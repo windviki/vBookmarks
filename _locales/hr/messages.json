@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "Ne"
+  },
+  "name": {
+    "description": "Ime oznake ili mape",
+    "message": "Ime"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otvori sve oznake u Inkognito prozoru"
+  },
+  "reportError": {
+    "message": "Prijavi grešku"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Jeste li sigurni da želite obrisati mapu oznaka \"$folderName$\" koja sadrži $subFolderCount$ podmapa/e/u i $bookmarkCount$ zabilješki/e?"
+  },
+  "extName": {
+    "description": "Ime ekstenzije",
+    "message": "Praktične oznake"
+  },
+  "noTitle": {
+    "description": "Naziv za oznaku(bookmark) koji nema URL-a ili ima neimenovanih prozora",
+    "message": "(neimenovano)"
+  },
+  "edit": {
+    "message": "Uredi..."
+  },
+  "open": {
+    "description": "Opcija koja služi za otvaranje oznaka ( bookmarkov-a)",
+    "message": "Otvori"
+  },
+  "searchBookmarks": {
+    "description": "Sivi (placeholder) tekst koji se pojavi kada otvorimo NeatBookmarks pored ikone za pretraživanje, uglavnom je odmah u fokusu, tako da trebamo kliknuti na prazan prostor u ekstenziji ili na neku od mapa.",
+    "message": "Pretraži oznake"
+  },
+  "delete": {
+    "message": "Obriši"
+  },
+  "editBookmark": {
+    "message": "Uredi oznaku"
+  },
+  "openNewTab": {
+    "message": "Otvori u novoj kartici"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Prikaži upozorenje prilikom otvaranja velikog broja oznaka iz mape"
+  },
+  "editFolder": {
+    "message": "Uredi mapu"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Traka oznaka",
+        "content": "$1"
+      }
+    },
+    "description": "Informacije koje se pojave kada držimo pokazivač miša na oznaci(bookmark-u) u rezultatima pretraživanja a govore nam u kojoj se mapi(folder-u) pronađena oznaka nalazi.",
+    "message": "Pripada mapi \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Poruka koja se pojavi kada želimo otvoriti sve oznake u novome inkognito prozoru.",
+    "message": "Jeste li sigurni da želite otvoriti $count$ oznaku/e/a u novom inkognito prozoru ?"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "errorOccured": {
+    "message": "Pojavila se pogreška."
+  },
+  "optionPopupStays": {
+    "message": "Iskočni prozor ekstenzije će ostati otvoren nakon otvaranja oznake."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zatvori nekorištene mape kad otvaram novu mapu"
+  },
+  "accessibility": {
+    "message": "Dostupnost"
+  },
+  "deleteEllipsis": {
+    "message": "Obriši..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Jeste li sigurni da želite obrisati mapu oznaka \"$folderName$\" koja sadrži $bookmarkCount$ zabilježaka/zabilješke ?"
+  },
+  "advancedOptions": {
+    "message": "Napredne opcije"
+  },
+  "extDesc": {
+    "description": "Opis ekstenzije (dodatka).",
+    "message": "Praktičan prikaz oznaka u pop-up prozoru."
+  },
+  "save": {
+    "message": "Spremi"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Poruka koja se pojavi kada želimo otvoriti sve oznake u novome prozoru.",
+    "message": "Jeste li sigurni da želite otvoriti $count$ oznaka/e/u u novom prozoru ?"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Jeste li sigurni da želite otvoriti sve oznake odjednom ?",
+    "message": "Jeste li sigurni da želite otvoriti $count$ oznaku/e/a odjednom ?"
+  },
+  "openBookmarks": {
+    "message": "Otvori sve oznake"
+  },
+  "optionRememberPrevState": {
+    "message": "Zapamti prijašnje stanje (poziciju u iskočnom prozoru i mape koje su bile otvorene)"
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Tekst na dnu stranice koji se može vidjeti kada pristupimo opcijama(Options)",
+    "message": "Izradio $authorName$"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otvori sve oznake u novom prozoru"
+  },
+  "optionOpenNewTab": {
+    "message": "Srednji klik (ili CONTROL+klik ) otvara oznaku u novoj kartici, ali se ne prebacuje automatski na nju."
+  },
+  "addHereFrontBookmark": {
+  	"message": "Dodaj trenutnu karticu prije toga"
+  },
+  "addHereEndBookmark": {
+  	"message": "Dodaj trenutnu karticu Nakon toga"
+  },
+  "addHereFrontFolder": {
+  	"message": "Dodaj trenutnu karticu na vrh ove"
+  },
+  "addHereEndFolder": {
+  	"message": "Dodaj trenutnu karticu na dno ove"
+  },
+  "addNewFolder": {
+    "message": "Dodaj mapu"
+  },
+  "ignore": {
+    "message": "Zanemari"
+  },
+  "openIncognitoWindow": {
+    "message": "Otvori u Inkognito prozoru"
+  },
+  "general": {
+    "message": "Općenito"
+  },
+  "openNewWindow": {
+    "message": "Otvori u novom prozoru"
+  },
+  "optionZoom": {
+    "message": "Zoomiranje"
+  },
+  "optionClickNewTab": {
+    "message": "Lijevim klikom otvarate oznaku u novoj kartici"
+  },
+  "options": {
+    "message": "Mogućnosti/Opcije"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Jeste li sigurni da želite obrisati mapu \"$folderName$\" koja sadrži $subFolderCount$ podmapa/e/u ?"
+  }
+}

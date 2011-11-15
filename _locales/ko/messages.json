@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "아니오"
+  },
+  "name": {
+    "description": "북마크 혹은 폴더의 이름",
+    "message": "이름"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "시크릿 창으로 모든 북마크 열기"
+  },
+  "reportError": {
+    "message": "오류 보고"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "정말 $subFolderCount$ 개의 하위 폴더와 $bookmarkCount$ 개의 북마크가 들어있는 $folderName$ 폴더를 삭제하시겠습니까?"
+  },
+  "extName": {
+    "description": "확장 프로그램 이름",
+    "message": "vBookmarks"
+  },
+  "noTitle": {
+    "description": "http(s) 형식이 아닌 URL(주소)이거나 제목없는 폴더에 있는 제목없는 북마크에 대한 제목",
+    "message": "(제목 없음)"
+  },
+  "edit": {
+    "message": "편집하기..."
+  },
+  "open": {
+    "description": "북마크 열기를 실행",
+    "message": "열기"
+  },
+  "searchBookmarks": {
+    "description": "검색어 입력상자에 미리 입력되어 있는 텍스트",
+    "message": "북마크 검색"
+  },
+  "delete": {
+    "message": "삭제"
+  },
+  "editBookmark": {
+    "message": "북마크 편집"
+  },
+  "openNewTab": {
+    "message": "새로운 탭으로 열기"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "한 폴더에 있는 많은 북마크를 열 때 확인창 보여주기"
+  },
+  "editFolder": {
+    "message": "폴더 편집"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "북마크바",
+        "content": "$1"
+      }
+    },
+    "description": "검색 결과 리스트 중 북마크에 대한 툴팁으로 표시되는 상위 폴더 정보",
+    "message": "상위 폴더: \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "모든 북마크를 시크릿 창으로 여는 것에 대한 확인 메시지",
+    "message": "정말 $count$ 개의 북마크를 모두 새로운 시크릿 창으로 여시겠습니까?"
+  },
+  "url": {
+    "message": "URL(주소)"
+  },
+  "errorOccured": {
+    "message": "오류가 발생하였습니다."
+  },
+  "optionPopupStays": {
+    "message": "(왼쪽 버튼 클릭으로) 북마크를 열 때 팝업메뉴 계속 보여주기"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "한 폴더를 펼칠 때 다른 폴더는 접기"
+  },
+  "accessibility": {
+    "message": "보기 옵션"
+  },
+  "deleteEllipsis": {
+    "message": "삭제하기..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "정말 $bookmarkCount$ 개의 북마크가 들어있는 $folderName$ 폴더를 삭제하시겠습니까?"
+  },
+  "advancedOptions": {
+    "message": "고급 옵션"
+  },
+  "extDesc": {
+    "description": "확장 프로그램에 대한 설명",
+    "message": "깔끔하게 정리된 북마크 트리를 팝업으로 보여줍니다."
+  },
+  "save": {
+    "message": "저장"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "모든 북마크를 새로운 창으로 열기 위한 확인 메세지",
+    "message": "정말 $count$ 개의 북마크를 모두 새로운 창으로 여시겠습니까?"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "모든 북마크를 여는 것에 대한 확인 메시지",
+    "message": "정말 $count$ 개의 북마크를 모두 여시겠습니까?"
+  },
+  "openBookmarks": {
+    "message": "모든 북마크 열기"
+  },
+  "optionRememberPrevState": {
+    "message": "(스크롤한 위치와 열렸던 폴더에 대한) 이전 상태 기억하기"
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "옵션 설정 페이지의 꼬리말",
+    "message": "만든이 : $authorName$."
+  },
+  "openBookmarksNewWindow": {
+    "message": "새로운 창으로 모든 북마크 열기"
+  },
+  "optionOpenNewTab": {
+    "message": "가운데 버튼이나 오른쪽 버튼 클릭시 새로운 백그라운드 탭으로 북마크 열기"
+  },
+  "addHereFrontBookmark": {
+  	"message": "이 전에 현재 탭 추가"
+  },
+  "addHereEndBookmark": {
+  	"message": "이 후 현재 탭 추가"
+  },
+  "addHereFrontFolder": {
+  	"message": "이 처음으로 현재 탭 추가"
+  },
+  "addHereEndFolder": {
+  	"message": "이것의 하단에 현재 탭 추가"
+  },
+  "addNewFolder": {
+    "message": "폴더 추가"
+  },
+  "ignore": {
+    "message": "무시"
+  },
+  "openIncognitoWindow": {
+    "message": "시크릿 창으로 열기"
+  },
+  "general": {
+    "message": "일반 옵션"
+  },
+  "openNewWindow": {
+    "message": "새로운 창으로 열기"
+  },
+  "optionZoom": {
+    "message": "확대"
+  },
+  "optionClickNewTab": {
+    "message": "왼쪽 버튼 클릭시 새로운 탭으로 북마크 열기"
+  },
+  "options": {
+    "message": "옵션"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "정말 $subFolderCount$ 개의 하위 폴더가 들어있는 $folderName$ 폴더를 삭제하시겠습니까?"
+  }
+}

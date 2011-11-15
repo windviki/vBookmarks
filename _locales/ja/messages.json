@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "いいえ"
+  },
+  "name": {
+    "description": "ブックマークとフォルダの名前",
+    "message": "名前"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "すべてのブックマークをシークレットウィンドウで開く"
+  },
+  "reportError": {
+    "message": "エラーレポート"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。"
+  },
+  "extName": {
+    "description": "拡張名",
+    "message": "vBookmarks"
+  },
+  "noTitle": {
+    "description": "名前の無いブックマークのための名前",
+    "message": "無題"
+  },
+  "edit": {
+    "message": "編集..."
+  },
+  "open": {
+    "description": "ブックマークを開く",
+    "message": "開く"
+  },
+  "searchBookmarks": {
+    "description": "検索フィールドのためのプレースホルダーテキスト",
+    "message": "ブックマークの検索"
+  },
+  "delete": {
+    "message": "削除"
+  },
+  "editBookmark": {
+    "message": "ブックマークの編集"
+  },
+  "openNewTab": {
+    "message": "新しいタブで開く"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "フォルダから多くのブックマークを開くとき、警告する"
+  },
+  "editFolder": {
+    "message": "フォルダの編集"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "ブックマークバー",
+        "content": "$1"
+      }
+    },
+    "description": "ブックマークが格納されているフォルダの情報は、検索結果リストのブックマーク吹き出しに表示される",
+    "message": "フォルダ名 \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "確認メッセージ - すべてのブックマークを新規シークレットウィンドウで表示する場合",
+    "message": "$count$ 個のブックマークを新しいシークレットウィンドウで開こうとしています。よろしいですか。"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "errorOccured": {
+    "message": "エラーが発生しました"
+  },
+  "optionPopupStays": {
+    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
+  },
+  "accessibility": {
+    "message": "アクセシビリティ"
+  },
+  "deleteEllipsis": {
+    "message": "削除..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。"
+  },
+  "advancedOptions": {
+    "message": "拡張オプション"
+  },
+  "extDesc": {
+    "description": "詳細な説明",
+    "message": "すっきりしたツリー構造のブックマーク"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "確認メッセージ - すべてのブックマークを新規ウィンドウで表示する場合",
+    "message": "$count$ 個のブックマークを新しいウィンドウで開こうとしています。よろしいですか。"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "確認メッセージ - すべてのブックマークを開く場合",
+    "message": "$count$ 個のブックマークを開こうとしています。よろしいですか。"
+  },
+  "openBookmarks": {
+    "message": "すべてのブックマークを開く"
+  },
+  "optionRememberPrevState": {
+    "message": "スクロール位置と開いたフォルダの情報を保持する"
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "オプションページのフッターテキスト",
+    "message": "作成者 $authorName$."
+  },
+  "openBookmarksNewWindow": {
+    "message": "すべてのブックマークを新しいウィンドウで開く"
+  },
+  "optionOpenNewTab": {
+    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
+  },
+  "addHereFrontBookmark": {
+  	"message": "この前に現在のタブを追加します"
+  },
+  "addHereEndBookmark": {
+  	"message": "この後に現在のタブを追加します"
+  },
+  "addHereFrontFolder": {
+  	"message": "このトップに現在のタブを追加します"
+  },
+  "addHereEndFolder": {
+  	"message": "このボトムに現在のタブを追加します"
+  },
+  "addNewFolder": {
+    "message": "フォルダを追加"
+  },
+  "ignore": {
+    "message": "無視"
+  },
+  "openIncognitoWindow": {
+    "message": "シークレットウィンドウで開く"
+  },
+  "general": {
+    "message": "全般"
+  },
+  "openNewWindow": {
+    "message": "新しいウィンドウで開く"
+  },
+  "optionZoom": {
+    "message": "拡大"
+  },
+  "optionClickNewTab": {
+    "message": "ブックマークを新しいタブで開く"
+  },
+  "options": {
+    "message": "オプション"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。"
+  }
+}

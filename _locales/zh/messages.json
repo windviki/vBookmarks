@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "取消"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在隐身窗口中打开所有书签"
+  },
+  "name": {
+    "description": "书签名或文件夹名",
+    "message": "名字"
+  },
+  "reportError": {
+    "message": "报告此错误"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录和 $bookmarkCount$ 个书签）？"
+  },
+  "noTitle": {
+    "description": "没 http(s) 开头的书签或没有命名的文件夹的统一标题",
+    "message": "（无标题）"
+  },
+  "extName": {
+    "description": "扩展名",
+    "message": "vBookmarks"
+  },
+  "edit": {
+    "message": "編輯 ..."
+  },
+  "searchBookmarks": {
+    "description": "搜索框里的提示文字",
+    "message": "书签搜索"
+  },
+  "open": {
+    "description": "打开书签的动作",
+    "message": "打开"
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "editBookmark": {
+    "message": "编辑书签"
+  },
+  "openNewTab": {
+    "message": "在新标签页中打开"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "打开多个书签前需确认"
+  },
+  "editFolder": {
+    "message": "编辑文件夹"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "书签栏",
+        "content": "$1"
+      }
+    },
+    "description": "搜索结果列表中提示书签所在目录",
+    "message": "所在目录：$folderName$"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "在隐身窗口中打开所有书签的确认信息",
+    "message": "您确定要在隐身窗口中打开 $count$ 个书签？"
+  },
+  "url": {
+    "message": "网址"
+  },
+  "optionPopupStays": {
+    "message": "打开（鼠标左击）书签时 Popup 页面不关闭"
+  },
+  "errorOccured": {
+    "message": "有错误出现"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展开文件夹时折叠其他文件夹"
+  },
+  "accessibility": {
+    "message": "辅助功能"
+  },
+  "deleteEllipsis": {
+    "message": "删除 ..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "您确定要删除文件夹[$folderName$]（包含 $bookmarkCount$ 个书签）？"
+  },
+  "advancedOptions": {
+    "message": "高级选项"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "extDesc": {
+    "description": "扩展描述",
+    "message": "灵巧实用的侧置书签扩展"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "在新窗口中打开所有书签的确认信息",
+    "message": "您确定要在新窗口中打开 $count$ 个书签？"
+  },
+  "openBookmarks": {
+    "message": "打开所有书签"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "打开所有书签的确认信息",
+    "message": "您确定要打开 $count$ 个书签？"
+  },
+  "optionRememberPrevState": {
+    "message": "记住上次状态（滚动条位置、所打开文件夹）"
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "选项页的页脚信息",
+    "message": "作者：$authorName$"
+  },
+  "optionOpenNewTab": {
+    "message": "用鼠标中键或按住 Ctrl 键左击在后台打开书签"
+  },
+  "addHereFrontBookmark": {
+    "message": "添加当前页到此书签前"
+  },
+  "addHereEndBookmark": {
+    "message": "添加当前页到此书签后"
+  },
+  "addHereFrontFolder": {
+    "message": "添加当前页到文件夹开头"
+  },
+  "addHereEndFolder": {
+    "message": "添加当前页到文件夹末尾"
+  },
+  "addNewFolder": {
+    "message": "添加文件夹"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新窗口中打开所有书签"
+  },
+  "openIncognitoWindow": {
+    "message": "在隐身窗口中打开"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "openNewWindow": {
+    "message": "在新窗口中打开"
+  },
+  "general": {
+    "message": "常规功能"
+  },
+  "optionZoom": {
+    "message": "缩放"
+  },
+  "options": {
+    "message": "选项"
+  },
+  "optionClickNewTab": {
+    "message": "左击书签在新标签页中打开"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录）？"
+  }
+}

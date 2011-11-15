@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="codemirror.css">
+<script>
+onerror = function(){chrome.extension.sendRequest({error: [].slice.call(arguments)}) };
+</script>
+<script src="neatools.js"></script>
+<script src="codemirror.js"></script>
+<script>
+var _m = chrome.i18n.getMessage;
+var __m = function(){
+	document.write(_m.apply(this, arguments));
+};
+document.addEventListener('DOMContentLoaded', function(){
+	document.title = _m('extName') + ' ' + _m('advancedOptions');
+	
+	var customIconPreview = $('custom-icon-preview').firstElementChild;
+	var canvas = document.createElement('canvas');
+	canvas.width = canvas.height = 19;
+	var ctx = canvas.getContext('2d');
+	var dontLoad = true;
+	customIconPreview.onload = function(){
+		if (dontLoad){
+			dontLoad = false;
+			return;
+		}
+		ctx.clearRect(0, 0, 19, 19);
+		ctx.drawImage(customIconPreview, 0, 0, 19, 19);
+		var imageData = ctx.getImageData(0, 0, 19, 19);
+		chrome.browserAction.setIcon({imageData: imageData});
+		localStorage.customIcon = JSON.stringify(imageData.data);
+	};
+	if (localStorage.customIcon){
+		var customIcon = JSON.parse(localStorage.customIcon);
+		var imageData = ctx.getImageData(0, 0, 19, 19);
+		for (var key in customIcon) imageData.data[key] = customIcon[key];
+		ctx.putImageData(imageData, 0, 0);
+		customIconPreview.src = canvas.toDataURL();
+	}
+	
+	var customIconFile = $('custom-icon-file');
+	customIconFile.addEventListener('change', function(){
+		var files = this.files;
+		if (files && files.length){
+			var file = files[0];
+			if (/image\/[a-z]+/i.test(file.type)){
+				reader = new FileReader();
+				reader.onload = function(e){
+					var result = e.target.result;
+					customIconPreview.src = result;
+				};
+				reader.readAsDataURL(files[0]);
+			} else {
+				alert('Not an image. Try another one.');
+			}
+		}
+	});
+	
+	var defaultIconButton = $('default-icon-button');
+	defaultIconButton.addEventListener('click', function(){
+		delete localStorage.customIcon;
+		chrome.browserAction.setIcon({path: 'icon.png'});
+		dontLoad = true;
+		customIconPreview.src = 'icon.png';
+	});
+	
+	var textareaUserstyle = $('userstyle');
+	if (localStorage.userstyle) textareaUserstyle.value = localStorage.userstyle;
+	CodeMirror.fromTextArea(textareaUserstyle, {
+		onChange: function(c){
+			localStorage.userstyle = c.getValue();
+		}
+	});
+	
+	$('reset-button').addEventListener('click', function(){
+		localStorage.clear();
+		alert('vBookmarks has been reset.');
+		location.reload();
+	}, false);
+});
+</script>
+<h1><img src="icon32.png" width="32" height="32" alt=""> <script>__m('extName')</script> <small><script>__m('advancedOptions')</script></small></h1>
+<fieldset>
+<legend>Custom icon</legend>
+<div id="custom-icon-preview"><img src="icon.png" width="19" height="19" alt=""></div>
+<p>The icon has to be in 19&times;19 pixel dimension. Else it'll be resized to this dimension.</p>
+<div>
+<button id="default-icon-button">Use default</button> or <input type="file" id="custom-icon-file">
+</div>
+</fieldset>
+<fieldset>
+<legend>Custom styles</legend>
+<p>This requires some CSS skillz. Hack at your own risk. Code sharing would be wise done via <a href="http://gist.github.com/">GitHub Gist</a>.</p>
+<textarea id="userstyle"></textarea>
+</fieldset>
+<fieldset>
+<legend>Reset settings</legend>
+<div>Reset vBookmarks to default settings. <button id="reset-button">Reset</button></div>
+</fieldset>
+<div id="footer">
+<script>__m('optionsFooterText', '<a href="http://twitter.com/cheeaun">Lim Chee Aun</a>')</script>
+<script>__m('optionsFooterText', '<a href="http://twitter.com/windviki">windviki</a>')</script>
+</div>

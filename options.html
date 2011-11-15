@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="options.css">
+<script>
+onerror = function(){chrome.extension.sendRequest({error: [].slice.call(arguments)}) };
+</script>
+<script src="neatools.js"></script>
+<script>
+var _m = chrome.i18n.getMessage;
+var __m = function(){
+	document.write(_m.apply(this, arguments));
+};
+document.addEventListener('DOMContentLoaded', function(){
+	document.title = _m('extName') + ' ' + _m('options');
+	
+	var clickNewTab = $('click-new-tab');
+	clickNewTab.checked = !!localStorage.leftClickNewTab;
+	clickNewTab.addEventListener('change', function(){
+		localStorage.leftClickNewTab = clickNewTab.checked ? '1' : '';
+	});
+	
+	var openNewTabBg = $('open-new-tab-bg');
+	openNewTabBg.checked = !!localStorage.middleClickBgTab;
+	openNewTabBg.addEventListener('change', function(){
+		localStorage.middleClickBgTab = openNewTabBg.checked ? '1' : '';
+	});
+	
+	var closeUnusedFolders = $('close-unused-folders');
+	closeUnusedFolders.checked = !!localStorage.closeUnusedFolders;
+	closeUnusedFolders.addEventListener('change', function(){
+		localStorage.closeUnusedFolders = closeUnusedFolders.checked ? '1' : '';
+	});
+	
+	var popupStayOpen = $('popup-stay-open');
+	popupStayOpen.checked = !!localStorage.bookmarkClickStayOpen;
+	popupStayOpen.addEventListener('change', function(){
+		localStorage.bookmarkClickStayOpen = popupStayOpen.checked ? '1' : '';
+	});
+	
+	var confirmOpenFolder = $('confirm-open-folder');
+	confirmOpenFolder.checked = !localStorage.dontConfirmOpenFolder;
+	confirmOpenFolder.addEventListener('change', function(){
+		localStorage.dontConfirmOpenFolder = confirmOpenFolder.checked ? '' : '1';
+	});
+	
+	var rememberPrevState = $('remember-prev-state');
+	rememberPrevState.checked = !localStorage.dontRememberState;
+	rememberPrevState.addEventListener('change', function(){
+		localStorage.dontRememberState = rememberPrevState.checked ? '' : '1';
+	});
+	
+	var zoom = $('zoom-input');
+	setInterval(function(){
+		zoom.value = localStorage.zoom || 100;
+	}, 1000);
+	zoom.addEventListener('input', function(){
+		var val = zoom.value.toInt();
+		if (val == 100){
+			localStorage.removeItem('zoom');
+		} else {
+			localStorage.zoom = val;
+		}
+	});
+});
+</script>
+<div class="options-nav"><a href="advanced-options.html"><script>__m('advancedOptions')</script></a></div>
+<h1><img src="icon32.png" width="32" height="32" alt=""> <script>__m('extName')</script> <small><script>__m('options')</script></small></h1>
+<h2><script>__m('general')</script></h2>
+<ul class="options-list">
+<li><label><input type="checkbox" id="click-new-tab"> <script>__m('optionClickNewTab')</script></label></li>
+<li><label><input type="checkbox" id="open-new-tab-bg"> <script>__m('optionOpenNewTab')</script></label></li>
+<li><label><input type="checkbox" id="close-unused-folders"> <script>__m('optionCloseUnusedFolders')</script></label></li>
+<li><label><input type="checkbox" id="popup-stay-open"> <script>__m('optionPopupStays')</script></label></li>
+<li><label><input type="checkbox" id="confirm-open-folder"> <script>__m('optionConfirmOpenFolder')</script></label></li>
+<li><label><input type="checkbox" id="remember-prev-state"> <script>__m('optionRememberPrevState')</script></label></li>
+</ul>
+<h2><script>__m('accessibility')</script></h2>
+<ul class="options-list">
+<li><label><script>__m('optionZoom')</script> <input type="number" min="90" max="150" step="10" value="100" id="zoom-input">%</label></li>
+</ul>
+<div id="footer">
+<script>__m('optionsFooterText', '<a href="http://twitter.com/cheeaun">Lim Chee Aun</a>')</script>
+<script>__m('optionsFooterText', '<a href="http://twitter.com/windviki">windviki</a>')</script>
+</div>

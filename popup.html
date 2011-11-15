@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="neat.css">
+<div id="container">
+<div id="search" role="search"><input id="search-input" type="search" results="0" autofocus></div>
+<div id="tree" tabindex="-1"></div>
+<div id="results" tabindex="-1" style="display: none;"></div>
+</div>
+<div id="drop-overlay"></div>
+<div id="bookmark-clone"></div>
+<menu id="bookmark-context-menu" type="context" tabindex="-1">
+	<command id="bookmark-addhere-front" tabindex="-1">
+	<command id="bookmark-addhere-end" tabindex="-1">
+	<hr>
+	<command id="bookmark-new-tab" tabindex="-1">
+	<command id="bookmark-new-window" tabindex="-1">
+	<command id="bookmark-new-incognito-window" tabindex="-1">
+	<hr>
+	<command id="bookmark-edit" tabindex="-1">
+	<command id="bookmark-delete" tabindex="-1">
+</menu>
+<menu id="folder-context-menu" type="context" tabindex="-1">
+	<command id="folder-addhere-front" tabindex="-1">
+	<command id="folder-addhere-end" tabindex="-1">
+	<hr>
+	<command id="add-new-folder" tabindex="-1">
+	<hr>
+	<command id="folder-window" tabindex="-1">
+	<command id="folder-new-window" tabindex="-1">
+	<command id="folder-new-incognito-window" tabindex="-1">
+	<hr>
+	<command id="folder-edit" tabindex="-1">
+	<command id="folder-delete" tabindex="-1">
+</menu>
+<div id="resizer"></div>
+<div id="cover"></div>
+<div id="alert-dialog" class="dialog" role="dialog">
+	<p id="alert-dialog-text" class="dialog-text"></p>
+</div>
+<div id="confirm-dialog" class="dialog" role="dialog">
+	<p id="confirm-dialog-text" class="dialog-text"></p>
+	<div class="buttons">
+	<button id="confirm-dialog-button-1" onclick="ConfirmDialog.fn1(); ConfirmDialog.close();"></button>
+	<button id="confirm-dialog-button-2" onclick="ConfirmDialog.fn2(); ConfirmDialog.close();"></button>
+	</div>
+</div>
+<div id="edit-dialog" class="dialog" role="dialog">
+	<form onsubmit="EditDialog.close(); return false;">
+	<p id="edit-dialog-text" class="dialog-text"></p>
+	<input id="edit-dialog-name">
+	<input type="url" id="edit-dialog-url" aria-required="true" required>
+	<div class="buttons">
+	<button id="edit-dialog-button" type="submit"></button>
+	</div>
+	</form>
+</div>
+<div id="new-folder-dialog" class="dialog" role="dialog">
+	<form onsubmit="NewFolderDialog.close(); return false;">
+	<p id="new-folder-dialog-text" class="dialog-text"></p>
+	<input id="new-folder-dialog-name">
+	<div class="buttons">
+	<button id="new-folder-dialog-button" type="submit"></button>
+	</div>
+	</form>
+</div>
+<script>
+onerror = function(){chrome.extension.sendRequest({error: [].slice.call(arguments)}) };
+if (localStorage.popupHeight) document.body.style.height = localStorage.popupHeight + 'px';
+if (localStorage.popupWidth) document.body.style.width = localStorage.popupWidth + 'px';
+</script>
+<script src="neatools.js"></script>
+<script src="neat.js"></script>

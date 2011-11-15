@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "No"
+  },
+  "name": {
+    "description": "Nome del preferito o della cartella.",
+    "message": "Nome"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Apri tutti i preferiti in una finestra di navigazione in incognito"
+  },
+  "reportError": {
+    "message": "Segnala questo errore"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Eliminare la cartella $folderName$, le $subFolderCount$ sottocartelle e i $bookmarkCount$ preferiti contenuti in essa?"
+  },
+  "extName": {
+    "description": "Nome dell'estensione.",
+    "message": "vBookmarks"
+  },
+  "noTitle": {
+    "description": "Nome dei preferiti senza nome non contenente indirizzi Web http(s) o delle cartelle senza nome.",
+    "message": "(senza nome)"
+  },
+  "edit": {
+    "message": "Modifica..."
+  },
+  "open": {
+    "description": "Azione per aprire i preferiti.",
+    "message": "Apri"
+  },
+  "searchBookmarks": {
+    "description": "Testo iniziale del campo di ricerca.",
+    "message": "Cerca preferiti"
+  },
+  "delete": {
+    "message": "Elimina"
+  },
+  "editBookmark": {
+    "message": "Modifica preferito"
+  },
+  "openNewTab": {
+    "message": "Apri in un'altra scheda"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
+  },
+  "editFolder": {
+    "message": "Modifica cartella"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Barra dei preferiti",
+        "content": "$1"
+      }
+    },
+    "description": "Informazioni sulla cartella principale visualizzate nel suggerimento dei preferiti nell'elenco dei risultati di ricerca.",
+    "message": "Cartella principale: \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Messaggio di conferma di apertura di tutti i preferiti in una finestra di navigazione in incognito.",
+    "message": "Aprire tutti i $count$ preferiti in una finestra di navigazione in incognito?"
+  },
+  "url": {
+    "message": "Indirizzo Web"
+  },
+  "errorOccured": {
+    "message": "Si è verificato un errore."
+  },
+  "optionPopupStays": {
+    "message": "Non chiudere la finestra di vBookmarks quando si aprono i preferiti (clic con il pulsante sinistro del mouse)."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "All'apertura di una cartella, chiudi tutte le altre."
+  },
+  "accessibility": {
+    "message": "Accessibilità"
+  },
+  "deleteEllipsis": {
+    "message": "Elimina..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?"
+  },
+  "advancedOptions": {
+    "message": "Opzioni avanzate"
+  },
+  "extDesc": {
+    "description": "Descrizione dell'estensione.",
+    "message": "Una pratica estensione per la gestione dei preferiti."
+  },
+  "save": {
+    "message": "Salva"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Messaggio di conferma di apertura di tutti i preferiti in un'altra finestra.",
+    "message": "Aprire tutti i $count$ preferiti in un'altra finestra?"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Messaggio di conferma di apertura di tutti i preferiti.",
+    "message": "Aprire tutti i $count$ preferiti?"
+  },
+  "openBookmarks": {
+    "message": "Apri tutti i preferiti"
+  },
+  "optionRememberPrevState": {
+    "message": "Memorizza lo stato della finestra di vBookmarks (posizione di scorrimento dell'elenco e cartelle aperte)."
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Testo in basso alla pagina Opzioni",
+    "message": "Creato da $authorName$."
+  },
+  "openBookmarksNewWindow": {
+    "message": "Apri tutti i preferiti in un'altra finestra"
+  },
+  "optionOpenNewTab": {
+    "message": "Fai clic con il pulsante centrale del mouse o con il pulsante sinistro tenendo premuto il tasto Ctrl per aprire i preferiti in un'altra scheda in secondo piano (anziché in primo piano)."
+  },
+  "addHereFrontBookmark": {
+  	"message": "Aggiungi la scheda corrente prima di questa"
+  },
+  "addHereEndBookmark": {
+  	"message": "Aggiungi la scheda corrente Dopo questo"
+  },
+  "addHereFrontFolder": {
+  	"message": "Aggiungi la scheda corrente Per il Top di questa"
+  },
+  "addHereEndFolder": {
+  	"message": "Aggiungi la scheda corrente in fondo di questo"
+  },
+  "addNewFolder": {
+    "message": "Aggiungi cartella"
+  },
+  "ignore": {
+    "message": "Ignora"
+  },
+  "openIncognitoWindow": {
+    "message": "Apri in una finestra di navigazione in incognito"
+  },
+  "general": {
+    "message": "Generale"
+  },
+  "openNewWindow": {
+    "message": "Apri in un'altra finestra"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionClickNewTab": {
+    "message": "Apri i preferiti in un'altra finestra quando si fa clic con il pulsante sinistro del mouse su di essi."
+  },
+  "options": {
+    "message": "Opzioni"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Eliminare la cartella $folderName$ e le $subFolderCount$ sottocartelle contenute in essa?"
+  }
+}

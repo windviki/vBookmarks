@@ -1,0 +1,412 @@
+body{
+	direction: __MSG_@@bidi_dir__;
+	font: menu;
+	color: #000;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	overflow: hidden;
+	width: 320px;
+	height: 530px;
+}
+body.linux{
+	font-size: 12px;
+}
+body.transitional{
+	-webkit-transition-property: height;
+}
+body[data-zoom='90']>*:not(menu),
+body[data-zoom='90'] menu[type=context] command{
+	zoom: .9;
+}
+body[data-zoom='90'] #drop-overlay.bookmark{ /* zooming out makes the line too hard to see */
+	border-top: 0;
+}
+body[data-zoom='110']>*:not(menu),
+body[data-zoom='110'] menu[type=context] command{
+	zoom: 1.1;
+}
+body[data-zoom='120']>*:not(menu),
+body[data-zoom='120'] menu[type=context] command{
+	zoom: 1.2;
+}
+body[data-zoom='130']>*:not(menu),
+body[data-zoom='130'] menu[type=context] command{
+	zoom: 1.3;
+}
+body[data-zoom='140']>*:not(menu),
+body[data-zoom='140'] menu[type=context] command{
+	zoom: 1.4;
+}
+body[data-zoom='150']>*:not(menu),
+body[data-zoom='150'] menu[type=context] command{
+	zoom: 1.5;
+}
+input{
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font: menu;
+}
+body.linux input{
+	font-size: 12px;
+}
+#container{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+#search{
+	padding: 0 2px 2px;
+}
+#search input{
+	width: 100%;
+	margin: 2px 0;
+	padding: 2px;
+}
+#results,
+#tree{
+	background-color: #eee;
+	overflow: auto;
+	outline: 0;
+	padding: 3px 0;
+	-webkit-box-shadow: inset 0 4px 4px -4px rgba(0,0,0,.1);
+	-webkit-box-flex: 1;
+	box-flex: 1;
+	text-shadow: 0 1px #f6f6f6;
+	position: relative;
+}
+#results ul,
+#results ul li,
+#tree ul,
+#tree ul li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+#results ul li a,
+#tree ul li a,
+#tree ul li span{
+	display: block;
+	line-height: 1.67em;
+	padding: 0 4px;
+	text-decoration: none;
+	color: #000;
+	outline: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+#results ul li a *,
+#tree ul li a *,
+#tree ul li span *{
+	pointer-events: none;
+}
+#tree ul li span .twisty{
+	display: inline-block;
+	position: relative;
+	width: 0;
+	height: 0;
+	border-width: 4.5px 0 4.5px 8px;
+	border-color: transparent transparent transparent #84919f;
+	border-style: solid;
+	margin: 0 4px;
+	-webkit-transition: -webkit-transform .15s;
+	-webkit-transform: scaleX(.99);
+}
+.chrome-536 #tree ul li span .twisty{ /* Chrome build 536 dev bug */
+	-webkit-transition-duration: 0s;
+}
+.rtl #tree ul li span .twisty{
+	-webkit-transform: scaleX(-1);
+}
+#tree ul li.open>span .twisty{
+	-webkit-transform: rotate(90deg);
+}
+.rtl #tree ul li.open>span .twisty{
+	-webkit-transform: scaleX(-1) rotate(90deg);
+}
+#results ul li a img,
+#results ul li span img,
+#tree ul li a img,
+#tree ul li span img{
+	margin-top: -2px;
+	vertical-align: middle;
+	margin-__MSG_@@bidi_end_edge__: 4px;
+}
+#results ul li a img,
+#tree ul li a img{
+	margin-__MSG_@@bidi_start_edge__: 16px;
+}
+#results ul li i,
+#tree ul li i{
+	font-style: normal;
+}
+#results ul li a:hover i,
+#tree ul li a:hover i{
+	text-decoration: underline;
+}
+#results ul li a:active,
+#results ul li a.active,
+#results ul li a:focus,
+#tree ul li a:active,
+#tree ul li span:active,
+#tree ul li a.active,
+#tree ul li span.active,
+#tree ul li a:focus,
+#tree ul li span:focus,
+menu[type=context] command:focus{
+	color: #fff;
+	background-color: #4687cb;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6fa6de), to(#1e6cbb));
+	-webkit-box-shadow: 0 -1px #5594d2;
+	text-shadow: 0 0 rgba(255,255,255,.5), 0 1px rgba(0,0,0,.5);
+	outline: 0;
+}
+.searchFocus #results ul>li:first-child a{
+	background-color: rgba(43,93,205,.2);
+}
+#tree ul li span:active .twisty,
+#tree ul li span.active .twisty,
+#tree ul li span:focus .twisty{
+	border-color: transparent transparent transparent #e5eef8;
+}
+#tree ul ul{
+	height: 0;
+	overflow: hidden;
+}
+#tree .open>ul{
+	height: auto;
+}
+@-webkit-keyframes blueFade {
+	0% {
+		background-color: transparent;
+	}
+	10%{
+		background-color: rgba(43,93,205,.2);
+	}
+	100% {
+		background-color: transparent;
+	}
+}
+#tree ul li a.focus,
+#tree ul li span.focus{
+	-webkit-animation-name: blueFade;
+	-webkit-animation-duration: 3s;
+}
+
+#bookmark-clone{
+	position: absolute;
+	left: -999px;
+	margin: -1em 0 0 -24px;
+	white-space: nowrap;
+	line-height: 1em;
+	padding: .3em;
+	padding-__MSG_@@bidi_end_edge__: .5em;
+	-webkit-mask-image: -webkit-gradient(linear, left top, 320 top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	pointer-events: none;
+	cursor: default;
+}
+.rtl #bookmark-clone{
+	margin-left: 24px;
+	-webkit-mask-image: -webkit-gradient(linear, right top, -320 top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+#bookmark-clone img{
+	vertical-align: text-top;
+	margin-__MSG_@@bidi_end_edge__: 4px;
+}
+#bookmark-clone i{
+	font-style: normal;
+}
+#drop-overlay{
+	display: block;
+	width: 100%;
+	position: absolute;
+	left: -999px;
+	pointer-events: none;
+	margin: -1px 0 0;
+	-webkit-box-sizing: border-box;
+	-box-sizing: border-box;
+}
+#drop-overlay.bookmark{
+	margin-__MSG_@@bidi_start_edge__: -3px;
+	height: 3px;
+	background-color: #000;
+	border: 1px solid #fff;
+}
+#drop-overlay.folder{
+	background-color: rgba(43,93,205,.2);
+	border: 1px solid #5594d2;
+	border-radius: 2px;
+}
+
+menu[type=context]{
+	-webkit-transition: opacity .3s;
+	opacity: 0;
+	margin: 0;
+	padding: 5px 0;
+	list-style: none;
+	position: absolute;
+	left: -999px;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	background-color: rgba(255,255,255,.96);
+	box-shadow: 0 2px 6px rgba(0,0,0,.2);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,.2);
+	outline: 0;
+	max-width: 100%;
+}
+menu[type=context] command{
+	display: block;
+	padding: 0 10px;
+	line-height: 20px;
+	text-shadow: none;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+/* convert title-style to sentence-style capitalization, for Windows */
+.win menu[type=context] command{
+	text-transform: lowercase;
+}
+.win menu[type=context] command:first-letter{
+	text-transform: uppercase;
+}
+menu[type=context] hr{
+	border: 0;
+	padding: 0;
+	height: 1px;
+	margin: 2px 0;
+	background-color: #eee;
+	pointer-events: none;
+}
+
+menu[type=context].hide-editables hr,
+menu[type=context].hide-editables #folder-edit,
+menu[type=context].hide-editables #folder-delete{
+	display: none;
+}
+
+#resizer{
+	position: absolute;
+	width: 4px;
+	height: 100%;
+	__MSG_@@bidi_start_edge__: 0;
+	top: 0;
+	cursor: col-resize;
+}
+
+#cover{
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 100%;
+	opacity: 0;
+	background-color: rgba(255,255,255,.5);
+}
+.transitional #cover{
+	-webkit-transition: opacity .3s;
+}
+.needAlert #cover,
+.needConfirm #cover,
+.needEdit #cover{
+	left: 0;
+	opacity: 1;
+}
+
+.dialog{
+	position: absolute;
+	top: -150px;
+	left: 0;
+	right: 0;
+	opacity: 0;
+	background-color: #fff;
+	padding: 1em;
+	border-bottom: 1px solid #e0e0e0;
+	-webkit-box-shadow: 0 0 100px rgba(0,0,0,.1);
+	box-shadow: 0 0 100px rgba(0,0,0,.1);
+}
+.transitional .dialog{
+	-webkit-transition-property: opacity, top;
+	-webkit-transition-duration: .3s;
+}
+.dialog-text{
+	padding: 0;
+	margin: 0;
+	line-height: 1.4em;
+	font-size: 110%;
+}
+.dialog .buttons{
+	margin: 1em 0 0;
+	text-align: __MSG_@@bidi_end_edge__;
+}
+.dialog .buttons button{
+	padding: .3em 1.5em;
+}
+.dialog pre{
+	white-space: pre-line;
+	margin: 0;
+	padding: 5px;
+	line-height: 1.1em;
+	-webkit-user-select: text;
+	cursor: text;
+	background-color: #fafafa;
+	text-shadow: none;
+}
+
+#edit-dialog .dialog-text{
+	margin: 0;
+	font-weight: bold;
+}
+#edit-dialog input{
+	width: 100%;
+	padding: 2px;
+}
+#edit-dialog input:invalid{
+	outline-color: red;
+}
+#edit-dialog .buttons{
+	margin: 0;
+}
+#edit-dialog .buttons button{
+	font-weight: bold;
+}
+
+#new-folder-dialog .dialog-text{
+	margin: 0;
+	font-weight: bold;
+}
+#new-folder-dialog input{
+	width: 100%;
+	padding: 2px;
+}
+#new-folder-dialog input:invalid{
+	outline-color: red;
+}
+#new-folder-dialog .buttons{
+	margin: 0;
+}
+#new-folder-dialog .buttons button{
+	font-weight: bold;
+}
+
+.needAlert #alert-dialog,
+.needConfirm #confirm-dialog,
+.needEdit #edit-dialog{
+	top: 0;
+	opacity: 1;
+}
+.needInputName #new-folder-dialog{
+	top: 0;
+	opacity: 1;
+}

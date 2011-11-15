@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "Nãaoo"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Abrir Todos os Marcadores numa Janela Privada"
+  },
+  "name": {
+    "description": "Nome do marcador ou pasta.",
+    "message": "Nome"
+  },
+  "reportError": {
+    "message": "Reportar Erro"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Tem a certeza que pretende apagar a pasta $folderName$, $subFolderCount$ sub-pasta(s) e $bookmarkCount$ marcador(es) incluído(s)?"
+  },
+  "noTitle": {
+    "description": "Título para marcadores sem título e sem http(s) URL ou pastas sem título.",
+    "message": "(sem título)"
+  },
+  "extName": {
+    "description": "Nome da extensão.",
+    "message": "vBookmarks"
+  },
+  "edit": {
+    "message": "Editar..."
+  },
+  "searchBookmarks": {
+    "description": "Texto contido no campo de pesquisa.",
+    "message": "Pesquisar Marcadores"
+  },
+  "open": {
+    "description": "Acção para abrir marcadores.",
+    "message": "Abrir"
+  },
+  "delete": {
+    "message": "Apagar"
+  },
+  "editBookmark": {
+    "message": "Editar marcador"
+  },
+  "openNewTab": {
+    "message": "Abrir num Novo Separador"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostra confirmação quando abre vários marcadores duma pasta."
+  },
+  "editFolder": {
+    "message": "Editar pasta"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Barra de marcadores",
+        "content": "$1"
+      }
+    },
+    "description": "Informação da pasta principal mostrada nas dicas dos marcadores, nas listas dos resultados das pesquisas.",
+    "message": "Pasta principal: \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os marcadores numa nova janela privada.",
+    "message": "Tem a certeza que pretende abrir todos os $count$ marcadores numa nova janela privada?"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "optionPopupStays": {
+    "message": "Popup continua aberto quando abrir (click-esquerdo no rato) marcadores."
+  },
+  "errorOccured": {
+    "message": "Oops, ocorreu um erro."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Fecha pastas não utilizadas quando abre uma nova pasta."
+  },
+  "accessibility": {
+    "message": "Acessibilidade"
+  },
+  "deleteEllipsis": {
+    "message": "Apagar..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Tem a certeza que pretende apagar a pasta $folderName$ e $bookmarkCount$ marcador(es) incluídos?"
+  },
+  "advancedOptions": {
+    "message": "Opções Avançadas"
+  },
+  "save": {
+    "message": "Gravar"
+  },
+  "extDesc": {
+    "description": "Descrição de extensão.",
+    "message": "Um prático gestor de marcadores de estilo popup."
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os marcadores numa nova janela.",
+    "message": "Tem a certeza que pretende abrir todos os $count$ marcadores numa nova janela?"
+  },
+  "openBookmarks": {
+    "message": "Abrir Todos os Marcadores"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os marcadores.",
+    "message": "Tem a certeza que pretende abrir todos os $count$ marcadores?"
+  },
+  "optionRememberPrevState": {
+    "message": "Memoriza o estado anterior (posição vertical e pastas abertas)."
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Texto de rodapé para a página de Opções",
+    "message": "Criado por $authorName$."
+  },
+  "optionOpenNewTab": {
+    "message": "click-botão do meio do rato ou control-click abre marcador num novo separador em 2º plano (em vez de 1º plano)."
+  },
+  "addHereFrontBookmark": {
+  	"message": "Adicionar Tab atual Antes Esta"
+  },
+  "addHereEndBookmark": {
+  	"message": "Adicionar Tab atual Após Este"
+  },
+  "addHereFrontFolder": {
+  	"message": "Adicionar Tab atual para o Topo"
+  },
+  "addHereEndFolder": {
+  	"message": "Adicionar Tab atual para o final da"
+  },
+  "addNewFolder": {
+    "message": "Adicionar pasta"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Abrir Todos os Marcadores numa Nova Janela"
+  },
+  "openIncognitoWindow": {
+    "message": "Abrir numa Janela Privada"
+  },
+  "ignore": {
+    "message": "Ignorar"
+  },
+  "openNewWindow": {
+    "message": "Abrir numa Nova Janela"
+  },
+  "general": {
+    "message": "Geral"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Opções"
+  },
+  "optionClickNewTab": {
+    "message": "click-botão esquerdo do rato abre marcador num novo separador."
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Tem a certeza que pretende apagar a pasta $folderName$ e $subFolderCount$ sub-pasta(s) incluída(s)?"
+  }
+}

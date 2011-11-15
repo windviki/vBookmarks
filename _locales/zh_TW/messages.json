@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "取消"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在無痕式視窗中開啟所有書籤"
+  },
+  "name": {
+    "description": "書籤名或資料夾名",
+    "message": "名稱"
+  },
+  "reportError": {
+    "message": "報告此錯誤"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？"
+  },
+  "noTitle": {
+    "description": "無 http(s) 開頭的書籤或無命名的資料夾的預設標題",
+    "message": "（無標題）"
+  },
+  "extName": {
+    "description": "擴充功能名稱",
+    "message": "vBookmarks"
+  },
+  "edit": {
+    "message": "編輯 ..."
+  },
+  "searchBookmarks": {
+    "description": "搜索框裡的提示文字",
+    "message": "搜尋書籤"
+  },
+  "open": {
+    "description": "開啟書籤的動作",
+    "message": "開啟"
+  },
+  "delete": {
+    "message": "刪除"
+  },
+  "editBookmark": {
+    "message": "編輯書籤"
+  },
+  "openNewTab": {
+    "message": "在新分頁中開啟"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "開啟多個書籤前需確認"
+  },
+  "editFolder": {
+    "message": "編輯資料夾"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "書籤欄",
+        "content": "$1"
+      }
+    },
+    "description": "搜索結果列表中提示書籤所在目錄",
+    "message": "所在目錄：$folderName$"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "在無痕式視窗中開啟所有書籤時的確認訊息",
+    "message": "您確定要在無痕式視窗中開啟 $count$ 個書籤？"
+  },
+  "url": {
+    "message": "網址"
+  },
+  "optionPopupStays": {
+    "message": "開啟（滑鼠左擊）書籤時 Popup 頁面不關閉"
+  },
+  "errorOccured": {
+    "message": "有錯誤出現"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展開資料夾時收合其他資料夾"
+  },
+  "accessibility": {
+    "message": "輔助功能"
+  },
+  "deleteEllipsis": {
+    "message": "刪除 ..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "您確定要刪除資料夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？"
+  },
+  "advancedOptions": {
+    "message": "進階設定"
+  },
+  "save": {
+    "message": "儲存"
+  },
+  "extDesc": {
+    "description": "擴充功能描述",
+    "message": "靈巧實用的側置書籤擴充功能"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "在新視窗中開啟所有書籤時的確認訊息",
+    "message": "您確定要在新視窗中開啟 $count$ 個書籤？"
+  },
+  "openBookmarks": {
+    "message": "開啟所有書籤"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "開啟所有書籤時的確認訊息",
+    "message": "您確定要開啟 $count$ 個書籤？"
+  },
+  "optionRememberPrevState": {
+    "message": "記住上次狀態（滾動軸位置、已展開資料夾）"
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "設定頁的頁腳訊息",
+    "message": "作者：$authorName$"
+  },
+  "optionOpenNewTab": {
+    "message": "用滑鼠中鍵或按住 Ctrl 鍵左擊在背景開啟書籤"
+  },
+  "addHereFrontBookmark": {
+    "message": "添加當前頁到此書籤前"
+  },
+  "addHereEndBookmark": {
+    "message": "添加當前頁到此書籤後"
+  },
+  "addHereFrontFolder": {
+    "message": "添加當前頁到資料夾前端"
+  },
+  "addHereEndFolder": {
+    "message": "添加當前頁到資料夾末尾"
+  },
+  "addNewFolder": {
+    "message": "添加資料夾"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新視窗中開啟所有書籤"
+  },
+  "openIncognitoWindow": {
+    "message": "在無痕式視窗中開啟"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "openNewWindow": {
+    "message": "在新視窗中開啟"
+  },
+  "general": {
+    "message": "一般功能"
+  },
+  "optionZoom": {
+    "message": "縮放"
+  },
+  "options": {
+    "message": "設定"
+  },
+  "optionClickNewTab": {
+    "message": "左擊書籤在新分頁中開啟"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？"
+  }
+}

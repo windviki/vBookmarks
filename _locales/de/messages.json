@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "Nein"
+  },
+  "name": {
+    "description": "Der Name des Lesezeichen oder des Ordners.",
+    "message": "Name"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Alle Lesezeichen in einem Incognito-Fenster öffnen"
+  },
+  "reportError": {
+    "message": "Ein Fehler melden"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Möchten Sie wirklich den gesamten $folderName$ Ordner, $subFolderCount$ Unterordner und $bookmarkCount$ Lesezeichen löschen?"
+  },
+  "extName": {
+    "description": "Der Name der Erweiterung.",
+    "message": "vBookmarks"
+  },
+  "noTitle": {
+    "description": "Lesezeichen oder Ordner ohne Namen oder Adresse.",
+    "message": "(kein Name)"
+  },
+  "edit": {
+    "message": "Bearbeiten..."
+  },
+  "open": {
+    "description": "Aktion um Lesezeichen zu öffnen.",
+    "message": "Öffnen"
+  },
+  "searchBookmarks": {
+    "description": "Suchen",
+    "message": "Lesezeichen suchen"
+  },
+  "delete": {
+    "message": "Löschen"
+  },
+  "editBookmark": {
+    "message": "Lesezeichen bearbeiten"
+  },
+  "openNewTab": {
+    "message": "Einen neuen Tab öffnen"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Sie öffnen nun sehr viele Lesezeichen von diesem Ordner."
+  },
+  "editFolder": {
+    "message": "Ordner bearbeiten"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Lesezeichen-Leiste",
+        "content": "$1"
+      }
+    },
+    "description": "Tooltip- Informationen zu den Lesezeichen des übergeordneter Ordners.",
+    "message": "Übergeordneter Ordner: \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Sie haben alle Lesezeichen in einem neuen Incognito-Fenster geöffnet.",
+    "message": "Möchten Sie wirklich alle Lesezeichen in einem neuen Incognito-Fenster öffnen?"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "errorOccured": {
+    "message": "Upps, es ist ein Fehler aufgetreten."
+  },
+  "optionPopupStays": {
+    "message": "Das Pop-Up bleibt - beim Öffnen der Lesezeichen mit einem Links-Klick - geöffnet."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Schließe nicht genutzte Ordner beim Öffnen des Ordners."
+  },
+  "accessibility": {
+    "message": "Erreichbarkeit"
+  },
+  "deleteEllipsis": {
+    "message": "Löschen..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Möchten Sie wirklich den gesamten $folderName$ Ordner mit $bookmarkCount$ Lesezeichen löschen?"
+  },
+  "advancedOptions": {
+    "message": "Erweiterte Einstellungen"
+  },
+  "extDesc": {
+    "description": "Die Beschreibung der Erweiterung.",
+    "message": "Ein vBookmarks Pop-Up."
+  },
+  "save": {
+    "message": "Speichern"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Sie haben alle Lesezeichen in einem neuen Fenster geöffnet.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Fenster öffnen?"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Sie haben alle Lesezeichen geöffnet.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen öffnen?"
+  },
+  "openBookmarks": {
+    "message": "Alle Lesezeichen öffnen"
+  },
+  "optionRememberPrevState": {
+    "message": "Behalte vorherigen Status (Scroll-Position und geöffnete Lesezeichen)."
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Hier können Sie Ihre Einstellungen vornehmen.",
+    "message": "Von zsdr erstellt."
+  },
+  "openBookmarksNewWindow": {
+    "message": "Alle Lesezeichen in einem neuen Fenster öffnen"
+  },
+  "optionOpenNewTab": {
+    "message": "Mitte-Klick oder STRG+Klick öffnet das Lesezeichen in einen neuen Hintergrund-Tab (anstatt im Vordergrund)."
+  },
+  "addHereFrontBookmark": {
+  	"message": "Hinzufügen aktuellen tab vor diesem"
+  },
+  "addHereEndBookmark": {
+  	"message": "Hinzufügen aktuellen tab nach diesem"
+  },
+  "addHereFrontFolder": {
+  	"message": "Hinzufügen aktuellen tab zu anfang der"
+  },
+  "addHereEndFolder": {
+  	"message": "Hinzufügen aktuellen tab auf den grund dieser"
+  },
+  "addNewFolder": {
+    "message": "Ordner hinzufügen"
+  },
+  "ignore": {
+    "message": "Ignorieren"
+  },
+  "openIncognitoWindow": {
+    "message": "Incognito-Fenster öffnen"
+  },
+  "general": {
+    "message": "Generell"
+  },
+  "openNewWindow": {
+    "message": "Ein neues Fenster öffnen"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionClickNewTab": {
+    "message": "Links-Klick öffnet Lesezeichen in einem neuen Tab."
+  },
+  "options": {
+    "message": "Einstellungen"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Möchten Sie wirklich den gesamten $folderName$ Ordner mit $subFolderCount$ Unterordnern löschen?"
+  }
+}

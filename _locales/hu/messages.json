@@ -1,0 +1,207 @@
+{
+  "nope": {
+    "message": "Dehogy"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Összes könyvjelző megnyitása Inkognitó ablakban"
+  },
+  "name": {
+    "description": "A könyvjelző, vagy mappa neve.",
+    "message": "Név"
+  },
+  "reportError": {
+    "message": "Hiba jelentése"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Biztososan ki szeretné törölni a $folderName$ nevű mappát, $subFolderCount$ almappát és $bookmarkCount$ könyvjelzőt benne?"
+  },
+  "noTitle": {
+    "description": "Cím nélküli könyvjelzők http(s) URL nélkül, vagy cím nélküli mappák.",
+    "message": "(nincs cím)"
+  },
+  "extName": {
+    "description": "A bővítmény neve.",
+    "message": "Neat könyvjelzők."
+  },
+  "edit": {
+    "message": "Szerkesztés..."
+  },
+  "searchBookmarks": {
+    "description": "Helykitöltő szöveg a kereső mezőben.",
+    "message": "Könyvjelzők keresése"
+  },
+  "open": {
+    "description": "Művelet a könyvjelzők megnyitásához.",
+    "message": "Megnyitás"
+  },
+  "delete": {
+    "message": "Törlés"
+  },
+  "editBookmark": {
+    "message": "Könyvjelző szerkesztése..."
+  },
+  "openNewTab": {
+    "message": "Megnyitás Új fülön"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Megerősítő üzenet megjelenítése, amikor egyszerre sok könyvjelzőt nyit meg egy mappából."
+  },
+  "editFolder": {
+    "message": "Mappa szerkesztése"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Könyvjelző sáv",
+        "content": "$1"
+      }
+    },
+    "description": "Könyvjelzőt tartalmazó mappa nevének kijelzése egértipp formájában a keresési eredmény listában.",
+    "message": "Könyvjelzőt tartalmazó mappa: \"$folderName$\""
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Megerősítő üzenet az összes könyvjelző megnyitásához új inkognitó ablakban.",
+    "message": "Biztosan meg szeretné nyitni az összes $count$ könyvjelzőt egy új inkognitó ablakban?"
+  },
+  "url": {
+    "message": "Hivatkozás"
+  },
+  "optionPopupStays": {
+    "message": "A Popup nyitva marad, amikor bal egérgombbal megnyitunk egy könyvjelzőt."
+  },
+  "errorOccured": {
+    "message": "Hoppá, valami hiba történt."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Nem használt mappák becsukása, amikor egy új mappa nyílik meg."
+  },
+  "accessibility": {
+    "message": "Megközelíthetőség"
+  },
+  "deleteEllipsis": {
+    "message": "Törlés..."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Biztososan ki szeretné törölni a $folderName$ nevű mappát és $bookmarkCount$ könyvjelzőt benne?"
+  },
+  "advancedOptions": {
+    "message": "Haladó beállítások"
+  },
+  "save": {
+    "message": "Mentés"
+  },
+  "extDesc": {
+    "description": "A bővítmény leírása.",
+    "message": "Egy elegáns popup könyvjelző fa. "
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Megerősítő üzenet az összes könyvjelző megnyitásához egy új ablakban.",
+    "message": "Biztosan meg szeretné nyitni az összes $count$ könyvjelzőt egy új ablakban?"
+  },
+  "openBookmarks": {
+    "message": "Összes könyvjelző megnyitása"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Megerősítő üzenet az összes könyvjelző megnyitásához.",
+    "message": "Biztosan meg szeretné nyitni az összes $count$ könyvjelzőt?"
+  },
+  "optionRememberPrevState": {
+    "message": "Előző állapot megjegyzése (görgetés pozíció és megnyitott mappák)."
+  },
+  "optionsFooterText": {
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Lábléc szöveg a Beállítások oldalon",
+    "message": "Készítette: $authorName$."
+  },
+  "optionOpenNewTab": {
+    "message": "Középső egérgomb, vagy Ctrl+bal egérgomb használatakor egy könyvjelzőt megnyitva a böngésző nem ugrik át az Új fülre (hanem egy marad az aktív fülön). "
+  },
+  "addHereFrontBookmark": {
+  	"message": "Add Current Tab ezt megelőzően"
+  },
+  "addHereEndBookmark": {
+  	"message": "Add Current Tab után ez"
+  },
+  "addHereFrontFolder": {
+  	"message": "Add Current Tab a tetején a"
+  },
+  "addHereEndFolder": {
+  	"message": "Add Current Tab a végére"
+  },
+  "addNewFolder": {
+    "message": "Add Folder"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Összes könyvjelző megnyitása Új ablakban"
+  },
+  "openIncognitoWindow": {
+    "message": "Megnyitás Inkognitó ablakban"
+  },
+  "ignore": {
+    "message": "Figyelmen kívül hagy"
+  },
+  "openNewWindow": {
+    "message": "Megnyitás Új ablakban"
+  },
+  "general": {
+    "message": "Általános"
+  },
+  "optionZoom": {
+    "message": "Közelítés"
+  },
+  "options": {
+    "message": "Opciók"
+  },
+  "optionClickNewTab": {
+    "message": "Könyvjelző megnyitása Új fülön bal egérgombbal."
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Biztososan ki szeretné törölni a $folderName$ nevű mappát és benne $subFolderCount$ almappát?"
+  }
+}
