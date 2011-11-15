@@ -473,7 +473,7 @@
 			body.addClass('needInputName');
 		},
 		close: function(){
-			console.log("add newfolder callback, title=" + $('new-folder-dialog-name').value);
+			//console.log("add newfolder callback, title=" + $('new-folder-dialog-name').value);
 			NewFolderDialog.fn($('new-folder-dialog-name').value);
 			body.removeClass('needInputName');
 		},
@@ -537,9 +537,9 @@
 						var cnode = $('neat-tree-item-' + nextid);
 						var lv = parseInt(pnode.parentNode.dataset.level) + 1;
 						var paddingStart = 14*lv;
-						console.log("parentid="+parentid+", nextid="+nextid+", curindex="+curindex+", title="+addtitle+", url="+addurl+", lv="+lv);
+						//console.log("parentid="+parentid+", nextid="+nextid+", curindex="+curindex+", title="+addtitle+", url="+addurl+", lv="+lv);
 						var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-						console.log("idHTML="+idHTML);
+						//console.log("idHTML="+idHTML);
 						var html = '';
 						html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
 						+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
@@ -583,9 +583,9 @@
 					var pnode = $('neat-tree-item-' + parentid);
 					var lv = parseInt(pnode.parentNode.dataset.level) + 1;
 					var paddingStart = 14*lv;
-					console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
+					//console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
 					var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-					console.log("idHTML="+idHTML);
+					//console.log("idHTML="+idHTML);
 					var html = '';
 					html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
 					+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
@@ -593,7 +593,8 @@
 					var div = document.createElement('div');
 					div.innerHTML = html;
 					var li = div.querySelector('li');
-					li.inject(pnode, 'top');
+					var ul = pnode.querySelector('ul');
+					li.inject(ul, 'top');
 					div.destroy();
 			});
 		},
@@ -604,9 +605,9 @@
 					var pnode = $('neat-tree-item-' + parentid);
 					var lv = parseInt(pnode.parentNode.dataset.level) + 1;
 					var paddingStart = 14*lv;
-					console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
+					//console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
 					var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-					console.log("idHTML="+idHTML);
+					//console.log("idHTML="+idHTML);
 					var html = '';
 					html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
 					+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
@@ -614,7 +615,8 @@
 					var div = document.createElement('div');
 					div.innerHTML = html;
 					var li = div.querySelector('li');
-					li.inject(pnode, 'bottom');
+					var ul = pnode.querySelector('ul');
+					li.inject(ul, 'bottom');
 					div.destroy();
 			});
 		},
@@ -626,9 +628,9 @@
 								var pnode = $('neat-tree-item-' + parentid);
 								var lv = parseInt(pnode.parentNode.dataset.level) + 1;
 								var paddingStart = 14*lv;
-								console.log("add newfolder, parentid="+parentid+", title="+dirtitle+", lv="+lv);
+								//console.log("add newfolder, parentid="+parentid+", title="+dirtitle+", lv="+lv);
 								var idHTML = newfolder.id ? ' id="neat-tree-item-' + newfolder.id + '"': '';
-								console.log("idHTML="+idHTML);
+								//console.log("idHTML="+idHTML);
 								var html = '';
 								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">'
 									+ '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
