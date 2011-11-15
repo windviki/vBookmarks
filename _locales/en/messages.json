@@ -4,7 +4,7 @@
 		"description": "The extension name."
 	},
 	"extDesc": {
-		"message": "A vBookmarks tree popup.",
+		"message": "A popup bookmark manager. Enhanced Neat Bookmarks.",
 		"description": "The extension description."
 	},
 	"searchBookmarks": {
@@ -33,20 +33,20 @@
 		"message": "Open All Bookmarks"
 	},
 	"addHereFrontBookmark": {
-		"message": "Add Current Tab Before This"
+		"message": "Bookmark Current Tab Before This"
 	},
 	"addHereEndBookmark": {
-		"message": "Add Current Tab After This"
+		"message": "Bookmark Current Tab After This"
 	},
 	"addHereFrontFolder": {
-		"message": "Add Current Tab To Top"
+		"message": "Bookmark Current Tab To Top"
 	},
 	"addHereEndFolder": {
-		"message": "Add Current Tab To Bottom"
+		"message": "Bookmark Current Tab To Bottom"
 	},
-    "addNewFolder": {
-        "message": "Add Folder"
-    },
+  "addNewFolder": {
+    "message": "Add Folder"
+  },
 	"openBookmarksNewWindow": {
 		"message": "Open All Bookmarks in New Window"
 	},

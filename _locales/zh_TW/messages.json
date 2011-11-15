@@ -116,7 +116,7 @@
   },
   "extDesc": {
     "description": "擴充功能描述",
-    "message": "靈巧實用的側置書籤擴充功能"
+    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
   },
   "confirmOpenBookmarksNewWindow": {
     "placeholders": {

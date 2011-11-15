@@ -116,7 +116,7 @@
   },
   "extDesc": {
     "description": "扩展描述",
-    "message": "灵巧实用的侧置书签扩展"
+    "message": "灵巧实用的弹出书签管理器，NeatBookmarks的增强版"
   },
   "confirmOpenBookmarksNewWindow": {
     "placeholders": {

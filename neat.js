@@ -396,7 +396,7 @@
 			var height = Math.max(200, Math.min(fullHeight, maxHeight));
 			body.style.height = height + 'px';
 			localStorage.popupHeight = height;
-		}, 100);
+		}, 200);
 	};
 	if (!searchMode) resetHeight();
 	$tree.addEventListener('click', resetHeight);
