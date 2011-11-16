@@ -598,6 +598,15 @@
 							div.innerHTML = html;
 							var li = div.querySelector('li');
 							var ul = pnode.querySelector('ul');
+							//fix ul
+							if (!ul){
+								var tmpdiv = document.createElement('div');
+								tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
+								var newul = tmpdiv.querySelector('ul');
+								pnode.appendChild(newul);
+								ul = pnode.querySelector('ul');
+								tmpdiv.destroy();
+							}
 							if (where == 'top'){
 								if (ul.firstElementChild){
 									ul.insertBefore(li, ul.firstElementChild);
@@ -624,23 +633,35 @@
 						chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
 							function(resultbm){
 								var lv = parseInt(pnode.parentNode.dataset.level) + 1;
+								if (!isBookmark){
+									//lv += 1;
+								}
 								var paddingStart = 14*lv;
 								var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
 								var html = '';
-								//console.log('innerhtml!!\n'+pnode.innerHTML);
+								console.log('level = '+lv+', innerhtml!!\n'+pnode.innerHTML+'\n');
 								//add folder
 								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
 								html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
 									+ '<img src="folder.png" width="16" height="16" alt=""></img><i>' + (addtitle || _m('noTitle')) + '</i>'
 									+ '</span>';
-								html += '<ul role="group" data-level="' + lv + '">';
-								html += '</ul>';
+								//html += '<ul role="group" data-level="' + lv + '">';
+								//html += '</ul>';
 								html += '</li>';
 								
 								var div = document.createElement('div');
 								div.innerHTML = html;
 								var li = div.querySelector('li');
 								var ul = pnode.querySelector('ul');
+								//fix ul
+								if (!ul){
+									var tmpdiv = document.createElement('div');
+									tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
+									var newul = tmpdiv.querySelector('ul');
+									pnode.appendChild(newul);
+									ul = pnode.querySelector('ul');
+									tmpdiv.destroy();
+								}
 								if (where == 'top'){
 									if (ul.firstElementChild){
 										ul.insertBefore(li, ul.firstElementChild);
@@ -965,20 +986,20 @@
 		var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
 		switch (el.id){
 			//++++++++ modified by windviki@gmail.com ++++++++ 
-			case 'add-bookmark-before':
+			case 'add-bookmark-before-bookmark':
 				chrome.tabs.getSelected(null, function(curTab){
 					actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
 				});
 				break;
-			case 'add-bookmark-after':
+			case 'add-bookmark-after-bookmark':
 				chrome.tabs.getSelected(null, function(curTab){
 					actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
 				});
 				break;
-			case 'add-folder-before':
+			case 'add-folder-before-bookmark':
 				actions.addNewBookmarkNode(id, 'before', '', '');
 				break;
-			case 'add-folder-after':
+			case 'add-folder-after-bookmark':
 				actions.addNewBookmarkNode(id, 'after', '', '');
 				break;
 			//++++++++ end ++++++++ 
@@ -1038,23 +1059,19 @@
 						actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
 					});
 					break;
-				case 'add-bookmark-before-bookmark':
 				case 'add-bookmark-before-folder':
 					chrome.tabs.getSelected(null, function(curTab){
 						actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
 					});
 					break;
-				case 'add-bookmark-after-bookmark':
 				case 'add-bookmark-after-folder':
 					chrome.tabs.getSelected(null, function(curTab){
 						actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
 					});
 					break;
-				case 'add-folder-before-bookmark':
 				case 'add-folder-before-folder':
 					actions.addNewBookmarkNode(id, 'before', '', '');
 					break;
-				case 'add-folder-after-bookmark':
 				case 'add-folder-after-folder':
 					actions.addNewBookmarkNode(id, 'after', '', '');
 					break;

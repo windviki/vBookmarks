@@ -27,3 +27,20 @@ Technical Details
 -----------------
 
 Neat Bookmarks was powered by [MooTools](http://mootools.net/), but is now powered by Neatools, a custom-coded smaller subset of MooTools. [CodeMirror](http://codemirror.net/) is used for the Custom CSS section.
+
+
+Changelogs
+-----------------
+
+ver1.0 2011/11/15
+
+First version.
+
+
+ver1.1 2011/11/16
+
+Added:option for only displaying bookmarks in Bookmark Bar.
+
+Added:context menu for adding folder before/after bookmark/folder.
+
+Fixed:some translations in multi-language support.
