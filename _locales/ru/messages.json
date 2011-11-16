@@ -154,20 +154,26 @@
   "optionOpenNewTab": {
     "message": "Клик средней кнопкой мыши открывает закладки в новой фоновой вкладке."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Добавить текущую вкладку До этого"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Добавить текущую вкладку После этого"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Добавить текущую вкладку Наверх"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Добавить текущую вкладку Вниз"
   },
   "addNewFolder": {
     "message": "Добавить папку"
+  },
+  "addNewFolderBefore": {
+    "message": "добавить папку до этого"
+  },
+  "addNewFolderAfter": {
+    "message": "добавить папку после этого"
   },
   "openBookmarksNewWindow": {
     "message": "Открыть все закладки в новом окне"

@@ -323,6 +323,10 @@ menu[type=context].hide-editables #folder-delete{
 	left: 0;
 	opacity: 1;
 }
+.needInputName #cover{
+	left: 0;
+	opacity: 1;
+}
 
 .dialog{
 	position: absolute;

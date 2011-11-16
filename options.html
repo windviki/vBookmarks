@@ -48,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		localStorage.dontRememberState = rememberPrevState.checked ? '' : '1';
 	});
 	
+	var onlyShowBMBar = $('only-show-bmbar');
+	onlyShowBMBar.checked = !!localStorage.onlyShowBMBar;
+	onlyShowBMBar.addEventListener('change', function(){
+		localStorage.onlyShowBMBar = onlyShowBMBar.checked ? '1' : '';
+	});
+	
 	var zoom = $('zoom-input');
 	setInterval(function(){
 		zoom.value = localStorage.zoom || 100;
@@ -72,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <li><label><input type="checkbox" id="popup-stay-open"> <script>__m('optionPopupStays')</script></label></li>
 <li><label><input type="checkbox" id="confirm-open-folder"> <script>__m('optionConfirmOpenFolder')</script></label></li>
 <li><label><input type="checkbox" id="remember-prev-state"> <script>__m('optionRememberPrevState')</script></label></li>
+<li><label><input type="checkbox" id="only-show-bmbar"> <script>__m('optionOnlyShowBookmarkBar')</script></label></li>
 </ul>
 <h2><script>__m('accessibility')</script></h2>
 <ul class="options-list">

@@ -154,20 +154,26 @@
   "optionOpenNewTab": {
     "message": "Clique com o botão do meio do mouse ou control-clique abre o favorito em um nova guia em 2º plano (em vez de 1º plano)."
   },
-  "addHereFrontBookmark": {
-  	"message": "Adicionar Tab atual Antes Esta"
+  "addBookmarkBefore": {
+  	"message": "Adicionar guia atual antes desta"
   },
-  "addHereEndBookmark": {
-  	"message": "Adicionar Tab atual Após Este"
+  "addBookmarkAfter": {
+  	"message": "Adicionar guia atual após este"
   },
-  "addHereFrontFolder": {
-  	"message": "Adicionar Tab atual para o Topo"
+  "addBookmarkTop": {
+  	"message": "Adicionar guia atual para o topo desta"
   },
-  "addHereEndFolder": {
-  	"message": "Adicionar Tab atual para o final da"
+  "addBookmarkBottom": {
+  	"message": "Adicionar guia atual para o final desta"
   },
   "addNewFolder": {
-    "message": "Adicionar pasta"
+    "message": "Adicionar pasta sub"
+  },
+  "addNewFolderBefore": {
+    "message": "Adicionar pasta antes desta"
+  },
+  "addNewFolderAfter": {
+    "message": "Adicionar a pasta após esta"
   },
   "openBookmarksNewWindow": {
     "message": "Abrir todos os favoritos em uma nova janela"

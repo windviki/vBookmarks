@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Fai clic con il pulsante centrale del mouse o con il pulsante sinistro tenendo premuto il tasto Ctrl per aprire i preferiti in un'altra scheda in secondo piano (anziché in primo piano)."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Aggiungi la scheda corrente prima di questa"
   },
-  "addHereEndBookmark": {
-  	"message": "Aggiungi la scheda corrente Dopo questo"
+  "addBookmarkAfter": {
+  	"message": "Aggiungi la scheda corrente dopo questo"
   },
-  "addHereFrontFolder": {
-  	"message": "Aggiungi la scheda corrente Per il Top di questa"
+  "addBookmarkTop": {
+  	"message": "Aggiungi la scheda corrente per il top di questa"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Aggiungi la scheda corrente in fondo di questo"
   },
   "addNewFolder": {
     "message": "Aggiungi cartella"
+  },
+  "addNewFolderBefore": {
+    "message": "Aggiungi cartella prima di questo"
+  },
+  "addNewFolderAfter": {
+    "message": "Aggiungi cartella dopo questo"
   },
   "ignore": {
     "message": "Ignora"

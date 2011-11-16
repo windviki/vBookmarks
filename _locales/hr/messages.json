@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Srednji klik (ili CONTROL+klik ) otvara oznaku u novoj kartici, ali se ne prebacuje automatski na nju."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Dodaj trenutnu karticu prije toga"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Dodaj trenutnu karticu Nakon toga"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Dodaj trenutnu karticu na vrh ove"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Dodaj trenutnu karticu na dno ove"
   },
   "addNewFolder": {
     "message": "Dodaj mapu"
+  },
+  "addNewFolderBefore": {
+    "message": "Dodaj mapu prije toga"
+  },
+  "addNewFolderAfter": {
+    "message": "Dodaj mapu nakon toga"
   },
   "ignore": {
     "message": "Zanemari"

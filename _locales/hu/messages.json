@@ -154,20 +154,26 @@
   "optionOpenNewTab": {
     "message": "Középső egérgomb, vagy Ctrl+bal egérgomb használatakor egy könyvjelzőt megnyitva a böngésző nem ugrik át az Új fülre (hanem egy marad az aktív fülön). "
   },
-  "addHereFrontBookmark": {
-  	"message": "Add Current Tab ezt megelőzően"
+  "addBookmarkBefore": {
+  	"message": "Könyvjelző aktuális fület, mielőtt ez"
   },
-  "addHereEndBookmark": {
-  	"message": "Add Current Tab után ez"
+  "addBookmarkAfter": {
+  	"message": "Könyvjelző aktuális fület után"
   },
-  "addHereFrontFolder": {
-  	"message": "Add Current Tab a tetején a"
+  "addBookmarkTop": {
+  	"message": "Könyvjelző aktuális fület a tetején"
   },
-  "addHereEndFolder": {
-  	"message": "Add Current Tab a végére"
+  "addBookmarkBottom": {
+  	"message": "Könyvjelző aktuális fület a végére"
   },
   "addNewFolder": {
-    "message": "Add Folder"
+    "message": "Új mappa"
+  },
+  "addNewFolderBefore": {
+    "message": "Új mappa, mielőtt ez"
+  },
+  "addNewFolderAfter": {
+    "message": "Új mappa után"
   },
   "openBookmarksNewWindow": {
     "message": "Összes könyvjelző megnyitása Új ablakban"

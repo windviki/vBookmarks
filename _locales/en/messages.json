@@ -32,21 +32,27 @@
 	"openBookmarks": {
 		"message": "Open All Bookmarks"
 	},
-	"addHereFrontBookmark": {
+	"addBookmarkBefore": {
 		"message": "Bookmark Current Tab Before This"
 	},
-	"addHereEndBookmark": {
+	"addBookmarkAfter": {
 		"message": "Bookmark Current Tab After This"
 	},
-	"addHereFrontFolder": {
-		"message": "Bookmark Current Tab To Top"
+	"addBookmarkTop": {
+		"message": "Bookmark Current Tab To Top Of This"
 	},
-	"addHereEndFolder": {
-		"message": "Bookmark Current Tab To Bottom"
+	"addBookmarkBottom": {
+		"message": "Bookmark Current Tab To Bottom Of This"
 	},
-  "addNewFolder": {
-    "message": "Add Folder"
-  },
+    "addNewFolder": {
+      "message": "Add Sub Folder"
+    },
+    "addNewFolderBefore": {
+      "message": "Add Folder Before This"
+    },
+    "addNewFolderAfter": {
+      "message": "Add Folder After This"
+    },
 	"openBookmarksNewWindow": {
 		"message": "Open All Bookmarks in New Window"
 	},

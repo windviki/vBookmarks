@@ -154,20 +154,29 @@
   "optionOpenNewTab": {
     "message": "用鼠标中键或按住 Ctrl 键左击在后台打开书签"
   },
-  "addHereFrontBookmark": {
-    "message": "添加当前页到此书签前"
+  "optionOnlyShowBookmarkBar": {
+    "message": "仅显示书签栏中的书签"
   },
-  "addHereEndBookmark": {
-    "message": "添加当前页到此书签后"
+  "addBookmarkBefore": {
+    "message": "添加当前页书签到此之前"
   },
-  "addHereFrontFolder": {
+  "addBookmarkAfter": {
+    "message": "添加当前页书签到此之后"
+  },
+  "addBookmarkTop": {
     "message": "添加当前页到文件夹开头"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
     "message": "添加当前页到文件夹末尾"
   },
   "addNewFolder": {
-    "message": "添加文件夹"
+    "message": "添加子文件夹"
+  },
+  "addNewFolderBefore": {
+    "message": "添加文件夹到此之前"
+  },
+  "addNewFolderAfter": {
+    "message": "添加文件夹到此之后"
   },
   "openBookmarksNewWindow": {
     "message": "在新窗口中打开所有书签"

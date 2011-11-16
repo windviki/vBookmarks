@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Mitte-Klick oder STRG+Klick öffnet das Lesezeichen in einen neuen Hintergrund-Tab (anstatt im Vordergrund)."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Hinzufügen aktuellen tab vor diesem"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Hinzufügen aktuellen tab nach diesem"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Hinzufügen aktuellen tab zu anfang der"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Hinzufügen aktuellen tab auf den grund dieser"
   },
   "addNewFolder": {
     "message": "Ordner hinzufügen"
+  },
+  "addNewFolderBefore": {
+    "message": "Ordner hinzufügen, bevor diese"
+  },
+  "addNewFolderAfter": {
+    "message": "Ordner hinzufügen, nachdem dieser"
   },
   "ignore": {
     "message": "Ignorieren"

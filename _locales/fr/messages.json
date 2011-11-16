@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Clic milieu ou Ctrl-clic ouvre le signet dans un nouvel onglet en arrière-plan (au lieu d’en premier plan)."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Ajouter un onglet courant avant cette"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Ajouter l'onglet courant Après cette"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Ajouter un onglet courante au-dessus de cette"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Ajouter l'onglet courant au fond de cette"
   },
   "addNewFolder": {
     "message": "Ajouter un dossier"
+  },
+  "addNewFolderBefore": {
+    "message": "Ajouter un dossier avant cette"
+  },
+  "addNewFolderAfter": {
+    "message": "Ajouter un dossier après cette"
   },
   "ignore": {
     "message": "Ignorer"

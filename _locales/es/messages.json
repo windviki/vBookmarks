@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Botón central del ratón o control-clic abre el marcador en segundo plano (en lugar de en primer plano)."
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Agregar la pestaña actual antes de esta"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Agregar la pestaña actual Después de esta"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Agregar ficha actual a la cima de este"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Agregar la pestaña actual al fondo de este"
   },
   "addNewFolder": {
     "message": "Agregar carpeta"
+  },
+  "addNewFolderBefore": {
+    "message": "Agregar la carpeta antes de que esta"
+  },
+  "addNewFolderAfter": {
+    "message": "Agregar la carpeta después de esta"
   },
   "ignore": {
     "message": "Ignorar"

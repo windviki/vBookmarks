@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "Kliknięcie środkowym przyciskiem myszy lub wciśnięcie CTRL na klawiaturze i kliknięcie otwiera zakładkę na nowej karcie w tle (zamiast na pierwszym planie)"
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "Dodaj bieżącąkartę Przed tym"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "Dodaj bieżącąkartę Po tym"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "Dodaj bieżący Tab do góry"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "Dodaj bieżący Tab do dołu"
   },
   "addNewFolder": {
     "message": "Dodaj folder"
+  },
+  "addNewFolderBefore": {
+    "message": "Dodaj folder przed tym"
+  },
+  "addNewFolderAfter": {
+    "message": "Dodaj folder po tym"
   },
   "ignore": {
     "message": "Ignoruj"

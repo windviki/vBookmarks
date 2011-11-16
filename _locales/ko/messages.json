@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "가운데 버튼이나 오른쪽 버튼 클릭시 새로운 백그라운드 탭으로 북마크 열기"
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "이 전에 현재 탭 추가"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "이 후 현재 탭 추가"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "이 처음으로 현재 탭 추가"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "이것의 하단에 현재 탭 추가"
   },
   "addNewFolder": {
     "message": "폴더 추가"
+  },
+  "addNewFolderBefore": {
+    "message": "이 전에 폴더를 추가"
+  },
+  "addNewFolderAfter": {
+    "message": "이 후 폴더를 추가"
   },
   "ignore": {
     "message": "무시"

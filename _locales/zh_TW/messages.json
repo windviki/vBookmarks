@@ -154,20 +154,26 @@
   "optionOpenNewTab": {
     "message": "用滑鼠中鍵或按住 Ctrl 鍵左擊在背景開啟書籤"
   },
-  "addHereFrontBookmark": {
-    "message": "添加當前頁到此書籤前"
+  "addBookmarkBefore": {
+    "message": "添加當前頁書籤到此之前"
   },
-  "addHereEndBookmark": {
-    "message": "添加當前頁到此書籤後"
+  "addBookmarkAfter": {
+    "message": "添加當前頁書籤到此之後"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
     "message": "添加當前頁到資料夾前端"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
     "message": "添加當前頁到資料夾末尾"
   },
   "addNewFolder": {
-    "message": "添加資料夾"
+    "message": "添加子資料夾"
+  },
+  "addNewFolderBefore": {
+    "message": "添加資料夾到此之前"
+  },
+  "addNewFolderAfter": {
+    "message": "添加資料夾到此之後"
   },
   "openBookmarksNewWindow": {
     "message": "在新視窗中開啟所有書籤"

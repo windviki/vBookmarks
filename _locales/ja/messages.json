@@ -157,20 +157,26 @@
   "optionOpenNewTab": {
     "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
   },
-  "addHereFrontBookmark": {
+  "addBookmarkBefore": {
   	"message": "この前に現在のタブを追加します"
   },
-  "addHereEndBookmark": {
+  "addBookmarkAfter": {
   	"message": "この後に現在のタブを追加します"
   },
-  "addHereFrontFolder": {
+  "addBookmarkTop": {
   	"message": "このトップに現在のタブを追加します"
   },
-  "addHereEndFolder": {
+  "addBookmarkBottom": {
   	"message": "このボトムに現在のタブを追加します"
   },
   "addNewFolder": {
     "message": "フォルダを追加"
+  },
+  "addNewFolderBefore": {
+    "message": "この前にフォルダを追加します"
+  },
+  "addNewFolderAfter": {
+    "message": "この後にフォルダを追加します"
   },
   "ignore": {
     "message": "無視"

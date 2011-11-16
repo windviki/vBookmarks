@@ -43,15 +43,21 @@
 	$('edit-dialog-url').placeholder = _m('url');
 	$('new-folder-dialog-name').placeholder = _m('name');
 	$each({
-		'bookmark-addhere-front': 'addHereFrontBookmark',
-		'bookmark-addhere-end': 'addHereEndBookmark',
 		'bookmark-new-tab': 'openNewTab',
 		'bookmark-new-window': 'openNewWindow',
 		'bookmark-new-incognito-window': 'openIncognitoWindow',
 		'bookmark-edit': 'edit',
 		'bookmark-delete': 'delete',
-		'folder-addhere-front': 'addHereFrontFolder',
-		'folder-addhere-end': 'addHereEndFolder',
+		'add-bookmark-top': 'addBookmarkTop',
+		'add-bookmark-bottom': 'addBookmarkBottom',
+		'add-bookmark-before-bookmark': 'addBookmarkBefore',
+		'add-bookmark-after-bookmark': 'addBookmarkAfter',
+		'add-folder-before-bookmark': 'addNewFolderBefore',
+		'add-folder-after-bookmark': 'addNewFolderAfter',
+		'add-bookmark-before-folder': 'addBookmarkBefore',
+		'add-bookmark-after-folder': 'addBookmarkAfter',
+		'add-folder-before-folder': 'addNewFolderBefore',
+		'add-folder-after-folder': 'addNewFolderAfter',
 		'add-new-folder': 'addNewFolder',
 		'folder-window': 'openBookmarks',
 		'folder-new-window': 'openBookmarksNewWindow',
@@ -75,6 +81,8 @@
 	var rememberState = !localStorage.dontRememberState;
 	var a = document.createElement('a');
 	var httpsPattern = /^https?:\/\//i;
+	var onlyShowBMBar = !!localStorage.onlyShowBMBar;
+	console.log("onlyShowBMBar=" + onlyShowBMBar);
 	
 	// Adaptive bookmark tooltips
 	var adaptBookmarkTooltips = function(){
@@ -167,7 +175,13 @@
 	
 	var $tree = $('tree');
 	chrome.bookmarks.getTree(function(tree){
-		var html = generateHTML(tree[0].children);
+		var html = '';
+		if (onlyShowBMBar){
+			html = generateHTML(tree[0].children[0].children);
+		} else{
+			html = generateHTML(tree[0].children);
+		}
+		
 		$tree.innerHTML = html;
 		
 		if (rememberState) $tree.scrollTop = localStorage.scrollTop || 0;
@@ -527,123 +541,129 @@
 		},
 		
 		//++++++++ modified by windviki@gmail.com ++++++++ 
-		addHereFrontBookmark: function(nextid, addurl, addtitle){
-			chrome.bookmarks.get(nextid, function(node){
-				var parentid = node[0].parentId;
-				var curindex = node[0].index;
-				chrome.bookmarks.create({'parentId': parentid, 'index': curindex, 'title': addtitle, 'url': addurl}, 
-					function(resultbm){
-						var pnode = $('neat-tree-item-' + parentid);
-						var cnode = $('neat-tree-item-' + nextid);
-						var lv = parseInt(pnode.parentNode.dataset.level) + 1;
-						var paddingStart = 14*lv;
-						//console.log("parentid="+parentid+", nextid="+nextid+", curindex="+curindex+", title="+addtitle+", url="+addurl+", lv="+lv);
-						var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-						//console.log("idHTML="+idHTML);
-						var html = '';
-						html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
-						+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
-						html += '</li>';
-						var div = document.createElement('div');
-						div.innerHTML = html;
-						var li = div.querySelector('li');
-						li.inject(cnode, 'before');
-						div.destroy();
-				});
-			});
-		},
-		
-		addHereEndBookmark: function(previousid, addurl, addtitle){
-			chrome.bookmarks.get(previousid, function(node){
-				var parentid = node[0].parentId;
-				var curindex = node[0].index + 1;
-				chrome.bookmarks.create({'parentId': parentid, 'index': curindex, 'title': addtitle, 'url': addurl}, 
-					function(resultbm){
-						var pnode = $('neat-tree-item-' + parentid);
-						var cnode = $('neat-tree-item-' + previousid);
-						var div = document.createElement('div');
-						var lv = parseInt(pnode.parentNode.dataset.level) + 1;
-						var paddingStart = 14*lv;
-						var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-						var html = '';
-						html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
-						+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
-						html += '</li>';
-						div.innerHTML = html;
-						var li = div.querySelector('li');
-						li.inject(cnode, 'after');
-						div.destroy();
-				});
-			});
-		},
-		
-		addHereFrontFolder: function(parentid, addurl, addtitle){
-			chrome.bookmarks.create({'parentId': parentid, 'index': 0, 'title': addtitle, 'url': addurl}, 
-				function(resultbm){
-					var pnode = $('neat-tree-item-' + parentid);
-					var lv = parseInt(pnode.parentNode.dataset.level) + 1;
-					var paddingStart = 14*lv;
-					//console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
-					var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-					//console.log("idHTML="+idHTML);
-					var html = '';
-					html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
-					+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
-					html += '</li>';
-					var div = document.createElement('div');
-					div.innerHTML = html;
-					var li = div.querySelector('li');
-					var ul = pnode.querySelector('ul');
-					li.inject(ul, 'top');
-					div.destroy();
-			});
-		},
-		
-		addHereEndFolder: function(parentid, addurl, addtitle){
-			chrome.bookmarks.create({'parentId': parentid, 'title': addtitle, 'url': addurl}, 
-				function(resultbm){
-					var pnode = $('neat-tree-item-' + parentid);
-					var lv = parseInt(pnode.parentNode.dataset.level) + 1;
-					var paddingStart = 14*lv;
-					//console.log("parentid="+parentid+", title="+addtitle+", url="+addurl+", lv="+lv);
-					var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-					//console.log("idHTML="+idHTML);
-					var html = '';
-					html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
-					+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
-					html += '</li>';
-					var div = document.createElement('div');
-					div.innerHTML = html;
-					var li = div.querySelector('li');
-					var ul = pnode.querySelector('ul');
-					li.inject(ul, 'bottom');
-					div.destroy();
-			});
-		},
-		
-		addNewFolder: function(parentid){
-			NewFolderDialog.open('NewFolder', function(dirtitle){
-						chrome.bookmarks.create({'parentId': parentid, 'index': 0, 'title': dirtitle},
-							function(newfolder){
-								var pnode = $('neat-tree-item-' + parentid);
+		addNewBookmarkNode: function(nodeid, where, inurl, intitle){
+			chrome.bookmarks.get(nodeid, function(nodeList){
+				if (!nodeList.length) return;
+				var node = nodeList[0];
+				var url = node.url;
+				//check whether the reference node is bookmark or folder
+				var isBookmark = !!url;
+				//check whether the target node is bookmark or folder
+				var isAddBookmark = !!inurl;
+				var addurl = inurl;
+				var addtitle = intitle;
+				
+				if (isBookmark){//folder - 'before', 'after'
+					if (where == 'top' || where == 'bottom') return;
+				}
+				
+				//get parent node
+				var parentid = node.parentId;
+				var pnode = $('neat-tree-item-' + parentid);
+				var rnode = $('neat-tree-item-' + node.id);
+				var iindex = 0;
+				if (where == 'before'){
+					iindex = node.index;
+				}
+				if (where == 'after'){
+					iindex = node.index + 1;
+				}
+				
+				//folder - 'before', 'after', 'top' ,'bottom'
+				if (where == 'top'){
+					iindex = 0;
+					parentid = node.id;
+					pnode = $('neat-tree-item-' + parentid);
+				}
+				if (where == 'bottom'){
+					//iindex = node.children.length;
+					chrome.bookmarks.getChildren(node.id, function(nodechildren){
+						iindex = nodechildren.length;
+					});
+					parentid = node.id;
+					pnode = $('neat-tree-item-' + parentid);
+				}
+						
+				if (isAddBookmark) {//add bookmark
+					chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
+						function(resultbm){
+							var lv = parseInt(pnode.parentNode.dataset.level) + 1;
+							var paddingStart = 14*lv;
+							var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
+							var html = '';
+							//add bookmark
+							html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
+							+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"') + '</li>';
+							var div = document.createElement('div');
+							div.innerHTML = html;
+							var li = div.querySelector('li');
+							var ul = pnode.querySelector('ul');
+							if (where == 'top'){
+								if (ul.firstElementChild){
+									ul.insertBefore(li, ul.firstElementChild);
+								} else{
+									ul.appendChild(li);
+								}
+							}
+							if (where == 'bottom'){
+								ul.appendChild(li);
+							}
+							if (where == 'before'){
+								ul.insertBefore(li, rnode);
+							}
+							if (where == 'after'){
+								ul.insertBefore(li, rnode.nextSibling);
+							}
+						
+							div.destroy();
+						}
+					);
+				} else{//add folder
+					NewFolderDialog.open('NewFolder', function(dirtitle){
+						addtitle = dirtitle;
+						chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
+							function(resultbm){
 								var lv = parseInt(pnode.parentNode.dataset.level) + 1;
 								var paddingStart = 14*lv;
-								//console.log("add newfolder, parentid="+parentid+", title="+dirtitle+", lv="+lv);
-								var idHTML = newfolder.id ? ' id="neat-tree-item-' + newfolder.id + '"': '';
-								//console.log("idHTML="+idHTML);
+								var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
 								var html = '';
-								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">'
-									+ '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
-									+ '<img src="folder.png" width="16" height="16" alt=""></img><i>' + (dirtitle || _m('noTitle')) + '</i>'
-									+ '</span></li>';
+								//console.log('innerhtml!!\n'+pnode.innerHTML);
+								//add folder
+								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
+								html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
+									+ '<img src="folder.png" width="16" height="16" alt=""></img><i>' + (addtitle || _m('noTitle')) + '</i>'
+									+ '</span>';
+								html += '<ul role="group" data-level="' + lv + '">';
+								html += '</ul>';
+								html += '</li>';
+								
 								var div = document.createElement('div');
 								div.innerHTML = html;
 								var li = div.querySelector('li');
 								var ul = pnode.querySelector('ul');
-								li.inject(ul, 'top');
+								if (where == 'top'){
+									if (ul.firstElementChild){
+										ul.insertBefore(li, ul.firstElementChild);
+									} else{
+										ul.appendChild(li);
+									}
+								}
+								if (where == 'bottom'){
+									ul.appendChild(li);
+								}
+								if (where == 'before'){
+									ul.insertBefore(li, rnode);
+								}
+								if (where == 'after'){
+									ul.insertBefore(li, rnode.nextSibling);
+								}
+							
 								div.destroy();
-						});
-			});
+							}
+						); //end bookmarks.create
+					}); //end NewFolderDialog.open
+				} // end if
+			}); // end bookmarks.get
 		},
 		//++++++++ end ++++++++ 
 		
@@ -941,27 +961,25 @@
 		var el = e.target;
 		if (el.tagName != 'COMMAND') return;
 		var url = currentContext.href;
+		var li = currentContext.parentNode;
+		var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
 		switch (el.id){
 			//++++++++ modified by windviki@gmail.com ++++++++ 
-			//add here actions
-			case 'bookmark-addhere-front':
-				var li = currentContext.parentNode;
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			case 'add-bookmark-before':
 				chrome.tabs.getSelected(null, function(curTab){
-					var curURL = curTab.url;
-					var curTitle = curTab.title;
-					actions.addHereFrontBookmark(id, curURL, curTitle);
+					actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
 				});
 				break;
-			//add here actions
-			case 'bookmark-addhere-end':
-				var li = currentContext.parentNode;
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			case 'add-bookmark-after':
 				chrome.tabs.getSelected(null, function(curTab){
-					var curURL = curTab.url;
-					var curTitle = curTab.title;
-					actions.addHereEndBookmark(id, curURL, curTitle);
+					actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
 				});
+				break;
+			case 'add-folder-before':
+				actions.addNewBookmarkNode(id, 'before', '', '');
+				break;
+			case 'add-folder-after':
+				actions.addNewBookmarkNode(id, 'after', '', '');
 				break;
 			//++++++++ end ++++++++ 
 			case 'bookmark-new-tab':
@@ -1010,24 +1028,38 @@
 			var noURLS = !urlsLen;
 			switch (el.id){
 				//++++++++ modified by windviki@gmail.com ++++++++ 
-				//add here actions
-				case 'folder-addhere-front':
+				case 'add-bookmark-top':
 					chrome.tabs.getSelected(null, function(curTab){
-						var curURL = curTab.url;
-						var curTitle = curTab.title;
-						actions.addHereFrontFolder(id, curURL, curTitle);
+						actions.addNewBookmarkNode(id, 'top', curTab.url, curTab.title);
 					});
 					break;
-				//add here actions
-				case 'folder-addhere-end':
+				case 'add-bookmark-bottom':
 					chrome.tabs.getSelected(null, function(curTab){
-						var curURL = curTab.url;
-						var curTitle = curTab.title;
-						actions.addHereEndFolder(id, curURL, curTitle);
+						actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
 					});
+					break;
+				case 'add-bookmark-before-bookmark':
+				case 'add-bookmark-before-folder':
+					chrome.tabs.getSelected(null, function(curTab){
+						actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
+					});
+					break;
+				case 'add-bookmark-after-bookmark':
+				case 'add-bookmark-after-folder':
+					chrome.tabs.getSelected(null, function(curTab){
+						actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
+					});
+					break;
+				case 'add-folder-before-bookmark':
+				case 'add-folder-before-folder':
+					actions.addNewBookmarkNode(id, 'before', '', '');
+					break;
+				case 'add-folder-after-bookmark':
+				case 'add-folder-after-folder':
+					actions.addNewBookmarkNode(id, 'after', '', '');
 					break;
 				case 'add-new-folder':
-					actions.addNewFolder(id);
+					actions.addNewBookmarkNode(id, 'top', '', '');
 					break;
 				//++++++++ end ++++++++ 
 				case 'folder-window':
