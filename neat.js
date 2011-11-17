@@ -82,7 +82,8 @@
 	var a = document.createElement('a');
 	var httpsPattern = /^https?:\/\//i;
 	var onlyShowBMBar = !!localStorage.onlyShowBMBar;
-	console.log("onlyShowBMBar=" + onlyShowBMBar);
+	//var onlyShowBMBar = true;
+	//console.log("onlyShowBMBar=" + onlyShowBMBar);
 	
 	// Adaptive bookmark tooltips
 	var adaptBookmarkTooltips = function(){
@@ -178,6 +179,7 @@
 		var html = '';
 		if (onlyShowBMBar){
 			html = generateHTML(tree[0].children[0].children);
+			//console.log("----- html -----\n"+html+"\n");
 		} else{
 			html = generateHTML(tree[0].children);
 		}
@@ -583,11 +585,24 @@
 					parentid = node.id;
 					pnode = $('neat-tree-item-' + parentid);
 				}
+				
+				if(!pnode){
+					console.log('null pnode found!!');
+					//parentid
+					// chrome.bookmarks.getTree(function(tree){
+						// parentid = tree[0].children[0].id; //Bookmark Bar Node ID
+					// });
+				}
 						
 				if (isAddBookmark) {//add bookmark
 					chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
 						function(resultbm){
-							var lv = parseInt(pnode.parentNode.dataset.level) + 1;
+							var lv = 0;
+							if (!pnode){
+								pnode = document.body;
+							} else{
+								lv = parseInt(pnode.parentNode.dataset.level) + 1;
+							}
 							var paddingStart = 14*lv;
 							var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
 							var html = '';
@@ -632,14 +647,16 @@
 						addtitle = dirtitle;
 						chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
 							function(resultbm){
-								var lv = parseInt(pnode.parentNode.dataset.level) + 1;
-								if (!isBookmark){
-									//lv += 1;
+								var lv = 0;
+								if (!pnode){
+									pnode = document.body;
+								} else{
+									lv = parseInt(pnode.parentNode.dataset.level) + 1;
 								}
 								var paddingStart = 14*lv;
 								var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
 								var html = '';
-								console.log('level = '+lv+', innerhtml!!\n'+pnode.innerHTML+'\n');
+								//console.log('innerhtml!!\n'+pnode.innerHTML+'\nname='+pnode.name);
 								//add folder
 								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
 								html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
