@@ -1,160 +1,168 @@
-(function(window){
+(function(window) {
 	var document = window.document;
 	var chrome = window.chrome;
 	var localStorage = window.localStorage;
 	var navigator = window.navigator;
 	var body = document.body;
 	var _m = chrome.i18n.getMessage;
-	
+
 	// Error alert
 	var AlertDialog = {
-		open: function(dialog){
-			if (!dialog) return;
+		open : function(dialog) {
+			if (!dialog)
+				return;
 			$('alert-dialog-text').innerHTML = dialog;
 			body.addClass('needAlert');
 		},
-		close: function(){
+		close : function() {
 			body.removeClass('needAlert');
 		}
 	};
-	window.addEventListener('error', function(){
+	window.addEventListener('error', function() {
 		AlertDialog.open('<strong>' + _m('errorOccured') + '</strong><br>' + _m('reportedToDeveloper'));
 	}, false);
-	
+
 	// Platform detection
-	var os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
+	var os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || [ 'other' ])[0];
 	body.addClass(os);
-	
+
 	// Chrome version detection
-	var version = (function(){
+	var version = (function() {
 		var v = {};
-		var keys = ['major', 'minor', 'build', 'patch'];
+		var keys = [ 'major', 'minor', 'build', 'patch' ];
 		var matches = navigator.userAgent.match(/chrome\/([\d]+)\.([\d]+)\.([\d]+)\.([\d]+)/i);
-		if (!matches) return null;
-		matches.slice(1).forEach(function(m, i){
+		if (!matches)
+			return null;
+		matches.slice(1).forEach(function(m, i) {
 			v[keys[i]] = m.toInt();
 		});
 		return v;
 	})();
-	
+
 	// Some i18n
 	$('search-input').placeholder = _m('searchBookmarks');
 	$('edit-dialog-name').placeholder = _m('name');
 	$('edit-dialog-url').placeholder = _m('url');
 	$('new-folder-dialog-name').placeholder = _m('name');
 	$each({
-		'bookmark-new-tab': 'openNewTab',
-		'bookmark-new-window': 'openNewWindow',
-		'bookmark-new-incognito-window': 'openIncognitoWindow',
-		'bookmark-edit': 'edit',
-		'bookmark-delete': 'delete',
-		'add-bookmark-top': 'addBookmarkTop',
-		'add-bookmark-bottom': 'addBookmarkBottom',
-		'add-bookmark-before-bookmark': 'addBookmarkBefore',
-		'add-bookmark-after-bookmark': 'addBookmarkAfter',
-		'add-folder-before-bookmark': 'addNewFolderBefore',
-		'add-folder-after-bookmark': 'addNewFolderAfter',
-		'add-bookmark-before-folder': 'addBookmarkBefore',
-		'add-bookmark-after-folder': 'addBookmarkAfter',
-		'add-folder-before-folder': 'addNewFolderBefore',
-		'add-folder-after-folder': 'addNewFolderAfter',
-		'add-new-folder': 'addNewFolder',
-		'folder-window': 'openBookmarks',
-		'folder-new-window': 'openBookmarksNewWindow',
-		'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
-		'folder-edit': 'edit',
-		'folder-delete': 'deleteEllipsis',
-		'edit-dialog-button': 'save',
-		'new-folder-dialog-button': 'save'
-	}, function(msg, id){
+		'bookmark-new-tab' : 'openNewTab',
+		'bookmark-new-window' : 'openNewWindow',
+		'bookmark-new-incognito-window' : 'openIncognitoWindow',
+		'bookmark-edit' : 'edit',
+		'bookmark-delete' : 'delete',
+		'add-bookmark-top' : 'addBookmarkTop',
+		'add-bookmark-bottom' : 'addBookmarkBottom',
+		'add-bookmark-before-bookmark' : 'addBookmarkBefore',
+		'add-bookmark-after-bookmark' : 'addBookmarkAfter',
+		'add-folder-before-bookmark' : 'addNewFolderBefore',
+		'add-folder-after-bookmark' : 'addNewFolderAfter',
+		'add-bookmark-before-folder' : 'addBookmarkBefore',
+		'add-bookmark-after-folder' : 'addBookmarkAfter',
+		'add-folder-before-folder' : 'addNewFolderBefore',
+		'add-folder-after-folder' : 'addNewFolderAfter',
+		'add-new-folder' : 'addNewFolder',
+		'folder-window' : 'openBookmarks',
+		'folder-new-window' : 'openBookmarksNewWindow',
+		'folder-new-incognito-window' : 'openBookmarksIncognitoWindow',
+		'folder-edit' : 'edit',
+		'folder-delete' : 'deleteEllipsis',
+		'edit-dialog-button' : 'save',
+		'new-folder-dialog-button' : 'save'
+	}, function(msg, id) {
 		var el = $(id), m = _m(msg);
-		if (el.tagName == 'COMMAND') el.label = m;
+		if (el.tagName == 'COMMAND')
+			el.label = m;
 		el.textContent = m;
 	});
-	
+
 	// RTL indicator
 	var rtl = (body.getComputedStyle('direction') == 'rtl');
-	if (rtl) body.addClass('rtl');
-	
+	if (rtl)
+		body.addClass('rtl');
+
 	// Init some variables
 	var opens = localStorage.opens ? JSON.parse(localStorage.opens) : [];
 	var rememberState = !localStorage.dontRememberState;
-	var a = document.createElement('a');
+	// var a = document.createElement('a');
 	var httpsPattern = /^https?:\/\//i;
 	var onlyShowBMBar = !!localStorage.onlyShowBMBar;
-	//var onlyShowBMBar = true;
-	//console.log("onlyShowBMBar=" + onlyShowBMBar);
-	
+	// var onlyShowBMBar = true;
+	// console.log("onlyShowBMBar=" + onlyShowBMBar);
+
 	// Adaptive bookmark tooltips
-	var adaptBookmarkTooltips = function(){
+	var adaptBookmarkTooltips = function() {
 		var bookmarks = document.querySelectorAll('li.child a');
-		for (var i=0, l=bookmarks.length; i<l; i++){
+		for ( var i = 0, l = bookmarks.length; i < l; i++) {
 			var bookmark = bookmarks[i];
-			if (bookmark.hasClass('titled')){
-				if (bookmark.scrollWidth <= bookmark.offsetWidth){
+			if (bookmark.hasClass('titled')) {
+				if (bookmark.scrollWidth <= bookmark.offsetWidth) {
 					bookmark.title = bookmark.href;
 					bookmark.removeClass('titled');
 				}
-			} else if (bookmark.scrollWidth > bookmark.offsetWidth){
+			} else if (bookmark.scrollWidth > bookmark.offsetWidth) {
 				var text = bookmark.querySelector('i').textContent;
 				var title = bookmark.title;
-				if (text != title){
+				if (text != title) {
 					bookmark.title = text + '\n' + title;
 					bookmark.addClass('titled');
 				}
 			}
 		}
 	};
-	
-	var generateBookmarkHTML = function(title, url, extras){
-		if (!extras) extras = '';
+
+	var generateBookmarkHTML = function(title, url, extras) {
+		if (!extras)
+			extras = '';
 		var u = url.htmlspecialchars();
 		var favicon = 'chrome://favicon/' + u;
 		var tooltipURL = url;
-		if (/^javascript:/i.test(url)){
-			if (url.length > 140) tooltipURL = url.slice(0, 140) + '...';
+		if (/^javascript:/i.test(url)) {
+			if (url.length > 140)
+				tooltipURL = url.slice(0, 140) + '...';
 			favicon = 'document-code.png';
 		}
 		tooltipURL = tooltipURL.htmlspecialchars();
 		var name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
-		return '<a href="' + u + '"' + ' title="' + tooltipURL + '" tabindex="0" ' + extras + '>'
-			+ '<img src="' + favicon + '" width="16" height="16" alt=""><i>' + name + '</i>'
-			+ '</a>';
+		return '<a href="' + u + '"' + ' title="' + tooltipURL + '" tabindex="0" ' + extras + '>' + '<img src="'
+				+ favicon + '" width="16" height="16" alt=""><i>' + name + '</i>' + '</a>';
 	};
-	
-	var generateHTML = function(data, level){
-		if (!level) level = 0;
-		var paddingStart = 14*level;
+
+	var generateHTML = function(data, level) {
+		if (!level)
+			level = 0;
+		var paddingStart = 14 * level;
 		var group = (level == 0) ? 'tree' : 'group';
 		var html = '<ul role="' + group + '" data-level="' + level + '">';
-		
-		for (var i=0, l=data.length; i<l; i++){
+
+		for ( var i = 0, l = data.length; i < l; i++) {
 			var d = data[i];
 			var children = d.children;
 			var title = d.title.htmlspecialchars();
 			var url = d.url;
 			var id = d.id;
 			var parentID = d.parentId;
-			var idHTML = id ? ' id="neat-tree-item-' + id + '"': '';
+			var idHTML = id ? ' id="neat-tree-item-' + id + '"' : '';
 			var isFolder = d.dateGroupModified || children || typeof url == 'undefined';
-			if (isFolder){
+			if (isFolder) {
 				var isOpen = false;
 				var open = '';
-				if (rememberState){
+				if (rememberState) {
 					isOpen = opens.contains(id);
-					if (isOpen) open = ' open';
+					if (isOpen)
+						open = ' open';
 				}
-				html += '<li class="parent' + open + '"' + idHTML + ' role="treeitem" aria-expanded="' + isOpen + '" data-parentid="' + parentID + '">'
-					+ '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
-					+ '<img src="folder.png" width="16" height="16" alt=""><i>' + (title || _m('noTitle')) + '</i>'
-					+ '</span>';
-				if (isOpen){
-					if (children){
-						html += generateHTML(children, level+1);
+				html += '<li class="parent' + open + '"' + idHTML + ' role="treeitem" aria-expanded="' + isOpen
+						+ '" data-parentid="' + parentID + '">' + '<span tabindex="0" style="-webkit-padding-start: '
+						+ paddingStart + 'px"><b class="twisty"></b>'
+						+ '<img src="folder.png" width="16" height="16" alt=""><i>' + (title || _m('noTitle')) + '</i>'
+						+ '</span>';
+				if (isOpen) {
+					if (children) {
+						html += generateHTML(children, level + 1);
 					} else {
-						(function(_id){
-							chrome.bookmarks.getChildren(_id, function(children){
-								var html = generateHTML(children, level+1);
+						(function(_id) {
+							chrome.bookmarks.getChildren(_id, function(children) {
+								var html = generateHTML(children, level + 1);
 								var div = document.createElement('div');
 								div.innerHTML = html;
 								var ul = div.querySelector('ul');
@@ -166,60 +174,62 @@
 				}
 			} else {
 				html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentID + '">'
-					+ generateBookmarkHTML(title, url, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
+						+ generateBookmarkHTML(title, url, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
 			}
 			html += '</li>';
 		}
 		html += '</ul>';
 		return html;
 	};
-	
+
 	var $tree = $('tree');
-	chrome.bookmarks.getTree(function(tree){
+	chrome.bookmarks.getTree(function(tree) {
 		var html = '';
-		if (onlyShowBMBar){
+		if (onlyShowBMBar) {
 			html = generateHTML(tree[0].children[0].children);
 			//console.log("----- html -----\n"+html+"\n");
-		} else{
+		} else {
 			html = generateHTML(tree[0].children);
 		}
-		
+
 		$tree.innerHTML = html;
-		
-		if (rememberState) $tree.scrollTop = localStorage.scrollTop || 0;
-		
+
+		if (rememberState)
+			$tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
+
 		var focusID = localStorage.focusID;
-		if (typeof focusID != 'undefined' && focusID != null){
+		if (typeof focusID != 'undefined' && focusID != null) {
 			var focusEl = $('neat-tree-item-' + focusID);
-			if (focusEl){
+			if (focusEl) {
 				var oriOverflow = $tree.style.overflow;
 				$tree.style.overflow = 'hidden';
 				focusEl.style.width = '100%';
 				focusEl.firstElementChild.addClass('focus');
-				setTimeout(function(){
+				setTimeout(function() {
 					$tree.style.overflow = oriOverflow;
 				}, 1);
-				setTimeout(function(){
+				setTimeout(function() {
 					localStorage.removeItem('focusID');
 				}, 4000);
 			}
 		}
-		
+
 		setTimeout(adaptBookmarkTooltips, 100);
-		
+
 		tree = null;
 	});
-	
+
 	// Events for the tree
-	$tree.addEventListener('scroll', function(){
+	$tree.addEventListener('scroll', function() {
 		localStorage.scrollTop = $tree.scrollTop;
 	});
-	$tree.addEventListener('focus', function(e){
+	$tree.addEventListener('focus', function(e) {
 		var el = e.target;
 		var tagName = el.tagName;
 		var focusEl = $tree.querySelector('.focus');
-		if (focusEl) focusEl.removeClass('focus');
-		if (tagName == 'A' || tagName == 'SPAN'){
+		if (focusEl)
+			focusEl.removeClass('focus');
+		if (tagName == 'A' || tagName == 'SPAN') {
 			var id = el.parentNode.id.replace('neat-tree-item-', '');
 			localStorage.focusID = id;
 		} else {
@@ -227,21 +237,24 @@
 		}
 	}, true);
 	var closeUnusedFolders = localStorage.closeUnusedFolders;
-	$tree.addEventListener('click', function(e){
-		if (e.button != 0) return;
+	$tree.addEventListener('click', function(e) {
+		if (e.button != 0)
+			return;
 		var el = e.target;
 		var tagName = el.tagName;
-		if (tagName != 'SPAN') return;
-		if (e.shiftKey || e.ctrlKey) return;
+		if (tagName != 'SPAN')
+			return;
+		if (e.shiftKey || e.ctrlKey)
+			return;
 		var parent = el.parentNode;
 		parent.toggleClass('open');
 		var expanded = parent.hasClass('open');
 		parent.setAttribute('aria-expanded', expanded);
 		var children = parent.querySelector('ul');
-		if (!children){
+		if (!children) {
 			var id = parent.id.replace('neat-tree-item-', '');
-			chrome.bookmarks.getChildren(id, function(children){
-				var html = generateHTML(children, parseInt(parent.parentNode.dataset.level)+1);
+			chrome.bookmarks.getChildren(id, function(children) {
+				var html = generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
 				var div = document.createElement('div');
 				div.innerHTML = html;
 				var ul = div.querySelector('ul');
@@ -250,162 +263,171 @@
 				setTimeout(adaptBookmarkTooltips, 100);
 			});
 		}
-		if (closeUnusedFolders && expanded){
+		if (closeUnusedFolders && expanded) {
 			var siblings = parent.getSiblings('li');
-			for (var i=0, l=siblings.length; i<l; i++){
+			for ( var i = 0, l = siblings.length; i < l; i++) {
 				var li = siblings[i];
-				if (li.hasClass('parent')){
+				if (li.hasClass('parent')) {
 					li.removeClass('open').setAttribute('aria-expanded', false);
 				}
 			}
 		}
 		var opens = $tree.querySelectorAll('li.open');
-		opens = Array.map(function(li){
+		opens = Array.map(function(li) {
 			return li.id.replace('neat-tree-item-', '');
 		}, opens);
 		localStorage.opens = JSON.stringify(opens);
 	});
 	// Force middle clicks to trigger the focus event
-	$tree.addEventListener('mouseup', function(e){
-		if (e.button != 1) return;
+	$tree.addEventListener('mouseup', function(e) {
+		if (e.button != 1)
+			return;
 		var el = e.target;
 		var tagName = el.tagName;
-		if (tagName != 'A' && tagName != 'SPAN') return;
+		if (tagName != 'A' && tagName != 'SPAN')
+			return;
 		el.focus();
 	});
-	
+
 	// Search
 	var $results = $('results');
 	var searchMode = false;
 	var searchInput = $('search-input');
 	var prevValue = '';
-	
-	var search = function(){
+
+	var search = function() {
 		var value = searchInput.value.trim();
 		localStorage.searchQuery = value;
-		if (value == ''){
+		if (value == '') {
 			prevValue = '';
 			searchMode = false;
 			$tree.style.display = 'block';
 			$results.style.display = 'none';
 			return;
 		}
-		if (value == prevValue) return;
+		if (value == prevValue)
+			return;
 		prevValue = value;
 		searchMode = true;
-		chrome.bookmarks.search(value, function(results){
+		chrome.bookmarks.search(value, function(results) {
 			var v = value.toLowerCase();
 			var vPattern = new RegExp('^' + value.escapeRegExp().replace(/\s+/g, '.*'), 'ig');
-			if (results.length > 1){
-				results.sort(function(a, b){
+			if (results.length > 1) {
+				results.sort(function(a, b) {
 					var aTitle = a.title;
 					var bTitle = b.title;
 					var aIndexTitle = aTitle.toLowerCase().indexOf(v);
 					var bIndexTitle = bTitle.toLowerCase().indexOf(v);
-					if (aIndexTitle >= 0 || bIndexTitle >= 0){
-						if (aIndexTitle < 0) aIndexTitle = Infinity;
-						if (bIndexTitle < 0) bIndexTitle = Infinity;
+					if (aIndexTitle >= 0 || bIndexTitle >= 0) {
+						if (aIndexTitle < 0)
+							aIndexTitle = Infinity;
+						if (bIndexTitle < 0)
+							bIndexTitle = Infinity;
 						return aIndexTitle - bIndexTitle;
 					}
 					var aTestTitle = vPattern.test(aTitle);
 					var bTestTitle = vPattern.test(bTitle);
-					if (aTestTitle && !bTestTitle) return -1;
-					if (!aTestTitle && bTestTitle) return 1;
+					if (aTestTitle && !bTestTitle)
+						return -1;
+					if (!aTestTitle && bTestTitle)
+						return 1;
 					return b.dateAdded - a.dateAdded;
 				});
 				results = results.slice(0, 100); // 100 is enough
 			}
 			var html = '<ul role="list">';
-			for (var i=0, l=results.length; i<l; i++){
+			for ( var i = 0, l = results.length; i < l; i++) {
 				var result = results[i];
 				var id = result.id;
 				html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">'
-					+ generateBookmarkHTML(result.title, result.url);
+						+ generateBookmarkHTML(result.title, result.url);
 			}
 			html += '</ul>';
 			$tree.style.display = 'none';
 			$results.innerHTML = html;
 			$results.style.display = 'block';
-			
+
 			var lis = $results.querySelectorAll('li');
-			Array.forEach(function(li){
+			Array.forEach(function(li) {
 				var parentId = li.dataset.parentid;
-				chrome.bookmarks.get(parentId, function(node){
-					if (!node || !node.length) return;
+				chrome.bookmarks.get(parentId, function(node) {
+					if (!node || !node.length)
+						return;
 					var a = li.querySelector('a');
 					a.title = _m('parentFolder', node[0].title) + '\n' + a.title;
 				});
 			}, lis);
-			
+
 			results = null;
 			vPattern = null;
 			lis = null;
 		});
 	};
 	searchInput.addEventListener('input', search);
-	
-	searchInput.addEventListener('keydown', function(e){
+
+	searchInput.addEventListener('keydown', function(e) {
 		var key = e.keyCode;
 		var focusID = localStorage.focusID;
-		if (key == 40 && searchInput.value.length == searchInput.selectionEnd){ // down
+		if (key == 40 && searchInput.value.length == searchInput.selectionEnd) { // down
 			e.preventDefault();
-			if (searchMode){
+			if (searchMode) {
 				$results.querySelector('ul>li:first-child a').focus();
 			} else {
 				$tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
 			}
-		} else if (key == 13 && searchInput.value.length){ // enter
+		} else if (key == 13 && searchInput.value.length) { // enter
 			var item = $results.querySelector('ul>li:first-child a');
 			item.focus();
-			setTimeout(function(){
+			setTimeout(function() {
 				var event = document.createEvent('MouseEvents');
 				event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 				item.dispatchEvent(event);
 			}, 30);
-		} else if (key == 9 && !searchMode){ // tab
-			if (typeof focusID != 'undefined' && focusID != null){
+		} else if (key == 9 && !searchMode) { // tab
+			if (typeof focusID != 'undefined' && focusID != null) {
 				var focusEl = $('neat-tree-item-' + focusID);
-				if (focusEl){
+				if (focusEl) {
 					e.preventDefault();
 					focusEl.firstElementChild.focus();
 				}
 			} else {
 				var bound = $tree.scrollTop;
 				var items = $tree.querySelectorAll('a, span');
-				var firstItem = Array.filter(function(item){
+				var firstItem = Array.filter(function(item) {
 					return !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound);
 				}, items)[0];
-				if (firstItem) firstItem.focus();
+				if (firstItem)
+					firstItem.focus();
 			}
-		// Pressing esc shouldn't close the popup when search field has value
-		} else if (e.keyCode == 27 && searchInput.value){ // esc
+			// Pressing esc shouldn't close the popup when search field has value
+		} else if (e.keyCode == 27 && searchInput.value) { // esc
 			e.preventDefault();
 			searchInput.value = '';
 			search();
 		}
 	});
-	
-	searchInput.addEventListener('focus', function(){
+
+	searchInput.addEventListener('focus', function() {
 		body.addClass('searchFocus');
 	});
-	searchInput.addEventListener('blur', function(){
+	searchInput.addEventListener('blur', function() {
 		body.removeClass('searchFocus');
 	});
-	
+
 	// Saved search query
-	if (rememberState && localStorage.searchQuery){
+	if (rememberState && localStorage.searchQuery) {
 		searchInput.value = localStorage.searchQuery;
 		search();
 		searchInput.select();
 		searchInput.scrollLeft = 0;
 	}
-	
+
 	// Popup auto-height
-	var resetHeight = function(){
-		var zoomLevel = localStorage.zoom ? localStorage.zoom.toInt()/100 : 1;
-		setTimeout(function(){
+	var resetHeight = function() {
+		var zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
+		setTimeout(function() {
 			var neatTree = $tree.firstElementChild;
-			var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16)*zoomLevel;
+			var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
 			// Slide up faster than down
 			body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
 			var maxHeight = screen.height - window.screenY - 50;
@@ -414,43 +436,52 @@
 			localStorage.popupHeight = height;
 		}, 200);
 	};
-	if (!searchMode) resetHeight();
+	if (!searchMode)
+		resetHeight();
 	$tree.addEventListener('click', resetHeight);
 	$tree.addEventListener('keyup', resetHeight);
-	
+
 	// Confirm dialog
-	var ConfirmDialog = window.ConfirmDialog = {
-		open: function(opts){
-			if (!opts) return;
+	ConfirmDialog = {
+		open : function(opts) {
+			if (!opts)
+				return;
 			$('confirm-dialog-text').innerHTML = opts.dialog.widont();
 			$('confirm-dialog-button-1').innerHTML = opts.button1;
 			$('confirm-dialog-button-2').innerHTML = opts.button2;
-			if (opts.fn1) ConfirmDialog.fn1 = opts.fn1;
-			if (opts.fn2) ConfirmDialog.fn2 = opts.fn2;
+			if (opts.fn1)
+				ConfirmDialog.fn1 = opts.fn1;
+			if (opts.fn2)
+				ConfirmDialog.fn2 = opts.fn2;
 			$('confirm-dialog-button-' + (opts.focusButton || 1)).focus();
 			document.body.addClass('needConfirm');
 		},
-		close: function(){
+		close : function() {
 			document.body.removeClass('needConfirm');
 		},
-		fn1: function(){},
-		fn2: function(){}
+		fn1 : function() {
+		},
+		fn2 : function() {
+		}
 	};
-	
+
 	// Edit dialog
-	var EditDialog = window.EditDialog = {
-		open: function(opts){
-			if (!opts) return;
+	EditDialog = {
+		open : function(opts) {
+			if (!opts)
+				return;
 			$('edit-dialog-text').innerHTML = opts.dialog.widont();
-			if (opts.fn) EditDialog.fn = opts.fn;
+			if (opts.fn)
+				EditDialog.fn = opts.fn;
 			var type = opts.type || 'bookmark';
 			var name = $('edit-dialog-name');
 			name.value = opts.name;
 			name.focus();
 			name.select();
-			name.scrollLeft = 0; // very delicate, show first few words instead of last
+			name.scrollLeft = 0; // very delicate, show first few words
+			// instead of last
 			var url = $('edit-dialog-url');
-			if (type == 'bookmark'){
+			if (type == 'bookmark') {
 				url.style.display = '';
 				url.disabled = false;
 				url.value = opts.url;
@@ -461,26 +492,29 @@
 			}
 			body.addClass('needEdit');
 		},
-		close: function(){
+		close : function() {
 			var urlInput = $('edit-dialog-url');
 			var url = urlInput.value;
-			if (!urlInput.validity.valid){
+			if (!urlInput.validity.valid) {
 				urlInput.value = 'http://' + url;
-				if (!urlInput.validity.valid) url = ''; // if still invalid, fuck it.
+				if (!urlInput.validity.valid)
+					url = ''; // if still invalid, fuck it.
 				url = 'http://' + url;
 			}
 			EditDialog.fn($('edit-dialog-name').value, url);
 			body.removeClass('needEdit');
 		},
-		fn: function(){}
+		fn : function() {
+		}
 	};
-	
-	//++++++++ modified by windviki@gmail.com ++++++++ 
-	//New Folder Dialog
-	var NewFolderDialog = window.NewFolderDialog = {
-		open: function(optname, optcall){
+
+	// ++++++++ modified by windviki@gmail.com ++++++++
+	// New Folder Dialog
+	NewFolderDialog = {
+		open : function(optname, optcall) {
 			$('new-folder-dialog-text').innerHTML = _m('editFolder');
-			if (optcall) NewFolderDialog.fn = optcall;
+			if (optcall)
+				NewFolderDialog.fn = optcall;
 			var name = $('new-folder-dialog-name');
 			name.value = optname;
 			name.focus();
@@ -488,44 +522,46 @@
 			name.scrollLeft = 0;
 			body.addClass('needInputName');
 		},
-		close: function(){
-			//console.log("add newfolder callback, title=" + $('new-folder-dialog-name').value);
+		close : function() {
 			NewFolderDialog.fn($('new-folder-dialog-name').value);
 			body.removeClass('needInputName');
 		},
-		fn: function(){}
+		fn : function() {
+		}
 	};
-	//++++++++ end ++++++++ 
-	
+	// ++++++++ end ++++++++
+
 	// Bookmark handling
 	var dontConfirmOpenFolder = !!localStorage.dontConfirmOpenFolder;
 	var bookmarkClickStayOpen = !!localStorage.bookmarkClickStayOpen;
 	var openBookmarksLimit = 10;
 	var actions = {
-		
-		openBookmark: function(url){
-			chrome.tabs.getSelected(null, function(tab){
+
+		openBookmark : function(url) {
+			chrome.tabs.getSelected(null, function(tab) {
 				chrome.tabs.update(tab.id, {
-					url: decodeURIComponent(url)
+					url : decodeURIComponent(url)
 				});
-				if (!bookmarkClickStayOpen) setTimeout(window.close, 200);
+				if (!bookmarkClickStayOpen)
+					setTimeout(window.close, 200);
 			});
 		},
-		
-		openBookmarkNewTab: function(url, selected, blankTabCheck){
-			var open = function(){
+
+		openBookmarkNewTab : function(url, selected, blankTabCheck) {
+			var open = function() {
 				chrome.tabs.create({
-					url: url,
-					selected: selected
+					url : url,
+					selected : selected
 				});
 			};
-			if (blankTabCheck){
-				chrome.tabs.getSelected(null, function(tab){
-					if (/^chrome:\/\/newtab/i.test(tab.url)){
+			if (blankTabCheck) {
+				chrome.tabs.getSelected(null, function(tab) {
+					if (/^chrome:\/\/newtab/i.test(tab.url)) {
 						chrome.tabs.update(tab.id, {
-							url: url
+							url : url
 						});
-						if (!bookmarkClickStayOpen) setTimeout(window.close, 200);
+						if (!bookmarkClickStayOpen)
+							setTimeout(window.close, 200);
 					} else {
 						open();
 					}
@@ -534,87 +570,171 @@
 				open();
 			}
 		},
-		
-		openBookmarkNewWindow: function(url, incognito){
+
+		openBookmarkNewWindow : function(url, incognito) {
 			chrome.windows.create({
-				url: url,
-				incognito: incognito
+				url : url,
+				incognito : incognito
 			});
 		},
-		
-		//++++++++ modified by windviki@gmail.com ++++++++ 
-		addNewBookmarkNode: function(nodeid, where, inurl, intitle){
-			chrome.bookmarks.get(nodeid, function(nodeList){
-				if (!nodeList.length) return;
+
+		// ++++++++ modified by windviki@gmail.com ++++++++
+		addNewBookmarkNode : function(nodeid, where, inurl, intitle) {
+			chrome.bookmarks.get(nodeid, function(nodeList) {
+				if (!nodeList.length)
+					return;
 				var node = nodeList[0];
 				var url = node.url;
-				//check whether the reference node is bookmark or folder
+				// check whether the referenced node is bookmark or folder
 				var isBookmark = !!url;
-				//check whether the target node is bookmark or folder
+				// if the referenced node is folder, check whether it is open
+				var isOpenDir = false;
+				// check whether the target node is bookmark or folder
 				var isAddBookmark = !!inurl;
 				var addurl = inurl;
 				var addtitle = intitle;
-				
-				if (isBookmark){//folder - 'before', 'after'
-					if (where == 'top' || where == 'bottom') return;
-				}
-				
-				//get parent node
+
+				// get parent node
 				var parentid = node.parentId;
 				var pnode = $('neat-tree-item-' + parentid);
 				var rnode = $('neat-tree-item-' + node.id);
 				var iindex = 0;
-				if (where == 'before'){
+				if (where == 'before') {
 					iindex = node.index;
 				}
-				if (where == 'after'){
+				if (where == 'after') {
 					iindex = node.index + 1;
 				}
-				
-				//folder - 'before', 'after', 'top' ,'bottom'
-				if (where == 'top'){
+
+				// referenced node is folder - 'top', 'bottom', 'before', 'after'
+				// referenced node is bookmark - 'before', 'after'
+				if (isBookmark) {
+					if (where == 'top' || where == 'bottom')
+						return;
+				} else {
+					isOpenDir = (rnode.getAttribute('aria-expanded') == 'true');
+					//console.log('the folder is opened.');
+				}
+
+				// referenced node is folder
+				if (where == 'top') {
 					iindex = 0;
 					parentid = node.id;
 					pnode = $('neat-tree-item-' + parentid);
 				}
-				if (where == 'bottom'){
-					//iindex = node.children.length;
-					chrome.bookmarks.getChildren(node.id, function(nodechildren){
+				if (where == 'bottom') {
+					// iindex = node.children.length;
+					chrome.bookmarks.getChildren(node.id, function(nodechildren) {
 						iindex = nodechildren.length;
 					});
 					parentid = node.id;
 					pnode = $('neat-tree-item-' + parentid);
 				}
-				
-				if(!pnode){
-					console.log('null pnode found!!');
-					//parentid
-					// chrome.bookmarks.getTree(function(tree){
-						// parentid = tree[0].children[0].id; //Bookmark Bar Node ID
-					// });
+
+				if (!pnode) {
+					//console.log('null pnode found!!');
 				}
-						
-				if (isAddBookmark) {//add bookmark
-					chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
-						function(resultbm){
+
+				if (isAddBookmark) {// add bookmark
+					chrome.bookmarks.create({
+						'parentId' : parentid,
+						'index' : iindex,
+						'title' : addtitle,
+						'url' : addurl
+					}, function(resultbm) {
+						if (!isOpenDir && (where == "top" || where == "bottom")) {
+							//console.log('do not add html for opened folder.');
+							return;
+						}
+						var lv = 0;
+						if (!pnode) {
+							// root
+							pnode = document.body;
+						} else {
+							lv = parseInt(pnode.parentNode.dataset.level) + 1;
+						}
+						var paddingStart = 14 * lv;
+						var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
+						var html = '';
+						// add bookmark
+						html += '<li class="child"'
+								+ idHTML
+								+ ' role="treeitem" data-parentid="'
+								+ parentid
+								+ '">'
+								+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: '
+										+ paddingStart + 'px"') + '</li>';
+						var div = document.createElement('div');
+						div.innerHTML = html;
+						var li = div.querySelector('li');
+						var ul = pnode.querySelector('ul');
+						// fix ul
+						if (!ul) {
+							var tmpdiv = document.createElement('div');
+							tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
+							var newul = tmpdiv.querySelector('ul');
+							pnode.appendChild(newul);
+							ul = pnode.querySelector('ul');
+							tmpdiv.destroy();
+						}
+						if (where == 'top') {
+							if (ul.firstElementChild) {
+								ul.insertBefore(li, ul.firstElementChild);
+							} else {
+								ul.appendChild(li);
+							}
+						}
+						if (where == 'bottom') {
+							ul.appendChild(li);
+						}
+						if (where == 'before') {
+							ul.insertBefore(li, rnode);
+						}
+						if (where == 'after') {
+							ul.insertBefore(li, rnode.nextSibling);
+						}
+
+						div.destroy();
+					});
+				} else {// add folder
+					NewFolderDialog.open('NewFolder', function(dirtitle) {
+						addtitle = dirtitle;
+						chrome.bookmarks.create({
+							'parentId' : parentid,
+							'index' : iindex,
+							'title' : addtitle,
+							'url' : addurl
+						}, function(resultbm) {
+							if (!isOpenDir && (where == "top" || where == "bottom")) {
+								//console.log('do not add html for opened folder.');
+								return;
+							}
 							var lv = 0;
-							if (!pnode){
+							if (!pnode) {
+								// root
 								pnode = document.body;
-							} else{
+							} else {
 								lv = parseInt(pnode.parentNode.dataset.level) + 1;
 							}
-							var paddingStart = 14*lv;
-							var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
+							var paddingStart = 14 * lv;
+							var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
 							var html = '';
-							//add bookmark
-							html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentid + '">'
-							+ generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' + paddingStart + 'px"') + '</li>';
+							// console.log('innerhtml!!\n'+pnode.innerHTML+'\nname='+pnode.name);
+							// add folder
+							html += '<li class="parent"' + idHTML
+									+ ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
+							html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart
+									+ 'px"><b class="twisty"></b>'
+									+ '<img src="folder.png" width="16" height="16" alt=""></img><i>'
+									+ (addtitle || _m('noTitle')) + '</i>' + '</span>';
+							html += '</li>';
+
 							var div = document.createElement('div');
 							div.innerHTML = html;
 							var li = div.querySelector('li');
 							var ul = pnode.querySelector('ul');
-							//fix ul
-							if (!ul){
+							// fix ul
+							if (!ul) {
 								var tmpdiv = document.createElement('div');
 								tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
 								var newul = tmpdiv.querySelector('ul');
@@ -622,270 +742,225 @@
 								ul = pnode.querySelector('ul');
 								tmpdiv.destroy();
 							}
-							if (where == 'top'){
-								if (ul.firstElementChild){
+							if (where == 'top') {
+								if (ul.firstElementChild) {
 									ul.insertBefore(li, ul.firstElementChild);
-								} else{
+								} else {
 									ul.appendChild(li);
 								}
 							}
-							if (where == 'bottom'){
+							if (where == 'bottom') {
 								ul.appendChild(li);
 							}
-							if (where == 'before'){
+							if (where == 'before') {
 								ul.insertBefore(li, rnode);
 							}
-							if (where == 'after'){
+							if (where == 'after') {
 								ul.insertBefore(li, rnode.nextSibling);
 							}
-						
+
 							div.destroy();
-						}
-					);
-				} else{//add folder
-					NewFolderDialog.open('NewFolder', function(dirtitle){
-						addtitle = dirtitle;
-						chrome.bookmarks.create({'parentId': parentid, 'index': iindex, 'title': addtitle, 'url': addurl}, 
-							function(resultbm){
-								var lv = 0;
-								if (!pnode){
-									pnode = document.body;
-								} else{
-									lv = parseInt(pnode.parentNode.dataset.level) + 1;
-								}
-								var paddingStart = 14*lv;
-								var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"': '';
-								var html = '';
-								//console.log('innerhtml!!\n'+pnode.innerHTML+'\nname='+pnode.name);
-								//add folder
-								html += '<li class="parent"' + idHTML + ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
-								html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart + 'px"><b class="twisty"></b>'
-									+ '<img src="folder.png" width="16" height="16" alt=""></img><i>' + (addtitle || _m('noTitle')) + '</i>'
-									+ '</span>';
-								//html += '<ul role="group" data-level="' + lv + '">';
-								//html += '</ul>';
-								html += '</li>';
-								
-								var div = document.createElement('div');
-								div.innerHTML = html;
-								var li = div.querySelector('li');
-								var ul = pnode.querySelector('ul');
-								//fix ul
-								if (!ul){
-									var tmpdiv = document.createElement('div');
-									tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
-									var newul = tmpdiv.querySelector('ul');
-									pnode.appendChild(newul);
-									ul = pnode.querySelector('ul');
-									tmpdiv.destroy();
-								}
-								if (where == 'top'){
-									if (ul.firstElementChild){
-										ul.insertBefore(li, ul.firstElementChild);
-									} else{
-										ul.appendChild(li);
-									}
-								}
-								if (where == 'bottom'){
-									ul.appendChild(li);
-								}
-								if (where == 'before'){
-									ul.insertBefore(li, rnode);
-								}
-								if (where == 'after'){
-									ul.insertBefore(li, rnode.nextSibling);
-								}
-							
-								div.destroy();
-							}
-						); //end bookmarks.create
-					}); //end NewFolderDialog.open
+						}); // end bookmarks.create
+					}); // end NewFolderDialog.open
 				} // end if
 			}); // end bookmarks.get
 		},
-		//++++++++ end ++++++++ 
-		
-		openBookmarks: function(urls, selected){
+		// ++++++++ end ++++++++
+
+		openBookmarks : function(urls, selected) {
 			var urlsLen = urls.length;
-			var open = function(){
+			var open = function() {
 				chrome.tabs.create({
-					url: urls.shift(),
-					selected: selected // first tab will be selected
+					url : urls.shift(),
+					selected : selected
+				// first tab will be selected
 				});
-				for (var i=0, l=urls.length; i<l; i++){
+				for ( var i = 0, l = urls.length; i < l; i++) {
 					chrome.tabs.create({
-						url: urls[i],
-						selected: false
+						url : urls[i],
+						selected : false
 					});
 				}
 			};
-			if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit){
+			if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
 				ConfirmDialog.open({
-					dialog: _m('confirmOpenBookmarks', ''+urlsLen),
-					button1: '<strong>' + _m('open') + '</strong>',
-					button2: _m('nope'),
-					fn1: open
+					dialog : _m('confirmOpenBookmarks', '' + urlsLen),
+					button1 : '<strong>' + _m('open') + '</strong>',
+					button2 : _m('nope'),
+					fn1 : open
 				});
 			} else {
 				open();
 			}
 		},
-		
-		openBookmarksNewWindow: function(urls, incognito){
+
+		openBookmarksNewWindow : function(urls, incognito) {
 			var urlsLen = urls.length;
-			var open = function(){
+			var open = function() {
 				chrome.windows.create({
-					url: urls,
-					incognito: incognito
+					url : urls,
+					incognito : incognito
 				});
 			};
-			if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit){
-				var dialog = incognito ? _m('confirmOpenBookmarksNewIncognitoWindow', ''+urlsLen) : _m('confirmOpenBookmarksNewWindow', ''+urlsLen);
+			if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
+				var dialog = incognito ? _m('confirmOpenBookmarksNewIncognitoWindow', '' + urlsLen) : _m(
+						'confirmOpenBookmarksNewWindow', '' + urlsLen);
 				ConfirmDialog.open({
-					dialog: dialog,
-					button1: '<strong>' + _m('open') + '</strong>',
-					button2: _m('nope'),
-					fn1: open
+					dialog : dialog,
+					button1 : '<strong>' + _m('open') + '</strong>',
+					button2 : _m('nope'),
+					fn1 : open
 				});
 			} else {
 				open();
 			}
 		},
-		
-		editBookmarkFolder: function(id){
-			chrome.bookmarks.get(id, function(nodeList){
-				if (!nodeList.length) return;
+
+		editBookmarkFolder : function(id) {
+			chrome.bookmarks.get(id, function(nodeList) {
+				if (!nodeList.length)
+					return;
 				var node = nodeList[0];
 				var url = node.url;
 				var isBookmark = !!url;
 				var type = isBookmark ? 'bookmark' : 'folder';
 				var dialog = isBookmark ? _m('editBookmark') : _m('editFolder');
 				EditDialog.open({
-					dialog: dialog,
-					type: type,
-					name: node.title,
-					url: decodeURIComponent(url),
-					fn: function(name, url){
+					dialog : dialog,
+					type : type,
+					name : node.title,
+					url : decodeURIComponent(url),
+					fn : function(name, url) {
 						chrome.bookmarks.update(id, {
-							title: name,
-							url: isBookmark ? url : ''
-						}, function(n){
-							var title = n.title;
-							var url = n.url;
-							var li = $('neat-tree-item-' + id);
-							if (li){
-								if (isBookmark){
-									var css = li.querySelector('a').style.cssText;
-									li.innerHTML = generateBookmarkHTML(title, url, 'style="' + css + '"');
-								} else {
-									var i = li.querySelector('i');
-									var name = title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
-									i.textContent = name;
-								}
-							}
-							if (searchMode){
-								li = $('results-item-' + id);
-								li.innerHTML = generateBookmarkHTML(title, url);
-							}
-							li.firstElementChild.focus();
-						});
+							title : name,
+							url : isBookmark ? url : ''
+						},
+								function(n) {
+									var title = n.title;
+									var url = n.url;
+									var li = $('neat-tree-item-' + id);
+									if (li) {
+										if (isBookmark) {
+											var css = li.querySelector('a').style.cssText;
+											li.innerHTML = generateBookmarkHTML(title, url, 'style="' + css + '"');
+										} else {
+											var i = li.querySelector('i');
+											var name = title
+													|| (httpsPattern.test(url)
+															? url.replace(httpsPattern, '')
+															: _m('noTitle'));
+											i.textContent = name;
+										}
+									}
+									if (searchMode) {
+										li = $('results-item-' + id);
+										li.innerHTML = generateBookmarkHTML(title, url);
+									}
+									li.firstElementChild.focus();
+								});
 					}
 				});
 			});
 		},
-		
-		deleteBookmark: function(id){
+
+		deleteBookmark : function(id) {
 			var li1 = $('neat-tree-item-' + id);
 			var li2 = $('results-item-' + id);
-			chrome.bookmarks.remove(id, function(){
-				if (li1){
+			chrome.bookmarks.remove(id, function() {
+				if (li1) {
 					var nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
 					li1.destroy();
-					if (!searchMode && nearLi1) nearLi1.querySelector('a, span').focus();
+					if (!searchMode && nearLi1)
+						nearLi1.querySelector('a, span').focus();
 				}
-				if (li2){
+				if (li2) {
 					var nearLi2 = li2.nextElementSibling || li2.previousElementSibling;
 					li2.destroy();
-					if (searchMode && nearLi2) nearLi2.querySelector('a, span').focus();
+					if (searchMode && nearLi2)
+						nearLi2.querySelector('a, span').focus();
 				}
 			});
 		},
-		
-		deleteBookmarks: function(id, bookmarkCount, folderCount){
+
+		deleteBookmarks : function(id, bookmarkCount, folderCount) {
 			var li = $('neat-tree-item-' + id);
 			var item = li.querySelector('span');
-			if (bookmarkCount || folderCount){
+			if (bookmarkCount || folderCount) {
 				var dialog = '';
 				var folderName = '<cite>' + item.textContent.trim() + '</cite>';
-				if (bookmarkCount && folderCount){
-					dialog = _m('confirmDeleteFolderSubfoldersBookmarks', [folderName, folderCount, bookmarkCount]);
-				} else if (bookmarkCount){
-					dialog = _m('confirmDeleteFolderBookmarks', [folderName, bookmarkCount]);
+				if (bookmarkCount && folderCount) {
+					dialog = _m('confirmDeleteFolderSubfoldersBookmarks', [ folderName, folderCount, bookmarkCount ]);
+				} else if (bookmarkCount) {
+					dialog = _m('confirmDeleteFolderBookmarks', [ folderName, bookmarkCount ]);
 				} else {
-					dialog = _m('confirmDeleteFolderSubfolders', [folderName, folderCount]);
+					dialog = _m('confirmDeleteFolderSubfolders', [ folderName, folderCount ]);
 				}
 				ConfirmDialog.open({
-					dialog: dialog,
-					button1: '<strong>' + _m('delete') + '</strong>',
-					button2: _m('nope'),
-					fn1: function(){
-						chrome.bookmarks.removeTree(id, function(){
+					dialog : dialog,
+					button1 : '<strong>' + _m('delete') + '</strong>',
+					button2 : _m('nope'),
+					fn1 : function() {
+						chrome.bookmarks.removeTree(id, function() {
 							li.destroy();
 						});
 						var nearLi = li.nextElementSibling || li.previousElementSibling;
-						if (nearLi) nearLi.querySelector('a, span').focus();
+						if (nearLi)
+							nearLi.querySelector('a, span').focus();
 					},
-					fn2: function(){
+					fn2 : function() {
 						li.querySelector('a, span').focus();
 					}
 				});
 			} else {
-				chrome.bookmarks.removeTree(id, function(){
+				chrome.bookmarks.removeTree(id, function() {
 					li.destroy();
 				});
 				var nearLi = li.nextElementSibling || li.previousElementSibling;
-				if (nearLi) nearLi.querySelector('a, span').focus();
+				if (nearLi)
+					nearLi.querySelector('a, span').focus();
 			}
 		}
-		
+
 	};
-	
+
 	var middleClickBgTab = !!localStorage.middleClickBgTab;
 	var leftClickNewTab = !!localStorage.leftClickNewTab;
 	var noOpenBookmark = false;
-	var bookmarkHandler = function(e){
+	var bookmarkHandler = function(e) {
 		e.preventDefault();
-		if (e.button != 0) return; // force left-click
-		if (noOpenBookmark){ // flag that disables opening bookmark
+		if (e.button != 0)
+			return; // force left-click
+		if (noOpenBookmark) { // flag that disables opening bookmark
 			noOpenBookmark = false;
 			return;
 		}
 		var el = e.target;
 		var ctrlMeta = (e.ctrlKey || e.metaKey);
 		var shift = e.shiftKey;
-		if (el.tagName == 'A'){
+		if (el.tagName == 'A') {
 			var url = el.href;
-			if (ctrlMeta){ // ctrl/meta click
+			if (ctrlMeta) { // ctrl/meta click
 				actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);
 			} else { // click
-				if (shift){
+				if (shift) {
 					actions.openBookmarkNewWindow(url);
 				} else {
 					leftClickNewTab ? actions.openBookmarkNewTab(url, true, true) : actions.openBookmark(url);
 				}
 			}
-		} else if (el.tagName == 'SPAN'){
+		} else if (el.tagName == 'SPAN') {
 			var li = el.parentNode;
 			var id = li.id.replace('neat-tree-item-', '');
-			chrome.bookmarks.getChildren(id, function(children){
-				var urls = Array.map(function(c){
+			chrome.bookmarks.getChildren(id, function(children) {
+				var urls = Array.map(function(c) {
 					return c.url;
 				}, children).clean();
 				var urlsLen = urls.length;
-				if (!urlsLen) return;
-				if (ctrlMeta){ // ctrl/meta click
+				if (!urlsLen)
+					return;
+				if (ctrlMeta) { // ctrl/meta click
 					actions.openBookmarks(urls, middleClickBgTab ? shift : !shift);
-				} else if (shift){ // shift click
+				} else if (shift) { // shift click
 					actions.openBookmarksNewWindow(urls);
 				}
 			});
@@ -893,33 +968,36 @@
 	};
 	$tree.addEventListener('click', bookmarkHandler);
 	$results.addEventListener('click', bookmarkHandler);
-	var bookmarkHandlerMiddle = function(e){
-		if (e.button != 1) return; // force middle-click
+	var bookmarkHandlerMiddle = function(e) {
+		if (e.button != 1)
+			return; // force middle-click
 		var event = document.createEvent('MouseEvents');
 		event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, true, false, e.shiftKey, true, 0, null);
 		e.target.dispatchEvent(event);
 	};
 	$tree.addEventListener('mouseup', bookmarkHandlerMiddle);
 	$results.addEventListener('mouseup', bookmarkHandlerMiddle);
-	
+
 	// Disable Chrome auto-scroll feature
-	window.addEventListener('mousedown', function(e){
-		if (e.button == 1) e.preventDefault();
+	window.addEventListener('mousedown', function(e) {
+		if (e.button == 1)
+			e.preventDefault();
 	});
-	
+
 	// Context menu
 	var $bookmarkContextMenu = $('bookmark-context-menu');
 	var $folderContextMenu = $('folder-context-menu');
-	
-	var clearMenu = function(e){
+
+	var clearMenu = function(e) {
 		currentContext = null;
 		var active = body.querySelector('.active');
-		if (active){
+		if (active) {
 			active.removeClass('active');
 			// This is kinda hacky. Oh well.
-			if (e){
+			if (e) {
 				var el = e.target;
-				if (el == $tree || el == $results) active.focus();
+				if (el == $tree || el == $results)
+					active.focus();
 			}
 		}
 		$bookmarkContextMenu.style.left = '-999px';
@@ -927,57 +1005,67 @@
 		$folderContextMenu.style.left = '-999px';
 		$folderContextMenu.style.opacity = 0;
 	};
-	
+
 	body.addEventListener('click', clearMenu);
 	$tree.addEventListener('scroll', clearMenu);
 	$results.addEventListener('scroll', clearMenu);
 	$tree.addEventListener('focus', clearMenu, true);
 	$results.addEventListener('focus', clearMenu, true);
-	
+
 	var currentContext = null;
 	var macCloseContextMenu = false;
-	body.addEventListener('contextmenu', function(e){
+	body.addEventListener('contextmenu', function(e) {
 		e.preventDefault();
 		clearMenu();
-		if (os == 'mac'){
+		if (os == 'mac') {
 			macCloseContextMenu = false;
-			setTimeout(function(){ macCloseContextMenu = true; }, 500);
+			setTimeout(function() {
+				macCloseContextMenu = true;
+			}, 500);
 		}
 		var el = e.target;
-		if (el.tagName == 'A'){
+		if (el.tagName == 'A') {
 			currentContext = el;
 			var active = body.querySelector('.active');
-			if (active) active.removeClass('active');
+			if (active)
+				active.removeClass('active');
 			el.addClass('active');
 			var bookmarkMenuWidth = $bookmarkContextMenu.offsetWidth;
 			var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
-			var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth - bookmarkMenuWidth);
+			var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth
+					- bookmarkMenuWidth);
 			var pageY = e.pageY;
 			var boundY = window.innerHeight - bookmarkMenuHeight;
-			if (pageY > boundY) pageY -= bookmarkMenuHeight;
-			if (pageY < 0) pageY = boundY;
+			if (pageY > boundY)
+				pageY -= bookmarkMenuHeight;
+			if (pageY < 0)
+				pageY = boundY;
 			pageY = Math.max(0, pageY);
 			$bookmarkContextMenu.style.left = pageX + 'px';
 			$bookmarkContextMenu.style.top = pageY + 'px';
 			$bookmarkContextMenu.style.opacity = 1;
 			$bookmarkContextMenu.focus();
-		} else if (el.tagName == 'SPAN'){
+		} else if (el.tagName == 'SPAN') {
 			currentContext = el;
 			var active = body.querySelector('.active');
-			if (active) active.removeClass('active');
+			if (active)
+				active.removeClass('active');
 			el.addClass('active');
-			if (el.parentNode.dataset.parentid == '0'){
+			if (el.parentNode.dataset.parentid == '0') {
 				$folderContextMenu.addClass('hide-editables');
 			} else {
 				$folderContextMenu.removeClass('hide-editables');
 			}
 			var folderMenuWidth = $folderContextMenu.offsetWidth;
 			var folderMenuHeight = $folderContextMenu.offsetHeight;
-			var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth - folderMenuWidth);
+			var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth
+					- folderMenuWidth);
 			var pageY = e.pageY;
 			var boundY = window.innerHeight - folderMenuHeight;
-			if (pageY > boundY) pageY -= folderMenuHeight;
-			if (pageY < 0) pageY = boundY;
+			if (pageY > boundY)
+				pageY -= folderMenuHeight;
+			if (pageY < 0)
+				pageY = boundY;
 			$folderContextMenu.style.left = pageX + 'px';
 			$folderContextMenu.style.top = pageY + 'px';
 			$folderContextMenu.style.opacity = 1;
@@ -986,432 +1074,464 @@
 	});
 	// on Mac, holding down right-click for a period of time closes the context menu
 	// Not a complete implementation, but it works :)
-	if (os == 'mac') body.addEventListener('mouseup', function(e){
-		if (e.button == 2 && macCloseContextMenu){
-			macCloseContextMenu = false;
-			clearMenu();
-		}
-	});
-	
-	var bookmarkContextHandler = function(e){
+	if (os == 'mac')
+		body.addEventListener('mouseup', function(e) {
+			if (e.button == 2 && macCloseContextMenu) {
+				macCloseContextMenu = false;
+				clearMenu();
+			}
+		});
+
+	var bookmarkContextHandler = function(e) {
 		e.stopPropagation();
-		if (!currentContext) return;
+		if (!currentContext)
+			return;
 		var el = e.target;
-		if (el.tagName != 'COMMAND') return;
+		if (el.tagName != 'COMMAND')
+			return;
 		var url = currentContext.href;
 		var li = currentContext.parentNode;
 		var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
-		switch (el.id){
-			//++++++++ modified by windviki@gmail.com ++++++++ 
-			case 'add-bookmark-before-bookmark':
-				chrome.tabs.getSelected(null, function(curTab){
-					actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
-				});
-				break;
-			case 'add-bookmark-after-bookmark':
-				chrome.tabs.getSelected(null, function(curTab){
-					actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
-				});
-				break;
-			case 'add-folder-before-bookmark':
-				actions.addNewBookmarkNode(id, 'before', '', '');
-				break;
-			case 'add-folder-after-bookmark':
-				actions.addNewBookmarkNode(id, 'after', '', '');
-				break;
-			//++++++++ end ++++++++ 
-			case 'bookmark-new-tab':
-				actions.openBookmarkNewTab(url);
-				break;
-			case 'bookmark-new-window':
-				actions.openBookmarkNewWindow(url);
-				break;
-			case 'bookmark-new-incognito-window':
-				actions.openBookmarkNewWindow(url, true);
-				break;
-			case 'bookmark-edit':
-				var li = currentContext.parentNode;
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
-				actions.editBookmarkFolder(id);
-				break;
-			case 'bookmark-delete':
-				var li = currentContext.parentNode;
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
-				actions.deleteBookmark(id);
-				break;
+		switch (el.id) {
+		// ++++++++ modified by windviki@gmail.com ++++++++
+		case 'add-bookmark-before-bookmark':
+			chrome.tabs.getSelected(null, function(curTab) {
+				actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
+			});
+			break;
+		case 'add-bookmark-after-bookmark':
+			chrome.tabs.getSelected(null, function(curTab) {
+				actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
+			});
+			break;
+		case 'add-folder-before-bookmark':
+			actions.addNewBookmarkNode(id, 'before', '', '');
+			break;
+		case 'add-folder-after-bookmark':
+			actions.addNewBookmarkNode(id, 'after', '', '');
+			break;
+		// ++++++++ end ++++++++
+		case 'bookmark-new-tab':
+			actions.openBookmarkNewTab(url);
+			break;
+		case 'bookmark-new-window':
+			actions.openBookmarkNewWindow(url);
+			break;
+		case 'bookmark-new-incognito-window':
+			actions.openBookmarkNewWindow(url, true);
+			break;
+		case 'bookmark-edit':
+			var li = currentContext.parentNode;
+			var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			actions.editBookmarkFolder(id);
+			break;
+		case 'bookmark-delete':
+			var li = currentContext.parentNode;
+			var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			actions.deleteBookmark(id);
+			break;
 		}
 		clearMenu();
 	};
 	// On Mac, all three mouse clicks work; on Windows, middle-click doesn't work
-	$bookmarkContextMenu.addEventListener('mouseup', function(e){
+	$bookmarkContextMenu.addEventListener('mouseup', function(e) {
 		e.stopPropagation();
-		if (e.button == 0 || (os == 'mac' && e.button == 1)) bookmarkContextHandler(e);
+		if (e.button == 0 || (os == 'mac' && e.button == 1))
+			bookmarkContextHandler(e);
 	});
 	$bookmarkContextMenu.addEventListener('contextmenu', bookmarkContextHandler);
-	$bookmarkContextMenu.addEventListener('click', function(e){
+	$bookmarkContextMenu.addEventListener('click', function(e) {
 		e.stopPropagation();
 	});
-	
-	var folderContextHandler = function(e){
-		if (!currentContext) return;
+
+	var folderContextHandler = function(e) {
+		if (!currentContext)
+			return;
 		var el = e.target;
-		if (el.tagName != 'COMMAND') return;
+		if (el.tagName != 'COMMAND')
+			return;
 		var li = currentContext.parentNode;
 		var id = li.id.replace('neat-tree-item-', '');
-		chrome.bookmarks.getChildren(id, function(children){
-			var urls = Array.map(function(c){
+		chrome.bookmarks.getChildren(id, function(children) {
+			var urls = Array.map(function(c) {
 				return c.url;
 			}, children).clean();
 			var urlsLen = urls.length;
 			var noURLS = !urlsLen;
-			switch (el.id){
-				//++++++++ modified by windviki@gmail.com ++++++++ 
-				case 'add-bookmark-top':
-					chrome.tabs.getSelected(null, function(curTab){
-						actions.addNewBookmarkNode(id, 'top', curTab.url, curTab.title);
-					});
-					break;
-				case 'add-bookmark-bottom':
-					chrome.tabs.getSelected(null, function(curTab){
-						actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
-					});
-					break;
-				case 'add-bookmark-before-folder':
-					chrome.tabs.getSelected(null, function(curTab){
-						actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
-					});
-					break;
-				case 'add-bookmark-after-folder':
-					chrome.tabs.getSelected(null, function(curTab){
-						actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
-					});
-					break;
-				case 'add-folder-before-folder':
-					actions.addNewBookmarkNode(id, 'before', '', '');
-					break;
-				case 'add-folder-after-folder':
-					actions.addNewBookmarkNode(id, 'after', '', '');
-					break;
-				case 'add-new-folder':
-					actions.addNewBookmarkNode(id, 'top', '', '');
-					break;
-				//++++++++ end ++++++++ 
-				case 'folder-window':
-					if (noURLS) return;
-					actions.openBookmarks(urls);
-					break;
-				case 'folder-new-window':
-					if (noURLS) return;
-					actions.openBookmarksNewWindow(urls);
-					break;
-				case 'folder-new-incognito-window':
-					if (noURLS) return;
-					actions.openBookmarksNewWindow(urls, true);
-					break;
-				case 'folder-edit':
-					actions.editBookmarkFolder(id);
-					break;
-				case 'folder-delete':
-					actions.deleteBookmarks(id, urlsLen, children.length-urlsLen);
-					break;
+			switch (el.id) {
+			// ++++++++ modified by windviki@gmail.com ++++++++
+			case 'add-bookmark-top':
+				chrome.tabs.getSelected(null, function(curTab) {
+					actions.addNewBookmarkNode(id, 'top', curTab.url, curTab.title);
+				});
+				break;
+			case 'add-bookmark-bottom':
+				chrome.tabs.getSelected(null, function(curTab) {
+					actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
+				});
+				break;
+			case 'add-bookmark-before-folder':
+				chrome.tabs.getSelected(null, function(curTab) {
+					actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
+				});
+				break;
+			case 'add-bookmark-after-folder':
+				chrome.tabs.getSelected(null, function(curTab) {
+					actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
+				});
+				break;
+			case 'add-folder-before-folder':
+				actions.addNewBookmarkNode(id, 'before', '', '');
+				break;
+			case 'add-folder-after-folder':
+				actions.addNewBookmarkNode(id, 'after', '', '');
+				break;
+			case 'add-new-folder':
+				actions.addNewBookmarkNode(id, 'top', '', '');
+				break;
+			// ++++++++ end ++++++++
+			case 'folder-window':
+				if (noURLS)
+					return;
+				actions.openBookmarks(urls);
+				break;
+			case 'folder-new-window':
+				if (noURLS)
+					return;
+				actions.openBookmarksNewWindow(urls);
+				break;
+			case 'folder-new-incognito-window':
+				if (noURLS)
+					return;
+				actions.openBookmarksNewWindow(urls, true);
+				break;
+			case 'folder-edit':
+				actions.editBookmarkFolder(id);
+				break;
+			case 'folder-delete':
+				actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
+				break;
 			}
 		});
 		clearMenu();
 	};
-	$folderContextMenu.addEventListener('mouseup', function(e){
+	$folderContextMenu.addEventListener('mouseup', function(e) {
 		e.stopPropagation();
-		if (e.button == 0 || (os == 'mac' && e.button == 1)) folderContextHandler(e);
+		if (e.button == 0 || (os == 'mac' && e.button == 1))
+			folderContextHandler(e);
 	});
 	$folderContextMenu.addEventListener('contextmenu', folderContextHandler);
-	$folderContextMenu.addEventListener('click', function(e){
+	$folderContextMenu.addEventListener('click', function(e) {
 		e.stopPropagation();
 	});
-	
+
 	// Keyboard navigation
-	var keyBuffer = '', keyBufferTimer;
-	var treeKeyDown = function(e){
+	var keyBuffer = '', keyBufferTimer = null;
+	var treeKeyDown = function(e) {
 		var item = document.activeElement;
-		if (!/^(a|span)$/i.test(item.tagName)) item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
+		if (!/^(a|span)$/i.test(item.tagName))
+			item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
 		var li = item.parentNode;
 		var keyCode = e.keyCode;
 		var metaKey = e.metaKey;
-		if (keyCode == 40 && metaKey) keyCode = 35; // cmd + down (Mac)
-		if (keyCode == 38 && metaKey) keyCode = 36; // cmd + up (Mac)
-		switch (keyCode){
-			case 40: // down
-				e.preventDefault();
-				var liChild = li.querySelector('ul>li:first-child');
-				if (li.hasClass('open') && liChild){
-					liChild.querySelector('a, span').focus();
+		if (keyCode == 40 && metaKey)
+			keyCode = 35; // cmd + down (Mac)
+		if (keyCode == 38 && metaKey)
+			keyCode = 36; // cmd + up (Mac)
+		switch (keyCode) {
+		case 40: // down
+			e.preventDefault();
+			var liChild = li.querySelector('ul>li:first-child');
+			if (li.hasClass('open') && liChild) {
+				liChild.querySelector('a, span').focus();
+			} else {
+				var nextLi = li.nextElementSibling;
+				if (nextLi) {
+					nextLi.querySelector('a, span').focus();
 				} else {
-					var nextLi = li.nextElementSibling;
-					if (nextLi){
-						nextLi.querySelector('a, span').focus();
-					} else {
-						var nextLi;
-						do {
-							li = li.parentNode.parentNode;
-							if (li) nextLi = li.nextElementSibling;
-							if (nextLi) nextLi.querySelector('a, span').focus();
-						} while (li && !nextLi);
-					}
+					var nextLi = null;
+					do {
+						li = li.parentNode.parentNode;
+						if (li)
+							nextLi = li.nextElementSibling;
+						if (nextLi)
+							nextLi.querySelector('a, span').focus();
+					} while (li && !nextLi);
 				}
-				break;
-			case 38: // up
-				e.preventDefault();
-				var prevLi = li.previousElementSibling;
-				if (prevLi){
-					while (prevLi.hasClass('open') && prevLi.querySelector('ul>li:last-child')){
-						var lis = prevLi.querySelectorAll('ul>li:last-child');
-						prevLi = Array.filter(function(li){
-							return !!li.parentNode.offsetHeight;
-						}, lis).getLast();
-					};
-					prevLi.querySelector('a, span').focus();
-				} else {
-					var parentPrevLi = li.parentNode.parentNode;
-					if (parentPrevLi && parentPrevLi.tagName == 'LI'){
-						parentPrevLi.querySelector('a, span').focus();
-					} else {
-						searchInput.focus();
-					}
-				}
-				break;
-			case 39: // right (left for RTL)
-				e.preventDefault();
-				if (li.hasClass('parent') && ((!rtl && !li.hasClass('open')) || (rtl && li.hasClass('open')))){
-					var event = document.createEvent('MouseEvents');
-					event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-					li.firstElementChild.dispatchEvent(event);
-				} else if (rtl){
-					var parentID = li.dataset.parentid;
-					if (parentID == '0') return;
-					$('neat-tree-item-' + parentID).querySelector('span').focus();
-				}
-				break;
-			case 37: // left (right for RTL)
-				e.preventDefault();
-				if (li.hasClass('parent') && ((!rtl && li.hasClass('open')) || (rtl && !li.hasClass('open')))){
-					var event = document.createEvent('MouseEvents');
-					event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-					li.firstElementChild.dispatchEvent(event);
-				} else if (!rtl){
-					var parentID = li.dataset.parentid;
-					if (parentID == '0') return;
-					$('neat-tree-item-' + parentID).querySelector('span').focus();
-				}
-				break;
-			case 32: // space
-			case 13: // enter
-				e.preventDefault();
-				var event = document.createEvent('MouseEvents');
-				event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, e.ctrlKey, false, e.shiftKey, e.metaKey, 0, null);
-				li.firstElementChild.dispatchEvent(event);
-				break;
-			case 35: // end
-				if (searchMode){
-					this.querySelector('li:last-child a').focus();
-				} else {
-					var lis = this.querySelectorAll('ul>li:last-child');
-					var li = Array.filter(function(li){
+			}
+			break;
+		case 38: // up
+			e.preventDefault();
+			var prevLi = li.previousElementSibling;
+			if (prevLi) {
+				while (prevLi.hasClass('open') && prevLi.querySelector('ul>li:last-child')) {
+					var lis = prevLi.querySelectorAll('ul>li:last-child');
+					prevLi = Array.filter(function(li) {
 						return !!li.parentNode.offsetHeight;
 					}, lis).getLast();
-					li.querySelector('span, a').focus();
 				}
-				break;
-			case 36: // home
-				if (searchMode){
-					this.querySelector('ul>li:first-child a').focus();
+				;
+				prevLi.querySelector('a, span').focus();
+			} else {
+				var parentPrevLi = li.parentNode.parentNode;
+				if (parentPrevLi && parentPrevLi.tagName == 'LI') {
+					parentPrevLi.querySelector('a, span').focus();
 				} else {
-					this.querySelector('ul>li:first-child').querySelector('span, a').focus();
+					searchInput.focus();
 				}
+			}
+			break;
+		case 39: // right (left for RTL)
+			e.preventDefault();
+			if (li.hasClass('parent') && ((!rtl && !li.hasClass('open')) || (rtl && li.hasClass('open')))) {
+				var event = document.createEvent('MouseEvents');
+				event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				li.firstElementChild.dispatchEvent(event);
+			} else if (rtl) {
+				var parentID = li.dataset.parentid;
+				if (parentID == '0')
+					return;
+				$('neat-tree-item-' + parentID).querySelector('span').focus();
+			}
+			break;
+		case 37: // left (right for RTL)
+			e.preventDefault();
+			if (li.hasClass('parent') && ((!rtl && li.hasClass('open')) || (rtl && !li.hasClass('open')))) {
+				var event = document.createEvent('MouseEvents');
+				event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				li.firstElementChild.dispatchEvent(event);
+			} else if (!rtl) {
+				var parentID = li.dataset.parentid;
+				if (parentID == '0')
+					return;
+				$('neat-tree-item-' + parentID).querySelector('span').focus();
+			}
+			break;
+		case 32: // space
+		case 13: // enter
+			e.preventDefault();
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, e.ctrlKey, false, e.shiftKey, e.metaKey,
+					0, null);
+			li.firstElementChild.dispatchEvent(event);
+			break;
+		case 35: // end
+			if (searchMode) {
+				this.querySelector('li:last-child a').focus();
+			} else {
+				var lis = this.querySelectorAll('ul>li:last-child');
+				var li = Array.filter(function(li) {
+					return !!li.parentNode.offsetHeight;
+				}, lis).getLast();
+				li.querySelector('span, a').focus();
+			}
+			break;
+		case 36: // home
+			if (searchMode) {
+				this.querySelector('ul>li:first-child a').focus();
+			} else {
+				this.querySelector('ul>li:first-child').querySelector('span, a').focus();
+			}
+			break;
+		case 34: // page down
+			var self = this;
+			var getLastItem = function() {
+				var bound = self.offsetHeight + self.scrollTop;
+				var items = self.querySelectorAll('a, span');
+				return Array.filter(function(item) {
+					return !!item.parentElement.offsetHeight && item.offsetTop < bound;
+				}, items).getLast();
+			};
+			var item = getLastItem();
+			if (item != document.activeElement) {
+				e.preventDefault();
+				item.focus();
+			} else {
+				setTimeout(function() {
+					getLastItem().focus();
+				}, 0);
+			}
+			break;
+		case 33: // page up
+			var self = this;
+			var getFirstItem = function() {
+				var bound = self.scrollTop;
+				var items = self.querySelectorAll('a, span');
+				return Array.filter(function(item) {
+					return !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound);
+				}, items)[0];
+			};
+			var item = getFirstItem();
+			if (item != document.activeElement) {
+				e.preventDefault();
+				item.focus();
+			} else {
+				setTimeout(function() {
+					getFirstItem().focus();
+				}, 0);
+			}
+			break;
+		case 113: // F2, not for Mac
+			if (os == 'mac')
 				break;
-			case 34: // page down
-				var self = this;
-				var getLastItem = function(){
-					var bound = self.offsetHeight + self.scrollTop;
-					var items = self.querySelectorAll('a, span');
-					return Array.filter(function(item){
-						return !!item.parentElement.offsetHeight && item.offsetTop < bound;
-					}, items).getLast();
-				};
-				var item = getLastItem();
-				if (item != document.activeElement){
-					e.preventDefault();
-					item.focus();
+			var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			actions.editBookmarkFolder(id);
+			break;
+		case 46: // delete
+			break; // don't run 'default'
+		default:
+			var key = String.fromCharCode(keyCode).trim();
+			if (!key)
+				return;
+			if (key != keyBuffer)
+				keyBuffer += key;
+			clearTimeout(keyBufferTimer);
+			keyBufferTimer = setTimeout(function() {
+				keyBuffer = '';
+			}, 500);
+			var lis = this.querySelectorAll('ul>li');
+			var items = [];
+			for ( var i = 0, l = lis.length; i < l; i++) {
+				var li = lis[i];
+				if (li.parentNode.offsetHeight)
+					items.push(li.firstElementChild);
+			}
+			var pattern = new RegExp('^' + keyBuffer.escapeRegExp(), 'i');
+			var batch = [];
+			var startFind = false;
+			var found = false;
+			var activeElement = document.activeElement;
+			for ( var i = 0, l = items.length; i < l; i++) {
+				var item = items[i];
+				if (item == activeElement) {
+					startFind = true;
+				} else if (startFind) {
+					if (pattern.test(item.textContent.trim())) {
+						found = true;
+						item.focus();
+						break;
+					}
 				} else {
-					setTimeout(function(){
-						getLastItem().focus();
-					}, 0);
+					batch.push(item);
 				}
-				break;
-			case 33: // page up
-				var self = this;
-				var getFirstItem = function(){
-					var bound = self.scrollTop;
-					var items = self.querySelectorAll('a, span');
-					return Array.filter(function(item){
-						return !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound);
-					}, items)[0];
-				};
-				var item = getFirstItem();
-				if (item != document.activeElement){
-					e.preventDefault();
-					item.focus();
-				} else {
-					setTimeout(function(){
-						getFirstItem().focus();
-					}, 0);
-				}
-				break;
-			case 113: // F2, not for Mac
-				if (os == 'mac') break;
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
-				actions.editBookmarkFolder(id);
-				break;
-			case 46: // delete
-				break; // don't run 'default'
-			default:
-				var key = String.fromCharCode(keyCode).trim();
-				if (!key) return;
-				if (key != keyBuffer) keyBuffer += key;
-				clearTimeout(keyBufferTimer);
-				keyBufferTimer = setTimeout(function(){ keyBuffer = ''; }, 500);
-				var lis = this.querySelectorAll('ul>li');
-				var items = [];
-				for (var i=0, l=lis.length; i<l; i++){
-					var li = lis[i];
-					if (li.parentNode.offsetHeight) items.push(li.firstElementChild);
-				}
-				var pattern = new RegExp('^'+keyBuffer.escapeRegExp(), 'i');
-				var batch = [];
-				var startFind = false;
-				var found = false;
-				var activeElement = document.activeElement;
-				for (var i=0, l=items.length; i<l; i++){
-					var item = items[i];
-					if (item == activeElement){
-						startFind = true;
-					} else if (startFind){
-						if (pattern.test(item.textContent.trim())){
-							found = true;
-							item.focus();
-							break;
-						}
-					} else {
-						batch.push(item);
+			}
+			if (!found) {
+				for ( var i = 0, l = batch.length; i < l; i++) {
+					var item = batch[i];
+					if (pattern.test(item.textContent.trim())) {
+						item.focus();
+						break;
 					}
 				}
-				if (!found){
-					for (var i=0, l=batch.length; i<l; i++){
-						var item = batch[i];
-						if (pattern.test(item.textContent.trim())){
-							item.focus();
-							break;
-						}
-					}
-				}
+			}
 		}
 	};
 	$tree.addEventListener('keydown', treeKeyDown);
 	$results.addEventListener('keydown', treeKeyDown);
-	
-	var treeKeyUp = function(e){
+
+	var treeKeyUp = function(e) {
 		var item = document.activeElement;
-		if (!/^(a|span)$/i.test(item.tagName)) item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
+		if (!/^(a|span)$/i.test(item.tagName))
+			item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
 		var li = item.parentNode;
-		switch (e.keyCode){
-			case 8: // backspace
-				if (os != 'mac') break; // somehow delete button on mac gives backspace
-			case 46: // delete
-				e.preventDefault();
-				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
-				if (li.hasClass('parent')){
-					chrome.bookmarks.getChildren(id, function(children){
-						var urlsLen = Array.map(function(c){
-							return c.url;
-						}, children).clean().length;
-						actions.deleteBookmarks(id, urlsLen, children.length-urlsLen);
-					});
-				} else {
-					actions.deleteBookmark(id);
-				}
-				break;
+		switch (e.keyCode) {
+		case 8: // backspace
+			if (os != 'mac')
+				break; // somehow delete button on mac gives backspace
+		case 46: // delete
+			e.preventDefault();
+			var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+			if (li.hasClass('parent')) {
+				chrome.bookmarks.getChildren(id, function(children) {
+					var urlsLen = Array.map(function(c) {
+						return c.url;
+					}, children).clean().length;
+					actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
+				});
+			} else {
+				actions.deleteBookmark(id);
+			}
+			break;
 		}
 	};
 	$tree.addEventListener('keyup', treeKeyUp);
 	$results.addEventListener('keyup', treeKeyUp);
-	
-	var contextKeyDown = function(e){
+
+	var contextKeyDown = function(e) {
 		var menu = this;
 		var item = document.activeElement;
 		var metaKey = e.metaKey;
-		switch (e.keyCode){
-			case 40: // down
-				e.preventDefault();
-				if (metaKey){ // cmd + down (Mac)
-					menu.lastElementChild.focus();
-				} else {
-					if (item.tagName == 'COMMAND'){
-						var nextItem = item.nextElementSibling;
-						if (nextItem && nextItem.tagName == 'HR') nextItem = nextItem.nextElementSibling;
-						if (nextItem){
-							nextItem.focus();
-						} else if (os != 'mac'){
-							menu.firstElementChild.focus();
-						}
-					} else {
-						item.firstElementChild.focus();
+		switch (e.keyCode) {
+		case 40: // down
+			e.preventDefault();
+			if (metaKey) { // cmd + down (Mac)
+				menu.lastElementChild.focus();
+			} else {
+				if (item.tagName == 'COMMAND') {
+					var nextItem = item.nextElementSibling;
+					if (nextItem && nextItem.tagName == 'HR')
+						nextItem = nextItem.nextElementSibling;
+					if (nextItem) {
+						nextItem.focus();
+					} else if (os != 'mac') {
+						menu.firstElementChild.focus();
 					}
-				}
-				break;
-			case 38: // up
-				e.preventDefault();
-				if (metaKey){ // cmd + up (Mac)
-					menu.firstElementChild.focus();
 				} else {
-					if (item.tagName == 'COMMAND'){
-						var prevItem = item.previousElementSibling;
-						if (prevItem && prevItem.tagName == 'HR') prevItem = prevItem.previousElementSibling;
-						if (prevItem){
-							prevItem.focus();
-						} else if (os != 'mac'){
-							menu.lastElementChild.focus();
-						}
-					} else {
-						item.lastElementChild.focus();
-					}
+					item.firstElementChild.focus();
 				}
+			}
+			break;
+		case 38: // up
+			e.preventDefault();
+			if (metaKey) { // cmd + up (Mac)
+				menu.firstElementChild.focus();
+			} else {
+				if (item.tagName == 'COMMAND') {
+					var prevItem = item.previousElementSibling;
+					if (prevItem && prevItem.tagName == 'HR')
+						prevItem = prevItem.previousElementSibling;
+					if (prevItem) {
+						prevItem.focus();
+					} else if (os != 'mac') {
+						menu.lastElementChild.focus();
+					}
+				} else {
+					item.lastElementChild.focus();
+				}
+			}
+			break;
+		case 32: // space
+			if (os != 'mac')
 				break;
-			case 32: // space
-				if (os != 'mac') break;
-			case 13: // enter
-				e.preventDefault();
-				var event = document.createEvent('MouseEvents');
-				event.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-				item.dispatchEvent(event);
-			case 27: // esc
-				e.preventDefault();
-				var active = body.querySelector('.active');
-				if (active) active.removeClass('active').focus();
-				clearMenu();
+		case 13: // enter
+			e.preventDefault();
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			item.dispatchEvent(event);
+		case 27: // esc
+			e.preventDefault();
+			var active = body.querySelector('.active');
+			if (active)
+				active.removeClass('active').focus();
+			clearMenu();
 		}
 	};
 	$bookmarkContextMenu.addEventListener('keydown', contextKeyDown);
 	$folderContextMenu.addEventListener('keydown', contextKeyDown);
-	
-	var contextMouseMove = function(e){
+
+	var contextMouseMove = function(e) {
 		e.target.focus();
 	};
 	$bookmarkContextMenu.addEventListener('mousemove', contextMouseMove);
 	$folderContextMenu.addEventListener('mousemove', contextMouseMove);
-	
-	var contextMouseOut = function(){
-		if (this.style.opacity.toInt()) this.focus();
+
+	var contextMouseOut = function() {
+		if (this.style.opacity.toInt())
+			this.focus();
 	};
 	$bookmarkContextMenu.addEventListener('mouseout', contextMouseOut);
 	$folderContextMenu.addEventListener('mouseout', contextMouseOut);
-	
+
 	// Drag and drop, baby
 	var draggedBookmark = null;
 	var draggedOut = false;
@@ -1419,87 +1539,100 @@
 	var zoomLevel = 1;
 	var bookmarkClone = $('bookmark-clone');
 	var dropOverlay = $('drop-overlay');
-	$tree.addEventListener('mousedown', function(e){
-		if (e.button != 0) return;
+	$tree.addEventListener('mousedown', function(e) {
+		if (e.button != 0)
+			return;
 		var el = e.target;
 		var elParent = el.parentNode;
-		// can move any bookmarks/folders except the default root folders
-		if ((el.tagName == 'A' && elParent.hasClass('child')) || (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')){
+		// can move any bookmarks/folders except the default
+		// root folders
+		if ((el.tagName == 'A' && elParent.hasClass('child'))
+				|| (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')) {
 			e.preventDefault();
 			draggedOut = false;
 			draggedBookmark = el;
-			if (localStorage.zoom) zoomLevel = localStorage.zoom.toInt()/100;
+			if (localStorage.zoom)
+				zoomLevel = localStorage.zoom.toInt() / 100;
 			bookmarkClone.innerHTML = el.innerHTML;
 			el.focus();
 		}
 	});
-	var scrollTree, scrollTreeInterval = 100, scrollTreeSpot = 10;
-	var stopScrollTree = function(){
+	var scrollTree = null, scrollTreeInterval = 100, scrollTreeSpot = 10;
+	var stopScrollTree = function() {
 		clearInterval(scrollTree);
 		scrollTree = null;
 	};
-	document.addEventListener('mousemove', function(e){
-		if (e.button != 0) return;
-		if (!draggedBookmark) return;
+	document.addEventListener('mousemove', function(e) {
+		if (e.button != 0)
+			return;
+		if (!draggedBookmark)
+			return;
 		e.preventDefault();
 		var el = e.target;
 		var clientX = e.clientX;
 		var clientY = e.clientY;
-		if (el == draggedBookmark){
+		if (el == draggedBookmark) {
 			bookmarkClone.style.left = '-999px';
 			dropOverlay.style.left = '-999px';
 			canDrop = false;
 			return;
 		}
 		draggedOut = true;
-		// if hovering over the dragged element itself or cursor move outside the tree
+		// if hovering over the dragged element itself or cursor
+		// move outside the tree
 		var treeTop = $tree.offsetTop, treeBottom = window.innerHeight;
-		if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom){
+		if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom) {
 			bookmarkClone.style.left = '-999px';
 			dropOverlay.style.left = '-999px';
 			canDrop = false;
 		}
-		// if hovering over the top or bottom edges of the tree, scroll the tree
+		// if hovering over the top or bottom edges of the tree,
+		// scroll the tree
 		var treeScrollHeight = $tree.scrollHeight, treeOffsetHeight = $tree.offsetHeight;
-		if (treeScrollHeight > treeOffsetHeight){ // only scroll when it's scrollable
+		if (treeScrollHeight > treeOffsetHeight) { // only
+			// scroll
+			// when it's
+			// scrollable
 			var treeScrollTop = $tree.scrollTop;
-			if (clientY <= treeTop+scrollTreeSpot){
-				if (treeScrollTop == 0){
+			if (clientY <= treeTop + scrollTreeSpot) {
+				if (treeScrollTop == 0) {
 					stopScrollTree();
-				} else if (!scrollTree) scrollTree = setInterval(function(){
-					$tree.scrollByLines(-1);
-					dropOverlay.style.left = '-999px';
-				}, scrollTreeInterval);
-			} else if (clientY >= treeBottom-scrollTreeSpot){
-				if (treeScrollTop == (treeScrollHeight - treeOffsetHeight)){
+				} else if (!scrollTree)
+					scrollTree = setInterval(function() {
+						$tree.scrollByLines(-1);
+						dropOverlay.style.left = '-999px';
+					}, scrollTreeInterval);
+			} else if (clientY >= treeBottom - scrollTreeSpot) {
+				if (treeScrollTop == (treeScrollHeight - treeOffsetHeight)) {
 					stopScrollTree();
-				} else if (!scrollTree) scrollTree = setInterval(function(){
-					$tree.scrollByLines(1);
-					dropOverlay.style.left = '-999px';
-				}, scrollTreeInterval);
+				} else if (!scrollTree)
+					scrollTree = setInterval(function() {
+						$tree.scrollByLines(1);
+						dropOverlay.style.left = '-999px';
+					}, scrollTreeInterval);
 			} else {
 				stopScrollTree();
 			}
 		}
 		// collapse the folder before moving it
 		var draggedBookmarkParent = draggedBookmark.parentNode;
-		if (draggedBookmark.tagName == 'SPAN' && draggedBookmarkParent.hasClass('open')){
+		if (draggedBookmark.tagName == 'SPAN' && draggedBookmarkParent.hasClass('open')) {
 			draggedBookmarkParent.removeClass('open').setAttribute('aria-expanded', false);
 		}
 		clientX /= zoomLevel;
 		clientY /= zoomLevel;
-		if (el.tagName == 'A'){
+		if (el.tagName == 'A') {
 			canDrop = true;
 			bookmarkClone.style.top = clientY + 'px';
-			bookmarkClone.style.left = (rtl ? (clientX-bookmarkClone.offsetWidth) : clientX) + 'px';
+			bookmarkClone.style.left = (rtl ? (clientX - bookmarkClone.offsetWidth) : clientX) + 'px';
 			var elRect = el.getBoundingClientRect();
-			var top = (clientY >= elRect.top+elRect.height/2) ? elRect.bottom : elRect.top;
+			var top = (clientY >= elRect.top + elRect.height / 2) ? elRect.bottom : elRect.top;
 			dropOverlay.className = 'bookmark';
 			dropOverlay.style.top = top + 'px';
 			dropOverlay.style.left = rtl ? '0px' : el.style.webkitPaddingStart.toInt() + 16 + 'px';
 			dropOverlay.style.width = (el.getComputedStyle('width').toInt() - 12) + 'px';
 			dropOverlay.style.height = null;
-		} else if (el.tagName == 'SPAN'){
+		} else if (el.tagName == 'SPAN') {
 			canDrop = true;
 			bookmarkClone.style.top = clientY + 'px';
 			bookmarkClone.style.left = clientX + 'px';
@@ -1507,14 +1640,14 @@
 			var top = null;
 			var elRectTop = elRect.top, elRectHeight = elRect.height;
 			var elParent = el.parentNode;
-			if (elParent.dataset.parentid != '0'){
-				if (clientY < elRectTop+elRectHeight*.3){
+			if (elParent.dataset.parentid != '0') {
+				if (clientY < elRectTop + elRectHeight * .3) {
 					top = elRect.top;
-				} else if (clientY > elRectTop+elRectHeight*.7 && !elParent.hasClass('open')){
+				} else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
 					top = elRect.bottom;
 				}
 			}
-			if (top == null){
+			if (top == null) {
 				dropOverlay.className = 'folder';
 				dropOverlay.style.top = elRect.top + 'px';
 				dropOverlay.style.left = '0px';
@@ -1529,73 +1662,79 @@
 			}
 		}
 	});
-	var onDrop = function(){
+	var onDrop = function() {
 		draggedBookmark = null;
 		bookmarkClone.style.left = '-999px';
 		dropOverlay.style.left = '-999px';
 		canDrop = false;
 	};
-	document.addEventListener('mouseup', function(e){
-		if (e.button != 0) return;
-		if (!draggedBookmark) return;
+	document.addEventListener('mouseup', function(e) {
+		if (e.button != 0)
+			return;
+		if (!draggedBookmark)
+			return;
 		stopScrollTree();
-		if (!canDrop){
-			if (draggedOut) noOpenBookmark = true;
+		if (!canDrop) {
+			if (draggedOut)
+				noOpenBookmark = true;
 			draggedOut = false;
 			onDrop();
 			return;
-		};
+		}
+		;
 		var el = e.target;
 		var elParent = el.parentNode;
 		var id = elParent.id.replace('neat-tree-item-', '');
-		if (!id){
+		if (!id) {
 			onDrop();
 			return;
 		}
 		var draggedBookmarkParent = draggedBookmark.parentNode;
 		var draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
-		var clientY = e.clientY/zoomLevel;
-		if (el.tagName == 'A'){
+		var clientY = e.clientY / zoomLevel;
+		if (el.tagName == 'A') {
 			var elRect = el.getBoundingClientRect();
-			var moveBottom = (clientY >= elRect.top+elRect.height/2);
-			chrome.bookmarks.get(id, function(node){
-				if (!node || !node.length) return;
+			var moveBottom = (clientY >= elRect.top + elRect.height / 2);
+			chrome.bookmarks.get(id, function(node) {
+				if (!node || !node.length)
+					return;
 				node = node[0];
 				var index = node.index;
 				var parentId = node.parentId;
 				chrome.bookmarks.move(draggedID, {
-					parentId: parentId,
-					index: moveBottom ? ++index : index
-				}, function(){
+					parentId : parentId,
+					index : moveBottom ? ++index : index
+				}, function() {
 					draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
 					draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
 					draggedBookmark.focus();
 					onDrop();
 				});
 			});
-		} else if (el.tagName == 'SPAN'){
+		} else if (el.tagName == 'SPAN') {
 			var elRect = el.getBoundingClientRect();
 			var move = 0; // 0 = middle, 1 = top, 2 = bottom
 			var elRectTop = elRect.top, elRectHeight = elRect.height;
 			var elParent = el.parentNode;
-			if (elParent.dataset.parentid != '0'){
-				if (clientY < elRectTop+elRectHeight*.3){
+			if (elParent.dataset.parentid != '0') {
+				if (clientY < elRectTop + elRectHeight * .3) {
 					move = 1;
-				} else if (clientY > elRectTop+elRectHeight*.7 && !elParent.hasClass('open')){
+				} else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
 					move = 2;
 				}
 			}
-			if (move > 0){
+			if (move > 0) {
 				var moveBottom = (move == 2);
-				chrome.bookmarks.get(id, function(node){
-					if (!node || !node.length) return;
+				chrome.bookmarks.get(id, function(node) {
+					if (!node || !node.length)
+						return;
 					node = node[0];
 					var index = node.index;
 					var parentId = node.parentId;
 					chrome.bookmarks.move(draggedID, {
-						parentId: parentId,
-						index: moveBottom ? ++index : index
-					}, function(){
+						parentId : parentId,
+						index : moveBottom ? ++index : index
+					}, function() {
 						draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
 						draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
 						draggedBookmark.focus();
@@ -1604,12 +1743,12 @@
 				});
 			} else {
 				chrome.bookmarks.move(draggedID, {
-					parentId: id
-				}, function(){
+					parentId : id
+				}, function() {
 					var ul = elParent.querySelector('ul');
-					var level = parseInt(elParent.parentNode.dataset.level)+1;
-					draggedBookmark.style.webkitPaddingStart = (14*level) + 'px';
-					if (ul){
+					var level = parseInt(elParent.parentNode.dataset.level) + 1;
+					draggedBookmark.style.webkitPaddingStart = (14 * level) + 'px';
+					if (ul) {
 						draggedBookmarkParent.inject(ul);
 					} else {
 						draggedBookmarkParent.destroy();
@@ -1622,20 +1761,21 @@
 			onDrop();
 		}
 	});
-	
+
 	// Resizer
 	var $resizer = $('resizer');
 	var resizerDown = false;
-	var bodyWidth, screenX;
-	$resizer.addEventListener('mousedown', function(e){
+	var bodyWidth = 0, screenX = 0;
+	$resizer.addEventListener('mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		resizerDown = true;
 		bodyWidth = body.offsetWidth;
 		screenX = e.screenX;
 	});
-	document.addEventListener('mousemove', function(e){
-		if (!resizerDown) return;
+	document.addEventListener('mousemove', function(e) {
+		if (!resizerDown)
+			return;
 		e.preventDefault();
 		var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
 		var width = bodyWidth + changedWidth;
@@ -1644,58 +1784,70 @@
 		localStorage.popupWidth = width;
 		clearMenu(); // messes the context menu
 	});
-	document.addEventListener('mouseup', function(e){
-		if (!resizerDown) return;
+	document.addEventListener('mouseup', function(e) {
+		if (!resizerDown)
+			return;
 		e.preventDefault();
 		resizerDown = false;
 		adaptBookmarkTooltips();
 	});
-	setTimeout(function(){ // delaying execution due to stupid Chrome Linux bug
-		window.addEventListener('resize', function(){ // in case there's a resizer *outside* the popup page
-			if (resizerDown) return;
+	setTimeout(function() { // delaying execution due to stupid Chrome Linux bug
+		window.addEventListener('resize', function() {
+			// in case there's a resizer *outside* the popup page
+			if (resizerDown)
+				return;
 			var width = window.innerWidth;
 			body.style.width = width + 'px';
 			localStorage.popupWidth = width;
 			clearMenu();
 		});
 	}, 1000);
-	
+
 	// Closing dialogs on escape
-	var closeDialogs = function(){
-			if (body.hasClass('needConfirm')) ConfirmDialog.fn2(); ConfirmDialog.close();
-			if (body.hasClass('needEdit')) EditDialog.close();
-			if (body.hasClass('needInputName')) NewFolderDialog.close();
-			if (body.hasClass('needAlert')) AlertDialog.close();
+	var closeDialogs = function() {
+		if (body.hasClass('needConfirm'))
+			ConfirmDialog.fn2();
+		ConfirmDialog.close();
+		if (body.hasClass('needEdit'))
+			EditDialog.close();
+		if (body.hasClass('needInputName'))
+			NewFolderDialog.close();
+		if (body.hasClass('needAlert'))
+			AlertDialog.close();
 	};
-	document.addEventListener('keydown', function(e){
-		if (e.keyCode == 27 && (body.hasClass('needConfirm') || body.hasClass('needEdit') || body.hasClass('needAlert') || body.hasClass('needInputName'))){ // esc
+	document.addEventListener('keydown', function(e) {
+		if (e.keyCode == 27
+				&& (body.hasClass('needConfirm') || body.hasClass('needEdit') || body.hasClass('needAlert') || body
+						.hasClass('needInputName'))) { // esc
 			e.preventDefault();
 			closeDialogs();
-		} else if ((e.metaKey || e.ctrlKey) && e.keyCode == 70){ // cmd/ctrl + f
+		} else if ((e.metaKey || e.ctrlKey) && e.keyCode == 70) { // cmd/ctrl
+			// + f
 			searchInput.focus();
 			searchInput.select();
 		}
 	});
 	$('cover').addEventListener('click', closeDialogs);
-	
+
 	// Make webkit transitions work only after elements are settled down
-	setTimeout(function(){
+	setTimeout(function() {
 		body.addClass('transitional');
 	}, 10);
-	
+
 	// Zoom
-	if (localStorage.zoom){
+	if (localStorage.zoom) {
 		body.dataset.zoom = localStorage.zoom;
 	}
-	var zoom = function(val){
-		if (draggedBookmark) return; // prevent zooming when drag-n-droppping
+	var zoom = function(val) {
+		if (draggedBookmark)
+			return; // prevent zooming when drag-n-droppping
 		var dataZoom = body.dataset.zoom;
 		var currentZoom = dataZoom ? dataZoom.toInt() : 100;
-		if (val == 0){
+		if (val == 0) {
 			delete body.dataset.zoom;
 			localStorage.removeItem('zoom');
 		} else {
-			var z = (val>0) ? currentZoom+10 : currentZoom-10;
+			var z = (val > 0) ? currentZoom + 10 : currentZoom - 10;
 			z = Math.min(150, Math.max(90, z));
 			body.dataset.zoom = z;
 			localStorage.zoom = z;
@@ -1703,39 +1855,43 @@
 		body.addClass('dummy').removeClass('dummy'); // force redraw
 		resetHeight();
 	};
-	document.addEventListener('mousewheel', function(e){
-		if (!e.metaKey && !e.ctrlKey) return;
+	document.addEventListener('mousewheel', function(e) {
+		if (!e.metaKey && !e.ctrlKey)
+			return;
 		e.preventDefault();
 		zoom(e.wheelDelta);
 	});
-	document.addEventListener('keydown', function(e){
-		if (!e.metaKey && !e.ctrlKey) return;
-		switch (e.keyCode){
-			case 187: // + (plus)
-				e.preventDefault();
-				zoom(1);
-				break;
-			case 189: // - (minus)
-				e.preventDefault();
-				zoom(-1);
-				break;
-			case 48: // 0 (zero)
-				e.preventDefault();
-				zoom(0);
-				break;
+	document.addEventListener('keydown', function(e) {
+		if (!e.metaKey && !e.ctrlKey)
+			return;
+		switch (e.keyCode) {
+		case 187: // + (plus)
+			e.preventDefault();
+			zoom(1);
+			break;
+		case 189: // - (minus)
+			e.preventDefault();
+			zoom(-1);
+			break;
+		case 48: // 0 (zero)
+			e.preventDefault();
+			zoom(0);
+			break;
 		}
 	});
-	
+
 	// Fix stupid Chrome build 536 bug
-	if (version.build >= 536) body.addClass('chrome-536');
-	
+	if (version.build >= 536)
+		body.addClass('chrome-536');
+
 	// Fix stupid wrong offset of the page, on Chrome Mac
-	setTimeout(function(){
+	setTimeout(function() {
 		var top = body.scrollTop;
-		if (top != 0) body.scrollTop = 0;
+		if (top != 0)
+			body.scrollTop = 0;
 	}, 1500);
-	
-	if (localStorage.userstyle){
+
+	if (localStorage.userstyle) {
 		var style = document.createElement('style');
 		style.textContent = localStorage.userstyle;
 		style.inject(document.body);
