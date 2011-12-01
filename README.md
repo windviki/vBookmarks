@@ -16,7 +16,11 @@ So I enhance the features of "Neat Bookmarks", it's easy to add or remove bookma
 
 5) Add a sub-folder into selected folder.
 
-6) Fix bugs in Neat Bookmarks.
+6) Update URL of bookmark with current URL.
+
+7) Copy title and URL information for bookmarks to clipboard.
+
+8) Fix bugs in Neat Bookmarks.
 
 Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
@@ -44,3 +48,14 @@ Added:option for only displaying bookmarks in Bookmark Bar.
 Added:context menu for adding folder before/after bookmark/folder.
 
 Fixed:some translations in multi-language support.
+
+
+ver1.2 2011/11/30
+
+Added:update selected bookmark with current URL.
+
+Added:copy title and URL of selected bookmark to clipboard.
+
+Fixed:after adding new bookmark or folder to a closed folder, its original children cannot be shown. 
+
+Fixed:make up missing translations for cs(Czech).
