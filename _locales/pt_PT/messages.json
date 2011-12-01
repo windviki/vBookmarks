@@ -209,5 +209,14 @@
       }
     },
     "message": "Tem a certeza que pretende apagar a pasta $folderName$ e $subFolderCount$ sub-pasta(s) incluída(s)?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Título copiar e URL à prancheta"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiar todos os títulos e URLs à prancheta"
+  },
+  "replaceUrl": {
+    "message": "Substituir isto por URL atual"
   }
 }

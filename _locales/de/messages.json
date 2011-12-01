@@ -209,5 +209,14 @@
       }
     },
     "message": "Möchten Sie wirklich den gesamten $folderName$ Ordner mit $subFolderCount$ Unterordnern löschen?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopieren Sie Titel und die URL in die Zwischenablage kopieren"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopieren Sie alle Titel und URLs in die Zwischenablage kopieren"
+  },
+  "replaceUrl": {
+    "message": "Ersetzen Sie diese mit den aktuellen URL"
   }
 }

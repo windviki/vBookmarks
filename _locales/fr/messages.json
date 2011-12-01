@@ -209,5 +209,14 @@
       }
     },
     "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$ et $subFolderCount$ sous-répertoire(s) les contenant?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Titre Copiez et l'URL dans le presse papier"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiez tous les titres et les URL dans le presse papier"
+  },
+  "replaceUrl": {
+    "message": "Remplacer cette URL en cours avec les"
   }
 }

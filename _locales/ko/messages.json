@@ -209,5 +209,14 @@
       }
     },
     "message": "정말 $subFolderCount$ 개의 하위 폴더가 들어있는 $folderName$ 폴더를 삭제하시겠습니까?"
+  },
+  "copyTitleAndUrl": {
+    "message": "클립 보드로 복사 제목 및 URL"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "클립 보드의 모든 제목과 URL을 복사"
+  },
+  "replaceUrl": {
+    "message": "현재 URL이로 교체"
   }
 }

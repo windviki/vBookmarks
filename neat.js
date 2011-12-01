@@ -6,6 +6,55 @@
 	var body = document.body;
 	var _m = chrome.i18n.getMessage;
 
+	// ++++++++ added by windviki@gmail.com ++++++++
+	copy_to_clipboard = function(copyText) {
+		if (window.clipboardData) {
+			window.clipboardData.setData("Text", copyText);
+		} else {
+			$('copier-input').value = copyText;
+			$('copier-input').select();
+			document.execCommand("Copy");
+		}
+	};
+
+	function TreeText(nodeid) {
+		this.id = nodeid;
+		this.text = '';
+		this.level = 0;
+	};
+
+	TreeText.prototype.get = function(fn) {
+		var _self1 = this;
+		var _fn1 = fn;
+		chrome.bookmarks.get(_self1.id, function(nodeList) {
+			if (!nodeList.length)
+				return;
+			var node = nodeList[0];
+			var url = node.url;
+			var title = node.title;
+			// check whether the referenced node is bookmark or folder
+			var isBookmark = !!url;
+			_self1.text += _self1.level ? '\t' * _self1.level : '' + title + '\r\n';
+			if (isBookmark) {
+				_self1.text += _self1.level ? '\t' * _self1.level : '' + url;
+				//console.info("get1 end. id = " + _self1.id + ", text = " + _self1.text);
+				if (_fn1)
+					_fn1(_self1.text);
+			} else {
+				/*
+				 * var _self2 = _self1; var _fn2 = _fn1; chrome.bookmarks.getChildren(_self2.id, function(nodechildren) {
+				 * for ( var i = 0, l = nodechildren.length; i < l; i++) { var d = nodechildren[i]; var child = new
+				 * TreeText(d.id); child.level = _self2.level + 1; var _self3 = _self2; child.get(function(childtext){
+				 * _self3.text += childtext; _self3.text += '\r\n'; console.info("child get end. id = " + _self3.id + ",
+				 * text = " + _self3.text); }); } console.info("get2 end. id = " + _self2.id + ", text = " +
+				 * _self2.text); if(_fn2) _fn2(_self2.text); });
+				 */
+			}
+		});
+	};
+
+	// ++++++++ end ++++++++
+
 	// Error alert
 	var AlertDialog = {
 		open : function(dialog) {
@@ -61,6 +110,9 @@
 		'add-folder-before-folder' : 'addNewFolderBefore',
 		'add-folder-after-folder' : 'addNewFolderAfter',
 		'add-new-folder' : 'addNewFolder',
+		'copy-title-and-url' : 'copyTitleAndUrl',
+		// 'copy-all-titles-and-urls' : 'copyAllTitlesAndUrls',
+		'replace-url' : 'replaceUrl',
 		'folder-window' : 'openBookmarks',
 		'folder-new-window' : 'openBookmarksNewWindow',
 		'folder-new-incognito-window' : 'openBookmarksIncognitoWindow',
@@ -187,7 +239,7 @@
 		var html = '';
 		if (onlyShowBMBar) {
 			html = generateHTML(tree[0].children[0].children);
-			//console.log("----- html -----\n"+html+"\n");
+			// console.log("----- html -----\n"+html+"\n");
 		} else {
 			html = generateHTML(tree[0].children);
 		}
@@ -578,7 +630,7 @@
 			});
 		},
 
-		// ++++++++ modified by windviki@gmail.com ++++++++
+		// ++++++++ added by windviki@gmail.com ++++++++
 		addNewBookmarkNode : function(nodeid, where, inurl, intitle) {
 			chrome.bookmarks.get(nodeid, function(nodeList) {
 				if (!nodeList.length)
@@ -613,7 +665,7 @@
 						return;
 				} else {
 					isOpenDir = (rnode.getAttribute('aria-expanded') == 'true');
-					//console.log('the folder is opened.');
+					// console.log('the folder is opened.');
 				}
 
 				// referenced node is folder
@@ -632,7 +684,7 @@
 				}
 
 				if (!pnode) {
-					//console.log('null pnode found!!');
+					// console.log('null pnode found!!');
 				}
 
 				if (isAddBookmark) {// add bookmark
@@ -643,7 +695,7 @@
 						'url' : addurl
 					}, function(resultbm) {
 						if (!isOpenDir && (where == "top" || where == "bottom")) {
-							//console.log('do not add html for opened folder.');
+							// console.log('do not add html for opened folder.');
 							return;
 						}
 						var lv = 0;
@@ -706,7 +758,7 @@
 							'url' : addurl
 						}, function(resultbm) {
 							if (!isOpenDir && (where == "top" || where == "bottom")) {
-								//console.log('do not add html for opened folder.');
+								// console.log('do not add html for opened folder.');
 								return;
 							}
 							var lv = 0;
@@ -764,6 +816,28 @@
 					}); // end NewFolderDialog.open
 				} // end if
 			}); // end bookmarks.get
+		},
+
+		copyAllTitlesAndUrls : function(nodeid) {
+			var tt = new TreeText(nodeid);
+			tt.get(function(textresult) {
+				console.info("tt -> \n" + textresult);
+				copy_to_clipboard(textresult);
+			});
+		},
+
+		replaceUrl : function(nodeid, newurl) {
+			chrome.bookmarks.get(nodeid, function(nodeList) {
+				if (!nodeList.length)
+					return;
+				var node = nodeList[0];
+				if (!!node.url && !!newurl) // ensure it is a bookmark
+				{
+					chrome.bookmarks.update(node.id, {
+						url : newurl
+					});
+				}
+			});
 		},
 		// ++++++++ end ++++++++
 
@@ -1110,6 +1184,14 @@
 		case 'add-folder-after-bookmark':
 			actions.addNewBookmarkNode(id, 'after', '', '');
 			break;
+		case 'copy-title-and-url':
+			actions.copyAllTitlesAndUrls(id);
+			break;
+		case 'replace-url':
+			chrome.tabs.getSelected(null, function(curTab) {
+				actions.replaceUrl(id, curTab.url);
+			});
+			break;
 		// ++++++++ end ++++++++
 		case 'bookmark-new-tab':
 			actions.openBookmarkNewTab(url);
@@ -1188,6 +1270,9 @@
 				break;
 			case 'add-new-folder':
 				actions.addNewBookmarkNode(id, 'top', '', '');
+				break;
+			case 'copy-all-titles-and-urls':
+				actions.copyAllTitlesAndUrls(id);
 				break;
 			// ++++++++ end ++++++++
 			case 'folder-window':

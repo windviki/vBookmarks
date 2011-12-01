@@ -212,5 +212,14 @@
       }
     },
     "message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录）？"
+  },
+  "copyTitleAndUrl": {
+    "message": "拷贝标题和链接到剪贴板"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "拷贝所有标题和链接到剪贴板"
+  },
+  "replaceUrl": {
+    "message": "替换为当前页的URL"
   }
 }

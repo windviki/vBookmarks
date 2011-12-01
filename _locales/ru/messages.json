@@ -209,5 +209,14 @@
       }
     },
     "message": "Вы уверены что хотите удалить $folderName$ папку и $subFolderCount$ подпапок в ней?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Название Скопируйте и URL в буфер обмена"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Скопируйте все названия и адреса в буфер обмена"
+  },
+  "replaceUrl": {
+    "message": "Замените его текущий URL"
   }
 }

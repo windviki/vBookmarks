@@ -209,5 +209,14 @@
       }
     },
     "message": "Biztososan ki szeretné törölni a $folderName$ nevű mappát és benne $subFolderCount$ almappát?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Másolás cím és URL vágólapra"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Másolja át az összes cím és URL-eket a vágólapra"
+  },
+  "replaceUrl": {
+    "message": "Cserélje a jelenlegi URL-t"
   }
 }

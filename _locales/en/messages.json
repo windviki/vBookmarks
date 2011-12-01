@@ -213,5 +213,14 @@
 				"content": "$1"
 			}
 		}
+	},
+	"copyTitleAndUrl": {
+		"message": "Copy title and URL to clipboard"
+	},
+	"copyAllTitlesAndUrls": {
+		"message": "Copy all titles and URLs to clipboard"
+	},
+	"replaceUrl": {
+		"message": "Replace this with current URL"
 	}
 }

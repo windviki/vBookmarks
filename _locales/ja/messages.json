@@ -209,5 +209,14 @@
       }
     },
     "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。"
+  },
+  "copyTitleAndUrl": {
+    "message": "クリップボードへのコピーのタイトルとURL"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "クリップボードへのすべてのタイトルとURLをコピー"
+  },
+  "replaceUrl": {
+    "message": "現在のURLに置き換えてください"
   }
 }

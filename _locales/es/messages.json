@@ -209,5 +209,14 @@
       }
     },
     "message": "¿Está seguro de que quiere eliminar la carpeta $folderName$ y $subFolderCount$ subcarpeta(s) almacenado(s) en ésta?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copia de título y la URL en el portapapeles"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copia todos los títulos y direcciones URL en el portapapeles"
+  },
+  "replaceUrl": {
+    "message": "Reemplazar esta con dirección actual"
   }
 }

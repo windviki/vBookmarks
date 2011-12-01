@@ -209,5 +209,14 @@
       }
     },
     "message": "Eliminare la cartella $folderName$ e le $subFolderCount$ sottocartelle contenute in essa?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copia del titolo e l'URL nella clipboard"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiare tutti i titoli e gli URL nella clipboard"
+  },
+  "replaceUrl": {
+    "message": "Sostituire questa con l'URL corrente"
   }
 }

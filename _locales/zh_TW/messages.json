@@ -209,5 +209,14 @@
       }
     },
     "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？"
+  },
+  "copyTitleAndUrl": {
+    "message": "拷貝標題和鏈接到剪貼板"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "拷貝所有標題和鏈接到剪貼板"
+  },
+  "replaceUrl": {
+    "message": "替換為當前頁的URL"
   }
 }

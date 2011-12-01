@@ -209,5 +209,14 @@
       }
     },
     "message": "Czy jesteś pewien, że chcesz usunąć folder $folderName$ i $subFolderCount$ podfolderów?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Tytuł Skopiuj i URL do schowka"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Skopiuj wszystkie tytuły i adresy URL do schowka"
+  },
+  "replaceUrl": {
+    "message": "Wymień to z aktualnego adresu URL"
   }
 }

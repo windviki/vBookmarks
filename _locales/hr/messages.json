@@ -209,5 +209,14 @@
       }
     },
     "message": "Jeste li sigurni da želite obrisati mapu \"$folderName$\" koja sadrži $subFolderCount$ podmapa/e/u ?"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopiraj naslov i URL u međuspremnik"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopiraj sve naslove i URL u međuspremnik"
+  },
+  "replaceUrl": {
+    "message": "Zamijenite ovo s trenutnom URL"
   }
 }
