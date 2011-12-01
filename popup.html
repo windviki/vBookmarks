@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="neat.css">
 <div id="container">
 <div id="search" role="search"><input id="search-input" type="search" results="0" autofocus></div>
+<div id="clipboardcopier" style="width: 0; height: 0;">
+<textarea id="copier-input" value=""></textarea>
+</div>
 <div id="tree" tabindex="-1"></div>
 <div id="results" tabindex="-1" style="display: none;"></div>
 </div>
@@ -15,12 +18,16 @@
 	<command id="add-folder-before-bookmark" tabindex="-1">
 	<command id="add-folder-after-bookmark" tabindex="-1">
 	<hr>
+	<command id="replace-url" tabindex="-1">
+	<hr>
 	<command id="bookmark-new-tab" tabindex="-1">
 	<command id="bookmark-new-window" tabindex="-1">
 	<command id="bookmark-new-incognito-window" tabindex="-1">
 	<hr>
 	<command id="bookmark-edit" tabindex="-1">
 	<command id="bookmark-delete" tabindex="-1">
+	<hr>
+	<command id="copy-title-and-url" tabindex="-1">
 </menu>
 <menu id="folder-context-menu" type="context" tabindex="-1">
 	<command id="add-bookmark-top" tabindex="-1">
@@ -40,6 +47,8 @@
 	<hr>
 	<command id="folder-edit" tabindex="-1">
 	<command id="folder-delete" tabindex="-1">
+	<!--<hr>
+	<command id="copy-all-titles-and-urls" tabindex="-1">-->
 </menu>
 <div id="resizer"></div>
 <div id="cover"></div>
