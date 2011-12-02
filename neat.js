@@ -17,11 +17,13 @@
 		}
 	};
 
+	// class for get tree style text
 	function TreeText(nodeid) {
 		this.id = nodeid;
 		this.text = '';
 		this.level = 0;
-	};
+	}
+	;
 
 	TreeText.prototype.get = function(fn) {
 		var _self1 = this;
@@ -37,7 +39,6 @@
 			_self1.text += _self1.level ? '\t' * _self1.level : '' + title + '\r\n';
 			if (isBookmark) {
 				_self1.text += _self1.level ? '\t' * _self1.level : '' + url;
-				//console.info("get1 end. id = " + _self1.id + ", text = " + _self1.text);
 				if (_fn1)
 					_fn1(_self1.text);
 			} else {
@@ -135,11 +136,8 @@
 	// Init some variables
 	var opens = localStorage.opens ? JSON.parse(localStorage.opens) : [];
 	var rememberState = !localStorage.dontRememberState;
-	// var a = document.createElement('a');
 	var httpsPattern = /^https?:\/\//i;
 	var onlyShowBMBar = !!localStorage.onlyShowBMBar;
-	// var onlyShowBMBar = true;
-	// console.log("onlyShowBMBar=" + onlyShowBMBar);
 
 	// Adaptive bookmark tooltips
 	var adaptBookmarkTooltips = function() {
@@ -665,7 +663,6 @@
 						return;
 				} else {
 					isOpenDir = (rnode.getAttribute('aria-expanded') == 'true');
-					// console.log('the folder is opened.');
 				}
 
 				// referenced node is folder
@@ -695,7 +692,7 @@
 						'url' : addurl
 					}, function(resultbm) {
 						if (!isOpenDir && (where == "top" || where == "bottom")) {
-							// console.log('do not add html for opened folder.');
+							// console.log('do not add html for closed folder.');
 							return;
 						}
 						var lv = 0;
@@ -758,7 +755,7 @@
 							'url' : addurl
 						}, function(resultbm) {
 							if (!isOpenDir && (where == "top" || where == "bottom")) {
-								// console.log('do not add html for opened folder.');
+								// console.log('do not add html for closed folder.');
 								return;
 							}
 							var lv = 0;
@@ -821,7 +818,6 @@
 		copyAllTitlesAndUrls : function(nodeid) {
 			var tt = new TreeText(nodeid);
 			tt.get(function(textresult) {
-				console.info("tt -> \n" + textresult);
 				copy_to_clipboard(textresult);
 			});
 		},
@@ -831,8 +827,8 @@
 				if (!nodeList.length)
 					return;
 				var node = nodeList[0];
-				if (!!node.url && !!newurl) // ensure it is a bookmark
-				{
+				// ensure it is a bookmark
+				if (!!node.url && !!newurl) {
 					chrome.bookmarks.update(node.id, {
 						url : newurl
 					});
@@ -1389,7 +1385,9 @@
 				var parentID = li.dataset.parentid;
 				if (parentID == '0')
 					return;
-				$('neat-tree-item-' + parentID).querySelector('span').focus();
+				// fixed: check whether the parent item exists
+				if ($('neat-tree-item-' + parentID))
+					$('neat-tree-item-' + parentID).querySelector('span').focus();
 			}
 			break;
 		case 32: // space
@@ -1629,8 +1627,7 @@
 			return;
 		var el = e.target;
 		var elParent = el.parentNode;
-		// can move any bookmarks/folders except the default
-		// root folders
+		// can move any bookmarks/folders except the default root folders
 		if ((el.tagName == 'A' && elParent.hasClass('child'))
 				|| (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')) {
 			e.preventDefault();
@@ -1674,10 +1671,7 @@
 		// if hovering over the top or bottom edges of the tree,
 		// scroll the tree
 		var treeScrollHeight = $tree.scrollHeight, treeOffsetHeight = $tree.offsetHeight;
-		if (treeScrollHeight > treeOffsetHeight) { // only
-			// scroll
-			// when it's
-			// scrollable
+		if (treeScrollHeight > treeOffsetHeight) { // only scroll when it's scrollable
 			var treeScrollTop = $tree.scrollTop;
 			if (clientY <= treeTop + scrollTreeSpot) {
 				if (treeScrollTop == 0) {
