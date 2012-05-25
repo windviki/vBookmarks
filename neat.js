@@ -5,7 +5,7 @@
 	var navigator = window.navigator;
 	var body = document.body;
 	var _m = chrome.i18n.getMessage;
-
+	
 	// ++++++++ added by windviki@gmail.com ++++++++
 	copy_to_clipboard = function(copyText) {
 		if (window.clipboardData) {

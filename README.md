@@ -62,3 +62,8 @@ Added: copy title and URL of selected bookmark to clipboard.
 Fixed: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly. 
 
 Fixed: make up some missing translations for cs(Czech).
+
+
+ver1.3 2012/05/25
+
+Fixed: Scrollbar glitch. https://github.com/windviki/vBookmarks/issues/1

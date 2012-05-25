@@ -54,7 +54,7 @@ body.linux input{
 	font-size: 12px;
 }
 #container{
-	display: -webkit-box;
+	/*display: -webkit-box;*/
 	-webkit-box-orient: vertical;
 	display: box;
 	box-orient: vertical;
