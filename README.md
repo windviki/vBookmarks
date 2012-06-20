@@ -41,9 +41,9 @@ Chinese Introduction
 7) 修正Neat Bookmarks中的已知BUG
 
 近期版本说明：
-版本1.2 在Chrome20+有双滚动条问题。
+版本1.2 在Chrome20+有双滚动条问题。 <-- 推荐Chrome20以下版本使用
 版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
-版本1.4 彻底解决滚动条问题。各版本通用。
+版本1.4 彻底解决滚动条问题。各版本通用。 <-- 随着Chrome的更新进行了一些扩展相关改动，推荐Chrome20以上版本使用
 
 Technical Details
 -----------------
