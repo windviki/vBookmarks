@@ -2,6 +2,7 @@
 	"name": "__MSG_extName__",
 	"version": "1.4",
 	"description": "__MSG_extDesc__",
+	"manifest_version": 2,
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",
