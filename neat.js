@@ -88,6 +88,14 @@
 		});
 		return v;
 	})();
+	
+	// Fix scrollbar bug in Chrome 20
+	if (version.major >= 20) {
+		document.getElementById('container').style.display = "";
+	}
+	else {
+		document.getElementById('container').style.display = "-webkit-box";
+	}
 
 	// Some i18n
 	$('search-input').placeholder = _m('searchBookmarks');

@@ -28,6 +28,17 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
+Chinese Introduction
+-----------------
+
+功能：
+1) 在选中的书签/文件夹之前/之后添加当前tab为新书签
+2) 在选中的文件夹顶部/底部添加当前tab为新书签
+3) 在选中的文件夹中添加子文件夹
+4) 替换选中的书签的URL为当前tab的URL
+5) 拷贝选中书签的标题和URL到剪贴板
+6) 增加选项：仅在插件里显示书签工具栏中的书签
+7) 修正Neat Bookmarks中的已知BUG
 
 Technical Details
 -----------------
@@ -67,3 +78,8 @@ Fixed: make up some missing translations for cs(Czech).
 ver1.3 2012/05/25
 
 Fixed: Scrollbar glitch. https://github.com/windviki/vBookmarks/issues/1
+
+
+ver1.4 2012/06/20
+
+Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
