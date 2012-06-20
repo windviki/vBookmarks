@@ -40,6 +40,11 @@ Chinese Introduction
 6) 增加选项：仅在插件里显示书签工具栏中的书签
 7) 修正Neat Bookmarks中的已知BUG
 
+近期版本说明：
+版本1.2 在Chrome20+有双滚动条问题。
+版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
+版本1.4 彻底解决滚动条问题。各版本通用。
+
 Technical Details
 -----------------
 
