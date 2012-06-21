@@ -214,6 +214,33 @@
 			}
 		}
 	},
+	"customIcon": {
+		"message": "Custom icon"
+	},
+	"customIconDescription": {
+		"message": "The icon has to be in 19*19 pixel dimension. Else it'll be resized to this dimension."
+	},
+	"defaultIconButton": {
+		"message": "Use default"
+	},
+	"defaultIconButtonOr": {
+		"message": " or "
+	},
+	"customStyles": {
+		"message": "Custom styles"
+	},
+	"customStylesDescription": {
+		"message": "This requires some CSS skillz. Hack at your own risk. Code sharing would be wise done via "
+	},
+	"resetSettings": {
+		"message": "Reset settings"
+	},
+	"resetSettingsDescription": {
+		"message": "Reset vBookmarks to default settings."
+	},
+	"resetButton": {
+		"message": "Reset"
+	},
 	"copyTitleAndUrl": {
 		"message": "Copy title and URL to clipboard"
 	},

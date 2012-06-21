@@ -199,6 +199,33 @@
   "options": {
     "message": "Opcje"
   },
+  "customIcon": {
+  	"message": "niestandardowe ikony"
+  },
+  "customIconDescription": {
+  	"message": "Ikona musi być w 19 * 19 wymiaru pikseli. Inaczej to będzie przeskalowane do tego wymiaru."
+  },
+  "defaultIconButton": {
+  	"message": "Użyj domyślnego"
+  },
+  "defaultIconButtonOr": {
+  	"message": " lub "
+  },
+  "customStyles": {
+  	"message": "niestandardowe style"
+  },
+  "customStylesDescription": {
+  	"message": "Wymaga to trochę CSS Skillz. Hack na własne ryzyko. Dzielenie byłoby mądre odbywa się poprzez "
+  },
+  "resetSettings": {
+  	"message": "Resetowanie ustawień"
+  },
+  "resetSettingsDescription": {
+  	"message": "Resetowanie vBookmarks do ustawień domyślnych."
+  },
+  "resetButton": {
+  	"message": "Reset"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

@@ -199,6 +199,33 @@
   "optionClickNewTab": {
     "message": "click-botão esquerdo do rato abre marcador num novo separador."
   },
+  "customIcon": {
+  	"message": "Personalizar ícone"
+  },
+  "customIconDescription": {
+  	"message": "O ícone tem que ser em 19 dimensão do pixel * 19. Mais ele vai ser redimensionado para esta dimensão."
+  },
+  "defaultIconButton": {
+  	"message": "usar padrão"
+  },
+  "defaultIconButtonOr": {
+  	"message": " ou "
+  },
+  "customStyles": {
+  	"message": "estilos personalizados"
+  },
+  "customStylesDescription": {
+  	"message": "Isto requer algum skillz CSS. Corte em seu próprio risco. Compartilhamento de código seria sábio feito via "
+  },
+  "resetSettings": {
+  	"message": "Redefinir as configurações"
+  },
+  "resetSettingsDescription": {
+  	"message": "Redefinir vBookmarks para as configurações padrão."
+  },
+  "resetButton": {
+  	"message": "Redefinir"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

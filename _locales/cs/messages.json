@@ -196,6 +196,33 @@
   "optionClickNewTab": {
     "message": "Kliknutí levým tlačítkem otevře záložku v nové kartě."
   },
+  "customIcon": {
+  	"message": "Vlastní ikona"
+  },
+  "customIconDescription": {
+  	"message": "Ikona musí být v 19 * 19 pixelů rozměr. Jinak to bude být zvětšena na této dimenzi."
+  },
+  "defaultIconButton": {
+  	"message": "použít výchozí"
+  },
+  "defaultIconButtonOr": {
+  	"message": " nebo "
+  },
+  "customStyles": {
+  	"message": "Vlastní styly"
+  },
+  "customStylesDescription": {
+  	"message": "To vyžaduje určité dovednosti CSS. Hack na vlastní riziko. Sdílení kódů by bylo rozumné udělat přes "
+  },
+  "resetSettings": {
+  	"message": "Obnovit nastavení"
+  },
+  "resetSettingsDescription": {
+  	"message": "Obnovit vBookmarks do výchozího nastavení."
+  },
+  "resetButton": {
+  	"message": "Obnovit"
+  },
   "options": {
     "message": "Nastavení"
   },

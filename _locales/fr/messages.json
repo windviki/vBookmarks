@@ -196,6 +196,33 @@
   "optionClickNewTab": {
     "message": "Clic gauche ouvre le signet dans un nouvel onglet."
   },
+  "customIcon": {
+  	"message": "Personnaliser l'icône"
+  },
+  "customIconDescription": {
+  	"message": "L'icône doit être dans 19 * pixel dimension 19. Sinon ça va être redimensionnée à cette dimension."
+  },
+  "defaultIconButton": {
+  	"message": "Utilisez par défaut"
+  },
+  "defaultIconButtonOr": {
+  	"message": " ou "
+  },
+  "customStyles": {
+  	"message": "styles personnalisés"
+  },
+  "customStylesDescription": {
+  	"message": "Cela nécessite des compétences CSS. Hack à vos propres risques. Le partage de code serait sage fait par l'intermédiaire "
+  },
+  "resetSettings": {
+  	"message": "Réinitialiser les paramètres"
+  },
+  "resetSettingsDescription": {
+  	"message": "Réinitialiser les paramètres par défaut vBookmarks."
+  },
+  "resetButton": {
+  	"message": "Réinitialiser"
+  },
   "options": {
     "message": "Options"
   },

@@ -202,6 +202,33 @@
   "optionClickNewTab": {
     "message": "左击书签在新标签页中打开"
   },
+  "customIcon": {
+  	"message": "个性化图标"
+  },
+  "customIconDescription": {
+  	"message": "图标必须为19*19像素，否则会被缩放至此大小"
+  },
+  "defaultIconButton": {
+  	"message": "使用默认图标"
+  },
+  "defaultIconButtonOr": {
+  	"message": " 或者 "
+  },
+  "customStyles": {
+  	"message": "定制CSS"
+  },
+  "customStylesDescription": {
+  	"message": "注意：无CSS知识请勿冒险修改。推荐将代码共享到 "
+  },
+  "resetSettings": {
+  	"message": "重置所有选项"
+  },
+  "resetSettingsDescription": {
+  	"message": "重置所有选项到默认值"
+  },
+  "resetButton": {
+  	"message": "重置"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

@@ -199,6 +199,33 @@
   "options": {
     "message": "Einstellungen"
   },
+  "customIcon": {
+  	"message": "benutzerdefiniertes Symbol"
+  },
+  "customIconDescription": {
+  	"message": "Das Icon soll in 19 * 19 Pixel-Dimension sein. Else, es wird auf diese Dimension der Größe verändert werden."
+  },
+  "defaultIconButton": {
+  	"message": "Verwenden Sie Standard"
+  },
+  "defaultIconButtonOr": {
+  	"message": " oder "
+  },
+  "customStyles": {
+  	"message": "Benutzerdefinierte Stile"
+  },
+  "customStylesDescription": {
+  	"message": "Das erfordert einige CSS-Kenntnisse. Hack auf Ihr eigenes Risiko. Code-Sharing wäre klug gemacht über "
+  },
+  "resetSettings": {
+  	"message": "Einstellungen zurücksetzen"
+  },
+  "resetSettingsDescription": {
+  	"message": "Zurücksetzen auf Werkseinstellungen vBookmarks."
+  },
+  "resetButton": {
+  	"message": "Zurücksetzen"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

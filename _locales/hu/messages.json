@@ -199,6 +199,33 @@
   "optionClickNewTab": {
     "message": "Könyvjelző megnyitása Új fülön bal egérgombbal."
   },
+  "customIcon": {
+  	"message": "Egyedi ikon"
+  },
+  "customIconDescription": {
+  	"message": "Az ikon kell lennie a 19 * 19 pixel méret. Különben hogy lesz átméretezve ebben a dimenzióban."
+  },
+  "defaultIconButton": {
+  	"message": "Az alapértelmezett"
+  },
+  "defaultIconButtonOr": {
+  	"message": " vagy "
+  },
+  "customStyles": {
+  	"message": "Egyedi stílus"
+  },
+  "customStylesDescription": {
+  	"message": "Ez igényel némi CSS ismeretek. Csapkod a saját felelősségére. Kód megosztása lenne bölcs dolog-en keresztül "
+  },
+  "resetSettings": {
+  	"message": "Minden beállítás visszaállítása"
+  },
+  "resetSettingsDescription": {
+  	"message": "VBookmarks visszaállítása az alapértelmezett beállításokra."
+  },
+  "resetButton": {
+  	"message": "Visszaállítása"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

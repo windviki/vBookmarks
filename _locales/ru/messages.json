@@ -199,6 +199,33 @@
   "optionClickNewTab": {
     "message": "Левый клик откроет закладку в новой вкладке."
   },
+  "customIcon": {
+  	"message": "Пользовательские иконки"
+  },
+  "customIconDescription": {
+  	"message": "Икона должна быть в 19 * 19 пикселей измерение. Остальное он будет изменен, чтобы это измерение."
+  },
+  "defaultIconButton": {
+  	"message": "Использовать параметры по умолчанию"
+  },
+  "defaultIconButtonOr": {
+  	"message": " или "
+  },
+  "customStyles": {
+  	"message": "Пользовательские стили"
+  },
+  "customStylesDescription": {
+  	"message": "Это требует некоторых CSS Skillz. Взломать на свой страх и риск. Код совместного бы разумно сделать с помощью "
+  },
+  "resetSettings": {
+  	"message": "Сброс установок"
+  },
+  "resetSettingsDescription": {
+  	"message": "Сброс vBookmarks по умолчанию."
+  },
+  "resetButton": {
+  	"message": "Сброс"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

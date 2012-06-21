@@ -157,6 +157,33 @@
   "optionOpenNewTab": {
     "message": "가운데 버튼이나 오른쪽 버튼 클릭시 새로운 백그라운드 탭으로 북마크 열기"
   },
+  "customIcon": {
+  	"message": "사용자 정의 아이콘"
+  },
+  "customIconDescription": {
+  	"message": "아이콘은 19 * 19 픽셀 치수에 있어야합니다. 또 그것이 차원 크기를 조정할 수 있습니다.."
+  },
+  "defaultIconButton": {
+  	"message": "기본값을 사용하여"
+  },
+  "defaultIconButtonOr": {
+  	"message": " 또는 "
+  },
+  "customStyles": {
+  	"message": "사용자 정의 스타일"
+  },
+  "customStylesDescription": {
+  	"message": "이것은 일부의 CSS 기술이 필요합니다. 에 따른 모든 책임은 사용자에게 해킹. 코드 공유가 수행을 통해 현명한 것입니다 "
+  },
+  "resetSettings": {
+  	"message": "설정을 다시 설정합니다"
+  },
+  "resetSettingsDescription": {
+  	"message": "기본 설정으로 vBookmarks을 다시 설정합니다."
+  },
+  "resetButton": {
+  	"message": "재설정합니다"
+  },
   "addBookmarkBefore": {
   	"message": "이 전에 현재 탭 추가"
   },

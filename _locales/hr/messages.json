@@ -157,6 +157,33 @@
   "optionOpenNewTab": {
     "message": "Srednji klik (ili CONTROL+klik ) otvara oznaku u novoj kartici, ali se ne prebacuje automatski na nju."
   },
+  "customIcon": {
+  	"message": "Custom ikona"
+  },
+  "customIconDescription": {
+  	"message": "Ikona mora biti u 19 * 19 piksela dimenzije. Inače će se mijenjati na ovoj dimenziji."
+  },
+  "defaultIconButton": {
+  	"message": "Koristite zadani"
+  },
+  "defaultIconButtonOr": {
+  	"message": " ili "
+  },
+  "customStyles": {
+  	"message": "prilagođeni stilovi"
+  },
+  "customStylesDescription": {
+  	"message": "To zahtijeva neke CSS vještine. Hack na vlastiti rizik. Kod dijeljenje bi bilo pametno napraviti preko "
+  },
+  "resetSettings": {
+  	"message": "Reset podešenja"
+  },
+  "resetSettingsDescription": {
+  	"message": "Ponovno vBookmarks na zadane postavke."
+  },
+  "resetButton": {
+  	"message": "Vrati izvorno"
+  },
   "addBookmarkBefore": {
   	"message": "Dodaj trenutnu karticu prije toga"
   },

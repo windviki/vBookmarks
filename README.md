@@ -28,6 +28,15 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
+
+Attensions
+-----------------
+
+Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to install it.
+
+Otherwise there will be an error.
+
+
 Chinese Introduction
 -----------------
 
@@ -53,7 +62,14 @@ Chinese Introduction
 
 版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
 
-版本1.4 彻底解决滚动条问题。各版本通用。 <-- 随着Chrome的更新进行了一些扩展相关改动，推荐Chrome20以上版本使用
+版本1.4 彻底解决滚动条问题。
+
+版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。
+
+注意：
+
+Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
+
 
 Technical Details
 -----------------
@@ -98,3 +114,8 @@ Fixed: Scrollbar glitch. https://github.com/windviki/vBookmarks/issues/1
 ver1.4 2012/06/20
 
 Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
+
+
+ver1.5 2012/06/21
+
+Fixed: manifest problem in Chrome 20+.

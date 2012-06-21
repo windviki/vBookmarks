@@ -199,6 +199,33 @@
   "options": {
     "message": "オプション"
   },
+  "customIcon": {
+  	"message": "カスタムアイコン"
+  },
+  "customIconDescription": {
+  	"message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
+  },
+  "defaultIconButton": {
+  	"message": "デフォルトを使用"
+  },
+  "defaultIconButtonOr": {
+  	"message": " または "
+  },
+  "customStyles": {
+  	"message": "カスタムスタイル"
+  },
+  "customStylesDescription": {
+  	"message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
+  },
+  "resetSettings": {
+  	"message": "設定をリセットします"
+  },
+  "resetSettingsDescription": {
+  	"message": "デフォルトの設定にvBookmarksをリセットします"
+  },
+  "resetButton": {
+  	"message": "リセットされます"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {

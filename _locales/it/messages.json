@@ -157,6 +157,33 @@
   "optionOpenNewTab": {
     "message": "Fai clic con il pulsante centrale del mouse o con il pulsante sinistro tenendo premuto il tasto Ctrl per aprire i preferiti in un'altra scheda in secondo piano (anziché in primo piano)."
   },
+  "customIcon": {
+  	"message": "icona personalizzata"
+  },
+  "customIconDescription": {
+  	"message": "L'icona deve essere in dimensione 19 * 19 pixel. Altrimenti verrà ridimensionata a questa dimensione."
+  },
+  "defaultIconButton": {
+  	"message": "Usa di default"
+  },
+  "defaultIconButtonOr": {
+  	"message": " o "
+  },
+  "customStyles": {
+  	"message": "stili personalizzati"
+  },
+  "customStylesDescription": {
+  	"message": "Ciò richiede alcune abilità CSS. Hack a proprio rischio. Il code sharing sarebbe saggio fare via "
+  },
+  "resetSettings": {
+  	"message": "Ripristino delle impostazioni"
+  },
+  "resetSettingsDescription": {
+  	"message": "Ripristina vBookmarks alle impostazioni predefinite."
+  },
+  "resetButton": {
+  	"message": "Reset"
+  },
   "addBookmarkBefore": {
   	"message": "Aggiungi la scheda corrente prima di questa"
   },

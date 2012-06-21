@@ -199,6 +199,33 @@
   "optionClickNewTab": {
     "message": "左擊書籤在新分頁中開啟"
   },
+  "customIcon": {
+  	"message": "個性化圖標"
+  },
+  "customIconDescription": {
+  	"message": "圖標必須為19*19像素，否則會被縮放至此大小"
+  },
+  "defaultIconButton": {
+  	"message": "使用默認圖標"
+  },
+  "defaultIconButtonOr": {
+  	"message": " 或者 "
+  },
+  "customStyles": {
+  	"message": "定制CSS"
+  },
+  "customStylesDescription": {
+  	"message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
+  },
+  "resetSettings": {
+  	"message": "重置所有選項"
+  },
+  "resetSettingsDescription": {
+  	"message": "重置所有選項到默認值"
+  },
+  "resetButton": {
+  	"message": "重置"
+  },
   "confirmDeleteFolderSubfolders": {
     "placeholders": {
       "subFolderCount": {
