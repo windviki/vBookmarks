@@ -588,7 +588,25 @@
 		}
 	};
 	// ++++++++ end ++++++++
-
+		
+	// Events for dialogs
+	$('confirm-dialog-button-1').addEventListener('click', function(e) {
+		ConfirmDialog.fn1();
+		ConfirmDialog.close();
+	});
+	$('confirm-dialog-button-2').addEventListener('click', function(e) {
+		ConfirmDialog.fn2();
+		ConfirmDialog.close();
+	});
+	$('edit-dialog-form').addEventListener('submit', function(e) {
+		EditDialog.close();
+		return false;
+	});
+	$('new-folder-dialog-form').addEventListener('submit', function(e) {
+		NewFolderDialog.close();
+		return false;
+	});
+	
 	// Bookmark handling
 	var dontConfirmOpenFolder = !!localStorage.dontConfirmOpenFolder;
 	var bookmarkClickStayOpen = !!localStorage.bookmarkClickStayOpen;

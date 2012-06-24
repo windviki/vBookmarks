@@ -16,5 +16,6 @@
 		if (localStorage.popupWidth) {
 			document.body.style.width = localStorage.popupWidth + 'px';
 		};
+		
 	});
 })(window);

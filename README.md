@@ -66,6 +66,8 @@ Chinese Introduction
 
 版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。
 
+版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。
+
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。

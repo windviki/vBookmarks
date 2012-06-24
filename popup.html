@@ -58,12 +58,12 @@
 <div id="confirm-dialog" class="dialog" role="dialog">
 	<p id="confirm-dialog-text" class="dialog-text"></p>
 	<div class="buttons">
-	<button id="confirm-dialog-button-1" onclick="ConfirmDialog.fn1(); ConfirmDialog.close();"></button>
-	<button id="confirm-dialog-button-2" onclick="ConfirmDialog.fn2(); ConfirmDialog.close();"></button>
+	<button id="confirm-dialog-button-1"></button>
+	<button id="confirm-dialog-button-2"></button>
 	</div>
 </div>
 <div id="edit-dialog" class="dialog" role="dialog">
-	<form onsubmit="EditDialog.close(); return false;">
+	<form id="edit-dialog-form">
 	<p id="edit-dialog-text" class="dialog-text"></p>
 	<input id="edit-dialog-name">
 	<input type="url" id="edit-dialog-url" aria-required="true" required>
@@ -73,7 +73,7 @@
 	</form>
 </div>
 <div id="new-folder-dialog" class="dialog" role="dialog">
-	<form onsubmit="NewFolderDialog.close(); return false;">
+	<form id="new-folder-dialog-form">
 	<p id="new-folder-dialog-text" class="dialog-text"></p>
 	<input id="new-folder-dialog-name">
 	<div class="buttons">
@@ -81,6 +81,6 @@
 	</div>
 	</form>
 </div>
-<script src="popup.js"></script>
 <script src="neatools.js"></script>
+<script src="popup.js"></script>
 <script src="neat.js"></script>
