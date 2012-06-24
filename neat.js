@@ -22,8 +22,8 @@
 		this.id = nodeid;
 		this.text = '';
 		this.level = 0;
-	}
-	;
+	};
+	
 
 	TreeText.prototype.get = function(fn) {
 		var _self1 = this;
@@ -96,7 +96,7 @@
 	else {
 		document.getElementById('container').style.display = "-webkit-box";
 	}
-
+	
 	// Some i18n
 	$('search-input').placeholder = _m('searchBookmarks');
 	$('edit-dialog-name').placeholder = _m('name');
@@ -1855,6 +1855,7 @@
 	var $resizer = $('resizer');
 	var resizerDown = false;
 	var bodyWidth = 0, screenX = 0;
+	// Darg the edge
 	$resizer.addEventListener('mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();

@@ -119,3 +119,13 @@ Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks
 ver1.5 2012/06/21
 
 Fixed: manifest problem in Chrome 20+.
+
+Fixed: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
+
+
+ver1.6 2012/06/24
+
+Fixed: Cannot search bookmarks in Omnibox (*+space). [seeContent Security Policy]
+
+Fixed: Restore width of the popup window. [Content Security Policy]
+
