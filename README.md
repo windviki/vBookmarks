@@ -40,7 +40,7 @@ Otherwise there will be an error.
 Chinese Introduction
 -----------------
 
-功能：
+增加功能：
 
 1) 在选中的书签/文件夹之前/之后添加当前tab为新书签
 
@@ -68,7 +68,8 @@ Chinese Introduction
 
 版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。
 
-版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。
+版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。
+
 
 注意：
 
@@ -139,3 +140,5 @@ Fixed: Dialogs cannot submit their forms. [Content Security Policy]
 ver1.7 2012/06/26
 
 Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
+
+Fixed: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
