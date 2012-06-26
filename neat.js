@@ -492,6 +492,7 @@
 			var height = Math.max(200, Math.min(fullHeight, maxHeight));
 			body.style.height = height + 'px';
 			localStorage.popupHeight = height;
+			body.style.width = localStorage.popupWidth
 		}, 200);
 	};
 	if (!searchMode)
@@ -1873,7 +1874,7 @@
 	var $resizer = $('resizer');
 	var resizerDown = false;
 	var bodyWidth = 0, screenX = 0;
-	// Darg the edge
+	// Drag the edge
 	$resizer.addEventListener('mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -1898,18 +1899,23 @@
 		e.preventDefault();
 		resizerDown = false;
 		adaptBookmarkTooltips();
+		//
+		//var width = window.innerWidth;
+		//body.style.width = width + 'px';
+		//localStorage.popupWidth = width;
+		//clearMenu();
 	});
-	setTimeout(function() { // delaying execution due to stupid Chrome Linux bug
-		window.addEventListener('resize', function() {
-			// in case there's a resizer *outside* the popup page
-			if (resizerDown)
-				return;
-			var width = window.innerWidth;
-			body.style.width = width + 'px';
-			localStorage.popupWidth = width;
-			clearMenu();
-		});
-	}, 1000);
+	//setTimeout(function() { // delaying execution due to stupid Chrome Linux bug
+	//	window.addEventListener('resize', function() {
+	//		// in case there's a resizer *outside* the popup page
+	//		if (resizerDown)
+	//			return;
+	//		var width = window.innerWidth;
+	//		body.style.width = width + 'px';
+	//		localStorage.popupWidth = width;
+	//		clearMenu();
+	//	});
+	//}, 1000);
 
 	// Closing dialogs on escape
 	var closeDialogs = function() {
