@@ -85,7 +85,7 @@
 	document.getElementById('reset-settings').innerText = __m('resetSettings');
 	document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
 	document.getElementById('reset-button').innerText = __m('resetButton');
-	document.getElementById('options-footer-1').innerText = __m('optionsFooterText');
-	document.getElementById('options-footer-2').innerText = __m('optionsFooterText');
+	document.getElementById('options-footer-1').innerHTML = '<a href="http://twitter.com/cheeaun">' + __m('optionsFooterText', 'Lim Chee Aun') + '</a>';
+	document.getElementById('options-footer-2').innerHTML = '<a href="http://twitter.com/windviki">' + __m('optionsFooterText', 'windviki') + '</a>';
 	});
 })(window);

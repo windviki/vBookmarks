@@ -78,7 +78,7 @@
 		document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
 		document.getElementById('accessibility').innerText = __m('accessibility');
 		document.getElementById('option-zoom').innerText = __m('optionZoom');
-		document.getElementById('options-footer-1').innerText = __m('optionsFooterText');
-		document.getElementById('options-footer-2').innerText = __m('optionsFooterText');
+		document.getElementById('options-footer-1').innerHTML = '<a href="http://twitter.com/cheeaun">' + __m('optionsFooterText', 'Lim Chee Aun') + '</a>';
+		document.getElementById('options-footer-2').innerHTML = '<a href="http://twitter.com/windviki">' + __m('optionsFooterText', 'windviki') + '</a>';
 	});
 })(window);
