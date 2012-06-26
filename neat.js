@@ -89,8 +89,8 @@
 		return v;
 	})();
 	
-	// Fix scrollbar bug in Chrome 20
-	if (version.major >= 20) {
+	// Fix scrollbar bug in Chrome 19+
+	if (version.major >= 19) {
 		document.getElementById('container').style.display = "";
 	}
 	else {

@@ -58,7 +58,7 @@ Chinese Introduction
 
 近期版本说明：
 
-版本1.2 在Chrome20+有双滚动条问题。 <-- 推荐Chrome20以下版本使用
+版本1.2 在Chrome20+有双滚动条问题。
 
 版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
 
@@ -67,6 +67,8 @@ Chinese Introduction
 版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。
 
 版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。
+
+版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。
 
 注意：
 
@@ -127,7 +129,13 @@ Fixed: separated script file instead of inline scripts. see Content Security Pol
 
 ver1.6 2012/06/24
 
-Fixed: Cannot search bookmarks in Omnibox (*+space). [seeContent Security Policy]
+Fixed: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]
 
 Fixed: Restore width of the popup window. [Content Security Policy]
 
+Fixed: Dialogs cannot submit their forms. [Content Security Policy]
+
+
+ver1.7 2012/06/26
+
+Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
