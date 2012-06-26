@@ -492,7 +492,20 @@
 			var height = Math.max(200, Math.min(fullHeight, maxHeight));
 			body.style.height = height + 'px';
 			localStorage.popupHeight = height;
-			body.style.width = localStorage.popupWidth
+			// width fix
+			//var scrollwidthoffset = window.innerWidth - localStorage.popupWidth;
+			//console.info("scrollwidthoffset = " + scrollwidthoffset);
+			//if (scrollwidthoffset > 0) { // has scrollbar, going to expand root folder
+			//	body.style.width = window.innerWidth + 'px';
+			//	localStorage.scrollbaroffset = scrollwidthoffset;
+			//	//localStorage.popupWidth = window.innerWidth;
+			//	console.info("Expand, body.style.width = " + body.style.width);
+			//} else { //no scrollbar
+			//	body.style.width = window.innerWidth - localStorage.scrollbaroffset + 'px';
+			//	//localStorage.popupWidth = window.innerWidth - localStorage.scrollbaroffset;
+			//	localStorage.scrollbaroffset = 0;
+			//	console.info("Collapse, body.style.width = " + body.style.width);
+			//}
 		}, 200);
 	};
 	if (!searchMode)
@@ -1900,10 +1913,12 @@
 		resizerDown = false;
 		adaptBookmarkTooltips();
 		// record current width
-		var width = window.innerwidth;
+		var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
+		var width = bodyWidth + changedWidth;
+		//var width = window.innerWidth;
 		body.style.width = width + 'px';
-		localstorage.popupwidth = width;
-		clearmenu();
+		localStorage.popupWidth = width;
+		clearMenu();
 	});
 	
 	// width will be reset when expanding root folder due to this section of code
