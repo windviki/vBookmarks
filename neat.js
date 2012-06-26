@@ -1899,12 +1899,15 @@
 		e.preventDefault();
 		resizerDown = false;
 		adaptBookmarkTooltips();
-		//
-		//var width = window.innerWidth;
-		//body.style.width = width + 'px';
-		//localStorage.popupWidth = width;
-		//clearMenu();
+		// record current width
+		var width = window.innerwidth;
+		body.style.width = width + 'px';
+		localstorage.popupwidth = width;
+		clearmenu();
 	});
+	
+	// width will be reset when expanding root folder due to this section of code
+	//
 	//setTimeout(function() { // delaying execution due to stupid Chrome Linux bug
 	//	window.addEventListener('resize', function() {
 	//		// in case there's a resizer *outside* the popup page
