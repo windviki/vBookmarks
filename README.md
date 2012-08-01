@@ -70,7 +70,10 @@ Chinese Introduction
 
 版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。
 
-版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。修正Chrome18更新以来导致的drag-drop位置不正确的问题。更改ICON颜色。
+版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。
+修正Chrome18更新以来导致的drag-drop位置不正确的问题。
+更改ICON颜色。
+实现一个基于Github的更新检测和提醒。
 
 注意：
 
@@ -143,3 +146,14 @@ ver1.7 2012/06/26
 Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
 
 Fixed: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
+
+
+ver1.8 2012/08/01
+
+Added: Separators. see https://github.com/windviki/vBookmarks/issues/3
+
+Fixed: Wrong position of dragged bookmark (since Chrome18).
+
+Added: Color of icon is changed to red.
+
+Added: Simple update checking and desktop notification.
