@@ -383,8 +383,10 @@
 
 	addSeparator = function(nodeid, where, bsave) {
 		chrome.bookmarks.get(nodeid, function(nodeList) {
-			if (!nodeList.length)
+			if (!nodeList || !nodeList.length) {
+				separatorManager.remove(nodeid);
 				return;
+			}
 			var node = nodeList[0];
 			var url = node.url;
 			// check whether the referenced node is bookmark or folder
@@ -396,6 +398,10 @@
 			var rnode = $('neat-tree-item-' + node.id);
 			if(!pnode){
 				pnode = document.body;
+			}
+			if(!rnode){
+				//console.log('addSeparator rnode = null!, nodeid = ' + nodeid);
+				return;
 			}
 			//if (where == 'before') {
 			//}
@@ -2248,6 +2254,7 @@
 						var hr = draggedBookmark.querySelector('hr');
 						var creatorID = hr.id.replace('creator-', '');
 						hr.id = 'creator-' + id;
+						separatorManager.update(creatorID, id);
 						//console.log('target is Folder (top/bottom), oldid = ' + creatorID + ', newid = ' + id);
 						draggedBookmark.focus();
 						onDrop();
@@ -2283,6 +2290,7 @@
 					var hr = draggedBookmark.querySelector('hr');
 					var creatorID = hr.id.replace('creator-', '');
 					hr.id = 'creator-' + id;
+					separatorManager.update(creatorID, id);
 					//console.log('target is Folder, oldid = ' + creatorID + ', newid = ' + id);
 					onDrop();
 				}
