@@ -58,6 +58,12 @@
 		customIconPreview.src = 'icon.png';
 	});
 	
+	var customSeparatorColor = $('custom-separator-color');
+	if (localStorage.separatorcolor) customSeparatorColor.value = localStorage.separatorcolor;
+	customSeparatorColor.addEventListener('change', function(){
+		localStorage.separatorcolor = customSeparatorColor.value;
+	});
+	
 	var textareaUserstyle = $('userstyle');
 	if (localStorage.userstyle) textareaUserstyle.value = localStorage.userstyle;
 	CodeMirror.fromTextArea(textareaUserstyle, {
@@ -81,6 +87,7 @@
 	document.getElementById('default-icon-button').innerText = __m('defaultIconButton');
 	document.getElementById('default-icon-button-or').innerText = __m('defaultIconButtonOr');
 	document.getElementById('custom-styles').innerText = __m('customStyles');
+	document.getElementById('custom-separator-color-description').innerText = __m('customSeparatorColorDescription');
 	document.getElementById('custom-styles-description').innerText = __m('customStylesDescription');
 	document.getElementById('reset-settings').innerText = __m('resetSettings');
 	document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');

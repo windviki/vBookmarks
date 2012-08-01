@@ -1,253 +1,352 @@
 {
-	"extName": {
-		"message": "vBookmarks",
-		"description": "The extension name."
-	},
-	"extDesc": {
-		"message": "A popup bookmark manager. Enhanced Neat Bookmarks.",
-		"description": "The extension description."
-	},
-	"searchBookmarks": {
-		"message": "Search Bookmarks",
-		"description": "Placeholder text for search field."
-	},
-	"openNewTab": {
-		"message": "Open in New Tab"
-	},
-	"openNewWindow": {
-		"message": "Open in New Window"
-	},
-	"openIncognitoWindow": {
-		"message": "Open in Incognito Window"
-	},
-	"edit": {
-		"message": "Edit..."
-	},
-	"delete": {
-		"message": "Delete"
-	},
-	"deleteEllipsis": {
-		"message": "Delete..."
-	},
-	"openBookmarks": {
-		"message": "Open All Bookmarks"
-	},
-	"addBookmarkBefore": {
-		"message": "Bookmark Current Tab Before This"
-	},
-	"addBookmarkAfter": {
-		"message": "Bookmark Current Tab After This"
-	},
-	"addBookmarkTop": {
-		"message": "Bookmark Current Tab To Top Of This"
-	},
-	"addBookmarkBottom": {
-		"message": "Bookmark Current Tab To Bottom Of This"
-	},
-    "addNewFolder": {
-      "message": "Add Sub Folder"
+    "accessibility": 
+    {
+        "message": "Accessibility"
     },
-    "addNewFolderBefore": {
-      "message": "Add Folder Before This"
+    "addBookmarkAfter": 
+    {
+        "message": "Bookmark Current Tab After This"
     },
-    "addNewFolderAfter": {
-      "message": "Add Folder After This"
+    "addBookmarkBefore": 
+    {
+        "message": "Bookmark Current Tab Before This"
     },
-	"openBookmarksNewWindow": {
-		"message": "Open All Bookmarks in New Window"
-	},
-	"openBookmarksIncognitoWindow": {
-		"message": "Open All Bookmarks in Incognito Window"
-	},
-	"noTitle": {
-		"message": "(no title)",
-		"description": "The title for untitled bookmarks with no http(s) URL or untitled folders."
-	},
-	"parentFolder": {
-		"message": "Parent folder: \"$folderName$\"",
-		"description": "Parent folder information displayed in the tooltip of bookmarks in search results list.",
-		"placeholders": {
-			"folderName": {
-				"content": "$1",
-				"example": "Bookmarks bar"
-			}
-		}
-	},
-	"confirmOpenBookmarks": {
-		"message": "Are you sure you want to open all $count$ bookmarks?",
-		"description": "Confirmation message for opening all bookmarks.",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewWindow": {
-		"message": "Are you sure you want to open all $count$ bookmarks in a new window?",
-		"description": "Confirmation message for opening all bookmarks in a new window.",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewIncognitoWindow": {
-		"message": "Are you sure you want to open all $count$ bookmarks in a new incognito window?",
-		"description": "Confirmation message for opening all bookmarks in a new incognito window.",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfoldersBookmarks": {
-		"message": "Are you sure you want to delete $folderName$ folder, $subFolderCount$ sub-folder(s) and $bookmarkCount$ bookmark(s) in it?",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			},
-			"bookmarkCount": {
-				"content": "$3"
-			}
-		}
-	},
-	"confirmDeleteFolderBookmarks": {
-		"message": "Are you sure you want to delete $folderName$ folder and $bookmarkCount$ bookmark(s) in it?",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"bookmarkCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfolders": {
-		"message": "Are you sure you want to delete $folderName$ folder and $subFolderCount$ sub-folder(s) in it?",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"open": {
-		"message": "Open",
-		"description": "Action to open bookmarks."
-	},
-	"nope": {
-		"message": "Nope"
-	},
-	"editBookmark": {
-		"message": "Edit bookmark"
-	},
-	"editFolder": {
-		"message": "Edit folder"
-	},
-	"save": {
-		"message": "Save"
-	},
-	"name": {
-		"message": "Name",
-		"description": "Name of bookmark or folder."
-	},
-	"url": {
-		"message": "URL"
-	},
-	"errorOccured": {
-		"message": "Oops, an error occured."
-	},
-	"reportedToDeveloper": {
-		"message": "This has been reported to the developer.",
-		"description": "A message for an error occured in the extension, has been reported to the developer."
-	},
-	"reportError": {
-		"message": "Report Error"
-	},
-	"ignore": {
-		"message": "Ignore"
-	},
-	"options": {
-		"message": "Options"
-	},
-	"advancedOptions": {
-		"message": "Advanced Options"
-	},
-	"general": {
-		"message": "General"
-	},
-	"accessibility": {
-		"message": "Accessibility"
-	},
-	"optionClickNewTab": {
-		"message": "Left-click opens bookmark in new tab."
-	},
-	"optionOpenNewTab": {
-		"message": "Middle-click or control-click opens bookmark in new background tab (instead of foreground)."
-	},
-	"optionCloseUnusedFolders": {
-		"message": "Close unused folders when opening a folder."
-	},
-	"optionPopupStays": {
-		"message": "Popup stays open when opening (left-clicking) bookmarks."
-	},
-	"optionConfirmOpenFolder": {
-		"message": "Display confirmation when opening a lot of bookmarks from a folder."
-	},
-	"optionRememberPrevState": {
-		"message": "Remember previous state (scroll position and opened folders)."
-	},
-	"optionZoom": {
-		"message": "Zoom"
-	},
-	"optionsFooterText": {
-		"message": "Built by $authorName$.",
-		"description": "Footer text for the Options page",
-		"placeholders": {
-			"authorName": {
-				"content": "$1"
-			}
-		}
-	},
-	"customIcon": {
-		"message": "Custom icon"
-	},
-	"customIconDescription": {
-		"message": "The icon has to be in 19*19 pixel dimension. Else it'll be resized to this dimension."
-	},
-	"defaultIconButton": {
-		"message": "Use default"
-	},
-	"defaultIconButtonOr": {
-		"message": " or "
-	},
-	"customStyles": {
-		"message": "Custom styles"
-	},
-	"customStylesDescription": {
-		"message": "This requires some CSS skillz. Hack at your own risk. Code sharing would be wise done via "
-	},
-	"resetSettings": {
-		"message": "Reset settings"
-	},
-	"resetSettingsDescription": {
-		"message": "Reset vBookmarks to default settings."
-	},
-	"resetButton": {
-		"message": "Reset"
-	},
-	"copyTitleAndUrl": {
-		"message": "Copy title and URL to clipboard"
-	},
-	"copyAllTitlesAndUrls": {
-		"message": "Copy all titles and URLs to clipboard"
-	},
-	"replaceUrl": {
-		"message": "Replace this with current URL"
-	}
+    "addBookmarkBottom": 
+    {
+        "message": "Bookmark Current Tab To Bottom Of This"
+    },
+    "addBookmarkTop": 
+    {
+        "message": "Bookmark Current Tab To Top Of This"
+    },
+    "addNewFolder": 
+    {
+        "message": "Add Sub Folder"
+    },
+    "addNewFolderAfter": 
+    {
+        "message": "Add Folder After This"
+    },
+    "addNewFolderBefore": 
+    {
+        "message": "Add Folder Before This"
+    },
+    "addSeparator": 
+    {
+        "message": "Add Separator"
+    },
+    "advancedOptions": 
+    {
+        "message": "Advanced Options"
+    },
+    "confirmDeleteFolderBookmarks": 
+    {
+        "message": "Are you sure you want to delete $folderName$ folder and $bookmarkCount$ bookmark(s) init?",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$2"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfolders": 
+    {
+        "message": "Are you sure you want to delete $folderName$ folder and $subFolderCount$ sub-folder(s) init?",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfoldersBookmarks": 
+    {
+        "message": "Are you sure you want to delete $folderName$ folder, $subFolderCount$ sub-folder(s) and $bookmarkCount$ bookmark(s) init?",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$3"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmOpenBookmarks": 
+    {
+        "description": "Confirmation message for opening all bookmarks.",
+        "message": "Are you sure you want to open all $count$ bookmarks?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewIncognitoWindow": 
+    {
+        "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+        "message": "Are you sure you want to open all $count$ bookmarks in a new incognito window?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewWindow": 
+    {
+        "description": "Confirmation message for opening all bookmarks in a new window.",
+        "message": "Are you sure you want to open all $count$ bookmarks in a new window?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "copyAllTitlesAndUrls": 
+    {
+        "message": "Copy all titles and URLs to clipboard"
+    },
+    "copyTitleAndUrl": 
+    {
+        "message": "Copy title and URL to clipboard"
+    },
+    "customIcon": 
+    {
+        "message": "Custom icon"
+    },
+    "customIconDescription": 
+    {
+        "message": "The icon has to be in 19*19 pixel dimension. Else it'll be resized to this dimension."
+    },
+    "customSeparatorColorDescription": 
+    {
+        "message": "Customize Separator Color"
+    },
+    "customStyles": 
+    {
+        "message": "Customstyles"
+    },
+    "customStylesDescription": 
+    {
+        "message": "This requires some CSS skillz. Hack at your own risk. Code sharing would be wise done via"
+    },
+    "defaultIconButton": 
+    {
+        "message": "Use default"
+    },
+    "defaultIconButtonOr": 
+    {
+        "message": "or"
+    },
+    "delete": 
+    {
+        "message": "Delete"
+    },
+    "deleteEllipsis": 
+    {
+        "message": "Delete..."
+    },
+    "edit": 
+    {
+        "message": "Edit..."
+    },
+    "editBookmark": 
+    {
+        "message": "Edit bookmark"
+    },
+    "editFolder": 
+    {
+        "message": "Edit folder"
+    },
+    "errorOccured": 
+    {
+        "message": "Oops,
+		anerroroccured."
+    },
+    "extDesc": 
+    {
+        "description": "The extension description.",
+        "message": "A popup bookmark manager. Enhanced Neat Bookmarks."
+    },
+    "extName": 
+    {
+        "description": "vBookmarks",
+        "message": "vBookmarks"
+    },
+    "general": 
+    {
+        "message": "General"
+    },
+    "ignore": 
+    {
+        "message": "Ignore"
+    },
+    "name": 
+    {
+        "description": "Name of bookmark or folder.",
+        "message": "Name"
+    },
+    "nope": 
+    {
+        "message": "Nope"
+    },
+    "noTitle": 
+    {
+        "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+        "message": "(no title)"
+    },
+    "open": 
+    {
+        "description": "Action to open bookmarks.",
+        "message": "Open"
+    },
+    "openBookmarks": 
+    {
+        "message": "Open All Bookmarks"
+    },
+    "openBookmarksIncognitoWindow": 
+    {
+        "message": "Open All Bookmarks in Incognito Window"
+    },
+    "openBookmarksNewWindow": 
+    {
+        "message": "Open All Bookmarks in New Window"
+    },
+    "openIncognitoWindow": 
+    {
+        "message": "Open in Incognito Window"
+    },
+    "openNewTab": 
+    {
+        "message": "Open in New Tab"
+    },
+    "openNewWindow": 
+    {
+        "message": "Open in New Window"
+    },
+    "optionClickNewTab": 
+    {
+        "message": "Left-click opens bookmark in new tab."
+    },
+    "optionCloseUnusedFolders": 
+    {
+        "message": "Close unused folders when opening a folder."
+    },
+    "optionConfirmOpenFolder": 
+    {
+        "message": "Display confirmation when opening a lot of bookmarks from a folder."
+    },
+    "optionOnlyShowBookmarkBar": 
+    {
+        "message": "Only show bookmarks in Bookmark Bar"
+    },
+    "optionOpenNewTab": 
+    {
+        "message": "Middle-click or control-click opens bookmark in new background tab(in stead of foreground)."
+    },
+    "optionPopupStays": 
+    {
+        "message": "Popup stays open when opening(left-clicking) bookmarks."
+    },
+    "optionRememberPrevState": 
+    {
+        "message": "Remember previous state(scroll position and opened folders)."
+    },
+    "options": 
+    {
+        "message": "Options"
+    },
+    "optionsFooterText": 
+    {
+        "description": "Footer text for the Options page",
+        "message": "Built by $authorName$.",
+        "placeholders": 
+        {
+            "authorName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "optionZoom": 
+    {
+        "message": "Zoom"
+    },
+    "parentFolder": 
+    {
+        "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+        "message": "Parent folder: \"$folderName$\"",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1",
+                "example": "Bookmarksbar"
+            }
+        }
+    },
+    "removeSeparator": 
+    {
+        "message": "Remove Separator"
+    },
+    "replaceUrl": 
+    {
+        "message": "Replace this with current URL"
+    },
+    "reportedToDeveloper": 
+    {
+        "description": "A message for an error occured in the extension, has been reported to the developer.",
+        "message": "This has been reported to the developer."
+    },
+    "reportError": 
+    {
+        "message": "Report Error"
+    },
+    "resetButton": 
+    {
+        "message": "Reset"
+    },
+    "resetSettings": 
+    {
+        "message": "Reset settings"
+    },
+    "resetSettingsDescription": 
+    {
+        "message": "Reset vBookmarks to default settings."
+    },
+    "save": 
+    {
+        "message": "Save"
+    },
+    "searchBookmarks": 
+    {
+        "description": "Placeholder text for search field.",
+        "message": "Search Bookmarks"
+    },
+    "url": 
+    {
+        "message": "URL"
+    }
 }

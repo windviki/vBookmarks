@@ -6,6 +6,141 @@
 	var body = document.body;
 	var _m = chrome.i18n.getMessage;
 	
+	function StringList () {
+		this._strings_ = new Array();
+	};
+
+	StringList.prototype.append = function(str) {
+		var inputstr = "" + str;
+		if (inputstr) {
+			this._strings_.push(inputstr);
+			//console.log('StringList.prototype.append, inputstr = "' + inputstr + '"');
+		}
+	};
+	
+	StringList.prototype.remove = function(str) {
+		var inputstr = "" + str;
+		if (inputstr) {
+			for ( var i = 0; i < this._strings_.length; i++) {
+				if	(this._strings_[i] == inputstr) {
+					this._strings_.splice(i, 1);
+					//console.log('StringList.prototype.remove, inputstr = "' + inputstr + '", this._strings_[i] = "' + this._strings_[i] + '"');
+					break;
+				}
+			}
+		}
+	};
+	
+	StringList.prototype.replace = function(strold, strnew) {
+		var inputstr = "" + strold;
+		var newstr = "" + strnew;
+		if (inputstr) {
+			for ( var i = 0; i < this._strings_.length; i++) {
+				if	(this._strings_[i] == inputstr) {
+					this._strings_[i] = newstr;
+					//console.log('StringList.prototype.replace, inputstr = "' + inputstr + '", this._strings_[i] = "' + this._strings_[i] + '"');
+				}
+			}
+		}
+	};
+	
+	StringList.prototype.fromString = function(str) {
+		var inputstr = "" + str;
+		if (inputstr) {
+			this._strings_ = inputstr.split(",");
+			//console.log('StringList.prototype.fromString, inputstr = "' + inputstr + '"');
+		}
+	};
+
+	StringList.prototype.toString = function() {
+		return this._strings_.join(",");
+	};
+	
+	function SeparatorManager () {
+		this.stringList = new StringList();
+		if (localStorage.separators) {
+			this.stringList.fromString(localStorage.separators);
+		}
+	};
+	
+	SeparatorManager.prototype.add = function(str) {
+		this.stringList.append(str);
+		localStorage.separators = this.stringList.toString();
+	};
+	
+	SeparatorManager.prototype.update = function(str, strnew) {
+		this.stringList.replace(str, strnew);
+		localStorage.separators = this.stringList.toString();
+	};
+	
+	SeparatorManager.prototype.remove = function(str) {
+		this.stringList.remove(str);
+		localStorage.separators = this.stringList.toString();
+	};
+	
+	SeparatorManager.prototype.getAll = function(str) {
+		return this.stringList._strings_;
+	};
+	
+	separatorManager = new SeparatorManager();
+	
+	//regex for color expressions
+	var hexcolorreg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+	//RGB -> HEX
+	String.prototype.colorHex = function(){
+		var that = this;
+		if(/^(rgb|RGB)/.test(that)){
+			var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+			var strHex = "#";
+			for(var i=0; i<aColor.length; i++){
+				var hex = Number(aColor[i]).toString(16);
+				if(hex === "0"){
+					hex += hex;	
+				}
+				strHex += hex;
+			}
+			if(strHex.length !== 7){
+				strHex = that;	
+			}
+			return strHex;
+		}else if(hexcolorreg.test(that)){
+			var aNum = that.replace(/#/,"").split("");
+			if(aNum.length === 6){
+				return that;	
+			}else if(aNum.length === 3){
+				var numHex = "#";
+				for(var i=0; i<aNum.length; i+=1){
+					numHex += (aNum[i]+aNum[i]);
+				}
+				return numHex;
+			}
+		}else{
+			return '';	
+		}
+	};
+
+	//HEX -> RGB
+	String.prototype.colorRgb = function(){
+		var sColor = this.toLowerCase();
+		if(sColor && hexcolorreg.test(sColor)){
+			if(sColor.length === 4){
+				var sColorNew = "#";
+				for(var i=1; i<4; i+=1){
+					sColorNew += sColor.slice(i,i+1).concat(sColor.slice(i,i+1));	
+				}
+				sColor = sColorNew;
+			}
+			//6 bit
+			var sColorChange = [];
+			for(var i=1; i<7; i+=2){
+				sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));	
+			}
+			return "RGB(" + sColorChange.join(",") + ")";
+		}else{
+			return '';	
+		}
+	};
+
 	// ++++++++ added by windviki@gmail.com ++++++++
 	copy_to_clipboard = function(copyText) {
 		if (window.clipboardData) {
@@ -119,6 +254,9 @@
 		'add-folder-before-folder' : 'addNewFolderBefore',
 		'add-folder-after-folder' : 'addNewFolderAfter',
 		'add-new-folder' : 'addNewFolder',
+		'add-separator' : 'addSeparator',
+		'remove-separator' : 'removeSeparator',
+		'add-folder-separator' : 'addSeparator',
 		'copy-title-and-url' : 'copyTitleAndUrl',
 		// 'copy-all-titles-and-urls' : 'copyAllTitlesAndUrls',
 		'replace-url' : 'replaceUrl',
@@ -181,8 +319,11 @@
 		}
 		tooltipURL = tooltipURL.htmlspecialchars();
 		var name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
-		return '<a href="' + u + '"' + ' title="' + tooltipURL + '" tabindex="0" ' + extras + '>' + '<img src="'
-				+ favicon + '" width="16" height="16" alt=""><i>' + name + '</i>' + '</a>';
+		var bookmarkhtml = '<a href="' + u + '"' + ' title="' + tooltipURL 
+				+ '" tabindex="0" ' + extras + '>' 
+				+ '<img src="' + favicon + '" width="16" height="16" alt=""><i>' 
+				+ name + '</i>' + '</a>';
+		return bookmarkhtml;
 	};
 
 	var generateHTML = function(data, level) {
@@ -209,7 +350,7 @@
 					if (isOpen)
 						open = ' open';
 				}
-				html += '<li class="parent' + open + '"' + idHTML + ' role="treeitem" aria-expanded="' + isOpen
+				html += '<li class="parent' + open + '"' + idHTML + '" level="' + level + '" role="treeitem" aria-expanded="' + isOpen
 						+ '" data-parentid="' + parentID + '">' + '<span tabindex="0" style="-webkit-padding-start: '
 						+ paddingStart + 'px"><b class="twisty"></b>'
 						+ '<img src="folder.png" width="16" height="16" alt=""><i>' + (title || _m('noTitle')) + '</i>'
@@ -231,7 +372,7 @@
 					}
 				}
 			} else {
-				html += '<li class="child"' + idHTML + ' role="treeitem" data-parentid="' + parentID + '">'
+				html += '<li class="child"' + idHTML + ' level="' + level + '" role="treeitem" data-parentid="' + parentID + '">'
 						+ generateBookmarkHTML(title, url, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
 			}
 			html += '</li>';
@@ -240,6 +381,85 @@
 		return html;
 	};
 
+	addSeparator = function(nodeid, where, bsave) {
+		chrome.bookmarks.get(nodeid, function(nodeList) {
+			if (!nodeList.length)
+				return;
+			var node = nodeList[0];
+			var url = node.url;
+			// check whether the referenced node is bookmark or folder
+			var isBookmark = !!url;
+
+			// get parent node
+			var parentid = node.parentId;
+			var pnode = $('neat-tree-item-' + parentid);
+			var rnode = $('neat-tree-item-' + node.id);
+			if(!pnode){
+				pnode = document.body;
+			}
+			//if (where == 'before') {
+			//}
+			var ul = pnode.querySelector('ul');
+			var div = document.createElement('div');
+			var lv = rnode.getAttribute('level'); //getAttribute!
+			var paddingStart = lv*14;
+			var hrwidth = window.innerWidth - paddingStart - 40;
+			//console.log('addSeparator. innerWidth = ' + window.innerWidth + ', paddingStart = ' + paddingStart + ', left = ' + rnode.left);
+			var color = '#987cb9';
+			if (localStorage.separatorcolor){
+				color = localStorage.separatorcolor.colorHex();
+			}
+			div.innerHTML = '<li>' 
+							//+ '<a href="chrome://chrome/settings/"' 
+							+ '<a href="#"' 
+							+ ' style="-webkit-padding-start: ' + paddingStart + 'px"' 
+							+ '>' 
+							+ '<img width="16" height="16" style="display:none;"></img>'
+							+ '<hr' 
+							+ ' class="child"'
+							+ ' role="treeitem"'
+							+ ' width="' +  hrwidth + 'px"' 
+							//+ ' height="' +  2 + 'px"' 
+							+ ' id="creator-' + nodeid + '"' 
+							+ ' align=right color=' + color 
+							+ ' size=1' 
+							//+ ' style="position:absolute;left:' + paddingStart + ';"'
+							//+ ' style="display:inline-block;"'
+							+ '></a></li>';
+			var hr = div.querySelector('li');
+			if (rnode.nextSibling) {
+				ul.insertBefore(hr, rnode.nextSibling);
+			} else {
+				ul.appendChild(hr);
+			}
+			div.destroy();
+			if(bsave){
+				separatorManager.add(nodeid);
+			}
+		}); // end bookmarks.get
+	};
+	
+		
+	checkSeparator = function (node) {
+		if (node && node.nextElementSibling) {
+			nextnode = node.nextElementSibling;
+			prevnode = node.previousElementSibling;
+			hr = nextnode.querySelector('hr');
+			if (hr) {
+				id = hr.id.replace('creator-', '');
+				if (prevnode && !prevnode.querySelector('hr')) {
+					newid = prevnode.id.replace('neat-tree-item-', '');
+					hr.id = 'creator-' + newid;
+					separatorManager.update(id, newid);
+				} else {
+					//remove separator
+					separatorManager.remove(id);
+					hr.parentNode.destroy();
+				} 
+			}
+		}
+	};
+		
 	var $tree = $('tree');
 	chrome.bookmarks.getTree(function(tree) {
 		var html = '';
@@ -273,6 +493,14 @@
 		}
 
 		setTimeout(adaptBookmarkTooltips, 100);
+		
+		var seps = separatorManager.getAll();
+		for(var i=0; i<seps.length; i++) {
+			if(seps[i]) {
+				//console.log('separatorManager.getAll i = "' + i + '" seps[i] = "' + seps[i] +'"');
+				addSeparator(seps[i], 'after', false);
+			}
+		}
 
 		tree = null;
 	});
@@ -492,20 +720,6 @@
 			var height = Math.max(200, Math.min(fullHeight, maxHeight));
 			body.style.height = height + 'px';
 			localStorage.popupHeight = height;
-			// width fix
-			//var scrollwidthoffset = window.innerWidth - localStorage.popupWidth;
-			//console.info("scrollwidthoffset = " + scrollwidthoffset);
-			//if (scrollwidthoffset > 0) { // has scrollbar, going to expand root folder
-			//	body.style.width = window.innerWidth + 'px';
-			//	localStorage.scrollbaroffset = scrollwidthoffset;
-			//	//localStorage.popupWidth = window.innerWidth;
-			//	console.info("Expand, body.style.width = " + body.style.width);
-			//} else { //no scrollbar
-			//	body.style.width = window.innerWidth - localStorage.scrollbaroffset + 'px';
-			//	//localStorage.popupWidth = window.innerWidth - localStorage.scrollbaroffset;
-			//	localStorage.scrollbaroffset = 0;
-			//	console.info("Collapse, body.style.width = " + body.style.width);
-			//}
 		}, 200);
 	};
 	if (!searchMode)
@@ -748,6 +962,7 @@
 						// add bookmark
 						html += '<li class="child"'
 								+ idHTML
+								+ ' level="' + lv + '"'
 								+ ' role="treeitem" data-parentid="'
 								+ parentid
 								+ '">'
@@ -811,6 +1026,7 @@
 							// console.log('innerhtml!!\n'+pnode.innerHTML+'\nname='+pnode.name);
 							// add folder
 							html += '<li class="parent"' + idHTML
+									+ ' level="' + lv + '"'
 									+ ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
 							html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart
 									+ 'px"><b class="twisty"></b>'
@@ -979,12 +1195,14 @@
 			chrome.bookmarks.remove(id, function() {
 				if (li1) {
 					var nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
+					checkSeparator(li1); // checkSeparator
 					li1.destroy();
 					if (!searchMode && nearLi1)
 						nearLi1.querySelector('a, span').focus();
 				}
 				if (li2) {
 					var nearLi2 = li2.nextElementSibling || li2.previousElementSibling;
+					checkSeparator(li2); // checkSeparator
 					li2.destroy();
 					if (searchMode && nearLi2)
 						nearLi2.querySelector('a, span').focus();
@@ -1047,7 +1265,7 @@
 		var el = e.target;
 		var ctrlMeta = (e.ctrlKey || e.metaKey);
 		var shift = e.shiftKey;
-		if (el.tagName == 'A') {
+		if (el.tagName == 'A' && !el.querySelector('hr')) {
 			var url = el.href;
 			if (ctrlMeta) { // ctrl/meta click
 				actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);
@@ -1097,6 +1315,7 @@
 	// Context menu
 	var $bookmarkContextMenu = $('bookmark-context-menu');
 	var $folderContextMenu = $('folder-context-menu');
+	var $separatorContextMenu = $('separator-context-menu');
 
 	var clearMenu = function(e) {
 		currentContext = null;
@@ -1114,6 +1333,8 @@
 		$bookmarkContextMenu.style.opacity = 0;
 		$folderContextMenu.style.left = '-999px';
 		$folderContextMenu.style.opacity = 0;
+		$separatorContextMenu.style.left = '-999px';
+		$separatorContextMenu.style.opacity = 0;
 	};
 
 	body.addEventListener('click', clearMenu);
@@ -1135,26 +1356,53 @@
 		}
 		var el = e.target;
 		if (el.tagName == 'A') {
-			currentContext = el;
-			var active = body.querySelector('.active');
-			if (active)
-				active.removeClass('active');
-			el.addClass('active');
-			var bookmarkMenuWidth = $bookmarkContextMenu.offsetWidth;
-			var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
-			var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth
-					- bookmarkMenuWidth);
-			var pageY = e.pageY;
-			var boundY = window.innerHeight - bookmarkMenuHeight;
-			if (pageY > boundY)
-				pageY -= bookmarkMenuHeight;
-			if (pageY < 0)
-				pageY = boundY;
-			pageY = Math.max(0, pageY);
-			$bookmarkContextMenu.style.left = pageX + 'px';
-			$bookmarkContextMenu.style.top = pageY + 'px';
-			$bookmarkContextMenu.style.opacity = 1;
-			$bookmarkContextMenu.focus();
+			if	(el.querySelector('hr')) {
+				currentContext = el;
+				var active = body.querySelector('.active');
+				if (active)
+					active.removeClass('active');
+				el.addClass('active');
+				if (el.parentNode.dataset.parentid == '0') {
+					$separatorContextMenu.addClass('hide-editables');
+				} else {
+					$separatorContextMenu.removeClass('hide-editables');
+				}
+				var separatorMenuWidth = $separatorContextMenu.offsetWidth;
+				var separatorMenuHeight = $separatorContextMenu.offsetHeight;
+				var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
+						- separatorMenuWidth);
+				var pageY = e.pageY;
+				var boundY = window.innerHeight - separatorMenuHeight;
+				if (pageY > boundY)
+					pageY -= separatorMenuHeight;
+				if (pageY < 0)
+					pageY = boundY;
+				$separatorContextMenu.style.left = pageX + 'px';
+				$separatorContextMenu.style.top = pageY + 'px';
+				$separatorContextMenu.style.opacity = 1;
+				$separatorContextMenu.focus();
+			} else {
+				currentContext = el;
+				var active = body.querySelector('.active');
+				if (active)
+					active.removeClass('active');
+				el.addClass('active');
+				var bookmarkMenuWidth = $bookmarkContextMenu.offsetWidth;
+				var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
+				var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth
+						- bookmarkMenuWidth);
+				var pageY = e.pageY;
+				var boundY = window.innerHeight - bookmarkMenuHeight;
+				if (pageY > boundY)
+					pageY -= bookmarkMenuHeight;
+				if (pageY < 0)
+					pageY = boundY;
+				pageY = Math.max(0, pageY);
+				$bookmarkContextMenu.style.left = pageX + 'px';
+				$bookmarkContextMenu.style.top = pageY + 'px';
+				$bookmarkContextMenu.style.opacity = 1;
+				$bookmarkContextMenu.focus();
+			}
 		} else if (el.tagName == 'SPAN') {
 			currentContext = el;
 			var active = body.querySelector('.active');
@@ -1180,6 +1428,31 @@
 			$folderContextMenu.style.top = pageY + 'px';
 			$folderContextMenu.style.opacity = 1;
 			$folderContextMenu.focus();
+		} else if (el.tagName == 'HR') {
+			currentContext = el;
+			var active = body.querySelector('.active');
+			if (active)
+				active.removeClass('active');
+			el.addClass('active');
+			if (el.parentNode.dataset.parentid == '0') {
+				$separatorContextMenu.addClass('hide-editables');
+			} else {
+				$separatorContextMenu.removeClass('hide-editables');
+			}
+			var separatorMenuWidth = $separatorContextMenu.offsetWidth;
+			var separatorMenuHeight = $separatorContextMenu.offsetHeight;
+			var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
+					- separatorMenuWidth);
+			var pageY = e.pageY;
+			var boundY = window.innerHeight - separatorMenuHeight;
+			if (pageY > boundY)
+				pageY -= separatorMenuHeight;
+			if (pageY < 0)
+				pageY = boundY;
+			$separatorContextMenu.style.left = pageX + 'px';
+			$separatorContextMenu.style.top = pageY + 'px';
+			$separatorContextMenu.style.opacity = 1;
+			$separatorContextMenu.focus();
 		}
 	});
 	// on Mac, holding down right-click for a period of time closes the context menu
@@ -1219,6 +1492,9 @@
 			break;
 		case 'add-folder-after-bookmark':
 			actions.addNewBookmarkNode(id, 'after', '', '');
+			break;
+		case 'add-separator':
+			addSeparator(id, 'after', true);
 			break;
 		case 'copy-title-and-url':
 			actions.copyAllTitlesAndUrls(id);
@@ -1307,6 +1583,9 @@
 			case 'add-new-folder':
 				actions.addNewBookmarkNode(id, 'top', '', '');
 				break;
+			case 'add-folder-separator':
+				addSeparator(id, 'after', true);
+				break;
 			case 'copy-all-titles-and-urls':
 				actions.copyAllTitlesAndUrls(id);
 				break;
@@ -1345,7 +1624,35 @@
 	$folderContextMenu.addEventListener('click', function(e) {
 		e.stopPropagation();
 	});
-
+	
+	
+	var separatorContextHandler = function(e) {
+		if (!currentContext)
+			return;
+		var el = e.target;
+		if (el.tagName != 'COMMAND')
+			return;
+		var hr = currentContext.querySelector('hr');
+		var id = hr.id.replace('creator-', '');
+		switch (el.id) {
+		case 'remove-separator':
+			//console.log('separatorManager.remove creator = "' + id + '"');
+			separatorManager.remove(id);
+			hr.parentNode.destroy();
+			break;
+		}
+		clearMenu();
+	};
+	$separatorContextMenu.addEventListener('mouseup', function(e) {
+		e.stopPropagation();
+		if (e.button == 0 || (os == 'mac' && e.button == 1))
+			separatorContextHandler(e);
+	});
+	$separatorContextMenu.addEventListener('contextmenu', separatorContextHandler);
+	//$separatorContextMenu.addEventListener('click', function(e) {
+	//	e.stopPropagation();
+	//});
+	
 	// Keyboard navigation
 	var keyBuffer = '', keyBufferTimer = null;
 	var treeKeyDown = function(e) {
@@ -1368,7 +1675,10 @@
 			} else {
 				var nextLi = li.nextElementSibling;
 				if (nextLi) {
-					nextLi.querySelector('a, span').focus();
+					nextlispan = nextLi.querySelector('a, span');
+					if(nextlispan) {
+						nextlispan.focus();
+					}
 				} else {
 					var nextLi = null;
 					do {
@@ -1643,12 +1953,14 @@
 	};
 	$bookmarkContextMenu.addEventListener('keydown', contextKeyDown);
 	$folderContextMenu.addEventListener('keydown', contextKeyDown);
+	//$separatorContextMenu.addEventListener('keydown', contextKeyDown);
 
 	var contextMouseMove = function(e) {
 		e.target.focus();
 	};
 	$bookmarkContextMenu.addEventListener('mousemove', contextMouseMove);
 	$folderContextMenu.addEventListener('mousemove', contextMouseMove);
+	$separatorContextMenu.addEventListener('mousemove', contextMouseMove);
 
 	var contextMouseOut = function() {
 		if (this.style.opacity.toInt())
@@ -1656,6 +1968,7 @@
 	};
 	$bookmarkContextMenu.addEventListener('mouseout', contextMouseOut);
 	$folderContextMenu.addEventListener('mouseout', contextMouseOut);
+	$separatorContextMenu.addEventListener('mouseout', contextMouseOut);
 
 	// Drag and drop, baby
 	var draggedBookmark = null;
@@ -1671,7 +1984,8 @@
 		var elParent = el.parentNode;
 		// can move any bookmarks/folders except the default root folders
 		if ((el.tagName == 'A' && elParent.hasClass('child'))
-				|| (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')) {
+				|| (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')
+				|| (el.tagName == 'A' && el.querySelector('HR'))) {
 			e.preventDefault();
 			draggedOut = false;
 			draggedBookmark = el;
@@ -1695,6 +2009,9 @@
 		var el = e.target;
 		var clientX = e.clientX;
 		var clientY = e.clientY;
+		//fixed clientY
+		clientY += document.body.scrollTop;
+		//hovering over the dragged element itself
 		if (el == draggedBookmark) {
 			bookmarkClone.style.left = '-999px';
 			dropOverlay.style.left = '-999px';
@@ -1702,8 +2019,7 @@
 			return;
 		}
 		draggedOut = true;
-		// if hovering over the dragged element itself or cursor
-		// move outside the tree
+		//cursor moves outside the tree
 		var treeTop = $tree.offsetTop, treeBottom = window.innerHeight;
 		if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom) {
 			bookmarkClone.style.left = '-999px';
@@ -1742,12 +2058,16 @@
 		}
 		clientX /= zoomLevel;
 		clientY /= zoomLevel;
-		if (el.tagName == 'A') {
+		if (el.tagName == 'A'/* || el.tagName == 'HR'*/) {
 			canDrop = true;
 			bookmarkClone.style.top = clientY + 'px';
 			bookmarkClone.style.left = (rtl ? (clientX - bookmarkClone.offsetWidth) : clientX) + 'px';
 			var elRect = el.getBoundingClientRect();
-			var top = (clientY >= elRect.top + elRect.height / 2) ? elRect.bottom : elRect.top;
+			//fixed elRectTop
+			var elRectTop = elRect.top + document.body.scrollTop;
+			//fixed elRectBottom
+			var elRectBottom = elRect.bottom + document.body.scrollTop;
+			var top = (clientY >= elRectTop + elRect.height / 2) ? elRectBottom : elRectTop;
 			dropOverlay.className = 'bookmark';
 			dropOverlay.style.top = top + 'px';
 			dropOverlay.style.left = rtl ? '0px' : el.style.webkitPaddingStart.toInt() + 16 + 'px';
@@ -1759,18 +2079,22 @@
 			bookmarkClone.style.left = clientX + 'px';
 			var elRect = el.getBoundingClientRect();
 			var top = null;
-			var elRectTop = elRect.top, elRectHeight = elRect.height;
+			//fixed elRectTop
+			var elRectTop = elRect.top + document.body.scrollTop;
+			//fixed elRectBottom
+			var elRectBottom = elRect.bottom + document.body.scrollTop;
+			var elRectHeight = elRect.height;
 			var elParent = el.parentNode;
 			if (elParent.dataset.parentid != '0') {
 				if (clientY < elRectTop + elRectHeight * .3) {
-					top = elRect.top;
+					top = elRectTop;
 				} else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
-					top = elRect.bottom;
+					top = elRectBottom;
 				}
 			}
 			if (top == null) {
 				dropOverlay.className = 'folder';
-				dropOverlay.style.top = elRect.top + 'px';
+				dropOverlay.style.top = elRectTop + 'px';
 				dropOverlay.style.left = '0px';
 				dropOverlay.style.width = elRect.width + 'px';
 				dropOverlay.style.height = elRect.height + 'px';
@@ -1782,6 +2106,7 @@
 				dropOverlay.style.height = null;
 			}
 		}
+		//console.log('dropOverlay top = ' + dropOverlay.style.top + ', scroll = ' + body.scrollTop);
 	});
 	var onDrop = function() {
 		draggedBookmark = null;
@@ -1801,38 +2126,80 @@
 			draggedOut = false;
 			onDrop();
 			return;
-		}
-		;
+		};
+		//el is the target element "A" "SPAN"
 		var el = e.target;
 		var elParent = el.parentNode;
+		//elParent.tagName "LI"
 		var id = elParent.id.replace('neat-tree-item-', '');
 		if (!id) {
-			onDrop();
-			return;
+			var hr = elParent.querySelector('hr');
+			if (hr) { //dropped taget is separator
+				id = hr.id.replace('creator-', '');
+			} else {
+				onDrop();
+				return;
+			}
 		}
 		var draggedBookmarkParent = draggedBookmark.parentNode;
 		var draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
-		var clientY = e.clientY / zoomLevel;
-		if (el.tagName == 'A') {
+		//fixed clientY
+		var clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
+		if (el.tagName == 'A') { //dropped taget is bookmark
 			var elRect = el.getBoundingClientRect();
-			var moveBottom = (clientY >= elRect.top + elRect.height / 2);
+			//fixed elRectTop
+			var elRectTop = elRect.top + document.body.scrollTop;
+			var moveBottom = (clientY >= elRectTop + elRect.height / 2);
 			chrome.bookmarks.get(id, function(node) {
 				if (!node || !node.length)
 					return;
 				node = node[0];
 				var index = node.index;
 				var parentId = node.parentId;
-				chrome.bookmarks.move(draggedID, {
-					parentId : parentId,
-					index : moveBottom ? ++index : index
-				}, function() {
+				if (draggedID) { //dragged is bookmark
+					chrome.bookmarks.move(draggedID, {
+						parentId : parentId,
+						index : moveBottom ? ++index : index
+					}, function() {
+						//display
+						draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
+						draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
+						draggedBookmark.focus();
+						onDrop();
+					});
+				} else { //dragged is separator
+					if (!moveBottom) { //before
+						var prevli = elParent.previousSibling;
+						if (prevli) {
+							//previous node
+							var newid = prevli.id.replace('neat-tree-item-', '');
+							//console.log('move before, newid = ' + newid + ', id = ' + id);
+							if (newid) {
+								id = newid;
+							}
+						}
+					}
+					//display
 					draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
 					draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
+					//save position
+					var hr = draggedBookmark.querySelector('hr');
+					var creatorID = hr.id.replace('creator-', '');
+					hr.id = 'creator-' + id;
+					separatorManager.update(creatorID, id);
+					//console.log('target is Bookmark, oldid = ' + creatorID + ', newid = ' + id);
 					draggedBookmark.focus();
 					onDrop();
-				});
+				}
 			});
-		} else if (el.tagName == 'SPAN') {
+		//} else if (el.tagName == 'HR') { //dropped taget is separator
+		//	var elRect = el.getBoundingClientRect();
+		//	var moveBottom = (clientY >= elRect.top + elRect.height / 2);
+		//	draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
+		//	draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
+		//	draggedBookmark.focus();
+		//	onDrop();
+		} else if (el.tagName == 'SPAN') { //dropped taget is directory
 			var elRect = el.getBoundingClientRect();
 			var move = 0; // 0 = middle, 1 = top, 2 = bottom
 			var elRectTop = elRect.top, elRectHeight = elRect.height;
@@ -1844,7 +2211,7 @@
 					move = 2;
 				}
 			}
-			if (move > 0) {
+			if (move > 0) { //top or bottom
 				var moveBottom = (move == 2);
 				chrome.bookmarks.get(id, function(node) {
 					if (!node || !node.length)
@@ -1852,20 +2219,57 @@
 					node = node[0];
 					var index = node.index;
 					var parentId = node.parentId;
-					chrome.bookmarks.move(draggedID, {
-						parentId : parentId,
-						index : moveBottom ? ++index : index
-					}, function() {
+					if (draggedID) {
+						chrome.bookmarks.move(draggedID, {
+							parentId : parentId,
+							index : moveBottom ? ++index : index
+						}, function() {
+							draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
+							draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
+							draggedBookmark.focus();
+							onDrop();
+						});
+					} else { //dragged is separator
+						if (!moveBottom) { //before
+							var prevli = elParent.previousSibling;
+							//prevli is dragged element
+							if (prevli) {
+								//previous node
+								var newid = prevli.id.replace('neat-tree-item-', '');
+								//console.log('move before, newid = ' + newid + ', id = ' + id);
+								if (newid) {
+									id = newid;
+								}
+							}
+						}
 						draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
 						draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
+						//save position
+						var hr = draggedBookmark.querySelector('hr');
+						var creatorID = hr.id.replace('creator-', '');
+						hr.id = 'creator-' + id;
+						//console.log('target is Folder (top/bottom), oldid = ' + creatorID + ', newid = ' + id);
 						draggedBookmark.focus();
 						onDrop();
-					});
+					}
 				});
-			} else {
-				chrome.bookmarks.move(draggedID, {
-					parentId : id
-				}, function() {
+			} else { //middle position
+				if (draggedID) {
+					chrome.bookmarks.move(draggedID, {
+						parentId : id
+					}, function() {
+						var ul = elParent.querySelector('ul');
+						var level = parseInt(elParent.parentNode.dataset.level) + 1;
+						draggedBookmark.style.webkitPaddingStart = (14 * level) + 'px';
+						if (ul) {
+							draggedBookmarkParent.inject(ul);
+						} else {
+							draggedBookmarkParent.destroy();
+						}
+						el.focus();
+						onDrop();
+					});
+				} else { //dragged is separator
 					var ul = elParent.querySelector('ul');
 					var level = parseInt(elParent.parentNode.dataset.level) + 1;
 					draggedBookmark.style.webkitPaddingStart = (14 * level) + 'px';
@@ -1875,8 +2279,13 @@
 						draggedBookmarkParent.destroy();
 					}
 					el.focus();
+					//save position
+					var hr = draggedBookmark.querySelector('hr');
+					var creatorID = hr.id.replace('creator-', '');
+					hr.id = 'creator-' + id;
+					//console.log('target is Folder, oldid = ' + creatorID + ', newid = ' + id);
 					onDrop();
-				});
+				}
 			}
 		} else {
 			onDrop();
@@ -1887,6 +2296,21 @@
 	var $resizer = $('resizer');
 	var resizerDown = false;
 	var bodyWidth = 0, screenX = 0;
+	// Reset separators
+	function resetSeparator(){
+		var seps = separatorManager.getAll();
+		for(var i=0; i<seps.length; i++) {
+			if(seps[i]) {
+				//console.log('resetSeparator i = "' + i + '" seps[i] = "' + seps[i] +'"');
+				var node = $('creator-' + seps[i]);
+				var bmnode = $('neat-tree-item-' + seps[i]);
+				var lv = bmnode.getAttribute('level'); //getAttribute!
+				var paddingStart = lv*14;
+				var hrwidth = window.innerWidth - paddingStart - 40;
+				node.width = hrwidth;
+			}
+		}
+	};
 	// Drag the edge
 	$resizer.addEventListener('mousedown', function(e) {
 		e.preventDefault();
@@ -1901,9 +2325,11 @@
 		e.preventDefault();
 		var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
 		var width = bodyWidth + changedWidth;
+		// 320 < width < 640
 		width = Math.min(640, Math.max(320, width));
 		body.style.width = width + 'px';
 		localStorage.popupWidth = width;
+		resetSeparator(); // Reset separators
 		clearMenu(); // messes the context menu
 	});
 	document.addEventListener('mouseup', function(e) {
@@ -1916,8 +2342,11 @@
 		var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
 		var width = bodyWidth + changedWidth;
 		//var width = window.innerWidth;
+		// 320 < width < 640
+		width = Math.min(640, Math.max(320, width));
 		body.style.width = width + 'px';
 		localStorage.popupWidth = width;
+		resetSeparator(); // Reset separators
 		clearMenu();
 	});
 	
@@ -1949,8 +2378,8 @@
 	};
 	document.addEventListener('keydown', function(e) {
 		if (e.keyCode == 27
-				&& (body.hasClass('needConfirm') || body.hasClass('needEdit') || body.hasClass('needAlert') || body
-						.hasClass('needInputName'))) { // esc
+				&& (body.hasClass('needConfirm') || body.hasClass('needEdit') 
+					|| body.hasClass('needAlert') || body.hasClass('needInputName'))) { // esc
 			e.preventDefault();
 			closeDialogs();
 		} else if ((e.metaKey || e.ctrlKey) && e.keyCode == 70) { // cmd/ctrl

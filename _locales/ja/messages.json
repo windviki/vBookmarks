@@ -1,249 +1,351 @@
 {
-  "nope": {
-    "message": "いいえ"
-  },
-  "name": {
-    "description": "ブックマークとフォルダの名前",
-    "message": "名前"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "すべてのブックマークをシークレットウィンドウで開く"
-  },
-  "reportError": {
-    "message": "エラーレポート"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "placeholders": {
-      "subFolderCount": {
-        "content": "$2"
-      },
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      }
+    "accessibility": 
+    {
+        "message": "アクセシビリティ"
     },
-    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。"
-  },
-  "extName": {
-    "description": "拡張名",
-    "message": "vBookmarks"
-  },
-  "noTitle": {
-    "description": "名前の無いブックマークのための名前",
-    "message": "無題"
-  },
-  "edit": {
-    "message": "編集..."
-  },
-  "open": {
-    "description": "ブックマークを開く",
-    "message": "開く"
-  },
-  "searchBookmarks": {
-    "description": "検索フィールドのためのプレースホルダーテキスト",
-    "message": "ブックマークの検索"
-  },
-  "delete": {
-    "message": "削除"
-  },
-  "editBookmark": {
-    "message": "ブックマークの編集"
-  },
-  "openNewTab": {
-    "message": "新しいタブで開く"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "フォルダから多くのブックマークを開くとき、警告する"
-  },
-  "editFolder": {
-    "message": "フォルダの編集"
-  },
-  "parentFolder": {
-    "placeholders": {
-      "folderName": {
-        "example": "ブックマークバー",
-        "content": "$1"
-      }
+    "addBookmarkAfter": 
+    {
+        "message": "この後に現在のタブを追加します"
     },
-    "description": "ブックマークが格納されているフォルダの情報は、検索結果リストのブックマーク吹き出しに表示される",
-    "message": "フォルダ名 \"$folderName$\""
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addBookmarkBefore": 
+    {
+        "message": "この前に現在のタブを追加します"
     },
-    "description": "確認メッセージ - すべてのブックマークを新規シークレットウィンドウで表示する場合",
-    "message": "$count$ 個のブックマークを新しいシークレットウィンドウで開こうとしています。よろしいですか。"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "errorOccured": {
-    "message": "エラーが発生しました"
-  },
-  "optionPopupStays": {
-    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
-  },
-  "accessibility": {
-    "message": "アクセシビリティ"
-  },
-  "deleteEllipsis": {
-    "message": "削除..."
-  },
-  "confirmDeleteFolderBookmarks": {
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "bookmarkCount": {
-        "content": "$2"
-      }
+    "addBookmarkBottom": 
+    {
+        "message": "このボトムに現在のタブを追加します"
     },
-    "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。"
-  },
-  "advancedOptions": {
-    "message": "拡張オプション"
-  },
-  "extDesc": {
-    "description": "詳細な説明",
-    "message": "すっきりしたツリー構造のブックマーク"
-  },
-  "save": {
-    "message": "保存"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addBookmarkTop": 
+    {
+        "message": "このトップに現在のタブを追加します"
     },
-    "description": "確認メッセージ - すべてのブックマークを新規ウィンドウで表示する場合",
-    "message": "$count$ 個のブックマークを新しいウィンドウで開こうとしています。よろしいですか。"
-  },
-  "confirmOpenBookmarks": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addNewFolder": 
+    {
+        "message": "フォルダを追加"
     },
-    "description": "確認メッセージ - すべてのブックマークを開く場合",
-    "message": "$count$ 個のブックマークを開こうとしています。よろしいですか。"
-  },
-  "openBookmarks": {
-    "message": "すべてのブックマークを開く"
-  },
-  "optionRememberPrevState": {
-    "message": "スクロール位置と開いたフォルダの情報を保持する"
-  },
-  "optionsFooterText": {
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
+    "addNewFolderAfter": 
+    {
+        "message": "この後にフォルダを追加します"
     },
-    "description": "オプションページのフッターテキスト",
-    "message": "作成者 $authorName$."
-  },
-  "openBookmarksNewWindow": {
-    "message": "すべてのブックマークを新しいウィンドウで開く"
-  },
-  "optionOpenNewTab": {
-    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
-  },
-  "addBookmarkBefore": {
-  	"message": "この前に現在のタブを追加します"
-  },
-  "addBookmarkAfter": {
-  	"message": "この後に現在のタブを追加します"
-  },
-  "addBookmarkTop": {
-  	"message": "このトップに現在のタブを追加します"
-  },
-  "addBookmarkBottom": {
-  	"message": "このボトムに現在のタブを追加します"
-  },
-  "addNewFolder": {
-    "message": "フォルダを追加"
-  },
-  "addNewFolderBefore": {
-    "message": "この前にフォルダを追加します"
-  },
-  "addNewFolderAfter": {
-    "message": "この後にフォルダを追加します"
-  },
-  "ignore": {
-    "message": "無視"
-  },
-  "openIncognitoWindow": {
-    "message": "シークレットウィンドウで開く"
-  },
-  "general": {
-    "message": "全般"
-  },
-  "openNewWindow": {
-    "message": "新しいウィンドウで開く"
-  },
-  "optionZoom": {
-    "message": "拡大"
-  },
-  "optionClickNewTab": {
-    "message": "ブックマークを新しいタブで開く"
-  },
-  "options": {
-    "message": "オプション"
-  },
-  "customIcon": {
-  	"message": "カスタムアイコン"
-  },
-  "customIconDescription": {
-  	"message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
-  },
-  "defaultIconButton": {
-  	"message": "デフォルトを使用"
-  },
-  "defaultIconButtonOr": {
-  	"message": " または "
-  },
-  "customStyles": {
-  	"message": "カスタムスタイル"
-  },
-  "customStylesDescription": {
-  	"message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
-  },
-  "resetSettings": {
-  	"message": "設定をリセットします"
-  },
-  "resetSettingsDescription": {
-  	"message": "デフォルトの設定にvBookmarksをリセットします"
-  },
-  "resetButton": {
-  	"message": "リセットされます"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "placeholders": {
-      "subFolderCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
+    "addNewFolderBefore": 
+    {
+        "message": "この前にフォルダを追加します"
     },
-    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。"
-  },
-  "copyTitleAndUrl": {
-    "message": "クリップボードへのコピーのタイトルとURL"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "クリップボードへのすべてのタイトルとURLをコピー"
-  },
-  "replaceUrl": {
-    "message": "現在のURLに置き換えてください"
-  }
+    "addSeparator": 
+    {
+        "message": "区切りを追加"
+    },
+    "advancedOptions": 
+    {
+        "message": "拡張オプション"
+    },
+    "confirmDeleteFolderBookmarks": 
+    {
+        "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$2"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfolders": 
+    {
+        "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfoldersBookmarks": 
+    {
+        "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$3"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmOpenBookmarks": 
+    {
+        "description": "確認メッセージ - すべてのブックマークを開く場合",
+        "message": "$count$ 個のブックマークを開こうとしています。よろしいですか。",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewIncognitoWindow": 
+    {
+        "description": "確認メッセージ - すべてのブックマークを新規シークレットウィンドウで表示する場合",
+        "message": "$count$ 個のブックマークを新しいシークレットウィンドウで開こうとしています。よろしいですか。",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewWindow": 
+    {
+        "description": "確認メッセージ - すべてのブックマークを新規ウィンドウで表示する場合",
+        "message": "$count$ 個のブックマークを新しいウィンドウで開こうとしています。よろしいですか。",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "copyAllTitlesAndUrls": 
+    {
+        "message": "クリップボードへのすべてのタイトルとURLをコピー"
+    },
+    "copyTitleAndUrl": 
+    {
+        "message": "クリップボードへのコピーのタイトルとURL"
+    },
+    "customIcon": 
+    {
+        "message": "カスタムアイコン"
+    },
+    "customIconDescription": 
+    {
+        "message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
+    },
+    "customSeparatorColorDescription": 
+    {
+        "message": "区切り文字の色をカスタマイズ"
+    },
+    "customStyles": 
+    {
+        "message": "カスタムスタイル"
+    },
+    "customStylesDescription": 
+    {
+        "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
+    },
+    "defaultIconButton": 
+    {
+        "message": "デフォルトを使用"
+    },
+    "defaultIconButtonOr": 
+    {
+        "message": " または "
+    },
+    "delete": 
+    {
+        "message": "削除"
+    },
+    "deleteEllipsis": 
+    {
+        "message": "削除..."
+    },
+    "edit": 
+    {
+        "message": "編集..."
+    },
+    "editBookmark": 
+    {
+        "message": "ブックマークの編集"
+    },
+    "editFolder": 
+    {
+        "message": "フォルダの編集"
+    },
+    "errorOccured": 
+    {
+        "message": "エラーが発生しました"
+    },
+    "extDesc": 
+    {
+        "description": "詳細な説明",
+        "message": "すっきりしたツリー構造のブックマーク"
+    },
+    "extName": 
+    {
+        "description": "拡張名",
+        "message": "vBookmarks"
+    },
+    "general": 
+    {
+        "message": "全般"
+    },
+    "ignore": 
+    {
+        "message": "無視"
+    },
+    "name": 
+    {
+        "description": "ブックマークとフォルダの名前",
+        "message": "名前"
+    },
+    "nope": 
+    {
+        "message": "いいえ"
+    },
+    "noTitle": 
+    {
+        "description": "名前の無いブックマークのための名前",
+        "message": "無題"
+    },
+    "open": 
+    {
+        "description": "ブックマークを開く",
+        "message": "開く"
+    },
+    "openBookmarks": 
+    {
+        "message": "すべてのブックマークを開く"
+    },
+    "openBookmarksIncognitoWindow": 
+    {
+        "message": "すべてのブックマークをシークレットウィンドウで開く"
+    },
+    "openBookmarksNewWindow": 
+    {
+        "message": "すべてのブックマークを新しいウィンドウで開く"
+    },
+    "openIncognitoWindow": 
+    {
+        "message": "シークレットウィンドウで開く"
+    },
+    "openNewTab": 
+    {
+        "message": "新しいタブで開く"
+    },
+    "openNewWindow": 
+    {
+        "message": "新しいウィンドウで開く"
+    },
+    "optionClickNewTab": 
+    {
+        "message": "ブックマークを新しいタブで開く"
+    },
+    "optionCloseUnusedFolders": 
+    {
+        "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
+    },
+    "optionConfirmOpenFolder": 
+    {
+        "message": "フォルダから多くのブックマークを開くとき、警告する"
+    },
+    "optionOnlyShowBookmarkBar": 
+    {
+        "message": "ブックマークバーのブックマークのみを表示する"
+    },
+    "optionOpenNewTab": 
+    {
+        "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
+    },
+    "optionPopupStays": 
+    {
+        "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
+    },
+    "optionRememberPrevState": 
+    {
+        "message": "スクロール位置と開いたフォルダの情報を保持する"
+    },
+    "options": 
+    {
+        "message": "オプション"
+    },
+    "optionsFooterText": 
+    {
+        "description": "オプションページのフッターテキスト",
+        "message": "作成者 $authorName$.",
+        "placeholders": 
+        {
+            "authorName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "optionZoom": 
+    {
+        "message": "拡大"
+    },
+    "parentFolder": 
+    {
+        "description": "ブックマークが格納されているフォルダの情報は、検索結果リストのブックマーク吹き出しに表示される",
+        "message": "フォルダ名 \"$folderName$\"",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1",
+                "example": "ブックマークバー"
+            }
+        }
+    },
+    "removeSeparator": 
+    {
+        "message": "区切り文字を削除"
+    },
+    "replaceUrl": 
+    {
+        "message": "現在のURLに置き換えてください"
+    },
+    "reportedToDeveloper": 
+    {
+        "description": "拡張エラーで発生した、開発者に報告してください",
+        "message": "開発者にエラーメッセージを報告"
+    },
+    "reportError": 
+    {
+        "message": "エラーレポート"
+    },
+    "resetButton": 
+    {
+        "message": "リセットされます"
+    },
+    "resetSettings": 
+    {
+        "message": "設定をリセットします"
+    },
+    "resetSettingsDescription": 
+    {
+        "message": "デフォルトの設定にvBookmarksをリセットします"
+    },
+    "save": 
+    {
+        "message": "保存"
+    },
+    "searchBookmarks": 
+    {
+        "description": "検索フィールドのためのプレースホルダーテキスト",
+        "message": "ブックマークの検索"
+    },
+    "url": 
+    {
+        "message": "URL"
+    }
 }
