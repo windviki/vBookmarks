@@ -3,6 +3,7 @@
 	var chrome = window.chrome;
 	var _m = chrome.i18n.getMessage;
 	var __m = _m;
+	var localStorage = window.localStorage;
 	
 	document.addEventListener('DOMContentLoaded', function () {
 
@@ -140,5 +141,58 @@
 			for (var key in customIcon) imageData.data[key] = customIcon[key];
 			chrome.browserAction.setIcon({imageData: imageData});
 		}
+		
+		function getExtensionVersion(callback) {
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open('GET', 'manifest.json');
+			xmlhttp.onload = function (e) {
+				var manifest = JSON.parse(xmlhttp.responseText);
+				callback(manifest.version);
+			}
+			xmlhttp.send(null);
+		}
+ 
+		// parse version to dictionary
+		var parseVersion = function(strversion) {
+			var v = {};
+			var keys = [ 'major', 'minor' ];
+			var matches = strversion.match(/([\d]+)\.([\d]+)/i);
+			if (!matches)
+				return null;
+			matches.slice(1).forEach(function(m, i) {
+				v[keys[i]] = m.toInt();
+			});
+			return v;
+		};
+	
+		var myversion;
+		getExtensionVersion(function (ver) { myversion = parseVersion(ver); });
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://raw.github.com/windviki/vBookmarks/gh-pages/checkupdate.json", true);
+		xhr.onreadystatechange = function() {
+		  if (xhr.readyState == 4) {
+			var resp = JSON.parse(xhr.responseText);
+			var latestversion = parseVersion(resp.latest);
+			if ( (latestversion['major'] > myversion['major']) ||
+					((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor'])) ){
+					//resp.current = currentversion;
+					//save
+					localStorage.checkupdate = xhr.responseText;
+					var notification = webkitNotifications.createHTMLNotification('notification.html');
+					notification.onclose = function() {
+						localStorage.checkupdate = '';
+					}
+					notification.onclick = function() {
+						chrome.tabs.create({
+							url : resp.url,
+							selected : selected
+						});
+					}
+					notification.show();
+				}
+		  }
+		}
+		xhr.send();
 	});
 })(window);

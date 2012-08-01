@@ -17,7 +17,7 @@
 		"page": "background.html"
 	},
 	"permissions": [
-		"<all_urls>", "chrome://favicon/", "bookmarks", "tabs"
+		"<all_urls>", "chrome://favicon/", "bookmarks", "tabs", "notifications"
 	],
 	"minimum_chrome_version": "9",
 	"default_locale": "en",

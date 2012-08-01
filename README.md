@@ -70,6 +70,7 @@ Chinese Introduction
 
 版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。
 
+版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。修正Chrome18更新以来导致的drag-drop位置不正确的问题。更改ICON颜色。
 
 注意：
 
