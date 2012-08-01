@@ -150,9 +150,9 @@ Fixed: Width resetting occured when expanding root folder. https://github.com/wi
 
 ver1.8 2012/08/01
 
-Added: Separators. see https://github.com/windviki/vBookmarks/issues/3
+Added: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see https://github.com/windviki/vBookmarks/issues/3
 
-Fixed: Wrong position of dragged bookmark (since Chrome18).
+Fixed: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrollbar is scrolled down (since Chrome18).
 
 Added: Color of icon is changed to red.
 
