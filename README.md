@@ -22,7 +22,11 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 
 8) Add an option: only show the nodes of the Bookmark Bar.
 
-9) Fix bugs in Neat Bookmarks.
+9) Add: separators for bookmarks or folders. Cannot be synchronized.
+
+10) Add: update checking and notification based on github. A tricky solution.
+
+11) Fix bugs in Neat Bookmarks.
 
 Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
@@ -54,7 +58,11 @@ Chinese Introduction
 
 6) 增加选项：仅在插件里显示书签工具栏中的书签
 
-7) 修正Neat Bookmarks中的已知BUG
+7) 增加存储于本地的书签分隔符
+
+8) 内建的新版本提醒
+
+9) 修正Neat Bookmarks中的已知BUG
 
 近期版本说明：
 
@@ -73,11 +81,35 @@ Chinese Introduction
 版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。
 修正Chrome18更新以来导致的drag-drop位置不正确的问题。
 更改ICON颜色。
-实现一个基于Github的更新检测和提醒。
+实现一个基于Github的更新检测和提醒（没有美元信用卡开不了webstore账户的人伤不起）。
+移除多国语言，仅保留en,ja,zh,zh_TW（英语，日语，简体中文，繁体中文）。
 
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
+
+功能提醒：
+
+1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。
+
+2.（popup打开的时候）扩展支持键盘方向键（↑↓←→）进行书签/文件夹的选择，空格键或者回车键打开选中书签或者文件夹，HOME/END跳到开头或者结尾。
+PAGE DOWN/UP翻页，DELETE键删除书签。
+
+3.选中书签，文件夹的时候，F2键可编辑。
+
+4.鼠标中键打开目录下所有书签。
+
+5.（popup打开的时候）Ctrl+F定位到搜索栏进行书签搜索。
+
+6.支持书签拖放进行移动。
+
+7.选项里可选打开书签链接后popup是否关闭。是否只显示书签栏中的书签。后台打开。书签树缩放等。
+
+8.定制分隔符颜色（高级选项）支持十六进制颜色或者RGB颜色。#00FF00和RGB(255,0,0)都是合法的。
+
+9.请用高级选项里的定制CSS获取更丰富的外观呈现。如改变书签树的字体。* {font-family: 微软雅黑;}
+
+10.高级选项里可定制程序图标。
 
 
 Technical Details
@@ -157,3 +189,5 @@ Fixed: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrol
 Added: Color of icon is changed to red.
 
 Added: Simple update checking and desktop notification.
+
+Removed: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
