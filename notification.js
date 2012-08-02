@@ -27,7 +27,7 @@
 			document.getElementById('titlemessage').innerHTML = '<h1>' + document.title + '</h1>';
 			document.getElementById('messages').innerHTML = resp.message;
 			var updatelogs = document.getElementById('a-updatelogs');
-			updatelogs.href = 'https://raw.github.com/windviki/vBookmarks';
+			updatelogs.href = 'http://windviki.github.com/vBookmarks/';
 			updatelogs.innerHTML = '<p>Changelogs ¸üÐÂ¼ÇÂ¼</p>';
 			var newversion = document.getElementById('a-newversion');
 			newversion.href = resp.url;
