@@ -17,7 +17,7 @@
 		"page": "background.html"
 	},
 	"permissions": [
-		"<all_urls>", "chrome://favicon/", "bookmarks", "tabs", "notifications"
+		"<all_urls>", "chrome://favicon/", "http://*.github.com/*", "https://*.github.com/*", "bookmarks", "tabs", "notifications"
 	],
 	"minimum_chrome_version": "9",
 	"default_locale": "en",

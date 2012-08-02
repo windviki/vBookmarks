@@ -184,10 +184,6 @@
 						localStorage.checkupdate = '';
 					}
 					notification.onclick = function() {
-						chrome.tabs.create({
-							url : resp.url,
-							selected : selected
-						});
 					}
 					notification.show();
 				}

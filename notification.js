@@ -5,17 +5,35 @@
 	var __m = _m;
 	var localStorage = window.localStorage;
 	
+	var linkHandler = function(e) {
+		e.preventDefault();
+		if (e.button != 0)
+			return; // force left-click
+		var el = e.target;
+		var elParent = el.parentNode;
+		if (elParent && elParent.tagName == 'A') {
+			var url = elParent.href;
+			chrome.tabs.create({
+				url : url,
+				selected : true
+			});
+		}
+	};
+		
 	document.addEventListener('DOMContentLoaded', function () {
 		var resp = JSON.parse(localStorage.checkupdate);
 		if (resp) {
-			document.title = 'New version ' + resp.latest + ' is available!';
-			document.getElementById('messages').innerHTML = '<p>' + document.title + '</p>';
-			//var updatelogs = document.getElementById("updatelogs");
-			document.getElementById('a-updatelogs').href = 'https://raw.github.com/windviki/vBookmarks';
-			document.getElementById('a-updatelogs').innerHTML = '<p>Check changelogs</p>';
-			//var newversion = document.getElementById("newversion");
-			document.getElementById('a-newversion').href = resp.url;
-			//document.getElementById('a-newversion').innerHTML = resp.url;
+			document.title = 'New version ' + resp.latest + ' is available! 发现新版本';
+			document.getElementById('titlemessage').innerHTML = '<h1>' + document.title + '</h1>';
+			document.getElementById('messages').innerHTML = resp.message;
+			var updatelogs = document.getElementById('a-updatelogs');
+			updatelogs.href = 'https://raw.github.com/windviki/vBookmarks';
+			updatelogs.innerHTML = '<p>Changelogs 更新记录</p>';
+			var newversion = document.getElementById('a-newversion');
+			newversion.href = resp.url;
+			newversion.innerHTML = '<p>Download!! 下载地址</p>';
+			var links = document.getElementById('links');
+			links.addEventListener('click', linkHandler);
 		}
 	});
 })(window);
