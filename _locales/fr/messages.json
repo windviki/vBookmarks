@@ -1,249 +1,330 @@
 {
-  "nope": {
-    "message": "Non"
-  },
-  "name": {
-    "description": "Nom du signet ou du dossier.",
-    "message": "Nom"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Ouvrir tous les signets dans une nouvelle fenêtre incognito"
-  },
-  "reportError": {
-    "message": "Signaler l’erreur"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "placeholders": {
-      "subFolderCount": {
-        "content": "$2"
-      },
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      }
+    "accessibility": 
+    {
+        "message": "Accessibilité"
     },
-    "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$, $subFolderCount$ sous-répertoire(s) et $bookmarkCount$ signets les contenant?"
-  },
-  "extName": {
-    "description": "Le nom de l’extension.",
-    "message": "vBookmarks"
-  },
-  "noTitle": {
-    "description": "Le titre donné aux répertoires ou signets sans noms.",
-    "message": "(Sans titre)"
-  },
-  "edit": {
-    "message": "Éditer..."
-  },
-  "open": {
-    "description": "Action pour ouvrir les signets.",
-    "message": "Ouvrir"
-  },
-  "searchBookmarks": {
-    "description": "Texte d’information du champ de recherche.",
-    "message": "Rechercher Signets"
-  },
-  "delete": {
-    "message": "Supprimer"
-  },
-  "editBookmark": {
-    "message": "Éditer le signet"
-  },
-  "openNewTab": {
-    "message": "Ouvrir dans un nouvel onglet"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Afficher un message de confirmation lors de l’ouverture de beaucoup de signets d’un dossier."
-  },
-  "editFolder": {
-    "message": "Éditer le répertoire"
-  },
-  "parentFolder": {
-    "placeholders": {
-      "folderName": {
-        "example": "Barre de favoris",
-        "content": "$1"
-      }
+    "addBookmarkAfter": 
+    {
+        "message": "Ajouter l'onglet courant Après cette"
     },
-    "description": "L’information des répertoires parents est affichée dans l’infobulle des signets dans la liste des résultats.",
-    "message": "Répertoire parent: \"$folderName$\""
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addBookmarkBefore": 
+    {
+        "message": "Ajouter un onglet courant avant cette"
     },
-    "description": "Message de confirmation pour ouvrir tous les signets dans une nouvelle fenêtre de navigation incognito.",
-    "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets dans une nouvelle fenêtre incognito?"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "errorOccured": {
-    "message": "Oups, une erreur s'est produite."
-  },
-  "optionPopupStays": {
-    "message": "La popup reste ouverte lors de l'ouverture (clic gauche) de signets."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Fermer les répertoires non utilisés lors de l'ouverture d’un répertoire."
-  },
-  "accessibility": {
-    "message": "Accessibilité"
-  },
-  "deleteEllipsis": {
-    "message": "Supprimer..."
-  },
-  "confirmDeleteFolderBookmarks": {
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "bookmarkCount": {
-        "content": "$2"
-      }
+    "addBookmarkBottom": 
+    {
+        "message": "Ajouter l'onglet courant au fond de cette"
     },
-    "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$ et $bookmarkCount$ signet(s) les contenant?"
-  },
-  "advancedOptions": {
-    "message": "Options Avancées"
-  },
-  "extDesc": {
-    "description": "La description de l’extension.",
-    "message": "Un extention pratique pour gérer ses signets."
-  },
-  "save": {
-    "message": "Enregistrer"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addBookmarkTop": 
+    {
+        "message": "Ajouter un onglet courante au-dessus de cette"
     },
-    "description": "Message de confirmation pour ouvrir tous les signets dans une nouvelle fenêtre de navigation.",
-    "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets dans une nouvelle fenêtre?"
-  },
-  "confirmOpenBookmarks": {
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "addNewFolder": 
+    {
+        "message": "Ajouter un dossier"
     },
-    "description": "Message de confirmation pour ouvrir tous les signets.",
-    "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets?"
-  },
-  "openBookmarks": {
-    "message": "Ouvrir tous les signets"
-  },
-  "optionRememberPrevState": {
-    "message": "Se rappeler de l’état précédent (position dans la page et répertoires ouverts)."
-  },
-  "optionsFooterText": {
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
+    "addNewFolderAfter": 
+    {
+        "message": "Ajouter un dossier après cette"
     },
-    "description": "Texte du pied de la page Options",
-    "message": "Créé par $authorName$."
-  },
-  "openBookmarksNewWindow": {
-    "message": "Ouvrir tous les signets dans une nouvelle fenêtre"
-  },
-  "optionOpenNewTab": {
-    "message": "Clic milieu ou Ctrl-clic ouvre le signet dans un nouvel onglet en arrière-plan (au lieu d’en premier plan)."
-  },
-  "addBookmarkBefore": {
-  	"message": "Ajouter un onglet courant avant cette"
-  },
-  "addBookmarkAfter": {
-  	"message": "Ajouter l'onglet courant Après cette"
-  },
-  "addBookmarkTop": {
-  	"message": "Ajouter un onglet courante au-dessus de cette"
-  },
-  "addBookmarkBottom": {
-  	"message": "Ajouter l'onglet courant au fond de cette"
-  },
-  "addNewFolder": {
-    "message": "Ajouter un dossier"
-  },
-  "addNewFolderBefore": {
-    "message": "Ajouter un dossier avant cette"
-  },
-  "addNewFolderAfter": {
-    "message": "Ajouter un dossier après cette"
-  },
-  "ignore": {
-    "message": "Ignorer"
-  },
-  "openIncognitoWindow": {
-    "message": "Ouvrir dans une fenêtre incognito"
-  },
-  "general": {
-    "message": "Général"
-  },
-  "openNewWindow": {
-    "message": "Ouvrir dans une nouvelle fenêtre"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "optionClickNewTab": {
-    "message": "Clic gauche ouvre le signet dans un nouvel onglet."
-  },
-  "customIcon": {
-  	"message": "Personnaliser l'icône"
-  },
-  "customIconDescription": {
-  	"message": "L'icône doit être dans 19 * pixel dimension 19. Sinon ça va être redimensionnée à cette dimension."
-  },
-  "defaultIconButton": {
-  	"message": "Utilisez par défaut"
-  },
-  "defaultIconButtonOr": {
-  	"message": " ou "
-  },
-  "customStyles": {
-  	"message": "styles personnalisés"
-  },
-  "customStylesDescription": {
-  	"message": "Cela nécessite des compétences CSS. Hack à vos propres risques. Le partage de code serait sage fait par l'intermédiaire "
-  },
-  "resetSettings": {
-  	"message": "Réinitialiser les paramètres"
-  },
-  "resetSettingsDescription": {
-  	"message": "Réinitialiser les paramètres par défaut vBookmarks."
-  },
-  "resetButton": {
-  	"message": "Réinitialiser"
-  },
-  "options": {
-    "message": "Options"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "placeholders": {
-      "subFolderCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
+    "addNewFolderBefore": 
+    {
+        "message": "Ajouter un dossier avant cette"
     },
-    "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$ et $subFolderCount$ sous-répertoire(s) les contenant?"
-  },
-  "copyTitleAndUrl": {
-    "message": "Titre Copiez et l'URL dans le presse papier"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Copiez tous les titres et les URL dans le presse papier"
-  },
-  "replaceUrl": {
-    "message": "Remplacer cette URL en cours avec les"
-  }
+    "advancedOptions": 
+    {
+        "message": "Options Avancées"
+    },
+    "confirmDeleteFolderBookmarks": 
+    {
+        "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$ et $bookmarkCount$ signet(s) les contenant?",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$2"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfolders": 
+    {
+        "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$ et $subFolderCount$ sous-répertoire(s) les contenant?",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmDeleteFolderSubfoldersBookmarks": 
+    {
+        "message": "Êtes-vous certain de bien vouloir supprimer le répertoire $folderName$, $subFolderCount$ sous-répertoire(s) et $bookmarkCount$ signets les contenant?",
+        "placeholders": 
+        {
+            "bookmarkCount": 
+            {
+                "content": "$3"
+            },
+            "folderName": 
+            {
+                "content": "$1"
+            },
+            "subFolderCount": 
+            {
+                "content": "$2"
+            }
+        }
+    },
+    "confirmOpenBookmarks": 
+    {
+        "description": "Message de confirmation pour ouvrir tous les signets.",
+        "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewIncognitoWindow": 
+    {
+        "description": "Message de confirmation pour ouvrir tous les signets dans une nouvelle fenêtre de navigation incognito.",
+        "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets dans une nouvelle fenêtre incognito?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "confirmOpenBookmarksNewWindow": 
+    {
+        "description": "Message de confirmation pour ouvrir tous les signets dans une nouvelle fenêtre de navigation.",
+        "message": "Etes-vous certain de bien vouloir ouvrir tous les $count$ signets dans une nouvelle fenêtre?",
+        "placeholders": 
+        {
+            "count": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "copyAllTitlesAndUrls": 
+    {
+        "message": "Copiez tous les titres et les URL dans le presse papier"
+    },
+    "copyTitleAndUrl": 
+    {
+        "message": "Titre Copiez et l'URL dans le presse papier"
+    },
+    "customIcon": 
+    {
+        "message": "Personnaliser l'icône"
+    },
+    "customIconDescription": 
+    {
+        "message": "L'icône doit être dans 19 * pixel dimension 19. Sinon ça va être redimensionnée à cette dimension."
+    },
+    "customStyles": 
+    {
+        "message": "styles personnalisés"
+    },
+    "customStylesDescription": 
+    {
+        "message": "Cela nécessite des compétences CSS. Hack à vos propres risques. Le partage de code serait sage fait par l'intermédiaire "
+    },
+    "defaultIconButton": 
+    {
+        "message": "Utilisez par défaut"
+    },
+    "defaultIconButtonOr": 
+    {
+        "message": " ou "
+    },
+    "delete": 
+    {
+        "message": "Supprimer"
+    },
+    "deleteEllipsis": 
+    {
+        "message": "Supprimer..."
+    },
+    "edit": 
+    {
+        "message": "Éditer..."
+    },
+    "editBookmark": 
+    {
+        "message": "Éditer le signet"
+    },
+    "editFolder": 
+    {
+        "message": "Éditer le répertoire"
+    },
+    "errorOccured": 
+    {
+        "message": "Oups, une erreur s'est produite."
+    },
+    "extDesc": 
+    {
+        "description": "La description de l’extension.",
+        "message": "Un extention pratique pour gérer ses signets."
+    },
+    "extName": 
+    {
+        "description": "Le nom de l’extension.",
+        "message": "vBookmarks"
+    },
+    "general": 
+    {
+        "message": "Général"
+    },
+    "ignore": 
+    {
+        "message": "Ignorer"
+    },
+    "name": 
+    {
+        "description": "Nom du signet ou du dossier.",
+        "message": "Nom"
+    },
+    "nope": 
+    {
+        "message": "Non"
+    },
+    "noTitle": 
+    {
+        "description": "Le titre donné aux répertoires ou signets sans noms.",
+        "message": "(Sans titre)"
+    },
+    "open": 
+    {
+        "description": "Action pour ouvrir les signets.",
+        "message": "Ouvrir"
+    },
+    "openBookmarks": 
+    {
+        "message": "Ouvrir tous les signets"
+    },
+    "openBookmarksIncognitoWindow": 
+    {
+        "message": "Ouvrir tous les signets dans une nouvelle fenêtre incognito"
+    },
+    "openBookmarksNewWindow": 
+    {
+        "message": "Ouvrir tous les signets dans une nouvelle fenêtre"
+    },
+    "openIncognitoWindow": 
+    {
+        "message": "Ouvrir dans une fenêtre incognito"
+    },
+    "openNewTab": 
+    {
+        "message": "Ouvrir dans un nouvel onglet"
+    },
+    "openNewWindow": 
+    {
+        "message": "Ouvrir dans une nouvelle fenêtre"
+    },
+    "optionClickNewTab": 
+    {
+        "message": "Clic gauche ouvre le signet dans un nouvel onglet."
+    },
+    "optionCloseUnusedFolders": 
+    {
+        "message": "Fermer les répertoires non utilisés lors de l'ouverture d’un répertoire."
+    },
+    "optionConfirmOpenFolder": 
+    {
+        "message": "Afficher un message de confirmation lors de l’ouverture de beaucoup de signets d’un dossier."
+    },
+    "optionOpenNewTab": 
+    {
+        "message": "Clic milieu ou Ctrl-clic ouvre le signet dans un nouvel onglet en arrière-plan (au lieu d’en premier plan)."
+    },
+    "optionPopupStays": 
+    {
+        "message": "La popup reste ouverte lors de l'ouverture (clic gauche) de signets."
+    },
+    "optionRememberPrevState": 
+    {
+        "message": "Se rappeler de l’état précédent (position dans la page et répertoires ouverts)."
+    },
+    "options": 
+    {
+        "message": "Options"
+    },
+    "optionsFooterText": 
+    {
+        "description": "Texte du pied de la page Options",
+        "message": "Créé par $authorName$.",
+        "placeholders": 
+        {
+            "authorName": 
+            {
+                "content": "$1"
+            }
+        }
+    },
+    "optionZoom": 
+    {
+        "message": "Zoom"
+    },
+    "parentFolder": 
+    {
+        "description": "L’information des répertoires parents est affichée dans l’infobulle des signets dans la liste des résultats.",
+        "message": "Répertoire parent: \"$folderName$\"",
+        "placeholders": 
+        {
+            "folderName": 
+            {
+                "content": "$1",
+                "example": "Barre de favoris"
+            }
+        }
+    },
+    "replaceUrl": 
+    {
+        "message": "Remplacer cette URL en cours avec les"
+    },
+    "reportError": 
+    {
+        "message": "Signaler l’erreur"
+    },
+    "resetButton": 
+    {
+        "message": "Réinitialiser"
+    },
+    "resetSettings": 
+    {
+        "message": "Réinitialiser les paramètres"
+    },
+    "resetSettingsDescription": 
+    {
+        "message": "Réinitialiser les paramètres par défaut vBookmarks."
+    },
+    "save": 
+    {
+        "message": "Enregistrer"
+    },
+    "searchBookmarks": 
+    {
+        "description": "Texte d’information du champ de recherche.",
+        "message": "Rechercher Signets"
+    },
+    "url": 
+    {
+        "message": "URL"
+    }
 }
