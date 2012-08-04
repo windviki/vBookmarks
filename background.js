@@ -8,7 +8,7 @@
 	document.addEventListener('DOMContentLoaded', function () {
 
 		var reportError = function(msg, url, line){
-			var txt = '_s=b1824edd76872119571eb2b8003447a1&_r=img'
+			var txt = '_s=84615e81d50c4ddabff522aee3c4b734&_r=img'
 				+ '&Msg=' + escape(msg)
 				+ '&URL=' + escape(url)
 				+ '&Line=' + line
