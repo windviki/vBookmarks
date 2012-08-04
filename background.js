@@ -169,7 +169,8 @@
 		getExtensionVersion(function (ver) { myversion = parseVersion(ver); });
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://raw.github.com/windviki/vBookmarks/gh-pages/checkupdate.json", true);
+		xhr.open("GET", "https://raw.github.com/windviki/vBookmarks/checkupdate.json", true);
+		//xhr.open("GET", "checkupdate.json");
 		xhr.onreadystatechange = function() {
 		  if (xhr.readyState == 4) {
 			var resp = JSON.parse(xhr.responseText);
