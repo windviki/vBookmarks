@@ -316,8 +316,8 @@
     },
     "reportedToDeveloper": 
     {
-        "description": "扩展中发生了一个错误，请报告给开发者",
-        "message": "报告错误消息给开发者"
+        "description": "扩展中发生了一个错误，已经报告给开发者",
+        "message": "错误报告"
     },
     "reportError": 
     {

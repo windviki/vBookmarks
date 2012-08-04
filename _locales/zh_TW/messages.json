@@ -316,8 +316,8 @@
     },
     "reportedToDeveloper": 
     {
-        "description": "擴展中發生了一個錯誤，請報告給開發者",
-        "message": "報告錯誤消息給開發者"
+        "description": "擴展中發生了一個錯誤，已經報告給開發者",
+        "message": "錯誤報告"
     },
     "reportError": 
     {
