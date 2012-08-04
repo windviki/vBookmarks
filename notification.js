@@ -23,8 +23,8 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		var resp = JSON.parse(localStorage.checkupdate);
 		if (resp) {
-			document.title = 'New version ' + resp.latest + ' is available! 发现新版本';
-			document.getElementById('titlemessage').innerHTML = '<h1>' + document.title + '</h1>';
+			document.title = 'New version ' + resp.latest + ' is available!';
+			document.getElementById('titlemessage').innerHTML = '<h1>' + document.title + '</h1><p>发现新版本</p>';
 			document.getElementById('messages').innerHTML = resp.message;
 			var updatelogs = document.getElementById('a-updatelogs');
 			updatelogs.href = 'http://windviki.github.com/vBookmarks/';
