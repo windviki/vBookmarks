@@ -734,8 +734,9 @@
 			};
 		}, 200);
 	};
-	//if (!searchMode)
-	//	resetHeight();
+	
+	if (!searchMode)
+		resetHeight();
 
 	$tree.addEventListener('click', resetHeight);
 	$tree.addEventListener('keyup', resetHeight);
