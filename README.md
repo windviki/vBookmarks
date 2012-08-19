@@ -84,6 +84,11 @@ Chinese Introduction
 实现一个基于Github的更新检测和提醒（没有美元信用卡开不了webstore账户的人伤不起）。
 移除多国语言，仅保留en,ja,zh,zh_TW（英语，日语，简体中文，繁体中文）。
 
+版本1.9 修正popup刚刚打开时候滚动条会被重置到顶部的bug。
+更改ICON细节。
+更改更新检测的细节。
+修改默认分割条的样式。
+
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
@@ -191,3 +196,12 @@ Added: Color of icon is changed to red.
 Added: Simple update checking and desktop notification.
 
 Removed: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
+
+
+ver1.9 2012/08/19
+
+Fixed: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
+
+Updated: Color of ICON.
+
+Updated: Style of separator.

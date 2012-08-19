@@ -411,7 +411,7 @@
 			var paddingStart = lv*14;
 			var hrwidth = window.innerWidth - paddingStart - 40;
 			//console.log('addSeparator. innerWidth = ' + window.innerWidth + ', paddingStart = ' + paddingStart + ', left = ' + rnode.left);
-			var color = '#987cb9';
+			var color = '#B0B0B0';
 			if (localStorage.separatorcolor){
 				color = localStorage.separatorcolor.colorHex();
 			}
@@ -427,10 +427,11 @@
 							+ ' width="' +  hrwidth + 'px"' 
 							//+ ' height="' +  2 + 'px"' 
 							+ ' id="creator-' + nodeid + '"' 
-							+ ' align=right color=' + color 
-							+ ' size=1' 
+							//+ ' align=right color=' + color 
+							+ ' align=right'
+							//+ ' size=1' 
 							//+ ' style="position:absolute;left:' + paddingStart + ';"'
-							//+ ' style="display:inline-block;"'
+							+ ' style="border:1px dotted ' + color + ';"'
 							+ '></a></li>';
 			var hr = div.querySelector('li');
 			if (rnode.nextSibling) {
@@ -719,17 +720,23 @@
 		var zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
 		setTimeout(function() {
 			var neatTree = $tree.firstElementChild;
-			var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-			// Slide up faster than down
-			body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-			var maxHeight = screen.height - window.screenY - 50;
-			var height = Math.max(200, Math.min(fullHeight, maxHeight));
-			body.style.height = height + 'px';
-			localStorage.popupHeight = height;
+			if (neatTree) {
+				var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+				var maxHeight = screen.height - window.screenY - 50;
+				var height = Math.max(200, Math.min(fullHeight, maxHeight));
+				var newheightstyle = height + 'px';
+				if (localStorage.popupHeight != height) {
+					// Slide up faster than down
+					body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
+					body.style.height = newheightstyle;
+					localStorage.popupHeight = height;
+				};
+			};
 		}, 200);
 	};
-	if (!searchMode)
-		resetHeight();
+	//if (!searchMode)
+	//	resetHeight();
+
 	$tree.addEventListener('click', resetHeight);
 	$tree.addEventListener('keyup', resetHeight);
 
@@ -2410,6 +2417,7 @@
 	var zoom = function(val) {
 		if (draggedBookmark)
 			return; // prevent zooming when drag-n-droppping
+		//console.log("zoom ---> " + val);
 		var dataZoom = body.dataset.zoom;
 		var currentZoom = dataZoom ? dataZoom.toInt() : 100;
 		if (val == 0) {
@@ -2454,11 +2462,13 @@
 		body.addClass('chrome-536');
 
 	// Fix stupid wrong offset of the page, on Chrome Mac
-	setTimeout(function() {
-		var top = body.scrollTop;
-		if (top != 0)
-			body.scrollTop = 0;
-	}, 1500);
+	if (os == 'mac') {
+		setTimeout(function() {
+			var top = body.scrollTop;
+			if (top != 0)
+				body.scrollTop = 0;
+		}, 1500);
+	}
 
 	if (localStorage.userstyle) {
 		var style = document.createElement('style');

@@ -1,6 +1,7 @@
 (function(window) {
 	var document = window.document;
 	var chrome = window.chrome;
+	var localStorage = window.localStorage;
 	var _m = chrome.i18n.getMessage;
 	var __m = _m;
 	
