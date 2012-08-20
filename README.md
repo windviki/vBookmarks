@@ -1,6 +1,8 @@
 ﻿vBookmarks
 ==============
 
+[HomePage](http://windviki.github.com/vBookmarks/)
+
 Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. 
 
 Clicking the Bookmark Star in Chrome is an awful way to add a bookmark, and what I need is an extension just like "AddBookmarkHere" for Firefox.
@@ -33,7 +35,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
 
-Attensions
+Attentions
 -----------------
 
 Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to install it.
