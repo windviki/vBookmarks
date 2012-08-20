@@ -411,7 +411,7 @@
 			var paddingStart = lv*14;
 			var hrwidth = window.innerWidth - paddingStart - 40;
 			//console.log('addSeparator. innerWidth = ' + window.innerWidth + ', paddingStart = ' + paddingStart + ', left = ' + rnode.left);
-			var color = '#B0B0B0';
+			var color = '#888888';
 			if (localStorage.separatorcolor){
 				color = localStorage.separatorcolor.colorHex();
 			}
