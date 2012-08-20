@@ -172,23 +172,24 @@
 		xhr.open("GET", "https://raw.github.com/windviki/vBookmarks/master/checkupdate.json", true);
 		//xhr.open("GET", "checkupdate.json");
 		xhr.onreadystatechange = function() {
-		  if (xhr.readyState == 4) {
+			if (xhr.readyState == 4) {
 			var resp = JSON.parse(xhr.responseText);
 			var latestversion = parseVersion(resp.latest);
+			if (!latestversion || !latestversion['major'] || !latestversion['minor']) {
+				return;
+			}
 			if ( (latestversion['major'] > myversion['major']) ||
-					((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor'])) ){
-					//resp.current = currentversion;
+				((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor'])) ){
 					//save
 					localStorage.checkupdate = xhr.responseText;
 					var notification = webkitNotifications.createHTMLNotification('notification.html');
 					notification.onclose = function() {
 						localStorage.checkupdate = '';
 					}
-					notification.onclick = function() {
-					}
+					//notification.onclick = function() { }
 					notification.show();
 				}
-		  }
+			}
 		}
 		xhr.send();
 	});

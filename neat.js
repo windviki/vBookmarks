@@ -857,8 +857,13 @@
 
 		openBookmark : function(url) {
 			chrome.tabs.getSelected(null, function(tab) {
+				try {
+					decodedurl = decodeURIComponent(url);
+				} catch (e) {
+					return;
+				}
 				chrome.tabs.update(tab.id, {
-					url : decodeURIComponent(url)
+					url : decodedurl
 				});
 				if (!bookmarkClickStayOpen)
 					setTimeout(window.close, 200);
@@ -1165,11 +1170,16 @@
 				var isBookmark = !!url;
 				var type = isBookmark ? 'bookmark' : 'folder';
 				var dialog = isBookmark ? _m('editBookmark') : _m('editFolder');
+				try {
+					decodedurl = decodeURIComponent(url);
+				} catch (e) {
+					decodedurl = url;
+				}
 				EditDialog.open({
 					dialog : dialog,
 					type : type,
 					name : node.title,
-					url : decodeURIComponent(url),
+					url : decodedurl,
 					fn : function(name, url) {
 						chrome.bookmarks.update(id, {
 							title : name,
