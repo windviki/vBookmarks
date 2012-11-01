@@ -35,11 +35,11 @@ h2{
 }
 .options-nav{
 	float: __MSG_@@bidi_end_edge__;
-	font-size: 13px;
+	font-size: 18px;
 }
 .options-nav a{
 	text-decoration: none;
-	color: #aaa;
+	color: #F00;
 }
 .options-nav a:hover{
 	color: #000;

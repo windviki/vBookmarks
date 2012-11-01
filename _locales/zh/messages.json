@@ -144,6 +144,18 @@
     {
         "message": "定制分隔符颜色"
     },
+    "customSeparatorTitleDescription": 
+    {
+        "message": "被用作分隔符的书签节点的标题"
+    },
+    "customSeparatorUrlDescription": 
+    {
+        "message": "被用作分隔符的书签节点的URL"
+    },
+    "customSeparatorStringDescription": 
+    {
+        "message": "如果任一书签URL含有以下字符串，将被显示为分隔符"
+    },
     "customStyles": 
     {
         "message": "定制CSS"

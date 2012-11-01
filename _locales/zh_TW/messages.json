@@ -142,7 +142,19 @@
     },
     "customSeparatorColorDescription": 
     {
-        "message": "定制分隔条顏色"
+        "message": "定制分割條顏色"
+    },
+    "customSeparatorTitleDescription": 
+    {
+        "message": "被用作分割條的書籤節點的标题"
+    },
+    "customSeparatorUrlDescription": 
+    {
+        "message": "被用作分割條的書籤節點的URL"
+    },
+    "customSeparatorStringDescription": 
+    {
+        "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
     },
     "customStyles": 
     {

@@ -144,6 +144,18 @@
     {
         "message": "Customize Separator Color"
     },
+    "customSeparatorTitleDescription": 
+    {
+        "message": "The title of this bookmark which is shown as a separator"
+    },
+    "customSeparatorUrlDescription": 
+    {
+        "message": "The URL of this bookmark which is shown as a separator"
+    },
+    "customSeparatorStringDescription": 
+    {
+        "message": "If URL of a bookmark contains this string, it will be shown as a separator"
+    },
     "customStyles": 
     {
         "message": "Customstyles"

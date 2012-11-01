@@ -64,6 +64,32 @@
 		localStorage.separatorcolor = customSeparatorColor.value;
 	});
 	
+	var customSeparatorTitle = $('custom-separator-title');
+	if (localStorage.separatorTitle) {
+		customSeparatorTitle.value = localStorage.separatorTitle;
+	} else {
+		customSeparatorTitle.value = '|';
+	}
+	customSeparatorTitle.addEventListener('change', function(){
+		localStorage.separatorTitle = customSeparatorTitle.value;
+	});
+	
+	var customSeparatorUrl = $('custom-separator-url');
+	if (localStorage.separatorUrl) {
+		customSeparatorUrl.value = localStorage.separatorUrl;
+	} else {
+		customSeparatorUrl.value = 'http://separatethis.com/';
+	}
+	customSeparatorUrl.addEventListener('change', function(){
+		localStorage.separatorUrl = customSeparatorUrl.value;
+	});
+	
+	var customSeparatorString = $('custom-separator-string');
+	if (localStorage.separatorString) customSeparatorString.value = localStorage.separatorString;
+	customSeparatorString.addEventListener('change', function(){
+		localStorage.separatorString = customSeparatorString.value;
+	});
+	
 	var textareaUserstyle = $('userstyle');
 	if (localStorage.userstyle) textareaUserstyle.value = localStorage.userstyle;
 	CodeMirror.fromTextArea(textareaUserstyle, {
@@ -79,7 +105,8 @@
 	}, false);
 		
 	window.onerror = function(){chrome.extension.sendRequest({error: [].slice.call(arguments)}) };
-	
+
+	document.getElementById('small-options').innerText = __m('options');
 	document.getElementById('ext-name').innerText = __m('extName');
 	document.getElementById('advanced-options').innerText = __m('advancedOptions');
 	document.getElementById('custom-icon').innerText = __m('customIcon');
@@ -88,6 +115,9 @@
 	document.getElementById('default-icon-button-or').innerText = __m('defaultIconButtonOr');
 	document.getElementById('custom-styles').innerText = __m('customStyles');
 	document.getElementById('custom-separator-color-description').innerText = __m('customSeparatorColorDescription');
+	document.getElementById('custom-separator-title-description').innerText = __m('customSeparatorTitleDescription');
+	document.getElementById('custom-separator-url-description').innerText = __m('customSeparatorUrlDescription');
+	document.getElementById('custom-separator-string-description').innerText = __m('customSeparatorStringDescription');
 	document.getElementById('custom-styles-description').innerText = __m('customStylesDescription');
 	document.getElementById('reset-settings').innerText = __m('resetSettings');
 	document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');

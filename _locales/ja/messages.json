@@ -144,6 +144,18 @@
     {
         "message": "区切り文字の色をカスタマイズ"
     },
+    "customSeparatorTitleDescription": 
+    {
+        "message": "セパレータとして表示され、このブックマークのタイトル"
+    },
+    "customSeparatorUrlDescription": 
+    {
+        "message": "セパレータとして表示され、このブックマークのURL"
+    },
+    "customSeparatorStringDescription": 
+    {
+        "message": "ブックマークのURLは、この文字列が含まれている場合は、区切り文字として表示されます"
+    },
     "customStyles": 
     {
         "message": "カスタムスタイル"

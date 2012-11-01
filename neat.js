@@ -44,6 +44,10 @@
     StringList.prototype.clear = function () {
         return this._strings_ = new Array();
     };
+    
+    StringList.prototype.size = function () {
+        return this._strings_.length;
+    };
 
     StringList.prototype.fromString = function (str) {
         var inputstr = "" + str;
@@ -58,6 +62,21 @@
 
     function SeparatorManager() {
         this.stringList = new StringList();
+        if (localStorage.separatorTitle) {
+            this.separatorTitle = localStorage.separatorTitle;
+        } else {
+            this.separatorTitle = "|";
+        }
+        if (localStorage.separatorURL) {
+            this.separatorURL = localStorage.separatorURL;
+        } else {
+            this.separatorURL = "http://separatethis.com/";
+        }
+        if (localStorage.separatorString) {
+            this.separatorString = localStorage.separatorString;
+        } else {
+            this.separatorString = "";
+        }
     }
 
     SeparatorManager.prototype.load = function () {
@@ -71,8 +90,9 @@
     };
 
     SeparatorManager.prototype.add = function (str) {
-        if (this.stringList.indexOf(str) == -1) {
+        if (this.stringList._strings_.indexOf(str) == -1) {
             this.stringList.append(str);
+            //console.log('SeparatorManager.add id = ' + str);
         }
     };
 
@@ -82,6 +102,7 @@
 
     SeparatorManager.prototype.remove = function (str) {
         this.stringList.remove(str);
+        //console.log('SeparatorManager.remove id = ' + str);
     };
 
     SeparatorManager.prototype.getAll = function (str) {
@@ -91,6 +112,10 @@
     SeparatorManager.prototype.clear = function () {
         localStorage.separators = "";
         this.stringList.clear();
+    };
+    
+    SeparatorManager.prototype.size = function () {
+        return this.stringList.size();
     };
 
     separatorManager = new SeparatorManager();
@@ -420,7 +445,6 @@
         var paddingStart = 14 * level;
         var group = (level == 0) ? 'tree' : 'group';
         var html = '<ul role="' + group + '" data-level="' + level + '">';
-        separatorManager.clear();
 
         for (var i = 0, l = data.length; i < l; i++) {
             var d = data[i];
@@ -431,7 +455,9 @@
             var parentID = d.parentId;
             var idHTML = id ? ' id="neat-tree-item-' + id + '"' : '';
             var isFolder = d.dateGroupModified || children || typeof url == 'undefined';
-            var isSeparator = !isFolder && title == '|' && url.indexOf('http://separatethis.com') == 0;
+            var isSeparator = !isFolder && 
+            				(( title == separatorManager.separatorTitle && url.indexOf(separatorManager.separatorURL) == 0)
+            				|| ( separatorManager.separatorString && url.indexOf(separatorManager.separatorString) != -1));
             if (isFolder) { // folder node
                 var isOpen = false;
                 var open = '';
@@ -469,6 +495,7 @@
                         + '" role="treeitem" data-parentid="' + parentID + '">'
                         + generateSeparatorHTML(paddingStart);
                     separatorManager.add(id);
+                    //console.log('Add separator in initialization! id = ' + id + ', separatorManager size = ' + separatorManager.size());
                 } else {
                     html += '<li class="child"' + idHTML + ' level="' + level
                         + '" role="treeitem" data-parentid="' + parentID + '">'
@@ -510,11 +537,11 @@
             chrome.bookmarks.create({
                 'parentId':parentID,
                 'index':newNodeIndex,
-                'title':"|",
-                'url':"http://separatethis.com/#" + Math.uuidFast()
+                'title':separatorManager.separatorTitle,
+                'url':separatorManager.separatorURL + '#' + Math.uuidFast()
             }, function (resultbm) {
                 if ((where == "top" || where == "bottom") || !resultbm) {
-                    console.log('create failed. where = ' + where + ' resultbm = ' + resultbm);
+                    //console.log('create failed. where = ' + where + ' resultbm = ' + resultbm);
                     return;
                 }
                 var lv = 0;
@@ -569,12 +596,13 @@
             nearLi.querySelector('a, span').focus();
     };
 
+    separatorManager.clear();
     var $tree = $('tree');
     chrome.bookmarks.getTree(function (tree) {
         var html = '';
         if (onlyShowBMBar) {
             html = generateHTML(tree[0].children[0].children);
-            // console.log("----- html -----\n"+html+"\n");
+            // console.log("----- html -----\n" + html + "\n");
         } else {
             html = generateHTML(tree[0].children);
         }
@@ -603,15 +631,17 @@
 
         setTimeout(adaptBookmarkTooltips, 100);
 
+        // try to load local separator list used in last version
         sm = new SeparatorManager();
         sm.load();
         var seps = sm.getAll();
         for (var i = 0; i < seps.length; i++) {
             if (seps[i]) {
-                console.log('separatorManager.getAll i = "' + i + '" seps[i] = "' + seps[i] +'"');
+                //console.log('separatorManager.getAll i = "' + i + '" seps[i] = "' + seps[i] +'"');
                 addSeparator(seps[i], 'after');
             }
         }
+        // and discard this setting from now on
         sm.clear();
         sm.save();
 
@@ -2295,13 +2325,6 @@
                     onDrop();
                 });
             });
-            //} else if (el.tagName == 'HR') { //dropped taget is separator
-            //	var elRect = el.getBoundingClientRect();
-            //	var moveBottom = (clientY >= elRect.top + elRect.height / 2);
-            //	draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
-            //	draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
-            //	draggedBookmark.focus();
-            //	onDrop();
         } else if (el.tagName == 'SPAN') { //dropped taget is directory
             var elRect = el.getBoundingClientRect();
             var move = 0; // 0 = middle, 1 = top, 2 = bottom
@@ -2366,10 +2389,11 @@
             if (seps[i]) {
                 var bmnode = $('neat-tree-item-' + seps[i]);
                 var lv = bmnode.getAttribute('level'); //getAttribute!
+                if (!lv) lv = 1;
                 var paddingStart = lv * 14;
                 var hrwidth = window.innerWidth - paddingStart - 40;
                 bmnode.querySelector('hr').width = hrwidth;
-                console.log('resetSeparator i = "' + i + '" "' + seps[i] + '" hrwidth = "' + hrwidth + '"');
+                //console.log('resetSeparator i = "' + i + '" "' + seps[i] + '" hrwidth = "' + hrwidth + '"');
             }
         }
     }
