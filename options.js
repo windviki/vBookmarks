@@ -80,5 +80,7 @@
 		document.getElementById('option-zoom').innerText = __m('optionZoom');
 		document.getElementById('options-footer-1').innerHTML = '<a href="http://twitter.com/cheeaun">' + __m('optionsFooterText', 'Lim Chee Aun') + '</a>';
 		document.getElementById('options-footer-2').innerHTML = '<a href="http://twitter.com/windviki">' + __m('optionsFooterText', 'windviki') + '</a>';
+		document.getElementById('options-footer-3').innerHTML = '<a href="http://weibo.com/windviki">Follow @windviki on Weibo</a>';
+		document.getElementById('options-footer-4').innerHTML = '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
 	});
 })(window);
