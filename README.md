@@ -1,4 +1,4 @@
-﻿vBookmarks
+vBookmarks
 ==============
 
 [HomePage](http://windviki.github.com/vBookmarks/)
@@ -40,7 +40,9 @@ Attentions
 
 Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to install it.
 
-Otherwise there will be an error.
+Above Chrome 22+, please add startup parameters (--enable-easy-off-store-extension-install) for Chrome.exe so that it can accept extensions which are from outside of the WebStore.
+
+See [link](http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/) for details.
 
 
 Chinese Introduction
@@ -91,9 +93,26 @@ Chinese Introduction
 更改更新检测的细节。
 修改默认分割条的样式。
 
+版本2.0 修正版本检测。
+改进分隔条的实现，现在可以和书签一起同步了（其实就是特殊标识的书签）。
+增加分隔条相关的几个高级选项。
+
+
+- “被用作分隔符的书签节点的标题”：默认为"|"，即在Chrome自带的书签管理器或者书签栏里显示的书签标题文字（或者如果你用了多浏览器书签同步的工具，在其他浏览器它就是一个普通的标题为"|"的书签）。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。在vbookmarks里则会显示为真正的分隔条。
+
+
+- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/"，即在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。
+
+
+- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值，URL包含该字符串的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
+
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
+
+Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。
+
+详情参见[link](http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html)。
 
 功能提醒：
 
@@ -129,12 +148,12 @@ Neat Bookmarks was powered by [MooTools](http://mootools.net/), but is now power
 Changelogs
 -----------------
 
-ver1.0 2011/11/15
+**ver1.0 2011/11/15**
 
 First version.
 
 
-ver1.1 2011/11/16
+**ver1.1 2011/11/16**
 
 Added: option for only displaying bookmarks in Bookmark Bar.
 
@@ -143,7 +162,7 @@ Added: context menu for adding folder before/after bookmark/folder.
 Fixed: some translations in multi-language support.
 
 
-ver1.2 2011/11/30
+**ver1.2 2011/11/30**
 
 Added: update selected bookmark with current URL.
 
@@ -154,24 +173,24 @@ Fixed: after adding new bookmark or folder to a closed folder, its original chil
 Fixed: make up some missing translations for cs(Czech).
 
 
-ver1.3 2012/05/25
+**ver1.3 2012/05/25**
 
 Fixed: Scrollbar glitch. https://github.com/windviki/vBookmarks/issues/1
 
 
-ver1.4 2012/06/20
+**ver1.4 2012/06/20**
 
 Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
 
 
-ver1.5 2012/06/21
+**ver1.5 2012/06/21**
 
 Fixed: manifest problem in Chrome 20+.
 
 Fixed: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
 
-ver1.6 2012/06/24
+**ver1.6 2012/06/24**
 
 Fixed: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]
 
@@ -180,14 +199,14 @@ Fixed: Restore width of the popup window. [Content Security Policy]
 Fixed: Dialogs cannot submit their forms. [Content Security Policy]
 
 
-ver1.7 2012/06/26
+**ver1.7 2012/06/26**
 
 Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
 
 Fixed: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
 
 
-ver1.8 2012/08/01
+**ver1.8 2012/08/01**
 
 Added: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see https://github.com/windviki/vBookmarks/issues/3
 
@@ -200,10 +219,28 @@ Added: Simple update checking and desktop notification.
 Removed: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
 
 
-ver1.9 2012/08/19
+**ver1.9 2012/08/19**
 
 Fixed: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
 
 Updated: Color of ICON.
 
 Updated: Style of separator.
+
+
+**ver2.0 2012/11/01**
+
+Fixed: Version checking in background.js.
+
+Improved: Synchronizable separators.
+
+Added: Advanced options for separator.
+
+
+- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally in Chrome bookmark menu.
+
+
+- "The real URL of bookmark which is shown as a separator":By default it is "http://separatethis.com/". It's a "online separator". If you click bookmark from Chrome bookmark menu, it will bring you to this link. In vbookmarks, all separators are not clickable.
+
+
+- "If URL of a bookmark contains this string, it will be shown as a separator"：If you set this value, all bookmarks whose URL contains it will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.

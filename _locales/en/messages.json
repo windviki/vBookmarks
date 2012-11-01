@@ -146,11 +146,11 @@
     },
     "customSeparatorTitleDescription": 
     {
-        "message": "The title of this bookmark which is shown as a separator"
+        "message": "The real title of bookmark which is shown as a separator"
     },
     "customSeparatorUrlDescription": 
     {
-        "message": "The URL of this bookmark which is shown as a separator"
+        "message": "The real URL of bookmark which is shown as a separator"
     },
     "customSeparatorStringDescription": 
     {
