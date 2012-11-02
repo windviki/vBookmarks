@@ -1,5 +1,5 @@
 {
-	"latest": "1.9",
+	"latest": "2.0",
 	"url": "https://github.com/windviki/vBookmarks/downloads",
-	"message": "<span>Update icons.</span><span>Update style of separators.</span><span>Fix scrollbar resetting.</span>"
+	"message": "<span>Synchronizable separators!</span><span>More options.</span>"
 }
