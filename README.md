@@ -24,7 +24,7 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 
 8) Add an option: only show the nodes of the Bookmark Bar.
 
-9) Add: separators for bookmarks or folders. Cannot be synchronized.
+9) Add: Synchronizable bookmark separators.
 
 10) Add: update checking and notification based on github. A tricky solution.
 
@@ -240,7 +240,7 @@ Added: Advanced options for separator.
 - "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.
 
 
-- "The real URL of bookmark which is shown as a separator":By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.
+- "The real URL of bookmark which is shown as a separator": By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.
 
 
-- "If URL of a bookmark contains this string, it will be shown as a separator"：If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
+- "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
