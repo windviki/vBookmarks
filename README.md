@@ -98,13 +98,13 @@ Chinese Introduction
 增加分隔条相关的几个高级选项。
 
 
-- “被用作分隔符的书签节点的标题”：默认为"|"，即在Chrome自带的书签管理器或者书签栏里显示的书签标题文字（或者如果你用了多浏览器书签同步的工具，在其他浏览器它就是一个普通的标题为"|"的书签）。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。在vbookmarks里则会显示为真正的分隔条。
+- “被用作分隔符的书签节点的标题”：默认为"|"，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签标题文字。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。
 
 
-- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。
+- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。
 
 
-- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值，URL包含该字符串的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
+- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
 
 注意：
 
@@ -114,7 +114,7 @@ Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右�
 
 详情参见[link](http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html)。
 
-功能提醒：
+功能备注：
 
 1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。
 
@@ -237,10 +237,10 @@ Improved: Synchronizable separators.
 Added: Advanced options for separator.
 
 
-- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally in Chrome bookmark menu.
+- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.
 
 
-- "The real URL of bookmark which is shown as a separator":By default it is "http://separatethis.com/". It's a "online separator". If you click bookmark from Chrome bookmark menu, it will bring you to this link. In vbookmarks, all separators are not clickable.
+- "The real URL of bookmark which is shown as a separator":By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.
 
 
-- "If URL of a bookmark contains this string, it will be shown as a separator"：If you set this value, all bookmarks whose URL contains it will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
+- "If URL of a bookmark contains this string, it will be shown as a separator"：If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.

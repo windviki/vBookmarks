@@ -72,10 +72,11 @@
         } else {
             this.separatorURL = "http://separatethis.com/";
         }
+        this.separatorString = new Array();
         if (localStorage.separatorString) {
-            this.separatorString = localStorage.separatorString;
+            this.separatorString = localStorage.separatorString.split(';');
         } else {
-            this.separatorString = "";
+            this.separatorString.push("separatethis.com");
         }
     }
 
@@ -264,14 +265,6 @@
                 if (_fn1)
                     _fn1(_self1.text);
             } else {
-                /*
-                 * var _self2 = _self1; var _fn2 = _fn1; chrome.bookmarks.getChildren(_self2.id, function(nodechildren) {
-                 * for ( var i = 0, l = nodechildren.length; i < l; i++) { var d = nodechildren[i]; var child = new
-                 * TreeText(d.id); child.level = _self2.level + 1; var _self3 = _self2; child.get(function(childtext){
-                 * _self3.text += childtext; _self3.text += '\r\n'; console.info("child get end. id = " + _self3.id + ",
-                 * text = " + _self3.text); }); } console.info("get2 end. id = " + _self2.id + ", text = " +
-                 * _self2.text); if(_fn2) _fn2(_self2.text); });
-                 */
             }
         });
     };
@@ -455,9 +448,6 @@
             var parentID = d.parentId;
             var idHTML = id ? ' id="neat-tree-item-' + id + '"' : '';
             var isFolder = d.dateGroupModified || children || typeof url == 'undefined';
-            var isSeparator = !isFolder && 
-            				(( title == separatorManager.separatorTitle && url.indexOf(separatorManager.separatorURL) == 0)
-            				|| ( separatorManager.separatorString && url.indexOf(separatorManager.separatorString) != -1));
             if (isFolder) { // folder node
                 var isOpen = false;
                 var open = '';
@@ -490,12 +480,22 @@
                     }
                 }
             } else { // bookmark node
+                var isSeparator = (separatorManager.separatorURL && url.indexOf(separatorManager.separatorURL) == 0);
+                if (!isSeparator) {
+                    for (var j = 0; j < separatorManager.separatorString.length; j++) {
+                        if (separatorManager.separatorString[j].length > 1){
+                        	if (url.indexOf(separatorManager.separatorString[j]) != -1) {
+	                        	isSeparator = true;
+	                        	break;
+                            }
+                        }
+                    }
+                }
                 if (isSeparator) {
                     html += '<li class="child"' + idHTML + ' level="' + level
                         + '" role="treeitem" data-parentid="' + parentID + '">'
                         + generateSeparatorHTML(paddingStart);
                     separatorManager.add(id);
-                    //console.log('Add separator in initialization! id = ' + id + ', separatorManager size = ' + separatorManager.size());
                 } else {
                     html += '<li class="child"' + idHTML + ' level="' + level
                         + '" role="treeitem" data-parentid="' + parentID + '">'
@@ -522,7 +522,6 @@
                 parentNode = document.body;
             }
             if (!referencedNode) {
-                //console.log('addSeparator rnode = null!, nodeid = ' + nodeid);
                 return;
             }
 
@@ -541,7 +540,6 @@
                 'url':separatorManager.separatorURL + '#' + Math.uuidFast()
             }, function (resultbm) {
                 if ((where == "top" || where == "bottom") || !resultbm) {
-                    //console.log('create failed. where = ' + where + ' resultbm = ' + resultbm);
                     return;
                 }
                 var lv = 0;
@@ -637,7 +635,6 @@
         var seps = sm.getAll();
         for (var i = 0; i < seps.length; i++) {
             if (seps[i]) {
-                //console.log('separatorManager.getAll i = "' + i + '" seps[i] = "' + seps[i] +'"');
                 addSeparator(seps[i], 'after');
             }
         }
@@ -2139,17 +2136,19 @@
         if (e.button != 0)
             return;
         var el = e.target;
-        var elParent = el.parentNode;
+        if ((el.tagName) == 'HR') {
+        	el = el.parentNode; //a
+        }
+        var elParent = el.parentNode; //li
         // can move any bookmarks/folders except the default root folders
         if ((el.tagName == 'A' && elParent.hasClass('child'))
-            || (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')
-            || (el.tagName == 'A' && el.querySelector('HR'))) {
+            || (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')) {
             e.preventDefault();
             draggedOut = false;
-            draggedBookmark = el;
+            draggedBookmark = el; //a
             if (localStorage.zoom)
                 zoomLevel = localStorage.zoom.toInt() / 100;
-            bookmarkClone.innerHTML = el.innerHTML;
+            bookmarkClone.innerHTML = el.innerHTML; //<a>..</a>
             el.focus();
         }
     });
@@ -2216,6 +2215,9 @@
         }
         clientX /= zoomLevel;
         clientY /= zoomLevel;
+        if ((el.tagName) == 'HR') {
+        	el = el.parentNode; //a
+        }
         if (el.tagName == 'A'/* || el.tagName == 'HR'*/) {
             canDrop = true;
             bookmarkClone.style.top = clientY + 'px';
@@ -2271,6 +2273,7 @@
         bookmarkClone.style.left = '-999px';
         dropOverlay.style.left = '-999px';
         canDrop = false;
+        resetSeparator();
     };
     document.addEventListener('mouseup', function (e) {
         if (e.button != 0)
@@ -2287,20 +2290,18 @@
         }
         //el is the target element "A" "SPAN"
         var el = e.target;
-        var elParent = el.parentNode;
-        //elParent.tagName "LI"
+        if ((el.tagName) == 'HR') {
+        	el = el.parentNode; //a
+        }
+        var elParent = el.parentNode; //li
         var id = elParent.id.replace('neat-tree-item-', '');
         if (!id) {
-            var hr = elParent.querySelector('hr');
-            if (hr) { //dropped taget is separator
-                id = hr.id.replace('creator-', '');
-            } else {
-                onDrop();
-                return;
-            }
+            onDrop();
+            return;
         }
-        var draggedBookmarkParent = draggedBookmark.parentNode;
+        var draggedBookmarkParent = draggedBookmark.parentNode; //li
         var draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
+        
         //fixed clientY
         var clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
         if (el.tagName == 'A') { //dropped taget is bookmark
@@ -2322,6 +2323,8 @@
                     draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
                     draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
                     draggedBookmark.focus();
+                    draggedBookmarkParent.setAttribute("level", elParent.getAttribute("level"));
+                    draggedBookmarkParent.setAttribute("data-parentid", elParent.getAttribute("data-parentid"));
                     onDrop();
                 });
             });
@@ -2329,7 +2332,7 @@
             var elRect = el.getBoundingClientRect();
             var move = 0; // 0 = middle, 1 = top, 2 = bottom
             var elRectTop = elRect.top, elRectHeight = elRect.height;
-            var elParent = el.parentNode;
+            var elParent = el.parentNode; //li
             if (elParent.dataset.parentid != '0') {
                 if (clientY < elRectTop + elRectHeight * .3) {
                     move = 1;
@@ -2353,6 +2356,8 @@
                             draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
                             draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
                             draggedBookmark.focus();
+                            draggedBookmarkParent.setAttribute("level", elParent.getAttribute("level"));
+                            draggedBookmarkParent.setAttribute("data-parentid", elParent.getAttribute("data-parentid"));
                             onDrop();
                         });
                     }
@@ -2365,7 +2370,9 @@
                     var level = parseInt(elParent.parentNode.dataset.level) + 1;
                     draggedBookmark.style.webkitPaddingStart = (14 * level) + 'px';
                     if (ul) {
-                        draggedBookmarkParent.inject(ul);
+                        draggedBookmarkParent.inject(ul); //inject into bottom of ul
+                        draggedBookmarkParent.setAttribute("level", parseInt(elParent.getAttribute("level"))+1);
+                        draggedBookmarkParent.setAttribute("data-parentid", id);
                     } else {
                         draggedBookmarkParent.destroy();
                     }
@@ -2387,13 +2394,17 @@
         var seps = separatorManager.getAll();
         for (var i = 0; i < seps.length; i++) {
             if (seps[i]) {
-                var bmnode = $('neat-tree-item-' + seps[i]);
+                var bmnode = $('neat-tree-item-' + seps[i]); //li
+                if (!bmnode) {
+                	return;
+                }
                 var lv = bmnode.getAttribute('level'); //getAttribute!
-                if (!lv) lv = 1;
+                if (!lv) {
+                	lv = 1;
+                }
                 var paddingStart = lv * 14;
                 var hrwidth = window.innerWidth - paddingStart - 40;
-                bmnode.querySelector('hr').width = hrwidth;
-                //console.log('resetSeparator i = "' + i + '" "' + seps[i] + '" hrwidth = "' + hrwidth + '"');
+                bmnode.querySelector('hr').width = hrwidth; //li.a.hr
             }
         }
     }

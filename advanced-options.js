@@ -85,7 +85,11 @@
 	});
 	
 	var customSeparatorString = $('custom-separator-string');
-	if (localStorage.separatorString) customSeparatorString.value = localStorage.separatorString;
+	if (localStorage.separatorString) {
+		customSeparatorString.value = localStorage.separatorString;
+	} else {
+		customSeparatorString.value = "separatethis.com;"
+	}
 	customSeparatorString.addEventListener('change', function(){
 		localStorage.separatorString = customSeparatorString.value;
 	});

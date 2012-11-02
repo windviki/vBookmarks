@@ -158,7 +158,7 @@
 			var keys = [ 'major', 'minor' ];
 			var matches = strversion.match(/([\d]+)\.([\d]+)/i);
 			if (!matches)
-				return null;
+				return v;
 			matches.slice(1).forEach(function(m, i) {
 				v[keys[i]] = m.toInt();
 			});
