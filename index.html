@@ -37,11 +37,9 @@
 
 <h2>Download</h2>
 
-<hr><p>Latest release ver.1.9:</p>
+<hr><p>Latest release ver.2.0:</p>
 
-<p>For Chrome9-17: <a href="https://github.com/downloads/windviki/vBookmarks/vbookmarks_1.9_for_Chrome9-17.zip">https://github.com/downloads/windviki/vBookmarks/vbookmarks_1.9_for_Chrome9-17.zip</a></p>
-
-<p>For Chrome18+: <a href="https://github.com/downloads/windviki/vBookmarks/vbookmarks_1.9_for_Chrome18+.zip">https://github.com/downloads/windviki/vBookmarks/vbookmarks_1.9_for_Chrome18+.zip</a></p>
+<p>For Chrome18+: <a href="https://github.com/downloads/windviki/vBookmarks/vbookmarks_2.0_for_Chrome18+.zip">https://github.com/downloads/windviki/vBookmarks/vbookmarks_2.0_for_Chrome18+.zip</a></p>
 
 <h2>Introduction</h2>
 
@@ -80,7 +78,9 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 
 <hr><p>Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to install it.</p>
 
-<p>Otherwise there will be an error.</p>
+<p>Above Chrome 22+, please add startup parameters (--enable-easy-off-store-extension-install) for Chrome.exe so that it can accept extensions which are from outside of the WebStore.</p>
+
+<p>See <a href="http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/">link</a> for details.</p>
 
 <h2>Chinese Introduction</h2>
 
@@ -98,7 +98,7 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 
 <p>6.增加选项：仅在插件里显示书签工具栏中的书签</p>
 
-<p>7.增加存储于本地的书签分隔符</p>
+<p>7.可同步的书签分隔符</p>
 
 <p>8.内建的新版本提醒</p>
 
@@ -129,11 +129,25 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 更改更新检测的细节。
 修改默认分割条的样式。</p>
 
+<p>版本2.0 修正版本检测。
+改进分隔条的实现，现在可以和书签一起同步了（其实就是特殊标识的书签）。
+增加分隔条相关的几个高级选项。</p>
+
+<p>- “被用作分隔符的书签节点的标题”：默认为"|"，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签标题文字。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。</p>
+
+<p>- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。</p>
+
+<p>- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。</p>
+
 <h3>注意：</h3>
 
 <p>Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。</p>
 
-<h3>功能提醒：</h3>
+<p>Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。</p>
+
+<p>详情参见<a href="http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html">link</a></p>
+
+<h3>功能备注：</h3>
 
 <p>1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。</p>
 
@@ -233,6 +247,21 @@ PAGE DOWN/UP翻页，DELETE键删除书签。</p>
 <p>Updated: Color of ICON.</p>
 
 <p>Updated: Style of separator.</p>
+
+
+<h3>ver2.0 2012/11/01</h3>
+
+<p>Fixed: Version checking in background.js.</p>
+
+<p>Improved: Synchronizable separators.</p>
+
+<p>Added: Advanced options for separator.</p>
+
+<p>- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.</p>
+
+<p>- "The real URL of bookmark which is shown as a separator":By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.</p>
+
+<p>- "If URL of a bookmark contains this string, it will be shown as a separator"：If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.</p>
 
       </section>
     </div>
