@@ -64,8 +64,13 @@ body.linux input{
 	bottom: 0;
 	left: 0;
 }
+#copier-input{
+	width: 0px;
+	height: 0px;
+	border: 0;
+}
 #search{
-	padding: 0 2px 2px;
+	padding: 0;
 }
 #search input{
 	width: 100%;
