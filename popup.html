@@ -14,41 +14,41 @@
 <menu id="bookmark-context-menu" type="context" tabindex="-1">
 	<command id="add-bookmark-before-bookmark" tabindex="-1">
 	<command id="add-bookmark-after-bookmark" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep1">
 	<command id="add-folder-before-bookmark" tabindex="-1">
 	<command id="add-folder-after-bookmark" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep2">
 	<command id="add-separator" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep3">
 	<command id="replace-url" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep4">
 	<command id="bookmark-new-tab" tabindex="-1">
 	<command id="bookmark-new-window" tabindex="-1">
 	<command id="bookmark-new-incognito-window" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep5">
 	<command id="bookmark-edit" tabindex="-1">
 	<command id="bookmark-delete" tabindex="-1">
-	<hr>
+	<hr id="bookmark-context-menu-sep6">
 	<command id="copy-title-and-url" tabindex="-1">
 </menu>
 <menu id="folder-context-menu" type="context" tabindex="-1">
 	<command id="add-bookmark-top" tabindex="-1">
 	<command id="add-bookmark-bottom" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep1">
 	<command id="add-new-folder" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep2">
 	<command id="add-bookmark-before-folder" tabindex="-1">
 	<command id="add-bookmark-after-folder" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep3">
 	<command id="add-folder-before-folder" tabindex="-1">
 	<command id="add-folder-after-folder" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep4">
 	<command id="add-folder-separator" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep5">
 	<command id="folder-window" tabindex="-1">
 	<command id="folder-new-window" tabindex="-1">
 	<command id="folder-new-incognito-window" tabindex="-1">
-	<hr>
+	<hr id="folder-context-menu-sep6">
 	<command id="folder-edit" tabindex="-1">
 	<command id="folder-delete" tabindex="-1">
 	<!--<hr>
@@ -76,6 +76,7 @@
 	<input type="url" id="edit-dialog-url" aria-required="true" required>
 	<div class="buttons">
 	<button id="edit-dialog-button" type="submit"></button>
+	<button id="edit-dialog-cancel-button"></button>
 	</div>
 	</form>
 </div>
@@ -85,6 +86,7 @@
 	<input id="new-folder-dialog-name">
 	<div class="buttons">
 	<button id="new-folder-dialog-button" type="submit"></button>
+	<button id="new-folder-dialog-cancel-button"></button>
 	</div>
 	</form>
 </div>

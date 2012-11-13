@@ -370,17 +370,21 @@
         var bookmarks = document.querySelectorAll('li.child a');
         for (var i = 0, l = bookmarks.length; i < l; i++) {
             var bookmark = bookmarks[i];
-            if (bookmark.hasClass('titled')) {
-                if (bookmark.scrollWidth <= bookmark.offsetWidth) {
-                    bookmark.title = bookmark.href;
-                    bookmark.removeClass('titled');
-                }
-            } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                var text = bookmark.querySelector('i').textContent;
-                var title = bookmark.title;
-                if (text != title) {
-                    bookmark.title = text + '\n' + title;
-                    bookmark.addClass('titled');
+            if (bookmark.querySelector('hr')) {
+                bookmark.title = '';
+            } else {
+                if (bookmark.hasClass('titled')) {
+                    if (bookmark.scrollWidth <= bookmark.offsetWidth) {
+                        bookmark.title = bookmark.href;
+                        bookmark.removeClass('titled');
+                    }
+                } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
+                    var text = bookmark.querySelector('i').textContent;
+                    var title = bookmark.title;
+                    if (text != title) {
+                        bookmark.title = text + '\n' + title;
+                        bookmark.addClass('titled');
+                    }
                 }
             }
         }
@@ -432,6 +436,21 @@
         return separatorhtml;
     };
 
+    isSeparator = function (title, url) {
+        var isSeparator = (separatorManager.separatorURL && url.indexOf(separatorManager.separatorURL) == 0);
+        if (!isSeparator) {
+            for (var j = 0; j < separatorManager.separatorString.length; j++) {
+                if (separatorManager.separatorString[j].length > 1){
+                    if (url.indexOf(separatorManager.separatorString[j]) != -1) {
+                        isSeparator = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return isSeparator;
+    };
+
     var generateHTML = function (data, level) {
         if (!level)
             level = 0;
@@ -480,18 +499,7 @@
                     }
                 }
             } else { // bookmark node
-                var isSeparator = (separatorManager.separatorURL && url.indexOf(separatorManager.separatorURL) == 0);
-                if (!isSeparator) {
-                    for (var j = 0; j < separatorManager.separatorString.length; j++) {
-                        if (separatorManager.separatorString[j].length > 1){
-                        	if (url.indexOf(separatorManager.separatorString[j]) != -1) {
-	                        	isSeparator = true;
-	                        	break;
-                            }
-                        }
-                    }
-                }
-                if (isSeparator) {
+                if (isSeparator(title, url)) {
                     html += '<li class="child"' + idHTML + ' level="' + level
                         + '" role="treeitem" data-parentid="' + parentID + '">'
                         + generateSeparatorHTML(paddingStart);
@@ -765,8 +773,10 @@
             for (var i = 0, l = results.length; i < l; i++) {
                 var result = results[i];
                 var id = result.id;
-                html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">'
-                    + generateBookmarkHTML(result.title, result.url);
+                if (!isSeparator(result.title, result.url)) {
+                    html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">'
+                        + generateBookmarkHTML(result.title, result.url);
+                }
             }
             html += '</ul>';
             $tree.style.display = 'none';
@@ -780,6 +790,7 @@
                     if (!node || !node.length)
                         return;
                     var a = li.querySelector('a');
+                    // Add parent folder
                     a.title = _m('parentFolder', node[0].title) + '\n' + a.title;
                 });
             }, lis);
@@ -923,9 +934,13 @@
                 url.disabled = true;
                 url.value = '';
             }
-            body.addClass('needEdit');
+            //if lose focus, the page will submit it if belowing class exists.
+            //body.addClass('needEdit');
         },
-        close:function () {
+        close:function (bave) {
+            if (bave == false) {
+                return;
+            }
             var urlInput = $('edit-dialog-url');
             var url = urlInput.value;
             if (!urlInput.validity.valid) {
@@ -935,7 +950,7 @@
                 url = 'http://' + url;
             }
             EditDialog.fn($('edit-dialog-name').value, url);
-            body.removeClass('needEdit');
+            //body.removeClass('needEdit');
         },
         fn:function () {
         }
@@ -953,11 +968,14 @@
             name.focus();
             name.select();
             name.scrollLeft = 0;
-            body.addClass('needInputName');
+            //if lose focus, the page will submit it if belowing class exists.
+            //body.addClass('needInputName');
         },
-        close:function () {
-            NewFolderDialog.fn($('new-folder-dialog-name').value);
-            body.removeClass('needInputName');
+        close:function (bsave) {
+            if (bave != false) {
+                NewFolderDialog.fn($('new-folder-dialog-name').value);
+            }
+            //body.removeClass('needInputName');
         },
         fn:function () {
         }
@@ -972,6 +990,12 @@
     $('confirm-dialog-button-2').addEventListener('click', function (e) {
         ConfirmDialog.fn2();
         ConfirmDialog.close();
+    });
+    $('edit-dialog-cancel-button').addEventListener('click', function (e) {
+        EditDialog.close(false);
+    });
+    $('new-folder-dialog-cancel-button').addEventListener('click', function (e) {
+        NewFolderDialog.close(false);
     });
     $('edit-dialog-form').addEventListener('submit', function (e) {
         EditDialog.close();
@@ -1494,6 +1518,28 @@
         $separatorContextMenu.style.opacity = 0;
     };
 
+    var switchBookmarkMenu = function (disable) {
+        if (disable) {
+            $('add-bookmark-before-bookmark').style.visibility = 'hidden';
+            $('add-bookmark-after-bookmark').style.visibility = 'hidden';
+            $('bookmark-context-menu-sep1').style.visibility = 'hidden';
+            $('add-folder-before-bookmark').style.visibility = 'hidden';
+            $('add-folder-after-bookmark').style.visibility = 'hidden';
+            $('bookmark-context-menu-sep2').style.visibility = 'hidden';
+            $('add-separator').style.visibility = 'hidden';
+            $('bookmark-context-menu-sep3').style.visibility = 'hidden';
+        } else {       
+            $('add-bookmark-before-bookmark').style.visibility = 'visible';
+            $('add-bookmark-after-bookmark').style.visibility = 'visible';
+            $('bookmark-context-menu-sep1').style.visibility = 'visible';
+            $('add-folder-before-bookmark').style.visibility = 'visible';
+            $('add-folder-after-bookmark').style.visibility = 'visible';
+            $('bookmark-context-menu-sep2').style.visibility = 'visible';
+            $('add-separator').style.visibility = 'visible';
+            $('bookmark-context-menu-sep3').style.visibility = 'visible';
+        }
+    }
+
     body.addEventListener('click', clearMenu);
     $tree.addEventListener('scroll', clearMenu);
     $results.addEventListener('scroll', clearMenu);
@@ -1512,6 +1558,9 @@
             }, 500);
         }
         var el = e.target;
+        if ((el.tagName) == 'HR') {
+            el = el.parentNode; //a
+        }
         if (el.tagName == 'A') {
             if (el.querySelector('hr')) {
                 currentContext = el;
@@ -1585,31 +1634,7 @@
             $folderContextMenu.style.top = pageY + 'px';
             $folderContextMenu.style.opacity = 1;
             $folderContextMenu.focus();
-        } else if (el.tagName == 'HR') {
-            currentContext = el;
-            var active = body.querySelector('.active');
-            if (active)
-                active.removeClass('active');
-            el.addClass('active');
-            if (el.parentNode.dataset.parentid == '0') {
-                $separatorContextMenu.addClass('hide-editables');
-            } else {
-                $separatorContextMenu.removeClass('hide-editables');
-            }
-            var separatorMenuWidth = $separatorContextMenu.offsetWidth;
-            var separatorMenuHeight = $separatorContextMenu.offsetHeight;
-            var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
-                - separatorMenuWidth);
-            var pageY = e.pageY;
-            var boundY = window.innerHeight - separatorMenuHeight;
-            if (pageY > boundY)
-                pageY -= separatorMenuHeight;
-            if (pageY < 0)
-                pageY = boundY;
-            $separatorContextMenu.style.left = pageX + 'px';
-            $separatorContextMenu.style.top = pageY + 'px';
-            $separatorContextMenu.style.opacity = 1;
-            $separatorContextMenu.focus();
+        } else {
         }
     });
     // on Mac, holding down right-click for a period of time closes the context menu
