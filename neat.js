@@ -370,17 +370,21 @@
         var bookmarks = document.querySelectorAll('li.child a');
         for (var i = 0, l = bookmarks.length; i < l; i++) {
             var bookmark = bookmarks[i];
-            if (bookmark.hasClass('titled')) {
-                if (bookmark.scrollWidth <= bookmark.offsetWidth) {
-                    bookmark.title = bookmark.href;
-                    bookmark.removeClass('titled');
-                }
-            } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                var text = bookmark.querySelector('i').textContent;
-                var title = bookmark.title;
-                if (text != title) {
-                    bookmark.title = text + '\n' + title;
-                    bookmark.addClass('titled');
+            if (bookmark.querySelector('hr')) {
+                bookmark.title = '';
+            } else {
+                if (bookmark.hasClass('titled')) {
+                    if (bookmark.scrollWidth <= bookmark.offsetWidth) {
+                        bookmark.title = bookmark.href;
+                        bookmark.removeClass('titled');
+                    }
+                } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
+                    var text = bookmark.querySelector('i').textContent;
+                    var title = bookmark.title;
+                    if (text != title) {
+                        bookmark.title = text + '\n' + title;
+                        bookmark.addClass('titled');
+                    }
                 }
             }
         }
@@ -432,6 +436,21 @@
         return separatorhtml;
     };
 
+    isSeparator = function (title, url) {
+        var isSeparator = (separatorManager.separatorURL && url.indexOf(separatorManager.separatorURL) == 0);
+        if (!isSeparator) {
+            for (var j = 0; j < separatorManager.separatorString.length; j++) {
+                if (separatorManager.separatorString[j].length > 1){
+                    if (url.indexOf(separatorManager.separatorString[j]) != -1) {
+                        isSeparator = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return isSeparator;
+    };
+
     var generateHTML = function (data, level) {
         if (!level)
             level = 0;
@@ -480,18 +499,7 @@
                     }
                 }
             } else { // bookmark node
-                var isSeparator = (separatorManager.separatorURL && url.indexOf(separatorManager.separatorURL) == 0);
-                if (!isSeparator) {
-                    for (var j = 0; j < separatorManager.separatorString.length; j++) {
-                        if (separatorManager.separatorString[j].length > 1){
-                        	if (url.indexOf(separatorManager.separatorString[j]) != -1) {
-	                        	isSeparator = true;
-	                        	break;
-                            }
-                        }
-                    }
-                }
-                if (isSeparator) {
+                if (isSeparator(title, url)) {
                     html += '<li class="child"' + idHTML + ' level="' + level
                         + '" role="treeitem" data-parentid="' + parentID + '">'
                         + generateSeparatorHTML(paddingStart);
@@ -607,8 +615,10 @@
 
         $tree.innerHTML = html;
 
-        if (rememberState)
-            $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
+        if (rememberState) {
+            body.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
+            //console.log("set tree scrollTop = " + body.scrollTop + "\n");
+        }
 
         var focusID = localStorage.focusID;
         if (typeof focusID != 'undefined' && focusID != null) {
@@ -646,8 +656,9 @@
     });
 
     // Events for the tree
-    $tree.addEventListener('scroll', function () {
-        localStorage.scrollTop = $tree.scrollTop;
+    window.addEventListener('scroll', function () {
+        localStorage.scrollTop = body.scrollTop;
+        //console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
     });
     $tree.addEventListener('focus', function (e) {
         var el = e.target;
@@ -765,8 +776,10 @@
             for (var i = 0, l = results.length; i < l; i++) {
                 var result = results[i];
                 var id = result.id;
-                html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">'
-                    + generateBookmarkHTML(result.title, result.url);
+                if (!isSeparator(result.title, result.url)) {
+                    html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">'
+                        + generateBookmarkHTML(result.title, result.url);
+                }
             }
             html += '</ul>';
             $tree.style.display = 'none';
@@ -1495,7 +1508,8 @@
     };
 
     body.addEventListener('click', clearMenu);
-    $tree.addEventListener('scroll', clearMenu);
+    //invalid event handler?
+    window.addEventListener('scroll', clearMenu);
     $results.addEventListener('scroll', clearMenu);
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
@@ -1512,6 +1526,9 @@
             }, 500);
         }
         var el = e.target;
+        if ((el.tagName) == 'HR') {
+            el = el.parentNode; //a
+        }
         if (el.tagName == 'A') {
             if (el.querySelector('hr')) {
                 currentContext = el;
@@ -1528,12 +1545,13 @@
                 var separatorMenuHeight = $separatorContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
                     - separatorMenuWidth);
-                var pageY = e.pageY;
-                var boundY = window.innerHeight - separatorMenuHeight;
-                if (pageY > boundY)
-                    pageY -= separatorMenuHeight;
-                if (pageY < 0)
-                    pageY = boundY;
+                //var pageY = Math.max(e.pageY, separatorMenuHeight);
+                //var boundY = window.innerHeight - separatorMenuHeight;
+                //if (pageY > boundY)
+                //    pageY -= separatorMenuHeight;
+                //if (pageY < 0)
+                //    pageY = boundY;
+                var pageY = e.pageY - Math.min(separatorMenuHeight, e.clientY);
                 $separatorContextMenu.style.left = pageX + 'px';
                 $separatorContextMenu.style.top = pageY + 'px';
                 $separatorContextMenu.style.opacity = 1;
@@ -1548,13 +1566,14 @@
                 var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth
                     - bookmarkMenuWidth);
-                var pageY = e.pageY;
-                var boundY = window.innerHeight - bookmarkMenuHeight;
-                if (pageY > boundY)
-                    pageY -= bookmarkMenuHeight;
-                if (pageY < 0)
-                    pageY = boundY;
-                pageY = Math.max(0, pageY);
+                //var pageY = Math.max(e.pageY, bookmarkMenuHeight);
+                //var boundY = window.innerHeight - bookmarkMenuHeight;
+                //if (pageY > boundY)
+                //    pageY -= bookmarkMenuHeight;
+                //if (pageY < 0)
+                //    pageY = boundY;
+                //pageY = Math.max(0, pageY);
+                var pageY = e.pageY - Math.min(bookmarkMenuHeight, e.clientY);
                 $bookmarkContextMenu.style.left = pageX + 'px';
                 $bookmarkContextMenu.style.top = pageY + 'px';
                 $bookmarkContextMenu.style.opacity = 1;
@@ -1575,41 +1594,18 @@
             var folderMenuHeight = $folderContextMenu.offsetHeight;
             var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth
                 - folderMenuWidth);
-            var pageY = e.pageY;
-            var boundY = window.innerHeight - folderMenuHeight;
-            if (pageY > boundY)
-                pageY -= folderMenuHeight;
-            if (pageY < 0)
-                pageY = boundY;
+            //var pageY = Math.max(e.pageY, folderMenuHeight);
+            //var boundY = window.innerHeight - folderMenuHeight;
+            //if (pageY > boundY)
+            //    pageY -= folderMenuHeight;
+            //if (pageY < 0)
+            //    pageY = boundY;
+            var pageY = e.pageY - Math.min(folderMenuHeight, e.clientY);
             $folderContextMenu.style.left = pageX + 'px';
             $folderContextMenu.style.top = pageY + 'px';
             $folderContextMenu.style.opacity = 1;
             $folderContextMenu.focus();
-        } else if (el.tagName == 'HR') {
-            currentContext = el;
-            var active = body.querySelector('.active');
-            if (active)
-                active.removeClass('active');
-            el.addClass('active');
-            if (el.parentNode.dataset.parentid == '0') {
-                $separatorContextMenu.addClass('hide-editables');
-            } else {
-                $separatorContextMenu.removeClass('hide-editables');
-            }
-            var separatorMenuWidth = $separatorContextMenu.offsetWidth;
-            var separatorMenuHeight = $separatorContextMenu.offsetHeight;
-            var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
-                - separatorMenuWidth);
-            var pageY = e.pageY;
-            var boundY = window.innerHeight - separatorMenuHeight;
-            if (pageY > boundY)
-                pageY -= separatorMenuHeight;
-            if (pageY < 0)
-                pageY = boundY;
-            $separatorContextMenu.style.left = pageX + 'px';
-            $separatorContextMenu.style.top = pageY + 'px';
-            $separatorContextMenu.style.opacity = 1;
-            $separatorContextMenu.focus();
+        } else {
         }
     });
     // on Mac, holding down right-click for a period of time closes the context menu
