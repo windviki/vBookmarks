@@ -1545,7 +1545,7 @@
 
     body.addEventListener('click', clearMenu);
     //invalid event handler?
-    $tree.addEventListener('scroll', clearMenu);
+    window.addEventListener('scroll', clearMenu);
     $results.addEventListener('scroll', clearMenu);
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
@@ -1581,12 +1581,13 @@
                 var separatorMenuHeight = $separatorContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth
                     - separatorMenuWidth);
-                var pageY = e.pageY;
-                var boundY = window.innerHeight - separatorMenuHeight;
-                if (pageY > boundY)
-                    pageY -= separatorMenuHeight;
-                if (pageY < 0)
-                    pageY = boundY;
+                //var pageY = Math.max(e.pageY, separatorMenuHeight);
+                //var boundY = window.innerHeight - separatorMenuHeight;
+                //if (pageY > boundY)
+                //    pageY -= separatorMenuHeight;
+                //if (pageY < 0)
+                //    pageY = boundY;
+                var pageY = e.pageY - Math.min(separatorMenuHeight, e.clientY);
                 $separatorContextMenu.style.left = pageX + 'px';
                 $separatorContextMenu.style.top = pageY + 'px';
                 $separatorContextMenu.style.opacity = 1;
@@ -1601,13 +1602,14 @@
                 var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth
                     - bookmarkMenuWidth);
-                var pageY = e.pageY;
-                var boundY = window.innerHeight - bookmarkMenuHeight;
-                if (pageY > boundY)
-                    pageY -= bookmarkMenuHeight;
-                if (pageY < 0)
-                    pageY = boundY;
-                pageY = Math.max(0, pageY);
+                //var pageY = Math.max(e.pageY, bookmarkMenuHeight);
+                //var boundY = window.innerHeight - bookmarkMenuHeight;
+                //if (pageY > boundY)
+                //    pageY -= bookmarkMenuHeight;
+                //if (pageY < 0)
+                //    pageY = boundY;
+                //pageY = Math.max(0, pageY);
+                var pageY = e.pageY - Math.min(bookmarkMenuHeight, e.clientY);
                 $bookmarkContextMenu.style.left = pageX + 'px';
                 $bookmarkContextMenu.style.top = pageY + 'px';
                 $bookmarkContextMenu.style.opacity = 1;
@@ -1628,12 +1630,13 @@
             var folderMenuHeight = $folderContextMenu.offsetHeight;
             var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth
                 - folderMenuWidth);
-            var pageY = e.pageY;
-            var boundY = window.innerHeight - folderMenuHeight;
-            if (pageY > boundY)
-                pageY -= folderMenuHeight;
-            if (pageY < 0)
-                pageY = boundY;
+            //var pageY = Math.max(e.pageY, folderMenuHeight);
+            //var boundY = window.innerHeight - folderMenuHeight;
+            //if (pageY > boundY)
+            //    pageY -= folderMenuHeight;
+            //if (pageY < 0)
+            //    pageY = boundY;
+            var pageY = e.pageY - Math.min(folderMenuHeight, e.clientY);
             $folderContextMenu.style.left = pageX + 'px';
             $folderContextMenu.style.top = pageY + 'px';
             $folderContextMenu.style.opacity = 1;
