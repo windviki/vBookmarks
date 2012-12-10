@@ -346,7 +346,9 @@
         'folder-edit':'edit',
         'folder-delete':'deleteEllipsis',
         'edit-dialog-button':'save',
-        'new-folder-dialog-button':'save'
+        'edit-dialog-cancel-button':'nope',
+        'new-folder-dialog-button':'save',
+        'new-folder-dialog-cancel-button':'nope'
     }, function (msg, id) {
         var el = $(id), m = _m(msg);
         if (el.tagName == 'COMMAND')
@@ -726,6 +728,28 @@
         el.focus();
     });
 
+    var switchBookmarkMenu = function (disable) {
+        if (disable) {
+            $('add-bookmark-before-bookmark').style.display = 'none';
+            $('add-bookmark-after-bookmark').style.display = 'none';
+            $('bookmark-context-menu-sep1').style.display = 'none';
+            $('add-folder-before-bookmark').style.display = 'none';
+            $('add-folder-after-bookmark').style.display = 'none';
+            $('bookmark-context-menu-sep2').style.display = 'none';
+            $('add-separator').style.display = 'none';
+            $('bookmark-context-menu-sep3').style.display = 'none';
+        } else {       
+            $('add-bookmark-before-bookmark').style.display = 'block';
+            $('add-bookmark-after-bookmark').style.display = 'block';
+            $('bookmark-context-menu-sep1').style.display = 'block';
+            $('add-folder-before-bookmark').style.display = 'block';
+            $('add-folder-after-bookmark').style.display = 'block';
+            $('bookmark-context-menu-sep2').style.display = 'block';
+            $('add-separator').style.display = 'block';
+            $('bookmark-context-menu-sep3').style.display = 'block';
+        }
+    };
+
     // Search
     var $results = $('results');
     var searchMode = false;
@@ -738,6 +762,7 @@
         if (value == '') {
             prevValue = '';
             searchMode = false;
+            switchBookmarkMenu(false);
             $tree.style.display = 'block';
             $results.style.display = 'none';
             return;
@@ -746,6 +771,7 @@
             return;
         prevValue = value;
         searchMode = true;
+        switchBookmarkMenu(true);
         chrome.bookmarks.search(value, function (results) {
             var v = value.toLowerCase();
             var vPattern = new RegExp('^' + value.escapeRegExp().replace(/\s+/g, '.*'), 'ig');
@@ -938,10 +964,11 @@
                 url.value = '';
             }
             //if lose focus, the page will submit it if belowing class exists.
-            //body.addClass('needEdit');
+            body.addClass('needEdit');
         },
         close:function (bave) {
             if (bave == false) {
+                body.removeClass('needEdit');
                 return;
             }
             var urlInput = $('edit-dialog-url');
@@ -953,7 +980,7 @@
                 url = 'http://' + url;
             }
             EditDialog.fn($('edit-dialog-name').value, url);
-            //body.removeClass('needEdit');
+            body.removeClass('needEdit');
         },
         fn:function () {
         }
@@ -972,13 +999,13 @@
             name.select();
             name.scrollLeft = 0;
             //if lose focus, the page will submit it if belowing class exists.
-            //body.addClass('needInputName');
+            body.addClass('needInputName');
         },
         close:function (bsave) {
-            if (bave != false) {
+            body.removeClass('needInputName');
+            if (bsave != false) {
                 NewFolderDialog.fn($('new-folder-dialog-name').value);
             }
-            //body.removeClass('needInputName');
         },
         fn:function () {
         }
@@ -1521,28 +1548,6 @@
         $separatorContextMenu.style.opacity = 0;
     };
 
-    var switchBookmarkMenu = function (disable) {
-        if (disable) {
-            $('add-bookmark-before-bookmark').style.visibility = 'hidden';
-            $('add-bookmark-after-bookmark').style.visibility = 'hidden';
-            $('bookmark-context-menu-sep1').style.visibility = 'hidden';
-            $('add-folder-before-bookmark').style.visibility = 'hidden';
-            $('add-folder-after-bookmark').style.visibility = 'hidden';
-            $('bookmark-context-menu-sep2').style.visibility = 'hidden';
-            $('add-separator').style.visibility = 'hidden';
-            $('bookmark-context-menu-sep3').style.visibility = 'hidden';
-        } else {       
-            $('add-bookmark-before-bookmark').style.visibility = 'visible';
-            $('add-bookmark-after-bookmark').style.visibility = 'visible';
-            $('bookmark-context-menu-sep1').style.visibility = 'visible';
-            $('add-folder-before-bookmark').style.visibility = 'visible';
-            $('add-folder-after-bookmark').style.visibility = 'visible';
-            $('bookmark-context-menu-sep2').style.visibility = 'visible';
-            $('add-separator').style.visibility = 'visible';
-            $('bookmark-context-menu-sep3').style.visibility = 'visible';
-        }
-    }
-
     body.addEventListener('click', clearMenu);
     //invalid event handler?
     window.addEventListener('scroll', clearMenu);
@@ -1587,7 +1592,16 @@
                 //    pageY -= separatorMenuHeight;
                 //if (pageY < 0)
                 //    pageY = boundY;
-                var pageY = e.pageY - Math.min(separatorMenuHeight, e.clientY);
+                //    
+                //var pageY = e.pageY - Math.min(separatorMenuHeight, e.clientY);
+                var pageY = 0;
+                var boundY = window.innerHeight - e.clientY;
+                if (boundY > separatorMenuHeight) {
+                    pageY = e.pageY;
+                } else {
+                    pageY = e.pageY - separatorMenuHeight;
+                }
+
                 $separatorContextMenu.style.left = pageX + 'px';
                 $separatorContextMenu.style.top = pageY + 'px';
                 $separatorContextMenu.style.opacity = 1;
@@ -1609,7 +1623,16 @@
                 //if (pageY < 0)
                 //    pageY = boundY;
                 //pageY = Math.max(0, pageY);
-                var pageY = e.pageY - Math.min(bookmarkMenuHeight, e.clientY);
+                //
+                //var pageY = e.pageY - Math.min(bookmarkMenuHeight, e.clientY);
+                var pageY = 0;
+                var boundY = window.innerHeight - e.clientY;
+                if (boundY > bookmarkMenuHeight) {
+                    pageY = e.pageY;
+                } else {
+                    pageY = e.pageY - bookmarkMenuHeight;
+                }
+
                 $bookmarkContextMenu.style.left = pageX + 'px';
                 $bookmarkContextMenu.style.top = pageY + 'px';
                 $bookmarkContextMenu.style.opacity = 1;
@@ -1636,7 +1659,16 @@
             //    pageY -= folderMenuHeight;
             //if (pageY < 0)
             //    pageY = boundY;
-            var pageY = e.pageY - Math.min(folderMenuHeight, e.clientY);
+            //    
+            //var pageY = e.pageY - Math.min(folderMenuHeight, e.clientY);
+            var pageY = 0;
+            var boundY = window.innerHeight - e.clientY;
+            if (boundY > folderMenuHeight) {
+                pageY = e.pageY;
+            } else {
+                pageY = e.pageY - folderMenuHeight;
+            }
+
             $folderContextMenu.style.left = pageX + 'px';
             $folderContextMenu.style.top = pageY + 'px';
             $folderContextMenu.style.opacity = 1;
@@ -2500,9 +2532,9 @@
             ConfirmDialog.fn2();
         ConfirmDialog.close();
         if (body.hasClass('needEdit'))
-            EditDialog.close();
+            EditDialog.close(false);
         if (body.hasClass('needInputName'))
-            NewFolderDialog.close();
+            NewFolderDialog.close(false);
         if (body.hasClass('needAlert'))
             AlertDialog.close();
     };
