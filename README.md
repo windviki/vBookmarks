@@ -106,6 +106,15 @@ Chinese Introduction
 
 - “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
 
+
+版本2.1 现在可以正确记忆滚动条的位置了。
+改进右键菜单的位置。并且右键菜单会在滚动页面的时候自动关闭。search模式下的右键菜单精简掉不直观的一些命令。
+给新建文件夹对话框，重命名对话框增加“取消”按钮。
+
+
+末日版=。= 以后或许都不会再更新了。
+
+
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
@@ -113,6 +122,7 @@ Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个�
 Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。
 
 详情参见[link](http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html)。
+
 
 功能备注：
 
@@ -244,3 +254,14 @@ Added: Advanced options for separator.
 
 
 - "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
+
+
+**ver2.1 2012/12/12**
+
+Fixed: Now it can remember and restore position of scroll bar correctly.
+
+Improved: Position of context menu. And context menu will be dismissed when scrolling up/down.
+
+Added: Cancel button for dialogs in vbookmarks.
+
+Others: Maybe it's the last version:) see you at 2012/12/21.
