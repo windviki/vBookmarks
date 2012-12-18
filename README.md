@@ -3,6 +3,8 @@ vBookmarks
 
 [HomePage](http://windviki.github.com/vBookmarks/)
 
+[Latest CRX File Download](http://dl.vmall.com/c01ygu6gk4)
+
 Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. 
 
 Clicking the Bookmark Star in Chrome is an awful way to add a bookmark, and what I need is an extension just like "AddBookmarkHere" for Firefox.
