@@ -305,12 +305,14 @@
     })();
 
     // Fix scrollbar bug in Chrome 19+
+    /*
     if (version.major >= 19) {
         document.getElementById('container').style.display = "";
     }
     else {
         document.getElementById('container').style.display = "-webkit-box";
     }
+    */
 
     // Some i18n
     $('search-input').placeholder = _m('searchBookmarks');
@@ -895,7 +897,7 @@
             var neatTree = $tree.firstElementChild;
             if (neatTree) {
                 var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-                var maxHeight = screen.height - window.screenY - 50;
+                var maxHeight = Math.min(screen.height - window.screenY - 50, 600);
                 var height = Math.max(200, Math.min(fullHeight, maxHeight));
                 var newheightstyle = height + 'px';
                 if (localStorage.popupHeight != height) {

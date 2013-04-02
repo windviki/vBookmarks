@@ -114,7 +114,7 @@ Chinese Introduction
 给新建文件夹对话框，重命名对话框增加“取消”按钮。
 
 
-末日版=。= 以后或许都不会再更新了。
+版本2.2 修正Chrome26+滚动条不滚动的问题。
 
 
 注意：
@@ -266,4 +266,7 @@ Improved: Position of context menu. And context menu will be dismissed when scro
 
 Added: Cancel button for dialogs in vbookmarks.
 
-Others: Maybe it's the last version:) see you at 2012/12/21.
+
+**ver2.2 2013/04/02**
+
+Fixed: Scroll bar does not work above chrome 26+.

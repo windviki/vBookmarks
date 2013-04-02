@@ -56,7 +56,7 @@ body.linux input{
 #container{
 	/*display: -webkit-box;*/
 	-webkit-box-orient: vertical;
-	display: box;
+	display: -webkit-box;
 	box-orient: vertical;
 	position: absolute;
 	top: 0;
