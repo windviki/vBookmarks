@@ -3,7 +3,7 @@ vBookmarks
 
 [HomePage](http://windviki.github.com/vBookmarks/)
 
-[Latest CRX File Download](http://dl.vmall.com/c01ygu6gk4)
+[Latest CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.2.crx?raw=true)
 
 Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. 
 
@@ -269,4 +269,4 @@ Added: Cancel button for dialogs in vbookmarks.
 
 **ver2.2 2013/04/02**
 
-Fixed: Scroll bar does not work above chrome 26+.
+Fixed: Scroll bar does not work above chrome 26+ (not well tested).
