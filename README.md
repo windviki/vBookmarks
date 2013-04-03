@@ -5,6 +5,8 @@ vBookmarks
 
 [Latest CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.2.crx?raw=true)
 
+[All versions](https://github.com/windviki/vBookmarks/blob/master/release/)
+
 Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. 
 
 Clicking the Bookmark Star in Chrome is an awful way to add a bookmark, and what I need is an extension just like "AddBookmarkHere" for Firefox.
@@ -50,6 +52,11 @@ See [link](http://www.howtogeek.com/120743/how-to-install-extensions-from-outsid
 Chinese Introduction
 -----------------
 
+[最新版本下载](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.2.crx?raw=true)
+
+[历史版本下载](https://github.com/windviki/vBookmarks/blob/master/release/)
+
+
 增加功能：
 
 1) 在选中的书签/文件夹之前/之后添加当前tab为新书签
@@ -69,6 +76,7 @@ Chinese Introduction
 8) 内建的新版本提醒
 
 9) 修正Neat Bookmarks中的已知BUG
+
 
 近期版本说明：
 
