@@ -1551,6 +1551,8 @@
     };
 
     body.addEventListener('click', clearMenu);
+    //body.addEventListener('scroll', clearMenu);
+    $tree.addEventListener('scroll', clearMenu);
     //invalid event handler?
     window.addEventListener('scroll', clearMenu);
     $results.addEventListener('scroll', clearMenu);
