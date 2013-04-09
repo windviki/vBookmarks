@@ -620,7 +620,7 @@
         $tree.innerHTML = html;
 
         if (rememberState) {
-            body.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
+            $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
             //console.log("set tree scrollTop = " + body.scrollTop + "\n");
         }
 
@@ -660,9 +660,9 @@
     });
 
     // Events for the tree
-    window.addEventListener('scroll', function () {
-        localStorage.scrollTop = body.scrollTop;
-        //console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
+    $tree.addEventListener('scroll', function () {
+        localStorage.scrollTop = $tree.scrollTop;
+        console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
     });
     $tree.addEventListener('focus', function (e) {
         var el = e.target;

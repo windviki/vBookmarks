@@ -1,5 +1,5 @@
 {
-	"latest": "2.2",
-	"url": "https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.2.crx?raw=true",
-	"message": "<p><a href='http://windviki.github.com/vBookmarks/#latestversion'>Fixed scrollbar in 26+</a></p>"
+	"latest": "2.3",
+	"url": "https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.3.crx?raw=true",
+	"message": "<p><a href='http://windviki.github.com/vBookmarks/#latestversion'>Remember position of scroll bar.</a></p><p>Dismiss menus when scrolling.</p>"
 }
