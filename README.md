@@ -3,7 +3,7 @@ vBookmarks
 
 [HomePage](http://windviki.github.com/vBookmarks/)
 
-[Latest CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.3.crx?raw=true)
+[Latest CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.4.crx?raw=true)
 
 [All versions](https://github.com/windviki/vBookmarks/blob/master/release/)
 
@@ -52,7 +52,7 @@ See [link](http://www.howtogeek.com/120743/how-to-install-extensions-from-outsid
 Chinese Introduction
 -----------------
 
-[最新版本下载](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.3.crx?raw=true)
+[最新版本下载](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.4.crx?raw=true)
 
 [历史版本下载](https://github.com/windviki/vBookmarks/blob/master/release/)
 
@@ -126,6 +126,9 @@ Chinese Introduction
 
 
 版本2.3 修复右键菜单的自动关闭。修正滚动条位置的记忆（Chrome26+以及上个版本带来的问题）。
+
+
+版本2.4 修正"Unexpected end of input"问题.
 
 
 注意：
@@ -287,3 +290,8 @@ Fixed: Scroll bar does not work above chrome 26+ (not well tested).
 
 Fixed: Context menu will be dismissed when scrolling up/down (broken again in previous version).
 Fixed: Remember position of scroll bar (broken again in previous version).
+
+
+**ver2.4 2013/08/29**
+
+Fixed: "Unexpected end of input" in js.
