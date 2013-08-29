@@ -46,7 +46,7 @@
 
 			var xmlEncode = function (text){
 				return text.replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/\'/g, '&apos;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			}
+			};
 
 			var matcher = function(text, value){
 				var matched = false;
@@ -133,7 +133,7 @@
 			});
 		}
 
-		if (localStorage.customIcon){
+		if (localStorage.customIcon) {
 			var canvas = document.createElement('canvas');
 			var ctx = canvas.getContext('2d');
 			var customIcon = JSON.parse(localStorage.customIcon);
@@ -148,7 +148,7 @@
 			xmlhttp.onload = function (e) {
 				var manifest = JSON.parse(xmlhttp.responseText);
 				callback(manifest.version);
-			}
+			};
 			xmlhttp.send(null);
 		}
  
@@ -171,26 +171,27 @@
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "https://raw.github.com/windviki/vBookmarks/master/checkupdate.json", true);
 		//xhr.open("GET", "checkupdate.json");
+        xhr.setRequestHeader("Accept","application/json");
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4) {
-			var resp = JSON.parse(xhr.responseText);
-			var latestversion = parseVersion(resp.latest);
-			if (!latestversion || !latestversion['major'] || !latestversion['minor']) {
-				return;
-			}
-			if ( (latestversion['major'] > myversion['major']) ||
-				((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor'])) ){
-					//save
-					localStorage.checkupdate = xhr.responseText;
-					var notification = webkitNotifications.createHTMLNotification('notification.html');
-					notification.onclose = function() {
-						localStorage.checkupdate = '';
-					}
-					//notification.onclick = function() { }
-					notification.show();
+			if (xhr.readyState == 4 && xhr.status==200) {
+                var resp = JSON.parse(xhr.responseText);
+                var latestversion = parseVersion(resp.latest);
+                if (!latestversion || !latestversion['major'] || !latestversion['minor']) {
+                    return;
+                }
+                if ( (latestversion['major'] > myversion['major']) ||
+                    ((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor'])) ){
+                        //save
+                        localStorage.checkupdate = xhr.responseText;
+                        var notification = webkitNotifications.createHTMLNotification('notification.html');
+                        notification.onclose = function() {
+                            localStorage.checkupdate = '';
+                        };
+                        //notification.onclick = function() { }
+                        notification.show();
 				}
 			}
-		}
-		xhr.send();
+		};
+		xhr.send(null);
 	});
 })(window);
