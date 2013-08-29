@@ -1,70 +1,72 @@
-(function(window) {
+(function (window) {
 	var document = window.document;
 	var chrome = window.chrome;
 	var _m = chrome.i18n.getMessage;
 	var __m = _m;
-	
+
 	document.addEventListener('DOMContentLoaded', function () {
-		
+
 		document.title = _m('extName') + ' ' + _m('options');
-		
+
 		var clickNewTab = $('click-new-tab');
 		clickNewTab.checked = !!localStorage.leftClickNewTab;
-		clickNewTab.addEventListener('change', function(){
+		clickNewTab.addEventListener('change', function () {
 			localStorage.leftClickNewTab = clickNewTab.checked ? '1' : '';
 		});
-		
+
 		var openNewTabBg = $('open-new-tab-bg');
 		openNewTabBg.checked = !!localStorage.middleClickBgTab;
-		openNewTabBg.addEventListener('change', function(){
+		openNewTabBg.addEventListener('change', function () {
 			localStorage.middleClickBgTab = openNewTabBg.checked ? '1' : '';
 		});
-		
+
 		var closeUnusedFolders = $('close-unused-folders');
 		closeUnusedFolders.checked = !!localStorage.closeUnusedFolders;
-		closeUnusedFolders.addEventListener('change', function(){
+		closeUnusedFolders.addEventListener('change', function () {
 			localStorage.closeUnusedFolders = closeUnusedFolders.checked ? '1' : '';
 		});
-		
+
 		var popupStayOpen = $('popup-stay-open');
 		popupStayOpen.checked = !!localStorage.bookmarkClickStayOpen;
-		popupStayOpen.addEventListener('change', function(){
+		popupStayOpen.addEventListener('change', function () {
 			localStorage.bookmarkClickStayOpen = popupStayOpen.checked ? '1' : '';
 		});
-		
+
 		var confirmOpenFolder = $('confirm-open-folder');
 		confirmOpenFolder.checked = !localStorage.dontConfirmOpenFolder;
-		confirmOpenFolder.addEventListener('change', function(){
+		confirmOpenFolder.addEventListener('change', function () {
 			localStorage.dontConfirmOpenFolder = confirmOpenFolder.checked ? '' : '1';
 		});
-		
+
 		var rememberPrevState = $('remember-prev-state');
 		rememberPrevState.checked = !localStorage.dontRememberState;
-		rememberPrevState.addEventListener('change', function(){
+		rememberPrevState.addEventListener('change', function () {
 			localStorage.dontRememberState = rememberPrevState.checked ? '' : '1';
 		});
-		
+
 		var onlyShowBMBar = $('only-show-bmbar');
 		onlyShowBMBar.checked = !!localStorage.onlyShowBMBar;
-		onlyShowBMBar.addEventListener('change', function(){
+		onlyShowBMBar.addEventListener('change', function () {
 			localStorage.onlyShowBMBar = onlyShowBMBar.checked ? '1' : '';
 		});
-		
+
 		var zoom = $('zoom-input');
-		setInterval(function(){
+		setInterval(function () {
 			zoom.value = localStorage.zoom || 100;
 		}, 1000);
-		zoom.addEventListener('input', function(){
+		zoom.addEventListener('input', function () {
 			var val = zoom.value.toInt();
-			if (val == 100){
+			if (val == 100) {
 				localStorage.removeItem('zoom');
 			} else {
 				localStorage.zoom = val;
 			}
 		});
-		
-		window.onerror = function(){chrome.extension.sendRequest({error: [].slice.call(arguments)}) };
-		
+
+		window.onerror = function () {
+			chrome.extension.sendRequest({error: [].slice.call(arguments)})
+		};
+
 		document.getElementById('advanced-options').innerText = __m('advancedOptions');
 		document.getElementById('ext-name').innerText = __m('extName');
 		document.getElementById('small-options').innerText = __m('options');
