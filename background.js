@@ -185,7 +185,7 @@
 					((latestversion['major'] == myversion['major']) && (latestversion['minor'] > myversion['minor']))) {
 					//save
 					localStorage.checkupdate = xhr.responseText;
-					var notification = webkitNotifications.createHTMLNotification('notification.html');
+					var notification = webkitNotifications.createNotification('https://raw.github.com/windviki/vBookmarks/master/icon16.png', 'New version ' + resp.latest + ' is available!', resp.message);
 					notification.onclose = function () {
 						localStorage.checkupdate = '';
 					};
