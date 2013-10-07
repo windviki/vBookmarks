@@ -131,7 +131,7 @@ Chinese Introduction
 版本2.4 修正"Unexpected end of input"问题。
 
 
-版本2.4 移除HTML notifications，现已不可用。参见https://bugs.webkit.org/show_bug.cgi?id=98388.
+版本2.5 移除HTML notifications，现已不可用。参见https://bugs.webkit.org/show_bug.cgi?id=98388.
 
 
 
