@@ -142,6 +142,8 @@
 			chrome.browserAction.setIcon({imageData: imageData});
 		}
 
+                /* Disable update checking since uploaded to web store */
+                /*
 		function getExtensionVersion(callback) {
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open('GET', 'manifest.json');
@@ -195,5 +197,6 @@
 			}
 		};
 		xhr.send(null);
+                */
 	});
 })(window);

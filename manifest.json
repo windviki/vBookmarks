@@ -1,8 +1,10 @@
 {
 	"name": "__MSG_extName__",
-	"version": "2.5",
+	"version": "2.6",
 	"description": "__MSG_extDesc__",
 	"manifest_version": 2,
+	"homepage_url":"https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
+	"update_url":"http://clients2.google.com/service/update2/crx",
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",
@@ -19,7 +21,7 @@
 	"permissions": [
 		"<all_urls>", "chrome://favicon/", "http://*.github.com/*", "https://*.github.com/*", "bookmarks", "tabs", "notifications"
 	],
-	"minimum_chrome_version": "9",
+	"minimum_chrome_version":"18.0.0",
 	"default_locale": "en",
 	"omnibox": {
 		"keyword" : "*"
