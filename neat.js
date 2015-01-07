@@ -662,7 +662,7 @@
 	// Events for the tree
 	$tree.addEventListener('scroll', function () {
 		localStorage.scrollTop = $tree.scrollTop;
-		console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
+		//console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
 	});
 	$tree.addEventListener('focus', function (e) {
 		var el = e.target;
@@ -897,7 +897,9 @@
 			var neatTree = $tree.firstElementChild;
 			if (neatTree) {
 				var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-				var maxHeight = Math.min(screen.height - window.screenY - 50, 600);
+				//var maxHeight = Math.min(screen.height - window.screenY - 50, 600);
+				//var maxHeight = Math.min($tree.height - searchInput.height - 3, 530);
+				var maxHeight = Math.min(screen.height - window.screenY - 50, 530);
 				var height = Math.max(200, Math.min(fullHeight, maxHeight));
 				var newheightstyle = height + 'px';
 				if (localStorage.popupHeight != height) {

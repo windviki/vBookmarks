@@ -134,6 +134,9 @@ Chinese Introduction
 版本2.5 移除HTML notifications，现已不可用。参见https://bugs.webkit.org/show_bug.cgi?id=98388.
 
 
+版本2.6 再次修复双滚动条。
+
+
 
 注意：
 
@@ -304,3 +307,8 @@ Fixed: "Unexpected end of input" in js.
 **ver2.5 2013/08/30**
 
 Fixed: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.
+
+
+**ver2.6 2013/10/21**
+
+Fixed: Remove double scroll bars.
