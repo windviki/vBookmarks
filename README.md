@@ -137,6 +137,24 @@ Chinese Introduction
 版本2.6 再次修复双滚动条。
 
 
+版本2.8 修正鼠标中键点击打开两个页面的问题。https://github.com/windviki/vBookmarks/issues/9
+
+修正有时候搜索书签会出现空结果的问题。 https://github.com/windviki/vBookmarks/issues/7
+
+修正右键菜单有时候会被截断的问题。
+
+改进滚动条CSS样式。
+
+添加一个占位符"\_\_VBM_CURRENT_TAB_URL\_\_"。放在URL里可以自动被替换为当前激活的Tab的URL。主要用于Bookmarklet。（Chrome中使用BMLet常用的 _document.location.href_ 会取不到URL）。
+
+比如WIZ的BMLet“添加到WIZ”(http://note.wiz.cn/web/pages/client/url2wiz.html)，官方的URL为：
+
+javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(document.location.href)+'&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1');
+
+现在可以改为：
+
+http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1
+
 
 注意：
 
@@ -296,6 +314,7 @@ Fixed: Scroll bar does not work above chrome 26+ (not well tested).
 **ver2.3 2013/04/09**
 
 Fixed: Context menu will be dismissed when scrolling up/down (broken again in previous version).
+
 Fixed: Remember position of scroll bar (broken again in previous version).
 
 
@@ -312,3 +331,16 @@ Fixed: Remove HTML notifications because it is not available now. https://bugs.w
 **ver2.6 2013/10/21**
 
 Fixed: Remove double scroll bars.
+
+
+**ver2.8 2019/05/06**
+
+Fixed: Open URL twice when clicked by middle button of mouse. https://github.com/windviki/vBookmarks/issues/9
+
+Fixed: Sometimes search will fail. https://github.com/windviki/vBookmarks/issues/7
+
+Fixed: Context menu position.
+
+Improved: Scrollbar CSS style.
+
+Added: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bookmarklets work (Chrome does not allow _document.location.href_ in BMlet). It will be replaced with URL of current active tab when you click BMlet from vBookmarks.
