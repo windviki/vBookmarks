@@ -147,13 +147,14 @@ Chinese Introduction
 
 添加一个占位符"\_\_VBM_CURRENT_TAB_URL\_\_"。放在URL里可以自动被替换为当前激活的Tab的URL。主要用于Bookmarklet。（Chrome中使用BMLet常用的 _document.location.href_ 会取不到URL）。
 
-比如WIZ的BMLet“添加到WIZ”(http://note.wiz.cn/web/pages/client/url2wiz.html)，官方的URL为：
+比如WIZ的BMLet“[添加到WIZ](http://note.wiz.cn/web/pages/client/url2wiz.html)”，官方的URL为：
 
-javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(document.location.href)+'&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1');
+`
+javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(document.location.href)+'&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1');`
 
 现在可以改为：
 
-http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1
+[http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1](http://note.wiz.cn/url2wiz?url=__VBM_CURRENT_TAB_URL__&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1)
 
 
 注意：
