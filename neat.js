@@ -908,17 +908,19 @@
             var neatTree = $tree.firstElementChild;
             if (neatTree) {
                 var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-                //var maxHeight = Math.min(screen.height - window.screenY - 50, 600);
-                //var maxHeight = Math.min($tree.height - searchInput.height - 3, 530);
-                var maxHeight = Math.min(screen.height - window.screenY - 50, 530);
-                var height = Math.max(200, Math.min(fullHeight, maxHeight));
-                var newheightstyle = height + 'px';
-                if (localStorage.popupHeight != height) {
-                    // Slide up faster than down
-                    body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-                    body.style.height = newheightstyle;
-                    localStorage.popupHeight = height;
-                }
+                chrome.tabs.getZoom(function (zoomFactor) {
+                    //console.log("zoomFactor ---> " + zoomFactor);
+                    var maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+                    //console.log("maxHeight ---> " + maxHeight);
+                    var height = Math.max(200, Math.min(fullHeight, maxHeight));
+                    var newheightstyle = height + 'px';
+                    if (localStorage.popupHeight != height) {
+                        // Slide up faster than down
+                        body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
+                        body.style.height = newheightstyle;
+                        localStorage.popupHeight = height;
+                    }
+                }); 
             }
         }, 200);
     };

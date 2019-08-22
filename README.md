@@ -157,6 +157,9 @@ javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(do
 [http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1](http://note.wiz.cn/url2wiz?url=__VBM_CURRENT_TAB_URL__&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1)
 
 
+版本2.9 修正自版本77以来再次出现的双滚动条问题。
+
+
 注意：
 
 Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
@@ -345,3 +348,8 @@ Fixed: Context menu position.
 Improved: Scrollbar CSS style.
 
 Added: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bookmarklets work (Chrome does not allow _document.location.href_ in BMlet). It will be replaced with URL of current active tab when you click BMlet from vBookmarks.
+
+
+**ver2.9 2019/08/22**
+
+Fixed: Double scrollbar since Chrome version 77+.
