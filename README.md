@@ -1,11 +1,15 @@
 vBookmarks
 ==============
 
+![Image of vBookmarks](https://lh3.googleusercontent.com/BIA2bf_LphQRYg_phWFYGtXHTzIVC6iO9k9y3p444cJzN_g8YadBGGSrw9AewVCOOAJb7c5k6w=w700-h280-e365)
+
+[Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
+
 [HomePage](http://windviki.github.com/vBookmarks/)
 
-[Latest CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.5.crx?raw=true)
+[Legacy CRX File Download](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.5.crx?raw=true)
 
-[All versions](https://github.com/windviki/vBookmarks/blob/master/release/)
+[All legacy versions](https://github.com/windviki/vBookmarks/blob/master/release/)
 
 Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. 
 
@@ -47,150 +51,6 @@ Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to in
 Above Chrome 22+, please add startup parameters (--enable-easy-off-store-extension-install) for Chrome.exe so that it can accept extensions which are from outside of the WebStore.
 
 See [link](http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/) for details.
-
-
-Chinese Introduction
------------------
-
-[最新版本下载](https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.5.crx?raw=true)
-
-[历史版本下载](https://github.com/windviki/vBookmarks/blob/master/release/)
-
-
-增加功能：
-
-1) 在选中的书签/文件夹之前/之后添加当前tab为新书签
-
-2) 在选中的文件夹顶部/底部添加当前tab为新书签
-
-3) 在选中的文件夹中添加子文件夹
-
-4) 替换选中的书签的URL为当前tab的URL
-
-5) 拷贝选中书签的标题和URL到剪贴板
-
-6) 增加选项：仅在插件里显示书签工具栏中的书签
-
-7) 可同步的书签分隔符
-
-8) 内建的新版本提醒
-
-9) 修正Neat Bookmarks中的已知BUG
-
-
-近期版本说明：
-
-版本1.2 在Chrome20+有双滚动条问题。
-
-版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
-
-版本1.4 彻底解决滚动条问题。
-
-版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。
-
-版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。
-
-版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。
-
-版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。
-修正Chrome18更新以来导致的drag-drop位置不正确的问题。
-更改ICON颜色。
-实现一个基于Github的更新检测和提醒（没有美元信用卡开不了webstore账户的人伤不起）。
-移除多国语言，仅保留en,ja,zh,zh_TW（英语，日语，简体中文，繁体中文）。
-
-版本1.9 修正popup刚刚打开时候滚动条会被重置到顶部的bug。
-更改ICON细节。
-更改更新检测的细节。
-修改默认分割条的样式。
-
-版本2.0 修正版本检测。
-改进分隔条的实现，现在可以和书签一起同步了（其实就是特殊标识的书签）。
-增加分隔条相关的几个高级选项。
-
-
-- “被用作分隔符的书签节点的标题”：默认为"|"，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签标题文字。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。
-
-
-- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。
-
-
-- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
-
-
-版本2.1 现在可以正确记忆滚动条的位置了。
-改进右键菜单的位置。并且右键菜单会在滚动页面的时候自动关闭。search模式下的右键菜单精简掉不直观的一些命令。
-给新建文件夹对话框，重命名对话框增加“取消”按钮。
-
-
-版本2.2 修正Chrome26+滚动条不滚动的问题。
-
-
-版本2.3 修复右键菜单的自动关闭。修正滚动条位置的记忆（Chrome26+以及上个版本带来的问题）。
-
-
-版本2.4 修正"Unexpected end of input"问题。
-
-
-版本2.5 移除HTML notifications，现已不可用。参见https://bugs.webkit.org/show_bug.cgi?id=98388.
-
-
-版本2.6 再次修复双滚动条。
-
-
-版本2.8 修正鼠标中键点击打开两个页面的问题。https://github.com/windviki/vBookmarks/issues/9
-
-修正有时候搜索书签会出现空结果的问题。 https://github.com/windviki/vBookmarks/issues/7
-
-修正右键菜单有时候会被截断的问题。
-
-改进滚动条CSS样式。
-
-添加一个占位符"\_\_VBM_CURRENT_TAB_URL\_\_"。放在URL里可以自动被替换为当前激活的Tab的URL。主要用于Bookmarklet。（Chrome中使用BMLet常用的 _document.location.href_ 会取不到URL）。
-
-比如WIZ的BMLet“[添加到WIZ](http://note.wiz.cn/web/pages/client/url2wiz.html)”，官方的URL为：
-
-`
-javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(document.location.href)+'&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1');`
-
-现在可以改为：
-
-[http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1](http://note.wiz.cn/url2wiz?url=__VBM_CURRENT_TAB_URL__&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1)
-
-
-版本2.9 修正自版本77以来再次出现的双滚动条问题。
-
-
-注意：
-
-Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
-
-Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。
-
-详情参见[link](http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html)。
-
-
-功能备注：
-
-1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。
-
-2.（popup打开的时候）扩展支持键盘方向键（↑↓←→）进行书签/文件夹的选择，空格键或者回车键打开选中书签或者文件夹，HOME/END跳到开头或者结尾。
-PAGE DOWN/UP翻页，DELETE键删除书签。
-
-3.选中书签，文件夹的时候，F2键可编辑。
-
-4.鼠标中键打开目录下所有书签。
-
-5.（popup打开的时候）Ctrl+F定位到搜索栏进行书签搜索。
-
-6.支持书签拖放进行移动。
-
-7.选项里可选打开书签链接后popup是否关闭。是否只显示书签栏中的书签。后台打开。书签树缩放等。
-
-8.定制分隔符颜色（高级选项）支持十六进制颜色或者RGB颜色。#00FF00和RGB(255,0,0)都是合法的。
-
-9.请用高级选项里的定制CSS获取更丰富的外观呈现。如改变书签树的字体。* {font-family: 微软雅黑;}
-
-10.高级选项里可定制程序图标。
 
 
 Technical Details
@@ -353,3 +213,148 @@ Added: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bo
 **ver2.9 2019/08/22**
 
 Fixed: Double scrollbar since Chrome version 77+.
+
+
+
+简介（中文）
+-----------------
+
+[插件WebStore页面](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
+
+[历史版本下载](https://github.com/windviki/vBookmarks/blob/master/release/)
+
+
+增加功能：
+
+1) 在选中的书签/文件夹之前/之后添加当前tab为新书签
+
+2) 在选中的文件夹顶部/底部添加当前tab为新书签
+
+3) 在选中的文件夹中添加子文件夹
+
+4) 替换选中的书签的URL为当前tab的URL
+
+5) 拷贝选中书签的标题和URL到剪贴板
+
+6) 增加选项：仅在插件里显示书签工具栏中的书签
+
+7) 可同步的书签分隔符
+
+8) 内建的新版本提醒
+
+9) 修正Neat Bookmarks中的已知BUG
+
+
+近期版本说明：
+
+版本1.2 在Chrome20+有双滚动条问题。
+
+版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。
+
+版本1.4 彻底解决滚动条问题。
+
+版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。
+
+版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。
+
+版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。
+
+版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。
+修正Chrome18更新以来导致的drag-drop位置不正确的问题。
+更改ICON颜色。
+实现一个基于Github的更新检测和提醒（没有美元信用卡开不了webstore账户的人伤不起）。
+移除多国语言，仅保留en,ja,zh,zh_TW（英语，日语，简体中文，繁体中文）。
+
+版本1.9 修正popup刚刚打开时候滚动条会被重置到顶部的bug。
+更改ICON细节。
+更改更新检测的细节。
+修改默认分割条的样式。
+
+版本2.0 修正版本检测。
+改进分隔条的实现，现在可以和书签一起同步了（其实就是特殊标识的书签）。
+增加分隔条相关的几个高级选项。
+
+
+- “被用作分隔符的书签节点的标题”：默认为"|"，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签标题文字。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。
+
+
+- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。
+
+
+- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。
+
+
+版本2.1 现在可以正确记忆滚动条的位置了。
+改进右键菜单的位置。并且右键菜单会在滚动页面的时候自动关闭。search模式下的右键菜单精简掉不直观的一些命令。
+给新建文件夹对话框，重命名对话框增加“取消”按钮。
+
+
+版本2.2 修正Chrome26+滚动条不滚动的问题。
+
+
+版本2.3 修复右键菜单的自动关闭。修正滚动条位置的记忆（Chrome26+以及上个版本带来的问题）。
+
+
+版本2.4 修正"Unexpected end of input"问题。
+
+
+版本2.5 移除HTML notifications，现已不可用。参见https://bugs.webkit.org/show_bug.cgi?id=98388.
+
+
+版本2.6 再次修复双滚动条。
+
+
+版本2.8 修正鼠标中键点击打开两个页面的问题。https://github.com/windviki/vBookmarks/issues/9
+
+修正有时候搜索书签会出现空结果的问题。 https://github.com/windviki/vBookmarks/issues/7
+
+修正右键菜单有时候会被截断的问题。
+
+改进滚动条CSS样式。
+
+添加一个占位符"\_\_VBM_CURRENT_TAB_URL\_\_"。放在URL里可以自动被替换为当前激活的Tab的URL。主要用于Bookmarklet。（Chrome中使用BMLet常用的 _document.location.href_ 会取不到URL）。
+
+比如WIZ的BMLet“[添加到WIZ](http://note.wiz.cn/web/pages/client/url2wiz.html)”，官方的URL为：
+
+`
+javascript:window.open('http://note.wiz.cn/url2wiz?url=' + encodeURIComponent(document.location.href)+'&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1');`
+
+现在可以改为：
+
+[http://note.wiz.cn/url2wiz?url=\_\_VBM_CURRENT_TAB_URL\_\_&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1](http://note.wiz.cn/url2wiz?url=__VBM_CURRENT_TAB_URL__&folder=%2FMy%20Notes%2F&user=your_email@mywiz.cn&content-only=false&bookmark=1)
+
+
+版本2.9 修正自版本77以来再次出现的双滚动条问题。
+
+
+注意：
+
+Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。
+
+Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。
+
+详情参见[link](http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html)。
+
+
+功能备注：
+
+1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。
+
+2.（popup打开的时候）扩展支持键盘方向键（↑↓←→）进行书签/文件夹的选择，空格键或者回车键打开选中书签或者文件夹，HOME/END跳到开头或者结尾。
+PAGE DOWN/UP翻页，DELETE键删除书签。
+
+3.选中书签，文件夹的时候，F2键可编辑。
+
+4.鼠标中键打开目录下所有书签。
+
+5.（popup打开的时候）Ctrl+F定位到搜索栏进行书签搜索。
+
+6.支持书签拖放进行移动。
+
+7.选项里可选打开书签链接后popup是否关闭。是否只显示书签栏中的书签。后台打开。书签树缩放等。
+
+8.定制分隔符颜色（高级选项）支持十六进制颜色或者RGB颜色。#00FF00和RGB(255,0,0)都是合法的。
+
+9.请用高级选项里的定制CSS获取更丰富的外观呈现。如改变书签树的字体。* {font-family: 微软雅黑;}
+
+10.高级选项里可定制程序图标。
