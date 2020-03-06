@@ -1074,9 +1074,21 @@
                     } catch (e) {
                         return;
                     }
-                    chrome.tabs.update(tab.id, {
-                        url: decodedurl
-                    });
+                    //Start of patch for using bookmarklets
+                    var expression = 'javascript:*'
+                    var regex = new RegExp(expression);
+                    if (decodedurl.match(regex)){
+                        //bookmarklet
+                        chrome.tabs.executeScript(tab.id, {
+                            code: decodedurl
+                        });
+                    } else {
+                        //url
+                        chrome.tabs.update(tab.id, {
+                            url: decodedurl
+                        });
+                    }
+                    //End of putch for using bookmarklets
                     if (!bookmarkClickStayOpen)
                         setTimeout(window.close, 200);
                 });
