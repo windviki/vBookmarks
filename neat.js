@@ -1598,12 +1598,15 @@
         currentContext = null;
         var active = body.querySelector('.active');
         if (active) {
-            active.removeClass('active');
-            // This is kinda hacky. Oh well.
             if (e) {
+                active.removeClass('active');
                 var el = e.target;
-                if (el == $tree || el == $results)
+                if (el == $tree || el == $results) {
                     active.focus();
+                }
+            } else {
+                // When menu is closed, do not lost focus
+                active.focus();
             }
         }
         $bookmarkContextMenu.style.left = '-999px';
