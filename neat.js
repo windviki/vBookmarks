@@ -1555,6 +1555,7 @@
     $tree.addEventListener('click', bookmarkHandler);
     $results.addEventListener('click', bookmarkHandler);
     $tree.addEventListener('auxclick', bookmarkHandler);
+    
     // Fixed: 2019/5/6 open twice
     // middle-click can be handled without simulation
     // var bookmarkHandlerMiddle = function(e) {
@@ -2352,7 +2353,7 @@
                     stopScrollTree();
                 } else if (!scrollTree)
                     scrollTree = setInterval(function() {
-                        $tree.scrollByLines(-1);
+                        $tree.scrollBy(0, -scrollTreeSpot);
                         dropOverlay.style.left = '-999px';
                     }, scrollTreeInterval);
             } else if (clientY >= treeBottom - scrollTreeSpot) {
@@ -2360,7 +2361,7 @@
                     stopScrollTree();
                 } else if (!scrollTree)
                     scrollTree = setInterval(function() {
-                        $tree.scrollByLines(1);
+                        $tree.scrollBy(0, scrollTreeSpot);
                         dropOverlay.style.left = '-999px';
                     }, scrollTreeInterval);
             } else {
