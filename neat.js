@@ -1074,9 +1074,19 @@
                     } catch (e) {
                         return;
                     }
-                    chrome.tabs.update(tab.id, {
-                        url: decodedurl
-                    });
+                    
+                    if (/^javascript:.*/i.test(url)){
+                        //bookmarklet
+                        chrome.tabs.executeScript(tab.id, {
+                            code: decodedurl
+                        });
+                    } else {
+                        //url
+                        chrome.tabs.update(tab.id, {
+                            url: decodedurl
+                        });
+                    }
+
                     if (!bookmarkClickStayOpen)
                         setTimeout(window.close, 200);
                 });
