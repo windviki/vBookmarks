@@ -1999,8 +1999,8 @@
                                 nextLi = li.nextElementSibling;
                             if (nextLi)
                                 nextlispan = nextLi.querySelector('a, span');
-                            if (nextlispan) //fixed: pushed down "DOWN" when the focus was at the last node
-                                nextlispan.focus();
+                                if (nextlispan) //fixed: pushed down "DOWN" when the focus was at the last node
+                                    nextlispan.focus();
                         } while (li && !nextLi);
                     }
                 }
