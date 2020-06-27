@@ -97,7 +97,6 @@
     SeparatorManager.prototype.add = function(str) {
         if (this.stringList._strings_.indexOf(str) == -1) {
             this.stringList.append(str);
-            //console.log('SeparatorManager.add id = ' + str);
         }
     };
 
@@ -107,7 +106,6 @@
 
     SeparatorManager.prototype.remove = function(str) {
         this.stringList.remove(str);
-        //console.log('SeparatorManager.remove id = ' + str);
     };
 
     SeparatorManager.prototype.getAll = function(str) {
@@ -326,17 +324,7 @@
         });
         return v;
     })();
-
-    // Fix scrollbar bug in Chrome 19+
-    /*
-     if (version.major >= 19) {
-     document.getElementById('container').style.display = "";
-     }
-     else {
-     document.getElementById('container').style.display = "-webkit-box";
-     }
-     */
-
+    
     // Some i18n
     $('search-input').placeholder = _m('searchBookmarks');
     $('edit-dialog-name').placeholder = _m('name');
@@ -452,13 +440,8 @@
             ' class="child"' +
             ' role="treeitem"' +
             ' width="' + hrWidth + 'px"'
-            //+ ' height="' +  2 + 'px"'
-            //+ ' id="creator-' + nodeid + '"'
-            //+ ' align=right color=' + color
             +
             ' align=right'
-            //+ ' size=1'
-            //+ ' style="position:absolute;left:' + paddingStart + ';"'
             +
             ' style="border:1px dotted ' + color + ';"' +
             '></a>';
@@ -623,7 +606,6 @@
         var html = '';
         if (onlyShowBMBar) {
             html = generateHTML(tree[0].children[0].children);
-            // console.log("----- html -----\n" + html + "\n");
         } else {
             html = generateHTML(tree[0].children);
         }
@@ -632,7 +614,6 @@
 
         if (rememberState) {
             $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
-            //console.log("set tree scrollTop = " + body.scrollTop + "\n");
         }
 
         var focusID = localStorage.focusID;
@@ -673,7 +654,6 @@
     // Events for the tree
     $tree.addEventListener('scroll', function() {
         localStorage.scrollTop = $tree.scrollTop;
-        //console.log("save tree scrollTop = " + localStorage.scrollTop + "\n");
     });
     $tree.addEventListener('focus', function(e) {
         var el = e.target;
@@ -909,9 +889,7 @@
             if (neatTree) {
                 var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
                 chrome.tabs.getZoom(function (zoomFactor) {
-                    //console.log("zoomFactor ---> " + zoomFactor);
                     var maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                    //console.log("maxHeight ---> " + maxHeight);
                     var height = Math.max(200, Math.min(fullHeight, maxHeight));
                     var newheightstyle = height + 'px';
                     if (localStorage.popupHeight != height) {
@@ -966,8 +944,7 @@
             name.value = opts.name;
             name.focus();
             name.select();
-            name.scrollLeft = 0; // very delicate, show first few words
-            // instead of last
+            name.scrollLeft = 0; // very delicate, show first few words instead of last
             var url = $('edit-dialog-url');
             if (type == 'bookmark') {
                 url.style.display = '';
@@ -1208,7 +1185,6 @@
                         'url': addurl
                     }, function(resultbm) {
                         if (!isOpenDir && (where == "top" || where == "bottom")) {
-                            // console.log('do not add html for closed folder.');
                             return;
                         }
                         var lv = 0;
@@ -1272,7 +1248,6 @@
                             'url': addurl
                         }, function(resultbm) {
                             if (!isOpenDir && (where == "top" || where == "bottom")) {
-                                // console.log('do not add html for closed folder.');
                                 return;
                             }
                             var lv = 0;
@@ -1285,7 +1260,6 @@
                             var paddingStart = 14 * lv;
                             var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
                             var html = '';
-                            // console.log('innerhtml!!\n'+pnode.innerHTML+'\nname='+pnode.name);
                             // add folder
                             html += '<li class="parent"' + idHTML +
                                 ' level="' + lv + '"' +
@@ -1462,14 +1436,12 @@
             chrome.bookmarks.remove(id, function() {
                 if (li1) {
                     var nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
-                    //checkSeparator(li1); // checkSeparator
                     li1.destroy();
                     if (!searchMode && nearLi1)
                         nearLi1.querySelector('a, span').focus();
                 }
                 if (li2) {
                     var nearLi2 = li2.nextElementSibling || li2.previousElementSibling;
-                    //checkSeparator(li2); // checkSeparator
                     li2.destroy();
                     if (searchMode && nearLi2)
                         nearLi2.querySelector('a, span').focus();
@@ -1566,23 +1538,6 @@
     $results.addEventListener('click', bookmarkHandler);
     $tree.addEventListener('auxclick', bookmarkHandler);
     
-    // Fixed: 2019/5/6 open twice
-    // middle-click can be handled without simulation
-    // var bookmarkHandlerMiddle = function(e) {
-    //     if (e.button != 1)
-    //         return; // force middle-click
-    //     var event = document.createEvent('MouseEvents');
-    //     // type, canBubble, cancelable, 
-    //     event.initMouseEvent('click', true, true,
-    //         // view, detail, screenX, screenY, clientX, clientY, 
-    //         window, 0, 0, 0, 0, 0,
-    //         // ctrlKey, altKey, shiftKey, metaKey, button, relatedTarget
-    //         true, false, e.shiftKey, true, 0, null);
-    //     e.target.dispatchEvent(event);
-    // };
-    // $tree.addEventListener('mouseup', bookmarkHandlerMiddle);
-    // $results.addEventListener('mouseup', bookmarkHandlerMiddle);
-
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', function(e) {
         if (e.button == 1) // middle-click
@@ -1657,14 +1612,6 @@
                 var separatorMenuHeight = $separatorContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                     separatorMenuWidth);
-                //var pageY = Math.max(e.pageY, separatorMenuHeight);
-                //var boundY = window.innerHeight - separatorMenuHeight;
-                //if (pageY > boundY)
-                //    pageY -= separatorMenuHeight;
-                //if (pageY < 0)
-                //    pageY = boundY;
-                //
-                //var pageY = e.pageY - Math.min(separatorMenuHeight, e.clientY);
                 var pageY = 0;
                 var boundY = window.innerHeight - e.clientY;
                 if (boundY > separatorMenuHeight) {
@@ -1687,15 +1634,6 @@
                 var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
                 var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                     bookmarkMenuWidth);
-                //var pageY = Math.max(e.pageY, bookmarkMenuHeight);
-                //var boundY = window.innerHeight - bookmarkMenuHeight;
-                //if (pageY > boundY)
-                //    pageY -= bookmarkMenuHeight;
-                //if (pageY < 0)
-                //    pageY = boundY;
-                //pageY = Math.max(0, pageY);
-                //
-                //var pageY = e.pageY - Math.min(bookmarkMenuHeight, e.clientY);
                 var pageY = 0;
                 var boundY = window.innerHeight - e.clientY;
                 if (boundY > bookmarkMenuHeight) {
@@ -1724,14 +1662,6 @@
             var folderMenuHeight = $folderContextMenu.offsetHeight;
             var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                 folderMenuWidth);
-            //var pageY = Math.max(e.pageY, folderMenuHeight);
-            //var boundY = window.innerHeight - folderMenuHeight;
-            //if (pageY > boundY)
-            //    pageY -= folderMenuHeight;
-            //if (pageY < 0)
-            //    pageY = boundY;
-            //
-            //var pageY = e.pageY - Math.min(folderMenuHeight, e.clientY);
             var pageY = 0;
             var boundY = window.innerHeight - e.clientY;
             if (boundY > folderMenuHeight) {
@@ -1973,9 +1903,6 @@
             separatorContextHandler(e);
     });
     $separatorContextMenu.addEventListener('contextmenu', separatorContextHandler);
-    //$separatorContextMenu.addEventListener('click', function(e) {
-    //	e.stopPropagation();
-    //});
 
     // Keyboard navigation
     var keyBuffer = '';
@@ -2439,7 +2366,6 @@
                 dropOverlay.style.height = null;
             }
         }
-        //console.log('dropOverlay top = ' + dropOverlay.style.top + ', scroll = ' + body.scrollTop);
     });
     var onDrop = function() {
         draggedBookmark = null;
@@ -2623,20 +2549,6 @@
         clearMenu();
     });
 
-    // width will be reset when expanding root folder due to this section of code
-    //
-    //setTimeout(function() { // delaying execution due to stupid Chrome Linux bug
-    //	window.addEventListener('resize', function() {
-    //		// in case there's a resizer *outside* the popup page
-    //		if (resizerDown)
-    //			return;
-    //		var width = window.innerWidth;
-    //		body.style.width = width + 'px';
-    //		localStorage.popupWidth = width;
-    //		clearMenu();
-    //	});
-    //}, 1000);
-
     // Closing dialogs on escape
     var closeDialogs = function() {
         if (body.hasClass('needConfirm'))
@@ -2675,7 +2587,6 @@
     var zoom = function(val) {
         if (draggedBookmark)
             return; // prevent zooming when drag-n-droppping
-        //console.log("zoom ---> " + val);
         var dataZoom = body.dataset.zoom;
         var currentZoom = dataZoom ? dataZoom.toInt() : 100;
         if (val == 0) {
