@@ -9,19 +9,19 @@
 		"message": "添加當前頁書籤到此之前"
 	},
 	"addBookmarkBottom": {
-		"message": "添加當前頁到資料夾末尾"
+		"message": "添加當前頁到文件夾末尾"
 	},
 	"addBookmarkTop": {
-		"message": "添加當前頁到資料夾前端"
+		"message": "添加當前頁到文件夾前端"
 	},
 	"addNewFolder": {
-		"message": "添加子資料夾"
+		"message": "添加子文件夾"
 	},
 	"addNewFolderAfter": {
-		"message": "添加資料夾到此之後"
+		"message": "添加文件夾到此之後"
 	},
 	"addNewFolderBefore": {
-		"message": "添加資料夾到此之前"
+		"message": "添加文件夾到此之前"
 	},
 	"addSeparator": {
 		"message": "添加分隔符"
@@ -30,7 +30,7 @@
 		"message": "進階設定"
 	},
 	"confirmDeleteFolderBookmarks": {
-		"message": "您確定要刪除資料夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
+		"message": "您確定要刪除文件夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
 		"placeholders": {
 			"bookmarkCount": {
 				"content": "$2"
@@ -41,7 +41,7 @@
 		}
 	},
 	"confirmDeleteFolderSubfolders": {
-		"message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
+		"message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
 		"placeholders": {
 			"folderName": {
 				"content": "$1"
@@ -52,7 +52,7 @@
 		}
 	},
 	"confirmDeleteFolderSubfoldersBookmarks": {
-		"message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？",
+		"message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？",
 		"placeholders": {
 			"bookmarkCount": {
 				"content": "$3"
@@ -66,8 +66,8 @@
 		}
 	},
 	"confirmOpenBookmarks": {
-		"description": "開啟所有書籤時的確認訊息",
-		"message": "您確定要開啟 $count$ 個書籤？",
+		"description": "打開所有書籤時的確認信息",
+		"message": "您確定要打開 $count$ 個書籤？",
 		"placeholders": {
 			"count": {
 				"content": "$1"
@@ -75,8 +75,8 @@
 		}
 	},
 	"confirmOpenBookmarksNewIncognitoWindow": {
-		"description": "在無痕式視窗中開啟所有書籤時的確認訊息",
-		"message": "您確定要在無痕式視窗中開啟 $count$ 個書籤？",
+		"description": "在隱身窗口中打開所有書籤時的確認信息",
+		"message": "您確定要在隱身窗口中打開 $count$ 個書籤？",
 		"placeholders": {
 			"count": {
 				"content": "$1"
@@ -84,8 +84,8 @@
 		}
 	},
 	"confirmOpenBookmarksNewWindow": {
-		"description": "在新視窗中開啟所有書籤時的確認訊息",
-		"message": "您確定要在新視窗中開啟 $count$ 個書籤？",
+		"description": "在新窗口中打開所有書籤時的確認信息",
+		"message": "您確定要在新窗口中打開 $count$ 個書籤？",
 		"placeholders": {
 			"count": {
 				"content": "$1"
@@ -141,7 +141,7 @@
 		"message": "編輯書籤"
 	},
 	"editFolder": {
-		"message": "編輯資料夾"
+		"message": "編輯文件夾"
 	},
 	"errorOccured": {
 		"message": "有錯誤出現"
@@ -161,61 +161,61 @@
 		"message": "忽略"
 	},
 	"name": {
-		"description": "書籤名或資料夾名",
-		"message": "名稱"
+		"description": "書籤名或文件夾名",
+		"message": "名字"
 	},
 	"nope": {
 		"message": "取消"
 	},
 	"noTitle": {
-		"description": "無 http(s) 開頭的書籤或無命名的資料夾的預設標題",
-		"message": "（無標題）"
+		"description": "沒 http(s) 開頭的書籤或沒命名的文件夾的統一標題",
+		"message": "（沒標題）"
 	},
 	"open": {
-		"description": "開啟書籤的動作",
-		"message": "開啟"
+		"description": "打開書籤的動作",
+		"message": "打開"
 	},
 	"openBookmarks": {
-		"message": "開啟所有書籤"
+		"message": "打開所有書籤"
 	},
 	"openBookmarksIncognitoWindow": {
-		"message": "在無痕式視窗中開啟所有書籤"
+		"message": "在隱身窗口中打開所有書籤"
 	},
 	"openBookmarksNewWindow": {
-		"message": "在新視窗中開啟所有書籤"
+		"message": "在新窗口中打開所有書籤"
 	},
 	"openIncognitoWindow": {
-		"message": "在無痕式視窗中開啟"
+		"message": "在隱身窗口中打開"
 	},
 	"openNewTab": {
-		"message": "在新分頁中開啟"
+		"message": "在新標籤頁中打開"
 	},
 	"openNewWindow": {
-		"message": "在新視窗中開啟"
+		"message": "在新窗口中打開"
 	},
 	"optionClickNewTab": {
-		"message": "左擊書籤在新分頁中開啟"
+		"message": "左擊書籤在新標籤頁中打開"
 	},
 	"optionCloseUnusedFolders": {
-		"message": "展開資料夾時收合其他資料夾"
+		"message": "展開文件夾時折疊其他文件夾"
 	},
 	"optionConfirmOpenFolder": {
-		"message": "開啟多個書籤前需確認"
+		"message": "打開多個書籤前需確認"
 	},
 	"optionOnlyShowBookmarkBar": {
 		"message": "僅顯示書籤欄中的書籤"
 	},
 	"optionOpenNewTab": {
-		"message": "用滑鼠中鍵或按住 Ctrl 鍵左擊在背景開啟書籤"
+		"message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
 	},
 	"optionPopupStays": {
-		"message": "開啟（滑鼠左擊）書籤時 Popup 頁面不關閉"
+		"message": "打開（鼠標左擊）書籤時 Popup 頁面不關閉"
 	},
 	"optionRememberPrevState": {
-		"message": "記住上次狀態（滾動軸位置、已展開資料夾）"
+		"message": "記住上次狀態（滾動條位置、所打開文件夾）"
 	},
 	"options": {
-		"message": "設定"
+		"message": "設置"
 	},
 	"optionsFooterText": {
 		"description": "設定頁的頁腳訊息",
@@ -266,7 +266,7 @@
 	},
 	"searchBookmarks": {
 		"description": "搜索框裡的提示文字",
-		"message": "搜尋書籤"
+		"message": "書籤搜索"
 	},
 	"url": {
 		"message": "網址"
