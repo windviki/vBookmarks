@@ -19,12 +19,8 @@
           <a id="forkme_banner" href="https://github.com/windviki/vBookmarks">View on GitHub</a>
 
           <h1 id="project_title">vBookmarks</h1>
-          <h2 id="project_tagline">A mod of Neat Bookmarks</h2>
+          <h2 id="project_tagline">A successor of Neat Bookmarks since 2011</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/windviki/vBookmarks/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/windviki/vBookmarks/tarball/master">Download this project as a tar.gz file</a>
-            </section>
         </header>
     </div>
 
@@ -32,34 +28,32 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>vBookmarks</h1>
+        <p><span><a href="index.html">English</a></span> | <span><a href="index.zh.html">中文主页</a></span></p>
 
 <h1></h1>
 
-<h2>Download</h2>
+<hr>
+
+<h2>Get the extension</h2>
+
+<h3>vBookmarks has been released to WebStore:</h3>
+<p><a href="https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb">vBookmarks on WebStore</a></p>
+
+<h3>All legacy versions:</h3>
+
+<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/">Download old versions</a></p>
 
 <hr>
 
-<h3>ver.2.6 has been released to WebStore:</h3>
-<p><a href="https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb">vBookmarks 2.6 on WebStore</a></p>
-
-
-<h3>Latest release ver.2.5:</h3>
-
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.5.crx?raw=true">Download 2.5</a></p>
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/vBookmarks_2.5.crx?raw=true">下载最新版 2.5</a></p>
-
-<h3>All versions:</h3>
-
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/">Download old versions</a></p>
-<p><a href="https://github.com/windviki/vBookmarks/blob/master/release/">历史版本</a></p>
-
-
 <h2>Introduction</h2>
 
-<hr><p>Modified from NeatBookmarks, an excellent bookmark extension for Google Chrome. </p>
+<p>Origined from <a href="https://github.com/cheeaun/neat-bookmarks">Neat Bookmarks</a>, an excellent bookmark extension for Google Chrome.</p>
 
-<p>Clicking the Bookmark Star in Chrome is an awful way to add a bookmark, and what I need is an extension just like "AddBookmarkHere" for Firefox.
-So I added some new features to "NeatBookmarks", it's easy to manage your bookmarks now.</p>
+<p>Inspired by "AddBookmarkHere" extension of Firefox, I added some new features to Neat Bookmarks, to provide more convenient way to manage booksmarks. 
+  
+  After this, more other features are added. Many bugs found during the update of Chrome are solved. After years of evolution since 2011, now it has a new name "vBookmarks".</p>
+
+  <p>New features compared to Neat Bookmarks:</p>
 
 <p>1.Bookmark current tab before selected bookmark/folder.</p>
 
@@ -85,241 +79,35 @@ So I added some new features to "NeatBookmarks", it's easy to manage your bookma
 
 <p>Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.</p>
 
-<p>Read the <a href="https://github.com/windviki/vBookmarks/wiki/FAQ">FAQ</a>.</p>
+<hr>
 
-<h2>Attentions</h2>
+<h2>Notes for Advanced Features</h2>
 
-<hr><p>Above Chrome 20+, please drag this crx file to chrome://chrome/extensions/ to install it.</p>
+<p>1. Search in Omnibox. Type * in your browser address bar, then press space key. Now you can input keyword to search in your bookmarks.</p>
 
-<p>Above Chrome 22+, please add startup parameters (--enable-easy-off-store-extension-install) for Chrome.exe so that it can accept extensions which are from outside of the WebStore.</p>
+<p>2. Full keyboard support. When the popup is open, you can change the selected bookmark/folder by using ↑↓←→, and you can open the focused one by SPACE or ENTER. Use ← key to unfold folder. Use HOME/END to go to the beginning or the end. PAGE DOWN/UP, DELETE are also supported just as their original meaning.</p>
 
-<p>See <a href="http://www.howtogeek.com/120743/how-to-install-extensions-from-outside-the-chrome-web-store/">link</a> for details.</p>
+<p>3. When the bookmark/folder is selected, press F2 to rename it.</p>
 
-<h2>Chinese Introduction</h2>
+<p>4. Press middle button of mouse to open all bookmarks in focused folder.</p>
 
-<hr><h3>增加功能：</h3>
+<p>5. When the popup is open, use Ctrl+F to show the search bar.</p>
 
-<p>1.在选中的书签/文件夹之前/之后添加当前tab为新书签</p>
+<p>6. Darg & drop is supported. So you can rearrange your bookmarks.</p>
 
-<p>2.在选中的文件夹顶部/底部添加当前tab为新书签</p>
+<p>7. You can decide whether to close popup after click-and-open the bookmark. You can found this option in settings.</p>
 
-<p>3.在选中的文件夹中添加子文件夹</p>
+<p>8. You can only show bookmarks in Chrome bookmark bar. Also has a option to in settings.</p>
+   
+<p>9. Open bookmark in background. Also has a option to in settings.</p>
+    
+<p>10. Control the zoom level of bookmark popup in settings.</p>
+    
+<p>11. Advanced Settings: Custom the style of separators. The option is in "Advanced Settings", you can found the entry at the right top of settings page.</p>
 
-<p>4.替换选中的书签的URL为当前tab的URL</p>
+<p>12. Advanced Settings: More flexible customization for the whole popup. CSS skill is required. e.g. You can change the font of the bookmark tree by: * {font-family: Consolas;}</p>
 
-<p>5.拷贝选中书签的标题和URL到剪贴板</p>
-
-<p>6.增加选项：仅在插件里显示书签工具栏中的书签</p>
-
-<p>7.可同步的书签分隔符</p>
-
-<p>8.内建的新版本提醒</p>
-
-<p>9.修正Neat Bookmarks中的已知BUG</p>
-
-<h3>近期版本说明：</h3>
-
-<p>版本1.2 在Chrome20+有双滚动条问题。</p>
-
-<p>版本1.3 修正以上问题，但是Chrome20以下版本滚动条不出现。</p>
-
-<p>版本1.4 彻底解决滚动条问题。</p>
-
-<p>版本1.5 解决Chrome的更新引起的一些问题，推荐Chrome20以上版本使用。</p>
-
-<p>版本1.6 解决CSP相关的一些问题（Omnibox搜索（地址栏里*+空格）不能使用以及弹出框大小不能记忆的问题）。</p>
-
-<p>版本1.7 修正Chrome19的双滚动条问题。之前没对Chrome19进行测试，遗漏了这个版本。请Chrome19的朋友重新更新。修正根目录展开时候popup宽度重置的问题。</p>
-
-<p>版本1.8 实现书签分隔符（只存在于本地，无法随书签同步）。
-修正Chrome18更新以来导致的drag-drop位置不正确的问题。
-更改ICON颜色。
-实现一个基于Github的更新检测和提醒（没有美元信用卡开不了webstore账户的人伤不起）。
-移除多国语言，仅保留en,ja,zh,zh_TW（英语，日语，简体中文，繁体中文）。</p>
-
-<p>版本1.9 修正popup刚刚打开时候滚动条会被重置到顶部的bug。
-更改ICON细节。
-更改更新检测的细节。
-修改默认分割条的样式。</p>
-
-<p>版本2.0 修正版本检测。
-改进分隔条的实现，现在可以和书签一起同步了（其实就是特殊标识的书签）。
-增加分隔条相关的几个高级选项。</p>
-
-<p>- “被用作分隔符的书签节点的标题”：默认为"|"，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签标题文字。改为"------------"，可以在自带的书签菜单里起到视觉上的分割作用。</p>
-
-<p>- “被用作分隔符的书签节点的URL”：默认为"http://separatethis.com/ "，即通过vbookmarks菜单新建的分隔符（一个特殊书签）在Chrome自带的书签管理器或者书签栏里显示的书签链接地址。在vbookmarks里会显示为真正的分隔条，并且不可点击。</p>
-
-<p>- “如果任一书签URL含有以下字符串，将被显示为分隔符”：如果设置了该值（多个URL值用";"隔开），URL包含了该值的所有书签都会在vbookmarks里被显示为真正的分隔条。例如，设置为google.com，则所有google域名的书签都会变成分隔条。</p>
-
-<p>版本2.1 现在可以正确记忆滚动条的位置了。
-改进右键菜单的位置。并且右键菜单会在滚动页面的时候自动关闭。search模式下的右键菜单精简掉不直观的一些命令。
-给新建文件夹对话框，重命名对话框增加“取消”按钮。</p>
-
-<p>版本2.2 修正Chrome26+滚动条不滚动的问题。</p>
-
-<p>版本2.3 修复右键菜单的自动关闭。修正滚动条位置的记忆（Chrome26+以及上个版本带来的问题）。</p>
-
-<p>版本2.4 修正"Unexpected end of input"问题。</p>
-
-<p>版本2.5 移除HTML Notifications。</p>
-
-
-<h3>注意：</h3>
-
-<p>Chrome20+ 在安装本扩展的时候，需要把crx拖动到扩展程序这个页面（chrome://chrome/extensions/）才能正常安装，否则会报错。</p>
-
-<p>Chrome22+ 可能需要添加启动参数才能安装非WebStore的扩展。右击 Chrome 桌面快捷方式，选择-"属性"-"快捷方式"，然后在"目标"一栏尾部添加参数 --enable-easy-off-store-extension-install，然后再运行浏览器就可以了。</p>
-
-<p>详情参见<a href="http://www.guao.hk/posts/chrome-extensions-not-in-the-chrome-web-store-more-difficult-to-install.html">link</a></p>
-
-<h3>功能备注：</h3>
-
-<p>1.扩展支持地址栏搜索，地址栏里敲*，然后空格，就可以输入关键词进行书签内的检索。</p>
-
-<p>2.（popup打开的时候）扩展支持键盘方向键（↑↓←→）进行书签/文件夹的选择，空格键或者回车键打开选中书签或者文件夹，HOME/END跳到开头或者结尾。
-PAGE DOWN/UP翻页，DELETE键删除书签。</p>
-
-<p>3.选中书签，文件夹的时候，F2键可编辑。</p>
-
-<p>4.鼠标中键打开目录下所有书签。</p>
-
-<p>5.（popup打开的时候）Ctrl+F定位到搜索栏进行书签搜索。</p>
-
-<p>6.支持书签拖放进行移动。</p>
-
-<p>7.选项里可选打开书签链接后popup是否关闭。是否只显示书签栏中的书签。后台打开。书签树缩放等。</p>
-
-<p>8.定制分隔符颜色（高级选项）支持十六进制颜色或者RGB颜色。#00FF00和RGB(255,0,0)都是合法的。</p>
-
-<p>9.请用高级选项里的定制CSS获取更丰富的外观呈现。如改变书签树的字体。* {font-family: 微软雅黑;}</p>
-
-<p>10.高级选项里可定制程序图标。</p>
-
-<h2>Technical Details</h2>
-
-<hr><p>Neat Bookmarks was powered by <a href="http://mootools.net/">MooTools</a>, but is now powered by Neatools, a custom-coded smaller subset of MooTools. 
-<a href="http://codemirror.net/">CodeMirror</a> is used for the Custom CSS section.</p>
-
-<h2>Changelogs</h2>
-
-<hr><h3>ver1.0 2011/11/15</h3>
-
-<p>First version.</p>
-
-<h3>ver1.1 2011/11/16</h3>
-
-<p>Added: option for only displaying bookmarks in Bookmark Bar.</p>
-
-<p>Added: context menu for adding folder before/after bookmark/folder.</p>
-
-<p>Fixed: some translations in multi-language support.</p>
-
-<h3>ver1.2 2011/11/30</h3>
-
-<p>Added: update selected bookmark with current URL.</p>
-
-<p>Added: copy title and URL of selected bookmark to clipboard.</p>
-
-<p>Fixed: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly. </p>
-
-<p>Fixed: make up some missing translations for cs(Czech).</p>
-
-<h3>ver1.3 2012/05/25</h3>
-
-<p>Fixed: Scrollbar glitch. <a href="https://github.com/windviki/vBookmarks/issues/1">https://github.com/windviki/vBookmarks/issues/1</a></p>
-
-<h3>ver1.4 2012/06/20</h3>
-
-<p>Fixed: Scrollbar problem in Chrome 18,19. <a href="https://github.com/windviki/vBookmarks/issues/2">https://github.com/windviki/vBookmarks/issues/2</a></p>
-
-<h3>ver1.5 2012/06/21</h3>
-
-<p>Fixed: manifest problem in Chrome 20+.</p>
-
-<p>Fixed: separated script file instead of inline scripts. see Content Security Policy <a href="http://code.google.com/chrome/extensions/contentSecurityPolicy.html">http://code.google.com/chrome/extensions/contentSecurityPolicy.html</a></p>
-
-<h3>ver1.6 2012/06/24</h3>
-
-<p>Fixed: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]</p>
-
-<p>Fixed: Restore width of the popup window. [Content Security Policy]</p>
-
-<p>Fixed: Dialogs cannot submit their forms. [Content Security Policy]</p>
-
-<h3>ver1.7 2012/06/26</h3>
-
-<p>Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)</p>
-
-<p>Fixed: Width resetting occured when expanding root folder. <a href="https://github.com/windviki/vBookmarks/issues/2">https://github.com/windviki/vBookmarks/issues/2</a></p>
-
-<h3>ver1.8 2012/08/01</h3>
-
-<p>Added: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see <a href="https://github.com/windviki/vBookmarks/issues/3">https://github.com/windviki/vBookmarks/issues/3</a></p>
-
-<p>Fixed: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrollbar is scrolled down (since Chrome18).</p>
-
-<p>Added: Color of icon is changed to red.</p>
-
-<p>Added: Simple update checking and desktop notification.</p>
-
-<p>Removed: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.</p>
-
-
-<h3>ver1.9 2012/08/19</h3>
-
-<p>Fixed: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.</p>
-
-<p>Updated: Color of ICON.</p>
-
-<p>Updated: Style of separator.</p>
-
-
-<h3>ver2.0 2012/11/01</h3>
-
-<p>Fixed: Version checking in background.js.</p>
-
-<p>Improved: Synchronizable separators.</p>
-
-<p>Added: Advanced options for separator.</p>
-
-<p>- "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.</p>
-
-<p>- "The real URL of bookmark which is shown as a separator": By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.</p>
-
-<p>- "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.</p>
-
-
-<h3>ver2.1 2012/12/12</h3>
-
-<p>Fixed: Now it can remember and restore position of scroll bar correctly.</p>
-
-<p>Improved: Position of context menu. And context menu will be dismissed when scrolling up/down.</p>
-
-<p>Added: Cancel button for dialogs in vbookmarks.</p>
-
-<p>Others: Maybe it's the last version :) see you at 2012/12/21.</p>
-
-
-<h3>ver2.2 2013/04/02</h3>
-
-<p>Fixed: Scroll bar does not work above chrome 26+ (not well tested).</p>
-
-
-<h3>ver2.3 2013/04/09</h3>
-
-<p>Fixed: Context menu will be dismissed when scrolling up/down (broken again in previous version).</p>
-<p>Fixed: Remember position of scroll bar (broken again in previous version).</p>
-
-
-<h3>ver2.4 2013/08/29</h3>
-
-<p>Fixed: "Unexpected end of input" in js.</p>
-
-
-<a name='latestversion'></a><h3>ver2.5 2013/08/30</h3>
-
-<p>Fixed: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.</p>
+<p>13. Advanced Settings: Custom the icon of this extension.</p>
 
       </section>
     </div>
