@@ -3,7 +3,7 @@ vBookmarks
 
 [English Readme](README.md) | [中文说明](README.zh.md)
 
-![Image of vBookmarks](https://lh3.googleusercontent.com/BIA2bf_LphQRYg_phWFYGtXHTzIVC6iO9k9y3p444cJzN_g8YadBGGSrw9AewVCOOAJb7c5k6w=w700-h280-e365)
+![Image of vBookmarks](vbookmarks.png)
 
 [插件WebStore页面](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
 
@@ -44,6 +44,9 @@ vBookmarks
 10) 基于Github的更新检测。在上架Webstore之后已经禁用
 
 11) 解决[Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks)的历史Bugs，以及在Chrome不断升级过程中出现的新Bugs
+
+
+    ![Image of vBookmarks features](vbookmarks-menu.png)
 
 
 # 高级功能说明：

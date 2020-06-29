@@ -3,7 +3,7 @@ vBookmarks
 
 [English Readme](README.md) | [中文说明](README.zh.md)
 
-![Image of vBookmarks](https://lh3.googleusercontent.com/BIA2bf_LphQRYg_phWFYGtXHTzIVC6iO9k9y3p444cJzN_g8YadBGGSrw9AewVCOOAJb7c5k6w=w700-h280-e365)
+![Image of vBookmarks](vbookmarks.png)
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
 
@@ -43,6 +43,9 @@ Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 10) Add: update checking and notification based on github. A tricky solution.
 
 11) Fix bugs in [Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks).
+
+
+![Image of vBookmarks features](vbookmarks-menu.png)
 
 
 # Notes for Advanced Features
