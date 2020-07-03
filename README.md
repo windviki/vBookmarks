@@ -242,6 +242,16 @@ Fixed: Double scrollbar since Chrome version 77+.
 Fixed: New icons.
 
 
+**ver3.1 2020/07/03**
+
+Fixed: [#12](https://github.com/windviki/vBookmarks/issues/12): Focus lost when clear the menu.
+Fixed: [#18](https://github.com/windviki/vBookmarks/issues/18): Tree does not scroll when drag to top or bottom.
+Fix an undefined error when pressing key DOWN.
+Fix the support of bookmarklet. Thanks for @ZG-nico.
+Added: France language. Thanks for @Fab-fr.
+Added: Chinese Hong Kong language.
+
+
 # Attentions
 
 For those who installs the pre-built crx file:

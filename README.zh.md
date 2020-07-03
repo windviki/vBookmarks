@@ -156,6 +156,19 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
 
 - 版本3.0 图标整体更换。
 
+- 版本3.1 
+  - 修正 [#12](https://github.com/windviki/vBookmarks/issues/12) 清除右键菜单时候导致的焦点丢失。现在可以全键盘操作。
+
+  - 修正 [#18](https://github.com/windviki/vBookmarks/issues/18) 拖动书签或者文件夹到顶部或者底部时候的报错。
+
+  - 修正 按方向盘下键时候一个未定义的错误。
+
+  - 修正 对于bookmarklet的支持。多谢 @ZG-nico 的贡献。
+
+  - 增加 法语。多谢 @Fab-fr 的贡献。
+
+  - 增加 中国香港繁体中文。
+
 
 # 注意：
 
