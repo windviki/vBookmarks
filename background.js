@@ -8,11 +8,16 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         var reportError = function(msg, url, line) {
+            var _version;
+            getExtensionVersion(function (ver) {
+                _version = ver;
+            });
             var txt = '_s=84615e81d50c4ddabff522aee3c4b734&_r=img' +
                 '&Msg=' + escape(msg) +
                 '&URL=' + escape(url) +
                 '&Line=' + line +
                 '&Platform=' + escape(navigator.platform) +
+                '&Version=' + escape(_version) +
                 '&UserAgent=' + escape(navigator.userAgent);
             var i = document.createElement('img');
             i.setAttribute('src', (('https:' == document.location.protocol) ? 'https://errorstack.appspot.com' : 'http://www.errorstack.com') + '/submit?' + txt);
