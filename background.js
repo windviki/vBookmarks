@@ -5,6 +5,16 @@
     var __m = _m;
     var localStorage = window.localStorage;
 
+    function getExtensionVersion(callback) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', 'manifest.json');
+        xmlhttp.onload = function (e) {
+            var manifest = JSON.parse(xmlhttp.responseText);
+            callback(manifest.version);
+        };
+        xmlhttp.send(null);
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
 
         var reportError = function(msg, url, line) {

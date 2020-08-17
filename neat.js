@@ -480,6 +480,7 @@
                     '<img src="folder.png" width="16" height="16" alt=""><i>' +
                     (title || _m('noTitle')) + '</i>' +
                     '</span>';
+                // only generate children for opened folder
                 if (isOpen) {
                     if (children) {
                         html += generateHTML(children, level + 1);
@@ -813,7 +814,9 @@
                         return;
                     var a = li.querySelector('a');
                     // Add parent folder
-                    a.title = _m('parentFolder', node[0].title) + '\n' + a.title;
+                    if (a && node[0]) {
+                        a.title = _m('parentFolder', node[0].title || 'root') + '\n' + a.title;
+                    }
                 });
             }, lis);
 
@@ -836,12 +839,14 @@
             }
         } else if (key == 13 && searchInput.value.length) { // enter
             var item = $results.querySelector('ul>li:first-child a');
-            item.focus();
-            setTimeout(function() {
-                var event = document.createEvent('MouseEvents');
-                event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                item.dispatchEvent(event);
-            }, 30);
+            if (item) {
+                item.focus();
+                setTimeout(function() {
+                    var event = document.createEvent('MouseEvents');
+                    event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                    item.dispatchEvent(event);
+                }, 30);
+            }
         } else if (key == 9 && !searchMode) { // tab
             if (typeof focusID != 'undefined' && focusID != null) {
                 var focusEl = $('neat-tree-item-' + focusID);
@@ -1934,7 +1939,8 @@
                     } else {
                         var nextLi = null;
                         do {
-                            li = li.parentNode.parentNode;
+                            if (li)
+                                li = li.parentNode.parentNode;
                             if (li)
                                 nextLi = li.nextElementSibling;
                             if (nextLi)
