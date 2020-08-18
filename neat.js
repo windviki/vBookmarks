@@ -813,6 +813,12 @@
             var vPattern = new RegExp('^' + value.escapeRegExp().replace(/\s+/g, '.*'), 'ig');
             if (results.length > 1) {
                 results.sort(function(a, b) {
+                    if (a.url && !b.url) {
+                        return 1;
+                    }
+                    if (!a.url && b.url) {
+                        return -1;
+                    }
                     var aTitle = a.title;
                     var bTitle = b.title;
                     var aIndexTitle = aTitle.toLowerCase().indexOf(v);
@@ -832,7 +838,7 @@
                         return 1;
                     return b.dateAdded - a.dateAdded;
                 });
-                results = results.slice(0, 200); // 200 is enough
+                results = results.slice(0, 100); // 100 is enough
             }
             var html = '<ul role="list">';
             for (var i = 0, l = results.length; i < l; i++) {
@@ -844,12 +850,10 @@
                             generateBookmarkHTML(result.title, result.url) + '</li>';
                     }
                 } else {  // folder
-                    if ($tree.querySelector("#neat-tree-item-" + id)) {
-                        html += '<li id="results-item-' + id + '" role="listitem"' +
-                        '" data-parentid="' + result.parentId + '">' + '<a href="" class="link-folder">' +
-                        '<img src="folder.png" width="16" height="16" alt=""><i>' +
-                        (result.title || _m('noTitle')) + '</i>' + '</a>' + '</li>';
-                    }
+                    html += '<li id="results-item-' + id + '" role="listitem"' +
+                    '" data-parentid="' + result.parentId + '">' + '<a href="" class="link-folder">' +
+                    '<img src="folder.png" width="16" height="16" alt=""><i>' +
+                    (result.title || _m('noTitle')) + '</i>' + '</a>' + '</li>';
                 }
             }
             html += '</ul>';
@@ -1549,6 +1553,17 @@
     var middleClickBgTab = !!localStorage.middleClickBgTab;
     var leftClickNewTab = !!localStorage.leftClickNewTab;
     var noOpenBookmark = false;
+    function generateTreeForTarget(trees) {
+        generateTree(trees);
+        // This must be put int chrome API handler function. 
+        // Otherwise it may be called before generation completed.
+        if (localStorage.focusID) {
+            var item = $tree.querySelector("#neat-tree-item-" + localStorage.focusID);
+            if (item) {
+                item.scrollIntoView();
+            }
+        }
+    };
     var bookmarkHandler = function(e) {
         e.preventDefault();
         if (e.button != 0 && e.button != 1)
@@ -1567,27 +1582,20 @@
                 searchInput.value = '';
                 searchMode = false;
                 switchBookmarkMenu(false);
-                // get parent folders
+                $results.style.display = 'none';
+                $tree.style.display = 'block';
+                // get folder id (el parent is li)
                 var id = el.parentNode.id.replace(/(neat\-tree|results)\-item\-/, '');
+                // all parent folder ids
                 var nodePath = getParentPath(id, nodeTrees);
-                console.log("" + id + " parents path: " + nodePath);
-                _rememberState = rememberState;
-                _opens = opens;
+                // set them as opened folders
                 opens = nodePath;
+                // force to recover from remember state (opened folders)
                 rememberState = true;
+                // focus on the target folder
                 localStorage.focusID = id;
-                chrome.bookmarks.getTree(generateTree);
-                rememberState = _rememberState;
-                var item = $tree.querySelector("#neat-tree-item-" + id);
-                if (item) {
-                    localStorage.scrollTop = item.offsetTop - $tree.clientheight / 2;
-                    $tree.scrollTop = localStorage.scrollTop;
-                    //$tree.scrollTo(0, item.offsetTop - $tree.clientheight / 2);
-                }
-                setTimeout(function() {
-                    $tree.style.display = 'block';
-                    $results.style.display = 'none';
-                }, 100);
+                // new hanlder to handle the scrolling
+                chrome.bookmarks.getTree(generateTreeForTarget);
             } else {
                 var url = el.href;
                 if (ctrlMeta) { // ctrl/meta click
