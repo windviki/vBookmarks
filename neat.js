@@ -1563,6 +1563,7 @@
                 item.scrollIntoView();
             }
         }
+        localStorage.scrollTop = $tree.scrollTop;
     };
     var bookmarkHandler = function(e) {
         e.preventDefault();
@@ -1579,7 +1580,9 @@
         if (el.tagName == 'A' && !el.querySelector('hr')) { // bookmark
             if (el.className == "link-folder") { // search result folder
                 // switch to tree
+                prevValue = '';
                 searchInput.value = '';
+                localStorage.searchQuery = '';
                 searchMode = false;
                 switchBookmarkMenu(false);
                 $results.style.display = 'none';
@@ -1590,6 +1593,7 @@
                 var nodePath = getParentPath(id, nodeTrees);
                 // set them as opened folders
                 opens = nodePath;
+                localStorage.opens = JSON.stringify(opens);
                 // force to recover from remember state (opened folders)
                 rememberState = true;
                 // focus on the target folder
@@ -1606,6 +1610,13 @@
                     } else {
                         leftClickNewTab ? actions.openBookmarkNewTab(url, true, true) : actions.openBookmark(url);
                     }
+                }
+                if (searchMode) {
+                    prevValue = '';
+                    searchInput.value = '';
+                    localStorage.searchQuery = '';
+                    searchMode = false;
+                    switchBookmarkMenu(false);
                 }
             }
         } else if (el.tagName == 'SPAN') { // folder
