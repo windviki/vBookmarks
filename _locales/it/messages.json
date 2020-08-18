@@ -1,0 +1,274 @@
+{
+  "accessibility": {
+    "message": "Impostazioni di accessibilità"
+  },
+  "addBookmarkAfter": {
+    "message": "Aggiungi la scheda corrente dopo questo"
+  },
+  "addBookmarkBefore": {
+    "message": "Aggiungi la scheda corrente prima di questa"
+  },
+  "addBookmarkBottom": {
+    "message": "Aggiungi la scheda corrente alla fine di questa directory"
+  },
+  "addBookmarkTop": {
+    "message": "Aggiungi la scheda corrente all'inizio di questa directory"
+  },
+  "addNewFolder": {
+    "message": "Aggiungi una sottocartella"
+  },
+  "addNewFolderAfter": {
+    "message": "Aggiungi cartella dopo questo"
+  },
+  "addNewFolderBefore": {
+    "message": "Aggiungi cartella prima di questo"
+  },
+  "addSeparator": {
+    "message": "Add Separator"
+  },
+  "advancedOptions": {
+    "message": "Advanced Options"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Sei sicuro di voler eliminare la cartella $folderName$ e $subFolderCount$ sottocartelle al suo interno?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Sei sicuro di voler eliminare la cartella $folderName$, $subFolderCount$ sottocartelle e $bookmarkCount$ segnalibri al suo interno?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Messaggio di conferma di apertura di tutti i preferiti.",
+    "message": "Aprire tutti i $count$ preferiti?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Messaggio di conferma di apertura di tutti i preferiti in una finestra di navigazione in incognito.",
+    "message": "Aprire tutti i $count$ preferiti in una finestra di navigazione in incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Messaggio di conferma di apertura di tutti i preferiti in un'altra finestra.",
+    "message": "Aprire tutti i $count$ preferiti in un'altra finestra?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copia tutti i titoli e gli URL negli appunti"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copia titolo e URL negli appunti"
+  },
+  "customIcon": {
+    "message": "Icona personalizzata"
+  },
+  "customIconText": {
+    "message": "L'icona deve avere una risoluzione di 19×19, altrimenti verrà ridimensionata."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizza il colore del separatore"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Il vero titolo del segnalibro che viene mostrato come separatore"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "L'URL reale del segnalibro che viene mostrato come separatore"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Se l'URL di un segnalibro contiene questa stringa, verrà visualizzato come separatore"
+  },
+  "customStyles": {
+    "message": "Stili personalizzati"
+  },
+  "customStylesDescription": {
+    "message": "Ciò richiede alcune abilità CSS. Hack a proprio rischio."
+  },
+  "defaultIconButton": {
+    "message": "Usa predefinito"
+  },
+  "defaultIconButtonOr": {
+    "message": "oppure"
+  },
+  "delete": {
+    "message": "Elimina"
+  },
+  "deleteEllipsis": {
+    "message": "Elimina..."
+  },
+  "edit": {
+    "message": "Modifica..."
+  },
+  "editBookmark": {
+    "message": "Modifica preferito"
+  },
+  "editFolder": {
+    "message": "Modifica cartella"
+  },
+  "errorOccured": {
+    "message": "Si è verificato un errore."
+  },
+  "extDesc": {
+    "description": "Descrizione dell'estensione.",
+    "message": "Una visualizzazione ad albero più ordinata dei preferiti."
+  },
+  "extName": {
+    "description": "Nome dell'estensione.",
+    "message": "Neater Bookmarks"
+  },
+  "general": {
+    "message": "Impostazioni generali"
+  },
+  "ignore": {
+    "message": "Ignora"
+  },
+  "name": {
+    "description": "Nome del preferito o della cartella.",
+    "message": "Nome"
+  },
+  "nope": {
+    "message": "No"
+  },
+  "noTitle": {
+    "description": "Nome dei preferiti senza nome non contenente indirizzi Web http(s) o delle cartelle senza nome.",
+    "message": "(senza nome)"
+  },
+  "open": {
+    "description": "Azione per aprire i preferiti.",
+    "message": "Apri"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Apri tutti i preferiti in una finestra di navigazione in incognito"
+  },
+  "openBookmarks": {
+    "message": "Apri tutti i preferiti"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Apri tutti i preferiti in un'altra finestra"
+  },
+  "openIncognitoWindow": {
+    "message": "Apri in una finestra di navigazione in incognito"
+  },
+  "openNewTab": {
+    "message": "Apri in un'altra scheda"
+  },
+  "openNewWindow": {
+    "message": "Apri in un'altra finestra"
+  },
+  "optionClickNewTab": {
+    "message": "Apri i preferiti in un'altra finestra quando si fa clic con il pulsante sinistro del mouse su di essi."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "All'apertura di una cartella, chiudi tutte le altre."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Mostra solo i segnalibri nella barra dei segnalibri"
+  },
+  "optionOpenNewTab": {
+    "message": "Apri i preferiti in un'altra scheda in secondo piano (anziché in primo piano) quando si fa clic con il pulsante centrale del mouse su di essi o con il pulsante sinistro su di essi tenendo premuto il tasto Ctrl."
+  },
+  "optionPopupStays": {
+    "message": "Non chiudere la finestra di Neater Bookmarks quando si aprono i preferiti (clic con il pulsante sinistro del mouse)."
+  },
+  "optionRememberPrevState": {
+    "message": "Memorizza lo stato della finestra di Neater Bookmarks (posizione di scorrimento dell'elenco e cartelle aperte)."
+  },
+  "options": {
+    "message": "Opzioni"
+  },
+  "optionsFooterText": {
+    "description": "Testo del piè di pagina per la pagina Opzioni",
+    "message": "Costruito da $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Informazioni sulla cartella principale visualizzate nel suggerimento dei preferiti nell'elenco dei risultati di ricerca.",
+    "message": "Cartella principale: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Barra dei preferiti"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Rimuovi separatore"
+  },
+  "replaceUrl": {
+    "message": "Sostituiscilo con l'URL corrente"
+  },
+  "reportedToDeveloper": {
+    "description": "Allo sviluppatore è stato inviato un messaggio per l'errore che si è verificato all'estensione.",
+    "message": "Segnalato allo sviluppatore."
+  },
+  "reportError": {
+    "message": "Segnala questo errore"
+  },
+  "resetButton": {
+    "message": "Ripristina"
+  },
+  "resetSettings": {
+    "message": "Ripristina impostazioni predefinite"
+  },
+  "resetSettingsDescription": {
+    "message": "Ripristina tutte le impostazioni ai valori predefiniti."
+  },
+  "save": {
+    "message": "Salva"
+  },
+  "searchBookmarks": {
+    "description": "Testo iniziale del campo di ricerca.",
+    "message": "Cerca preferiti"
+  },
+  "url": {
+    "message": "Indirizzo Web"
+  }
+}

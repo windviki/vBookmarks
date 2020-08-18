@@ -1,274 +1,274 @@
 {
-	"accessibility": {
-		"message": "辅助功能"
-	},
-	"addBookmarkAfter": {
-		"message": "添加当前页书签到此之后"
-	},
-	"addBookmarkBefore": {
-		"message": "添加当前页书签到此之前"
-	},
-	"addBookmarkBottom": {
-		"message": "添加当前页到文件夹末尾"
-	},
-	"addBookmarkTop": {
-		"message": "添加当前页到文件夹开头"
-	},
-	"addNewFolder": {
-		"message": "添加子文件夹"
-	},
-	"addNewFolderAfter": {
-		"message": "添加文件夹到此之后"
-	},
-	"addNewFolderBefore": {
-		"message": "添加文件夹到此之前"
-	},
-	"addSeparator": {
-		"message": "添加分隔符"
-	},
-	"advancedOptions": {
-		"message": "高级选项"
-	},
-	"confirmDeleteFolderBookmarks": {
-		"message": "您确定要删除文件夹[$folderName$]（包含 $bookmarkCount$ 个书签）？",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$2"
-			},
-			"folderName": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfolders": {
-		"message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录）？",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfoldersBookmarks": {
-		"message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录和 $bookmarkCount$ 个书签）？",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$3"
-			},
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmOpenBookmarks": {
-		"description": "打开所有书签的确认信息",
-		"message": "您确定要打开 $count$ 个书签？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewIncognitoWindow": {
-		"description": "在隐身窗口中打开所有书签的确认信息",
-		"message": "您确定要在隐身窗口中打开 $count$ 个书签？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewWindow": {
-		"description": "在新窗口中打开所有书签的确认信息",
-		"message": "您确定要在新窗口中打开 $count$ 个书签？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"copyAllTitlesAndUrls": {
-		"message": "拷贝所有标题和链接到剪贴板"
-	},
-	"copyTitleAndUrl": {
-		"message": "拷贝标题和链接到剪贴板"
-	},
-	"customIcon": {
-		"message": "个性化图标"
-	},
-	"customIconDescription": {
-		"message": "图标必须为19*19像素，否则会被缩放至此大小"
-	},
-	"customSeparatorColorDescription": {
-		"message": "定制分隔符颜色"
-	},
-	"customSeparatorTitleDescription": {
-		"message": "被用作分隔符的书签节点的标题"
-	},
-	"customSeparatorUrlDescription": {
-		"message": "被用作分隔符的书签节点的URL"
-	},
-	"customSeparatorStringDescription": {
-		"message": "如果任一书签URL含有以下字符串，将被显示为分隔符"
-	},
-	"customStyles": {
-		"message": "定制CSS"
-	},
-	"customStylesDescription": {
-		"message": "注意：无CSS知识请勿冒险修改。推荐将代码共享到 "
-	},
-	"defaultIconButton": {
-		"message": "使用默认图标"
-	},
-	"defaultIconButtonOr": {
-		"message": " 或者 "
-	},
-	"delete": {
-		"message": "删除"
-	},
-	"deleteEllipsis": {
-		"message": "删除 ..."
-	},
-	"edit": {
-		"message": "编辑 ..."
-	},
-	"editBookmark": {
-		"message": "编辑书签"
-	},
-	"editFolder": {
-		"message": "编辑文件夹"
-	},
-	"errorOccured": {
-		"message": "有错误出现"
-	},
-	"extDesc": {
-		"description": "扩展描述",
-		"message": "灵巧实用的弹出书签管理器，NeatBookmarks的增强版"
-	},
-	"extName": {
-		"description": "扩展名",
-		"message": "vBookmarks"
-	},
-	"general": {
-		"message": "常规功能"
-	},
-	"ignore": {
-		"message": "忽略"
-	},
-	"name": {
-		"description": "书签名或文件夹名",
-		"message": "名字"
-	},
-	"nope": {
-		"message": "取消"
-	},
-	"noTitle": {
-		"description": "没 http(s) 开头的书签或没有命名的文件夹的统一标题",
-		"message": "（无标题）"
-	},
-	"open": {
-		"description": "打开书签的动作",
-		"message": "打开"
-	},
-	"openBookmarks": {
-		"message": "打开所有书签"
-	},
-	"openBookmarksIncognitoWindow": {
-		"message": "在隐身窗口中打开所有书签"
-	},
-	"openBookmarksNewWindow": {
-		"message": "在新窗口中打开所有书签"
-	},
-	"openIncognitoWindow": {
-		"message": "在隐身窗口中打开"
-	},
-	"openNewTab": {
-		"message": "在新标签页中打开"
-	},
-	"openNewWindow": {
-		"message": "在新窗口中打开"
-	},
-	"optionClickNewTab": {
-		"message": "左击书签在新标签页中打开"
-	},
-	"optionCloseUnusedFolders": {
-		"message": "展开文件夹时折叠其他文件夹"
-	},
-	"optionConfirmOpenFolder": {
-		"message": "打开多个书签前需确认"
-	},
-	"optionOnlyShowBookmarkBar": {
-		"message": "仅显示书签栏中的书签"
-	},
-	"optionOpenNewTab": {
-		"message": "用鼠标中键或按住 Ctrl 键左击在后台打开书签"
-	},
-	"optionPopupStays": {
-		"message": "打开（鼠标左击）书签时 Popup 页面不关闭"
-	},
-	"optionRememberPrevState": {
-		"message": "记住上次状态（滚动条位置、所打开文件夹）"
-	},
-	"options": {
-		"message": "选项"
-	},
-	"optionsFooterText": {
-		"description": "选项页的页脚信息",
-		"message": "作者：$authorName$",
-		"placeholders": {
-			"authorName": {
-				"content": "$1"
-			}
-		}
-	},
-	"optionZoom": {
-		"message": "缩放"
-	},
-	"parentFolder": {
-		"description": "搜索结果列表中提示书签所在目录",
-		"message": "所在目录：$folderName$",
-		"placeholders": {
-			"folderName": {
-				"content": "$1",
-				"example": "书签栏"
-			}
-		}
-	},
-	"removeSeparator": {
-		"message": "移除分隔符"
-	},
-	"replaceUrl": {
-		"message": "替换为当前页的URL"
-	},
-	"reportedToDeveloper": {
-		"description": "扩展中发生了一个错误，已经报告给开发者",
-		"message": "错误报告"
-	},
-	"reportError": {
-		"message": "报告此错误"
-	},
-	"resetButton": {
-		"message": "重置"
-	},
-	"resetSettings": {
-		"message": "重置所有选项"
-	},
-	"resetSettingsDescription": {
-		"message": "重置所有选项到默认值"
-	},
-	"save": {
-		"message": "保存"
-	},
-	"searchBookmarks": {
-		"description": "搜索框里的提示文字",
-		"message": "书签搜索"
-	},
-	"url": {
-		"message": "网址"
-	}
+  "accessibility": {
+    "message": "辅助功能"
+  },
+  "addBookmarkAfter": {
+    "message": "添加当前页书签到此之后"
+  },
+  "addBookmarkBefore": {
+    "message": "添加当前页书签到此之前"
+  },
+  "addBookmarkBottom": {
+    "message": "添加当前页到文件夹末尾"
+  },
+  "addBookmarkTop": {
+    "message": "添加当前页到文件夹开头"
+  },
+  "addNewFolder": {
+    "message": "添加子文件夹"
+  },
+  "addNewFolderAfter": {
+    "message": "添加文件夹到此之后"
+  },
+  "addNewFolderBefore": {
+    "message": "添加文件夹到此之前"
+  },
+  "addSeparator": {
+    "message": "添加分隔符"
+  },
+  "advancedOptions": {
+    "message": "高级选项"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "您确定要删除文件夹[$folderName$]（包含 $bookmarkCount$ 个书签）？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录）？",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "您确定要删除文件夹[$folderName$]（包含 $subFolderCount$ 个子目录和 $bookmarkCount$ 个书签）？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "打开所有书签的确认信息",
+    "message": "您确定要打开 $count$ 个书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "在隐身窗口中打开所有书签的确认信息",
+    "message": "您确定要在隐身窗口中打开 $count$ 个书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "在新窗口中打开所有书签的确认信息",
+    "message": "您确定要在新窗口中打开 $count$ 个书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "拷贝所有标题和链接到剪贴板"
+  },
+  "copyTitleAndUrl": {
+    "message": "拷贝标题和链接到剪贴板"
+  },
+  "customIcon": {
+    "message": "个性化图标"
+  },
+  "customIconDescription": {
+    "message": "图标必须为19*19像素，否则会被缩放至此大小"
+  },
+  "customSeparatorColorDescription": {
+    "message": "定制分隔符颜色"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "被用作分隔符的书签节点的标题"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "被用作分隔符的书签节点的URL"
+  },
+  "customSeparatorStringDescription": {
+    "message": "如果任一书签URL含有以下字符串，将被显示为分隔符"
+  },
+  "customStyles": {
+    "message": "定制CSS"
+  },
+  "customStylesDescription": {
+    "message": "注意：无CSS知识请勿冒险修改。推荐将代码共享到 "
+  },
+  "defaultIconButton": {
+    "message": "使用默认图标"
+  },
+  "defaultIconButtonOr": {
+    "message": " 或者 "
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "deleteEllipsis": {
+    "message": "删除 ..."
+  },
+  "edit": {
+    "message": "编辑 ..."
+  },
+  "editBookmark": {
+    "message": "编辑书签"
+  },
+  "editFolder": {
+    "message": "编辑文件夹"
+  },
+  "errorOccured": {
+    "message": "有错误出现"
+  },
+  "extDesc": {
+    "description": "扩展描述",
+    "message": "灵巧实用的弹出书签管理器，NeatBookmarks的增强版"
+  },
+  "extName": {
+    "description": "扩展名",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "常规功能"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "name": {
+    "description": "书签名或文件夹名",
+    "message": "名字"
+  },
+  "nope": {
+    "message": "取消"
+  },
+  "noTitle": {
+    "description": "没 http(s) 开头的书签或没有命名的文件夹的统一标题",
+    "message": "（无标题）"
+  },
+  "open": {
+    "description": "打开书签的动作",
+    "message": "打开"
+  },
+  "openBookmarks": {
+    "message": "打开所有书签"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在隐身窗口中打开所有书签"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新窗口中打开所有书签"
+  },
+  "openIncognitoWindow": {
+    "message": "在隐身窗口中打开"
+  },
+  "openNewTab": {
+    "message": "在新标签页中打开"
+  },
+  "openNewWindow": {
+    "message": "在新窗口中打开"
+  },
+  "optionClickNewTab": {
+    "message": "左击书签在新标签页中打开"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展开文件夹时折叠其他文件夹"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "打开多个书签前需确认"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "仅显示书签栏中的书签"
+  },
+  "optionOpenNewTab": {
+    "message": "用鼠标中键或按住 Ctrl 键左击在后台打开书签"
+  },
+  "optionPopupStays": {
+    "message": "打开（鼠标左击）书签时 Popup 页面不关闭"
+  },
+  "optionRememberPrevState": {
+    "message": "记住上次状态（滚动条位置、所打开文件夹）"
+  },
+  "options": {
+    "message": "选项"
+  },
+  "optionsFooterText": {
+    "description": "选项页的页脚信息",
+    "message": "作者：$authorName$",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "缩放"
+  },
+  "parentFolder": {
+    "description": "搜索结果列表中提示书签所在目录",
+    "message": "所在目录：$folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "书签栏"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "移除分隔符"
+  },
+  "replaceUrl": {
+    "message": "替换为当前页的URL"
+  },
+  "reportedToDeveloper": {
+    "description": "扩展中发生了一个错误，已经报告给开发者",
+    "message": "错误报告"
+  },
+  "reportError": {
+    "message": "报告此错误"
+  },
+  "resetButton": {
+    "message": "重置"
+  },
+  "resetSettings": {
+    "message": "重置所有选项"
+  },
+  "resetSettingsDescription": {
+    "message": "重置所有选项到默认值"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "searchBookmarks": {
+    "description": "搜索框里的提示文字",
+    "message": "书签搜索"
+  },
+  "url": {
+    "message": "网址"
+  }
 }
