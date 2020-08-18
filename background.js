@@ -1,74 +1,71 @@
-(function(window) {
-    var document = window.document;
-    var chrome = window.chrome;
-    var _m = chrome.i18n.getMessage;
-    var __m = _m;
-    var localStorage = window.localStorage;
+(window => {
+    const document = window.document;
+    const chrome = window.chrome;
+    const _m = chrome.i18n.getMessage;
+    const __m = _m;
+    const localStorage = window.localStorage;
 
     function getExtensionVersion(callback) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', 'manifest.json');
-        xmlhttp.onload = function (e) {
-            var manifest = JSON.parse(xmlhttp.responseText);
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', 'manifest.json');
+        xmlHttp.onload = e => {
+            const manifest = JSON.parse(xmlHttp.responseText);
             callback(manifest.version);
         };
-        xmlhttp.send(null);
+        xmlHttp.send(null);
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
 
-        var reportError = function(msg, url, line) {
-            var _version;
-            getExtensionVersion(function (ver) {
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const reportError = (msg, url, line) => {
+            let _version;
+            getExtensionVersion(ver => {
                 _version = ver;
             });
-            var txt = '_s=84615e81d50c4ddabff522aee3c4b734&_r=img' +
-                '&Msg=' + escape(msg) +
-                '&URL=' + escape(url) +
-                '&Line=' + line +
-                '&Platform=' + escape(navigator.platform) +
-                '&Version=' + escape(_version) +
-                '&UserAgent=' + escape(navigator.userAgent);
-            var i = document.createElement('img');
-            i.setAttribute('src', (('https:' == document.location.protocol) ? 'https://errorstack.appspot.com' : 'http://www.errorstack.com') + '/submit?' + txt);
+            const txt = `_s=84615e81d50c4ddabff522aee3c4b734&_r=img&Msg=${escape(msg)}&URL=${escape(url)}&Line=${line}&Platform=${escape(navigator.platform)}&Version=${escape(_version)}&UserAgent=${escape(navigator.userAgent)}`;
+            const i = document.createElement('img');
+            i.setAttribute('src', `${('https:' === document.location.protocol) ? 'https://errorstack.appspot.com'
+                : 'http://www.errorstack.com'}/submit?${txt}`);
             document.body.appendChild(i);
-            i.onload = function() {
+            i.onload = () => {
                 document.body.removeChild(i);
             };
         };
 
         window.onerror = reportError;
 
-        chrome.extension.onRequest.addListener(function(request) {
+        chrome.extension.onRequest.addListener(request => {
             if (request.error) reportError.apply(null, request.error);
         });
 
         if (chrome.omnibox) {
-            var setSuggest = function(description) {
+            const setSuggest = description => {
                 chrome.omnibox.setDefaultSuggestion({
                     description: description
                 });
             };
 
-            var omniboxValue = null;
-            var firstResult = null;
-            var resetSuggest = function() {
+            let omniboxValue = null;
+            let firstResult = null;
+            const resetSuggest = () => {
                 omniboxValue = null;
                 firstResult = null;
-                setSuggest('<url><match>*</match></url> ' + chrome.i18n.getMessage('searchBookmarks'));
+                setSuggest(`<url><match>*</match></url> ${chrome.i18n.getMessage('searchBookmarks')}`);
             };
             resetSuggest();
 
-            var xmlEncode = function(text) {
-                return text.replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/\'/g, '&apos;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            };
+            const xmlEncode = text => text.replace(/&/g, '&amp;')
+                .replace(/\"/g, '&quot;')
+                .replace(/\'/g, '&apos;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
 
-            var matcher = function(text, value) {
-                var matched = false;
-                var exp = new RegExp(value.replace(/\s+/g, '|'), 'ig');
-                var matchedText = text.replace(exp, function(m) {
+            const matcher = (text, value) => {
+                let matched = false;
+                const exp = new RegExp(value.replace(/\s+/g, '|'), 'ig');
+                const matchedText = text.replace(exp, m => {
                     matched = true;
-                    return '<match>' + m + '</match>';
+                    return `<match>${m}</match>`;
                 });
                 return {
                     text: matchedText,
@@ -76,58 +73,59 @@
                 };
             };
 
-            chrome.omnibox.onInputChanged.addListener(function(value, suggest) {
+            chrome.omnibox.onInputChanged.addListener((value, suggest) => {
                 if (!value) {
                     resetSuggest();
                     return;
                 }
                 omniboxValue = value;
-                chrome.bookmarks.search(value, function(results) {
+                chrome.bookmarks.search(value, results => {
                     if (!results.length) {
                         resetSuggest();
                         return;
                     }
-                    var v = value.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-                    var vPattern = new RegExp('^' + v.replace(/\s+/g, '.*'), 'ig');
+                    const v = value.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
+                    let vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'ig');
                     if (results.length > 1) {
-                        results.sort(function(a, b) {
-                            var aTitle = a.title;
-                            var bTitle = b.title;
-                            var aIndexTitle = aTitle.toLowerCase().indexOf(v);
-                            var bIndexTitle = bTitle.toLowerCase().indexOf(v);
+                        results.sort((a, b) => {
+                            const aTitle = a.title;
+                            const bTitle = b.title;
+                            let aIndexTitle = aTitle.toLowerCase().indexOf(v);
+                            let bIndexTitle = bTitle.toLowerCase().indexOf(v);
                             if (aIndexTitle >= 0 || bIndexTitle >= 0) {
                                 if (aIndexTitle < 0) aIndexTitle = Infinity;
                                 if (bIndexTitle < 0) bIndexTitle = Infinity;
                                 return aIndexTitle - bIndexTitle;
                             }
-                            var aTestTitle = vPattern.test(aTitle);
-                            var bTestTitle = vPattern.test(bTitle);
+                            const aTestTitle = vPattern.test(aTitle);
+                            const bTestTitle = vPattern.test(bTitle);
                             if (aTestTitle && !bTestTitle) return -1;
                             if (!aTestTitle && bTestTitle) return 1;
                             return b.dateAdded - a.dateAdded;
                         });
                         results = results.slice(0, 6);
                     }
-                    var resultsLen = results.length;
+                    const resultsLen = results.length;
                     firstResult = results.shift();
-                    var firstTitle = matcher(xmlEncode(firstResult.title), v);
-                    var firstURL = {
+                    const firstTitle = matcher(xmlEncode(firstResult.title), v);
+                    let firstURL = {
                         text: xmlEncode(firstResult.url)
                     };
                     if (!firstTitle.matched) firstURL = matcher(firstURL.text, v);
-                    setSuggest(firstTitle.text + ' <dim>-</dim> <url>' + firstURL.text + '</url>');
-                    var suggestions = [];
-                    for (var i = 0, l = results.length; i < l; i++) {
-                        var result = results[i];
-                        var title = matcher(xmlEncode(result.title), v);
-                        var URL = result.url;
-                        var url = {
+                    setSuggest(`${firstTitle.text} <dim>-</dim> <url>${firstURL.text}</url>`);
+                    let suggestions = [];
+                    let i = 0, l = results.length;
+                    for (; i < l; i++) {
+                        const result = results[i];
+                        const title = matcher(xmlEncode(result.title), v);
+                        const URL = result.url;
+                        let url = {
                             text: xmlEncode(URL)
                         };
                         if (!title.matched) url = matcher(url.text, v);
                         suggestions.push({
                             content: URL,
-                            description: title.text + ' <dim>-</dim> <url>' + url.text + '</url>'
+                            description: `${title.text} <dim>-</dim> <url>${url.text}</url>`
                         });
                     }
                     suggest(suggestions);
@@ -137,13 +135,13 @@
                 });
             });
 
-            chrome.omnibox.onInputEntered.addListener(function(text) {
+            chrome.omnibox.onInputEntered.addListener(text => {
                 if (!text || !firstResult) {
                     resetSuggest();
                     return;
                 }
-                var url = (text == omniboxValue) ? firstResult.url : text;
-                chrome.tabs.getSelected(null, function(tab) {
+                const url = (text === omniboxValue) ? firstResult.url : text;
+                chrome.tabs.getSelected(null, tab => {
                     chrome.tabs.update(tab.id, {
                         url: url,
                         selected: true
@@ -153,11 +151,11 @@
         }
 
         if (localStorage.customIcon) {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-            var customIcon = JSON.parse(localStorage.customIcon);
-            var imageData = ctx.getImageData(0, 0, 19, 19);
-            for (var key in customIcon) imageData.data[key] = customIcon[key];
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const customIcon = JSON.parse(localStorage.customIcon);
+            const imageData = ctx.getImageData(0, 0, 19, 19);
+            for (const key in customIcon) imageData.data[key] = customIcon[key];
             chrome.browserAction.setIcon({
                 imageData: imageData
             });

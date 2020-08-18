@@ -1,69 +1,69 @@
-(function(window) {
-    var document = window.document;
-    var chrome = window.chrome;
-    var _m = chrome.i18n.getMessage;
-    var __m = _m;
+(window => {
+    const document = window.document;
+    const chrome = window.chrome;
+    const _m = chrome.i18n.getMessage;
+    const __m = _m;
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
 
-        document.title = _m('extName') + ' ' + _m('options');
+        document.title = `${_m('extName')} ${_m('options')}`;
 
-        var clickNewTab = $('click-new-tab');
+        const clickNewTab = $('click-new-tab');
         clickNewTab.checked = !!localStorage.leftClickNewTab;
-        clickNewTab.addEventListener('change', function() {
+        clickNewTab.addEventListener('change', () => {
             localStorage.leftClickNewTab = clickNewTab.checked ? '1' : '';
         });
 
-        var openNewTabBg = $('open-new-tab-bg');
+        const openNewTabBg = $('open-new-tab-bg');
         openNewTabBg.checked = !!localStorage.middleClickBgTab;
-        openNewTabBg.addEventListener('change', function() {
+        openNewTabBg.addEventListener('change', () => {
             localStorage.middleClickBgTab = openNewTabBg.checked ? '1' : '';
         });
 
-        var closeUnusedFolders = $('close-unused-folders');
+        const closeUnusedFolders = $('close-unused-folders');
         closeUnusedFolders.checked = !!localStorage.closeUnusedFolders;
-        closeUnusedFolders.addEventListener('change', function() {
+        closeUnusedFolders.addEventListener('change', () => {
             localStorage.closeUnusedFolders = closeUnusedFolders.checked ? '1' : '';
         });
 
-        var popupStayOpen = $('popup-stay-open');
+        const popupStayOpen = $('popup-stay-open');
         popupStayOpen.checked = !!localStorage.bookmarkClickStayOpen;
-        popupStayOpen.addEventListener('change', function() {
+        popupStayOpen.addEventListener('change', () => {
             localStorage.bookmarkClickStayOpen = popupStayOpen.checked ? '1' : '';
         });
 
-        var confirmOpenFolder = $('confirm-open-folder');
+        const confirmOpenFolder = $('confirm-open-folder');
         confirmOpenFolder.checked = !localStorage.dontConfirmOpenFolder;
-        confirmOpenFolder.addEventListener('change', function() {
+        confirmOpenFolder.addEventListener('change', () => {
             localStorage.dontConfirmOpenFolder = confirmOpenFolder.checked ? '' : '1';
         });
 
-        var rememberPrevState = $('remember-prev-state');
+        const rememberPrevState = $('remember-prev-state');
         rememberPrevState.checked = !localStorage.dontRememberState;
-        rememberPrevState.addEventListener('change', function() {
+        rememberPrevState.addEventListener('change', () => {
             localStorage.dontRememberState = rememberPrevState.checked ? '' : '1';
         });
 
-        var onlyShowBMBar = $('only-show-bmbar');
+        const onlyShowBMBar = $('only-show-bmbar');
         onlyShowBMBar.checked = !!localStorage.onlyShowBMBar;
-        onlyShowBMBar.addEventListener('change', function() {
+        onlyShowBMBar.addEventListener('change', () => {
             localStorage.onlyShowBMBar = onlyShowBMBar.checked ? '1' : '';
         });
 
-        var zoom = $('zoom-input');
-        setInterval(function() {
+        const zoom = $('zoom-input');
+        setInterval(() => {
             zoom.value = localStorage.zoom || 100;
         }, 1000);
-        zoom.addEventListener('input', function() {
-            var val = zoom.value.toInt();
-            if (val == 100) {
+        zoom.addEventListener('input', () => {
+            const val = zoom.value.toInt();
+            if (val === 100) {
                 localStorage.removeItem('zoom');
             } else {
                 localStorage.zoom = val;
             }
         });
 
-        window.onerror = function() {
+        window.onerror = function () {
             chrome.extension.sendRequest({
                 error: [].slice.call(arguments)
             })
@@ -82,9 +82,11 @@
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
-        document.getElementById('options-footer-1').innerHTML = '<a href="http://twitter.com/cheeaun">' + __m('optionsFooterText', 'Lim Chee Aun') + '</a>';
-        document.getElementById('options-footer-2').innerHTML = '<a href="http://twitter.com/windviki">' + __m('optionsFooterText', 'windviki') + '</a>';
-        document.getElementById('options-footer-3').innerHTML = '<a href="http://weibo.com/windviki">Follow @windviki on Weibo</a>';
-        document.getElementById('options-footer-4').innerHTML = '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
+        document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
+        document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
+        document.getElementById('options-footer-3').innerHTML =
+            '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
+        document.getElementById('options-footer-4').innerHTML =
+            '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
     });
 })(window);

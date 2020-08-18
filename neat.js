@@ -1,27 +1,28 @@
-(function(window) {
-    var document = window.document;
-    var chrome = window.chrome;
-    var localStorage = window.localStorage;
-    var navigator = window.navigator;
-    var body = document.body;
-    var _m = chrome.i18n.getMessage;
+(window => {
+    let currentContext;
+    const document = window.document;
+    const chrome = window.chrome;
+    const localStorage = window.localStorage;
+    const navigator = window.navigator;
+    const body = document.body;
+    const _m = chrome.i18n.getMessage;
 
     function StringList() {
-        this._strings_ = new Array();
+        this._strings_ = [];
     }
 
-    StringList.prototype.append = function(str) {
-        var inputstr = "" + str;
-        if (inputstr) {
-            this._strings_.push(inputstr);
+    StringList.prototype.append = function (str) {
+        const inputStr = `${str}`;
+        if (inputStr) {
+            this._strings_.push(inputStr);
         }
     };
 
-    StringList.prototype.remove = function(str) {
-        var inputstr = "" + str;
-        if (inputstr) {
-            for (var i = 0; i < this._strings_.length; i++) {
-                if (this._strings_[i] == inputstr) {
+    StringList.prototype.remove = function (str) {
+        const inputStr = `${str}`;
+        if (inputStr) {
+            for (let i = 0; i < this._strings_.length; i++) {
+                if (this._strings_[i] === inputStr) {
                     this._strings_.splice(i, 1);
                     break;
                 }
@@ -29,34 +30,34 @@
         }
     };
 
-    StringList.prototype.replace = function(strold, strnew) {
-        var inputstr = "" + strold;
-        var newstr = "" + strnew;
-        if (inputstr) {
-            for (var i = 0; i < this._strings_.length; i++) {
-                if (this._strings_[i] == inputstr) {
-                    this._strings_[i] = newstr;
+    StringList.prototype.replace = function (strOld, strNew) {
+        const inputStr = `${strOld}`;
+        const newStr = `${strNew}`;
+        if (inputStr) {
+            for (let i = 0; i < this._strings_.length; i++) {
+                if (this._strings_[i] === inputStr) {
+                    this._strings_[i] = newStr;
                 }
             }
         }
     };
 
-    StringList.prototype.clear = function() {
-        return this._strings_ = new Array();
+    StringList.prototype.clear = function () {
+        return this._strings_ = [];
     };
 
-    StringList.prototype.size = function() {
+    StringList.prototype.size = function () {
         return this._strings_.length;
     };
 
-    StringList.prototype.fromString = function(str) {
-        var inputstr = "" + str;
-        if (inputstr) {
-            this._strings_ = inputstr.split(",");
+    StringList.prototype.fromString = function (str) {
+        const inputStr = `${str}`;
+        if (inputStr) {
+            this._strings_ = inputStr.split(",");
         }
     };
 
-    StringList.prototype.toString = function() {
+    StringList.prototype.toString = function () {
         return this._strings_.join(",");
     };
 
@@ -76,7 +77,7 @@
         } else {
             this.separatorURL = "http://separatethis.com/";
         }
-        this.separatorString = new Array();
+        this.separatorString = [];
         if (!isBlank(localStorage.separatorString)) {
             this.separatorString = localStorage.separatorString.split(';');
         } else {
@@ -84,49 +85,49 @@
         }
     }
 
-    SeparatorManager.prototype.load = function() {
+    SeparatorManager.prototype.load = function () {
         if (localStorage.separators) {
             this.stringList.fromString(localStorage.separators);
         }
     };
 
-    SeparatorManager.prototype.save = function() {
+    SeparatorManager.prototype.save = function () {
         localStorage.separators = this.stringList.toString();
     };
 
-    SeparatorManager.prototype.add = function(str) {
-        if (this.stringList._strings_.indexOf(str) == -1) {
+    SeparatorManager.prototype.add = function (str) {
+        if (this.stringList._strings_.indexOf(str) === -1) {
             this.stringList.append(str);
         }
     };
 
-    SeparatorManager.prototype.update = function(str, strnew) {
-        this.stringList.replace(str, strnew);
+    SeparatorManager.prototype.update = function (str, strNew) {
+        this.stringList.replace(str, strNew);
     };
 
-    SeparatorManager.prototype.remove = function(str) {
+    SeparatorManager.prototype.remove = function (str) {
         this.stringList.remove(str);
     };
 
-    SeparatorManager.prototype.getAll = function(str) {
+    SeparatorManager.prototype.getAll = function () {
         return this.stringList._strings_;
     };
 
-    SeparatorManager.prototype.clear = function() {
+    SeparatorManager.prototype.clear = function () {
         localStorage.separators = "";
         this.stringList.clear();
     };
 
-    SeparatorManager.prototype.size = function() {
+    SeparatorManager.prototype.size = function () {
         return this.stringList.size();
     };
 
-    SeparatorManager.prototype.isSeparator = function(title, url) {
-        var isSeparator = (this.separatorURL && url.indexOf(this.separatorURL) == 0);
+    SeparatorManager.prototype.isSeparator = function (title, url) {
+        let isSeparator = (this.separatorURL && url.indexOf(this.separatorURL) === 0);
         if (!isSeparator) {
-            for (var j = 0; j < this.separatorString.length; j++) {
+            for (let j = 0; j < this.separatorString.length; j++) {
                 if (this.separatorString[j].length > 1) {
-                    if (url.indexOf(this.separatorString[j]) != -1) {
+                    if (url.indexOf(this.separatorString[j]) !== -1) {
                         isSeparator = true;
                         break;
                     }
@@ -136,18 +137,18 @@
         return isSeparator;
     };
 
-    separatorManager = new SeparatorManager();
+    const separatorManager = new SeparatorManager();
 
     //regex for color expressions
-    var hexcolorreg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    const hexColorRegex = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
     //RGB -> HEX
-    String.prototype.colorHex = function() {
-        var that = this;
+    String.prototype.colorHex = function () {
+        const that = this;
         if (/^(rgb|RGB)/.test(that)) {
-            var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-            var strHex = "#";
-            for (var i = 0; i < aColor.length; i++) {
-                var hex = Number(aColor[i]).toString(16);
+            const aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+            let strHex = "#";
+            for (let i = 0; i < aColor.length; i++) {
+                let hex = Number(aColor[i]).toString(16);
                 if (hex === "0") {
                     hex += hex;
                 }
@@ -157,13 +158,13 @@
                 strHex = that;
             }
             return strHex;
-        } else if (hexcolorreg.test(that)) {
-            var aNum = that.replace(/#/, "").split("");
+        } else if (hexColorRegex.test(that)) {
+            const aNum = that.replace(/#/, "").split("");
             if (aNum.length === 6) {
                 return that;
             } else if (aNum.length === 3) {
-                var numHex = "#";
-                for (var i = 0; i < aNum.length; i += 1) {
+                let numHex = "#";
+                for (let i = 0; i < aNum.length; i += 1) {
                     numHex += (aNum[i] + aNum[i]);
                 }
                 return numHex;
@@ -174,32 +175,32 @@
     };
 
     //HEX -> RGB
-    String.prototype.colorRgb = function() {
-        var sColor = this.toLowerCase();
-        if (sColor && hexcolorreg.test(sColor)) {
+    String.prototype.colorRgb = function () {
+        let sColor = this.toLowerCase();
+        if (sColor && hexColorRegex.test(sColor)) {
             if (sColor.length === 4) {
-                var sColorNew = "#";
-                for (var i = 1; i < 4; i += 1) {
+                let sColorNew = "#";
+                for (let i = 1; i < 4; i += 1) {
                     sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
                 }
                 sColor = sColorNew;
             }
             //6 bit
-            var sColorChange = [];
-            for (var i = 1; i < 7; i += 2) {
-                sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+            const sColorChange = [];
+            for (let i = 1; i < 7; i += 2) {
+                sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
             }
-            return "RGB(" + sColorChange.join(",") + ")";
+            return `RGB(${sColorChange.join(",")})`;
         } else {
             return '';
         }
     };
 
     // Private array of chars to use
-    var UUIDCHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+    const UUIDCHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
 
-    Math.uuid = function(len, radix) {
-        var chars = UUIDCHARS,
+    Math.uuid = (len, radix) => {
+        let chars = UUIDCHARS,
             uuid = [],
             i;
         radix = radix || chars.length;
@@ -209,7 +210,7 @@
             for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
         } else {
             // rfc4122, version 4 form
-            var r;
+            let r;
 
             // rfc4122 requires these characters
             uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
@@ -220,7 +221,7 @@
             for (i = 0; i < 36; i++) {
                 if (!uuid[i]) {
                     r = 0 | Math.random() * 16;
-                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                    uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r];
                 }
             }
         }
@@ -230,21 +231,20 @@
 
     // A more performant, but slightly bulkier, RFC4122v4 solution.  We boost performance
     // by minimizing calls to random()
-    Math.uuidFast = function() {
-        var chars = UUIDCHARS,
-            uuid = new Array(36),
+    Math.uuidFast = () => {
+        let uuid = new Array(36),
             rnd = 0,
             r;
-        for (var i = 0; i < 36; i++) {
-            if (i == 8 || i == 13 || i == 18 || i == 23) {
+        for (let i = 0; i < 36; i++) {
+            if (i === 8 || i === 13 || i === 18 || i === 23) {
                 uuid[i] = '-';
-            } else if (i == 14) {
+            } else if (i === 14) {
                 uuid[i] = '4';
             } else {
                 if (rnd <= 0x02) rnd = 0x2000000 + (Math.random() * 0x1000000) | 0;
                 r = rnd & 0xf;
                 rnd = rnd >> 4;
-                uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                uuid[i] = UUIDCHARS[(i === 19) ? (r & 0x3) | 0x8 : r];
             }
         }
         return uuid.join('');
@@ -252,79 +252,81 @@
 
 
     // ++++++++ added by windviki@gmail.com ++++++++
-    copy_to_clipboard = function(copyText) {
+    const copyToClipboard = copyText => {
         if (window.clipboardData) {
             window.clipboardData.setData("Text", copyText);
         } else {
-            $('copier-input').value = copyText;
-            $('copier-input').select();
+            const copier = $('copier-input');
+            copier.value = copyText;
+            copier.select();
             document.execCommand("Copy");
         }
     };
 
     // class for get tree style text
-    function TreeText(nodeid) {
-        this.id = nodeid;
+    function TreeText(nodeId) {
+        this.id = nodeId;
         this.text = '';
         this.level = 0;
     }
 
 
-    TreeText.prototype.get = function(fn) {
-        var _self1 = this;
-        var _fn1 = fn;
-        chrome.bookmarks.get(_self1.id, function(nodeList) {
+    TreeText.prototype.get = function (fn) {
+        const _self1 = this;
+        const _fn1 = fn;
+        chrome.bookmarks.get(_self1.id, nodeList => {
             if (!nodeList.length)
                 return;
-            var node = nodeList[0];
-            var url = node.url;
-            var title = node.title;
+            const node = nodeList[0];
+            const url = node.url;
+            const title = node.title;
             // check whether the referenced node is bookmark or folder
-            var isBookmark = !!url;
-            _self1.text += _self1.level ? '\t' * _self1.level : '' + title + '\r\n';
+            const isBookmark = !!url;
+            _self1.text += _self1.level ? '\t' * _self1.level : `${title}\r\n`;
             if (isBookmark) {
-                _self1.text += _self1.level ? '\t' * _self1.level : '' + url;
+                _self1.text += _self1.level ? '\t' * _self1.level : `${url}`;
                 if (_fn1)
                     _fn1(_self1.text);
-            } else {}
+            } else {
+            }
         });
     };
 
     // ++++++++ end ++++++++
 
     // Error alert
-    var AlertDialog = {
-        open: function(dialog) {
+    const AlertDialog = {
+        open: dialog => {
             if (!dialog)
                 return;
             $('alert-dialog-text').innerHTML = dialog;
             body.addClass('needAlert');
         },
-        close: function() {
+        close: () => {
             body.removeClass('needAlert');
         }
     };
-    window.addEventListener('error', function() {
-        AlertDialog.open('<strong>' + _m('errorOccured') + '</strong><br>' + _m('reportedToDeveloper'));
+    window.addEventListener('error', () => {
+        AlertDialog.open(`<strong>${_m('errorOccured')}</strong><br>${_m('reportedToDeveloper')}`);
     }, false);
 
     // Platform detection
-    var os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
+    const os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
     body.addClass(os);
 
     // Chrome version detection
-    var version = (function() {
-        var v = {};
-        var keys = ['major', 'minor', 'build', 'patch'];
-        var matches = navigator.userAgent.match(/chrome\/([\d]+)\.([\d]+)\.([\d]+)\.([\d]+)/i);
+    const version = (() => {
+        const v = {};
+        const keys = ['major', 'minor', 'build', 'patch'];
+        const matches = navigator.userAgent.match(/chrome\/([\d]+)\.([\d]+)\.([\d]+)\.([\d]+)/i);
         if (!matches)
             return null;
-        matches.slice(1).forEach(function(m, i) {
+        matches.slice(1).forEach((m, i) => {
             v[keys[i]] = m.toInt();
         });
         return v;
     })();
-    
+
     // Some i18n
     $('search-input').placeholder = _m('searchBookmarks');
     $('edit-dialog-name').placeholder = _m('name');
@@ -362,30 +364,30 @@
         'edit-dialog-cancel-button': 'nope',
         'new-folder-dialog-button': 'save',
         'new-folder-dialog-cancel-button': 'nope'
-    }, function(msg, id) {
-        var el = $(id),
-            m = _m(msg);
-        if (el.tagName == 'COMMAND')
+    }, (msg, id) => {
+        const el = $(id);
+        const m = _m(msg);
+        if (el.tagName === 'COMMAND')
             el.label = m;
         el.textContent = m;
     });
 
     // RTL indicator
-    var rtl = (body.getComputedStyle('direction') == 'rtl');
+    const rtl = (body.getComputedStyle('direction') === 'rtl');
     if (rtl)
         body.addClass('rtl');
 
     // Init some variables
-    var opens = localStorage.opens ? JSON.parse(localStorage.opens) : [];
-    var rememberState = !localStorage.dontRememberState;
-    var httpsPattern = /^https?:\/\//i;
-    var onlyShowBMBar = !!localStorage.onlyShowBMBar;
+    let opens = localStorage.opens ? JSON.parse(localStorage.opens) : [];
+    let rememberState = !localStorage.dontRememberState;
+    const httpsPattern = /^https?:\/\//i;
+    const onlyShowBMBar = !!localStorage.onlyShowBMBar;
 
     // Adaptive bookmark tooltips
-    var adaptBookmarkTooltips = function() {
-        var bookmarks = document.querySelectorAll('li.child a');
-        for (var i = 0, l = bookmarks.length; i < l; i++) {
-            var bookmark = bookmarks[i];
+    const adaptBookmarkTooltips = () => {
+        const bookmarks = document.querySelectorAll('li.child a');
+        for (let i = 0, l = bookmarks.length; i < l; i++) {
+            const bookmark = bookmarks[i];
             if (bookmark.querySelector('hr')) {
                 bookmark.title = '';
             } else {
@@ -395,10 +397,10 @@
                         bookmark.removeClass('titled');
                     }
                 } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                    var text = bookmark.querySelector('i').textContent;
-                    var title = bookmark.title;
-                    if (text != title) {
-                        bookmark.title = text + '\n' + title;
+                    const text = bookmark.querySelector('i').textContent;
+                    const title = bookmark.title;
+                    if (text !== title) {
+                        bookmark.title = `${text}\n${title}`;
                         bookmark.addClass('titled');
                     }
                 }
@@ -406,92 +408,83 @@
         }
     };
 
-    var generateBookmarkHTML = function(title, url, extras) {
+    const generateBookmarkHTML = (title, url, extras) => {
         if (!extras)
             extras = '';
-        var u = url.htmlspecialchars();
-        var favicon = 'chrome://favicon/' + u;
-        var tooltipURL = url;
+        const u = url.htmlspecialchars();
+        let favicon = `chrome://favicon/${u}`;
+        let tooltipURL = url;
         if (/^javascript:/i.test(url)) {
             if (url.length > 140)
-                tooltipURL = url.slice(0, 140) + '...';
+                tooltipURL = `${url.slice(0, 140)}...`;
             favicon = 'document-code.png';
         }
         tooltipURL = tooltipURL.htmlspecialchars();
-        var name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
-        var bookmarkhtml = '<a href="' + u + '"' + ' title="' + tooltipURL +
-            '" tabindex="0" ' + extras + '>' +
-            '<img src="' + favicon + '" width="16" height="16" alt=""><i>' +
-            name + '</i>' + '</a>';
-        return bookmarkhtml;
+        const name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
+        return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras}>
+                <img src="${favicon}" width="16" height="16" alt="">
+                <i>${name}</i>
+                </a>`;
     };
 
-    var generateSeparatorHTML = function(paddingStart) {
-        var color = '#888888';
+    const generateSeparatorHTML = paddingStart => {
+        let color = '#888888';
         if (localStorage.separatorcolor) {
             color = localStorage.separatorcolor.colorHex();
         }
-        var extras = 'style="-webkit-padding-start: ' + paddingStart + 'px"';
-        var hrWidth = window.innerWidth - paddingStart - 40;
-        var separatorhtml = '<a href="#"' +
-            ' tabindex="0" ' + extras + '>' +
-            '<img width="16" height="16" style="display:none;"><i></i>' +
-            '<hr' +
-            ' class="child"' +
-            ' role="treeitem"' +
-            ' width="' + hrWidth + 'px"'
-            +
-            ' align=right'
-            +
-            ' style="border:1px dotted ' + color + ';"' +
-            '></a>';
-
-        return separatorhtml;
+        const extras = `style="-webkit-padding-start: ${paddingStart}px"`;
+        const hrWidth = window.innerWidth - paddingStart - 40;
+        const borderStyle = `style="border:1px dotted ${color};"`
+        return `<a href="#" tabindex="0" ${extras}>
+                <img width="16" height="16" style="display:none;">
+                <i></i>
+                <hr class="child" role="treeitem" width="${hrWidth}px" align=right ${borderStyle}">
+                </a>`;
     };
 
-    var generateHTML = function(data, level) {
+    const generateHTML = (data, level) => {
         if (!level)
             level = 0;
-        var paddingStart = 14 * level;
-        var group = (level == 0) ? 'tree' : 'group';
-        var html = '<ul role="' + group + '" data-level="' + level + '">';
+        const paddingStart = 14 * level;
+        const group = (level === 0) ? 'tree' : 'group';
+        let html = `<ul role="${group}" data-level="${level}">`;
 
-        for (var i = 0, l = data.length; i < l; i++) {
-            var d = data[i];
-            var children = d.children;
-            var title = d.title.htmlspecialchars();
-            var url = d.url;
-            var id = d.id;
-            var parentID = d.parentId;
-            var idHTML = id ? ' id="neat-tree-item-' + id + '"' : '';
-            var isFolder = d.dateGroupModified || children || typeof url == 'undefined';
+        for (let i = 0, l = data.length; i < l; i++) {
+            const d = data[i];
+            const children = d.children;
+            const title = d.title.htmlspecialchars();
+            const url = d.url;
+            const id = d.id;
+            const parentID = d.parentId;
+            const idHTML = id ? `id="neat-tree-item-${id}"` : '';
+            const isFolder = d.dateGroupModified || children || typeof url === 'undefined';
+            const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
             if (isFolder) { // folder node
-                var isOpen = false;
-                var open = '';
+                let isOpen = false;
+                let open = '';
                 if (rememberState) {
                     isOpen = opens.contains(id);
                     if (isOpen)
-                        open = ' open';
+                        open = 'open';
                 }
-                html += '<li class="parent' + open + '"' + idHTML + '" level="' + level +
-                    '" role="treeitem" aria-expanded="' + isOpen +
-                    '" data-parentid="' + parentID + '">' + '<span tabindex="0" style="-webkit-padding-start: ' +
-                    paddingStart + 'px"><b class="twisty"></b>' +
-                    '<img src="folder.png" width="16" height="16" alt=""><i>' +
-                    (title || _m('noTitle')) + '</i>' +
-                    '</span>';
+                html += `<li class="parent ${open}" ${idHTML} level="${level}" role="treeitem" aria-expanded="${isOpen}" data-parentid="${parentID}">
+                         <span tabindex="0" ${stylePad}>
+                            <b class="twisty"></b>
+                            <img src="folder.png" width="16" height="16" alt="">
+                            <i>${title || _m('noTitle')}</i>
+                         </span>`;
                 // only generate children for opened folder
                 if (isOpen) {
                     if (children) {
                         html += generateHTML(children, level + 1);
                     } else {
-                        (function(_id) {
-                            chrome.bookmarks.getChildren(_id, function(children) {
-                                var html = generateHTML(children, level + 1);
-                                var div = document.createElement('div');
+                        (_id => {
+                            chrome.bookmarks.getChildren(_id, children => {
+                                const html = generateHTML(children, level + 1);
+                                const div = document.createElement('div');
                                 div.innerHTML = html;
-                                var ul = div.querySelector('ul');
-                                ul.inject($('neat-tree-item-' + _id));
+                                const ul = div.querySelector('ul');
+                                ul.inject($(`neat-tree-item-${_id}`));
                                 div.destroy();
                             });
                         })(id);
@@ -499,14 +492,12 @@
                 }
             } else { // bookmark node
                 if (separatorManager.isSeparator(title, url)) {
-                    html += '<li class="child"' + idHTML + ' level="' + level +
-                        '" role="treeitem" data-parentid="' + parentID + '">' +
-                        generateSeparatorHTML(paddingStart);
+                    html += `<li class="child ${idHTML}" level="${level}" role="treeitem" data-parentid="${parentID}">
+                            ${generateSeparatorHTML(paddingStart)}`;
                     separatorManager.add(id);
                 } else {
-                    html += '<li class="child"' + idHTML + ' level="' + level +
-                        '" role="treeitem" data-parentid="' + parentID + '">' +
-                        generateBookmarkHTML(title, url, 'style="-webkit-padding-start: ' + paddingStart + 'px"');
+                    html += `<li class="child ${idHTML}" level="${level}" role="treeitem" data-parentid="${parentID}">
+                            ${generateBookmarkHTML(title, url, `${stylePad}`)}`;
                 }
             }
             html += '</li>';
@@ -515,16 +506,16 @@
         return html;
     };
 
-    addSeparator = function(nodeid, where) {
-        chrome.bookmarks.get(nodeid, function(nodeList) {
+    const addSeparator = (nodeId, where) => {
+        chrome.bookmarks.get(nodeId, nodeList => {
             if (!nodeList || !nodeList.length) {
                 return;
             }
-            var node = nodeList[0];
+            const node = nodeList[0];
             // get parent node
-            var parentID = node.parentId;
-            var parentNode = $('neat-tree-item-' + parentID);
-            var referencedNode = $('neat-tree-item-' + node.id);
+            const parentID = node.parentId;
+            let parentNode = $(`neat-tree-item-${parentID}`);
+            const referencedNode = $(`neat-tree-item-${node.id}`);
             if (!parentNode) {
                 parentNode = document.body;
             }
@@ -532,11 +523,11 @@
                 return;
             }
 
-            var newNodeIndex = 0;
-            if (where == 'before') {
+            let newNodeIndex = 0;
+            if (where === 'before') {
                 newNodeIndex = node.index;
             }
-            if (where == 'after') {
+            if (where === 'after') {
                 newNodeIndex = node.index + 1;
             }
 
@@ -544,73 +535,66 @@
                 'parentId': parentID,
                 'index': newNodeIndex,
                 'title': separatorManager.separatorTitle,
-                'url': separatorManager.separatorURL + '#' + Math.uuidFast()
-            }, function(resultbm) {
-                if ((where == "top" || where == "bottom") || !resultbm) {
+                'url': `${separatorManager.separatorURL}#${Math.uuidFast()}`
+            }, resultBm => {
+                if ((where === "top" || where === "bottom") || !resultBm) {
                     return;
                 }
-                var lv = 0;
+                let lv = 0;
                 if (!parentNode) { // root node
                     parentNode = document.body;
                 } else {
                     lv = parseInt(parentNode.parentNode.dataset.level) + 1;
                 }
-                var paddingStart = 14 * lv;
-                var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
-                var html = '<li class="child"' +
-                    idHTML +
-                    ' level="' + lv + '"' +
-                    ' role="treeitem" data-parentid="' +
-                    parentID +
-                    '">' +
-                    generateSeparatorHTML(paddingStart) + '</li>';
-                var div = document.createElement('div');
+                const paddingStart = 14 * lv;
+                const idHTML = resultBm.id ? ` id="neat-tree-item-${resultBm.id}"` : '';
+                const html = `<li class="child ${idHTML}" level="${lv}" role="treeitem" data-parentid="${parentID}">
+                             ${generateSeparatorHTML(paddingStart)}</li>`;
+                const div = document.createElement('div');
                 div.innerHTML = html;
-                var li = div.querySelector('li');
-                var ul = parentNode.querySelector('ul');
+                const li = div.querySelector('li');
+                let ul = parentNode.querySelector('ul');
                 // fix ul
                 if (!ul) {
-                    var tmpDIV = document.createElement('div');
-                    tmpDIV.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
-                    var newUL = tmpDIV.querySelector('ul');
+                    const tmpDIV = document.createElement('div');
+                    tmpDIV.innerHTML = `<ul role="group" data-level="${lv}"></ul>`;
+                    const newUL = tmpDIV.querySelector('ul');
                     parentNode.appendChild(newUL);
                     ul = parentNode.querySelector('ul');
                     tmpDIV.destroy();
                 }
-                if (where == 'before') {
+                if (where === 'before') {
                     ul.insertBefore(li, referencedNode);
                 }
-                if (where == 'after') {
+                if (where === 'after') {
                     ul.insertBefore(li, referencedNode.nextSibling);
                 }
 
                 div.destroy();
-                separatorManager.add(resultbm.id);
+                separatorManager.add(resultBm.id);
             });
         }); // end bookmarks.get
     };
 
-    deleteSeparator = function(id) {
-        var li = $('neat-tree-item-' + id);
-        chrome.bookmarks.removeTree(id, function() {
+    const deleteSeparator = id => {
+        const li = $(`neat-tree-item-${id}`);
+        chrome.bookmarks.removeTree(id, () => {
             li.destroy();
             separatorManager.remove(id);
         });
-        var nearLi = li.nextElementSibling || li.previousElementSibling;
+        const nearLi = li.nextElementSibling || li.previousElementSibling;
         if (nearLi)
             nearLi.querySelector('a, span').focus();
     };
 
     separatorManager.clear();
-    var $tree = $('tree');
-    
-    debugger;
+    let $tree = $('tree');
 
-    nodeTrees = {};
-    generateNodeTrees = function(data, list) {
+    const nodeTrees = {};
+    const generateNodeTrees = (data, list) => {
         if (data) {
-            for (var i = 0, l = data.length; i < l; i++) {
-                var d = data[i];
+            for (let i = 0, l = data.length; i < l; i++) {
+                const d = data[i];
                 if (!d.url) {
                     if (d.parentId > 1) {
                         list[d.id] = d.parentId;
@@ -621,13 +605,13 @@
         }
     };
 
-    getParentPath = function(nodeID, list) {
-        var nodePath = new Array();
+    const getParentPath = (nodeID, list) => {
+        const nodePath = [];
         nodePath.push(nodeID);
-        var lastID = nodeID;
+        let lastID = nodeID;
         while (nodeID) {
-            if ((nodeID in list)==true) {
-                if (lastID == list[nodeID]) {
+            if (nodeID in list) {
+                if (lastID === list[nodeID]) {
                     break;
                 }
                 nodePath.push(list[nodeID]);
@@ -640,14 +624,14 @@
         return nodePath.reverse();
     };
 
-    generateTree = function(tree) {
-        var subTree;
+    const generateTree = tree => {
+        let subTree;
         if (onlyShowBMBar) {
             subTree = tree[0].children[0].children;
         } else {
             subTree = tree[0].children;
         }
-        var html = generateHTML(subTree);
+        const html = generateHTML(subTree);
         generateNodeTrees(subTree, nodeTrees);
 
         $tree.innerHTML = html;
@@ -656,18 +640,18 @@
             $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
         }
 
-        var focusID = localStorage.focusID;
-        if (typeof focusID != 'undefined' && focusID != null) {
-            var focusEl = $('neat-tree-item-' + focusID);
+        const focusID = localStorage.focusID;
+        if (typeof focusID !== 'undefined' && focusID !== null) {
+            const focusEl = $(`neat-tree-item-${focusID}`);
             if (focusEl) {
-                var oriOverflow = $tree.style.overflow;
+                const oriOverflow = $tree.style.overflow;
                 $tree.style.overflow = 'hidden';
                 focusEl.style.width = '100%';
                 focusEl.firstElementChild.addClass('focus');
-                setTimeout(function() {
+                setTimeout(() => {
                     $tree.style.overflow = oriOverflow;
                 }, 1);
-                setTimeout(function() {
+                setTimeout(() => {
                     localStorage.removeItem('focusID');
                 }, 4000);
             }
@@ -676,10 +660,10 @@
         setTimeout(adaptBookmarkTooltips, 100);
 
         // try to load local separator list used in last version
-        sm = new SeparatorManager();
+        const sm = new SeparatorManager();
         sm.load();
-        var seps = sm.getAll();
-        for (var i = 0; i < seps.length; i++) {
+        const seps = sm.getAll();
+        for (let i = 0; i < seps.length; i++) {
             if (seps[i]) {
                 addSeparator(seps[i], 'after');
             }
@@ -690,81 +674,78 @@
 
         tree = null;
     };
-    
+
     chrome.bookmarks.getTree(generateTree);
 
     // Events for the tree
-    $tree.addEventListener('scroll', function() {
+    $tree.addEventListener('scroll', () => {
         localStorage.scrollTop = $tree.scrollTop;
     });
-    $tree.addEventListener('focus', function(e) {
-        var el = e.target;
-        var tagName = el.tagName;
-        var focusEl = $tree.querySelector('.focus');
+    $tree.addEventListener('focus', e => {
+        const el = e.target;
+        const tagName = el.tagName;
+        const focusEl = $tree.querySelector('.focus');
         if (focusEl)
             focusEl.removeClass('focus');
-        if (tagName == 'A' || tagName == 'SPAN') {
-            var id = el.parentNode.id.replace('neat-tree-item-', '');
-            localStorage.focusID = id;
+        if (tagName === 'A' || tagName === 'SPAN') {
+            localStorage.focusID = el.parentNode.id.replace('neat-tree-item-', '');
         } else {
             localStorage.focusID = null;
         }
     }, true);
-    var closeUnusedFolders = localStorage.closeUnusedFolders;
-    $tree.addEventListener('click', function(e) {
-        if (e.button != 0)
+    const closeUnusedFolders = localStorage.closeUnusedFolders;
+    $tree.addEventListener('click', e => {
+        if (e.button !== 0)
             return;
-        var el = e.target;
-        var tagName = el.tagName;
-        if (tagName != 'SPAN')
+        const el = e.target;
+        const tagName = el.tagName;
+        if (tagName !== 'SPAN')
             return;
         if (e.shiftKey || e.ctrlKey)
             return;
-        var parent = el.parentNode;
+        const parent = el.parentNode;
         parent.toggleClass('open');
-        var expanded = parent.hasClass('open');
+        const expanded = parent.hasClass('open');
         parent.setAttribute('aria-expanded', expanded);
-        var children = parent.querySelector('ul');
+        const children = parent.querySelector('ul');
         // expand children for unexpanded folder node
         if (!children) {
-            var id = parent.id.replace('neat-tree-item-', '');
-            chrome.bookmarks.getChildren(id, function(children) {
-                var html = generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
-                var div = document.createElement('div');
+            const id = parent.id.replace('neat-tree-item-', '');
+            chrome.bookmarks.getChildren(id, children => {
+                const html = generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
+                const div = document.createElement('div');
                 div.innerHTML = html;
-                var ul = div.querySelector('ul');
+                const ul = div.querySelector('ul');
                 ul.inject(parent);
                 div.destroy();
                 setTimeout(adaptBookmarkTooltips, 100);
             });
         }
         if (closeUnusedFolders && expanded) {
-            var siblings = parent.getSiblings('li');
-            for (var i = 0, l = siblings.length; i < l; i++) {
-                var li = siblings[i];
+            const siblings = parent.getSiblings('li');
+            for (let i = 0, l = siblings.length; i < l; i++) {
+                const li = siblings[i];
                 if (li.hasClass('parent')) {
                     li.removeClass('open').setAttribute('aria-expanded', false);
                 }
             }
         }
-        var opens = $tree.querySelectorAll('li.open');
-        opens = Array.map(function(li) {
-            return li.id.replace('neat-tree-item-', '');
-        }, opens);
+        let opens = $tree.querySelectorAll('li.open');
+        opens = Array.map(li => li.id.replace('neat-tree-item-', ''), opens);
         localStorage.opens = JSON.stringify(opens);
     });
     // Force middle clicks to trigger the focus event
-    $tree.addEventListener('mouseup', function(e) {
-        if (e.button != 1)
+    $tree.addEventListener('mouseup', e => {
+        if (e.button !== 1)
             return;
-        var el = e.target;
-        var tagName = el.tagName;
-        if (tagName != 'A' && tagName != 'SPAN')
+        const el = e.target;
+        const tagName = el.tagName;
+        if (tagName !== 'A' && tagName !== 'SPAN')
             return;
         el.focus();
     });
 
-    var switchBookmarkMenu = function(disable) {
+    const switchBookmarkMenu = disable => {
         if (disable) {
             $('add-bookmark-before-bookmark').style.display = 'none';
             $('add-bookmark-after-bookmark').style.display = 'none';
@@ -787,15 +768,15 @@
     };
 
     // Search
-    var $results = $('results');
-    var searchMode = false;
-    var searchInput = $('search-input');
-    var prevValue = '';
+    const $results = $('results');
+    let searchMode = false;
+    const searchInput = $('search-input');
+    let prevValue = '';
 
-    var search = function() {
-        var value = searchInput.value.trim();
+    const search = () => {
+        const value = searchInput.value.trim();
         localStorage.searchQuery = value;
-        if (value == '') {
+        if (value === '') {
             prevValue = '';
             searchMode = false;
             switchBookmarkMenu(false);
@@ -803,26 +784,26 @@
             $results.style.display = 'none';
             return;
         }
-        if (value == prevValue)
+        if (value === prevValue)
             return;
         prevValue = value;
         searchMode = true;
         switchBookmarkMenu(true);
-        chrome.bookmarks.search(value, function(results) {
-            var v = value.toLowerCase();
-            var vPattern = new RegExp('^' + value.escapeRegExp().replace(/\s+/g, '.*'), 'ig');
+        chrome.bookmarks.search(value, results => {
+            const v = value.toLowerCase();
+            let vPattern = new RegExp(`^${value.escapeRegExp().replace(/\s+/g, '.*')}`, 'ig');
             if (results.length > 1) {
-                results.sort(function(a, b) {
+                results.sort((a, b) => {
                     if (a.url && !b.url) {
                         return 1;
                     }
                     if (!a.url && b.url) {
                         return -1;
                     }
-                    var aTitle = a.title;
-                    var bTitle = b.title;
-                    var aIndexTitle = aTitle.toLowerCase().indexOf(v);
-                    var bIndexTitle = bTitle.toLowerCase().indexOf(v);
+                    const aTitle = a.title;
+                    const bTitle = b.title;
+                    let aIndexTitle = aTitle.toLowerCase().indexOf(v);
+                    let bIndexTitle = bTitle.toLowerCase().indexOf(v);
                     if (aIndexTitle >= 0 || bIndexTitle >= 0) {
                         if (aIndexTitle < 0)
                             aIndexTitle = Infinity;
@@ -830,8 +811,8 @@
                             bIndexTitle = Infinity;
                         return aIndexTitle - bIndexTitle;
                     }
-                    var aTestTitle = vPattern.test(aTitle);
-                    var bTestTitle = vPattern.test(bTitle);
+                    const aTestTitle = vPattern.test(aTitle);
+                    const bTestTitle = vPattern.test(bTitle);
                     if (aTestTitle && !bTestTitle)
                         return -1;
                     if (!aTestTitle && bTestTitle)
@@ -840,20 +821,21 @@
                 });
                 results = results.slice(0, 100); // 100 is enough
             }
-            var html = '<ul role="list">';
-            for (var i = 0, l = results.length; i < l; i++) {
-                var result = results[i];
-                var id = result.id;
+            let html = '<ul role="list">';
+            for (let i = 0, l = results.length; i < l; i++) {
+                const result = results[i];
+                const id = result.id;
                 if (result.url) {
                     if (!separatorManager.isSeparator(result.title, result.url)) {
-                        html += '<li data-parentid="' + result.parentId + '" id="results-item-' + id + '" role="listitem">' +
-                            generateBookmarkHTML(result.title, result.url) + '</li>';
+                        html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
+                                ${generateBookmarkHTML(result.title, result.url)}</li>`;
                     }
                 } else {  // folder
-                    html += '<li id="results-item-' + id + '" role="listitem"' +
-                    '" data-parentid="' + result.parentId + '">' + '<a href="" class="link-folder">' +
-                    '<img src="folder.png" width="16" height="16" alt=""><i>' +
-                    (result.title || _m('noTitle')) + '</i>' + '</a>' + '</li>';
+                    html += `<li id="results-item-${id}" role="listitem"" data-parentid="${result.parentId}">
+                            <a href="" class="link-folder">
+                            <img src="folder.png" width="16" height="16" alt="">
+                            <i>${result.title || _m('noTitle')}</i>
+                            </a></li>`;
                 }
             }
             html += '</ul>';
@@ -861,16 +843,16 @@
             $results.innerHTML = html;
             $results.style.display = 'block';
 
-            var lis = $results.querySelectorAll('li');
-            Array.forEach(function(li) {
-                var parentId = li.dataset.parentid;
-                chrome.bookmarks.get(parentId, function(node) {
+            let lis = $results.querySelectorAll('li');
+            Array.forEach(li => {
+                const parentId = li.dataset.parentid;
+                chrome.bookmarks.get(parentId, node => {
                     if (!node || !node.length)
                         return;
-                    var a = li.querySelector('a');
+                    const a = li.querySelector('a');
                     // Add parent folder
                     if (a && node[0]) {
-                        a.title = _m('parentFolder', node[0].title || 'root') + '\n' + a.title;
+                        a.title = `${_m('parentFolder', node[0].title || 'root')}\n${a.title}`;
                     }
                 });
             }, lis);
@@ -882,54 +864,55 @@
     };
     searchInput.addEventListener('input', search);
 
-    searchInput.addEventListener('keydown', function(e) {
-        var key = e.keyCode;
-        var focusID = localStorage.focusID;
-        if (key == 40 && searchInput.value.length == searchInput.selectionEnd) { // down
+    searchInput.addEventListener('keydown', e => {
+        const key = e.keyCode;
+        const focusID = localStorage.focusID;
+        if (key === 40 && searchInput.value.length === searchInput.selectionEnd) { // down
             e.preventDefault();
             if (searchMode) {
                 $results.querySelector('ul>li:first-child a').focus();
             } else {
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
-        } else if (key == 13 && searchInput.value.length) { // enter
-            var item = $results.querySelector('ul>li:first-child a');
+        } else if (key === 13 && searchInput.value.length) { // enter
+            const item = $results.querySelector('ul>li:first-child a');
             if (item) {
                 item.focus();
-                setTimeout(function() {
-                    var event = document.createEvent('MouseEvents');
-                    event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                setTimeout(() => {
+                    const event = document.createEvent('MouseEvents');
+                    event.initMouseEvent('click', true, true, window, 0,
+                        0, 0, 0, 0,
+                        false, false, false, false, 0, null);
                     item.dispatchEvent(event);
                 }, 30);
             }
-        } else if (key == 9 && !searchMode) { // tab
-            if (typeof focusID != 'undefined' && focusID != null) {
-                var focusEl = $('neat-tree-item-' + focusID);
+        } else if (key === 9 && !searchMode) { // tab
+            if (typeof focusID !== 'undefined' && focusID !== null) {
+                const focusEl = $(`neat-tree-item-${focusID}`);
                 if (focusEl) {
                     e.preventDefault();
                     focusEl.firstElementChild.focus();
                 }
             } else {
-                var bound = $tree.scrollTop;
-                var items = $tree.querySelectorAll('a, span');
-                var firstItem = Array.filter(function(item) {
-                    return !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound);
-                }, items)[0];
+                const bound = $tree.scrollTop;
+                const items = $tree.querySelectorAll('a, span');
+                const firstItem = Array.filter(item =>
+                    !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound), items)[0];
                 if (firstItem)
                     firstItem.focus();
             }
             // Pressing esc shouldn't close the popup when search field has value
-        } else if (e.keyCode == 27 && searchInput.value) { // esc
+        } else if (e.keyCode === 27 && searchInput.value) { // esc
             e.preventDefault();
             searchInput.value = '';
             search();
         }
     });
 
-    searchInput.addEventListener('focus', function() {
+    searchInput.addEventListener('focus', () => {
         body.addClass('searchFocus');
     });
-    searchInput.addEventListener('blur', function() {
+    searchInput.addEventListener('blur', () => {
         body.removeClass('searchFocus');
     });
 
@@ -942,23 +925,23 @@
     }
 
     // Popup auto-height
-    var resetHeight = function() {
-        var zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
-        setTimeout(function() {
-            var neatTree = $tree.firstElementChild;
+    const resetHeight = () => {
+        const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
+        setTimeout(() => {
+            const neatTree = $tree.firstElementChild;
             if (neatTree) {
-                var fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-                chrome.tabs.getZoom(function (zoomFactor) {
-                    var maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                    var height = Math.max(200, Math.min(fullHeight, maxHeight));
-                    var newheightstyle = height + 'px';
-                    if (localStorage.popupHeight != height) {
+                let fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+                chrome.tabs.getZoom(zoomFactor => {
+                    const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+                    const height = Math.max(200, Math.min(fullHeight, maxHeight));
+                    const newHeightStyle = `${height}px`;
+                    if (localStorage.popupHeight !== height) {
                         // Slide up faster than down
                         body.style.webkitTransitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-                        body.style.height = newheightstyle;
+                        body.style.height = newHeightStyle;
                         localStorage.popupHeight = height;
                     }
-                }); 
+                });
             }
         }, 200);
     };
@@ -970,8 +953,8 @@
     $tree.addEventListener('keyup', resetHeight);
 
     // Confirm dialog
-    ConfirmDialog = {
-        open: function(opts) {
+    const ConfirmDialog = {
+        open: opts => {
             if (!opts)
                 return;
             $('confirm-dialog-text').innerHTML = opts.dialog.widont();
@@ -981,32 +964,34 @@
                 ConfirmDialog.fn1 = opts.fn1;
             if (opts.fn2)
                 ConfirmDialog.fn2 = opts.fn2;
-            $('confirm-dialog-button-' + (opts.focusButton || 1)).focus();
+            $(`confirm-dialog-button-${opts.focusButton || 1}`).focus();
             document.body.addClass('needConfirm');
         },
-        close: function() {
+        close: () => {
             document.body.removeClass('needConfirm');
         },
-        fn1: function() {},
-        fn2: function() {}
+        fn1: () => {
+        },
+        fn2: () => {
+        }
     };
 
     // Edit dialog
-    EditDialog = {
-        open: function(opts) {
+    const EditDialog = {
+        open: opts => {
             if (!opts)
                 return;
             $('edit-dialog-text').innerHTML = opts.dialog.widont();
             if (opts.fn)
                 EditDialog.fn = opts.fn;
-            var type = opts.type || 'bookmark';
-            var name = $('edit-dialog-name');
+            const type = opts.type || 'bookmark';
+            const name = $('edit-dialog-name');
             name.value = opts.name;
             name.focus();
             name.select();
             name.scrollLeft = 0; // very delicate, show first few words instead of last
-            var url = $('edit-dialog-url');
-            if (type == 'bookmark') {
+            const url = $('edit-dialog-url');
+            if (type === 'bookmark') {
                 url.style.display = '';
                 url.disabled = false;
                 url.value = opts.url;
@@ -1018,101 +1003,102 @@
             //if lose focus, the page will submit it if belowing class exists.
             body.addClass('needEdit');
         },
-        close: function(bave) {
-            if (bave == false) {
+        close: needSave => {
+            if (needSave === false) {
                 body.removeClass('needEdit');
                 return;
             }
-            var urlInput = $('edit-dialog-url');
-            var url = urlInput.value;
+            const urlInput = $('edit-dialog-url');
+            let url = urlInput.value;
             if (!urlInput.validity.valid) {
-                urlInput.value = 'http://' + url;
+                urlInput.value = `http://${url}`;
                 if (!urlInput.validity.valid)
                     url = ''; // if still invalid, fuck it.
-                url = 'http://' + url;
+                url = `http://${url}`;
             }
             EditDialog.fn($('edit-dialog-name').value, url);
             body.removeClass('needEdit');
         },
-        fn: function() {}
+        fn: () => {
+        }
     };
 
     // ++++++++ modified by windviki@gmail.com ++++++++
     // New Folder Dialog
-    NewFolderDialog = {
-        open: function(optname, optcall) {
+    const NewFolderDialog = {
+        open: (optName, optCall) => {
             $('new-folder-dialog-text').innerHTML = _m('editFolder');
-            if (optcall)
-                NewFolderDialog.fn = optcall;
-            var name = $('new-folder-dialog-name');
-            name.value = optname;
+            if (optCall)
+                NewFolderDialog.fn = optCall;
+            const name = $('new-folder-dialog-name');
+            name.value = optName;
             name.focus();
             name.select();
             name.scrollLeft = 0;
             //if lose focus, the page will submit it if belowing class exists.
             body.addClass('needInputName');
         },
-        close: function(bsave) {
+        close: needSave => {
             body.removeClass('needInputName');
-            if (bsave != false) {
+            if (needSave !== false) {
                 NewFolderDialog.fn($('new-folder-dialog-name').value);
             }
         },
-        fn: function() {}
+        fn: () => {
+        }
     };
     // ++++++++ end ++++++++
 
     // Events for dialogs
-    $('confirm-dialog-button-1').addEventListener('click', function(e) {
+    $('confirm-dialog-button-1').addEventListener('click', e => {
         ConfirmDialog.fn1();
         ConfirmDialog.close();
     });
-    $('confirm-dialog-button-2').addEventListener('click', function(e) {
+    $('confirm-dialog-button-2').addEventListener('click', e => {
         ConfirmDialog.fn2();
         ConfirmDialog.close();
     });
-    $('edit-dialog-cancel-button').addEventListener('click', function(e) {
+    $('edit-dialog-cancel-button').addEventListener('click', e => {
         EditDialog.close(false);
     });
-    $('new-folder-dialog-cancel-button').addEventListener('click', function(e) {
+    $('new-folder-dialog-cancel-button').addEventListener('click', e => {
         NewFolderDialog.close(false);
     });
-    $('edit-dialog-form').addEventListener('submit', function(e) {
+    $('edit-dialog-form').addEventListener('submit', e => {
         EditDialog.close();
         return false;
     });
-    $('new-folder-dialog-form').addEventListener('submit', function(e) {
+    $('new-folder-dialog-form').addEventListener('submit', e => {
         NewFolderDialog.close();
         return false;
     });
 
-    var filterURL = function(url, target) {
-        return url.replace(/__VBM_CURRENT_TAB_URL__/, encodeURIComponent(target));
-    };
+    const filterURL = (url, target) => url.replace(/__VBM_CURRENT_TAB_URL__/, encodeURIComponent(target));
 
     // Bookmark handling
-    var dontConfirmOpenFolder = !!localStorage.dontConfirmOpenFolder;
-    var bookmarkClickStayOpen = !!localStorage.bookmarkClickStayOpen;
-    var openBookmarksLimit = 10;
-    var actions = {
-        openBookmark: function(url) {
+    const dontConfirmOpenFolder = !!localStorage.dontConfirmOpenFolder;
+    const bookmarkClickStayOpen = !!localStorage.bookmarkClickStayOpen;
+    const openBookmarksLimit = 10;
+    const actions = {
+        openBookmark: url => {
             chrome.tabs.query({
                     'active': true,
                     'windowId': chrome.windows.WINDOW_ID_CURRENT
                 },
-                function(tabs) {
-                    var tab = tabs[0];
-                    var filteredURL = url;
+                tabs => {
+                    const tab = tabs[0];
+                    let filteredURL = url;
                     if (/^.*__VBM_CURRENT_TAB_URL__.*/i.test(url)) {
                         filteredURL = filterURL(url, tab.url);
                     }
+                    let decodedurl;
                     try {
                         decodedurl = decodeURIComponent(filteredURL);
                     } catch (e) {
                         return;
                     }
-                    
-                    if (/^javascript:.*/i.test(url)){
+
+                    if (/^javascript:.*/i.test(url)) {
                         //bookmarklet
                         chrome.tabs.executeScript(tab.id, {
                             code: decodedurl
@@ -1129,8 +1115,8 @@
                 });
         },
 
-        openBookmarkNewTab: function(url, selected, blankTabCheck) {
-            var open = function(openURL) {
+        openBookmarkNewTab: (url, selected, blankTabCheck) => {
+            const open = openURL => {
                 chrome.tabs.create({
                     url: openURL,
                     selected: selected
@@ -1140,9 +1126,9 @@
                     'active': true,
                     'windowId': chrome.windows.WINDOW_ID_CURRENT
                 },
-                function(tabs) {
-                    var tab = tabs[0];
-                    var filteredURL = url;
+                tabs => {
+                    const tab = tabs[0];
+                    let filteredURL = url;
                     if (/^.*__VBM_CURRENT_TAB_URL__.*/i.test(url)) {
                         filteredURL = filterURL(url, tab.url);
                     }
@@ -1163,14 +1149,14 @@
                 });
         },
 
-        openBookmarkNewWindow: function(url, incognito) {
+        openBookmarkNewWindow: (url, incognito) => {
             chrome.tabs.query({
                     'active': true,
                     'windowId': chrome.windows.WINDOW_ID_CURRENT
                 },
-                function(tabs) {
-                    var tab = tabs[0];
-                    var filteredURL = url;
+                tabs => {
+                    const tab = tabs[0];
+                    let filteredURL = url;
                     if (/^.*__VBM_CURRENT_TAB_URL__.*/i.test(url)) {
                         filteredURL = filterURL(url, tab.url);
                     }
@@ -1182,182 +1168,176 @@
         },
 
         // ++++++++ added by windviki@gmail.com ++++++++
-        addNewBookmarkNode: function(nodeid, where, inurl, intitle) {
-            chrome.bookmarks.get(nodeid, function(nodeList) {
+        addNewBookmarkNode: (nodeid, where, inurl, intitle) => {
+            chrome.bookmarks.get(nodeid, nodeList => {
                 if (!nodeList.length)
                     return;
-                var node = nodeList[0];
-                var url = node.url;
+                const node = nodeList[0];
+                const url = node.url;
                 // check whether the referenced node is bookmark or folder
-                var isBookmark = !!url;
+                const isBookmark = !!url;
                 // if the referenced node is folder, check whether it is open
-                var isOpenDir = false;
+                let isOpenDir = false;
                 // check whether the target node is bookmark or folder
-                var isAddBookmark = !!inurl;
-                var addurl = inurl;
-                var addtitle = intitle;
+                const isAddBookmark = !!inurl;
+                const addUrl = inurl;
+                let addTitle = intitle;
 
                 // get parent node
-                var parentid = node.parentId;
-                var pnode = $('neat-tree-item-' + parentid);
-                var rnode = $('neat-tree-item-' + node.id);
-                var iindex = 0;
-                if (where == 'before') {
-                    iindex = node.index;
+                let parentid = node.parentId;
+                let pNode = $(`neat-tree-item-${parentid}`);
+                const rNode = $(`neat-tree-item-${node.id}`);
+                let iIndex = 0;
+                if (where === 'before') {
+                    iIndex = node.index;
                 }
-                if (where == 'after') {
-                    iindex = node.index + 1;
+                if (where === 'after') {
+                    iIndex = node.index + 1;
                 }
 
                 // referenced node is folder - 'top', 'bottom', 'before', 'after'
                 // referenced node is bookmark - 'before', 'after'
                 if (isBookmark) {
-                    if (where == 'top' || where == 'bottom')
+                    if (where === 'top' || where === 'bottom')
                         return;
                 } else {
-                    isOpenDir = (rnode.getAttribute('aria-expanded') == 'true');
+                    isOpenDir = (rNode.getAttribute('aria-expanded') === 'true');
                 }
 
                 // referenced node is folder
-                if (where == 'top') {
-                    iindex = 0;
+                if (where === 'top') {
+                    iIndex = 0;
                     parentid = node.id;
-                    pnode = $('neat-tree-item-' + parentid);
+                    pNode = $(`neat-tree-item-${parentid}`);
                 }
-                if (where == 'bottom') {
+                if (where === 'bottom') {
                     // iindex = node.children.length;
-                    chrome.bookmarks.getChildren(node.id, function(nodechildren) {
-                        iindex = nodechildren.length;
+                    chrome.bookmarks.getChildren(node.id, nodeChildren => {
+                        iIndex = nodeChildren.length;
                     });
                     parentid = node.id;
-                    pnode = $('neat-tree-item-' + parentid);
+                    pNode = $(`neat-tree-item-${parentid}`);
                 }
 
-                if (!pnode) {
+                if (!pNode) {
                     // console.log('null pnode found!!');
                 }
 
                 if (isAddBookmark) { // add bookmark
                     chrome.bookmarks.create({
                         'parentId': parentid,
-                        'index': iindex,
-                        'title': addtitle,
-                        'url': addurl
-                    }, function(resultbm) {
-                        if (!isOpenDir && (where == "top" || where == "bottom")) {
+                        'index': iIndex,
+                        'title': addTitle,
+                        'url': addUrl
+                    }, resultBm => {
+                        if (!isOpenDir && (where === "top" || where === "bottom")) {
                             return;
                         }
-                        var lv = 0;
-                        if (!pnode) {
+                        let lv = 0;
+                        if (!pNode) {
                             // root
-                            pnode = document.body;
+                            pNode = document.body;
                         } else {
-                            lv = parseInt(pnode.parentNode.dataset.level) + 1;
+                            lv = parseInt(pNode.parentNode.dataset.level) + 1;
                         }
-                        var paddingStart = 14 * lv;
-                        var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
-                        var html = '';
+                        const paddingStart = 14 * lv;
+                        const idHTML = resultBm.id ? ` id="neat-tree-item-${resultBm.id}"` : '';
+                        let html = '';
                         // add bookmark
-                        html += '<li class="child"' +
-                            idHTML +
-                            ' level="' + lv + '"' +
-                            ' role="treeitem" data-parentid="' +
-                            parentid +
-                            '">' +
-                            generateBookmarkHTML(addtitle, addurl, 'style="-webkit-padding-start: ' +
-                                paddingStart + 'px"') + '</li>';
-                        var div = document.createElement('div');
+                        const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
+                        html += `<li class="child ${idHTML}" level="${lv}" role="treeitem" data-parentid="${parentid}">
+                                ${generateBookmarkHTML(addTitle, addUrl, `${stylePad}`)}</li>`;
+                        const div = document.createElement('div');
                         div.innerHTML = html;
-                        var li = div.querySelector('li');
-                        var ul = pnode.querySelector('ul');
+                        const li = div.querySelector('li');
+                        let ul = pNode.querySelector('ul');
                         // fix ul
                         if (!ul) {
-                            var tmpdiv = document.createElement('div');
-                            tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
-                            var newul = tmpdiv.querySelector('ul');
-                            pnode.appendChild(newul);
-                            ul = pnode.querySelector('ul');
-                            tmpdiv.destroy();
+                            const tmpDiv = document.createElement('div');
+                            tmpDiv.innerHTML = `<ul role="group" data-level="${lv}"></ul>`;
+                            const newUl = tmpDiv.querySelector('ul');
+                            pNode.appendChild(newUl);
+                            ul = pNode.querySelector('ul');
+                            tmpDiv.destroy();
                         }
-                        if (where == 'top') {
+                        if (where === 'top') {
                             if (ul.firstElementChild) {
                                 ul.insertBefore(li, ul.firstElementChild);
                             } else {
                                 ul.appendChild(li);
                             }
                         }
-                        if (where == 'bottom') {
+                        if (where === 'bottom') {
                             ul.appendChild(li);
                         }
-                        if (where == 'before') {
-                            ul.insertBefore(li, rnode);
+                        if (where === 'before') {
+                            ul.insertBefore(li, rNode);
                         }
-                        if (where == 'after') {
-                            ul.insertBefore(li, rnode.nextSibling);
+                        if (where === 'after') {
+                            ul.insertBefore(li, rNode.nextSibling);
                         }
 
                         div.destroy();
                     });
                 } else { // add folder
-                    NewFolderDialog.open('NewFolder', function(dirtitle) {
-                        addtitle = dirtitle;
+                    NewFolderDialog.open('NewFolder', dirTitle => {
+                        addTitle = dirTitle;
                         chrome.bookmarks.create({
                             'parentId': parentid,
-                            'index': iindex,
-                            'title': addtitle,
-                            'url': addurl
-                        }, function(resultbm) {
-                            if (!isOpenDir && (where == "top" || where == "bottom")) {
+                            'index': iIndex,
+                            'title': addTitle,
+                            'url': addUrl
+                        }, resultBm => {
+                            if (!isOpenDir && (where === "top" || where === "bottom")) {
                                 return;
                             }
-                            var lv = 0;
-                            if (!pnode) {
+                            let lv = 0;
+                            if (!pNode) {
                                 // root
-                                pnode = document.body;
+                                pNode = document.body;
                             } else {
-                                lv = parseInt(pnode.parentNode.dataset.level) + 1;
+                                lv = parseInt(pNode.parentNode.dataset.level) + 1;
                             }
-                            var paddingStart = 14 * lv;
-                            var idHTML = resultbm.id ? ' id="neat-tree-item-' + resultbm.id + '"' : '';
-                            var html = '';
+                            const paddingStart = 14 * lv;
+                            const idHTML = resultBm.id ? ` id="neat-tree-item-${resultBm.id}"` : '';
+                            let html = '';
                             // add folder
-                            html += '<li class="parent"' + idHTML +
-                                ' level="' + lv + '"' +
-                                ' role="treeitem" aria-expanded="false" data-parentid="' + parentid + '">';
-                            html += '<span tabindex="0" style="-webkit-padding-start: ' + paddingStart +
-                                'px"><b class="twisty"></b>' +
-                                '<img src="folder.png" width="16" height="16" alt=""><i>' +
-                                (addtitle || _m('noTitle')) + '</i>' + '</span>';
+                            html += `<li class="parent ${idHTML}" level="${lv}" role="treeitem" aria-expanded="false" data-parentid="${parentid}">`;
+                            html += `<span tabindex="0" style="-webkit-padding-start: ${paddingStart}px">
+                                    <b class="twisty"></b>
+                                    <img src="folder.png" width="16" height="16" alt="">
+                                    <i>${addTitle || _m('noTitle')}</i>
+                                    </span>`;
                             html += '</li>';
 
-                            var div = document.createElement('div');
+                            const div = document.createElement('div');
                             div.innerHTML = html;
-                            var li = div.querySelector('li');
-                            var ul = pnode.querySelector('ul');
+                            const li = div.querySelector('li');
+                            let ul = pNode.querySelector('ul');
                             // fix ul
                             if (!ul) {
-                                var tmpdiv = document.createElement('div');
-                                tmpdiv.innerHTML = '<ul role="group" data-level="' + lv + '"></ul>';
-                                var newul = tmpdiv.querySelector('ul');
-                                pnode.appendChild(newul);
-                                ul = pnode.querySelector('ul');
-                                tmpdiv.destroy();
+                                const tmpDiv = document.createElement('div');
+                                tmpDiv.innerHTML = `<ul role="group" data-level="${lv}"></ul>`;
+                                const newUl = tmpDiv.querySelector('ul');
+                                pNode.appendChild(newUl);
+                                ul = pNode.querySelector('ul');
+                                tmpDiv.destroy();
                             }
-                            if (where == 'top') {
+                            if (where === 'top') {
                                 if (ul.firstElementChild) {
                                     ul.insertBefore(li, ul.firstElementChild);
                                 } else {
                                     ul.appendChild(li);
                                 }
                             }
-                            if (where == 'bottom') {
+                            if (where === 'bottom') {
                                 ul.appendChild(li);
                             }
-                            if (where == 'before') {
-                                ul.insertBefore(li, rnode);
+                            if (where === 'before') {
+                                ul.insertBefore(li, rNode);
                             }
-                            if (where == 'after') {
-                                ul.insertBefore(li, rnode.nextSibling);
+                            if (where === 'after') {
+                                ul.insertBefore(li, rNode.nextSibling);
                             }
 
                             div.destroy();
@@ -1367,37 +1347,37 @@
             }); // end bookmarks.get
         },
 
-        copyAllTitlesAndUrls: function(nodeid) {
-            var tt = new TreeText(nodeid);
-            tt.get(function(textresult) {
-                copy_to_clipboard(textresult);
+        copyAllTitlesAndUrls: nodeId => {
+            const tt = new TreeText(nodeId);
+            tt.get(textResult => {
+                copyToClipboard(textResult);
             });
         },
 
-        replaceUrl: function(nodeid, newurl) {
-            chrome.bookmarks.get(nodeid, function(nodeList) {
+        replaceUrl: (nodeId, newUrl) => {
+            chrome.bookmarks.get(nodeId, nodeList => {
                 if (!nodeList.length)
                     return;
-                var node = nodeList[0];
+                const node = nodeList[0];
                 // ensure it is a bookmark
-                if (!!node.url && !!newurl) {
+                if (!!node.url && !!newUrl) {
                     chrome.bookmarks.update(node.id, {
-                        url: newurl
+                        url: newUrl
                     });
                 }
             });
         },
         // ++++++++ end ++++++++
 
-        openBookmarks: function(urls, selected) {
-            var urlsLen = urls.length;
-            var open = function() {
+        openBookmarks: (urls, selected) => {
+            const urlsLen = urls.length;
+            const open = () => {
                 chrome.tabs.create({
                     url: urls.shift(),
                     selected: selected
-                        // first tab will be selected
+                    // first tab will be selected
                 });
-                for (var i = 0, l = urls.length; i < l; i++) {
+                for (let i = 0, l = urls.length; i < l; i++) {
                     chrome.tabs.create({
                         url: urls[i],
                         selected: false
@@ -1406,8 +1386,8 @@
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
                 ConfirmDialog.open({
-                    dialog: _m('confirmOpenBookmarks', '' + urlsLen),
-                    button1: '<strong>' + _m('open') + '</strong>',
+                    dialog: _m('confirmOpenBookmarks', `${urlsLen}`),
+                    button1: `<strong>${_m('open')}</strong>`,
                     button2: _m('nope'),
                     fn1: open
                 });
@@ -1416,20 +1396,20 @@
             }
         },
 
-        openBookmarksNewWindow: function(urls, incognito) {
-            var urlsLen = urls.length;
-            var open = function() {
+        openBookmarksNewWindow: (urls, incognito) => {
+            const urlsLen = urls.length;
+            const open = () => {
                 chrome.windows.create({
                     url: urls,
                     incognito: incognito
                 });
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
-                var dialog = incognito ? _m('confirmOpenBookmarksNewIncognitoWindow', '' + urlsLen) : _m(
-                    'confirmOpenBookmarksNewWindow', '' + urlsLen);
+                const dialog = incognito ? _m('confirmOpenBookmarksNewIncognitoWindow', `${urlsLen}`) : _m(
+                    'confirmOpenBookmarksNewWindow', `${urlsLen}`);
                 ConfirmDialog.open({
                     dialog: dialog,
-                    button1: '<strong>' + _m('open') + '</strong>',
+                    button1: `<strong>${_m('open')}</strong>`,
                     button2: _m('nope'),
                     fn1: open
                 });
@@ -1438,49 +1418,49 @@
             }
         },
 
-        editBookmarkFolder: function(id) {
-            chrome.bookmarks.get(id, function(nodeList) {
+        editBookmarkFolder: id => {
+            chrome.bookmarks.get(id, nodeList => {
                 if (!nodeList.length)
                     return;
-                var node = nodeList[0];
-                var url = node.url;
-                var isBookmark = !!url;
-                var type = isBookmark ? 'bookmark' : 'folder';
-                var dialog = isBookmark ? _m('editBookmark') : _m('editFolder');
+                const node = nodeList[0];
+                const url = node.url;
+                const isBookmark = !!url;
+                const type = isBookmark ? 'bookmark' : 'folder';
+                const dialog = isBookmark ? _m('editBookmark') : _m('editFolder');
+                let decodedUrl;
                 try {
-                    decodedurl = decodeURIComponent(url);
+                    decodedUrl = decodeURIComponent(url);
                 } catch (e) {
-                    decodedurl = url;
+                    decodedUrl = url;
                 }
                 EditDialog.open({
                     dialog: dialog,
                     type: type,
                     name: node.title,
-                    url: decodedurl,
-                    fn: function(name, url) {
+                    url: decodedUrl,
+                    fn: (name, url) => {
                         chrome.bookmarks.update(id, {
                                 title: name,
                                 url: isBookmark ? url : ''
                             },
-                            function(n) {
-                                var title = n.title;
-                                var url = n.url;
-                                var li = $('neat-tree-item-' + id);
+                            n => {
+                                const title = n.title;
+                                const url = n.url;
+                                let li = $(`neat-tree-item-${id}`);
                                 if (li) {
                                     if (isBookmark) {
-                                        var css = li.querySelector('a').style.cssText;
-                                        li.innerHTML = generateBookmarkHTML(title, url, 'style="' + css + '"');
+                                        const css = li.querySelector('a').style.cssText;
+                                        li.innerHTML = generateBookmarkHTML(title, url, `style="${css}"`);
                                     } else {
-                                        var i = li.querySelector('i');
-                                        var name = title ||
+                                        const i = li.querySelector('i');
+                                        i.textContent = title ||
                                             (httpsPattern.test(url) ?
                                                 url.replace(httpsPattern, '') :
                                                 _m('noTitle'));
-                                        i.textContent = name;
                                     }
                                 }
                                 if (searchMode) {
-                                    li = $('results-item-' + id);
+                                    li = $(`results-item-${id}`);
                                     li.innerHTML = generateBookmarkHTML(title, url);
                                 }
                                 li.firstElementChild.focus();
@@ -1490,18 +1470,18 @@
             });
         },
 
-        deleteBookmark: function(id) {
-            var li1 = $('neat-tree-item-' + id);
-            var li2 = $('results-item-' + id);
-            chrome.bookmarks.remove(id, function() {
+        deleteBookmark: id => {
+            const li1 = $(`neat-tree-item-${id}`);
+            const li2 = $(`results-item-${id}`);
+            chrome.bookmarks.remove(id, () => {
                 if (li1) {
-                    var nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
+                    const nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
                     li1.destroy();
                     if (!searchMode && nearLi1)
                         nearLi1.querySelector('a, span').focus();
                 }
                 if (li2) {
-                    var nearLi2 = li2.nextElementSibling || li2.previousElementSibling;
+                    const nearLi2 = li2.nextElementSibling || li2.previousElementSibling;
                     li2.destroy();
                     if (searchMode && nearLi2)
                         nearLi2.querySelector('a, span').focus();
@@ -1509,12 +1489,12 @@
             });
         },
 
-        deleteBookmarks: function(id, bookmarkCount, folderCount) {
-            var li = $('neat-tree-item-' + id);
-            var item = li.querySelector('span');
+        deleteBookmarks: (id, bookmarkCount, folderCount) => {
+            const li = $(`neat-tree-item-${id}`);
+            const item = li.querySelector('span');
             if (bookmarkCount || folderCount) {
-                var dialog = '';
-                var folderName = '<cite>' + item.textContent.trim() + '</cite>';
+                let dialog;
+                const folderName = `<cite>${item.textContent.trim()}</cite>`;
                 if (bookmarkCount && folderCount) {
                     dialog = _m('confirmDeleteFolderSubfoldersBookmarks', [folderName, folderCount, bookmarkCount]);
                 } else if (bookmarkCount) {
@@ -1524,25 +1504,25 @@
                 }
                 ConfirmDialog.open({
                     dialog: dialog,
-                    button1: '<strong>' + _m('delete') + '</strong>',
+                    button1: `<strong>${_m('delete')}</strong>`,
                     button2: _m('nope'),
-                    fn1: function() {
-                        chrome.bookmarks.removeTree(id, function() {
+                    fn1: () => {
+                        chrome.bookmarks.removeTree(id, () => {
                             li.destroy();
                         });
-                        var nearLi = li.nextElementSibling || li.previousElementSibling;
+                        const nearLi = li.nextElementSibling || li.previousElementSibling;
                         if (nearLi)
                             nearLi.querySelector('a, span').focus();
                     },
-                    fn2: function() {
+                    fn2: () => {
                         li.querySelector('a, span').focus();
                     }
                 });
             } else {
-                chrome.bookmarks.removeTree(id, function() {
+                chrome.bookmarks.removeTree(id, () => {
                     li.destroy();
                 });
-                var nearLi = li.nextElementSibling || li.previousElementSibling;
+                const nearLi = li.nextElementSibling || li.previousElementSibling;
                 if (nearLi)
                     nearLi.querySelector('a, span').focus();
             }
@@ -1550,35 +1530,37 @@
 
     };
 
-    var middleClickBgTab = !!localStorage.middleClickBgTab;
-    var leftClickNewTab = !!localStorage.leftClickNewTab;
-    var noOpenBookmark = false;
+    const middleClickBgTab = !!localStorage.middleClickBgTab;
+    const leftClickNewTab = !!localStorage.leftClickNewTab;
+    let noOpenBookmark = false;
+
     function generateTreeForTarget(trees) {
         generateTree(trees);
         // This must be put int chrome API handler function. 
         // Otherwise it may be called before generation completed.
         if (localStorage.focusID) {
-            var item = $tree.querySelector("#neat-tree-item-" + localStorage.focusID);
+            const item = $tree.querySelector(`#neat-tree-item-${localStorage.focusID}`);
             if (item) {
                 item.scrollIntoView();
             }
         }
         localStorage.scrollTop = $tree.scrollTop;
-    };
-    var bookmarkHandler = function(e) {
+    }
+
+    const bookmarkHandler = e => {
         e.preventDefault();
-        if (e.button != 0 && e.button != 1)
+        if (e.button !== 0 && e.button !== 1)
             return;
         // only take left-click
         if (noOpenBookmark) { // flag that disables opening bookmark
             noOpenBookmark = false;
             return;
         }
-        var el = e.target;
-        var ctrlMeta = (e.ctrlKey || e.metaKey || (e.button == 1));
-        var shift = e.shiftKey;
-        if (el.tagName == 'A' && !el.querySelector('hr')) { // bookmark
-            if (el.className == "link-folder") { // search result folder
+        const el = e.target;
+        const ctrlMeta = (e.ctrlKey || e.metaKey || (e.button === 1));
+        const shift = e.shiftKey;
+        if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
+            if (el.className === "link-folder") { // search result folder
                 // switch to tree
                 prevValue = '';
                 searchInput.value = '';
@@ -1588,20 +1570,19 @@
                 $results.style.display = 'none';
                 $tree.style.display = 'block';
                 // get folder id (el parent is li)
-                var id = el.parentNode.id.replace(/(neat\-tree|results)\-item\-/, '');
+                const id = el.parentNode.id.replace(/(neat-tree|results)-item-/, '');
                 // all parent folder ids
-                var nodePath = getParentPath(id, nodeTrees);
                 // set them as opened folders
-                opens = nodePath;
+                opens = getParentPath(id, nodeTrees);
                 localStorage.opens = JSON.stringify(opens);
                 // force to recover from remember state (opened folders)
                 rememberState = true;
                 // focus on the target folder
                 localStorage.focusID = id;
-                // new hanlder to handle the scrolling
+                // new handler to handle the scrolling
                 chrome.bookmarks.getTree(generateTreeForTarget);
             } else {
-                var url = el.href;
+                let url = el.href;
                 if (ctrlMeta) { // ctrl/meta click
                     actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);
                 } else { // click
@@ -1619,14 +1600,12 @@
                     switchBookmarkMenu(false);
                 }
             }
-        } else if (el.tagName == 'SPAN') { // folder
-            var li = el.parentNode;
-            var id = li.id.replace('neat-tree-item-', '');
-            chrome.bookmarks.getChildren(id, function(children) {
-                var urls = Array.map(function(c) {
-                    return c.url;
-                }, children).clean();
-                var urlsLen = urls.length;
+        } else if (el.tagName === 'SPAN') { // folder
+            const li = el.parentNode;
+            const id = li.id.replace('neat-tree-item-', '');
+            chrome.bookmarks.getChildren(id, children => {
+                const urls = Array.map(c => c.url, children).clean();
+                const urlsLen = urls.length;
                 if (!urlsLen)
                     return;
                 if (ctrlMeta) { // ctrl/meta click
@@ -1642,24 +1621,24 @@
     $tree.addEventListener('auxclick', bookmarkHandler);
 
     // Disable Chrome auto-scroll feature
-    window.addEventListener('mousedown', function(e) {
-        if (e.button == 1) // middle-click
+    window.addEventListener('mousedown', e => {
+        if (e.button === 1) // middle-click
             e.preventDefault();
     });
 
     // Context menu
-    var $bookmarkContextMenu = $('bookmark-context-menu');
-    var $folderContextMenu = $('folder-context-menu');
-    var $separatorContextMenu = $('separator-context-menu');
+    const $bookmarkContextMenu = $('bookmark-context-menu');
+    const $folderContextMenu = $('folder-context-menu');
+    const $separatorContextMenu = $('separator-context-menu');
 
-    var clearMenu = function(e) {
+    const clearMenu = e => {
         currentContext = null;
-        var active = body.querySelector('.active');
+        const active = body.querySelector('.active');
         if (active) {
             if (e) {
                 active.removeClass('active');
-                var el = e.target;
-                if (el == $tree || el == $results) {
+                const el = e.target;
+                if (el === $tree || el === $results) {
                     active.focus();
                 }
             } else {
@@ -1684,121 +1663,122 @@
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
 
-    var currentContext = null;
-    var macCloseContextMenu = false;
-    body.addEventListener('contextmenu', function(e) {
+    currentContext = null;
+    let macCloseContextMenu = false;
+    body.addEventListener('contextmenu', e => {
         e.preventDefault();
         clearMenu();
-        if (os == 'mac') {
+        if (os === 'mac') {
             macCloseContextMenu = false;
-            setTimeout(function() {
+            setTimeout(() => {
                 macCloseContextMenu = true;
             }, 500);
         }
-        var el = e.target;
-        if ((el.tagName) == 'HR') {
+        let el = e.target;
+        if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
-        if (el.tagName == 'A') {
+        if (el.tagName === 'A') {
             if (el.querySelector('hr')) {
                 currentContext = el;
-                var active = body.querySelector('.active');
+                const active = body.querySelector('.active');
                 if (active)
                     active.removeClass('active');
                 el.addClass('active');
-                if (el.parentNode.dataset.parentid == '0') {
+                if (el.parentNode.dataset.parentid === '0') {
                     $separatorContextMenu.addClass('hide-editables');
                 } else {
                     $separatorContextMenu.removeClass('hide-editables');
                 }
-                var separatorMenuWidth = $separatorContextMenu.offsetWidth;
-                var separatorMenuHeight = $separatorContextMenu.offsetHeight;
-                var pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth -
+                const separatorMenuWidth = $separatorContextMenu.offsetWidth;
+                const separatorMenuHeight = $separatorContextMenu.offsetHeight;
+                const pageX = rtl ? Math.max(0, e.pageX - separatorMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                     separatorMenuWidth);
-                var pageY = 0;
-                var boundY = window.innerHeight - e.clientY;
+                let pageY;
+                const boundY = window.innerHeight - e.clientY;
                 if (boundY > separatorMenuHeight) {
                     pageY = e.pageY;
                 } else {
                     pageY = Math.max(e.pageY - separatorMenuHeight, 0);
                 }
 
-                $separatorContextMenu.style.left = pageX + 'px';
-                $separatorContextMenu.style.top = pageY + 'px';
+                $separatorContextMenu.style.left = `${pageX}px`;
+                $separatorContextMenu.style.top = `${pageY}px`;
                 $separatorContextMenu.style.opacity = 1;
                 $separatorContextMenu.focus();
             } else {
                 currentContext = el;
-                var active = body.querySelector('.active');
+                const active = body.querySelector('.active');
                 if (active)
                     active.removeClass('active');
                 el.addClass('active');
-                var bookmarkMenuWidth = $bookmarkContextMenu.offsetWidth;
-                var bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
-                var pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth -
+                const bookmarkMenuWidth = $bookmarkContextMenu.offsetWidth;
+                const bookmarkMenuHeight = $bookmarkContextMenu.offsetHeight;
+                const pageX = rtl ? Math.max(0, e.pageX - bookmarkMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                     bookmarkMenuWidth);
-                var pageY = 0;
-                var boundY = window.innerHeight - e.clientY;
+                let pageY;
+                const boundY = window.innerHeight - e.clientY;
                 if (boundY > bookmarkMenuHeight) {
                     pageY = e.pageY;
                 } else {
                     pageY = Math.max(e.pageY - bookmarkMenuHeight, 0);
                 }
 
-                $bookmarkContextMenu.style.left = pageX + 'px';
-                $bookmarkContextMenu.style.top = pageY + 'px';
+                $bookmarkContextMenu.style.left = `${pageX}px`;
+                $bookmarkContextMenu.style.top = `${pageY}px`;
                 $bookmarkContextMenu.style.opacity = 1;
                 $bookmarkContextMenu.focus();
             }
-        } else if (el.tagName == 'SPAN') {
+        } else if (el.tagName === 'SPAN') {
             currentContext = el;
-            var active = body.querySelector('.active');
+            const active = body.querySelector('.active');
             if (active)
                 active.removeClass('active');
             el.addClass('active');
-            if (el.parentNode.dataset.parentid == '0') {
+            if (el.parentNode.dataset.parentid === '0') {
                 $folderContextMenu.addClass('hide-editables');
             } else {
                 $folderContextMenu.removeClass('hide-editables');
             }
-            var folderMenuWidth = $folderContextMenu.offsetWidth;
-            var folderMenuHeight = $folderContextMenu.offsetHeight;
-            var pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth -
+            const folderMenuWidth = $folderContextMenu.offsetWidth;
+            const folderMenuHeight = $folderContextMenu.offsetHeight;
+            const pageX = rtl ? Math.max(0, e.pageX - folderMenuWidth) : Math.min(e.pageX, body.offsetWidth -
                 folderMenuWidth);
-            var pageY = 0;
-            var boundY = window.innerHeight - e.clientY;
+            let pageY;
+            const boundY = window.innerHeight - e.clientY;
             if (boundY > folderMenuHeight) {
                 pageY = e.pageY;
             } else {
                 pageY = Math.max(e.pageY - folderMenuHeight, 0);
             }
 
-            $folderContextMenu.style.left = pageX + 'px';
-            $folderContextMenu.style.top = pageY + 'px';
+            $folderContextMenu.style.left = `${pageX}px`;
+            $folderContextMenu.style.top = `${pageY}px`;
             $folderContextMenu.style.opacity = 1;
             $folderContextMenu.focus();
-        } else {}
+        } else {
+        }
     });
     // on Mac, holding down right-click for a period of time closes the context menu
     // Not a complete implementation, but it works :)
-    if (os == 'mac')
-        body.addEventListener('mouseup', function(e) {
-            if (e.button == 2 && macCloseContextMenu) {
+    if (os === 'mac')
+        body.addEventListener('mouseup', e => {
+            if (e.button === 2 && macCloseContextMenu) {
                 macCloseContextMenu = false;
                 clearMenu();
             }
         });
 
-    var bookmarkContextHandler = function(e) {
+    const bookmarkContextHandler = e => {
         e.stopPropagation();
         if (!currentContext)
             return;
-        var el = e.target;
-        if (el.tagName != 'COMMAND')
+        const el = e.target;
+        if (el.tagName !== 'COMMAND')
             return;
-        var url = currentContext.href;
-        var li = currentContext.parentNode;
-        var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+        const url = currentContext.href;
+        const li = currentContext.parentNode;
+        const id = li.id.replace(/(neat-tree|results)-item-/, '');
         switch (el.id) {
             // ++++++++ modified by windviki@gmail.com ++++++++
             case 'add-bookmark-before-bookmark':
@@ -1806,8 +1786,8 @@
                         'active': true,
                         'windowId': chrome.windows.WINDOW_ID_CURRENT
                     },
-                    function(tabs) {
-                        var curTab = tabs[0];
+                    tabs => {
+                        const curTab = tabs[0];
                         actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
                     });
                 break;
@@ -1816,8 +1796,8 @@
                         'active': true,
                         'windowId': chrome.windows.WINDOW_ID_CURRENT
                     },
-                    function(tabs) {
-                        var curTab = tabs[0];
+                    tabs => {
+                        const curTab = tabs[0];
                         actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
                     });
                 break;
@@ -1838,12 +1818,11 @@
                         'active': true,
                         'windowId': chrome.windows.WINDOW_ID_CURRENT
                     },
-                    function(tabs) {
-                        var curTab = tabs[0];
-                        actions.replaceUrl(id, curTab.url);
+                    tabs => {
+                        actions.replaceUrl(id, tabs[0].url);
                     });
                 break;
-                // ++++++++ end ++++++++
+            // ++++++++ end ++++++++
             case 'bookmark-new-tab':
                 actions.openBookmarkNewTab(url);
                 break;
@@ -1853,44 +1832,44 @@
             case 'bookmark-new-incognito-window':
                 actions.openBookmarkNewWindow(url, true);
                 break;
-            case 'bookmark-edit':
-                var li = currentContext.parentNode;
-                var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+            case 'bookmark-edit': {
+                const li = currentContext.parentNode;
+                const id = li.id.replace(/(neat-tree|results)-item-/, '');
                 actions.editBookmarkFolder(id);
+            }
                 break;
-            case 'bookmark-delete':
-                var li = currentContext.parentNode;
-                var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+            case 'bookmark-delete': {
+                const li = currentContext.parentNode;
+                const id = li.id.replace(/(neat-tree|results)-item-/, '');
                 actions.deleteBookmark(id);
+            }
                 break;
         }
         clearMenu();
     };
     // On Mac, all three mouse clicks work; on Windows, middle-click doesn't work
-    $bookmarkContextMenu.addEventListener('mouseup', function(e) {
+    $bookmarkContextMenu.addEventListener('mouseup', e => {
         e.stopPropagation();
-        if (e.button == 0 || (os == 'mac' && e.button == 1))
+        if (e.button === 0 || (os === 'mac' && e.button === 1))
             bookmarkContextHandler(e);
     });
     $bookmarkContextMenu.addEventListener('contextmenu', bookmarkContextHandler);
-    $bookmarkContextMenu.addEventListener('click', function(e) {
+    $bookmarkContextMenu.addEventListener('click', e => {
         e.stopPropagation();
     });
 
-    var folderContextHandler = function(e) {
+    const folderContextHandler = e => {
         if (!currentContext)
             return;
-        var el = e.target;
-        if (el.tagName != 'COMMAND')
+        const el = e.target;
+        if (el.tagName !== 'COMMAND')
             return;
-        var li = currentContext.parentNode;
-        var id = li.id.replace('neat-tree-item-', '');
-        chrome.bookmarks.getChildren(id, function(children) {
-            var urls = Array.map(function(c) {
-                return c.url;
-            }, children).clean();
-            var urlsLen = urls.length;
-            var noURLS = !urlsLen;
+        const li = currentContext.parentNode;
+        const id = li.id.replace('neat-tree-item-', '');
+        chrome.bookmarks.getChildren(id, children => {
+            const urls = Array.map(c => c.url, children).clean();
+            const urlsLen = urls.length;
+            const noURLS = !urlsLen;
             switch (el.id) {
                 // ++++++++ modified by windviki@gmail.com ++++++++
                 case 'add-bookmark-top':
@@ -1898,8 +1877,8 @@
                             'active': true,
                             'windowId': chrome.windows.WINDOW_ID_CURRENT
                         },
-                        function(tabs) {
-                            var curTab = tabs[0];
+                        tabs => {
+                            const curTab = tabs[0];
                             actions.addNewBookmarkNode(id, 'top', curTab.url, curTab.title);
                         });
                     break;
@@ -1908,8 +1887,8 @@
                             'active': true,
                             'windowId': chrome.windows.WINDOW_ID_CURRENT
                         },
-                        function(tabs) {
-                            var curTab = tabs[0];
+                        tabs => {
+                            const curTab = tabs[0];
                             actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
                         });
                     break;
@@ -1918,8 +1897,8 @@
                             'active': true,
                             'windowId': chrome.windows.WINDOW_ID_CURRENT
                         },
-                        function(tabs) {
-                            var curTab = tabs[0];
+                        tabs => {
+                            const curTab = tabs[0];
                             actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
                         });
                     break;
@@ -1928,8 +1907,8 @@
                             'active': true,
                             'windowId': chrome.windows.WINDOW_ID_CURRENT
                         },
-                        function(tabs) {
-                            var curTab = tabs[0];
+                        tabs => {
+                            const curTab = tabs[0];
                             actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
                         });
                     break;
@@ -1948,7 +1927,7 @@
                 case 'copy-all-titles-and-urls':
                     actions.copyAllTitlesAndUrls(id);
                     break;
-                    // ++++++++ end ++++++++
+                // ++++++++ end ++++++++
                 case 'folder-window':
                     if (noURLS)
                         return;
@@ -1974,25 +1953,25 @@
         });
         clearMenu();
     };
-    $folderContextMenu.addEventListener('mouseup', function(e) {
+    $folderContextMenu.addEventListener('mouseup', e => {
         e.stopPropagation();
-        if (e.button == 0 || (os == 'mac' && e.button == 1))
+        if (e.button === 0 || (os === 'mac' && e.button === 1))
             folderContextHandler(e);
     });
     $folderContextMenu.addEventListener('contextmenu', folderContextHandler);
-    $folderContextMenu.addEventListener('click', function(e) {
+    $folderContextMenu.addEventListener('click', e => {
         e.stopPropagation();
     });
 
 
-    var separatorContextHandler = function(e) {
+    const separatorContextHandler = e => {
         if (!currentContext)
             return;
-        var el = e.target;
-        if (el.tagName != 'COMMAND')
+        const el = e.target;
+        if (el.tagName !== 'COMMAND')
             return;
-        var li = currentContext.parentNode;
-        var id = li.id.replace('neat-tree-item-', '');
+        const li = currentContext.parentNode;
+        const id = li.id.replace('neat-tree-item-', '');
         switch (el.id) {
             case 'remove-separator':
                 deleteSeparator(id);
@@ -2000,119 +1979,126 @@
         }
         clearMenu();
     };
-    $separatorContextMenu.addEventListener('mouseup', function(e) {
+    $separatorContextMenu.addEventListener('mouseup', e => {
         e.stopPropagation();
-        if (e.button == 0 || (os == 'mac' && e.button == 1))
+        if (e.button === 0 || (os === 'mac' && e.button === 1))
             separatorContextHandler(e);
     });
     $separatorContextMenu.addEventListener('contextmenu', separatorContextHandler);
 
     // Keyboard navigation
-    var keyBuffer = '';
-    var keyBufferTimer = null;
-    var treeKeyDown = function(e) {
-        var item = document.activeElement;
+    let keyBuffer = '';
+    let keyBufferTimer = null;
+    const treeKeyDown = function (e) {
+        let item = document.activeElement;
         if (!/^(a|span)$/i.test(item.tagName))
             item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
-        var li = item.parentNode;
-        var keyCode = e.keyCode;
-        var metaKey = e.metaKey;
-        if (keyCode == 40 && metaKey)
+        let li = item.parentNode;
+        let keyCode = e.keyCode;
+        const metaKey = e.metaKey;
+        if (keyCode === 40 && metaKey)
             keyCode = 35; // cmd + down (Mac)
-        if (keyCode == 38 && metaKey)
+        if (keyCode === 38 && metaKey)
             keyCode = 36; // cmd + up (Mac)
         switch (keyCode) {
             case 40: // down
                 e.preventDefault();
-                var liChild = li.querySelector('ul>li:first-child');
+                const liChild = li.querySelector('ul>li:first-child');
+                let nextLiSpan;
                 if (li.hasClass('open') && liChild) {
                     liChild.querySelector('a, span').focus();
                 } else {
-                    var nextLi = li.nextElementSibling;
+                    let nextLi = li.nextElementSibling;
                     if (nextLi) {
-                        nextlispan = nextLi.querySelector('a, span');
-                        if (nextlispan) {
-                            nextlispan.focus();
+                        nextLiSpan = nextLi.querySelector('a, span');
+                        if (nextLiSpan) {
+                            nextLiSpan.focus();
                         }
                     } else {
-                        var nextLi = null;
+                        nextLi = null;
                         do {
                             if (li)
                                 li = li.parentNode.parentNode;
                             if (li)
                                 nextLi = li.nextElementSibling;
                             if (nextLi)
-                                nextlispan = nextLi.querySelector('a, span');
-                                if (nextlispan) //fixed: pushed down "DOWN" when the focus was at the last node
-                                    nextlispan.focus();
+                                nextLiSpan = nextLi.querySelector('a, span');
+                            if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
+                                nextLiSpan.focus();
                         } while (li && !nextLi);
                     }
                 }
                 break;
             case 38: // up
+            {
                 e.preventDefault();
-                var prevLi = li.previousElementSibling;
+                let prevLi = li.previousElementSibling;
                 if (prevLi) {
                     while (prevLi.hasClass('open') && prevLi.querySelector('ul>li:last-child')) {
-                        var lis = prevLi.querySelectorAll('ul>li:last-child');
-                        prevLi = Array.filter(function(li) {
-                            return !!li.parentNode.offsetHeight;
-                        }, lis).getLast();
-                    };
+                        const lis = prevLi.querySelectorAll('ul>li:last-child');
+                        prevLi = Array.filter(li => !!li.parentNode.offsetHeight, lis).getLast();
+                    }
                     prevLi.querySelector('a, span').focus();
                 } else {
-                    var parentPrevLi = li.parentNode.parentNode;
-                    if (parentPrevLi && parentPrevLi.tagName == 'LI') {
+                    const parentPrevLi = li.parentNode.parentNode;
+                    if (parentPrevLi && parentPrevLi.tagName === 'LI') {
                         parentPrevLi.querySelector('a, span').focus();
                     } else {
                         searchInput.focus();
                     }
                 }
+            }
                 break;
             case 39: // right (left for RTL)
+            {
                 e.preventDefault();
                 if (li.hasClass('parent') && ((!rtl && !li.hasClass('open')) || (rtl && li.hasClass('open')))) {
-                    var event = document.createEvent('MouseEvents');
+                    const event = document.createEvent('MouseEvents');
                     event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                     li.firstElementChild.dispatchEvent(event);
                 } else if (rtl) {
-                    var parentID = li.dataset.parentid;
-                    if (parentID == '0')
+                    const parentID = li.dataset.parentid;
+                    if (parentID === '0')
                         return;
-                    $('neat-tree-item-' + parentID).querySelector('span').focus();
+                    $(`neat-tree-item-${parentID}`).querySelector('span').focus();
                 }
+            }
                 break;
             case 37: // left (right for RTL)
+            {
                 e.preventDefault();
                 if (li.hasClass('parent') && ((!rtl && li.hasClass('open')) || (rtl && !li.hasClass('open')))) {
-                    var event = document.createEvent('MouseEvents');
+                    const event = document.createEvent('MouseEvents');
                     event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                     li.firstElementChild.dispatchEvent(event);
                 } else if (!rtl) {
-                    var parentID = li.dataset.parentid;
-                    if (parentID == '0')
+                    const parentID = li.dataset.parentid;
+                    if (parentID === '0')
                         return;
                     // fixed: check whether the parent item exists
-                    if ($('neat-tree-item-' + parentID))
-                        $('neat-tree-item-' + parentID).querySelector('span').focus();
+                    const item = $(`neat-tree-item-${parentID}`);
+                    if (item) {
+                        item.querySelector('span').focus();
+                    }
                 }
+            }
                 break;
             case 32: // space
             case 13: // enter
+            {
                 e.preventDefault();
-                var event = document.createEvent('MouseEvents');
+                const event = document.createEvent('MouseEvents');
                 event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, e.ctrlKey, false, e.shiftKey, e.metaKey,
                     0, null);
                 li.firstElementChild.dispatchEvent(event);
+            }
                 break;
             case 35: // end
                 if (searchMode) {
                     this.querySelector('li:last-child a').focus();
                 } else {
-                    var lis = this.querySelectorAll('ul>li:last-child');
-                    var li = Array.filter(function(li) {
-                        return !!li.parentNode.offsetHeight;
-                    }, lis).getLast();
+                    const lis = this.querySelectorAll('ul>li:last-child');
+                    const li = Array.filter(li => !!li.parentNode.offsetHeight, lis).getLast();
                     li.querySelector('span, a').focus();
                 }
                 break;
@@ -2124,76 +2110,78 @@
                 }
                 break;
             case 34: // page down
-                var self = this;
-                var getLastItem = function() {
-                    var bound = self.offsetHeight + self.scrollTop;
-                    var items = self.querySelectorAll('a, span');
-                    return Array.filter(function(item) {
-                        return !!item.parentElement.offsetHeight && item.offsetTop < bound;
-                    }, items).getLast();
+            {
+                const self = this;
+                const getLastItem = () => {
+                    const bound = self.offsetHeight + self.scrollTop;
+                    const items = self.querySelectorAll('a, span');
+                    return Array.filter(item => !!item.parentElement.offsetHeight && item.offsetTop < bound, items).getLast();
                 };
-                var item = getLastItem();
-                if (item != document.activeElement) {
+                const item = getLastItem();
+                if (item !== document.activeElement) {
                     e.preventDefault();
                     item.focus();
                 } else {
-                    setTimeout(function() {
+                    setTimeout(() => {
                         getLastItem().focus();
                     }, 0);
                 }
+            }
                 break;
             case 33: // page up
-                var self = this;
-                var getFirstItem = function() {
-                    var bound = self.scrollTop;
-                    var items = self.querySelectorAll('a, span');
-                    return Array.filter(function(item) {
-                        return !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound);
-                    }, items)[0];
+            {
+                const self = this;
+                const getFirstItem = () => {
+                    const bound = self.scrollTop;
+                    const items = self.querySelectorAll('a, span');
+                    return Array.filter(item => !!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound), items)[0];
                 };
-                var item = getFirstItem();
-                if (item != document.activeElement) {
+                const item = getFirstItem();
+                if (item !== document.activeElement) {
                     e.preventDefault();
                     item.focus();
                 } else {
-                    setTimeout(function() {
+                    setTimeout(() => {
                         getFirstItem().focus();
                     }, 0);
                 }
+            }
                 break;
             case 113: // F2, not for Mac
-                if (os == 'mac')
+            {
+                if (os === 'mac')
                     break;
-                var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+                const id = li.id.replace(/(neat-tree|results)-item-/, '');
                 actions.editBookmarkFolder(id);
+            }
                 break;
             case 46: // delete
                 break; // don't run 'default'
-            default:
-                var key = String.fromCharCode(keyCode).trim();
+            default: {
+                const key = String.fromCharCode(keyCode).trim();
                 if (!key)
                     return;
-                if (key != keyBuffer)
+                if (key !== keyBuffer)
                     keyBuffer += key;
                 clearTimeout(keyBufferTimer);
-                keyBufferTimer = setTimeout(function() {
+                keyBufferTimer = setTimeout(() => {
                     keyBuffer = '';
                 }, 500);
-                var lis = this.querySelectorAll('ul>li');
-                var items = [];
-                for (var i = 0, l = lis.length; i < l; i++) {
-                    var li = lis[i];
+                const lis = this.querySelectorAll('ul>li');
+                const items = [];
+                for (let i = 0, l = lis.length; i < l; i++) {
+                    const li = lis[i];
                     if (li.parentNode.offsetHeight)
                         items.push(li.firstElementChild);
                 }
-                var pattern = new RegExp('^' + keyBuffer.escapeRegExp(), 'i');
-                var batch = [];
-                var startFind = false;
-                var found = false;
-                var activeElement = document.activeElement;
-                for (var i = 0, l = items.length; i < l; i++) {
-                    var item = items[i];
-                    if (item == activeElement) {
+                const pattern = new RegExp(`^${keyBuffer.escapeRegExp()}`, 'i');
+                const batch = [];
+                let startFind = false;
+                let found = false;
+                const activeElement = document.activeElement;
+                for (let i = 0, l = items.length; i < l; i++) {
+                    const item = items[i];
+                    if (item === activeElement) {
                         startFind = true;
                     } else if (startFind) {
                         if (pattern.test(item.textContent.trim())) {
@@ -2206,36 +2194,35 @@
                     }
                 }
                 if (!found) {
-                    for (var i = 0, l = batch.length; i < l; i++) {
-                        var item = batch[i];
+                    for (let i = 0, l = batch.length; i < l; i++) {
+                        const item = batch[i];
                         if (pattern.test(item.textContent.trim())) {
                             item.focus();
                             break;
                         }
                     }
                 }
+            }
         }
     };
     $tree.addEventListener('keydown', treeKeyDown);
     $results.addEventListener('keydown', treeKeyDown);
 
-    var treeKeyUp = function(e) {
-        var item = document.activeElement;
+    const treeKeyUp = e => {
+        let item = document.activeElement;
         if (!/^(a|span)$/i.test(item.tagName))
             item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
-        var li = item.parentNode;
+        const li = item.parentNode;
         switch (e.keyCode) {
             case 8: // backspace
-                if (os != 'mac')
+                if (os !== 'mac')
                     break; // somehow delete button on mac gives backspace
             case 46: // delete
                 e.preventDefault();
-                var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
+                const id = li.id.replace(/(neat-tree|results)-item-/, '');
                 if (li.hasClass('parent')) {
-                    chrome.bookmarks.getChildren(id, function(children) {
-                        var urlsLen = Array.map(function(c) {
-                            return c.url;
-                        }, children).clean().length;
+                    chrome.bookmarks.getChildren(id, children => {
+                        const urlsLen = Array.map(c => c.url, children).clean().length;
                         actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
                     });
                 } else {
@@ -2247,23 +2234,23 @@
     $tree.addEventListener('keyup', treeKeyUp);
     $results.addEventListener('keyup', treeKeyUp);
 
-    var contextKeyDown = function(e) {
-        var menu = this;
-        var item = document.activeElement;
-        var metaKey = e.metaKey;
+    const contextKeyDown = function (e) {
+        const menu = this;
+        const item = document.activeElement;
+        const metaKey = e.metaKey;
         switch (e.keyCode) {
             case 40: // down
                 e.preventDefault();
                 if (metaKey) { // cmd + down (Mac)
                     menu.lastElementChild.focus();
                 } else {
-                    if (item.tagName == 'COMMAND') {
-                        var nextItem = item.nextElementSibling;
-                        if (nextItem && nextItem.tagName == 'HR')
+                    if (item.tagName === 'COMMAND') {
+                        let nextItem = item.nextElementSibling;
+                        if (nextItem && nextItem.tagName === 'HR')
                             nextItem = nextItem.nextElementSibling;
                         if (nextItem) {
                             nextItem.focus();
-                        } else if (os != 'mac') {
+                        } else if (os !== 'mac') {
                             menu.firstElementChild.focus();
                         }
                     } else {
@@ -2276,13 +2263,13 @@
                 if (metaKey) { // cmd + up (Mac)
                     menu.firstElementChild.focus();
                 } else {
-                    if (item.tagName == 'COMMAND') {
-                        var prevItem = item.previousElementSibling;
-                        if (prevItem && prevItem.tagName == 'HR')
+                    if (item.tagName === 'COMMAND') {
+                        let prevItem = item.previousElementSibling;
+                        if (prevItem && prevItem.tagName === 'HR')
                             prevItem = prevItem.previousElementSibling;
                         if (prevItem) {
                             prevItem.focus();
-                        } else if (os != 'mac') {
+                        } else if (os !== 'mac') {
                             menu.lastElementChild.focus();
                         }
                     } else {
@@ -2291,16 +2278,16 @@
                 }
                 break;
             case 32: // space
-                if (os != 'mac')
+                if (os !== 'mac')
                     break;
             case 13: // enter
                 e.preventDefault();
-                var event = document.createEvent('MouseEvents');
+                const event = document.createEvent('MouseEvents');
                 event.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                 item.dispatchEvent(event);
             case 27: // esc
                 e.preventDefault();
-                var active = body.querySelector('.active');
+                const active = body.querySelector('.active');
                 if (active)
                     active.removeClass('active').focus();
                 clearMenu();
@@ -2310,14 +2297,14 @@
     $folderContextMenu.addEventListener('keydown', contextKeyDown);
     //$separatorContextMenu.addEventListener('keydown', contextKeyDown);
 
-    var contextMouseMove = function(e) {
+    const contextMouseMove = e => {
         e.target.focus();
     };
     $bookmarkContextMenu.addEventListener('mousemove', contextMouseMove);
     $folderContextMenu.addEventListener('mousemove', contextMouseMove);
     $separatorContextMenu.addEventListener('mousemove', contextMouseMove);
 
-    var contextMouseOut = function() {
+    const contextMouseOut = function () {
         if (this.style.opacity.toInt())
             this.focus();
     };
@@ -2326,23 +2313,23 @@
     $separatorContextMenu.addEventListener('mouseout', contextMouseOut);
 
     // Drag and drop, baby
-    var draggedBookmark = null;
-    var draggedOut = false;
-    var canDrop = false;
-    var zoomLevel = 1;
-    var bookmarkClone = $('bookmark-clone');
-    var dropOverlay = $('drop-overlay');
-    $tree.addEventListener('mousedown', function(e) {
-        if (e.button != 0) //left-click
+    let draggedBookmark = null;
+    let draggedOut = false;
+    let canDrop = false;
+    let zoomLevel = 1;
+    const bookmarkClone = $('bookmark-clone');
+    const dropOverlay = $('drop-overlay');
+    $tree.addEventListener('mousedown', e => {
+        if (e.button !== 0) //left-click
             return;
-        var el = e.target;
-        if ((el.tagName) == 'HR') {
+        let el = e.target;
+        if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
-        var elParent = el.parentNode; //li
+        const elParent = el.parentNode; //li
         // can move any bookmarks/folders except the default root folders
-        if ((el.tagName == 'A' && elParent.hasClass('child')) ||
-            (el.tagName == 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid != '0')) {
+        if ((el.tagName === 'A' && elParent.hasClass('child')) ||
+            (el.tagName === 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid !== '0')) {
             e.preventDefault();
             draggedOut = false;
             draggedBookmark = el; //a
@@ -2352,26 +2339,30 @@
             el.focus();
         }
     });
-    var scrollTree = null,
+    let scrollTree = null,
         scrollTreeInterval = 100,
         scrollTreeSpot = 10;
-    var stopScrollTree = function() {
+    const stopScrollTree = () => {
         clearInterval(scrollTree);
         scrollTree = null;
     };
-    document.addEventListener('mousemove', function(e) {
-        if (e.button != 0)
+    document.addEventListener('mousemove', e => {
+        let top;
+        let elRectBottom;
+        let elRectTop;
+        let elRect;
+        if (e.button !== 0)
             return;
         if (!draggedBookmark)
             return;
         e.preventDefault();
-        var el = e.target;
-        var clientX = e.clientX;
-        var clientY = e.clientY;
+        let el = e.target;
+        let clientX = e.clientX;
+        let clientY = e.clientY;
         //fixed clientY
         clientY += document.body.scrollTop;
         //hovering over the dragged element itself
-        if (el == draggedBookmark) {
+        if (el === draggedBookmark) {
             bookmarkClone.style.left = '-999px';
             dropOverlay.style.left = '-999px';
             canDrop = false;
@@ -2379,7 +2370,7 @@
         }
         draggedOut = true;
         //cursor moves outside the tree
-        var treeTop = $tree.offsetTop,
+        const treeTop = $tree.offsetTop,
             treeBottom = window.innerHeight;
         if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom) {
             bookmarkClone.style.left = '-999px';
@@ -2388,23 +2379,23 @@
         }
         // if hovering over the top or bottom edges of the tree,
         // scroll the tree
-        var treeScrollHeight = $tree.scrollHeight,
+        const treeScrollHeight = $tree.scrollHeight,
             treeOffsetHeight = $tree.offsetHeight;
         if (treeScrollHeight > treeOffsetHeight) { // only scroll when it's scrollable
-            var treeScrollTop = $tree.scrollTop;
+            const treeScrollTop = $tree.scrollTop;
             if (clientY <= treeTop + scrollTreeSpot) {
-                if (treeScrollTop == 0) {
+                if (treeScrollTop === 0) {
                     stopScrollTree();
                 } else if (!scrollTree)
-                    scrollTree = setInterval(function() {
+                    scrollTree = setInterval(() => {
                         $tree.scrollBy(0, -scrollTreeSpot);
                         dropOverlay.style.left = '-999px';
                     }, scrollTreeInterval);
             } else if (clientY >= treeBottom - scrollTreeSpot) {
-                if (treeScrollTop == (treeScrollHeight - treeOffsetHeight)) {
+                if (treeScrollTop === (treeScrollHeight - treeOffsetHeight)) {
                     stopScrollTree();
                 } else if (!scrollTree)
-                    scrollTree = setInterval(function() {
+                    scrollTree = setInterval(() => {
                         $tree.scrollBy(0, scrollTreeSpot);
                         dropOverlay.style.left = '-999px';
                     }, scrollTreeInterval);
@@ -2413,73 +2404,76 @@
             }
         }
         // collapse the folder before moving it
-        var draggedBookmarkParent = draggedBookmark.parentNode;
-        if (draggedBookmark.tagName == 'SPAN' && draggedBookmarkParent.hasClass('open')) {
+        const draggedBookmarkParent = draggedBookmark.parentNode;
+        if (draggedBookmark.tagName === 'SPAN' && draggedBookmarkParent.hasClass('open')) {
             draggedBookmarkParent.removeClass('open').setAttribute('aria-expanded', false);
         }
         clientX /= zoomLevel;
         clientY /= zoomLevel;
-        if ((el.tagName) == 'HR') {
+        if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
-        if (el.tagName == 'A' /* || el.tagName == 'HR'*/ ) {
+        if (el.tagName === 'A' /* || el.tagName === 'HR'*/) {
             canDrop = true;
-            bookmarkClone.style.top = clientY + 'px';
-            bookmarkClone.style.left = (rtl ? (clientX - bookmarkClone.offsetWidth) : clientX) + 'px';
-            var elRect = el.getBoundingClientRect();
+            bookmarkClone.style.top = `${clientY}px`;
+            bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;
+            elRect = el.getBoundingClientRect();
             //fixed elRectTop
-            var elRectTop = elRect.top + document.body.scrollTop;
+            elRectTop = elRect.top + document.body.scrollTop;
             //fixed elRectBottom
-            var elRectBottom = elRect.bottom + document.body.scrollTop;
-            var top = (clientY >= elRectTop + elRect.height / 2) ? elRectBottom : elRectTop;
+            elRectBottom = elRect.bottom + document.body.scrollTop;
+            top = (clientY >= elRectTop + elRect.height / 2) ? elRectBottom : elRectTop;
             dropOverlay.className = 'bookmark';
-            dropOverlay.style.top = top + 'px';
-            dropOverlay.style.left = rtl ? '0px' : el.style.webkitPaddingStart.toInt() + 16 + 'px';
-            dropOverlay.style.width = (el.getComputedStyle('width').toInt() - 12) + 'px';
+            dropOverlay.style.top = `${top}px`;
+            dropOverlay.style.left = rtl ? '0px' : `${el.style.webkitPaddingStart.toInt() + 16}px`;
+            dropOverlay.style.width = `${el.getComputedStyle('width').toInt() - 12}px`;
             dropOverlay.style.height = null;
-        } else if (el.tagName == 'SPAN') {
+        } else if (el.tagName === 'SPAN') {
             canDrop = true;
-            bookmarkClone.style.top = clientY + 'px';
-            bookmarkClone.style.left = clientX + 'px';
-            var elRect = el.getBoundingClientRect();
-            var top = null;
+            bookmarkClone.style.top = `${clientY}px`;
+            bookmarkClone.style.left = `${clientX}px`;
+            elRect = el.getBoundingClientRect();
+            top = null;
             //fixed elRectTop
-            var elRectTop = elRect.top + document.body.scrollTop;
+            elRectTop = elRect.top + document.body.scrollTop;
             //fixed elRectBottom
-            var elRectBottom = elRect.bottom + document.body.scrollTop;
-            var elRectHeight = elRect.height;
-            var elParent = el.parentNode;
-            if (elParent.dataset.parentid != '0') {
+            elRectBottom = elRect.bottom + document.body.scrollTop;
+            const elRectHeight = elRect.height;
+            const elParent = el.parentNode;
+            if (elParent.dataset.parentid !== '0') {
                 if (clientY < elRectTop + elRectHeight * .3) {
                     top = elRectTop;
                 } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
                     top = elRectBottom;
                 }
             }
-            if (top == null) {
+            if (top === null) {
                 dropOverlay.className = 'folder';
-                dropOverlay.style.top = elRectTop + 'px';
+                dropOverlay.style.top = `${elRectTop}px`;
                 dropOverlay.style.left = '0px';
-                dropOverlay.style.width = elRect.width + 'px';
-                dropOverlay.style.height = elRect.height + 'px';
+                dropOverlay.style.width = `${elRect.width}px`;
+                dropOverlay.style.height = `${elRect.height}px`;
             } else {
                 dropOverlay.className = 'bookmark';
-                dropOverlay.style.top = top + 'px';
-                dropOverlay.style.left = el.style.webkitPaddingStart.toInt() + 16 + 'px';
-                dropOverlay.style.width = (el.getComputedStyle('width').toInt() - 12) + 'px';
+                dropOverlay.style.top = `${top}px`;
+                dropOverlay.style.left = `${el.style.webkitPaddingStart.toInt() + 16}px`;
+                dropOverlay.style.width = `${el.getComputedStyle('width').toInt() - 12}px`;
                 dropOverlay.style.height = null;
             }
         }
     });
-    var onDrop = function() {
+    const onDrop = () => {
         draggedBookmark = null;
         bookmarkClone.style.left = '-999px';
         dropOverlay.style.left = '-999px';
         canDrop = false;
         resetSeparator();
     };
-    document.addEventListener('mouseup', function(e) {
-        if (e.button != 0) //left-click
+    document.addEventListener('mouseup', e => {
+        let moveBottom;
+        let elRectTop;
+        let elRect;
+        if (e.button !== 0) //left-click
             return;
         if (!draggedBookmark)
             return;
@@ -2492,36 +2486,36 @@
             return;
         }
         //el is the target element "A" "SPAN"
-        var el = e.target;
-        if ((el.tagName) == 'HR') {
+        let el = e.target;
+        if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
-        var elParent = el.parentNode; //li
-        var id = elParent.id.replace('neat-tree-item-', '');
+        let elParent = el.parentNode; //li
+        const id = elParent.id.replace('neat-tree-item-', '');
         if (!id) {
             onDrop();
             return;
         }
-        var draggedBookmarkParent = draggedBookmark.parentNode; //li
-        var draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
+        const draggedBookmarkParent = draggedBookmark.parentNode; //li
+        const draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
 
         //fixed clientY
-        var clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
-        if (el.tagName == 'A') { //dropped taget is bookmark
-            var elRect = el.getBoundingClientRect();
+        const clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
+        if (el.tagName === 'A') { //dropped taget is bookmark
+            elRect = el.getBoundingClientRect();
             //fixed elRectTop
-            var elRectTop = elRect.top + document.body.scrollTop;
-            var moveBottom = (clientY >= elRectTop + elRect.height / 2);
-            chrome.bookmarks.get(id, function(node) {
+            elRectTop = elRect.top + document.body.scrollTop;
+            moveBottom = (clientY >= elRectTop + elRect.height / 2);
+            chrome.bookmarks.get(id, node => {
                 if (!node || !node.length)
                     return;
                 node = node[0];
-                var index = node.index;
-                var parentId = node.parentId;
+                let index = node.index;
+                const parentId = node.parentId;
                 chrome.bookmarks.move(draggedID, {
                     parentId: parentId,
                     index: moveBottom ? ++index : index
-                }, function() {
+                }, () => {
                     //display
                     draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
                     draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
@@ -2531,13 +2525,13 @@
                     onDrop();
                 });
             });
-        } else if (el.tagName == 'SPAN') { //dropped taget is directory
-            var elRect = el.getBoundingClientRect();
-            var move = 0; // 0 = middle, 1 = top, 2 = bottom
-            var elRectTop = elRect.top,
-                elRectHeight = elRect.height;
-            var elParent = el.parentNode; //li
-            if (elParent.dataset.parentid != '0') {
+        } else if (el.tagName === 'SPAN') { //dropped target is directory
+            elRect = el.getBoundingClientRect();
+            let move = 0; // 0 = middle, 1 = top, 2 = bottom
+            elRectTop = elRect.top;
+            const elRectHeight = elRect.height;
+            elParent = el.parentNode; //li
+            if (elParent.dataset.parentid !== '0') {
                 if (clientY < elRectTop + elRectHeight * .3) {
                     move = 1;
                 } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
@@ -2545,18 +2539,18 @@
                 }
             }
             if (move > 0) { //top or bottom
-                var moveBottom = (move == 2);
-                chrome.bookmarks.get(id, function(node) {
+                moveBottom = (move === 2);
+                chrome.bookmarks.get(id, node => {
                     if (!node || !node.length)
                         return;
                     node = node[0];
-                    var index = node.index;
-                    var parentId = node.parentId;
+                    let index = node.index;
+                    const parentId = node.parentId;
                     if (draggedID) {
                         chrome.bookmarks.move(draggedID, {
                             parentId: parentId,
                             index: moveBottom ? ++index : index
-                        }, function() {
+                        }, () => {
                             draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
                             draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
                             draggedBookmark.focus();
@@ -2569,10 +2563,10 @@
             } else { //middle position
                 chrome.bookmarks.move(draggedID, {
                     parentId: id
-                }, function() {
-                    var ul = elParent.querySelector('ul');
-                    var level = parseInt(elParent.parentNode.dataset.level) + 1;
-                    draggedBookmark.style.webkitPaddingStart = (14 * level) + 'px';
+                }, () => {
+                    const ul = elParent.querySelector('ul');
+                    const level = parseInt(elParent.parentNode.dataset.level) + 1;
+                    draggedBookmark.style.webkitPaddingStart = `${14 * level}px`;
                     if (ul) {
                         draggedBookmarkParent.inject(ul); //inject into bottom of ul
                         draggedBookmarkParent.setAttribute("level", parseInt(elParent.getAttribute("level")) + 1);
@@ -2590,71 +2584,72 @@
     });
 
     // Resizer
-    var $resizer = $('resizer');
-    var resizerDown = false;
-    var bodyWidth = 0,
+    const $resizer = $('resizer');
+    let resizerDown = false;
+    let bodyWidth = 0,
         screenX = 0;
+
     // Reset separators
     function resetSeparator() {
-        var seps = separatorManager.getAll();
-        for (var i = 0; i < seps.length; i++) {
+        const seps = separatorManager.getAll();
+        for (let i = 0; i < seps.length; i++) {
             if (seps[i]) {
-                var bmnode = $('neat-tree-item-' + seps[i]); //li
+                const bmnode = $(`neat-tree-item-${seps[i]}`); //li
                 if (!bmnode) {
                     return;
                 }
-                var lv = bmnode.getAttribute('level'); //getAttribute!
+                let lv = bmnode.getAttribute('level'); //getAttribute!
                 if (!lv) {
                     lv = 1;
                 }
-                var paddingStart = lv * 14;
-                var hrwidth = window.innerWidth - paddingStart - 40;
-                bmnode.querySelector('hr').width = hrwidth; //li.a.hr
+                const paddingStart = lv * 14;
+                const hrwidth = window.innerWidth - paddingStart - 40;
+                bmnode.querySelector('hr').width = `${hrwidth}`; //li.a.hr
             }
         }
     }
 
     // Drag the edge
-    $resizer.addEventListener('mousedown', function(e) {
+    $resizer.addEventListener('mousedown', e => {
         e.preventDefault();
         e.stopPropagation();
         resizerDown = true;
         bodyWidth = body.offsetWidth;
         screenX = e.screenX;
     });
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', e => {
         if (!resizerDown)
             return;
         e.preventDefault();
-        var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
-        var width = bodyWidth + changedWidth;
+        const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
+        let width = bodyWidth + changedWidth;
         // 320 < width < 640
         width = Math.min(640, Math.max(320, width));
-        body.style.width = width + 'px';
+        body.style.width = `${width}px`;
         localStorage.popupWidth = width;
         resetSeparator(); // Reset separators
         clearMenu(); // messes the context menu
     });
-    document.addEventListener('mouseup', function(e) {
+    document.addEventListener('mouseup', e => {
         if (!resizerDown)
             return;
         e.preventDefault();
         resizerDown = false;
         adaptBookmarkTooltips();
         // record current width
-        var changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
-        var width = bodyWidth + changedWidth;
+        const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
+        let width = bodyWidth + changedWidth;
         //var width = window.innerWidth;
         // 320 < width < 640
         width = Math.min(640, Math.max(320, width));
-        body.style.width = width + 'px';
+        body.style.width = `${width}px`;
         localStorage.popupWidth = width;
         resetSeparator(); // Reset separators
         clearMenu();
     });
 
     // Closing dialogs on escape
-    var closeDialogs = function() {
+    const closeDialogs = () => {
         if (body.hasClass('needConfirm'))
             ConfirmDialog.fn2();
         ConfirmDialog.close();
@@ -2665,13 +2660,13 @@
         if (body.hasClass('needAlert'))
             AlertDialog.close();
     };
-    document.addEventListener('keydown', function(e) {
-        if (e.keyCode == 27 &&
+    document.addEventListener('keydown', e => {
+        if (e.keyCode === 27 &&
             (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
                 body.hasClass('needAlert') || body.hasClass('needInputName'))) { // esc
             e.preventDefault();
             closeDialogs();
-        } else if ((e.metaKey || e.ctrlKey) && e.keyCode == 70) { // cmd/ctrl
+        } else if ((e.metaKey || e.ctrlKey) && e.keyCode === 70) { // cmd/ctrl
             // + f
             searchInput.focus();
             searchInput.select();
@@ -2680,7 +2675,7 @@
     $('cover').addEventListener('click', closeDialogs);
 
     // Make webkit transitions work only after elements are settled down
-    setTimeout(function() {
+    setTimeout(() => {
         body.addClass('transitional');
     }, 10);
 
@@ -2688,16 +2683,16 @@
     if (localStorage.zoom) {
         body.dataset.zoom = localStorage.zoom;
     }
-    var zoom = function(val) {
+    const zoom = val => {
         if (draggedBookmark)
             return; // prevent zooming when drag-n-droppping
-        var dataZoom = body.dataset.zoom;
-        var currentZoom = dataZoom ? dataZoom.toInt() : 100;
-        if (val == 0) {
+        const dataZoom = body.dataset.zoom;
+        const currentZoom = dataZoom ? dataZoom.toInt() : 100;
+        if (val === 0) {
             delete body.dataset.zoom;
             localStorage.removeItem('zoom');
         } else {
-            var z = (val > 0) ? currentZoom + 10 : currentZoom - 10;
+            let z = (val > 0) ? currentZoom + 10 : currentZoom - 10;
             z = Math.min(150, Math.max(90, z));
             body.dataset.zoom = z;
             localStorage.zoom = z;
@@ -2705,13 +2700,13 @@
         body.addClass('dummy').removeClass('dummy'); // force redraw
         resetHeight();
     };
-    document.addEventListener('mousewheel', function(e) {
+    document.addEventListener('mousewheel', e => {
         if (!e.metaKey && !e.ctrlKey)
             return;
         e.preventDefault();
         zoom(e.wheelDelta);
     });
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', e => {
         if (!e.metaKey && !e.ctrlKey)
             return;
         switch (e.keyCode) {
@@ -2735,16 +2730,16 @@
         body.addClass('chrome-536');
 
     // Fix stupid wrong offset of the page, on Chrome Mac
-    if (os == 'mac') {
-        setTimeout(function() {
-            var top = body.scrollTop;
-            if (top != 0)
+    if (os === 'mac') {
+        setTimeout(() => {
+            const top = body.scrollTop;
+            if (top !== 0)
                 body.scrollTop = 0;
         }, 1500);
     }
 
     if (localStorage.userstyle) {
-        var style = document.createElement('style');
+        const style = document.createElement('style');
         style.textContent = localStorage.userstyle;
         style.inject(document.body);
     }

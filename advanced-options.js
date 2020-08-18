@@ -1,48 +1,49 @@
-(function(window) {
-    var document = window.document;
-    var chrome = window.chrome;
-    var _m = chrome.i18n.getMessage;
-    var __m = _m;
+(window => {
+    const document = window.document;
+    const chrome = window.chrome;
+    const _m = chrome.i18n.getMessage;
+    const __m = _m;
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
 
-        document.title = _m('extName') + ' ' + _m('advancedOptions');
+        document.title = `${_m('extName')} ${_m('advancedOptions')}`;
 
-        var customIconPreview = $('custom-icon-preview').firstElementChild;
-        var canvas = document.createElement('canvas');
+        const customIconPreview = $('custom-icon-preview').firstElementChild;
+        const canvas = document.createElement('canvas');
         canvas.width = canvas.height = 19;
-        var ctx = canvas.getContext('2d');
-        var dontLoad = true;
-        customIconPreview.onload = function() {
+        const ctx = canvas.getContext('2d');
+        let dontLoad = true;
+        customIconPreview.onload = () => {
             if (dontLoad) {
                 dontLoad = false;
                 return;
             }
             ctx.clearRect(0, 0, 19, 19);
             ctx.drawImage(customIconPreview, 0, 0, 19, 19);
-            var imageData = ctx.getImageData(0, 0, 19, 19);
+            const imageData = ctx.getImageData(0, 0, 19, 19);
             chrome.browserAction.setIcon({
                 imageData: imageData
             });
             localStorage.customIcon = JSON.stringify(imageData.data);
         };
         if (localStorage.customIcon) {
-            var customIcon = JSON.parse(localStorage.customIcon);
-            var imageData = ctx.getImageData(0, 0, 19, 19);
-            for (var key in customIcon) imageData.data[key] = customIcon[key];
+            const customIcon = JSON.parse(localStorage.customIcon);
+            const imageData = ctx.getImageData(0, 0, 19, 19);
+            for (const key in customIcon) imageData.data[key] = customIcon[key];
             ctx.putImageData(imageData, 0, 0);
             customIconPreview.src = canvas.toDataURL();
         }
 
-        var customIconFile = $('custom-icon-file');
-        customIconFile.addEventListener('change', function() {
-            var files = this.files;
+        const customIconFile = $('custom-icon-file');
+        customIconFile.addEventListener('change', function () {
+            const files = this.files;
+            let reader;
             if (files && files.length) {
-                var file = files[0];
+                const file = files[0];
                 if (/image\/[a-z]+/i.test(file.type)) {
                     reader = new FileReader();
-                    reader.onload = function(e) {
-                        var result = e.target.result;
+                    reader.onload = e => {
+                        const result = e.target.result;
                         customIconPreview.src = result;
                     };
                     reader.readAsDataURL(files[0]);
@@ -52,8 +53,8 @@
             }
         });
 
-        var defaultIconButton = $('default-icon-button');
-        defaultIconButton.addEventListener('click', function() {
+        const defaultIconButton = $('default-icon-button');
+        defaultIconButton.addEventListener('click', () => {
             delete localStorage.customIcon;
             chrome.browserAction.setIcon({
                 path: 'icon.png'
@@ -62,57 +63,57 @@
             customIconPreview.src = 'icon.png';
         });
 
-        var customSeparatorColor = $('custom-separator-color');
+        const customSeparatorColor = $('custom-separator-color');
         if (localStorage.separatorcolor) customSeparatorColor.value = localStorage.separatorcolor;
-        customSeparatorColor.addEventListener('change', function() {
+        customSeparatorColor.addEventListener('change', () => {
             localStorage.separatorcolor = customSeparatorColor.value;
         });
 
-        var customSeparatorTitle = $('custom-separator-title');
+        const customSeparatorTitle = $('custom-separator-title');
         if (localStorage.separatorTitle) {
             customSeparatorTitle.value = localStorage.separatorTitle;
         } else {
             customSeparatorTitle.value = '|';
         }
-        customSeparatorTitle.addEventListener('change', function() {
+        customSeparatorTitle.addEventListener('change', () => {
             localStorage.separatorTitle = customSeparatorTitle.value;
         });
 
-        var customSeparatorUrl = $('custom-separator-url');
+        const customSeparatorUrl = $('custom-separator-url');
         if (localStorage.separatorUrl) {
             customSeparatorUrl.value = localStorage.separatorUrl;
         } else {
             customSeparatorUrl.value = 'http://separatethis.com/';
         }
-        customSeparatorUrl.addEventListener('change', function() {
+        customSeparatorUrl.addEventListener('change', () => {
             localStorage.separatorUrl = customSeparatorUrl.value;
         });
 
-        var customSeparatorString = $('custom-separator-string');
+        const customSeparatorString = $('custom-separator-string');
         if (localStorage.separatorString) {
             customSeparatorString.value = localStorage.separatorString;
         } else {
             customSeparatorString.value = "separatethis.com;"
         }
-        customSeparatorString.addEventListener('change', function() {
+        customSeparatorString.addEventListener('change', () => {
             localStorage.separatorString = customSeparatorString.value;
         });
 
-        var textareaUserstyle = $('userstyle');
+        const textareaUserstyle = $('userstyle');
         if (localStorage.userstyle) textareaUserstyle.value = localStorage.userstyle;
         CodeMirror.fromTextArea(textareaUserstyle, {
-            onChange: function(c) {
+            onChange: c => {
                 localStorage.userstyle = c.getValue();
             }
         });
 
-        $('reset-button').addEventListener('click', function() {
+        $('reset-button').addEventListener('click', () => {
             localStorage.clear();
             alert('vBookmarks has been reset.');
             location.reload();
         }, false);
 
-        window.onerror = function() {
+        window.onerror = function () {
             chrome.extension.sendRequest({
                 error: [].slice.call(arguments)
             })
@@ -134,9 +135,11 @@
         document.getElementById('reset-settings').innerText = __m('resetSettings');
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');
-        document.getElementById('options-footer-1').innerHTML = '<a href="http://twitter.com/cheeaun">' + __m('optionsFooterText', 'Lim Chee Aun') + '</a>';
-        document.getElementById('options-footer-2').innerHTML = '<a href="http://twitter.com/windviki">' + __m('optionsFooterText', 'windviki') + '</a>';
-        document.getElementById('options-footer-3').innerHTML = '<a href="http://weibo.com/windviki">Follow @windviki on Weibo</a>';
-        document.getElementById('options-footer-4').innerHTML = '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
+        document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
+        document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
+        document.getElementById('options-footer-3').innerHTML =
+            '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
+        document.getElementById('options-footer-4').innerHTML =
+            '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
     });
 })(window);
