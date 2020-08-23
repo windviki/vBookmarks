@@ -21,7 +21,7 @@
 	"permissions": [
 		"<all_urls>", "chrome://favicon/", "bookmarks", "tabs"
 	],
-	"minimum_chrome_version":"18.0.0",
+	"minimum_chrome_version":"51.0.0.0",
 	"default_locale": "en",
 	"omnibox": {
 		"keyword" : "*"
