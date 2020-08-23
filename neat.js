@@ -704,6 +704,18 @@
         }
     };
 
+    const $donation = $('donation');
+    const showDonation = (show) => {
+        if (show) {
+            $donation.style.display = 'block';
+            $donation.innerHTML = `<p>Make a donation for me</p><a>Close</a>`;
+        } else {
+            $donation.style.display = 'none';
+        }
+    }
+
+    showDonation(true);
+
     // Search
     const $results = $('results');
     let searchMode = false;

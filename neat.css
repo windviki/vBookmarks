@@ -96,6 +96,38 @@ body.linux input {
     margin: 0;
 }
 
+#donation {
+    width: 100%;
+    position: relative;
+    top: 1px;
+    margin: 0;
+    padding: 0;
+    background: #feffb0;
+    color: #2e39df;
+    overflow: hidden;
+    z-index: 9999;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+#donation p {
+    display: inline;
+    position: relative;
+    font: menu;
+    font-size: 10px;
+    margin: 4px;
+}
+
+#donation a {
+    display: inline;
+    position: relative;
+    font: menu;
+    font-size: 10px;
+    right: -155px;
+}
+
 #results,
 #tree {
     background-color: #f8f9fa;
@@ -192,6 +224,7 @@ body.linux input {
 #tree ul li a:hover i {
     text-decoration: underline;
 }
+
 #results ul li a:active,
 #results ul li a.active,
 #results ul li a:focus,

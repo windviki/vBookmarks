@@ -6,6 +6,7 @@
         <textarea id="copier-input" value=""></textarea>
     </div>
     <div id="search" role="search"><input id="search-input" type="search" results="0" autofocus></div>
+    <div id="donation" tabindex="-1" style="display: none;"></div>
     <div id="tree" tabindex="-1"></div>
     <div id="results" tabindex="-1" style="display: none;"></div>
 </div>
@@ -33,9 +34,9 @@
 </menu>
 <menu id="folder-context-menu" type="context" tabindex="-1">
     <command id="add-bookmark-top" tabindex="-1">
-    <command id="add-bookmark-bottom" tabindex="-1">
-    <hr id="folder-context-menu-sep1">
-    <command id="add-new-folder" tabindex="-1">
+        <command id="add-bookmark-bottom" tabindex="-1">
+            <hr id="folder-context-menu-sep1">
+            <command id="add-new-folder" tabindex="-1">
                 <hr id="folder-context-menu-sep2">
                 <command id="add-bookmark-before-folder" tabindex="-1">
                     <command id="add-bookmark-after-folder" tabindex="-1">
