@@ -533,7 +533,7 @@
             for (let i = 0, l = data.length; i < l; i++) {
                 const d = data[i];
                 if (!d.url) {
-                    if (d.parentId > 1) {
+                    if (d.parentId >= 1) {
                         list[d.id] = d.parentId;
                     }
                     generateNodeTrees(d.children, list);
