@@ -740,6 +740,7 @@
         showDonation(false);
         localStorage.donationCountDown = 0;
         localStorage.donationLastDate = Date.now() + 3*3600*1000*24;
+        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
     })
 
     $('donation-close').addEventListener('click', () => {  
