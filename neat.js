@@ -707,14 +707,52 @@
     const $donation = $('donation');
     const showDonation = (show) => {
         if (show) {
+            $('donation-text').innerHTML = _m('donationMessage');
+            $('donation-go').innerHTML = _m('donationGo');
             $donation.style.display = 'block';
-            $donation.innerHTML = `<p>Make a donation for me</p><a>Close</a>`;
+            $('donation-go').focus();
+            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 60;
+            let countDown = setInterval(() => {
+                localStorage.donationCountDown = seconds;
+                if (seconds <= 0) {
+                    $('donation-close').innerHTML = _m('donationDismiss');
+                    $('donation-close').disabled = false;
+                    clearInterval(countDown);
+                    localStorage.donationCountDown = 0;
+                } else {
+                    $('donation-close').innerHTML = `${seconds}s`;
+                    $('donation-close').disabled = true;
+                }
+                seconds--;
+            }, 1000);
         } else {
             $donation.style.display = 'none';
         }
     }
 
-    showDonation(true);
+    if (!localStorage.openCount) {
+        localStorage.openCount = 1;
+    } else {
+        localStorage.openCount++;
+    }
+
+    $('donation-go').addEventListener('click', () => {  
+        showDonation(false);
+        localStorage.donationCountDown = 0;
+        localStorage.donationLastDate = Date.now() + 3*3600*1000*24;
+    })
+
+    $('donation-close').addEventListener('click', () => {  
+        showDonation(false);
+        localStorage.donationCountDown = 0;
+        localStorage.donationLastDate = Date.now();
+    })
+
+    if (localStorage.donationCountDown > 0 
+        || !localStorage.donationLastDate 
+        || Date.now() - localStorage.donationLastDate > 3600*1000*24) {
+        showDonation(true);
+    }
 
     // Search
     const $results = $('results');
@@ -881,9 +919,10 @@
                 const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
                 chrome.tabs.getZoom(zoomFactor => {
                     const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+                    // 200 <= height <= maxHeight
                     const height = Math.max(200, Math.min(fullHeight, maxHeight));
                     const newHeightStyle = `${height}px`;
-                    if (localStorage.popupHeight !== height) {
+                    if (localStorage.popupHeight <= height) {
                         // Slide up faster than down
                         body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
                         body.style.height = newHeightStyle;
@@ -2434,10 +2473,14 @@
     });
 
     // Resizer
-    const $resizer = $('resizer');
-    let resizerDown = false;
+    const $resizerx = $('resizer-x');
+    const $resizery = $('resizer-y');
+    let resizerXDown = false;
+    let resizerYDown = false;
     let bodyWidth = 0,
-        screenX = 0;
+        bodyHeight = 0, 
+        screenX = 0, 
+        screenY = 0;
 
     // Reset separators
     function resetSeparator() {
@@ -2460,30 +2503,81 @@
     }
 
     // Drag the edge
-    $resizer.addEventListener('mousedown', e => {
+    $resizerx.addEventListener('mousedown', e => {
         e.preventDefault();
         e.stopPropagation();
-        resizerDown = true;
+        resizerXDown = true;
         bodyWidth = body.offsetWidth;
         screenX = e.screenX;
     });
+    $resizery.addEventListener('mousedown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        resizerYDown = true;
+        bodyHeight = body.offsetHeight;
+        screenY = e.screenY;
+    });
+    let currentMaxHeight = 0;
     function mouseMoveHandler(e) {
-        if (!resizerDown)
+        if (!resizerXDown && !resizerYDown)
             return;
         e.preventDefault();
+        const isX = resizerXDown;
         if (e.type === 'mouseup') {
-            resizerDown = false;
+            resizerXDown = false;
+            resizerYDown = false;
             adaptBookmarkTooltips();
         }
-        // record current width
-        const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
-        let width = bodyWidth + changedWidth;
-        // 320 < width < 640
-        width = Math.min(640, Math.max(320, width));
-        body.style.width = `${width}px`;
-        localStorage.popupWidth = width;
-        resetSeparator(); // Reset separators
-        clearMenu();
+        if (isX) {
+            // record current width
+            const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
+            let width = bodyWidth + changedWidth;
+            // 320 < width < 640
+            width = Math.min(640, Math.max(320, width));
+            // if (!rtl && e.screenX < 640 || rtl && e.screenX > 640) {
+            //     $resizerx.style.cursor = 'not-allowed';
+            // } else {
+            //     $resizerx.style.cursor = 'col-resize';
+            // }
+            body.style.width = `${width}px`;
+            localStorage.popupWidth = width;
+            resetSeparator(); // Reset separators
+            clearMenu();
+        } else {
+            // record current height
+            const changedHeight = e.screenY - screenY;
+            let height = bodyHeight + changedHeight;
+            // 240 < height < 600
+            if (currentMaxHeight <= 0) {
+                chrome.tabs.getZoom(zoomFactor => {
+                    currentMaxHeight = (600 / zoomFactor) - 1;
+                    height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
+                    // if (e.screenY > currentMaxHeight) {
+                    //     $resizery.style.cursor = 'not-allowed';
+                    // } else {
+                    //     $resizery.style.cursor = 'row-resize';
+                    // }
+                    body.style.height = `${height}px`;
+                    localStorage.popupHeight = height;
+                    resetSeparator(); // Reset separators
+                    clearMenu();
+                });
+            } else {
+                height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
+                // if (e.screenY > currentMaxHeight) {
+                //     $resizery.style.cursor = 'not-allowed';
+                // } else {
+                //     $resizery.style.cursor = 'row-resize';
+                // }
+                body.style.height = `${height}px`;
+                localStorage.popupHeight = height;
+                resetSeparator(); // Reset separators
+                clearMenu();
+                if (e.type === 'mouseup') {
+                    currentMaxHeight = 0;
+                }
+            }
+        }
     }
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseMoveHandler);

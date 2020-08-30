@@ -96,36 +96,65 @@ body.linux input {
     margin: 0;
 }
 
+#search input:focus { 
+    outline-width: 0; 
+}
+
 #donation {
-    width: 100%;
+    width: 98%;
     position: relative;
-    top: 1px;
-    margin: 0;
-    padding: 0;
-    background: #feffb0;
-    color: #2e39df;
-    overflow: hidden;
-    z-index: 9999;
+    top: 0;
+    margin: 2px;
+    padding: 2px;
+    background: #ffffcc;
+    z-index: 9;
+    border: 0;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
+    box-shadow: 0 2px 4px #bbbbbb;
 }
 
-#donation p {
-    display: inline;
-    position: relative;
+#donation li {
     font: menu;
     font-size: 10px;
-    margin: 4px;
+    display: flex;
+    overflow: hidden;
 }
 
-#donation a {
-    display: inline;
+#donation-text {
+    color: #eb3939;
+    margin: 2px 10px 2px 2px;
+}
+
+.donation-button {
     position: relative;
+    color: #300cce;
+    vertical-align: middle;
+    min-width: 28px;
+    margin: 4px 2px 4px 2px;
+    padding: 0;
+    z-index: 10;
+    background-color: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
     font: menu;
     font-size: 10px;
-    right: -155px;
+    text-align: center;
+}
+
+.donation-button:disabled {
+    text-decoration: none;
+    color: #85858b;
+}
+
+.donation-button:not([disabled]):hover {
+    text-decoration: underline;
+}
+
+.donation-button:focus {
+    outline: thin dotted;
 }
 
 #results,
@@ -384,13 +413,22 @@ menu[type=context].hide-editables #folder-delete {
     display: none;
 }
 
-#resizer {
+#resizer-x {
     position: absolute;
     width: 4px;
     height: 100%;
     __MSG_@@bidi_start_edge__: 0;
     top: 0;
     cursor: col-resize;
+}
+
+#resizer-y {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    __MSG_@@bidi_start_edge__: 0;
+    bottom: 0;
+    cursor: row-resize;
 }
 
 #cover {

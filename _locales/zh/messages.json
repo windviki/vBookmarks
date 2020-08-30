@@ -131,6 +131,15 @@
   "delete": {
     "message": "删除"
   },
+  "donationMessage": {
+    "message": "如果你喜欢本扩展的话，请进行捐助。这样我可以持续改进它的功能并保持开放。"
+  },
+  "donationGo": {
+    "message": "好的"
+  },
+  "donationDismiss": {
+    "message": "关闭"
+  },
   "deleteEllipsis": {
     "message": "删除 ..."
   },

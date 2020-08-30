@@ -6,7 +6,13 @@
         <textarea id="copier-input" value=""></textarea>
     </div>
     <div id="search" role="search"><input id="search-input" type="search" results="0" autofocus></div>
-    <div id="donation" tabindex="-1" style="display: none;"></div>
+    <div id="donation" style="display: none;">
+        <li>
+            <p id="donation-text"></p>
+            <button class="donation-button" id="donation-go" type="button"><i></i></button>
+            <button class="donation-button" id="donation-close" type="button"><i></i></button>
+        </li>
+    </div>
     <div id="tree" tabindex="-1"></div>
     <div id="results" tabindex="-1" style="display: none;"></div>
 </div>
@@ -58,7 +64,8 @@
 <menu id="separator-context-menu" type="context" tabindex="-1">
     <command id="remove-separator" tabindex="-1">
 </menu>
-<div id="resizer"></div>
+<div id="resizer-x" class="resizer"></div>
+<div id="resizer-y" class="resizer"></div>
 <div id="cover"></div>
 <div id="alert-dialog" class="dialog" role="dialog">
     <p id="alert-dialog-text" class="dialog-text"></p>

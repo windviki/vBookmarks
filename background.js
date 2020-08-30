@@ -5,24 +5,12 @@
     const __m = _m;
     const localStorage = window.localStorage;
 
-    function getExtensionVersion(callback) {
-        const xmlHttp = new XMLHttpRequest();
-        xmlHttp.open('GET', 'manifest.json');
-        xmlHttp.onload = e => {
-            const manifest = JSON.parse(xmlHttp.responseText);
-            callback(manifest.version);
-        };
-        xmlHttp.send(null);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
 
         const reportError = (msg, url, line) => {
-            let _version;
-            getExtensionVersion(ver => {
-                _version = ver;
-            });
-            const txt = `_s=84615e81d50c4ddabff522aee3c4b734&_r=img&Msg=${escape(msg)}&URL=${escape(url)}&Line=${line}&Platform=${escape(navigator.platform)}&Version=${escape(_version)}&UserAgent=${escape(navigator.userAgent)}`;
+            const manifest = chrome.runtime.getManifest();
+            const version = manifest.version;
+            const txt = `_s=84615e81d50c4ddabff522aee3c4b734&_r=img&Msg=${escape(msg)}&URL=${escape(url)}&Line=${line}&Platform=${escape(navigator.platform)}&Version=${escape(version)}&UserAgent=${escape(navigator.userAgent)}`;
             const i = document.createElement('img');
             i.setAttribute('src', `${('https:' === document.location.protocol) ? 'https://errorstack.appspot.com'
                 : 'http://www.errorstack.com'}/submit?${txt}`);

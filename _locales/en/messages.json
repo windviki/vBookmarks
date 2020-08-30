@@ -134,6 +134,15 @@
   "deleteEllipsis": {
     "message": "Delete..."
   },
+  "donationMessage": {
+    "message": "If you like it, please buy me a beer!"
+  },
+  "donationGo": {
+    "message": "Fine"
+  },
+  "donationDismiss": {
+    "message": "Close"
+  },
   "edit": {
     "message": "Edit..."
   },
