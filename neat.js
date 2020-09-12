@@ -735,24 +735,38 @@
     } else {
         localStorage.openCount++;
     }
+    if (!localStorage.donationKey) {
+        localStorage.donationKey = 1;
+    }
 
     $('donation-go').addEventListener('click', () => {  
         showDonation(false);
         localStorage.donationCountDown = 0;
-        localStorage.donationLastDate = Date.now() + 3*3600*1000*24;
+        localStorage.donationFactor = 1;
+        if (localStorage.donationKey > 1000) {
+            localStorage.donationKey = 1000;
+        } else {
+            localStorage.donationKey = parseInt(localStorage.donationKey) + 100;
+        }
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
     })
 
     $('donation-close').addEventListener('click', () => {  
         showDonation(false);
         localStorage.donationCountDown = 0;
-        localStorage.donationLastDate = Date.now();
+        localStorage.donationFactor = parseInt(localStorage.donationFactor) + 2;
+        if (localStorage.donationKey < 100) {
+            localStorage.donationKey = 100;
+        }
+        localStorage.donationFactor %= localStorage.donationKey;
     })
 
     if (localStorage.donationCountDown > 0 
-        || !localStorage.donationLastDate 
-        || Date.now() - localStorage.donationLastDate > 3600*1000*24) {
+        || !localStorage.donationFactor 
+        || parseInt(localStorage.donationFactor) >= parseInt(localStorage.donationKey)) {
         showDonation(true);
+    } else {
+        localStorage.donationFactor = parseInt(localStorage.donationFactor) + 1;
     }
 
     // Search
