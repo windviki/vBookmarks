@@ -1,274 +1,274 @@
 {
-	"accessibility": {
-		"message": "Accessibilité"
-	},
-	"addBookmarkAfter": {
-		"message": "Ajouter l'onglet actuel aux favoris après"
-	},
-	"addBookmarkBefore": {
-		"message": "Ajouter l'onglet actuel à vos favoris avant"
-	},
-	"addBookmarkBottom": {
-		"message": "Ajouter l'onglet actuel à vos favoris en bas"
-	},
-	"addBookmarkTop": {
-		"message": "Ajouter l'onglet actuel à vos favoris en haut"
-	},
-	"addNewFolder": {
-		"message": "Ajouter un sous-dossier"
-	},
-	"addNewFolderAfter": {
-		"message": "Ajouter un dossier après"
-	},
-	"addNewFolderBefore": {
-		"message": "Ajouter un dossier avant"
-	},
-	"addSeparator": {
-		"message": "Ajouter un séparateur"
-	},
-	"advancedOptions": {
-		"message": "Options avancées"
-	},
-	"confirmDeleteFolderBookmarks": {
-		"message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $bookmarkCount$ favoris ?",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$2"
-			},
-			"folderName": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfolders": {
-		"message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $subFolderCount$ sous-dossier(s)?",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfoldersBookmarks": {
-		"message": "Etes-vous sûr que vous voulez supprimer $folderName$, $subFolderCount$ sous-dossier(s) et $bookmarkCount$ favoris ?",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$3"
-			},
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmOpenBookmarks": {
-		"description": "Message de confirmation pour l'ouverture de tous les favoris.",
-		"message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count $?",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewIncognitoWindow": {
-		"description": "Confirmation message for opening all bookmarks in a new incognito window.",
-		"message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count$ dans une nouvelle fenêtre incognito?",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewWindow": {
-		"description": "Message de confirmation pour l’ouverture de tous les signets dans une nouvelle fenêtre.",
-		"message": "Etes-vous sûr que vous voulez ouvrir tous les $count$ favoeis dans une nouvelle fenêtre?",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"copyAllTitlesAndUrls": {
-		"message": "Copier tous les titres et URL dans le presse-papiers"
-	},
-	"copyTitleAndUrl": {
-		"message": "Copier le titre et l’URL dans le presse-papiers"
-	},
-	"customIcon": {
-		"message": "Icône personnalisée"
-	},
-	"customIconDescription": {
-		"message": "L'icône doit être au dimensions 19x19 pixels. Sinon, il sera redimensionné à cette dimension."
-	},
-	"customSeparatorColorDescription": {
-		"message": "Personnaliser la couleur du séparateur"
-	},
-	"customSeparatorStringDescription": {
-		"message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
-	},
-	"customSeparatorTitleDescription": {
-		"message": "Le vrai titre du favoris s'affiche comme séparateur"
-	},
-	"customSeparatorUrlDescription": {
-		"message": "L'URL réelle du favoris s'affiche comme séparateur"
-	},
-	"customStyles": {
-		"message": "Styles personnalisés"
-	},
-	"customStylesDescription": {
-		"message": "Cela nécessite des compétences CSS. Pirater à vos risques et périls. Le partage de code serait judicieux via"
-	},
-	"defaultIconButton": {
-		"message": "utilisation par défaut"
-	},
-	"defaultIconButtonOr": {
-		"message": "ou"
-	},
-	"delete": {
-		"message": "Supprimer"
-	},
-	"deleteEllipsis": {
-		"message": "Supprimer..."
-	},
-	"edit": {
-		"message": "Editer..."
-	},
-	"editBookmark": {
-		"message": "Editer le favoris"
-	},
-	"editFolder": {
-		"message": "Editer Dossier"
-	},
-	"errorOccured": {
-		"message": "Oops, une erreur s’est produite."
-	},
-	"extDesc": {
-		"description": "La description de l’extension.",
-		"message": "Un gestionnaire de favoris. Enhanced Neat Bookmarks."
-	},
-	"extName": {
-		"description": "vBookmarks",
-		"message": "vBookmarks"
-	},
-	"general": {
-		"message": "General"
-	},
-	"ignore": {
-		"message": "Ignorer"
-	},
-	"name": {
-		"description": "Nom du favoris ou du dossier.",
-		"message": "Nom"
-	},
-	"noTitle": {
-		"description": "Titre des favoris sans titre sans URL http (s) ou dossiers sans titre.",
-		"message": "(Sans titre)"
-	},
-	"nope": {
-		"message": "Non"
-	},
-	"open": {
-		"description": "Action pour ouvrir les favoris.",
-		"message": "Ouvrir"
-	},
-	"openBookmarks": {
-		"message": "Ouvrir tous les favoris"
-	},
-	"openBookmarksIncognitoWindow": {
-		"message": "Ouvrir tous les favoris dans une fenetre privée"
-	},
-	"openBookmarksNewWindow": {
-		"message": "Ouvrir tous les favoris dans une nouvelle fenetre"
-	},
-	"openIncognitoWindow": {
-		"message": "Ouvrir dans une fenetre privée"
-	},
-	"openNewTab": {
-		"message": "Ouvrir dans un nouvel onglet"
-	},
-	"openNewWindow": {
-		"message": "Ouvrir dans une nouvelle fenetre"
-	},
-	"optionClickNewTab": {
-		"message": "un click gauche ouvre le favoris dans un nouvel onglet."
-	},
-	"optionCloseUnusedFolders": {
-		"message": "Fermer les dossiers non utilisés lors de l'ouverture d'un nouveau dossier."
-	},
-	"optionConfirmOpenFolder": {
-		"message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
-	},
-	"optionOnlyShowBookmarkBar": {
-		"message": "Afficher uniquement les favoris de la barre des favoris"
-	},
-	"optionOpenNewTab": {
-		"message": "Le clic du milieu ou le ctrl-clic ouvre le favoris dans le nouvel onglet d'arrière-plan (au lieu du premier plan)."
-	},
-	"optionPopupStays": {
-		"message": "La fenêtre contextuelle reste ouverte lors de l'ouverture (clic gauche) des favoris."
-	},
-	"optionRememberPrevState": {
-		"message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
-	},
-	"optionZoom": {
-		"message": "Zoom"
-	},
-	"options": {
-		"message": "Options"
-	},
-	"optionsFooterText": {
-		"description": "Texte de pied de page pour la page Options",
-		"message": "Fait par $authorName$.",
-		"placeholders": {
-			"authorName": {
-				"content": "$1"
-			}
-		}
-	},
-	"parentFolder": {
-		"description": "Dossier parent affiché dans l'info-bulle des favoris dans la liste des résultats de la recherche.",
-		"message": "Dossier parent: \"$folderName$\"",
-		"placeholders": {
-			"folderName": {
-				"content": "$1",
-				"example": "Bar des favoris"
-			}
-		}
-	},
-	"removeSeparator": {
-		"message": "Supprimer le séparateur"
-	},
-	"replaceUrl": {
-		"message": "Remplacer par l'URL actuelle"
-	},
-	"reportError": {
-		"message": "Signaler une erreur"
-	},
-	"reportedToDeveloper": {
-		"description": "Un message pour une erreur produite dans l'extension, a été signalé au développeur.",
-		"message": "Cela a été signalé au développeur."
-	},
-	"resetButton": {
-		"message": "Réinitialiser"
-	},
-	"resetSettings": {
-		"message": "Réinitialiser les options"
-	},
-	"resetSettingsDescription": {
-		"message": "Réinitialiser vBookmarks aux paramètres par défaut."
-	},
-	"save": {
-		"message": "sauvegarder"
-	},
-	"searchBookmarks": {
-		"description": "Espace réservé au champ de recherche.",
-		"message": "Recherche de favoris"
-	},
-	"url": {
-		"message": "URL"
-	}
+  "accessibility": {
+    "message": "Accessibilité"
+  },
+  "addBookmarkAfter": {
+    "message": "Ajouter l'onglet actuel aux favoris après"
+  },
+  "addBookmarkBefore": {
+    "message": "Ajouter l'onglet actuel à vos favoris avant"
+  },
+  "addBookmarkBottom": {
+    "message": "Ajouter l'onglet actuel à vos favoris en bas"
+  },
+  "addBookmarkTop": {
+    "message": "Ajouter l'onglet actuel à vos favoris en haut"
+  },
+  "addNewFolder": {
+    "message": "Ajouter un sous-dossier"
+  },
+  "addNewFolderAfter": {
+    "message": "Ajouter un dossier après"
+  },
+  "addNewFolderBefore": {
+    "message": "Ajouter un dossier avant"
+  },
+  "addSeparator": {
+    "message": "Ajouter un séparateur"
+  },
+  "advancedOptions": {
+    "message": "Options avancées"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $bookmarkCount$ favoris ?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $subFolderCount$ sous-dossier(s)?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Etes-vous sûr que vous voulez supprimer $folderName$, $subFolderCount$ sous-dossier(s) et $bookmarkCount$ favoris ?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Message de confirmation pour l'ouverture de tous les favoris.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count $?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count$ dans une nouvelle fenêtre incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Message de confirmation pour l’ouverture de tous les signets dans une nouvelle fenêtre.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les $count$ favoeis dans une nouvelle fenêtre?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copier tous les titres et URL dans le presse-papiers"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copier le titre et l’URL dans le presse-papiers"
+  },
+  "customIcon": {
+    "message": "Icône personnalisée"
+  },
+  "customIconDescription": {
+    "message": "L'icône doit être au dimensions 19x19 pixels. Sinon, il sera redimensionné à cette dimension."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personnaliser la couleur du séparateur"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Le vrai titre du favoris s'affiche comme séparateur"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "L'URL réelle du favoris s'affiche comme séparateur"
+  },
+  "customStyles": {
+    "message": "Styles personnalisés"
+  },
+  "customStylesDescription": {
+    "message": "Cela nécessite des compétences CSS. Pirater à vos risques et périls. Le partage de code serait judicieux via"
+  },
+  "defaultIconButton": {
+    "message": "utilisation par défaut"
+  },
+  "defaultIconButtonOr": {
+    "message": "ou"
+  },
+  "delete": {
+    "message": "Supprimer"
+  },
+  "deleteEllipsis": {
+    "message": "Supprimer..."
+  },
+  "edit": {
+    "message": "Editer..."
+  },
+  "editBookmark": {
+    "message": "Editer le favoris"
+  },
+  "editFolder": {
+    "message": "Editer Dossier"
+  },
+  "errorOccured": {
+    "message": "Oops, une erreur s’est produite."
+  },
+  "extDesc": {
+    "description": "La description de l’extension.",
+    "message": "Un gestionnaire de favoris. Enhanced Neat Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "General"
+  },
+  "ignore": {
+    "message": "Ignorer"
+  },
+  "name": {
+    "description": "Nom du favoris ou du dossier.",
+    "message": "Nom"
+  },
+  "noTitle": {
+    "description": "Titre des favoris sans titre sans URL http (s) ou dossiers sans titre.",
+    "message": "(Sans titre)"
+  },
+  "nope": {
+    "message": "Non"
+  },
+  "open": {
+    "description": "Action pour ouvrir les favoris.",
+    "message": "Ouvrir"
+  },
+  "openBookmarks": {
+    "message": "Ouvrir tous les favoris"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Ouvrir tous les favoris dans une fenetre privée"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Ouvrir tous les favoris dans une nouvelle fenetre"
+  },
+  "openIncognitoWindow": {
+    "message": "Ouvrir dans une fenetre privée"
+  },
+  "openNewTab": {
+    "message": "Ouvrir dans un nouvel onglet"
+  },
+  "openNewWindow": {
+    "message": "Ouvrir dans une nouvelle fenetre"
+  },
+  "optionClickNewTab": {
+    "message": "un click gauche ouvre le favoris dans un nouvel onglet."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Fermer les dossiers non utilisés lors de l'ouverture d'un nouveau dossier."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Afficher uniquement les favoris de la barre des favoris"
+  },
+  "optionOpenNewTab": {
+    "message": "Le clic du milieu ou le ctrl-clic ouvre le favoris dans le nouvel onglet d'arrière-plan (au lieu du premier plan)."
+  },
+  "optionPopupStays": {
+    "message": "La fenêtre contextuelle reste ouverte lors de l'ouverture (clic gauche) des favoris."
+  },
+  "optionRememberPrevState": {
+    "message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Options"
+  },
+  "optionsFooterText": {
+    "description": "Texte de pied de page pour la page Options",
+    "message": "Fait par $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "parentFolder": {
+    "description": "Dossier parent affiché dans l'info-bulle des favoris dans la liste des résultats de la recherche.",
+    "message": "Dossier parent: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bar des favoris"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Supprimer le séparateur"
+  },
+  "replaceUrl": {
+    "message": "Remplacer par l'URL actuelle"
+  },
+  "reportError": {
+    "message": "Signaler une erreur"
+  },
+  "reportedToDeveloper": {
+    "description": "Un message pour une erreur produite dans l'extension, a été signalé au développeur.",
+    "message": "Cela a été signalé au développeur."
+  },
+  "resetButton": {
+    "message": "Réinitialiser"
+  },
+  "resetSettings": {
+    "message": "Réinitialiser les options"
+  },
+  "resetSettingsDescription": {
+    "message": "Réinitialiser vBookmarks aux paramètres par défaut."
+  },
+  "save": {
+    "message": "sauvegarder"
+  },
+  "searchBookmarks": {
+    "description": "Espace réservé au champ de recherche.",
+    "message": "Recherche de favoris"
+  },
+  "url": {
+    "message": "URL"
+  }
 }

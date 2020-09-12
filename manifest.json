@@ -1,29 +1,49 @@
 {
 	"name": "__MSG_extName__",
-	"version": "3.1",
+	"version": "3.2",
 	"description": "__MSG_extDesc__",
 	"manifest_version": 2,
-	"homepage_url":"https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
-	"update_url":"http://clients2.google.com/service/update2/crx",
+	"homepage_url": "https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
+	"update_url": "http://clients2.google.com/service/update2/crx",
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
 	"browser_action": {
-		"default_icon": "icon.png",
+		"default_icon": {
+			"16": "icon16.png",
+			"19": "icon.png",
+			"32": "icon32.png",
+			"48": "icon48.png",
+			"128": "icon128.png"
+		},
+		"default_title": "vBookmarks",
 		"default_popup": "popup.html"
 	},
 	"options_page": "options.html",
 	"background": {
 		"page": "background.html"
 	},
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"windows": "Ctrl+Shift+B",
+				"mac": "Command+Shift+B",
+				"chromeos": "Ctrl+Shift+B",
+				"linux": "Ctrl+Shift+B"
+			}
+		}
+	},
 	"permissions": [
-		"<all_urls>", "chrome://favicon/", "bookmarks", "tabs"
+		"<all_urls>",
+		"chrome://favicon/",
+		"bookmarks",
+		"tabs"
 	],
-	"minimum_chrome_version":"18.0.0",
+	"minimum_chrome_version": "61.0.0.0",
 	"default_locale": "en",
 	"omnibox": {
-		"keyword" : "*"
+		"keyword": "*"
 	}
 }

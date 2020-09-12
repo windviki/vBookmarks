@@ -1,274 +1,274 @@
 {
-	"accessibility": {
-		"message": "輔助功能"
-	},
-	"addBookmarkAfter": {
-		"message": "添加當前頁書籤到此之後"
-	},
-	"addBookmarkBefore": {
-		"message": "添加當前頁書籤到此之前"
-	},
-	"addBookmarkBottom": {
-		"message": "添加當前頁到文件夾末尾"
-	},
-	"addBookmarkTop": {
-		"message": "添加當前頁到文件夾前端"
-	},
-	"addNewFolder": {
-		"message": "添加子文件夾"
-	},
-	"addNewFolderAfter": {
-		"message": "添加文件夾到此之後"
-	},
-	"addNewFolderBefore": {
-		"message": "添加文件夾到此之前"
-	},
-	"addSeparator": {
-		"message": "添加分隔符"
-	},
-	"advancedOptions": {
-		"message": "進階設定"
-	},
-	"confirmDeleteFolderBookmarks": {
-		"message": "您確定要刪除文件夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$2"
-			},
-			"folderName": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfolders": {
-		"message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
-		"placeholders": {
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmDeleteFolderSubfoldersBookmarks": {
-		"message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？",
-		"placeholders": {
-			"bookmarkCount": {
-				"content": "$3"
-			},
-			"folderName": {
-				"content": "$1"
-			},
-			"subFolderCount": {
-				"content": "$2"
-			}
-		}
-	},
-	"confirmOpenBookmarks": {
-		"description": "打開所有書籤時的確認信息",
-		"message": "您確定要打開 $count$ 個書籤？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewIncognitoWindow": {
-		"description": "在隱身窗口中打開所有書籤時的確認信息",
-		"message": "您確定要在隱身窗口中打開 $count$ 個書籤？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"confirmOpenBookmarksNewWindow": {
-		"description": "在新窗口中打開所有書籤時的確認信息",
-		"message": "您確定要在新窗口中打開 $count$ 個書籤？",
-		"placeholders": {
-			"count": {
-				"content": "$1"
-			}
-		}
-	},
-	"copyAllTitlesAndUrls": {
-		"message": "拷貝所有標題和鏈接到剪貼板"
-	},
-	"copyTitleAndUrl": {
-		"message": "拷貝標題和鏈接到剪貼板"
-	},
-	"customIcon": {
-		"message": "個性化圖標"
-	},
-	"customIconDescription": {
-		"message": "圖標必須為19*19像素，否則會被縮放至此大小"
-	},
-	"customSeparatorColorDescription": {
-		"message": "定制分割條顏色"
-	},
-	"customSeparatorTitleDescription": {
-		"message": "被用作分割條的書籤節點的标题"
-	},
-	"customSeparatorUrlDescription": {
-		"message": "被用作分割條的書籤節點的URL"
-	},
-	"customSeparatorStringDescription": {
-		"message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
-	},
-	"customStyles": {
-		"message": "定制CSS"
-	},
-	"customStylesDescription": {
-		"message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
-	},
-	"defaultIconButton": {
-		"message": "使用默認圖標"
-	},
-	"defaultIconButtonOr": {
-		"message": " 或者 "
-	},
-	"delete": {
-		"message": "刪除"
-	},
-	"deleteEllipsis": {
-		"message": "刪除 ..."
-	},
-	"edit": {
-		"message": "編輯 ..."
-	},
-	"editBookmark": {
-		"message": "編輯書籤"
-	},
-	"editFolder": {
-		"message": "編輯文件夾"
-	},
-	"errorOccured": {
-		"message": "有錯誤出現"
-	},
-	"extDesc": {
-		"description": "擴充功能描述",
-		"message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
-	},
-	"extName": {
-		"description": "擴充功能名稱",
-		"message": "vBookmarks"
-	},
-	"general": {
-		"message": "一般功能"
-	},
-	"ignore": {
-		"message": "忽略"
-	},
-	"name": {
-		"description": "書籤名或文件夾名",
-		"message": "名字"
-	},
-	"nope": {
-		"message": "取消"
-	},
-	"noTitle": {
-		"description": "沒 http(s) 開頭的書籤或沒命名的文件夾的統一標題",
-		"message": "（沒標題）"
-	},
-	"open": {
-		"description": "打開書籤的動作",
-		"message": "打開"
-	},
-	"openBookmarks": {
-		"message": "打開所有書籤"
-	},
-	"openBookmarksIncognitoWindow": {
-		"message": "在隱身窗口中打開所有書籤"
-	},
-	"openBookmarksNewWindow": {
-		"message": "在新窗口中打開所有書籤"
-	},
-	"openIncognitoWindow": {
-		"message": "在隱身窗口中打開"
-	},
-	"openNewTab": {
-		"message": "在新標籤頁中打開"
-	},
-	"openNewWindow": {
-		"message": "在新窗口中打開"
-	},
-	"optionClickNewTab": {
-		"message": "左擊書籤在新標籤頁中打開"
-	},
-	"optionCloseUnusedFolders": {
-		"message": "展開文件夾時折疊其他文件夾"
-	},
-	"optionConfirmOpenFolder": {
-		"message": "打開多個書籤前需確認"
-	},
-	"optionOnlyShowBookmarkBar": {
-		"message": "僅顯示書籤欄中的書籤"
-	},
-	"optionOpenNewTab": {
-		"message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
-	},
-	"optionPopupStays": {
-		"message": "打開（鼠標左擊）書籤時 Popup 頁面不關閉"
-	},
-	"optionRememberPrevState": {
-		"message": "記住上次狀態（滾動條位置、所打開文件夾）"
-	},
-	"options": {
-		"message": "設置"
-	},
-	"optionsFooterText": {
-		"description": "設定頁的頁腳訊息",
-		"message": "作者：$authorName$",
-		"placeholders": {
-			"authorName": {
-				"content": "$1"
-			}
-		}
-	},
-	"optionZoom": {
-		"message": "縮放"
-	},
-	"parentFolder": {
-		"description": "搜索結果列表中提示書籤所在目錄",
-		"message": "所在目錄：$folderName$",
-		"placeholders": {
-			"folderName": {
-				"content": "$1",
-				"example": "書籤欄"
-			}
-		}
-	},
-	"removeSeparator": {
-		"message": "移除分隔符"
-	},
-	"replaceUrl": {
-		"message": "替換為當前頁的URL"
-	},
-	"reportedToDeveloper": {
-		"description": "擴展中發生了一個錯誤，已經報告給開發者",
-		"message": "錯誤報告"
-	},
-	"reportError": {
-		"message": "報告此錯誤"
-	},
-	"resetButton": {
-		"message": "重置"
-	},
-	"resetSettings": {
-		"message": "重置所有選項"
-	},
-	"resetSettingsDescription": {
-		"message": "重置所有選項到默認值"
-	},
-	"save": {
-		"message": "儲存"
-	},
-	"searchBookmarks": {
-		"description": "搜索框裡的提示文字",
-		"message": "書籤搜索"
-	},
-	"url": {
-		"message": "網址"
-	}
+  "accessibility": {
+    "message": "輔助功能"
+  },
+  "addBookmarkAfter": {
+    "message": "添加當前頁書籤到此之後"
+  },
+  "addBookmarkBefore": {
+    "message": "添加當前頁書籤到此之前"
+  },
+  "addBookmarkBottom": {
+    "message": "添加當前頁到文件夾末尾"
+  },
+  "addBookmarkTop": {
+    "message": "添加當前頁到文件夾前端"
+  },
+  "addNewFolder": {
+    "message": "添加子文件夾"
+  },
+  "addNewFolderAfter": {
+    "message": "添加文件夾到此之後"
+  },
+  "addNewFolderBefore": {
+    "message": "添加文件夾到此之前"
+  },
+  "addSeparator": {
+    "message": "添加分隔符"
+  },
+  "advancedOptions": {
+    "message": "進階設定"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "您確定要刪除文件夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "您確定要刪除文件夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "打開所有書籤時的確認信息",
+    "message": "您確定要打開 $count$ 個書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "在隱身窗口中打開所有書籤時的確認信息",
+    "message": "您確定要在隱身窗口中打開 $count$ 個書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "在新窗口中打開所有書籤時的確認信息",
+    "message": "您確定要在新窗口中打開 $count$ 個書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "拷貝所有標題和鏈接到剪貼板"
+  },
+  "copyTitleAndUrl": {
+    "message": "拷貝標題和鏈接到剪貼板"
+  },
+  "customIcon": {
+    "message": "個性化圖標"
+  },
+  "customIconDescription": {
+    "message": "圖標必須為19*19像素，否則會被縮放至此大小"
+  },
+  "customSeparatorColorDescription": {
+    "message": "定制分割條顏色"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "被用作分割條的書籤節點的标题"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "被用作分割條的書籤節點的URL"
+  },
+  "customSeparatorStringDescription": {
+    "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
+  },
+  "customStyles": {
+    "message": "定制CSS"
+  },
+  "customStylesDescription": {
+    "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
+  },
+  "defaultIconButton": {
+    "message": "使用默認圖標"
+  },
+  "defaultIconButtonOr": {
+    "message": " 或者 "
+  },
+  "delete": {
+    "message": "刪除"
+  },
+  "deleteEllipsis": {
+    "message": "刪除 ..."
+  },
+  "edit": {
+    "message": "編輯 ..."
+  },
+  "editBookmark": {
+    "message": "編輯書籤"
+  },
+  "editFolder": {
+    "message": "編輯文件夾"
+  },
+  "errorOccured": {
+    "message": "有錯誤出現"
+  },
+  "extDesc": {
+    "description": "擴充功能描述",
+    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
+  },
+  "extName": {
+    "description": "擴充功能名稱",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "一般功能"
+  },
+  "ignore": {
+    "message": "忽略"
+  },
+  "name": {
+    "description": "書籤名或文件夾名",
+    "message": "名字"
+  },
+  "nope": {
+    "message": "取消"
+  },
+  "noTitle": {
+    "description": "沒 http(s) 開頭的書籤或沒命名的文件夾的統一標題",
+    "message": "（沒標題）"
+  },
+  "open": {
+    "description": "打開書籤的動作",
+    "message": "打開"
+  },
+  "openBookmarks": {
+    "message": "打開所有書籤"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在隱身窗口中打開所有書籤"
+  },
+  "openBookmarksNewWindow": {
+    "message": "在新窗口中打開所有書籤"
+  },
+  "openIncognitoWindow": {
+    "message": "在隱身窗口中打開"
+  },
+  "openNewTab": {
+    "message": "在新標籤頁中打開"
+  },
+  "openNewWindow": {
+    "message": "在新窗口中打開"
+  },
+  "optionClickNewTab": {
+    "message": "左擊書籤在新標籤頁中打開"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展開文件夾時折疊其他文件夾"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "打開多個書籤前需確認"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "僅顯示書籤欄中的書籤"
+  },
+  "optionOpenNewTab": {
+    "message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
+  },
+  "optionPopupStays": {
+    "message": "打開（鼠標左擊）書籤時 Popup 頁面不關閉"
+  },
+  "optionRememberPrevState": {
+    "message": "記住上次狀態（滾動條位置、所打開文件夾）"
+  },
+  "options": {
+    "message": "設置"
+  },
+  "optionsFooterText": {
+    "description": "設定頁的頁腳訊息",
+    "message": "作者：$authorName$",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "縮放"
+  },
+  "parentFolder": {
+    "description": "搜索結果列表中提示書籤所在目錄",
+    "message": "所在目錄：$folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "書籤欄"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "移除分隔符"
+  },
+  "replaceUrl": {
+    "message": "替換為當前頁的URL"
+  },
+  "reportedToDeveloper": {
+    "description": "擴展中發生了一個錯誤，已經報告給開發者",
+    "message": "錯誤報告"
+  },
+  "reportError": {
+    "message": "報告此錯誤"
+  },
+  "resetButton": {
+    "message": "重置"
+  },
+  "resetSettings": {
+    "message": "重置所有選項"
+  },
+  "resetSettingsDescription": {
+    "message": "重置所有選項到默認值"
+  },
+  "save": {
+    "message": "儲存"
+  },
+  "searchBookmarks": {
+    "description": "搜索框裡的提示文字",
+    "message": "書籤搜索"
+  },
+  "url": {
+    "message": "網址"
+  }
 }
