@@ -46,6 +46,8 @@ Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
 11) Fix bugs in [Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks).
 
+12) Search bookmark folders.
+
 
 ![Image of vBookmarks features](vbookmarks-menu.png)
 

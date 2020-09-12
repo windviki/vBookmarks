@@ -47,6 +47,8 @@ vBookmarks
 
 11) 解决[Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks)的历史Bugs，以及在Chrome不断升级过程中出现的新Bugs
 
+12) 可以搜索文件夹
+
 
     ![Image of vBookmarks features](vbookmarks-menu.png)
 
