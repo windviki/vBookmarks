@@ -269,7 +269,7 @@ New: Resize the height of popup.
 
 Added: Italy language.
 
-Added: Russian language.
+Added: Russian language. Thanks for @Stanislav .
 
 Fix some undefined errors.
 
