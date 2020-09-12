@@ -3,6 +3,8 @@ vBookmarks
 
 [English Readme](README.md) | [中文说明](README.zh.md)
 
+[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](donation/donation.zh.md)
+
 ![Image of vBookmarks](vbookmarks.png)
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
