@@ -171,6 +171,21 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
 
   - 增加 中国香港繁体中文。
 
+- 版本3.2 
+  - 修正 [#19](https://github.com/windviki/vBookmarks/issues/19) 添加到文件夹末尾不能正常工作。
+
+  - 新增 [#15](https://github.com/windviki/vBookmarks/issues/15) 在Popup搜索栏搜索时可以搜索文件夹。
+
+  - 新增 高度可以调节了。
+
+  - 修正 一些未定义的错误。
+
+  - 增加 意大利语。
+
+  - 增加 俄语。多谢 @Stanislav 的贡献。
+
+  - 代码升级到ECMAScript 6。最低Chrome版本要求调到61。
+
 
 # 注意：
 

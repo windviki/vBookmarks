@@ -259,6 +259,24 @@ Added: France language. Thanks for @Fab-fr.
 Added: Chinese Hong Kong language.
 
 
+**ver3.2 2020/09/12**
+
+Fixed: [#19](https://github.com/windviki/vBookmarks/issues/19): "Add to the end of folder" feature does not work bugs.
+
+New: [#15](https://github.com/windviki/vBookmarks/issues/15): Search for folders in bookmark search bar.
+
+New: Resize the height of popup.
+
+Added: Italy language.
+
+Added: Russian language.
+
+Fix some undefined errors.
+
+Update code to ecmascript version 6. minimum_chrome_version = 61.
+
+
+
 # Attentions
 
 For those who installs the pre-built crx file:
