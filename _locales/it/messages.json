@@ -134,6 +134,15 @@
   "deleteEllipsis": {
     "message": "Elimina..."
   },
+  "donationMessage": {
+    "message": "Se ti piace, forse puoi donare per il suo sviluppo futuro. Qualsiasi importo è il benvenuto."
+  },
+  "donationGo": {
+    "message": "Certo"
+  },
+  "donationDismiss": {
+    "message": "No"
+  },
   "edit": {
     "message": "Modifica..."
   },

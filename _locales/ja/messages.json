@@ -134,6 +134,15 @@
   "deleteEllipsis": {
     "message": "削除..."
   },
+  "donationMessage": {
+    "message": "気に入ったら、将来の開発のために寄付してください。どんな金額でも大歓迎です。"
+  },
+  "donationGo": {
+    "message": "はい"
+  },
+  "donationDismiss": {
+    "message": "いいえ"
+  },
   "edit": {
     "message": "編集..."
   },

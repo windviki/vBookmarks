@@ -131,6 +131,15 @@
   "delete": {
     "message": "刪除"
   },
+  "donationMessage": {
+    "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
+  },
+  "donationGo": {
+    "message": "好的"
+  },
+  "donationDismiss": {
+    "message": "關閉"
+  },
   "deleteEllipsis": {
     "message": "刪除 ..."
   },

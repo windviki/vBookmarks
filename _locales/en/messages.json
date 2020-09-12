@@ -135,13 +135,13 @@
     "message": "Delete..."
   },
   "donationMessage": {
-    "message": "If you like it, please buy me a beer!"
+    "message": "If you like it, maybe you can donate for its future development. Any amount is welcome."
   },
   "donationGo": {
-    "message": "Fine"
+    "message": "OK"
   },
   "donationDismiss": {
-    "message": "Close"
+    "message": "Dismiss"
   },
   "edit": {
     "message": "Edit..."

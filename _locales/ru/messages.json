@@ -1,0 +1,283 @@
+{
+   "accessibility": {
+      "message": "Доступность Настройки"
+   },
+   "addBookmarkAfter": {
+      "message": "Добавить закладку НИЖЕ этой"
+   },
+   "addBookmarkBefore": {
+      "message": "Добавить закладку ВЫШЕ этой"
+   },
+   "addBookmarkBottom": {
+      "message": "Добавить закладку внизу папки"
+   },
+   "addBookmarkTop": {
+      "message": "Добавить закладку вверху папки"
+   },
+   "addNewFolder": {
+      "message": "Добавить подпапку"
+   },
+   "addNewFolderAfter": {
+      "message": "Добавить папку НИЖЕ этого"
+   },
+   "addNewFolderBefore": {
+      "message": "Добавить папку ВЫШЕ этого"
+   },
+   "addSeparator": {
+      "message": "Добавить разделитель"
+   },
+   "advancedOptions": {
+      "message": "Расширенные настройки"
+   },
+   "confirmDeleteFolderBookmarks": {
+      "message": "Вы уверены, что хотите удалить папку $folderName$ с $bookmarkCount$ вложенными закладками?",
+      "placeholders": {
+         "bookmarkCount": {
+            "content": "$2"
+         },
+         "folderName": {
+            "content": "$1"
+         }
+      }
+   },
+   "confirmDeleteFolderSubfolders": {
+      "message": "Вы уверены, что хотите удалить папку $folderName$ с $subFolderCount$ вложенной(-ыми) подпапкой(-ами)?",
+      "placeholders": {
+         "folderName": {
+            "content": "$1"
+         },
+         "subFolderCount": {
+            "content": "$2"
+         }
+      }
+   },
+   "confirmDeleteFolderSubfoldersBookmarks": {
+      "message": "Вы уверены, что хотите удалить папку $folderName$, $subFolderCount$ подпапки и $bookmarkCount$ вложенных закладок?",
+      "placeholders": {
+         "bookmarkCount": {
+            "content": "$3"
+         },
+         "folderName": {
+            "content": "$1"
+         },
+         "subFolderCount": {
+            "content": "$2"
+         }
+      }
+   },
+   "confirmOpenBookmarks": {
+      "description": "Подтверждающие сообщение при открытии всех закладок.",
+      "message": "Вы уверены, что вы хотите открыть все $count$ закладок?",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "confirmOpenBookmarksNewIncognitoWindow": {
+      "description": "Подтверждающие сообщение при открытии всех закладок в режиме инкогнито.",
+      "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне в режиме инкогнито?",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "confirmOpenBookmarksNewWindow": {
+      "description": "Подтверждающие сообщение при открытии всех закладок в новом окне.",
+      "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне?",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "copyAllTitlesAndUrls": {
+      "message": "Скопировать все заголовки и URL-адреса в буфер обмена"
+   },
+   "copyTitleAndUrl": {
+      "message": "Копировать название и URL в буфер обмена"
+   },
+   "customIcon": {
+      "message": "Кастомная иконка"
+   },
+   "customIconDescription": {
+      "message": "Значок должен быть в 19x19 пикселей. Иначе он будет изменен до размера (?)."
+   },
+   "customSeparatorColorDescription": {
+      "message": "Настроить цвет разделителя "
+   },
+   "customSeparatorStringDescription": {
+      "message": "Если URL-адрес закладки содержит эту строку, она будет отображаться как разделитель "
+   },
+   "customSeparatorTitleDescription": {
+      "message": "Настоящее название закладки, которое отображается как разделитель "
+   },
+   "customSeparatorUrlDescription": {
+      "message": "Настоящий URL-адрес закладки, который отображается как разделитель "
+   },
+   "customStyles": {
+      "message": "Пользовательский стиль"
+   },
+   "customStylesDescription": {
+      "message": "Для этого требуется некоторый навык CSS. Кодируйте на свой страх и риск. Обмен кодом был бы разумным "
+   },
+   "defaultIconButton": {
+      "message": "Использовать дефолтную"
+   },
+   "defaultIconButtonOr": {
+      "message": " или "
+   },
+   "delete": {
+      "message": "Удалить"
+   },
+   "deleteEllipsis": {
+      "message": "Удалить..."
+   },
+   "donationMessage": {
+      "message": "Если вам это нравится, возможно, вы сможете пожертвовать на его дальнейшее развитие. Приветствуется любая сумма."
+   },
+   "donationGo": {
+      "message": "хорошо"
+   },
+   "donationDismiss": {
+      "message": "Нет"
+   },
+   "edit": {
+      "message": "Редактировать..."
+   },
+   "editBookmark": {
+      "message": "Изменить закладку"
+   },
+   "editFolder": {
+      "message": "Изменить папку"
+   },
+   "errorOccured": {
+      "message": "К сожалению,\r\n\t\tпроизошла ошибка."
+   },
+   "extDesc": {
+      "description": "The extension description.",
+      "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
+   },
+   "extName": {
+      "description": "vBookmarks",
+      "message": "vBookmarks"
+   },
+   "general": {
+      "message": "Общие параметры"
+   },
+   "ignore": {
+      "message": "Игнорировать"
+   },
+   "name": {
+      "description": "Имя закладки или папки",
+      "message": "Имя"
+   },
+   "noTitle": {
+      "description": "Заголовок для безымянных закладок не имеющих ссылки и безымянных папок.",
+      "message": "(без заголовка)"
+   },
+   "nope": {
+      "message": "Отмена"
+   },
+   "open": {
+      "description": "Действие для открытия закладки.",
+      "message": "Открыть"
+   },
+   "openBookmarks": {
+      "message": "Открыть все закладки"
+   },
+   "openBookmarksIncognitoWindow": {
+      "message": "Открыть все закладки в новом окне (инкогнито)"
+   },
+   "openBookmarksNewWindow": {
+      "message": "Открыть все закладки в новом окне"
+   },
+   "openIncognitoWindow": {
+      "message": "Открыть в новом окне (инкогнито)"
+   },
+   "openNewTab": {
+      "message": "Открыть в новой вкладке"
+   },
+   "openNewWindow": {
+      "message": "Открыть в новом окне"
+   },
+   "optionClickNewTab": {
+      "message": "Клик ЛКМ открывает закладку в новой вкладке."
+   },
+   "optionCloseUnusedFolders": {
+      "message": "Закрыть неиспользуемые папки при открытии папки."
+   },
+   "optionConfirmOpenFolder": {
+      "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
+   },
+   "optionOnlyShowBookmarkBar": {
+      "message": "Показывать только закладки в панели закладок"
+   },
+   "optionOpenNewTab": {
+      "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
+   },
+   "optionPopupStays": {
+      "message": "Всплывающее окно расширения остается открытым при клике ЛКМ по закладкам."
+   },
+   "optionRememberPrevState": {
+      "message": "Помнить предыдущее состояние (открытые папки и положение прокрутки)."
+   },
+   "optionZoom": {
+      "message": "Увеличить"
+   },
+   "options": {
+      "message": "Основные настройки"
+   },
+   "optionsFooterText": {
+      "description": "Footer text for the Options page",
+      "message": "Built by $authorName$.",
+      "placeholders": {
+         "authorName": {
+            "content": "$1"
+         }
+      }
+   },
+   "parentFolder": {
+      "description": "Отображение информации родительской папки во всплывающем окне закладок в списке результатов поиска.",
+      "message": "Родительская папка: \"$folderName$\"",
+      "placeholders": {
+         "folderName": {
+            "content": "$1",
+            "example": "Панель закладок"
+         }
+      }
+   },
+   "removeSeparator": {
+      "message": "Удалить разделитель"
+   },
+   "replaceUrl": {
+      "message": "Заменить текущим URL"
+   },
+   "reportError": {
+      "message": "Сообщение об ошибке"
+   },
+   "reportedToDeveloper": {
+      "description": "Сообщение при возникновении ошибки в расширении, сообщается разработчику.",
+      "message": "Об этом сообщено разработчику."
+   },
+   "resetButton": {
+      "message": "Сбросить"
+   },
+   "resetSettings": {
+      "message": "Сброс настроек"
+   },
+   "resetSettingsDescription": {
+      "message": "Сброс vBookmarks к настройкам по умолчанию  "
+   },
+   "save": {
+      "message": "Сохранить"
+   },
+   "searchBookmarks": {
+      "description": "Впишите текст для поиска.",
+      "message": "Поиск"
+   },
+   "url": {
+      "message": "URL"
+   }
+}
