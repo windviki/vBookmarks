@@ -711,7 +711,7 @@
             $('donation-go').innerHTML = _m('donationGo');
             $donation.style.display = 'block';
             $('donation-go').focus();
-            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 60;
+            let seconds = localStorage.donationCountDown.toInt() > 0 ? localStorage.donationCountDown.toInt() : 60;
             let countDown = setInterval(() => {
                 localStorage.donationCountDown = seconds;
                 if (seconds <= 0) {
@@ -743,10 +743,10 @@
         showDonation(false);
         localStorage.donationCountDown = 0;
         localStorage.donationFactor = 1;
-        if (localStorage.donationKey > 1000) {
+        if (localStorage.donationKey.toInt() > 1000) {
             localStorage.donationKey = 1000;
         } else {
-            localStorage.donationKey = parseInt(localStorage.donationKey) + 100;
+            localStorage.donationKey = localStorage.donationKey.toInt() + 100;
         }
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
     })
@@ -754,19 +754,19 @@
     $('donation-close').addEventListener('click', () => {  
         showDonation(false);
         localStorage.donationCountDown = 0;
-        localStorage.donationFactor = parseInt(localStorage.donationFactor) + 2;
-        if (localStorage.donationKey < 100) {
+        localStorage.donationFactor = localStorage.donationFactor.toInt() + 2;
+        if (localStorage.donationKey.toInt() < 100) {
             localStorage.donationKey = 100;
         }
-        localStorage.donationFactor %= localStorage.donationKey;
+        localStorage.donationFactor = localStorage.donationFactor.toInt() % localStorage.donationKey.toInt();
     })
 
     if (localStorage.donationCountDown > 0 
         || !localStorage.donationFactor 
-        || parseInt(localStorage.donationFactor) >= parseInt(localStorage.donationKey)) {
+        || localStorage.donationFactor.toInt() >= localStorage.donationKey.toInt()) {
         showDonation(true);
     } else {
-        localStorage.donationFactor = parseInt(localStorage.donationFactor) + 1;
+        localStorage.donationFactor = localStorage.donationFactor.toInt() + 1;
     }
 
     // Search
@@ -933,11 +933,12 @@
             if (neatTree) {
                 const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
                 chrome.tabs.getZoom(zoomFactor => {
+                    // left 50px at bottom if the screen is too short
                     const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
                     // 300 <= height <= maxHeight
                     const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
                     const newHeightStyle = `${height}px`;
-                    if (localStorage.popupHeight <= height) {
+                    if (localStorage.popupHeight.toInt() <= height) {
                         // Slide up faster than down
                         body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
                         body.style.height = newHeightStyle;
@@ -2567,11 +2568,6 @@
                 chrome.tabs.getZoom(zoomFactor => {
                     currentMaxHeight = (600 / zoomFactor) - 1;
                     height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
-                    // if (e.screenY > currentMaxHeight) {
-                    //     $resizery.style.cursor = 'not-allowed';
-                    // } else {
-                    //     $resizery.style.cursor = 'row-resize';
-                    // }
                     body.style.height = `${height}px`;
                     localStorage.popupHeight = height;
                     resetSeparator(); // Reset separators
@@ -2579,11 +2575,6 @@
                 });
             } else {
                 height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
-                // if (e.screenY > currentMaxHeight) {
-                //     $resizery.style.cursor = 'not-allowed';
-                // } else {
-                //     $resizery.style.cursor = 'row-resize';
-                // }
                 body.style.height = `${height}px`;
                 localStorage.popupHeight = height;
                 resetSeparator(); // Reset separators

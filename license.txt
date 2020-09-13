@@ -1,7 +1,7 @@
 The MIT License
 
 Copyright (C) 2011 by Lim Chee Aun, http://cheeaun.com/
-Copyright (C) 2011-2014 by windviki, http://twitter.com/windviki
+Copyright (C) 2011-2020 by windviki, http://twitter.com/windviki
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
