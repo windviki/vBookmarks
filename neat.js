@@ -934,8 +934,8 @@
                 const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
                 chrome.tabs.getZoom(zoomFactor => {
                     const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                    // 200 <= height <= maxHeight
-                    const height = Math.max(200, Math.min(fullHeight, maxHeight));
+                    // 300 <= height <= maxHeight
+                    const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
                     const newHeightStyle = `${height}px`;
                     if (localStorage.popupHeight <= height) {
                         // Slide up faster than down
