@@ -83,7 +83,7 @@
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
-        document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
+        //document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
         document.getElementById('options-footer-3').innerHTML =
             '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
         document.getElementById('options-footer-4').innerHTML =

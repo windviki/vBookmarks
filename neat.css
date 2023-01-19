@@ -10,7 +10,7 @@ body {
     -webkit-user-select: none;
     overflow: hidden;
     width: 320px;
-    height: 530px;
+    height: 600px;
 }
 
 body.linux {

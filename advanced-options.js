@@ -21,7 +21,7 @@
             ctx.clearRect(0, 0, 19, 19);
             ctx.drawImage(customIconPreview, 0, 0, 19, 19);
             const imageData = ctx.getImageData(0, 0, 19, 19);
-            chrome.browserAction.setIcon({
+            chrome.action.setIcon({
                 imageData: imageData
             });
             localStorage.customIcon = JSON.stringify(imageData.data);
@@ -136,7 +136,7 @@
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
-        document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
+        // document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
         document.getElementById('options-footer-3').innerHTML =
             '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
         document.getElementById('options-footer-4').innerHTML =

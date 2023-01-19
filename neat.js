@@ -408,11 +408,22 @@
         }
     };
 
+    const getFaviconUrl = (url) => {
+        // return `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(url)}&size=32`;
+        // return chrome.runtime.getURL(`_favicon/?pageUrl=${encodeURIComponent(url)}&size=64`);
+        const favUrl = new URL(chrome.runtime.getURL("/_favicon/"));
+        favUrl.searchParams.set("pageUrl", url);
+        favUrl.searchParams.set("size", "32");
+        return favUrl.toString();
+    };
+
     const generateBookmarkHTML = (title, url, extras) => {
         if (!extras)
             extras = '';
         const u = url.htmlspecialchars();
-        let favicon = `chrome://favicon/${u}`;
+        // let favicon = `chrome://favicon/${u}`;
+        // let favicon = 'icon-2.png';
+        let favicon = getFaviconUrl(url);
         let tooltipURL = url;
         if (/^javascript:/i.test(url)) {
             if (url.length > 140)
@@ -612,6 +623,11 @@
         tree = null;
     };
 
+    // restore height
+    if (localStorage.popupHeight) {
+        body.style.height = localStorage.popupHeight;
+    }
+
     chrome.bookmarks.getTree(generateTree);
 
     // Events for the tree
@@ -711,7 +727,7 @@
             $('donation-go').innerHTML = _m('donationGo');
             $donation.style.display = 'block';
             $('donation-go').focus();
-            let seconds = localStorage.donationCountDown.toInt() > 0 ? localStorage.donationCountDown.toInt() : 60;
+            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 60;
             let countDown = setInterval(() => {
                 localStorage.donationCountDown = seconds;
                 if (seconds <= 0) {
@@ -738,28 +754,6 @@
     if (!localStorage.donationKey) {
         localStorage.donationKey = 1;
     }
-
-    $('donation-go').addEventListener('click', () => {  
-        showDonation(false);
-        localStorage.donationCountDown = 0;
-        localStorage.donationFactor = 1;
-        if (localStorage.donationKey.toInt() > 1000) {
-            localStorage.donationKey = 1000;
-        } else {
-            localStorage.donationKey = localStorage.donationKey.toInt() + 100;
-        }
-        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
-    })
-
-    $('donation-close').addEventListener('click', () => {  
-        showDonation(false);
-        localStorage.donationCountDown = 0;
-        localStorage.donationFactor = localStorage.donationFactor.toInt() + 2;
-        if (localStorage.donationKey.toInt() < 100) {
-            localStorage.donationKey = 100;
-        }
-        localStorage.donationFactor = localStorage.donationFactor.toInt() % localStorage.donationKey.toInt();
-    })
 
     if (localStorage.donationCountDown > 0 
         || !localStorage.donationFactor 
@@ -928,22 +922,25 @@
     // Popup auto-height
     const resetHeight = () => {
         const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
+        console.log(`zoomLevel = ${zoomLevel}`);
         setTimeout(() => {
             const neatTree = $tree.firstElementChild;
             if (neatTree) {
                 const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+                console.log(`fullHeight = ${fullHeight}`);
                 chrome.tabs.getZoom(zoomFactor => {
+                    // zoomFactor is the zoom factor in chrome setting. e.g. 125%
                     // left 50px at bottom if the screen is too short
                     const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+                    console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
                     // 300 <= height <= maxHeight
                     const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
+                    console.log(`height = ${height}`);
                     const newHeightStyle = `${height}px`;
-                    if (localStorage.popupHeight.toInt() <= height) {
-                        // Slide up faster than down
-                        body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-                        body.style.height = newHeightStyle;
-                        localStorage.popupHeight = height;
-                    }
+                    // Slide up faster than down
+                    body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
+                    body.style.height = newHeightStyle;
+                    localStorage.popupHeight = height;
                 });
             }
         }, 200);
@@ -1228,8 +1225,11 @@
 
                     if (/^javascript:.*/i.test(url)) {
                         //bookmarklet
-                        chrome.tabs.executeScript(tab.id, {
-                            code: decodedUrl
+                        // TODO
+                        chrome.scripting.executeScript(tab.id, {
+                            // code: decodedUrl,
+                            target: {tabId: tab.id},
+                            files: ['content-script.js']
                         });
                     } else {
                         //url
@@ -1572,6 +1572,29 @@
     $tree.addEventListener('click', bookmarkHandler);
     $results.addEventListener('click', bookmarkHandler);
     $tree.addEventListener('auxclick', bookmarkHandler);
+
+    // donation
+    $('donation-go').addEventListener('click', () => {  
+        showDonation(false);
+        localStorage.donationCountDown = 0;
+        localStorage.donationFactor = 1;
+        if (localStorage.donationKey.toInt() > 1000) {
+            localStorage.donationKey = 1000;
+        } else {
+            localStorage.donationKey = localStorage.donationKey.toInt() + 100;
+        }
+        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
+    })
+
+    $('donation-close').addEventListener('click', () => {  
+        showDonation(false);
+        localStorage.donationCountDown = 0;
+        localStorage.donationFactor = localStorage.donationFactor.toInt() + 2;
+        if (localStorage.donationKey.toInt() < 100) {
+            localStorage.donationKey = 100;
+        }
+        localStorage.donationFactor = localStorage.donationFactor.toInt() % localStorage.donationKey.toInt();
+    })
 
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', e => {
@@ -2685,5 +2708,38 @@
         const style = document.createElement('style');
         style.textContent = localStorage.userstyle;
         style.inject(document.body);
+    }
+
+    // document.addEventListener('DOMContentLoaded', () => {
+
+    //     const reportError = (msg, url, line) => {
+    //         const manifest = chrome.runtime.getManifest();
+    //         const version = manifest.version;
+    //         const txt = `_s=84615e81d50c4ddabff522aee3c4b734&_r=img&Msg=${escape(msg)}&URL=${escape(url)}&Line=${line}&Platform=${escape(navigator.platform)}&Version=${escape(version)}&UserAgent=${escape(navigator.userAgent)}`;
+    //         const i = document.createElement('img');
+    //         i.setAttribute('src', `${('https:' === document.location.protocol) ? 'https://errorstack.appspot.com'
+    //             : 'http://www.errorstack.com'}/submit?${txt}`);
+    //         document.body.appendChild(i);
+    //         i.onload = () => {
+    //             document.body.removeChild(i);
+    //         };
+    //     };
+
+    //     window.onerror = reportError;
+
+    //     chrome.extension.onRequest.addListener(request => {
+    //         if (request.error) reportError.apply(null, request.error);
+    //     });
+    // });
+    
+    if (localStorage.customIcon) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const customIcon = JSON.parse(localStorage.customIcon);
+        const imageData = ctx.getImageData(0, 0, 19, 19);
+        for (const key in customIcon) imageData.data[key] = customIcon[key];
+        chrome.action.setIcon({
+            imageData: imageData
+        });
     }
 })(window);

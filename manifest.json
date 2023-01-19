@@ -1,8 +1,8 @@
 {
 	"name": "__MSG_extName__",
-	"version": "3.2",
+	"version": "3.3",
 	"description": "__MSG_extDesc__",
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"homepage_url": "https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
 	"update_url": "http://clients2.google.com/service/update2/crx",
 	"icons": {
@@ -10,7 +10,7 @@
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
-	"browser_action": {
+	"action": {
 		"default_icon": {
 			"16": "icon16.png",
 			"19": "icon.png",
@@ -23,7 +23,8 @@
 	},
 	"options_page": "options.html",
 	"background": {
-		"page": "background.html"
+        "service_worker": "background.js",
+        "type": "module"
 	},
 	"commands": {
 		"_execute_browser_action": {
@@ -36,11 +37,21 @@
 		}
 	},
 	"permissions": [
-		"<all_urls>",
-		"chrome://favicon/",
 		"bookmarks",
-		"tabs"
+		"tabs",
+        "favicon"
 	],
+    "web_accessible_resources": [{
+        "resources": [ "_favicon/*" ],
+        "matches": ["<all_urls>"],
+        "extension_ids": [ "*" ]
+    }],
+    "host_permissions": [
+		"<all_urls>"
+    ],
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline';"
+    },
 	"minimum_chrome_version": "61.0.0.0",
 	"default_locale": "en",
 	"omnibox": {
