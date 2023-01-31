@@ -50,6 +50,12 @@
             localStorage.onlyShowBMBar = onlyShowBMBar.checked ? '1' : '';
         });
 
+        const searchAfterEnter = $('search-after-enter');
+        searchAfterEnter.checked = !!localStorage.searchAfterEnter;
+        searchAfterEnter.addEventListener('change', () => {
+            localStorage.searchAfterEnter = searchAfterEnter.checked ? '1' : '';
+        });
+
         const zoom = $('zoom-input');
         setInterval(() => {
             zoom.value = localStorage.zoom || 100;
@@ -80,10 +86,10 @@
         document.getElementById('option-confirm-open-folder').innerText = __m('optionConfirmOpenFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
+        document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
-        //document.getElementById('options-footer-2').innerHTML = `<a href="http://twitter.com/windviki">${__m('optionsFooterText', 'windviki')}</a>`;
         document.getElementById('options-footer-3').innerHTML =
             '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
         document.getElementById('options-footer-4').innerHTML =

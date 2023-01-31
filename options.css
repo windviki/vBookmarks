@@ -9,15 +9,19 @@ body{
 	cursor: default;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
+	user-select: none;
 	text-shadow: 0 1px #fff;
 	font-size: 14px;
 	margin: 0;
 	padding: 2em;
 	-webkit-box-shadow: inset 0 3px 5px -2px rgba(0,0,0,.1);
+	box-shadow: inset 0 3px 5px -2px rgba(0,0,0,.1);
 }
 a{
 	-webkit-transition-property: color;
+	transition-property: color;
 	-webkit-transition-duration: .3s;
+	transition-duration: .3s;
 }
 h1{
 	margin: 0;
@@ -60,6 +64,7 @@ h2{
 	padding: .5em 1em;
 	line-height: 30px;
 	-webkit-box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
+	box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
 }
 .options-list>li:first-child{
 	border-top-left-radius: 5px;
@@ -96,6 +101,7 @@ h2{
 #zoom-input{
 	width: 4em;
 	-webkit-user-select: none;
+	user-select: none;
 }
 fieldset{
 	border: 1px solid #ccc;
@@ -103,12 +109,14 @@ fieldset{
 	margin: 2em 0 0;
 	padding: 1em;
 	-webkit-box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
+	box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
 }
 fieldset legend{
 	font-weight: bold;
 	background: #eee;
 	padding: 0 5px;
 	-webkit-box-shadow: 0 0 20px 10px #eee;
+	box-shadow: 0 0 20px 10px #eee;
 }
 fieldset p{
 	margin-top: 0;
@@ -122,10 +130,12 @@ fieldset p{
 	margin: 0 0 .5em 0;
 	margin-__MSG_@@bidi_end_edge__: 1em;
 	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
+	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	border: 1px solid #aaa;
 }
 .CodeMirror{
 	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
+	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	border: 1px solid #aaa;
 	background: #fff;
 	display: inline-block;
@@ -138,6 +148,7 @@ fieldset p{
 	color: #999;
 	border-top: 1px solid #fff;
 	-webkit-box-shadow: 0 -1px rgba(0,0,0,.1);
+	box-shadow: 0 -1px rgba(0,0,0,.1);
 	margin-top: 40px;
 	line-height: 2em;
 }

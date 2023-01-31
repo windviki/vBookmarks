@@ -214,14 +214,17 @@
   "optionOnlyShowBookmarkBar": {
     "message": "Only show bookmarks in Bookmark Bar"
   },
+  "optionSearchAfterEnter": {
+    "message": "Search bookmarks only when ENTER is pressed (instead of instant search)"
+  },
   "optionOpenNewTab": {
-    "message": "Middle-click or control-click opens bookmark in new background tab(in stead of foreground)."
+    "message": "Middle-click or control-click opens bookmark in new background tab (instead of foreground)."
   },
   "optionPopupStays": {
-    "message": "Popup stays open when opening(left-clicking) bookmarks."
+    "message": "Popup stays open when opening (left-clicking) bookmarks."
   },
   "optionRememberPrevState": {
-    "message": "Remember previous state(scroll position and opened folders)."
+    "message": "Remember previous state (scroll position and opened folders)."
   },
   "options": {
     "message": "Options"

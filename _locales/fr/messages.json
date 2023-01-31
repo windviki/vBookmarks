@@ -214,6 +214,9 @@
   "optionOnlyShowBookmarkBar": {
     "message": "Afficher uniquement les favoris de la barre des favoris"
   },
+  "optionSearchAfterEnter": {
+    "message": "Rechercher des signets uniquement lorsque vous appuyez sur ENTER (au lieu d'une recherche instantanée)"
+  },
   "optionOpenNewTab": {
     "message": "Le clic du milieu ou le ctrl-clic ouvre le favoris dans le nouvel onglet d'arrière-plan (au lieu du premier plan)."
   },

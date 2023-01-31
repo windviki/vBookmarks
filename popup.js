@@ -6,12 +6,6 @@
     const __m = _m;
 
     document.addEventListener('DOMContentLoaded', () => {
-        window.onerror = function () {
-            chrome.extension.sendRequest({
-                error: [].slice.call(arguments)
-            })
-        };
-
         // Restore size
         if (localStorage.popupHeight) {
             if (localStorage.popupHeight > 600) {

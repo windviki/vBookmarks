@@ -214,6 +214,9 @@
   "optionOnlyShowBookmarkBar": {
     "message": "仅显示书签栏中的书签"
   },
+  "optionSearchAfterEnter": {
+    "message": "仅当回车时候才进行书签搜索（否则输入字符立即搜索）"
+  },
   "optionOpenNewTab": {
     "message": "用鼠标中键或按住 Ctrl 键左击在后台打开书签"
   },

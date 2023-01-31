@@ -764,20 +764,43 @@
     }
 
     // Search
+    const searchAfterEnter = !!localStorage.searchAfterEnter;
     const $results = $('results');
     let searchMode = false;
     const searchInput = $('search-input');
     let prevValue = '';
 
-    const search = () => {
-        const value = searchInput.value.trim();
-        localStorage.searchQuery = value;
-        if (value === '') {
+    const quitSearchMode = () => {
+        if (searchMode) {
             prevValue = '';
+            if (searchInput.value) {
+                searchInput.value = '';
+            }
+            localStorage.searchQuery = '';
             searchMode = false;
             switchBookmarkMenu(false);
             $tree.style.display = 'block';
             $results.style.display = 'none';
+
+            // fix focus
+            let item = $tree.querySelector('.focus');
+            if (!item) {
+                item = $tree.querySelector('li:first-child>span');
+            }
+            if (item) {
+                item.focus();
+            }
+        }
+    };
+
+    const search = (e) => {
+        const value = searchInput.value.trim();
+        localStorage.searchQuery = value;
+        if (value === '') {
+            quitSearchMode();
+            return;
+        }
+        if (searchAfterEnter && !e) {
             return;
         }
         if (value === prevValue)
@@ -858,7 +881,8 @@
             lis = null;
         });
     };
-    searchInput.addEventListener('input', search);
+
+    searchInput.addEventListener('input', e => search(null));
 
     searchInput.addEventListener('keydown', e => {
         const focusID = localStorage.focusID;
@@ -870,16 +894,21 @@
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
         } else if (e.key === 'Enter' && searchInput.value.length) { // enter
-            const item = $results.querySelector('ul>li:first-child a');
-            if (item) {
-                item.focus();
-                setTimeout(() => {
-                    const event = document.createEvent('MouseEvents');
-                    event.initMouseEvent('click', true, true, window, 0,
-                        0, 0, 0, 0,
-                        false, false, false, false, 0, null);
-                    item.dispatchEvent(event);
-                }, 30);
+            if (searchAfterEnter) {
+                search(e);
+            } else {
+                const item = $results.querySelector('ul>li:first-child a');
+                if (item) {
+                    item.focus();
+                    setTimeout(() => {
+                        let event = new MouseEvent("click", {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window,
+                        });
+                        item.dispatchEvent(event);
+                    }, 30);
+                }
             }
         } else if (e.key === 'Tab' && !searchMode) { // tab
             if (typeof focusID !== 'undefined' && focusID !== null) {
@@ -896,11 +925,12 @@
                 if (firstItem)
                     firstItem.focus();
             }
-            // Pressing esc shouldn't close the popup when search field has value
-        } else if (e.key === 'Escape' && searchInput.value) { // esc
-            e.preventDefault();
-            searchInput.value = '';
-            search();
+        } else if (e.key === 'Escape') { // esc
+            if (searchInput.value) {
+                // Pressing esc shouldn't close the popup when search field has value
+                e.preventDefault();
+                quitSearchMode();
+            }
         }
     });
 
@@ -922,20 +952,20 @@
     // Popup auto-height
     const resetHeight = () => {
         const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
-        console.log(`zoomLevel = ${zoomLevel}`);
+        // console.log(`zoomLevel = ${zoomLevel}`);
         setTimeout(() => {
             const neatTree = $tree.firstElementChild;
             if (neatTree) {
                 const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-                console.log(`fullHeight = ${fullHeight}`);
+                // console.log(`fullHeight = ${fullHeight}`);
                 chrome.tabs.getZoom(zoomFactor => {
                     // zoomFactor is the zoom factor in chrome setting. e.g. 125%
                     // left 50px at bottom if the screen is too short
                     const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                    console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
+                    // console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
                     // 300 <= height <= maxHeight
                     const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
-                    console.log(`height = ${height}`);
+                    // console.log(`height = ${height}`);
                     const newHeightStyle = `${height}px`;
                     // Slide up faster than down
                     body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
@@ -1515,13 +1545,7 @@
         if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
             if (el.className === "link-folder") { // search result folder
                 // switch to tree
-                prevValue = '';
-                searchInput.value = '';
-                localStorage.searchQuery = '';
-                searchMode = false;
-                switchBookmarkMenu(false);
-                $results.style.display = 'none';
-                $tree.style.display = 'block';
+                quitSearchMode();
                 // get folder id (el parent is li)
                 const id = el.parentNode.id.replace(/(neat-tree|results)-item-/, '');
                 // all parent folder ids
@@ -1925,8 +1949,9 @@
     let keyBufferTimer = null;
     const treeKeyDown = function (e) {
         let item = document.activeElement;
-        if (!/^(a|span)$/i.test(item.tagName))
+        if (!/^(a|span)$/i.test(item.tagName)) {
             item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
+        }
         let li = item.parentNode;
         let keyValue = e.key;
         const metaKey = e.metaKey;
@@ -1948,7 +1973,7 @@
                         if (nextLiSpan) {
                             nextLiSpan.focus();
                         }
-                    } else {
+                    } else if (!searchMode) {
                         nextLi = null;
                         do {
                             if (li)
@@ -1987,8 +2012,11 @@
             {
                 e.preventDefault();
                 if (li.hasClass('parent') && ((!rtl && !li.hasClass('open')) || (rtl && li.hasClass('open')))) {
-                    const event = document.createEvent('MouseEvents');
-                    event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                    let event = new MouseEvent("click", {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window,
+                    });
                     li.firstElementChild.dispatchEvent(event);
                 } else if (rtl) {
                     const parentID = li.dataset.parentid;
@@ -2002,8 +2030,11 @@
             {
                 e.preventDefault();
                 if (li.hasClass('parent') && ((!rtl && li.hasClass('open')) || (rtl && !li.hasClass('open')))) {
-                    const event = document.createEvent('MouseEvents');
-                    event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                    let event = new MouseEvent("click", {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window,
+                    });
                     li.firstElementChild.dispatchEvent(event);
                 } else if (!rtl) {
                     const parentID = li.dataset.parentid;
@@ -2021,9 +2052,14 @@
             case 'Enter': // enter
             {
                 e.preventDefault();
-                const event = document.createEvent('MouseEvents');
-                event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, e.ctrlKey, false, e.shiftKey, e.metaKey,
-                    0, null);
+                let event = new MouseEvent("click", {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    ctrlKey: e.ctrlKey,
+                    shiftKey: e.shiftKey,
+                    metaKey: e.metaKey
+                });
                 li.firstElementChild.dispatchEvent(event);
             }
                 break;
@@ -2212,10 +2248,11 @@
             case " ": // space
             case 'Enter': // enter
                 e.preventDefault();
-                const event = document.createEvent('MouseEvents');
-                event.initMouseEvent('mouseup', true, true, window,
-                    0, 0, 0, 0, 0,
-                    false, false, false, false, 0, null);
+                let event = new MouseEvent("mouseup", {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                });
                 item.dispatchEvent(event);
                 break;
             case 'Escape': // esc
@@ -2624,14 +2661,26 @@
             AlertDialog.close();
     };
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' &&
-            (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
-                body.hasClass('needAlert') || body.hasClass('needInputName'))) { // esc
-            e.preventDefault();
-            closeDialogs();
+        if (e.key === 'Escape') {
+            if (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
+                body.hasClass('needAlert') || body.hasClass('needInputName')) { // esc
+                e.preventDefault();
+                closeDialogs();
+            } else {
+                if (searchMode) {
+                    // Pressing esc shouldn't close the popup when search field has value
+                    e.preventDefault();
+                    quitSearchMode();
+                }
+                if (searchInput.value) {
+                    e.preventDefault();
+                    searchInput.value = '';
+                }
+            }
         } else if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
             searchInput.focus();
             searchInput.select();
+            e.preventDefault();
         }
     });
     $('cover').addEventListener('click', closeDialogs);

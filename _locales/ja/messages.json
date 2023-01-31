@@ -214,6 +214,9 @@
   "optionOnlyShowBookmarkBar": {
     "message": "ブックマークバーのブックマークのみを表示する"
   },
+  "optionSearchAfterEnter": {
+    "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
+  },
   "optionOpenNewTab": {
     "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
   },

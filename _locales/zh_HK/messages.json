@@ -214,6 +214,9 @@
   "optionOnlyShowBookmarkBar": {
     "message": "僅顯示書籤欄中的書籤"
   },
+  "optionSearchAfterEnter": {
+    "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"
+  },
   "optionOpenNewTab": {
     "message": "用鼠標中鍵或按住 Ctrl 鍵左擊在後台打開書籤"
   },

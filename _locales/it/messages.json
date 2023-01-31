@@ -214,6 +214,9 @@
   "optionOnlyShowBookmarkBar": {
     "message": "Mostra solo i segnalibri nella barra dei segnalibri"
   },
+  "optionSearchAfterEnter": {
+    "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
+  },
   "optionOpenNewTab": {
     "message": "Apri i preferiti in un'altra scheda in secondo piano (anziché in primo piano) quando si fa clic con il pulsante centrale del mouse su di essi o con il pulsante sinistro su di essi tenendo premuto il tasto Ctrl."
   },

@@ -214,6 +214,9 @@
    "optionOnlyShowBookmarkBar": {
       "message": "Показывать только закладки в панели закладок"
    },
+   "optionSearchAfterEnter": {
+      "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
+   },
    "optionOpenNewTab": {
       "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
    },
