@@ -139,6 +139,6 @@
         document.getElementById('options-footer-3').innerHTML =
             '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
         document.getElementById('options-footer-4').innerHTML =
-            '<a href="http://windviki.github.com/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
+            '<a href="https://windviki.github.io/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
     });
 })(window);
