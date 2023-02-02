@@ -724,20 +724,19 @@
     const showDonation = (show) => {
         if (show) {
             $('donation-text').innerHTML = _m('donationMessage');
-            $('donation-go').innerHTML = _m('donationGo');
             $donation.style.display = 'block';
-            $('donation-go').focus();
-            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 60;
+            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 15;
             let countDown = setInterval(() => {
                 localStorage.donationCountDown = seconds;
                 if (seconds <= 0) {
-                    $('donation-close').innerHTML = _m('donationDismiss');
-                    $('donation-close').disabled = false;
+                    $('donation-go').innerHTML = _m('donationGo');
+                    $('donation-go').disabled = false;
                     clearInterval(countDown);
                     localStorage.donationCountDown = 0;
                 } else {
-                    $('donation-close').innerHTML = `${seconds}s`;
-                    $('donation-close').disabled = true;
+                    $('donation-go').innerHTML = `${seconds}s`;
+                    $('donation-go').disabled = true;
+                    $('donation-go').focus();
                 }
                 seconds--;
             }, 1000);
@@ -746,6 +745,34 @@
         }
     }
 
+    // parse version to dictionary
+    const parseVersion = function(strversion) {
+        let v = {};
+        const keys = [ 'major', 'minor' ];
+        let matches = strversion.match(/([\d]+)\.([\d]+)/i);
+        if (!matches)
+            return null;
+        matches.slice(1).forEach(function(m, i) {
+            v[keys[i]] = m.toInt();
+        });
+        return v;
+    };
+
+    let newOrUpgrade = true;
+    const mf = chrome.runtime.getManifest();
+    const currentVer = parseVersion(mf["version"]);
+    if (!localStorage.currentVersion) {
+        localStorage.currentVersion = mf["version"];
+    } else {
+        let recordVer = parseVersion(localStorage.currentVersion);
+        localStorage.currentVersion = mf["version"];
+        if (recordVer && currentVer && recordVer['major'] && recordVer['minor'] && currentVer['major'] && currentVer['minor']) {     
+            if ( (recordVer['major'] > currentVer['major']) ||
+                ((recordVer['major'] == currentVer['major']) && (recordVer['minor'] >= currentVer['minor'])) ){
+                newOrUpgrade = false;
+            }
+        }
+    }
     if (!localStorage.openCount) {
         localStorage.openCount = 1;
     } else {
@@ -755,7 +782,7 @@
         localStorage.donationKey = 1;
     }
 
-    if (localStorage.donationCountDown > 0 
+    if (newOrUpgrade || localStorage.donationCountDown > 0 
         || !localStorage.donationFactor 
         || localStorage.donationFactor.toInt() >= localStorage.donationKey.toInt()) {
         showDonation(true);
@@ -1277,7 +1304,7 @@
             const open = openURL => {
                 chrome.tabs.create({
                     url: openURL,
-                    selected: selected
+                    active: selected
                 });
             };
             chrome.tabs.query({
@@ -1602,22 +1629,12 @@
         showDonation(false);
         localStorage.donationCountDown = 0;
         localStorage.donationFactor = 1;
-        if (localStorage.donationKey.toInt() > 1000) {
-            localStorage.donationKey = 1000;
+        if (localStorage.donationKey.toInt() > 3200) {
+            localStorage.donationKey = 3200;
         } else {
-            localStorage.donationKey = localStorage.donationKey.toInt() + 100;
+            localStorage.donationKey = localStorage.donationKey.toInt() + 800;
         }
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
-    })
-
-    $('donation-close').addEventListener('click', () => {  
-        showDonation(false);
-        localStorage.donationCountDown = 0;
-        localStorage.donationFactor = localStorage.donationFactor.toInt() + 2;
-        if (localStorage.donationKey.toInt() < 100) {
-            localStorage.donationKey = 100;
-        }
-        localStorage.donationFactor = localStorage.donationFactor.toInt() % localStorage.donationKey.toInt();
     })
 
     // Disable Chrome auto-scroll feature

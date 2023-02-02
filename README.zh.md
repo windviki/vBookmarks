@@ -189,6 +189,22 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
   - 代码升级到ECMAScript 6。最低Chrome版本要求调到61。
 
 
+- 版本3.3
+  - 修正 [#23](https://github.com/windviki/vBookmarks/issues/23) 选项页面的错误主页链接。
+
+  - 修正 [#26](https://github.com/windviki/vBookmarks/issues/26) Chrome 107开始，无法在后台打开标签页的问题。
+
+  - 新增 [#24](https://github.com/windviki/vBookmarks/issues/24) 直到回车才触发书签搜索（禁止增量搜索）的选项。
+
+  - 修正 一直以来时不时出现的双滚动条问题。这次应该修复比较彻底。
+
+  - 修正 书签搜索模式退出的时候焦点丢失，纯键盘操作无法响应。
+  
+  - 修正 书签搜索模式下下方向键一直按会出错。
+
+  - 升级到 manifest V3（否则无法上架webstore），最低Chrome版本要求调到88。
+
+
 # 注意：
 
 如果您需要离线安装扩展：

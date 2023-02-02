@@ -279,6 +279,26 @@ Update code to ecmascript version 6. minimum_chrome_version = 61.
 
 
 
+**ver3.3 2023/02/02**
+
+Fixed: [#23](https://github.com/windviki/vBookmarks/issues/23): Incorrect link on the options page.
+
+Fixed: [#26](https://github.com/windviki/vBookmarks/issues/26): Middle/Ctrl click no longer opens bookmarks in the background in Chrome 107.
+
+New: [#24](https://github.com/windviki/vBookmarks/issues/24): Add new option to disable incremental search (use ENTER to search).
+
+Fixed: The stupid double scroll bar (finally).
+
+Fixed: Focus lost when quit from search mode.
+
+Fixed: Arrow down triggers an error in search mode.
+
+Fix some undefined errors.
+
+Update code to manifest V3. minimum_chrome_version = 88.
+
+
+
 # Attentions
 
 For those who installs the pre-built crx file:
