@@ -11,7 +11,7 @@ Sometimes a glass of beer or a cup of coffee can make me keep goging.
 
 Want to show your love & support? 
 
-Donate via Wechat/Alipay, Paypal or Bitcoin/ETH. 
+Donate via Wechat/Alipay, or Paypal. 
 
 ---
 ## Wechat or Alipay
@@ -25,12 +25,3 @@ Scan the QRCode to pay. Any amount is welcome.
 ## Paypal
 
 Via [paypal.me](paypal.me/windviki)
-
----
-
-## Bitcoin or ETH
-
-BTC address. 1Q717Jo3JwQQ924tDtU5xNrfwDnbYu973E
-
-ETH address. 0x06a453b895724eb95089e7baebacd9dc0f6399ef
-

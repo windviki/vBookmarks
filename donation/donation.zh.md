@@ -7,7 +7,7 @@
 
 # 捐赠方式？
 
-微信/支付宝，Paypal或者Bitcoin/ETH都可以。 
+微信/支付宝，Paypal都可以。 
 
 ---
 ## 微信/支付宝
@@ -21,12 +21,3 @@
 ## Paypal
 
 链接 [paypal.me](paypal.me/windviki)
-
----
-
-## Bitcoin/ETH
-
-BTC地址 1Q717Jo3JwQQ924tDtU5xNrfwDnbYu973E
-
-ETH地址 0x06a453b895724eb95089e7baebacd9dc0f6399ef
-
