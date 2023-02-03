@@ -2028,6 +2028,7 @@
             case 'ArrowRight': // right (left for RTL)
             {
                 e.preventDefault();
+                // open/close dir node
                 if (li.hasClass('parent') && ((!rtl && !li.hasClass('open')) || (rtl && li.hasClass('open')))) {
                     let event = new MouseEvent("click", {
                         bubbles: true,
@@ -2035,17 +2036,35 @@
                         view: window,
                     });
                     li.firstElementChild.dispatchEvent(event);
-                } else if (rtl) {
-                    const parentID = li.dataset.parentid;
-                    if (parentID === '0')
-                        return;
-                    $(`neat-tree-item-${parentID}`).querySelector('span').focus();
+                } else {
+                    if (rtl) {
+                        // move back to parent node
+                        const parentID = li.dataset.parentid;
+                        if (parentID === '0')
+                            return;
+                        // fixed: check whether the parent item exists
+                        const item = $(`neat-tree-item-${parentID}`);
+                        if (item) {
+                            item.querySelector('span').focus();
+                        }
+                    } else {
+                        let elRect = e.target.getBoundingClientRect();
+                        let event = new MouseEvent("contextmenu", {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window,
+                            clientX: elRect.right,
+                            clientY: elRect.bottom,
+                        });
+                        e.target.dispatchEvent(event);
+                    }
                 }
             }
                 break;
             case 'ArrowLeft': // left (right for RTL)
             {
                 e.preventDefault();
+                // open/close dir node
                 if (li.hasClass('parent') && ((!rtl && li.hasClass('open')) || (rtl && !li.hasClass('open')))) {
                     let event = new MouseEvent("click", {
                         bubbles: true,
@@ -2053,14 +2072,27 @@
                         view: window,
                     });
                     li.firstElementChild.dispatchEvent(event);
-                } else if (!rtl) {
-                    const parentID = li.dataset.parentid;
-                    if (parentID === '0')
-                        return;
-                    // fixed: check whether the parent item exists
-                    const item = $(`neat-tree-item-${parentID}`);
-                    if (item) {
-                        item.querySelector('span').focus();
+                } else {
+                    if (!rtl) {
+                        // move back to parent node
+                        const parentID = li.dataset.parentid;
+                        if (parentID === '0')
+                            return;
+                        // fixed: check whether the parent item exists
+                        const item = $(`neat-tree-item-${parentID}`);
+                        if (item) {
+                            item.querySelector('span').focus();
+                        }
+                    } else {
+                        let elRect = e.target.getBoundingClientRect();
+                        let event = new MouseEvent("contextmenu", {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window,
+                            clientX: elRect.left,
+                            clientY: elRect.bottom,
+                        });
+                        e.target.dispatchEvent(event);
                     }
                 }
             }
@@ -2260,6 +2292,24 @@
                     } else {
                         item.lastElementChild.focus();
                     }
+                }
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                if (!rtl) {
+                    const active = body.querySelector('.active');
+                    if (active)
+                        active.removeClass('active').focus();
+                    clearMenu();
+                }
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                if (rtl) {
+                    const active = body.querySelector('.active');
+                    if (active)
+                        active.removeClass('active').focus();
+                    clearMenu();
                 }
                 break;
             case " ": // space
