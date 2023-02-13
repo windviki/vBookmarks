@@ -979,28 +979,25 @@
     // Popup auto-height
     const resetHeight = () => {
         const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
-        // console.log(`zoomLevel = ${zoomLevel}`);
-        setTimeout(() => {
-            const neatTree = $tree.firstElementChild;
-            if (neatTree) {
-                const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-                // console.log(`fullHeight = ${fullHeight}`);
-                chrome.tabs.getZoom(zoomFactor => {
-                    // zoomFactor is the zoom factor in chrome setting. e.g. 125%
-                    // left 50px at bottom if the screen is too short
-                    const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                    // console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
-                    // 300 <= height <= maxHeight
-                    const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
-                    // console.log(`height = ${height}`);
-                    const newHeightStyle = `${height}px`;
-                    // Slide up faster than down
-                    body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-                    body.style.height = newHeightStyle;
-                    localStorage.popupHeight = height;
-                });
-            }
-        }, 200);
+        const neatTree = $tree.firstElementChild;
+        if (neatTree) {
+            const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+            // console.log(`fullHeight = ${fullHeight}`);
+            chrome.tabs.getZoom(zoomFactor => {
+                // zoomFactor is the zoom factor in chrome setting. e.g. 125%
+                // left 50px at bottom if the screen is too short
+                const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+                // console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
+                // 300 <= height <= maxHeight
+                const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
+                // console.log(`height = ${height}`);
+                const newHeightStyle = `${height}px`;
+                // Slide up faster than down
+                body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
+                body.style.height = newHeightStyle;
+                localStorage.popupHeight = height;
+            });
+        }
     };
 
     if (!searchMode)
@@ -1384,13 +1381,13 @@
             const open = () => {
                 chrome.tabs.create({
                     url: urls.shift(),
-                    selected: selected
+                    active: selected
                     // first tab will be selected
                 });
                 for (let i = 0, l = urls.length; i < l; i++) {
                     chrome.tabs.create({
                         url: urls[i],
-                        selected: false
+                        active: false
                     });
                 }
             };
