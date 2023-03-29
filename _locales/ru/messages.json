@@ -134,6 +134,17 @@
    "deleteEllipsis": {
       "message": "Удалить..."
    },
+   "versionMessage": {
+     "message": "This is new VBM $versionNumber$! Changelog is here: $versionTips$",
+     "placeholders": {
+       "versionNumber": {
+         "content": "$1"
+       },
+       "versionTips": {
+         "content": "$2"
+       }
+     }
+   },
    "donationMessage": {
       "message": "Если вам это нравится, возможно, вы сможете пожертвовать на его дальнейшее развитие. Приветствуется любая сумма."
    },

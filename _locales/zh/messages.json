@@ -131,6 +131,17 @@
   "delete": {
     "message": "删除"
   },
+  "versionMessage": {
+    "message": "欢迎使用新版本 $versionNumber$！更新记录：$versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
   "donationMessage": {
     "message": "如果你喜欢本扩展的话，请考虑进行捐助。这样我可以持续改进它的功能并保持开放。"
   },

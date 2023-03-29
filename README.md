@@ -298,6 +298,14 @@ Fix some undefined errors.
 Update code to manifest V3. minimum_chrome_version = 88.
 
 
+**ver3.4 2023/02/14**
+
+Fixed: [#26](https://github.com/windviki/vBookmarks/issues/26): open directory in the background.
+
+New: Key Right to open context menu (when focus on an opened dir or a bookmark) and key Left to close it (when context menu is showing).
+
+Remove timeout of height reset. Speed up the popup.
+
 
 # Attentions
 

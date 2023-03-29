@@ -205,6 +205,14 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
   - 升级到 manifest V3（否则无法上架webstore），最低Chrome版本要求调到88。
 
 
+- 版本3.4
+  - 修正 [#26](https://github.com/windviki/vBookmarks/issues/26) 修复在后台打开文件夹。
+
+  - 新增 全键盘操作优化：方向键→可以在已经打开的文件夹或者书签上面打开右键菜单。同时方向键←可以关闭右键菜单。
+
+  - 移除一处超时设置，以加快 popup 弹出速度。
+
+
 # 注意：
 
 如果您需要离线安装扩展：

@@ -720,31 +720,6 @@
         }
     };
 
-    const $donation = $('donation');
-    const showDonation = (show) => {
-        if (show) {
-            $('donation-text').innerHTML = _m('donationMessage');
-            $donation.style.display = 'block';
-            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 15;
-            let countDown = setInterval(() => {
-                localStorage.donationCountDown = seconds;
-                if (seconds <= 0) {
-                    $('donation-go').innerHTML = _m('donationGo');
-                    $('donation-go').disabled = false;
-                    clearInterval(countDown);
-                    localStorage.donationCountDown = 0;
-                } else {
-                    $('donation-go').innerHTML = `${seconds}s`;
-                    $('donation-go').disabled = true;
-                    $('donation-go').focus();
-                }
-                seconds--;
-            }, 1000);
-        } else {
-            $donation.style.display = 'none';
-        }
-    }
-
     // parse version to dictionary
     const parseVersion = function(strversion) {
         let v = {};
@@ -758,6 +733,7 @@
         return v;
     };
 
+    // Donation
     let newOrUpgrade = true;
     const mf = chrome.runtime.getManifest();
     const currentVer = parseVersion(mf["version"]);
@@ -780,6 +756,35 @@
     }
     if (!localStorage.donationKey) {
         localStorage.donationKey = 1;
+    }
+
+    const $donation = $('donation');
+    const showDonation = (show) => {
+        if (show) {
+            if (newOrUpgrade) {
+                $('new-version-text').innerHTML = _m('versionMessage', 
+                    [mf["version"], 'Github']);
+            }
+            $('donation-text').innerHTML = _m('donationMessage');
+            $donation.style.display = 'block';
+            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 10;
+            let countDown = setInterval(() => {
+                localStorage.donationCountDown = seconds;
+                if (seconds <= 0) {
+                    $('donation-go').innerHTML = _m('donationGo');
+                    $('donation-go').disabled = false;
+                    clearInterval(countDown);
+                    localStorage.donationCountDown = 0;
+                } else {
+                    $('donation-go').innerHTML = `${seconds}s`;
+                    $('donation-go').disabled = true;
+                    $('donation-go').focus();
+                }
+                seconds--;
+            }, 1000);
+        } else {
+            $donation.style.display = 'none';
+        }
     }
 
     if (newOrUpgrade || localStorage.donationCountDown > 0 
@@ -1632,7 +1637,11 @@
             localStorage.donationKey = localStorage.donationKey.toInt() + 800;
         }
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
-    })
+    });
+
+    $('new-version-text').addEventListener('click', () => {
+        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks#changelogs", true, true);
+    });
 
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', e => {

@@ -131,6 +131,17 @@
   "delete": {
     "message": "刪除"
   },
+  "versionMessage": {
+    "message": "歡迎使用新版本 $versionNumber$！更新記錄：$versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
   "donationMessage": {
     "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
   },

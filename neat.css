@@ -107,7 +107,7 @@ body.linux input {
     top: 0;
     margin: 2px;
     padding: 2px;
-    background: #ffffcc;
+    background: #f8f9fa;
     z-index: 9;
     border: 0;
     border-bottom-left-radius: 2px;
@@ -124,8 +124,18 @@ body.linux input {
     overflow: hidden;
 }
 
+#information-text {
+    color: #818181;
+    font-size: 9px;
+    margin: 4px 0px 4px 0px;
+}
+
+#new-version-text {
+    color: #463af0;
+    margin: 2px 10px 2px 2px;
+}
+
 #donation-text {
-    color: #eb3939;
     margin: 2px 10px 2px 2px;
 }
 
