@@ -135,7 +135,7 @@
       "message": "Удалить..."
    },
    "versionMessage": {
-     "message": "This is new VBM $versionNumber$! Changelog is here: $versionTips$",
+     "message": "Это новый VBM $versionNumber$! Список изменений находится здесь: $versionTips$",
      "placeholders": {
        "versionNumber": {
          "content": "$1"

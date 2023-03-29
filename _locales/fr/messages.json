@@ -135,7 +135,7 @@
     "message": "Supprimer..."
   },
   "versionMessage": {
-    "message": "This is new VBM $versionNumber$! Changelog is here: $versionTips$",
+    "message": "C'est le nouveau VBM $versionNumber$! Le journal des modifications est ici: $versionTips$",
     "placeholders": {
       "versionNumber": {
         "content": "$1"
