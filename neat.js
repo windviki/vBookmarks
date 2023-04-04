@@ -972,7 +972,7 @@
             if (searchInput.value) {
                 // Pressing esc shouldn't close the popup when search field has value
                 e.preventDefault();
-                quitSearchMode();
+                quitSearchMode(true);
             }
         }
     });
