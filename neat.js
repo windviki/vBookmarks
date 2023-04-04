@@ -802,7 +802,7 @@
     const searchInput = $('search-input');
     let prevValue = '';
 
-    const quitSearchMode = () => {
+    const quitSearchMode = (ignoreFocus) => {
         if (searchMode) {
             prevValue = '';
             if (searchInput.value) {
@@ -814,13 +814,16 @@
             $tree.style.display = 'block';
             $results.style.display = 'none';
 
-            // fix focus
-            let item = $tree.querySelector('.focus');
-            if (!item) {
-                item = $tree.querySelector('li:first-child>span');
-            }
-            if (item) {
-                item.focus();
+            if (ignoreFocus === null || !ignoreFocus) {
+                // fix focus
+                let item = $tree.querySelector('.focus');
+                // not found focus, focus on the root node
+                if (!item) {
+                    item = $tree.querySelector('li:first-child>span');
+                }
+                if (item) {
+                    item.focus();
+                }
             }
         }
     };
@@ -914,7 +917,15 @@
         });
     };
 
-    searchInput.addEventListener('input', e => search(null));
+    searchInput.addEventListener('input', e => {
+        if (!searchInput.value.length) {
+            // keep focus on input
+            // do not restore focus to item
+            quitSearchMode(true);
+        } else {
+            search(null);
+        }
+    });
 
     searchInput.addEventListener('keydown', e => {
         const focusID = localStorage.focusID;
