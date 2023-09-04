@@ -307,6 +307,13 @@ New: Key Right to open context menu (when focus on an opened dir or a bookmark) 
 Remove timeout of height reset. Speed up the popup.
 
 
+**ver3.5 2023/09/04**
+
+Fixed: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doesn't stay in search bar after clearing the search text.
+
+Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
+
+
 # Attentions
 
 For those who installs the pre-built crx file:

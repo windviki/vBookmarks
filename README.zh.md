@@ -213,6 +213,12 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
   - 移除一处超时设置，以加快 popup 弹出速度。
 
 
+- 版本3.5
+  - 修正 [#29](https://github.com/windviki/vBookmarks/issues/29) 清除搜索栏字符后光标焦点从搜索栏里消失。
+
+  - 修正 快捷键设置。因之前覆盖默认书签栏的Ctrl+Shift+B在新版里面不再生效，现修正默认的弹出快捷键为Ctrl+Shift+V。
+
+
 # 注意：
 
 如果您需要离线安装扩展：
