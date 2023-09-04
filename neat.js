@@ -796,9 +796,15 @@
     }
 
     // Search
+    if (!localStorage.searchHistory) {
+        localStorage.searchHistory = JSON.stringify([]);
+    }
+    let searchHistory = localStorage.searchHistory ? JSON.parse(localStorage.searchHistory) : [];
     const searchAfterEnter = !!localStorage.searchAfterEnter;
     const $results = $('results');
     let searchMode = false;
+    let historyMode = false;
+    let historyIndex = null;
     const searchInput = $('search-input');
     let prevValue = '';
 
@@ -814,6 +820,10 @@
             $tree.style.display = 'block';
             $results.style.display = 'none';
 
+            // reset history walking
+            historyMode = false;
+            historyIndex = null;
+
             if (ignoreFocus === null || !ignoreFocus) {
                 // fix focus
                 let item = $tree.querySelector('.focus');
@@ -828,7 +838,15 @@
         }
     };
 
-    const search = (e) => {
+    const pushSearchHistory = (value) => {
+        // keep history items count: 50
+        if (searchHistory.length >= 50) {
+            searchHistory.splice(0, searchHistory.length - 49);
+        }
+        searchHistory.push(value);
+    };
+
+    const search = (e, skipHistory) => {
         const value = searchInput.value.trim();
         localStorage.searchQuery = value;
         if (value === '') {
@@ -841,6 +859,9 @@
         if (value === prevValue)
             return;
         prevValue = value;
+        if (!skipHistory) {
+        }
+        localStorage.searchHistory = JSON.stringify(searchHistory);
         searchMode = true;
         switchBookmarkMenu(true);
         chrome.bookmarks.search(value, results => {
@@ -918,6 +939,9 @@
     };
 
     searchInput.addEventListener('input', e => {
+        // reset history walking
+        historyMode = false;
+        historyIndex = null;
         if (!searchInput.value.length) {
             // keep focus on input
             // do not restore focus to item
@@ -936,7 +960,23 @@
             } else {
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
+        } else if (e.key === 'ArrowUp') { // up
+            if (!searchInput.value.length) {
+                historyMode = true;
+            }
+            if (historyMode) {
+                if (historyIndex === null || historyIndex <= 0) {
+                    historyIndex = searchHistory.length - 1;
+                } else {
+                    historyIndex -= 1;
+                }
+                searchInput.value = searchHistory[historyIndex];
+                search(e, true);
+            }
         } else if (e.key === 'Enter' && searchInput.value.length) { // enter
+            if (historyMode) {
+                return;
+            }
             if (searchAfterEnter) {
                 search(e);
             } else {
@@ -1610,6 +1650,8 @@
                     }
                 }
                 if (searchMode) {
+                    const value = searchInput.value.trim();
+                    pushSearchHistory(value);
                     prevValue = '';
                     searchInput.value = '';
                     localStorage.searchQuery = '';
