@@ -219,6 +219,10 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
   - 修正 快捷键设置。因之前覆盖默认书签栏的Ctrl+Shift+B在新版里面不再生效，现修正默认的弹出快捷键为Ctrl+Shift+V。
 
 
+- 版本3.6
+  - 修正 [#31](https://github.com/windviki/vBookmarks/issues/31) 修正无法自定义图标的问题。
+
+
 # 注意：
 
 如果您需要离线安装扩展：

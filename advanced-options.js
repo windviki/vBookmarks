@@ -56,7 +56,7 @@
         const defaultIconButton = $('default-icon-button');
         defaultIconButton.addEventListener('click', () => {
             delete localStorage.customIcon;
-            chrome.browserAction.setIcon({
+            chrome.action.setIcon({
                 path: 'icon.png'
             });
             dontLoad = true;

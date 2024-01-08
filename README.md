@@ -314,6 +314,11 @@ Fixed: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doe
 Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
 
 
+**ver3.6 2024/01/08**
+
+Fixed: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
+
+
 # Attentions
 
 For those who installs the pre-built crx file:
