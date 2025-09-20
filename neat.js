@@ -417,7 +417,7 @@
         return favUrl.toString();
     };
 
-    const generateBookmarkHTML = (title, url, extras) => {
+    const generateBookmarkHTML = (title, url, extras, bookmarkId) => {
         if (!extras)
             extras = '';
         const u = url.htmlspecialchars();
@@ -432,19 +432,59 @@
         }
         tooltipURL = tooltipURL.htmlspecialchars();
         const name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
-        return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras}>
-                <img src="${favicon}" width="16" height="16" alt="">
+
+        // Add sync status indicator if enabled
+        let syncIndicator = '';
+        if (localStorage.showSyncStatus === 'true' && window.syncManager && bookmarkId) {
+            const syncStatus = window.syncManager.getSyncStatusIndicator(bookmarkId);
+            const syncTooltip = window.syncManager.getSyncTooltip(bookmarkId);
+            if (syncStatus) {
+                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                    <span class="sync-tooltip">${syncTooltip}</span>
+                </span>`;
+            }
+        }
+
+        return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
+                <div class="favicon-container">
+                    <img src="${favicon}" width="16" height="16" alt="">
+                    ${syncIndicator}
+                </div>
                 <i>${name}</i>
                 </a>`;
     };
 
-    const generateFolderHTML = (title, extras) => {
+    const generateFolderHTML = (title, extras, folderId, folderNode) => {
         if (!extras)
             extras = '';
-        return `<span tabindex="0" ${extras}>
+
+        // Handle dual storage folders - add suffix for non-syncing folders
+        let displayTitle = title || _m('noTitle');
+        if (folderNode && folderNode.syncing === false && folderNode.folderType) {
+            // Add suffix to distinguish between syncing and non-syncing folders
+            const suffix = ' (Local)';
+            displayTitle += suffix;
+        }
+
+        // Add sync status indicator if enabled
+        let syncIndicator = '';
+        if (localStorage.showSyncStatus === 'true' && window.syncManager && folderId) {
+            const syncStatus = window.syncManager.getSyncStatusIndicator(folderId);
+            const syncTooltip = window.syncManager.getSyncTooltip(folderId);
+            if (syncStatus) {
+                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                    <span class="sync-tooltip">${syncTooltip}</span>
+                </span>`;
+            }
+        }
+
+        return `<span tabindex="0" ${extras} class="tree-item-span">
 		   <b class="twisty"></b>
-		   <img src="folder.png" width="16" height="16" alt="">
-		   <i>${title || _m('noTitle')}</i>
+		   <div class="favicon-container">
+		       <img src="folder.png" width="16" height="16" alt="">
+		       ${syncIndicator}
+		   </div>
+		   <i>${displayTitle}</i>
 		   </span>`;
     };
 
@@ -456,8 +496,10 @@
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
         const hrWidth = window.innerWidth - paddingStart - 40;
         const hrStyle = `style="width=${hrWidth}px;align=right;border:1px dotted ${color};"`
-        return `<a href="#" tabindex="0" ${aStyle}>
-                <img width="16" height="16" style="display:none;" alt="">
+        return `<a href="#" tabindex="0" ${aStyle} class="tree-item-link">
+                <div class="favicon-container">
+                    <img width="16" height="16" style="display:none;" alt="">
+                </div>
                 <i></i>
                 <hr class="child" role="treeitem" ${hrStyle}">
                 </a>`;
@@ -486,7 +528,7 @@
             const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
             html += `<li class="${classStr} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
             if (isFolder) { // folder node
-                html += generateFolderHTML(title, stylePad);
+                html += generateFolderHTML(title, stylePad, id, d);
                 // only generate children for opened folder
                 if (isOpen) {
                     if (children) {
@@ -509,7 +551,7 @@
                     html += generateSeparatorHTML(paddingStart);
                     separatorManager.add(id);
                 } else {
-                    html += generateBookmarkHTML(title, url, stylePad);
+                    html += generateBookmarkHTML(title, url, stylePad, id);
                 }
             }
             html += '</li>';
@@ -572,10 +614,39 @@
         return nodePath.reverse();
     };
 
+    // Find folder by folderType in the tree (supports dual storage)
+    const findFolderByType = (tree, folderType) => {
+        if (!tree || !Array.isArray(tree)) return null;
+
+        function searchFolder(nodes) {
+            if (!nodes || !Array.isArray(nodes)) return null;
+
+            for (const node of nodes) {
+                if (node.folderType === folderType) {
+                    return node;
+                }
+                if (node.children) {
+                    const found = searchFolder(node.children);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        return searchFolder(tree);
+    };
+
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar) {
-            subTree = tree[0].children[0].children;
+            // Find the bookmarks bar folder using folderType instead of fixed position
+            const bookmarksBarFolder = findFolderByType(tree, 'bookmarks-bar');
+            if (bookmarksBarFolder) {
+                subTree = bookmarksBarFolder.children || [];
+            } else {
+                // Fallback to old logic if folderType not available
+                subTree = tree[0].children[0].children;
+            }
         } else {
             subTree = tree[0].children;
         }
@@ -583,6 +654,13 @@
         generateNodeTrees(subTree, nodeTrees);
 
         $tree.innerHTML = html;
+
+        // Refresh sync indicators after tree is generated
+        if (localStorage.showSyncStatus === 'true') {
+            setTimeout(() => {
+                refreshSyncIndicators();
+            }, 100);
+        }
 
         if (rememberState) {
             $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
@@ -882,12 +960,27 @@
                 if (result.url) {
                     if (!separatorManager.isSeparator(result.title, result.url)) {
                         html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
-                                ${generateBookmarkHTML(result.title, result.url)}</li>`;
+                                ${generateBookmarkHTML(result.title, result.url, '', result.id)}</li>`;
                     }
                 } else {  // folder
+                    // Add sync status indicator for folders in search results
+                    let syncIndicator = '';
+                    if (localStorage.showSyncStatus === 'true' && window.syncManager && id) {
+                        const syncStatus = window.syncManager.getSyncStatusIndicator(id);
+                        const syncTooltip = window.syncManager.getSyncTooltip(id);
+                        if (syncStatus) {
+                            syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                                <span class="sync-tooltip">${syncTooltip}</span>
+                            </span>`;
+                        }
+                    }
+
                     html += `<li id="results-item-${id}" role="listitem"" data-parentid="${result.parentId}">
-                            <a href="" class="link-folder">
+                            <a href="" class="link-folder tree-item-link">
+                            <div class="favicon-container">
                             <img src="folder.png" width="16" height="16" alt="">
+                            ${syncIndicator}
+                            </div>
                             <i>${result.title || _m('noTitle')}</i>
                             </a></li>`;
                 }
@@ -1176,10 +1269,10 @@
                     inner = generateSeparatorHTML(paddingStart);
                 }
                 else {
-                    inner = generateBookmarkHTML(addTitle, addUrl, stylePad);
+                    inner = generateBookmarkHTML(addTitle, addUrl, stylePad, resultBm.id);
                 }
             } else {
-                inner = generateFolderHTML(addTitle, stylePad);
+                inner = generateFolderHTML(addTitle, stylePad, resultBm.id, resultBm);
             }
             const html = `<li ${classStr} ${idHTML} level="${lv}" role="treeitem" ${extra} data-parentId="${parentId}">${inner}</li>`;
 
@@ -1473,18 +1566,40 @@
                                 if (li) {
                                     if (isBookmark) {
                                         const css = li.querySelector('a').style.cssText;
-                                        li.innerHTML = generateBookmarkHTML(title, url, `style="${css}"`);
+                                        li.innerHTML = generateBookmarkHTML(title, url, `style="${css}"`, id);
                                     } else {
                                         const i = li.querySelector('i');
                                         i.textContent = title ||
                                             (httpsPattern.test(url) ?
                                                 url.replace(httpsPattern, '') :
                                                 _m('noTitle'));
+                                        // Update sync status for folders
+                                        if (window.syncManager && localStorage.showSyncStatus === 'true') {
+                                            const syncIndicator = li.querySelector('.sync-indicator');
+                                            if (syncIndicator) {
+                                                syncIndicator.remove();
+                                            }
+                                            const syncStatus = window.syncManager.getSyncStatusIndicator(id);
+                                            const syncTooltip = window.syncManager.getSyncTooltip(id);
+                                            if (syncStatus) {
+                                                const newSyncIndicator = document.createElement('span');
+                                                newSyncIndicator.className = `sync-indicator ${syncStatus}`;
+                                                newSyncIndicator.title = syncTooltip;
+                                                newSyncIndicator.innerHTML = `<span class="sync-tooltip">${syncTooltip}</span>`;
+                                                // Insert after the img element, not at the end of span
+                                                const imgElement = li.querySelector('span img');
+                                                if (imgElement && imgElement.nextSibling) {
+                                                    li.querySelector('span').insertBefore(newSyncIndicator, imgElement.nextSibling);
+                                                } else {
+                                                    li.querySelector('span').appendChild(newSyncIndicator);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (searchMode) {
                                     li = $(`results-item-${id}`);
-                                    li.innerHTML = generateBookmarkHTML(title, url);
+                                    li.innerHTML = generateBookmarkHTML(title, url, '', id);
                                 }
                                 li.firstElementChild.focus();
                             });
@@ -2874,5 +2989,122 @@
         chrome.action.setIcon({
             imageData: imageData
         });
+    }
+
+    // Initialize sync status event listeners
+    function initializeSyncControls() {
+        // Listen for sync status changes
+        if (window.addEventListener && window.syncManager) {
+            window.addEventListener('syncStatusChanged', (event) => {
+                // Update UI based on sync status changes
+                const { bookmarkId, status } = event.detail;
+                if (bookmarkId && status) {
+                    updateBookmarkSyncStatus(bookmarkId, status);
+                }
+            });
+        }
+    }
+
+    // Update individual bookmark sync status
+    function updateBookmarkSyncStatus(bookmarkId, syncStatus) {
+        const treeItem = document.getElementById(`neat-tree-item-${bookmarkId}`);
+        const resultsItem = document.getElementById(`results-item-${bookmarkId}`);
+
+        [treeItem, resultsItem].forEach(item => {
+            if (item) {
+                const syncIndicator = item.querySelector('.sync-indicator');
+                if (syncIndicator) {
+                    syncIndicator.remove();
+                }
+
+                if (localStorage.showSyncStatus === 'true' && window.syncManager) {
+                    const statusClass = window.syncManager.getSyncStatusIndicator(bookmarkId);
+                    const tooltip = window.syncManager.getSyncTooltip(bookmarkId);
+                    if (statusClass) {
+                        const newIndicator = document.createElement('span');
+                        newIndicator.className = `sync-indicator ${statusClass}`;
+                        newIndicator.title = tooltip;
+                        newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
+
+                        // Insert into the favicon container
+                        const containerElement = item.querySelector('.tree-item-link') || item.querySelector('.tree-item-span');
+                        const faviconContainer = containerElement ? containerElement.querySelector('.favicon-container') : null;
+                        if (faviconContainer) {
+                            faviconContainer.appendChild(newIndicator);
+                        } else {
+                            // Fallback to old logic
+                            const fallbackContainer = item.querySelector('a') || item.querySelector('span');
+                            const imgElement = fallbackContainer.querySelector('img');
+                            if (imgElement && imgElement.nextSibling) {
+                                fallbackContainer.insertBefore(newIndicator, imgElement.nextSibling);
+                            } else {
+                                fallbackContainer.appendChild(newIndicator);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Refresh all sync indicators in the UI
+    function refreshSyncIndicators() {
+        if (window.syncManager) {
+            window.syncManager.refreshAllSyncStatus();
+        }
+        // Update existing UI elements
+        const allTreeItems = document.querySelectorAll('[id^="neat-tree-item-"], [id^="results-item-"]');
+        allTreeItems.forEach(item => {
+            const bookmarkId = item.id.replace(/^neat-tree-item-/, '').replace(/^results-item-/, '');
+            if (bookmarkId && window.syncManager) {
+                const statusClass = window.syncManager.getSyncStatusIndicator(bookmarkId);
+                const tooltip = window.syncManager.getSyncTooltip(bookmarkId);
+
+                const syncIndicator = item.querySelector('.sync-indicator');
+                if (syncIndicator) {
+                    syncIndicator.remove();
+                }
+
+                if (localStorage.showSyncStatus === 'true' && statusClass) {
+                    const newIndicator = document.createElement('span');
+                    newIndicator.className = `sync-indicator ${statusClass}`;
+                    newIndicator.title = tooltip;
+                    newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
+
+                    // Insert into the favicon container
+                    const containerElement = item.querySelector('.tree-item-link') || item.querySelector('.tree-item-span');
+                    const faviconContainer = containerElement ? containerElement.querySelector('.favicon-container') : null;
+                    if (faviconContainer) {
+                        faviconContainer.appendChild(newIndicator);
+                    } else {
+                        // Fallback to old logic
+                        const fallbackContainer = item.querySelector('a') || item.querySelector('span');
+                        const imgElement = fallbackContainer.querySelector('img');
+                        if (imgElement && imgElement.nextSibling) {
+                            fallbackContainer.insertBefore(newIndicator, imgElement.nextSibling);
+                        } else {
+                            fallbackContainer.appendChild(newIndicator);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Expose neat functions to window
+    window.neat = {
+        refreshSyncIndicators: refreshSyncIndicators
+    };
+
+    // Set default sync settings if not already set
+    if (localStorage.showSyncStatus === undefined) {
+        localStorage.showSyncStatus = 'true';
+    }
+
+    // Initialize sync controls when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeSyncControls);
+    } else {
+        initializeSyncControls();
     }
 })(window);

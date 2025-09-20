@@ -56,6 +56,68 @@
             localStorage.searchAfterEnter = searchAfterEnter.checked ? '1' : '';
         });
 
+        // Sync settings
+        const showSyncStatus = $('show-sync-status');
+        showSyncStatus.checked = localStorage.showSyncStatus !== 'false';
+        showSyncStatus.addEventListener('change', () => {
+            localStorage.showSyncStatus = showSyncStatus.checked ? 'true' : 'false';
+            // Update sync manager settings
+            if (window.syncManager) {
+                window.syncManager.syncSettings.showSyncStatus = showSyncStatus.checked;
+                window.syncManager.saveSettings();
+            }
+            // Refresh the UI to show/hide sync indicators immediately
+            if (window.opener && window.opener.neat) {
+                window.opener.neat.refreshSyncIndicators();
+            }
+        });
+
+        const highlightUnsynced = $('highlight-unsynced');
+        highlightUnsynced.checked = localStorage.highlightUnsynced !== 'false';
+        highlightUnsynced.addEventListener('change', () => {
+            localStorage.highlightUnsynced = highlightUnsynced.checked ? 'true' : 'false';
+            // Update sync manager settings
+            if (window.syncManager) {
+                window.syncManager.syncSettings.highlightUnsynced = highlightUnsynced.checked;
+                window.syncManager.saveSettings();
+            }
+        });
+
+        const autoRefreshSync = $('auto-refresh-sync');
+        autoRefreshSync.checked = localStorage.autoRefreshSync !== 'false';
+        autoRefreshSync.addEventListener('change', () => {
+            localStorage.autoRefreshSync = autoRefreshSync.checked ? 'true' : 'false';
+            // Update sync manager settings
+            if (window.syncManager) {
+                window.syncManager.syncSettings.autoRefreshSync = autoRefreshSync.checked;
+                if (autoRefreshSync.checked) {
+                    window.syncManager.startAutoRefresh();
+                } else {
+                    window.syncManager.stopAutoRefresh();
+                }
+                window.syncManager.saveSettings();
+            }
+        });
+
+        const syncRefreshInterval = $('sync-refresh-interval');
+        syncRefreshInterval.value = localStorage.syncRefreshInterval || 30;
+        syncRefreshInterval.addEventListener('input', () => {
+            const val = parseInt(syncRefreshInterval.value);
+            if (val >= 10 && val <= 300) {
+                localStorage.syncRefreshInterval = val;
+                // Update sync manager settings
+                if (window.syncManager) {
+                    window.syncManager.syncSettings.syncRefreshInterval = val * 1000;
+                    window.syncManager.saveSettings();
+                    // Restart auto-refresh if enabled
+                    if (window.syncManager.syncSettings.autoRefreshSync) {
+                        window.syncManager.stopAutoRefresh();
+                        window.syncManager.startAutoRefresh();
+                    }
+                }
+            }
+        });
+
         const zoom = $('zoom-input');
         setInterval(() => {
             zoom.value = localStorage.zoom || 100;
@@ -89,6 +151,14 @@
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
+
+        // Sync settings labels
+        document.getElementById('sync-options').innerText = __m('syncOptions');
+        document.getElementById('option-show-sync-status').innerText = __m('optionShowSyncStatus');
+        document.getElementById('option-highlight-unsynced').innerText = __m('optionHighlightUnsynced');
+        document.getElementById('option-auto-refresh-sync').innerText = __m('optionAutoRefreshSync');
+        document.getElementById('option-sync-refresh-interval').innerText = __m('optionSyncRefreshInterval');
+        document.getElementById('option-sync-refresh-interval-seconds').innerText = __m('optionSyncRefreshIntervalSeconds');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
         document.getElementById('options-footer-3').innerHTML =
             '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';

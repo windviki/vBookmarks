@@ -39,7 +39,9 @@
 	"permissions": [
 		"bookmarks",
 		"tabs",
-        "favicon"
+        "favicon",
+        "storage",
+        "identity"
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],

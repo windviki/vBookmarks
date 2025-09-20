@@ -1,0 +1,605 @@
+/**
+ * vBookmarks Sync Status Styles
+ */
+
+
+/* Sync Status Indicators */
+.sync-indicator {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    cursor: help;
+    position: absolute;
+    /* Position over favicon bottom right */
+    bottom: 1px;
+    right: 1px;
+    z-index: 10;
+    /* Reset positioning context */
+    margin: 0;
+    padding: 0;
+    /* Ensure it doesn't affect layout */
+    box-sizing: border-box;
+    /* Ensure perfect circle */
+    min-width: 6px;
+    min-height: 6px;
+    transform: translateZ(0); /* Force hardware acceleration for crisp rendering */
+}
+
+.sync-indicator.synced {
+    background: #4CAF50; /* Green - harmonious and positive */
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+}
+
+.sync-indicator.unsynced {
+    background: #FF9800; /* Orange - warning but friendly */
+    box-shadow: 0 0 3px rgba(255, 152, 0, 0.5);
+}
+
+.sync-indicator.syncing {
+    background: #2196F3; /* Blue - active state */
+    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
+}
+
+.sync-indicator.sync-error {
+    background: #F44336; /* Red - error state */
+    box-shadow: 0 0 3px rgba(244, 67, 54, 0.5);
+}
+
+.sync-indicator.local {
+    background: #607D8B; /* Blue-gray - local/storage color, more harmonious than purple */
+    box-shadow: 0 0 3px rgba(96, 125, 139, 0.5);
+}
+
+.sync-indicator.unsyncable {
+    background: #CFD8DC; /* Light blue-gray - neutral, disabled look */
+    border: 1px solid #B0BEC5;
+    box-shadow: none;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Sync Tooltips */
+.sync-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    /* Ensure tooltip doesn't affect parent layout */
+    width: 0;
+    height: 0;
+    overflow: visible;
+}
+
+.sync-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+}
+
+.sync-indicator:hover .sync-tooltip {
+    opacity: 1;
+}
+
+/* Bookmark Tree Sync Enhancements */
+.tree-item {
+    position: relative;
+}
+
+/* Favicon container for proper positioning context */
+.favicon-container {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+/* ========================================================================= */
+/* MAIN TREE LAYOUT */
+/* ========================================================================= */
+
+/* Base tree item styling - override existing neat.css styles */
+#tree ul li a.tree-item-link,
+#results ul li a.tree-item-link {
+    display: flex !important;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1.67em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+}
+
+#tree ul li span.tree-item-span {
+    display: flex !important;
+    align-items: center;
+    line-height: 1.67em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Favicon container - consistent across all elements */
+.favicon-container {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* Images inside favicon container */
+.favicon-container img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0 !important; /* Override any existing margins */
+    vertical-align: middle;
+}
+
+/* Text elements */
+#tree ul li a.tree-item-link i,
+#tree ul li span.tree-item-span i,
+#results ul li a.tree-item-link i,
+#results ul li a.link-folder.tree-item-link i {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: normal;
+    line-height: 1.67em;
+    margin: 0;
+    padding: 0;
+}
+
+/* ========================================================================= */
+/* MAIN TREE SPECIFIC STYLES */
+/* ========================================================================= */
+
+/* Main tree bookmarks */
+#tree ul li a.tree-item-link {
+    padding: 0 4px;
+    gap: 4px;
+}
+
+#tree ul li a.tree-item-link .favicon-container {
+    margin-left: 12px; /* Align with folder icons: twisty(8px+4pxmargin) = 12px */
+    margin-right: 4px;
+}
+
+/* Main tree folders */
+#tree ul li span.tree-item-span {
+    padding: 0 4px;
+    gap: 4px;
+}
+
+#tree ul li span.tree-item-span .favicon-container {
+    margin-right: 4px;
+}
+
+/* Fallback for browsers that don't support gap */
+@supports not (gap: 4px) {
+    #tree ul li a.tree-item-link > *:not(:last-child),
+    #tree ul li span.tree-item-span > *:not(:last-child),
+    #results ul li a.tree-item-link > *:not(:last-child),
+    #results ul li a.link-folder.tree-item-link > *:not(:last-child) {
+        margin-right: 4px;
+    }
+}
+
+#tree ul li span.tree-item-span .twisty {
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+/* ========================================================================= */
+/* SEARCH RESULTS SPECIFIC STYLES */
+/* ========================================================================= */
+
+/* Search results bookmarks */
+#results ul li a.tree-item-link {
+    padding: 0 4px;
+    gap: 4px;
+    padding-left: 16px; /* Consistent left margin */
+}
+
+#results ul li a.tree-item-link .favicon-container {
+    margin-right: 4px;
+}
+
+/* Search results folders */
+#results ul li a.link-folder.tree-item-link {
+    display: flex !important;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1.67em;
+    padding: 0 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-left: 16px;
+    gap: 4px;
+}
+
+#results ul li a.link-folder.tree-item-link .favicon-container {
+    margin-right: 4px;
+}
+
+/* ========================================================================= */
+/* NESTED LEVELS */
+/* ========================================================================= */
+
+/* Handle nested levels in main tree */
+#tree ul ul li a.tree-item-link {
+    padding-left: 20px; /* Indent nested bookmarks */
+}
+
+#tree ul ul li a.tree-item-link .favicon-container {
+    margin-left: 0; /* Reset margin for nested bookmarks since container has padding */
+}
+
+#tree ul ul li span.tree-item-span {
+    margin-left: 20px; /* Indent nested folders */
+}
+
+/* Position sync indicator over favicon - simplified since base class handles positioning */
+.favicon-container .sync-indicator {
+    /* Position relative to the favicon-container */
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+}
+
+/* Twisty styling is already handled in MAIN TREE SPECIFIC STYLES section */
+
+.tree-item.sync-highlighted {
+    background: rgba(255, 152, 0, 0.1);
+    border-left: 3px solid #FF9800;
+}
+
+.tree-item.sync-error-highlighted {
+    background: rgba(244, 67, 54, 0.1);
+    border-left: 3px solid #F44336;
+}
+
+.tree-item.sync-success-highlighted {
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 3px solid #4CAF50;
+}
+
+/* Sync Status Bar */
+#sync-status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2c3e50;
+    color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+#sync-status-bar.visible {
+    transform: translateY(0);
+}
+
+.sync-status-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.sync-status-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sync-status-item .sync-indicator {
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+.sync-status-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.sync-status-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sync Filter Controls */
+#sync-filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    flex-wrap: wrap;
+}
+
+.sync-filter-btn {
+    padding: 4px 8px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s ease;
+}
+
+.sync-filter-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.sync-filter-btn:hover:not(.active) {
+    background: #e9ecef;
+}
+
+/* Sync Modal */
+.sync-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sync-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sync-modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.sync-modal.visible .sync-modal-content {
+    transform: scale(1);
+}
+
+.sync-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sync-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sync-modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sync-modal-close:hover {
+    background: #f0f0f0;
+}
+
+.sync-modal-body {
+    margin-bottom: 15px;
+}
+
+.sync-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.sync-modal-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.sync-modal-btn.primary {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.sync-modal-btn.primary:hover {
+    background: #0056b3;
+}
+
+.sync-modal-btn.secondary {
+    background: white;
+    color: #333;
+}
+
+.sync-modal-btn.secondary:hover {
+    background: #f8f9fa;
+}
+
+/* Sync Statistics */
+.sync-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.sync-stat-item {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.sync-stat-number {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.sync-stat-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Progress Bar */
+.sync-progress {
+    width: 100%;
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.sync-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #sync-controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .sync-btn {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .sync-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sync-modal-content {
+        padding: 15px;
+        margin: 10px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    #sync-controls {
+        background: #2c3e50;
+    }
+
+    .sync-btn {
+        background: #34495e;
+        color: white;
+        border-color: #4a5f7a;
+    }
+
+    .sync-btn:hover {
+        background: #4a5f7a;
+        border-color: #5a6f8a;
+    }
+
+    .sync-filter-controls {
+        background: #2c3e50;
+    }
+
+    .sync-filter-btn {
+        background: #34495e;
+        color: white;
+        border-color: #4a5f7a;
+    }
+
+    .sync-filter-btn:hover:not(.active) {
+        background: #4a5f7a;
+    }
+
+    .sync-stat-item {
+        background: #34495e;
+        border-color: #4a5f7a;
+        color: white;
+    }
+
+    .sync-stat-label {
+        color: #bdc3c7;
+    }
+}
