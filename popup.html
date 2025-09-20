@@ -14,6 +14,7 @@
                 <p id="donation-text"></p>
             </div>
             <button class="donation-button" id="donation-go" type="button"><i></i></button>
+            <button class="donation-close" id="donation-close" type="button" title="Close">×</button>
         </li>
     </div>
     <div id="tree" tabindex="-1"></div>
@@ -22,19 +23,19 @@
 <div id="drop-overlay"></div>
 <div id="bookmark-clone"></div>
 <menu id="bookmark-context-menu" type="context" tabindex="-1">
-    <command id="add-bookmark-before-bookmark" tabindex="-1">
-    <command id="add-bookmark-after-bookmark" tabindex="-1">
-    <hr id="bookmark-context-menu-sep1">
-    <command id="add-folder-before-bookmark" tabindex="-1">
-    <command id="add-folder-after-bookmark" tabindex="-1">
-    <hr id="bookmark-context-menu-sep2">
-    <command id="add-separator" tabindex="-1">
-    <hr id="bookmark-context-menu-sep3">
-    <command id="replace-url" tabindex="-1">
-    <hr id="bookmark-context-menu-sep4">
     <command id="bookmark-new-tab" tabindex="-1">
     <command id="bookmark-new-window" tabindex="-1">
     <command id="bookmark-new-incognito-window" tabindex="-1">
+    <hr id="bookmark-context-menu-sep1">
+    <command id="add-bookmark-before-bookmark" tabindex="-1">
+    <command id="add-bookmark-after-bookmark" tabindex="-1">
+    <hr id="bookmark-context-menu-sep2">
+    <command id="add-folder-before-bookmark" tabindex="-1">
+    <command id="add-folder-after-bookmark" tabindex="-1">
+    <hr id="bookmark-context-menu-sep3">
+    <command id="add-separator" tabindex="-1">
+    <hr id="bookmark-context-menu-sep4">
+    <command id="replace-url" tabindex="-1">
     <hr id="bookmark-context-menu-sep5">
     <command id="bookmark-edit" tabindex="-1">
     <command id="bookmark-delete" tabindex="-1">
@@ -42,22 +43,22 @@
     <command id="copy-title-and-url" tabindex="-1">
 </menu>
 <menu id="folder-context-menu" type="context" tabindex="-1">
-    <command id="add-bookmark-top" tabindex="-1">
-    <command id="add-bookmark-bottom" tabindex="-1">
-    <hr id="folder-context-menu-sep1">
-    <command id="add-new-folder" tabindex="-1">
-    <hr id="folder-context-menu-sep2">
-    <command id="add-bookmark-before-folder" tabindex="-1">
-    <command id="add-bookmark-after-folder" tabindex="-1">
-    <hr id="folder-context-menu-sep3">
-    <command id="add-folder-before-folder" tabindex="-1">
-    <command id="add-folder-after-folder" tabindex="-1">
-    <hr id="folder-context-menu-sep4">
-    <command id="add-folder-separator" tabindex="-1">
-    <hr id="folder-context-menu-sep5">
     <command id="folder-window" tabindex="-1">
     <command id="folder-new-window" tabindex="-1">
     <command id="folder-new-incognito-window" tabindex="-1">
+    <hr id="folder-context-menu-sep1">
+    <command id="add-bookmark-top" tabindex="-1">
+    <command id="add-bookmark-bottom" tabindex="-1">
+    <hr id="folder-context-menu-sep2">
+    <command id="add-new-folder" tabindex="-1">
+    <hr id="folder-context-menu-sep3">
+    <command id="add-bookmark-before-folder" tabindex="-1">
+    <command id="add-bookmark-after-folder" tabindex="-1">
+    <hr id="folder-context-menu-sep4">
+    <command id="add-folder-before-folder" tabindex="-1">
+    <command id="add-folder-after-folder" tabindex="-1">
+    <hr id="folder-context-menu-sep5">
+    <command id="add-folder-separator" tabindex="-1">
     <hr id="folder-context-menu-sep6">
     <command id="folder-edit" tabindex="-1">
     <command id="folder-delete" tabindex="-1">
@@ -102,6 +103,8 @@
     </form>
 </div>
 <script src="neatools.js"></script>
+<script type="module" src="legacy-bridge.js"></script>
 <script src="popup.js"></script>
 <script src="sync-manager.js"></script>
 <script src="neat.js"></script>
+<script type="module" src="src/integration-test.js"></script>

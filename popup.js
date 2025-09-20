@@ -19,5 +19,24 @@
             document.body.style.width = `${localStorage.popupWidth}px`;
         }
 
+        // Setup donation close button
+        const donationClose = document.getElementById('donation-close');
+        const donationDiv = document.getElementById('donation');
+        if (donationClose && donationDiv) {
+            donationClose.addEventListener('click', () => {
+                donationDiv.style.display = 'none';
+                // Optionally save preference to localStorage
+                localStorage.donationDismissed = 'true';
+            });
+        }
+
+        // Check if donation was previously dismissed
+        if (localStorage.donationDismissed === 'true') {
+            const donationDiv = document.getElementById('donation');
+            if (donationDiv) {
+                donationDiv.style.display = 'none';
+            }
+        }
+
     });
 })(window);

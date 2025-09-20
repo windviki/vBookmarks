@@ -168,6 +168,37 @@ body.linux input {
     outline: thin dotted;
 }
 
+.donation-close {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donation-close:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.donation-close:active {
+    color: #000;
+    background: rgba(0, 0, 0, 0.2);
+}
+
 #results,
 #tree {
     background-color: #f8f9fa;
@@ -254,12 +285,22 @@ body.linux input {
 #tree ul li span img {
     margin-top: -2px;
     vertical-align: middle;
-    margin-__MSG_@@bidi_end_edge__: 4px;
+    margin-right: 4px;
+    margin-left: 0;
 }
 
+/* Bookmarks (URLs) should have consistent left margin */
 #results ul li a img,
 #tree ul li a img {
-    margin-__MSG_@@bidi_start_edge__: 16px;
+    margin-left: 16px;
+    margin-right: 4px;
+}
+
+/* Folders and spans should have no left margin */
+#results ul li span img,
+#tree ul li span img {
+    margin-left: 0;
+    margin-right: 4px;
 }
 
 #results ul li i,
