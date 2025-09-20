@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for:*)",
+      "Bash(do echo:*)",
+      "Bash(if:*)",
+      "Bash(fi:*)",
+      "Bash(done)",
+      "Bash(then echo \"✓ Created\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
