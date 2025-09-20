@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Barrierefreiheit"
+  },
+  "addBookmarkAfter": {
+    "message": "Aktuellen Tab danach hinzufügen"
+  },
+  "addBookmarkBefore": {
+    "message": "Aktuellen Tab davor hinzufügen"
+  },
+  "addBookmarkBottom": {
+    "message": "Aktuellen Tab am Ende davon hinzufügen"
+  },
+  "addBookmarkTop": {
+    "message": "Aktuellen Tab am Anfang davon hinzufügen"
+  },
+  "addNewFolder": {
+    "message": "Unterordner hinzufügen"
+  },
+  "addNewFolderAfter": {
+    "message": "Ordner danach hinzufügen"
+  },
+  "addNewFolderBefore": {
+    "message": "Ordner davor hinzufügen"
+  },
+  "addSeparator": {
+    "message": "Trennzeichen hinzufügen"
+  },
+  "advancedOptions": {
+    "message": "Erweiterte Optionen"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Möchten Sie wirklich den Ordner $folderName$ und $bookmarkCount$ Lesezeichen darin löschen?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Möchten Sie wirklich den Ordner $folderName$ und $subFolderCount$ Unterordner darin löschen?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Möchten Sie wirklich den Ordner $folderName$, $subFolderCount$ Unterordner und $bookmarkCount$ Lesezeichen darin löschen?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Bestätigungsnachricht zum Öffnen aller Lesezeichen.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen öffnen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Bestätigungsnachricht zum Öffnen aller Lesezeichen in einem neuen Inkognito-Fenster.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Inkognito-Fenster öffnen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Bestätigungsnachricht zum Öffnen aller Lesezeichen in einem neuen Fenster.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Fenster öffnen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Alle Titel und URLs in die Zwischenablage kopieren"
+  },
+  "copyTitleAndUrl": {
+    "message": "Titel und URL in die Zwischenablage kopieren"
+  },
+  "customIcon": {
+    "message": "Benutzerdefiniertes Symbol"
+  },
+  "customIconDescription": {
+    "message": "Das Symbol muss 19*19 Pixel groß sein. Andernfalls wird es auf diese Größe skaliert."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Trennzeichenfarbe anpassen"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Der eigentliche Titel des Lesezeichens, das als Trennzeichen angezeigt wird"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Die eigentliche URL des Lesezeichens, das als Trennzeichen angezeigt wird"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Wenn die URL eines Lesezeichens diese Zeichenfolge enthält, wird es als Trennzeichen angezeigt"
+  },
+  "customStyles": {
+    "message": "Benutzerdefinierte Stile"
+  },
+  "customStylesDescription": {
+    "message": "Dies erfordert einige CSS-Kenntnisse. Ändern Sie auf eigenes Risiko. Es wäre klug, Code über"
+  },
+  "defaultIconButton": {
+    "message": "Standard verwenden"
+  },
+  "defaultIconButtonOr": {
+    "message": "oder"
+  },
+  "delete": {
+    "message": "Löschen"
+  },
+  "deleteEllipsis": {
+    "message": "Löschen..."
+  },
+  "versionMessage": {
+    "message": "Dies ist das neue VBM $versionNumber$! Änderungsprotokoll finden Sie hier: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Wenn es Ihnen gefällt, könnten Sie vielleicht für die zukünftige Entwicklung spenden. Jeder Betrag ist willkommen."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Verwerfen"
+  },
+  "edit": {
+    "message": "Bearbeiten..."
+  },
+  "editBookmark": {
+    "message": "Lesezeichen bearbeiten"
+  },
+  "editFolder": {
+    "message": "Ordner bearbeiten"
+  },
+  "errorOccured": {
+    "message": "Oops, ein Fehler ist aufgetreten."
+  },
+  "extDesc": {
+    "description": "Die Erweiterungsbeschreibung.",
+    "message": "Ein Popup-Lesezeichen-Manager. Verbesserte Neat Bookmarks. Ordentlicher als Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Allgemein"
+  },
+  "ignore": {
+    "message": "Ignorieren"
+  },
+  "name": {
+    "description": "Name des Lesezeichens oder Ordners.",
+    "message": "Name"
+  },
+  "nope": {
+    "message": "Nein"
+  },
+  "noTitle": {
+    "description": "Der Titel für unbenannte Lesezeichen ohne http(s)-URL oder unbenannte Ordner.",
+    "message": "(kein Titel)"
+  },
+  "open": {
+    "description": "Aktion zum Öffnen von Lesezeichen.",
+    "message": "Öffnen"
+  },
+  "openBookmarks": {
+    "message": "Alle Lesezeichen öffnen"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Alle Lesezeichen in Inkognito-Fenster öffnen"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Alle Lesezeichen in neuem Fenster öffnen"
+  },
+  "openIncognitoWindow": {
+    "message": "In Inkognito-Fenster öffnen"
+  },
+  "openNewTab": {
+    "message": "In neuem Tab öffnen"
+  },
+  "openNewWindow": {
+    "message": "In neuem Fenster öffnen"
+  },
+  "optionClickNewTab": {
+    "message": "Linksklick öffnet Lesezeichen in neuem Tab."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Ungenutzte Ordner beim Öffnen eines Ordners schließen."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Nur Lesezeichen in Lesezeichenleiste anzeigen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"
+  },
+  "optionOpenNewTab": {
+    "message": "Mittelklick oder Strg-Klick öffnet Lesezeichen in neuem Hintergrund-Tab (statt Vordergrund)."
+  },
+  "optionPopupStays": {
+    "message": "Popup bleibt beim Öffnen (Linksklick) von Lesezeichen offen."
+  },
+  "optionRememberPrevState": {
+    "message": "Vorherigen Zustand merken (Scroll-Position und geöffnete Ordner)."
+  },
+  "options": {
+    "message": "Optionen"
+  },
+  "optionsFooterText": {
+    "description": "Fußzeilentext für die Optionsseite",
+    "message": "Erstellt von $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Übergeordneter Ordner in Informationen, die im Tooltip der Lesezeichen in der Suchergebnisliste angezeigt werden.",
+    "message": "Übergeordneter Ordner: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Lesezeichenleiste"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Trennzeichen entfernen"
+  },
+  "replaceUrl": {
+    "message": "Dies durch aktuelle URL ersetzen"
+  },
+  "reportedToDeveloper": {
+    "description": "Eine Nachricht für einen in der Erweiterung aufgetretenen Fehler, wurde dem Entwickler gemeldet.",
+    "message": "Dies wurde dem Entwickler gemeldet."
+  },
+  "reportError": {
+    "message": "Fehler melden"
+  },
+  "resetButton": {
+    "message": "Zurücksetzen"
+  },
+  "resetSettings": {
+    "message": "Einstellungen zurücksetzen"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks auf Standardeinstellungen zurücksetzen."
+  },
+  "save": {
+    "message": "Speichern"
+  },
+  "searchBookmarks": {
+    "description": "Platzhaltertext für Suchfeld.",
+    "message": "Lesezeichen durchsuchen"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

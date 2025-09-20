@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Aksesibilitas"
+  },
+  "addBookmarkAfter": {
+    "message": "Markah Tab Saat Ini Setelah Ini"
+  },
+  "addBookmarkBefore": {
+    "message": "Markah Tab Saat Ini Sebelum Ini"
+  },
+  "addBookmarkBottom": {
+    "message": "Markah Tab Saat Ini Ke Dasar Ini"
+  },
+  "addBookmarkTop": {
+    "message": "Markah Tab Saat Ini Ke Atas Ini"
+  },
+  "addNewFolder": {
+    "message": "Tambah Sub Folder"
+  },
+  "addNewFolderAfter": {
+    "message": "Tambah Folder Setelah Ini"
+  },
+  "addNewFolderBefore": {
+    "message": "Tambah Folder Sebelum Ini"
+  },
+  "addSeparator": {
+    "message": "Tambah Pemisah"
+  },
+  "advancedOptions": {
+    "message": "Opsi Lanjutan"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $bookmarkCount$ markah di dalamnya?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $subFolderCount$ sub-folder di dalamnya?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Apakah Anda yakin ingin menghapus folder $folderName$, $subFolderCount$ sub-folder dan $bookmarkCount$ markah di dalamnya?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Apakah Anda yakin ingin membuka semua $count$ markah?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela penyamaran baru?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela baru?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Salin semua judul dan URL ke clipboard"
+  },
+  "copyTitleAndUrl": {
+    "message": "Salin judul dan URL ke clipboard"
+  },
+  "customIcon": {
+    "message": "Ikon kustom"
+  },
+  "customIconDescription": {
+    "message": "Ikon harus berukuran 19x19 piksel. Jika tidak akan diubah ukurannya menjadi ukuran ini."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Kustomisasi Warna Pemisah"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Judul asli dari markah yang ditampilkan sebagai pemisah"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL asli dari markah yang ditampilkan sebagai pemisah"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jika URL dari markah berisi string ini, akan ditampilkan sebagai pemisah"
+  },
+  "customStyles": {
+    "message": "Gaya Kustom"
+  },
+  "customStylesDescription": {
+    "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
+  },
+  "defaultIconButton": {
+    "message": "Gunakan default"
+  },
+  "defaultIconButtonOr": {
+    "message": "atau"
+  },
+  "delete": {
+    "message": "Hapus"
+  },
+  "deleteEllipsis": {
+    "message": "Hapus..."
+  },
+  "versionMessage": {
+    "message": "Ini adalah VBM $versionNumber$ baru! Log perubahan ada di sini: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Jika Anda menyukainya, mungkin Anda bisa menyumbang untuk pengembangan di masa depan. Jumlah berapa pun disambut baik."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Tutup"
+  },
+  "edit": {
+    "message": "Edit..."
+  },
+  "editBookmark": {
+    "message": "Edit markah"
+  },
+  "editFolder": {
+    "message": "Edit folder"
+  },
+  "errorOccured": {
+    "message": "Ups, terjadi kesalahan."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Manajer markah popup. Neat Bookmarks yang ditingkatkan. Lebih rapi dari Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Umum"
+  },
+  "ignore": {
+    "message": "Abaikan"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nama"
+  },
+  "nope": {
+    "message": "Tidak"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(tanpa judul)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Buka"
+  },
+  "openBookmarks": {
+    "message": "Buka Semua Markah"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Buka Semua Markah di Jendela Penyamaran"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Buka Semua Markah di Jendela Baru"
+  },
+  "openIncognitoWindow": {
+    "message": "Buka di Jendela Penyamaran"
+  },
+  "openNewTab": {
+    "message": "Buka di Tab Baru"
+  },
+  "openNewWindow": {
+    "message": "Buka di Jendela Baru"
+  },
+  "optionClickNewTab": {
+    "message": "Klik kiri membuka markah di tab baru."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Tutup folder yang tidak digunakan saat membuka folder."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Hanya tampilkan markah di Bilah Markah"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
+  },
+  "optionOpenNewTab": {
+    "message": "Klik tengah atau control-klik membuka markah di tab latar belakang baru (bukan latar depan)."
+  },
+  "optionPopupStays": {
+    "message": "Popup tetap terbuka saat membuka (klik kiri) markah."
+  },
+  "optionRememberPrevState": {
+    "message": "Ingat keadaan sebelumnya (posisi gulir dan folder yang dibuka)."
+  },
+  "options": {
+    "message": "Opsi"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Dibangun oleh $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Perbesar"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Folder induk: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Hapus Pemisah"
+  },
+  "replaceUrl": {
+    "message": "Ganti ini dengan URL saat ini"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ini telah dilaporkan ke pengembang."
+  },
+  "reportError": {
+    "message": "Laporkan Kesalahan"
+  },
+  "resetButton": {
+    "message": "Reset"
+  },
+  "resetSettings": {
+    "message": "Reset pengaturan"
+  },
+  "resetSettingsDescription": {
+    "message": "Reset vBookmarks ke pengaturan default."
+  },
+  "save": {
+    "message": "Simpan"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Cari Markah"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

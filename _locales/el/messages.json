@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Προσβασιμότητα"
+  },
+  "addBookmarkAfter": {
+    "message": "Επισήμανση τρέχουσας καρτέλας μετά από αυτό"
+  },
+  "addBookmarkBefore": {
+    "message": "Επισήμανση τρέχουσας καρτέλας πριν από αυτό"
+  },
+  "addBookmarkBottom": {
+    "message": "Επισήμανση τρέχουσας καρτέλας στο τέλος αυτού"
+  },
+  "addBookmarkTop": {
+    "message": "Επισήμανση τρέχουσας καρτέλας στην αρχή αυτού"
+  },
+  "addNewFolder": {
+    "message": "Προσθήκη υποφακέλου"
+  },
+  "addNewFolderAfter": {
+    "message": "Προσθήκη φακέλου μετά από αυτό"
+  },
+  "addNewFolderBefore": {
+    "message": "Προσθήκη φακέλου πριν από αυτό"
+  },
+  "addSeparator": {
+    "message": "Προσθήκη διαχωριστικού"
+  },
+  "advancedOptions": {
+    "message": "Προχωρημένες Επιλογές"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $bookmarkCount$ σελιδοδείκτες σε αυτόν;",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $subFolderCount$ υποφακέλους σε αυτόν;",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$, $subFolderCount$ υποφακέλους και $bookmarkCount$ σελιδοδείκτες σε αυτόν;",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Είστε σίγουροι ότι θέλετε να ανοίξετε όλους τους $count$ σελιδοδείκτες;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Είστε σίγουροι ότι θέλετε να ανοίξετε όλους τους $count$ σελιδοδείκτες σε νέο παράθυρο ανώνυμης περιήγησης;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Είστε σίγουροι ότι θέλετε να ανοίξετε όλους τους $count$ σελιδοδείκτες σε νέο παράθυρο;",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Αντιγραφή όλων των τίτλων και URLs στο clipboard"
+  },
+  "copyTitleAndUrl": {
+    "message": "Αντιγραφή τίτλου και URL στο clipboard"
+  },
+  "customIcon": {
+    "message": "Προσαρμοσμένο εικονίδιο"
+  },
+  "customIconDescription": {
+    "message": "Το εικονίδιο πρέπει να έχει διαστάσεις 19x19 pixel. Διαφορετικά θα αλλάξει μέγεθος σε αυτές τις διαστάσεις."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Προσαρμογή Χρώματος Διαχωριστικού"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Ο πραγματικός τίτλος του σελιδοδείκτη που εμφανίζεται ως διαχωριστικό"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Το πραγματικό URL του σελιδοδείκτη που εμφανίζεται ως διαχωριστικό"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Αν το URL ενός σελιδοδείκτη περιέχει αυτό το string, θα εμφανιστεί ως διαχωριστικό"
+  },
+  "customStyles": {
+    "message": "Προσαρμοσμένα Στυλ"
+  },
+  "customStylesDescription": {
+    "message": "Αυτό απαιτεί κάποιες γνώσεις CSS. Τροποποιήστε με δική σας ευθύνη. Η κοινή χρήση κώδικα θα ήταν σοφή μέσω"
+  },
+  "defaultIconButton": {
+    "message": "Χρήση προεπιλογής"
+  },
+  "defaultIconButtonOr": {
+    "message": "ή"
+  },
+  "delete": {
+    "message": "Διαγραφή"
+  },
+  "deleteEllipsis": {
+    "message": "Διαγραφή..."
+  },
+  "versionMessage": {
+    "message": "Αυτό είναι το νέο VBM $versionNumber$! Το changelog είναι εδώ: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Αν σας αρέσει, ίσως μπορείτε να κάνετε μια δωρεά για μελλοντική ανάπτυξη. Κάθε ποσό είναι ευπρόσδεκτο."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Αγνόηση"
+  },
+  "edit": {
+    "message": "Επεξεργασία..."
+  },
+  "editBookmark": {
+    "message": "Επεξεργασία σελιδοδείκτη"
+  },
+  "editFolder": {
+    "message": "Επεξεργασία φακέλου"
+  },
+  "errorOccured": {
+    "message": "Ωχ, συνέβη ένα σφάλμα."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Ένας popup διαχειριστής σελιδοδείκτων. Βελτιωμένο Neat Bookmarks. Πιο τακτοποιημένο από το Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Γενικά"
+  },
+  "ignore": {
+    "message": "Αγνόηση"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Όνομα"
+  },
+  "nope": {
+    "message": "Όχι"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(χωρίς τίτλο)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Άνοιγμα"
+  },
+  "openBookmarks": {
+    "message": "Άνοιγμα Όλων των Σελιδοδεικτών"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Άνοιγμα Όλων των Σελιδοδεικτών σε Παράθυρο Ανώνυμης Περιήγησης"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Άνοιγμα Όλων των Σελιδοδεικτών σε Νέο Παράθυρο"
+  },
+  "openIncognitoWindow": {
+    "message": "Άνοιγμα σε Παράθυρο Ανώνυμης Περιήγησης"
+  },
+  "openNewTab": {
+    "message": "Άνοιγμα σε Νέα Καρτέλα"
+  },
+  "openNewWindow": {
+    "message": "Άνοιγμα σε Νέο Παράθυρο"
+  },
+  "optionClickNewTab": {
+    "message": "Αριστερό κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Κλείσιμο μη χρησιμοποιούμενων φακέλων κατά το άνοιγμα φακέλου."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Εμφάνιση μόνο σελιδοδεικτών στη Γραμμή Σελιδοδεικτών"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Αναζήτηση σελιδοδεικτών μόνο όταν πατηθεί το ENTER (αντί για άμεση αναζήτηση)"
+  },
+  "optionOpenNewTab": {
+    "message": "Μέσο κλικ ή control-κλικ ανοίγει σελιδοδείκτη σε νέα καρτέλα παρασκηνίου (αντί για προσκήνιο)."
+  },
+  "optionPopupStays": {
+    "message": "Το popup παραμένει ανοιχτό κατά το άνοιγμα (αριστερό κλικ) σελιδοδεικτών."
+  },
+  "optionRememberPrevState": {
+    "message": "Απομνημόνευση προηγούμενης κατάστασης (θέση κύλισης και ανοιχτοί φάκελοι)."
+  },
+  "options": {
+    "message": "Επιλογές"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Δημιουργήθηκε από $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Μεγέθυνση"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Γονικός φάκελος: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Αφαίρεση Διαχωριστικού"
+  },
+  "replaceUrl": {
+    "message": "Αντικατάσταση αυτού με τρέχον URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Αυτό έχει αναφερθεί στον προγραμματιστή."
+  },
+  "reportError": {
+    "message": "Αναφορά Σφάλματος"
+  },
+  "resetButton": {
+    "message": "Επαναφορά"
+  },
+  "resetSettings": {
+    "message": "Επαναφορά ρυθμίσεων"
+  },
+  "resetSettingsDescription": {
+    "message": "Επαναφορά του vBookmarks στις προεπιλεγμένες ρυθμίσεις."
+  },
+  "save": {
+    "message": "Αποθήκευση"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Αναζήτηση Σελιδοδεικτών"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

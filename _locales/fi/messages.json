@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Saavutettavuus"
+  },
+  "addBookmarkAfter": {
+    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Jälkeen"
+  },
+  "addBookmarkBefore": {
+    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Edelle"
+  },
+  "addBookmarkBottom": {
+    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Alareunaan"
+  },
+  "addBookmarkTop": {
+    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Yläreunaan"
+  },
+  "addNewFolder": {
+    "message": "Lisää Alikansio"
+  },
+  "addNewFolderAfter": {
+    "message": "Lisää Kansio Tämän Jälkeen"
+  },
+  "addNewFolderBefore": {
+    "message": "Lisää Kansio Tämän Edelle"
+  },
+  "addSeparator": {
+    "message": "Lisää Erotin"
+  },
+  "advancedOptions": {
+    "message": "Lisäasetukset"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $bookmarkCount$ kirjanmerkkiä?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $subFolderCount$ alikansiota?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Haluatko varmasti poistaa $folderName$-kansion, sen sisällä olevat $subFolderCount$ alikansiota ja $bookmarkCount$ kirjanmerkkiä?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Haluatko varmasti avata kaikki $count$ kirjanmerkkiä?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Haluatko varmasti avata kaikki $count$ kirjanmerkkiä uudessa incognito-ikkunassa?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Haluatko varmasti avata kaikki $count$ kirjanmerkkiä uudessa ikkunassa?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopioi kaikki otsikot ja URL-osoitteet leikepöydälle"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopioi otsikko ja URL-osoite leikepöydälle"
+  },
+  "customIcon": {
+    "message": "Mukautettu kuvake"
+  },
+  "customIconDescription": {
+    "message": "Kuvakkeen on oltava 19x19 pikselin kokoinen. Muuten se skaalataan tähän kokoon."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Mukauta Erottimen Väriä"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Kirjanmerkin todellinen otsikko, joka näytetään erottimena"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Kirjanmerkin todellinen URL-osoite, joka näytetään erottimena"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jos kirjanmerkin URL-osoite sisältää tämän merkkijonon, se näytetään erottimena"
+  },
+  "customStyles": {
+    "message": "Mukautetut Tyylit"
+  },
+  "customStylesDescription": {
+    "message": "Tämä vaatii CSS-taitoja. Muokkaa omalla vastuullasi. Koodin jakaminen olisi viisasta tehdä kautta"
+  },
+  "defaultIconButton": {
+    "message": "Käytä oletusta"
+  },
+  "defaultIconButtonOr": {
+    "message": "tai"
+  },
+  "delete": {
+    "message": "Poista"
+  },
+  "deleteEllipsis": {
+    "message": "Poista..."
+  },
+  "versionMessage": {
+    "message": "Tämä on uusi VBM $versionNumber$! Muutosloki on täällä: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Jos pidät siitä, ehkä voit lahjoittaa tulevaa kehitystä varten. Mikä tahansa summa on tervetullutta."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Hylkää"
+  },
+  "edit": {
+    "message": "Muokkaa..."
+  },
+  "editBookmark": {
+    "message": "Muokkaa kirjanmerkkiä"
+  },
+  "editFolder": {
+    "message": "Muokkaa kansiota"
+  },
+  "errorOccured": {
+    "message": "Hups, tapahtui virhe."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Ponnahdusikkuna-kirjanmerkkienhallinta. Paranneltu Neat Bookmarks. Siistimpi kuin Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Yleinen"
+  },
+  "ignore": {
+    "message": "Ohita"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nimi"
+  },
+  "nope": {
+    "message": "Ei"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ei otsikkoa)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Avaa"
+  },
+  "openBookmarks": {
+    "message": "Avaa Kaikki Kirjanmerkit"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Avaa Kaikki Kirjanmerkit Incognito-ikkunassa"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Avaa Kaikki Kirjanmerkit Uudessa Ikkunassa"
+  },
+  "openIncognitoWindow": {
+    "message": "Avaa Incognito-ikkunassa"
+  },
+  "openNewTab": {
+    "message": "Avaa Uudessa Välilehdessä"
+  },
+  "openNewWindow": {
+    "message": "Avaa Uudessa Ikkunassa"
+  },
+  "optionClickNewTab": {
+    "message": "Vasen klikkaus avaa kirjanmerkin uudessa välilehdessä."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Sulje käyttämättömät kansiot, kun kansio avataan."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Näytä vain kirjanmerkit Kirjanmerkkipalkissa"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"
+  },
+  "optionOpenNewTab": {
+    "message": "Keskellä klikkaus tai control-klikkaus avaa kirjanmerkin uudessa taustavälilehdessä (sen sijaan että avaisi etuvälilehdessä)."
+  },
+  "optionPopupStays": {
+    "message": "Ponnahdusikkuna pysyy auki, kun kirjanmerkkejä avataan (vasen klikkaus)."
+  },
+  "optionRememberPrevState": {
+    "message": "Muista edellinen tila (vieritysasetus ja avatut kansiot)."
+  },
+  "options": {
+    "message": "Asetukset"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Luonut $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoomaus"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Yläkansio: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Poista Erotin"
+  },
+  "replaceUrl": {
+    "message": "Korvaa tämä nykyisellä URL-osoitteella"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Tämä on raportoitu kehittäjälle."
+  },
+  "reportError": {
+    "message": "Raportoi Virheestä"
+  },
+  "resetButton": {
+    "message": "Nollaa"
+  },
+  "resetSettings": {
+    "message": "Nollaa asetukset"
+  },
+  "resetSettingsDescription": {
+    "message": "Nollaa vBookmarks oletusasetuksiin."
+  },
+  "save": {
+    "message": "Tallenna"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Etsi Kirjanmerkkejä"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

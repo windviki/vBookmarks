@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "دسترسی‌پذیری"
+  },
+  "addBookmarkAfter": {
+    "message": "اضافه کردن تب فعلی بعد از این"
+  },
+  "addBookmarkBefore": {
+    "message": "اضافه کردن تب فعلی قبل از این"
+  },
+  "addBookmarkBottom": {
+    "message": "اضافه کردن تب فعلی به پایین این"
+  },
+  "addBookmarkTop": {
+    "message": "اضافه کردن تب فعلی به بالای این"
+  },
+  "addNewFolder": {
+    "message": "اضافه کردن زیرپوشه"
+  },
+  "addNewFolderAfter": {
+    "message": "اضافه کردن پوشه بعد از این"
+  },
+  "addNewFolderBefore": {
+    "message": "اضافه کردن پوشه قبل از این"
+  },
+  "addSeparator": {
+    "message": "اضافه کردن جداکننده"
+  },
+  "advancedOptions": {
+    "message": "گزینه‌های پیشرفته"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $subFolderCount$ زیرپوشه(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$، $subFolderCount$ زیرپوشه(ها) و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "پیام تأیید برای باز کردن همه نشانک‌ها.",
+    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را باز کنید؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "پیام تأیید برای باز کردن همه نشانک‌ها در پنجره ناشناس جدید.",
+    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را در پنجره ناشناس جدید باز کنید؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "پیام تأیید برای باز کردن همه نشانک‌ها در پنجره جدید.",
+    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را در پنجره جدید باز کنید؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "کپی همه عناوین و URLها در کلیپ‌بورد"
+  },
+  "copyTitleAndUrl": {
+    "message": "کپی عنوان و URL در کلیپ‌بورد"
+  },
+  "customIcon": {
+    "message": "آیکون سفارشی"
+  },
+  "customIconDescription": {
+    "message": "آیکون باید ابعاد 19*19 پیکسل داشته باشد. در غیر این صورت به این اندازه تغییر اندازه داده خواهد شد."
+  },
+  "customSeparatorColorDescription": {
+    "message": "شخصی‌سازی رنگ جداکننده"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "عنوان واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
+  },
+  "customSeparatorStringDescription": {
+    "message": "اگر URL یک نشانک شامل این رشته باشد، به عنوان جداکننده نمایش داده خواهد شد"
+  },
+  "customStyles": {
+    "message": "استایل‌های سفارشی"
+  },
+  "customStylesDescription": {
+    "message": "این به برخی مهارت‌های CSS نیاز دارد. به عهده خودتان هک کنید. اشتراک‌گذاری کد از طریق هوشمندانه خواهد بود"
+  },
+  "defaultIconButton": {
+    "message": "استفاده از پیش‌فرض"
+  },
+  "defaultIconButtonOr": {
+    "message": "یا"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "deleteEllipsis": {
+    "message": "حذف..."
+  },
+  "versionMessage": {
+    "message": "این VBM جدید $versionNumber$ است! لیست تغییرات اینجاست: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "اگر خوشتان آمد، شاید بتوانید برای توسعه آینده آن کمک مالی کنید. هر مبلغی خوشآمدگویی است."
+  },
+  "donationGo": {
+    "message": "تأیید"
+  },
+  "donationDismiss": {
+    "message": "رد کردن"
+  },
+  "edit": {
+    "message": "ویرایش..."
+  },
+  "editBookmark": {
+    "message": "ویرایش نشانک"
+  },
+  "editFolder": {
+    "message": "ویرایش پوشه"
+  },
+  "errorOccured": {
+    "message": "اوپس، خطایی رخ داد."
+  },
+  "extDesc": {
+    "description": "توضیحات افزونه.",
+    "message": "مدیر نشانک پاپ‌آپ. Neat Bookmarks بهبود یافته. مرتب‌تر از Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "عمومی"
+  },
+  "ignore": {
+    "message": "نادیده گرفتن"
+  },
+  "name": {
+    "description": "نام نشانک یا پوشه.",
+    "message": "نام"
+  },
+  "nope": {
+    "message": "نه"
+  },
+  "noTitle": {
+    "description": "عنوان برای نشانک‌های بدون عنوان بدون URL http(s) یا پوشه‌های بدون عنوان.",
+    "message": "(بدون عنوان)"
+  },
+  "open": {
+    "description": "عملکرد برای باز کردن نشانک‌ها.",
+    "message": "باز کردن"
+  },
+  "openBookmarks": {
+    "message": "باز کردن همه نشانک‌ها"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
+  },
+  "openBookmarksNewWindow": {
+    "message": "باز کردن همه نشانک‌ها در پنجره جدید"
+  },
+  "openIncognitoWindow": {
+    "message": "باز کردن در پنجره ناشناس"
+  },
+  "openNewTab": {
+    "message": "باز کردن در تب جدید"
+  },
+  "openNewWindow": {
+    "message": "باز کردن در پنجره جدید"
+  },
+  "optionClickNewTab": {
+    "message": "کلیک چپ نشانک را در تب جدید باز می‌کند."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "بستن پوشه‌های استفاده نشده هنگام باز کردن پوشه."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "فقط نشانک‌های نوار نشانک‌ها را نشان بده"
+  },
+  "optionSearchAfterEnter": {
+    "message": "جستجوی نشانک‌ها فقط زمانی که ENTER فشار داده می‌شود (به جای جستجوی فوری)"
+  },
+  "optionOpenNewTab": {
+    "message": "کلیک وسط یا کنترل-کلیک نشانک را در تب پس‌زمینه جدید باز می‌کند (به جای پیش‌زمینه)."
+  },
+  "optionPopupStays": {
+    "message": "پاپ‌آپ هنگام باز کردن (کلیک چپ) نشانک‌ها باز می‌ماند."
+  },
+  "optionRememberPrevState": {
+    "message": "به خاطر سپردن وضعیت قبلی (موقعیت اسکرول و پوشه‌های باز)."
+  },
+  "options": {
+    "message": "گزینه‌ها"
+  },
+  "optionsFooterText": {
+    "description": "متن پاورقی برای صفحه گزینه‌ها",
+    "message": "ساخته شده توسط $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "بزرگنمایی"
+  },
+  "parentFolder": {
+    "description": "پوشه والد در اطلاعاتی که در توولتیپ نشانک‌ها در لیست نتایج جستجو نمایش داده می‌شود.",
+    "message": "پوشه والد: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "نوار نشانک‌ها"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "حذف جداکننده"
+  },
+  "replaceUrl": {
+    "message": "جایگزینی این با URL فعلی"
+  },
+  "reportedToDeveloper": {
+    "description": "پیامی برای خطایی رخ داده در افزونه، به توسعه‌دهنده گزارش شده است.",
+    "message": "این به توسعه‌دهنده گزارش شده است."
+  },
+  "reportError": {
+    "message": "گزارش خطا"
+  },
+  "resetButton": {
+    "message": "بازنشانی"
+  },
+  "resetSettings": {
+    "message": "بازنشانی تنظیمات"
+  },
+  "resetSettingsDescription": {
+    "message": "بازنشانی vBookmarks به تنظیمات پیش‌فرض."
+  },
+  "save": {
+    "message": "ذخیره"
+  },
+  "searchBookmarks": {
+    "description": "متن نگهدارنده برای فیلد جستجو.",
+    "message": "جستجوی نشانک‌ها"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

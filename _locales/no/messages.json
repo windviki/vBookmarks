@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Tilgjengelighet"
+  },
+  "addBookmarkAfter": {
+    "message": "Bokmerk Gjeldende Fane Etter Dette"
+  },
+  "addBookmarkBefore": {
+    "message": "Bokmerk Gjeldende Fane Før Dette"
+  },
+  "addBookmarkBottom": {
+    "message": "Bokmerk Gjeldende Fane Til Bunnen Av Dette"
+  },
+  "addBookmarkTop": {
+    "message": "Bokmerk Gjeldende Fane Til Toppen Av Dette"
+  },
+  "addNewFolder": {
+    "message": "Legg Til Undermappe"
+  },
+  "addNewFolderAfter": {
+    "message": "Legg Til Mappe Etter Dette"
+  },
+  "addNewFolderBefore": {
+    "message": "Legg Til Mappe Før Dette"
+  },
+  "addSeparator": {
+    "message": "Legg Til Skillelinje"
+  },
+  "advancedOptions": {
+    "message": "Avanserte Alternativer"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Er du sikker på at du vil slette mappen $folderName$ og $bookmarkCount$ bokmerke(r) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Er du sikker på at du vil slette mappen $folderName$ og $subFolderCount$ undermappe(r) i den?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Er du sikker på at du vil slette mappen $folderName$, $subFolderCount$ undermappe(r) og $bookmarkCount$ bokmerke(r) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt inkognitovindu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt vindu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopier alle titler og URL-er til utklippstavlen"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopier tittel og URL til utklippstavlen"
+  },
+  "customIcon": {
+    "message": "Egendefinert ikon"
+  },
+  "customIconDescription": {
+    "message": "Ikonet må være i 19x19 piksler. Ellers vil det bli endret til denne størrelsen."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tilpass Skillelinjefarge"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Den virkelige tittelen til bokmerket som vises som en skillelinje"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Den virkelige URL-en til bokmerket som vises som en skillelinje"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Hvis URL-en til et bokmerke inneholder denne strengen, vil det vises som en skillelinje"
+  },
+  "customStyles": {
+    "message": "Egendefinerte Stiler"
+  },
+  "customStylesDescription": {
+    "message": "Dette krever noen CSS-kunnskaper. Endre på egen risiko. Kodedeling vil være lurt gjort via"
+  },
+  "defaultIconButton": {
+    "message": "Bruk standard"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "delete": {
+    "message": "Slett"
+  },
+  "deleteEllipsis": {
+    "message": "Slett..."
+  },
+  "versionMessage": {
+    "message": "Dette er nytt VBM $versionNumber$! Endringslogg er her: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Hvis du liker det, kanskje du kan donere for fremtidig utvikling. Ethvert beløp er velkomment."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Avvis"
+  },
+  "edit": {
+    "message": "Rediger..."
+  },
+  "editBookmark": {
+    "message": "Rediger bokmerke"
+  },
+  "editFolder": {
+    "message": "Rediger mappe"
+  },
+  "errorOccured": {
+    "message": "Oops, en feil oppstod."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "En popup bokmerkebehandler. Forbedret Neat Bookmarks. Penere enn Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Generelt"
+  },
+  "ignore": {
+    "message": "Ignorer"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Navn"
+  },
+  "nope": {
+    "message": "Nei"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ingen tittel)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Åpne"
+  },
+  "openBookmarks": {
+    "message": "Åpne Alle Bokmerker"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Åpne Alle Bokmerker i Inkognitovindu"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Åpne Alle Bokmerker i Nytt Vindu"
+  },
+  "openIncognitoWindow": {
+    "message": "Åpne i Inkognitovindu"
+  },
+  "openNewTab": {
+    "message": "Åpne i Ny Fane"
+  },
+  "openNewWindow": {
+    "message": "Åpne i Nytt Vindu"
+  },
+  "optionClickNewTab": {
+    "message": "Venstreklikk åpner bokmerke i ny fane."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Lukk ubrukte mapper når du åpner en mappe."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Vis bekreftelse når du åpner mange bokmerker fra en mappe."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Vis kun bokmerker i Bokmerkefeltet"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"
+  },
+  "optionOpenNewTab": {
+    "message": "Midtklikk eller control-klikk åpner bokmerke i ny bakgrunnsfane (i stedet for forgrunnsfane)."
+  },
+  "optionPopupStays": {
+    "message": "Popup forblir åpen når du åpner (venstreklikker) bokmerker."
+  },
+  "optionRememberPrevState": {
+    "message": "Husk forrige tilstand (rulleposisjon og åpne mapper)."
+  },
+  "options": {
+    "message": "Alternativer"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Bygget av $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Overordnet mappe: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Fjern Skillelinje"
+  },
+  "replaceUrl": {
+    "message": "Erstatt dette med gjeldende URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Dette har blitt rapportert til utvikleren."
+  },
+  "reportError": {
+    "message": "Rapporter Feil"
+  },
+  "resetButton": {
+    "message": "Tilbakestill"
+  },
+  "resetSettings": {
+    "message": "Tilbakestill innstillinger"
+  },
+  "resetSettingsDescription": {
+    "message": "Tilbakestill vBookmarks til standardinnstillinger."
+  },
+  "save": {
+    "message": "Lagre"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Søk Bokmerker"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "অ্যাক্সেসিবিলিটি"
+  },
+  "addBookmarkAfter": {
+    "message": "বর্তমান ট্যাব এর পরে যোগ করুন"
+  },
+  "addBookmarkBefore": {
+    "message": "বর্তমান ট্যাব এর আগে যোগ করুন"
+  },
+  "addBookmarkBottom": {
+    "message": "বর্তমান ট্যাব এর নিচে যোগ করুন"
+  },
+  "addBookmarkTop": {
+    "message": "বর্তমান ট্যাব এর উপরে যোগ করুন"
+  },
+  "addNewFolder": {
+    "message": "সাবফোল্ডার যোগ করুন"
+  },
+  "addNewFolderAfter": {
+    "message": "এর পরে ফোল্ডার যোগ করুন"
+  },
+  "addNewFolderBefore": {
+    "message": "এর আগে ফোল্ডার যোগ করুন"
+  },
+  "addSeparator": {
+    "message": "সেপারেটর যোগ করুন"
+  },
+  "advancedOptions": {
+    "message": "উন্নত অপশন"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $subFolderCount$ সাবফোল্ডার মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "আপনি কি $folderName$ ফোল্ডার, $subFolderCount$ সাবফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "সব বুকমার্ক খোলার জন্য নিশ্চিতকরণ বার্তা।",
+    "message": "আপনি কি সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "নতুন ইনকগনিটো উইন্ডোতে সব বুকমার্ক খোলার জন্য নিশ্চিতকরণ বার্তা।",
+    "message": "আপনি কি নতুন ইনকগনিটো উইন্ডোতে সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "নতুন উইন্ডোতে সব বুকমার্ক খোলার জন্য নিশ্চিতকরণ বার্তা।",
+    "message": "আপনি কি নতুন উইন্ডোতে সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "সব শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
+  },
+  "copyTitleAndUrl": {
+    "message": "শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
+  },
+  "customIcon": {
+    "message": "কাস্টম আইকন"
+  },
+  "customIconDescription": {
+    "message": "আইকনটি 19*19 পিক্সেল ডাইমেনশনের হতে হবে। অন্যথায় এটি এই ডাইমেনশনে রিসাইজ করা হবে।"
+  },
+  "customSeparatorColorDescription": {
+    "message": "সেপারেটর কাস্টমাইজ করুন"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল শিরোনাম"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল URL"
+  },
+  "customSeparatorStringDescription": {
+    "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
+  },
+  "customStyles": {
+    "message": "কাস্টম স্টাইল"
+  },
+  "customStylesDescription": {
+    "message": "এর জন্য কিছু CSS দক্ষতা প্রয়োজন। নিজের ঝুঁকিতে হ্যাক করুন। কোড শেয়ারিং করা বুদ্ধিমানের কাজ হবে"
+  },
+  "defaultIconButton": {
+    "message": "ডিফল্ট ব্যবহার করুন"
+  },
+  "defaultIconButtonOr": {
+    "message": "অথবা"
+  },
+  "delete": {
+    "message": "মুছে ফেলুন"
+  },
+  "deleteEllipsis": {
+    "message": "মুছে ফেলুন..."
+  },
+  "versionMessage": {
+    "message": "এটি নতুন VBM $versionNumber$! পরিবর্তন লগ এখানে: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "আপনি যদি এটি পছন্দ করেন, তবে হয়তো আপনি এর ভবিষ্যত উন্নয়নের জন্য দান করতে পারেন। যেকোনো পরিমাণ স্বাগত।"
+  },
+  "donationGo": {
+    "message": "ঠিক আছে"
+  },
+  "donationDismiss": {
+    "message": "বাতিল করুন"
+  },
+  "edit": {
+    "message": "সম্পাদনা..."
+  },
+  "editBookmark": {
+    "message": "বুকমার্ক সম্পাদনা করুন"
+  },
+  "editFolder": {
+    "message": "ফোল্ডার সম্পাদনা করুন"
+  },
+  "errorOccured": {
+    "message": "ওহো, একটি ত্রুটি ঘটেছে।"
+  },
+  "extDesc": {
+    "description": "এক্সটেনশনের বর্ণনা।",
+    "message": "একটি পপআপ বুকমার্ক ম্যানেজার। উন্নত Neat Bookmarks। Neater Bookmarks থেকে আরও পরিষ্কার।"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "সাধারণ"
+  },
+  "ignore": {
+    "message": "উপেক্ষা করুন"
+  },
+  "name": {
+    "description": "বুকমার্ক বা ফোল্ডারের নাম।",
+    "message": "নাম"
+  },
+  "nope": {
+    "message": "না"
+  },
+  "noTitle": {
+    "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
+    "message": "(কোনো শিরোনাম নেই)"
+  },
+  "open": {
+    "description": "বুকমার্ক খোলার ক্রিয়া।",
+    "message": "খুলুন"
+  },
+  "openBookmarks": {
+    "message": "সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksNewWindow": {
+    "message": "নতুন উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে খুলুন"
+  },
+  "openNewTab": {
+    "message": "নতুন ট্যাবে খুলুন"
+  },
+  "openNewWindow": {
+    "message": "নতুন উইন্ডোতে খুলুন"
+  },
+  "optionClickNewTab": {
+    "message": "বাম ক্লিক বুকমার্ক নতুন ট্যাবে খোলে।"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "ফোল্ডার খোলার সময় অব্যবহৃত ফোল্ডার বন্ধ করুন।"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
+  },
+  "optionSearchAfterEnter": {
+    "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
+  },
+  "optionOpenNewTab": {
+    "message": "মিডল ক্লিক বা কন্ট্রোল-ক্লিক বুকমার্ক নতুন ব্যাকগ্রাউন্ড ট্যাবে খোলে (ফোরগ্রাউন্ডের পরিবর্তে)।"
+  },
+  "optionPopupStays": {
+    "message": "বুকমার্ক খোলার সময় (বাম ক্লিক) পপআপ খোলা থাকে।"
+  },
+  "optionRememberPrevState": {
+    "message": "আগের অবস্থা মনে রাখুন (স্ক্রল অবস্থান এবং খোলা ফোল্ডার)।"
+  },
+  "options": {
+    "message": "অপশন"
+  },
+  "optionsFooterText": {
+    "description": "অপশন পেজের জন্য ফুটার টেক্সট",
+    "message": "$authorName$ দ্বারা তৈরি।",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "জুম"
+  },
+  "parentFolder": {
+    "description": "সার্চ রেজাল্ট লিস্টে বুকমার্কের টুলটিপে দেখানো তথ্যে প্যারেন্ট ফোল্ডার।",
+    "message": "প্যারেন্ট ফোল্ডার: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "বুকমার্ক বার"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "সেপারেটর সরান"
+  },
+  "replaceUrl": {
+    "message": "এটি বর্তমান URL দিয়ে প্রতিস্থাপন করুন"
+  },
+  "reportedToDeveloper": {
+    "description": "এক্সটেনশনে ঘটা একটি ত্রুটির জন্য বার্তা, ডেভেলপারকে রিপোর্ট করা হয়েছে।",
+    "message": "এটি ডেভেলপারকে রিপোর্ট করা হয়েছে।"
+  },
+  "reportError": {
+    "message": "ত্রুটি রিপোর্ট করুন"
+  },
+  "resetButton": {
+    "message": "রিসেট করুন"
+  },
+  "resetSettings": {
+    "message": "সেটিংস রিসেট করুন"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
+  },
+  "save": {
+    "message": "সংরক্ষণ করুন"
+  },
+  "searchBookmarks": {
+    "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
+    "message": "বুকমার্ক খুঁজুন"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

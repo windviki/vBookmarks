@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Juurdepääsetavus"
+  },
+  "addBookmarkAfter": {
+    "message": "Lisa praegune vahe selle järele"
+  },
+  "addBookmarkBefore": {
+    "message": "Lisa praegune vahe selle ette"
+  },
+  "addBookmarkBottom": {
+    "message": "Lisa praegune vahe selle alla"
+  },
+  "addBookmarkTop": {
+    "message": "Lisa praegune vahe selle peale"
+  },
+  "addNewFolder": {
+    "message": "Lisa alamkaust"
+  },
+  "addNewFolderAfter": {
+    "message": "Lisa kaust selle järele"
+  },
+  "addNewFolderBefore": {
+    "message": "Lisa kaust selle ette"
+  },
+  "addSeparator": {
+    "message": "Lisa eraldaja"
+  },
+  "advancedOptions": {
+    "message": "Täpsemad valikud"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $subFolderCount$ alamkausta(-d) selles?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$, $subFolderCount$ alamkausta(-d) ja $bookmarkCount$ järjehoidja(-d) selles?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Kinnitusteadus kõikide järjehoidjate avamiseks.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Kinnitusteadus kõikide järjehoidjate avamiseks uues inkognito aknas.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues inkognito aknas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Kinnitusteadus kõikide järjehoidjate avamiseks uues aknas.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues aknas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopeeri kõik pealkirjad ja URL-id lõikelauale"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopeeri pealkiri ja URL lõikelauale"
+  },
+  "customIcon": {
+    "message": "Kohandatud ikoon"
+  },
+  "customIconDescription": {
+    "message": "Ikoon peab olema 19*19 piksli suurune. Vastasel korral muudetakse see selle suuruseni."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Kohanda eraldaja värvi"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Järjehoidja tegelik pealkiri, mida kuvatakse eraldajana"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Järjehoidja tegelik URL, mida kuvatakse eraldajana"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
+  },
+  "customStyles": {
+    "message": "Kohandatud stiilid"
+  },
+  "customStylesDescription": {
+    "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
+  },
+  "defaultIconButton": {
+    "message": "Kasuta vaikeväärtust"
+  },
+  "defaultIconButtonOr": {
+    "message": "või"
+  },
+  "delete": {
+    "message": "Kustuta"
+  },
+  "deleteEllipsis": {
+    "message": "Kustuta..."
+  },
+  "versionMessage": {
+    "message": "See on uus VBM $versionNumber$! Muudatuste logi on siin: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Kui teile meeldib, võib-olla saate annetada selle tulevase arengu jaoks. Igat summat teretatakse."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Loobu"
+  },
+  "edit": {
+    "message": "Redigeeri..."
+  },
+  "editBookmark": {
+    "message": "Redigeeri järjehoidjat"
+  },
+  "editFolder": {
+    "message": "Redigeeri kausta"
+  },
+  "errorOccured": {
+    "message": "Ups, tekkis viga."
+  },
+  "extDesc": {
+    "description": "Laiendi kirjeldus.",
+    "message": "Hüpikakna järjehoidjate haldur. Täiendatud Neat Bookmarks. Korralikum kui Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Üldine"
+  },
+  "ignore": {
+    "message": "Ignoreeri"
+  },
+  "name": {
+    "description": "Järjehoidja või kausta nimi.",
+    "message": "Nimi"
+  },
+  "nope": {
+    "message": "Ei"
+  },
+  "noTitle": {
+    "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
+    "message": "(pealkirjata)"
+  },
+  "open": {
+    "description": "Tegevus järjehoidjate avamiseks.",
+    "message": "Ava"
+  },
+  "openBookmarks": {
+    "message": "Ava kõik järjehoidjad"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Ava kõik järjehoidjad inkognito aknas"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Ava kõik järjehoidjad uues aknas"
+  },
+  "openIncognitoWindow": {
+    "message": "Ava inkognito aknas"
+  },
+  "openNewTab": {
+    "message": "Ava uues vahelehes"
+  },
+  "openNewWindow": {
+    "message": "Ava uues aknas"
+  },
+  "optionClickNewTab": {
+    "message": "Vasak klõps avab järjehoidja uues vahelehes."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Sulge kasutamata kaustad kausta avamisel."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
+  },
+  "optionOpenNewTab": {
+    "message": "Keskmine klõps või control-klõps avab järjehoidja uues taustavahelehes (mitte esiplaanil)."
+  },
+  "optionPopupStays": {
+    "message": "Hüpikaken jääb avatuks järjehoidjate avamisel (vasak klõps)."
+  },
+  "optionRememberPrevState": {
+    "message": "Jäta eelmine olek meelde (kerimise asend ja avatud kaustad)."
+  },
+  "options": {
+    "message": "Valikud"
+  },
+  "optionsFooterText": {
+    "description": "Jalamitekst valikute lehele",
+    "message": "Looja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Suum"
+  },
+  "parentFolder": {
+    "description": "Vanemkaust teabes, mida kuvatakse järjehoidjate tooltipis otsingutulemuste loendis.",
+    "message": "Vanemkaust: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Järjehoidjariba"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Eemalda eraldaja"
+  },
+  "replaceUrl": {
+    "message": "Asenda praeguse URL-iga"
+  },
+  "reportedToDeveloper": {
+    "description": "Sõnum laiendis tekkinud veast, teavitatud arendajat.",
+    "message": "See on teatatud arendajale."
+  },
+  "reportError": {
+    "message": "Teata veast"
+  },
+  "resetButton": {
+    "message": "Lähtesta"
+  },
+  "resetSettings": {
+    "message": "Lähtesta seaded"
+  },
+  "resetSettingsDescription": {
+    "message": "Lähtesta vBookmarks vaikeseadetele."
+  },
+  "save": {
+    "message": "Salvesta"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekst otsinguväljale.",
+    "message": "Otsi järjehoidjaid"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

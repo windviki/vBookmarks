@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "נגישות"
+  },
+  "addBookmarkAfter": {
+    "message": "הוסף סימנייה ללשונית הנוכחית אחרי זה"
+  },
+  "addBookmarkBefore": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לפני זה"
+  },
+  "addBookmarkBottom": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לתחתית זה"
+  },
+  "addBookmarkTop": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לראש זה"
+  },
+  "addNewFolder": {
+    "message": "הוסף תיקיית משנה"
+  },
+  "addNewFolderAfter": {
+    "message": "הוסף תיקייה אחרי זה"
+  },
+  "addNewFolderBefore": {
+    "message": "הוסף תיקייה לפני זה"
+  },
+  "addSeparator": {
+    "message": "הוסף מפריד"
+  },
+  "advancedOptions": {
+    "message": "אפשרויות מתקדמות"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$bookmarkCount$ סימניות בה?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$subFolderCount$ תיקיות משנה בה?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$, $subFolderCount$ תיקיות משנה ו-$bookmarkCount$ סימניות בה?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון גלישה פרטית חדש?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון חדש?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "העתק את כל הכותרות וה-URLs ללוח הגזירים"
+  },
+  "copyTitleAndUrl": {
+    "message": "העתק כותרת ו-URL ללוח הגזירים"
+  },
+  "customIcon": {
+    "message": "אייקון מותאם אישית"
+  },
+  "customIconDescription": {
+    "message": "האייקון חייב להיות במידות 19x19 פיקסלים. אחרת ישנה את גודלו למידות אלו."
+  },
+  "customSeparatorColorDescription": {
+    "message": "התאם אישית צבע מפריד"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "הכותרת האמיתית של סימנייה המוצגת כמפריד"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "ה-URL האמיתי של סימנייה המוצגת כמפריד"
+  },
+  "customSeparatorStringDescription": {
+    "message": "אם ה-URL של סימנייה מכיל מחרוזת זו, היא תוצג כמפריד"
+  },
+  "customStyles": {
+    "message": "סגנונות מותאמים אישית"
+  },
+  "customStylesDescription": {
+    "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
+  },
+  "defaultIconButton": {
+    "message": "השתמש בברירת מחדל"
+  },
+  "defaultIconButtonOr": {
+    "message": "או"
+  },
+  "delete": {
+    "message": "מחק"
+  },
+  "deleteEllipsis": {
+    "message": "מחק..."
+  },
+  "versionMessage": {
+    "message": "זהו VBM $versionNumber$ חדש! יומן שינויים כאן: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "סגור"
+  },
+  "edit": {
+    "message": "ערוך..."
+  },
+  "editBookmark": {
+    "message": "ערוך סימנייה"
+  },
+  "editFolder": {
+    "message": "ערוך תיקייה"
+  },
+  "errorOccured": {
+    "message": "אופס, אירעה שגיאה."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "כללי"
+  },
+  "ignore": {
+    "message": "התעלם"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "שם"
+  },
+  "nope": {
+    "message": "לא"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ללא כותרת)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "פתח"
+  },
+  "openBookmarks": {
+    "message": "פתח את כל הסימניות"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "פתח את כל הסימניות בחלון גלישה פרטית"
+  },
+  "openBookmarksNewWindow": {
+    "message": "פתח את כל הסימניות בחלון חדש"
+  },
+  "openIncognitoWindow": {
+    "message": "פתח בחלון גלישה פרטית"
+  },
+  "openNewTab": {
+    "message": "פתח בלשונית חדשה"
+  },
+  "openNewWindow": {
+    "message": "פתח בחלון חדש"
+  },
+  "optionClickNewTab": {
+    "message": "לחיצה שמאלית פותחת סימנייה בלשונית חדשה."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "סגור תיקיות שאינן בשימוש בעת פתיחת תיקייה."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "הצג רק סימניות בסרגל הסימניות"
+  },
+  "optionSearchAfterEnter": {
+    "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
+  },
+  "optionOpenNewTab": {
+    "message": "לחיצה אמצעית או control-לחיצה פותחת סימנייה בלשונית חדשה ברקע (במקום בחזית)."
+  },
+  "optionPopupStays": {
+    "message": "חלון קופץ נשאר פתוח בעת פתיחת (לחיצה שמאלית) סימניות."
+  },
+  "optionRememberPrevState": {
+    "message": "זכור מצב קודם (מיקום גלילה ותיקיות פתוחות)."
+  },
+  "options": {
+    "message": "אפשרויות"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "נוצר על ידי $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "זום"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "תיקיית אב: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "הסר מפריד"
+  },
+  "replaceUrl": {
+    "message": "החלף זאת ב-URL הנוכחי"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "זה דווח למפתח."
+  },
+  "reportError": {
+    "message": "דווח על שגיאה"
+  },
+  "resetButton": {
+    "message": "איפוס"
+  },
+  "resetSettings": {
+    "message": "איפוס הגדרות"
+  },
+  "resetSettingsDescription": {
+    "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  },
+  "save": {
+    "message": "שמור"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "חפש סימניות"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

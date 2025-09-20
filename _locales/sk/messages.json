@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Prístupnosť"
+  },
+  "addBookmarkAfter": {
+    "message": "Pridať aktuálnu kartu po tomto"
+  },
+  "addBookmarkBefore": {
+    "message": "Pridať aktuálnu kartu pred týmto"
+  },
+  "addBookmarkBottom": {
+    "message": "Pridať aktuálnu kartu na koniec tohto"
+  },
+  "addBookmarkTop": {
+    "message": "Pridať aktuálnu kartu na začiatok tohto"
+  },
+  "addNewFolder": {
+    "message": "Pridať podpriečinok"
+  },
+  "addNewFolderAfter": {
+    "message": "Pridať priečinok po tomto"
+  },
+  "addNewFolderBefore": {
+    "message": "Pridať priečinok pred týmto"
+  },
+  "addSeparator": {
+    "message": "Pridať oddeľovač"
+  },
+  "advancedOptions": {
+    "message": "Pokročilé možnosti"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $subFolderCount$ podpriečinok(ov) v ňom?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Ste si istí, že chcete odstrániť priečinok $folderName$, $subFolderCount$ podpriečinok(ov) a $bookmarkCount$ záložku(y) v ňom?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek v novom inkognito okne.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom inkognito okne?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek v novom okne.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom okne?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Skopírovať všetky názvy a URL do schránky"
+  },
+  "copyTitleAndUrl": {
+    "message": "Skopírovať názov a URL do schránky"
+  },
+  "customIcon": {
+    "message": "Vlastná ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikona musí mať rozmery 19*19 pixelov. Inak bude zmenšená na tento rozmer."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Prispôsobiť farbu oddeľovača"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Skutočný názov záložky, ktorá sa zobrazuje ako oddeľovač"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Skutočná URL záložky, ktorá sa zobrazuje ako oddeľovač"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
+  },
+  "customStyles": {
+    "message": "Vlastné štýly"
+  },
+  "customStylesDescription": {
+    "message": "Toto vyžaduje nejaké CSS znalosti. Upravujte na vlastné riziko. Zdieľanie kódu by b múdre"
+  },
+  "defaultIconButton": {
+    "message": "Použiť predvolené"
+  },
+  "defaultIconButtonOr": {
+    "message": "alebo"
+  },
+  "delete": {
+    "message": "Odstrániť"
+  },
+  "deleteEllipsis": {
+    "message": "Odstrániť..."
+  },
+  "versionMessage": {
+    "message": "Toto je nový VBM $versionNumber$! Zoznam zmien je tu: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Ak sa vám to páči, možno by ste mohli prispejať na jeho budúci vývoj. Akákoľvek suma je vítaná."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Zrušiť"
+  },
+  "edit": {
+    "message": "Upraviť..."
+  },
+  "editBookmark": {
+    "message": "Upraviť záložku"
+  },
+  "editFolder": {
+    "message": "Upraviť priečinok"
+  },
+  "errorOccured": {
+    "message": "Oops, nastala chyba."
+  },
+  "extDesc": {
+    "description": "Popis rozšírenia.",
+    "message": "Pop-up správca záložiek. Vylepšené Neat Bookmarks. Usporiadanejšie ako Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Všeobecné"
+  },
+  "ignore": {
+    "message": "Ignorovať"
+  },
+  "name": {
+    "description": "Názov záložky alebo priečinka.",
+    "message": "Názov"
+  },
+  "nope": {
+    "message": "Nie"
+  },
+  "noTitle": {
+    "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
+    "message": "(bez názvu)"
+  },
+  "open": {
+    "description": "Akcia na otvorenie záložiek.",
+    "message": "Otvoriť"
+  },
+  "openBookmarks": {
+    "message": "Otvoriť všetky záložky"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otvoriť všetky záložky v inkognito okne"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otvoriť všetky záložky v novom okne"
+  },
+  "openIncognitoWindow": {
+    "message": "Otvoriť v inkognito okne"
+  },
+  "openNewTab": {
+    "message": "Otvoriť na novej karte"
+  },
+  "openNewWindow": {
+    "message": "Otvoriť v novom okne"
+  },
+  "optionClickNewTab": {
+    "message": "Ľavý klik otvára záložku na novej karte."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zatvoriť nepoužívané priečinky pri otváraní priečinka."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Zobraziť len záložky v lište záložiek"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
+  },
+  "optionOpenNewTab": {
+    "message": "Stredný klik alebo control-klik otvára záložku na novej pozadí karte (namiesto popredia)."
+  },
+  "optionPopupStays": {
+    "message": "Popup zostane otvorený pri otváraní (ľavý klik) záložiek."
+  },
+  "optionRememberPrevState": {
+    "message": "Pamätať si predchádzajúci stav (pozícia posuvu a otvorené priečinky)."
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "optionsFooterText": {
+    "description": "Text päty pre stránku Možnosti",
+    "message": "Vytvoril $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Priblíženie"
+  },
+  "parentFolder": {
+    "description": "Rodičovský priečinok v informáciách zobrazených v popise záložiek v zozname výsledkov vyhľadávania.",
+    "message": "Rodičovský priečinok: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Lišta záložiek"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Odstrániť oddeľovač"
+  },
+  "replaceUrl": {
+    "message": "Nahradiť aktuálnou URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Správa pre chybu v rozšírení, nahlásená vývojárovi.",
+    "message": "Toto bolo nahlásené vývojárovi."
+  },
+  "reportError": {
+    "message": "Nahlásiť chybu"
+  },
+  "resetButton": {
+    "message": "Resetovať"
+  },
+  "resetSettings": {
+    "message": "Resetovať nastavenia"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetovať vBookmarks na predvolené nastavenia."
+  },
+  "save": {
+    "message": "Uložiť"
+  },
+  "searchBookmarks": {
+    "description": "Zástupný text pre vyhľadávacie pole.",
+    "message": "Hľadať záložky"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "إمكانية الوصول"
+  },
+  "addBookmarkAfter": {
+    "message": "إضافة علامة التبويب الحالية بعد هذا"
+  },
+  "addBookmarkBefore": {
+    "message": "إضافة علامة التبويب الحالية قبل هذا"
+  },
+  "addBookmarkBottom": {
+    "message": "إضافة علامة التبويب الحالية في أسفل هذا"
+  },
+  "addBookmarkTop": {
+    "message": "إضافة علامة التبويب الحالية في أعلى هذا"
+  },
+  "addNewFolder": {
+    "message": "إضافة مجلد فرعي"
+  },
+  "addNewFolderAfter": {
+    "message": "إضافة مجلد بعد هذا"
+  },
+  "addNewFolderBefore": {
+    "message": "إضافة مجلد قبل هذا"
+  },
+  "addSeparator": {
+    "message": "إضافة فاصل"
+  },
+  "advancedOptions": {
+    "message": "خيارات متقدمة"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي و $bookmarkCount$ علامة مرجعية فيه؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "رسالة تأكيد لفتح جميع العلامات المرجعية.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "رسالة تأكيد لفتح جميع العلامات المرجعية في نافذة التصفح المتخفية الجديدة.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة متخفية جديدة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "رسالة تأكيد لفتح جميع العلامات المرجعية في نافذة جديدة.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة جديدة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
+  },
+  "copyTitleAndUrl": {
+    "message": "نسخ العنوان وعنوان URL إلى الحافظة"
+  },
+  "customIcon": {
+    "message": "أيقونة مخصصة"
+  },
+  "customIconDescription": {
+    "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
+  },
+  "customSeparatorColorDescription": {
+    "message": "تخصيص لون الفاصل"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "customSeparatorStringDescription": {
+    "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
+  },
+  "customStyles": {
+    "message": "أنماط مخصصة"
+  },
+  "customStylesDescription": {
+    "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
+  },
+  "defaultIconButton": {
+    "message": "استخدام الافتراضي"
+  },
+  "defaultIconButtonOr": {
+    "message": "أو"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "deleteEllipsis": {
+    "message": "حذف..."
+  },
+  "versionMessage": {
+    "message": "هذا هو VBM الجديد $versionNumber$! سجل التغييرات هنا: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
+  },
+  "donationGo": {
+    "message": "موافق"
+  },
+  "donationDismiss": {
+    "message": "تجاهل"
+  },
+  "edit": {
+    "message": "تحرير..."
+  },
+  "editBookmark": {
+    "message": "تحرير علامة مرجعية"
+  },
+  "editFolder": {
+    "message": "تحرير مجلد"
+  },
+  "errorOccured": {
+    "message": "عفواً، حدث خطأ."
+  },
+  "extDesc": {
+    "description": "وصف الامتداد.",
+    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "عام"
+  },
+  "ignore": {
+    "message": "تجاهل"
+  },
+  "name": {
+    "description": "اسم العلامة المرجعية أو المجلد.",
+    "message": "الاسم"
+  },
+  "nope": {
+    "message": "لا"
+  },
+  "noTitle": {
+    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
+    "message": "(بلا عنوان)"
+  },
+  "open": {
+    "description": "إجراء لفتح العلامات المرجعية.",
+    "message": "فتح"
+  },
+  "openBookmarks": {
+    "message": "فتح جميع العلامات المرجعية"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "فتح جميع العلامات المرجعية في نافذة متخفية"
+  },
+  "openBookmarksNewWindow": {
+    "message": "فتح جميع العلامات المرجعية في نافذة جديدة"
+  },
+  "openIncognitoWindow": {
+    "message": "فتح في نافذة متخفية"
+  },
+  "openNewTab": {
+    "message": "فتح في علامة تبويب جديدة"
+  },
+  "openNewWindow": {
+    "message": "فتح في نافذة جديدة"
+  },
+  "optionClickNewTab": {
+    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
+  },
+  "optionSearchAfterEnter": {
+    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
+  },
+  "optionOpenNewTab": {
+    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
+  },
+  "optionPopupStays": {
+    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
+  },
+  "optionRememberPrevState": {
+    "message": "تذكر الحالة السابقة (موضع التمرير والمجلدات المفتوحة)."
+  },
+  "options": {
+    "message": "خيارات"
+  },
+  "optionsFooterText": {
+    "description": "نص تذييل لصفحة الخيارات",
+    "message": "تم إنشاؤه بواسطة $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "تكبير"
+  },
+  "parentFolder": {
+    "description": "المجلد الأصلي في المعلومات المعروضة في تلميح الأداة للعلامات المرجعية في قائمة نتائج البحث.",
+    "message": "المجلد الأصلي: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "شريط العلامات المرجعية"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "إزالة الفاصل"
+  },
+  "replaceUrl": {
+    "message": "استبدال هذا بعنوان URL الحالي"
+  },
+  "reportedToDeveloper": {
+    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
+    "message": "تم الإبلاغ عن هذا إلى المطور."
+  },
+  "reportError": {
+    "message": "الإبلاغ عن خطأ"
+  },
+  "resetButton": {
+    "message": "إعادة تعيين"
+  },
+  "resetSettings": {
+    "message": "إعادة تعيين الإعدادات"
+  },
+  "resetSettingsDescription": {
+    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
+  },
+  "save": {
+    "message": "حفظ"
+  },
+  "searchBookmarks": {
+    "description": "نص عنصر نائب لحقل البحث.",
+    "message": "بحث في العلامات المرجعية"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

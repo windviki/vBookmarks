@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Tillgänglighet"
+  },
+  "addBookmarkAfter": {
+    "message": "Lägg till aktuell flik efter detta"
+  },
+  "addBookmarkBefore": {
+    "message": "Lägg till aktuell flik före detta"
+  },
+  "addBookmarkBottom": {
+    "message": "Lägg till aktuell flik längst ner i detta"
+  },
+  "addBookmarkTop": {
+    "message": "Lägg till aktuell flik högst upp i detta"
+  },
+  "addNewFolder": {
+    "message": "Lägg till undermapp"
+  },
+  "addNewFolderAfter": {
+    "message": "Lägg till mapp efter detta"
+  },
+  "addNewFolderBefore": {
+    "message": "Lägg till mapp före detta"
+  },
+  "addSeparator": {
+    "message": "Lägg till avskiljare"
+  },
+  "advancedOptions": {
+    "message": "Avancerade alternativ"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Är du säker på att du vill ta bort mappen $folderName$ och $bookmarkCount$ bokmärke(n) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Är du säker på att du vill ta bort mappen $folderName$ och $subFolderCount$ undermapp(ar) i den?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Är du säker på att du vill ta bort mappen $folderName$, $subFolderCount$ undermapp(ar) och $bookmarkCount$ bokmärke(n) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Bekräftelsemeddelande för att öppna alla bokmärken.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Bekräftelsemeddelande för att öppna alla bokmärken i ett nytt inkognitofönster.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt inkognitofönster?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Bekräftelsemeddelande för att öppna alla bokmärken i ett nytt fönster.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt fönster?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopiera alla titlar och URL:er till urklipp"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopiera titel och URL till urklipp"
+  },
+  "customIcon": {
+    "message": "Anpassad ikon"
+  },
+  "customIconDescription": {
+    "message": "Ikonen måste vara 19*19 pixlar i storlek. Annars kommer den att storleksändras till denna dimension."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Anpassa avskiljarfärg"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Den verkliga titeln på bokmärket som visas som avskiljare"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Den verkliga URL:en för bokmärket som visas som avskiljare"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Om URL:en för ett bokmärke innehåller denna sträng, kommer det att visas som avskiljare"
+  },
+  "customStyles": {
+    "message": "Anpassade stilar"
+  },
+  "customStylesDescription": {
+    "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
+  },
+  "defaultIconButton": {
+    "message": "Använd standard"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "delete": {
+    "message": "Ta bort"
+  },
+  "deleteEllipsis": {
+    "message": "Ta bort..."
+  },
+  "versionMessage": {
+    "message": "Detta är nya VBM $versionNumber$! Ändringsloggen finns här: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Om du gillar det kan du kanske donera för framtida utveckling. Alla belopp välkomnas."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Avvisa"
+  },
+  "edit": {
+    "message": "Redigera..."
+  },
+  "editBookmark": {
+    "message": "Redigera bokmärke"
+  },
+  "editFolder": {
+    "message": "Redigera mapp"
+  },
+  "errorOccured": {
+    "message": "Hoppsan, ett fel inträffade."
+  },
+  "extDesc": {
+    "description": "Tilläggbeskrivningen.",
+    "message": "En popup-bokmärkeshanterare. Förbättrade Neat Bookmarks. Snyggare än Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Allmänt"
+  },
+  "ignore": {
+    "message": "Ignorera"
+  },
+  "name": {
+    "description": "Namn på bokmärke eller mapp.",
+    "message": "Namn"
+  },
+  "nope": {
+    "message": "Nej"
+  },
+  "noTitle": {
+    "description": "Titeln för bokmärken utan titel utan http(s)-URL eller mappar utan titel.",
+    "message": "(ingen titel)"
+  },
+  "open": {
+    "description": "Åtgärd för att öppna bokmärken.",
+    "message": "Öppna"
+  },
+  "openBookmarks": {
+    "message": "Öppna alla bokmärken"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Öppna alla bokmärken i inkognitofönster"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Öppna alla bokmärken i nytt fönster"
+  },
+  "openIncognitoWindow": {
+    "message": "Öppna i inkognitofönster"
+  },
+  "openNewTab": {
+    "message": "Öppna i ny flik"
+  },
+  "openNewWindow": {
+    "message": "Öppna i nytt fönster"
+  },
+  "optionClickNewTab": {
+    "message": "Vänsterklick öppnar bokmärke i ny flik."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Stäng oanvända mappar när en mapp öppnas."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Visa endast bokmärken i bokmärkesfältet"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
+  },
+  "optionOpenNewTab": {
+    "message": "Mittenklick eller kontroll-klick öppnar bokmärke i ny bakgrundsflik (istället för förgrund)."
+  },
+  "optionPopupStays": {
+    "message": "Popup förblir öppen när bokmärken öppnas (vänsterklick)."
+  },
+  "optionRememberPrevState": {
+    "message": "Kom ihåg tidigare tillstånd (rullningsposition och öppna mappar)."
+  },
+  "options": {
+    "message": "Alternativ"
+  },
+  "optionsFooterText": {
+    "description": "Sidfotstext för Alternativsidan",
+    "message": "Skapad av $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Överordnad mapp i information som visas i verktygstipset för bokmärken i sökresultatlistan.",
+    "message": "Överordnad mapp: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bokmärkesfältet"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Ta bort avskiljare"
+  },
+  "replaceUrl": {
+    "message": "Ersätt detta med aktuell URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Ett meddelande för ett fel som inträffade i tillägget, har rapporterats till utvecklaren.",
+    "message": "Detta har rapporterats till utvecklaren."
+  },
+  "reportError": {
+    "message": "Rapportera fel"
+  },
+  "resetButton": {
+    "message": "Återställ"
+  },
+  "resetSettings": {
+    "message": "Återställ inställningar"
+  },
+  "resetSettingsDescription": {
+    "message": "Återställ vBookmarks till standardinställningar."
+  },
+  "save": {
+    "message": "Spara"
+  },
+  "searchBookmarks": {
+    "description": "Platshållartext för sökfältet.",
+    "message": "Sök bokmärken"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

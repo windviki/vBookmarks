@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Prieinamumas"
+  },
+  "addBookmarkAfter": {
+    "message": "Pridėti dabartinį skirtuką po šio"
+  },
+  "addBookmarkBefore": {
+    "message": "Pridėti dabartinį skirtuką prieš šį"
+  },
+  "addBookmarkBottom": {
+    "message": "Pridėti dabartinį skirtuką į šio apačią"
+  },
+  "addBookmarkTop": {
+    "message": "Pridėti dabartinį skirtuką į šio viršų"
+  },
+  "addNewFolder": {
+    "message": "Pridėti pakatalogį"
+  },
+  "addNewFolderAfter": {
+    "message": "Pridėti aplanką po šio"
+  },
+  "addNewFolderBefore": {
+    "message": "Pridėti aplanką prieš šį"
+  },
+  "addSeparator": {
+    "message": "Pridėti skirtuką"
+  },
+  "advancedOptions": {
+    "message": "Išplėstiniai parametrai"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $subFolderCount$ pakatalogį(-ius) jame?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$, $subFolderCount$ pakatalogį(-ius) ir $bookmarkCount$ žymelę(-es) jame?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Patvirtinimo pranešimas visų žymelių atidarymui.",
+    "message": "Ar tikrai norite atidaryti visas $count$ žymeles?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Patvirtinimo pranešimas visų žymelių atidarymui naujame incognito lange.",
+    "message": "Ar tikrai norite atidaryti visas $count$ žymeles naujame incognito lange?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Patvirtinimo pranešimas visų žymelių atidarymui naujame lange.",
+    "message": "Ar tikrai norite atidaryti visas $count$ žymeles naujame lange?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopijuoti visus pavadinimus ir URL į iškarpinę"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopijuoti pavadinimą ir URL į iškarpinę"
+  },
+  "customIcon": {
+    "message": "Tinkinta piktograma"
+  },
+  "customIconDescription": {
+    "message": "Piktograma turi būti 19*19 pikselių dydžio. Kitaip ji bus pakeista į šį dydį."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tinkinti skirtuko spalvą"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Tikrasis žymelės pavadinimas, rodomas kaip skirtukas"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Tikrasis žymelės URL, rodomas kaip skirtukas"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
+  },
+  "customStyles": {
+    "message": "Tinkinti stiliai"
+  },
+  "customStylesDescription": {
+    "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
+  },
+  "defaultIconButton": {
+    "message": "Naudoti numatytąjį"
+  },
+  "defaultIconButtonOr": {
+    "message": "arba"
+  },
+  "delete": {
+    "message": "Ištrinti"
+  },
+  "deleteEllipsis": {
+    "message": "Ištrinti..."
+  },
+  "versionMessage": {
+    "message": "Tai naujas VBM $versionNumber$! Pakeitimų žurnalas čia: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Jei jums patinka, galbūt galite paremti jo ateities plėtrą. Bet kokia suma yra sveikinama."
+  },
+  "donationGo": {
+    "message": "Gerai"
+  },
+  "donationDismiss": {
+    "message": "Atmesti"
+  },
+  "edit": {
+    "message": "Redaguoti..."
+  },
+  "editBookmark": {
+    "message": "Redaguoti žymelę"
+  },
+  "editFolder": {
+    "message": "Redaguoti aplanką"
+  },
+  "errorOccured": {
+    "message": "Oi, įvyko klaida."
+  },
+  "extDesc": {
+    "description": "Plėtinio aprašymas.",
+    "message": "Iškylantis žymelių tvarkyklė. Patobulintas Neat Bookmarks. Tvarkingesnis už Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Bendri"
+  },
+  "ignore": {
+    "message": "Ignoruoti"
+  },
+  "name": {
+    "description": "Žymelės ar aplanko pavadinimas.",
+    "message": "Pavadinimas"
+  },
+  "nope": {
+    "message": "Ne"
+  },
+  "noTitle": {
+    "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
+    "message": "(be pavadinimo)"
+  },
+  "open": {
+    "description": "Veiksmas žymelių atidarymui.",
+    "message": "Atidaryti"
+  },
+  "openBookmarks": {
+    "message": "Atidaryti visas žymeles"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atidaryti visas žymeles incognito lange"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Atidaryti visas žymeles naujame lange"
+  },
+  "openIncognitoWindow": {
+    "message": "Atidaryti incognito lange"
+  },
+  "openNewTab": {
+    "message": "Atidaryti naujame skirtuke"
+  },
+  "openNewWindow": {
+    "message": "Atidaryti naujame lange"
+  },
+  "optionClickNewTab": {
+    "message": "Kairysis paspaudimas atidaro žymelę naujame skirtuke."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Užverti nenaudojamus aplankus atidarant aplanką."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Rodyti tik žymeles žymelių juostoje"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidurinis paspaudimas arba control-paspaudimas atidaro žymelę naujame fono skirtuke (vietoj priekinio plano)."
+  },
+  "optionPopupStays": {
+    "message": "Iškylantis langas lieka atidarytas atidarant (kairysis paspaudimas) žymeles."
+  },
+  "optionRememberPrevState": {
+    "message": "Prisiminti ankstesnę būseną (slinkties poziciją ir atidarytus aplankus)."
+  },
+  "options": {
+    "message": "Parametrai"
+  },
+  "optionsFooterText": {
+    "description": "Poraštės tekstas Parametrų puslapiui",
+    "message": "Sukūrė $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Mastelis"
+  },
+  "parentFolder": {
+    "description": "Tėvinis aplankas informacijoje, rodomoje žymelių patarčių paieškos rezultatų sąraše.",
+    "message": "Tėvinis aplankas: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Žymelių juosta"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Pašalinti skirtuką"
+  },
+  "replaceUrl": {
+    "message": "Pakeisti dabartiniu URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Pranešimas apie klaidą plėtinyje, pranešta kūrėjui.",
+    "message": "Tai pranešta kūrėjui."
+  },
+  "reportError": {
+    "message": "Pranešti apie klaidą"
+  },
+  "resetButton": {
+    "message": "Atstatyti"
+  },
+  "resetSettings": {
+    "message": "Atstatyti nustatymus"
+  },
+  "resetSettingsDescription": {
+    "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
+  },
+  "save": {
+    "message": "Išsaugoti"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekstas paieškos laukui.",
+    "message": "Ieškoti žymelių"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

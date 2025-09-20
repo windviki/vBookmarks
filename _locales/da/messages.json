@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Tilgængelighed"
+  },
+  "addBookmarkAfter": {
+    "message": "Bogmærk Nuværende Fane Efter Dette"
+  },
+  "addBookmarkBefore": {
+    "message": "Bogmærk Nuværende Fane Før Dette"
+  },
+  "addBookmarkBottom": {
+    "message": "Bogmærk Nuværende Fane Til Bund Af Dette"
+  },
+  "addBookmarkTop": {
+    "message": "Bogmærk Nuværende Fane Til Top Af Dette"
+  },
+  "addNewFolder": {
+    "message": "Tilføj Undermappe"
+  },
+  "addNewFolderAfter": {
+    "message": "Tilføj Mappe Efter Dette"
+  },
+  "addNewFolderBefore": {
+    "message": "Tilføj Mappe Før Dette"
+  },
+  "addSeparator": {
+    "message": "Tilføj Skillelinje"
+  },
+  "advancedOptions": {
+    "message": "Avancerede Indstillinger"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Er du sikker på, du vil slette mappen $folderName$ og $bookmarkCount$ bogmærke(r) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Er du sikker på, du vil slette mappen $folderName$ og $subFolderCount$ undermappe(r) i den?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Er du sikker på, du vil slette mappen $folderName$, $subFolderCount$ undermappe(r) og $bookmarkCount$ bogmærke(r) i den?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Er du sikker på, du vil åbne alle $count$ bogmærker?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Er du sikker på, du vil åbne alle $count$ bogmærker i et nyt inkognitovindue?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Er du sikker på, du vil åbne alle $count$ bogmærker i et nyt vindue?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopier alle titler og URL'er til udklipsholder"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopier titel og URL til udklipsholder"
+  },
+  "customIcon": {
+    "message": "Brugerdefineret ikon"
+  },
+  "customIconDescription": {
+    "message": "Ikonet skal være i 19x19 pixel dimensioner. Ellers bliver det ændret til denne dimension."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tilpas Skillelinjefarve"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Den rigtige titel af bogmærket som vises som en skillelinje"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Den rigtige URL af bogmærket som vises som en skillelinje"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Hvis URL'en af et bogmærke indeholder denne streng, vil det blive vist som en skillelinje"
+  },
+  "customStyles": {
+    "message": "Brugerdefinerede Stile"
+  },
+  "customStylesDescription": {
+    "message": "Dette kræver nogle CSS færdigheder. Rediger på egen risiko. Kodedeling ville være klogt via"
+  },
+  "defaultIconButton": {
+    "message": "Brug standard"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "delete": {
+    "message": "Slet"
+  },
+  "deleteEllipsis": {
+    "message": "Slet..."
+  },
+  "versionMessage": {
+    "message": "Dette er nyt VBM $versionNumber$! Ændringslog er her: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Hvis du kan lide det, må du kan donere til dets fremtidige udvikling. Ethvert beløb er velkomment."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Afvis"
+  },
+  "edit": {
+    "message": "Rediger..."
+  },
+  "editBookmark": {
+    "message": "Rediger bogmærke"
+  },
+  "editFolder": {
+    "message": "Rediger mappe"
+  },
+  "errorOccured": {
+    "message": "Ups, der opstod en fejl."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "En popup bogmærkehåndtering. Forbedret Neat Bookmarks. Pænere end Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Generelt"
+  },
+  "ignore": {
+    "message": "Ignorer"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Navn"
+  },
+  "nope": {
+    "message": "Nej"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ingen titel)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Åbn"
+  },
+  "openBookmarks": {
+    "message": "Åbn Alle Bogmærker"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Åbn Alle Bogmærker i Inkognitovindue"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Åbn Alle Bogmærker i Nyt Vindue"
+  },
+  "openIncognitoWindow": {
+    "message": "Åbn i Inkognitovindue"
+  },
+  "openNewTab": {
+    "message": "Åbn i Ny Fane"
+  },
+  "openNewWindow": {
+    "message": "Åbn i Nyt Vindue"
+  },
+  "optionClickNewTab": {
+    "message": "Venstreklik åbner bogmærke i ny fane."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Luk ubrugte mapper, når en mappe åbnes."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Vis kun bogmærker i Bogmærkelinjen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
+  },
+  "optionOpenNewTab": {
+    "message": "Midterklik eller control-klik åbner bogmærke i ny baggrundsfane (i stedet for forgrundsfane)."
+  },
+  "optionPopupStays": {
+    "message": "Popup forbliver åben, når der åbnes (venstreklikkes) bogmærker."
+  },
+  "optionRememberPrevState": {
+    "message": "Husk forrige tilstand (rulleposition og åbne mapper)."
+  },
+  "options": {
+    "message": "Indstillinger"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Bygget af $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Overordnet mappe: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Fjern Skillelinje"
+  },
+  "replaceUrl": {
+    "message": "Erstat dette med nuværende URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Dette er blevet rapporteret til udvikleren."
+  },
+  "reportError": {
+    "message": "Rapporter Fejl"
+  },
+  "resetButton": {
+    "message": "Nulstil"
+  },
+  "resetSettings": {
+    "message": "Nulstil indstillinger"
+  },
+  "resetSettingsDescription": {
+    "message": "Nulstil vBookmarks til standardindstillinger."
+  },
+  "save": {
+    "message": "Gem"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Søg Bogmærker"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Dostopnost"
+  },
+  "addBookmarkAfter": {
+    "message": "Dodaj trenuten zavihek po tem"
+  },
+  "addBookmarkBefore": {
+    "message": "Dodaj trenuten zavihek pred tem"
+  },
+  "addBookmarkBottom": {
+    "message": "Dodaj trenuten zavihek na dno tega"
+  },
+  "addBookmarkTop": {
+    "message": "Dodaj trenuten zavihek na vrh tega"
+  },
+  "addNewFolder": {
+    "message": "Dodaj podmapo"
+  },
+  "addNewFolderAfter": {
+    "message": "Dodaj mapo po tem"
+  },
+  "addNewFolderBefore": {
+    "message": "Dodaj mapo pred tem"
+  },
+  "addSeparator": {
+    "message": "Dodaj ločilo"
+  },
+  "advancedOptions": {
+    "message": "Napredne možnosti"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Ali ste prepričani, da želite izbrisati mapo $folderName$ in $bookmarkCount$ zaznamek(-e) v njej?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Ali ste prepričani, da želite izbrisati mapo $folderName$ in $subFolderCount$ podmapo(-e) v njej?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Ali ste prepričani, da želite izbrisati mapo $folderName$, $subFolderCount$ podmapo(-e) in $bookmarkCount$ zaznamek(-e) v njej?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Potrditveno sporočilo za odpiranje vseh zaznamkov.",
+    "message": "Ali ste prepričani, da želite odpreti vseh $count$ zaznamkov?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Potrditveno sporočilo za odpiranje vseh zaznamkov v novem incognito oknu.",
+    "message": "Ali ste prepričani, da želite odpreti vseh $count$ zaznamkov v novem incognito oknu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Potrditveno sporočilo za odpiranje vseh zaznamkov v novem oknu.",
+    "message": "Ali ste prepričani, da želite odpreti vseh $count$ zaznamkov v novem oknu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopiraj vse naslove in URL-je v odložišče"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopiraj naslov in URL v odložišče"
+  },
+  "customIcon": {
+    "message": "Prilagojena ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikona mora biti dimenzij 19*19 pikslov. V nasprotnem primeru bo spremenjena na to dimenzijo."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Prilagodi barvo ločila"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Pravi naslov zaznamka, ki se prikazuje kot ločilo"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Pravi URL zaznamka, ki se prikazuje kot ločilo"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Če URL zaznamka vsebuje ta niz, se bo prikazal kot ločilo"
+  },
+  "customStyles": {
+    "message": "Prilagojeni slogi"
+  },
+  "customStylesDescription": {
+    "message": "To zahteva neka CSS znanja. Spreminjajte na lastno tveganje. Skupna raba kode bi bila pametna"
+  },
+  "defaultIconButton": {
+    "message": "Uporabi privzeto"
+  },
+  "defaultIconButtonOr": {
+    "message": "ali"
+  },
+  "delete": {
+    "message": "Izbriši"
+  },
+  "deleteEllipsis": {
+    "message": "Izbriši..."
+  },
+  "versionMessage": {
+    "message": "To je nov VBM $versionNumber$! Dnevnik sprememb je tukaj: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Če vam je všeč, morda lahko prispevate za njegov prihodnji razvoj. Vsak znesek je dobrodošel."
+  },
+  "donationGo": {
+    "message": "V redu"
+  },
+  "donationDismiss": {
+    "message": "Zavrži"
+  },
+  "edit": {
+    "message": "Uredi..."
+  },
+  "editBookmark": {
+    "message": "Uredi zaznamek"
+  },
+  "editFolder": {
+    "message": "Uredi mapo"
+  },
+  "errorOccured": {
+    "message": "Ups, prišlo je do napake."
+  },
+  "extDesc": {
+    "description": "Opis razširitve.",
+    "message": "Popup upravitelj zaznamkov. Izboljšan Neat Bookmarks. Urejenši od Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Splošno"
+  },
+  "ignore": {
+    "message": "Prezri"
+  },
+  "name": {
+    "description": "Ime zaznamka ali mape.",
+    "message": "Ime"
+  },
+  "nope": {
+    "message": "Ne"
+  },
+  "noTitle": {
+    "description": "Naslov za neimenovane zaznamke brez http(s) URL-ja ali neimenovane mape.",
+    "message": "(brez naslova)"
+  },
+  "open": {
+    "description": "Dejanje za odpiranje zaznamkov.",
+    "message": "Odpri"
+  },
+  "openBookmarks": {
+    "message": "Odpri vse zaznamke"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Odpri vse zaznamke v incognito oknu"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Odpri vse zaznamke v novem oknu"
+  },
+  "openIncognitoWindow": {
+    "message": "Odpri v incognito oknu"
+  },
+  "openNewTab": {
+    "message": "Odpri v novem zavihku"
+  },
+  "openNewWindow": {
+    "message": "Odpri v novem oknu"
+  },
+  "optionClickNewTab": {
+    "message": "Levi klik odpre zaznamek v novem zavihku."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zapri neuporabljene mape pri odpiranju mape."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Prikaži potrditev pri odpiranju veliko zaznamkov iz mape."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Prikaži samo zaznamke v vrstici zaznamkov"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Išči zaznamke samo, ko je pritisnjen ENTER (namesto takojšnjega iskanja)"
+  },
+  "optionOpenNewTab": {
+    "message": "Srednji klik ali control-klik odpre zaznamek v novem zavihku v ozadju (namesto v ospredju)."
+  },
+  "optionPopupStays": {
+    "message": "Popup ostane odprt pri odpiranju (levi klik) zaznamkov."
+  },
+  "optionRememberPrevState": {
+    "message": "Zapomni si prejšnje stanje (položaj drsenja in odprte mape)."
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "optionsFooterText": {
+    "description": "Besedilo noge za stran Možnosti",
+    "message": "Ustvaril $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Povečava"
+  },
+  "parentFolder": {
+    "description": "Starševska mapa v informacijah, prikazanih v orodnem namigu zaznamkov v seznamu rezultatov iskanja.",
+    "message": "Starševska mapa: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Vrstica zaznamkov"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Odstrani ločilo"
+  },
+  "replaceUrl": {
+    "message": "Zamenjaj s trenutnim URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Sporočilo za napako v razširitvi, prijavljeno razvijalcu.",
+    "message": "To je bilo prijavljeno razvijalcu."
+  },
+  "reportError": {
+    "message": "Prijavi napako"
+  },
+  "resetButton": {
+    "message": "Ponastavi"
+  },
+  "resetSettings": {
+    "message": "Ponastavi nastavitve"
+  },
+  "resetSettingsDescription": {
+    "message": "Ponastavi vBookmarks na privzete nastavitve."
+  },
+  "save": {
+    "message": "Shrani"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder besedilo za iskalno polje.",
+    "message": "Išči zaznamke"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

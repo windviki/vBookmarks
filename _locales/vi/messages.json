@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Khả năng truy cập"
+  },
+  "addBookmarkAfter": {
+    "message": "Đánh dấu Tab Hiện Tại Sau Đây"
+  },
+  "addBookmarkBefore": {
+    "message": "Đánh dấu Tab Hiện Tại Trước Đây"
+  },
+  "addBookmarkBottom": {
+    "message": "Đánh dấu Tab Hiện Tại Vào Đáy Của Đây"
+  },
+  "addBookmarkTop": {
+    "message": "Đánh dấu Tab Hiện Tại Vào Đầu Của Đây"
+  },
+  "addNewFolder": {
+    "message": "Thêm Thư Mục Con"
+  },
+  "addNewFolderAfter": {
+    "message": "Thêm Thư Mục Sau Đây"
+  },
+  "addNewFolderBefore": {
+    "message": "Thêm Thư Mục Trước Đây"
+  },
+  "addSeparator": {
+    "message": "Thêm Dòng Kẻ"
+  },
+  "advancedOptions": {
+    "message": "Tùy Chọn Nâng Cao"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$, $subFolderCount$ thư mục con và $bookmarkCount$ dấu trang trong đó?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ ẩn danh mới?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ mới?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
+  },
+  "copyTitleAndUrl": {
+    "message": "Sao chép tiêu đề và URL vào clipboard"
+  },
+  "customIcon": {
+    "message": "Biểu tượng tùy chỉnh"
+  },
+  "customIconDescription": {
+    "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tùy chỉnh Màu Dòng Kẻ"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
+  },
+  "customStyles": {
+    "message": "Kiểu Tùy Chỉnh"
+  },
+  "customStylesDescription": {
+    "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
+  },
+  "defaultIconButton": {
+    "message": "Sử dụng mặc định"
+  },
+  "defaultIconButtonOr": {
+    "message": "hoặc"
+  },
+  "delete": {
+    "message": "Xóa"
+  },
+  "deleteEllipsis": {
+    "message": "Xóa..."
+  },
+  "versionMessage": {
+    "message": "Đây là VBM $versionNumber$ mới! Nhật ký thay đổi ở đây: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Bỏ qua"
+  },
+  "edit": {
+    "message": "Chỉnh sửa..."
+  },
+  "editBookmark": {
+    "message": "Chỉnh sửa dấu trang"
+  },
+  "editFolder": {
+    "message": "Chỉnh sửa thư mục"
+  },
+  "errorOccured": {
+    "message": "Ồ, đã xảy ra lỗi."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Chung"
+  },
+  "ignore": {
+    "message": "Bỏ qua"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Tên"
+  },
+  "nope": {
+    "message": "Không"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(không tiêu đề)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Mở"
+  },
+  "openBookmarks": {
+    "message": "Mở Tất Cả Dấu Trang"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Ẩn Danh"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Mới"
+  },
+  "openIncognitoWindow": {
+    "message": "Mở trong Cửa Sổ Ẩn Danh"
+  },
+  "openNewTab": {
+    "message": "Mở trong Tab Mới"
+  },
+  "openNewWindow": {
+    "message": "Mở trong Cửa Sổ Mới"
+  },
+  "optionClickNewTab": {
+    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
+  },
+  "optionOpenNewTab": {
+    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
+  },
+  "optionPopupStays": {
+    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
+  },
+  "optionRememberPrevState": {
+    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
+  },
+  "options": {
+    "message": "Tùy Chọn"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Xây dựng bởi $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Thu phóng"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Thư mục cha: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Xóa Dòng Kẻ"
+  },
+  "replaceUrl": {
+    "message": "Thay thế điều này bằng URL hiện tại"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Điều này đã được báo cáo cho nhà phát triển."
+  },
+  "reportError": {
+    "message": "Báo Cáo Lỗi"
+  },
+  "resetButton": {
+    "message": "Đặt lại"
+  },
+  "resetSettings": {
+    "message": "Đặt lại cài đặt"
+  },
+  "resetSettingsDescription": {
+    "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  },
+  "save": {
+    "message": "Lưu"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Tìm kiếm Dấu Trang"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

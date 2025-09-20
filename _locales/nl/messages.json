@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Toegankelijkheid"
+  },
+  "addBookmarkAfter": {
+    "message": "Huidige tab hierna toevoegen"
+  },
+  "addBookmarkBefore": {
+    "message": "Huidige tab hiervoor toevoegen"
+  },
+  "addBookmarkBottom": {
+    "message": "Huidige tab onderaan toevoegen"
+  },
+  "addBookmarkTop": {
+    "message": "Huidige tab bovenaan toevoegen"
+  },
+  "addNewFolder": {
+    "message": "Submap toevoegen"
+  },
+  "addNewFolderAfter": {
+    "message": "Map hierna toevoegen"
+  },
+  "addNewFolderBefore": {
+    "message": "Map hiervoor toevoegen"
+  },
+  "addSeparator": {
+    "message": "Scheidingsteken toevoegen"
+  },
+  "advancedOptions": {
+    "message": "Geavanceerde opties"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Weet u zeker dat u map $folderName$ en $bookmarkCount$ bladwijzer(s) daarin wilt verwijderen?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Weet u zeker dat u map $folderName$ en $subFolderCount$ submap(pen) daarin wilt verwijderen?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Weet u zeker dat u map $folderName$, $subFolderCount$ submap(pen) en $bookmarkCount$ bladwijzer(s) daarin wilt verwijderen?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Bevestigingsbericht voor het openen van alle bladwijzers.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Bevestigingsbericht voor het openen van alle bladwijzers in een nieuw incognito-venster.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw incognito-venster wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Bevestigingsbericht voor het openen van alle bladwijzers in een nieuw venster.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw venster wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Alle titels en URL's kopiëren naar klembord"
+  },
+  "copyTitleAndUrl": {
+    "message": "Titel en URL kopiëren naar klembord"
+  },
+  "customIcon": {
+    "message": "Aangepast pictogram"
+  },
+  "customIconDescription": {
+    "message": "Het pictogram moet 19*19 pixels groot zijn. Anders wordt het naar deze afmeting geschaald."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Scheidingstekenkleur aanpassen"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "De echte titel van de bladwijzer die als scheidingsteken wordt weergegeven"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "De echte URL van de bladwijzer die als scheidingsteken wordt weergegeven"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Als de URL van een bladwijzer deze tekenreeks bevat, wordt deze als scheidingsteken weergegeven"
+  },
+  "customStyles": {
+    "message": "Aangepaste stijlen"
+  },
+  "customStylesDescription": {
+    "message": "Dit vereist enige CSS-vaardigheden. Wijzig op eigen risico. Code delen zou verstandig zijn via"
+  },
+  "defaultIconButton": {
+    "message": "Standaard gebruiken"
+  },
+  "defaultIconButtonOr": {
+    "message": "of"
+  },
+  "delete": {
+    "message": "Verwijderen"
+  },
+  "deleteEllipsis": {
+    "message": "Verwijderen..."
+  },
+  "versionMessage": {
+    "message": "Dit is de nieuwe VBM $versionNumber$! Changelog staat hier: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Als u het leuk vindt, kunt u misschien doneren voor toekomstige ontwikkeling. Elk bedrag is welkom."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Negeren"
+  },
+  "edit": {
+    "message": "Bewerken..."
+  },
+  "editBookmark": {
+    "message": "Bladwijzer bewerken"
+  },
+  "editFolder": {
+    "message": "Map bewerken"
+  },
+  "errorOccured": {
+    "message": "Oeps, er is een fout opgetreden."
+  },
+  "extDesc": {
+    "description": "De extensiebeschrijving.",
+    "message": "Een pop-up bladwijzerbeheerder. Verbeterde Neat Bookmarks. Netter dan Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Algemeen"
+  },
+  "ignore": {
+    "message": "Negeren"
+  },
+  "name": {
+    "description": "Naam van bladwijzer of map.",
+    "message": "Naam"
+  },
+  "nope": {
+    "message": "Nee"
+  },
+  "noTitle": {
+    "description": "De titel voor bladwijzers zonder titel zonder http(s)-URL of mappen zonder titel.",
+    "message": "(geen titel)"
+  },
+  "open": {
+    "description": "Actie om bladwijzers te openen.",
+    "message": "Openen"
+  },
+  "openBookmarks": {
+    "message": "Alle bladwijzers openen"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Alle bladwijzers openen in incognito-venster"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Alle bladwijzers openen in nieuw venster"
+  },
+  "openIncognitoWindow": {
+    "message": "Openen in incognito-venster"
+  },
+  "openNewTab": {
+    "message": "Openen in nieuw tabblad"
+  },
+  "openNewWindow": {
+    "message": "Openen in nieuw venster"
+  },
+  "optionClickNewTab": {
+    "message": "Linkerklik opent bladwijzer in nieuw tabblad."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Ongebruikte mappen sluiten bij het openen van een map."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Alleen bladwijzers in bladwijzerbalk tonen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"
+  },
+  "optionOpenNewTab": {
+    "message": "Middelklik of control-klik opent bladwijzer in nieuw achtergrondtabblad (in plaats van voorgrond)."
+  },
+  "optionPopupStays": {
+    "message": "Pop-up blijft open bij het openen (linkerklik) van bladwijzers."
+  },
+  "optionRememberPrevState": {
+    "message": "Vorige status onthouden (scrollpositie en open mappen)."
+  },
+  "options": {
+    "message": "Opties"
+  },
+  "optionsFooterText": {
+    "description": "Voettekst voor de Opties pagina",
+    "message": "Gemaakt door $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Bovenliggende map in informatie weergegeven in tooltip van bladwijzers in zoekresultatenlijst.",
+    "message": "Bovenliggende map: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bladwijzerbalk"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Scheidingsteken verwijderen"
+  },
+  "replaceUrl": {
+    "message": "Vervang dit met huidige URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Een bericht voor een fout opgetreden in de extensie, is gemeld aan de ontwikkelaar.",
+    "message": "Dit is gemeld aan de ontwikkelaar."
+  },
+  "reportError": {
+    "message": "Fout melden"
+  },
+  "resetButton": {
+    "message": "Resetten"
+  },
+  "resetSettings": {
+    "message": "Instellingen resetten"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks resetten naar standaardinstellingen."
+  },
+  "save": {
+    "message": "Opslaan"
+  },
+  "searchBookmarks": {
+    "description": "Plaatshoudertekst voor zoekveld.",
+    "message": "Bladwijzers zoeken"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

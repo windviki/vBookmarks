@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Dostępność"
+  },
+  "addBookmarkAfter": {
+    "message": "Dodaj obecną kartę po tym"
+  },
+  "addBookmarkBefore": {
+    "message": "Dodaj obecną kartę przed tym"
+  },
+  "addBookmarkBottom": {
+    "message": "Dodaj obecną kartę na dół tego"
+  },
+  "addBookmarkTop": {
+    "message": "Dodaj obecną kartę na górę tego"
+  },
+  "addNewFolder": {
+    "message": "Dodaj podfolder"
+  },
+  "addNewFolderAfter": {
+    "message": "Dodaj folder po tym"
+  },
+  "addNewFolderBefore": {
+    "message": "Dodaj folder przed tym"
+  },
+  "addSeparator": {
+    "message": "Dodaj separator"
+  },
+  "advancedOptions": {
+    "message": "Opcje zaawansowane"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Czy na pewno chcesz usunąć folder $folderName$ i $bookmarkCount$ zakładek w nim?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Czy na pewno chcesz usunąć folder $folderName$ i $subFolderCount$ podfolderów w nim?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Czy na pewno chcesz usunąć folder $folderName$, $subFolderCount$ podfolderów i $bookmarkCount$ zakładek w nim?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Potwierdzenie otwarcia wszystkich zakładek.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Potwierdzenie otwarcia wszystkich zakładek w nowym oknie incognito.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Potwierdzenie otwarcia wszystkich zakładek w nowym oknie.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Skopiuj wszystkie tytuły i adresy URL do schowka"
+  },
+  "copyTitleAndUrl": {
+    "message": "Skopiuj tytuł i adres URL do schowka"
+  },
+  "customIcon": {
+    "message": "Niestandardowa ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikona musi mieć wymiary 19*19 pikseli. W przeciwnym razie zostanie przeskalowana do tych wymiarów."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Dostosuj kolor separatora"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Rzeczywisty tytuł zakładki wyświetlanej jako separator"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Rzeczywisty adres URL zakładki wyświetlanej jako separator"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jeśli adres URL zakładki zawiera ten ciąg, zostanie wyświetlony jako separator"
+  },
+  "customStyles": {
+    "message": "Niestandardowe style"
+  },
+  "customStylesDescription": {
+    "message": "Wymaga to pewnych umiejętności CSS. Modyfikuj na własne ryzyko. Mądre byłoby udostępnianie kodu poprzez"
+  },
+  "defaultIconButton": {
+    "message": "Użyj domyślnego"
+  },
+  "defaultIconButtonOr": {
+    "message": "lub"
+  },
+  "delete": {
+    "message": "Usuń"
+  },
+  "deleteEllipsis": {
+    "message": "Usuń..."
+  },
+  "versionMessage": {
+    "message": "To jest nowe VBM $versionNumber$! Lista zmian znajduje się tutaj: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Jeśli ci się podoba, może możesz przekazać darowiznę na dalszy rozwój. Każda kwota jest mile widziana."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Zignoruj"
+  },
+  "edit": {
+    "message": "Edytuj..."
+  },
+  "editBookmark": {
+    "message": "Edytuj zakładkę"
+  },
+  "editFolder": {
+    "message": "Edytuj folder"
+  },
+  "errorOccured": {
+    "message": "Ups, wystąpił błąd."
+  },
+  "extDesc": {
+    "description": "Opis rozszerzenia.",
+    "message": "Menedżer zakładek wyskakujących. Ulepszone Neat Bookmarks. Bardziej uporządkowane niż Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Ogólne"
+  },
+  "ignore": {
+    "message": "Ignoruj"
+  },
+  "name": {
+    "description": "Nazwa zakładki lub folderu.",
+    "message": "Nazwa"
+  },
+  "nope": {
+    "message": "Nie"
+  },
+  "noTitle": {
+    "description": "Tytuł dla zakładek bez tytułu bez adresu URL http(s) lub folderów bez tytułu.",
+    "message": "(bez tytułu)"
+  },
+  "open": {
+    "description": "Akcja otwierania zakładek.",
+    "message": "Otwórz"
+  },
+  "openBookmarks": {
+    "message": "Otwórz wszystkie zakładki"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otwórz wszystkie zakładki w oknie incognito"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otwórz wszystkie zakładki w nowym oknie"
+  },
+  "openIncognitoWindow": {
+    "message": "Otwórz w oknie incognito"
+  },
+  "openNewTab": {
+    "message": "Otwórz w nowej karcie"
+  },
+  "openNewWindow": {
+    "message": "Otwórz w nowym oknie"
+  },
+  "optionClickNewTab": {
+    "message": "Lewy klik otwiera zakładkę w nowej karcie."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zamykaj nieużywane foldery podczas otwierania folderu."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Pokaż potwierdzenie przy otwieraniu wielu zakładek z folderu."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Pokaż tylko zakładki na pasku zakładek"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"
+  },
+  "optionOpenNewTab": {
+    "message": "Środkowe kliknięcie lub kontrol-klik otwiera zakładkę w nowej karcie tła (zamiast na pierwszym planie)."
+  },
+  "optionPopupStays": {
+    "message": "Wyskakujące okno pozostaje otwarte podczas otwierania (lewy klik) zakładek."
+  },
+  "optionRememberPrevState": {
+    "message": "Pamiętaj poprzedni stan (pozycja przewijania i otwarte foldery)."
+  },
+  "options": {
+    "message": "Opcje"
+  },
+  "optionsFooterText": {
+    "description": "Tekst stopki dla strony Opcje",
+    "message": "Stworzone przez $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Powiększenie"
+  },
+  "parentFolder": {
+    "description": "Folder nadrzędny w informacjach wyświetlanych w podpowiedzi zakładek na liście wyników wyszukiwania.",
+    "message": "Folder nadrzędny: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Pasek zakładek"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Usuń separator"
+  },
+  "replaceUrl": {
+    "message": "Zastąp to obecnym adresem URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Komunikat o błędzie w rozszerzeniu został zgłoszony deweloperowi.",
+    "message": "Zgłoszono to deweloperowi."
+  },
+  "reportError": {
+    "message": "Zgłoś błąd"
+  },
+  "resetButton": {
+    "message": "Resetuj"
+  },
+  "resetSettings": {
+    "message": "Resetuj ustawienia"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetuj vBookmarks do ustawień domyślnych."
+  },
+  "save": {
+    "message": "Zapisz"
+  },
+  "searchBookmarks": {
+    "description": "Tekst zastępczy dla pola wyszukiwania.",
+    "message": "Szukaj zakładek"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

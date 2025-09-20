@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Přístupnost"
+  },
+  "addBookmarkAfter": {
+    "message": "Přidat Záložku Aktuálního Panelu Za Toto"
+  },
+  "addBookmarkBefore": {
+    "message": "Přidat Záložku Aktuálního Panelu Před Toto"
+  },
+  "addBookmarkBottom": {
+    "message": "Přidat Záložku Aktuálního Panelu Na Konec Toto"
+  },
+  "addBookmarkTop": {
+    "message": "Přidat Záložku Aktuálního Panelu Na Začátek Toto"
+  },
+  "addNewFolder": {
+    "message": "Přidat Podsložku"
+  },
+  "addNewFolderAfter": {
+    "message": "Přidat Složku Za Toto"
+  },
+  "addNewFolderBefore": {
+    "message": "Přidat Složku Před Toto"
+  },
+  "addSeparator": {
+    "message": "Přidat Oddělovač"
+  },
+  "advancedOptions": {
+    "message": "Pokročilé Možnosti"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Opravdu chcete smazat složku $folderName$ a $bookmarkCount$ záložek v ní?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Opravdu chcete smazat složku $folderName$ a $subFolderCount$ podsložek v ní?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Opravdu chcete smazat složku $folderName$, $subFolderCount$ podsložek a $bookmarkCount$ záložek v ní?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek v novém anonymním okně?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek v novém okně?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Zkopírovat všechny názvy a URL do schránky"
+  },
+  "copyTitleAndUrl": {
+    "message": "Zkopírovat název a URL do schránky"
+  },
+  "customIcon": {
+    "message": "Vlastní ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikona musí mít rozměry 19x19 pixelů. Jinak bude změněna na tento rozměr."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Přizpůsobit Barvu Oddělovače"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Skutečný název záložky, který je zobrazen jako oddělovač"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Skutečná URL záložky, která je zobrazena jako oddělovač"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Pokud URL záložky obsahuje tento řetězec, bude zobrazena jako oddělovač"
+  },
+  "customStyles": {
+    "message": "Vlastní Styly"
+  },
+  "customStylesDescription": {
+    "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
+  },
+  "defaultIconButton": {
+    "message": "Použít výchozí"
+  },
+  "defaultIconButtonOr": {
+    "message": "nebo"
+  },
+  "delete": {
+    "message": "Smazat"
+  },
+  "deleteEllipsis": {
+    "message": "Smazat..."
+  },
+  "versionMessage": {
+    "message": "Toto je nové VBM $versionNumber$! Seznam změn je zde: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Pokud se vám to líbí, možná můžete přispět na jeho budoucí vývoj. Jakákoliv částka je vítána."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Zavřít"
+  },
+  "edit": {
+    "message": "Upravit..."
+  },
+  "editBookmark": {
+    "message": "Upravit záložku"
+  },
+  "editFolder": {
+    "message": "Upravit složku"
+  },
+  "errorOccured": {
+    "message": "Jejda, došlo k chybě."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Popup správce záložek. Vylepšené Neat Bookmarks. Přehlednější než Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Obecné"
+  },
+  "ignore": {
+    "message": "Ignorovat"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Název"
+  },
+  "nope": {
+    "message": "Ne"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(bez názvu)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Otevřít"
+  },
+  "openBookmarks": {
+    "message": "Otevřít Všechny Záložky"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otevřít Všechny Záložky v Anonymním Okně"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otevřít Všechny Záložky v Novém Okně"
+  },
+  "openIncognitoWindow": {
+    "message": "Otevřít v Anonymním Okně"
+  },
+  "openNewTab": {
+    "message": "Otevřít v Novém Panelu"
+  },
+  "openNewWindow": {
+    "message": "Otevřít v Novém Okně"
+  },
+  "optionClickNewTab": {
+    "message": "Levý klik otevře záložku v novém panelu."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zavřít nepoužívané složky při otevření složky."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Zobrazit pouze záložky v Liště Záložek"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
+  },
+  "optionOpenNewTab": {
+    "message": "Prostřední klik nebo control-klik otevře záložku v novém panelu na pozadí (místo na popředí)."
+  },
+  "optionPopupStays": {
+    "message": "Popup zůstává otevřený při otevírání (levý klik) záložek."
+  },
+  "optionRememberPrevState": {
+    "message": "Pamatovat si předchozí stav (pozice posunu a otevřené složky)."
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Vytvořil $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Přiblížení"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Nadřazená složka: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Odstranit Oddělovač"
+  },
+  "replaceUrl": {
+    "message": "Nahradit toto aktuální URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "To bylo nahlášeno vývojáři."
+  },
+  "reportError": {
+    "message": "Nahlásit Chybu"
+  },
+  "resetButton": {
+    "message": "Resetovat"
+  },
+  "resetSettings": {
+    "message": "Resetovat nastavení"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetovat vBookmarks na výchozí nastavení."
+  },
+  "save": {
+    "message": "Uložit"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Hledat Záložky"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

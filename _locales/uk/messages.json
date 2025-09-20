@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Доступність"
+  },
+  "addBookmarkAfter": {
+    "message": "Додати поточну вкладку після цього"
+  },
+  "addBookmarkBefore": {
+    "message": "Додати поточну вкладку перед цим"
+  },
+  "addBookmarkBottom": {
+    "message": "Додати поточну вкладку в кінець цього"
+  },
+  "addBookmarkTop": {
+    "message": "Додати поточну вкладку на початок цього"
+  },
+  "addNewFolder": {
+    "message": "Додати підпапку"
+  },
+  "addNewFolderAfter": {
+    "message": "Додати папку після цього"
+  },
+  "addNewFolderBefore": {
+    "message": "Додати папку перед цим"
+  },
+  "addSeparator": {
+    "message": "Додати розділювач"
+  },
+  "advancedOptions": {
+    "message": "Розширені опції"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Ви впевнені, що хочете видалити папку $folderName$ та $bookmarkCount$ закладку(и) в ній?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Ви впевнені, що хочете видалити папку $folderName$ та $subFolderCount$ підпапку(и) в ній?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Ви впевнені, що хочете видалити папку $folderName$, $subFolderCount$ підпапку(и) та $bookmarkCount$ закладку(и) в ній?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Повідомлення підтвердження для відкриття всіх закладок.",
+    "message": "Ви впевнені, що хочете відкрити всі $count$ закладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Повідомлення підтвердження для відкриття всіх закладок у новому вікні інкогніто.",
+    "message": "Ви впевнені, що хочете відкрити всі $count$ закладок у новому вікні інкогніто?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Повідомлення підтвердження для відкриття всіх закладок у новому вікні.",
+    "message": "Ви впевнені, що хочете відкрити всі $count$ закладок у новому вікні?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Копіювати всі назви та URL в буфер обміну"
+  },
+  "copyTitleAndUrl": {
+    "message": "Копіювати назву та URL в буфер обміну"
+  },
+  "customIcon": {
+    "message": "Користувацька іконка"
+  },
+  "customIconDescription": {
+    "message": "Іконка повинна бути розміром 19*19 пікселів. В іншому випадку вона буде змінена до цього розміру."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Налаштувати колір розділювача"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Реальна назва закладки, яка відображається як розділювач"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Реальний URL закладки, яка відображається як розділювач"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Якщо URL закладки містить цей рядок, вона буде відображатися як розділювач"
+  },
+  "customStyles": {
+    "message": "Користувацькі стилі"
+  },
+  "customStylesDescription": {
+    "message": "Це вимагає деяких навичок CSS. Змінюйте на свій страх і ризик. Було б розумно ділитися кодом через"
+  },
+  "defaultIconButton": {
+    "message": "Використовувати за замовчуванням"
+  },
+  "defaultIconButtonOr": {
+    "message": "або"
+  },
+  "delete": {
+    "message": "Видалити"
+  },
+  "deleteEllipsis": {
+    "message": "Видалити..."
+  },
+  "versionMessage": {
+    "message": "Це новий VBM $versionNumber$! Список змін тут: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Якщо вам подобається, можливо, ви можете пожертвувати на його подальший розвиток. Будь-яка сума вітається."
+  },
+  "donationGo": {
+    "message": "Так"
+  },
+  "donationDismiss": {
+    "message": "Відхилити"
+  },
+  "edit": {
+    "message": "Редагувати..."
+  },
+  "editBookmark": {
+    "message": "Редагувати закладку"
+  },
+  "editFolder": {
+    "message": "Редагувати папку"
+  },
+  "errorOccured": {
+    "message": "Ой, сталася помилка."
+  },
+  "extDesc": {
+    "description": "Опис розширення.",
+    "message": "Спливаючий менеджер закладок. Покращений Neat Bookmarks. акуратніший за Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Загальне"
+  },
+  "ignore": {
+    "message": "Ігнорувати"
+  },
+  "name": {
+    "description": "Назва закладки або папки.",
+    "message": "Назва"
+  },
+  "nope": {
+    "message": "Ні"
+  },
+  "noTitle": {
+    "description": "Назва для безіменних закладок без http(s) URL або безіменних папок.",
+    "message": "(без назви)"
+  },
+  "open": {
+    "description": "Дія для відкриття закладок.",
+    "message": "Відкрити"
+  },
+  "openBookmarks": {
+    "message": "Відкрити всі закладки"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Відкрити всі закладки у вікні інкогніто"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Відкрити всі закладки у новому вікні"
+  },
+  "openIncognitoWindow": {
+    "message": "Відкрити у вікні інкогніто"
+  },
+  "openNewTab": {
+    "message": "Відкрити у новій вкладці"
+  },
+  "openNewWindow": {
+    "message": "Відкрити у новому вікні"
+  },
+  "optionClickNewTab": {
+    "message": "Лівий клік відкриває закладку у новій вкладці."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Закривати невикористовувані папки при відкритті папки."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Показувати підтвердження при відкритті багатьох закладок з папки."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Показувати тільки закладки з панелі закладок"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Шукати закладки тільки при натисканні ENTER (замість миттєвого пошуку)"
+  },
+  "optionOpenNewTab": {
+    "message": "Середній клік або контроль-клік відкриває закладку у новій фоновій вкладці (замість переднього плану)."
+  },
+  "optionPopupStays": {
+    "message": "Спливаюче вікно залишається відкритим при відкритті (лівий клік) закладок."
+  },
+  "optionRememberPrevState": {
+    "message": "Пам'ятати попередній стан (позицію прокрутки та відкриті папки)."
+  },
+  "options": {
+    "message": "Опції"
+  },
+  "optionsFooterText": {
+    "description": "Текст футера для сторінки Опцій",
+    "message": "Створено $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Масштаб"
+  },
+  "parentFolder": {
+    "description": "Батьківська папка в інформації, що відображається у спливаючій підказці закладок у списку результатів пошуку.",
+    "message": "Батьківська папка: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Панель закладок"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Видалити розділювач"
+  },
+  "replaceUrl": {
+    "message": "Замінити це поточним URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Повідомлення про помилку в розширенні, повідомлено розробнику.",
+    "message": "Це повідомлено розробнику."
+  },
+  "reportError": {
+    "message": "Повідомити про помилку"
+  },
+  "resetButton": {
+    "message": "Скинути"
+  },
+  "resetSettings": {
+    "message": "Скинути налаштування"
+  },
+  "resetSettingsDescription": {
+    "message": "Скинути vBookmarks до налаштувань за замовчуванням."
+  },
+  "save": {
+    "message": "Зберегти"
+  },
+  "searchBookmarks": {
+    "description": "Текст-заповнювач для поля пошуку.",
+    "message": "Пошук закладок"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

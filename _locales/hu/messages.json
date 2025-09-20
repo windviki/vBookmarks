@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Akadálymentesítés"
+  },
+  "addBookmarkAfter": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ez Után"
+  },
+  "addBookmarkBefore": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ez Elött"
+  },
+  "addBookmarkBottom": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ennek Az Aljára"
+  },
+  "addBookmarkTop": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ennek A Tetejére"
+  },
+  "addNewFolder": {
+    "message": "Almappa Hozzáadása"
+  },
+  "addNewFolderAfter": {
+    "message": "Mappa Hozzáadása Ez Után"
+  },
+  "addNewFolderBefore": {
+    "message": "Mappa Hozzáadása Ez Elött"
+  },
+  "addSeparator": {
+    "message": "Elválasztó Hozzáadása"
+  },
+  "advancedOptions": {
+    "message": "Haladó Beállítások"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $subFolderCount$ almappát?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Biztosan törli a(z) $folderName$ mappát, a benne lévő $subFolderCount$ almappát és $bookmarkCount$ könyvjelzőt?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új inkognitó ablakban?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új ablakban?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Összes cím és URL másolása vágólapra"
+  },
+  "copyTitleAndUrl": {
+    "message": "Cím és URL másolása vágólapra"
+  },
+  "customIcon": {
+    "message": "Egyéni ikon"
+  },
+  "customIconDescription": {
+    "message": "Az ikonnak 19x19 pixel méretűnek kell lennie. Egyébként átméretezésre kerül erre a méretre."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Elválasztó Színének Testreszabása"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "A könyvjelző valós címe, amely elválasztóként jelenik meg"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "A könyvjelző valós URL-je, amely elválasztóként jelenik meg"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ha egy könyvjelző URL-je tartalmazza ezt a karakterláncot, elválasztóként jelenik meg"
+  },
+  "customStyles": {
+    "message": "Egyéni Stílusok"
+  },
+  "customStylesDescription": {
+    "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
+  },
+  "defaultIconButton": {
+    "message": "Alapértelmezett használata"
+  },
+  "defaultIconButtonOr": {
+    "message": "vagy"
+  },
+  "delete": {
+    "message": "Törlés"
+  },
+  "deleteEllipsis": {
+    "message": "Törlés..."
+  },
+  "versionMessage": {
+    "message": "Ez az új VBM $versionNumber$! Változásnapló itt: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Ha tetszik, talán adományozhat a jövőbeli fejlesztéshez. Bármilyen összeget szívesen fogadunk."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Elvetés"
+  },
+  "edit": {
+    "message": "Szerkesztés..."
+  },
+  "editBookmark": {
+    "message": "Könyvjelző szerkesztése"
+  },
+  "editFolder": {
+    "message": "Mappa szerkesztése"
+  },
+  "errorOccured": {
+    "message": "Hoppá, hiba történt."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Egy felugró könyvjelzőkezelő. Fejlesztett Neat Bookmarks. Rendezettebb, mint a Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Általános"
+  },
+  "ignore": {
+    "message": "Mellőzés"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Név"
+  },
+  "nope": {
+    "message": "Nem"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(nincs cím)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Megnyitás"
+  },
+  "openBookmarks": {
+    "message": "Összes Könyvjelző Megnyitása"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Összes Könyvjelző Megnyitása Inkognitó Ablakban"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Összes Könyvjelző Megnyitása Új Ablakban"
+  },
+  "openIncognitoWindow": {
+    "message": "Megnyitás Inkognitó Ablakban"
+  },
+  "openNewTab": {
+    "message": "Megnyitás Új Lapon"
+  },
+  "openNewWindow": {
+    "message": "Megnyitás Új Ablakban"
+  },
+  "optionClickNewTab": {
+    "message": "Bal kattintás új lapon nyitja meg a könyvjelzőt."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Nem használt mappák bezárása mappa megnyitásakor."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
+  },
+  "optionOpenNewTab": {
+    "message": "Középső kattintás vagy control-kattintás új háttér lapon nyitja meg a könyvjelzőt (előtér helyett)."
+  },
+  "optionPopupStays": {
+    "message": "A felugró ablak nyitva marad a könyvjelzők megnyitásakor (bal kattintás)."
+  },
+  "optionRememberPrevState": {
+    "message": "Előző állapot megjegyzése (görgetési pozíció és nyitott mappák)."
+  },
+  "options": {
+    "message": "Beállítások"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Készítette $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Nagyítás"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Szülőmappa: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Elválasztó Eltávolítása"
+  },
+  "replaceUrl": {
+    "message": "Cserélje le ezt a jelenlegi URL-rel"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ezt jelentették a fejlesztőnek."
+  },
+  "reportError": {
+    "message": "Hiba Jelentése"
+  },
+  "resetButton": {
+    "message": "Visszaállítás"
+  },
+  "resetSettings": {
+    "message": "Beállítások visszaállítása"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
+  },
+  "save": {
+    "message": "Mentés"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Könyvjelzők Keresése"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

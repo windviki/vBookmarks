@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Erişilebilirlik"
+  },
+  "addBookmarkAfter": {
+    "message": "Geçerli sekmeyi bundan sonra ekle"
+  },
+  "addBookmarkBefore": {
+    "message": "Geçerli sekmeyi bundan önce ekle"
+  },
+  "addBookmarkBottom": {
+    "message": "Geçerli sekmeyi bunun en altına ekle"
+  },
+  "addBookmarkTop": {
+    "message": "Geçerli sekmeyi bunun en üstüne ekle"
+  },
+  "addNewFolder": {
+    "message": "Alt klasör ekle"
+  },
+  "addNewFolderAfter": {
+    "message": "Bundan sonra klasör ekle"
+  },
+  "addNewFolderBefore": {
+    "message": "Bundan önce klasör ekle"
+  },
+  "addSeparator": {
+    "message": "Ayırıcı ekle"
+  },
+  "advancedOptions": {
+    "message": "Gelişmiş Seçenekler"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "$folderName$ klasörünü ve içindeki $subFolderCount$ alt klasörü silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "$folderName$ klasörünü, içindeki $subFolderCount$ alt klasörü ve $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Tüm yer imlerini açmak için onay mesajı.",
+    "message": "Tüm $count$ yer imini açmak istediğinizden emin misiniz?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Tüm yer imlerini yeni bir gizli pencerede açmak için onay mesajı.",
+    "message": "Tüm $count$ yer imini yeni bir gizli pencerede açmak istediğinizden emin misiniz?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Tüm yer imlerini yeni bir pencerede açmak için onay mesajı.",
+    "message": "Tüm $count$ yer imini yeni bir pencerede açmak istediğinizden emin misiniz?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Tüm başlıkları ve URL'leri panoya kopyala"
+  },
+  "copyTitleAndUrl": {
+    "message": "Başlığı ve URL'yi panoya kopyala"
+  },
+  "customIcon": {
+    "message": "Özel simge"
+  },
+  "customIconDescription": {
+    "message": "Simge 19*19 piksel boyutunda olmalıdır. Aksi takdirde bu boyuta yeniden boyutlandırılacaktır."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Ayırıcı Rengini Özelleştir"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Ayırıcı olarak gösterilen yer iminin gerçek başlığı"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Ayırıcı olarak gösterilen yer iminin gerçek URL'si"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Bir yer iminin URL'si bu dizeyi içeriyorsa, ayırıcı olarak gösterilecektir"
+  },
+  "customStyles": {
+    "message": "Özel stiller"
+  },
+  "customStylesDescription": {
+    "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
+  },
+  "defaultIconButton": {
+    "message": "Varsayılanı kullan"
+  },
+  "defaultIconButtonOr": {
+    "message": "veya"
+  },
+  "delete": {
+    "message": "Sil"
+  },
+  "deleteEllipsis": {
+    "message": "Sil..."
+  },
+  "versionMessage": {
+    "message": "Bu yeni VBM $versionNumber$! Değişiklik günlüğü burada: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Beğendiyseniz, gelecekteki geliştirme için bağış yapmayı düşünebilirsiniz. Her tutar kabul edilir."
+  },
+  "donationGo": {
+    "message": "Tamam"
+  },
+  "donationDismiss": {
+    "message": "Yoksay"
+  },
+  "edit": {
+    "message": "Düzenle..."
+  },
+  "editBookmark": {
+    "message": "Yer imini düzenle"
+  },
+  "editFolder": {
+    "message": "Klasörü düzenle"
+  },
+  "errorOccured": {
+    "message": "Hata oluştu."
+  },
+  "extDesc": {
+    "description": "Eklentinin açıklaması.",
+    "message": "Açılır pencere yer imi yöneticisi. Geliştirilmiş Neat Bookmarks. Neater Bookmarks'tan daha düzenli."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Genel"
+  },
+  "ignore": {
+    "message": "Yoksay"
+  },
+  "name": {
+    "description": "Yer imi veya klasörün adı.",
+    "message": "Ad"
+  },
+  "nope": {
+    "message": "Hayır"
+  },
+  "noTitle": {
+    "description": "Http(s) URL'si olmayan başlıksız yer imleri veya başlıksız klasörler için başlık.",
+    "message": "(başlık yok)"
+  },
+  "open": {
+    "description": "Yer imlerini açma eylemi.",
+    "message": "Aç"
+  },
+  "openBookmarks": {
+    "message": "Tüm yer imlerini aç"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Tüm yer imlerini gizli pencerede aç"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Tüm yer imlerini yeni pencerede aç"
+  },
+  "openIncognitoWindow": {
+    "message": "Gizli pencerede aç"
+  },
+  "openNewTab": {
+    "message": "Yeni sekmede aç"
+  },
+  "openNewWindow": {
+    "message": "Yeni pencerede aç"
+  },
+  "optionClickNewTab": {
+    "message": "Sol tık yer imini yeni sekmede açar."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Klasör açılırken kullanılmayan klasörleri kapat."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bir klasörden birçok yer imi açarken onay göster."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
+  },
+  "optionOpenNewTab": {
+    "message": "Orta tık veya kontrol-tık yer imini yeni arka plan sekmesinde açar (ön plan yerine)."
+  },
+  "optionPopupStays": {
+    "message": "Yer imleri açılırken (sol tık) açılır pencere açık kalır."
+  },
+  "optionRememberPrevState": {
+    "message": "Önceki durumu hatırla (kaydırma konumu ve açık klasörler)."
+  },
+  "options": {
+    "message": "Seçenekler"
+  },
+  "optionsFooterText": {
+    "description": "Seçenekler sayfası için altbilgi metni",
+    "message": "$authorName$ tarafından oluşturuldu.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Yakınlaştırma"
+  },
+  "parentFolder": {
+    "description": "Arama sonuçları listesindeki yer imlerinin araç ipucunda görünen üst klasör bilgisi.",
+    "message": "Üst klasör: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Yer imleri çubuğu"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Ayırıcıyı kaldır"
+  },
+  "replaceUrl": {
+    "message": "Bunu mevcut URL ile değiştir"
+  },
+  "reportedToDeveloper": {
+    "description": "Eklentide oluşan bir hata için mesaj, geliştiriciye rapor edildi.",
+    "message": "Bu geliştiriciye rapor edildi."
+  },
+  "reportError": {
+    "message": "Hata raporu"
+  },
+  "resetButton": {
+    "message": "Sıfırla"
+  },
+  "resetSettings": {
+    "message": "Ayarları sıfırla"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
+  },
+  "save": {
+    "message": "Kaydet"
+  },
+  "searchBookmarks": {
+    "description": "Arama alanı için yer tutucu metin.",
+    "message": "Yer imlerini ara"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

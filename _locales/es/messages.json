@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Accesibilidad"
+  },
+  "addBookmarkAfter": {
+    "message": "Añadir pestaña actual después de esto"
+  },
+  "addBookmarkBefore": {
+    "message": "Añadir pestaña actual antes de esto"
+  },
+  "addBookmarkBottom": {
+    "message": "Añadir pestaña actual al final de esto"
+  },
+  "addBookmarkTop": {
+    "message": "Añadir pestaña actual al principio de esto"
+  },
+  "addNewFolder": {
+    "message": "Añadir subcarpeta"
+  },
+  "addNewFolderAfter": {
+    "message": "Añadir carpeta después de esto"
+  },
+  "addNewFolderBefore": {
+    "message": "Añadir carpeta antes de esto"
+  },
+  "addSeparator": {
+    "message": "Añadir separador"
+  },
+  "advancedOptions": {
+    "message": "Opciones avanzadas"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $bookmarkCount$ marcador(es) en ella?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $subFolderCount$ subcarpeta(s) en ella?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "¿Está seguro de que desea eliminar la carpeta $folderName$, $subFolderCount$ subcarpeta(s) y $bookmarkCount$ marcador(es) en ella?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Mensaje de confirmación para abrir todos los marcadores.",
+    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Mensaje de confirmación para abrir todos los marcadores en una nueva ventana incógnita.",
+    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana incógnita?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Mensaje de confirmación para abrir todos los marcadores en una nueva ventana.",
+    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiar todos los títulos y URLs al portapapeles"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copiar título y URL al portapapeles"
+  },
+  "customIcon": {
+    "message": "Icono personalizado"
+  },
+  "customIconDescription": {
+    "message": "El icono debe tener dimensiones de 19*19 píxeles. De lo contrario, se redimensionará a esta dimensión."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizar color del separador"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "El título real del marcador que se muestra como separador"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "La URL real del marcador que se muestra como separador"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Si la URL de un marcador contiene esta cadena, se mostrará como separador"
+  },
+  "customStyles": {
+    "message": "Estilos personalizados"
+  },
+  "customStylesDescription": {
+    "message": "Esto requiere algunos conocimientos de CSS. Modifique bajo su propio riesgo. Sería sabio compartir el código a través de"
+  },
+  "defaultIconButton": {
+    "message": "Usar predeterminado"
+  },
+  "defaultIconButtonOr": {
+    "message": "o"
+  },
+  "delete": {
+    "message": "Eliminar"
+  },
+  "deleteEllipsis": {
+    "message": "Eliminar..."
+  },
+  "versionMessage": {
+    "message": "¡Este es el nuevo VBM $versionNumber$! El registro de cambios está aquí: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Si le gusta, quizás pueda donar para su futuro desarrollo. Cualquier cantidad es bienvenida."
+  },
+  "donationGo": {
+    "message": "Aceptar"
+  },
+  "donationDismiss": {
+    "message": "Descartar"
+  },
+  "edit": {
+    "message": "Editar..."
+  },
+  "editBookmark": {
+    "message": "Editar marcador"
+  },
+  "editFolder": {
+    "message": "Editar carpeta"
+  },
+  "errorOccured": {
+    "message": "Ups, ocurrió un error."
+  },
+  "extDesc": {
+    "description": "La descripción de la extensión.",
+    "message": "Un gestor de marcadores emergente. Neat Bookmarks mejorado. Más ordenado que Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "General"
+  },
+  "ignore": {
+    "message": "Ignorar"
+  },
+  "name": {
+    "description": "Nombre del marcador o carpeta.",
+    "message": "Nombre"
+  },
+  "nope": {
+    "message": "No"
+  },
+  "noTitle": {
+    "description": "El título para marcadores sin título sin URL http(s) o carpetas sin título.",
+    "message": "(sin título)"
+  },
+  "open": {
+    "description": "Acción para abrir marcadores.",
+    "message": "Abrir"
+  },
+  "openBookmarks": {
+    "message": "Abrir todos los marcadores"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Abrir todos los marcadores en ventana incógnita"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Abrir todos los marcadores en ventana nueva"
+  },
+  "openIncognitoWindow": {
+    "message": "Abrir en ventana incógnita"
+  },
+  "openNewTab": {
+    "message": "Abrir en nueva pestaña"
+  },
+  "openNewWindow": {
+    "message": "Abrir en ventana nueva"
+  },
+  "optionClickNewTab": {
+    "message": "Clic izquierdo abre el marcador en nueva pestaña."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Cerrar carpetas no utilizadas al abrir una carpeta."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostrar confirmación al abrir muchos marcadores desde una carpeta."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Mostrar solo marcadores en la barra de marcadores"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"
+  },
+  "optionOpenNewTab": {
+    "message": "Clic central o control-clic abre el marcador en nueva pestaña de fondo (en lugar de primer plano)."
+  },
+  "optionPopupStays": {
+    "message": "La ventana emergente permanece abierta al abrir (clic izquierdo) marcadores."
+  },
+  "optionRememberPrevState": {
+    "message": "Recordar estado anterior (posición de desplazamiento y carpetas abiertas)."
+  },
+  "options": {
+    "message": "Opciones"
+  },
+  "optionsFooterText": {
+    "description": "Texto de pie de página para la página de Opciones",
+    "message": "Creado por $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Carpeta principal en la información que se muestra en la información sobre herramientas de los marcadores en la lista de resultados de búsqueda.",
+    "message": "Carpeta principal: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Barra de marcadores"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Eliminar separador"
+  },
+  "replaceUrl": {
+    "message": "Reemplazar esto con la URL actual"
+  },
+  "reportedToDeveloper": {
+    "description": "Un mensaje para un error ocurrido en la extensión, ha sido reportado al desarrollador.",
+    "message": "Esto ha sido reportado al desarrollador."
+  },
+  "reportError": {
+    "message": "Reportar error"
+  },
+  "resetButton": {
+    "message": "Restablecer"
+  },
+  "resetSettings": {
+    "message": "Restablecer configuración"
+  },
+  "resetSettingsDescription": {
+    "message": "Restablecer vBookmarks a la configuración predeterminada."
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "searchBookmarks": {
+    "description": "Texto de marcador de posición para el campo de búsqueda.",
+    "message": "Buscar marcadores"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Pieejamība"
+  },
+  "addBookmarkAfter": {
+    "message": "Pievienot pašreizējo cilni pēc šīs"
+  },
+  "addBookmarkBefore": {
+    "message": "Pievienot pašreizējo cilni pirms šīs"
+  },
+  "addBookmarkBottom": {
+    "message": "Pievienot pašreizējo cilni šīs apakšā"
+  },
+  "addBookmarkTop": {
+    "message": "Pievienot pašreizējo cilni šīs augšā"
+  },
+  "addNewFolder": {
+    "message": "Pievienot apakšmapi"
+  },
+  "addNewFolderAfter": {
+    "message": "Pievienot mapi pēc šīs"
+  },
+  "addNewFolderBefore": {
+    "message": "Pievienot mapi pirms šīs"
+  },
+  "addSeparator": {
+    "message": "Pievienot atdalītāju"
+  },
+  "advancedOptions": {
+    "message": "Paplašinātās opcijas"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $bookmarkCount$ grāmatzīmi(-es) tajā?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $subFolderCount$ apakšmapi(-es) tajā?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Vai tiešām vēlaties dzēst mapi $folderName$, $subFolderCount$ apakšmapi(-es) un $bookmarkCount$ grāmatzīmi(-es) tajā?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Apstiprinājuma ziņojums visu grāmatzīmju atvēršanai.",
+    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Apstiprinājuma ziņojums visu grāmatzīmju atvēršanai jaunā incognito logā.",
+    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā incognito logā?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Apstiprinājuma ziņojums visu grāmatzīmju atvēršanai jaunā logā.",
+    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā logā?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopēt visus nosaukumus un URL starpliktuvē"
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopēt nosaukumu un URL starpliktuvē"
+  },
+  "customIcon": {
+    "message": "Pielāgota ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikonai jābūt 19*19 pikseļu izmērā. Pretējā gadījumā tā tiks mainīta uz šo izmēru."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Pielāgot atdalītāja krāsu"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Grāmatzīmes īstais nosaukums, kas tiek rādīts kā atdalītājs"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Grāmatzīmes īstais URL, kas tiek rādīts kā atdalītājs"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ja grāmatzīmes URL satur šo virkni, tā tiks rādīta kā atdalītājs"
+  },
+  "customStyles": {
+    "message": "Pielāgoti stili"
+  },
+  "customStylesDescription": {
+    "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
+  },
+  "defaultIconButton": {
+    "message": "Izmantot noklusējuma"
+  },
+  "defaultIconButtonOr": {
+    "message": "vai"
+  },
+  "delete": {
+    "message": "Dzēst"
+  },
+  "deleteEllipsis": {
+    "message": "Dzēst..."
+  },
+  "versionMessage": {
+    "message": "Šis ir jaunais VBM $versionNumber$! Izmaiņu žurnāls šeit: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Ja jums patīk, varbūt jūs varētu ziedot tās turpmākai attīstībai. Jebkura summa ir laipni gaidīta."
+  },
+  "donationGo": {
+    "message": "Labi"
+  },
+  "donationDismiss": {
+    "message": "Atmest"
+  },
+  "edit": {
+    "message": "Rediģēt..."
+  },
+  "editBookmark": {
+    "message": "Rediģēt grāmatzīmi"
+  },
+  "editFolder": {
+    "message": "Rediģēt mapi"
+  },
+  "errorOccured": {
+    "message": "Ups, notika kļūda."
+  },
+  "extDesc": {
+    "description": "Paplašinājuma apraksts.",
+    "message": "Uznirstošs grāmatzīmju pārvaldnieks. Uzlabotais Neat Bookmarks. Kārtīgāks par Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Vispārīgi"
+  },
+  "ignore": {
+    "message": "Ignorēt"
+  },
+  "name": {
+    "description": "Grāmatzīmes vai mapes nosaukums.",
+    "message": "Nosaukums"
+  },
+  "nope": {
+    "message": "Nē"
+  },
+  "noTitle": {
+    "description": "Nosaukums bezvārda grāmatzīmēm bez http(s) URL vai bezvārda mapēm.",
+    "message": "(bez nosaukuma)"
+  },
+  "open": {
+    "description": "Darbība grāmatzīmju atvēršanai.",
+    "message": "Atvērt"
+  },
+  "openBookmarks": {
+    "message": "Atvērt visas grāmatzīmes"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atvērt visas grāmatzīmes incognito logā"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Atvērt visas grāmatzīmes jaunā logā"
+  },
+  "openIncognitoWindow": {
+    "message": "Atvērt incognito logā"
+  },
+  "openNewTab": {
+    "message": "Atvērt jaunā cilnē"
+  },
+  "openNewWindow": {
+    "message": "Atvērt jaunā logā"
+  },
+  "optionClickNewTab": {
+    "message": "Kreisais klikšķis atver grāmatzīmi jaunā cilnē."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Aizvērt neizmantotās mapes, atverot mapi."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Rādīt tikai grāmatzīmes grāmatzīmju joslā"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidējais klikšķis vai control-klikšķis atver grāmatzīmi jaunā fona cilnē (nevis priekšplānā)."
+  },
+  "optionPopupStays": {
+    "message": "Uznirstošais logs paliek atvērts, atverot (kreisais klikšķis) grāmatzīmes."
+  },
+  "optionRememberPrevState": {
+    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju un atvērtās mapes)."
+  },
+  "options": {
+    "message": "Opcijas"
+  },
+  "optionsFooterText": {
+    "description": "Kājenes teksts Opciju lappusei",
+    "message": "Izveidoja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Tālummaiņa"
+  },
+  "parentFolder": {
+    "description": "Vecāku mape informācijā, kas parādīta grāmatzīmju tooltipā meklēšanas rezultātu sarakstā.",
+    "message": "Vecāku mape: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Grāmatzīmju josla"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Noņemt atdalītāju"
+  },
+  "replaceUrl": {
+    "message": "Aizstāt ar pašreizējo URL"
+  },
+  "reportedToDeveloper": {
+    "description": "Ziņojums par kļūdu paplašinājumā, ziņots izstrādātājam.",
+    "message": "Šis ir ziņots izstrādātājam."
+  },
+  "reportError": {
+    "message": "Ziņot par kļūdu"
+  },
+  "resetButton": {
+    "message": "Atiestatīt"
+  },
+  "resetSettings": {
+    "message": "Atiestatīt iestatījumus"
+  },
+  "resetSettingsDescription": {
+    "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
+  },
+  "save": {
+    "message": "Saglabāt"
+  },
+  "searchBookmarks": {
+    "description": "Aizstājējteksts meklēšanas laukam.",
+    "message": "Meklēt grāmatzīmes"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

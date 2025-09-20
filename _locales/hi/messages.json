@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "पहुंच"
+  },
+  "addBookmarkAfter": {
+    "message": "वर्तमान टैब को इसके बाद जोड़ें"
+  },
+  "addBookmarkBefore": {
+    "message": "वर्तमान टैब को इसके पहले जोड़ें"
+  },
+  "addBookmarkBottom": {
+    "message": "वर्तमान टैब को इसके नीचे जोड़ें"
+  },
+  "addBookmarkTop": {
+    "message": "वर्तमान टैब को इसके ऊपर जोड़ें"
+  },
+  "addNewFolder": {
+    "message": "सबफोल्डर जोड़ें"
+  },
+  "addNewFolderAfter": {
+    "message": "इसके बाद फोल्डर जोड़ें"
+  },
+  "addNewFolderBefore": {
+    "message": "इसके पहले फोल्डर जोड़ें"
+  },
+  "addSeparator": {
+    "message": "सेपरेटर जोड़ें"
+  },
+  "advancedOptions": {
+    "message": "उन्नत विकल्प"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $subFolderCount$ सबफोल्डर हटाना चाहते हैं?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "क्या आप वाकई $folderName$ फोल्डर, $subFolderCount$ सबफोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "सभी बुकमार्क खोलने के लिए पुष्टि संदेश।",
+    "message": "क्या आप वाकई सभी $count$ बुकमार्क खोलना चाहते हैं?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "नई इनकॉग्निटो विंडो में सभी बुकमार्क खोलने के लिए पुष्टि संदेश।",
+    "message": "क्या आप वाकई नई इनकॉग्निटो विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "नई विंडो में सभी बुकमार्क खोलने के लिए पुष्टि संदेश।",
+    "message": "क्या आप वाकई नई विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "सभी शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
+  },
+  "copyTitleAndUrl": {
+    "message": "शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
+  },
+  "customIcon": {
+    "message": "कस्टम आइकन"
+  },
+  "customIconDescription": {
+    "message": "आइकन 19*19 पिक्सेल आयाम का होना चाहिए। अन्यथा इसे इस आयाम में रीसाइज़ किया जाएगा।"
+  },
+  "customSeparatorColorDescription": {
+    "message": "सेपरेटर रंग कस्टमाइज़ करें"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "बुकमार्क का वास्तविक शीर्षक जो सेपरेटर के रूप में दिखाया जाता है"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "बुकमार्क का वास्तविक URL जो सेपरेटर के रूप में दिखाया जाता है"
+  },
+  "customSeparatorStringDescription": {
+    "message": "यदि किसी बुकमार्क के URL में यह स्ट्रिंग है, तो इसे सेपरेटर के रूप में दिखाया जाएगा"
+  },
+  "customStyles": {
+    "message": "कस्टम स्टाइल"
+  },
+  "customStylesDescription": {
+    "message": "इसके लिए कुछ CSS कौशल की आवश्यकता है। अपने जोखिम पर हैक करें। कोड शेयरिंग के लिए के माध्यम से करना बुद्धिमानी होगी"
+  },
+  "defaultIconButton": {
+    "message": "डिफ़ॉल्ट उपयोग करें"
+  },
+  "defaultIconButtonOr": {
+    "message": "या"
+  },
+  "delete": {
+    "message": "हटाएं"
+  },
+  "deleteEllipsis": {
+    "message": "हटाएं..."
+  },
+  "versionMessage": {
+    "message": "यह नया VBM $versionNumber$ है! चेंजलॉग यहाँ है: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "यदि आपको यह पसंद है, तो शायद आप इसके भविष्य के विकास के लिए दान कर सकते हैं। कोई भी राशि स्वागत है।"
+  },
+  "donationGo": {
+    "message": "ठीक है"
+  },
+  "donationDismiss": {
+    "message": "खारिज करें"
+  },
+  "edit": {
+    "message": "संपादित करें..."
+  },
+  "editBookmark": {
+    "message": "बुकमार्क संपादित करें"
+  },
+  "editFolder": {
+    "message": "फोल्डर संपादित करें"
+  },
+  "errorOccured": {
+    "message": "ओह, एक त्रुटि हुई।"
+  },
+  "extDesc": {
+    "description": "एक्सटेंशन का विवरण।",
+    "message": "एक पॉपअप बुकमार्क मैनेजर। बेहतर Neat Bookmarks। Neater Bookmarks से अधिक व्यवस्थित।"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "सामान्य"
+  },
+  "ignore": {
+    "message": "नज़रअंदाज़ करें"
+  },
+  "name": {
+    "description": "बुकमार्क या फोल्डर का नाम।",
+    "message": "नाम"
+  },
+  "nope": {
+    "message": "नहीं"
+  },
+  "noTitle": {
+    "description": "बिना शीर्षक वाले बुकमार्क के लिए शीर्षक जिनके पास http(s) URL नहीं है या बिना शीर्षक वाले फोल्डर।",
+    "message": "(कोई शीर्षक नहीं)"
+  },
+  "open": {
+    "description": "बुकमार्क खोलने की क्रिया।",
+    "message": "खोलें"
+  },
+  "openBookmarks": {
+    "message": "सभी बुकमार्क खोलें"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "इनकॉग्निटो विंडो में सभी बुकमार्क खोलें"
+  },
+  "openBookmarksNewWindow": {
+    "message": "नई विंडो में सभी बुकमार्क खोलें"
+  },
+  "openIncognitoWindow": {
+    "message": "इनकॉग्निटो विंडो में खोलें"
+  },
+  "openNewTab": {
+    "message": "नए टैब में खोलें"
+  },
+  "openNewWindow": {
+    "message": "नई विंडो में खोलें"
+  },
+  "optionClickNewTab": {
+    "message": "बाएँ क्लिक बुकमार्क को नए टैब में खोलता है।"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "फोल्डर खोलते समय अप्रयुक्त फोल्डर बंद करें।"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "केवल बुकमार्क बार में बुकमार्क दिखाएं"
+  },
+  "optionSearchAfterEnter": {
+    "message": "केवल ENTER दबाने पर बुकमार्क खोजें (तत्काल खोज के बजाय)"
+  },
+  "optionOpenNewTab": {
+    "message": "मिडिल क्लिक या कंट्रोल-क्लिक बुकमार्क को नए बैकग्राउंड टैब में खोलता है (फोरग्राउंड के बजाय)।"
+  },
+  "optionPopupStays": {
+    "message": "बुकमार्क खोलते समय (बाएँ क्लिक) पॉपअप खुला रहता है।"
+  },
+  "optionRememberPrevState": {
+    "message": "पिछली स्थिति याद रखें (स्क्रॉल पोजीशन और खुले फोल्डर)।"
+  },
+  "options": {
+    "message": "विकल्प"
+  },
+  "optionsFooterText": {
+    "description": "विकल्प पृष्ठ के लिए फुटर टेक्स्ट",
+    "message": "$authorName$ द्वारा बनाया गया।",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "ज़ूम"
+  },
+  "parentFolder": {
+    "description": "सर्च रिजल्ट लिस्ट में बुकमार्क के टूलटिप में दिखाई गई जानकारी में पैरेंट फोल्डर।",
+    "message": "पैरेंट फोल्डर: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "बुकमार्क बार"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "सेपरेटर हटाएं"
+  },
+  "replaceUrl": {
+    "message": "इसे वर्तमान URL से बदलें"
+  },
+  "reportedToDeveloper": {
+    "description": "एक्सटेंशन में हुई त्रुटि के लिए संदेश, डेवलपर को रिपोर्ट किया गया है।",
+    "message": "यह डेवलपर को रिपोर्ट किया गया है।"
+  },
+  "reportError": {
+    "message": "त्रुटि रिपोर्ट करें"
+  },
+  "resetButton": {
+    "message": "रीसेट करें"
+  },
+  "resetSettings": {
+    "message": "सेटिंग रीसेट करें"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks को डिफ़ॉल्ट सेटिंग पर रीसेट करें।"
+  },
+  "save": {
+    "message": "सहेजें"
+  },
+  "searchBookmarks": {
+    "description": "सर्च फील्ड के लिए प्लेसहोल्डर टेक्स्ट।",
+    "message": "बुकमार्क खोजें"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

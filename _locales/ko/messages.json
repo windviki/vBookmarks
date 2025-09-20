@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "접근성"
+  },
+  "addBookmarkAfter": {
+    "message": "현재 탭을 이후에 추가"
+  },
+  "addBookmarkBefore": {
+    "message": "현재 탭을 이전에 추가"
+  },
+  "addBookmarkBottom": {
+    "message": "현재 탭을 이 항목의 맨 아래에 추가"
+  },
+  "addBookmarkTop": {
+    "message": "현재 탭을 이 항목의 맨 위에 추가"
+  },
+  "addNewFolder": {
+    "message": "하위 폴더 추가"
+  },
+  "addNewFolderAfter": {
+    "message": "이후에 폴더 추가"
+  },
+  "addNewFolderBefore": {
+    "message": "이전에 폴더 추가"
+  },
+  "addSeparator": {
+    "message": "구분자 추가"
+  },
+  "advancedOptions": {
+    "message": "고급 옵션"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "$folderName$ 폴더와 그 안의 $bookmarkCount$개 북마크를 삭제하시겠습니까?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "$folderName$ 폴더와 그 안의 $subFolderCount$개 하위 폴더를 삭제하시겠습니까?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "$folderName$ 폴더, 그 안의 $subFolderCount$개 하위 폴더와 $bookmarkCount$개 북마크를 삭제하시겠습니까?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "모든 북마크를 열 때 확인 메시지",
+    "message": "$count$개의 모든 북마크를 여시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "새 시크릿 창에서 모든 북마크를 열 때 확인 메시지",
+    "message": "새 시크릿 창에서 $count$개의 모든 북마크를 여시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "새 창에서 모든 북마크를 열 때 확인 메시지",
+    "message": "새 창에서 $count$개의 모든 북마크를 여시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "모든 제목과 URL을 클립보드에 복사"
+  },
+  "copyTitleAndUrl": {
+    "message": "제목과 URL을 클립보드에 복사"
+  },
+  "customIcon": {
+    "message": "사용자 지정 아이콘"
+  },
+  "customIconDescription": {
+    "message": "아이콘은 19*19 픽셀 크기여야 합니다. 그렇지 않으면 이 크기로 조정됩니다."
+  },
+  "customSeparatorColorDescription": {
+    "message": "구분자 색상 사용자 지정"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "구분자로 표시되는 북마크의 실제 제목"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "구분자로 표시되는 북마크의 실제 URL"
+  },
+  "customSeparatorStringDescription": {
+    "message": "북마크의 URL에 이 문자열이 포함되면 구분자로 표시됩니다"
+  },
+  "customStyles": {
+    "message": "사용자 지정 스타일"
+  },
+  "customStylesDescription": {
+    "message": "일부 CSS 기술이 필요합니다. 자신의 책임하에 수정하십시오. 코드 공유는 통해 하는 것이 현명할 것입니다"
+  },
+  "defaultIconButton": {
+    "message": "기본값 사용"
+  },
+  "defaultIconButtonOr": {
+    "message": "또는"
+  },
+  "delete": {
+    "message": "삭제"
+  },
+  "deleteEllipsis": {
+    "message": "삭제..."
+  },
+  "versionMessage": {
+    "message": "새로운 VBM $versionNumber$입니다! 변경 로그는 여기에 있습니다: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "마음에 드셨다면 향후 개발을 위해 기부해 주실 수 있습니다. 모든 금액을 환영합니다."
+  },
+  "donationGo": {
+    "message": "확인"
+  },
+  "donationDismiss": {
+    "message": "무시"
+  },
+  "edit": {
+    "message": "편집..."
+  },
+  "editBookmark": {
+    "message": "북마크 편집"
+  },
+  "editFolder": {
+    "message": "폴더 편집"
+  },
+  "errorOccured": {
+    "message": "죄송합니다, 오류가 발생했습니다."
+  },
+  "extDesc": {
+    "description": "확장 프로그램 설명",
+    "message": "팝업 북마크 관리자. 향상된 Neat Bookmarks. Neater Bookmarks보다 더 깔끔합니다."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "일반"
+  },
+  "ignore": {
+    "message": "무시"
+  },
+  "name": {
+    "description": "북마크 또는 폴더의 이름",
+    "message": "이름"
+  },
+  "nope": {
+    "message": "아니요"
+  },
+  "noTitle": {
+    "description": "http(s) URL이 없는 제목 없는 북마크나 제목 없는 폴더의 제목",
+    "message": "(제목 없음)"
+  },
+  "open": {
+    "description": "북마크를 여는 작업",
+    "message": "열기"
+  },
+  "openBookmarks": {
+    "message": "모든 북마크 열기"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "시크릿 창에서 모든 북마크 열기"
+  },
+  "openBookmarksNewWindow": {
+    "message": "새 창에서 모든 북마크 열기"
+  },
+  "openIncognitoWindow": {
+    "message": "시크릿 창에서 열기"
+  },
+  "openNewTab": {
+    "message": "새 탭에서 열기"
+  },
+  "openNewWindow": {
+    "message": "새 창에서 열기"
+  },
+  "optionClickNewTab": {
+    "message": "왼쪽 클릭으로 북마크를 새 탭에서 엽니다."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "폴더를 열 때 사용하지 않는 폴더를 닫습니다."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "북마크 막대의 북마크만 표시"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Enter 키를 누를 때만 북마크 검색 (즉시 검색 대신)"
+  },
+  "optionOpenNewTab": {
+    "message": "가운데 클릭 또는 컨트롤 클릭으로 북마크를 새 배경 탭에서 엽니다 (전경 대신)."
+  },
+  "optionPopupStays": {
+    "message": "북마크를 열 때 (왼쪽 클릭) 팝업이 열린 상태로 유지됩니다."
+  },
+  "optionRememberPrevState": {
+    "message": "이전 상태 기억 (스크롤 위치와 열린 폴더)."
+  },
+  "options": {
+    "message": "옵션"
+  },
+  "optionsFooterText": {
+    "description": "옵션 페이지의 바닥글 텍스트",
+    "message": "$authorName$님께서 제작하셨습니다.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "확대/축소"
+  },
+  "parentFolder": {
+    "description": "검색 결과 목록에서 북마크의 도구 설명에 표시되는 상위 폴더 정보",
+    "message": "상위 폴더: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "북마크 막대"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "구분자 제거"
+  },
+  "replaceUrl": {
+    "message": "이것을 현재 URL로 교체"
+  },
+  "reportedToDeveloper": {
+    "description": "확장 프로그램에서 발생한 오류가 개발자에게 보고되었습니다.",
+    "message": "이것이 개발자에게 보고되었습니다."
+  },
+  "reportError": {
+    "message": "오류 보고"
+  },
+  "resetButton": {
+    "message": "재설정"
+  },
+  "resetSettings": {
+    "message": "설정 재설정"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks를 기본 설정으로 재설정합니다."
+  },
+  "save": {
+    "message": "저장"
+  },
+  "searchBookmarks": {
+    "description": "검색 필드의 자리 표시자 텍스트",
+    "message": "북마크 검색"
+  },
+  "url": {
+    "message": "URL"
+  }
+}

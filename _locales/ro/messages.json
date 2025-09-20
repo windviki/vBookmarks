@@ -1,0 +1,297 @@
+{
+  "accessibility": {
+    "message": "Accesibilitate"
+  },
+  "addBookmarkAfter": {
+    "message": "Adaugă Semn de Carte la Tab-ul Curent După Acesta"
+  },
+  "addBookmarkBefore": {
+    "message": "Adaugă Semn de Carte la Tab-ul Curent Înainte de Acesta"
+  },
+  "addBookmarkBottom": {
+    "message": "Adaugă Semn de Carte la Tab-ul Curent la Baza Acestuia"
+  },
+  "addBookmarkTop": {
+    "message": "Adaugă Semn de Carte la Tab-ul Curent la Vârful Acestuia"
+  },
+  "addNewFolder": {
+    "message": "Adaugă Subdosar"
+  },
+  "addNewFolderAfter": {
+    "message": "Adaugă Dosar După Acesta"
+  },
+  "addNewFolderBefore": {
+    "message": "Adaugă Dosar Înainte de Acesta"
+  },
+  "addSeparator": {
+    "message": "Adaugă Separator"
+  },
+  "advancedOptions": {
+    "message": "Opțiuni Avansate"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $subFolderCount$ subdosar(e) din el?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$, $subFolderCount$ subdosar(e) și $bookmarkCount$ semn(e) de carte din el?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte într-o fereastră incognito nouă?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte într-o fereastră nouă?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiază toate titlurile și URL-urile în clipboard"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copiază titlul și URL-ul în clipboard"
+  },
+  "customIcon": {
+    "message": "Iconiță personalizată"
+  },
+  "customIconDescription": {
+    "message": "Iconița trebuie să aibă dimensiunea 19x19 pixeli. Altfel va fi redimensionată la această dimensiune."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizează Culoarea Separatorului"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Titlul real al semnului de carte care este afișat ca separator"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL-ul real al semnului de carte care este afișat ca separator"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Dacă URL-ul unui semn de carte conține acest șir, va fi afișat ca separator"
+  },
+  "customStyles": {
+    "message": "Stiluri Personalizate"
+  },
+  "customStylesDescription": {
+    "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
+  },
+  "defaultIconButton": {
+    "message": "Folosește implicit"
+  },
+  "defaultIconButtonOr": {
+    "message": "sau"
+  },
+  "delete": {
+    "message": "Șterge"
+  },
+  "deleteEllipsis": {
+    "message": "Șterge..."
+  },
+  "versionMessage": {
+    "message": "Acesta este noul VBM $versionNumber$! Jurnalul modificărilor este aici: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "donationMessage": {
+    "message": "Dacă vă place, poate puteți dona pentru dezvoltarea viitoare. Orice sumă este binevenită."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Închide"
+  },
+  "edit": {
+    "message": "Editare..."
+  },
+  "editBookmark": {
+    "message": "Editare semn de carte"
+  },
+  "editFolder": {
+    "message": "Editare dosar"
+  },
+  "errorOccured": {
+    "message": "Ups, a apărut o eroare."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Un manager de semne de carte popup. Neat Bookmarks îmbunătățit. Mai ordonat decât Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "General"
+  },
+  "ignore": {
+    "message": "Ignoră"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nume"
+  },
+  "nope": {
+    "message": "Nu"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(fără titlu)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Deschide"
+  },
+  "openBookmarks": {
+    "message": "Deschide Toate Semnele de Carte"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Deschide Toate Semnele de Carte în Fereastră Incognito"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Deschide Toate Semnele de Carte în Fereastră Nouă"
+  },
+  "openIncognitoWindow": {
+    "message": "Deschide în Fereastră Incognito"
+  },
+  "openNewTab": {
+    "message": "Deschide în Tab Nou"
+  },
+  "openNewWindow": {
+    "message": "Deschide în Fereastră Nouă"
+  },
+  "optionClickNewTab": {
+    "message": "Click stânga deschide semnul de carte în tab nou."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Închide dosarele neutilizate la deschiderea unui dosar."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Afișează doar semne de carte în Bara de Semne de Carte"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
+  },
+  "optionOpenNewTab": {
+    "message": "Click mijlociu sau control-click deschide semnul de carte în tab nou de fundal (în loc de prim-plan)."
+  },
+  "optionPopupStays": {
+    "message": "Popup-ul rămâne deschis la deschiderea (click stânga) semnelor de carte."
+  },
+  "optionRememberPrevState": {
+    "message": "Memorează starea anterioară (poziția de scroll și dosarele deschise)."
+  },
+  "options": {
+    "message": "Opțiuni"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Construit de $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Dosar părinte: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Elimină Separator"
+  },
+  "replaceUrl": {
+    "message": "Înlocuiește acesta cu URL-ul curent"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Acest lucru a fost raportat dezvoltatorului."
+  },
+  "reportError": {
+    "message": "Raportează Eroare"
+  },
+  "resetButton": {
+    "message": "Resetare"
+  },
+  "resetSettings": {
+    "message": "Resetare setări"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetează vBookmarks la setările implicite."
+  },
+  "save": {
+    "message": "Salvează"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Caută Semne de Carte"
+  },
+  "url": {
+    "message": "URL"
+  }
+}
