@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekunder"
+  },
+  "optionAutoResizePopup": {
+    "message": "Tilpas automatisk popup-vinduets størrelse til indholdet"
   }
 }

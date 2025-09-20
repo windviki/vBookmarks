@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Sinhronizācijas opcijas"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Rādīt sinhronizācijas statusa indikatorus"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Izcelt nesinhronizētās grāmatzīmes"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Atsvaidzināšanas intervāls"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "sekundes"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
   }
 }

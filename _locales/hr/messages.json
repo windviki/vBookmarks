@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Opcije sinkronizacije"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Prikaži indikatore statusa sinkronizacije"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Istakni nesinkronizirane oznake"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Automatski osvježi status sinkronizacije"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Interval osvježavanja"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "sekundi"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automatski prilagodi veličinu prozora skočnog prozora prema sadržaju"
   }
 }

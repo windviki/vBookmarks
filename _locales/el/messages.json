@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "δευτερόλεπτα"
+  },
+  "optionAutoResizePopup": {
+    "message": "Αυτόματη προσαρμογή μεγέθους παραθύρου popup ανάλογα με το περιεχόμενο"
   }
 }

@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "ثواني"
+  },
+  "optionAutoResizePopup": {
+    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
   }
 }

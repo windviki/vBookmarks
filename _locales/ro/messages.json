@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Opțiuni de sincronizare"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Afișați indicatorii de stare a sincronizării"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Evidențiați semnele de carte nesincronizate"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Actualizare automată a stării sincronizării"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Interval de actualizare"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "secunde"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
   }
 }

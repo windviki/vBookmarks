@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Опции за синхронизация"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Показване на индикатори за статус на синхронизация"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Осветяване на несинхронизирани отметки"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Автоматично опресняване на статуса на синхронизация"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Интервал за опресняване"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "секунди"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматично оразмеряване на изскачащия прозорец според съдържанието"
   }
 }

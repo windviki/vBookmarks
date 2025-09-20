@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekuntia"
+  },
+  "optionAutoResizePopup": {
+    "message": "Säädä ponnahdusikkunan koko automaattisesti sisällön mukaan"
   }
 }

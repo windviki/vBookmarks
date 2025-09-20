@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "detik"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
   }
 }

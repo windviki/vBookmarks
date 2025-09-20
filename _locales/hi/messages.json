@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "सेकंड"
+  },
+  "optionAutoResizePopup": {
+    "message": "पॉपअप विंडो को सामग्री के अनुसार ऑटो-रिसाइज़ करें"
   }
 }

@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Sünkroniseerimise valikud"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Näita sünkroniseerimise oleku indikaatoreid"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Esile kütta sünkroniseerimata järjehoidjad"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Automaatselt värskenda sünkroniseerimise olekut"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Värskendamise intervall"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "sekundit"
+  },
+  "optionAutoResizePopup": {
+    "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
   }
 }

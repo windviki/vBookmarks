@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "שניות"
+  },
+  "optionAutoResizePopup": {
+    "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
   }
 }

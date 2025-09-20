@@ -311,5 +311,8 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "ثانیه"
+  },
+  "optionAutoResizePopup": {
+    "message": "تغییر اندازه خودکار پنجره پاپ‌آپ مطابق با محتوا"
   }
 }

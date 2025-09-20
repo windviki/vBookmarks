@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Szinkronizálási beállítások"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Szinkronizálási állapotjelzők megjelenítése"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Szinkronizálatlan könyvjelzők kiemelése"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Szinkronizálási állapot automatikus frissítése"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Frissítési időköz"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "másodperc"
+  },
+  "optionAutoResizePopup": {
+    "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
   }
 }

@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Sinchronizavimo parinktys"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Rodyti sinchronizavimo būklės indikatorius"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Paryškinti nesinchronizuotas žymeles"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Automatiškai atnaujinti sinchronizavimo būklę"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Atnaujinimo intervalas"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "sekundžių"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
   }
 }

@@ -295,21 +295,24 @@
     "message": "URL"
   },
   "syncOptions": {
-    "message": "Sync Options"
+    "message": "Možnosti synchronizace"
   },
   "optionShowSyncStatus": {
-    "message": "Show sync status indicators"
+    "message": "Zobrazit indikátory stavu synchronizace"
   },
   "optionHighlightUnsynced": {
-    "message": "Highlight unsynced bookmarks"
+    "message": "Zvýraznit nesynchronizované záložky"
   },
   "optionAutoRefreshSync": {
-    "message": "Auto-refresh sync status"
+    "message": "Automaticky obnovovat stav synchronizace"
   },
   "optionSyncRefreshInterval": {
-    "message": "Refresh interval"
+    "message": "Interval obnovení"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "seconds"
+    "message": "sekund"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
   }
 }
