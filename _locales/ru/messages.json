@@ -293,5 +293,26 @@
    },
    "url": {
       "message": "URL"
+   },
+   "syncOptions": {
+      "message": "Параметры синхронизации"
+   },
+   "optionShowSyncStatus": {
+      "message": "Показывать индикаторы синхронизации"
+   },
+   "optionHighlightUnsynced": {
+      "message": "Подсвечивать несинхронизированные закладки"
+   },
+   "optionAutoRefreshSync": {
+      "message": "Автоматически обновлять статус синхронизации"
+   },
+   "optionSyncRefreshInterval": {
+      "message": "Интервал обновления"
+   },
+   "optionSyncRefreshIntervalSeconds": {
+      "message": "секунд"
+   },
+   "optionAutoResizePopup": {
+      "message": "Автоматически изменять размер всплывающего окна под содержимое"
    }
 }

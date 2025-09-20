@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "אפשרויות סנכרון"
+  },
+  "optionShowSyncStatus": {
+    "message": "הצג מחווני מצב סנכרון"
+  },
+  "optionHighlightUnsynced": {
+    "message": "הדגש סימניות שאינן מסונכרנות"
+  },
+  "optionAutoRefreshSync": {
+    "message": "רענן מצב סנכרון אוטומטית"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "מרווח רענון"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "שניות"
   }
 }

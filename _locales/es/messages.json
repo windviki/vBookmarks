@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Opciones de sincronización"
+  },
+  "optionShowSyncStatus": {
+    "message": "Mostrar indicadores de sincronización"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Resaltar marcadores no sincronizados"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Actualizar automáticamente estado de sincronización"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Intervalo de actualización"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "segundos"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ajustar automáticamente el tamaño de la ventana emergente para adaptarse al contenido"
   }
 }

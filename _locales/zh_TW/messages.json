@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "網址"
+  },
+  "syncOptions": {
+    "message": "同步選項"
+  },
+  "optionShowSyncStatus": {
+    "message": "顯示同步狀態指示器"
+  },
+  "optionHighlightUnsynced": {
+    "message": "高亮未同步的書籤"
+  },
+  "optionAutoRefreshSync": {
+    "message": "自動刷新同步狀態"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "刷新間隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "optionAutoResizePopup": {
+    "message": "自動調整彈出視窗大小以適應內容"
   }
 }

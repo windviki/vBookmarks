@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsindstillinger"
+  },
+  "optionShowSyncStatus": {
+    "message": "Vis synkroniseringsstatusindikatorer"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Fremhæv ikke-synkroniserede bogmærker"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Opdater synkroniseringsstatus automatisk"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Opdateringsinterval"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
   }
 }

@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "동기화 옵션"
+  },
+  "optionShowSyncStatus": {
+    "message": "동기화 상태 표시기 표시"
+  },
+  "optionHighlightUnsynced": {
+    "message": "동기화되지 않은 북마크 강조 표시"
+  },
+  "optionAutoRefreshSync": {
+    "message": "동기화 상태 자동 새로고침"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "새로고침 간격"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "초"
+  },
+  "optionAutoResizePopup": {
+    "message": "팝업 창 크기를 콘텐츠에 맞게 자동 조정"
   }
 }

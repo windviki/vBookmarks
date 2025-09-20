@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "同期オプション"
+  },
+  "optionShowSyncStatus": {
+    "message": "同期ステータスインジケーターを表示"
+  },
+  "optionHighlightUnsynced": {
+    "message": "未同期のブックマークをハイライト"
+  },
+  "optionAutoRefreshSync": {
+    "message": "同期ステータスを自動更新"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "更新間隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "optionAutoResizePopup": {
+    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
   }
 }

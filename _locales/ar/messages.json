@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "خيارات المزامنة"
+  },
+  "optionShowSyncStatus": {
+    "message": "إظهار مؤشرات حالة المزامنة"
+  },
+  "optionHighlightUnsynced": {
+    "message": "إبراز العلامات المرجعية غير المتزامنة"
+  },
+  "optionAutoRefreshSync": {
+    "message": "تحديث حالة المزامنة تلقائياً"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "فترة التحديث"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "ثواني"
   }
 }

@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsalternativ"
+  },
+  "optionShowSyncStatus": {
+    "message": "Visa synkroniseringsstatusindikatorer"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Markera osynkroniserade bokmärken"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Uppdatera synkroniseringsstatus automatiskt"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Uppdateringsintervall"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
+  },
+  "optionAutoResizePopup": {
+    "message": "Justera automatiskt popup-fönstrets storlek för att passa innehållet"
   }
 }

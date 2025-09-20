@@ -1087,6 +1087,16 @@
 
     // Popup auto-height
     const resetHeight = () => {
+        // Check if auto-resize is enabled (default to true for backward compatibility)
+        const autoResizeEnabled = localStorage.autoResizePopup !== 'false';
+
+        if (!autoResizeEnabled) {
+            // If auto-resize is disabled, use the stored height or default to 600px
+            const storedHeight = localStorage.popupHeight || '600';
+            body.style.height = `${storedHeight}px`;
+            return;
+        }
+
         const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
         const neatTree = $tree.firstElementChild;
         if (neatTree) {

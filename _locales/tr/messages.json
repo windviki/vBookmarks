@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Senkronizasyon Seçenekleri"
+  },
+  "optionShowSyncStatus": {
+    "message": "Senkronizasyon durumu göstergelerini göster"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Senkronize edilmemiş yer imlerini vurgula"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Senkronizasyon durumunu otomatik yenile"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Yenileme aralığı"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "saniye"
+  },
+  "optionAutoResizePopup": {
+    "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
   }
 }

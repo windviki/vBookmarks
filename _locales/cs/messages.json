@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Sync Options"
+  },
+  "optionShowSyncStatus": {
+    "message": "Show sync status indicators"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Highlight unsynced bookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Auto-refresh sync status"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Refresh interval"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "seconds"
   }
 }

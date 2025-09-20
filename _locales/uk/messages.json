@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Опції синхронізації"
+  },
+  "optionShowSyncStatus": {
+    "message": "Показувати індикатори стану синхронізації"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Підсвічувати несинхронізовані закладки"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Автоматично оновлювати стан синхронізації"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Інтервал оновлення"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "секунд"
   }
 }

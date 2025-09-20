@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "ตัวเลือกการซิงค์"
+  },
+  "optionShowSyncStatus": {
+    "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
+  },
+  "optionHighlightUnsynced": {
+    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
+  },
+  "optionAutoRefreshSync": {
+    "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "ช่วงเวลารีเฟรช"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "วินาที"
   }
 }

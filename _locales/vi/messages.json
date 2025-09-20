@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Tùy chọn đồng bộ hóa"
+  },
+  "optionShowSyncStatus": {
+    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Tô sáng dấu trang chưa đồng bộ"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Tự động làm mới trạng thái đồng bộ"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Khoảng thời gian làm mới"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "giây"
   }
 }

@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "সিঙ্ক অপশন"
+  },
+  "optionShowSyncStatus": {
+    "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
+  },
+  "optionHighlightUnsynced": {
+    "message": "আনসিন্ক বুকমার্ক হাইলাইট করুন"
+  },
+  "optionAutoRefreshSync": {
+    "message": "সিঙ্ক স্ট্যাটাস অটো-রিফ্রেশ করুন"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "রিফ্রেশ ইন্টারভাল"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "সেকেন্ড"
   }
 }

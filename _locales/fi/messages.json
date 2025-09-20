@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Synkronointiasetukset"
+  },
+  "optionShowSyncStatus": {
+    "message": "Näytä synkronointitilan ilmaisimet"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Korosta synkronoimattomat kirjanmerkit"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Päivitä synkronointitila automaattisesti"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Päivitysväli"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekuntia"
   }
 }

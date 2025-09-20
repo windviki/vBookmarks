@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "सिंक विकल्प"
+  },
+  "optionShowSyncStatus": {
+    "message": "सिंक स्थिति संकेतक दिखाएं"
+  },
+  "optionHighlightUnsynced": {
+    "message": "असिंक बुकमार्क को हाइलाइट करें"
+  },
+  "optionAutoRefreshSync": {
+    "message": "सिंक स्थिति ऑटो-रिफ्रेश करें"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "रिफ्रेश अंतराल"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "सेकंड"
   }
 }

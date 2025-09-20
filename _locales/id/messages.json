@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Opsi Sinkronisasi"
+  },
+  "optionShowSyncStatus": {
+    "message": "Tampilkan indikator status sinkronisasi"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Sorot markah yang belum disinkronisasi"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Segarkan status sinkronisasi otomatis"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval penyegaran"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "detik"
   }
 }

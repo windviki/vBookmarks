@@ -293,5 +293,23 @@
   },
   "url": {
     "message": "URL"
+  },
+  "syncOptions": {
+    "message": "Επιλογές συγχρονισμού"
+  },
+  "optionShowSyncStatus": {
+    "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Επισήμανση μη συγχρονισμένων σελιδοδεικτών"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Αυτόματη ενημέρωση κατάστασης συγχρονισμού"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Διάστημα ενημέρωσης"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "δευτερόλεπτα"
   }
 }

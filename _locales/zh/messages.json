@@ -293,5 +293,26 @@
   },
   "url": {
     "message": "网址"
+  },
+  "syncOptions": {
+    "message": "同步选项"
+  },
+  "optionShowSyncStatus": {
+    "message": "显示同步状态指示器"
+  },
+  "optionHighlightUnsynced": {
+    "message": "高亮未同步的书签"
+  },
+  "optionAutoRefreshSync": {
+    "message": "自动刷新同步状态"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "刷新间隔"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
+  },
+  "optionAutoResizePopup": {
+    "message": "自动调整弹出窗口大小以适应内容"
   }
 }
