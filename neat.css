@@ -777,11 +777,31 @@ menu[type=context].hide-editables #folder-delete {
     display: flex !important;
     align-items: center;
     justify-content: flex-start;
-    padding-right: 80px !important;
+    padding-right: 120px !important;
 }
 
 #results .tree-item-link .bookmark-metadata {
-    /* 移除深色背景，使用tag样式 */
+    position: absolute;
+    right: 4px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+    pointer-events: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 2px !important;
+    z-index: 200 !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: auto !important;
+}
+
+#results ul li a:hover .bookmark-metadata {
+    opacity: 1 !important;
 }
 
 /* 强制显示元数据用于测试 */

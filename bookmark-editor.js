@@ -558,7 +558,6 @@ class BookmarkEditor {
                     </div>
                 </div>
             `;
-        });
 
         html += `
                 </div>
