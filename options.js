@@ -62,6 +62,32 @@
             localStorage.autoResizePopup = autoResizePopup.checked ? 'true' : 'false';
         });
 
+        // Toolbar settings
+        const showFloatingToolbar = $('show-floating-toolbar');
+        showFloatingToolbar.checked = localStorage.getItem('vbookmarks_show_floating_toolbar') !== 'false';
+        showFloatingToolbar.addEventListener('change', () => {
+            localStorage.setItem('vbookmarks_show_floating_toolbar', showFloatingToolbar.checked ? 'true' : 'false');
+        });
+
+        // Metadata display settings
+        const showAddedDate = $('show-added-date');
+        showAddedDate.checked = localStorage.getItem('vbookmarks_show_added_date') !== 'false';
+        showAddedDate.addEventListener('change', () => {
+            localStorage.setItem('vbookmarks_show_added_date', showAddedDate.checked ? 'true' : 'false');
+        });
+
+        const showLastAccessed = $('show-last-accessed');
+        showLastAccessed.checked = localStorage.getItem('vbookmarks_show_last_accessed') !== 'false';
+        showLastAccessed.addEventListener('change', () => {
+            localStorage.setItem('vbookmarks_show_last_accessed', showLastAccessed.checked ? 'true' : 'false');
+        });
+
+        const showClickCount = $('show-click-count');
+        showClickCount.checked = localStorage.getItem('vbookmarks_show_click_count') !== 'false';
+        showClickCount.addEventListener('change', () => {
+            localStorage.setItem('vbookmarks_show_click_count', showClickCount.checked ? 'true' : 'false');
+        });
+
         // Sync settings
         const showSyncStatus = $('show-sync-status');
         showSyncStatus.checked = localStorage.showSyncStatus !== 'false';
@@ -156,6 +182,12 @@
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
+        document.getElementById('toolbar-options').innerText = __m('toolbarOptions');
+        document.getElementById('option-show-floating-toolbar').innerText = __m('optionShowFloatingToolbar');
+        document.getElementById('metadata-options').innerText = __m('metadataOptions');
+        document.getElementById('option-show-added-date').innerText = __m('optionShowAddedDate');
+        document.getElementById('option-show-last-accessed').innerText = __m('optionShowLastAccessed');
+        document.getElementById('option-show-click-count').innerText = __m('optionShowClickCount');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
 

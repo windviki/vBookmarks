@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "팝업 창 크기를 콘텐츠에 맞게 자동 조정"
+  },
+  "toolbarEdit": {
+    "message": "북마크 편집"
+  },
+  "toolbarSortClicks": {
+    "message": "클릭 수로 정렬"
+  },
+  "toolbarSortDate": {
+    "message": "추가 날짜로 정렬"
+  },
+  "toolbarSortAccessed": {
+    "message": "마지막 액세스로 정렬"
+  },
+  "toolbarSettings": {
+    "message": "설정"
   }
 }

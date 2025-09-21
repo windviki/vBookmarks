@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Endre automatisk størrelsen på popup-vinduet for å passe innholdet"
+  },
+  "toolbarEdit": {
+    "message": "Rediger bokmerker"
+  },
+  "toolbarSortClicks": {
+    "message": "Sorter etter klikk"
+  },
+  "toolbarSortDate": {
+    "message": "Sorter etter dato lagt til"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sorter etter sist åpnet"
+  },
+  "toolbarSettings": {
+    "message": "Innstillinger"
   }
 }

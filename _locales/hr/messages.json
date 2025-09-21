@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Automatski prilagodi veličinu prozora skočnog prozora prema sadržaju"
+  },
+  "toolbarEdit": {
+    "message": "Uredi zabilješke"
+  },
+  "toolbarSortClicks": {
+    "message": "Sortiraj po klikovima"
+  },
+  "toolbarSortDate": {
+    "message": "Sortiraj po datumu dodavanja"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sortiraj po posljednjem pristupu"
+  },
+  "toolbarSettings": {
+    "message": "Postavke"
   }
 }

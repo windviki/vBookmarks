@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
+  },
+  "toolbarEdit": {
+    "message": "Muuda järjehoidjaid"
+  },
+  "toolbarSortClicks": {
+    "message": "Sorteeri klikkide järgi"
+  },
+  "toolbarSortDate": {
+    "message": "Sorteeri lisamiskuupäeva järgi"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sorteeri viimase kasutuse järgi"
+  },
+  "toolbarSettings": {
+    "message": "Seaded"
   }
 }

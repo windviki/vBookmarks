@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "自動調整彈出視窗大小以適應內容"
+  },
+  "toolbarEdit": {
+    "message": "書籤編輯"
+  },
+  "toolbarSortClicks": {
+    "message": "按點擊次數排序"
+  },
+  "toolbarSortDate": {
+    "message": "按添加日期排序"
+  },
+  "toolbarSortAccessed": {
+    "message": "按訪問日期排序"
+  },
+  "toolbarSettings": {
+    "message": "設定"
   }
 }

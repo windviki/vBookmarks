@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Ajustar automáticamente el tamaño de la ventana emergente para adaptarse al contenido"
+  },
+  "toolbarEdit": {
+    "message": "Editar marcadores"
+  },
+  "toolbarSortClicks": {
+    "message": "Ordenar por clics"
+  },
+  "toolbarSortDate": {
+    "message": "Ordenar por fecha de añadido"
+  },
+  "toolbarSortAccessed": {
+    "message": "Ordenar por último acceso"
+  },
+  "toolbarSettings": {
+    "message": "Configuración"
   }
 }

@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
+  },
+  "toolbarEdit": {
+    "message": "แก้ไขที่คั่นหน้า"
+  },
+  "toolbarSortClicks": {
+    "message": "เรียงตามจำนวนคลิก"
+  },
+  "toolbarSortDate": {
+    "message": "เรียงตามวันที่เพิ่ม"
+  },
+  "toolbarSortAccessed": {
+    "message": "เรียงตามการเข้าถึงล่าสุด"
+  },
+  "toolbarSettings": {
+    "message": "ตั้งค่า"
   }
 }

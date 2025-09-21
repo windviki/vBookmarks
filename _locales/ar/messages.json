@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
+  },
+  "toolbarEdit": {
+    "message": "تحرير العلامات المرجعية"
+  },
+  "toolbarSortClicks": {
+    "message": "فرز حسب النقرات"
+  },
+  "toolbarSortDate": {
+    "message": "فرز حسب تاريخ الإضافة"
+  },
+  "toolbarSortAccessed": {
+    "message": "فرز حسب آخر وصول"
+  },
+  "toolbarSettings": {
+    "message": "الإعدادات"
   }
 }

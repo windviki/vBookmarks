@@ -314,5 +314,38 @@
   },
   "optionAutoResizePopup": {
     "message": "自动调整弹出窗口大小以适应内容"
+  },
+  "toolbarEdit": {
+    "message": "书签编辑"
+  },
+  "toolbarSortClicks": {
+    "message": "按点击次数排序"
+  },
+  "toolbarSortDate": {
+    "message": "按添加日期排序"
+  },
+  "toolbarSortAccessed": {
+    "message": "按访问日期排序"
+  },
+  "toolbarSettings": {
+    "message": "设置"
+  },
+  "toolbarOptions": {
+    "message": "工具栏选项"
+  },
+  "optionShowFloatingToolbar": {
+    "message": "显示悬浮工具栏"
+  },
+  "metadataOptions": {
+    "message": "元数据显示"
+  },
+  "optionShowAddedDate": {
+    "message": "显示添加日期"
+  },
+  "optionShowLastAccessed": {
+    "message": "显示最后访问"
+  },
+  "optionShowClickCount": {
+    "message": "显示点击次数"
   }
 }

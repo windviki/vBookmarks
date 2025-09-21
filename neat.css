@@ -667,3 +667,213 @@ menu[type=context].hide-editables #folder-delete {
     background-color: #9f9f9f;
     -webkit-border-radius: 4px;
 }
+
+/* ========================================================================= */
+/* BOOKMARK METADATA DISPLAY */
+/* ========================================================================= */
+
+/* 恢复原有样式，只添加相对定位用于元信息悬浮显示 */
+#tree ul li a,
+#tree ul li span {
+    position: relative; /* 用于元信息绝对定位 */
+}
+
+.bookmark-metadata {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    font-size: 9px;
+    z-index: 200;
+    max-width: 120px;
+}
+
+#tree ul li a:hover .bookmark-metadata {
+    opacity: 1;
+}
+
+/* Individual meta badges positioned directly */
+.meta-badge {
+    display: inline-block;
+    background: rgba(248, 249, 250, 0.95);
+    color: #495057;
+    padding: 1px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid rgba(233, 236, 239, 0.8);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 1.2;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    backdrop-filter: blur(4px);
+}
+
+/* Position multiple badges in a row - 现在使用flex布局，不需要手动定位 */
+
+.meta-badge.clicks {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #ffeaa7;
+}
+
+.meta-badge.date {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.meta-badge.accessed {
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.metadata-item {
+    font-size: 9px;
+    line-height: 1.3;
+    color: #495057;
+    text-align: center;
+    font-weight: 500;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2px 6px;
+    margin: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+}
+
+.metadata-item.added-date {
+    background: #e3f2fd;
+    color: #1565c0;
+    border-color: #bbdefb;
+}
+
+.metadata-item.last-accessed {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border-color: #c8e6c9;
+}
+
+.metadata-item.click-count {
+    background: #fff3e0;
+    color: #ef6c00;
+    border-color: #ffcc02;
+    font-weight: 600;
+}
+
+/* 确保在搜索结果中也能正常显示 */
+#results ul li a {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 80px !important;
+}
+
+#results .tree-item-link .bookmark-metadata {
+    /* 移除深色背景，使用tag样式 */
+}
+
+/* 强制显示元数据用于测试 */
+.bookmark-metadata.force-show {
+    opacity: 1 !important;
+}
+
+/* 在小屏幕上优化显示 */
+@media (max-width: 300px) {
+    #tree ul li a,
+    #tree ul li span,
+    #results ul li a {
+        padding-right: 60px !important;
+    }
+
+    .bookmark-metadata {
+        font-size: 9px;
+        padding: 2px 4px;
+        min-width: 50px;
+    }
+
+    .metadata-item {
+        line-height: 1.1;
+    }
+}
+
+/* Sync status indicators */
+.sync-indicator {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.sync-indicator.synced {
+    background-color: #4caf50;
+}
+
+.sync-indicator.syncing {
+    background-color: #ff9800;
+    animation: pulse 1.5s infinite;
+}
+
+.sync-indicator.error {
+    background-color: #f44336;
+}
+
+.sync-indicator.local-only {
+    background-color: #9e9e9e;
+}
+
+.sync-indicator.pending {
+    background-color: #2196f3;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.sync-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    margin-bottom: 4px;
+}
+
+.sync-indicator:hover .sync-tooltip {
+    opacity: 1;
+}

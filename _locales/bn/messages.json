@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "বিষয়বস্তু অনুযায়ী পপআপ উইন্ডো স্বয়ংক্রিয়ভাবে আকার পরিবর্তন করুন"
+  },
+  "toolbarEdit": {
+    "message": "বুকমার্ক সম্পাদনা করুন"
+  },
+  "toolbarSortClicks": {
+    "message": "ক্লিক অনুযায়ী সাজান"
+  },
+  "toolbarSortDate": {
+    "message": "যোগের তারিখ অনুযায়ী সাজান"
+  },
+  "toolbarSortAccessed": {
+    "message": "সর্বশেষ অ্যাক্সেস অনুযায়ী সাজান"
+  },
+  "toolbarSettings": {
+    "message": "সেটিংস"
   }
 }

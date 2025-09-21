@@ -314,5 +314,20 @@
    },
    "optionAutoResizePopup": {
       "message": "Автоматически изменять размер всплывающего окна под содержимое"
+   },
+   "toolbarEdit": {
+      "message": "Редактировать закладки"
+   },
+   "toolbarSortClicks": {
+      "message": "Сортировать по кликам"
+   },
+   "toolbarSortDate": {
+      "message": "Сортировать по дате добавления"
+   },
+   "toolbarSortAccessed": {
+      "message": "Сортировать по последнему доступу"
+   },
+   "toolbarSettings": {
+      "message": "Настройки"
    }
 }

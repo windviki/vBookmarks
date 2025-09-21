@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "पॉपअप विंडो को सामग्री के अनुसार ऑटो-रिसाइज़ करें"
+  },
+  "toolbarEdit": {
+    "message": "बुकमार्क संपादित करें"
+  },
+  "toolbarSortClicks": {
+    "message": "क्लिक के अनुसार सॉर्ट करें"
+  },
+  "toolbarSortDate": {
+    "message": "जोड़ने की तारीख के अनुसार सॉर्ट करें"
+  },
+  "toolbarSortAccessed": {
+    "message": "आखिरी एक्सेस के अनुसार सॉर्ट करें"
+  },
+  "toolbarSettings": {
+    "message": "सेटिंग्स"
   }
 }

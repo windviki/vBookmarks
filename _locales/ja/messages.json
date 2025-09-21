@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
+  },
+  "toolbarEdit": {
+    "message": "ブックマークを編集"
+  },
+  "toolbarSortClicks": {
+    "message": "クリック数で並べ替え"
+  },
+  "toolbarSortDate": {
+    "message": "追加日時で並べ替え"
+  },
+  "toolbarSortAccessed": {
+    "message": "最終アクセス日時で並べ替え"
+  },
+  "toolbarSettings": {
+    "message": "設定"
   }
 }

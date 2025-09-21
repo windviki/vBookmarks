@@ -5,33 +5,39 @@
 
 /* Modern Sync Status Indicators */
 .sync-indicator {
-    display: block;
-    width: 10px;
-    height: 10px;
+    display: block !important;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     cursor: help;
     position: absolute;
     /* Position over favicon bottom right */
-    bottom: 0px;
-    right: 0px;
-    z-index: 5; /* Lower z-index to stay below dialogs */
+    bottom: 1px;
+    right: 1px;
+    z-index: 15; /* Higher z-index to ensure visibility */
     /* Reset positioning context */
     margin: 0;
     padding: 0;
     /* Ensure it doesn't affect layout */
     box-sizing: border-box;
     /* Ensure perfect circle and prevent compression */
-    min-width: 10px;
-    min-height: 10px;
-    max-width: 10px;
-    max-height: 10px;
+    min-width: 8px;
+    min-height: 8px;
+    max-width: 8px;
+    max-height: 8px;
     transform: translateZ(0); /* Force hardware acceleration for crisp rendering */
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    /* Prevent being stretched by parent containers */
+    flex-shrink: 0;
+    align-self: flex-end;
+    justify-self: flex-end;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     /* Ensure line-height doesn't affect it */
     line-height: 0;
     font-size: 0;
+    /* Ensure it's always visible */
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .sync-indicator.synced {
@@ -788,4 +794,548 @@
     .sync-stat-label {
         color: #bdc3c7;
     }
+}
+
+/* ========================================================================= */
+/* FLOATING TOOLBAR */
+/* ========================================================================= */
+
+.floating-toolbar {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 4px 8px;
+    display: flex;
+    gap: 3px;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.7;
+}
+
+.floating-toolbar:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.toolbar-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toolbar-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.toolbar-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.08) translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.toolbar-btn:hover::before {
+    opacity: 1;
+}
+
+.toolbar-btn:active {
+    transform: scale(0.92);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.toolbar-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    pointer-events: none;
+    stroke-width: 2;
+}
+
+/* Toolbar button specific hover effects */
+#toolbar-edit:hover {
+    background: rgba(52, 152, 219, 0.3);
+}
+
+#toolbar-sort-clicks:hover {
+    background: rgba(46, 204, 113, 0.3);
+}
+
+#toolbar-sort-date:hover {
+    background: rgba(241, 196, 15, 0.3);
+}
+
+#toolbar-settings:hover {
+    background: rgba(155, 89, 182, 0.3);
+}
+
+#toolbar-sort-accessed:hover {
+    background: rgba(230, 126, 34, 0.3);
+}
+
+/* Active state for sort buttons */
+.toolbar-btn.active {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.3),
+        inset 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Tooltip for toolbar buttons */
+.toolbar-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    margin-bottom: 5px;
+    backdrop-filter: blur(4px);
+}
+
+.toolbar-btn:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    .floating-toolbar {
+        bottom: 10px;
+        padding: 6px 8px;
+        gap: 6px;
+    }
+
+    .toolbar-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .toolbar-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* ========================================================================= */
+/* SORTED BOOKMARKS DISPLAY */
+/* ========================================================================= */
+
+.sort-header {
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #495057;
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.loading-sort {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.no-results {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin: 20px;
+    border: 1px dashed #dee2e6;
+}
+
+.error-message {
+    padding: 20px;
+    text-align: center;
+    color: #dc3545;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin: 20px;
+}
+
+.sorted-bookmark-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f3f4;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.sorted-bookmark-item:hover {
+    background: #f8f9fa;
+    border-left: 3px solid #007bff;
+}
+
+.sorted-bookmark-item:last-child {
+    border-bottom: none;
+}
+
+.bookmark-main {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.bookmark-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+    margin-left: 8px;
+}
+
+.bookmark-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.bookmark-metadata {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    margin-left: 16px;
+    min-width: 120px;
+}
+
+.click-count,
+.added-date {
+    font-size: 11px;
+    color: #6c757d;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.bookmark-path {
+    font-size: 10px;
+    color: #adb5bd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    text-align: right;
+}
+
+.favicon-container {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.bookmark-favicon {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    object-fit: cover;
+}
+
+/* Responsive design for sorted results */
+@media (max-width: 500px) {
+    .sorted-bookmark-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .bookmark-metadata {
+        align-items: flex-start;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .bookmark-path {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .bookmark-main {
+        width: 100%;
+    }
+
+    .bookmark-link {
+        margin-left: 8px;
+    }
+}
+
+/* Animation for sorted items */
+.sorted-bookmark-item {
+    animation: slideIn 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.sorted-bookmark-item:nth-child(1) { animation-delay: 0.05s; }
+.sorted-bookmark-item:nth-child(2) { animation-delay: 0.1s; }
+.sorted-bookmark-item:nth-child(3) { animation-delay: 0.15s; }
+.sorted-bookmark-item:nth-child(4) { animation-delay: 0.2s; }
+.sorted-bookmark-item:nth-child(5) { animation-delay: 0.25s; }
+.sorted-bookmark-item:nth-child(6) { animation-delay: 0.3s; }
+.sorted-bookmark-item:nth-child(7) { animation-delay: 0.35s; }
+.sorted-bookmark-item:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================================================= */
+/* SORTED BOOKMARK LIST ENHANCEMENTS */
+/* ========================================================================= */
+
+.sort-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin: -10px -10px 16px -10px;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sort-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sorted-bookmark-item.enhanced {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.sorted-bookmark-item.enhanced:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.sorted-bookmark-item.enhanced .bookmark-main {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.sorted-bookmark-item.enhanced .bookmark-content {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.sorted-bookmark-item.enhanced .bookmark-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sorted-bookmark-item.enhanced .bookmark-link:hover {
+    color: #667eea;
+}
+
+.sorted-bookmark-item.enhanced .bookmark-metadata.enhanced {
+    position: static;
+    transform: none;
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    padding: 4px 8px;
+    border-radius: 6px;
+    min-width: 80px;
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.1);
+    margin-left: 8px;
+}
+
+.sorted-bookmark-item.enhanced .metadata-item {
+    font-size: 10px;
+    line-height: 1.3;
+    margin: 1px 0;
+}
+
+.sorted-bookmark-item.enhanced .metadata-item.primary {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.sorted-bookmark-item.enhanced .metadata-item.path {
+    color: #666;
+    font-size: 9px;
+}
+
+/* Individual meta badges for sorted lists */
+.sorted-bookmark-item .meta-badge {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ffffff;
+    color: #333;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: inline-block !important;
+    line-height: 1.2;
+    min-height: 14px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Position multiple badges in sorted lists */
+.sorted-bookmark-item .meta-badge:nth-of-type(1) {
+    right: 4px;
+}
+
+.sorted-bookmark-item .meta-badge:nth-of-type(2) {
+    right: 70px;
+}
+
+.sorted-bookmark-item .meta-badge:nth-of-type(3) {
+    right: 130px;
+}
+
+/* Individual tag-style badges */
+.meta-badge {
+    background: #ffffff;
+    color: #333;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    /* Tag-like appearance */
+    display: inline-block;
+    line-height: 1.2;
+    min-height: 14px;
+}
+
+.meta-badge.clicks {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #ffeaa7;
+}
+
+.meta-badge.date {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.meta-badge.accessed {
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.meta-badge.path {
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+    font-size: 8px;
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    font-style: italic;
+    opacity: 0.8;
 }

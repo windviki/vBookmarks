@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Popup-venstergrootte automatisch aanpassen aan inhoud"
+  },
+  "toolbarEdit": {
+    "message": "Bladwijzers bewerken"
+  },
+  "toolbarSortClicks": {
+    "message": "Sorteren op klikken"
+  },
+  "toolbarSortDate": {
+    "message": "Sorteren op toegevoegde datum"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sorteren op laatste toegang"
+  },
+  "toolbarSettings": {
+    "message": "Instellingen"
   }
 }

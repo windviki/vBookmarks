@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "تغییر اندازه خودکار پنجره پاپ‌آپ مطابق با محتوا"
+  },
+  "toolbarEdit": {
+    "message": "ویرایش نشانک‌ها"
+  },
+  "toolbarSortClicks": {
+    "message": "مرتب‌سازی بر اساس کلیک‌ها"
+  },
+  "toolbarSortDate": {
+    "message": "مرتب‌سازی بر اساس تاریخ افزودن"
+  },
+  "toolbarSortAccessed": {
+    "message": "مرتب‌سازی بر اساس آخرین دسترسی"
+  },
+  "toolbarSettings": {
+    "message": "تنظیمات"
   }
 }

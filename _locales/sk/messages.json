@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Automaticky zmeňte veľkosť vyskakovacieho okna podľa obsahu"
+  },
+  "toolbarEdit": {
+    "message": "Upraviť záložky"
+  },
+  "toolbarSortClicks": {
+    "message": "Zoradiť podľa kliknutí"
+  },
+  "toolbarSortDate": {
+    "message": "Zoradiť podľa dátumu pridania"
+  },
+  "toolbarSortAccessed": {
+    "message": "Zoradiť podľa posledného prístupu"
+  },
+  "toolbarSettings": {
+    "message": "Nastavenia"
   }
 }

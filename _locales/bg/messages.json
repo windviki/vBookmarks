@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Автоматично оразмеряване на изскачащия прозорец според съдържанието"
+  },
+  "toolbarEdit": {
+    "message": "Редактиране на отметки"
+  },
+  "toolbarSortClicks": {
+    "message": "Сортиране по кликове"
+  },
+  "toolbarSortDate": {
+    "message": "Сортиране по дата на добавяне"
+  },
+  "toolbarSortAccessed": {
+    "message": "Сортиране по последен достъп"
+  },
+  "toolbarSettings": {
+    "message": "Настройки"
   }
 }

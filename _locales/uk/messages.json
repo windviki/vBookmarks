@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Автоматично змінювати розмір спливаючого вікна відповідно до вмісту"
+  },
+  "toolbarEdit": {
+    "message": "Редагувати закладки"
+  },
+  "toolbarSortClicks": {
+    "message": "Сортувати за кліками"
+  },
+  "toolbarSortDate": {
+    "message": "Сортувати за датою додавання"
+  },
+  "toolbarSortAccessed": {
+    "message": "Сортувати за останнім доступом"
+  },
+  "toolbarSettings": {
+    "message": "Налаштування"
   }
 }

@@ -417,6 +417,110 @@
         return favUrl.toString();
     };
 
+    /**
+     * Get metadata display settings
+     */
+    const getMetadataSettings = () => {
+        return {
+            showAddedDate: localStorage.getItem('vbookmarks_show_added_date') !== 'false',
+            showLastAccessed: localStorage.getItem('vbookmarks_show_last_accessed') !== 'false',
+            showClickCount: localStorage.getItem('vbookmarks_show_click_count') !== 'false'
+        };
+    };
+
+    /**
+     * Get compact date representation
+     */
+    const getCompactDate = (date) => {
+        if (!date) return '';
+
+        const now = new Date();
+        const timestamp = typeof date === 'string' ? new Date(date) : date;
+        const diff = now - timestamp;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        if (days === 0) return '今';
+        if (days === 1) return '昨';
+        if (days < 7) return `${days}天`;
+        if (days < 30) return `${Math.floor(days / 7)}周`;
+        if (days < 365) return `${Math.floor(days / 30)}月`;
+        return `${Math.floor(days / 365)}年`;
+    };
+
+    /**
+     * Format date for display
+     */
+    const formatDate = (date) => {
+        if (!date) return '';
+
+        const now = new Date();
+        const timestamp = typeof date === 'string' ? new Date(date) : date;
+        const diff = now - timestamp;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        if (days === 0) {
+            return '今天';
+        } else if (days === 1) {
+            return '昨天';
+        } else if (days < 7) {
+            return `${days}天前`;
+        } else if (days < 30) {
+            return `${Math.floor(days / 7)}周前`;
+        } else if (days < 365) {
+            return `${Math.floor(days / 30)}个月前`;
+        } else {
+            return `${Math.floor(days / 365)}年前`;
+        }
+    };
+
+    /**
+     * Get bookmark metadata HTML
+     */
+    const getBookmarkMetadataHTML = (bookmarkId) => {
+        if (!bookmarkId) {
+            return '';
+        }
+
+        // BookmarkMetadataManager应该已经初始化完成
+        if (!window.metadataManager) {
+            console.warn('MetadataManager not available for bookmark:', bookmarkId);
+            return '';
+        }
+
+        try {
+            const settings = getMetadataSettings();
+            const metadata = window.metadataManager.getMetadata(bookmarkId);
+
+            if (!settings.showAddedDate && !settings.showLastAccessed && !settings.showClickCount) {
+                return '';
+            }
+
+        let metadataHtml = '';
+
+            if (settings.showClickCount && metadata.clickCount > 0) {
+                const clickTitle = chrome.i18n.getMessage('clickCount') || 'Clicks';
+                metadataHtml += `<span class="meta-badge clicks" title="${clickTitle}: ${metadata.clickCount}">${metadata.clickCount}</span>`;
+            }
+
+            if (settings.showAddedDate && metadata.addedDate) {
+                const dateStr = formatDate(metadata.addedDate);
+                const addedTitle = chrome.i18n.getMessage('addedDate') || 'Added';
+                metadataHtml += `<span class="meta-badge date" title="${addedTitle}: ${dateStr}">${getCompactDate(metadata.addedDate)}</span>`;
+            }
+
+            if (settings.showLastAccessed && metadata.lastAccessed) {
+                const dateStr = formatDate(metadata.lastAccessed);
+                const accessedTitle = chrome.i18n.getMessage('lastAccessed') || 'Accessed';
+                metadataHtml += `<span class="meta-badge accessed" title="${accessedTitle}: ${dateStr}">${getCompactDate(metadata.lastAccessed)}</span>`;
+            }
+
+            return metadataHtml;
+        } catch (error) {
+            console.warn('Failed to generate bookmark metadata HTML for', bookmarkId, ':', error);
+            return '';
+        }
+    };
+
     const generateBookmarkHTML = (title, url, extras, bookmarkId) => {
         if (!extras)
             extras = '';
@@ -445,12 +549,16 @@
             }
         }
 
+        // Add metadata display
+        const metadataHTML = getBookmarkMetadataHTML(bookmarkId);
+
         return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
                 <div class="favicon-container">
                     <img src="${favicon}" width="16" height="16" alt="">
                     ${syncIndicator}
                 </div>
                 <i>${name}</i>
+                ${metadataHTML}
                 </a>`;
     };
 
@@ -1708,6 +1816,19 @@
         const ctrlMeta = (e.ctrlKey || e.metaKey || (e.button === 1));
         const shift = e.shiftKey;
         if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
+            // Track bookmark click if we have metadata manager
+            if (window.BookmarkMetadataManager) {
+                const bookmarkId = el.parentNode.id.replace(/(neat-tree|results)-item-/, '');
+                if (bookmarkId && bookmarkId !== '0' && /^\d+$/.test(bookmarkId)) {
+                    try {
+                        const metadataManager = new BookmarkMetadataManager();
+                        metadataManager.incrementClickCount(bookmarkId);
+                    } catch (error) {
+                        console.warn('Failed to track bookmark click:', error);
+                    }
+                }
+            }
+
             if (el.className === "link-folder") { // search result folder
                 // switch to tree
                 quitSearchMode();

@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Tilpas automatisk popup-vinduets størrelse til indholdet"
+  },
+  "toolbarEdit": {
+    "message": "Rediger bogmærker"
+  },
+  "toolbarSortClicks": {
+    "message": "Sorter efter klik"
+  },
+  "toolbarSortDate": {
+    "message": "Sorter efter tilføjelsesdato"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sorter efter sidst tilgået"
+  },
+  "toolbarSettings": {
+    "message": "Indstillinger"
   }
 }

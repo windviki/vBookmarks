@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
+  },
+  "toolbarEdit": {
+    "message": "Redaguoti žymeles"
+  },
+  "toolbarSortClicks": {
+    "message": "Rūšiuoti pagal paspaudimus"
+  },
+  "toolbarSortDate": {
+    "message": "Rūšiuoti pagal pridėjimo datą"
+  },
+  "toolbarSortAccessed": {
+    "message": "Rūšiuoti pagal paskutinį pasiekimą"
+  },
+  "toolbarSettings": {
+    "message": "Nustatymai"
   }
 }

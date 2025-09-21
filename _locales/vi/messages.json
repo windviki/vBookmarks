@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
+  },
+  "toolbarEdit": {
+    "message": "Chỉnh sửa dấu trang"
+  },
+  "toolbarSortClicks": {
+    "message": "Sắp xếp theo số lần nhấp"
+  },
+  "toolbarSortDate": {
+    "message": "Sắp xếp theo ngày thêm"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sắp xếp theo lần truy cập cuối"
+  },
+  "toolbarSettings": {
+    "message": "Cài đặt"
   }
 }

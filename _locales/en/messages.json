@@ -314,5 +314,38 @@
   },
   "optionAutoResizePopup": {
     "message": "Auto-resize popup window to fit content"
+  },
+  "toolbarEdit": {
+    "message": "Edit Bookmarks"
+  },
+  "toolbarSortClicks": {
+    "message": "Sort by Clicks"
+  },
+  "toolbarSortDate": {
+    "message": "Sort by Date Added"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sort by Last Accessed"
+  },
+  "toolbarSettings": {
+    "message": "Settings"
+  },
+  "toolbarOptions": {
+    "message": "Toolbar Options"
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Show floating toolbar"
+  },
+  "metadataOptions": {
+    "message": "Metadata Display"
+  },
+  "optionShowAddedDate": {
+    "message": "Show date added"
+  },
+  "optionShowLastAccessed": {
+    "message": "Show last accessed"
+  },
+  "optionShowClickCount": {
+    "message": "Show click count"
   }
 }

@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Ridimensiona automaticamente la finestra popup per adattarla al contenuto"
+  },
+  "toolbarEdit": {
+    "message": "Modifica segnalibri"
+  },
+  "toolbarSortClicks": {
+    "message": "Ordina per clic"
+  },
+  "toolbarSortDate": {
+    "message": "Ordina per data di aggiunta"
+  },
+  "toolbarSortAccessed": {
+    "message": "Ordina per ultimo accesso"
+  },
+  "toolbarSettings": {
+    "message": "Impostazioni"
   }
 }

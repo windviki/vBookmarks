@@ -418,9 +418,16 @@ class SyncManager {
     }
 }
 
-// Initialize sync manager when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize sync manager immediately if not already initialized
+if (typeof window !== 'undefined' && !window.syncManager) {
     window.syncManager = new SyncManager();
+}
+
+// Fallback initialization on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.syncManager) {
+        window.syncManager = new SyncManager();
+    }
 });
 
 // Export for module systems

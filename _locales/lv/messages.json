@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
+  },
+  "toolbarEdit": {
+    "message": "Rediģēt grāmatzīmes"
+  },
+  "toolbarSortClicks": {
+    "message": "Kārtot pēc klikšķiem"
+  },
+  "toolbarSortDate": {
+    "message": "Kārtot pēc pievienošanas datuma"
+  },
+  "toolbarSortAccessed": {
+    "message": "Kārtot pēc pēdējās piekļuves"
+  },
+  "toolbarSettings": {
+    "message": "Iestatījumi"
   }
 }

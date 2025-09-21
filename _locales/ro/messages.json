@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
+  },
+  "toolbarEdit": {
+    "message": "Editare marcaje"
+  },
+  "toolbarSortClicks": {
+    "message": "Sortare după clicuri"
+  },
+  "toolbarSortDate": {
+    "message": "Sortare după data adăugării"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sortare după ultimul acces"
+  },
+  "toolbarSettings": {
+    "message": "Setări"
   }
 }

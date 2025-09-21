@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
+  },
+  "toolbarEdit": {
+    "message": "Könyvjelzők szerkesztése"
+  },
+  "toolbarSortClicks": {
+    "message": "Rendezés kattintások szerint"
+  },
+  "toolbarSortDate": {
+    "message": "Rendezés hozzáadás dátuma szerint"
+  },
+  "toolbarSortAccessed": {
+    "message": "Rendezés utolsó hozzáférés szerint"
+  },
+  "toolbarSettings": {
+    "message": "Beállítások"
   }
 }

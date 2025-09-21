@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+*.crx
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+src/legacy/
+vendor/

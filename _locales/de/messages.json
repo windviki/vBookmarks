@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Popup-Fenstergröße automatisch an den Inhalt anpassen"
+  },
+  "toolbarEdit": {
+    "message": "Lesezeichen bearbeiten"
+  },
+  "toolbarSortClicks": {
+    "message": "Nach Klicks sortieren"
+  },
+  "toolbarSortDate": {
+    "message": "Nach Hinzufügungsdatum sortieren"
+  },
+  "toolbarSortAccessed": {
+    "message": "Nach letztem Zugriff sortieren"
+  },
+  "toolbarSettings": {
+    "message": "Einstellungen"
   }
 }

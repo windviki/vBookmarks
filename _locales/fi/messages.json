@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Säädä ponnahdusikkunan koko automaattisesti sisällön mukaan"
+  },
+  "toolbarEdit": {
+    "message": "Muokkaa kirjanmerkkejä"
+  },
+  "toolbarSortClicks": {
+    "message": "Järjestä klikkauksien mukaan"
+  },
+  "toolbarSortDate": {
+    "message": "Järjestä lisäyspäivämäärän mukaan"
+  },
+  "toolbarSortAccessed": {
+    "message": "Järjestä viimeisimmän käytön mukaan"
+  },
+  "toolbarSettings": {
+    "message": "Asetukset"
   }
 }

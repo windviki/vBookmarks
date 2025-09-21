@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Αυτόματη προσαρμογή μεγέθους παραθύρου popup ανάλογα με το περιεχόμενο"
+  },
+  "toolbarEdit": {
+    "message": "Επεξεργασία σελιδοδεικτών"
+  },
+  "toolbarSortClicks": {
+    "message": "Ταξινόμηση κατά κλικ"
+  },
+  "toolbarSortDate": {
+    "message": "Ταξινόμηση κατά ημερομηνία προσθήκης"
+  },
+  "toolbarSortAccessed": {
+    "message": "Ταξινόμηση κατά τελευταία πρόσβαση"
+  },
+  "toolbarSettings": {
+    "message": "Ρυθμίσεις"
   }
 }

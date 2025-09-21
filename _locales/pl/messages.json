@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Automycznie dostosuj rozmiar okna popup do zawartości"
+  },
+  "toolbarEdit": {
+    "message": "Edytuj zakładki"
+  },
+  "toolbarSortClicks": {
+    "message": "Sortuj według kliknięć"
+  },
+  "toolbarSortDate": {
+    "message": "Sortuj według daty dodania"
+  },
+  "toolbarSortAccessed": {
+    "message": "Sortuj według ostatniego dostępu"
+  },
+  "toolbarSettings": {
+    "message": "Ustawienia"
   }
 }

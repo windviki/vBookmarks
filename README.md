@@ -1,9 +1,10 @@
-vBookmarks
-==============
+# vBookmarks - 现代化书签管理扩展
+
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Build](https://img.shields.io/badge/build-passing-green.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 [English Readme](README.md) | [中文说明](README.zh.md)
-
-[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](donation/donation.zh.md)
 
 ![Image of vBookmarks](vbookmarks.png)
 

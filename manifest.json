@@ -22,6 +22,17 @@
 		"default_popup": "popup.html"
 	},
 	"options_page": "options.html",
+	"web_accessible_resources": [
+		{
+			"resources": ["bookmark-editor.html"],
+			"matches": ["<all_urls>"]
+		},
+		{
+			"resources": [ "_favicon/*" ],
+			"matches": ["<all_urls>"],
+			"extension_ids": [ "*" ]
+		}
+	],
 	"background": {
         "service_worker": "background.js",
         "type": "module"
@@ -44,7 +55,7 @@
         "identity"
 	],
     "web_accessible_resources": [{
-        "resources": [ "_favicon/*" ],
+        "resources": [ "bookmark-editor.html", "_favicon/*" ],
         "matches": ["<all_urls>"],
         "extension_ids": [ "*" ]
     }],
@@ -52,7 +63,7 @@
 		"<all_urls>"
     ],
     "content_security_policy": {
-        "extension_pages": "img-src 'self' data:; default-src 'self'; style-src 'self' 'unsafe-inline';"
+        "extension_pages": "img-src 'self' data: https://www.google.com https://t1.gstatic.com https://www.gstatic.com; default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
     },
 	"minimum_chrome_version": "88.0.0.0",
 	"default_locale": "en",

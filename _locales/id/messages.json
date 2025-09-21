@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
+  },
+  "toolbarEdit": {
+    "message": "Edit Bookmark"
+  },
+  "toolbarSortClicks": {
+    "message": "Urutkan berdasarkan Klik"
+  },
+  "toolbarSortDate": {
+    "message": "Urutkan berdasarkan Tanggal Ditambahkan"
+  },
+  "toolbarSortAccessed": {
+    "message": "Urutkan berdasarkan Terakhir Diakses"
+  },
+  "toolbarSettings": {
+    "message": "Pengaturan"
   }
 }

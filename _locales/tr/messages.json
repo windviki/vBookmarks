@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
+  },
+  "toolbarEdit": {
+    "message": "Yer imlerini düzenle"
+  },
+  "toolbarSortClicks": {
+    "message": "Tıklamaya göre sırala"
+  },
+  "toolbarSortDate": {
+    "message": "Ekleme tarihine göre sırala"
+  },
+  "toolbarSortAccessed": {
+    "message": "Son erişime göre sırala"
+  },
+  "toolbarSettings": {
+    "message": "Ayarlar"
   }
 }

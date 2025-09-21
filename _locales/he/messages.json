@@ -314,5 +314,20 @@
   },
   "optionAutoResizePopup": {
     "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
+  },
+  "toolbarEdit": {
+    "message": "ערוך סימניות"
+  },
+  "toolbarSortClicks": {
+    "message": "מיין לפי לחיצות"
+  },
+  "toolbarSortDate": {
+    "message": "מיין לפי תאריך הוספה"
+  },
+  "toolbarSortAccessed": {
+    "message": "מיין לפי גישה אחרונה"
+  },
+  "toolbarSettings": {
+    "message": "הגדרות"
   }
 }
