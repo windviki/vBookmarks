@@ -149,7 +149,7 @@
     "message": "Αν σας αρέσει, ίσως μπορείτε να κάνετε μια δωρεά για μελλοντική ανάπτυξη. Κάθε ποσό είναι ευπρόσδεκτο."
   },
   "donationGo": {
-    "message": "[EL] OK",
+    "message": "OK",
     "description": ""
   },
   "donationDismiss": {
@@ -172,7 +172,7 @@
     "message": "Ένας popup διαχειριστής σελιδοδείκτων. Βελτιωμένο Neat Bookmarks. Πιο τακτοποιημένο από το Neater Bookmarks."
   },
   "extName": {
-    "message": "[EL] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -293,7 +293,7 @@
     "message": "Αναζήτηση Σελιδοδεικτών"
   },
   "url": {
-    "message": "[EL] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

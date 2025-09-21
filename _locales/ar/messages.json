@@ -171,7 +171,7 @@
     "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
   },
   "extName": {
-    "message": "[AR] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -292,7 +292,7 @@
     "message": "بحث في العلامات المرجعية"
   },
   "url": {
-    "message": "[AR] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

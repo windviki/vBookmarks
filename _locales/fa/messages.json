@@ -171,7 +171,7 @@
     "message": "مدیر نشانک پاپ‌آپ. Neat Bookmarks بهبود یافته. مرتب‌تر از Neater Bookmarks."
   },
   "extName": {
-    "message": "[FA] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -292,7 +292,7 @@
     "message": "جستجوی نشانک‌ها"
   },
   "url": {
-    "message": "[FA] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

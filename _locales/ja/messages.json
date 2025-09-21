@@ -129,11 +129,11 @@
     "message": " または "
   },
   "delete": {
-    "message": "[JA] Delete",
+    "message": "削除",
     "description": ""
   },
   "deleteEllipsis": {
-    "message": "[JA] Delete...",
+    "message": "削除...",
     "description": ""
   },
   "versionMessage": {
@@ -157,7 +157,7 @@
     "message": "いいえ"
   },
   "edit": {
-    "message": "[JA] Edit...",
+    "message": "編集...",
     "description": ""
   },
   "editBookmark": {
@@ -174,26 +174,26 @@
     "message": "すっきりしたツリー構造のブックマーク"
   },
   "extName": {
-    "message": "[JA] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
-    "message": "[JA] General",
+    "message": "一般",
     "description": ""
   },
   "ignore": {
-    "message": "[JA] Ignore",
+    "message": "無視",
     "description": ""
   },
   "name": {
-    "message": "[JA] Name",
+    "message": "名前",
     "description": "Name of bookmark or folder."
   },
   "nope": {
     "message": "いいえ"
   },
   "noTitle": {
-    "message": "[JA] (no title)",
+    "message": "(no title)",
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders."
   },
   "open": {
@@ -246,7 +246,7 @@
     "message": "オプション"
   },
   "optionsFooterText": {
-    "message": "[JA] Built by $authorName$.",
+    "message": "Built by $authorName$.",
     "description": "Footer text for the Options page",
     "placeholders": {
       "authorName": {
@@ -255,7 +255,7 @@
     }
   },
   "optionZoom": {
-    "message": "[JA] Zoom",
+    "message": "ズーム",
     "description": ""
   },
   "parentFolder": {
@@ -291,7 +291,7 @@
     "message": "デフォルトの設定にvBookmarksをリセットします"
   },
   "save": {
-    "message": "[JA] Save",
+    "message": "保存",
     "description": ""
   },
   "searchBookmarks": {
@@ -299,7 +299,7 @@
     "message": "ブックマークの検索"
   },
   "url": {
-    "message": "[JA] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {
@@ -315,11 +315,11 @@
     "message": "同期ステータスを自動更新"
   },
   "optionSyncRefreshInterval": {
-    "message": "[JA] Refresh interval",
+    "message": "更新間隔",
     "description": ""
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "[JA] seconds",
+    "message": "秒",
     "description": ""
   },
   "optionAutoResizePopup": {
@@ -338,7 +338,7 @@
     "message": "最終アクセス日時で並べ替え"
   },
   "toolbarSettings": {
-    "message": "[JA] Settings",
+    "message": "設定",
     "description": ""
   },
   "toolbarOptions": {

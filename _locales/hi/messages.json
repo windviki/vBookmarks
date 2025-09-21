@@ -171,7 +171,7 @@
     "message": "एक पॉपअप बुकमार्क मैनेजर। बेहतर Neat Bookmarks। Neater Bookmarks से अधिक व्यवस्थित।"
   },
   "extName": {
-    "message": "[HI] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -292,7 +292,7 @@
     "message": "बुकमार्क खोजें"
   },
   "url": {
-    "message": "[HI] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

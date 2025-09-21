@@ -171,7 +171,7 @@
     "message": "팝업 북마크 관리자. 향상된 Neat Bookmarks. Neater Bookmarks보다 더 깔끔합니다."
   },
   "extName": {
-    "message": "[KO] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -292,7 +292,7 @@
     "message": "북마크 검색"
   },
   "url": {
-    "message": "[KO] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

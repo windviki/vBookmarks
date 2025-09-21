@@ -410,7 +410,47 @@ class AITranslationSync {
         this.generateFinalReport();
     }
 
+    // 永不翻译的key及其正确值
+    protectedKeys = {
+        'extName': 'vBookmarks',
+        'url': 'URL',
+        'donationGo': 'OK',
+        'noTitle': '(no title)',
+        'customStyles': 'Customstyles'
+    };
+
+    // 检查是否应该保护某个key不被翻译
+    shouldProtectKey(key, text) {
+        // 如果是受保护的key，直接返回正确值
+        if (this.protectedKeys[key]) {
+            return this.protectedKeys[key];
+        }
+
+        // 某些专有名词和技术术语不翻译
+        const protectedTerms = [
+            'vBookmarks', 'URL', 'OK', 'CSS', 'VBM', 'Neat Bookmarks', 'Neater Bookmarks',
+            'Built by $authorName$.'
+        ];
+
+        // 如果文本包含这些专有名词，不翻译
+        const textContainsProtectedTerms = protectedTerms.some(term =>
+            text.includes(term)
+        );
+
+        if (textContainsProtectedTerms) {
+            return text; // 返回原文，不翻译
+        }
+
+        return null; // 表示需要翻译
+    }
+
     async translateText(text, fromLang, toLang, key) {
+        // 首先检查是否应该保护这个key
+        const protectedValue = this.shouldProtectKey(key, text);
+        if (protectedValue !== null) {
+            return protectedValue;
+        }
+
         // 首先检查预定义翻译
         if (this.predefinedTranslations[key] && this.predefinedTranslations[key][toLang]) {
             return this.predefinedTranslations[key][toLang];
@@ -427,8 +467,9 @@ class AITranslationSync {
             return translations;
         }
 
-        // 如果没有找到翻译，返回带有标记的文本
-        return `[${toLang.toUpperCase()}] ${text}`;
+        // 如果没有找到翻译，返回空字符串而不是标记，避免用户困惑
+        console.log(`⚠️ 没有找到 "${text}" 的 ${toLang.toUpperCase()} 翻译，跳过翻译`);
+        return '';
     }
 
     getCommonTranslations(text, toLang) {

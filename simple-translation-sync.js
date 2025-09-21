@@ -17,6 +17,15 @@ class SimpleTranslationSync {
         this.localesDir = path.join(__dirname, '_locales');
         this.baseLanguages = ['en', 'zh'];
 
+        // 永不翻译的key及其正确值
+        this.protectedKeys = {
+            'extName': 'vBookmarks',
+            'url': 'URL',
+            'donationGo': 'OK',
+            'noTitle': '(no title)',
+            'customStyles': 'Customstyles'
+        };
+
         // 获取所有语言目录
         this.allLanguages = fs.readdirSync(this.localesDir)
             .filter(dir => {
@@ -66,7 +75,7 @@ class SimpleTranslationSync {
                     missingKeys.push(key);
                 } else {
                     // 检查是否使用了正确的语言
-                    if (this.isIncorrectLanguage(langMessages[key].message, lang)) {
+                    if (this.isIncorrectLanguage(langMessages[key].message, lang, key)) {
                         incorrectKeys.push(key);
                     } else {
                         correctKeys++;
@@ -110,10 +119,21 @@ class SimpleTranslationSync {
         }
     }
 
-    isIncorrectLanguage(text, targetLang) {
+    isIncorrectLanguage(text, targetLang, key = null) {
         if (!text || typeof text !== 'string') return false;
 
         const cleanText = text.replace(/<[^>]*>/g, '').replace(/\$[^$]+\$/g, '').trim();
+
+        // 检查是否是受保护的key
+        if (key && this.protectedKeys[key]) {
+            return false; // 受保护的key永远不算"错误语言"
+        }
+
+        // 检查是否是保护的专有名词（这些永远是正确的）
+        const protectedTerms = ['vBookmarks', 'URL', 'OK', 'CSS', 'VBM', 'Neat Bookmarks', 'Neater Bookmarks', 'Built by'];
+        if (protectedTerms.some(term => cleanText.includes(term))) {
+            return false; // 专有名词永远不算"错误语言"
+        }
 
         if (targetLang === 'en') {
             // 检查是否包含非英文字符

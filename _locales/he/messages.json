@@ -149,7 +149,7 @@
     "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
   },
   "donationGo": {
-    "message": "[HE] OK",
+    "message": "OK",
     "description": ""
   },
   "donationDismiss": {
@@ -172,7 +172,7 @@
     "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
   },
   "extName": {
-    "message": "[HE] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -293,7 +293,7 @@
     "message": "חפש סימניות"
   },
   "url": {
-    "message": "[HE] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {

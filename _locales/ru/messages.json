@@ -171,7 +171,7 @@
     "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
   },
   "extName": {
-    "message": "[RU] vBookmarks",
+    "message": "vBookmarks",
     "description": "vBookmarks"
   },
   "general": {
@@ -244,7 +244,7 @@
     "message": "Основные настройки"
   },
   "optionsFooterText": {
-    "message": "[RU] Built by $authorName$.",
+    "message": "Built by $authorName$.",
     "description": "Footer text for the Options page",
     "placeholders": {
       "authorName": {
@@ -292,7 +292,7 @@
     "message": "Поиск"
   },
   "url": {
-    "message": "[RU] URL",
+    "message": "URL",
     "description": ""
   },
   "syncOptions": {
