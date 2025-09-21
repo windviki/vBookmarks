@@ -48,6 +48,12 @@ async function initializePopup() {
 
 // 设置弹出窗口特定功能
 function setupPopupFeatures(app) {
+    // 恢复保存的窗口大小
+    restorePopupSize();
+
+    // 设置捐赠相关功能
+    setupDonationFeature();
+
     // 自动调整弹出窗口大小
     autoResizePopup();
 
@@ -179,6 +185,42 @@ function showError(error) {
                 </div>
             </div>
         `;
+    }
+}
+
+// 恢复保存的窗口大小
+function restorePopupSize() {
+    if (localStorage.popupHeight) {
+        if (localStorage.popupHeight > 600) {
+            localStorage.popupHeight = 600;
+        }
+        document.body.style.height = `${localStorage.popupHeight}px`;
+    }
+
+    if (localStorage.popupWidth) {
+        document.body.style.width = `${localStorage.popupWidth}px`;
+    }
+}
+
+// 设置捐赠相关功能
+function setupDonationFeature() {
+    // 设置捐赠关闭按钮
+    const donationClose = document.getElementById('donation-close');
+    const donationDiv = document.getElementById('donation');
+    if (donationClose && donationDiv) {
+        donationClose.addEventListener('click', () => {
+            donationDiv.style.display = 'none';
+            // 保存偏好到 localStorage
+            localStorage.donationDismissed = 'true';
+        });
+    }
+
+    // 检查捐赠是否之前被关闭
+    if (localStorage.donationDismissed === 'true') {
+        const donationDiv = document.getElementById('donation');
+        if (donationDiv) {
+            donationDiv.style.display = 'none';
+        }
     }
 }
 
