@@ -1,7 +1,15 @@
 /**
  * vBookmarks 弹出窗口入口
- * 临时简化版本 - 确保基本功能
+ * 现代化模块化版本
  */
+
+// 导入核心模块
+import { VBookmarksApp } from '../app/VBookmarksApp.js';
+import { AppInitializer } from '../core/app-initializer.js';
+import { DialogSystem } from '../components/ui/dialog-system.js';
+import { Logger } from '../utils/logger.js';
+
+const logger = new Logger('PopupEntry');
 
 // 简单的错误处理
 function showError(message) {
@@ -21,10 +29,17 @@ function showError(message) {
     }
 }
 
-// 简化的初始化函数
+// 现代化的初始化函数
 async function initializePopup() {
     try {
-        console.log('vBookmarks popup initializing...');
+        logger.info('Initializing vBookmarks popup...');
+
+        // 等待DOM就绪
+        if (document.readyState === 'loading') {
+            await new Promise(resolve => {
+                document.addEventListener('DOMContentLoaded', resolve);
+            });
+        }
 
         // 基本DOM检查
         if (!document.getElementById('tree-container')) {
@@ -35,25 +50,30 @@ async function initializePopup() {
         const container = document.getElementById('tree-container');
         container.innerHTML = '<div style="text-align: center; padding: 40px;">加载中...</div>';
 
-        // 这里将来会加载VBookmarksApp，但现在先显示基本信息
-        setTimeout(() => {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px 20px;">
-                    <div style="font-size: 32px; margin-bottom: 16px;">📚</div>
-                    <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">
-                        vBookmarks
-                    </div>
-                    <div style="font-size: 14px; color: #666;">
-                        模块化重构版本<br>
-                        正在完善功能中...
-                    </div>
-                </div>
-            `;
-        }, 1000);
+        // 创建应用初始化器
+        const initializer = new AppInitializer();
 
-        console.log('vBookmarks popup initialized successfully');
+        // 检测环境
+        await initializer.detectEnvironment();
+
+        // 验证Chrome API
+        await initializer.validateChromeAPIs();
+
+        // 创建全局对话框系统
+        window.dialogSystem = new DialogSystem();
+
+        // 创建主应用实例
+        const app = new VBookmarksApp();
+
+        // 初始化应用
+        await app.init();
+
+        // 设置弹出窗口特定功能
+        setupPopupFeatures(app);
+
+        logger.info('vBookmarks popup initialized successfully');
     } catch (error) {
-        console.error('Failed to initialize vBookmarks popup:', error);
+        logger.error('Failed to initialize vBookmarks popup:', error);
         showError(error.message);
     }
 }
