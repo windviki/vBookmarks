@@ -149,7 +149,8 @@
     "message": "Αν σας αρέσει, ίσως μπορείτε να κάνετε μια δωρεά για μελλοντική ανάπτυξη. Κάθε ποσό είναι ευπρόσδεκτο."
   },
   "donationGo": {
-    "message": "OK"
+    "message": "[EL] OK",
+    "description": ""
   },
   "donationDismiss": {
     "message": "Αγνόηση"
@@ -171,8 +172,8 @@
     "message": "Ένας popup διαχειριστής σελιδοδείκτων. Βελτιωμένο Neat Bookmarks. Πιο τακτοποιημένο από το Neater Bookmarks."
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[EL] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "Γενικά"
@@ -292,7 +293,8 @@
     "message": "Αναζήτηση Σελιδοδεικτών"
   },
   "url": {
-    "message": "URL"
+    "message": "[EL] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "Επιλογές συγχρονισμού"
@@ -329,5 +331,29 @@
   },
   "toolbarSettings": {
     "message": "Ρυθμίσεις"
+  },
+  "toolbarOptions": {
+    "message": "Επιλογές γραμμής εργαλείων",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Εμφάνιση αιωρούμενης γραμμής εργαλείων",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Επιλογές μεταδεδομένων",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Εμφάνιση ημερομηνίας προσθήκης",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Εμφάνιση ημερομηνίας τελευταίας πρόσβασης",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Εμφάνιση αριθμού κλικ",
+    "description": ""
   }
 }

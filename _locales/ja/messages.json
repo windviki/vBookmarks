@@ -129,10 +129,12 @@
     "message": " または "
   },
   "delete": {
-    "message": "削除"
+    "message": "[JA] Delete",
+    "description": ""
   },
   "deleteEllipsis": {
-    "message": "削除..."
+    "message": "[JA] Delete...",
+    "description": ""
   },
   "versionMessage": {
     "message": "これは新しい VBM $versionNumber$ です! 変更ログはこちら: $versionTips$",
@@ -155,7 +157,8 @@
     "message": "いいえ"
   },
   "edit": {
-    "message": "編集..."
+    "message": "[JA] Edit...",
+    "description": ""
   },
   "editBookmark": {
     "message": "ブックマークの編集"
@@ -171,25 +174,27 @@
     "message": "すっきりしたツリー構造のブックマーク"
   },
   "extName": {
-    "description": "拡張名",
-    "message": "vBookmarks"
+    "message": "[JA] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
-    "message": "全般"
+    "message": "[JA] General",
+    "description": ""
   },
   "ignore": {
-    "message": "無視"
+    "message": "[JA] Ignore",
+    "description": ""
   },
   "name": {
-    "description": "ブックマークとフォルダの名前",
-    "message": "名前"
+    "message": "[JA] Name",
+    "description": "Name of bookmark or folder."
   },
   "nope": {
     "message": "いいえ"
   },
   "noTitle": {
-    "description": "名前の無いブックマークのための名前",
-    "message": "無題"
+    "message": "[JA] (no title)",
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders."
   },
   "open": {
     "description": "ブックマークを開く",
@@ -241,8 +246,8 @@
     "message": "オプション"
   },
   "optionsFooterText": {
-    "description": "オプションページのフッターテキスト",
-    "message": "作成者 $authorName$.",
+    "message": "[JA] Built by $authorName$.",
+    "description": "Footer text for the Options page",
     "placeholders": {
       "authorName": {
         "content": "$1"
@@ -250,7 +255,8 @@
     }
   },
   "optionZoom": {
-    "message": "拡大"
+    "message": "[JA] Zoom",
+    "description": ""
   },
   "parentFolder": {
     "description": "ブックマークが格納されているフォルダの情報は、検索結果リストのブックマーク吹き出しに表示される",
@@ -285,14 +291,16 @@
     "message": "デフォルトの設定にvBookmarksをリセットします"
   },
   "save": {
-    "message": "保存"
+    "message": "[JA] Save",
+    "description": ""
   },
   "searchBookmarks": {
     "description": "検索フィールドのためのプレースホルダーテキスト",
     "message": "ブックマークの検索"
   },
   "url": {
-    "message": "URL"
+    "message": "[JA] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "同期オプション"
@@ -307,10 +315,12 @@
     "message": "同期ステータスを自動更新"
   },
   "optionSyncRefreshInterval": {
-    "message": "更新間隔"
+    "message": "[JA] Refresh interval",
+    "description": ""
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
+    "message": "[JA] seconds",
+    "description": ""
   },
   "optionAutoResizePopup": {
     "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
@@ -328,6 +338,31 @@
     "message": "最終アクセス日時で並べ替え"
   },
   "toolbarSettings": {
-    "message": "設定"
+    "message": "[JA] Settings",
+    "description": ""
+  },
+  "toolbarOptions": {
+    "message": "ツールバーオプション",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "フローティングツールバーを表示",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "メタデータオプション",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "追加日時を表示",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "最終アクセス日時を表示",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "クリック回数を表示",
+    "description": ""
   }
 }

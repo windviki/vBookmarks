@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Настройки"
+  },
+  "toolbarOptions": {
+    "message": "Опции на лентата с инструменти",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Показване на плаваща лента с инструменти",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Опции за метаданни",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Показване на дата на добавяне",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Показване на дата на последен достъп",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Показване на брой кликове",
+    "description": ""
   }
 }

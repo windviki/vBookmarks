@@ -171,8 +171,8 @@
     "message": "팝업 북마크 관리자. 향상된 Neat Bookmarks. Neater Bookmarks보다 더 깔끔합니다."
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[KO] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "일반"
@@ -292,7 +292,8 @@
     "message": "북마크 검색"
   },
   "url": {
-    "message": "URL"
+    "message": "[KO] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "동기화 옵션"
@@ -329,5 +330,29 @@
   },
   "toolbarSettings": {
     "message": "설정"
+  },
+  "toolbarOptions": {
+    "message": "툴바 옵션",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "플로팅 툴바 표시",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "메타데이터 옵션",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "추가 날짜 표시",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "마지막 접근 날짜 표시",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "클릭 횟수 표시",
+    "description": ""
   }
 }

@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "সেটিংস"
+  },
+  "toolbarOptions": {
+    "message": "টুলবার অপশন",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "ফ্লোটিং টুলবার দেখান",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "মেটাডেটা অপশন",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "যোগ করার তারিখ দেখান",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "সর্বশেষ অ্যাক্সেসের তারিখ দেখান",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "ক্লিক সংখ্যা দেখান",
+    "description": ""
   }
 }

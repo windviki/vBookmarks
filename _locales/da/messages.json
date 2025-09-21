@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Indstillinger"
+  },
+  "toolbarOptions": {
+    "message": "Værktøjslinjeindstillinger",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Vis flydende værktøjslinje",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metadata-indstillinger",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Vis tilføjet dato",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Vis sidst tilgået dato",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Vis antal klik",
+    "description": ""
   }
 }

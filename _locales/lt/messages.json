@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Nustatymai"
+  },
+  "toolbarOptions": {
+    "message": "Įrankių juostos nustatymai",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Rodyti slankiojantį įrankių juostą",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metaduomenų nustatymai",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Rodyti pridėjimo datą",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Rodyti paskutinės prieigos datą",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Rodyti spustelių skaičių",
+    "description": ""
   }
 }

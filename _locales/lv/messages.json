@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Iestatījumi"
+  },
+  "toolbarOptions": {
+    "message": "Rīkjoslas opcijas",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Rādīt peldošu rīkjoslu",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metadatu opcijas",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Rādīt pievienošanas datumu",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Rādīt pēdējās piekļuves datumu",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Rādīt klikšķu skaitu",
+    "description": ""
   }
 }

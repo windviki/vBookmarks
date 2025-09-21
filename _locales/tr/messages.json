@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Ayarlar"
+  },
+  "toolbarOptions": {
+    "message": "Araç çubuğu seçenekleri",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Kayan araç çubuğunu göster",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Meta veri seçenekleri",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Ekleme tarihini göster",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Son erişim tarihini göster",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Tıklama sayısını göster",
+    "description": ""
   }
 }

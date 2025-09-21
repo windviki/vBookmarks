@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Einstellungen"
+  },
+  "toolbarOptions": {
+    "message": "Symbolleistenoptionen",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Schwebende Symbolleiste anzeigen",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metadaten-Optionen",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Hinzufügungsdatum anzeigen",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Letzten Zugriffsdatum anzeigen",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Klickanzahl anzeigen",
+    "description": ""
   }
 }

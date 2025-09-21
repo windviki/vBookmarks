@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Nastavitve"
+  },
+  "toolbarOptions": {
+    "message": "Možnosti orodne vrstice",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Prikaži plavajočo orodno vrstico",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Možnosti metapodatkov",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Prikaži datum dodajanja",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Prikaži datum zadnjega dostopa",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Prikaži število klikov",
+    "description": ""
   }
 }

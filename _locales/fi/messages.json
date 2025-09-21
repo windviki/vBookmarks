@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Asetukset"
+  },
+  "toolbarOptions": {
+    "message": "Työkalupalkinasetukset",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Näytä kelluva työkalupalkki",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metatietoasetukset",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Näytä lisäyspäivä",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Näytä viimeksi käytetty päivä",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Näytä klikkausten määrä",
+    "description": ""
   }
 }

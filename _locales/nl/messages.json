@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Instellingen"
+  },
+  "toolbarOptions": {
+    "message": "Werkbalkopties",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Zwevende werkbalk weergeven",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metagegevens opties",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Toevoegdatum weergeven",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Laatste toegangsdatum weergeven",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Klikaantal weergeven",
+    "description": ""
   }
 }

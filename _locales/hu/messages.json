@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Beállítások"
+  },
+  "toolbarOptions": {
+    "message": "Eszköztár beállítások",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Lebegő eszköztár megjelenítése",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metaadat beállítások",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Hozzáadás dátumának megjelenítése",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Utolsó hozzáférés dátumának megjelenítése",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Kattintásszám megjelenítése",
+    "description": ""
   }
 }

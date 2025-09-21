@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Seaded"
+  },
+  "toolbarOptions": {
+    "message": "Tööriistariba valikud",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Näita hõljuvat tööriistariba",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metaandmete valikud",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Näita lisamiskuupäeva",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Näita viimase juurdepääsu kuupäeva",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Näita klõpsude arvu",
+    "description": ""
   }
 }

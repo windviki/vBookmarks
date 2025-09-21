@@ -329,5 +329,33 @@
   },
   "toolbarSettings": {
     "message": "Impostazioni"
+  },
+  "customIconDescription": {
+    "message": "Descrizione icona personalizzata",
+    "description": ""
+  },
+  "toolbarOptions": {
+    "message": "Opzioni barra degli strumenti",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Mostra barra degli strumenti fluttuante",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Opzioni metadati",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Mostra data di aggiunta",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Mostra data ultimo accesso",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Mostra numero di clic",
+    "description": ""
   }
 }

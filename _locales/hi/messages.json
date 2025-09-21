@@ -171,8 +171,8 @@
     "message": "एक पॉपअप बुकमार्क मैनेजर। बेहतर Neat Bookmarks। Neater Bookmarks से अधिक व्यवस्थित।"
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[HI] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "सामान्य"
@@ -292,7 +292,8 @@
     "message": "बुकमार्क खोजें"
   },
   "url": {
-    "message": "URL"
+    "message": "[HI] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "सिंक विकल्प"
@@ -329,5 +330,29 @@
   },
   "toolbarSettings": {
     "message": "सेटिंग्स"
+  },
+  "toolbarOptions": {
+    "message": "टूलबार विकल्प",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "फ़्लोटिंग टूलबार दिखाएं",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "मेटाडेटा विकल्प",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "जोड़ने की तारीख दिखाएं",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "अंतिम पहुंच की तारीख दिखाएं",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "क्लिक गणना दिखाएं",
+    "description": ""
   }
 }

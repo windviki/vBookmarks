@@ -149,7 +149,8 @@
     "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
   },
   "donationGo": {
-    "message": "OK"
+    "message": "[HE] OK",
+    "description": ""
   },
   "donationDismiss": {
     "message": "סגור"
@@ -171,8 +172,8 @@
     "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[HE] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "כללי"
@@ -292,7 +293,8 @@
     "message": "חפש סימניות"
   },
   "url": {
-    "message": "URL"
+    "message": "[HE] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "אפשרויות סנכרון"
@@ -329,5 +331,29 @@
   },
   "toolbarSettings": {
     "message": "הגדרות"
+  },
+  "toolbarOptions": {
+    "message": "אפשרויות סרגל כלים",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "הצג סרגל כלים צף",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "אפשרויות מטא נתונים",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "הצג תאריך הוספה",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "הצג תאריך גישה אחרון",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "הצג מספר לחיצות",
+    "description": ""
   }
 }

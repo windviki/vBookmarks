@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "設置"
+  },
+  "toolbarOptions": {
+    "message": "工具欄選項",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "顯示懸浮工具欄",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "元數據選項",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "顯示添加日期",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "顯示訪問日期",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "顯示點擊次數",
+    "description": ""
   }
 }

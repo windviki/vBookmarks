@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Pengaturan"
+  },
+  "toolbarOptions": {
+    "message": "Opsi Bilah Alat",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Tampilkan Bilah Alat Mengambang",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Opsi Metadata",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Tampilkan Tanggal Ditambahkan",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Tampilkan Tanggal Akses Terakhir",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Tampilkan Jumlah Klik",
+    "description": ""
   }
 }

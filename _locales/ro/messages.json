@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Setări"
+  },
+  "toolbarOptions": {
+    "message": "Opțiuni bară de unelte",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Afișează bara de unelte plutitoare",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Opțiuni metadate",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Afișează data adăugării",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Afișează data ultimului acces",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Afișează numărul de clicuri",
+    "description": ""
   }
 }

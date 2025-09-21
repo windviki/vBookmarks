@@ -171,8 +171,8 @@
     "message": "مدیر نشانک پاپ‌آپ. Neat Bookmarks بهبود یافته. مرتب‌تر از Neater Bookmarks."
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[FA] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "عمومی"
@@ -292,7 +292,8 @@
     "message": "جستجوی نشانک‌ها"
   },
   "url": {
-    "message": "URL"
+    "message": "[FA] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "گزینه‌های همگام‌سازی"
@@ -329,5 +330,29 @@
   },
   "toolbarSettings": {
     "message": "تنظیمات"
+  },
+  "toolbarOptions": {
+    "message": "گزینه‌های نوار ابزار",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "نمایش نوار ابزار شناور",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "گزینه‌های فراداده",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "نمایش تاریخ افزودن",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "نمایش تاریخ آخرین دسترسی",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "نمایش تعداد کلیک",
+    "description": ""
   }
 }

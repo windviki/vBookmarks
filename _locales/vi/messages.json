@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Cài đặt"
+  },
+  "toolbarOptions": {
+    "message": "Tùy chọn thanh công cụ",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Hiển thị thanh công cụ nổi",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Tùy chọn siêu dữ liệu",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Hiển thị ngày thêm",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Hiển thị ngày truy cập cuối",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Hiển thị số lần nhấp",
+    "description": ""
   }
 }

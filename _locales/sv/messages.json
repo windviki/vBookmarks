@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Inställningar"
+  },
+  "toolbarOptions": {
+    "message": "Verktygsfältsalternativ",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Visa flytande verktygsfält",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Metadata-alternativ",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Visa tillagd datum",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Visa senast åtkomstdatum",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Visa klickantal",
+    "description": ""
   }
 }

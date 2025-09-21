@@ -1,0 +1,282 @@
+{
+  "totalKeys": 92,
+  "languages": {
+    "ar": {
+      "correctKeys": 90,
+      "missingKeys": 0,
+      "incorrectKeys": 2,
+      "percentage": "97.8"
+    },
+    "bg": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "bn": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "cs": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "da": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "de": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "el": {
+      "correctKeys": 89,
+      "missingKeys": 0,
+      "incorrectKeys": 3,
+      "percentage": "96.7"
+    },
+    "es": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "et": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "fa": {
+      "correctKeys": 90,
+      "missingKeys": 0,
+      "incorrectKeys": 2,
+      "percentage": "97.8"
+    },
+    "fi": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "fr": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "he": {
+      "correctKeys": 89,
+      "missingKeys": 0,
+      "incorrectKeys": 3,
+      "percentage": "96.7"
+    },
+    "hi": {
+      "correctKeys": 90,
+      "missingKeys": 0,
+      "incorrectKeys": 2,
+      "percentage": "97.8"
+    },
+    "hr": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "hu": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "id": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "it": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "ja": {
+      "correctKeys": 77,
+      "missingKeys": 0,
+      "incorrectKeys": 15,
+      "percentage": "83.7"
+    },
+    "ko": {
+      "correctKeys": 90,
+      "missingKeys": 0,
+      "incorrectKeys": 2,
+      "percentage": "97.8"
+    },
+    "lt": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "lv": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "nl": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "no": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "pl": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "pt": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "ro": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "ru": {
+      "correctKeys": 89,
+      "missingKeys": 0,
+      "incorrectKeys": 3,
+      "percentage": "96.7"
+    },
+    "sk": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "sl": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "sv": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "th": {
+      "correctKeys": 90,
+      "missingKeys": 0,
+      "incorrectKeys": 2,
+      "percentage": "97.8"
+    },
+    "tr": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "uk": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "vi": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "zh_HK": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    },
+    "zh_TW": {
+      "correctKeys": 92,
+      "missingKeys": 0,
+      "incorrectKeys": 0,
+      "percentage": "100.0"
+    }
+  },
+  "missingKeys": {},
+  "incorrectKeys": {
+    "ar": [
+      "extName",
+      "url"
+    ],
+    "el": [
+      "donationGo",
+      "extName",
+      "url"
+    ],
+    "fa": [
+      "extName",
+      "url"
+    ],
+    "he": [
+      "donationGo",
+      "extName",
+      "url"
+    ],
+    "hi": [
+      "extName",
+      "url"
+    ],
+    "ja": [
+      "delete",
+      "deleteEllipsis",
+      "edit",
+      "extName",
+      "general",
+      "ignore",
+      "name",
+      "noTitle",
+      "optionsFooterText",
+      "optionZoom",
+      "save",
+      "url",
+      "optionSyncRefreshInterval",
+      "optionSyncRefreshIntervalSeconds",
+      "toolbarSettings"
+    ],
+    "ko": [
+      "extName",
+      "url"
+    ],
+    "ru": [
+      "extName",
+      "optionsFooterText",
+      "url"
+    ],
+    "th": [
+      "extName",
+      "url"
+    ]
+  }
+}

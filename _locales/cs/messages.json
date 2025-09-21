@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Nastavení"
+  },
+  "toolbarOptions": {
+    "message": "Možnosti panelu nástrojů",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Zobrazit plovoucí panel nástrojů",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Možnosti metadat",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Zobrazit datum přidání",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Zobrazit datum posledního přístupu",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Zobrazit počet kliknutí",
+    "description": ""
   }
 }

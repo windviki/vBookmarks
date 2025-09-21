@@ -171,8 +171,8 @@
     "message": "ตัวจัดการที่คั่นหน้าป๊อปอัป ปรับปรุงจาก Neat Bookmarks สะอาดกว่า Neater Bookmarks"
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[TH] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "ทั่วไป"
@@ -292,7 +292,8 @@
     "message": "ค้นหาที่คั่นหน้า"
   },
   "url": {
-    "message": "URL"
+    "message": "[TH] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "ตัวเลือกการซิงค์"
@@ -329,5 +330,29 @@
   },
   "toolbarSettings": {
     "message": "ตั้งค่า"
+  },
+  "toolbarOptions": {
+    "message": "ตัวเลือกแถบเครื่องมือ",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "แสดงแถบเครื่องมือโฟลติ้ง",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "ตัวเลือกข้อมูลเมตา",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "แสดงวันที่เพิ่ม",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "แสดงวันที่เข้าถึงล่าสุด",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "แสดงจำนวนคลิก",
+    "description": ""
   }
 }

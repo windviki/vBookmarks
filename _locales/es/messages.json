@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Configuración"
+  },
+  "toolbarOptions": {
+    "message": "Opciones de la barra de herramientas",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Mostrar barra de herramientas flotante",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Opciones de metadatos",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Mostrar fecha de agregación",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Mostrar fecha del último acceso",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Mostrar número de clics",
+    "description": ""
   }
 }

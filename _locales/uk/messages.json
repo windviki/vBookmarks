@@ -329,5 +329,29 @@
   },
   "toolbarSettings": {
     "message": "Налаштування"
+  },
+  "toolbarOptions": {
+    "message": "Параметри панелі інструментів",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "Показати плаваючу панель інструментів",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "Параметри метаданих",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "Показати дату додавання",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "Показати дату останнього доступу",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "Показати кількість кліків",
+    "description": ""
   }
 }

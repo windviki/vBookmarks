@@ -171,8 +171,8 @@
     "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
   },
   "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
+    "message": "[AR] vBookmarks",
+    "description": "vBookmarks"
   },
   "general": {
     "message": "عام"
@@ -292,7 +292,8 @@
     "message": "بحث في العلامات المرجعية"
   },
   "url": {
-    "message": "URL"
+    "message": "[AR] URL",
+    "description": ""
   },
   "syncOptions": {
     "message": "خيارات المزامنة"
@@ -329,5 +330,29 @@
   },
   "toolbarSettings": {
     "message": "الإعدادات"
+  },
+  "toolbarOptions": {
+    "message": "خيارات شريط الأدوات",
+    "description": ""
+  },
+  "optionShowFloatingToolbar": {
+    "message": "إظهار شريط الأدوات العائم",
+    "description": ""
+  },
+  "metadataOptions": {
+    "message": "خيارات البيانات الوصفية",
+    "description": ""
+  },
+  "optionShowAddedDate": {
+    "message": "إظهار تاريخ الإضافة",
+    "description": ""
+  },
+  "optionShowLastAccessed": {
+    "message": "إظهار تاريخ آخر وصول",
+    "description": ""
+  },
+  "optionShowClickCount": {
+    "message": "إظهار عدد النقرات",
+    "description": ""
   }
 }
