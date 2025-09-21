@@ -1,10 +1,8 @@
+/* 基础样式 - 已迁移到现代CSS系统 */
+/* 保留关键样式以确保兼容性 */
 body {
     direction: __MSG_@@bidi_dir__;
     font: menu;
-    color: #000;
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
     cursor: default;
     -webkit-user-drag: none;
     -webkit-user-select: none;
@@ -67,6 +65,7 @@ body.linux input {
     font-size: 12px;
 }
 
+/* 容器和搜索样式 - 已迁移到现代CSS系统 */
 #container {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -82,23 +81,6 @@ body.linux input {
     width: 0px;
     height: 0px;
     border: 0;
-}
-
-#search {
-    position: relative;
-    top: -3px;
-    margin: 0 -1px -5px -1px;
-    padding: 0;
-}
-
-#search input {
-    width: 100%;
-    padding: 6px 8px;
-    margin: 0;
-}
-
-#search input:focus { 
-    outline-width: 0; 
 }
 
 #donation {
@@ -199,17 +181,12 @@ body.linux input {
     background: rgba(0, 0, 0, 0.2);
 }
 
+/* 书签树样式 - 已迁移到现代CSS系统 */
+/* 保留关键样式以确保兼容性 */
 #results,
 #tree {
-    background-color: #f8f9fa;
     overflow: auto;
     outline: 0;
-    padding: 3px 0;
-    -webkit-box-shadow: inset 0 4px 4px -4px rgba(0, 0, 0, .1);
-    box-shadow: inset 0 4px 4px -4px rgba(0, 0, 0, .1);
-    -webkit-box-flex: 1;
-    box-flex: 1;
-    text-shadow: 0 1px #f6f6f6;
     position: relative;
 }
 
@@ -221,26 +198,6 @@ body.linux input {
     margin: 0;
     padding: 0;
     display: block;
-}
-
-#results ul li a,
-#tree ul li a,
-#tree ul li span {
-    display: block;
-    line-height: 2em;
-    padding: 0 4px;
-    text-decoration: none;
-    color: #000;
-    outline: 0;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-#results ul li a *,
-#tree ul li a *,
-#tree ul li span * {
-    pointer-events: none;
 }
 
 #tree ul li span .twisty {
@@ -279,69 +236,6 @@ body.linux input {
     transform: scaleX(-1) rotate(90deg);
 }
 
-#results ul li a img,
-#results ul li span img,
-#tree ul li a img,
-#tree ul li span img {
-    margin-top: -2px;
-    vertical-align: middle;
-    margin-right: 4px;
-    margin-left: 0;
-}
-
-/* Bookmarks (URLs) should have consistent left margin */
-#results ul li a img,
-#tree ul li a img {
-    margin-left: 16px;
-    margin-right: 4px;
-}
-
-/* Folders and spans should have no left margin */
-#results ul li span img,
-#tree ul li span img {
-    margin-left: 0;
-    margin-right: 4px;
-}
-
-#results ul li i,
-#tree ul li i {
-    font-style: normal;
-}
-
-#results ul li a:hover i,
-#tree ul li a:hover i {
-    text-decoration: underline;
-}
-
-#results ul li a:active,
-#results ul li a.active,
-#results ul li a:focus,
-#tree ul li a:active,
-#tree ul li span:active,
-#tree ul li a.active,
-#tree ul li span.active,
-#tree ul li a:focus,
-#tree ul li span:focus,
-menu[type=context] command:focus {
-    color: #fff;
-    background-color: #4687cb;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#6fa6de), to(#1e6cbb));
-    -webkit-box-shadow: 0 -1px #5594d2;
-    box-shadow: 0 -1px #5594d2;
-    text-shadow: 0 0 rgba(255, 255, 255, .5), 0 1px rgba(0, 0, 0, .5);
-    outline: 0;
-}
-
-.searchFocus #results ul>li:first-child a {
-    background-color: rgba(43, 93, 205, .2);
-}
-
-#tree ul li span:active .twisty,
-#tree ul li span.active .twisty,
-#tree ul li span:focus .twisty {
-    border-color: transparent transparent transparent #e5eef8;
-}
-
 #tree ul ul {
     height: 0;
     overflow: hidden;
@@ -351,38 +245,8 @@ menu[type=context] command:focus {
     height: auto;
 }
 
-@keyframes blueFade {
-    0% {
-        background-color: transparent;
-    }
-    10% {
-        background-color: rgba(43, 93, 205, .2);
-    }
-    100% {
-        background-color: transparent;
-    }
-}
-
-@-webkit-keyframes blueFade {
-    0% {
-        background-color: transparent;
-    }
-    10% {
-        background-color: rgba(43, 93, 205, .2);
-    }
-    100% {
-        background-color: transparent;
-    }
-}
-
-#tree ul li a.focus,
-#tree ul li span.focus {
-    -webkit-animation-name: blueFade;
-    animation-name: blueFade;
-    -webkit-animation-duration: 3s;
-    animation-duration: 3s;
-}
-
+/* 动画和拖拽样式 - 已迁移到现代CSS系统 */
+/* 保留关键样式以确保兼容性 */
 #bookmark-clone {
     position: absolute;
     left: -999px;
@@ -435,6 +299,8 @@ menu[type=context] command:focus {
     border-radius: 2px;
 }
 
+/* 上下文菜单样式 - 已迁移到现代CSS系统 */
+/* 保留关键样式以确保兼容性 */
 menu[type=context] {
     -webkit-transition: opacity .3s;
     transition: opacity .3s;
@@ -463,9 +329,6 @@ menu[type=context] command {
     text-overflow: ellipsis;
 }
 
-
-/* convert title-style to sentence-style capitalization, for Windows */
-
 .win menu[type=context] command {
     text-transform: lowercase;
 }
@@ -489,6 +352,7 @@ menu[type=context].hide-editables #folder-delete {
     display: none;
 }
 
+/* 调整器和对话框样式 - 保留原有功能 */
 #resizer-x {
     position: absolute;
     width: 4px;
@@ -645,6 +509,7 @@ menu[type=context].hide-editables #folder-delete {
     /* The height will be defined in JS */
 }
 
+/* 滚动条样式 - 已迁移到现代CSS系统 */
 ::-webkit-scrollbar-track-piece {
     background-color: #fff;
     -webkit-border-radius: 0;
@@ -668,286 +533,7 @@ menu[type=context].hide-editables #folder-delete {
     -webkit-border-radius: 4px;
 }
 
-/* ========================================================================= */
-/* BOOKMARK METADATA DISPLAY */
-/* ========================================================================= */
+/* 书签元数据显示 - 已迁移到现代CSS系统 */
+/* 以下样式保留以确保向后兼容性 */
 
-/* 恢复原有样式，只添加相对定位用于元信息悬浮显示 */
-#tree ul li a,
-#tree ul li span {
-    position: relative; /* 用于元信息绝对定位 */
-}
-
-.bookmark-metadata {
-    position: absolute;
-    right: 2px;
-    top: 2px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-    font-size: 9px;
-    z-index: 200;
-    max-width: 120px;
-}
-
-#tree ul li a:hover .bookmark-metadata {
-    opacity: 1;
-}
-
-/* Individual meta badges positioned directly */
-.meta-badge {
-    display: inline-block;
-    background: rgba(248, 249, 250, 0.95);
-    color: #495057;
-    padding: 1px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    font-weight: 500;
-    white-space: nowrap;
-    border: 1px solid rgba(233, 236, 239, 0.8);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    line-height: 1.2;
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    backdrop-filter: blur(4px);
-}
-
-/* Position multiple badges in a row - 现在使用flex布局，不需要手动定位 */
-
-.meta-badge.clicks {
-    background: #fff3cd;
-    color: #856404;
-    border-color: #ffeaa7;
-}
-
-.meta-badge.date {
-    background: #d1ecf1;
-    color: #0c5460;
-    border-color: #bee5eb;
-}
-
-.meta-badge.accessed {
-    background: #d4edda;
-    color: #155724;
-    border-color: #c3e6cb;
-}
-
-.metadata-item {
-    font-size: 9px;
-    line-height: 1.3;
-    color: #495057;
-    text-align: center;
-    font-weight: 500;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 2px 6px;
-    margin: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-}
-
-.metadata-item.added-date {
-    background: #e3f2fd;
-    color: #1565c0;
-    border-color: #bbdefb;
-}
-
-.metadata-item.last-accessed {
-    background: #e8f5e8;
-    color: #2e7d32;
-    border-color: #c8e6c9;
-}
-
-.metadata-item.click-count {
-    background: #fff3e0;
-    color: #ef6c00;
-    border-color: #ffcc02;
-    font-weight: 600;
-}
-
-/* 确保在搜索结果中也能正常显示 */
-#results ul li a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-start;
-    padding-right: 120px !important;
-    z-index: 1;
-}
-
-#results ul li {
-    position: relative;
-    min-height: 2em;
-}
-
-#results .tree-item-link .bookmark-metadata {
-    position: absolute;
-    right: 4px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    opacity: 0 !important;
-    transition: opacity 0.2s ease !important;
-    pointer-events: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    gap: 2px !important;
-    z-index: 200 !important;
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    min-width: auto !important;
-}
-
-#results ul li a:hover .bookmark-metadata {
-    opacity: 1 !important;
-}
-
-/* 强制显示元数据用于测试 */
-.bookmark-metadata.force-show {
-    opacity: 1 !important;
-}
-
-/* 在小屏幕上优化显示 */
-@media (max-width: 300px) {
-    #tree ul li a,
-    #tree ul li span,
-    #results ul li a {
-        padding-right: 60px !important;
-    }
-
-    .bookmark-metadata {
-        font-size: 9px;
-        padding: 2px 4px;
-        min-width: 50px;
-    }
-
-    .metadata-item {
-        line-height: 1.1;
-    }
-}
-
-/* Sync status indicators */
-.sync-indicator {
-    display: block !important;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    cursor: help;
-    position: absolute;
-    /* Position over favicon bottom right */
-    bottom: -2px;
-    right: -2px;
-    z-index: 15; /* Higher z-index to ensure visibility */
-    /* Reset positioning context */
-    margin: 0;
-    padding: 0;
-    /* Ensure it doesn't affect layout */
-    box-sizing: border-box;
-    /* Ensure perfect circle and prevent compression */
-    min-width: 8px;
-    min-height: 8px;
-    max-width: 8px;
-    max-height: 8px;
-    transform: translateZ(0); /* Force hardware acceleration for crisp rendering */
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    /* Prevent being stretched by parent containers */
-    flex-shrink: 0;
-    align-self: flex-end;
-    justify-self: flex-end;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Ensure line-height doesn't affect it */
-    line-height: 0;
-    font-size: 0;
-    /* Ensure it's always visible */
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.sync-indicator.synced {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    box-shadow:
-        0 0 8px rgba(76, 175, 80, 0.6),
-        0 2px 4px rgba(76, 175, 80, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.sync-indicator.syncing {
-    background: linear-gradient(135deg, #FF9800, #F57C00);
-    box-shadow:
-        0 0 8px rgba(255, 152, 0, 0.6),
-        0 2px 4px rgba(255, 152, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    animation: pulse 1.5s infinite;
-}
-
-.sync-indicator.error {
-    background: linear-gradient(135deg, #f44336, #d32f2f);
-    box-shadow:
-        0 0 8px rgba(244, 67, 54, 0.6),
-        0 2px 4px rgba(244, 67, 54, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.sync-indicator.local-only {
-    background: linear-gradient(135deg, #9e9e9e, #757575);
-    box-shadow:
-        0 0 8px rgba(158, 158, 158, 0.6),
-        0 2px 4px rgba(158, 158, 158, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.sync-indicator.pending {
-    background: linear-gradient(135deg, #2196f3, #1976d2);
-    box-shadow:
-        0 0 8px rgba(33, 150, 243, 0.6),
-        0 2px 4px rgba(33, 150, 243, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-@keyframes pulse {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.sync-tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    margin-bottom: 4px;
-}
-
-.sync-indicator:hover .sync-tooltip {
-    opacity: 1;
-}
+/* 同步状态指示器 - 已迁移到现代CSS系统 */
