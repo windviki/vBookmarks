@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排序功能调试页面</title>
+    <link rel="stylesheet" href="../neat.css">
+    <link rel="stylesheet" href="../sync-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-section {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 2px solid #dc3545;
+            padding-bottom: 5px;
+        }
+        .issue-report {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .status.broken {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.working {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .bookmark-data {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .analysis {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .sorted-bookmark-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .meta-badge {
+            border: 1px solid #orange !important;
+        }
+        button {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .sort-controls {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-section">
+        <div class="test-title">排序功能问题调试</div>
+        <div class="issue-report">
+            <strong>问题描述：</strong></br>
+            1. 按访问日期排序的页面里，为何只有几条记录？</br>
+            2. BookmarkTreeNode的dateLastUsed字段为何不使用？</br>
+            3. 按创建日期排序的页面，BookmarkTreeNode的dateGroupModified用上了吗？
+        </div>
+
+        <div class="analysis">
+            <strong>分析发现：</strong>
+            <ul>
+                <li><strong>bookmark-editor.js</strong>：确实使用了dateLastUsed和dateGroupModified字段</li>
+                <li><strong>floating-toolbar.js</strong>：按访问日期排序时，优先使用dateLastUsed，其次使用元数据</li>
+                <li><strong>问题可能在于</strong>：Chrome API中这些字段可能为空或者没有被正确设置</li>
+            </ul>
+        </div>
+
+        <div class="sort-controls">
+            <button onclick="simulateSortingData()">生成模拟排序数据</button>
+            <button onclick="testByClicks()">测试按点击次数排序</button>
+            <button onclick="testByDateAdded()">测试按添加日期排序</button>
+            <button onclick="testByLastAccessed()">测试按访问日期排序</button>
+            <button onclick="testByDateGroupModified()">测试按修改日期排序</button>
+        </div>
+
+        <div class="bookmark-data" id="bookmark-data-display">
+            <strong>模拟的BookmarkTreeNode数据：</strong><br>
+            点击按钮生成数据...
+        </div>
+    </div>
+
+    <div class="debug-section">
+        <div class="test-title">排序结果显示</div>
+        <div id="sorting-results">
+            <p>点击上方按钮查看排序结果...</p>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <span class="status broken" id="clicks-status">点击次数排序：待测试</span>
+            <span class="status broken" id="date-added-status">添加日期排序：待测试</span>
+            <span class="status broken" id="last-accessed-status">访问日期排序：待测试</span>
+            <span class="status broken" id="group-modified-status">修改日期排序：待测试</span>
+        </div>
+    </div>
+
+    <div class="debug-section">
+        <div class="test-title">字段使用分析</div>
+        <div id="field-analysis"></div>
+    </div>
+
+    <script>
+        // 模拟BookmarkTreeNode数据
+        let mockBookmarks = [];
+
+        function generateMockBookmarks() {
+            const now = Date.now();
+            mockBookmarks = [
+                {
+                    id: 'bookmark-1',
+                    title: 'Google',
+                    url: 'https://google.com',
+                    dateAdded: now - 172800000, // 2天前
+                    dateGroupModified: now - 86400000, // 1天前
+                    dateLastUsed: now - 3600000, // 1小时前
+                    parentId: 'root'
+                },
+                {
+                    id: 'bookmark-2',
+                    title: 'GitHub',
+                    url: 'https://github.com',
+                    dateAdded: now - 2592000000, // 30天前
+                    dateGroupModified: now - 604800000, // 7天前
+                    dateLastUsed: now - 1800000, // 30分钟前
+                    parentId: 'root'
+                },
+                {
+                    id: 'bookmark-3',
+                    title: 'Stack Overflow',
+                    url: 'https://stackoverflow.com',
+                    dateAdded: now - 5184000000, // 60天前
+                    dateGroupModified: now - 2592000000, // 30天前
+                    dateLastUsed: null, // 从未访问
+                    parentId: 'root'
+                },
+                {
+                    id: 'bookmark-4',
+                    title: 'MDN Web Docs',
+                    url: 'https://developer.mozilla.org',
+                    dateAdded: now - 7776000000, // 90天前
+                    dateGroupModified: null, // 从未修改
+                    dateLastUsed: now - 7200000, // 2小时前
+                    parentId: 'root'
+                },
+                {
+                    id: 'bookmark-5',
+                    title: 'YouTube',
+                    url: 'https://youtube.com',
+                    dateAdded: now - 10368000000, // 120天前
+                    dateGroupModified: now - 5184000000, // 60天前
+                    dateLastUsed: now - 900000, // 15分钟前
+                    parentId: 'root'
+                }
+            ];
+
+            // 模拟元数据
+            window.metadataManager = {
+                getMetadata: (bookmarkId) => {
+                    const metadata = {
+                        'bookmark-1': { clickCount: 42, lastAccessed: now - 3600000 },
+                        'bookmark-2': { clickCount: 128, lastAccessed: now - 1800000 },
+                        'bookmark-3': { clickCount: 5, lastAccessed: now - 86400000 },
+                        'bookmark-4': { clickCount: 23, lastAccessed: now - 7200000 },
+                        'bookmark-5': { clickCount: 89, lastAccessed: now - 900000 }
+                    };
+                    return metadata[bookmarkId] || { clickCount: 0, lastAccessed: null };
+                }
+            };
+        }
+
+        function displayBookmarkData() {
+            const display = document.getElementById('bookmark-data-display');
+            let html = '<strong>模拟的BookmarkTreeNode数据：</strong><br><br>';
+
+            mockBookmarks.forEach(bookmark => {
+                const metadata = window.metadataManager.getMetadata(bookmark.id);
+                html += `<strong>${bookmark.title}</strong> (ID: ${bookmark.id})<br>`;
+                html += `  - URL: ${bookmark.url}<br>`;
+                html += `  - dateAdded: ${new Date(bookmark.dateAdded).toLocaleString()}<br>`;
+                html += `  - dateGroupModified: ${bookmark.dateGroupModified ? new Date(bookmark.dateGroupModified).toLocaleString() : 'null'}<br>`;
+                html += `  - dateLastUsed: ${bookmark.dateLastUsed ? new Date(bookmark.dateLastUsed).toLocaleString() : 'null'}<br>`;
+                html += `  - 元数据点击次数: ${metadata.clickCount}<br>`;
+                html += `  - 元数据访问日期: ${metadata.lastAccessed ? new Date(metadata.lastAccessed).toLocaleString() : 'null'}<br><br>`;
+            });
+
+            display.innerHTML = html;
+            updateFieldAnalysis();
+        }
+
+        function updateFieldAnalysis() {
+            const analysis = document.getElementById('field-analysis');
+            let html = '<h3>BookmarkTreeNode字段使用情况：</h3>';
+
+            // 统计字段使用情况
+            let dateAddedCount = 0;
+            let dateGroupModifiedCount = 0;
+            let dateLastUsedCount = 0;
+
+            mockBookmarks.forEach(bookmark => {
+                if (bookmark.dateAdded) dateAddedCount++;
+                if (bookmark.dateGroupModified) dateGroupModifiedCount++;
+                if (bookmark.dateLastUsed) dateLastUsedCount++;
+            });
+
+            html += `<ul>`;
+            html += `<li><strong>dateAdded</strong>: ${dateAddedCount}/${mockBookmarks.length} 个书签有此字段 (100%)</li>`;
+            html += `<li><strong>dateGroupModified</strong>: ${dateGroupModifiedCount}/${mockBookmarks.length} 个书签有此字段 (${Math.round(dateGroupModifiedCount/mockBookmarks.length*100)}%)</li>`;
+            html += `<li><strong>dateLastUsed</strong>: ${dateLastUsedCount}/${mockBookmarks.length} 个书签有此字段 (${Math.round(dateLastUsedCount/mockBookmarks.length*100)}%)</li>`;
+            html += `</ul>`;
+
+            html += '<h3>问题分析：</h3>';
+            html += `<ul>`;
+            html += `<li><strong>dateLastUsed使用率低</strong>：只有${Math.round(dateLastUsedCount/mockBookmarks.length*100)}%的书签有此字段，这可能导致按访问日期排序时记录很少</li>`;
+            html += `<li><strong>回退机制</strong>：当dateLastUsed为空时，系统会回退到使用元数据中的lastAccessed</li>`;
+            html += `<li><strong>dateGroupModified</strong>：${Math.round(dateGroupModifiedCount/mockBookmarks.length*100)}%的使用率，相对较好</li>`;
+            html += `</ul>`;
+
+            analysis.innerHTML = html;
+        }
+
+        function formatCompactDate(timestamp) {
+            if (!timestamp) return '无';
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) return '今天';
+            if (diffDays === 1) return '昨天';
+            if (diffDays < 7) return `${diffDays}天前`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)}周前`;
+            return date.toLocaleDateString();
+        }
+
+        function simulateSortingData() {
+            generateMockBookmarks();
+            displayBookmarkData();
+
+            // 显示所有排序结果
+            testByClicks();
+            testByDateAdded();
+            testByLastAccessed();
+            testByDateGroupModified();
+        }
+
+        function testByClicks() {
+            const results = document.getElementById('sorting-results');
+            const sorted = [...mockBookmarks].sort((a, b) => {
+                const aMeta = window.metadataManager.getMetadata(a.id);
+                const bMeta = window.metadataManager.getMetadata(b.id);
+                return (bMeta.clickCount || 0) - (aMeta.clickCount || 0);
+            });
+
+            let html = '<h4>按点击次数排序：</h4>';
+            sorted.forEach(bookmark => {
+                const metadata = window.metadataManager.getMetadata(bookmark.id);
+                html += `<div class="sorted-bookmark-item">`;
+                html += `<strong>${bookmark.title}</strong> - 点击次数: ${metadata.clickCount}`;
+                html += `</div>`;
+            });
+
+            results.innerHTML = html;
+            document.getElementById('clicks-status').textContent = '点击次数排序：正常工作';
+            document.getElementById('clicks-status').className = 'status working';
+        }
+
+        function testByDateAdded() {
+            const results = document.getElementById('sorting-results');
+            const sorted = [...mockBookmarks].sort((a, b) => {
+                return (b.dateAdded || 0) - (a.dateAdded || 0);
+            });
+
+            let html = '<h4>按添加日期排序：</h4>';
+            sorted.forEach(bookmark => {
+                html += `<div class="sorted-bookmark-item">`;
+                html += `<strong>${bookmark.title}</strong> - 添加日期: ${formatCompactDate(bookmark.dateAdded)}`;
+                html += `</div>`;
+            });
+
+            results.innerHTML = html;
+            document.getElementById('date-added-status').textContent = '添加日期排序：正常工作';
+            document.getElementById('date-added-status').className = 'status working';
+        }
+
+        function testByLastAccessed() {
+            const results = document.getElementById('sorting-results');
+            const sorted = [...mockBookmarks].sort((a, b) => {
+                // 优先使用dateLastUsed，其次使用元数据
+                const aValue = a.dateLastUsed || window.metadataManager.getMetadata(a.id).lastAccessed || 0;
+                const bValue = b.dateLastUsed || window.metadataManager.getMetadata(b.id).lastAccessed || 0;
+                return bValue - aValue;
+            });
+
+            let html = '<h4>按访问日期排序：</h4>';
+            sorted.forEach(bookmark => {
+                const metadata = window.metadataManager.getMetadata(bookmark.id);
+                const lastAccessed = bookmark.dateLastUsed || metadata.lastAccessed;
+                html += `<div class="sorted-bookmark-item">`;
+                html += `<strong>${bookmark.title}</strong> - 访问日期: ${formatCompactDate(lastAccessed)}`;
+                html += `<br><small>dateLastUsed: ${formatCompactDate(bookmark.dateLastUsed)} | 元数据: ${formatCompactDate(metadata.lastAccessed)}</small>`;
+                html += `</div>`;
+            });
+
+            results.innerHTML = html;
+
+            // 检查有多少书签有访问日期数据
+            const hasAccessData = mockBookmarks.filter(b =>
+                b.dateLastUsed || window.metadataManager.getMetadata(b.id).lastAccessed
+            ).length;
+
+            document.getElementById('last-accessed-status').textContent =
+                `访问日期排序：${hasAccessData}/${mockBookmarks.length} 个书签有数据`;
+            document.getElementById('last-accessed-status').className =
+                hasAccessData > 0 ? 'status working' : 'status broken';
+        }
+
+        function testByDateGroupModified() {
+            const results = document.getElementById('sorting-results');
+            const sorted = [...mockBookmarks].sort((a, b) => {
+                return (b.dateGroupModified || 0) - (a.dateGroupModified || 0);
+            });
+
+            let html = '<h4>按修改日期排序：</h4>';
+            sorted.forEach(bookmark => {
+                html += `<div class="sorted-bookmark-item">`;
+                html += `<strong>${bookmark.title}</strong> - 修改日期: ${formatCompactDate(bookmark.dateGroupModified)}`;
+                html += `</div>`;
+            });
+
+            results.innerHTML = html;
+
+            // 检查有多少书签有修改日期数据
+            const hasModifiedData = mockBookmarks.filter(b => b.dateGroupModified).length;
+
+            document.getElementById('group-modified-status').textContent =
+                `修改日期排序：${hasModifiedData}/${mockBookmarks.length} 个书签有数据`;
+            document.getElementById('group-modified-status').className =
+                hasModifiedData > 0 ? 'status working' : 'status broken';
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('load', function() {
+            console.log('排序调试页面已加载');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicator和Badge调试页面</title>
+    <link rel="stylesheet" href="../neat.css">
+    <link rel="stylesheet" href="../sync-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-section {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        #tree, #results {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        /* 高亮显示关键元素 */
+        .favicon-container {
+            border: 1px solid blue !important;
+            background: rgba(0, 0, 255, 0.1) !important;
+        }
+        .sync-indicator {
+            border: 1px solid red !important;
+        }
+        .bookmark-metadata {
+            border: 1px solid green !important;
+        }
+        .meta-badge {
+            border: 1px solid orange !important;
+        }
+        .issue-report {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .status.broken {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.working {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .analysis {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-section">
+        <div class="test-title">问题诊断：书签树页面</div>
+        <div class="issue-report">
+            <strong>问题描述：</strong>书签树页面的indicator太靠下，看不见；badge显示完美与li右侧对齐
+        </div>
+
+        <div class="analysis">
+            <strong>分析过程：</strong>
+            <ul>
+                <li>检查neat.css中的line-height: 2em如何影响定位</li>
+                <li>分析img { margin-top: -2px } 对favicon-container的影响</li>
+                <li>验证sync-styles.css中的修复是否生效</li>
+            </ul>
+        </div>
+
+        <div id="tree">
+            <ul>
+                <li>
+                    <a href="#" class="tree-item-link">
+                        <div class="favicon-container">
+                            <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="">
+                            <div class="sync-indicator synced"></div>
+                        </div>
+                        <i>Google - 书签树测试</i>
+                        <div class="bookmark-metadata">
+                            <span class="meta-badge clicks">42</span>
+                            <span class="meta-badge date">2024</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <span class="tree-item-span">
+                        <b class="twisty"></b>
+                        <div class="favicon-container">
+                            <img src="folder.png" width="16" height="16" alt="">
+                            <div class="sync-indicator unsynced"></div>
+                        </div>
+                        <i>文件夹 - 书签树测试</i>
+                        <div class="bookmark-metadata">
+                            <span class="meta-badge clicks">15</span>
+                            <span class="meta-badge date">2023</span>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <span class="status broken" id="tree-indicator-status">Indicator状态：待测试</span>
+            <span class="status working" id="tree-badge-status">Badge状态：应该工作正常</span>
+        </div>
+    </div>
+
+    <div class="debug-section">
+        <div class="test-title">问题诊断：搜索结果页面</div>
+        <div class="issue-report">
+            <strong>问题描述：</strong>搜索结果页面的indicator显示完美；badge没有与li右侧对齐，被截断
+        </div>
+
+        <div class="analysis">
+            <strong>分析过程：</strong>
+            <ul>
+                <li>检查neat.css中#results .tree-item-link .bookmark-metadata的强制垂直居中</li>
+                <li>验证sync-styles.css中的覆盖样式是否生效</li>
+                <li>分析为什么badge没有撑满li宽度</li>
+            </ul>
+        </div>
+
+        <div id="results">
+            <ul>
+                <li>
+                    <a href="#" class="tree-item-link">
+                        <div class="favicon-container">
+                            <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="">
+                            <div class="sync-indicator synced"></div>
+                        </div>
+                        <i>Google - 搜索结果测试</i>
+                        <div class="bookmark-metadata">
+                            <span class="meta-badge clicks">42</span>
+                            <span class="meta-badge date">2024</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="tree-item-link">
+                        <div class="favicon-container">
+                            <img src="https://www.github.com/favicon.ico" width="16" height="16" alt="">
+                            <div class="sync-indicator unsynced"></div>
+                        </div>
+                        <i>GitHub - 搜索结果测试</i>
+                        <div class="bookmark-metadata">
+                            <span class="meta-badge clicks">128</span>
+                            <span class="meta-badge date">2023</span>
+                            <span class="meta-badge accessed">今天</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <span class="status working" id="results-indicator-status">Indicator状态：应该工作正常</span>
+            <span class="status broken" id="results-badge-status">Badge状态：待测试</span>
+        </div>
+    </div>
+
+    <div class="debug-section">
+        <div class="test-title">CSS样式检查</div>
+        <div id="css-analysis"></div>
+    </div>
+
+    <script>
+        function analyzeIssues() {
+            const analysis = document.getElementById('css-analysis');
+            let html = '<h3>实际应用的CSS样式：</h3>';
+
+            // 检查书签树favicon container
+            const treeContainers = document.querySelectorAll('#tree .favicon-container');
+            treeContainers.forEach((container, index) => {
+                const styles = window.getComputedStyle(container);
+                html += `<h4>书签树Container ${index + 1}:</h4>`;
+                html += `<pre>position: ${styles.position}<br>display: ${styles.display}<br>line-height: ${styles.lineHeight}<br>width: ${styles.width}<br>height: ${styles.height}</pre>`;
+            });
+
+            // 检查搜索结果bookmark metadata
+            const resultsMetadata = document.querySelectorAll('#results .bookmark-metadata');
+            resultsMetadata.forEach((metadata, index) => {
+                const styles = window.getComputedStyle(metadata);
+                html += `<h4>搜索结果Metadata ${index + 1}:</h4>`;
+                html += `<pre>position: ${styles.position}<br>top: ${styles.top}<br>transform: ${styles.transform}<br>right: ${styles.right}</pre>`;
+            });
+
+            // 检查indicator位置
+            const treeIndicators = document.querySelectorAll('#tree .sync-indicator');
+            treeIndicators.forEach((indicator, index) => {
+                const styles = window.getComputedStyle(indicator);
+                const rect = indicator.getBoundingClientRect();
+                html += `<h4>书签树Indicator ${index + 1}:</h4>`;
+                html += `<pre>bottom: ${styles.bottom}<br>right: ${styles.right}<br>z-index: ${styles.zIndex}<br>实际位置: (${rect.left}, ${rect.top})</pre>`;
+            });
+
+            analysis.innerHTML = html;
+
+            // 更新状态
+            updateStatus();
+        }
+
+        function updateStatus() {
+            // 检查indicator是否可见
+            const treeIndicators = document.querySelectorAll('#tree .sync-indicator');
+            const treeIndicatorWorking = Array.from(treeIndicators).some(indicator => {
+                const rect = indicator.getBoundingClientRect();
+                return rect.width > 0 && rect.height > 0;
+            });
+
+            document.getElementById('tree-indicator-status').textContent =
+                `Indicator状态：${treeIndicatorWorking ? '工作正常' : '仍然不可见'}`;
+            document.getElementById('tree-indicator-status').className =
+                `status ${treeIndicatorWorking ? 'working' : 'broken'}`;
+
+            // 检查badge对齐
+            const resultsBadges = document.querySelectorAll('#results .meta-badge');
+            const resultsBadgeWorking = Array.from(resultsBadges).some(badge => {
+                const rect = badge.getBoundingClientRect();
+                const parentRect = badge.closest('li').getBoundingClientRect();
+                return parentRect.right - rect.right < 10; // 接近右边缘
+            });
+
+            document.getElementById('results-badge-status').textContent =
+                `Badge状态：${resultsBadgeWorking ? '对齐正常' : '仍然未对齐'}`;
+            document.getElementById('results-badge-status').className =
+                `status ${resultsBadgeWorking ? 'working' : 'broken'}`;
+        }
+
+        // 页面加载后分析
+        window.addEventListener('load', analyzeIssues);
+    </script>
+</body>
+</html>
