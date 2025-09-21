@@ -304,6 +304,8 @@ class FloatingToolbar {
                 html += '<div class="sort-title">按访问日期排序</div>';
             }
 
+            }
+
             html += '</div>';
 
             for (const bookmark of bookmarksData) {
