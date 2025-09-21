@@ -1,0 +1,342 @@
+/**
+ * 书签树组件样式
+ */
+
+/* 书签树容器 */
+.bookmark-tree {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* 树节点 */
+.tree-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  border-radius: var(--radius-sm);
+  margin: 1px 0;
+}
+
+.tree-node:hover {
+  background-color: var(--bg-hover);
+}
+
+.tree-node.selected {
+  background-color: var(--bg-selected);
+  color: var(--text-primary);
+}
+
+.tree-node:focus {
+  background-color: var(--bg-focused);
+  outline: none;
+}
+
+.tree-node.dragging {
+  opacity: 0.5;
+}
+
+.tree-node.drag-over {
+  background-color: var(--bg-selected);
+  border: 2px dashed var(--color-primary);
+}
+
+/* 节点内容 */
+.node-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 24px;
+}
+
+/* 展开/折叠图标 */
+.expand-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-xs);
+  font-size: 10px;
+  color: var(--text-secondary);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.tree-node.expanded .expand-icon {
+  transform: rotate(90deg);
+}
+
+.expand-icon:hover {
+  color: var(--text-primary);
+}
+
+/* 占位符（用于对齐） */
+.spacer {
+  width: 16px;
+  height: 16px;
+  margin-right: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+/* 节点图标 */
+.node-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.node-icon.folder-icon {
+  color: var(--color-primary);
+}
+
+.node-icon.bookmark-icon {
+  color: var(--text-secondary);
+}
+
+.node-icon.separator-icon {
+  color: var(--text-disabled);
+}
+
+/* 节点标题 */
+.node-title {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.tree-node.selected .node-title {
+  font-weight: var(--font-weight-medium);
+}
+
+/* 分隔符样式 */
+.node-title.separator-title {
+  color: var(--text-disabled);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* 子节点容器 */
+.node-children {
+  margin-left: 20px;
+  overflow: hidden;
+  transition: max-height var(--transition-normal);
+}
+
+.node-children.collapsed {
+  max-height: 0;
+}
+
+.node-children.expanded {
+  max-height: none;
+}
+
+/* 搜索结果节点 */
+.search-result-node {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--border-secondary);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.search-result-node:hover {
+  background-color: var(--bg-hover);
+}
+
+.search-result-node:focus {
+  background-color: var(--bg-focused);
+  outline: none;
+}
+
+.search-result-node.selected {
+  background-color: var(--bg-selected);
+}
+
+/* 搜索结果内容 */
+.result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.result-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.result-title {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-url {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 24px; /* 对齐图标位置 */
+}
+
+/* 搜索高亮 */
+.highlight {
+  background-color: var(--color-warning);
+  color: var(--text-primary);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* 无结果提示 */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.no-results-text {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* 加载状态 */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-secondary);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-md);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* 拖拽指示器 */
+.drop-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  pointer-events: none;
+  z-index: var(--z-dropdown);
+}
+
+.drop-indicator.before {
+  top: -1px;
+}
+
+.drop-indicator.after {
+  bottom: -1px;
+}
+
+/* 层级缩进 */
+.tree-node[data-level="0"] { padding-left: var(--spacing-sm); }
+.tree-node[data-level="1"] { padding-left: calc(var(--spacing-sm) + 16px); }
+.tree-node[data-level="2"] { padding-left: calc(var(--spacing-sm) + 32px); }
+.tree-node[data-level="3"] { padding-left: calc(var(--spacing-sm) + 48px); }
+.tree-node[data-level="4"] { padding-left: calc(var(--spacing-sm) + 64px); }
+.tree-node[data-level="5"] { padding-left: calc(var(--spacing-sm) + 80px); }
+
+/* 响应式设计 */
+@media (max-width: 300px) {
+  .tree-node {
+    min-height: 24px;
+    padding: 2px 6px;
+  }
+
+  .node-title {
+    font-size: 12px;
+  }
+
+  .node-icon,
+  .expand-icon,
+  .spacer {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .tree-node:hover,
+  .search-result-node:hover {
+    background-color: var(--bg-selected);
+    border: 1px solid var(--border-focused);
+  }
+
+  .tree-node.selected,
+  .search-result-node.selected {
+    border: 2px solid var(--border-focused);
+  }
+}
+
+/* 暗色主题适配 */
+[data-theme="dark"] {
+  .highlight {
+    background-color: var(--color-primary-light);
+    color: var(--text-primary);
+  }
+
+  .loading-spinner {
+    border-color: var(--border-secondary);
+    border-top-color: var(--color-primary-light);
+  }
+}

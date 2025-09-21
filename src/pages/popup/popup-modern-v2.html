@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vBookmarks</title>
+
+    <!-- 使用新的模块化CSS系统 -->
+    <link rel="stylesheet" href="../../../src/styles/themes/default.css">
+
+    <!-- 兼容性：保留旧的CSS文件 -->
+    <link rel="stylesheet" href="../../../neat.css">
+
+    <style>
+        /* 额外的现代化样式增强 */
+        :root {
+            /* 自定义品牌色彩 */
+            --brand-primary: #1976d2;
+            --brand-secondary: #7c4dff;
+            --brand-accent: #00bcd4;
+        }
+
+        /* 应用布局 */
+        .app-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            max-width: 400px;
+            max-height: 600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            font-family: var(--font-family-base);
+        }
+
+        /* 品牌样式 */
+        .brand-header {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .brand-title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .brand-icon {
+            font-size: 24px;
+        }
+
+        /* 增强的搜索区域 */
+        .enhanced-search {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-secondary);
+            padding: var(--spacing-md);
+        }
+
+        .search-with-filters {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .search-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .filter-btn {
+            padding: 4px 8px;
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+        }
+
+        /* 快捷操作栏 */
+        .quick-actions {
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-secondary);
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 4px 8px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        /* 增强的书签树 */
+        .enhanced-tree {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* 浮动工具栏 */
+        .floating-toolbar {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xs);
+            z-index: var(--z-dropdown);
+        }
+
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        /* 状态栏增强 */
+        .enhanced-status {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-secondary);
+            padding: var(--spacing-xs) var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+        }
+
+        .status-info {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-icon {
+            font-size: 12px;
+        }
+
+        /* 主题切换器 */
+        .theme-switcher {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 2px 8px;
+            color: white;
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .theme-switcher:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 加载动画 */
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-secondary);
+            border-top-color: var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: var(--spacing-xl) auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 320px) {
+            .quick-actions {
+                justify-content: center;
+            }
+
+            .floating-toolbar {
+                bottom: var(--spacing-sm);
+                right: var(--spacing-sm);
+            }
+
+            .enhanced-status {
+                flex-direction: column;
+                gap: var(--spacing-xs);
+                align-items: flex-start;
+            }
+        }
+
+        /* 深色主题 */
+        [data-theme="dark"] {
+            --brand-primary: #42a5f5;
+            --brand-secondary: #7c4dff;
+            --brand-accent: #26c6da;
+        }
+
+        [data-theme="dark"] .brand-header {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+        }
+
+        /* 无障碍支持 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* 高对比度模式 */
+        @media (prefers-contrast: high) {
+            .action-btn,
+            .toolbar-btn {
+                border: 2px solid var(--border-primary);
+            }
+
+            .action-btn:hover,
+            .toolbar-btn:hover {
+                border: 2px solid var(--border-focused);
+            }
+        }
+
+        /* 减少动画 */
+        @media (prefers-reduced-motion: reduce) {
+            .loader {
+                animation: none;
+                border-top-color: var(--brand-primary);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- 品牌头部 -->
+        <header class="brand-header">
+            <h1 class="brand-title">
+                <span class="brand-icon">📚</span>
+                vBookmarks
+            </h1>
+            <button class="theme-switcher" onclick="toggleTheme()" title="切换主题">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </header>
+
+        <!-- 增强的搜索区域 -->
+        <div class="enhanced-search">
+            <div class="search-with-filters">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text"
+                           class="search-input"
+                           id="search-input"
+                           placeholder="搜索书签..."
+                           autocomplete="off"
+                           aria-label="搜索书签">
+                    <button class="search-clear" onclick="clearSearch()" title="清除搜索">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="search-actions">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">
+                            全部
+                        </button>
+                        <button class="filter-btn" data-filter="bookmarks" onclick="setFilter('bookmarks')">
+                            书签
+                        </button>
+                        <button class="filter-btn" data-filter="folders" onclick="setFilter('folders')">
+                            文件夹
+                        </button>
+                    </div>
+                    <div class="search-shortcuts">
+                        <span class="shortcut-key">Ctrl+F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快捷操作栏 -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="addBookmark()" title="添加书签">
+                <span>➕</span>
+                <span>添加书签</span>
+            </button>
+            <button class="action-btn" onclick="addFolder()" title="添加文件夹">
+                <span>📁</span>
+                <span>添加文件夹</span>
+            </button>
+            <button class="action-btn" onclick="refreshBookmarks()" title="刷新">
+                <span>🔄</span>
+                <span>刷新</span>
+            </button>
+            <button class="action-btn" onclick="showSettings()" title="设置">
+                <span>⚙️</span>
+                <span>设置</span>
+            </button>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 加载指示器 -->
+            <div class="loading-indicator" id="loading-indicator">
+                <div class="loader"></div>
+                <div>加载书签中...</div>
+            </div>
+
+            <!-- 应用内容 -->
+            <div class="app-content" id="app-content" style="display: none;">
+                <!-- 书签树容器 -->
+                <div class="enhanced-tree">
+                    <div class="tree-container" id="tree-container" role="tree" aria-label="书签树">
+                        <!-- 书签树将由JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 增强的状态栏 -->
+        <footer class="enhanced-status">
+            <div class="status-info">
+                <div class="status-item">
+                    <span class="status-icon">📊</span>
+                    <span id="bookmark-count">0 个书签</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">⏱️</span>
+                    <span id="last-update">刚刚更新</span>
+                </div>
+            </div>
+            <div class="status-actions">
+                <span id="sync-status" class="status-item">
+                    <span class="status-icon">✅</span>
+                    <span>已同步</span>
+                </span>
+            </div>
+        </footer>
+
+        <!-- 浮动工具栏 -->
+        <div class="floating-toolbar" id="floating-toolbar">
+            <button class="toolbar-btn" onclick="scrollToTop()" title="回到顶部">
+                ⬆️
+            </button>
+            <button class="toolbar-btn" onclick="expandAll()" title="展开全部">
+                📂
+            </button>
+            <button class="toolbar-btn" onclick="collapseAll()" title="折叠全部">
+                📁
+            </button>
+        </div>
+    </div>
+
+    <!-- 无障碍支持 -->
+    <span class="sr-only" id="live-region" aria-live="polite" aria-atomic="true"></span>
+
+    <script type="module">
+        import { initApp } from '../../app-v3.js';
+
+        // 主题管理
+        let currentTheme = localStorage.getItem('theme') || 'light';
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            const themeIcon = document.getElementById('theme-icon');
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            setTheme(currentTheme === 'light' ? 'dark' : 'light');
+        }
+
+        // 初始化主题
+        setTheme(currentTheme);
+
+        // 搜索功能
+        function clearSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = '';
+            searchInput.focus();
+
+            const clearBtn = document.querySelector('.search-clear');
+            clearBtn.classList.remove('visible');
+        }
+
+        function setFilter(filter) {
+            // 更新过滤器按钮状态
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+
+            // 应用过滤器逻辑
+            console.log('设置过滤器:', filter);
+        }
+
+        // 快捷操作
+        function addBookmark() {
+            console.log('添加书签');
+            // 实现添加书签逻辑
+        }
+
+        function addFolder() {
+            console.log('添加文件夹');
+            // 实现添加文件夹逻辑
+        }
+
+        function refreshBookmarks() {
+            console.log('刷新书签');
+            // 实现刷新逻辑
+        }
+
+        function showSettings() {
+            console.log('显示设置');
+            // 实现设置逻辑
+        }
+
+        // 工具栏功能
+        function scrollToTop() {
+            const treeContainer = document.getElementById('tree-container');
+            treeContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function expandAll() {
+            console.log('展开全部');
+            // 实现展开全部逻辑
+        }
+
+        function collapseAll() {
+            console.log('折叠全部');
+            // 实现折叠全部逻辑
+        }
+
+        // 搜索输入处理
+        const searchInput = document.getElementById('search-input');
+        const clearBtn = document.querySelector('.search-clear');
+
+        searchInput.addEventListener('input', (e) => {
+            const hasValue = e.target.value.length > 0;
+            clearBtn.classList.toggle('visible', hasValue);
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+F 或 / 聚焦搜索框
+            if ((e.ctrlKey && e.key === 'f') || e.key === '/') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+
+            // Escape 清除搜索
+            if (e.key === 'Escape') {
+                clearSearch();
+            }
+        });
+
+        // 初始化应用
+        async function initializeApp() {
+            try {
+                console.log('初始化vBookmarks现代化界面...');
+
+                const app = await initApp();
+
+                // 更新状态信息
+                updateStatusInfo();
+
+                // 设置搜索功能
+                setupSearch(app);
+
+                console.log('vBookmarks现代化界面初始化成功');
+            } catch (error) {
+                console.error('初始化失败:', error);
+
+                // 显示错误信息
+                const loadingIndicator = document.getElementById('loading-indicator');
+                loadingIndicator.innerHTML = `
+                    <div style="text-align: center; color: var(--color-error);">
+                        <div style="font-size: 24px; margin-bottom: var(--spacing-md);">❌</div>
+                        <div>加载失败</div>
+                        <div style="font-size: var(--font-size-xs); margin-top: var(--spacing-xs);">
+                            ${error.message}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // 更新状态信息
+        function updateStatusInfo() {
+            // 模拟更新书签数量
+            const bookmarkCount = document.getElementById('bookmark-count');
+            bookmarkCount.textContent = `${Math.floor(Math.random() * 100) + 50} 个书签`;
+
+            // 更新时间
+            const lastUpdate = document.getElementById('last-update');
+            lastUpdate.textContent = '刚刚更新';
+        }
+
+        // 设置搜索功能
+        function setupSearch(app) {
+            let searchTimeout;
+
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+
+                if (query === '') {
+                    app.clearSearch();
+                } else {
+                    // 防抖搜索
+                    searchTimeout = setTimeout(async () => {
+                        try {
+                            await app.search(query);
+                        } catch (error) {
+                            console.error('搜索失败:', error);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        // 启动应用
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>

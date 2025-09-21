@@ -1,0 +1,394 @@
+/**
+ * 搜索组件样式
+ */
+
+/* 搜索容器 */
+.search-container {
+  position: relative;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-secondary);
+  padding: var(--spacing-sm);
+}
+
+/* 搜索输入框 */
+.search-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.search-input::placeholder {
+  color: var(--text-disabled);
+}
+
+.search-input:focus {
+  border-color: var(--border-focused);
+  box-shadow: 0 0 0 2px var(--bg-focused);
+  outline: none;
+}
+
+.search-input:hover:not(:focus) {
+  border-color: var(--color-gray-400);
+}
+
+/* 搜索图标 */
+.search-icon {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 16px;
+  pointer-events: none;
+  transition: color var(--transition-fast);
+}
+
+.search-container:focus-within .search-icon {
+  color: var(--color-primary);
+}
+
+/* 清除按钮 */
+.search-clear {
+  position: absolute;
+  right: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.search-clear.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-clear:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.search-clear:active {
+  background: var(--bg-tertiary);
+}
+
+/* 搜索状态 */
+.search-status {
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-status-text {
+  flex: 1;
+}
+
+.search-status-count {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+/* 搜索建议 */
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: var(--z-dropdown);
+  display: none;
+}
+
+.search-suggestions.visible {
+  display: block;
+}
+
+.search-suggestion-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.search-suggestion-item:hover {
+  background: var(--bg-hover);
+}
+
+.search-suggestion-item.selected {
+  background: var(--bg-selected);
+  color: var(--text-primary);
+}
+
+.search-suggestion-item .suggestion-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-suggestion-item .suggestion-type {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-left: var(--spacing-sm);
+}
+
+/* 搜索过滤器 */
+.search-filters {
+  display: flex;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  flex-wrap: wrap;
+}
+
+.search-filter {
+  padding: 2px var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.search-filter:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-primary);
+}
+
+.search-filter.active {
+  background: var(--color-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-primary);
+}
+
+.search-filter .filter-icon {
+  margin-right: 2px;
+}
+
+/* 搜索快捷键提示 */
+.search-shortcuts {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-left: var(--spacing-sm);
+}
+
+.shortcut-key {
+  padding: 2px 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 3px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-family: var(--font-family-mono);
+}
+
+/* 搜索结果统计 */
+.search-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.search-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.search-stat-label {
+  opacity: 0.7;
+}
+
+.search-stat-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+/* 搜索历史 */
+.search-history {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: var(--z-dropdown);
+}
+
+.search-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.search-history-item:hover {
+  background: var(--bg-hover);
+}
+
+.search-history-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-history-remove {
+  padding: 2px 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+.search-history-item:hover .search-history-remove {
+  opacity: 1;
+}
+
+.search-history-remove:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* 搜索无结果状态 */
+.search-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.search-empty-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.3;
+}
+
+.search-empty-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.search-empty-description {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* 搜索加载状态 */
+.search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  color: var(--text-secondary);
+}
+
+.search-loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-secondary);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: var(--spacing-sm);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 300px) {
+  .search-container {
+    padding: var(--spacing-xs);
+  }
+
+  .search-input {
+    padding: 6px 30px 6px 28px;
+    font-size: 12px;
+  }
+
+  .search-shortcuts {
+    display: none;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .search-input:focus {
+    border-width: 2px;
+  }
+
+  .search-filter:hover,
+  .search-suggestion-item:hover {
+    border: 2px solid var(--border-focused);
+  }
+
+  .search-filter.active {
+    border: 2px solid var(--color-primary);
+  }
+}
+
+/* 暗色主题适配 */
+[data-theme="dark"] {
+  .search-input {
+    background: var(--bg-secondary);
+    border-color: var(--border-secondary);
+  }
+
+  .search-input:focus {
+    border-color: var(--color-primary-light);
+  }
+
+  .search-loading-spinner {
+    border-color: var(--border-secondary);
+    border-top-color: var(--color-primary-light);
+  }
+}

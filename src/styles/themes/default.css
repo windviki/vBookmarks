@@ -1,0 +1,436 @@
+/**
+ * 默认主题样式
+ * 整合所有CSS模块
+ */
+
+/* 导入基础样式 */
+@import '../base/variables.css';
+@import '../base/reset.css';
+
+/* 导入组件样式 */
+@import '../components/bookmark-tree.css';
+@import '../components/search.css';
+
+/* 应用基础样式 */
+body {
+  direction: __MSG_@@bidi_dir__;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  margin: 0;
+  padding: 0;
+  cursor: default;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  overflow: hidden;
+  width: var(--popup-width);
+  height: var(--popup-height);
+}
+
+/* Linux系统字体调整 */
+body.linux {
+  font-size: var(--font-size-xs);
+}
+
+/* 过渡动画 */
+body.transitional {
+  transition-property: height;
+  transition-duration: var(--transition-normal);
+}
+
+/* 缩放支持 */
+body[data-zoom='90'] > *:not(menu),
+body[data-zoom='90'] menu[type='context'] command {
+  zoom: var(--zoom-90);
+}
+
+body[data-zoom='90'] .drop-overlay.bookmark {
+  border-top: 0;
+}
+
+body[data-zoom='110'] > *:not(menu),
+body[data-zoom='110'] menu[type='context'] command {
+  zoom: var(--zoom-110);
+}
+
+body[data-zoom='120'] > *:not(menu),
+body[data-zoom='120'] menu[type='context'] command {
+  zoom: var(--zoom-120);
+}
+
+body[data-zoom='130'] > *:not(menu),
+body[data-zoom='130'] menu[type='context'] command {
+  zoom: var(--zoom-130);
+}
+
+body[data-zoom='140'] > *:not(menu),
+body[data-zoom='140'] menu[type='context'] command {
+  zoom: var(--zoom-140);
+}
+
+body[data-zoom='150'] > *:not(menu),
+body[data-zoom='150'] menu[type='context'] command {
+  zoom: var(--zoom-150);
+}
+
+/* 应用布局容器 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* 应用头部 */
+.app-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-secondary);
+  z-index: 10;
+}
+
+/* 主内容区域 */
+.main-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 树容器 */
+.tree-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-primary);
+}
+
+/* 应用底部 */
+.app-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  height: var(--footer-height);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 输入框样式 */
+input {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: var(--font-family-base);
+}
+
+body.linux input {
+  font-size: var(--font-size-xs);
+}
+
+/* 隐藏输入框 */
+#copier-input {
+  width: 0;
+  height: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 旧版兼容性样式 */
+#container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--bg-primary);
+}
+
+#search {
+  position: relative;
+  top: -3px;
+  margin: 0 -1px -5px -1px;
+  padding: 0;
+}
+
+#search input {
+  width: 100%;
+  padding: 6px 8px;
+  margin: 0;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#search input:focus {
+  outline: none;
+  border-color: var(--border-focused);
+  box-shadow: 0 0 0 2px var(--bg-focused);
+}
+
+/* 拖拽覆盖层 */
+.drop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: var(--z-dropdown);
+}
+
+.drop-overlay.bookmark {
+  border-top: 2px solid var(--color-primary);
+}
+
+/* 加载状态 */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.app-ready .loading-indicator {
+  display: none;
+}
+
+/* 应用内容 */
+.app-content {
+  display: none;
+}
+
+.app-ready .app-content {
+  display: block;
+}
+
+/* 状态栏 */
+#status-bar {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  height: var(--footer-height);
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 右键菜单样式 */
+.context-menu {
+  position: absolute;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  min-width: 200px;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.context-menu-item:hover {
+  background: var(--bg-hover);
+}
+
+.context-menu-item.disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.context-menu-item.disabled:hover {
+  background: transparent;
+}
+
+.context-menu-separator {
+  height: 1px;
+  background: var(--border-secondary);
+  margin: var(--spacing-xs) 0;
+}
+
+.context-menu-shortcut {
+  margin-left: auto;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* 工具提示 */
+.tooltip {
+  position: absolute;
+  background: var(--color-gray-800);
+  color: var(--text-inverse);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  z-index: var(--z-tooltip);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.tooltip.visible {
+  opacity: 1;
+}
+
+/* 消息提示 */
+.toast {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-gray-800);
+  color: var(--text-inverse);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-notification);
+  opacity: 0;
+  transition: all var(--transition-normal);
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+  background: var(--color-success);
+}
+
+.toast.error {
+  background: var(--color-error);
+}
+
+.toast.warning {
+  background: var(--color-warning);
+}
+
+/* 响应式设计 */
+@media (max-width: 300px) {
+  body {
+    width: 280px;
+  }
+
+  .context-menu {
+    min-width: 150px;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    height: auto;
+    padding: var(--spacing-xs);
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  body {
+    border: 2px solid var(--color-black);
+  }
+
+  .context-menu {
+    border: 2px solid var(--color-black);
+  }
+
+  .toast {
+    border: 2px solid var(--color-black);
+  }
+}
+
+/* 打印样式 */
+@media print {
+  body {
+    width: auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .app-header,
+  .app-footer,
+  .context-menu,
+  .tooltip,
+  .toast {
+    display: none !important;
+  }
+
+  .main-content {
+    overflow: visible;
+  }
+}
+
+/* 动画性能优化 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 焦点可见性优化 */
+:focus-visible {
+  outline: 2px solid var(--border-focused);
+  outline-offset: 2px;
+}
+
+/* 焦点不可见（键盘导航时） */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* 应用就绪状态 */
+.app-ready {
+  /* 应用就绪后的特定样式 */
+}
+
+.app-ready .tree-container {
+  /* 确保树容器在应用就绪后正确显示 */
+  opacity: 1;
+}
+
+/* 调试模式 */
+.debug-mode .tree-node::before {
+  content: attr(data-node-id);
+  position: absolute;
+  left: -50px;
+  font-size: 10px;
+  color: var(--text-disabled);
+  white-space: nowrap;
+}
+
+.debug-mode .tree-node {
+  border: 1px dashed transparent;
+}
+
+.debug-mode .tree-node:hover {
+  border-color: var(--color-primary);
+}
