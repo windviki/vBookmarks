@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vBookmarks</title>
+
+    <!-- 使用现代化的CSS系统 -->
+    <link rel="stylesheet" href="../styles/themes/default.css">
+
+    <!-- 兼容性：保留部分旧样式以确保功能正常 -->
+    <link rel="stylesheet" href="../../neat.css">
+
+    <style>
+        /* 弹出窗口特定样式 */
+        body {
+            width: var(--popup-width);
+            height: var(--popup-height);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: var(--font-family-base);
+        }
+
+        /* 应用容器 */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 加载状态 */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-secondary);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--spacing-md);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 搜索区域 */
+        .search-section {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-secondary);
+            padding: var(--spacing-sm);
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-secondary);
+            padding: var(--spacing-xs) var(--spacing-md);
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            height: var(--footer-height);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* 应用就绪状态 */
+        .app-ready .loading-container {
+            display: none;
+        }
+
+        .app-ready .app-content {
+            display: block;
+        }
+
+        .app-content {
+            display: none;
+            height: 100%;
+        }
+
+        /* 树容器 */
+        .tree-container {
+            width: 100%;
+            height: calc(100% - var(--header-height) - var(--footer-height));
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: var(--bg-primary);
+        }
+
+        /* 主题切换器 */
+        .theme-toggle {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 4px 8px;
+            color: var(--text-primary);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 300px) {
+            body {
+                width: 280px;
+            }
+
+            .search-section {
+                padding: var(--spacing-xs);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 加载状态 -->
+        <div class="loading-container" id="loading-container">
+            <div class="loading-spinner"></div>
+            <div>加载书签中...</div>
+        </div>
+
+        <!-- 应用内容 -->
+        <div class="app-content" id="app-content">
+            <!-- 搜索区域 -->
+            <div class="search-section">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text"
+                           class="search-input"
+                           id="search-input"
+                           placeholder="搜索书签..."
+                           autocomplete="off"
+                           aria-label="搜索书签">
+                    <button class="search-clear" onclick="clearSearch()" title="清除搜索">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- 主内容区域 -->
+            <main class="main-content">
+                <!-- 书签树容器 -->
+                <div class="tree-container" id="tree-container" role="tree" aria-label="书签树">
+                    <!-- 书签树将由JavaScript动态生成 -->
+                </div>
+            </main>
+
+            <!-- 状态栏 -->
+            <footer class="status-bar" id="status-bar">
+                <span id="status-text">就绪</span>
+                <span id="bookmark-count">0 个书签</span>
+            </footer>
+        </div>
+
+        <!-- 主题切换器 -->
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <!-- 模块化脚本 -->
+    <script type="module" src="./popup.js"></script>
+
+    <!-- 兼容性脚本 -->
+    <script>
+        // 主题管理
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            const themeIcon = document.getElementById('theme-icon');
+            themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // 搜索功能
+        function clearSearch() {
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.querySelector('.search-clear');
+
+            searchInput.value = '';
+            clearBtn.classList.remove('visible');
+            searchInput.focus();
+        }
+
+        // 初始化主题
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            const themeIcon = document.getElementById('theme-icon');
+            themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // 搜索输入处理
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.querySelector('.search-clear');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const hasValue = e.target.value.length > 0;
+                    clearBtn.classList.toggle('visible', hasValue);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -19,12 +19,12 @@
 			"128": "icon128.png"
 		},
 		"default_title": "vBookmarks",
-		"default_popup": "popup.html"
+		"default_popup": "src/entry/popup.html"
 	},
-	"options_page": "options.html",
+	"options_page": "src/entry/options.html",
 	"web_accessible_resources": [
 		{
-			"resources": ["bookmark-editor.html"],
+			"resources": ["src/entry/bookmark-editor.html"],
 			"matches": ["<all_urls>"]
 		},
 		{
@@ -55,7 +55,7 @@
         "identity"
 	],
     "web_accessible_resources": [{
-        "resources": [ "bookmark-editor.html", "_favicon/*" ],
+        "resources": [ "src/entry/bookmark-editor.html", "_favicon/*" ],
         "matches": ["<all_urls>"],
         "extension_ids": [ "*" ]
     }],
