@@ -339,6 +339,7 @@
 #tree ul li a.tree-item-link {
     padding: 0 4px;
     gap: 4px;
+    -webkit-padding-start: 20px !important;
 }
 
 #tree ul li a.tree-item-link .favicon-container {
@@ -385,7 +386,7 @@
 #results ul li a.tree-item-link {
     padding: 0 4px;
     gap: 4px;
-    padding-left: 16px; /* Consistent left margin */
+    padding-left: 10px; /* Consistent left margin */
 }
 
 #results ul li a.tree-item-link .favicon-container {
@@ -403,7 +404,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding-left: 16px;
+    padding-left: 10px;
     gap: 4px;
 }
 
@@ -418,6 +419,7 @@
 /* Handle nested levels in main tree */
 #tree ul ul li a.tree-item-link {
     padding-left: 20px; /* Indent nested bookmarks */
+    -webkit-padding-start: 40px !important;
 }
 
 #tree ul ul li a.tree-item-link .favicon-container {
@@ -1485,7 +1487,7 @@
 
 #results ul li a {
     position: relative !important;
-    padding-right: 60px !important;
+    padding-right: 10px !important;
     min-height: 20px !important;
     display: block !important;
 }
