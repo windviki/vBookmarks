@@ -183,23 +183,6 @@ function focusSearch() {
     }
 }
 
-// 显示错误信息
-function showError(error) {
-    const container = document.getElementById('tree-container');
-    if (container) {
-        container.innerHTML = `
-            <div style="text-align: center; padding: 40px 20px; color: #d32f2f;">
-                <div style="font-size: 48px; margin-bottom: 16px;">❌</div>
-                <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">
-                    加载失败
-                </div>
-                <div style="font-size: 14px; color: #666;">
-                    ${error.message || '未知错误'}
-                </div>
-            </div>
-        `;
-    }
-}
 
 // 恢复保存的窗口大小
 function restorePopupSize() {
