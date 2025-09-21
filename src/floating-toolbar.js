@@ -249,9 +249,9 @@ class FloatingToolbar {
     }
 
     /**
-     * Display sorted bookmarks in results container
+     * Display sorted bookmarks in results container with pagination
      */
-    async displaySortedBookmarks(sortedBookmarks, sortBy) {
+    async displaySortedBookmarks(sortedBookmarks, sortBy, page = 1, append = false) {
         const results = document.getElementById('results');
         if (!results) return;
 
@@ -266,12 +266,26 @@ class FloatingToolbar {
                 return;
             }
 
+            const itemsPerPage = 100;
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, validBookmarks.length);
+            const pageBookmarks = validBookmarks.slice(startIndex, endIndex);
+
             // Get full bookmark data for each item
-            const bookmarksData = await this.getBookmarksData(validBookmarks.map(item => item.id));
+            const bookmarksData = await this.getBookmarksData(pageBookmarks.map(item => item.id));
 
             let html = '';
 
-            // Add back button
+            // If not appending, add header and back button
+            if (!append) {
+                // Store current sort data for pagination
+                this.currentSortData = {
+                    bookmarks: sortedBookmarks,
+                    sortBy: sortBy,
+                    currentPage: page
+                };
+
+                // Add back button
             html += `
                 <div class="sort-header">
                     <button class="back-button" id="sort-back-button">
@@ -293,25 +307,59 @@ class FloatingToolbar {
             html += '</div>';
 
             for (const bookmark of bookmarksData) {
-                const metadata = validBookmarks.find(item => item.id === bookmark.id);
+                const metadata = pageBookmarks.find(item => item.id === bookmark.id);
                 if (metadata) {
                     html += await this.createBookmarkListItem(bookmark, metadata, sortBy);
                 }
             }
 
-            if (validBookmarks.length === 0) {
-                html += '<div class="no-results">暂无书签数据</div>';
+            // Add load more button if there are more items
+            if (endIndex < validBookmarks.length) {
+                html += `
+                    <div class="load-more-container">
+                        <button class="load-more-btn" id="load-more-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14m-7-7h14"/>
+                            </svg>
+                            加载更多 (显示 ${Math.min(itemsPerPage, validBookmarks.length - endIndex)}/${validBookmarks.length - endIndex} 项)
+                        </button>
+                    </div>
+                `;
             }
 
-            results.innerHTML = html;
+            if (append) {
+                // Append to existing content
+                const existingContent = results.innerHTML;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                // Remove existing load more button if any
+                const existingLoadMore = results.querySelector('.load-more-container');
+                if (existingLoadMore) {
+                    existingLoadMore.remove();
+                }
+
+                // Append new items
+                results.innerHTML = existingContent + html;
+            } else {
+                results.innerHTML = html;
+            }
 
             // Add click handlers
             this.addBookmarkClickHandlers(bookmarksData);
 
             // Add back button handler
-            const backButton = results.querySelector('.back-button');
+            const backButton = results.querySelector('#sort-back-button');
             if (backButton) {
                 backButton.addEventListener('click', () => this.clearSort());
+            }
+
+            // Add load more button handler
+            const loadMoreBtn = results.querySelector('#load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', () => {
+                    this.loadMoreSortedItems();
+                });
             }
 
         } catch (error) {
@@ -382,7 +430,10 @@ class FloatingToolbar {
             <div class="sorted-bookmark-item enhanced" data-bookmark-id="${bookmark.id}">
                 <div class="bookmark-main">
                     <div class="favicon-container">
-                        <img src="${this.getFaviconUrl(bookmark.url)}" alt="" class="bookmark-favicon">
+                        <img src="${this.getFaviconUrl(bookmark.url)}"
+                             alt=""
+                             class="bookmark-favicon"
+                             onerror="this.src='${this.getDefaultFavicon()}'">
                     </div>
                     <div class="bookmark-content">
                         <a href="${bookmark.url}" class="bookmark-link" target="_blank" rel="noopener noreferrer">
@@ -491,16 +542,79 @@ class FloatingToolbar {
     }
 
     /**
-     * Get favicon URL for a bookmark
+     * Load more sorted items
+     */
+    async loadMoreSortedItems() {
+        if (!this.currentSortData) {
+            console.warn('No sort data available for loading more items');
+            return;
+        }
+
+        const { bookmarks, sortBy, currentPage } = this.currentSortData;
+        const nextPage = currentPage + 1;
+
+        // Show loading state on the button
+        const loadMoreBtn = document.querySelector('#load-more-btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                </svg>
+                加载中...
+            `;
+            loadMoreBtn.disabled = true;
+        }
+
+        try {
+            await this.displaySortedBookmarks(bookmarks, sortBy, nextPage, true);
+        } catch (error) {
+            console.error('Failed to load more sorted items:', error);
+
+            // Restore button state on error
+            if (loadMoreBtn) {
+                loadMoreBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14m-7-7h14"/>
+                    </svg>
+                    加载失败，重试
+                `;
+                loadMoreBtn.disabled = false;
+            }
+        }
+    }
+
+    /**
+     * Get favicon URL for a bookmark with better error handling
      */
     getFaviconUrl(url) {
+        if (!url || typeof url !== 'string') {
+            return this.getDefaultFavicon();
+        }
+
         try {
-            const domain = new URL(url).hostname;
-            // Use Google Favicon service as fallback
+            // Clean the URL
+            let cleanUrl = url.trim();
+            if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+                cleanUrl = 'https://' + cleanUrl;
+            }
+
+            const domain = new URL(cleanUrl).hostname;
+            if (!domain || domain === 'localhost' || domain.startsWith('192.168.') || domain.startsWith('127.0.0.1')) {
+                return this.getDefaultFavicon();
+            }
+
+            // Use Google Favicon service with error handling
             return `https://www.google.com/s2/favicons?domain=${domain}&sz=16`;
         } catch (error) {
-            return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iMiIgZmlsbD0iI0Y0RjRGNCIvPgo8cGF0aCBkPSJNOCAxMkM5LjEwNDU3IDEyIDEwIDExLjEwNDU3IDEwIDEwQzEwIDguODk1NDMgOS4xMDQ1NyA4IDggOEM2Ljg5NTQzIDggNiA4Ljg5NTQzIDYgMTBDNiAxMS4xMDQ1NyA2Ljg5NTQzIDEyIDggMTJaIiBmaWxsPSIjOTk5Ii8+Cjwvc3ZnPgo=';
+            return this.getDefaultFavicon();
         }
+    }
+
+    /**
+     * Get default favicon SVG
+     */
+    getDefaultFavicon() {
+        return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iMiIgZmlsbD0iI0Y0RjRGNCIvPgo8cGF0aCBkPSJNOCAxMkM5LjEwNDU3IDEyIDEwIDExLjEwNDU3IDEwIDEwQzEwIDguODk1NDMgOS4xMDQ1NyA4IDggOEM2Ljg5NTQzIDggNiA4Ljg5NTQzIDYgMTBDNiAxMS4xMDQ1NyA2Ljg5NTQzIDEyIDggMTJaIiBmaWxsPSIjOTk5Ii8+Cjwvc3ZnPg==';
     }
 
     /**

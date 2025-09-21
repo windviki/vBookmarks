@@ -1017,9 +1017,6 @@
     border-left: 3px solid #007bff;
 }
 
-.sorted-bookmark-item:hover .bookmark-metadata {
-    opacity: 1;
-}
 
 .sorted-bookmark-item:last-child {
     border-bottom: none;
@@ -1059,8 +1056,7 @@
     margin-left: 12px;
     min-width: 100px;
     flex-shrink: 0;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    opacity: 1;
 }
 
 .click-count,
@@ -1327,16 +1323,11 @@
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    opacity: 1;
     position: absolute;
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-}
-
-.sorted-bookmark-item:hover .bookmark-metadata.compact {
-    opacity: 1;
 }
 
 .meta-badge.clicks {
@@ -1366,6 +1357,62 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-    font-style: italic;
-    opacity: 0.8;
+
+/* Load more button styling */
+.load-more-container {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #f1f3f4;
+    background: #fafbfc;
+    margin-top: 8px;
+}
+
+.load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.load-more-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.load-more-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.load-more-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.load-more-btn svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Loading animation for load more button */
+.load-more-btn:disabled svg {
+    animation: spin 1s linear infinite;
+}
+
+/* Style for the last load more item */
+.sorted-bookmark-item:last-of-type {
+    margin-bottom: 8px;
 }

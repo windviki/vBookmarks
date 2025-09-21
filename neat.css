@@ -227,7 +227,7 @@ body.linux input {
 #tree ul li a,
 #tree ul li span {
     display: block;
-    line-height: 1.67em;
+    line-height: 2em;
     padding: 0 4px;
     text-decoration: none;
     color: #000;
