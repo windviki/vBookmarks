@@ -481,37 +481,38 @@
             return '';
         }
 
-        // BookmarkMetadataManager应该已经初始化完成
-        if (!window.metadataManager) {
-            console.warn('MetadataManager not available for bookmark:', bookmarkId);
+        // 检查元数据显示设置
+        const settings = getMetadataSettings();
+        if (!settings.showAddedDate && !settings.showLastAccessed && !settings.showClickCount) {
             return '';
         }
 
-        try {
-            const settings = getMetadataSettings();
-            const metadata = window.metadataManager.getMetadata(bookmarkId);
-
-            if (!settings.showAddedDate && !settings.showLastAccessed && !settings.showClickCount) {
-                return '';
-            }
-
         let metadataHtml = '';
 
-            if (settings.showClickCount && metadata.clickCount > 0) {
-                const clickTitle = chrome.i18n.getMessage('clickCount') || 'Clicks';
-                metadataHtml += `<span class="meta-badge clicks" title="${clickTitle}: ${metadata.clickCount}">${metadata.clickCount}</span>`;
-            }
+        try {
+            // BookmarkMetadataManager应该已经初始化完成
+            if (window.metadataManager) {
+                const metadata = window.metadataManager.getMetadata(bookmarkId);
 
-            if (settings.showAddedDate && metadata.addedDate) {
-                const dateStr = formatDate(metadata.addedDate);
-                const addedTitle = chrome.i18n.getMessage('addedDate') || 'Added';
-                metadataHtml += `<span class="meta-badge date" title="${addedTitle}: ${dateStr}">${getCompactDate(metadata.addedDate)}</span>`;
-            }
+                // 添加点击次数 - 只有这个使用localStorage，因为Chrome API不提供点击次数
+                if (settings.showClickCount && metadata.clickCount > 0) {
+                    const clickTitle = chrome.i18n.getMessage('clickCount') || 'Clicks';
+                    metadataHtml += `<span class="meta-badge clicks" title="${clickTitle}: ${metadata.clickCount}">${metadata.clickCount}</span>`;
+                }
 
-            if (settings.showLastAccessed && metadata.lastAccessed) {
-                const dateStr = formatDate(metadata.lastAccessed);
-                const accessedTitle = chrome.i18n.getMessage('lastAccessed') || 'Accessed';
-                metadataHtml += `<span class="meta-badge accessed" title="${accessedTitle}: ${dateStr}">${getCompactDate(metadata.lastAccessed)}</span>`;
+                // 添加访问日期 - 使用localStorage的数据（作为回退）
+                if (settings.showLastAccessed && metadata.lastAccessed) {
+                    const dateStr = formatDate(metadata.lastAccessed);
+                    const accessedTitle = chrome.i18n.getMessage('lastAccessed') || 'Accessed';
+                    metadataHtml += `<span class="meta-badge accessed" title="${accessedTitle}: ${dateStr}">${getCompactDate(metadata.lastAccessed)}</span>`;
+                }
+
+                // 添加日期 - 使用localStorage的数据（作为回退）
+                if (settings.showAddedDate && metadata.addedDate) {
+                    const dateStr = formatDate(metadata.addedDate);
+                    const addedTitle = chrome.i18n.getMessage('addedDate') || 'Added';
+                    metadataHtml += `<span class="meta-badge date" title="${addedTitle}: ${dateStr}">${getCompactDate(metadata.addedDate)}</span>`;
+                }
             }
 
             return metadataHtml;

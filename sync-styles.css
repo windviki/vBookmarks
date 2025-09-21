@@ -478,10 +478,29 @@
 #tree ul li a.tree-item-link .favicon-container .sync-indicator,
 #tree ul li span.tree-item-span .favicon-container .sync-indicator {
     /* Adjust position to account for line-height issues */
-    bottom: -1px !important;
+    bottom: 6px !important;
     right: -2px !important;
     /* Ensure higher z-index than parent elements */
-    z-index: 20 !important;
+    z-index: 25 !important;
+    /* Ensure it's always visible */
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Force tree view favicon container positioning */
+#tree .favicon-container,
+#tree ul li .favicon-container,
+#tree ul li a .favicon-container,
+#tree ul li span .favicon-container {
+    position: relative !important;
+    line-height: normal !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    height: 16px !important;
+    width: 16px !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Fix search results badge alignment issue */
@@ -497,7 +516,7 @@
     align-items: flex-end !important;
     gap: 2px !important;
     z-index: 200 !important;
-    opacity: 0 !important;
+    opacity: 1 !important;
     transition: opacity 0.2s ease !important;
     pointer-events: none !important;
     font-size: 9px !important;
@@ -1452,4 +1471,39 @@
 /* Style for the last load more item */
 .sorted-bookmark-item:last-of-type {
     margin-bottom: 8px;
+}
+
+/* ========================================================================= */
+/* ADDITIONAL CRITICAL FIXES */
+/* ========================================================================= */
+
+/* Ensure search results containers have proper positioning */
+#results ul li {
+    position: relative !important;
+    min-height: 2em !important;
+}
+
+#results ul li a {
+    position: relative !important;
+    padding-right: 60px !important;
+    min-height: 20px !important;
+    display: block !important;
+}
+
+/* Final override for any remaining neat.css conflicts */
+#tree .sync-indicator {
+    bottom: 6px !important;
+    right: -2px !important;
+    z-index: 30 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#results .bookmark-metadata {
+    top: 2px !important;
+    right: 2px !important;
+    transform: none !important;
+    position: absolute !important;
+    opacity: 1 !important;
 }

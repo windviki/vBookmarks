@@ -53,6 +53,7 @@ class BookmarkMetadataManager {
                 this.bookmarkCache.set(node.id, {
                     dateAdded: node.dateAdded,
                     dateGroupModified: node.dateGroupModified,
+                    dateLastUsed: node.dateLastUsed,
                     title: node.title,
                     url: node.url
                 });
@@ -168,12 +169,23 @@ class BookmarkMetadataManager {
             return;
         }
 
-        // Use original dateAdded if available
-        if (nodeData.dateAdded && !this.metadata[bookmarkId].addedDate) {
+        // 优先使用BookmarkTreeNode的dateAdded字段
+        if (nodeData.dateAdded) {
             this.metadata[bookmarkId].addedDate = new Date(nodeData.dateAdded).toISOString();
         }
 
-        // Set title and URL for reference
+        // 如果BookmarkTreeNode有dateLastUsed，优先使用它
+        if (nodeData.dateLastUsed) {
+            this.metadata[bookmarkId].lastAccessed = new Date(nodeData.dateLastUsed).toISOString();
+        }
+
+        // 只有在Chrome API没有提供dateLastUsed时，才使用localStorage的lastAccessed
+        if (!nodeData.dateLastUsed && !this.metadata[bookmarkId].lastAccessed) {
+            // 可以设置一个默认值或者保持为null
+            // this.metadata[bookmarkId].lastAccessed = new Date().toISOString();
+        }
+
+        // 设置title和URL作为参考
         this.metadata[bookmarkId].title = nodeData.title;
         this.metadata[bookmarkId].url = nodeData.url;
     }
@@ -232,21 +244,28 @@ class BookmarkMetadataManager {
      * Get added date for a bookmark
      */
     getAddedDate(bookmarkId) {
-        // First try to get original date from BookmarkTreeNode
+        // 优先使用BookmarkTreeNode的dateAdded字段
         const nodeData = this.getBookmarkNodeData(bookmarkId);
         if (nodeData && nodeData.dateAdded) {
             return new Date(nodeData.dateAdded);
         }
 
-        // Fall back to stored metadata
+        // 回退到存储的元数据
         const metadata = this.getBookmarkMetadata(bookmarkId);
-        return new Date(metadata.addedDate || Date.now());
+        return metadata.addedDate ? new Date(metadata.addedDate) : null;
     }
 
     /**
      * Get last accessed date for a bookmark
      */
     getLastAccessed(bookmarkId) {
+        // 优先使用BookmarkTreeNode的dateLastUsed字段
+        const nodeData = this.getBookmarkNodeData(bookmarkId);
+        if (nodeData && nodeData.dateLastUsed) {
+            return new Date(nodeData.dateLastUsed);
+        }
+
+        // 回退到存储的元数据
         const metadata = this.getBookmarkMetadata(bookmarkId);
         return metadata.lastAccessed ? new Date(metadata.lastAccessed) : null;
     }
