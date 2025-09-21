@@ -379,6 +379,12 @@
 #tree ul li a.tree-item-link .favicon-container {
     margin-left: 12px; /* Align with folder icons: twisty(8px+4pxmargin) = 12px */
     margin-right: 4px;
+    /* Ensure proper positioning for sync indicator */
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
 }
 
 /* Main tree folders */

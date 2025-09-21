@@ -129,6 +129,16 @@ class FloatingToolbar {
                 }
             }
         });
+
+        // Setup favicon error handling using event delegation
+        document.addEventListener('error', (e) => {
+            if (e.target.tagName === 'IMG' && e.target.classList.contains('bookmark-favicon')) {
+                const fallbackSrc = e.target.getAttribute('data-fallback-src');
+                if (fallbackSrc && e.target.src !== fallbackSrc) {
+                    e.target.src = fallbackSrc;
+                }
+            }
+        }, true);
     }
 
     /**
@@ -435,7 +445,7 @@ class FloatingToolbar {
                         <img src="${this.getFaviconUrl(bookmark.url)}"
                              alt=""
                              class="bookmark-favicon"
-                             onerror="this.src='${this.getDefaultFavicon()}'">
+                             data-fallback-src="${this.getDefaultFavicon()}">
                     </div>
                     <div class="bookmark-content">
                         <a href="${bookmark.url}" class="bookmark-link" target="_blank" rel="noopener noreferrer">

@@ -63,7 +63,7 @@
 		"<all_urls>"
     ],
     "content_security_policy": {
-        "extension_pages": "img-src 'self' data: https://www.google.com https://t1.gstatic.com https://www.gstatic.com; default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
+        "extension_pages": "img-src 'self' data: https: http:; default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
     },
 	"minimum_chrome_version": "88.0.0.0",
 	"default_locale": "en",
