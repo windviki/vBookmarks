@@ -514,8 +514,8 @@
     position: absolute !important;
     right: 2px !important;
     display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
     gap: 2px !important;
     z-index: 200 !important;
     opacity: 1 !important;
@@ -528,6 +528,8 @@
     padding: 0 !important;
     margin: 0 !important;
     min-width: auto !important;
+    /* 让badge从右往左排列，自适应宽度 */
+    justify-content: flex-start !important;
 }
 
 /* Twisty styling is already handled in MAIN TREE SPECIFIC STYLES section */
@@ -1321,41 +1323,36 @@
     font-size: 9px;
 }
 
-/* Individual meta badges for sorted lists */
-.sorted-bookmark-item .meta-badge {
+/* Individual meta badges for sorted lists - handled by updated rules above */
+
+/* Position multiple badges in sorted lists - adaptive right-to-left layout */
+.sorted-bookmark-item .bookmark-metadata {
     position: absolute;
     right: 4px;
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Individual badges in sorted lists - no absolute positioning needed */
+.sorted-bookmark-item .meta-badge {
+    position: static; /* Override absolute positioning */
+    right: auto; /* Override fixed right positioning */
+    top: auto; /* Override fixed top positioning */
+    transform: none; /* Override transform */
     background: #ffffff;
     color: #333;
     padding: 1px 6px;
     border-radius: 4px;
     font-size: 9px;
     font-weight: 500;
+    border: 1px solid #ddd;
     white-space: nowrap;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    display: inline-block !important;
-    line-height: 1.2;
-    min-height: 14px;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 10;
-    pointer-events: none;
-}
-
-/* Position multiple badges in sorted lists */
-.sorted-bookmark-item .meta-badge:nth-of-type(1) {
-    right: 4px;
-}
-
-.sorted-bookmark-item .meta-badge:nth-of-type(2) {
-    right: 70px;
-}
-
-.sorted-bookmark-item .meta-badge:nth-of-type(3) {
-    right: 130px;
 }
 
 /* Individual tag-style badges */
@@ -1503,7 +1500,6 @@
 }
 
 #results .bookmark-metadata {
-    top: 2px !important;
     right: 2px !important;
     transform: none !important;
     position: absolute !important;

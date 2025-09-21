@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge自适应排列测试</title>
+    <link rel="stylesheet" href="neat.css">
+    <link rel="stylesheet" href="sync-styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .sorted-bookmark-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            position: relative;
+        }
+        .bookmark-link {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        .bookmark-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .bookmark-url {
+            color: #666;
+            font-size: 12px;
+        }
+        .debug-info {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <div class="test-title">Badge自适应排列测试</div>
+        <div class="debug-info">
+            <strong>测试说明：</strong><br>
+            1. Badge应该从右往左排列（第一个badge在最右边）<br>
+            2. Badge之间应该有2px的间隙<br>
+            3. Badge应该根据内容自动调整宽度<br>
+            4. 不应该重叠或超出容器边界
+        </div>
+
+        <!-- 测试用例1：一个badge -->
+        <div class="sorted-bookmark-item">
+            <a href="#" class="bookmark-link">
+                <div class="bookmark-title">测试用例1 - 只有点击次数</div>
+                <div class="bookmark-url">https://example1.com</div>
+                <div class="bookmark-metadata">
+                    <span class="meta-badge clicks">42</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- 测试用例2：两个badge -->
+        <div class="sorted-bookmark-item">
+            <a href="#" class="bookmark-link">
+                <div class="bookmark-title">测试用例2 - 点击次数和添加日期</div>
+                <div class="bookmark-url">https://example2.com</div>
+                <div class="bookmark-metadata">
+                    <span class="meta-badge clicks">128</span>
+                    <span class="meta-badge date">2024</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- 测试用例3：三个badge -->
+        <div class="sorted-bookmark-item">
+            <a href="#" class="bookmark-link">
+                <div class="bookmark-title">测试用例3 - 三个badge（点击次数、添加日期、访问日期）</div>
+                <div class="bookmark-url">https://example3.com</div>
+                <div class="bookmark-metadata">
+                    <span class="meta-badge clicks">256</span>
+                    <span class="meta-badge date">2024</span>
+                    <span class="meta-badge accessed">今天</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- 测试用例4：不同宽度的badge -->
+        <div class="sorted-bookmark-item">
+            <a href="#" class="bookmark-link">
+                <div class="bookmark-title">测试用例4 - 不同宽度的badge</div>
+                <div class="bookmark-url">https://example4.com</div>
+                <div class="bookmark-metadata">
+                    <span class="meta-badge clicks">1</span>
+                    <span class="meta-badge date">2024年1月</span>
+                    <span class="meta-badge accessed">昨天</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- 测试用例5：长文本 -->
+        <div class="sorted-bookmark-item">
+            <a href="#" class="bookmark-link">
+                <div class="bookmark-title">测试用例5 - 长文本标题测试用例看看badge是否会超出边界或者影响布局</div>
+                <div class="bookmark-url">https://very-long-url-example.com/testing/badge-layout-with-long-text</div>
+                <div class="bookmark-metadata">
+                    <span class="meta-badge clicks">999</span>
+                    <span class="meta-badge date">2023</span>
+                    <span class="meta-badge accessed">3天前</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="debug-info">
+            <strong>预期结果：</strong><br>
+            • 所有badge都应该从右往左排列<br>
+            • 第1个badge（点击次数）应该在最右边<br>
+            • 第2个badge（添加日期）应该在中间<br>
+            • 第3个badge（访问日期）应该在最左边<br>
+            • badge之间有2px间隙，不会重叠<br>
+            • badge宽度根据内容自动调整
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后分析badge布局
+        window.addEventListener('load', function() {
+            console.log('🔍 分析badge布局...');
+
+            const testItems = document.querySelectorAll('.sorted-bookmark-item');
+            testItems.forEach((item, index) => {
+                const metadata = item.querySelector('.bookmark-metadata');
+                const badges = item.querySelectorAll('.meta-badge');
+
+                console.log(`测试用例${index + 1}:`);
+                console.log(`  - Badge数量: ${badges.length}`);
+
+                badges.forEach((badge, badgeIndex) => {
+                    const rect = badge.getBoundingClientRect();
+                    const itemRect = item.getBoundingClientRect();
+                    console.log(`  - Badge${badgeIndex + 1} (${badge.textContent}): 位置=${Math.round(rect.left - itemRect.left)}px, 宽度=${Math.round(rect.width)}px`);
+                });
+
+                if (metadata) {
+                    const metaRect = metadata.getBoundingClientRect();
+                    console.log(`  - 元数据容器: 宽度=${Math.round(metaRect.width)}px`);
+                }
+            });
+
+            console.log('✅ Badge布局分析完成');
+        });
+    </script>
+</body>
+</html>
