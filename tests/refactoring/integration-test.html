@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vBookmarks 重构集成测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .test-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .test-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-waiting {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-running {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .test-section {
+            margin: 20px 0;
+        }
+
+        .test-section h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .result-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .result-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .result-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .test-log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .module-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .module-card h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+
+        .module-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .module-loaded {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .module-loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .module-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 5px 0;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <h1>vBookmarks 重构集成测试</h1>
+
+    <div class="test-container">
+        <div class="test-header">
+            <div class="test-title">模块加载测试</div>
+            <div class="test-status status-waiting" id="main-status">等待开始</div>
+        </div>
+
+        <div class="module-grid" id="module-grid">
+            <!-- 模块状态卡片将在这里动态生成 -->
+        </div>
+
+        <div class="test-controls">
+            <button class="btn btn-primary" onclick="runAllTests()">运行所有测试</button>
+            <button class="btn btn-secondary" onclick="clearResults()">清除结果</button>
+            <button class="btn btn-secondary" onclick="exportResults()">导出结果</button>
+        </div>
+
+        <div class="progress-bar" id="progress-bar" style="display: none;">
+            <div class="progress-fill" id="progress-fill">0%</div>
+        </div>
+
+        <div class="test-section">
+            <h3>测试结果</h3>
+            <div id="test-results">
+                <div class="test-result result-info">点击"运行所有测试"开始测试</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>性能指标</h3>
+            <div class="performance-metrics" id="performance-metrics">
+                <!-- 性能指标将在这里显示 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>测试日志</h3>
+            <div class="test-log" id="test-log">测试日志将在这里显示...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        // 导入测试模块
+        import { StringList, isBlank } from '../src/utils/string/string-utils.js';
+        import { SeparatorManager } from '../src/core/storage-manager/separator-manager.js';
+        import { EventSystem, Events } from '../src/core/event-system/event-system.js';
+        import { BookmarkManager } from '../src/core/bookmark-manager/bookmark-manager.js';
+
+        // 测试状态管理
+        const testState = {
+            totalTests: 0,
+            passedTests: 0,
+            failedTests: 0,
+            startTime: null,
+            endTime: null,
+            moduleStatus: new Map()
+        };
+
+        // 模块定义
+        const modules = [
+            { name: 'String Utils', file: 'string-utils.js', testFn: testStringUtils },
+            { name: 'Separator Manager', file: 'separator-manager.js', testFn: testSeparatorManager },
+            { name: 'Event System', file: 'event-system.js', testFn: testEventSystem },
+            { name: 'Bookmark Manager', file: 'bookmark-manager.js', testFn: testBookmarkManager }
+        ];
+
+        // 初始化页面
+        function initializePage() {
+            renderModuleGrid();
+            log('页面初始化完成', 'info');
+        }
+
+        // 渲染模块网格
+        function renderModuleGrid() {
+            const grid = document.getElementById('module-grid');
+            grid.innerHTML = '';
+
+            modules.forEach(module => {
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                card.innerHTML = `
+                    <h4>${module.name}</h4>
+                    <div class="module-status module-loading" id="status-${module.name}">
+                        未加载
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px; color: #6c757d;">
+                        文件: ${module.file}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 运行所有测试
+        async function runAllTests() {
+            updateStatus('running', '测试运行中...');
+            clearResults();
+            testState.startTime = performance.now();
+            testState.totalTests = modules.length;
+            testState.passedTests = 0;
+            testState.failedTests = 0;
+
+            showProgressBar();
+
+            for (let i = 0; i < modules.length; i++) {
+                const module = modules[i];
+                await runModuleTest(module, i);
+                updateProgress((i + 1) / modules.length * 100);
+            }
+
+            testState.endTime = performance.now();
+            hideProgressBar();
+            showFinalResults();
+            updatePerformanceMetrics();
+        }
+
+        // 运行单个模块测试
+        async function runModuleTest(module, index) {
+            updateModuleStatus(module.name, 'loading', '测试中...');
+            log(`开始测试 ${module.name}`, 'info');
+
+            try {
+                await module.testFn();
+                updateModuleStatus(module.name, 'success', '✅ 通过');
+                addTestResult(`${module.name} 测试通过`, 'success');
+                testState.passedTests++;
+                log(`${module.name} 测试通过`, 'success');
+            } catch (error) {
+                updateModuleStatus(module.name, 'error', '❌ 失败');
+                addTestResult(`${module.name} 测试失败: ${error.message}`, 'error');
+                testState.failedTests++;
+                log(`${module.name} 测试失败: ${error.message}`, 'error');
+                log(error.stack, 'error');
+            }
+        }
+
+        // 更新模块状态
+        function updateModuleStatus(moduleName, status, text) {
+            const statusElement = document.getElementById(`status-${moduleName}`);
+            if (statusElement) {
+                statusElement.className = `module-status module-${status}`;
+                statusElement.textContent = text;
+            }
+            testState.moduleStatus.set(moduleName, { status, text });
+        }
+
+        // 测试函数
+        async function testStringUtils() {
+            // 测试 isBlank
+            if (!isBlank('')) throw new Error('isBlank empty string failed');
+            if (!isBlank('   ')) throw new Error('isBlank whitespace failed');
+            if (isBlank('hello')) throw new Error('isBlank non-empty failed');
+
+            // 测试 StringList
+            const stringList = new StringList();
+            stringList.append('test1');
+            stringList.append('test2');
+
+            if (stringList.size() !== 2) throw new Error('StringList size failed');
+            if (!stringList.contains('test1')) throw new Error('StringList contains failed');
+
+            stringList.remove('test1');
+            if (stringList.contains('test1')) throw new Error('StringList remove failed');
+        }
+
+        async function testSeparatorManager() {
+            const mockLocalStorage = {
+                separatorTitle: '|',
+                separatorURL: 'http://separatethis.com/',
+                separatorString: 'separatethis.com',
+                separators: 'sep1,sep2'
+            };
+
+            const separatorManager = new SeparatorManager(mockLocalStorage);
+
+            separatorManager.load();
+            if (separatorManager.size() !== 2) throw new Error('SeparatorManager load failed');
+
+            separatorManager.add('sep3');
+            if (!separatorManager.contains('sep3')) throw new Error('SeparatorManager add failed');
+
+            if (!separatorManager.isSeparator('|', 'http://separatethis.com/')) {
+                throw new Error('SeparatorManager isSeparator failed');
+            }
+        }
+
+        async function testEventSystem() {
+            const eventSystem = new EventSystem();
+            const testEvent = 'test-event';
+
+            return new Promise((resolve, reject) => {
+                eventSystem.on(testEvent, (data) => {
+                    if (data === 'test-data') {
+                        resolve();
+                    } else {
+                        reject(new Error('Event data mismatch'));
+                    }
+                });
+
+                setTimeout(() => {
+                    try {
+                        eventSystem.emit(testEvent, 'test-data');
+                    } catch (error) {
+                        reject(error);
+                    }
+                }, 10);
+            });
+        }
+
+        async function testBookmarkManager() {
+            const mockChrome = {
+                bookmarks: {
+                    getTree: () => Promise.resolve([{
+                        id: '1',
+                        title: 'Root',
+                        children: []
+                    }]),
+                    onCreated: { addListener: () => {} },
+                    onRemoved: { addListener: () => {} },
+                    onChanged: { addListener: () => {} },
+                    onMoved: { addListener: () => {} },
+                    onChildrenReordered: { addListener: () => {} }
+                }
+            };
+
+            global.chrome = mockChrome;
+
+            const bookmarkManager = new BookmarkManager();
+            await bookmarkManager.loadBookmarks();
+
+            if (!bookmarkManager.bookmarks.has('1')) {
+                throw new Error('BookmarkManager load failed');
+            }
+        }
+
+        // UI 辅助函数
+        function updateStatus(type, text) {
+            const status = document.getElementById('main-status');
+            status.className = `test-status status-${type}`;
+            status.textContent = text;
+        }
+
+        function showProgressBar() {
+            document.getElementById('progress-bar').style.display = 'block';
+        }
+
+        function hideProgressBar() {
+            document.getElementById('progress-bar').style.display = 'none';
+        }
+
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            fill.style.width = `${percent}%`;
+            fill.textContent = `${Math.round(percent)}%`;
+        }
+
+        function addTestResult(message, type) {
+            const results = document.getElementById('test-results');
+            const result = document.createElement('div');
+            result.className = `test-result result-${type}`;
+            result.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            results.appendChild(result);
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('test-log').textContent = '';
+            document.getElementById('performance-metrics').innerHTML = '';
+        }
+
+        function showFinalResults() {
+            const duration = testState.endTime - testState.startTime;
+            const success = testState.failedTests === 0;
+
+            updateStatus(success ? 'success' : 'error',
+                `完成: ${testState.passedTests}/${testState.totalTests} 通过 (${duration.toFixed(0)}ms)`);
+
+            log(`测试完成: ${testState.passedTests}/${testState.totalTests} 通过, 耗时: ${duration.toFixed(0)}ms`,
+                success ? 'success' : 'error');
+        }
+
+        function updatePerformanceMetrics() {
+            const duration = testState.endTime - testState.startTime;
+            const avgTime = duration / testState.totalTests;
+
+            const metrics = document.getElementById('performance-metrics');
+            metrics.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-label">总耗时</div>
+                    <div class="metric-value">${duration.toFixed(0)}ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">平均测试时间</div>
+                    <div class="metric-value">${avgTime.toFixed(0)}ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">通过率</div>
+                    <div class="metric-value">${((testState.passedTests / testState.totalTests) * 100).toFixed(0)}%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">模块数量</div>
+                    <div class="metric-value">${testState.totalTests}</div>
+                </div>
+            `;
+        }
+
+        function log(message, type = 'info') {
+            const logElement = document.getElementById('test-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            logElement.textContent += `\n[${timestamp}] ${prefix} ${message}`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function exportResults() {
+            const results = {
+                timestamp: new Date().toISOString(),
+                summary: {
+                    total: testState.totalTests,
+                    passed: testState.passedTests,
+                    failed: testState.failedTests,
+                    duration: testState.endTime - testState.startTime
+                },
+                modules: Array.from(testState.moduleStatus.entries()),
+                logs: document.getElementById('test-log').textContent
+            };
+
+            const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `vbookmarks-test-results-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            log('测试结果已导出', 'success');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
