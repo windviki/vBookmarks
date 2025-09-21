@@ -451,6 +451,67 @@
     vertical-align: middle;
 }
 
+/* Fix for tree view favicon container positioning context */
+#tree ul li a.tree-item-link .favicon-container {
+    /* Ensure proper positioning context for sync indicator */
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+    vertical-align: middle;
+    /* Override any inherited line-height that affects positioning */
+    line-height: normal;
+}
+
+/* Fix sync indicator positioning for tree view */
+#tree ul li a.tree-item-link .favicon-container .sync-indicator,
+#tree ul li span.tree-item-span .favicon-container .sync-indicator {
+    /* Adjust position to account for line-height issues */
+    bottom: -1px;
+    right: -2px;
+    /* Ensure higher z-index than parent elements */
+    z-index: 20;
+}
+
+/* Fix folder favicon container positioning */
+#tree ul li span.tree-item-span .favicon-container {
+    /* Ensure proper positioning context for sync indicator */
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+    vertical-align: middle;
+    /* Override any inherited line-height that affects positioning */
+    line-height: normal;
+}
+
+#tree ul li span.tree-item-span .favicon-container img {
+    /* Override neat.css img margins that affect indicator positioning */
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    vertical-align: middle;
+}
+
+/* Fix search results badge alignment issue */
+#results ul li a.tree-item-link .bookmark-metadata {
+    /* Override the forced vertical centering to match tree view alignment */
+    top: 2px !important;
+    transform: none !important;
+    /* Keep other properties */
+    position: absolute;
+    right: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 2px !important;
+    z-index: 200 !important;
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+    pointer-events: none !important;
+}
+
 /* Twisty styling is already handled in MAIN TREE SPECIFIC STYLES section */
 
 .tree-item.sync-highlighted {
