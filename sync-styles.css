@@ -3,42 +3,7 @@
  */
 
 
-/* Modern Sync Status Indicators */
-.sync-indicator {
-    display: block !important;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    cursor: help;
-    position: absolute;
-    /* Position over favicon bottom right */
-    bottom: -2px;
-    right: -2px;
-    z-index: 15; /* Higher z-index to ensure visibility */
-    /* Reset positioning context */
-    margin: 0;
-    padding: 0;
-    /* Ensure it doesn't affect layout */
-    box-sizing: border-box;
-    /* Ensure perfect circle and prevent compression */
-    min-width: 8px;
-    min-height: 8px;
-    max-width: 8px;
-    max-height: 8px;
-    transform: translateZ(0); /* Force hardware acceleration for crisp rendering */
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    /* Prevent being stretched by parent containers */
-    flex-shrink: 0;
-    align-self: flex-end;
-    justify-self: flex-end;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Ensure line-height doesn't affect it */
-    line-height: 0;
-    font-size: 0;
-    /* Ensure it's always visible */
-    opacity: 1 !important;
-    visibility: visible !important;
-}
+/* Modern Sync Status Indicators - Enhanced styles that build upon neat.css base */
 
 .sync-indicator.synced {
     background: linear-gradient(135deg, #4CAF50, #45a049);
@@ -476,6 +441,14 @@
     position: absolute;
     bottom: -2px;
     right: -2px;
+}
+
+/* Fix for tree view favicon container img positioning */
+#tree ul li a.tree-item-link .favicon-container img {
+    /* Override neat.css img margins that affect indicator positioning */
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    vertical-align: middle;
 }
 
 /* Twisty styling is already handled in MAIN TREE SPECIFIC STYLES section */
