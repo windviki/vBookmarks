@@ -91,3 +91,4 @@ This is a Chrome extension project with no traditional build system. Development
 - Verify keyboard navigation and search functionality
 - Check context menu actions across different bookmark types
 - Test omnibox search integration
+- 任何关系到UI展示或者选项设置改动的文本值，记得利用工具脚本translation-sync-tool.js做多语种同步

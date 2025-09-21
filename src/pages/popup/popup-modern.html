@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>vBookmarks</title>
+    <link rel="stylesheet" href="../../../neat.css">
+    <style>
+        /* 现代化样式 */
+        body {
+            width: 320px;
+            min-height: 400px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .app-header {
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+            padding: 8px 12px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 30px 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 16px;
+        }
+
+        .main-content {
+            height: calc(100vh - 50px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tree-container {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .bookmark-tree {
+            user-select: none;
+        }
+
+        .tree-node {
+            margin: 2px 0;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            min-height: 24px;
+        }
+
+        .tree-node:hover {
+            background: #f0f0f0;
+        }
+
+        .tree-node.selected {
+            background: #e3f2fd;
+        }
+
+        .tree-node:focus {
+            outline: 2px solid #2196f3;
+            outline-offset: -2px;
+        }
+
+        .expand-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            margin-right: 4px;
+        }
+
+        .spacer {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .node-icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .node-title {
+            flex: 1;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .separator-title {
+            color: #999;
+            font-style: italic;
+        }
+
+        .node-children {
+            margin-left: 20px;
+        }
+
+        .search-result-node {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .search-result-node:hover {
+            background: #f9f9f9;
+        }
+
+        .search-result-node:focus {
+            outline: 2px solid #2196f3;
+            outline-offset: -2px;
+        }
+
+        .result-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .result-url {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #666;
+        }
+
+        .status-bar {
+            background: #f5f5f5;
+            border-top: 1px solid #ddd;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666;
+            height: 24px;
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .app-ready .loading-indicator {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="search-container">
+            <input type="text"
+                   class="search-input"
+                   id="search-input"
+                   placeholder="Search bookmarks..."
+                   autocomplete="off">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="loading-indicator" id="loading-indicator">
+            Loading bookmarks...
+        </div>
+
+        <div class="app-content" id="app-content" style="display: none;">
+            <div class="tree-container" id="tree-container">
+                <!-- Bookmarks will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar" id="status-bar">
+        Ready
+    </div>
+
+    <script type="module">
+        import { initApp } from '../../app-v3.js';
+
+        // 初始化应用
+        async function initializeApp() {
+            try {
+                const app = await initApp();
+
+                // 设置搜索功能
+                const searchInput = document.getElementById('search-input');
+                let searchTimeout;
+
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    const query = e.target.value.trim();
+
+                    if (query === '') {
+                        // 清除搜索
+                        app.clearSearch();
+                    } else {
+                        // 延迟搜索以避免频繁触发
+                        searchTimeout = setTimeout(async () => {
+                            try {
+                                await app.search(query);
+                            } catch (error) {
+                                console.error('Search failed:', error);
+                            }
+                        }, 300);
+                    }
+                });
+
+                console.log('vBookmarks popup initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize vBookmarks:', error);
+
+                // 显示错误信息
+                const loadingIndicator = document.getElementById('loading-indicator');
+                if (loadingIndicator) {
+                    loadingIndicator.innerHTML = `
+                        <div style="text-align: center; color: #d32f2f;">
+                            Failed to load bookmarks<br>
+                            <small>${error.message}</small>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // 启动应用
+        initializeApp();
+    </script>
+</body>
+</html>
