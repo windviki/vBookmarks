@@ -2,12 +2,17 @@
  * vBookmarks 弹出窗口入口
  * 现代化的模块化入口点
  */
-import { initApp } from '../app-v3.js';
+import { VBookmarksApp } from '../app/VBookmarksApp.js';
+import { AppInitializer } from '../core/app-initializer.js';
+import { DialogSystem } from '../components/ui/dialog-system.js';
+import { Logger } from '../utils/logger.js';
+
+const logger = new Logger('PopupEntry');
 
 // 初始化应用
 async function initializePopup() {
     try {
-        console.log('Initializing vBookmarks popup...');
+        logger.info('Initializing vBookmarks popup...');
 
         // 等待DOM就绪
         if (document.readyState === 'loading') {
@@ -16,15 +21,27 @@ async function initializePopup() {
             });
         }
 
+        // 创建应用初始化器
+        const initializer = new AppInitializer();
+
+        // 检测环境
+        await initializer.detectEnvironment();
+
+        // 验证Chrome API
+        await initializer.validateChromeAPIs();
+
+        // 创建主应用实例
+        const app = new VBookmarksApp();
+
         // 初始化应用
-        const app = await initApp();
+        await app.init();
 
         // 设置弹出窗口特定功能
         setupPopupFeatures(app);
 
-        console.log('vBookmarks popup initialized successfully');
+        logger.info('vBookmarks popup initialized successfully');
     } catch (error) {
-        console.error('Failed to initialize vBookmarks popup:', error);
+        logger.error('Failed to initialize vBookmarks popup:', error);
         showError(error);
     }
 }
@@ -101,7 +118,9 @@ function setupKeyboardShortcuts(app) {
         // Ctrl+N 新建书签
         if (e.ctrlKey && e.key === 'n') {
             e.preventDefault();
-            // 实现新建书签功能
+            if (app.modules.bookmarkManager) {
+                app.modules.bookmarkManager.createNewBookmark();
+            }
         }
     });
 }
@@ -118,13 +137,17 @@ function setupSearch(app) {
             const query = e.target.value.trim();
 
             if (query === '') {
-                app.clearSearch();
+                if (app.modules.searchManager) {
+                    app.modules.searchManager.clearSearch();
+                }
             } else {
                 searchTimeout = setTimeout(async () => {
                     try {
-                        await app.search(query);
+                        if (app.modules.searchManager) {
+                            await app.modules.searchManager.search(query);
+                        }
                     } catch (error) {
-                        console.error('Search failed:', error);
+                        logger.error('Search failed:', error);
                     }
                 }, 300);
             }
@@ -152,7 +175,7 @@ function showError(error) {
                     加载失败
                 </div>
                 <div style="font-size: 14px; color: #666;">
-                    ${error.message}
+                    ${error.message || '未知错误'}
                 </div>
             </div>
         `;

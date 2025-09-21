@@ -1,0 +1,602 @@
+/**
+ * 键盘导航组件样式
+ * 现代化的键盘导航交互样式系统
+ */
+
+/* 键盘导航基础变量 */
+:root {
+    --keyboard-focus-width: 2px;
+    --keyboard-focus-offset: 2px;
+    --keyboard-focus-color: var(--color-primary);
+    --keyboard-focus-color-light: var(--color-primary-light);
+    --keyboard-focus-color-dark: var(--color-primary-dark);
+    --keyboard-focus-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2);
+    --keyboard-transition-duration: 0.2s;
+    --keyboard-animation-duration: 0.3s;
+    --keyboard-highlight-bg: rgba(var(--color-primary-rgb), 0.1);
+    --keyboard-highlight-border: var(--color-primary);
+    --keyboard-selected-bg: var(--bg-tertiary);
+    --keyboard-selected-border: var(--color-primary);
+    --keyboard-active-bg: var(--color-primary);
+    --keyboard-active-text: var(--text-inverse);
+}
+
+/* 焦点样式 */
+.keyboard-focusable {
+    outline: none !important;
+    position: relative !important;
+}
+
+.keyboard-focusable:focus {
+    outline: var(--keyboard-focus-width) solid var(--keyboard-focus-color) !important;
+    outline-offset: var(--keyboard-focus-offset) !important;
+    box-shadow: var(--keyboard-focus-shadow) !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+}
+
+/* 高对比度焦点样式 */
+.keyboard-focusable:focus-high-contrast {
+    outline: 3px solid var(--keyboard-focus-color) !important;
+    outline-offset: 1px !important;
+    box-shadow: none !important;
+}
+
+/* 导航高亮样式 */
+.keyboard-navigable {
+    transition: all var(--keyboard-transition-duration) ease !important;
+}
+
+.keyboard-navigable:hover,
+.keyboard-navigable.keyboard-hover {
+    background: var(--keyboard-highlight-bg) !important;
+    border-color: var(--keyboard-highlight-border) !important;
+}
+
+.keyboard-navigable.keyboard-selected {
+    background: var(--keyboard-selected-bg) !important;
+    border-color: var(--keyboard-selected-border) !important;
+    color: var(--text-primary) !important;
+}
+
+.keyboard-navigable.keyboard-active {
+    background: var(--keyboard-active-bg) !important;
+    color: var(--keyboard-active-text) !important;
+}
+
+/* 树形导航样式 */
+.tree-item-link,
+.tree-item-span {
+    position: relative !important;
+    border-radius: var(--radius-sm) !important;
+    margin: 1px 0 !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    color: var(--text-primary) !important;
+    border: 1px solid transparent !important;
+    min-height: 24px !important;
+    box-sizing: border-box !important;
+}
+
+.tree-item-link:focus,
+.tree-item-span:focus {
+    background: var(--keyboard-highlight-bg) !important;
+    border-color: var(--keyboard-highlight-border) !important;
+    z-index: 1 !important;
+}
+
+.tree-item-link.keyboard-selected,
+.tree-item-span.keyboard-selected {
+    background: var(--keyboard-selected-bg) !important;
+    font-weight: var(--font-weight-medium) !important;
+}
+
+/* 文件夹特殊样式 */
+.folder-item > .tree-item-span {
+    font-weight: var(--font-weight-medium) !important;
+    color: var(--text-primary) !important;
+}
+
+.folder-item.open > .tree-item-span::before {
+    content: '▼' !important;
+    margin-right: var(--spacing-xs) !important;
+    font-size: 10px !important;
+    color: var(--text-secondary) !important;
+}
+
+.folder-item:not(.open) > .tree-item-span::before {
+    content: '▶' !important;
+    margin-right: var(--spacing-xs) !important;
+    font-size: 10px !important;
+    color: var(--text-secondary) !important;
+}
+
+/* RTL文件夹箭头 */
+[dir="rtl"] .folder-item.open > .tree-item-span::before {
+    content: '◀' !important;
+    margin-right: 0 !important;
+    margin-left: var(--spacing-xs) !important;
+}
+
+[dir="rtl"] .folder-item:not(.open) > .tree-item-span::before {
+    content: '▶' !important;
+    margin-right: 0 !important;
+    margin-left: var(--spacing-xs) !important;
+}
+
+/* 搜索结果导航样式 */
+.search-result-item {
+    border-radius: var(--radius-sm) !important;
+    padding: var(--spacing-sm) !important;
+    margin: var(--spacing-xs) 0 !important;
+    border: 1px solid transparent !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+}
+
+.search-result-item:focus,
+.search-result-item.keyboard-selected {
+    background: var(--keyboard-selected-bg) !important;
+    border-color: var(--keyboard-selected-border) !important;
+    outline: none !important;
+}
+
+/* 上下文菜单导航样式 */
+.context-menu-item {
+    position: relative !important;
+    border-radius: var(--radius-sm) !important;
+    margin: 1px 0 !important;
+    padding: var(--spacing-xs) var(--spacing-md) !important;
+    display: flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    color: var(--text-primary) !important;
+    border: 1px solid transparent !important;
+    min-height: 32px !important;
+    box-sizing: border-box !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+}
+
+.context-menu-item:focus,
+.context-menu-item.keyboard-selected {
+    background: var(--keyboard-highlight-bg) !important;
+    border-color: var(--keyboard-highlight-border) !important;
+    outline: none !important;
+}
+
+.context-menu-item.keyboard-active {
+    background: var(--keyboard-active-bg) !important;
+    color: var(--keyboard-active-text) !important;
+}
+
+/* 按钮导航样式 */
+.keyboard-button {
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    border: 1px solid var(--border-primary) !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    font-size: var(--font-size-sm) !important;
+    font-weight: var(--font-weight-medium) !important;
+    cursor: pointer !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+.keyboard-button:focus {
+    border-color: var(--keyboard-focus-color) !important;
+    box-shadow: var(--keyboard-focus-shadow) !important;
+    background: var(--bg-tertiary) !important;
+}
+
+.keyboard-button.keyboard-selected {
+    border-color: var(--keyboard-selected-border) !important;
+    background: var(--keyboard-selected-bg) !important;
+}
+
+.keyboard-button.keyboard-active {
+    background: var(--keyboard-active-bg) !important;
+    color: var(--keyboard-active-text) !important;
+    transform: scale(0.98) !important;
+}
+
+/* 输入框导航样式 */
+.keyboard-input {
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    border: 1px solid var(--border-primary) !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    font-size: var(--font-size-sm) !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+    outline: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.keyboard-input:focus {
+    border-color: var(--keyboard-focus-color) !important;
+    box-shadow: var(--keyboard-focus-shadow) !important;
+    background: var(--bg-tertiary) !important;
+}
+
+/* 键盘快捷键提示 */
+.keyboard-shortcut {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    padding: 0 var(--spacing-xs) !important;
+    margin-left: var(--spacing-sm) !important;
+    border-radius: var(--radius-xs) !important;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-primary) !important;
+    color: var(--text-secondary) !important;
+    font-size: 10px !important;
+    font-weight: var(--font-weight-bold) !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+}
+
+.keyboard-shortcut kbd {
+    font-family: monospace !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    font-weight: inherit !important;
+}
+
+/* 键盘导航指示器 */
+.keyboard-indicator {
+    position: fixed !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-primary) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 1000 !important;
+    font-size: var(--font-size-xs) !important;
+    color: var(--text-secondary) !important;
+    opacity: 0 !important;
+    transition: opacity var(--keyboard-transition-duration) ease !important;
+}
+
+.keyboard-indicator.show {
+    opacity: 1 !important;
+}
+
+.keyboard-indicator .shortcut-key {
+    display: inline-block !important;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-primary) !important;
+    border-radius: var(--radius-xs) !important;
+    padding: 2px 4px !important;
+    margin: 0 2px !important;
+    font-family: monospace !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+}
+
+/* 键盘帮助面板 */
+.keyboard-help {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-primary) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: var(--spacing-lg) !important;
+    box-shadow: var(--shadow-xl) !important;
+    z-index: 10000 !important;
+    max-width: 600px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    display: none !important;
+}
+
+.keyboard-help.show {
+    display: block !important;
+}
+
+.keyboard-help h3 {
+    margin: 0 0 var(--spacing-md) 0 !important;
+    font-size: var(--font-size-lg) !important;
+    color: var(--text-primary) !important;
+}
+
+.keyboard-help .help-section {
+    margin-bottom: var(--spacing-md) !important;
+}
+
+.keyboard-help .help-section h4 {
+    margin: 0 0 var(--spacing-sm) 0 !important;
+    font-size: var(--font-size-md) !important;
+    color: var(--text-primary) !important;
+}
+
+.keyboard-help .help-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: var(--spacing-xs) 0 !important;
+    border-bottom: 1px solid var(--border-secondary) !important;
+}
+
+.keyboard-help .help-description {
+    flex: 1 !important;
+    margin-right: var(--spacing-md) !important;
+    color: var(--text-secondary) !important;
+}
+
+.keyboard-help .help-shortcuts {
+    display: flex !important;
+    gap: var(--spacing-xs) !important;
+}
+
+/* 焦点环动画 */
+@keyframes focusRing {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.4) !important;
+    }
+    100% {
+        box-shadow: 0 0 0 6px rgba(var(--color-primary-rgb), 0) !important;
+    }
+}
+
+.keyboard-focusable:focus-within {
+    animation: focusRing 0.6s ease-out !important;
+}
+
+/* 选择动画 */
+@keyframes selectPulse {
+    0% {
+        background: var(--keyboard-highlight-bg) !important;
+        transform: scale(1) !important;
+    }
+    50% {
+        background: var(--keyboard-selected-bg) !important;
+        transform: scale(1.02) !important;
+    }
+    100% {
+        background: var(--keyboard-highlight-bg) !important;
+        transform: scale(1) !important;
+    }
+}
+
+.keyboard-navigable.keyboard-selecting {
+    animation: selectPulse 0.4s ease-in-out !important;
+}
+
+/* 滚动指示器 */
+.keyboard-scroll-indicator {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 3px !important;
+    background: var(--keyboard-focus-color) !important;
+    opacity: 0 !important;
+    transition: opacity var(--keyboard-transition-duration) ease !important;
+}
+
+.keyboard-scroll-indicator.visible {
+    opacity: 0.6 !important;
+}
+
+/* RTL适配 */
+[dir="rtl"] .keyboard-shortcut {
+    margin-left: 0 !important;
+    margin-right: var(--spacing-sm) !important;
+}
+
+[dir="rtl"] .keyboard-help .help-description {
+    margin-right: 0 !important;
+    margin-left: var(--spacing-md) !important;
+}
+
+[dir="rtl"] .keyboard-scroll-indicator {
+    right: auto !important;
+    left: 0 !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .keyboard-help {
+        max-width: 90vw !important;
+        padding: var(--spacing-md) !important;
+    }
+
+    .keyboard-indicator {
+        bottom: 5px !important;
+        right: 5px !important;
+        font-size: 9px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .keyboard-help {
+        max-width: 95vw !important;
+        padding: var(--spacing-sm) !important;
+    }
+
+    .keyboard-help .help-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: var(--spacing-xs) !important;
+    }
+
+    .keyboard-help .help-shortcuts {
+        width: 100% !important;
+        justify-content: flex-end !important;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .keyboard-focusable:focus {
+        outline-width: 3px !important;
+        outline-offset: 1px !important;
+    }
+
+    .keyboard-shortcut {
+        border-width: 2px !important;
+        font-weight: 900 !important;
+    }
+
+    .keyboard-help {
+        border-width: 2px !important;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .keyboard-focusable:focus,
+    .keyboard-navigable,
+    .keyboard-button,
+    .keyboard-input,
+    .keyboard-indicator,
+    .keyboard-help,
+    .keyboard-scroll-indicator {
+        transition: none !important;
+    }
+
+    .keyboard-focusable:focus-within,
+    .keyboard-navigable.keyboard-selecting {
+        animation: none !important;
+    }
+}
+
+/* 深色主题适配 */
+[data-theme="dark"] .keyboard-shortcut {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--border-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .keyboard-help {
+    background: var(--bg-primary) !important;
+    border-color: var(--border-primary) !important;
+}
+
+[data-theme="dark"] .keyboard-indicator {
+    background: var(--bg-primary) !important;
+    border-color: var(--border-primary) !important;
+}
+
+/* 可访问性增强 */
+.keyboard-focusable:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+.keyboard-focusable:focus-visible {
+    outline: var(--keyboard-focus-width) solid var(--keyboard-focus-color) !important;
+    outline-offset: var(--keyboard-focus-offset) !important;
+}
+
+/* 屏幕阅读器专用 */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* 键盘导航状态反馈 */
+.keyboard-feedback {
+    position: fixed !important;
+    top: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-primary) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 10000 !important;
+    font-size: var(--font-size-sm) !important;
+    color: var(--text-primary) !important;
+    opacity: 0 !important;
+    transition: all var(--keyboard-transition-duration) ease !important;
+}
+
+.keyboard-feedback.show {
+    opacity: 1 !important;
+}
+
+.keyboard-feedback.success {
+    border-color: var(--color-success) !important;
+    background: var(--bg-success) !important;
+    color: var(--color-success-dark) !important;
+}
+
+.keyboard-feedback.error {
+    border-color: var(--color-error) !important;
+    background: var(--bg-error) !important;
+    color: var(--color-error-dark) !important;
+}
+
+.keyboard-feedback.warning {
+    border-color: var(--color-warning) !important;
+    background: var(--bg-warning) !important;
+    color: var(--color-warning-dark) !important;
+}
+
+/* 键盘导航统计 */
+.keyboard-stats {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-primary) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-md) !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 1000 !important;
+    font-size: var(--font-size-xs) !important;
+    color: var(--text-secondary) !important;
+    opacity: 0 !important;
+    transition: opacity var(--keyboard-transition-duration) ease !important;
+}
+
+.keyboard-stats.show {
+    opacity: 1 !important;
+}
+
+.keyboard-stats .stat-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin: var(--spacing-xs) 0 !important;
+}
+
+.keyboard-stats .stat-label {
+    color: var(--text-secondary) !important;
+}
+
+.keyboard-stats .stat-value {
+    font-weight: bold !important;
+    color: var(--text-primary) !important;
+}
+
+/* 打印样式 */
+@media print {
+    .keyboard-focusable:focus,
+    .keyboard-indicator,
+    .keyboard-help,
+    .keyboard-feedback,
+    .keyboard-stats,
+    .keyboard-shortcut {
+        display: none !important;
+    }
+}

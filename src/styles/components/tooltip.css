@@ -1,0 +1,441 @@
+/**
+ * 工具提示组件样式
+ * 现代化的工具提示样式系统
+ */
+
+/* 工具提示变量 */
+:root {
+    /* 工具提示基础变量 */
+    --tooltip-z-index: 9999;
+    --tooltip-max-width: 300px;
+    --tooltip-font-size: 12px;
+    --tooltip-line-height: 1.4;
+    --tooltip-border-radius: 6px;
+    --tooltip-spacing-sm: 8px;
+    --tooltip-spacing-md: 12px;
+    --tooltip-offset: 8px;
+    --tooltip-arrow-size: 6px;
+
+    /* 工具提示颜色 - 深色主题 */
+    --tooltip-bg: rgba(0, 0, 0, 0.9);
+    --tooltip-text: #ffffff;
+    --tooltip-border: rgba(255, 255, 255, 0.1);
+    --tooltip-link: #4a90e2;
+    --tooltip-link-hover: #357abd;
+    --tooltip-code-bg: rgba(255, 255, 255, 0.1);
+    --tooltip-strong: #ffffff;
+
+    /* 工具提示动画 */
+    --tooltip-transition-duration: 0.2s;
+    --tooltip-animation-duration: 0.2s;
+
+    /* 工具提示阴影 */
+    --tooltip-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 浅色主题 */
+[data-theme="light"] {
+    --tooltip-bg: rgba(255, 255, 255, 0.95);
+    --tooltip-text: #333333;
+    --tooltip-border: rgba(0, 0, 0, 0.1);
+    --tooltip-link: #2563eb;
+    --tooltip-link-hover: #1d4ed8;
+    --tooltip-code-bg: rgba(0, 0, 0, 0.05);
+    --tooltip-strong: #333333;
+    --tooltip-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 工具提示容器 */
+.tooltip-container {
+    position: absolute;
+    z-index: var(--tooltip-z-index);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--tooltip-transition-duration) ease;
+    box-sizing: border-box;
+}
+
+.tooltip-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 工具提示内容 */
+.tooltip {
+    position: relative;
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    padding: var(--tooltip-spacing-sm) var(--tooltip-spacing-md);
+    border-radius: var(--tooltip-border-radius);
+    font-size: var(--tooltip-font-size);
+    line-height: var(--tooltip-line-height);
+    max-width: var(--tooltip-max-width);
+    word-wrap: break-word;
+    box-shadow: var(--tooltip-shadow);
+    border: 1px solid var(--tooltip-border);
+    box-sizing: border-box;
+    font-family: var(--font-family-base, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-weight: var(--font-weight-normal, 400);
+}
+
+/* 工具提示箭头 */
+.tooltip::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: var(--tooltip-arrow-size);
+}
+
+/* 上方箭头 */
+.tooltip[data-position="top"]::before {
+    bottom: calc(-1 * var(--tooltip-arrow-size) * 2);
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: var(--tooltip-bg) transparent transparent transparent;
+}
+
+/* 下方箭头 */
+.tooltip[data-position="bottom"]::before {
+    top: calc(-1 * var(--tooltip-arrow-size) * 2);
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: transparent transparent var(--tooltip-bg) transparent;
+}
+
+/* 左侧箭头 */
+.tooltip[data-position="left"]::before {
+    right: calc(-1 * var(--tooltip-arrow-size) * 2);
+    top: 50%;
+    transform: translateY(-50%);
+    border-color: transparent transparent transparent var(--tooltip-bg);
+}
+
+/* 右侧箭头 */
+.tooltip[data-position="right"]::before {
+    left: calc(-1 * var(--tooltip-arrow-size) * 2);
+    top: 50%;
+    transform: translateY(-50%);
+    border-color: transparent var(--tooltip-bg) transparent transparent;
+}
+
+/* 工具提示动画 */
+.tooltip.fade-in {
+    animation: tooltipFadeIn var(--tooltip-animation-duration) ease-out;
+}
+
+.tooltip.fade-out {
+    animation: tooltipFadeOut var(--tooltip-animation-duration) ease-in;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tooltipFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+}
+
+/* 交互式工具提示 */
+.tooltip.interactive {
+    pointer-events: auto;
+}
+
+/* 多行工具提示 */
+.tooltip.multiline {
+    white-space: pre-line;
+}
+
+/* 工具提示链接 */
+.tooltip a {
+    color: var(--tooltip-link);
+    text-decoration: underline;
+    transition: color var(--tooltip-transition-duration) ease;
+}
+
+.tooltip a:hover {
+    color: var(--tooltip-link-hover);
+}
+
+/* 工具提示代码 */
+.tooltip code {
+    background: var(--tooltip-code-bg);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+/* 工具提示强调 */
+.tooltip strong {
+    font-weight: bold;
+    color: var(--tooltip-strong);
+}
+
+/* 工具提示列表 */
+.tooltip ul,
+.tooltip ol {
+    margin: var(--tooltip-spacing-sm) 0;
+    padding-left: 20px;
+}
+
+.tooltip li {
+    margin: var(--tooltip-spacing-xs, 4px) 0;
+}
+
+/* 工具提示段落 */
+.tooltip p {
+    margin: var(--tooltip-spacing-sm) 0;
+}
+
+.tooltip p:first-child {
+    margin-top: 0;
+}
+
+.tooltip p:last-child {
+    margin-bottom: 0;
+}
+
+/* 工具提示状态类 */
+.tooltip-container.hiding {
+    opacity: 0;
+}
+
+.tooltip-container.showing {
+    opacity: 1;
+}
+
+/* 工具提示主题变体 */
+.tooltip.light {
+    background: var(--tooltip-bg-light, rgba(255, 255, 255, 0.95));
+    color: var(--tooltip-text-light, #333333);
+    border-color: var(--tooltip-border-light, rgba(0, 0, 0, 0.1));
+}
+
+.tooltip.dark {
+    background: var(--tooltip-bg-dark, rgba(0, 0, 0, 0.9));
+    color: var(--tooltip-text-dark, #ffffff);
+    border-color: var(--tooltip-border-dark, rgba(255, 255, 255, 0.1));
+}
+
+.tooltip.info {
+    background: var(--color-info, #2196f3);
+    color: var(--text-inverse, #ffffff);
+    border-color: var(--color-info-dark, #1976d2);
+}
+
+.tooltip.success {
+    background: var(--color-success, #4caf50);
+    color: var(--text-inverse, #ffffff);
+    border-color: var(--color-success-dark, #388e3c);
+}
+
+.tooltip.warning {
+    background: var(--color-warning, #ff9800);
+    color: var(--text-inverse, #ffffff);
+    border-color: var(--color-warning-dark, #f57c00);
+}
+
+.tooltip.error {
+    background: var(--color-error, #f44336);
+    color: var(--text-inverse, #ffffff);
+    border-color: var(--color-error-dark, #d32f2f);
+}
+
+/* 工具提示尺寸变体 */
+.tooltip.small {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.tooltip.large {
+    font-size: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.tooltip.xl {
+    font-size: 16px;
+    padding: 16px 20px;
+    border-radius: 10px;
+}
+
+/* 工具提示位置特定样式 */
+.tooltip[data-position="top"] {
+    margin-bottom: var(--tooltip-offset);
+}
+
+.tooltip[data-position="bottom"] {
+    margin-top: var(--tooltip-offset);
+}
+
+.tooltip[data-position="left"] {
+    margin-right: var(--tooltip-offset);
+}
+
+.tooltip[data-position="right"] {
+    margin-left: var(--tooltip-offset);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .tooltip {
+        max-width: 250px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tooltip {
+        max-width: 200px;
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .tooltip {
+        border-width: 2px;
+        font-weight: 600;
+    }
+
+    .tooltip::before {
+        border-width: calc(var(--tooltip-arrow-size) * 1.5);
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .tooltip-container,
+    .tooltip {
+        transition: none;
+    }
+
+    .tooltip.fade-in,
+    .tooltip.fade-out {
+        animation: none;
+    }
+}
+
+/* 可访问性增强 */
+.tooltip-container:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 屏幕阅读器专用 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 工具提示加载状态 */
+.tooltip.loading {
+    position: relative;
+}
+
+.tooltip.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid var(--tooltip-border);
+    border-top-color: var(--tooltip-text);
+    border-radius: 50%;
+    animation: tooltipSpin 1s linear infinite;
+}
+
+@keyframes tooltipSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 工具提示进度条 */
+.tooltip .progress-bar {
+    height: 4px;
+    background: var(--tooltip-border);
+    border-radius: 2px;
+    margin-top: var(--tooltip-spacing-sm);
+    overflow: hidden;
+}
+
+.tooltip .progress-bar-fill {
+    height: 100%;
+    background: var(--tooltip-text);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* 工具提示按钮 */
+.tooltip .tooltip-button {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--tooltip-border);
+    border-radius: var(--tooltip-border-radius);
+    padding: 4px 8px;
+    font-size: inherit;
+    cursor: pointer;
+    margin-top: var(--tooltip-spacing-sm);
+    margin-right: var(--tooltip-spacing-sm);
+    transition: all var(--tooltip-transition-duration) ease;
+}
+
+.tooltip .tooltip-button:hover {
+    background: var(--tooltip-border);
+    border-color: var(--tooltip-text);
+}
+
+.tooltip .tooltip-button:active {
+    transform: scale(0.95);
+}
+
+/* 工具提示图标 */
+.tooltip .tooltip-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: var(--tooltip-spacing-xs);
+    vertical-align: middle;
+}
+
+/* 工具提示标题 */
+.tooltip .tooltip-title {
+    font-weight: bold;
+    margin-bottom: var(--tooltip-spacing-sm);
+    font-size: 1.1em;
+}
+
+/* 工具提示内容包装 */
+.tooltip-content {
+    /* 可以在这里添加额外的样式 */
+}

@@ -1,0 +1,454 @@
+/**
+ * 对话框组件样式
+ * 现代化的对话框样式系统
+ */
+
+/* 对话框容器 */
+.dialog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.dialog-container.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 对话框基础样式 */
+.dialog {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid var(--border-primary);
+}
+
+/* 对话框内容 */
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+}
+
+/* 对话框头部 */
+.dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-secondary);
+    background: var(--bg-secondary);
+}
+
+.dialog-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+/* 关闭按钮 */
+.dialog-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.dialog-close:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.dialog-close:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 对话框主体 */
+.dialog-body {
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    max-height: calc(90vh - 200px);
+}
+
+.dialog-message {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+}
+
+/* 表单组 */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+/* 对话框输入框 */
+.dialog-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.dialog-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--bg-focused);
+}
+
+.dialog-input::placeholder {
+    color: var(--text-disabled);
+}
+
+.dialog-input:invalid {
+    border-color: var(--color-error);
+}
+
+/* 对话框底部 */
+.dialog-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--border-secondary);
+    background: var(--bg-secondary);
+}
+
+/* 对话框按钮 */
+.dialog-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 80px;
+    text-align: center;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.dialog-button:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-focused);
+}
+
+.dialog-button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.dialog-button:active {
+    transform: translateY(1px);
+}
+
+.dialog-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 主要按钮 */
+.dialog-button-primary {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    border-color: var(--color-primary);
+}
+
+.dialog-button-primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+}
+
+.dialog-button-primary:focus {
+    outline: 2px solid var(--color-primary-light);
+}
+
+/* 次要按钮 */
+.dialog-button-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-secondary);
+}
+
+.dialog-button-secondary:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-primary);
+}
+
+/* 危险按钮 */
+.dialog-button-danger {
+    background: var(--color-error);
+    color: var(--text-inverse);
+    border-color: var(--color-error);
+}
+
+.dialog-button-danger:hover {
+    background: var(--color-error-dark);
+    border-color: var(--color-error-dark);
+}
+
+/* 特定对话框样式 */
+
+/* 警告对话框 */
+.dialog-alert .dialog-title {
+    color: var(--color-warning);
+}
+
+.dialog-alert .dialog-button-primary {
+    background: var(--color-warning);
+    border-color: var(--color-warning);
+}
+
+.dialog-alert .dialog-button-primary:hover {
+    background: var(--color-warning-dark);
+}
+
+/* 确认对话框 */
+.dialog-confirm .dialog-title {
+    color: var(--color-primary);
+}
+
+/* 输入对话框 */
+.dialog-prompt .dialog-input {
+    margin-top: var(--spacing-md);
+}
+
+/* 书签编辑对话框 */
+.dialog-bookmark-edit .dialog-body {
+    min-width: 400px;
+}
+
+/* 文件夹创建对话框 */
+.dialog-folder-create .dialog-body {
+    min-width: 350px;
+}
+
+/* 动画效果 */
+@keyframes dialogSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes dialogSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+}
+
+.dialog-enter {
+    animation: dialogSlideIn var(--transition-normal) ease-out;
+}
+
+.dialog-exit {
+    animation: dialogSlideOut var(--transition-normal) ease-in;
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+    .dialog {
+        max-width: 95%;
+        margin: var(--spacing-md);
+    }
+
+    .dialog-header,
+    .dialog-footer {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .dialog-body {
+        padding: var(--spacing-md);
+    }
+
+    .dialog-footer {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .dialog-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dialog-bookmark-edit .dialog-body,
+    .dialog-folder-create .dialog-body {
+        min-width: auto;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .dialog {
+        border: 2px solid var(--border-focused);
+    }
+
+    .dialog-button {
+        border-width: 2px;
+    }
+
+    .dialog-button:focus {
+        outline-width: 3px;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .dialog-container,
+    .dialog,
+    .dialog-button {
+        transition: none;
+    }
+
+    .dialog-enter,
+    .dialog-exit {
+        animation: none;
+    }
+}
+
+/* 暗色主题适配 */
+[data-theme="dark"] {
+    .dialog {
+        background: var(--bg-primary);
+        border-color: var(--border-primary);
+    }
+
+    .dialog-header,
+    .dialog-footer {
+        background: var(--bg-secondary);
+        border-color: var(--border-secondary);
+    }
+
+    .dialog-input {
+        background: var(--bg-secondary);
+        border-color: var(--border-primary);
+    }
+
+    .dialog-button-secondary {
+        background: var(--bg-tertiary);
+        border-color: var(--border-primary);
+    }
+}
+
+/* 对话框状态类 */
+.dialog.loading {
+    pointer-events: none;
+}
+
+.dialog.loading .dialog-button {
+    opacity: 0.6;
+}
+
+/* 加载指示器 */
+.dialog-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    color: var(--text-secondary);
+}
+
+.dialog-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-secondary);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: var(--spacing-sm);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 错误状态 */
+.dialog-error {
+    border-color: var(--color-error);
+}
+
+.dialog-error .dialog-input {
+    border-color: var(--color-error);
+}
+
+.dialog-error-message {
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+}
+
+/* 可访问性增强 */
+.dialog:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 屏幕阅读器专用 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

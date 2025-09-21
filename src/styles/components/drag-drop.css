@@ -1,0 +1,529 @@
+/**
+ * 拖拽组件样式
+ * 现代化的拖拽交互样式系统
+ */
+
+/* 拖拽基础变量 */
+:root {
+    --drag-z-index: 10000;
+    --drag-overlay-z-index: 9999;
+    --drag-clone-opacity: 0.8;
+    --drag-overlay-opacity: 0.3;
+    --drag-handle-opacity: 0.6;
+    --drag-handle-opacity-hover: 1;
+    --drag-border-width: 2px;
+    --drag-border-radius: 6px;
+    --drag-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --drag-transition-duration: 0.2s;
+    --drag-animation-duration: 0.3s;
+    --drag-scroll-threshold: 20px;
+    --drag-scroll-speed: 5px;
+    --drag-pulse-scale: 1.05;
+}
+
+/* 拖拽克隆元素 */
+.drag-clone {
+    position: fixed;
+    pointer-events: none;
+    z-index: var(--drag-z-index);
+    opacity: var(--drag-clone-opacity);
+    border: var(--drag-border-width) solid var(--color-primary);
+    border-radius: var(--drag-border-radius);
+    background: var(--bg-primary);
+    box-shadow: var(--drag-shadow);
+    transition: transform var(--drag-transition-duration) ease;
+    transform-origin: center;
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.drag-clone.dragging {
+    animation: dragPulse var(--drag-animation-duration) ease-in-out;
+}
+
+/* 拖拽占位符 */
+.drag-placeholder {
+    height: 2px;
+    background: var(--color-primary);
+    margin: var(--spacing-xs) 0;
+    border-radius: 1px;
+    opacity: 0.6;
+    transition: all var(--drag-transition-duration) ease;
+}
+
+.drag-placeholder.expanded {
+    height: 40px;
+    background: var(--color-primary-light);
+    opacity: 0.3;
+    border-radius: var(--drag-border-radius);
+}
+
+/* 放置目标覆盖层 */
+.drop-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: var(--drag-overlay-z-index);
+    background: var(--color-primary);
+    opacity: var(--drag-overlay-opacity);
+    border-radius: var(--radius-sm);
+    transition: all var(--drag-transition-duration) ease;
+    box-sizing: border-box;
+}
+
+.drop-overlay.bookmark {
+    height: 3px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.drop-overlay.folder {
+    border: 3px dashed var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.1);
+    opacity: 0.6;
+    box-shadow: inset 0 0 0 1px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.drop-overlay.line {
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+    box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.4);
+}
+
+/* 拖拽中的元素 */
+.dragging {
+    opacity: 0.5 !important;
+    cursor: grabbing !important;
+    transition: opacity var(--drag-transition-duration) ease !important;
+}
+
+/* 可放置目标 */
+.drop-target {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--color-primary) !important;
+    position: relative !important;
+}
+
+.drop-target::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-primary);
+    opacity: 0.1;
+    pointer-events: none;
+    border-radius: var(--radius-sm);
+}
+
+/* 拖拽禁止状态 */
+.drag-not-allowed {
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+.drag-not-allowed .drag-clone {
+    border-color: var(--color-error);
+    background: var(--bg-error);
+    opacity: 0.6;
+}
+
+/* 拖拽手柄 */
+.drag-handle {
+    cursor: grab;
+    opacity: var(--drag-handle-opacity);
+    transition: opacity var(--drag-transition-duration) ease, transform var(--drag-transition-duration) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-right: var(--spacing-xs);
+    border-radius: var(--radius-xs);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1;
+}
+
+.drag-handle:hover {
+    opacity: var(--drag-handle-opacity-hover);
+    background: var(--bg-tertiary);
+    transform: scale(1.1);
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.drag-handle::before {
+    content: '⋮⋮';
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+/* 书签项拖拽样式 */
+.bookmark-item.dragging {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-md);
+}
+
+.bookmark-item.drag-handle {
+    position: absolute;
+    left: var(--spacing-xs);
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity var(--drag-transition-duration) ease;
+}
+
+.bookmark-item:hover .drag-handle {
+    opacity: var(--drag-handle-opacity);
+}
+
+/* 文件夹项拖拽样式 */
+.folder-item.dragging {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-lg);
+}
+
+.folder-item.drag-handle {
+    position: absolute;
+    left: var(--spacing-xs);
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity var(--drag-transition-duration) ease;
+}
+
+.folder-item:hover .drag-handle {
+    opacity: var(--drag-handle-opacity);
+}
+
+/* 拖拽区域指示器 */
+.drag-zone {
+    border: 2px dashed var(--border-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--text-secondary);
+    transition: all var(--drag-transition-duration) ease;
+    background: var(--bg-secondary);
+    margin: var(--spacing-md) 0;
+}
+
+.drag-zone.active {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+    color: var(--color-primary);
+}
+
+.drag-zone.drag-over {
+    border-color: var(--color-primary-dark);
+    background: rgba(var(--color-primary-rgb), 0.1);
+    transform: scale(1.02);
+}
+
+/* 拖拽动画 */
+@keyframes dragPulse {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(var(--drag-pulse-scale)) rotate(2deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes dragBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes dragShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.drag-clone.bounce {
+    animation: dragBounce 0.6s ease-in-out;
+}
+
+.drag-clone.shake {
+    animation: dragShake 0.4s ease-in-out;
+}
+
+/* 拖拽状态反馈 */
+.drag-feedback {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--drag-z-index);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all var(--drag-transition-duration) ease;
+    transform: translateY(100px);
+    opacity: 0;
+}
+
+.drag-feedback.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.drag-feedback.success {
+    border-color: var(--color-success);
+    background: var(--bg-success);
+    color: var(--color-success-dark);
+}
+
+.drag-feedback.error {
+    border-color: var(--color-error);
+    background: var(--bg-error);
+    color: var(--color-error-dark);
+}
+
+.drag-feedback.warning {
+    border-color: var(--color-warning);
+    background: var(--bg-warning);
+    color: var(--color-warning-dark);
+}
+
+/* 拖拽统计信息 */
+.drag-stats {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--drag-z-index);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    min-width: 200px;
+    transition: all var(--drag-transition-duration) ease;
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.drag-stats.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.drag-stats h3 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-md);
+    color: var(--text-primary);
+}
+
+.drag-stats .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--spacing-xs) 0;
+    color: var(--text-secondary);
+}
+
+.drag-stats .stat-value {
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+/* 从RTL语言适配 */
+[dir="rtl"] .drag-clone {
+    transform-origin: right center;
+}
+
+[dir="rtl"] .drag-handle {
+    margin-right: 0;
+    margin-left: var(--spacing-xs);
+}
+
+[dir="rtl"] .bookmark-item .drag-handle,
+[dir="rtl"] .folder-item .drag-handle {
+    left: auto;
+    right: var(--spacing-xs);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .drag-clone {
+        max-width: 200px;
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-xs);
+    }
+
+    .drag-feedback {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        font-size: var(--font-size-xs);
+    }
+
+    .drag-stats {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .drag-clone {
+        max-width: 150px;
+        font-size: 10px;
+    }
+
+    .drag-zone {
+        padding: var(--spacing-md);
+        margin: var(--spacing-sm) 0;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .drag-clone {
+        border-width: calc(var(--drag-border-width) * 1.5);
+        opacity: 0.9;
+    }
+
+    .drop-overlay {
+        opacity: 0.8;
+        border-width: calc(var(--drag-border-width) * 1.5);
+    }
+
+    .drag-handle {
+        border-width: 2px;
+        opacity: 0.8;
+    }
+
+    .drag-zone {
+        border-width: 3px;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .drag-clone,
+    .drop-overlay,
+    .drag-handle,
+    .dragging,
+    .drop-target,
+    .drag-feedback,
+    .drag-stats,
+    .drag-zone {
+        transition: none;
+    }
+
+    .drag-clone.dragging,
+    .drag-clone.bounce,
+    .drag-clone.shake {
+        animation: none;
+    }
+}
+
+/* 深色主题适配 */
+[data-theme="dark"] .drag-clone {
+    background: var(--bg-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .drop-overlay {
+    background: var(--color-primary);
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .drag-handle {
+    background: var(--bg-tertiary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .drag-zone {
+    border-color: var(--border-primary);
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .drag-feedback,
+[data-theme="dark"] .drag-stats {
+    background: var(--bg-primary);
+    border-color: var(--border-primary);
+}
+
+/* 可访问性增强 */
+.drag-clone:focus,
+.drop-overlay:focus,
+.drag-handle:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.drag-feedback[role="alert"],
+.drag-stats[role="status"] {
+    position: fixed;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 拖拽性能优化 */
+.drag-clone,
+.drop-overlay {
+    will-change: transform, opacity;
+}
+
+.dragging {
+    will-change: opacity, transform;
+}
+
+/* 打印样式 */
+@media print {
+    .drag-clone,
+    .drop-overlay,
+    .drag-handle,
+    .drag-feedback,
+    .drag-stats,
+    .drag-zone {
+        display: none !important;
+    }
+}

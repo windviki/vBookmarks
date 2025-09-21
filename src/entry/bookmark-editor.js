@@ -2,13 +2,21 @@
  * vBookmarks 书签编辑器入口
  * 现代化的模块化书签编辑器
  */
-import { BookmarkManager } from '../core/bookmark-manager/bookmark-manager.js';
-import { globalEventSystem, Events } from '../core/event-system/event-system.js';
+import { VBookmarksApp } from '../app/VBookmarksApp.js';
+import { AppInitializer } from '../core/app-initializer.js';
+import { DialogSystem } from '../components/ui/dialog-system.js';
+import { getTooltipManager } from '../components/ui/tooltip-manager.js';
+import { Logger } from '../utils/logger.js';
+
+const logger = new Logger('BookmarkEditor');
 
 class VBookmarksEditor {
     constructor() {
         this.initialized = false;
-        this.bookmarkManager = null;
+        this.app = null;
+        this.initializer = null;
+        this.dialogSystem = null;
+        this.tooltipManager = null;
         this.currentView = 'all';
         this.bookmarks = [];
         this.selectedBookmarks = new Set();
@@ -19,15 +27,33 @@ class VBookmarksEditor {
      */
     async init() {
         if (this.initialized) {
-            console.warn('Bookmark editor already initialized');
+            logger.warn('Bookmark editor already initialized');
             return;
         }
 
         try {
-            console.log('Initializing vBookmarks editor...');
+            logger.info('Initializing vBookmarks editor...');
 
-            // 初始化核心管理器
-            this.bookmarkManager = new BookmarkManager();
+            // 创建应用初始化器
+            this.initializer = new AppInitializer();
+
+            // 检测环境
+            await this.initializer.detectEnvironment();
+
+            // 验证Chrome API
+            await this.initializer.validateChromeAPIs();
+
+            // 创建主应用实例
+            this.app = new VBookmarksApp();
+
+            // 初始化应用
+            await this.app.init();
+
+            // 创建对话框系统
+            this.dialogSystem = new DialogSystem();
+
+            // 获取工具提示管理器
+            this.tooltipManager = getTooltipManager();
 
             // 等待DOM就绪
             await this.waitForDOMReady();
@@ -54,9 +80,9 @@ class VBookmarksEditor {
             await this.setupModals();
 
             this.initialized = true;
-            console.log('vBookmarks editor initialized successfully');
+            logger.info('vBookmarks editor initialized successfully');
         } catch (error) {
-            console.error('Failed to initialize bookmark editor:', error);
+            logger.error('Failed to initialize bookmark editor:', error);
             this.showError(error);
         }
     }
@@ -77,12 +103,16 @@ class VBookmarksEditor {
      */
     async loadBookmarks() {
         try {
-            const tree = await this.bookmarkManager.getBookmarkTree();
-            this.bookmarks = this.flattenBookmarks(tree);
-            this.updateBookmarkDisplay();
-            this.updateStatistics();
+            if (this.app.modules.bookmarkManager) {
+                const tree = await this.app.modules.bookmarkManager.getBookmarkTree();
+                this.bookmarks = this.flattenBookmarks(tree);
+                this.updateBookmarkDisplay();
+                this.updateStatistics();
+            } else {
+                throw new Error('Bookmark manager not available');
+            }
         } catch (error) {
-            console.error('Failed to load bookmarks:', error);
+            logger.error('Failed to load bookmarks:', error);
             throw error;
         }
     }
@@ -268,10 +298,20 @@ class VBookmarksEditor {
      */
     async searchBookmarks(query) {
         try {
-            const results = await this.bookmarkManager.searchBookmarks(query);
-            this.displaySearchResults(results);
+            if (this.app.modules.searchManager) {
+                const results = await this.app.modules.searchManager.searchBookmarks(query);
+                this.displaySearchResults(results);
+            } else {
+                logger.warn('Search manager not available, using fallback search');
+                // 降级到本地搜索
+                const results = this.bookmarks.filter(bookmark =>
+                    bookmark.title.toLowerCase().includes(query.toLowerCase()) ||
+                    bookmark.url.toLowerCase().includes(query.toLowerCase())
+                );
+                this.displaySearchResults(results);
+            }
         } catch (error) {
-            console.error('Search failed:', error);
+            logger.error('Search failed:', error);
         }
     }
 
@@ -515,28 +555,37 @@ class VBookmarksEditor {
      */
     async editBookmark(bookmarkId) {
         try {
-            const bookmark = await this.bookmarkManager.getBookmark(bookmarkId);
-            if (!bookmark) return;
+            if (this.app.modules.bookmarkManager) {
+                const bookmark = await this.app.modules.bookmarkManager.getBookmark(bookmarkId);
+                if (!bookmark) return;
 
-            const modal = document.getElementById('bookmarkModal');
-            const title = document.getElementById('modalTitle');
+                // 使用现代对话框系统显示编辑对话框
+                const result = await this.dialogSystem.openDialog({
+                    type: 'prompt',
+                    title: '编辑书签',
+                    message: '编辑书签信息',
+                    defaultValue: bookmark.title,
+                    fields: [
+                        { name: 'title', label: '标题', value: bookmark.title || '', required: true },
+                        { name: 'url', label: 'URL', value: bookmark.url || '', required: true }
+                    ]
+                });
 
-            if (title) {
-                title.textContent = '编辑书签';
-            }
-
-            // 填充表单
-            document.getElementById('bookmarkTitle').value = bookmark.title || '';
-            document.getElementById('bookmarkUrl').value = bookmark.url || '';
-
-            // 加载文件夹列表
-            this.loadFolderOptions(bookmark.parentId);
-
-            if (modal) {
-                modal.style.display = 'flex';
+                if (result && result.title && result.url) {
+                    await this.app.modules.bookmarkManager.updateBookmark(bookmarkId, {
+                        title: result.title,
+                        url: result.url
+                    });
+                    this.showStatus('书签已更新');
+                    await this.loadBookmarks();
+                }
+            } else {
+                logger.error('Bookmark manager not available');
+                this.showError('编辑书签功能不可用');
             }
         } catch (error) {
-            console.error('Failed to edit bookmark:', error);
+            logger.error('Failed to edit bookmark:', error);
+            this.showError('编辑书签失败');
         }
     }
 
@@ -544,16 +593,25 @@ class VBookmarksEditor {
      * 删除书签
      */
     async deleteBookmark(bookmarkId) {
-        if (!confirm('确定要删除这个书签吗？')) {
-            return;
-        }
-
         try {
-            await this.bookmarkManager.deleteBookmark(bookmarkId);
-            this.showStatus('书签已删除');
-            await this.loadBookmarks();
+            // 使用现代对话框系统确认删除
+            const confirmed = await this.dialogSystem.confirm(
+                '确定要删除这个书签吗？此操作不可撤销。',
+                '删除书签'
+            );
+
+            if (confirmed) {
+                if (this.app.modules.bookmarkManager) {
+                    await this.app.modules.bookmarkManager.deleteBookmark(bookmarkId);
+                    this.showStatus('书签已删除');
+                    await this.loadBookmarks();
+                } else {
+                    logger.error('Bookmark manager not available');
+                    this.showError('删除书签功能不可用');
+                }
+            }
         } catch (error) {
-            console.error('Failed to delete bookmark:', error);
+            logger.error('Failed to delete bookmark:', error);
             this.showError('删除书签失败');
         }
     }
@@ -562,27 +620,35 @@ class VBookmarksEditor {
      * 保存书签
      */
     async saveBookmark() {
-        const title = document.getElementById('bookmarkTitle').value.trim();
-        const url = document.getElementById('bookmarkUrl').value.trim();
-        const folderId = document.getElementById('bookmarkFolder').value;
-
-        if (!title || !url) {
-            this.showError('请填写书签标题和URL');
-            return;
-        }
-
         try {
-            await this.bookmarkManager.createBookmark({
-                title,
-                url,
-                parentId: folderId || undefined
+            // 使用现代对话框系统显示添加书签对话框
+            const result = await this.dialogSystem.openDialog({
+                type: 'prompt',
+                title: '添加书签',
+                message: '输入书签信息',
+                fields: [
+                    { name: 'title', label: '标题', required: true },
+                    { name: 'url', label: 'URL', required: true }
+                ]
             });
 
-            this.showStatus('书签已保存');
-            this.hideBookmarkModal();
-            await this.loadBookmarks();
+            if (result && result.title && result.url) {
+                if (this.app.modules.bookmarkManager) {
+                    await this.app.modules.bookmarkManager.createBookmark({
+                        title: result.title,
+                        url: result.url,
+                        parentId: result.folderId || undefined
+                    });
+
+                    this.showStatus('书签已保存');
+                    await this.loadBookmarks();
+                } else {
+                    logger.error('Bookmark manager not available');
+                    this.showError('添加书签功能不可用');
+                }
+            }
         } catch (error) {
-            console.error('Failed to save bookmark:', error);
+            logger.error('Failed to save bookmark:', error);
             this.showError('保存书签失败');
         }
     }
@@ -730,16 +796,22 @@ class VBookmarksEditor {
      * 显示状态消息
      */
     showStatus(message) {
-        // 实现状态显示
-        console.log('Status:', message);
+        logger.info('Status:', message);
+        // 可以在这里添加状态栏更新或Toast通知
     }
 
     /**
      * 显示错误消息
      */
     showError(message) {
-        // 实现错误显示
-        console.error('Error:', message);
+        logger.error('Error:', message);
+        // 使用现代对话框系统显示错误
+        if (this.dialogSystem) {
+            this.dialogSystem.alert(
+                typeof message === 'string' ? message : message.message || '未知错误',
+                '错误'
+            );
+        }
     }
 
     /**
