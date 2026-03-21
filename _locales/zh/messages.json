@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "自动调整弹出窗口大小以适应内容"
+  },
+  "crossStorageMoveWarning": {
+    "message": "无法在同步和本地存储之间移动书签。请使用复制/粘贴功能。",
+    "description": "尝试跨存储类型移动书签时的警告消息"
   }
 }

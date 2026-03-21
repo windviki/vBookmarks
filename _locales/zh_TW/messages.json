@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "自動調整彈出視窗大小以適應內容"
+  },
+  "crossStorageMoveWarning": {
+    "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。",
+    "description": "嘗試跨儲存類型移動書籤時的警告訊息"
   }
 }

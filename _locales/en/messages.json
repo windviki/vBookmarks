@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Auto-resize popup window to fit content"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Cannot move bookmarks between synced and local storage. Use copy/paste instead.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

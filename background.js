@@ -34,6 +34,13 @@
             };
         };
 
+        const getSyncStatusText = (bookmark) => {
+            if (bookmark.syncing !== undefined) {
+                return bookmark.syncing ? '<dim>☁</dim>' : '<dim>📁</dim>';
+            }
+            return '';
+        };
+
         chrome.omnibox.onInputChanged.addListener((value, suggest) => {
             if (!value) {
                 resetSuggest();
@@ -69,16 +76,18 @@
                 const resultsLen = results.length;
                 firstResult = results.shift();
                 const firstTitle = matcher(xmlEncode(firstResult.title), v);
+                const firstSyncStatus = getSyncStatusText(firstResult);
                 let firstURL = {
                     text: xmlEncode(firstResult.url)
                 };
                 if (!firstTitle.matched) firstURL = matcher(firstURL.text, v);
-                setSuggest(`${firstTitle.text} <dim>-</dim> <url>${firstURL.text}</url>`);
+                setSuggest(`${firstTitle.text} ${firstSyncStatus} <dim>-</dim> <url>${firstURL.text}</url>`);
                 let suggestions = [];
                 let i = 0, l = results.length;
                 for (; i < l; i++) {
                     const result = results[i];
                     const title = matcher(xmlEncode(result.title), v);
+                    const syncStatus = getSyncStatusText(result);
                     const URL = result.url;
                     let url = {
                         text: xmlEncode(URL)
@@ -86,7 +95,7 @@
                     if (!title.matched) url = matcher(url.text, v);
                     suggestions.push({
                         content: URL,
-                        description: `${title.text} <dim>-</dim> <url>${url.text}</url>`
+                        description: `${title.text} ${syncStatus} <dim>-</dim> <url>${url.text}</url>`
                     });
                 }
                 suggest(suggestions);

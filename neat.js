@@ -586,7 +586,8 @@
             for (let i = 0, l = data.length; i < l; i++) {
                 const d = data[i];
                 if (!d.url) {
-                    if (d.parentId >= 1) {
+                    // Use isRootFolder to properly identify root folders in dual-storage Chrome
+                    if (!isRootFolder(d)) {
                         list[d.id] = d.parentId;
                     }
                     generateNodeTrees(d.children, list);
@@ -636,6 +637,84 @@
         return searchFolder(tree);
     };
 
+    // Get effective subtree handling dual-storage Chrome (multiple root nodes)
+    const getEffectiveSubTree = (tree) => {
+        if (!tree || !Array.isArray(tree) || tree.length === 0) {
+            return [];
+        }
+
+        // Check if we have the new dual-storage structure (multiple root nodes)
+        const hasFolderType = tree.some(node => node.folderType !== undefined);
+
+        if (hasFolderType) {
+            // New Chrome with dual storage: tree may have multiple root nodes
+            // Return all root nodes' children combined
+            const allChildren = [];
+            tree.forEach(rootNode => {
+                if (rootNode.children && Array.isArray(rootNode.children)) {
+                    allChildren.push(...rootNode.children);
+                }
+            });
+            return allChildren;
+        } else {
+            // Old Chrome: single root node structure
+            // Legacy: tree[0].children contains the three main folders
+            return tree[0].children || [];
+        }
+    };
+
+    // Check if a node is a root folder (supports dual storage)
+    const isRootFolder = (node) => {
+        // Handle both object (from tree) and plain object with string properties
+        const nodeParentId = node.parentId;
+        const nodeFolderType = node.folderType;
+
+        // Check for root folder indicators:
+        // - parentId === "0" (string) or parentId === 0 (number)
+        // - folderType is defined (bookmarks-bar/other/mobile)
+        return nodeParentId === 0 || nodeParentId === "0" ||
+               nodeFolderType !== undefined;
+    };
+
+    // Check if a DOM element represents a root folder (for drag/drop)
+    const isDOMElementRootFolder = (el) => {
+        if (!el || !el.dataset) return false;
+        // Check dataset attributes which may contain folderType info
+        const parentId = el.dataset.parentid;
+        const folderType = el.dataset.foldertype;
+        return parentId === "0" || parentId === 0 || folderType !== undefined;
+    };
+
+    // Check if a bookmark can be moved between storage spaces
+    const canMoveBetweenStorage = (sourceId, targetParentId, callback) => {
+        chrome.bookmarks.get(sourceId, (sourceNodes) => {
+            if (!sourceNodes || !sourceNodes.length) {
+                callback(true);
+                return;
+            }
+            const sourceNode = sourceNodes[0];
+
+            chrome.bookmarks.get(sourceNode.parentId, (sourceParentNodes) => {
+                const sourceParent = sourceParentNodes && sourceParentNodes[0];
+
+                chrome.bookmarks.get(targetParentId, (targetParentNodes) => {
+                    const targetParent = targetParentNodes && targetParentNodes[0];
+
+                    // If no sync info, allow (old Chrome or no sync enabled)
+                    if (!sourceParent || !targetParent ||
+                        sourceParent.syncing === undefined ||
+                        targetParent.syncing === undefined) {
+                        callback(true);
+                        return;
+                    }
+
+                    // Block cross-storage moves in dual-storage Chrome
+                    callback(sourceParent.syncing === targetParent.syncing);
+                });
+            });
+        });
+    };
+
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar) {
@@ -648,7 +727,8 @@
                 subTree = tree[0].children[0].children;
             }
         } else {
-            subTree = tree[0].children;
+            // Use getEffectiveSubTree to handle dual-storage Chrome
+            subTree = getEffectiveSubTree(tree);
         }
         const html = generateHTML(subTree);
         generateNodeTrees(subTree, nodeTrees);
@@ -2509,7 +2589,7 @@
         const elParent = el.parentNode; //li
         // can move any bookmarks/folders except the default root folders
         if ((el.tagName === 'A' && elParent.hasClass('child')) ||
-            (el.tagName === 'SPAN' && elParent.hasClass('parent') && elParent.dataset.parentid !== '0')) {
+            (el.tagName === 'SPAN' && elParent.hasClass('parent') && !isDOMElementRootFolder(elParent))) {
             e.preventDefault();
             draggedOut = false;
             draggedBookmark = el; //a
@@ -2620,7 +2700,7 @@
             elRectBottom = elRect.bottom + document.body.scrollTop;
             const elRectHeight = elRect.height;
             const elParent = el.parentNode;
-            if (elParent.dataset.parentid !== '0') {
+            if (!isDOMElementRootFolder(elParent)) {
                 if (clientY < elRectTop + elRectHeight * .3) {
                     top = elRectTop;
                 } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
@@ -2701,10 +2781,21 @@
                 node = node[0];
                 let index = node.index;
                 const parentId = node.parentId;
-                chrome.bookmarks.move(draggedID, {
-                    parentId: parentId,
-                    index: moveBottom ? ++index : index
-                }, dragDisplay);
+
+                // Check for cross-storage move
+                canMoveBetweenStorage(draggedID, parentId, (canMove) => {
+                    if (!canMove) {
+                        const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
+                                   'Cannot move bookmarks between synced and local storage.';
+                        alert(msg);
+                        onDrop();
+                        return;
+                    }
+                    chrome.bookmarks.move(draggedID, {
+                        parentId: parentId,
+                        index: moveBottom ? ++index : index
+                    }, dragDisplay);
+                });
             });
         } else if (el.tagName === 'SPAN') { //dropped target is directory
             elRect = el.getBoundingClientRect();
@@ -2712,7 +2803,7 @@
             elRectTop = elRect.top;
             const elRectHeight = elRect.height;
             elParent = el.parentNode; //li
-            if (elParent.dataset.parentid !== '0') {
+            if (!isDOMElementRootFolder(elParent)) {
                 if (clientY < elRectTop + elRectHeight * .3) {
                     move = 1;
                 } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
@@ -2728,16 +2819,35 @@
                     let index = node.index;
                     const parentId = node.parentId;
                     if (draggedID) {
-                        chrome.bookmarks.move(draggedID, {
-                            parentId: parentId,
-                            index: moveBottom ? ++index : index
-                        }, dragDisplay);
+                        // Check for cross-storage move
+                        canMoveBetweenStorage(draggedID, parentId, (canMove) => {
+                            if (!canMove) {
+                                const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
+                                           'Cannot move bookmarks between synced and local storage.';
+                                alert(msg);
+                                onDrop();
+                                return;
+                            }
+                            chrome.bookmarks.move(draggedID, {
+                                parentId: parentId,
+                                index: moveBottom ? ++index : index
+                            }, dragDisplay);
+                        });
                     }
                 });
             } else { //middle position
-                chrome.bookmarks.move(draggedID, {
-                    parentId: id
-                }, () => {
+                // Check for cross-storage move before moving into folder
+                canMoveBetweenStorage(draggedID, id, (canMove) => {
+                    if (!canMove) {
+                        const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
+                                   'Cannot move bookmarks between synced and local storage.';
+                        alert(msg);
+                        onDrop();
+                        return;
+                    }
+                    chrome.bookmarks.move(draggedID, {
+                        parentId: id
+                    }, () => {
                     const ul = elParent.querySelector('ul');
                     const level = parseInt(elParent.parentNode.dataset.level) + 1;
                     draggedBookmark.style.webkitPaddingStart = `${14 * level}px`;
@@ -2750,7 +2860,8 @@
                     }
                     el.focus();
                     onDrop();
-                });
+                }); // close chrome.bookmarks.move callback
+                }); // close canMoveBetweenStorage callback
             }
         } else {
             onDrop();
