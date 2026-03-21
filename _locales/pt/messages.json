@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Os marcadores não podem ser movidos entre o armazenamento sincronizado e o local. Use copiar/colar.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

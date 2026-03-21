@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Popup-Fenstergröße automatisch an den Inhalt anpassen"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Lesezeichen können nicht zwischen synchronisiertem und lokalem Speicher verschoben werden. Verwenden Sie stattdessen Kopieren/Einfügen.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "पॉपअप विंडो को सामग्री के अनुसार ऑटो-रिसाइज़ करें"
+  },
+  "crossStorageMoveWarning": {
+    "message": "सिंक किए गए और स्थानीय स्टोरेज के बीच बुकमार्क नहीं ले जाए जा सकते। कॉपी/पेस्ट का उपयोग करें।",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

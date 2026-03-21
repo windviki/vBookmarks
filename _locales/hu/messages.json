@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
+  },
+  "crossStorageMoveWarning": {
+    "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

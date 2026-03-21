@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Автоматично змінювати розмір спливаючого вікна відповідно до вмісту"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Не можна переміщувати закладки між синхронізованим і локальним сховищем. Використовуйте копіювання/вставлення.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

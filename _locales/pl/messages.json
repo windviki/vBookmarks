@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Automycznie dostosuj rozmiar okna popup do zawartości"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Nie można przenosić zakładek między pamięcią synchronizowaną a lokalną. Użyj funkcji kopiuj/wklej.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

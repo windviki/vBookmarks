@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Ridimensiona automaticamente la finestra popup per adattarla al contenuto"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Non è possibile spostare i segnalibri tra l'archiviazione sincronizzata e quella locale. Utilizza invece copia/incolla.",
+    "description": "Avviso quando si tenta di spostare i segnalibri tra tipi di archiviazione"
   }
 }

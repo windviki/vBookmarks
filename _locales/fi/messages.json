@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Säädä ponnahdusikkunan koko automaattisesti sisällön mukaan"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Kirjanmerkkejä ei voi siirtää synkronoidun ja paikallisen tallennustilan välillä. Käytä sen sijaan kopioi/liitä -toimintoa.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

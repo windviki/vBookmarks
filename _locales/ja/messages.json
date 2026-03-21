@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
+  },
+  "crossStorageMoveWarning": {
+    "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

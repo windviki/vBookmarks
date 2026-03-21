@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Endre automatisk størrelsen på popup-vinduet for å passe innholdet"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bokmerkene kan ikke flyttes mellom synkronisert og lokal lagring. Bruk kopier/lim inn i stedet.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

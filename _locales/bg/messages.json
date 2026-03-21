@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Автоматично оразмеряване на изскачащия прозорец според съдържанието"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Не може да се преместват отметките между синхронизираното и локалното хранилище. Използвайте копиране/поставяне.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

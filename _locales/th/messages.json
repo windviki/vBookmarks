@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
+  },
+  "crossStorageMoveWarning": {
+    "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

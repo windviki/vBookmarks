@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "تغییر اندازه خودکار پنجره پاپ‌آپ مطابق با محتوا"
+  },
+  "crossStorageMoveWarning": {
+    "message": "نمی‌توان نشانک‌ها را بین حافظه همگام‌سازی شده و محلی جابجا کرد. از کپی/چسباندن استفاده کنید.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

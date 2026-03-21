@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
+  },
+  "crossStorageMoveWarning": {
+    "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

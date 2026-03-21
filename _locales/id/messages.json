@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

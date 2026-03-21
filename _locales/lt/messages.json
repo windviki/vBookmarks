@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Αυτόματη προσαρμογή μεγέθους παραθύρου popup ανάλογα με το περιεχόμενο"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Δεν είναι δυνατή η μετακίνηση σελιδεδεικτών μεταξύ συγχρονισμένης και τοπικής αποθήκευσης. Χρησιμοποιήστε αντιγραφή/επικόλληση.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

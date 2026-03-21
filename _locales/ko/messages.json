@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "팝업 창 크기를 콘텐츠에 맞게 자동 조정"
+  },
+  "crossStorageMoveWarning": {
+    "message": "동기화된 저장소와 로컬 저장소 간에는 북마크를 이동할 수 없습니다. 복사/붙여넣기를 사용하세요.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

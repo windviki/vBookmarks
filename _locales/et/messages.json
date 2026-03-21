@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

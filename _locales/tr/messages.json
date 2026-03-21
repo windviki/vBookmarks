@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }

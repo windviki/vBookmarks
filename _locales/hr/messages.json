@@ -314,5 +314,9 @@
   },
   "optionAutoResizePopup": {
     "message": "Automatski prilagodi veličinu prozora skočnog prozora prema sadržaju"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Zabilješke nije moguće premjestiti između sinkroniziranog i lokalnog pohranjivanja. Koristite kopiraj/zalijepi.",
+    "description": "Warning when trying to move bookmarks across storage types"
   }
 }
