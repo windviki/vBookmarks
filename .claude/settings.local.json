@@ -6,7 +6,10 @@
       "Bash(if:*)",
       "Bash(fi:*)",
       "Bash(done)",
-      "Bash(then echo \"✓ Created\")"
+      "Bash(then echo \"✓ Created\")",
+      "WebSearch",
+      "Bash(git add _locales/en/messages.json _locales/zh/messages.json _locales/zh_HK/messages.json _locales/zh_TW/messages.json background.js neat.js)",
+      "Bash(git add _locales/*/messages.json && git commit -m \"$\\(cat <<'EOF'\nAdd crossStorageMoveWarning translations for all languages\n\nAdd localized warning messages for cross-storage bookmark move attempts in all 39 supported languages.\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
     ],
     "deny": [],
     "ask": []

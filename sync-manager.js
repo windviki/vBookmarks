@@ -25,15 +25,27 @@ class SyncManager {
     }
 
     async loadSettings() {
-        const result = await chrome.storage.sync.get({
-            syncSettings: this.syncSettings
-        });
-        this.syncSettings = result.syncSettings;
+        const defaults = {
+            showSyncStatus: true,
+            highlightUnsynced: true,
+            autoRefreshSync: true,
+            syncRefreshInterval: 30
+        };
+        const result = await chrome.storage.sync.get(defaults);
+        this.syncSettings = {
+            showSyncStatus: result.showSyncStatus,
+            highlightUnsynced: result.highlightUnsynced,
+            autoRefreshSync: result.autoRefreshSync,
+            syncRefreshInterval: result.syncRefreshInterval * 1000
+        };
     }
 
     async saveSettings() {
         await chrome.storage.sync.set({
-            syncSettings: this.syncSettings
+            showSyncStatus: this.syncSettings.showSyncStatus,
+            highlightUnsynced: this.syncSettings.highlightUnsynced,
+            autoRefreshSync: this.syncSettings.autoRefreshSync,
+            syncRefreshInterval: this.syncSettings.syncRefreshInterval / 1000
         });
     }
 
