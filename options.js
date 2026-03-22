@@ -7,103 +7,63 @@
     async function initOptions() {
         document.title = `${_m('extName')} ${_m('options')}`;
 
-        // General settings (local storage)
-        const clickNewTab = $('click-new-tab');
-        clickNewTab.checked = !!(await getSetting('leftClickNewTab', ''));
-        clickNewTab.addEventListener('change', async () => {
-            await setSetting('leftClickNewTab', clickNewTab.checked ? '1' : '');
-        });
+        // Configuration for general settings
+        const generalSettings = [
+            { id: 'click-new-tab', key: 'leftClickNewTab', defaultValue: '', inverted: false },
+            { id: 'open-new-tab-bg', key: 'middleClickBgTab', defaultValue: '', inverted: false },
+            { id: 'close-unused-folders', key: 'closeUnusedFolders', defaultValue: '', inverted: false },
+            { id: 'popup-stay-open', key: 'bookmarkClickStayOpen', defaultValue: '', inverted: false },
+            { id: 'confirm-open-folder', key: 'dontConfirmOpenFolder', defaultValue: '', inverted: true },
+            { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
+            { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
+            { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
+            { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false }
+        ];
 
-        const openNewTabBg = $('open-new-tab-bg');
-        openNewTabBg.checked = !!(await getSetting('middleClickBgTab', ''));
-        openNewTabBg.addEventListener('change', async () => {
-            await setSetting('middleClickBgTab', openNewTabBg.checked ? '1' : '');
-        });
+        // Initialize general settings
+        for (const setting of generalSettings) {
+            const element = $(setting.id);
+            const value = await getSetting(setting.key, setting.defaultValue);
+            element.checked = setting.inverted ? !value : !!value;
+            element.addEventListener('change', async () => {
+                const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
+                await setSetting(setting.key, newValue);
+            });
+        }
 
-        const closeUnusedFolders = $('close-unused-folders');
-        closeUnusedFolders.checked = !!(await getSetting('closeUnusedFolders', ''));
-        closeUnusedFolders.addEventListener('change', async () => {
-            await setSetting('closeUnusedFolders', closeUnusedFolders.checked ? '1' : '');
-        });
+        // Configuration for sync settings
+        const syncSettings = [
+            { id: 'show-sync-status', key: 'showSyncStatus', defaultValue: 'true', inverted: false },
+            { id: 'highlight-unsynced', key: 'highlightUnsynced', defaultValue: 'true', inverted: false },
+            { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
+        ];
 
-        const popupStayOpen = $('popup-stay-open');
-        popupStayOpen.checked = !!(await getSetting('bookmarkClickStayOpen', ''));
-        popupStayOpen.addEventListener('change', async () => {
-            await setSetting('bookmarkClickStayOpen', popupStayOpen.checked ? '1' : '');
-        });
-
-        const confirmOpenFolder = $('confirm-open-folder');
-        confirmOpenFolder.checked = !(await getSetting('dontConfirmOpenFolder', ''));
-        confirmOpenFolder.addEventListener('change', async () => {
-            await setSetting('dontConfirmOpenFolder', confirmOpenFolder.checked ? '' : '1');
-        });
-
-        const rememberPrevState = $('remember-prev-state');
-        rememberPrevState.checked = !(await getSetting('dontRememberState', ''));
-        rememberPrevState.addEventListener('change', async () => {
-            await setSetting('dontRememberState', rememberPrevState.checked ? '' : '1');
-        });
-
-        const onlyShowBMBar = $('only-show-bmbar');
-        onlyShowBMBar.checked = !!(await getSetting('onlyShowBMBar', ''));
-        onlyShowBMBar.addEventListener('change', async () => {
-            await setSetting('onlyShowBMBar', onlyShowBMBar.checked ? '1' : '');
-        });
-
-        const searchAfterEnter = $('search-after-enter');
-        searchAfterEnter.checked = !!(await getSetting('searchAfterEnter', ''));
-        searchAfterEnter.addEventListener('change', async () => {
-            await setSetting('searchAfterEnter', searchAfterEnter.checked ? '1' : '');
-        });
-
-        const autoResizePopup = $('auto-resize-popup');
-        autoResizePopup.checked = (await getSetting('autoResizePopup', 'true')) !== 'false';
-        autoResizePopup.addEventListener('change', async () => {
-            await setSetting('autoResizePopup', autoResizePopup.checked ? 'true' : 'false');
-        });
-
-        // Sync settings (sync storage)
-        const showSyncStatus = $('show-sync-status');
-        showSyncStatus.checked = (await getSetting('showSyncStatus', 'true', true)) !== 'false';
-        showSyncStatus.addEventListener('change', async () => {
-            await setSetting('showSyncStatus', showSyncStatus.checked ? 'true' : 'false', true);
-            // Update sync manager settings
-            if (window.syncManager) {
-                window.syncManager.syncSettings.showSyncStatus = showSyncStatus.checked;
-                await window.syncManager.saveSettings();
-            }
-            // Refresh the UI to show/hide sync indicators immediately
-            if (window.opener && window.opener.neat) {
-                window.opener.neat.refreshSyncIndicators();
-            }
-        });
-
-        const highlightUnsynced = $('highlight-unsynced');
-        highlightUnsynced.checked = (await getSetting('highlightUnsynced', 'true', true)) !== 'false';
-        highlightUnsynced.addEventListener('change', async () => {
-            await setSetting('highlightUnsynced', highlightUnsynced.checked ? 'true' : 'false', true);
-            // Update sync manager settings
-            if (window.syncManager) {
-                window.syncManager.syncSettings.highlightUnsynced = highlightUnsynced.checked;
-                await window.syncManager.saveSettings();
-            }
-        });
-
-        const autoRefreshSync = $('auto-refresh-sync');
-        autoRefreshSync.checked = (await getSetting('autoRefreshSync', 'true', true)) !== 'false';
-        autoRefreshSync.addEventListener('change', async () => {
-            await setSetting('autoRefreshSync', autoRefreshSync.checked ? 'true' : 'false', true);
-            // Update sync manager settings
-            if (window.syncManager) {
-                window.syncManager.syncSettings.autoRefreshSync = autoRefreshSync.checked;
-                if (autoRefreshSync.checked) {
-                    window.syncManager.startAutoRefresh();
-                } else {
-                    window.syncManager.stopAutoRefresh();
+        // Initialize sync settings
+        for (const setting of syncSettings) {
+            const element = $(setting.id);
+            const value = await getSetting(setting.key, setting.defaultValue, true);
+            element.checked = value !== 'false';
+            element.addEventListener('change', async () => {
+                const newValue = element.checked ? 'true' : 'false';
+                await setSetting(setting.key, newValue, true);
+                // Update sync manager settings
+                if (window.syncManager) {
+                    window.syncManager.syncSettings[setting.key] = element.checked;
+                    if (setting.key === 'autoRefreshSync') {
+                        if (element.checked) {
+                            window.syncManager.startAutoRefresh();
+                        } else {
+                            window.syncManager.stopAutoRefresh();
+                        }
+                    }
+                    await window.syncManager.saveSettings();
                 }
-                await window.syncManager.saveSettings();
-            }
-        });
+                // Refresh the UI to show/hide sync indicators immediately
+                if (window.opener && window.opener.neat && setting.key === 'showSyncStatus') {
+                    window.opener.neat.refreshSyncIndicators();
+                }
+            });
+        }
 
         const syncRefreshInterval = $('sync-refresh-interval');
         syncRefreshInterval.value = await getSetting('syncRefreshInterval', 60, true);
