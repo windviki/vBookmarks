@@ -6,6 +6,40 @@
             });
         };
 
+        // Debounce utility
+        const debounce = (func, delay) => {
+            let timeoutId;
+            return (...args) => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(null, args), delay);
+            };
+        };
+
+        // Rank bookmarks based on query
+        const rankBookmarks = (query, results) => {
+            if (results.length <= 1) return results;
+            const v = query.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
+            const vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'ig');
+            results.sort((a, b) => {
+                const aTitle = a.title.toLowerCase();
+                const bTitle = b.title.toLowerCase();
+                const queryLower = query.toLowerCase();
+                let aIndexTitle = aTitle.indexOf(queryLower);
+                let bIndexTitle = bTitle.indexOf(queryLower);
+                if (aIndexTitle >= 0 || bIndexTitle >= 0) {
+                    if (aIndexTitle < 0) aIndexTitle = Infinity;
+                    if (bIndexTitle < 0) bIndexTitle = Infinity;
+                    return aIndexTitle - bIndexTitle;
+                }
+                const aTestTitle = vPattern.test(aTitle);
+                const bTestTitle = vPattern.test(bTitle);
+                if (aTestTitle && !bTestTitle) return -1;
+                if (!aTestTitle && bTestTitle) return 1;
+                return b.dateAdded - a.dateAdded;
+            });
+            return results.slice(0, 6);
+        };
+
         let omniboxValue = null;
         let firstResult = null;
         const resetSuggest = () => {
@@ -41,40 +75,23 @@
             return '';
         };
 
-        chrome.omnibox.onInputChanged.addListener((value, suggest) => {
+        chrome.omnibox.onInputChanged.addListener(debounce(async (value, suggest) => {
             if (!value) {
                 resetSuggest();
                 return;
             }
             omniboxValue = value;
-            chrome.bookmarks.search(value, results => {
+            try {
+                const results = await new Promise((resolve) => {
+                    chrome.bookmarks.search(value, resolve);
+                });
                 if (!results.length) {
                     resetSuggest();
                     return;
                 }
+                const rankedResults = rankBookmarks(value, results);
+                const firstResult = rankedResults.shift();
                 const v = value.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-                let vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'ig');
-                if (results.length > 1) {
-                    results.sort((a, b) => {
-                        const aTitle = a.title;
-                        const bTitle = b.title;
-                        let aIndexTitle = aTitle.toLowerCase().indexOf(v);
-                        let bIndexTitle = bTitle.toLowerCase().indexOf(v);
-                        if (aIndexTitle >= 0 || bIndexTitle >= 0) {
-                            if (aIndexTitle < 0) aIndexTitle = Infinity;
-                            if (bIndexTitle < 0) bIndexTitle = Infinity;
-                            return aIndexTitle - bIndexTitle;
-                        }
-                        const aTestTitle = vPattern.test(aTitle);
-                        const bTestTitle = vPattern.test(bTitle);
-                        if (aTestTitle && !bTestTitle) return -1;
-                        if (!aTestTitle && bTestTitle) return 1;
-                        return b.dateAdded - a.dateAdded;
-                    });
-                    results = results.slice(0, 6);
-                }
-                const resultsLen = results.length;
-                firstResult = results.shift();
                 const firstTitle = matcher(xmlEncode(firstResult.title), v);
                 const firstSyncStatus = getSyncStatusText(firstResult);
                 let firstURL = {
@@ -83,9 +100,9 @@
                 if (!firstTitle.matched) firstURL = matcher(firstURL.text, v);
                 setSuggest(`${firstTitle.text} ${firstSyncStatus} <dim>-</dim> <url>${firstURL.text}</url>`);
                 let suggestions = [];
-                let i = 0, l = results.length;
+                let i = 0, l = rankedResults.length;
                 for (; i < l; i++) {
-                    const result = results[i];
+                    const result = rankedResults[i];
                     const title = matcher(xmlEncode(result.title), v);
                     const syncStatus = getSyncStatusText(result);
                     const URL = result.url;
@@ -99,11 +116,11 @@
                     });
                 }
                 suggest(suggestions);
-                suggestions = null;
-                results = null;
-                vPattern = null;
-            });
-        });
+            } catch (error) {
+                console.error('Omnibox search error:', error);
+                resetSuggest();
+            }
+        }, 250));
 
         chrome.omnibox.onInputEntered.addListener(text => {
             if (!text || !firstResult) {
@@ -111,11 +128,12 @@
                 return;
             }
             const url = (text === omniboxValue) ? firstResult.url : text;
-            chrome.tabs.getSelected(null, tab => {
-                chrome.tabs.update(tab.id, {
-                    url: url,
-                    selected: true
-                });
+            chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+                if (tabs[0]) {
+                    chrome.tabs.update(tabs[0].id, {
+                        url: url
+                    });
+                }
             });
         });
     }

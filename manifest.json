@@ -45,14 +45,13 @@
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],
-        "matches": ["<all_urls>"],
-        "extension_ids": [ "*" ]
+        "matches": ["<all_urls>"]
     }],
     "host_permissions": [
 		"<all_urls>"
     ],
     "content_security_policy": {
-        "extension_pages": "img-src 'self' data:; default-src 'self'; style-src 'self' 'unsafe-inline';"
+        "extension_pages": "img-src 'self' data:; default-src 'self'; style-src 'self';"
     },
 	"minimum_chrome_version": "88.0.0.0",
 	"default_locale": "en",

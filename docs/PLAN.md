@@ -5,11 +5,11 @@
 
 ## 任务列表
 
-### 1. 统一存储方案（高优先）
-- [ ] 将 options.js 中的 localStorage 替换为 chrome.storage.local 和 chrome.storage.sync
-- [ ] 封装 getSetting 和 setSetting 辅助函数
-- [ ] 确保 SyncManager 和 options 同步设置一致
-- [ ] 测试存储兼容性和回退机制
+### 1. 统一存储方案（高优先） ✅
+- [x] 将 options.js 中的 localStorage 替换为 chrome.storage.local 和 chrome.storage.sync
+- [x] 封装 getSetting 和 setSetting 辅助函数
+- [x] 确保 SyncManager 和 options 同步设置一致
+- [x] 测试存储兼容性和回退机制
 
 ### 2. 现代化重构（中优先）
 - [ ] background.js Omnibox 搜索改为 async/await + debounce (250ms)
@@ -22,7 +22,7 @@
 - [ ] 同步刷新间隔改为可配置（最小 20s）
 
 ### 4. 兼容与迁移成本（中低优先）
-- [ ] 替换 chrome.extension.sendRequest 为 chrome.runtime.sendMessage
+- [x] 替换 chrome.extension.sendRequest 为 chrome.runtime.sendMessage
 - [ ] 将 DOM 入口封装为 initXXX() 函数，便于后续框架迁移
 
 ### 5. 安全与可维护性（高优先）
@@ -43,9 +43,10 @@
 
 ## 实施进度追踪
 - 开始时间：2026-03-22
-- 当前阶段：初始化 PLAN
-- 完成任务：0/7
+- 当前阶段：完成统一存储方案，开始现代化重构
+- 完成任务：1/7
 
 ## 提交记录
-- [初始提交] 创建 docs 目录并移动文档文件</content>
+- [初始提交] 创建 docs 目录并移动文档文件
+- [feat: 统一存储方案] 替换 localStorage 为 chrome.storage，修复兼容性问题</content>
 <parameter name="filePath">/home/coder/vBookmarks/docs/PLAN.md
