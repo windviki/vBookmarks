@@ -1,23 +1,28 @@
 (window => {
     const document = window.document;
     const chrome = window.chrome;
-    const localStorage = window.localStorage;
     const _m = chrome.i18n.getMessage;
     const __m = _m;
 
-    document.addEventListener('DOMContentLoaded', () => {
+    async function initPopup() {
         // Restore size
-        if (localStorage.popupHeight) {
-            if (localStorage.popupHeight > 600) {
-                localStorage.popupHeight = 600;
+        const popupHeight = await getSetting('popupHeight', '');
+        if (popupHeight) {
+            let height = parseInt(popupHeight);
+            if (height > 600) {
+                height = 600;
+                await setSetting('popupHeight', height);
             }
-            document.body.style.height = `${localStorage.popupHeight}px`;
+            document.body.style.height = `${height}px`;
         }
 
-        //document.body.style.height = '600px';
-        if (localStorage.popupWidth) {
-            document.body.style.width = `${localStorage.popupWidth}px`;
+        const popupWidth = await getSetting('popupWidth', '');
+        if (popupWidth) {
+            document.body.style.width = `${parseInt(popupWidth)}px`;
         }
+    }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        initPopup();
     });
 })(window);

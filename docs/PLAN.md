@@ -16,10 +16,10 @@
 - [x] 封装搜索命中策略为可测试函数 rankBookmarks(query, results)
 - [ ] options.js 改成数据驱动配置列表，抽象 createToggleOption 等函数
 
-### 3. 扩展同步管理（中优先）
-- [ ] SyncManager 改为事件触发增量刷新而非定时全量扫
-- [ ] 实现 cache TTL/LRU 策略，避免内存占用
-- [ ] 同步刷新间隔改为可配置（最小 20s）
+### 3. 扩展同步管理（中优先） ✅
+- [x] SyncManager 改为事件触发增量刷新而非定时全量扫
+- [x] 实现 cache TTL/LRU 策略，避免内存占用
+- [x] 同步刷新间隔改为可配置（最小 20s）
 
 ### 4. 兼容与迁移成本（中低优先）
 - [x] 替换 chrome.extension.sendRequest 为 chrome.runtime.sendMessage
@@ -43,11 +43,12 @@
 
 ## 实施进度追踪
 - 开始时间：2026-03-22
-- 当前阶段：完成现代化重构和安全优化，开始扩展同步管理
-- 完成任务：3/7
+- 当前阶段：完成扩展同步管理，开始兼容与迁移成本
+- 完成任务：4/7
 
 ## 提交记录
 - [初始提交] 创建 docs 目录并移动文档文件
 - [feat: 统一存储方案] 替换 localStorage 为 chrome.storage，修复兼容性问题
-- [feat: 现代化重构与安全优化] background.js 添加 debounce 和 rankBookmarks，manifest.json 移除 unsafe-inline</content>
+- [feat: 现代化重构与安全优化] background.js 添加 debounce 和 rankBookmarks，manifest.json 移除 unsafe-inline
+- [feat: 扩展同步管理优化] SyncManager 添加 cache TTL 和 LRU，刷新间隔优化</content>
 <parameter name="filePath">/home/coder/vBookmarks/docs/PLAN.md
