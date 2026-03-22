@@ -11,9 +11,9 @@
 - [x] 确保 SyncManager 和 options 同步设置一致
 - [x] 测试存储兼容性和回退机制
 
-### 2. 现代化重构（中优先）
-- [ ] background.js Omnibox 搜索改为 async/await + debounce (250ms)
-- [ ] 封装搜索命中策略为可测试函数 rankBookmarks(query, results)
+### 2. 现代化重构（中优先） ✅
+- [x] background.js Omnibox 搜索改为 async/await + debounce (250ms)
+- [x] 封装搜索命中策略为可测试函数 rankBookmarks(query, results)
 - [ ] options.js 改成数据驱动配置列表，抽象 createToggleOption 等函数
 
 ### 3. 扩展同步管理（中优先）
@@ -25,9 +25,9 @@
 - [x] 替换 chrome.extension.sendRequest 为 chrome.runtime.sendMessage
 - [ ] 将 DOM 入口封装为 initXXX() 函数，便于后续框架迁移
 
-### 5. 安全与可维护性（高优先）
-- [ ] 修改 CSP，关闭 unsafe-inline，脚本和样式文件化
-- [ ] web_accessible_resources 使用精确路径，移除 <all_urls> 和 *
+### 5. 安全与可维护性（高优先） ✅
+- [x] 修改 CSP，关闭 unsafe-inline，脚本和样式文件化
+- [x] web_accessible_resources 使用精确路径，移除 <all_urls> 和 *
 - [ ] 配置域白名单而非全域
 
 ### 6. UI/UX 体验优化（中低优先）
@@ -43,10 +43,11 @@
 
 ## 实施进度追踪
 - 开始时间：2026-03-22
-- 当前阶段：完成统一存储方案，开始现代化重构
-- 完成任务：1/7
+- 当前阶段：完成现代化重构和安全优化，开始扩展同步管理
+- 完成任务：3/7
 
 ## 提交记录
 - [初始提交] 创建 docs 目录并移动文档文件
-- [feat: 统一存储方案] 替换 localStorage 为 chrome.storage，修复兼容性问题</content>
+- [feat: 统一存储方案] 替换 localStorage 为 chrome.storage，修复兼容性问题
+- [feat: 现代化重构与安全优化] background.js 添加 debounce 和 rankBookmarks，manifest.json 移除 unsafe-inline</content>
 <parameter name="filePath">/home/coder/vBookmarks/docs/PLAN.md

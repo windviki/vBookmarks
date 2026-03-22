@@ -5,12 +5,13 @@
 
 class SyncManager {
     constructor() {
-        this.syncCache = new Map();
+        this.syncCache = new Map(); // {id: {status, timestamp}}
+        this.cacheTTL = 5 * 60 * 1000; // 5 minutes
         this.syncSettings = {
             showSyncStatus: true,
             highlightUnsynced: true,
             autoRefreshSync: true,
-            syncRefreshInterval: 30000 // 30 seconds
+            syncRefreshInterval: 60000 // 60 seconds, min 20s
         };
         this.refreshInterval = null;
         this.init();
@@ -29,7 +30,7 @@ class SyncManager {
             showSyncStatus: true,
             highlightUnsynced: true,
             autoRefreshSync: true,
-            syncRefreshInterval: 30
+            syncRefreshInterval: 60
         };
         const result = await chrome.storage.sync.get(defaults);
         this.syncSettings = {
@@ -79,6 +80,31 @@ class SyncManager {
         this.invalidateRelatedBookmarks(bookmarkId);
     }
 
+    setCache(bookmarkId, status) {
+        this.syncCache.set(bookmarkId, {
+            status,
+            timestamp: Date.now()
+        });
+    }
+
+    getCache(bookmarkId) {
+        const entry = this.syncCache.get(bookmarkId);
+        if (entry && (Date.now() - entry.timestamp) < this.cacheTTL) {
+            return entry.status;
+        }
+        this.syncCache.delete(bookmarkId);
+        return null;
+    }
+
+    clearExpiredCache() {
+        const now = Date.now();
+        for (const [id, entry] of this.syncCache) {
+            if ((now - entry.timestamp) > this.cacheTTL) {
+                this.syncCache.delete(id);
+            }
+        }
+    }
+
     invalidateRelatedBookmarks(bookmarkId) {
         // Invalidate parent folder
         chrome.bookmarks.get(bookmarkId, (node) => {
@@ -104,6 +130,7 @@ class SyncManager {
             clearInterval(this.refreshInterval);
         }
         this.refreshInterval = setInterval(() => {
+            this.clearExpiredCache();
             this.refreshAllSyncStatus();
         }, this.syncSettings.syncRefreshInterval);
     }
@@ -178,8 +205,9 @@ class SyncManager {
 
     async getSyncStatus(bookmarkNode) {
         // Check cache first
-        if (this.syncCache.has(bookmarkNode.id)) {
-            return this.syncCache.get(bookmarkNode.id);
+        const cached = this.getCache(bookmarkNode.id);
+        if (cached) {
+            return cached;
         }
 
         // Determine sync status based on Chrome's new syncing property
@@ -245,7 +273,7 @@ class SyncManager {
             const bookmark = await this.getBookmark(bookmarkId);
             if (bookmark) {
                 const syncStatus = await this.getSyncStatus(bookmark);
-                this.syncCache.set(bookmarkId, syncStatus);
+                this.setCache(bookmarkId, syncStatus);
                 this.notifySyncStatusChanged('updated', bookmarkId, syncStatus);
             }
         } catch (error) {
@@ -302,7 +330,7 @@ class SyncManager {
                 stats.folders++;
                 this.calculateStats(node.children, stats);
             } else {
-                const syncStatus = this.syncCache.get(node.id) || {};
+                const syncStatus = this.getCache(node.id) || {};
                 if (syncStatus.isSynced) {
                     stats.synced++;
                 } else {
@@ -334,7 +362,7 @@ class SyncManager {
         const details = [];
 
         nodes.forEach(node => {
-            const syncStatus = this.syncCache.get(node.id) || {};
+            const syncStatus = this.getCache(node.id) || {};
             const nodeInfo = {
                 id: node.id,
                 title: node.title,
@@ -357,7 +385,7 @@ class SyncManager {
 
     // Public methods for UI integration
     getSyncStatusIndicator(bookmarkId) {
-        const status = this.syncCache.get(bookmarkId);
+        const status = this.getCache(bookmarkId);
         if (!status) return '';
 
         if (status.syncError) {
@@ -380,7 +408,7 @@ class SyncManager {
     }
 
     getSyncTooltip(bookmarkId) {
-        const status = this.syncCache.get(bookmarkId);
+        const status = this.getCache(bookmarkId);
         if (!status) return '';
 
         if (status.syncError) {

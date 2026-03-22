@@ -106,10 +106,10 @@
         });
 
         const syncRefreshInterval = $('sync-refresh-interval');
-        syncRefreshInterval.value = await getSetting('syncRefreshInterval', 30, true);
+        syncRefreshInterval.value = await getSetting('syncRefreshInterval', 60, true);
         syncRefreshInterval.addEventListener('input', async () => {
             const val = parseInt(syncRefreshInterval.value);
-            if (val >= 10 && val <= 300) {
+            if (val >= 20 && val <= 300) {
                 await setSetting('syncRefreshInterval', val, true);
                 // Update sync manager settings
                 if (window.syncManager) {
