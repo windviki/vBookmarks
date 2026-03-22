@@ -1,0 +1,13 @@
+{
+  "name": "vbookmarks",
+  "version": "3.6.0",
+  "description": "Chrome extension for bookmark management",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "sinon": "^17.0.0"
+  }
+}

@@ -21,9 +21,9 @@
 - [x] 实现 cache TTL/LRU 策略，避免内存占用
 - [x] 同步刷新间隔改为可配置（最小 20s）
 
-### 4. 兼容与迁移成本（中低优先）
+### 4. 兼容与迁移成本（中低优先） ✅
 - [x] 替换 chrome.extension.sendRequest 为 chrome.runtime.sendMessage
-- [ ] 将 DOM 入口封装为 initXXX() 函数，便于后续框架迁移
+- [x] 将 DOM 入口封装为 initXXX() 函数，便于后续框架迁移
 
 ### 5. 安全与可维护性（高优先） ✅
 - [x] 修改 CSP，关闭 unsafe-inline，脚本和样式文件化
@@ -43,12 +43,13 @@
 
 ## 实施进度追踪
 - 开始时间：2026-03-22
-- 当前阶段：完成扩展同步管理，开始兼容与迁移成本
-- 完成任务：4/7
+- 当前阶段：完成兼容与迁移成本，开始 UI/UX 体验优化
+- 完成任务：5/7
 
 ## 提交记录
 - [初始提交] 创建 docs 目录并移动文档文件
 - [feat: 统一存储方案] 替换 localStorage 为 chrome.storage，修复兼容性问题
 - [feat: 现代化重构与安全优化] background.js 添加 debounce 和 rankBookmarks，manifest.json 移除 unsafe-inline
-- [feat: 扩展同步管理优化] SyncManager 添加 cache TTL 和 LRU，刷新间隔优化</content>
+- [feat: 扩展同步管理优化] SyncManager 添加 cache TTL 和 LRU，刷新间隔优化
+- [feat: 兼容与迁移成本优化] popup.js 封装 initPopup，统一存储</content>
 <parameter name="filePath">/home/coder/vBookmarks/docs/PLAN.md
