@@ -47,13 +47,15 @@ CSS_FILES = [
     'codemirror.css',
 ]
 
-# Icon/image files referenced in manifest.json or HTML pages
-ICONS = [
+# Icon/image files referenced in manifest.json, HTML pages, or JS code
+IMAGES = [
     'icon.png',
     'icon16.png',
     'icon32.png',
     'icon48.png',
     'icon128.png',
+    'folder.png',
+    'document-code.png',
 ]
 
 # Metadata files for store listing and user reference
@@ -86,9 +88,6 @@ EXCLUDE_FILES = {
     # Screenshots for README
     'vbookmarks.png',
     'vbookmarks-menu.png',
-    # Old icons / unused images
-    'folder.png',
-    'document-code.png',
     # Old MV2 background page (not in manifest)
     'background.html',
     # Disabled update checking
@@ -158,8 +157,8 @@ def collect_files(root, manifest):
     for name in CSS_FILES:
         add(name)
 
-    # Icons
-    for name in ICONS:
+    # Images/icons
+    for name in IMAGES:
         add(name)
 
     # Metadata
