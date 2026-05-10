@@ -327,7 +327,7 @@ New: [#36](https://github.com/windviki/vBookmarks/issues/36): Add auto-resize po
 
 Fixed: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
 
-New: Add Macedonian (mk), Portuguese Brazil (pt_BR), Portuguese Portugal (pt_PT) language support. Total 11 languages: en, fr, it, ja, mk, pt_BR, pt_PT, ru, zh, zh_HK, zh_TW.
+New: Full 42-language support synced from cc-dev branch, all aligned with English baseline (75 keys). Languages: ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW.
 
 
 # Attentions

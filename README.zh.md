@@ -230,7 +230,7 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
 
   - 修正 [#42](https://github.com/windviki/vBookmarks/issues/42) Chrome 148 移除已废弃的 `<command>` HTML 元素导致扩展崩溃的问题。替换为 `<div>` 元素以完全兼容。
 
-  - 新增马其顿语 (mk)、葡萄牙语巴西 (pt_BR)、葡萄牙语葡萄牙 (pt_PT) 语言支持。总计 11 种语言：en、fr、it、ja、mk、pt_BR、pt_PT、ru、zh、zh_HK、zh_TW。
+  - 从 cc-dev 分支同步全部语言支持，以英语为基准完全对齐（各 75 键）。共 42 种语言：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
 
 
 # 注意：
