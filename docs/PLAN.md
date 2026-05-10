@@ -14,7 +14,7 @@
 ### 2. 现代化重构（中优先） ✅
 - [x] background.js Omnibox 搜索改为 async/await + debounce (250ms)
 - [x] 封装搜索命中策略为可测试函数 rankBookmarks(query, results)
-- [ ] options.js 改成数据驱动配置列表，抽象 createToggleOption 等函数
+- [x] options.js 改成数据驱动配置列表，抽象 createToggleOption 等函数
 
 ### 3. 扩展同步管理（中优先） ✅
 - [x] SyncManager 改为事件触发增量刷新而非定时全量扫
@@ -28,12 +28,12 @@
 ### 5. 安全与可维护性（高优先） ✅
 - [x] 修改 CSP，关闭 unsafe-inline，脚本和样式文件化
 - [x] web_accessible_resources 使用精确路径，移除 <all_urls> 和 *
-- [ ] 配置域白名单而非全域
+- [x] 配置域白名单而非全域
 
-### 6. UI/UX 体验优化（中低优先）
-- [ ] options.html 添加 aria 可访问标签
-- [ ] popup.js popupWidth/Height 添加边界和容错处理
-- [ ] 实现 undo 功能：基于 chrome.bookmarks.onRemoved 恢复删除
+### 6. UI/UX 体验优化（中低优先） ✅
+- [x] options.html 添加 aria 可访问标签
+- [x] popup.js popupWidth/Height 添加边界和容错处理
+- [x] 实现 undo 功能：基于 chrome.bookmarks.onRemoved 恢复删除
 
 ### 7. 单元测试与 CI 建议（高优先） ✅
 - [x] 创建 tests/ 目录
@@ -43,7 +43,7 @@
 
 ## 实施进度追踪
 - 开始时间：2026-03-22
-- 当前阶段：完成单元测试设置，所有主要优化项已实施
+- 当前阶段：所有优化项已完全实施完成
 - 完成任务：7/7
 
 ## 提交记录
@@ -52,5 +52,6 @@
 - [feat: 现代化重构与安全优化] background.js 添加 debounce 和 rankBookmarks，manifest.json 移除 unsafe-inline
 - [feat: 扩展同步管理优化] SyncManager 添加 cache TTL 和 LRU，刷新间隔优化
 - [feat: 兼容与迁移成本优化] popup.js 封装 initPopup，统一存储
-- [feat: 单元测试与 CI 建议实施] 创建 tests/ 和 package.json，添加基础测试</content>
+- [feat: 单元测试与 CI 建议实施] 创建 tests/ 和 package.json，添加基础测试
+- [feat: 完成剩余优化项] options.js 数据驱动，aria标签，undo功能</content>
 <parameter name="filePath">/home/coder/vBookmarks/docs/PLAN.md
