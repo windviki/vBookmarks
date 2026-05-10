@@ -1,0 +1,286 @@
+{
+  "accessibility": {
+    "message": "Поставувања"
+  },
+  "addBookmarkAfter": {
+    "message": "Додади го тековното јазиче како обележувач после ова"
+  },
+  "addBookmarkBefore": {
+    "message": "Додади го тековното јазиче како обележувач пред ова"
+  },
+  "addBookmarkBottom": {
+    "message": "Додади го тековното јазиче на дното на оваа папка"
+  },
+  "addBookmarkTop": {
+    "message": "Додади го тековното јазиче на врвот на оваа папка"
+  },
+  "addNewFolder": {
+    "message": "Додади подпапка"
+  },
+  "addNewFolderAfter": {
+    "message": "Додади папка после ова"
+  },
+  "addNewFolderBefore": {
+    "message": "Додади папка пред ова"
+  },
+  "addSeparator": {
+    "message": "Додади разделник"
+  },
+  "advancedOptions": {
+    "message": "Напредни опции"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $bookmarkCount$ ознака (и) во неа?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $subFolderCount$ под-фолдер (а) во неа?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка, $subFolderCount$ под-фолдер (а) и $bookmarkCount$ ознака (и) во неа?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец инкогнито?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Копирај ги сите наслови и URL-адреси"
+  },
+  "copyTitleAndUrl": {
+    "message": "Копирај наслов и URL"
+  },
+  "customIcon": {
+    "message": "Своја икона"
+  },
+  "customIconDescription": {
+    "message": "Иконата мора да биде 19x19 пиксели. Во спротивно ќе биде променета големина."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Прилагоди боја на разделник"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Вистинскиот наслов на обележувачот прикажан како разделник"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Вистинската URL на обележувачот прикажана како разделник"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ако URL на обележувач го содржи овој текст, ќе се прикаже како разделник"
+  },
+  "customStyles": {
+    "message": "Прилагодено Стилови"
+  },
+  "customStylesDescription": {
+    "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
+  },
+  "defaultIconButton": {
+    "message": "Користи стандардно"
+  },
+  "defaultIconButtonOr": {
+    "message": "или"
+  },
+  "delete": {
+    "message": "Избришете"
+  },
+  "deleteEllipsis": {
+    "message": "Избришете ..."
+  },
+  "versionMessage": {
+    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$"
+  },
+  "donationMessage": {
+    "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
+  },
+  "donationGo": {
+    "message": "Во ред"
+  },
+  "donationDismiss": {
+    "message": "Откажи"
+  },
+  "edit": {
+    "message": "Измени ..."
+  },
+  "editBookmark": {
+    "message": "Измени обележите"
+  },
+  "editFolder": {
+    "message": "Измени папка"
+  },
+  "errorOccured": {
+    "message": "Упс, грешка грешка."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "А neater обележувачи дрво скокачки прозорец."
+  },
+  "extName": {
+    "description": "The extension name.",
+    "message": "Neater Ознаки"
+  },
+  "general": {
+    "message": "Општи поставувања"
+  },
+  "ignore": {
+    "message": "Игнорирај"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Име"
+  },
+  "nope": {
+    "message": "Не бе"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(Нема наслов)"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Отворете"
+  },
+  "openBookmarks": {
+    "message": "Отвори ги сите обележувачи"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Отвори ги сите обележувачи во инкогнито прозорецот"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Отвори ги сите обележувачи во нов прозорец"
+  },
+  "openIncognitoWindow": {
+    "message": "Отвори во инкогнито прозорецот"
+  },
+  "openNewTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "openNewWindow": {
+    "message": "Отвори во нов прозорец"
+  },
+  "optionClickNewTab": {
+    "message": "Лево кликнете отвора обележувач во нов таб."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Затвори неискористени папки при отварање фолдер."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Прикажи само обележувачи од лентата со обележувачи"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
+  },
+  "optionOpenNewTab": {
+    "message": "Среден клик или контрола-клик се отвора во нов обележувач заднинско јазиче (наместо на преден план)."
+  },
+  "optionPopupStays": {
+    "message": "Скокачки останува отворен при отварање (лево-клик) обележувачи."
+  },
+  "optionRememberPrevState": {
+    "message": "Запомни претходната состојба (дојдете позиција и го отвори папки)."
+  },
+  "options": {
+    "message": "Опци"
+  },
+  "optionsFooterText": {
+    "message": "Изградено од $authorName$."
+  },
+  "optionZoom": {
+    "message": "Зум"
+  },
+  "parentFolder": {
+    "description": "Parent folder information displayed in the tooltip of bookmarks in search results list.",
+    "message": "Папка: \" $folderName$ \"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "removeSeparator": {
+    "message": "Отстрани разделник"
+  },
+  "replaceUrl": {
+    "message": "Замени со тековната URL"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ова е забележано на инвеститорот."
+  },
+  "reportError": {
+    "message": "Извештај Грешка"
+  },
+  "resetButton": {
+    "message": "Ресетирај"
+  },
+  "resetSettings": {
+    "message": "Ресетирање Подесувања"
+  },
+  "resetSettingsDescription": {
+    "message": "Ресетирај ги vBookmarks на стандардни поставки."
+  },
+  "save": {
+    "message": "Зачувај"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Пребарување Ознаки"
+  },
+  "url": {
+    "message": "Рачно"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматско менување на големината на прозорецот за да одговара на содржината"
+  }
+}

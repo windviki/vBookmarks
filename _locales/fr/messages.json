@@ -107,14 +107,14 @@
   "customSeparatorColorDescription": {
     "message": "Personnaliser la couleur du séparateur"
   },
-  "customSeparatorStringDescription": {
-    "message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
-  },
   "customSeparatorTitleDescription": {
     "message": "Le vrai titre du favoris s'affiche comme séparateur"
   },
   "customSeparatorUrlDescription": {
     "message": "L'URL réelle du favoris s'affiche comme séparateur"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
   },
   "customStyles": {
     "message": "Styles personnalisés"
@@ -184,12 +184,12 @@
     "description": "Nom du favoris ou du dossier.",
     "message": "Nom"
   },
+  "nope": {
+    "message": "Non"
+  },
   "noTitle": {
     "description": "Titre des favoris sans titre sans URL http (s) ou dossiers sans titre.",
     "message": "(Sans titre)"
-  },
-  "nope": {
-    "message": "Non"
   },
   "open": {
     "description": "Action pour ouvrir les favoris.",
@@ -237,9 +237,6 @@
   "optionRememberPrevState": {
     "message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
   },
-  "optionZoom": {
-    "message": "Zoom"
-  },
   "options": {
     "message": "Options"
   },
@@ -251,6 +248,9 @@
         "content": "$1"
       }
     }
+  },
+  "optionZoom": {
+    "message": "Zoom"
   },
   "parentFolder": {
     "description": "Dossier parent affiché dans l'info-bulle des favoris dans la liste des résultats de la recherche.",
@@ -268,12 +268,12 @@
   "replaceUrl": {
     "message": "Remplacer par l'URL actuelle"
   },
-  "reportError": {
-    "message": "Signaler une erreur"
-  },
   "reportedToDeveloper": {
     "description": "Un message pour une erreur produite dans l'extension, a été signalé au développeur.",
     "message": "Cela a été signalé au développeur."
+  },
+  "reportError": {
+    "message": "Signaler une erreur"
   },
   "resetButton": {
     "message": "Réinitialiser"
@@ -293,5 +293,8 @@
   },
   "url": {
     "message": "URL"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionner automatiquement la fenêtre popup pour adapter le contenu"
   }
 }

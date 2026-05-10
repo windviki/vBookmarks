@@ -293,5 +293,8 @@
   },
   "url": {
     "message": "URL"
+  },
+  "optionAutoResizePopup": {
+    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
   }
 }

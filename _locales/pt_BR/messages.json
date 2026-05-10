@@ -1,0 +1,283 @@
+{
+  "accessibility": {
+    "message": "Configurações de Acessibilidade"
+  },
+  "addBookmarkAfter": {
+    "message": "Adicionar aba atual como favorito depois deste"
+  },
+  "addBookmarkBefore": {
+    "message": "Adicionar aba atual como favorito antes deste"
+  },
+  "addBookmarkBottom": {
+    "message": "Adicionar aba atual ao final desta pasta"
+  },
+  "addBookmarkTop": {
+    "message": "Adicionar aba atual ao topo desta pasta"
+  },
+  "addNewFolder": {
+    "message": "Adicionar subpasta"
+  },
+  "addNewFolderAfter": {
+    "message": "Adicionar pasta depois deste"
+  },
+  "addNewFolderBefore": {
+    "message": "Adicionar pasta antes deste"
+  },
+  "addSeparator": {
+    "message": "Adicionar separador"
+  },
+  "advancedOptions": {
+    "message": "Opções avançadas"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "bookmarkCount": {
+        "content": "$2"
+      }
+    },
+    "message": "Você tem certeza que quer apagar a pasta $folderName$ e $bookmarkCount$ favorito(s) incluído(s)?"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Você tem certeza que quer apagar a pasta $folderName$ e $subFolderCount$ sub-pasta(s) incluída(s)?"
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "placeholders": {
+      "subFolderCount": {
+        "content": "$2"
+      },
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    },
+    "message": "Você tem certeza que quer apagar a pasta $folderName$, $subFolderCount$ sub-pasta(s) e $bookmarkCount$ favorito(s) incluído(s)?"
+  },
+  "confirmOpenBookmarks": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os favoritos.",
+    "message": "Você tem certeza que quer abrir todos os $count$ favoritos?"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os favoritos em uma nova janela anônima.",
+    "message": "Você tem certeza que quer abrir todos os $count$ favoritos em uma nova janela anônima?"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Mensagem de confirmação para abertura de todos os favoritos em uma nova janela.",
+    "message": "Você tem certeza que quer abrir todos os $count$ favoritos em uma nova janela?"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copiar todos os títulos e URLs"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copiar título e URL"
+  },
+  "customIcon": {
+    "message": "Ícone personalizado"
+  },
+  "customIconDescription": {
+    "message": "O ícone deve ter dimensão de 19x19 pixels. Caso contrário, será redimensionado."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizar cor do separador"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "O título real do favorito exibido como separador"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "A URL real do favorito exibido como separador"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Se a URL de um favorito contiver este texto, será exibido como separador"
+  },
+  "customStyles": {
+    "message": "Estilos personalizados"
+  },
+  "customStylesDescription": {
+    "message": "Requer conhecimento de CSS. Modifique por sua conta e risco."
+  },
+  "defaultIconButton": {
+    "message": "Usar padrão"
+  },
+  "defaultIconButtonOr": {
+    "message": "ou"
+  },
+  "delete": {
+    "message": "Apagar"
+  },
+  "deleteEllipsis": {
+    "message": "Apagar..."
+  },
+  "versionMessage": {
+    "message": "Este é o novo VBM $versionNumber$! Veja as novidades: $versionTips$"
+  },
+  "donationMessage": {
+    "message": "Se você gosta, considere doar para o desenvolvimento futuro. Qualquer valor é bem-vindo."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "donationDismiss": {
+    "message": "Fechar"
+  },
+  "edit": {
+    "message": "Editar..."
+  },
+  "editBookmark": {
+    "message": "Editar favorito"
+  },
+  "editFolder": {
+    "message": "Editar pasta"
+  },
+  "errorOccured": {
+    "message": "Oops, ocorreu um erro."
+  },
+  "extDesc": {
+    "message": "Um gerenciador de favoritos popup. Enhanced Neat Bookmarks."
+  },
+  "extName": {
+    "message": "vBookmarks"
+  },
+  "general": {
+    "message": "Definições Gerais"
+  },
+  "ignore": {
+    "message": "Ignorar"
+  },
+  "name": {
+    "description": "Nome do favorito ou pasta.",
+    "message": "Nome"
+  },
+  "nope": {
+    "message": "Nãaoo"
+  },
+  "noTitle": {
+    "description": "Título para favoritos sem título e sem URL http(s) ou pastas sem título.",
+    "message": "(sem título)"
+  },
+  "open": {
+    "description": "Ação para abrir favoritos",
+    "message": "Abrir"
+  },
+  "openBookmarks": {
+    "message": "Abrir todos os favoritos"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Abrir todos os favoritos em uma janela anônima"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Abrir todos os favoritos em uma nova janela"
+  },
+  "openIncognitoWindow": {
+    "message": "Abrir em uma janela anônima"
+  },
+  "openNewTab": {
+    "message": "Abrir em uma nova guia"
+  },
+  "openNewWindow": {
+    "message": "Abrir em uma nova janela"
+  },
+  "optionClickNewTab": {
+    "message": "Clique com o botão esquerdo do mouse abre favorito em uma nova guia"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Fechar pastas não utilizadas quando abrir uma nova pasta."
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostrar confirmação quando abrir vários favoritos de uma pasta."
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Mostrar apenas favoritos da barra de favoritos"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Pesquisar favoritos apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
+  },
+  "optionOpenNewTab": {
+    "message": "Clique com o botão do meio do mouse ou control-clique abre o favorito em um nova guia em 2º plano (em vez de 1º plano)."
+  },
+  "optionPopupStays": {
+    "message": "O pop-up continua aberto quando abrir um favorito (clicando com o botão esquerdo) ."
+  },
+  "optionRememberPrevState": {
+    "message": "Lembrar do estado anterior (posição e pastas abertas)."
+  },
+  "options": {
+    "message": "Opções"
+  },
+  "optionsFooterText": {
+    "message": "Criado por $authorName$."
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "parentFolder": {
+    "placeholders": {
+      "folderName": {
+        "example": "Barra de favoritos",
+        "content": "$1"
+      }
+    },
+    "description": "Informação da pasta principal mostrada em dicas dos marcadores nas listas dos resultados das pesquisas.",
+    "message": "Pasta principal: \"$folderName$\""
+  },
+  "removeSeparator": {
+    "message": "Remover separador"
+  },
+  "replaceUrl": {
+    "message": "Substituir pela URL atual"
+  },
+  "reportedToDeveloper": {
+    "message": "Isso foi relatado ao desenvolvedor."
+  },
+  "reportError": {
+    "message": "Reportar erro"
+  },
+  "resetButton": {
+    "message": "Redefinir"
+  },
+  "resetSettings": {
+    "message": "Redefinir configurações"
+  },
+  "resetSettingsDescription": {
+    "message": "Redefinir vBookmarks para as configurações padrão."
+  },
+  "save": {
+    "message": "Salvar"
+  },
+  "searchBookmarks": {
+    "description": "Texto contido no campo de pesquisa.",
+    "message": "Procurar favoritos"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
+  }
+}

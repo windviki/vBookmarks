@@ -101,7 +101,7 @@
   "customIcon": {
     "message": "Icona personalizzata"
   },
-  "customIconText": {
+  "customIconDescription": {
     "message": "L'icona deve avere una risoluzione di 19×19, altrimenti verrà ridimensionata."
   },
   "customSeparatorColorDescription": {
@@ -195,11 +195,11 @@
     "description": "Azione per aprire i preferiti.",
     "message": "Apri"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Apri tutti i preferiti in una finestra di navigazione in incognito"
-  },
   "openBookmarks": {
     "message": "Apri tutti i preferiti"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Apri tutti i preferiti in una finestra di navigazione in incognito"
   },
   "openBookmarksNewWindow": {
     "message": "Apri tutti i preferiti in un'altra finestra"
@@ -293,5 +293,8 @@
   },
   "url": {
     "message": "Indirizzo Web"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ridimensiona automaticamente la finestra popup per adattarla al contenuto"
   }
 }

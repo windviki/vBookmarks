@@ -131,6 +131,9 @@
   "delete": {
     "message": "删除"
   },
+  "deleteEllipsis": {
+    "message": "删除 ..."
+  },
   "versionMessage": {
     "message": "欢迎使用新版本 $versionNumber$！更新记录：$versionTips$",
     "placeholders": {
@@ -150,9 +153,6 @@
   },
   "donationDismiss": {
     "message": "关闭"
-  },
-  "deleteEllipsis": {
-    "message": "删除 ..."
   },
   "edit": {
     "message": "编辑 ..."
@@ -293,5 +293,8 @@
   },
   "url": {
     "message": "网址"
+  },
+  "optionAutoResizePopup": {
+    "message": "自动调整弹出窗口大小以适应内容"
   }
 }
