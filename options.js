@@ -56,6 +56,12 @@
             localStorage.searchAfterEnter = searchAfterEnter.checked ? '1' : '';
         });
 
+        const autoResizePopup = $('auto-resize-popup');
+        autoResizePopup.checked = localStorage.autoResizePopup !== 'false';
+        autoResizePopup.addEventListener('change', () => {
+            localStorage.autoResizePopup = autoResizePopup.checked ? 'true' : 'false';
+        });
+
         const zoom = $('zoom-input');
         setInterval(() => {
             zoom.value = localStorage.zoom || 100;
@@ -87,6 +93,7 @@
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
+        document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';

@@ -293,5 +293,8 @@
   },
   "url": {
     "message": "URL"
+  },
+  "optionAutoResizePopup": {
+    "message": "Auto-resize popup window to fit content"
   }
 }
