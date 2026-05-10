@@ -135,7 +135,15 @@
     "message": "Apagar..."
   },
   "versionMessage": {
-    "message": "Este é o novo VBM $versionNumber$! Veja as novidades: $versionTips$"
+    "message": "Este é o novo VBM $versionNumber$! Veja as novidades: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "donationMessage": {
     "message": "Se você gosta, considere doar para o desenvolvimento futuro. Qualquer valor é bem-vindo."
@@ -231,7 +239,12 @@
     "message": "Opções"
   },
   "optionsFooterText": {
-    "message": "Criado por $authorName$."
+    "message": "Criado por $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
   "optionZoom": {
     "message": "Zoom"

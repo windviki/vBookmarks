@@ -135,6 +135,14 @@ def main():
                 new_data[key] = {'message': f'[TODO:{key}]'}
                 missing.append(key)
 
+        # Preserve placeholders from en baseline (required for $variable$ substitution)
+        for key in en_keys:
+            if key in en_data and 'placeholders' in en_data[key]:
+                if key in new_data:
+                    new_data[key]['placeholders'] = en_data[key]['placeholders']
+                if key in new_data and 'description' in en_data[key]:
+                    new_data[key]['description'] = en_data[key]['description']
+
         save_json(filepath, new_data)
 
         source = args.branch if (args.branch and cc_dev) else 'existing'

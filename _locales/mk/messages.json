@@ -135,7 +135,15 @@
     "message": "Избришете ..."
   },
   "versionMessage": {
-    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$"
+    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "donationMessage": {
     "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
@@ -233,7 +241,12 @@
     "message": "Опци"
   },
   "optionsFooterText": {
-    "message": "Изградено од $authorName$."
+    "message": "Изградено од $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
   "optionZoom": {
     "message": "Зум"
