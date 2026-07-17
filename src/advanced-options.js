@@ -84,13 +84,13 @@
         });
 
         const customSeparatorUrl = $('custom-separator-url');
-        if (store.get('separatorUrl')) {
-            customSeparatorUrl.value = store.get('separatorUrl');
+        if (store.get('separatorURL')) {
+            customSeparatorUrl.value = store.get('separatorURL');
         } else {
             customSeparatorUrl.value = 'http://separatethis.com/';
         }
         customSeparatorUrl.addEventListener('change', () => {
-            store.set('separatorUrl', customSeparatorUrl.value);
+            store.set('separatorURL', customSeparatorUrl.value);
         });
 
         const customSeparatorString = $('custom-separator-string');

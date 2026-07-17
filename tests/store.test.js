@@ -296,4 +296,57 @@ describe('store.js', () => {
             expect(sb.window.store.getSyncSetting('showSyncStatus')).toBeUndefined();
         });
     });
+
+    describe('separatorUrl key merge (v2)', () => {
+        it('renames legacy chrome.storage separatorUrl to separatorURL and drops the stale key', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { separatorUrl: 'http://legacy.test/', __migrated_v1: '1' }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.window.store.get('separatorURL')).toBe('http://legacy.test/');
+            expect(sb.window.store.get('separatorUrl')).toBeUndefined();
+            expect(sb.localData.separatorURL).toBe('http://legacy.test/');
+            expect('separatorUrl' in sb.localData).toBe(false);
+        });
+
+        it('canonical separatorURL wins when both spellings exist', async () => {
+            const sb = createSandbox({
+                chromeLocalData: {
+                    separatorURL: 'http://canonical.test/',
+                    separatorUrl: 'http://legacy.test/',
+                    __migrated_v1: '1'
+                }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.window.store.get('separatorURL')).toBe('http://canonical.test/');
+            expect(sb.localData.separatorURL).toBe('http://canonical.test/');
+            expect('separatorUrl' in sb.localData).toBe(false);
+        });
+
+        it('merges a localStorage-only legacy value and removes it there too', async () => {
+            const sb = createSandbox({
+                localStorageData: { separatorUrl: 'http://ls.test/' }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.window.store.get('separatorURL')).toBe('http://ls.test/');
+            expect(sb.localData.separatorURL).toBe('http://ls.test/');
+            expect(sb.lsData.has('separatorUrl')).toBe(false);
+        });
+
+        it('is idempotent: a second init against the merged profile writes nothing', async () => {
+            const first = createSandbox({
+                chromeLocalData: { separatorUrl: 'http://legacy.test/', __migrated_v1: '1' }
+            });
+            await first.window.store.ready;
+            expect(first.localSetCalls.some(c => 'separatorURL' in c)).toBe(true);
+
+            const second = createSandbox({ chromeLocalData: first.localData });
+            await second.window.store.ready;
+            expect(second.localSetCalls).toHaveLength(0);
+            expect(second.window.store.get('separatorURL')).toBe('http://legacy.test/');
+        });
+    });
 });

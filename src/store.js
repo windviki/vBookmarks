@@ -37,8 +37,9 @@
 
     // Known extension keys formerly kept in localStorage (enumerated from
     // neat.js and advanced-options.js). Used for the mirror pre-fill and the
-    // v1 migration. Note: 'separatorURL' (neat.js) and 'separatorUrl'
-    // (advanced-options.js) are two distinct historical keys.
+    // v1 migration. Note: 'separatorUrl' was the legacy advanced-options
+    // spelling; the v2 merge below renames it to the canonical 'separatorURL'
+    // (read by separators.js), so both spellings stay listed here.
     const KNOWN_KEYS = [
         // popup state
         'opens', 'popupHeight', 'popupWidth', 'zoom', 'searchQuery', 'scrollTop', 'focusID',
@@ -215,6 +216,19 @@
                 for (const key in toMigrate) {
                     mirror[key] = toMigrate[key];
                 }
+            }
+            // 3. v2 key merge (idempotent, runs on every load): the legacy
+            // 'separatorUrl' spelling (advanced-options) is renamed to the
+            // canonical 'separatorURL' (read by separators.js). The canonical
+            // key always wins; the stale key is removed from every store.
+            if (mirror.separatorUrl !== undefined && mirror.separatorUrl !== null) {
+                if (mirror.separatorURL === undefined || mirror.separatorURL === null) {
+                    mirror.separatorURL = mirror.separatorUrl;
+                    await chrome.storage.local.set({ separatorURL: mirror.separatorUrl });
+                }
+                delete mirror.separatorUrl;
+                await chrome.storage.local.remove('separatorUrl');
+                localStorage.removeItem('separatorUrl');
             }
             // 1c. Load the sync area into its own mirror
             try {
