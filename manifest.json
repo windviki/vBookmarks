@@ -50,7 +50,8 @@
         "favicon",
         "storage",
         "scripting",
-        "sidePanel"
+        "sidePanel",
+        "contextMenus"
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],

@@ -6,7 +6,7 @@
     <div id="clipboardcopier" style="width: 0; height: 0;">
         <textarea id="copier-input" value=""></textarea>
     </div>
-    <div id="search" role="search"><input id="search-input" type="search" results="0" autofocus></div>
+    <div id="search" role="search"><input id="search-input" type="search" results="0" autofocus><button id="quick-add-btn" type="button"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button><span id="quick-add-toast" role="status"></span></div>
       <div id="donation" style="display: none;">
         <li>
             <div id="information-text">
@@ -61,6 +61,8 @@
     <hr id="folder-context-menu-sep6">
     <div id="folder-edit" class="menu-item" tabindex="-1"></div>
     <div id="folder-delete" class="menu-item" tabindex="-1"></div>
+    <hr id="folder-context-menu-sep7">
+    <div id="sort-folder-contents" class="menu-item" tabindex="-1"></div>
     <!--<hr>
 	<command id="copy-all-titles-and-urls" tabindex="-1">-->
 </menu>
@@ -101,9 +103,24 @@
         </div>
     </form>
 </div>
+<div id="sort-dialog" class="dialog" role="dialog">
+    <p id="sort-dialog-text" class="dialog-text"></p>
+    <div id="sort-dialog-options">
+        <label><input type="radio" name="sort-by" id="sort-by-title" value="title" checked> <span id="sort-by-title-label"></span></label>
+        <label><input type="radio" name="sort-by" id="sort-by-date" value="dateAdded"> <span id="sort-by-date-label"></span></label>
+        <label><input type="checkbox" id="sort-folders-first" checked> <span id="sort-folders-first-label"></span></label>
+        <label><input type="checkbox" id="sort-recursive"> <span id="sort-recursive-label"></span></label>
+        <p id="sort-recursive-warning" hidden></p>
+    </div>
+    <div class="buttons">
+        <button id="sort-dialog-ok-button" type="button"></button>
+        <button id="sort-dialog-cancel-button" type="button"></button>
+    </div>
+</div>
 <script src="neatools.js"></script>
 <script src="store.js"></script>
 <script src="popup.js"></script>
 <script src="sync-manager.js"></script>
 <script src="fuzzy.js"></script>
+<script src="sort-utils.js"></script>
 <script src="neat.js"></script>

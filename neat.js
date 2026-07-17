@@ -338,6 +338,7 @@
     $('edit-dialog-name').placeholder = _m('name');
     $('edit-dialog-url').placeholder = _m('url');
     $('new-folder-dialog-name').placeholder = _m('name');
+    $('quick-add-btn').title = _m('quickAddBookmark');
     $each({
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
@@ -366,10 +367,19 @@
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
         'folder-delete': 'deleteEllipsis',
+        'sort-folder-contents': 'sortFolderContents',
+        'sort-dialog-text': 'sortFolderContents',
+        'sort-by-title-label': 'sortByTitle',
+        'sort-by-date-label': 'sortByDateAdded',
+        'sort-folders-first-label': 'sortFoldersFirst',
+        'sort-recursive-label': 'sortRecursive',
+        'sort-recursive-warning': 'sortRecursiveWarning',
         'edit-dialog-button': 'save',
         'edit-dialog-cancel-button': 'nope',
         'new-folder-dialog-button': 'save',
-        'new-folder-dialog-cancel-button': 'nope'
+        'new-folder-dialog-cancel-button': 'nope',
+        'sort-dialog-ok-button': 'save',
+        'sort-dialog-cancel-button': 'nope'
     }, (msg, id) => {
         const el = $(id);
         const m = _m(msg);
@@ -754,6 +764,51 @@
         });
     };
 
+    // Phase 3 (issue #34): virtual "recently added" section pinned to the top
+    // of the tree. Entries come from chrome.bookmarks.getRecent and are real
+    // bookmarks, so opening, the context menu and Delete all operate on the
+    // real bookmark id (matching Chrome's bookmark manager). To avoid
+    // duplicate element ids with the real tree items below, the <li> uses a
+    // 'neat-recent-item-' id prefix; the anchors carry data-virtual="1" so
+    // drag-and-drop rejects them as drag sources and drop targets.
+    const RECENT_BOOKMARKS_COUNT = 20;
+    const recentBookmarksEnabled = () => !!store.get('showRecentBookmarks', '1');
+    const generateRecentSectionHTML = () => {
+        if (!recentBookmarksEnabled())
+            return '';
+        const header = _m('recentBookmarks').htmlspecialchars();
+        return `<div id="recent-section"><div id="recent-header">${header}</div><ul id="recent-list" role="group"></ul></div>`;
+    };
+    const refreshRecentSection = () => {
+        const list = $('recent-list');
+        if (!list)
+            return;
+        chrome.bookmarks.getRecent(RECENT_BOOKMARKS_COUNT, items => {
+            let html = '';
+            for (let i = 0, l = items.length; i < l; i++) {
+                const d = items[i];
+                if (!d.url || separatorManager.isSeparator(d.title, d.url))
+                    continue;
+                html += `<li class="child" id="neat-recent-item-${d.id}" level="0" role="treeitem" data-parentid="${d.parentId}">` +
+                    generateBookmarkHTML(d.title, d.url, 'style="-webkit-padding-start: 0px" data-virtual="1"', d.id) +
+                    '</li>';
+            }
+            list.innerHTML = html;
+        });
+    };
+    // Keep the section fresh while the popup stays open; debounced so bulk
+    // imports don't make it flicker. onRemoved is covered too, otherwise a
+    // just-deleted bookmark would linger in the list.
+    let refreshRecentTimer = null;
+    const scheduleRecentRefresh = () => {
+        if (!recentBookmarksEnabled())
+            return;
+        clearTimeout(refreshRecentTimer);
+        refreshRecentTimer = setTimeout(refreshRecentSection, 300);
+    };
+    chrome.bookmarks.onCreated.addListener(scheduleRecentRefresh);
+    chrome.bookmarks.onRemoved.addListener(scheduleRecentRefresh);
+
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar) {
@@ -774,7 +829,8 @@
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         buildSearchIndex(tree);
 
-        $tree.innerHTML = html;
+        $tree.innerHTML = generateRecentSectionHTML() + html;
+        refreshRecentSection();
 
         // Refresh sync indicators after tree is generated
         if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
@@ -1378,6 +1434,69 @@
     };
     // ++++++++ end ++++++++
 
+    // Phase 3 (issue #33): sort a folder's children by title or date added.
+    const SortDialog = {
+        open: folderId => {
+            SortDialog.folderId = folderId;
+            // reset to the defaults every time
+            $('sort-by-title').checked = true;
+            $('sort-folders-first').checked = true;
+            $('sort-recursive').checked = false;
+            $('sort-recursive-warning').hidden = true;
+            body.addClass('needSort');
+            $('sort-dialog-ok-button').focus();
+        },
+        close: () => {
+            body.removeClass('needSort');
+            SortDialog.folderId = null;
+        },
+        folderId: null
+    };
+    $('sort-recursive').addEventListener('change', () => {
+        $('sort-recursive-warning').hidden = !$('sort-recursive').checked;
+    });
+    $('sort-dialog-cancel-button').addEventListener('click', () => {
+        SortDialog.close();
+    });
+    $('sort-dialog-ok-button').addEventListener('click', () => {
+        const folderId = SortDialog.folderId;
+        SortDialog.close();
+        if (!folderId)
+            return;
+        sortFolderContents(folderId, {
+            by: $('sort-by-date').checked ? 'dateAdded' : 'title',
+            foldersFirst: $('sort-folders-first').checked,
+            recursive: $('sort-recursive').checked
+        });
+    });
+
+    // Reorder the children of folderId with serial bookmarks.move calls, then
+    // rebuild the tree (the opens memory restores the expanded state).
+    const sortFolderContents = (folderId, opts) => {
+        chrome.bookmarks.getSubTree(folderId, nodes => {
+            if (!nodes || !nodes.length)
+                return;
+            const sorted = window.VBMSort.sortNodes(nodes[0].children || [], opts);
+            // Moving every node to its target index in ascending order leaves
+            // the parent sorted, because positions before i are already final.
+            const moveAll = list => list.reduce((chain, node, i) =>
+                chain.then(() => new Promise(resolve => {
+                    chrome.bookmarks.move(node.id, { index: i }, () => resolve());
+                })), Promise.resolve());
+            const applyLevel = list => moveAll(list).then(() => {
+                if (!opts.recursive)
+                    return Promise.resolve();
+                return list.reduce((chain, node) =>
+                    (node.children && node.children.length) ?
+                        chain.then(() => applyLevel(node.children)) : chain,
+                    Promise.resolve());
+            });
+            applyLevel(sorted).then(() => {
+                chrome.bookmarks.getTree(generateTree);
+            });
+        });
+    };
+
     // Events for dialogs
     $('confirm-dialog-button-1').addEventListener('click', () => {
         ConfirmDialog.fn1();
@@ -1877,7 +1996,7 @@
                 // switch to tree
                 quitSearchMode();
                 // get folder id (el parent is li)
-                const id = el.parentNode.id.replace(/(neat-tree|results)-item-/, '');
+                const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 // all parent folder ids
                 // set them as opened folders
                 opens = getParentPath(id, nodeTrees);
@@ -1943,6 +2062,79 @@
     $('new-version-text').addEventListener('click', () => {
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks#changelogs", true, true);
     });
+
+    // Phase 3 (issue #30): quick-add star button — one click bookmarks the
+    // current tab; when the page is already bookmarked the star is solid and
+    // clicking opens the edit dialog for the existing bookmark.
+    const quickAddBtn = $('quick-add-btn');
+    const quickAddToast = $('quick-add-toast');
+    let quickAddToastTimer = null;
+    const showQuickAddToast = () => {
+        quickAddToast.textContent = _m('quickAdded');
+        quickAddToast.addClass('show');
+        clearTimeout(quickAddToastTimer);
+        quickAddToastTimer = setTimeout(() => {
+            quickAddToast.removeClass('show');
+        }, 1500);
+    };
+    const withCurrentTabBookmark = callback => {
+        chrome.tabs.query({
+            'active': true,
+            'windowId': chrome.windows.WINDOW_ID_CURRENT
+        }, tabs => {
+            const tab = tabs[0];
+            if (!tab || !tab.url) {
+                callback(null, null);
+                return;
+            }
+            chrome.bookmarks.search({ url: tab.url }, results => {
+                callback(tab, (results && results.length) ? results[0] : null);
+            });
+        });
+    };
+    const refreshQuickAddState = () => {
+        withCurrentTabBookmark((tab, bookmark) => {
+            // neatools' toggleClass forwards no `force` flag, so branch explicitly
+            if (bookmark) {
+                quickAddBtn.addClass('starred');
+            } else {
+                quickAddBtn.removeClass('starred');
+            }
+        });
+    };
+    const quickAddCurrentTab = () => {
+        withCurrentTabBookmark((tab, bookmark) => {
+            if (!tab)
+                return;
+            if (bookmark) { // already bookmarked: edit the existing one
+                actions.editBookmarkFolder(bookmark.id);
+            } else {
+                chrome.bookmarks.create({
+                    title: tab.title || tab.url,
+                    url: tab.url,
+                    parentId: store.get('quickAddFolderId', '1')
+                }, () => {
+                    quickAddBtn.addClass('starred');
+                    showQuickAddToast();
+                });
+            }
+        });
+    };
+    quickAddBtn.addEventListener('click', quickAddCurrentTab);
+    refreshQuickAddState();
+    // Ctrl/Cmd+D inside the popup does the same. Capture phase + stopPropagation
+    // so the tree's type-ahead never sees the 'd'; skip while a dialog is open.
+    document.addEventListener('keydown', e => {
+        if (!(e.metaKey || e.ctrlKey) || (e.key !== 'd' && e.key !== 'D'))
+            return;
+        if (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
+            body.hasClass('needAlert') || body.hasClass('needInputName') ||
+            body.hasClass('needSort'))
+            return;
+        e.preventDefault();
+        e.stopPropagation();
+        quickAddCurrentTab();
+    }, true);
 
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', e => {
@@ -2016,6 +2208,13 @@
             }
         } else if (el.tagName === 'SPAN') {
             menu = $folderContextMenu;
+            // Sorting applies to a folder's contents, never to the root
+            // folders themselves (issue #33 excludes the bookmarks bar root)
+            if (el.parentNode.dataset.parentid === '0') {
+                menu.addClass('hide-sort');
+            } else {
+                menu.removeClass('hide-sort');
+            }
         } else {
         }
         if (menu) {
@@ -2060,7 +2259,7 @@
             return;
         const url = currentContext.href;
         const li = currentContext.parentNode;
-        const id = li.id.replace(/(neat-tree|results)-item-/, '');
+        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
         switch (el.id) {
             // ++++++++ modified by windviki@gmail.com ++++++++
             case 'add-bookmark-before-bookmark':
@@ -2116,13 +2315,13 @@
                 break;
             case 'bookmark-edit': {
                 const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|results)-item-/, '');
+                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 actions.editBookmarkFolder(id);
             }
                 break;
             case 'bookmark-delete': {
                 const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|results)-item-/, '');
+                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 actions.deleteBookmark(id);
             }
                 break;
@@ -2230,6 +2429,9 @@
                     break;
                 case 'folder-delete':
                     actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
+                    break;
+                case 'sort-folder-contents':
+                    SortDialog.open(id);
                     break;
             }
         });
@@ -2492,7 +2694,7 @@
             {
                 if (os === 'mac')
                     break;
-                const id = li.id.replace(/(neat-tree|results)-item-/, '');
+                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 actions.editBookmarkFolder(id);
             }
                 break;
@@ -2557,7 +2759,7 @@
         switch (e.key) {
             case "Delete": // delete
                 e.preventDefault();
-                const id = li.id.replace(/(neat-tree|results)-item-/, '');
+                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 if (li.hasClass('parent')) {
                     chrome.bookmarks.getChildren(id, children => {
                         const urlsLen = Array.map(c => c.url, children).clean().length;
@@ -2687,6 +2889,8 @@
             el = el.parentNode; //a
         }
         const elParent = el.parentNode; //li
+        if (el.dataset && el.dataset.virtual) // recent-section entries can't be dragged
+            return;
         // can move any bookmarks/folders except the default root folders
         if ((el.tagName === 'A' && elParent.hasClass('child')) ||
             (el.tagName === 'SPAN' && elParent.hasClass('parent') && !isDOMElementRootFolder(elParent))) {
@@ -2772,6 +2976,14 @@
         clientY /= zoomLevel;
         if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
+        }
+        if (el.dataset && el.dataset.virtual) {
+            // recent-section entries are not valid drop targets
+            canDrop = false;
+            bookmarkClone.style.top = `${clientY}px`;
+            bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;
+            dropOverlay.style.left = '-999px';
+            return;
         }
         if (el.tagName === 'A' /* || el.tagName === 'HR'*/) {
             canDrop = true;
@@ -3081,13 +3293,16 @@
             EditDialog.close(false);
         if (body.hasClass('needInputName'))
             NewFolderDialog.close(false);
+        if (body.hasClass('needSort'))
+            SortDialog.close();
         if (body.hasClass('needAlert'))
             AlertDialog.close();
     };
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             if (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
-                body.hasClass('needAlert') || body.hasClass('needInputName')) { // esc
+                body.hasClass('needAlert') || body.hasClass('needInputName') ||
+                body.hasClass('needSort')) { // esc
                 e.preventDefault();
                 closeDialogs();
             } else {

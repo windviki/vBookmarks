@@ -33,6 +33,7 @@
             { id: 'confirm-open-folder', key: 'dontConfirmOpenFolder', defaultValue: '', inverted: true },
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
+            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
@@ -139,6 +140,7 @@
         document.getElementById('option-confirm-open-folder').innerText = __m('optionConfirmOpenFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
+        document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');

@@ -22,5 +22,38 @@
   },
   "openSidePanelCommand": {
     "message": "打开 vBookmarks 侧栏"
+  },
+  "recentBookmarks": {
+    "message": "最近添加"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "在弹窗顶部显示最近添加的书签"
+  },
+  "sortFolderContents": {
+    "message": "排序文件夹内容"
+  },
+  "sortByTitle": {
+    "message": "按标题"
+  },
+  "sortByDateAdded": {
+    "message": "按添加时间（新的在前）"
+  },
+  "sortFoldersFirst": {
+    "message": "子文件夹排在前面"
+  },
+  "sortRecursive": {
+    "message": "同时排序子文件夹（递归）"
+  },
+  "sortRecursiveWarning": {
+    "message": "将重排所有子文件夹内的书签，且无法撤销。"
+  },
+  "quickAddBookmark": {
+    "message": "收藏当前页面 (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "已添加书签"
+  },
+  "contextMenuAddBookmark": {
+    "message": "用 vBookmarks 收藏此页面"
   }
 }

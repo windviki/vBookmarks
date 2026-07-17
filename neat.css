@@ -745,3 +745,123 @@ body.panel-mode #resizer-y {
     padding-bottom: 1px;
 }
 
+
+/* --- Phase 3: recent bookmarks section (issue #34) ---
+   Virtual "recently added" section pinned to the top of the tree: muted
+   small header, a 1px bottom separator, no folder icon. Entries reuse the
+   normal tree-item styles; only the section frame is defined here. */
+#recent-section {
+    border-bottom: 1px solid var(--vbm-border);
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
+
+#recent-header {
+    color: var(--vbm-muted);
+    font-size: 90%;
+    padding: 4px 8px 2px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* --- Phase 3: sort folder contents dialog (issue #33) ---
+   Reuses the shared body-class + #cover dialog pattern. */
+.needSort #cover {
+    left: 0;
+    opacity: 1;
+}
+
+.needSort #sort-dialog {
+    top: 0;
+    opacity: 1;
+}
+
+#sort-dialog .dialog-text {
+    margin: 0 0 .5em;
+    font-weight: bold;
+}
+
+#sort-dialog-options label {
+    display: block;
+    padding: 2px 0;
+}
+
+#sort-recursive-warning {
+    color: var(--vbm-danger);
+    font-size: 90%;
+    margin: 4px 0 0;
+}
+
+/* the sort item never applies to the root folders */
+menu[type=context].hide-sort #folder-context-menu-sep7,
+menu[type=context].hide-sort #sort-folder-contents {
+    display: none;
+}
+
+/* --- Phase 3: quick add bookmark star (issue #30) ---
+   Star button inside the search row; hollow = not bookmarked, solid =
+   bookmarked. The toast confirms a successful add and fades out. */
+#search {
+    display: flex;
+    align-items: center;
+}
+
+#search input {
+    flex: 1;
+    min-width: 0;
+}
+
+#quick-add-btn {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-left: 4px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+}
+
+#quick-add-btn:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-accent);
+}
+
+#quick-add-btn:focus {
+    outline: 2px solid var(--vbm-focus-ring);
+}
+
+#quick-add-btn.starred {
+    color: var(--vbm-accent);
+}
+
+#quick-add-btn.starred svg path {
+    fill: currentColor;
+}
+
+#quick-add-toast {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 2px;
+    padding: 2px 8px;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    box-shadow: 0 1px 4px var(--vbm-shadow);
+    color: var(--vbm-fg);
+    font-size: 90%;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+}
+
+#quick-add-toast.show {
+    opacity: 1;
+}

@@ -33,6 +33,7 @@ HTML_PAGES = [
 JS_FILES = [
     'background.js',
     'fuzzy.js',
+    'sort-utils.js',
     'neat.js',
     'neatools.js',
     'popup.js',

@@ -345,5 +345,41 @@
   "crossStorageMoveWarning": {
     "message": "Cannot move bookmarks between synced and local storage. Use copy/paste instead.",
     "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "recentBookmarks": {
+    "message": "Recently added",
+    "description": "Header of the virtual recent bookmarks section at the top of the popup tree."
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Show recently added bookmarks at the top of the popup"
+  },
+  "sortFolderContents": {
+    "message": "Sort Folder Contents"
+  },
+  "sortByTitle": {
+    "message": "By title"
+  },
+  "sortByDateAdded": {
+    "message": "By date added (newest first)"
+  },
+  "sortFoldersFirst": {
+    "message": "Keep folders on top"
+  },
+  "sortRecursive": {
+    "message": "Also sort subfolders (recursive)"
+  },
+  "sortRecursiveWarning": {
+    "message": "This reorders bookmarks in every subfolder and cannot be undone."
+  },
+  "quickAddBookmark": {
+    "message": "Bookmark this page (Ctrl+D)",
+    "description": "Tooltip of the quick-add star button in the popup header."
+  },
+  "quickAdded": {
+    "message": "Bookmark added"
+  },
+  "contextMenuAddBookmark": {
+    "message": "Bookmark this page with vBookmarks",
+    "description": "Page context menu item that saves the current page as a bookmark."
   }
 }
