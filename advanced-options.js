@@ -8,6 +8,8 @@
         // Wait for the storage mirror (chrome.storage.local loaded + migrated)
         store.ready.then(() => {
 
+        document.body.dataset.theme = store.get('theme', 'auto');
+
         document.title = `${_m('extName')} ${_m('advancedOptions')}`;
 
         const customIconPreview = $('custom-icon-preview').firstElementChild;

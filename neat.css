@@ -1,8 +1,75 @@
+/* vBookmarks design tokens. Light values are the default; the dark palette
+   applies either explicitly (body[data-theme="dark"]) or via the OS setting
+   when the user picked "auto" (body[data-theme="auto"]). Keep this block in
+   sync with the one in options.css. */
+:root {
+    --vbm-bg: #ffffff;
+    --vbm-bg-elev: #ffffff;
+    --vbm-bg-hover: rgba(0, 0, 0, 0.05);
+    --vbm-bg-selected: #d3e3fd;
+    --vbm-fg: #202124;
+    --vbm-fg-selected: #0b57d0;
+    --vbm-muted: #5f6368;
+    --vbm-border: rgba(0, 0, 0, 0.10);
+    --vbm-accent: #0b57d0;
+    --vbm-accent-fg: #ffffff;
+    --vbm-focus-ring: rgba(11, 87, 208, 0.40);
+    --vbm-danger: #d93025;
+    --vbm-scrim: rgba(0, 0, 0, 0.3);
+    --vbm-shadow: rgba(0, 0, 0, 0.2);
+    --vbm-flash: rgba(43, 93, 205, 0.2);
+    --vbm-scrollbar: rgba(95, 99, 104, 0.5);
+    --vbm-scrollbar-hover: rgba(95, 99, 104, 0.8);
+    --vbm-radius: 8px;
+}
+
+body[data-theme="dark"] {
+    --vbm-bg: #1b1c1f;
+    --vbm-bg-elev: #26282c;
+    --vbm-bg-hover: rgba(255, 255, 255, 0.07);
+    --vbm-bg-selected: #2c3f5e;
+    --vbm-fg: #e3e5e8;
+    --vbm-fg-selected: #a8c7fa;
+    --vbm-muted: #9aa0a6;
+    --vbm-border: rgba(255, 255, 255, 0.10);
+    --vbm-accent: #a8c7fa;
+    --vbm-accent-fg: #0b57d0;
+    --vbm-focus-ring: rgba(168, 199, 250, 0.45);
+    --vbm-danger: #f28b82;
+    --vbm-scrim: rgba(0, 0, 0, 0.55);
+    --vbm-shadow: rgba(0, 0, 0, 0.5);
+    --vbm-flash: var(--vbm-bg-selected);
+    --vbm-scrollbar: rgba(154, 160, 166, 0.5);
+    --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"] {
+        --vbm-bg: #1b1c1f;
+        --vbm-bg-elev: #26282c;
+        --vbm-bg-hover: rgba(255, 255, 255, 0.07);
+        --vbm-bg-selected: #2c3f5e;
+        --vbm-fg: #e3e5e8;
+        --vbm-fg-selected: #a8c7fa;
+        --vbm-muted: #9aa0a6;
+        --vbm-border: rgba(255, 255, 255, 0.10);
+        --vbm-accent: #a8c7fa;
+        --vbm-accent-fg: #0b57d0;
+        --vbm-focus-ring: rgba(168, 199, 250, 0.45);
+        --vbm-danger: #f28b82;
+        --vbm-scrim: rgba(0, 0, 0, 0.55);
+        --vbm-shadow: rgba(0, 0, 0, 0.5);
+        --vbm-flash: var(--vbm-bg-selected);
+        --vbm-scrollbar: rgba(154, 160, 166, 0.5);
+        --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+    }
+}
+
 body {
     direction: __MSG_@@bidi_dir__;
     font: menu;
-    color: #000;
-    background-color: #fff;
+    color: var(--vbm-fg);
+    background-color: var(--vbm-bg);
     margin: 0;
     padding: 0;
     cursor: default;
@@ -68,9 +135,8 @@ body.linux input {
 }
 
 #container {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    box-orient: vertical;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 0;
     right: 0;
@@ -97,8 +163,8 @@ body.linux input {
     margin: 0;
 }
 
-#search input:focus { 
-    outline-width: 0; 
+#search input:focus {
+    outline: 2px solid var(--vbm-focus-ring);
 }
 
 #donation {
@@ -107,14 +173,14 @@ body.linux input {
     top: 0;
     margin: 2px;
     padding: 2px;
-    background: #f8f9fa;
+    background: var(--vbm-bg-elev);
     z-index: 9;
     border: 0;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    box-shadow: 0 2px 4px #bbbbbb;
+    box-shadow: 0 2px 4px var(--vbm-shadow);
 }
 
 #donation li {
@@ -125,13 +191,13 @@ body.linux input {
 }
 
 #information-text {
-    color: #818181;
+    color: var(--vbm-muted);
     font-size: 9px;
     margin: 4px 0px 4px 0px;
 }
 
 #new-version-text {
-    color: #463af0;
+    color: var(--vbm-accent);
     margin: 2px 10px 2px 2px;
 }
 
@@ -141,7 +207,7 @@ body.linux input {
 
 .donation-button {
     position: relative;
-    color: #300cce;
+    color: var(--vbm-accent);
     vertical-align: middle;
     min-width: 28px;
     margin: 4px 2px 4px 2px;
@@ -157,7 +223,7 @@ body.linux input {
 
 .donation-button:disabled {
     text-decoration: none;
-    color: #85858b;
+    color: var(--vbm-muted);
 }
 
 .donation-button:not([disabled]):hover {
@@ -170,15 +236,13 @@ body.linux input {
 
 #results,
 #tree {
-    background-color: #f8f9fa;
+    background-color: var(--vbm-bg);
     overflow: auto;
     outline: 0;
     padding: 3px 0;
-    -webkit-box-shadow: inset 0 4px 4px -4px rgba(0, 0, 0, .1);
-    box-shadow: inset 0 4px 4px -4px rgba(0, 0, 0, .1);
-    -webkit-box-flex: 1;
-    box-flex: 1;
-    text-shadow: 0 1px #f6f6f6;
+    -webkit-box-shadow: inset 0 4px 4px -4px var(--vbm-border);
+    box-shadow: inset 0 4px 4px -4px var(--vbm-border);
+    flex: 1;
     position: relative;
 }
 
@@ -199,11 +263,17 @@ body.linux input {
     line-height: 1.67em;
     padding: 0 4px;
     text-decoration: none;
-    color: #000;
+    color: var(--vbm-fg);
     outline: 0;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+#results ul li a:hover,
+#tree ul li a:hover,
+#tree ul li span:hover {
+    background-color: var(--vbm-bg-hover);
 }
 
 #results ul li a *,
@@ -218,7 +288,7 @@ body.linux input {
     width: 0;
     height: 0;
     border-width: 4.5px 0 4.5px 8px;
-    border-color: transparent transparent transparent #84919f;
+    border-color: transparent transparent transparent var(--vbm-muted);
     border-style: solid;
     margin: 0 4px;
     -webkit-transition: -webkit-transform .15s;
@@ -282,23 +352,27 @@ body.linux input {
 #tree ul li a:focus,
 #tree ul li span:focus,
 menu[type=context] .menu-item:focus {
-    color: #fff;
-    background-color: #4687cb;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#6fa6de), to(#1e6cbb));
-    -webkit-box-shadow: 0 -1px #5594d2;
-    box-shadow: 0 -1px #5594d2;
-    text-shadow: 0 0 rgba(255, 255, 255, .5), 0 1px rgba(0, 0, 0, .5);
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
     outline: 0;
 }
 
+#results ul li a:focus,
+#tree ul li a:focus,
+#tree ul li span:focus,
+menu[type=context] .menu-item:focus {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
 .searchFocus #results ul>li:first-child a {
-    background-color: rgba(43, 93, 205, .2);
+    background-color: var(--vbm-flash);
 }
 
 #tree ul li span:active .twisty,
 #tree ul li span.active .twisty,
 #tree ul li span:focus .twisty {
-    border-color: transparent transparent transparent #e5eef8;
+    border-color: transparent transparent transparent var(--vbm-fg-selected);
 }
 
 #tree ul ul {
@@ -315,7 +389,7 @@ menu[type=context] .menu-item:focus {
         background-color: transparent;
     }
     10% {
-        background-color: rgba(43, 93, 205, .2);
+        background-color: var(--vbm-flash);
     }
     100% {
         background-color: transparent;
@@ -327,7 +401,7 @@ menu[type=context] .menu-item:focus {
         background-color: transparent;
     }
     10% {
-        background-color: rgba(43, 93, 205, .2);
+        background-color: var(--vbm-flash);
     }
     100% {
         background-color: transparent;
@@ -384,13 +458,13 @@ menu[type=context] .menu-item:focus {
 #drop-overlay.bookmark {
     margin-__MSG_@@bidi_start_edge__: -3px;
     height: 3px;
-    background-color: #000;
-    border: 1px solid #fff;
+    background-color: var(--vbm-fg);
+    border: 1px solid var(--vbm-bg);
 }
 
 #drop-overlay.folder {
-    background-color: rgba(43, 93, 205, .2);
-    border: 1px solid #5594d2;
+    background-color: var(--vbm-flash);
+    border: 1px solid var(--vbm-accent);
     border-radius: 2px;
 }
 
@@ -403,11 +477,11 @@ menu[type=context] {
     list-style: none;
     position: absolute;
     left: -999px;
-    border: 1px solid #bbb;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, .96);
-    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    background-color: var(--vbm-bg-elev);
+    -webkit-box-shadow: 0 2px 6px var(--vbm-shadow);
+    box-shadow: 0 2px 6px var(--vbm-shadow);
     outline: 0;
     max-width: 100%;
 }
@@ -438,7 +512,7 @@ menu[type=context] hr {
     padding: 0;
     height: 1px;
     margin: 2px 0;
-    background-color: #eee;
+    background-color: var(--vbm-border);
     pointer-events: none;
 }
 
@@ -473,7 +547,7 @@ menu[type=context].hide-editables #folder-delete {
     bottom: 0;
     width: 100%;
     opacity: 0;
-    background-color: rgba(255, 255, 255, .5);
+    background-color: var(--vbm-scrim);
 }
 
 .transitional #cover {
@@ -499,11 +573,12 @@ menu[type=context].hide-editables #folder-delete {
     left: 0;
     right: 0;
     opacity: 0;
-    background-color: #fff;
+    background-color: var(--vbm-bg-elev);
     padding: 1em;
-    border-bottom: 1px solid #e0e0e0;
-    -webkit-box-shadow: 0 0 100px rgba(0, 0, 0, .1);
-    box-shadow: 0 0 100px rgba(0, 0, 0, .1);
+    border-bottom: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    -webkit-box-shadow: 0 0 100px var(--vbm-shadow);
+    box-shadow: 0 0 100px var(--vbm-shadow);
 }
 
 .transitional .dialog {
@@ -537,7 +612,7 @@ menu[type=context].hide-editables #folder-delete {
     -webkit-user-select: text;
     user-select: text;
     cursor: text;
-    background-color: #fafafa;
+    background-color: var(--vbm-bg-hover);
     text-shadow: none;
 }
 
@@ -552,7 +627,7 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 #edit-dialog input:invalid {
-    outline-color: red;
+    outline-color: var(--vbm-danger);
 }
 
 #edit-dialog .buttons {
@@ -574,7 +649,7 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 #new-folder-dialog input:invalid {
-    outline-color: red;
+    outline-color: var(--vbm-danger);
 }
 
 #new-folder-dialog .buttons {
@@ -605,7 +680,7 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: #fff;
+    background-color: transparent;
     -webkit-border-radius: 0;
 }
 
@@ -615,14 +690,13 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: var(--vbm-scrollbar);
     -webkit-border-radius: 4px;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
-    border: 2px solid #fff;
+    border: 2px solid transparent;
+    background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #9f9f9f;
+    background-color: var(--vbm-scrollbar-hover);
     -webkit-border-radius: 4px;
 }

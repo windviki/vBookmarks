@@ -48,7 +48,7 @@
         'autoResizePopup',
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
-        'separatorcolor', 'userstyle', 'customIcon',
+        'separatorcolor', 'userstyle', 'customIcon', 'theme',
         // version & donation
         'currentVersion', 'openCount', 'donationKey', 'donationCountDown', 'donationFactor'
     ];

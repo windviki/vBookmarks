@@ -2,6 +2,41 @@
  * vBookmarks Sync Status Styles
  */
 
+/* Sync dot palette. Semantic colors (green synced / orange unsynced /
+   blue syncing / red error / gray local) with dark-theme variants, applied
+   through the same body[data-theme] mechanism as neat.css. */
+:root {
+    --vbm-synced: #4CAF50;
+    --vbm-unsynced: #FF9800;
+    --vbm-syncing: #2196F3;
+    --vbm-sync-error: #F44336;
+    --vbm-local: #607D8B;
+    --vbm-unsyncable: #CFD8DC;
+    --vbm-unsyncable-border: #B0BEC5;
+}
+
+body[data-theme="dark"] {
+    --vbm-synced: #66BB6A;
+    --vbm-unsynced: #FFA726;
+    --vbm-syncing: #64B5F6;
+    --vbm-sync-error: #EF5350;
+    --vbm-local: #90A4AE;
+    --vbm-unsyncable: #546E7A;
+    --vbm-unsyncable-border: #78909C;
+}
+
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"] {
+        --vbm-synced: #66BB6A;
+        --vbm-unsynced: #FFA726;
+        --vbm-syncing: #64B5F6;
+        --vbm-sync-error: #EF5350;
+        --vbm-local: #90A4AE;
+        --vbm-unsyncable: #546E7A;
+        --vbm-unsyncable-border: #78909C;
+    }
+}
+
 
 /* Sync Status Indicators */
 .sync-indicator {
@@ -27,34 +62,34 @@
 }
 
 .sync-indicator.synced {
-    background: #4CAF50; /* Green - harmonious and positive */
-    box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+    background: var(--vbm-synced); /* Green - harmonious and positive */
+    box-shadow: 0 0 3px var(--vbm-synced);
 }
 
 .sync-indicator.unsynced {
-    background: #FF9800; /* Orange - warning but friendly */
-    box-shadow: 0 0 3px rgba(255, 152, 0, 0.5);
+    background: var(--vbm-unsynced); /* Orange - warning but friendly */
+    box-shadow: 0 0 3px var(--vbm-unsynced);
 }
 
 .sync-indicator.syncing {
-    background: #2196F3; /* Blue - active state */
+    background: var(--vbm-syncing); /* Blue - active state */
     animation: pulse 1.5s infinite;
-    box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
+    box-shadow: 0 0 3px var(--vbm-syncing);
 }
 
 .sync-indicator.sync-error {
-    background: #F44336; /* Red - error state */
-    box-shadow: 0 0 3px rgba(244, 67, 54, 0.5);
+    background: var(--vbm-sync-error); /* Red - error state */
+    box-shadow: 0 0 3px var(--vbm-sync-error);
 }
 
 .sync-indicator.local {
-    background: #607D8B; /* Blue-gray - local/storage color, more harmonious than purple */
-    box-shadow: 0 0 3px rgba(96, 125, 139, 0.5);
+    background: var(--vbm-local); /* Blue-gray - local/storage color, more harmonious than purple */
+    box-shadow: 0 0 3px var(--vbm-local);
 }
 
 .sync-indicator.unsyncable {
-    background: #CFD8DC; /* Light blue-gray - neutral, disabled look */
-    border: 1px solid #B0BEC5;
+    background: var(--vbm-unsyncable); /* Light blue-gray - neutral, disabled look */
+    border: 1px solid var(--vbm-unsyncable-border);
     box-shadow: none;
 }
 
@@ -559,47 +594,5 @@
     .sync-modal-content {
         padding: 15px;
         margin: 10px;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    #sync-controls {
-        background: #2c3e50;
-    }
-
-    .sync-btn {
-        background: #34495e;
-        color: white;
-        border-color: #4a5f7a;
-    }
-
-    .sync-btn:hover {
-        background: #4a5f7a;
-        border-color: #5a6f8a;
-    }
-
-    .sync-filter-controls {
-        background: #2c3e50;
-    }
-
-    .sync-filter-btn {
-        background: #34495e;
-        color: white;
-        border-color: #4a5f7a;
-    }
-
-    .sync-filter-btn:hover:not(.active) {
-        background: #4a5f7a;
-    }
-
-    .sync-stat-item {
-        background: #34495e;
-        border-color: #4a5f7a;
-        color: white;
-    }
-
-    .sync-stat-label {
-        color: #bdc3c7;
     }
 }

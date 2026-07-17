@@ -7,6 +7,23 @@
     async function initOptions() {
         document.title = `${_m('extName')} ${_m('options')}`;
 
+        // Theme: apply the pre-filled mirror value immediately, then refine
+        // from chrome.storage.local (the source of truth)
+        document.body.dataset.theme = store.get('theme', 'auto');
+
+        const themeSelect = $('theme-select');
+        const theme = await getSetting('theme', 'auto');
+        themeSelect.value = theme;
+        document.body.dataset.theme = theme;
+        themeSelect.addEventListener('change', async () => {
+            const newTheme = themeSelect.value;
+            document.body.dataset.theme = newTheme;
+            // chrome.storage.local is the source of truth; the localStorage
+            // copy lets store.js synchronously pre-fill it in the popup
+            localStorage.setItem('theme', newTheme);
+            await setSetting('theme', newTheme);
+        });
+
         // Configuration for general settings
         const generalSettings = [
             { id: 'click-new-tab', key: 'leftClickNewTab', defaultValue: '', inverted: false },
@@ -117,6 +134,10 @@
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
+        document.getElementById('option-theme').innerText = __m('optionTheme');
+        document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
+        document.getElementById('option-theme-light').innerText = __m('optionThemeLight');
+        document.getElementById('option-theme-dark').innerText = __m('optionThemeDark');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
 

@@ -252,6 +252,18 @@
   "optionZoom": {
     "message": "Zoom"
   },
+  "optionTheme": {
+    "message": "Theme"
+  },
+  "optionThemeAuto": {
+    "message": "Follow system"
+  },
+  "optionThemeLight": {
+    "message": "Light"
+  },
+  "optionThemeDark": {
+    "message": "Dark"
+  },
   "parentFolder": {
     "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
     "message": "Parent folder: \"$folderName$\"",

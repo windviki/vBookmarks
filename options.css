@@ -1,21 +1,84 @@
+/* vBookmarks design tokens — keep this block in sync with neat.css. */
+:root {
+    --vbm-bg: #ffffff;
+    --vbm-bg-elev: #ffffff;
+    --vbm-bg-hover: rgba(0, 0, 0, 0.05);
+    --vbm-bg-selected: #d3e3fd;
+    --vbm-fg: #202124;
+    --vbm-fg-selected: #0b57d0;
+    --vbm-muted: #5f6368;
+    --vbm-border: rgba(0, 0, 0, 0.10);
+    --vbm-accent: #0b57d0;
+    --vbm-accent-fg: #ffffff;
+    --vbm-focus-ring: rgba(11, 87, 208, 0.40);
+    --vbm-danger: #d93025;
+    --vbm-scrim: rgba(0, 0, 0, 0.3);
+    --vbm-shadow: rgba(0, 0, 0, 0.2);
+    --vbm-flash: rgba(43, 93, 205, 0.2);
+    --vbm-scrollbar: rgba(95, 99, 104, 0.5);
+    --vbm-scrollbar-hover: rgba(95, 99, 104, 0.8);
+    --vbm-radius: 8px;
+}
+
+body[data-theme="dark"] {
+    --vbm-bg: #1b1c1f;
+    --vbm-bg-elev: #26282c;
+    --vbm-bg-hover: rgba(255, 255, 255, 0.07);
+    --vbm-bg-selected: #2c3f5e;
+    --vbm-fg: #e3e5e8;
+    --vbm-fg-selected: #a8c7fa;
+    --vbm-muted: #9aa0a6;
+    --vbm-border: rgba(255, 255, 255, 0.10);
+    --vbm-accent: #a8c7fa;
+    --vbm-accent-fg: #0b57d0;
+    --vbm-focus-ring: rgba(168, 199, 250, 0.45);
+    --vbm-danger: #f28b82;
+    --vbm-scrim: rgba(0, 0, 0, 0.55);
+    --vbm-shadow: rgba(0, 0, 0, 0.5);
+    --vbm-flash: var(--vbm-bg-selected);
+    --vbm-scrollbar: rgba(154, 160, 166, 0.5);
+    --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"] {
+        --vbm-bg: #1b1c1f;
+        --vbm-bg-elev: #26282c;
+        --vbm-bg-hover: rgba(255, 255, 255, 0.07);
+        --vbm-bg-selected: #2c3f5e;
+        --vbm-fg: #e3e5e8;
+        --vbm-fg-selected: #a8c7fa;
+        --vbm-muted: #9aa0a6;
+        --vbm-border: rgba(255, 255, 255, 0.10);
+        --vbm-accent: #a8c7fa;
+        --vbm-accent-fg: #0b57d0;
+        --vbm-focus-ring: rgba(168, 199, 250, 0.45);
+        --vbm-danger: #f28b82;
+        --vbm-scrim: rgba(0, 0, 0, 0.55);
+        --vbm-shadow: rgba(0, 0, 0, 0.5);
+        --vbm-flash: var(--vbm-bg-selected);
+        --vbm-scrollbar: rgba(154, 160, 166, 0.5);
+        --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+    }
+}
+
 html, body{
-	background-color: #eee;
+	background-color: var(--vbm-bg);
 }
 body{
 	direction: __MSG_@@bidi_dir__;
 	font: message-box;
-	color: #000;
-	background-color: #eee;
+	color: var(--vbm-fg);
+	background-color: var(--vbm-bg);
 	cursor: default;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 	user-select: none;
-	text-shadow: 0 1px #fff;
 	font-size: 14px;
 	margin: 0;
 	padding: 2em;
-	-webkit-box-shadow: inset 0 3px 5px -2px rgba(0,0,0,.1);
-	box-shadow: inset 0 3px 5px -2px rgba(0,0,0,.1);
+	-webkit-box-shadow: inset 0 3px 5px -2px var(--vbm-border);
+	box-shadow: inset 0 3px 5px -2px var(--vbm-border);
 }
 a{
 	-webkit-transition-property: color;
@@ -31,7 +94,7 @@ h1 img{
 	vertical-align: text-bottom;
 }
 h1 small{
-	color: #666;
+	color: var(--vbm-muted);
 }
 h2{
 	font-size: 1em;
@@ -43,35 +106,35 @@ h2{
 }
 .options-nav a{
 	text-decoration: none;
-	color: #F00;
+	color: var(--vbm-accent);
 }
 .options-nav a:hover{
-	color: #000;
+	color: var(--vbm-fg);
 }
 .options-list{
 	margin: 10px 0;
 	padding: 0;
 	list-style: none;
 	border-radius: 5px;
-	background-color: rgba(255,255,255,.5);
+	background-color: var(--vbm-bg-elev);
 }
 .options-list li ul{
 	list-style-type: disc;
 }
 .options-list>li{
-	border: 1px solid #ccc;
+	border: 1px solid var(--vbm-border);
 	border-bottom: 0;
 	padding: .5em 1em;
 	line-height: 30px;
-	-webkit-box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
-	box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
+	-webkit-box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
+	box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
 }
 .options-list>li:first-child{
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 .options-list>li:last-child{
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--vbm-border);
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
@@ -97,6 +160,17 @@ h2{
 	margin: 0;
 	margin-__MSG_@@bidi_start_edge__: 2em;
 }
+.options-list li select{
+	background: var(--vbm-bg-elev);
+	color: var(--vbm-fg);
+	border: 1px solid var(--vbm-border);
+	border-radius: 6px;
+	padding: 2px 4px;
+	font: inherit;
+	vertical-align: middle;
+	margin: 0;
+	margin-__MSG_@@bidi_start_edge__: 2em;
+}
 
 #zoom-input{
 	width: 4em;
@@ -104,35 +178,36 @@ h2{
 	user-select: none;
 }
 fieldset{
-	border: 1px solid #ccc;
+	border: 1px solid var(--vbm-border);
 	border-radius: 5px;
 	margin: 2em 0 0;
 	padding: 1em;
-	-webkit-box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
-	box-shadow: 1px 1px #fff, inset 0 -20px 60px -20px #ddd, inset 1px 1px #fff;
+	-webkit-box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
+	box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
 }
 fieldset legend{
 	font-weight: bold;
-	background: #eee;
+	background: var(--vbm-bg);
 	padding: 0 5px;
-	-webkit-box-shadow: 0 0 20px 10px #eee;
-	box-shadow: 0 0 20px 10px #eee;
+	-webkit-box-shadow: 0 0 20px 10px var(--vbm-bg);
+	box-shadow: 0 0 20px 10px var(--vbm-bg);
 }
 fieldset p{
 	margin-top: 0;
 }
 #custom-icon-preview{
-	background: #fff;
+	background: var(--vbm-bg-elev);
 	padding: 20px;
 	border-radius: 3px;
 	line-height: 0;
 	float: __MSG_@@bidi_start_edge__;
 	margin: 0 0 .5em 0;
 	margin-__MSG_@@bidi_end_edge__: 1em;
-	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
-	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
-	border: 1px solid #aaa;
+	-webkit-box-shadow: inset 0 1px 5px var(--vbm-border);
+	box-shadow: inset 0 1px 5px var(--vbm-border);
+	border: 1px solid var(--vbm-border);
 }
+/* The CodeMirror editor intentionally keeps its default light theme. */
 .CodeMirror{
 	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
@@ -145,10 +220,8 @@ fieldset p{
 	text-shadow: none;
 }
 #footer{
-	color: #999;
-	border-top: 1px solid #fff;
-	-webkit-box-shadow: 0 -1px rgba(0,0,0,.1);
-	box-shadow: 0 -1px rgba(0,0,0,.1);
+	color: var(--vbm-muted);
+	border-top: 1px solid var(--vbm-border);
 	margin-top: 40px;
 	line-height: 2em;
 }

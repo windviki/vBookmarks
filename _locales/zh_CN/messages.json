@@ -1,0 +1,14 @@
+{
+  "optionTheme": {
+    "message": "主题"
+  },
+  "optionThemeAuto": {
+    "message": "跟随系统"
+  },
+  "optionThemeLight": {
+    "message": "浅色"
+  },
+  "optionThemeDark": {
+    "message": "深色"
+  }
+}
