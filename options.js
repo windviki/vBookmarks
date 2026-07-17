@@ -84,12 +84,6 @@
             }
         });
 
-        const autoResizePopup = $('auto-resize-popup');
-        autoResizePopup.checked = localStorage.autoResizePopup !== 'false';
-        autoResizePopup.addEventListener('change', () => {
-            localStorage.autoResizePopup = autoResizePopup.checked ? 'true' : 'false';
-        });
-
         const zoom = $('zoom-input');
         setInterval(async () => {
             zoom.value = await getSetting('zoom', 100);
@@ -97,7 +91,7 @@
         zoom.addEventListener('input', async () => {
             const val = parseInt(zoom.value);
             if (val === 100) {
-                await storageManager.removeSetting('zoom');
+                await removeSetting('zoom');
             } else {
                 await setSetting('zoom', val);
             }

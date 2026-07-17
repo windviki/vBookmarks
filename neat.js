@@ -1,8 +1,11 @@
 (window => {
+    const store = window.store;
+    // Storage mirror must be ready (chrome.storage.local loaded + migrated)
+    // before any of the settings below are read
+    store.ready.then(() => {
     let currentContext;
     const document = window.document;
     const chrome = window.chrome;
-    const localStorage = window.localStorage;
     const navigator = window.navigator;
     const body = document.body;
     const _m = chrome.i18n.getMessage;
@@ -67,32 +70,32 @@
 
     function SeparatorManager() {
         this.stringList = new StringList();
-        if (!isBlank(localStorage.separatorTitle)) {
-            this.separatorTitle = localStorage.separatorTitle;
+        if (!isBlank(store.get('separatorTitle'))) {
+            this.separatorTitle = store.get('separatorTitle');
         } else {
             this.separatorTitle = "|";
         }
-        if (!isBlank(localStorage.separatorURL)) {
-            this.separatorURL = localStorage.separatorURL;
+        if (!isBlank(store.get('separatorURL'))) {
+            this.separatorURL = store.get('separatorURL');
         } else {
             this.separatorURL = "http://separatethis.com/";
         }
         this.separatorString = [];
-        if (!isBlank(localStorage.separatorString)) {
-            this.separatorString = localStorage.separatorString.split(';');
+        if (!isBlank(store.get('separatorString'))) {
+            this.separatorString = store.get('separatorString').split(';');
         } else {
             this.separatorString.push("separatethis.com");
         }
     }
 
     SeparatorManager.prototype.load = function () {
-        if (localStorage.separators) {
-            this.stringList.fromString(localStorage.separators);
+        if (store.get('separators')) {
+            this.stringList.fromString(store.get('separators'));
         }
     };
 
     SeparatorManager.prototype.save = function () {
-        localStorage.separators = this.stringList.toString();
+        store.set('separators', this.stringList.toString());
     };
 
     SeparatorManager.prototype.add = function (str) {
@@ -114,7 +117,7 @@
     };
 
     SeparatorManager.prototype.clear = function () {
-        localStorage.separators = "";
+        store.set('separators', "");
         this.stringList.clear();
     };
 
@@ -376,10 +379,10 @@
         body.addClass('rtl');
 
     // Init some variables
-    let opens = localStorage.opens ? JSON.parse(localStorage.opens) : [];
-    let rememberState = !localStorage.dontRememberState;
+    let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
+    let rememberState = !store.get('dontRememberState');
     const httpsPattern = /^https?:\/\//i;
-    const onlyShowBMBar = !!localStorage.onlyShowBMBar;
+    const onlyShowBMBar = !!store.get('onlyShowBMBar');
 
     // Adaptive bookmark tooltips
     const adaptBookmarkTooltips = () => {
@@ -433,7 +436,7 @@
 
         // Add sync status indicator if enabled
         let syncIndicator = '';
-        if (localStorage.showSyncStatus === 'true' && window.syncManager && bookmarkId) {
+        if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && bookmarkId) {
             const syncStatus = window.syncManager.getSyncStatusIndicator(bookmarkId);
             const syncTooltip = window.syncManager.getSyncTooltip(bookmarkId);
             if (syncStatus) {
@@ -466,7 +469,7 @@
 
         // Add sync status indicator if enabled
         let syncIndicator = '';
-        if (localStorage.showSyncStatus === 'true' && window.syncManager && folderId) {
+        if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && folderId) {
             const syncStatus = window.syncManager.getSyncStatusIndicator(folderId);
             const syncTooltip = window.syncManager.getSyncTooltip(folderId);
             if (syncStatus) {
@@ -488,8 +491,8 @@
 
     const generateSeparatorHTML = paddingStart => {
         let color = '#888888';
-        if (localStorage.separatorcolor) {
-            color = localStorage.separatorcolor.colorHex();
+        if (store.get('separatorcolor')) {
+            color = store.get('separatorcolor').colorHex();
         }
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
         const hrWidth = window.innerWidth - paddingStart - 40;
@@ -734,17 +737,17 @@
         $tree.innerHTML = html;
 
         // Refresh sync indicators after tree is generated
-        if (localStorage.showSyncStatus === 'true') {
+        if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
             setTimeout(() => {
                 refreshSyncIndicators();
             }, 100);
         }
 
         if (rememberState) {
-            $tree.scrollTop = localStorage.scrollTop ? localStorage.scrollTop : 0;
+            $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
         }
 
-        const focusID = localStorage.focusID;
+        const focusID = store.get('focusID');
         if (typeof focusID !== 'undefined' && focusID !== null) {
             const focusEl = $(`neat-tree-item-${focusID}`);
             if (focusEl) {
@@ -756,7 +759,7 @@
                     $tree.style.overflow = oriOverflow;
                 }, 1);
                 setTimeout(() => {
-                    localStorage.removeItem('focusID');
+                    store.remove('focusID');
                 }, 4000);
             }
         }
@@ -780,15 +783,15 @@
     };
 
     // restore height
-    if (localStorage.popupHeight) {
-        body.style.height = localStorage.popupHeight;
+    if (store.get('popupHeight')) {
+        body.style.height = store.get('popupHeight');
     }
 
     chrome.bookmarks.getTree(generateTree);
 
     // Events for the tree
     $tree.addEventListener('scroll', () => {
-        localStorage.scrollTop = $tree.scrollTop;
+        store.set('scrollTop', $tree.scrollTop);
     });
     $tree.addEventListener('focus', e => {
         const el = e.target;
@@ -797,12 +800,12 @@
         if (focusEl)
             focusEl.removeClass('focus');
         if (tagName === 'A' || tagName === 'SPAN') {
-            localStorage.focusID = el.parentNode.id.replace('neat-tree-item-', '');
+            store.set('focusID', el.parentNode.id.replace('neat-tree-item-', ''));
         } else {
-            localStorage.focusID = null;
+            store.set('focusID', null);
         }
     }, true);
-    const closeUnusedFolders = localStorage.closeUnusedFolders;
+    const closeUnusedFolders = store.get('closeUnusedFolders');
     $tree.addEventListener('click', e => {
         if (e.button !== 0)
             return;
@@ -841,7 +844,7 @@
         }
         let opens = $tree.querySelectorAll('li.open');
         opens = Array.map(li => li.id.replace('neat-tree-item-', ''), opens);
-        localStorage.opens = JSON.stringify(opens);
+        store.set('opens', JSON.stringify(opens));
     });
     // Force middle clicks to trigger the focus event
     $tree.addEventListener('mouseup', e => {
@@ -893,11 +896,11 @@
     let newOrUpgrade = true;
     const mf = chrome.runtime.getManifest();
     const currentVer = parseVersion(mf["version"]);
-    if (!localStorage.currentVersion) {
-        localStorage.currentVersion = mf["version"];
+    if (!store.get('currentVersion')) {
+        store.set('currentVersion', mf["version"]);
     } else {
-        let recordVer = parseVersion(localStorage.currentVersion);
-        localStorage.currentVersion = mf["version"];
+        let recordVer = parseVersion(store.get('currentVersion'));
+        store.set('currentVersion', mf["version"]);
         if (recordVer && currentVer && recordVer['major'] && recordVer['minor'] && currentVer['major'] && currentVer['minor']) {     
             if ( (recordVer['major'] > currentVer['major']) ||
                 ((recordVer['major'] == currentVer['major']) && (recordVer['minor'] >= currentVer['minor'])) ){
@@ -905,13 +908,13 @@
             }
         }
     }
-    if (!localStorage.openCount) {
-        localStorage.openCount = 1;
+    if (!store.get('openCount')) {
+        store.set('openCount', 1);
     } else {
-        localStorage.openCount++;
+        store.set('openCount', parseInt(store.get('openCount'), 10) + 1);
     }
-    if (!localStorage.donationKey) {
-        localStorage.donationKey = 1;
+    if (!store.get('donationKey')) {
+        store.set('donationKey', 1);
     }
 
     const $donation = $('donation');
@@ -923,14 +926,14 @@
             }
             $('donation-text').innerHTML = _m('donationMessage');
             $donation.style.display = 'block';
-            let seconds = localStorage.donationCountDown > 0 ? localStorage.donationCountDown : 10;
+            let seconds = store.get('donationCountDown') > 0 ? store.get('donationCountDown') : 10;
             let countDown = setInterval(() => {
-                localStorage.donationCountDown = seconds;
+                store.set('donationCountDown', seconds);
                 if (seconds <= 0) {
                     $('donation-go').innerHTML = _m('donationGo');
                     $('donation-go').disabled = false;
                     clearInterval(countDown);
-                    localStorage.donationCountDown = 0;
+                    store.set('donationCountDown', 0);
                 } else {
                     $('donation-go').innerHTML = `${seconds}s`;
                     $('donation-go').disabled = true;
@@ -943,16 +946,16 @@
         }
     }
 
-    if (newOrUpgrade || localStorage.donationCountDown > 0 
-        || !localStorage.donationFactor 
-        || localStorage.donationFactor.toInt() >= localStorage.donationKey.toInt()) {
+    if (newOrUpgrade || store.get('donationCountDown') > 0
+        || !store.get('donationFactor')
+        || parseInt(store.get('donationFactor'), 10) >= parseInt(store.get('donationKey'), 10)) {
         showDonation(true);
     } else {
-        localStorage.donationFactor = localStorage.donationFactor.toInt() + 1;
+        store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
     }
 
     // Search
-    const searchAfterEnter = !!localStorage.searchAfterEnter;
+    const searchAfterEnter = !!store.get('searchAfterEnter');
     const $results = $('results');
     let searchMode = false;
     const searchInput = $('search-input');
@@ -964,7 +967,7 @@
             if (searchInput.value) {
                 searchInput.value = '';
             }
-            localStorage.searchQuery = '';
+            store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
             $tree.style.display = 'block';
@@ -986,7 +989,7 @@
 
     const search = (e) => {
         const value = searchInput.value.trim();
-        localStorage.searchQuery = value;
+        store.set('searchQuery', value);
         if (value === '') {
             quitSearchMode();
             return;
@@ -1043,7 +1046,7 @@
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
-                    if (localStorage.showSyncStatus === 'true' && window.syncManager && id) {
+                    if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && id) {
                         const syncStatus = window.syncManager.getSyncStatusIndicator(id);
                         const syncTooltip = window.syncManager.getSyncTooltip(id);
                         if (syncStatus) {
@@ -1099,7 +1102,7 @@
     });
 
     searchInput.addEventListener('keydown', e => {
-        const focusID = localStorage.focusID;
+        const focusID = store.get('focusID');
         if (e.key === 'ArrowDown' && searchInput.value.length === searchInput.selectionEnd) { // down
             e.preventDefault();
             if (searchMode) {
@@ -1156,8 +1159,8 @@
     });
 
     // Saved search query
-    if (rememberState && localStorage.searchQuery) {
-        searchInput.value = localStorage.searchQuery;
+    if (rememberState && store.get('searchQuery')) {
+        searchInput.value = store.get('searchQuery');
         search();
         searchInput.select();
         searchInput.scrollLeft = 0;
@@ -1166,16 +1169,16 @@
     // Popup auto-height
     const resetHeight = () => {
         // Check if auto-resize is enabled (default to true for backward compatibility)
-        const autoResizeEnabled = localStorage.autoResizePopup !== 'false';
+        const autoResizeEnabled = store.get('autoResizePopup') !== 'false';
 
         if (!autoResizeEnabled) {
             // If auto-resize is disabled, use the stored height or default to 600px
-            const storedHeight = localStorage.popupHeight || '600';
+            const storedHeight = store.get('popupHeight') || '600';
             body.style.height = `${storedHeight}px`;
             return;
         }
 
-        const zoomLevel = localStorage.zoom ? localStorage.zoom.toInt() / 100 : 1;
+        const zoomLevel = store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1;
         const neatTree = $tree.firstElementChild;
         if (neatTree) {
             const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
@@ -1192,7 +1195,7 @@
                 // Slide up faster than down
                 body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
                 body.style.height = newHeightStyle;
-                localStorage.popupHeight = height;
+                store.set('popupHeight', height);
             });
         }
     };
@@ -1452,8 +1455,8 @@
     const filterURL = (url, target) => url.replace(/__VBM_CURRENT_TAB_URL__/, encodeURIComponent(target));
 
     // Bookmark handling
-    const dontConfirmOpenFolder = !!localStorage.dontConfirmOpenFolder;
-    const bookmarkClickStayOpen = !!localStorage.bookmarkClickStayOpen;
+    const dontConfirmOpenFolder = !!store.get('dontConfirmOpenFolder');
+    const bookmarkClickStayOpen = !!store.get('bookmarkClickStayOpen');
     const openBookmarksLimit = 10;
     const actions = {
         openBookmark: url => {
@@ -1475,12 +1478,18 @@
                     }
 
                     if (/^javascript:.*/i.test(url)) {
-                        //bookmarklet
-                        // TODO
-                        chrome.scripting.executeScript(tab.id, {
-                            // code: decodedUrl,
+                        // bookmarklet: run the code in the target page's main world
+                        const bookmarkletCode = decodedUrl.replace(/^javascript:/i, '');
+                        chrome.scripting.executeScript({
                             target: {tabId: tab.id},
-                            files: ['content-script.js']
+                            func: code => {
+                                try {
+                                    (0, eval)(code);
+                                } catch (e) {
+                                    console.warn('vBookmarks: bookmarklet execution failed:', e);
+                                }
+                            },
+                            args: [bookmarkletCode]
                         });
                     } else {
                         //url
@@ -1662,7 +1671,7 @@
                                                 url.replace(httpsPattern, '') :
                                                 _m('noTitle'));
                                         // Update sync status for folders
-                                        if (window.syncManager && localStorage.showSyncStatus === 'true') {
+                                        if (window.syncManager && store.getSyncSetting('showSyncStatus', 'true') === 'true') {
                                             const syncIndicator = li.querySelector('.sync-indicator');
                                             if (syncIndicator) {
                                                 syncIndicator.remove();
@@ -1756,21 +1765,21 @@
 
     };
 
-    const middleClickBgTab = !!localStorage.middleClickBgTab;
-    const leftClickNewTab = !!localStorage.leftClickNewTab;
+    const middleClickBgTab = !!store.get('middleClickBgTab');
+    const leftClickNewTab = !!store.get('leftClickNewTab');
     let noOpenBookmark = false;
 
     function generateTreeForTarget(trees) {
         generateTree(trees);
         // This must be put int chrome API handler function. 
         // Otherwise it may be called before generation completed.
-        if (localStorage.focusID) {
-            const item = $tree.querySelector(`#neat-tree-item-${localStorage.focusID}`);
+        if (store.get('focusID')) {
+            const item = $tree.querySelector(`#neat-tree-item-${store.get('focusID')}`);
             if (item) {
                 item.scrollIntoView();
             }
         }
-        localStorage.scrollTop = $tree.scrollTop;
+        store.set('scrollTop', $tree.scrollTop);
     }
 
     const bookmarkHandler = e => {
@@ -1794,11 +1803,11 @@
                 // all parent folder ids
                 // set them as opened folders
                 opens = getParentPath(id, nodeTrees);
-                localStorage.opens = JSON.stringify(opens);
+                store.set('opens', JSON.stringify(opens));
                 // force to recover from remember state (opened folders)
                 rememberState = true;
                 // focus on the target folder
-                localStorage.focusID = id;
+                store.set('focusID', id);
                 // new handler to handle the scrolling
                 chrome.bookmarks.getTree(generateTreeForTarget);
             } else {
@@ -1815,7 +1824,7 @@
                 if (searchMode) {
                     prevValue = '';
                     searchInput.value = '';
-                    localStorage.searchQuery = '';
+                    store.set('searchQuery', '');
                     searchMode = false;
                     switchBookmarkMenu(false);
                 }
@@ -1843,12 +1852,12 @@
     // donation
     $('donation-go').addEventListener('click', () => {  
         showDonation(false);
-        localStorage.donationCountDown = 0;
-        localStorage.donationFactor = 1;
-        if (localStorage.donationKey.toInt() > 3200) {
-            localStorage.donationKey = 3200;
+        store.set('donationCountDown', 0);
+        store.set('donationFactor', 1);
+        if (parseInt(store.get('donationKey'), 10) > 3200) {
+            store.set('donationKey', 3200);
         } else {
-            localStorage.donationKey = localStorage.donationKey.toInt() + 800;
+            store.set('donationKey', parseInt(store.get('donationKey'), 10) + 800);
         }
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
     });
@@ -2591,8 +2600,8 @@
             e.preventDefault();
             draggedOut = false;
             draggedBookmark = el; //a
-            if (localStorage.zoom)
-                zoomLevel = localStorage.zoom.toInt() / 100;
+            if (store.get('zoom'))
+                zoomLevel = parseInt(store.get('zoom'), 10) / 100;
             bookmarkClone.innerHTML = el.innerHTML; //<a>..</a>
             el.focus();
         }
@@ -2934,7 +2943,7 @@
             //     $resizerx.style.cursor = 'col-resize';
             // }
             body.style.width = `${width}px`;
-            localStorage.popupWidth = width;
+            store.set('popupWidth', width);
             resetSeparator(); // Reset separators
             clearMenu();
         } else {
@@ -2947,14 +2956,14 @@
                     currentMaxHeight = (600 / zoomFactor) - 1;
                     height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
                     body.style.height = `${height}px`;
-                    localStorage.popupHeight = height;
+                    store.set('popupHeight', height);
                     resetSeparator(); // Reset separators
                     clearMenu();
                 });
             } else {
                 height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
                 body.style.height = `${height}px`;
-                localStorage.popupHeight = height;
+                store.set('popupHeight', height);
                 resetSeparator(); // Reset separators
                 clearMenu();
                 if (e.type === 'mouseup') {
@@ -3009,8 +3018,8 @@
     }, 10);
 
     // Zoom
-    if (localStorage.zoom) {
-        body.dataset.zoom = localStorage.zoom;
+    if (store.get('zoom')) {
+        body.dataset.zoom = store.get('zoom');
     }
     const zoom = val => {
         if (draggedBookmark)
@@ -3019,12 +3028,12 @@
         const currentZoom = dataZoom ? dataZoom.toInt() : 100;
         if (val === 0) {
             delete body.dataset.zoom;
-            localStorage.removeItem('zoom');
+            store.remove('zoom');
         } else {
             let z = (val > 0) ? currentZoom + 10 : currentZoom - 10;
             z = Math.min(150, Math.max(90, z));
             body.dataset.zoom = `${z}`;
-            localStorage.zoom = z;
+            store.set('zoom', z);
         }
         body.addClass('dummy').removeClass('dummy'); // force redraw
         resetHeight();
@@ -3071,9 +3080,9 @@
         }, 1500);
     }
 
-    if (localStorage.userstyle) {
+    if (store.get('userstyle')) {
         const style = document.createElement('style');
-        style.textContent = localStorage.userstyle;
+        style.textContent = store.get('userstyle');
         style.inject(document.body);
     }
 
@@ -3099,10 +3108,10 @@
     //     });
     // });
     
-    if (localStorage.customIcon) {
+    if (store.get('customIcon')) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        const customIcon = JSON.parse(localStorage.customIcon);
+        const customIcon = JSON.parse(store.get('customIcon'));
         const imageData = ctx.getImageData(0, 0, 19, 19);
         for (const key in customIcon) imageData.data[key] = customIcon[key];
         chrome.action.setIcon({
@@ -3136,7 +3145,7 @@
                     syncIndicator.remove();
                 }
 
-                if (localStorage.showSyncStatus === 'true' && window.syncManager) {
+                if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager) {
                     const statusClass = window.syncManager.getSyncStatusIndicator(bookmarkId);
                     const tooltip = window.syncManager.getSyncTooltip(bookmarkId);
                     if (statusClass) {
@@ -3184,7 +3193,7 @@
                     syncIndicator.remove();
                 }
 
-                if (localStorage.showSyncStatus === 'true' && statusClass) {
+                if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && statusClass) {
                     const newIndicator = document.createElement('span');
                     newIndicator.className = `sync-indicator ${statusClass}`;
                     newIndicator.title = tooltip;
@@ -3215,15 +3224,11 @@
         refreshSyncIndicators: refreshSyncIndicators
     };
 
-    // Set default sync settings if not already set
-    if (localStorage.showSyncStatus === undefined) {
-        localStorage.showSyncStatus = 'true';
-    }
-
     // Initialize sync controls when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeSyncControls);
     } else {
         initializeSyncControls();
     }
+    });
 })(window);

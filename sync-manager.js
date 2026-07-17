@@ -28,26 +28,28 @@ class SyncManager {
     }
 
     async loadSettings() {
-        const defaults = {
-            showSyncStatus: true,
-            highlightUnsynced: true,
-            autoRefreshSync: true,
+        // Value model: toggles may be stored as 'true'/'false' strings
+        // (options.js) or booleans (older versions) — normalize both.
+        const asBool = v => v === true || v === 'true';
+        const result = await chrome.storage.sync.get({
+            showSyncStatus: 'true',
+            highlightUnsynced: 'true',
+            autoRefreshSync: 'true',
             syncRefreshInterval: 60
-        };
-        const result = await chrome.storage.sync.get(defaults);
+        });
         this.syncSettings = {
-            showSyncStatus: result.showSyncStatus,
-            highlightUnsynced: result.highlightUnsynced,
-            autoRefreshSync: result.autoRefreshSync,
-            syncRefreshInterval: result.syncRefreshInterval * 1000
+            showSyncStatus: asBool(result.showSyncStatus),
+            highlightUnsynced: asBool(result.highlightUnsynced),
+            autoRefreshSync: asBool(result.autoRefreshSync),
+            syncRefreshInterval: (parseInt(result.syncRefreshInterval, 10) || 60) * 1000
         };
     }
 
     async saveSettings() {
         await chrome.storage.sync.set({
-            showSyncStatus: this.syncSettings.showSyncStatus,
-            highlightUnsynced: this.syncSettings.highlightUnsynced,
-            autoRefreshSync: this.syncSettings.autoRefreshSync,
+            showSyncStatus: this.syncSettings.showSyncStatus ? 'true' : 'false',
+            highlightUnsynced: this.syncSettings.highlightUnsynced ? 'true' : 'false',
+            autoRefreshSync: this.syncSettings.autoRefreshSync ? 'true' : 'false',
             syncRefreshInterval: this.syncSettings.syncRefreshInterval / 1000
         });
     }

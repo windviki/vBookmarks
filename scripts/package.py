@@ -38,8 +38,9 @@ JS_FILES = [
     'options.js',
     'advanced-options.js',
     'codemirror.js',
-    'storage.js',
+    'store.js',
     'sync-manager.js',
+    'src/search-core.js',
 ]
 
 # CSS files referenced by HTML pages
