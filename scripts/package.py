@@ -38,6 +38,8 @@ JS_FILES = [
     'options.js',
     'advanced-options.js',
     'codemirror.js',
+    'storage.js',
+    'sync-manager.js',
 ]
 
 # CSS files referenced by HTML pages
@@ -45,6 +47,7 @@ CSS_FILES = [
     'neat.css',
     'options.css',
     'codemirror.css',
+    'sync-styles.css',
 ]
 
 # Icon/image files referenced in manifest.json, HTML pages, or JS code
@@ -61,8 +64,8 @@ IMAGES = [
 # Metadata files for store listing and user reference
 META_FILES = [
     'license.txt',
-    'README.md',
-    'README.zh.md',
+    'docs/README.md',
+    'docs/README.zh.md',
 ]
 
 # --- Exclusion patterns ---
@@ -74,6 +77,9 @@ EXCLUDE_DIRS = {
     'scripts',
     'donation',
     'release',
+    'docs',
+    'tests',
+    'node_modules',
     '_locales',  # handled separately below
 }
 
@@ -94,9 +100,10 @@ EXCLUDE_FILES = {
     'checkupdate.json',
     # Source archive
     'neat.xar',
-    # Dev/CI files
-    'PLAN.md',
-    'CLAUDE.md',
+    # Dev/tooling files
+    'AGENTS.md',
+    'package.json',
+    'package-lock.json',
 }
 
 # Locale directories to exclude (not in the supported set)

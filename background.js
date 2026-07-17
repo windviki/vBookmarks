@@ -19,7 +19,7 @@
         const rankBookmarks = (query, results) => {
             if (results.length <= 1) return results;
             const v = query.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-            const vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'ig');
+            const vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'i');
             results.sort((a, b) => {
                 const aTitle = a.title.toLowerCase();
                 const bTitle = b.title.toLowerCase();
@@ -90,7 +90,7 @@
                     return;
                 }
                 const rankedResults = rankBookmarks(value, results);
-                const firstResult = rankedResults.shift();
+                firstResult = rankedResults.shift();
                 const v = value.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
                 const firstTitle = matcher(xmlEncode(firstResult.title), v);
                 const firstSyncStatus = getSyncStatusText(firstResult);
@@ -122,12 +122,19 @@
             }
         }, 250));
 
-        chrome.omnibox.onInputEntered.addListener(text => {
+        chrome.omnibox.onInputEntered.addListener((text, disposition) => {
             if (!text || !firstResult) {
                 resetSuggest();
                 return;
             }
             const url = (text === omniboxValue) ? firstResult.url : text;
+            if (disposition === 'newForegroundTab' || disposition === 'newBackgroundTab') {
+                chrome.tabs.create({
+                    url: url,
+                    active: disposition === 'newForegroundTab'
+                });
+                return;
+            }
             chrome.tabs.query({active: true, currentWindow: true}, tabs => {
                 if (tabs[0]) {
                     chrome.tabs.update(tabs[0].id, {
