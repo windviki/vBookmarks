@@ -44,6 +44,7 @@ JS_FILES = [
     'src/sync-manager.js',
     'src/search-core.js',
     'src/separators.js',
+    'src/dialogs.js',
     'vendor/codemirror.js',
 ]
 

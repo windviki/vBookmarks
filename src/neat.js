@@ -1,4 +1,5 @@
 import { SeparatorManager } from './separators.js';
+import { initDialogs } from './dialogs.js';
 
 (window => {
     const store = window.store;
@@ -172,22 +173,6 @@ import { SeparatorManager } from './separators.js';
     };
 
     // ++++++++ end ++++++++
-
-    // Error alert
-    const AlertDialog = {
-        open: dialog => {
-            if (!dialog)
-                return;
-            $('alert-dialog-text').innerHTML = dialog;
-            body.addClass('needAlert');
-        },
-        close: () => {
-            body.removeClass('needAlert');
-        }
-    };
-    window.addEventListener('error', () => {
-        AlertDialog.open(`<strong>${_m('errorOccured')}</strong><br>${_m('reportedToDeveloper')}`);
-    }, false);
 
     // Platform detection
     const os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
@@ -1204,140 +1189,6 @@ import { SeparatorManager } from './separators.js';
     $tree.addEventListener('click', resetHeight);
     $tree.addEventListener('keyup', resetHeight);
 
-    // Confirm dialog
-    const ConfirmDialog = {
-        open: opts => {
-            if (!opts)
-                return;
-            $('confirm-dialog-text').innerHTML = opts.dialog.widont();
-            $('confirm-dialog-button-1').innerHTML = opts.button1;
-            $('confirm-dialog-button-2').innerHTML = opts.button2;
-            if (opts.fn1)
-                ConfirmDialog.fn1 = opts.fn1;
-            if (opts.fn2)
-                ConfirmDialog.fn2 = opts.fn2;
-            const focus = opts.focusButton || 1;
-            $(`confirm-dialog-button-${focus}`).focus();
-            document.body.addClass('needConfirm');
-        },
-        close: () => {
-            document.body.removeClass('needConfirm');
-        },
-        fn1: () => {
-        },
-        fn2: () => {
-        }
-    };
-
-    // Edit dialog
-    const EditDialog = {
-        open: opts => {
-            if (!opts)
-                return;
-            $('edit-dialog-text').innerHTML = opts.dialog.widont();
-            if (opts.fn)
-                EditDialog.fn = opts.fn;
-            const type = opts.type || 'bookmark';
-            const name = $('edit-dialog-name');
-            name.value = opts.name;
-            name.focus();
-            name.select();
-            name.scrollLeft = 0; // very delicate, show first few words instead of last
-            const url = $('edit-dialog-url');
-            if (type === 'bookmark') {
-                url.style.display = '';
-                url.disabled = false;
-                url.value = opts.url;
-            } else {
-                url.style.display = 'none';
-                url.disabled = true;
-                url.value = '';
-            }
-            //if lose focus, the page will submit it if bellowing class exists.
-            body.addClass('needEdit');
-        },
-        close: needSave => {
-            if (needSave === false) {
-                body.removeClass('needEdit');
-                return;
-            }
-            const urlInput = $('edit-dialog-url');
-            let url = urlInput.value;
-            if (!urlInput.validity.valid) {
-                urlInput.value = `http://${url}`;
-                if (!urlInput.validity.valid)
-                    url = ''; // if still invalid, fuck it.
-                url = `http://${url}`;
-            }
-            EditDialog.fn($('edit-dialog-name').value, url);
-            body.removeClass('needEdit');
-        },
-        fn: () => {
-        }
-    };
-
-    // ++++++++ modified by windviki@gmail.com ++++++++
-    // New Folder Dialog
-    const NewFolderDialog = {
-        open: (optName, optCall) => {
-            $('new-folder-dialog-text').innerHTML = _m('editFolder');
-            if (optCall)
-                NewFolderDialog.fn = optCall;
-            const name = $('new-folder-dialog-name');
-            name.value = optName;
-            name.focus();
-            name.select();
-            name.scrollLeft = 0;
-            //if lose focus, the page will submit it if bellowing class exists.
-            body.addClass('needInputName');
-        },
-        close: needSave => {
-            body.removeClass('needInputName');
-            if (needSave !== false) {
-                NewFolderDialog.fn($('new-folder-dialog-name').value);
-            }
-        },
-        fn: () => {
-        }
-    };
-    // ++++++++ end ++++++++
-
-    // Phase 3 (issue #33): sort a folder's children by title or date added.
-    const SortDialog = {
-        open: folderId => {
-            SortDialog.folderId = folderId;
-            // reset to the defaults every time
-            $('sort-by-title').checked = true;
-            $('sort-folders-first').checked = true;
-            $('sort-recursive').checked = false;
-            $('sort-recursive-warning').hidden = true;
-            body.addClass('needSort');
-            $('sort-dialog-ok-button').focus();
-        },
-        close: () => {
-            body.removeClass('needSort');
-            SortDialog.folderId = null;
-        },
-        folderId: null
-    };
-    $('sort-recursive').addEventListener('change', () => {
-        $('sort-recursive-warning').hidden = !$('sort-recursive').checked;
-    });
-    $('sort-dialog-cancel-button').addEventListener('click', () => {
-        SortDialog.close();
-    });
-    $('sort-dialog-ok-button').addEventListener('click', () => {
-        const folderId = SortDialog.folderId;
-        SortDialog.close();
-        if (!folderId)
-            return;
-        sortFolderContents(folderId, {
-            by: $('sort-by-date').checked ? 'dateAdded' : 'title',
-            foldersFirst: $('sort-folders-first').checked,
-            recursive: $('sort-recursive').checked
-        });
-    });
-
     // Reorder the children of folderId with serial bookmarks.move calls, then
     // rebuild the tree (the opens memory restores the expanded state).
     const sortFolderContents = (folderId, opts) => {
@@ -1365,29 +1216,8 @@ import { SeparatorManager } from './separators.js';
         });
     };
 
-    // Events for dialogs
-    $('confirm-dialog-button-1').addEventListener('click', () => {
-        ConfirmDialog.fn1();
-        ConfirmDialog.close();
-    });
-    $('confirm-dialog-button-2').addEventListener('click', () => {
-        ConfirmDialog.fn2();
-        ConfirmDialog.close();
-    });
-    $('edit-dialog-cancel-button').addEventListener('click', () => {
-        EditDialog.close(false);
-    });
-    $('new-folder-dialog-cancel-button').addEventListener('click', () => {
-        NewFolderDialog.close(false);
-    });
-    $('edit-dialog-form').addEventListener('submit', () => {
-        EditDialog.close();
-        return false;
-    });
-    $('new-folder-dialog-form').addEventListener('submit', () => {
-        NewFolderDialog.close();
-        return false;
-    });
+    // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children.
+    const dialogs = initDialogs({ onSort: sortFolderContents });
 
     function addNodeTo(referId, parentId, iIndex, addTitle, addUrl, where, isSeparator) {
         chrome.bookmarks.create({
@@ -1471,7 +1301,7 @@ import { SeparatorManager } from './separators.js';
     }
 
     function addFolderTo(referId, parentId, iIndex, where) {
-        NewFolderDialog.open('NewFolder', dirTitle => {
+        dialogs.NewFolderDialog.open('NewFolder', dirTitle => {
             addNodeTo(referId, parentId, iIndex, dirTitle, "", where, false);
         }); // end NewFolderDialog.open
     }
@@ -1663,7 +1493,7 @@ import { SeparatorManager } from './separators.js';
                 }
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
-                ConfirmDialog.open({
+                dialogs.ConfirmDialog.open({
                     dialog: _m('confirmOpenBookmarks', `${urlsLen}`),
                     button1: `<strong>${_m('open')}</strong>`,
                     button2: _m('nope'),
@@ -1685,7 +1515,7 @@ import { SeparatorManager } from './separators.js';
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
                 const dialog = incognito ? _m('confirmOpenBookmarksNewIncognitoWindow', `${urlsLen}`) : _m(
                     'confirmOpenBookmarksNewWindow', `${urlsLen}`);
-                ConfirmDialog.open({
+                dialogs.ConfirmDialog.open({
                     dialog: dialog,
                     button1: `<strong>${_m('open')}</strong>`,
                     button2: _m('nope'),
@@ -1711,7 +1541,7 @@ import { SeparatorManager } from './separators.js';
                 } catch (e) {
                     decodedUrl = url;
                 }
-                EditDialog.open({
+                dialogs.EditDialog.open({
                     dialog: dialog,
                     type: type,
                     name: node.title,
@@ -1802,7 +1632,7 @@ import { SeparatorManager } from './separators.js';
                 } else {
                     dialog = _m('confirmDeleteFolderSubfolders', [folderName, folderCount]);
                 }
-                ConfirmDialog.open({
+                dialogs.ConfirmDialog.open({
                     dialog: dialog,
                     button1: `<strong>${_m('delete')}</strong>`,
                     button2: _m('nope'),
@@ -2299,7 +2129,7 @@ import { SeparatorManager } from './separators.js';
                     actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
                     break;
                 case 'sort-folder-contents':
-                    SortDialog.open(id);
+                    dialogs.SortDialog.open(id);
                     break;
             }
         });
@@ -3152,27 +2982,12 @@ import { SeparatorManager } from './separators.js';
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseMoveHandler);
 
-    // Closing dialogs on escape
-    const closeDialogs = () => {
-        if (body.hasClass('needConfirm'))
-            ConfirmDialog.fn2();
-        ConfirmDialog.close();
-        if (body.hasClass('needEdit'))
-            EditDialog.close(false);
-        if (body.hasClass('needInputName'))
-            NewFolderDialog.close(false);
-        if (body.hasClass('needSort'))
-            SortDialog.close();
-        if (body.hasClass('needAlert'))
-            AlertDialog.close();
-    };
+    // Closing dialogs on escape (dialog state helpers come from src/dialogs.js)
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
-            if (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
-                body.hasClass('needAlert') || body.hasClass('needInputName') ||
-                body.hasClass('needSort')) { // esc
+            if (dialogs.anyOpen()) { // esc
                 e.preventDefault();
-                closeDialogs();
+                dialogs.closeDialogs();
             } else {
                 if (searchMode) {
                     // Pressing esc shouldn't close the popup when search field has value
@@ -3190,7 +3005,6 @@ import { SeparatorManager } from './separators.js';
             e.preventDefault();
         }
     });
-    $('cover').addEventListener('click', closeDialogs);
 
     // Make webkit transitions work only after elements are settled down
     setTimeout(() => {
