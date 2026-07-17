@@ -753,11 +753,6 @@ import { SeparatorManager } from './separators.js';
         tree = null;
     };
 
-    // restore height (skipped in the side panel, which is naturally full height)
-    if (!IS_PANEL && store.get('popupHeight')) {
-        body.style.height = store.get('popupHeight');
-    }
-
     chrome.bookmarks.getTree(generateTree);
 
     // Events for the tree
