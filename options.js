@@ -34,8 +34,15 @@
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
-            { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false }
+            { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
+            { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
         ];
+
+        // chrome.sidePanel requires Chrome 114+; hide the option where the API
+        // is unavailable (minimum_chrome_version is 88)
+        if (!chrome.sidePanel) {
+            $('open-in-side-panel-item').style.display = 'none';
+        }
 
         // Initialize general settings
         for (const setting of generalSettings) {
@@ -134,6 +141,7 @@
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
+        document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

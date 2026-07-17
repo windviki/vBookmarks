@@ -1,5 +1,8 @@
 (window => {
     const store = window.store;
+    // Phase 2b: popup.html doubles as the side panel page (popup.html?panel=1).
+    // popup.js tags body with the panel-mode class; here we only need the flag.
+    const IS_PANEL = window.location.search.includes('panel=1');
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
     store.ready.then(() => {
@@ -418,7 +421,32 @@
         return favUrl.toString();
     };
 
-    const generateBookmarkHTML = (title, url, extras, bookmarkId) => {
+    // Escape a title and wrap the characters at the given (pre-escape) indices
+    // in <mark> tags. Built one character at a time so escaping never shifts
+    // the indices. Used to highlight fuzzy-search matches (Phase 2b).
+    const highlightTitlePositions = (title, positions) => {
+        if (!positions || !positions.length)
+            return title.htmlspecialchars();
+        const posSet = new Set(positions);
+        let html = '';
+        let inMark = false;
+        for (let i = 0; i < title.length; i++) {
+            const hit = posSet.has(i);
+            if (hit && !inMark) {
+                html += '<mark>';
+                inMark = true;
+            } else if (!hit && inMark) {
+                html += '</mark>';
+                inMark = false;
+            }
+            html += title.charAt(i).htmlspecialchars();
+        }
+        if (inMark)
+            html += '</mark>';
+        return html;
+    };
+
+    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions) => {
         if (!extras)
             extras = '';
         const u = url.htmlspecialchars();
@@ -432,7 +460,9 @@
             favicon = 'document-code.png';
         }
         tooltipURL = tooltipURL.htmlspecialchars();
-        const name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
+        const name = (title && titlePositions && titlePositions.length)
+            ? highlightTitlePositions(title, titlePositions)
+            : (title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')));
 
         // Add sync status indicator if enabled
         let syncIndicator = '';
@@ -511,6 +541,14 @@
             level = 0;
         const paddingStart = 14 * level;
         const group = (level === 0) ? 'tree' : 'group';
+        // Phase 2b: an expanded folder with no children renders a muted
+        // "(Empty)" row. It contains no focusable a/span element, so keyboard
+        // navigation and the click handlers ignore it. This covers both child
+        // loading paths (pre-rendered open folders and lazy expand), which
+        // both funnel through generateHTML.
+        if (!data.length) {
+            return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart}px"><i>${_m('folderEmpty')}</i></li></ul>`;
+        }
         let html = `<ul role="${group}" data-level="${level}">`;
 
         for (let i = 0, l = data.length; i < l; i++) {
@@ -733,6 +771,8 @@
         }
         const html = generateHTML(subTree);
         generateNodeTrees(subTree, nodeTrees);
+        // Keep the fuzzy-search index in sync with the freshly loaded tree
+        buildSearchIndex(tree);
 
         $tree.innerHTML = html;
 
@@ -782,8 +822,8 @@
         tree = null;
     };
 
-    // restore height
-    if (store.get('popupHeight')) {
+    // restore height (skipped in the side panel, which is naturally full height)
+    if (!IS_PANEL && store.get('popupHeight')) {
         body.style.height = store.get('popupHeight');
     }
 
@@ -961,6 +1001,49 @@
     const searchInput = $('search-input');
     let prevValue = '';
 
+    // Phase 2b: flat index for the fuzzy search (window.VBMFuzzy), built from
+    // the full bookmark tree — folders included, separators excluded via the
+    // existing SeparatorManager logic. Bookmark change events only set a
+    // dirty flag; the index is rebuilt lazily on the next search so tree
+    // rendering is never blocked.
+    let searchIndex = null;
+    let searchIndexDirty = false;
+    const buildSearchIndex = tree => {
+        const index = [];
+        const walk = nodes => {
+            if (!nodes)
+                return;
+            for (let i = 0, l = nodes.length; i < l; i++) {
+                const node = nodes[i];
+                if (typeof node.parentId !== 'undefined') { // skip the invisible root
+                    const isFolder = !node.url;
+                    if (isFolder || !separatorManager.isSeparator(node.title, node.url)) {
+                        index.push({
+                            id: node.id,
+                            parentId: node.parentId,
+                            title: node.title || '',
+                            url: node.url || '',
+                            dateAdded: node.dateAdded || 0,
+                            isFolder: isFolder
+                        });
+                    }
+                }
+                if (node.children)
+                    walk(node.children);
+            }
+        };
+        walk(tree);
+        searchIndex = index;
+        searchIndexDirty = false;
+    };
+    const markSearchIndexDirty = () => {
+        searchIndexDirty = true;
+    };
+    chrome.bookmarks.onCreated.addListener(markSearchIndexDirty);
+    chrome.bookmarks.onRemoved.addListener(markSearchIndexDirty);
+    chrome.bookmarks.onChanged.addListener(markSearchIndexDirty);
+    chrome.bookmarks.onMoved.addListener(markSearchIndexDirty);
+
     const quitSearchMode = (ignoreFocus) => {
         if (searchMode) {
             prevValue = '';
@@ -1002,47 +1085,20 @@
         prevValue = value;
         searchMode = true;
         switchBookmarkMenu(true);
-        chrome.bookmarks.search(value, results => {
-            const v = value.toLowerCase();
-            let vPattern = new RegExp(`^${value.escapeRegExp().replace(/\s+/g, '.*')}`, 'ig');
-            if (results.length > 1) {
-                results.sort((a, b) => {
-                    if (a.url && !b.url) {
-                        return 1;
-                    }
-                    if (!a.url && b.url) {
-                        return -1;
-                    }
-                    const aTitle = a.title;
-                    const bTitle = b.title;
-                    let aIndexTitle = aTitle.toLowerCase().indexOf(v);
-                    let bIndexTitle = bTitle.toLowerCase().indexOf(v);
-                    if (aIndexTitle >= 0 || bIndexTitle >= 0) {
-                        if (aIndexTitle < 0)
-                            aIndexTitle = Infinity;
-                        if (bIndexTitle < 0)
-                            bIndexTitle = Infinity;
-                        return aIndexTitle - bIndexTitle;
-                    }
-                    const aTestTitle = vPattern.test(aTitle);
-                    const bTestTitle = vPattern.test(bTitle);
-                    if (aTestTitle && !bTestTitle)
-                        return -1;
-                    if (!aTestTitle && bTestTitle)
-                        return 1;
-                    return b.dateAdded - a.dateAdded;
-                });
-                results = results.slice(0, 100); // 100 is enough
-            }
+
+        const renderResults = results => {
             let html = '<ul role="list">';
+            if (!results.length) {
+                // Phase 2b: no-results empty state (no a/span inside, so
+                // keyboard navigation skips it and clicks do nothing)
+                html += `<li class="empty-state" role="listitem"><i>${_m('searchNoResults')}</i></li>`;
+            }
             for (let i = 0, l = results.length; i < l; i++) {
                 const result = results[i];
                 const id = result.id;
-                if (result.url) {
-                    if (!separatorManager.isSeparator(result.title, result.url)) {
-                        html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
-                                ${generateBookmarkHTML(result.title, result.url, '', result.id)}</li>`;
-                    }
+                if (!result.isFolder) {
+                    html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
+                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions)}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
@@ -1056,13 +1112,15 @@
                         }
                     }
 
-                    html += `<li id="results-item-${id}" role="listitem"" data-parentid="${result.parentId}">
+                    const folderTitle = result.title ?
+                        highlightTitlePositions(result.title, result.positions) : _m('noTitle');
+                    html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
                             <a href="" class="link-folder tree-item-link">
                             <div class="favicon-container">
                             <img src="folder.png" width="16" height="16" alt="">
                             ${syncIndicator}
                             </div>
-                            <i>${result.title || _m('noTitle')}</i>
+                            <i>${folderTitle}</i>
                             </a></li>`;
                 }
             }
@@ -1074,6 +1132,8 @@
             let lis = $results.querySelectorAll('li');
             Array.forEach(li => {
                 const parentId = li.dataset.parentid;
+                if (!parentId) // empty-state row
+                    return;
                 chrome.bookmarks.get(parentId, node => {
                     if (!node || !node.length)
                         return;
@@ -1085,10 +1145,18 @@
                 });
             }, lis);
 
-            results = null;
-            vPattern = null;
             lis = null;
-        });
+        };
+
+        // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed
+        if (searchIndex && !searchIndexDirty) {
+            renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+        } else {
+            chrome.bookmarks.getTree(tree => {
+                buildSearchIndex(tree);
+                renderResults(window.VBMFuzzy.rank(value, searchIndex).slice(0, 100)); // 100 is enough
+            });
+        }
     };
 
     searchInput.addEventListener('input', e => {
@@ -1106,7 +1174,10 @@
         if (e.key === 'ArrowDown' && searchInput.value.length === searchInput.selectionEnd) { // down
             e.preventDefault();
             if (searchMode) {
-                $results.querySelector('ul>li:first-child a').focus();
+                // may be the no-results empty state, which has no focusable row
+                const firstResult = $results.querySelector('ul>li:first-child a');
+                if (firstResult)
+                    firstResult.focus();
             } else {
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
@@ -1168,6 +1239,9 @@
 
     // Popup auto-height
     const resetHeight = () => {
+        // The side panel is naturally full height; never resize it
+        if (IS_PANEL)
+            return;
         // Check if auto-resize is enabled (default to true for backward compatibility)
         const autoResizeEnabled = store.get('autoResizePopup') !== 'false';
 
@@ -1380,6 +1454,10 @@
                 ul = pNode.querySelector('ul');
                 tmpDiv.destroy();
             }
+            // a stale "(Empty)" marker must not survive a real child insert
+            const emptyRow = ul.querySelector(':scope > li.empty-folder');
+            if (emptyRow)
+                emptyRow.destroy();
             if (where === 'top') {
                 if (ul.firstElementChild) {
                     ul.insertBefore(li, ul.firstElementChild);
@@ -2209,9 +2287,11 @@
             case 'ArrowDown': // down
                 e.preventDefault();
                 const liChild = li.querySelector('ul>li:first-child');
+                // may be an "(Empty)" marker row, which has no focusable element
+                const liChildFocus = liChild ? liChild.querySelector('a, span') : null;
                 let nextLiSpan;
-                if (li.hasClass('open') && liChild) {
-                    liChild.querySelector('a, span').focus();
+                if (li.hasClass('open') && liChildFocus) {
+                    liChildFocus.focus();
                 } else {
                     let nextLi = li.nextElementSibling;
                     if (nextLi) {
@@ -2243,7 +2323,15 @@
                         const lis = prevLi.querySelectorAll('ul>li:last-child');
                         prevLi = Array.filter(li => !!li.parentNode.offsetHeight, lis).getLast();
                     }
-                    prevLi.querySelector('a, span').focus();
+                    const prevLiFocus = prevLi && prevLi.querySelector('a, span');
+                    if (prevLiFocus) {
+                        prevLiFocus.focus();
+                    } else if (prevLi) {
+                        // "(Empty)" marker row: land on its folder instead
+                        const markerParentLi = prevLi.parentNode.parentNode;
+                        if (markerParentLi && markerParentLi.tagName === 'LI')
+                            markerParentLi.querySelector('a, span').focus();
+                    }
                 } else {
                     const parentPrevLi = li.parentNode.parentNode;
                     if (parentPrevLi && parentPrevLi.tagName === 'LI') {
@@ -2343,7 +2431,10 @@
                 break;
             case 'End': // end
                 if (searchMode) {
-                    this.querySelector('li:last-child a').focus();
+                    // may be the no-results empty state, which has no focusable row
+                    const lastResult = this.querySelector('li:last-child a');
+                    if (lastResult)
+                        lastResult.focus();
                 } else {
                     const lis = this.querySelectorAll('ul>li:last-child');
                     const li = Array.filter(li => !!li.parentNode.offsetHeight, lis).getLast();
@@ -2352,7 +2443,9 @@
                 break;
             case 'Home': // home
                 if (searchMode) {
-                    this.querySelector('ul>li:first-child a').focus();
+                    const firstResult = this.querySelector('ul>li:first-child a');
+                    if (firstResult)
+                        firstResult.focus();
                 } else {
                     this.querySelector('ul>li:first-child').querySelector('span, a').focus();
                 }
@@ -2859,6 +2952,10 @@
                     const level = parseInt(elParent.parentNode.dataset.level) + 1;
                     draggedBookmark.style.webkitPaddingStart = `${14 * level}px`;
                     if (ul) {
+                        // a stale "(Empty)" marker must not survive a real drop
+                        const emptyRow = ul.querySelector(':scope > li.empty-folder');
+                        if (emptyRow)
+                            emptyRow.destroy();
                         draggedBookmarkParent.inject(ul); //inject into bottom of ul
                         draggedBookmarkParent.setAttribute("level", parseInt(elParent.getAttribute("level")) + 1);
                         draggedBookmarkParent.setAttribute("data-parentid", id);

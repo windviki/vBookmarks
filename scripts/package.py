@@ -32,6 +32,7 @@ HTML_PAGES = [
 # JavaScript files referenced by HTML pages
 JS_FILES = [
     'background.js',
+    'fuzzy.js',
     'neat.js',
     'neatools.js',
     'popup.js',
@@ -105,6 +106,7 @@ EXCLUDE_FILES = {
     'AGENTS.md',
     'package.json',
     'package-lock.json',
+    '.gitignore',
 }
 
 # Locale directories to exclude (not in the supported set)

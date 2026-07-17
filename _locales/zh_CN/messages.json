@@ -10,5 +10,17 @@
   },
   "optionThemeDark": {
     "message": "深色"
+  },
+  "searchNoResults": {
+    "message": "未找到匹配的书签"
+  },
+  "folderEmpty": {
+    "message": "（空文件夹）"
+  },
+  "optionOpenInSidePanel": {
+    "message": "在侧栏中打开（替代弹窗）"
+  },
+  "openSidePanelCommand": {
+    "message": "打开 vBookmarks 侧栏"
   }
 }

@@ -16,10 +16,11 @@ Runtime code lives flat in the repo root (this is also the layout of the shipped
 
 | File(s) | Role |
 |---|---|
-| `manifest.json` | MV3 manifest: `background.js` service worker (module), `popup.html` action popup, `options.html` options page, omnibox keyword `*`, permissions `bookmarks`, `tabs`, `favicon`, `storage`, `scripting`, host permissions `<all_urls>` |
-| `background.js` | Service worker (ES module). Omnibox search only: debounced (250 ms) `chrome.bookmarks.search`, suggestion rendering, sync-status glyphs. Ranking/highlight helpers imported from `src/search-core.js` |
+| `manifest.json` | MV3 manifest: `background.js` service worker (module), `popup.html` action popup (also reused as the side panel page via `side_panel.default_path` = `popup.html?panel=1`), `options.html` options page, omnibox keyword `*`, permissions `bookmarks`, `tabs`, `favicon`, `storage`, `scripting`, `sidePanel`, host permissions `<all_urls>` |
+| `background.js` | Service worker (ES module). Omnibox search (debounced 250 ms `chrome.bookmarks.search`, suggestion rendering, sync-status glyphs; ranking/highlight helpers imported from `src/search-core.js`) plus side panel management: applies the `openInSidePanel` setting via `chrome.sidePanel.setPanelBehavior` at startup and on storage change (feature-detected, Chrome 114+), and the `open-side-panel` command (Alt+Shift+B) opens the panel |
 | `src/search-core.js` | Pure search helpers shared by `background.js` and the vitest suites: `rankBookmarks`, `xmlEncode`, `matcher` (no chrome.* references) |
-| `popup.html` / `popup.js` / `neat.js` | Main popup UI. `popup.js` restores popup size; `neat.js` (~3200 lines) is the application monolith: tree rendering, search, context menus, dialogs, keyboard nav, drag & drop, separators, sync indicators |
+| `fuzzy.js` | Popup fuzzy search (Phase 2b), classic script exposing `window.VBMFuzzy`: fzf-style subsequence `score(query, text)` (consecutive/word-boundary/camelCase bonuses, case-insensitive incl. CJK) and `rank(query, items)` (title hits ×2, url hits ×1; score desc then dateAdded desc). Loaded by `popup.html` before `neat.js` |
+| `popup.html` / `popup.js` / `neat.js` | Main popup UI, reused as the side panel page (`?panel=1` → `body.panel-mode`: full height, no size restore/auto-resize, resizers hidden). `popup.js` restores popup size; `neat.js` (~3200 lines) is the application monolith: tree rendering, fuzzy search over a lazily rebuilt flat index (`VBMFuzzy.rank`, `<mark>` highlight, no-results `.empty-state` row), `(Empty)` rows for childless folders (`.empty-folder`), context menus, dialogs, keyboard nav, drag & drop, separators, sync indicators |
 | `neatools.js` | "Neatools": tiny MooTools-inspired helper library — global `$` (= `getElementById`), `$extend`, `$each`, and `String`/`Array`/`Element` prototype extensions. Loaded first by every page |
 | `options.html` / `options.js` / `options.css` | Settings page. Data-driven settings lists (`generalSettings`, `syncSettings` arrays) bound to storage |
 | `advanced-options.html` / `advanced-options.js` | Advanced settings: custom toolbar icon, separator customization, custom CSS (via CodeMirror), full reset |
@@ -55,7 +56,7 @@ npm test           # vitest in watch mode
 npm run test:run   # single run
 ```
 
-Test files: `tests/store.test.js` (evaluates the real `store.js` in a sandbox with mocked chrome/localStorage — covers migration, mirror precedence, debounce, `clearAll`) and `tests/search-core.test.js` (imports the real `src/search-core.js` — ranking, `xmlEncode`, `matcher`).
+Test files: `tests/store.test.js` (evaluates the real `store.js` in a sandbox with mocked chrome/localStorage — covers migration, mirror precedence, debounce, `clearAll`), `tests/search-core.test.js` (imports the real `src/search-core.js` — ranking, `xmlEncode`, `matcher`), `tests/fuzzy.test.js` (sandbox-evaluates the real `fuzzy.js` — subsequence matching, scoring bonuses, CJK, rank ordering/positions, 10k-item perf budget; plus Phase 2b CSS/wiring assertions) and `tests/theme.test.js` (design-token and theme-locale contract).
 
 ### Packaging (deployment)
 

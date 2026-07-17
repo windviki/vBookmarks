@@ -174,6 +174,10 @@
     "description": "vBookmarks",
     "message": "vBookmarks"
   },
+  "folderEmpty": {
+    "description": "Row shown inside an expanded folder that has no children.",
+    "message": "(Empty)"
+  },
   "general": {
     "message": "General"
   },
@@ -213,6 +217,10 @@
   "openNewWindow": {
     "message": "Open in New Window"
   },
+  "openSidePanelCommand": {
+    "description": "Description of the keyboard shortcut command that opens the side panel.",
+    "message": "Open vBookmarks side panel"
+  },
   "optionClickNewTab": {
     "message": "Left-click opens bookmark in new tab."
   },
@@ -230,6 +238,9 @@
   },
   "optionOpenNewTab": {
     "message": "Middle-click or control-click opens bookmark in new background tab (instead of foreground)."
+  },
+  "optionOpenInSidePanel": {
+    "message": "Open in side panel instead of popup"
   },
   "optionPopupStays": {
     "message": "Popup stays open when opening (left-clicking) bookmarks."
@@ -302,6 +313,10 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Search Bookmarks"
+  },
+  "searchNoResults": {
+    "description": "Shown in the popup when a search returns no matching bookmarks.",
+    "message": "No matching bookmarks"
   },
   "url": {
     "message": "URL"

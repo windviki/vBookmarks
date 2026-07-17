@@ -103,3 +103,40 @@ import { rankBookmarks, xmlEncode, matcher } from './src/search-core.js';
         });
     }
 })();
+
+// --- Side panel (Phase 2b) ----------------------------------------------
+// popup.html doubles as the side panel page (manifest.side_panel). The panel
+// is an opt-in enhancement (setting `openInSidePanel`, off by default):
+// when enabled, clicking the action opens the panel instead of the popup.
+// chrome.sidePanel needs Chrome 114+ while minimum_chrome_version is 88, so
+// every use is feature-detected.
+const applyPanelBehavior = open => {
+    if (chrome.sidePanel) {
+        chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: open }).catch(() => {});
+    }
+};
+
+// Apply the persisted setting at service worker startup
+chrome.storage.local.get('openInSidePanel', data => {
+    applyPanelBehavior(!!data.openInSidePanel);
+});
+
+// React to setting changes immediately (options page writes chrome.storage.local)
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'local' && 'openInSidePanel' in changes) {
+        applyPanelBehavior(!!changes.openInSidePanel.newValue);
+    }
+});
+
+// Keyboard shortcut to open the panel on demand (works regardless of the setting)
+chrome.commands.onCommand.addListener(async command => {
+    if (command !== 'open-side-panel' || !chrome.sidePanel) {
+        return;
+    }
+    try {
+        const currentWindow = await chrome.windows.getCurrent();
+        await chrome.sidePanel.open({ windowId: currentWindow.id });
+    } catch (error) {
+        console.warn('vBookmarks: failed to open side panel:', error);
+    }
+});

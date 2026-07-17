@@ -12,7 +12,18 @@
         document.body.dataset.theme = store.get('theme', 'auto');
     });
 
+    // Phase 2b: popup.html doubles as the side panel page (popup.html?panel=1).
+    // The panel has no fixed popup size: tag the body for CSS and skip the
+    // popup width/height restore below.
+    const IS_PANEL = window.location.search.includes('panel=1');
+    if (IS_PANEL) {
+        document.body.classList.add('panel-mode');
+    }
+
     async function initPopup() {
+        if (IS_PANEL) {
+            return;
+        }
         // Restore size
         const popupHeight = await getSetting('popupHeight', '');
         if (popupHeight) {

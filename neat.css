@@ -700,3 +700,48 @@ menu[type=context].hide-editables #folder-delete {
     background-color: var(--vbm-scrollbar-hover);
     -webkit-border-radius: 4px;
 }
+
+/* --- Phase 2b: side panel mode (popup.html?panel=1, body.panel-mode) ---
+   The panel fills its host: no fixed popup width/height, no manual resizers.
+   #container is absolutely positioned to the body and #tree/#results already
+   flex:1, so the tree area stretches with the panel. */
+body.panel-mode {
+    width: auto;
+    height: 100vh;
+    min-width: 260px;
+}
+
+body.panel-mode #resizer-x,
+body.panel-mode #resizer-y {
+    display: none;
+}
+
+/* --- Phase 2b: fuzzy search highlight + empty states --- */
+#results mark {
+    background-color: transparent;
+    color: var(--vbm-accent);
+    font-weight: 600;
+}
+
+/* keep the hit readable on the selected/focused row */
+#results ul li a:focus mark,
+#results ul li a.active mark {
+    color: inherit;
+}
+
+/* no-results row: text only, no focusable element inside, so keyboard
+   navigation and clicks ignore it */
+#results ul li.empty-state {
+    color: var(--vbm-muted);
+    text-align: center;
+    padding: 24px 8px;
+}
+
+/* "(Empty)" row inside an expanded childless folder */
+#tree ul li.empty-folder {
+    color: var(--vbm-muted);
+    font-style: italic;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
