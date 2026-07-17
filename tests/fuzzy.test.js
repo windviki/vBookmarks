@@ -134,7 +134,7 @@ describe('phase 2b wiring', () => {
 
     it('popup.html loads fuzzy.js before neat.js', () => {
         const fuzzyAt = popupHtml.indexOf('<script src="/src/fuzzy.js"></script>');
-        const neatAt = popupHtml.indexOf('<script src="/src/neat.js"></script>');
+        const neatAt = popupHtml.indexOf('<script type="module" src="/src/neat.js"></script>');
         expect(fuzzyAt).toBeGreaterThan(-1);
         expect(neatAt).toBeGreaterThan(-1);
         expect(fuzzyAt).toBeLessThan(neatAt);
@@ -145,7 +145,8 @@ describe('phase 2b wiring', () => {
         // side_panel.default_path rejects query strings (verified on Chrome 124):
         // the panel page is a copy of popup.html carrying panel-mode on <body>.
         expect(sidepanelHtml).toContain('<body class="panel-mode">');
-        const scriptsOf = html => [...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]);
+        // neat.js loads as an ES module (P1); classic scripts have no type attribute
+        const scriptsOf = html => [...html.matchAll(/<script( type="module")? src="([^"]+)"><\/script>/g)].map(m => m[2]);
         expect(scriptsOf(sidepanelHtml)).toEqual(scriptsOf(popupHtml));
     });
 

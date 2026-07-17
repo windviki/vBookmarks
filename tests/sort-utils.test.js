@@ -97,7 +97,7 @@ describe('phase 3 wiring', () => {
 
     it('popup.html loads sort-utils.js before neat.js', () => {
         const sortAt = popupHtml.indexOf('<script src="/src/sort-utils.js"></script>');
-        const neatAt = popupHtml.indexOf('<script src="/src/neat.js"></script>');
+        const neatAt = popupHtml.indexOf('<script type="module" src="/src/neat.js"></script>');
         expect(sortAt).toBeGreaterThan(-1);
         expect(neatAt).toBeGreaterThan(-1);
         expect(sortAt).toBeLessThan(neatAt);

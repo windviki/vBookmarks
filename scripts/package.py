@@ -30,7 +30,7 @@ HTML_PAGES = [
     'pages/advanced-options.html',
 ]
 
-# JavaScript files referenced by HTML pages
+# JavaScript files referenced by HTML pages (or imported by other modules)
 JS_FILES = [
     'src/background.js',
     'src/fuzzy.js',
@@ -43,6 +43,7 @@ JS_FILES = [
     'src/store.js',
     'src/sync-manager.js',
     'src/search-core.js',
+    'src/separators.js',
     'vendor/codemirror.js',
 ]
 

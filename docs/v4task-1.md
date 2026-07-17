@@ -29,7 +29,9 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 
 最新 8 个 commit（全在本地 master，未推送）：`fcbcc39`(docs) → `7fdd128`(Phase 0) → `e5099dc`(存储统一) → `1789dd2`(暗色主题) → `da20641`(侧栏+模糊搜索+空态) → `4ea30d2`(三条 issue 功能) → `478e492`(sidepanel+CSP) → `aaa4892`(docs)。
 
-已实现：存储统一 src/store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（pages/sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、59 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
+2026-07-17 续作进度：`dbc52b7` 完成仓库目录重组（布局见下）；随后 commit 完成 **P1 切片 1** —— src/neat.js 转为 ES module 入口（pages 两个页面 `<script type="module">`），StringList / isBlank / SeparatorManager 剥离至 `src/separators.js`（storage 镜像构造注入，保持纯逻辑），新增 tests/separators.test.js 11 例直测（总计 70 例全绿，docker 冒烟零错误）。P1 下一切片建议从 dialogs 或 search 继续逐模块剥离。
+
+已实现：存储统一 src/store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（pages/sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、70 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
 
 **版本号仍是 3.7**，发版时再定 3.8/4.0（捐赠横幅按版本号比较，改版本有其副作用，见 src/neat.js donation 逻辑）。
 
@@ -39,7 +41,7 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 
 ```bash
 cd vBookmarks
-npm run test:run                                  # 59 例应全绿
+npm run test:run                                  # 70 例应全绿
 python3 scripts/package.py --output /tmp/x.zip    # 打包自检
 node --check <改动的 js 文件>
 # docker 冒烟（headless Chrome 加载扩展查 console 错误）：
@@ -63,7 +65,7 @@ node --check <改动的 js 文件>
 依据：总方案 §3 拆分蓝图。src/neat.js 现约 3500 行单 IIFE，是当前最大的维护风险。
 目标模块：tree-view / search / actions / context-menu / keyboard / dnd / dialogs / separators / sync-ui。
 路线已定：MV3 原生 ES modules（popup 页面 `<script type="module">` 可用），src/neatools.js 同步退役（替代对照表见《现状分析-弹窗UI.md》§5，注意它 monkey-patch 了 String/Array/Element 原型，全篇隐式依赖，需先全局替换为纯函数）。
-验收：每模块 <400 行；纯逻辑全部可 vitest 直测；现有 59 例测试保持绿；docker 冒烟零错误。
+验收：每模块 <400 行；纯逻辑全部可 vitest 直测；现有 70 例测试保持绿；docker 冒烟零错误。
 风险：这是大手术，建议分子任务逐个模块剥离，每步可独立提交、独立冒烟。
 
 ### P2 — ⌘K 命令面板

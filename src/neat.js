@@ -1,3 +1,5 @@
+import { SeparatorManager } from './separators.js';
+
 (window => {
     const store = window.store;
     // Phase 2b: the popup page doubles as the side panel page (sidepanel.html,
@@ -15,137 +17,8 @@
     const body = document.body;
     const _m = chrome.i18n.getMessage;
 
-    function StringList() {
-        this._strings_ = [];
-    }
-
-    StringList.prototype.append = function (str) {
-        const inputStr = `${str}`;
-        if (inputStr) {
-            this._strings_.push(inputStr);
-        }
-    };
-
-    StringList.prototype.remove = function (str) {
-        const inputStr = `${str}`;
-        if (inputStr) {
-            for (let i = 0; i < this._strings_.length; i++) {
-                if (this._strings_[i] === inputStr) {
-                    this._strings_.splice(i, 1);
-                    break;
-                }
-            }
-        }
-    };
-
-    StringList.prototype.replace = function (strOld, strNew) {
-        const inputStr = `${strOld}`;
-        const newStr = `${strNew}`;
-        if (inputStr) {
-            for (let i = 0; i < this._strings_.length; i++) {
-                if (this._strings_[i] === inputStr) {
-                    this._strings_[i] = newStr;
-                }
-            }
-        }
-    };
-
-    StringList.prototype.clear = function () {
-        return this._strings_ = [];
-    };
-
-    StringList.prototype.size = function () {
-        return this._strings_.length;
-    };
-
-    StringList.prototype.fromString = function (str) {
-        const inputStr = `${str}`;
-        if (inputStr) {
-            this._strings_ = inputStr.split(",");
-        }
-    };
-
-    StringList.prototype.toString = function () {
-        return this._strings_.join(",");
-    };
-
-    function isBlank(str) {
-        return (!str || /^\s*$/.test(str));
-    }
-
-    function SeparatorManager() {
-        this.stringList = new StringList();
-        if (!isBlank(store.get('separatorTitle'))) {
-            this.separatorTitle = store.get('separatorTitle');
-        } else {
-            this.separatorTitle = "|";
-        }
-        if (!isBlank(store.get('separatorURL'))) {
-            this.separatorURL = store.get('separatorURL');
-        } else {
-            this.separatorURL = "http://separatethis.com/";
-        }
-        this.separatorString = [];
-        if (!isBlank(store.get('separatorString'))) {
-            this.separatorString = store.get('separatorString').split(';');
-        } else {
-            this.separatorString.push("separatethis.com");
-        }
-    }
-
-    SeparatorManager.prototype.load = function () {
-        if (store.get('separators')) {
-            this.stringList.fromString(store.get('separators'));
-        }
-    };
-
-    SeparatorManager.prototype.save = function () {
-        store.set('separators', this.stringList.toString());
-    };
-
-    SeparatorManager.prototype.add = function (str) {
-        if (this.stringList._strings_.indexOf(str) === -1) {
-            this.stringList.append(str);
-        }
-    };
-
-    SeparatorManager.prototype.update = function (str, strNew) {
-        this.stringList.replace(str, strNew);
-    };
-
-    SeparatorManager.prototype.remove = function (str) {
-        this.stringList.remove(str);
-    };
-
-    SeparatorManager.prototype.getAll = function () {
-        return this.stringList._strings_;
-    };
-
-    SeparatorManager.prototype.clear = function () {
-        store.set('separators', "");
-        this.stringList.clear();
-    };
-
-    SeparatorManager.prototype.size = function () {
-        return this.stringList.size();
-    };
-
-    SeparatorManager.prototype.isSeparator = function (title, url) {
-        let isSeparator = (this.separatorURL && url.indexOf(this.separatorURL) === 0);
-        if (!isSeparator) {
-            for (let j = 0; j < this.separatorString.length; j++) {
-                if (this.separatorString[j].length > 1) {
-                    if (url.indexOf(this.separatorString[j]) !== -1) {
-                        isSeparator = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return isSeparator;
-    };
-
-    const separatorManager = new SeparatorManager();
+    // StringList / SeparatorManager 已剥离至 src/separators.js（P1，ES module 见顶部 import）
+    const separatorManager = new SeparatorManager(store);
 
     //regex for color expressions
     const hexColorRegex = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
@@ -865,7 +738,7 @@
         setTimeout(adaptBookmarkTooltips, 100);
 
         // try to load local separator list used in last version
-        const sm = new SeparatorManager();
+        const sm = new SeparatorManager(store);
         sm.load();
         const seps = sm.getAll();
         for (let i = 0; i < seps.length; i++) {
