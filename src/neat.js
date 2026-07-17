@@ -2,6 +2,7 @@ import { SeparatorManager } from './separators.js';
 import { initDialogs } from './dialogs.js';
 import { initSearch } from './search.js';
 import { initActions } from './actions.js';
+import { initContextMenu } from './context-menu.js';
 
 (window => {
     const store = window.store;
@@ -13,7 +14,6 @@ import { initActions } from './actions.js';
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
     store.ready.then(() => {
-    let currentContext;
     const document = window.document;
     const chrome = window.chrome;
     const navigator = window.navigator;
@@ -753,28 +753,6 @@ import { initActions } from './actions.js';
         el.focus();
     });
 
-    const switchBookmarkMenu = disable => {
-        if (disable) {
-            $('add-bookmark-before-bookmark').style.display = 'none';
-            $('add-bookmark-after-bookmark').style.display = 'none';
-            $('bookmark-context-menu-sep1').style.display = 'none';
-            $('add-folder-before-bookmark').style.display = 'none';
-            $('add-folder-after-bookmark').style.display = 'none';
-            $('bookmark-context-menu-sep2').style.display = 'none';
-            $('add-separator').style.display = 'none';
-            $('bookmark-context-menu-sep3').style.display = 'none';
-        } else {
-            $('add-bookmark-before-bookmark').style.display = 'block';
-            $('add-bookmark-after-bookmark').style.display = 'block';
-            $('bookmark-context-menu-sep1').style.display = 'block';
-            $('add-folder-before-bookmark').style.display = 'block';
-            $('add-folder-after-bookmark').style.display = 'block';
-            $('bookmark-context-menu-sep2').style.display = 'block';
-            $('add-separator').style.display = 'block';
-            $('bookmark-context-menu-sep3').style.display = 'block';
-        }
-    };
-
     // parse version to dictionary
     const parseVersion = function(strversion) {
         let v = {};
@@ -850,14 +828,31 @@ import { initActions } from './actions.js';
         store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
     }
 
+    // Context menus live in src/context-menu.js (P1): the three menus, the
+    // body contextmenu handler (position math, hide-editables/hide-sort on
+    // root folders, the mac right-click-hold quirk) and every menu-item
+    // dispatch. This must init before initSearch, because search calls
+    // switchBookmarkMenu synchronously when it restores a saved query — but
+    // actions/dialogs init further below (actions needs the search API), so
+    // they reach the menus module through getters that only run at dispatch
+    // time, when every const below is long initialized.
+    const menus = initContextMenu({
+        tree: $tree,
+        os,
+        rtl,
+        get actions() { return actions; },
+        get dialogs() { return dialogs; }
+    });
+
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
     // index, the results pane and every searchInput listener. generateTree
     // refreshes the index via search.updateIndex; everything else goes
-    // through the returned API.
+    // through the returned API. switchBookmarkMenu comes from the menus
+    // module (it hides the add-* menu entries while search is active).
     const search = initSearch({
         store,
         separatorManager,
-        switchBookmarkMenu,
+        switchBookmarkMenu: menus.switchBookmarkMenu,
         generateBookmarkHTML,
         highlightTitlePositions,
         rememberState
@@ -1126,333 +1121,11 @@ import { initActions } from './actions.js';
             e.preventDefault();
     });
 
-    // Context menu
-    const $bookmarkContextMenu = $('bookmark-context-menu');
-    const $folderContextMenu = $('folder-context-menu');
-    const $separatorContextMenu = $('separator-context-menu');
-
-    const clearMenu = e => {
-        currentContext = null;
-        const active = body.querySelector('.active');
-        if (active) {
-            if (e) {
-                active.removeClass('active');
-                const el = e.target;
-                if (el === $tree || el === search.results) {
-                    active.focus();
-                }
-            } else {
-                // When menu is closed, do not lost focus
-                active.focus();
-            }
-        }
-        $bookmarkContextMenu.style.left = '-999px';
-        $bookmarkContextMenu.style.opacity = '0';
-        $folderContextMenu.style.left = '-999px';
-        $folderContextMenu.style.opacity = '0';
-        $separatorContextMenu.style.left = '-999px';
-        $separatorContextMenu.style.opacity = '0';
-    };
-
-    body.addEventListener('click', clearMenu);
-    //body.addEventListener('scroll', clearMenu);
-    $tree.addEventListener('scroll', clearMenu);
-    //invalid event handler?
-    window.addEventListener('scroll', clearMenu);
-    search.results.addEventListener('scroll', clearMenu);
-    $tree.addEventListener('focus', clearMenu, true);
-    search.results.addEventListener('focus', clearMenu, true);
-
-    currentContext = null;
-    let macCloseContextMenu = false;
-    body.addEventListener('contextmenu', e => {
-        e.preventDefault();
-        clearMenu();
-        if (os === 'mac') {
-            macCloseContextMenu = false;
-            setTimeout(() => {
-                macCloseContextMenu = true;
-            }, 500);
-        }
-        let el = e.target;
-        if ((el.tagName) === 'HR') {
-            el = el.parentNode; //a
-        }
-        let menu;
-        if (el.tagName === 'A') {
-            if (el.querySelector('hr')) {
-                menu = $separatorContextMenu;
-                if (el.parentNode.dataset.parentid === '0') {
-                    menu.addClass('hide-editables');
-                } else {
-                    menu.removeClass('hide-editables');
-                }
-            } else {
-                menu = $bookmarkContextMenu;
-            }
-        } else if (el.tagName === 'SPAN') {
-            menu = $folderContextMenu;
-            // Sorting applies to a folder's contents, never to the root
-            // folders themselves (issue #33 excludes the bookmarks bar root)
-            if (el.parentNode.dataset.parentid === '0') {
-                menu.addClass('hide-sort');
-            } else {
-                menu.removeClass('hide-sort');
-            }
-        } else {
-        }
-        if (menu) {
-            currentContext = el;
-            const active = body.querySelector('.active');
-            if (active)
-                active.removeClass('active');
-            el.addClass('active');
-            const menuWidth = menu.offsetWidth;
-            const menuHeight = menu.offsetHeight;
-            const pageX = rtl ? Math.max(0, e.pageX - menuWidth) :
-                Math.min(e.pageX, body.offsetWidth - menuWidth);
-            let pageY;
-            const boundY = window.innerHeight - e.clientY;
-            if (boundY > menuHeight) {
-                pageY = e.pageY;
-            } else {
-                pageY = Math.max(e.pageY - menuHeight, 0);
-            }
-            menu.style.left = `${pageX}px`;
-            menu.style.top = `${pageY}px`;
-            menu.style.opacity = '1';
-            menu.focus();
-        }
-    });
-    // on Mac, holding down right-click for a period of time closes the context menu
-    // Not a complete implementation, but it works :)
-    if (os === 'mac')
-        body.addEventListener('mouseup', e => {
-            if (e.button === 2 && macCloseContextMenu) {
-                macCloseContextMenu = false;
-                clearMenu();
-            }
-        });
-
-    const bookmarkContextHandler = e => {
-        e.stopPropagation();
-        if (!currentContext)
-            return;
-        const el = e.target;
-        if (!el.classList.contains('menu-item'))
-            return;
-        const url = currentContext.href;
-        const li = currentContext.parentNode;
-        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-        switch (el.id) {
-            // ++++++++ modified by windviki@gmail.com ++++++++
-            case 'add-bookmark-before-bookmark':
-                chrome.tabs.query({
-                        'active': true,
-                        'windowId': chrome.windows.WINDOW_ID_CURRENT
-                    },
-                    tabs => {
-                        const curTab = tabs[0];
-                        actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
-                    });
-                break;
-            case 'add-bookmark-after-bookmark':
-                chrome.tabs.query({
-                        'active': true,
-                        'windowId': chrome.windows.WINDOW_ID_CURRENT
-                    },
-                    tabs => {
-                        const curTab = tabs[0];
-                        actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
-                    });
-                break;
-            case 'add-folder-before-bookmark':
-                actions.addNewBookmarkNode(id, 'before', '', '');
-                break;
-            case 'add-folder-after-bookmark':
-                actions.addNewBookmarkNode(id, 'after', '', '');
-                break;
-            case 'add-separator':
-                actions.addSeparator(id, 'after');
-                break;
-            case 'copy-title-and-url':
-                actions.copyAllTitlesAndUrls(id);
-                break;
-            case 'replace-url':
-                chrome.tabs.query({
-                        'active': true,
-                        'windowId': chrome.windows.WINDOW_ID_CURRENT
-                    },
-                    tabs => {
-                        actions.replaceUrl(id, tabs[0].url);
-                    });
-                break;
-            // ++++++++ end ++++++++
-            case 'bookmark-new-tab':
-                actions.openBookmarkNewTab(url);
-                break;
-            case 'bookmark-new-window':
-                actions.openBookmarkNewWindow(url);
-                break;
-            case 'bookmark-new-incognito-window':
-                actions.openBookmarkNewWindow(url, true);
-                break;
-            case 'bookmark-edit': {
-                const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                actions.editBookmarkFolder(id);
-            }
-                break;
-            case 'bookmark-delete': {
-                const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                actions.deleteBookmark(id);
-            }
-                break;
-        }
-        clearMenu();
-    };
-    // On Mac, all three mouse clicks work; on Windows, middle-click doesn't work
-    $bookmarkContextMenu.addEventListener('mouseup', e => {
-        e.stopPropagation();
-        if (e.button === 0 || (os === 'mac' && e.button === 1))
-            bookmarkContextHandler(e);
-    });
-    $bookmarkContextMenu.addEventListener('contextmenu', bookmarkContextHandler);
-    $bookmarkContextMenu.addEventListener('click', e => {
-        e.stopPropagation();
-    });
-
-    const folderContextHandler = e => {
-        if (!currentContext)
-            return;
-        const el = e.target;
-        if (!el.classList.contains('menu-item'))
-            return;
-        const li = currentContext.parentNode;
-        const id = li.id.replace('neat-tree-item-', '');
-        chrome.bookmarks.getChildren(id, children => {
-            const urls = Array.map(c => c.url, children).clean();
-            const urlsLen = urls.length;
-            const noURLS = !urlsLen;
-            switch (el.id) {
-                // ++++++++ modified by windviki@gmail.com ++++++++
-                case 'add-bookmark-top':
-                    chrome.tabs.query({
-                            'active': true,
-                            'windowId': chrome.windows.WINDOW_ID_CURRENT
-                        },
-                        tabs => {
-                            const curTab = tabs[0];
-                            actions.addNewBookmarkNode(id, 'top', curTab.url, curTab.title);
-                        });
-                    break;
-                case 'add-bookmark-bottom':
-                    chrome.tabs.query({
-                            'active': true,
-                            'windowId': chrome.windows.WINDOW_ID_CURRENT
-                        },
-                        tabs => {
-                            const curTab = tabs[0];
-                            actions.addNewBookmarkNode(id, 'bottom', curTab.url, curTab.title);
-                        });
-                    break;
-                case 'add-bookmark-before-folder':
-                    chrome.tabs.query({
-                            'active': true,
-                            'windowId': chrome.windows.WINDOW_ID_CURRENT
-                        },
-                        tabs => {
-                            const curTab = tabs[0];
-                            actions.addNewBookmarkNode(id, 'before', curTab.url, curTab.title);
-                        });
-                    break;
-                case 'add-bookmark-after-folder':
-                    chrome.tabs.query({
-                            'active': true,
-                            'windowId': chrome.windows.WINDOW_ID_CURRENT
-                        },
-                        tabs => {
-                            const curTab = tabs[0];
-                            actions.addNewBookmarkNode(id, 'after', curTab.url, curTab.title);
-                        });
-                    break;
-                case 'add-folder-before-folder':
-                    actions.addNewBookmarkNode(id, 'before', '', '');
-                    break;
-                case 'add-folder-after-folder':
-                    actions.addNewBookmarkNode(id, 'after', '', '');
-                    break;
-                case 'add-new-folder':
-                    actions.addNewBookmarkNode(id, 'top', '', '');
-                    break;
-                case 'add-folder-separator':
-                    actions.addSeparator(id, 'after', true);
-                    break;
-                case 'copy-all-titles-and-urls':
-                    actions.copyAllTitlesAndUrls(id);
-                    break;
-                // ++++++++ end ++++++++
-                case 'folder-window':
-                    if (noURLS)
-                        return;
-                    actions.openBookmarks(urls);
-                    break;
-                case 'folder-new-window':
-                    if (noURLS)
-                        return;
-                    actions.openBookmarksNewWindow(urls);
-                    break;
-                case 'folder-new-incognito-window':
-                    if (noURLS)
-                        return;
-                    actions.openBookmarksNewWindow(urls, true);
-                    break;
-                case 'folder-edit':
-                    actions.editBookmarkFolder(id);
-                    break;
-                case 'folder-delete':
-                    actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
-                    break;
-                case 'sort-folder-contents':
-                    dialogs.SortDialog.open(id);
-                    break;
-            }
-        });
-        clearMenu();
-    };
-    $folderContextMenu.addEventListener('mouseup', e => {
-        e.stopPropagation();
-        if (e.button === 0 || (os === 'mac' && e.button === 1))
-            folderContextHandler(e);
-    });
-    $folderContextMenu.addEventListener('contextmenu', folderContextHandler);
-    $folderContextMenu.addEventListener('click', e => {
-        e.stopPropagation();
-    });
-
-
-    const separatorContextHandler = e => {
-        if (!currentContext)
-            return;
-        const el = e.target;
-        if (!el.classList.contains('menu-item'))
-            return;
-        const li = currentContext.parentNode;
-        const id = li.id.replace('neat-tree-item-', '');
-        switch (el.id) {
-            case 'remove-separator':
-                actions.deleteSeparator(id);
-                break;
-        }
-        clearMenu();
-    };
-    $separatorContextMenu.addEventListener('mouseup', e => {
-        e.stopPropagation();
-        if (e.button === 0 || (os === 'mac' && e.button === 1))
-            separatorContextHandler(e);
-    });
-    $separatorContextMenu.addEventListener('contextmenu', separatorContextHandler);
+    // Context menus live in src/context-menu.js (P1, init'd next to initSearch
+    // above): the three menus, the body contextmenu handler and every
+    // menu-item dispatch. What remains here is menus.* call sites: clearMenu
+    // in the keyboard/drag code below, and the menu elements the keyboard
+    // handlers bind to (menus.bookmarkMenu/folderMenu/separatorMenu).
 
     // Keyboard navigation
     let keyBuffer = '';
@@ -1808,7 +1481,7 @@ import { initActions } from './actions.js';
                     const active = body.querySelector('.active');
                     if (active)
                         active.removeClass('active').focus();
-                    clearMenu();
+                    menus.clearMenu();
                 }
                 break;
             case 'ArrowRight':
@@ -1817,7 +1490,7 @@ import { initActions } from './actions.js';
                     const active = body.querySelector('.active');
                     if (active)
                         active.removeClass('active').focus();
-                    clearMenu();
+                    menus.clearMenu();
                 }
                 break;
             case " ": // space
@@ -1835,28 +1508,28 @@ import { initActions } from './actions.js';
                 const active = body.querySelector('.active');
                 if (active)
                     active.removeClass('active').focus();
-                clearMenu();
+                menus.clearMenu();
                 break;
         }
     };
-    $bookmarkContextMenu.addEventListener('keydown', contextKeyDown);
-    $folderContextMenu.addEventListener('keydown', contextKeyDown);
-    //$separatorContextMenu.addEventListener('keydown', contextKeyDown);
+    menus.bookmarkMenu.addEventListener('keydown', contextKeyDown);
+    menus.folderMenu.addEventListener('keydown', contextKeyDown);
+    //menus.separatorMenu.addEventListener('keydown', contextKeyDown);
 
     const contextMouseMove = e => {
         e.target.focus();
     };
-    $bookmarkContextMenu.addEventListener('mousemove', contextMouseMove);
-    $folderContextMenu.addEventListener('mousemove', contextMouseMove);
-    $separatorContextMenu.addEventListener('mousemove', contextMouseMove);
+    menus.bookmarkMenu.addEventListener('mousemove', contextMouseMove);
+    menus.folderMenu.addEventListener('mousemove', contextMouseMove);
+    menus.separatorMenu.addEventListener('mousemove', contextMouseMove);
 
     const contextMouseOut = function () {
         if (this.style.opacity.toInt())
             this.focus();
     };
-    $bookmarkContextMenu.addEventListener('mouseout', contextMouseOut);
-    $folderContextMenu.addEventListener('mouseout', contextMouseOut);
-    $separatorContextMenu.addEventListener('mouseout', contextMouseOut);
+    menus.bookmarkMenu.addEventListener('mouseout', contextMouseOut);
+    menus.folderMenu.addEventListener('mouseout', contextMouseOut);
+    menus.separatorMenu.addEventListener('mouseout', contextMouseOut);
 
     // Drag and drop, baby
     let draggedBookmark = null;
@@ -2238,7 +1911,7 @@ import { initActions } from './actions.js';
             body.style.width = `${width}px`;
             store.set('popupWidth', width);
             resetSeparator(); // Reset separators
-            clearMenu();
+            menus.clearMenu();
         } else {
             // record current height
             const changedHeight = e.screenY - screenY;
@@ -2251,14 +1924,14 @@ import { initActions } from './actions.js';
                     body.style.height = `${height}px`;
                     store.set('popupHeight', height);
                     resetSeparator(); // Reset separators
-                    clearMenu();
+                    menus.clearMenu();
                 });
             } else {
                 height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
                 body.style.height = `${height}px`;
                 store.set('popupHeight', height);
                 resetSeparator(); // Reset separators
-                clearMenu();
+                menus.clearMenu();
                 if (e.type === 'mouseup') {
                     currentMaxHeight = 0;
                 }
