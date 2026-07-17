@@ -23,7 +23,7 @@ body.transitional {
 }
 
 body[data-zoom='90']>*:not(menu),
-body[data-zoom='90'] menu[type=context] command {
+body[data-zoom='90'] menu[type=context] .menu-item {
     zoom: .9;
 }
 
@@ -33,27 +33,27 @@ body[data-zoom='90'] #drop-overlay.bookmark {
 }
 
 body[data-zoom='110']>*:not(menu),
-body[data-zoom='110'] menu[type=context] command {
+body[data-zoom='110'] menu[type=context] .menu-item {
     zoom: 1.1;
 }
 
 body[data-zoom='120']>*:not(menu),
-body[data-zoom='120'] menu[type=context] command {
+body[data-zoom='120'] menu[type=context] .menu-item {
     zoom: 1.2;
 }
 
 body[data-zoom='130']>*:not(menu),
-body[data-zoom='130'] menu[type=context] command {
+body[data-zoom='130'] menu[type=context] .menu-item {
     zoom: 1.3;
 }
 
 body[data-zoom='140']>*:not(menu),
-body[data-zoom='140'] menu[type=context] command {
+body[data-zoom='140'] menu[type=context] .menu-item {
     zoom: 1.4;
 }
 
 body[data-zoom='150']>*:not(menu),
-body[data-zoom='150'] menu[type=context] command {
+body[data-zoom='150'] menu[type=context] .menu-item {
     zoom: 1.5;
 }
 
@@ -281,7 +281,7 @@ body.linux input {
 #tree ul li span.active,
 #tree ul li a:focus,
 #tree ul li span:focus,
-menu[type=context] command:focus {
+menu[type=context] .menu-item:focus {
     color: #fff;
     background-color: #4687cb;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#6fa6de), to(#1e6cbb));
@@ -412,7 +412,7 @@ menu[type=context] {
     max-width: 100%;
 }
 
-menu[type=context] command {
+menu[type=context] .menu-item {
     display: block;
     padding: 0 10px;
     line-height: 20px;
@@ -425,11 +425,11 @@ menu[type=context] command {
 
 /* convert title-style to sentence-style capitalization, for Windows */
 
-.win menu[type=context] command {
+.win menu[type=context] .menu-item {
     text-transform: lowercase;
 }
 
-.win menu[type=context] command:first-letter {
+.win menu[type=context] .menu-item:first-letter {
     text-transform: uppercase;
 }
 

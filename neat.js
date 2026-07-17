@@ -367,8 +367,6 @@
     }, (msg, id) => {
         const el = $(id);
         const m = _m(msg);
-        if (el.tagName === 'COMMAND')
-            el.label = m;
         el.textContent = m;
     });
 
@@ -1971,7 +1969,7 @@
         if (!currentContext)
             return;
         const el = e.target;
-        if (el.tagName !== 'COMMAND')
+        if (!el.classList.contains('menu-item'))
             return;
         const url = currentContext.href;
         const li = currentContext.parentNode;
@@ -2059,7 +2057,7 @@
         if (!currentContext)
             return;
         const el = e.target;
-        if (el.tagName !== 'COMMAND')
+        if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
         const id = li.id.replace('neat-tree-item-', '');
@@ -2165,7 +2163,7 @@
         if (!currentContext)
             return;
         const el = e.target;
-        if (el.tagName !== 'COMMAND')
+        if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
         const id = li.id.replace('neat-tree-item-', '');
@@ -2483,7 +2481,7 @@
                 if (metaKey) { // cmd + down (Mac)
                     menu.lastElementChild.focus();
                 } else {
-                    if (item.tagName === 'COMMAND') {
+                    if (item.classList.contains('menu-item')) {
                         let nextItem = item.nextElementSibling;
                         if (nextItem && nextItem.tagName === 'HR')
                             nextItem = nextItem.nextElementSibling;
@@ -2502,7 +2500,7 @@
                 if (metaKey) { // cmd + up (Mac)
                     menu.firstElementChild.focus();
                 } else {
-                    if (item.tagName === 'COMMAND') {
+                    if (item.classList.contains('menu-item')) {
                         let prevItem = item.previousElementSibling;
                         if (prevItem && prevItem.tagName === 'HR')
                             prevItem = prevItem.previousElementSibling;

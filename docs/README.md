@@ -80,6 +80,8 @@ Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
 13. Advanced Settings: Custom the icon of this extension.
 
+14. You can disable auto-resize of the popup window in General settings, to keep a fixed popup height.
+
 # Technical Details
 
 - [Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks) was powered by [MooTools](http://mootools.net/), but is now powered by Neatools, a custom-coded smaller subset of MooTools. 
@@ -317,6 +319,15 @@ Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B
 **ver3.6 2024/01/08**
 
 Fixed: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
+
+
+**ver3.7 2026/05/10**
+
+New: [#36](https://github.com/windviki/vBookmarks/issues/36): Add auto-resize popup toggle option. Enable/disable automatic popup height adjustment in General settings.
+
+Fixed: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
+
+New: Full 42-language support synced from cc-dev branch, all aligned with English baseline (75 keys). Languages: ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW.
 
 
 # Attentions

@@ -76,6 +76,8 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
 
 10.高级选项里可定制程序图标。
 
+11.可在常规选项中禁用弹窗自动调整大小，保持固定高度。
+
 
 # 版本历史：
 
@@ -221,6 +223,14 @@ PAGE DOWN/UP翻页，DELETE键删除书签。
 
 - 版本3.6
   - 修正 [#31](https://github.com/windviki/vBookmarks/issues/31) 修正无法自定义图标的问题。
+
+
+- 版本3.7
+  - 新增 [#36](https://github.com/windviki/vBookmarks/issues/36) 弹窗自动调整大小开关选项，可在常规设置中禁用自动调整，保持固定弹窗高度。
+
+  - 修正 [#42](https://github.com/windviki/vBookmarks/issues/42) Chrome 148 移除已废弃的 `<command>` HTML 元素导致扩展崩溃的问题。替换为 `<div>` 元素以完全兼容。
+
+  - 从 cc-dev 分支同步全部语言支持，以英语为基准完全对齐（各 75 键）。共 42 种语言：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
 
 
 # 注意：

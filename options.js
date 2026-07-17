@@ -84,6 +84,12 @@
             }
         });
 
+        const autoResizePopup = $('auto-resize-popup');
+        autoResizePopup.checked = localStorage.autoResizePopup !== 'false';
+        autoResizePopup.addEventListener('change', () => {
+            localStorage.autoResizePopup = autoResizePopup.checked ? 'true' : 'false';
+        });
+
         const zoom = $('zoom-input');
         setInterval(async () => {
             zoom.value = await getSetting('zoom', 100);
