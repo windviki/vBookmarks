@@ -45,6 +45,7 @@ JS_FILES = [
     'src/search-core.js',
     'src/separators.js',
     'src/search.js',
+    'src/actions.js',
     'src/dialogs.js',
     'vendor/codemirror.js',
 ]
