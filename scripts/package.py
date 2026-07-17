@@ -48,6 +48,7 @@ JS_FILES = [
     'src/actions.js',
     'src/context-menu.js',
     'src/dialogs.js',
+    'src/keyboard.js',
     'vendor/codemirror.js',
 ]
 
