@@ -148,7 +148,6 @@ import { SeparatorManager } from './separators.js';
     function TreeText(nodeId) {
         this.id = nodeId;
         this.text = '';
-        this.level = 0;
     }
 
 
@@ -163,12 +162,11 @@ import { SeparatorManager } from './separators.js';
             const title = node.title;
             // check whether the referenced node is bookmark or folder
             const isBookmark = !!url;
-            _self1.text += _self1.level ? '\t' * _self1.level : `${title}\r\n`;
+            _self1.text += `${title}\r\n`;
             if (isBookmark) {
-                _self1.text += _self1.level ? '\t' * _self1.level : `${url}`;
+                _self1.text += url;
                 if (_fn1)
                     _fn1(_self1.text);
-            } else {
             }
         });
     };
