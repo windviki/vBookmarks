@@ -5,27 +5,27 @@
 	"manifest_version": 3,
 	"homepage_url": "https://chrome.google.com/webstore/detail/odhjcodnoebmndcihdedenkmdmklpihb",
 	"icons": {
-		"16": "icon16.png",
-		"48": "icon48.png",
-		"128": "icon128.png"
+		"16": "assets/icons/icon16.png",
+		"48": "assets/icons/icon48.png",
+		"128": "assets/icons/icon128.png"
 	},
 	"action": {
 		"default_icon": {
-			"16": "icon16.png",
-			"19": "icon.png",
-			"32": "icon32.png",
-			"48": "icon48.png",
-			"128": "icon128.png"
+			"16": "assets/icons/icon16.png",
+			"19": "assets/icons/icon.png",
+			"32": "assets/icons/icon32.png",
+			"48": "assets/icons/icon48.png",
+			"128": "assets/icons/icon128.png"
 		},
 		"default_title": "vBookmarks",
-		"default_popup": "popup.html"
+		"default_popup": "pages/popup.html"
 	},
-	"options_page": "options.html",
+	"options_page": "pages/options.html",
 	"side_panel": {
-		"default_path": "sidepanel.html"
+		"default_path": "pages/sidepanel.html"
 	},
 	"background": {
-        "service_worker": "background.js",
+        "service_worker": "src/background.js",
         "type": "module"
 	},
 	"commands": {

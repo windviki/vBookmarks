@@ -61,10 +61,10 @@
         defaultIconButton.addEventListener('click', () => {
             store.remove('customIcon');
             chrome.action.setIcon({
-                path: 'icon.png'
+                path: 'assets/icons/icon.png'
             });
             dontLoad = true;
-            customIconPreview.src = 'icon.png';
+            customIconPreview.src = '/assets/icons/icon.png';
         });
 
         const customSeparatorColor = $('custom-separator-color');

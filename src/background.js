@@ -1,4 +1,4 @@
-import { rankBookmarks, xmlEncode, matcher } from './src/search-core.js';
+import { rankBookmarks, xmlEncode, matcher } from './search-core.js';
 
 (() => {
     if (chrome.omnibox) {

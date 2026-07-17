@@ -3,9 +3,9 @@ vBookmarks
 
 [English Readme](README.md) | [中文说明](README.zh.md)
 
-[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](donation/donation.zh.md)
+[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](../donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](../donation/donation.zh.md)
 
-![Image of vBookmarks](vbookmarks.png)
+![Image of vBookmarks](../assets/store/vbookmarks.png)
 
 [插件WebStore页面](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
 
@@ -62,7 +62,7 @@ vBookmarks
 18) 快速收藏：弹窗内星形按钮（Ctrl/Cmd+D）与页面右键"收藏本页"
 
 
-    ![Image of vBookmarks features](vbookmarks-menu.png)
+    ![Image of vBookmarks features](../assets/store/vbookmarks-menu.png)
 
 
 # 高级功能说明：

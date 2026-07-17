@@ -29,9 +29,11 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 
 最新 8 个 commit（全在本地 master，未推送）：`fcbcc39`(docs) → `7fdd128`(Phase 0) → `e5099dc`(存储统一) → `1789dd2`(暗色主题) → `da20641`(侧栏+模糊搜索+空态) → `4ea30d2`(三条 issue 功能) → `478e492`(sidepanel+CSP) → `aaa4892`(docs)。
 
-已实现：存储统一 store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、59 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
+已实现：存储统一 src/store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（pages/sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、59 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
 
-**版本号仍是 3.7**，发版时再定 3.8/4.0（捐赠横幅按版本号比较，改版本有其副作用，见 neat.js donation 逻辑）。
+**版本号仍是 3.7**，发版时再定 3.8/4.0（捐赠横幅按版本号比较，改版本有其副作用，见 src/neat.js donation 逻辑）。
+
+**2026-07-17 仓库目录重组**：运行时 JS 在 `src/`、页面在 `pages/`、样式在 `css/`、vendored 第三方在 `vendor/`、图像素材在 `assets/`（`icons/` 代码引用并随包发布、`store/` 仅商店页/README 截图、`design/` 设计源与废弃备选）、MV2 遗物在 `legacy/`；`manifest.json`、`_locales/` 须在扩展根未动。历史分析文档（现状分析×2、总方案等）中的文件路径仍为重组前写法，以 `AGENTS.md` 为准。
 
 ### 验证工具（开工先跑一遍确认基线绿）
 
@@ -51,22 +53,22 @@ node --check <改动的 js 文件>
 - i18n：新文案先加 `_locales/en/messages.json` + `_locales/zh_CN/messages.json`，其余语言回退 en（不生成 TODO 占位）。
 - CSP：`script-src 'self'` 是硬线；`style-src` 已含 `'unsafe-inline'`（树缩进/分隔符颜色依赖内联样式属性，勿收紧）。
 - 测试：classic 脚本用 `fs + new Function` 沙箱测真源码（tests/store.test.js 范式），ESM 直接 import；**禁止抄写被测实现**。
-- sidepanel.html 是 popup.html 的复刻（仅多 `<body class="panel-mode">`），改 popup.html 后必须同步复刻（tests/fuzzy.test.js 有脚本一致性断言）。
+- pages/sidepanel.html 是 pages/popup.html 的复刻（仅多 `<body class="panel-mode">`），改 pages/popup.html 后必须同步复刻（tests/fuzzy.test.js 有脚本一致性断言）。
 - CSS：新样式追加到文件末尾带注释段标；颜色只用 `var(--vbm-*)` token；新 JS 文件要登记 scripts/package.py 的 JS_FILES。
 
 ## 4. 下一步任务（按优先级）
 
 ### P1 — neat.js 模块化拆分（下一个大版本的主体工程）
 
-依据：总方案 §3 拆分蓝图。neat.js 现约 3500 行单 IIFE，是当前最大的维护风险。
+依据：总方案 §3 拆分蓝图。src/neat.js 现约 3500 行单 IIFE，是当前最大的维护风险。
 目标模块：tree-view / search / actions / context-menu / keyboard / dnd / dialogs / separators / sync-ui。
-路线已定：MV3 原生 ES modules（popup 页面 `<script type="module">` 可用），neatools.js 同步退役（替代对照表见《现状分析-弹窗UI.md》§5，注意它 monkey-patch 了 String/Array/Element 原型，全篇隐式依赖，需先全局替换为纯函数）。
+路线已定：MV3 原生 ES modules（popup 页面 `<script type="module">` 可用），src/neatools.js 同步退役（替代对照表见《现状分析-弹窗UI.md》§5，注意它 monkey-patch 了 String/Array/Element 原型，全篇隐式依赖，需先全局替换为纯函数）。
 验收：每模块 <400 行；纯逻辑全部可 vitest 直测；现有 59 例测试保持绿；docker 冒烟零错误。
 风险：这是大手术，建议分子任务逐个模块剥离，每步可独立提交、独立冒烟。
 
 ### P2 — ⌘K 命令面板
 
-依据：总方案 §2.1。在 P1 之后做（依赖模块化后的 actions 表）。对标 alyssaxuu/omni 的斜杠命令；复用 fuzzy.js；`chrome.commands` 唤醒（注意每个扩展最多 4 个建议快捷键）。
+依据：总方案 §2.1。在 P1 之后做（依赖模块化后的 actions 表）。对标 alyssaxuu/omni 的斜杠命令；复用 src/fuzzy.js；`chrome.commands` 唤醒（注意每个扩展最多 4 个建议快捷键）。
 
 ### P3 — Phase 3 剩余功能（按 ROI 排序）
 
@@ -80,13 +82,13 @@ node --check <改动的 js 文件>
 ### P4 — 遗留观察项（小而确定的修复）
 
 - `minimum_chrome_version` 88 → 114（sidePanel/promise storage 实际基线；现靠 feature-detect 降级）。抬基线后清理降级代码。
-- `separatorURL`（neat.js 读）vs `separatorUrl`（advanced-options.js 写）大小写分叉：归并为一个 key + store.js 迁移（改 KNOWN_KEYS，注意幂等）。
-- `TreeText` 的 `'\t' * level` NaN bug（neat.js 约 267-293 行）："复制标题和 URL"产出残破，修复或移除该功能。
-- neat.js 约 786 行 `body.style.height = store.get('popupHeight')` 赋无单位值（无效 CSS，popup.js 路径才是实际生效路径）：删除或修正。
-- options.js 的 zoom 每秒 setInterval 轮询：改事件驱动。
+- `separatorURL`（src/neat.js 读）vs `separatorUrl`（src/advanced-options.js 写）大小写分叉：归并为一个 key + src/store.js 迁移（改 KNOWN_KEYS，注意幂等）。
+- `TreeText` 的 `'\t' * level` NaN bug（src/neat.js 约 267-293 行）："复制标题和 URL"产出残破，修复或移除该功能。
+- src/neat.js 约 786 行 `body.style.height = store.get('popupHeight')` 赋无单位值（无效 CSS，src/popup.js 路径才是实际生效路径）：删除或修正。
+- src/options.js 的 zoom 每秒 setInterval 轮询：改事件驱动。
 - options 页 number input 等原生控件深色适配。
-- sync-styles.css 中未上线同步 UI 的死样式段：随 P3.6 一并清理或落地。
-- 位图图标 SVG 化（folder.png、document-code.png → 内联 SVG currentColor，随主题变色）。
+- css/sync-styles.css 中未上线同步 UI 的死样式段：随 P3.6 一并清理或落地。
+- 位图图标 SVG 化（assets/icons/folder.png、assets/icons/document-code.png → 内联 SVG currentColor，随主题变色）。
 
 ### P5 — Phase 4 评估（不承诺排期）
 

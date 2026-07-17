@@ -3,7 +3,7 @@ import fs from 'node:fs';
 
 // Load the real sort-utils.js source and evaluate it in a sandbox with a
 // bare window global — the same way a classic script runs inside popup.html.
-const sortSource = fs.readFileSync(new URL('../sort-utils.js', import.meta.url), 'utf8');
+const sortSource = fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8');
 const window = {};
 new Function('window', sortSource)(window);
 const VBMSort = window.VBMSort;
@@ -93,11 +93,11 @@ describe('sort-utils.js sortNodes() purity', () => {
 
 // Phase 3 wiring contract: popup.html loads sort-utils.js before neat.js.
 describe('phase 3 wiring', () => {
-    const popupHtml = fs.readFileSync(new URL('../popup.html', import.meta.url), 'utf8');
+    const popupHtml = fs.readFileSync(new URL('../pages/popup.html', import.meta.url), 'utf8');
 
     it('popup.html loads sort-utils.js before neat.js', () => {
-        const sortAt = popupHtml.indexOf('<script src="sort-utils.js"></script>');
-        const neatAt = popupHtml.indexOf('<script src="neat.js"></script>');
+        const sortAt = popupHtml.indexOf('<script src="/src/sort-utils.js"></script>');
+        const neatAt = popupHtml.indexOf('<script src="/src/neat.js"></script>');
         expect(sortAt).toBeGreaterThan(-1);
         expect(neatAt).toBeGreaterThan(-1);
         expect(sortAt).toBeLessThan(neatAt);

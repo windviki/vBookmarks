@@ -18,36 +18,37 @@ This is a Chrome extension project with no traditional build system. Development
 
 ### Core Components
 
-1. **Background Script (`background.js`)**:
+1. **Background Script (`src/background.js`)**:
    - Handles omnibox search functionality
    - Manages extension lifecycle and background processes
    - Processes bookmark search queries from address bar
 
-2. **Popup Interface (`popup.html`, `popup.js`, `neat.js`)**:
+2. **Popup Interface (`pages/popup.html`, `src/popup.js`, `src/neat.js`)**:
    - Main bookmark tree interface
    - Search functionality within the popup
    - Context menus and bookmark management
    - Keyboard navigation support
 
-3. **Options Page (`options.html`, `options.js`)**:
+3. **Options Page (`pages/options.html`, `src/options.js`)**:
    - User preferences and settings
    - Configuration for behavior and appearance
 
-4. **Advanced Options (`advanced-options.html`, `advanced-options.js`)**:
+4. **Advanced Options (`pages/advanced-options.html`, `src/advanced-options.js`)**:
    - Custom CSS styling
    - Separator customization
    - Advanced configuration options
 
 ### Key Files
 
-- `neat.js`: Main application logic (113KB) - core bookmark tree rendering and interaction
-- `neatools.js`: Utility library providing helper functions
-- `codemirror.js`: Code editor for custom CSS input
+- `src/neat.js`: Main application logic (~142KB) - core bookmark tree rendering and interaction
+- `src/neatools.js`: Utility library providing helper functions
+- `vendor/codemirror.js`: Code editor for custom CSS input
 - `manifest.json`: Extension configuration (Manifest V3)
+- Runtime JS lives in `src/`, pages in `pages/`, styles in `css/`, vendored code in `vendor/`, images in `assets/` (see AGENTS.md for the full layout)
 
 ### Data Flow
 
-1. Extension loads and initializes bookmark tree in `neat.js`
+1. Extension loads and initializes bookmark tree in `src/neat.js`
 2. User interactions trigger bookmark API calls through `chrome.bookmarks`
 3. Settings stored in `localStorage` for persistence
 4. Context menus provide extended bookmark management actions
@@ -80,7 +81,7 @@ This is a Chrome extension project with no traditional build system. Development
 
 - Minimum Chrome version: 88 (Manifest V3)
 - Uses ES6+ JavaScript features
-- Custom utility library (`neatools.js`) instead of external frameworks
+- Custom utility library (`src/neatools.js`) instead of external frameworks
 - CodeMirror for CSS editing in advanced options
 - Security considerations: Content Security Policy implemented in manifest
 

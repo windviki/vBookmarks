@@ -463,13 +463,13 @@
             extras = '';
         const u = url.htmlspecialchars();
         // let favicon = `chrome://favicon/${u}`;
-        // let favicon = 'icon-2.png';
+        // let favicon = 'assets/design/icon-2.png';
         let favicon = getFaviconUrl(url);
         let tooltipURL = url;
         if (/^javascript:/i.test(url)) {
             if (url.length > 140)
                 tooltipURL = `${url.slice(0, 140)}...`;
-            favicon = 'document-code.png';
+            favicon = '/assets/icons/document-code.png';
         }
         tooltipURL = tooltipURL.htmlspecialchars();
         const name = (title && titlePositions && titlePositions.length)
@@ -524,7 +524,7 @@
         return `<span tabindex="0" ${extras} class="tree-item-span">
 		   <b class="twisty"></b>
 		   <div class="favicon-container">
-		       <img src="folder.png" width="16" height="16" alt="">
+		       <img src="/assets/icons/folder.png" width="16" height="16" alt="">
 		       ${syncIndicator}
 		   </div>
 		   <i>${displayTitle}</i>
@@ -1175,7 +1175,7 @@
                     html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
                             <a href="" class="link-folder tree-item-link">
                             <div class="favicon-container">
-                            <img src="folder.png" width="16" height="16" alt="">
+                            <img src="/assets/icons/folder.png" width="16" height="16" alt="">
                             ${syncIndicator}
                             </div>
                             <i>${folderTitle}</i>

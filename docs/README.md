@@ -3,9 +3,9 @@ vBookmarks
 
 [English Readme](README.md) | [中文说明](README.zh.md)
 
-[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](donation/donation.zh.md)
+[![Donate me](https://img.shields.io/badge/donate-me-orange.svg)](../donation/donation.md) | [![捐赠](https://img.shields.io/badge/捐赠-支持-orange.svg)](../donation/donation.zh.md)
 
-![Image of vBookmarks](vbookmarks.png)
+![Image of vBookmarks](../assets/store/vbookmarks.png)
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb)
 
@@ -61,7 +61,7 @@ Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 18) Quick add: star button in the popup (Ctrl/Cmd+D) and a "Bookmark this page" entry in the page context menu.
 
 
-![Image of vBookmarks features](vbookmarks-menu.png)
+![Image of vBookmarks features](../assets/store/vbookmarks-menu.png)
 
 
 # Notes for Advanced Features

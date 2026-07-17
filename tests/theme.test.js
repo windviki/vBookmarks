@@ -5,7 +5,7 @@ import fs from 'node:fs';
 // be overridden for the explicit dark theme, and have a prefers-color-scheme
 // fallback for the "auto" theme. The theme option labels must exist in en
 // (the default locale) and zh_CN.
-const neatCss = fs.readFileSync(new URL('../neat.css', import.meta.url), 'utf8');
+const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
 const enMessages = JSON.parse(fs.readFileSync(new URL('../_locales/en/messages.json', import.meta.url), 'utf8'));
 const zhCNMessages = JSON.parse(fs.readFileSync(new URL('../_locales/zh_CN/messages.json', import.meta.url), 'utf8'));
 

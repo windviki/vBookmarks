@@ -24,45 +24,45 @@ import argparse
 
 # HTML pages referenced from manifest.json (or linked from other pages)
 HTML_PAGES = [
-    'popup.html',
-    'sidepanel.html',
-    'options.html',
-    'advanced-options.html',
+    'pages/popup.html',
+    'pages/sidepanel.html',
+    'pages/options.html',
+    'pages/advanced-options.html',
 ]
 
 # JavaScript files referenced by HTML pages
 JS_FILES = [
-    'background.js',
-    'fuzzy.js',
-    'sort-utils.js',
-    'neat.js',
-    'neatools.js',
-    'popup.js',
-    'options.js',
-    'advanced-options.js',
-    'codemirror.js',
-    'store.js',
-    'sync-manager.js',
+    'src/background.js',
+    'src/fuzzy.js',
+    'src/sort-utils.js',
+    'src/neat.js',
+    'src/neatools.js',
+    'src/popup.js',
+    'src/options.js',
+    'src/advanced-options.js',
+    'src/store.js',
+    'src/sync-manager.js',
     'src/search-core.js',
+    'vendor/codemirror.js',
 ]
 
 # CSS files referenced by HTML pages
 CSS_FILES = [
-    'neat.css',
-    'options.css',
-    'codemirror.css',
-    'sync-styles.css',
+    'css/neat.css',
+    'css/options.css',
+    'css/sync-styles.css',
+    'vendor/codemirror.css',
 ]
 
 # Icon/image files referenced in manifest.json, HTML pages, or JS code
 IMAGES = [
-    'icon.png',
-    'icon16.png',
-    'icon32.png',
-    'icon48.png',
-    'icon128.png',
-    'folder.png',
-    'document-code.png',
+    'assets/icons/icon.png',
+    'assets/icons/icon16.png',
+    'assets/icons/icon32.png',
+    'assets/icons/icon48.png',
+    'assets/icons/icon128.png',
+    'assets/icons/folder.png',
+    'assets/icons/document-code.png',
 ]
 
 # Metadata files for store listing and user reference
@@ -84,26 +84,20 @@ EXCLUDE_DIRS = {
     'docs',
     'tests',
     'node_modules',
+    'legacy',  # dead MV2 artifacts (background.html, checkupdate.json)
     '_locales',  # handled separately below
 }
 
 EXCLUDE_FILES = {
-    # Source design files
-    'icon.psd',
-    # Alternative icons not in manifest
-    'icon-2.png',
-    'icon-3.png',
-    # Old omnibox icon (not referenced)
-    'omni-icon.png',
-    # Screenshots for README
-    'vbookmarks.png',
-    'vbookmarks-menu.png',
-    # Old MV2 background page (not in manifest)
-    'background.html',
-    # Disabled update checking
-    'checkupdate.json',
-    # Source archive
-    'neat.xar',
+    # Design sources and unused alternative icons (assets/design/)
+    'assets/design/icon.psd',
+    'assets/design/neat.xar',
+    'assets/design/icon-2.png',
+    'assets/design/icon-3.png',
+    'assets/design/omni-icon.png',
+    # Screenshots for store listing / README (assets/store/)
+    'assets/store/vbookmarks.png',
+    'assets/store/vbookmarks-menu.png',
     # Dev/tooling files
     'AGENTS.md',
     'package.json',

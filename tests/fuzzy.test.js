@@ -3,7 +3,7 @@ import fs from 'node:fs';
 
 // Load the real fuzzy.js source and evaluate it in a sandbox with a bare
 // window global — the same way a classic script would run inside popup.html.
-const fuzzySource = fs.readFileSync(new URL('../fuzzy.js', import.meta.url), 'utf8');
+const fuzzySource = fs.readFileSync(new URL('../src/fuzzy.js', import.meta.url), 'utf8');
 const window = {};
 new Function('window', fuzzySource)(window);
 const VBMFuzzy = window.VBMFuzzy;
@@ -122,8 +122,8 @@ describe('fuzzy.js rank()', () => {
 // Phase 2b CSS/wiring contract: panel-mode + empty-state styles exist,
 // popup.html loads fuzzy.js before neat.js.
 describe('phase 2b wiring', () => {
-    const neatCss = fs.readFileSync(new URL('../neat.css', import.meta.url), 'utf8');
-    const popupHtml = fs.readFileSync(new URL('../popup.html', import.meta.url), 'utf8');
+    const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+    const popupHtml = fs.readFileSync(new URL('../pages/popup.html', import.meta.url), 'utf8');
 
     it('neat.css defines panel-mode and empty-state styles', () => {
         expect(neatCss).toContain('body.panel-mode');
@@ -133,15 +133,15 @@ describe('phase 2b wiring', () => {
     });
 
     it('popup.html loads fuzzy.js before neat.js', () => {
-        const fuzzyAt = popupHtml.indexOf('<script src="fuzzy.js"></script>');
-        const neatAt = popupHtml.indexOf('<script src="neat.js"></script>');
+        const fuzzyAt = popupHtml.indexOf('<script src="/src/fuzzy.js"></script>');
+        const neatAt = popupHtml.indexOf('<script src="/src/neat.js"></script>');
         expect(fuzzyAt).toBeGreaterThan(-1);
         expect(neatAt).toBeGreaterThan(-1);
         expect(fuzzyAt).toBeLessThan(neatAt);
     });
 
     it('sidepanel.html mirrors popup.html (panel-mode body, same scripts)', () => {
-        const sidepanelHtml = fs.readFileSync(new URL('../sidepanel.html', import.meta.url), 'utf8');
+        const sidepanelHtml = fs.readFileSync(new URL('../pages/sidepanel.html', import.meta.url), 'utf8');
         // side_panel.default_path rejects query strings (verified on Chrome 124):
         // the panel page is a copy of popup.html carrying panel-mode on <body>.
         expect(sidepanelHtml).toContain('<body class="panel-mode">');
@@ -151,7 +151,7 @@ describe('phase 2b wiring', () => {
 
     it('manifest side_panel.default_path has no query string', () => {
         const manifest = JSON.parse(fs.readFileSync(new URL('../manifest.json', import.meta.url), 'utf8'));
-        expect(manifest.side_panel.default_path).toBe('sidepanel.html');
+        expect(manifest.side_panel.default_path).toBe('pages/sidepanel.html');
         expect(manifest.side_panel.default_path).not.toContain('?');
     });
 });

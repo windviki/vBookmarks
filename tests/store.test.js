@@ -4,7 +4,7 @@ import fs from 'node:fs';
 // Load the real store.js source and evaluate it in a sandbox with mocked
 // window/chrome/localStorage/document — the same globals a classic script
 // would see inside an extension page.
-const storeSource = fs.readFileSync(new URL('../store.js', import.meta.url), 'utf8');
+const storeSource = fs.readFileSync(new URL('../src/store.js', import.meta.url), 'utf8');
 
 const createSandbox = ({
     localStorageData = {},
