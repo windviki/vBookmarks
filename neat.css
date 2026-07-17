@@ -168,6 +168,7 @@ body.linux input {
 }
 
 #donation {
+    display: none;
     width: 98%;
     position: relative;
     top: 0;
@@ -244,6 +245,18 @@ body.linux input {
     box-shadow: inset 0 4px 4px -4px var(--vbm-border);
     flex: 1;
     position: relative;
+}
+
+/* Hidden by default; neat.js toggles via el.style.display (CSP-safe CSSOM) */
+#results {
+    display: none;
+}
+
+#clipboardcopier {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
 #results ul,

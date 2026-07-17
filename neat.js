@@ -1,8 +1,10 @@
 (window => {
     const store = window.store;
-    // Phase 2b: popup.html doubles as the side panel page (popup.html?panel=1).
-    // popup.js tags body with the panel-mode class; here we only need the flag.
-    const IS_PANEL = window.location.search.includes('panel=1');
+    // Phase 2b: the popup page doubles as the side panel page (sidepanel.html,
+    // or the ?panel=1 query form). popup.js tags body with the panel-mode
+    // class; here we only need the flag.
+    const IS_PANEL = window.location.search.includes('panel=1')
+        || window.document.body.classList.contains('panel-mode');
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
     store.ready.then(() => {
@@ -536,13 +538,13 @@
         }
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
         const hrWidth = window.innerWidth - paddingStart - 40;
-        const hrStyle = `style="width=${hrWidth}px;align=right;border:1px dotted ${color};"`
+        const hrStyle = `style="width: ${hrWidth}px; border: 1px dotted ${color};"`;
         return `<a href="#" tabindex="0" ${aStyle} class="tree-item-link">
                 <div class="favicon-container">
                     <img width="16" height="16" style="display:none;" alt="">
                 </div>
                 <i></i>
-                <hr class="child" role="treeitem" ${hrStyle}">
+                <hr class="child" role="treeitem" ${hrStyle}>
                 </a>`;
     };
 

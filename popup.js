@@ -12,10 +12,13 @@
         document.body.dataset.theme = store.get('theme', 'auto');
     });
 
-    // Phase 2b: popup.html doubles as the side panel page (popup.html?panel=1).
+    // Phase 2b: the popup page doubles as the side panel page. The panel loads
+    // sidepanel.html (a copy of popup.html whose <body> carries panel-mode);
+    // the ?panel=1 query form is kept for backwards compatibility.
     // The panel has no fixed popup size: tag the body for CSS and skip the
     // popup width/height restore below.
-    const IS_PANEL = window.location.search.includes('panel=1');
+    const IS_PANEL = window.location.search.includes('panel=1')
+        || document.body.classList.contains('panel-mode');
     if (IS_PANEL) {
         document.body.classList.add('panel-mode');
     }

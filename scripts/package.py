@@ -25,6 +25,7 @@ import argparse
 # HTML pages referenced from manifest.json (or linked from other pages)
 HTML_PAGES = [
     'popup.html',
+    'sidepanel.html',
     'options.html',
     'advanced-options.html',
 ]

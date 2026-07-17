@@ -139,4 +139,19 @@ describe('phase 2b wiring', () => {
         expect(neatAt).toBeGreaterThan(-1);
         expect(fuzzyAt).toBeLessThan(neatAt);
     });
+
+    it('sidepanel.html mirrors popup.html (panel-mode body, same scripts)', () => {
+        const sidepanelHtml = fs.readFileSync(new URL('../sidepanel.html', import.meta.url), 'utf8');
+        // side_panel.default_path rejects query strings (verified on Chrome 124):
+        // the panel page is a copy of popup.html carrying panel-mode on <body>.
+        expect(sidepanelHtml).toContain('<body class="panel-mode">');
+        const scriptsOf = html => [...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]);
+        expect(scriptsOf(sidepanelHtml)).toEqual(scriptsOf(popupHtml));
+    });
+
+    it('manifest side_panel.default_path has no query string', () => {
+        const manifest = JSON.parse(fs.readFileSync(new URL('../manifest.json', import.meta.url), 'utf8'));
+        expect(manifest.side_panel.default_path).toBe('sidepanel.html');
+        expect(manifest.side_panel.default_path).not.toContain('?');
+    });
 });

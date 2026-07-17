@@ -22,7 +22,7 @@
 	},
 	"options_page": "options.html",
 	"side_panel": {
-		"default_path": "popup.html?panel=1"
+		"default_path": "sidepanel.html"
 	},
 	"background": {
         "service_worker": "background.js",
@@ -61,7 +61,7 @@
 		"<all_urls>"
     ],
     "content_security_policy": {
-        "extension_pages": "img-src 'self' data:; default-src 'self'; style-src 'self';"
+        "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
     },
 	"minimum_chrome_version": "88.0.0.0",
 	"default_locale": "en",
