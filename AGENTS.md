@@ -16,12 +16,12 @@ Runtime code lives flat in the repo root (this is also the layout of the shipped
 
 | File(s) | Role |
 |---|---|
-| `manifest.json` | MV3 manifest: `background.js` service worker (module), `popup.html` action popup (also reused as the side panel page via `side_panel.default_path` = `popup.html?panel=1`), `options.html` options page, omnibox keyword `*`, permissions `bookmarks`, `tabs`, `favicon`, `storage`, `scripting`, `sidePanel`, `contextMenus`, host permissions `<all_urls>` |
+| `manifest.json` | MV3 manifest: `background.js` service worker (module), `popup.html` action popup, `sidepanel.html` side panel page (opt-in via the `openInSidePanel` setting; `side_panel.default_path` must not contain a query string — Chrome rejects it at install), `options.html` options page, omnibox keyword `*`, permissions `bookmarks`, `tabs`, `favicon`, `storage`, `scripting`, `sidePanel`, `contextMenus`, host permissions `<all_urls>` |
 | `background.js` | Service worker (ES module). Omnibox search (debounced 250 ms `chrome.bookmarks.search`, suggestion rendering, sync-status glyphs; ranking/highlight helpers imported from `src/search-core.js`) plus side panel management: applies the `openInSidePanel` setting via `chrome.sidePanel.setPanelBehavior` at startup and on storage change (feature-detected, Chrome 114+), and the `open-side-panel` command (Alt+Shift+B) opens the panel. Also owns the `vbm-quick-add` page context menu (Phase 3, issue #30): created on install and at every SW startup (remove-then-create for idempotence), click saves the page into `quickAddFolderId` (default `'1'`) |
 | `src/search-core.js` | Pure search helpers shared by `background.js` and the vitest suites: `rankBookmarks`, `xmlEncode`, `matcher` (no chrome.* references) |
 | `fuzzy.js` | Popup fuzzy search (Phase 2b), classic script exposing `window.VBMFuzzy`: fzf-style subsequence `score(query, text)` (consecutive/word-boundary/camelCase bonuses, case-insensitive incl. CJK) and `rank(query, items)` (title hits ×2, url hits ×1; score desc then dateAdded desc). Loaded by `popup.html` before `neat.js` |
 | `sort-utils.js` | Folder sorting (Phase 3, issue #33), classic script exposing `window.VBMSort`: pure `sortNodes(nodes, {by, foldersFirst, recursive})` — title order via `Intl.Collator(numeric, base)` or `dateAdded` desc, optional folders-first grouping, recursive returns a deep-copied ordered tree; never mutates the input. Loaded by `popup.html` before `neat.js` |
-| `popup.html` / `popup.js` / `neat.js` | Main popup UI, reused as the side panel page (`?panel=1` → `body.panel-mode`: full height, no size restore/auto-resize, resizers hidden). `popup.js` restores popup size; `neat.js` (~3500 lines) is the application monolith: tree rendering, fuzzy search over a lazily rebuilt flat index (`VBMFuzzy.rank`, `<mark>` highlight, no-results `.empty-state` row), `(Empty)` rows for childless folders (`.empty-folder`), context menus, dialogs, keyboard nav, drag & drop, separators, sync indicators. Phase 3 additions: virtual "recently added" section on top of the tree (issue #34, `chrome.bookmarks.getRecent(20)`, `data-virtual` anchors excluded from drag sources/drop targets, `neat-recent-item-` li id prefix, toggle `showRecentBookmarks` default on, debounced refresh on create/remove), folder content sorting (issue #33, `sort-folder-contents` menu item hidden on root folders, `SortDialog` + serial `bookmarks.move` reindex), quick-add star button (issue #30, `#quick-add-btn` + Ctrl/Cmd+D capture handler, solid star = already bookmarked → edit dialog) |
+| `popup.html` / `popup.js` / `neat.js` | Main popup UI; `sidepanel.html` is a copy of `popup.html` whose `<body>` carries `panel-mode` (keep their script lists in sync — `tests/fuzzy.test.js` asserts parity). Panel mode: full height, no size restore/auto-resize, resizers hidden. `popup.js` restores popup size; `neat.js` (~3500 lines) is the application monolith: tree rendering, fuzzy search over a lazily rebuilt flat index (`VBMFuzzy.rank`, `<mark>` highlight, no-results `.empty-state` row), `(Empty)` rows for childless folders (`.empty-folder`), context menus, dialogs, keyboard nav, drag & drop, separators, sync indicators. Phase 3 additions: virtual "recently added" section on top of the tree (issue #34, `chrome.bookmarks.getRecent(20)`, `data-virtual` anchors excluded from drag sources/drop targets, `neat-recent-item-` li id prefix, toggle `showRecentBookmarks` default on, debounced refresh on create/remove), folder content sorting (issue #33, `sort-folder-contents` menu item hidden on root folders, `SortDialog` + serial `bookmarks.move` reindex), quick-add star button (issue #30, `#quick-add-btn` + Ctrl/Cmd+D capture handler, solid star = already bookmarked → edit dialog) |
 | `neatools.js` | "Neatools": tiny MooTools-inspired helper library — global `$` (= `getElementById`), `$extend`, `$each`, and `String`/`Array`/`Element` prototype extensions. Loaded first by every page |
 | `options.html` / `options.js` / `options.css` | Settings page. Data-driven settings lists (`generalSettings`, `syncSettings` arrays) bound to storage |
 | `advanced-options.html` / `advanced-options.js` | Advanced settings: custom toolbar icon, separator customization, custom CSS (via CodeMirror), full reset |
@@ -41,7 +41,7 @@ Supporting directories:
 - `donation/` — donation page assets
 - `background.html`, `checkupdate.json`, `neat.xar`, `icon.psd`, screenshots — legacy/source files, excluded from packaging
 
-There is no `.gitignore`, no lint config, and no CI configuration in the repo.
+There is a `.gitignore` (ignores `node_modules/`), no lint config, and no CI configuration in the repo.
 
 ## Build, Test, and Development Commands
 
@@ -84,8 +84,12 @@ python3 scripts/check_translations.py             # report: over-long UI strings
 - Popup: open/expand/collapse folders, add/edit/delete/move bookmarks via context menus, drag & drop, separators
 - Keyboard: arrows, Enter/Space, F2 rename, Ctrl+F search, Delete, Home/End, PageUp/Down
 - Omnibox: type `*` + Space, search, Enter opens top result
-- Options: toggles persist across popup reopen; zoom; auto-resize toggle
+- Options: toggles persist across popup reopen; zoom; auto-resize toggle; theme select (auto/light/dark); side panel opt-in
 - Sync indicators and dual-storage behavior (see `docs/bookmark-sync-changes.md` for Chrome flags to test syncing/non-syncing subtrees)
+
+### Headless smoke test (Docker)
+
+A verified recipe lives outside the repo (`/tmp/vbm-smoke/smoke.js` pattern): image `zenika/alpine-chrome:with-puppeteer`, bake the extension in with a Dockerfile `COPY` (bind mounts do not work in some DinD setups), launch Chromium with `--load-extension=/ext` and `headless: 'new'` (old headless does not load extensions), then assert the service worker registers and popup/panel/options pages raise zero console errors. This caught two ship-blockers: `side_panel.default_path` rejects query strings, and `style-src 'self'` blocked all inline style attributes.
 
 ## Code Style and Conventions
 
@@ -102,7 +106,7 @@ python3 scripts/check_translations.py             # report: over-long UI strings
 
 ## Security Considerations
 
-- **Strict CSP** in `manifest.json`: `default-src 'self'; style-src 'self'; img-src 'self' data:`. No inline scripts, inline styles, or inline event handlers — all JS/CSS must live in files. This is why HTML pages load scripts via `<script src>` at the end of the body.
+- **CSP** in `manifest.json`: `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:`. Scripts must live in files (no inline scripts/handlers). `style-src` intentionally allows `'unsafe-inline'`: the codebase uses inline style attributes for dynamic values (per-level tree indentation, separator color/width, user custom CSS injection) that cannot be expressed statically — keep `script-src 'self'` as the hard line.
 - Permissions are broad (`<all_urls>` host access, `bookmarks`, `tabs`, `scripting`). Do not add permissions or broaden matches without clear need; changes trigger new permission warnings for all users.
 - User-controlled text rendered into the omnibox must go through `xmlEncode` (`background.js`); HTML contexts use `htmlspecialchars` (`neatools.js`). Preserve these escapes when editing rendering code.
 - Bookmarklet support: `javascript:` bookmark URLs are executed in the active tab via `chrome.scripting.executeScript` with an injected `func` + `args` (`neat.js`, requires the `scripting` permission); the placeholder `__VBM_CURRENT_TAB_URL__` in a bookmark URL is replaced with the active tab's URL at click time — do not break this substitution.

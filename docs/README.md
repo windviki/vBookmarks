@@ -48,6 +48,18 @@ Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
 
 12) Search bookmark folders.
 
+13) Dark theme: light / dark / follow-system, built on full design tokens.
+
+14) Optional side panel mode: open the manager in Chrome's side panel instead of the popup (opt-in setting; popup stays the default), plus an Alt+Shift+B shortcut.
+
+15) Fuzzy search: fzf-style subsequence matching in the popup, with match highlighting, CJK-friendly.
+
+16) Recently added section: the 20 most recent bookmarks on top of the tree (can be disabled in options).
+
+17) Folder content sorting: sort by title or date from the context menu, folders-first option, optional recursion.
+
+18) Quick add: star button in the popup (Ctrl/Cmd+D) and a "Bookmark this page" entry in the page context menu.
+
 
 ![Image of vBookmarks features](vbookmarks-menu.png)
 
