@@ -16,7 +16,8 @@
  * initPalette(ctx) is called once by neat.js after treeView/actions init.
  * ctx.store        — settings store (reserved; the palette reads nothing yet)
  * ctx.actions      — actions.js API (openBookmark/openBookmarkNewTab/
- *                    addNewBookmarkNode/addSeparator)
+ *                    addNewBookmarkNode/addSeparator; deleteBookmark for the
+ *                    /dead row disposal, undo capture + toast included)
  * ctx.treeView     — tree-view.js API (revealFolder)
  * ctx.quickAdd     — neat.js's quickAddCurrentTab
  * ctx.rootFolderId — folder the create-style commands drop new nodes into
@@ -25,6 +26,8 @@
  *                    /dupes cleanup confirmations and the session-save alerts
  * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
  *                    cleanup removed nodes or a session save added a folder
+ * ctx.separatorManager — separators.js API (isSeparator); /dead filters
+ *                    separators out of the scan set
  *
  * P3.1 adds a second panel mode: running the "dupes" command (slash name
  * /dupes) switches the result list to duplicate-bookmark groups — one row
@@ -39,6 +42,19 @@
  * through ctx.onChanged. A window with nothing bookmarkable gets the
  * sessionEmpty alert and the panel stays open.
  *
+ * P3.5 adds the dead-link scan (slash name /dead): the flattened tree
+ * (bookmarks only, separators filtered out through ctx.separatorManager —
+ * their URLs are http(s) and would be probed otherwise) goes through
+ * dead-links.js's concurrency-pooled fetch scan right inside the popup.
+ * While it runs, the result list is a single progress line; afterwards it
+ * is a rescan row plus one row per dead bookmark, badged with the HTTP
+ * status (or 'timeout'/'error'). Enter on a dead row confirms through
+ * ConfirmDialog and deletes via ctx.actions.deleteBookmark, so the undo
+ * capture + toast + tree-row removal ride along; Escape aborts the scan.
+ * The scan deliberately lives in the popup, not an offscreen document:
+ * disposal is interactive (the user watches progress, then acts on rows),
+ * and <all_urls> host permission already covers the cross-origin fetches.
+ *
  * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
  * (URL ?palette=1 / storage.session flag) on top of open().
  *
@@ -50,6 +66,7 @@
 
 import { normalizeUrl, findDupes, planDeletion } from './dupes.js';
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
+import { filterScannable, startDeadScan, collectDead, statusLabel } from './dead-links.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
@@ -81,8 +98,19 @@ export function initPalette(ctx = {}) {
     let index = [];          // flattened { id, title, url, dateAdded, isFolder }
     let rows = [];           // rendered rows: { kind, el, id, url, name, fn }
     let selected = -1;       // index into rows, -1 = nothing highlighted
-    let mode = 'normal';     // 'normal' | 'dupes'
+    let mode = 'normal';     // 'normal' | 'dupes' | 'dead'
     let dupeGroups = [];     // findDupes() result backing the dupes-mode rows
+    let deadScan = null;     // startDeadScan() controller while a scan runs
+    let deadItems = [];      // scannable bookmarks of the current scan
+    let deadResults = null;  // Map id → checkUrl result (null = scan in flight)
+    let deadProgress = 0;    // settled checks, for the deadChecking line
+
+    // /dead must never probe separators (their URLs are http(s)); the manager
+    // is injected by neat.js, tests may leave it out.
+    const separatorManager = ctx.separatorManager;
+    const isSeparator = separatorManager
+        ? (title, url) => separatorManager.isSeparator(title, url)
+        : null;
 
     // Flatten a bookmark tree: a node with children is a folder, everything
     // else a bookmark; the synthetic root ('0') is skipped. Shared by the
@@ -180,6 +208,89 @@ export function initPalette(ctx = {}) {
         });
     };
 
+    // --- Dead-link scan (P3.5) ----------------------------------------------
+    // The scan runs in the popup itself (see the module header). Every stage
+    // re-checks `mode`: the panel may close — and abort the scan — while the
+    // tree read or a check is in flight, and late resolutions must not paint.
+    const startDeadModeScan = () => {
+        deadResults = null;
+        deadProgress = 0;
+        chrome.bookmarks.getTree(tree => {
+            if (mode !== 'dead')
+                return;
+            deadItems = filterScannable(flattenTree(tree), isSeparator);
+            render(); // progress line at 0/total
+            deadScan = startDeadScan(deadItems, {
+                onProgress: done => {
+                    deadProgress = done;
+                    if (mode === 'dead')
+                        render();
+                }
+            });
+            deadScan.promise.then(results => {
+                deadScan = null;
+                if (mode !== 'dead') // closed mid-scan: drop the partials
+                    return;
+                deadResults = results;
+                render();
+            });
+        });
+    };
+
+    const enterDeadMode = () => {
+        mode = 'dead';
+        $input.value = '';
+        startDeadModeScan();
+    };
+
+    const removeDeadItem = item => {
+        dialogs.ConfirmDialog.open({
+            dialog: _m('deadConfirmDelete'),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                // deleteBookmark carries undo capture + toast + tree-row
+                // removal; the palette only drops its own row.
+                actions.deleteBookmark(item.id);
+                deadResults.delete(item.id);
+                deadItems = deadItems.filter(b => b.id !== item.id);
+                render();
+            }
+        });
+    };
+
+    // Dead mode: the query box is inert — while scanning, one progress line;
+    // afterwards a rescan row plus one badged row per dead bookmark, or the
+    // deadNone empty-state when everything resolved ok.
+    const renderDead = () => {
+        if (!deadResults) {
+            const li = document.createElement('li');
+            li.className = 'palette-empty';
+            li.textContent = _m('deadChecking', [`${deadProgress}`, `${deadItems.length}`]);
+            $results.appendChild(li);
+            return;
+        }
+        const dead = collectDead(deadItems, deadResults);
+        if (!dead.length) {
+            const li = document.createElement('li');
+            li.className = 'palette-empty';
+            li.textContent = _m('deadNone');
+            $results.appendChild(li);
+            return;
+        }
+        addRow({ kind: 'dead-rescan', fn: startDeadModeScan, name: _m('deadRescan') });
+        for (let i = 0, l = dead.length; i < l; i++) {
+            const item = dead[i];
+            addRow({
+                kind: 'dead',
+                fn: () => removeDeadItem(item),
+                title: item.title || item.url,
+                url: item.url,
+                badge: statusLabel(deadResults.get(item.id))
+            });
+        }
+    };
+
     // --- Session save (P3.2) ------------------------------------------------
     // Snapshot the current window's tabs into a fresh folder under
     // rootFolderId. keepOpen so the nothing-bookmarkable case can alert
@@ -232,6 +343,7 @@ export function initPalette(ctx = {}) {
         { name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
         { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
         { slash: 'dupes', keepOpen: true, name: () => _m('paletteCmdDupes'), fn: enterDupesMode },
+        { slash: 'dead', keepOpen: true, name: () => _m('paletteCmdDead'), fn: enterDeadMode },
         { slash: 'session', keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession }
     ];
 
@@ -246,10 +358,12 @@ export function initPalette(ctx = {}) {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'folder') {
             li.innerHTML = `<img class="palette-icon" src="/assets/icons/folder.png" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(row.title)}</span>`;
-        } else if (row.kind === 'dupes-all') {
+        } else if (row.kind === 'dupes-all' || row.kind === 'dead-rescan') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'dupe') {
             li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-url">${htmlspecialchars(row.count)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
+        } else if (row.kind === 'dead') {
+            li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-badge">${htmlspecialchars(row.badge)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
         } else {
             const title = row.title || row.url;
             li.innerHTML = `<img class="palette-icon" src="${faviconUrl(row.url)}" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(title)}</span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
@@ -308,6 +422,11 @@ export function initPalette(ctx = {}) {
             updateSelection();
             return;
         }
+        if (mode === 'dead') {
+            renderDead();
+            updateSelection();
+            return;
+        }
         const query = $input.value.trim();
         const slashMode = query.charAt(0) === '/';
         const q = slashMode ? query.slice(1) : query;
@@ -353,7 +472,8 @@ export function initPalette(ctx = {}) {
             row.fn();
             if (row.keepOpen)
                 return;
-        } else if (row.kind === 'dupes-all' || row.kind === 'dupe') {
+        } else if (row.kind === 'dupes-all' || row.kind === 'dupe' ||
+                   row.kind === 'dead-rescan' || row.kind === 'dead') {
             row.fn();
             return;
         } else if (row.kind === 'folder') {
@@ -416,8 +536,14 @@ export function initPalette(ctx = {}) {
         if (!openState)
             return;
         openState = false;
-        mode = 'normal'; // dupes mode never survives a close
+        mode = 'normal'; // dupes/dead mode never survives a close
         dupeGroups = [];
+        if (deadScan) { // abort an in-flight dead-link scan
+            deadScan.abort();
+            deadScan = null;
+        }
+        deadItems = [];
+        deadResults = null;
         $palette.hidden = true;
         // Hand focus back to the tree: the focused row, else its first row,
         // else just drop focus from the input.

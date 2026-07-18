@@ -72,6 +72,32 @@
   "quickAddBookmark": {
     "message": "[TODO:quickAddBookmark]"
   },
+  "deadChecking": {
+    "message": "[TODO:deadChecking]",
+    "placeholders": {
+      "done": {
+        "content": "$1",
+        "example": "12"
+      },
+      "total": {
+        "content": "$2",
+        "example": "120"
+      }
+    },
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
+  },
+  "deadConfirmDelete": {
+    "message": "[TODO:deadConfirmDelete]"
+  },
+  "deadNone": {
+    "message": "[TODO:deadNone]"
+  },
+  "deadRescan": {
+    "message": "[TODO:deadRescan]"
+  },
+  "paletteCmdDead": {
+    "message": "[TODO:paletteCmdDead]"
+  },
   "dupesCleanAll": {
     "message": "[TODO:dupesCleanAll]",
     "placeholders": {

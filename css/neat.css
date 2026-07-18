@@ -1015,6 +1015,16 @@ menu[type=context].hide-sort #sort-folder-contents {
     font-size: 85%;
 }
 
+/* Dead-link rows (P3.5): status chip next to the title ('404', 'timeout'). */
+.palette-row .palette-badge {
+    flex: none;
+    padding: 0 4px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 3px;
+    color: var(--vbm-danger);
+    font-size: 85%;
+}
+
 .palette-row:hover {
     background-color: var(--vbm-bg-hover);
 }

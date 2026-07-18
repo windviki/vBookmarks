@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 
 // palette.js touches page globals (document/window/chrome) only inside
 // initPalette and its handlers, so the real module imports cleanly in node
@@ -54,6 +54,11 @@ const MSGS = {
     paletteCmdNewSeparator: 'New separator',
     paletteCmdDupes: 'Clean duplicate bookmarks',
     paletteCmdSaveSession: 'Save window tabs as folder',
+    paletteCmdDead: 'Find dead links',
+    deadChecking: 'Checking $1 / $2…',
+    deadNone: 'No dead links found',
+    deadRescan: 'Rescan',
+    deadConfirmDelete: 'Remove this bookmark?',
     sessionFolderName: 'Session $date$',
     sessionSaved: 'Saved $1 tabs to a new folder',
     sessionEmpty: 'No tabs to save',
@@ -225,6 +230,7 @@ const setup = (opts = {}) => {
         openBookmarkNewTabCalls: [],
         addNewBookmarkNodeCalls: [],
         addSeparatorCalls: [],
+        deleteBookmarkCalls: [],
         openBookmark(url) {
             this.openBookmarkCalls.push(url);
         },
@@ -236,6 +242,9 @@ const setup = (opts = {}) => {
         },
         addSeparator(nodeId, where) {
             this.addSeparatorCalls.push([nodeId, where]);
+        },
+        deleteBookmark(id) {
+            this.deleteBookmarkCalls.push(id);
         }
     };
     const treeView = {
@@ -267,7 +276,8 @@ const setup = (opts = {}) => {
         quickAdd: () => quickAddCalls.push(1),
         rootFolderId: opts.rootFolderId || '1',
         dialogs,
-        onChanged: () => onChangedCalls.push(1)
+        onChanged: () => onChangedCalls.push(1),
+        separatorManager: opts.separatorManager || null
     });
 
     const keydown = (target, props) => {
@@ -390,10 +400,11 @@ describe('Ctrl/Cmd+K toggle', () => {
 });
 
 describe('result composition', () => {
-    it('an empty query renders only the six commands, named via i18n', () => {
+    it('an empty query renders only the seven commands, named via i18n', () => {
         const { palette, results, rowClasses } = setup({});
         palette.open();
         expect(rowClasses()).toEqual([
+            'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
@@ -406,7 +417,8 @@ describe('result composition', () => {
         expect(results._appended[2]._innerHTML).toContain(MSGS.paletteCmdNewFolder);
         expect(results._appended[3]._innerHTML).toContain(MSGS.paletteCmdNewSeparator);
         expect(results._appended[4]._innerHTML).toContain(MSGS.paletteCmdDupes);
-        expect(results._appended[5]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
+        expect(results._appended[5]._innerHTML).toContain(MSGS.paletteCmdDead);
+        expect(results._appended[6]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
     });
 
     it('a non-empty query lists matching commands before bookmarks/folders', () => {
@@ -437,7 +449,7 @@ describe('result composition', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
         type('/');
-        expect(rowClasses()).toHaveLength(6);
+        expect(rowClasses()).toHaveLength(7);
     });
 
     it('ranks real fuzzy title hits above url-only hits', () => {
@@ -482,11 +494,11 @@ describe('result composition', () => {
     it('re-renders on every input event', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
-        expect(rowClasses()).toHaveLength(6);
+        expect(rowClasses()).toHaveLength(7);
         type('gmail');
         expect(rowClasses()).toHaveLength(2);
         type('');
-        expect(rowClasses()).toHaveLength(6);
+        expect(rowClasses()).toHaveLength(7);
     });
 
     it('rebuilds a fresh index on the next open', () => {
@@ -517,9 +529,9 @@ describe('keyboard navigation', () => {
 
     it('rolls over at both ends', () => {
         const { palette, input, keydown, selectedIndex } = setup({});
-        palette.open(); // 6 command rows
+        palette.open(); // 7 command rows
         keydown(input, { key: 'ArrowUp' }); // wraps to the last row
-        expect(selectedIndex()).toBe(5);
+        expect(selectedIndex()).toBe(6);
         keydown(input, { key: 'ArrowDown' }); // wraps back to the first
         expect(selectedIndex()).toBe(0);
     });
@@ -821,7 +833,7 @@ describe('dupes mode (P3.1)', () => {
         expect(ctx.palette.isOpen()).toBe(false);
         // next open is plain normal mode again
         ctx.palette.open();
-        expect(ctx.rowClasses()).toHaveLength(6);
+        expect(ctx.rowClasses()).toHaveLength(7);
         expect(ctx.rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
     });
 
@@ -832,15 +844,15 @@ describe('dupes mode (P3.1)', () => {
         ctx.keydown(ctx.input, { key: 'Escape' });
         expect(ctx.palette.isOpen()).toBe(false);
         ctx.palette.open();
-        expect(ctx.rowClasses()).toHaveLength(6);
+        expect(ctx.rowClasses()).toHaveLength(7);
         expect(ctx.rowClasses()[0]).toBe('palette-row palette-command');
     });
 });
 
 // --- P3.2: save window tabs as folder --------------------------------------
-// The command sits at index 5 in the command set (after /dupes). The chrome
-// double's tabs.query fires synchronously but saveSession resolves through a
-// promise chain, so the assertions after a run await flush().
+// The command sits at index 6 in the command set (after /dupes and /dead).
+// The chrome double's tabs.query fires synchronously but saveSession resolves
+// through a promise chain, so the assertions after a run await flush().
 const makeSessionTabs = () => [
     { id: 1, url: 'https://a.com/', title: 'A' },
     { id: 2, url: 'chrome://extensions/', title: 'Extensions' }, // unbookmarkable
@@ -850,8 +862,8 @@ const makeSessionTabs = () => [
 
 const runSessionCommand = ctx => {
     ctx.palette.open();
-    // first ArrowDown selects row 0; the session command is row 5
-    for (let n = 0; n < 6; n++)
+    // first ArrowDown selects row 0; the session command is row 6
+    for (let n = 0; n < 7; n++)
         ctx.keydown(ctx.input, { key: 'ArrowDown' });
     ctx.keydown(ctx.input, { key: 'Enter' });
 };
@@ -860,9 +872,9 @@ describe('session save command (P3.2)', () => {
     it('lists the save-session command last, named via i18n', () => {
         const { palette, results, rowClasses } = setup({});
         palette.open();
-        expect(rowClasses()).toHaveLength(6);
-        expect(rowClasses()[5]).toBe('palette-row palette-command');
-        expect(results._appended[5]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
+        expect(rowClasses()).toHaveLength(7);
+        expect(rowClasses()[6]).toBe('palette-row palette-command');
+        expect(results._appended[6]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
     });
 
     it("the slash alias matches by prefix: '/sess' already lists it", () => {
@@ -936,5 +948,183 @@ describe('session save command (P3.2)', () => {
         expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['No tabs to save']);
         expect(ctx.palette.isOpen()).toBe(true);
         expect(ctx.chrome.bookmarks.createCalls).toEqual([]);
+    });
+});
+
+// --- P3.5: /dead mode -------------------------------------------------------
+// dead-links.js does the fetching through the global fetch, so these tests
+// double globalThis.fetch per case (restored after each). The tree holds two
+// checkable bookmarks plus one separator; the separatorManager double marks
+// separatethis.com URLs, and the scan must never probe them.
+const makeDeadTree = () => [{
+    id: '0',
+    title: '',
+    children: [
+        {
+            id: '1', title: 'Bookmarks bar', dateAdded: 10,
+            children: [
+                { id: '11', title: 'Fine', url: 'https://fine.example/', dateAdded: 100 },
+                { id: '12', title: 'Gone', url: 'https://gone.example/page', dateAdded: 200 },
+                { id: '13', title: 'Sep', url: 'http://separatethis.com/#7', dateAdded: 300 }
+            ]
+        }
+    ]
+}];
+
+const sepManager = { isSeparator: (title, url) => url.indexOf('separatethis.com') !== -1 };
+
+const enterDeadMode = ctx => {
+    ctx.palette.open();
+    ctx.type('/dead');
+    ctx.keydown(ctx.input, { key: 'Enter' });
+};
+
+describe('dead-link scan mode (P3.5)', () => {
+    const realFetch = globalThis.fetch;
+    afterEach(() => {
+        globalThis.fetch = realFetch;
+    });
+
+    it("typing '/dead' surfaces the dead command alone, via its slash alias", () => {
+        const { palette, results, rowClasses, type } = setup({});
+        palette.open();
+        type('/dead');
+        expect(rowClasses()).toEqual(['palette-row palette-command']);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdDead);
+    });
+
+    it("the '/d' prefix lists both /dupes and /dead, dupes first", () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/d');
+        const html = results._appended.map(li => li._innerHTML);
+        const iDupes = html.findIndex(h => h.includes(MSGS.paletteCmdDupes));
+        const iDead = html.findIndex(h => h.includes(MSGS.paletteCmdDead));
+        expect(iDupes).toBeGreaterThanOrEqual(0);
+        expect(iDead).toBeGreaterThan(iDupes); // command-table order wins
+    });
+
+    it('executing the command shows a 0/total progress line without closing', () => {
+        globalThis.fetch = () => new Promise(() => {}); // hang: still scanning
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.results._appended).toHaveLength(1);
+        expect(ctx.results._appended[0].className).toBe('palette-empty');
+        expect(ctx.results._appended[0].textContent).toBe('Checking 0 / 2…');
+    });
+
+    it('never probes separators: filtered out of both the fetches and the total', () => {
+        const calls = [];
+        globalThis.fetch = url => {
+            calls.push(url);
+            return new Promise(() => {});
+        };
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        expect(calls).toEqual(['https://fine.example/', 'https://gone.example/page']);
+        expect(ctx.results._appended[0].textContent).toBe('Checking 0 / 2…');
+    });
+
+    it('updates the progress line as checks settle, then renders the results', async () => {
+        const gates = {};
+        globalThis.fetch = url => new Promise(resolve => {
+            gates[url] = status => resolve({ status });
+        });
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        expect(ctx.results._appended[0].textContent).toBe('Checking 0 / 2…');
+        gates['https://fine.example/'](200);
+        await flush();
+        expect(ctx.results._appended[0].textContent).toBe('Checking 1 / 2…');
+        gates['https://gone.example/page'](404);
+        await flush();
+        expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dead-rescan',
+            'palette-row palette-dead'
+        ]);
+    });
+
+    it('renders the rescan row and a status-badged row per dead bookmark', async () => {
+        globalThis.fetch = url =>
+            Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        await flush();
+        expect(ctx.results._appended[0]._innerHTML).toContain(MSGS.deadRescan);
+        const row = ctx.results._appended[1]._innerHTML;
+        expect(row).toContain('Gone');
+        expect(row).toContain('https://gone.example/page');
+        expect(row).toContain('<span class="palette-badge">404</span>');
+    });
+
+    it('shows the deadNone empty-state when every link checks out', async () => {
+        globalThis.fetch = () => Promise.resolve({ status: 200 });
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        await flush();
+        expect(ctx.results._appended).toHaveLength(1);
+        expect(ctx.results._appended[0].className).toBe('palette-empty');
+        expect(ctx.results._appended[0].textContent).toBe(MSGS.deadNone);
+    });
+
+    it('Enter on a dead row confirms, deletes via actions.deleteBookmark and drops the row', async () => {
+        globalThis.fetch = url =>
+            Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        await flush();
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // row 1 = the dead row
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        const opts = ctx.dialogs.ConfirmDialog.openCalls[0];
+        expect(opts.dialog).toBe(MSGS.deadConfirmDelete);
+        expect(opts.button1).toContain(MSGS.delete);
+        expect(opts.button2).toBe(MSGS.nope);
+        opts.fn1();
+        expect(ctx.actions.deleteBookmarkCalls).toEqual(['12']);
+        // the only dead row is gone: back to the empty state
+        expect(ctx.results._appended).toHaveLength(1);
+        expect(ctx.results._appended[0].textContent).toBe(MSGS.deadNone);
+    });
+
+    it('the rescan row starts the scan over', async () => {
+        let calls = 0;
+        globalThis.fetch = url => {
+            calls++;
+            return Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
+        };
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        await flush();
+        expect(calls).toBe(2);
+        ctx.keydown(ctx.input, { key: 'Enter' }); // no selection: row 0 = rescan
+        expect(ctx.results._appended[0].textContent).toBe('Checking 0 / 2…');
+        await flush();
+        expect(calls).toBe(4);
+        expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dead-rescan',
+            'palette-row palette-dead'
+        ]);
+    });
+
+    it('Escape aborts the in-flight scan and closes; the next open is normal mode', () => {
+        const signals = [];
+        globalThis.fetch = (url, opts) => {
+            signals.push(opts.signal);
+            return new Promise(() => {});
+        };
+        const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
+        enterDeadMode(ctx);
+        expect(signals).toHaveLength(2);
+        const ev = ctx.keydown(ctx.input, { key: 'Escape' });
+        expect(ev.propagationStopped).toBe(true);
+        expect(ctx.palette.isOpen()).toBe(false);
+        expect(signals.every(s => s.aborted)).toBe(true);
+        ctx.palette.open();
+        expect(ctx.rowClasses()).toHaveLength(7);
+        expect(ctx.rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
     });
 });

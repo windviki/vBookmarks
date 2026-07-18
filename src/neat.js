@@ -488,7 +488,9 @@ import { initUndo } from './undo.js';
         // P3.1: the /dupes mode confirms batch deletions through the dialogs
         // and repaints the tree (same call the sort flow uses) afterwards.
         dialogs,
-        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
+        // P3.5: /dead filters separators out of the scan through the manager.
+        separatorManager
     });
 
     // Global wake-up (background.js's open-command-palette command): the

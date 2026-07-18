@@ -128,6 +128,32 @@
   "defaultIconButtonOr": {
     "message": "or"
   },
+  "deadChecking": {
+    "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
+    "message": "Checking $done$ / $total$…",
+    "placeholders": {
+      "done": {
+        "content": "$1",
+        "example": "12"
+      },
+      "total": {
+        "content": "$2",
+        "example": "120"
+      }
+    }
+  },
+  "deadConfirmDelete": {
+    "description": "Confirmation before deleting one bookmark from the palette's dead-link scan results.",
+    "message": "Remove this bookmark?"
+  },
+  "deadNone": {
+    "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",
+    "message": "No dead links found"
+  },
+  "deadRescan": {
+    "description": "Top row of the palette's dead-link scan results; starts the scan over.",
+    "message": "Rescan"
+  },
   "delete": {
     "message": "Delete"
   },
@@ -361,6 +387,10 @@
   },
   "optionThemeDark": {
     "message": "Dark"
+  },
+  "paletteCmdDead": {
+    "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
+    "message": "Find dead links"
   },
   "paletteCmdDupes": {
     "description": "Command palette entry that switches the panel into duplicate-bookmark cleanup mode (slash command /dupes).",
