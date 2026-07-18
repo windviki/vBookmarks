@@ -88,7 +88,12 @@ const SEED = `
             try { localStorage.setItem('theme', t); } catch (e) {}
         }, theme);
         await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
-        await page.evaluate(t => chrome.storage.local.set({ theme: t }), theme);
+        await page.evaluate(t => chrome.storage.local.set({
+            theme: t,
+            currentVersion: chrome.runtime.getManifest().version,
+            donationFactor: 1,
+            donationKey: 30
+        }), theme);
         await page.reload({ waitUntil: 'networkidle0' });
         await sleep(1200);
         await clickFolder(page, 'Bookmarks bar').catch(() => clickFolder(page, '书签栏'));

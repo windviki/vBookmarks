@@ -716,6 +716,8 @@ menu[type=context].hide-editables #folder-delete {
     width: 100%;
     opacity: 0;
     background-color: var(--vbm-scrim);
+    /* above the donation card (9), below palette (11) and toasts (12) */
+    z-index: 10;
 }
 
 .transitional #cover {
@@ -747,6 +749,9 @@ menu[type=context].hide-editables #folder-delete {
     border-radius: var(--vbm-radius);
     -webkit-box-shadow: 0 0 100px var(--vbm-shadow);
     box-shadow: 0 0 100px var(--vbm-shadow);
+    /* above the donation card (9): a dialog opened while the card is
+       visible must never slide behind it */
+    z-index: 10;
 }
 
 .transitional .dialog {

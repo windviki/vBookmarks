@@ -79,6 +79,15 @@ const SEED = `
     watch(page, 'popup');
     await page.setViewport({ width: 400, height: 640 });
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+    // Silence the donation ask until state 12 explicitly enables it (the
+    // seed page's storage writes race this first open, so newOrUpgrade is
+    // not deterministic otherwise).
+    await page.evaluate(() => chrome.storage.local.set({
+        currentVersion: chrome.runtime.getManifest().version,
+        donationFactor: 1,
+        donationKey: 30
+    }));
+    await page.reload({ waitUntil: 'networkidle0' });
     await sleep(1200);
 
     const clickFolder = async name => page.evaluate(n => {
@@ -170,6 +179,30 @@ const SEED = `
     });
     console.log('undo toast visible:', toastVisible);
     await page.screenshot({ path: '/tmp/shots/07-toast-light.png' });
+
+    // Donation card (light): max the snooze counter so the gentle-ask card
+    // shows on the next open (newOrUpgrade is false by now — the seed page
+    // was the first open, so this run takes the donationFactor path).
+    await page.evaluate(() => chrome.storage.local.set({ donationFactor: 100, donationKey: 30 }));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(1200);
+    const donationShown = await page.evaluate(() => {
+        const d = document.querySelector('#donation');
+        return d && getComputedStyle(d).display !== 'none';
+    });
+    console.log('donation card visible:', donationShown);
+    await page.screenshot({ path: '/tmp/shots/12-donation-light.png' });
+
+    // Recent-bookmarks section, collapsed via its header (light)
+    await page.evaluate(() => chrome.storage.local.set({ donationFactor: 1 }));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(1200);
+    await page.evaluate(() => {
+        const header = document.querySelector('#recent-header');
+        if (header) header.click();
+    });
+    await sleep(400);
+    await page.screenshot({ path: '/tmp/shots/13-recent-collapsed-light.png' });
     await page.close();
 
     // --- options page ------------------------------------------------------
@@ -202,6 +235,12 @@ const SEED = `
     watch(panel, 'panel');
     await panel.setViewport({ width: 360, height: 720 });
     await panel.goto(`chrome-extension://${extId}/pages/sidepanel.html`, { waitUntil: 'networkidle0' });
+    await panel.evaluate(() => chrome.storage.local.set({
+        currentVersion: chrome.runtime.getManifest().version,
+        donationFactor: 1,
+        donationKey: 30
+    }));
+    await panel.reload({ waitUntil: 'networkidle0' });
     await sleep(1200);
     await light(panel);
     await sleep(300);

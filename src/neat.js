@@ -166,7 +166,12 @@ import { initUndo } from './undo.js';
     } else {
         let recordVer = parseVersion(store.get('currentVersion'));
         store.set('currentVersion', mf["version"]);
-        if (recordVer && currentVer && recordVer['major'] && recordVer['minor'] && currentVer['major'] && currentVer['minor']) {     
+        // x.0 versions have minor === 0, which is falsy — the old truthiness
+        // check skipped the comparison entirely and every popup open counted
+        // as an upgrade (donation card on every open). Compare numerically.
+        if (recordVer && currentVer
+                && typeof recordVer['major'] === 'number' && typeof recordVer['minor'] === 'number'
+                && typeof currentVer['major'] === 'number' && typeof currentVer['minor'] === 'number') {
             if ( (recordVer['major'] > currentVer['major']) ||
                 ((recordVer['major'] == currentVer['major']) && (recordVer['minor'] >= currentVer['minor'])) ){
                 newOrUpgrade = false;
