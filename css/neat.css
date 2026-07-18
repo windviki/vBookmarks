@@ -164,11 +164,24 @@ body.linux input {
 #search input {
     width: 100%;
     padding: 6px 8px;
+    padding-inline-start: 27px; /* room for the leading magnifier glyph */
     margin: 0;
     background: var(--vbm-bg-elev);
     color: var(--vbm-fg);
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
+}
+
+/* Leading magnifier: marks the row as a live-filter field, so the star
+   button on the right is not mistaken for a search-submit button. */
+#search .vbm-icon-search {
+    position: absolute;
+    inset-inline-start: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    color: var(--vbm-muted);
 }
 
 #search input::placeholder {
@@ -932,24 +945,28 @@ menu[type=context].hide-sort #sort-folder-contents {
     min-width: 0;
 }
 
+/* Own button chrome (border + elevated bg) so the star reads as a
+   separate "quick add" action, not as the search field's submit button. */
 #quick-add-btn {
     flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     width: 26px;
     height: 26px;
-    margin-left: 4px;
+    margin-left: 6px;
     padding: 0;
-    border: 0;
+    border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
-    background: transparent;
+    background: var(--vbm-bg-elev);
     color: var(--vbm-muted);
     cursor: pointer;
 }
 
 #quick-add-btn:hover {
     background: var(--vbm-bg-hover);
+    border-color: var(--vbm-accent);
     color: var(--vbm-accent);
 }
 
