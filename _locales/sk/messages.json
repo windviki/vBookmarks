@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "Prístupnosť"
-  },
-  "addBookmarkAfter": {
-    "message": "Pridať aktuálnu kartu po tomto"
-  },
-  "addBookmarkBefore": {
-    "message": "Pridať aktuálnu kartu pred týmto"
-  },
-  "addBookmarkBottom": {
-    "message": "Pridať aktuálnu kartu na koniec tohto"
+  "versionMessage": {
+    "message": "Toto je nový VBM $versionNumber$! Zoznam zmien je tu: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "Pridať aktuálnu kartu na začiatok tohto"
   },
-  "addNewFolder": {
-    "message": "Pridať podpriečinok"
+  "customSeparatorColorDescription": {
+    "message": "Prispôsobiť farbu oddeľovača"
   },
-  "addNewFolderAfter": {
-    "message": "Pridať priečinok po tomto"
+  "customIconDescription": {
+    "message": "Ikona musí mať rozmery 19*19 pixelov. Inak bude zmenšená na tento rozmer."
   },
-  "addNewFolderBefore": {
-    "message": "Pridať priečinok pred týmto"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekúnd"
   },
-  "addSeparator": {
-    "message": "Pridať oddeľovač"
+  "optionOnlyShowBookmarkBar": {
+    "message": "Zobraziť len záložky v lište záložiek"
   },
-  "advancedOptions": {
-    "message": "Pokročilé možnosti"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Rodičovský priečinok: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "Zrušiť"
+  },
+  "accessibility": {
+    "message": "Prístupnosť"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval obnovenia"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Pamätať si predchádzajúci stav (pozícia posuvu a otvorené priečinky)."
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Skutočný názov záložky, ktorá sa zobrazuje ako oddeľovač"
+  },
+  "searchBookmarks": {
+    "description": "Zástupný text pre vyhľadávacie pole.",
+    "message": "Hľadať záložky"
+  },
+  "reportError": {
+    "message": "Nahlásiť chybu"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "Ignorovať"
+  },
+  "extDesc": {
+    "description": "Popis rozšírenia.",
+    "message": "Pop-up správca záložiek. Vylepšené Neat Bookmarks. Usporiadanejšie ako Neater Bookmarks."
+  },
+  "addSeparator": {
+    "message": "Pridať oddeľovač"
+  },
+  "deleteEllipsis": {
+    "message": "Odstrániť..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "Záložky nie je možné presúvať medzi synchronizovaným a miestnym úložiskom. Použite kopírovať/prilepiť.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "Odstrániť oddeľovač"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "Správa pre chybu v rozšírení, nahlásená vývojárovi.",
+    "message": "Toto bolo nahlásené vývojárovi."
+  },
+  "customStyles": {
+    "message": "Vlastné štýly"
+  },
+  "resetButton": {
+    "message": "Resetovať"
+  },
+  "customStylesDescription": {
+    "message": "Toto vyžaduje nejaké CSS znalosti. Upravujte na vlastné riziko. Zdieľanie kódu by b múdre"
+  },
+  "openNewWindow": {
+    "message": "Otvoriť v novom okne"
+  },
+  "optionPopupStays": {
+    "message": "Popup zostane otvorený pri otváraní (ľavý klik) záložiek."
+  },
+  "addBookmarkBottom": {
+    "message": "Pridať aktuálnu kartu na koniec tohto"
+  },
+  "openBookmarks": {
+    "message": "Otvoriť všetky záložky"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom okne?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Nie"
+  },
+  "defaultIconButtonOr": {
+    "message": "alebo"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otvoriť všetky záložky v novom okne"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "save": {
+    "message": "Uložiť"
+  },
+  "general": {
+    "message": "Všeobecné"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "Priblíženie"
+  },
+  "addNewFolderAfter": {
+    "message": "Pridať priečinok po tomto"
+  },
+  "optionClickNewTab": {
+    "message": "Ľavý klik otvára záložku na novej karte."
+  },
+  "noTitle": {
+    "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
+    "message": "(bez názvu)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
+  },
+  "copyTitleAndUrl": {
+    "message": "Skopírovať názov a URL do schránky"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "Upraviť záložku"
+  },
+  "edit": {
+    "message": "Upraviť..."
+  },
+  "openNewTab": {
+    "message": "Otvoriť na novej karte"
+  },
+  "syncOptions": {
+    "message": "Možnosti synchronizácie"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Názov záložky alebo priečinka.",
+    "message": "Názov"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom inkognito okne?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Skopírovať všetky názvy a URL do schránky"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automaticky obnovovať stav synchronizácie"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Vytvoril $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "Stredný klik alebo control-klik otvára záložku na novej pozadí karte (namiesto popredia)."
+  },
+  "optionShowSyncStatus": {
+    "message": "Zobraziť indikátory stavu synchronizácie"
+  },
+  "openIncognitoWindow": {
+    "message": "Otvoriť v inkognito okne"
+  },
+  "addNewFolder": {
+    "message": "Pridať podpriečinok"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Skutočná URL záložky, ktorá sa zobrazuje ako oddeľovač"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "Použiť predvolené"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automaticky zmeňte veľkosť vyskakovacieho okna podľa obsahu"
+  },
+  "resetSettings": {
+    "message": "Resetovať nastavenia"
+  },
+  "addNewFolderBefore": {
+    "message": "Pridať priečinok pred týmto"
+  },
+  "editFolder": {
+    "message": "Upraviť priečinok"
+  },
+  "errorOccured": {
+    "message": "Oops, nastala chyba."
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "Pridať aktuálnu kartu pred týmto"
+  },
+  "advancedOptions": {
+    "message": "Pokročilé možnosti"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otvoriť všetky záložky v inkognito okne"
+  },
+  "customIcon": {
+    "message": "Vlastná ikona"
+  },
+  "delete": {
+    "message": "Odstrániť"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Zvýrazniť nesynchronizované záložky"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $subFolderCount$ podpriečinok(ov) v ňom?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek.",
-    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "Resetovať vBookmarks na predvolené nastavenia."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek v novom inkognito okne.",
-    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom inkognito okne?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "Pridať aktuálnu kartu po tomto"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Potvrdzujúca správa pre otvorenie všetkých záložiek v novom okne.",
-    "message": "Ste si istí, že chcete otvoriť všetkých $count$ záložiek v novom okne?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Skopírovať všetky názvy a URL do schránky"
-  },
-  "copyTitleAndUrl": {
-    "message": "Skopírovať názov a URL do schránky"
-  },
-  "customIcon": {
-    "message": "Vlastná ikona"
-  },
-  "customIconDescription": {
-    "message": "Ikona musí mať rozmery 19*19 pixelov. Inak bude zmenšená na tento rozmer."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Prispôsobiť farbu oddeľovača"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Skutočný názov záložky, ktorá sa zobrazuje ako oddeľovač"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Skutočná URL záložky, ktorá sa zobrazuje ako oddeľovač"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
-  },
-  "customStyles": {
-    "message": "Vlastné štýly"
-  },
-  "customStylesDescription": {
-    "message": "Toto vyžaduje nejaké CSS znalosti. Upravujte na vlastné riziko. Zdieľanie kódu by b múdre"
-  },
-  "defaultIconButton": {
-    "message": "Použiť predvolené"
-  },
-  "defaultIconButtonOr": {
-    "message": "alebo"
-  },
-  "delete": {
-    "message": "Odstrániť"
-  },
-  "deleteEllipsis": {
-    "message": "Odstrániť..."
-  },
-  "versionMessage": {
-    "message": "Toto je nový VBM $versionNumber$! Zoznam zmien je tu: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "Ak sa vám to páči, možno by ste mohli prispejať na jeho budúci vývoj. Akákoľvek suma je vítaná."
   },
-  "donationGo": {
-    "message": "OK"
+  "optionCloseUnusedFolders": {
+    "message": "Zatvoriť nepoužívané priečinky pri otváraní priečinka."
   },
-  "donationDismiss": {
-    "message": "Zrušiť"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "Upraviť..."
+  "replaceUrl": {
+    "message": "Nahradiť aktuálnou URL"
   },
-  "editBookmark": {
-    "message": "Upraviť záložku"
-  },
-  "editFolder": {
-    "message": "Upraviť priečinok"
-  },
-  "errorOccured": {
-    "message": "Oops, nastala chyba."
-  },
-  "extDesc": {
-    "description": "Popis rozšírenia.",
-    "message": "Pop-up správca záložiek. Vylepšené Neat Bookmarks. Usporiadanejšie ako Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "Všeobecné"
-  },
-  "ignore": {
-    "message": "Ignorovať"
-  },
-  "name": {
-    "description": "Názov záložky alebo priečinka.",
-    "message": "Názov"
-  },
-  "nope": {
-    "message": "Nie"
-  },
-  "noTitle": {
-    "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
-    "message": "(bez názvu)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Akcia na otvorenie záložiek.",
     "message": "Otvoriť"
   },
-  "openBookmarks": {
-    "message": "Otvoriť všetky záložky"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otvoriť všetky záložky v inkognito okne"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otvoriť všetky záložky v novom okne"
-  },
-  "openIncognitoWindow": {
-    "message": "Otvoriť v inkognito okne"
-  },
-  "openNewTab": {
-    "message": "Otvoriť na novej karte"
-  },
-  "openNewWindow": {
-    "message": "Otvoriť v novom okne"
-  },
-  "optionClickNewTab": {
-    "message": "Ľavý klik otvára záložku na novej karte."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Zatvoriť nepoužívané priečinky pri otváraní priečinka."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Zobraziť len záložky v lište záložiek"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
-  },
-  "optionOpenNewTab": {
-    "message": "Stredný klik alebo control-klik otvára záložku na novej pozadí karte (namiesto popredia)."
-  },
-  "optionPopupStays": {
-    "message": "Popup zostane otvorený pri otváraní (ľavý klik) záložiek."
-  },
-  "optionRememberPrevState": {
-    "message": "Pamätať si predchádzajúci stav (pozícia posuvu a otvorené priečinky)."
-  },
-  "options": {
-    "message": "Možnosti"
-  },
-  "optionsFooterText": {
-    "description": "Text päty pre stránku Možnosti",
-    "message": "Vytvoril $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Priblíženie"
-  },
-  "parentFolder": {
-    "description": "Rodičovský priečinok v informáciách zobrazených v popise záložiek v zozname výsledkov vyhľadávania.",
-    "message": "Rodičovský priečinok: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Lišta záložiek"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Odstrániť oddeľovač"
-  },
-  "replaceUrl": {
-    "message": "Nahradiť aktuálnou URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Správa pre chybu v rozšírení, nahlásená vývojárovi.",
-    "message": "Toto bolo nahlásené vývojárovi."
-  },
-  "reportError": {
-    "message": "Nahlásiť chybu"
-  },
-  "resetButton": {
-    "message": "Resetovať"
-  },
-  "resetSettings": {
-    "message": "Resetovať nastavenia"
-  },
-  "resetSettingsDescription": {
-    "message": "Resetovať vBookmarks na predvolené nastavenia."
-  },
-  "save": {
-    "message": "Uložiť"
-  },
-  "searchBookmarks": {
-    "description": "Zástupný text pre vyhľadávacie pole.",
-    "message": "Hľadať záložky"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Možnosti synchronizácie"
-  },
-  "optionShowSyncStatus": {
-    "message": "Zobraziť indikátory stavu synchronizácie"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Zvýrazniť nesynchronizované záložky"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automaticky obnovovať stav synchronizácie"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval obnovenia"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekúnd"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automaticky zmeňte veľkosť vyskakovacieho okna podľa obsahu"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Záložky nie je možné presúvať medzi synchronizovaným a miestnym úložiskom. Použite kopírovať/prilepiť.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

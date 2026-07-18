@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "Dostępność"
-  },
-  "addBookmarkAfter": {
-    "message": "Dodaj obecną kartę po tym"
-  },
-  "addBookmarkBefore": {
-    "message": "Dodaj obecną kartę przed tym"
-  },
-  "addBookmarkBottom": {
-    "message": "Dodaj obecną kartę na dół tego"
+  "versionMessage": {
+    "message": "To jest nowe VBM $versionNumber$! Lista zmian znajduje się tutaj: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "Dodaj obecną kartę na górę tego"
   },
-  "addNewFolder": {
-    "message": "Dodaj podfolder"
+  "customSeparatorColorDescription": {
+    "message": "Dostosuj kolor separatora"
   },
-  "addNewFolderAfter": {
-    "message": "Dodaj folder po tym"
+  "customIconDescription": {
+    "message": "Ikona musi mieć wymiary 19*19 pikseli. W przeciwnym razie zostanie przeskalowana do tych wymiarów."
   },
-  "addNewFolderBefore": {
-    "message": "Dodaj folder przed tym"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundy"
   },
-  "addSeparator": {
-    "message": "Dodaj separator"
+  "optionOnlyShowBookmarkBar": {
+    "message": "Pokaż tylko zakładki na pasku zakładek"
   },
-  "advancedOptions": {
-    "message": "Opcje zaawansowane"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Folder nadrzędny: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "Zignoruj"
+  },
+  "accessibility": {
+    "message": "Dostępność"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interwał odświeżania"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Pamiętaj poprzedni stan (pozycja przewijania i otwarte foldery)."
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Rzeczywisty tytuł zakładki wyświetlanej jako separator"
+  },
+  "searchBookmarks": {
+    "description": "Tekst zastępczy dla pola wyszukiwania.",
+    "message": "Szukaj zakładek"
+  },
+  "reportError": {
+    "message": "Zgłoś błąd"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Czy na pewno chcesz usunąć folder $folderName$ i $bookmarkCount$ zakładek w nim?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "Ignoruj"
+  },
+  "extDesc": {
+    "description": "Opis rozszerzenia.",
+    "message": "Menedżer zakładek wyskakujących. Ulepszone Neat Bookmarks. Bardziej uporządkowane niż Neater Bookmarks."
+  },
+  "addSeparator": {
+    "message": "Dodaj separator"
+  },
+  "deleteEllipsis": {
+    "message": "Usuń..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "Nie można przenosić zakładek między pamięcią synchronizowaną a lokalną. Użyj funkcji kopiuj/wklej.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "Usuń separator"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "Komunikat o błędzie w rozszerzeniu został zgłoszony deweloperowi.",
+    "message": "Zgłoszono to deweloperowi."
+  },
+  "customStyles": {
+    "message": "Niestandardowe style"
+  },
+  "resetButton": {
+    "message": "Resetuj"
+  },
+  "customStylesDescription": {
+    "message": "Wymaga to pewnych umiejętności CSS. Modyfikuj na własne ryzyko. Mądre byłoby udostępnianie kodu poprzez"
+  },
+  "openNewWindow": {
+    "message": "Otwórz w nowym oknie"
+  },
+  "optionPopupStays": {
+    "message": "Wyskakujące okno pozostaje otwarte podczas otwierania (lewy klik) zakładek."
+  },
+  "addBookmarkBottom": {
+    "message": "Dodaj obecną kartę na dół tego"
+  },
+  "openBookmarks": {
+    "message": "Otwórz wszystkie zakładki"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jeśli adres URL zakładki zawiera ten ciąg, zostanie wyświetlony jako separator"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Nie"
+  },
+  "defaultIconButtonOr": {
+    "message": "lub"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otwórz wszystkie zakładki w nowym oknie"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "Opcje"
+  },
+  "save": {
+    "message": "Zapisz"
+  },
+  "general": {
+    "message": "Ogólne"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "Powiększenie"
+  },
+  "addNewFolderAfter": {
+    "message": "Dodaj folder po tym"
+  },
+  "optionClickNewTab": {
+    "message": "Lewy klik otwiera zakładkę w nowej karcie."
+  },
+  "noTitle": {
+    "description": "Tytuł dla zakładek bez tytułu bez adresu URL http(s) lub folderów bez tytułu.",
+    "message": "(bez tytułu)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Pokaż potwierdzenie przy otwieraniu wielu zakładek z folderu."
+  },
+  "copyTitleAndUrl": {
+    "message": "Skopiuj tytuł i adres URL do schowka"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "Edytuj zakładkę"
+  },
+  "edit": {
+    "message": "Edytuj..."
+  },
+  "openNewTab": {
+    "message": "Otwórz w nowej karcie"
+  },
+  "syncOptions": {
+    "message": "Opcje synchronizacji"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Nazwa zakładki lub folderu.",
+    "message": "Nazwa"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Skopiuj wszystkie tytuły i adresy URL do schowka"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automatycznie odświeżaj status synchronizacji"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Stworzone przez $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "Środkowe kliknięcie lub kontrol-klik otwiera zakładkę w nowej karcie tła (zamiast na pierwszym planie)."
+  },
+  "optionShowSyncStatus": {
+    "message": "Pokaż wskaźniki statusu synchronizacji"
+  },
+  "openIncognitoWindow": {
+    "message": "Otwórz w oknie incognito"
+  },
+  "addNewFolder": {
+    "message": "Dodaj podfolder"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Rzeczywisty adres URL zakładki wyświetlanej jako separator"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "Użyj domyślnego"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automycznie dostosuj rozmiar okna popup do zawartości"
+  },
+  "resetSettings": {
+    "message": "Resetuj ustawienia"
+  },
+  "addNewFolderBefore": {
+    "message": "Dodaj folder przed tym"
+  },
+  "editFolder": {
+    "message": "Edytuj folder"
+  },
+  "errorOccured": {
+    "message": "Ups, wystąpił błąd."
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "Dodaj obecną kartę przed tym"
+  },
+  "advancedOptions": {
+    "message": "Opcje zaawansowane"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otwórz wszystkie zakładki w oknie incognito"
+  },
+  "customIcon": {
+    "message": "Niestandardowa ikona"
+  },
+  "delete": {
+    "message": "Usuń"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Podświetl niesynchronizowane zakładki"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Czy na pewno chcesz usunąć folder $folderName$ i $subFolderCount$ podfolderów w nim?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Potwierdzenie otwarcia wszystkich zakładek.",
-    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "Resetuj vBookmarks do ustawień domyślnych."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Potwierdzenie otwarcia wszystkich zakładek w nowym oknie incognito.",
-    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie incognito?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "Dodaj obecną kartę po tym"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Potwierdzenie otwarcia wszystkich zakładek w nowym oknie.",
-    "message": "Czy na pewno chcesz otworzyć wszystkie $count$ zakładki w nowym oknie?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Skopiuj wszystkie tytuły i adresy URL do schowka"
-  },
-  "copyTitleAndUrl": {
-    "message": "Skopiuj tytuł i adres URL do schowka"
-  },
-  "customIcon": {
-    "message": "Niestandardowa ikona"
-  },
-  "customIconDescription": {
-    "message": "Ikona musi mieć wymiary 19*19 pikseli. W przeciwnym razie zostanie przeskalowana do tych wymiarów."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Dostosuj kolor separatora"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Rzeczywisty tytuł zakładki wyświetlanej jako separator"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Rzeczywisty adres URL zakładki wyświetlanej jako separator"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Jeśli adres URL zakładki zawiera ten ciąg, zostanie wyświetlony jako separator"
-  },
-  "customStyles": {
-    "message": "Niestandardowe style"
-  },
-  "customStylesDescription": {
-    "message": "Wymaga to pewnych umiejętności CSS. Modyfikuj na własne ryzyko. Mądre byłoby udostępnianie kodu poprzez"
-  },
-  "defaultIconButton": {
-    "message": "Użyj domyślnego"
-  },
-  "defaultIconButtonOr": {
-    "message": "lub"
-  },
-  "delete": {
-    "message": "Usuń"
-  },
-  "deleteEllipsis": {
-    "message": "Usuń..."
-  },
-  "versionMessage": {
-    "message": "To jest nowe VBM $versionNumber$! Lista zmian znajduje się tutaj: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "Jeśli ci się podoba, może możesz przekazać darowiznę na dalszy rozwój. Każda kwota jest mile widziana."
   },
-  "donationGo": {
-    "message": "OK"
+  "optionCloseUnusedFolders": {
+    "message": "Zamykaj nieużywane foldery podczas otwierania folderu."
   },
-  "donationDismiss": {
-    "message": "Zignoruj"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "Edytuj..."
+  "replaceUrl": {
+    "message": "Zastąp to obecnym adresem URL"
   },
-  "editBookmark": {
-    "message": "Edytuj zakładkę"
-  },
-  "editFolder": {
-    "message": "Edytuj folder"
-  },
-  "errorOccured": {
-    "message": "Ups, wystąpił błąd."
-  },
-  "extDesc": {
-    "description": "Opis rozszerzenia.",
-    "message": "Menedżer zakładek wyskakujących. Ulepszone Neat Bookmarks. Bardziej uporządkowane niż Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "Ogólne"
-  },
-  "ignore": {
-    "message": "Ignoruj"
-  },
-  "name": {
-    "description": "Nazwa zakładki lub folderu.",
-    "message": "Nazwa"
-  },
-  "nope": {
-    "message": "Nie"
-  },
-  "noTitle": {
-    "description": "Tytuł dla zakładek bez tytułu bez adresu URL http(s) lub folderów bez tytułu.",
-    "message": "(bez tytułu)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Akcja otwierania zakładek.",
     "message": "Otwórz"
   },
-  "openBookmarks": {
-    "message": "Otwórz wszystkie zakładki"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otwórz wszystkie zakładki w oknie incognito"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otwórz wszystkie zakładki w nowym oknie"
-  },
-  "openIncognitoWindow": {
-    "message": "Otwórz w oknie incognito"
-  },
-  "openNewTab": {
-    "message": "Otwórz w nowej karcie"
-  },
-  "openNewWindow": {
-    "message": "Otwórz w nowym oknie"
-  },
-  "optionClickNewTab": {
-    "message": "Lewy klik otwiera zakładkę w nowej karcie."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Zamykaj nieużywane foldery podczas otwierania folderu."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Pokaż potwierdzenie przy otwieraniu wielu zakładek z folderu."
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Pokaż tylko zakładki na pasku zakładek"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"
-  },
-  "optionOpenNewTab": {
-    "message": "Środkowe kliknięcie lub kontrol-klik otwiera zakładkę w nowej karcie tła (zamiast na pierwszym planie)."
-  },
-  "optionPopupStays": {
-    "message": "Wyskakujące okno pozostaje otwarte podczas otwierania (lewy klik) zakładek."
-  },
-  "optionRememberPrevState": {
-    "message": "Pamiętaj poprzedni stan (pozycja przewijania i otwarte foldery)."
-  },
-  "options": {
-    "message": "Opcje"
-  },
-  "optionsFooterText": {
-    "description": "Tekst stopki dla strony Opcje",
-    "message": "Stworzone przez $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Powiększenie"
-  },
-  "parentFolder": {
-    "description": "Folder nadrzędny w informacjach wyświetlanych w podpowiedzi zakładek na liście wyników wyszukiwania.",
-    "message": "Folder nadrzędny: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Pasek zakładek"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Usuń separator"
-  },
-  "replaceUrl": {
-    "message": "Zastąp to obecnym adresem URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Komunikat o błędzie w rozszerzeniu został zgłoszony deweloperowi.",
-    "message": "Zgłoszono to deweloperowi."
-  },
-  "reportError": {
-    "message": "Zgłoś błąd"
-  },
-  "resetButton": {
-    "message": "Resetuj"
-  },
-  "resetSettings": {
-    "message": "Resetuj ustawienia"
-  },
-  "resetSettingsDescription": {
-    "message": "Resetuj vBookmarks do ustawień domyślnych."
-  },
-  "save": {
-    "message": "Zapisz"
-  },
-  "searchBookmarks": {
-    "description": "Tekst zastępczy dla pola wyszukiwania.",
-    "message": "Szukaj zakładek"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Opcje synchronizacji"
-  },
-  "optionShowSyncStatus": {
-    "message": "Pokaż wskaźniki statusu synchronizacji"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Podświetl niesynchronizowane zakładki"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automatycznie odświeżaj status synchronizacji"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interwał odświeżania"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundy"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automycznie dostosuj rozmiar okna popup do zawartości"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Nie można przenosić zakładek między pamięcią synchronizowaną a lokalną. Użyj funkcji kopiuj/wklej.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

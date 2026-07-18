@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "Tillgänglighet"
-  },
-  "addBookmarkAfter": {
-    "message": "Lägg till aktuell flik efter detta"
-  },
-  "addBookmarkBefore": {
-    "message": "Lägg till aktuell flik före detta"
-  },
-  "addBookmarkBottom": {
-    "message": "Lägg till aktuell flik längst ner i detta"
+  "versionMessage": {
+    "message": "Detta är nya VBM $versionNumber$! Ändringsloggen finns här: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "Lägg till aktuell flik högst upp i detta"
   },
-  "addNewFolder": {
-    "message": "Lägg till undermapp"
+  "customSeparatorColorDescription": {
+    "message": "Anpassa avskiljarfärg"
   },
-  "addNewFolderAfter": {
-    "message": "Lägg till mapp efter detta"
+  "customIconDescription": {
+    "message": "Ikonen måste vara 19*19 pixlar i storlek. Annars kommer den att storleksändras till denna dimension."
   },
-  "addNewFolderBefore": {
-    "message": "Lägg till mapp före detta"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
   },
-  "addSeparator": {
-    "message": "Lägg till avskiljare"
+  "optionOnlyShowBookmarkBar": {
+    "message": "Visa endast bokmärken i bokmärkesfältet"
   },
-  "advancedOptions": {
-    "message": "Avancerade alternativ"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Överordnad mapp: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "Avvisa"
+  },
+  "accessibility": {
+    "message": "Tillgänglighet"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Uppdateringsintervall"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Kom ihåg tidigare tillstånd (rullningsposition och öppna mappar)."
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Den verkliga titeln på bokmärket som visas som avskiljare"
+  },
+  "searchBookmarks": {
+    "description": "Platshållartext för sökfältet.",
+    "message": "Sök bokmärken"
+  },
+  "reportError": {
+    "message": "Rapportera fel"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Är du säker på att du vill ta bort mappen $folderName$ och $bookmarkCount$ bokmärke(n) i den?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "Ignorera"
+  },
+  "extDesc": {
+    "description": "Tilläggbeskrivningen.",
+    "message": "En popup-bokmärkeshanterare. Förbättrade Neat Bookmarks. Snyggare än Neater Bookmarks."
+  },
+  "addSeparator": {
+    "message": "Lägg till avskiljare"
+  },
+  "deleteEllipsis": {
+    "message": "Ta bort..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bokmärken kan inte flyttas mellan synkroniserad och lokal lagring. Använd kopiera/klistra in i stället.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "Ta bort avskiljare"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "Ett meddelande för ett fel som inträffade i tillägget, har rapporterats till utvecklaren.",
+    "message": "Detta har rapporterats till utvecklaren."
+  },
+  "customStyles": {
+    "message": "Anpassade stilar"
+  },
+  "resetButton": {
+    "message": "Återställ"
+  },
+  "customStylesDescription": {
+    "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
+  },
+  "openNewWindow": {
+    "message": "Öppna i nytt fönster"
+  },
+  "optionPopupStays": {
+    "message": "Popup förblir öppen när bokmärken öppnas (vänsterklick)."
+  },
+  "addBookmarkBottom": {
+    "message": "Lägg till aktuell flik längst ner i detta"
+  },
+  "openBookmarks": {
+    "message": "Öppna alla bokmärken"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Om URL:en för ett bokmärke innehåller denna sträng, kommer det att visas som avskiljare"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt fönster?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Nej"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Öppna alla bokmärken i nytt fönster"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "Alternativ"
+  },
+  "save": {
+    "message": "Spara"
+  },
+  "general": {
+    "message": "Allmänt"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "addNewFolderAfter": {
+    "message": "Lägg till mapp efter detta"
+  },
+  "optionClickNewTab": {
+    "message": "Vänsterklick öppnar bokmärke i ny flik."
+  },
+  "noTitle": {
+    "description": "Titeln för bokmärken utan titel utan http(s)-URL eller mappar utan titel.",
+    "message": "(ingen titel)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopiera titel och URL till urklipp"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "Redigera bokmärke"
+  },
+  "edit": {
+    "message": "Redigera..."
+  },
+  "openNewTab": {
+    "message": "Öppna i ny flik"
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsalternativ"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Namn på bokmärke eller mapp.",
+    "message": "Namn"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt inkognitofönster?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopiera alla titlar och URL:er till urklipp"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Uppdatera synkroniseringsstatus automatiskt"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Skapad av $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "Mittenklick eller kontroll-klick öppnar bokmärke i ny bakgrundsflik (istället för förgrund)."
+  },
+  "optionShowSyncStatus": {
+    "message": "Visa synkroniseringsstatusindikatorer"
+  },
+  "openIncognitoWindow": {
+    "message": "Öppna i inkognitofönster"
+  },
+  "addNewFolder": {
+    "message": "Lägg till undermapp"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Den verkliga URL:en för bokmärket som visas som avskiljare"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "Använd standard"
+  },
+  "optionAutoResizePopup": {
+    "message": "Justera automatiskt popup-fönstrets storlek för att passa innehållet"
+  },
+  "resetSettings": {
+    "message": "Återställ inställningar"
+  },
+  "addNewFolderBefore": {
+    "message": "Lägg till mapp före detta"
+  },
+  "editFolder": {
+    "message": "Redigera mapp"
+  },
+  "errorOccured": {
+    "message": "Hoppsan, ett fel inträffade."
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "Lägg till aktuell flik före detta"
+  },
+  "advancedOptions": {
+    "message": "Avancerade alternativ"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Öppna alla bokmärken i inkognitofönster"
+  },
+  "customIcon": {
+    "message": "Anpassad ikon"
+  },
+  "delete": {
+    "message": "Ta bort"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Markera osynkroniserade bokmärken"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Är du säker på att du vill ta bort mappen $folderName$ och $subFolderCount$ undermapp(ar) i den?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Bekräftelsemeddelande för att öppna alla bokmärken.",
-    "message": "Är du säker på att du vill öppna alla $count$ bokmärken?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "Återställ vBookmarks till standardinställningar."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Bekräftelsemeddelande för att öppna alla bokmärken i ett nytt inkognitofönster.",
-    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt inkognitofönster?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "Lägg till aktuell flik efter detta"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Bekräftelsemeddelande för att öppna alla bokmärken i ett nytt fönster.",
-    "message": "Är du säker på att du vill öppna alla $count$ bokmärken i ett nytt fönster?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Kopiera alla titlar och URL:er till urklipp"
-  },
-  "copyTitleAndUrl": {
-    "message": "Kopiera titel och URL till urklipp"
-  },
-  "customIcon": {
-    "message": "Anpassad ikon"
-  },
-  "customIconDescription": {
-    "message": "Ikonen måste vara 19*19 pixlar i storlek. Annars kommer den att storleksändras till denna dimension."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Anpassa avskiljarfärg"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Den verkliga titeln på bokmärket som visas som avskiljare"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Den verkliga URL:en för bokmärket som visas som avskiljare"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Om URL:en för ett bokmärke innehåller denna sträng, kommer det att visas som avskiljare"
-  },
-  "customStyles": {
-    "message": "Anpassade stilar"
-  },
-  "customStylesDescription": {
-    "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
-  },
-  "defaultIconButton": {
-    "message": "Använd standard"
-  },
-  "defaultIconButtonOr": {
-    "message": "eller"
-  },
-  "delete": {
-    "message": "Ta bort"
-  },
-  "deleteEllipsis": {
-    "message": "Ta bort..."
-  },
-  "versionMessage": {
-    "message": "Detta är nya VBM $versionNumber$! Ändringsloggen finns här: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "Om du gillar det kan du kanske donera för framtida utveckling. Alla belopp välkomnas."
   },
-  "donationGo": {
-    "message": "OK"
+  "optionCloseUnusedFolders": {
+    "message": "Stäng oanvända mappar när en mapp öppnas."
   },
-  "donationDismiss": {
-    "message": "Avvisa"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "Redigera..."
+  "replaceUrl": {
+    "message": "Ersätt detta med aktuell URL"
   },
-  "editBookmark": {
-    "message": "Redigera bokmärke"
-  },
-  "editFolder": {
-    "message": "Redigera mapp"
-  },
-  "errorOccured": {
-    "message": "Hoppsan, ett fel inträffade."
-  },
-  "extDesc": {
-    "description": "Tilläggbeskrivningen.",
-    "message": "En popup-bokmärkeshanterare. Förbättrade Neat Bookmarks. Snyggare än Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "Allmänt"
-  },
-  "ignore": {
-    "message": "Ignorera"
-  },
-  "name": {
-    "description": "Namn på bokmärke eller mapp.",
-    "message": "Namn"
-  },
-  "nope": {
-    "message": "Nej"
-  },
-  "noTitle": {
-    "description": "Titeln för bokmärken utan titel utan http(s)-URL eller mappar utan titel.",
-    "message": "(ingen titel)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Åtgärd för att öppna bokmärken.",
     "message": "Öppna"
   },
-  "openBookmarks": {
-    "message": "Öppna alla bokmärken"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Öppna alla bokmärken i inkognitofönster"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Öppna alla bokmärken i nytt fönster"
-  },
-  "openIncognitoWindow": {
-    "message": "Öppna i inkognitofönster"
-  },
-  "openNewTab": {
-    "message": "Öppna i ny flik"
-  },
-  "openNewWindow": {
-    "message": "Öppna i nytt fönster"
-  },
-  "optionClickNewTab": {
-    "message": "Vänsterklick öppnar bokmärke i ny flik."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Stäng oanvända mappar när en mapp öppnas."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Visa endast bokmärken i bokmärkesfältet"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"
-  },
-  "optionOpenNewTab": {
-    "message": "Mittenklick eller kontroll-klick öppnar bokmärke i ny bakgrundsflik (istället för förgrund)."
-  },
-  "optionPopupStays": {
-    "message": "Popup förblir öppen när bokmärken öppnas (vänsterklick)."
-  },
-  "optionRememberPrevState": {
-    "message": "Kom ihåg tidigare tillstånd (rullningsposition och öppna mappar)."
-  },
-  "options": {
-    "message": "Alternativ"
-  },
-  "optionsFooterText": {
-    "description": "Sidfotstext för Alternativsidan",
-    "message": "Skapad av $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "parentFolder": {
-    "description": "Överordnad mapp i information som visas i verktygstipset för bokmärken i sökresultatlistan.",
-    "message": "Överordnad mapp: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bokmärkesfältet"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Ta bort avskiljare"
-  },
-  "replaceUrl": {
-    "message": "Ersätt detta med aktuell URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Ett meddelande för ett fel som inträffade i tillägget, har rapporterats till utvecklaren.",
-    "message": "Detta har rapporterats till utvecklaren."
-  },
-  "reportError": {
-    "message": "Rapportera fel"
-  },
-  "resetButton": {
-    "message": "Återställ"
-  },
-  "resetSettings": {
-    "message": "Återställ inställningar"
-  },
-  "resetSettingsDescription": {
-    "message": "Återställ vBookmarks till standardinställningar."
-  },
-  "save": {
-    "message": "Spara"
-  },
-  "searchBookmarks": {
-    "description": "Platshållartext för sökfältet.",
-    "message": "Sök bokmärken"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Synkroniseringsalternativ"
-  },
-  "optionShowSyncStatus": {
-    "message": "Visa synkroniseringsstatusindikatorer"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Markera osynkroniserade bokmärken"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Uppdatera synkroniseringsstatus automatiskt"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Uppdateringsintervall"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekunder"
-  },
-  "optionAutoResizePopup": {
-    "message": "Justera automatiskt popup-fönstrets storlek för att passa innehållet"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bokmärken kan inte flyttas mellan synkroniserad och lokal lagring. Använd kopiera/klistra in i stället.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

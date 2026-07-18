@@ -130,6 +130,29 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 
 // Keyboard shortcut to open the panel on demand (works regardless of the setting)
 chrome.commands.onCommand.addListener(async command => {
+    if (command === 'open-command-palette') {
+        // The command palette lives in the popup page: flag the pending open,
+        // then raise the popup (chrome.action.openPopup, Chrome 127+) or fall
+        // back to a small popup window carrying ?palette=1.
+        try {
+            if (chrome.storage && chrome.storage.session) {
+                await chrome.storage.session.set({ pendingPaletteOpen: true });
+            }
+            if (chrome.action.openPopup) {
+                await chrome.action.openPopup();
+            } else {
+                await chrome.windows.create({
+                    url: chrome.runtime.getURL('pages/popup.html?palette=1'),
+                    type: 'popup',
+                    width: 400,
+                    height: 600
+                });
+            }
+        } catch (error) {
+            console.warn('vBookmarks: failed to open the command palette:', error);
+        }
+        return;
+    }
     if (command !== 'open-side-panel' || !chrome.sidePanel) {
         return;
     }

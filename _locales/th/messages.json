@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "การเข้าถึง"
-  },
-  "addBookmarkAfter": {
-    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันหลังจากนี้"
-  },
-  "addBookmarkBefore": {
-    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันก่อนหน้านี้"
-  },
-  "addBookmarkBottom": {
-    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันไปที่ด้านล่างของนี้"
+  "versionMessage": {
+    "message": "นี่คือ VBM $versionNumber$ ใหม่! บันทึกการเปลี่ยนแปลงอยู่ที่นี่: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันไปที่ด้านบนของนี้"
   },
-  "addNewFolder": {
-    "message": "เพิ่มโฟลเดอร์ย่อย"
+  "customSeparatorColorDescription": {
+    "message": "ปรับแต่งสีเส้นแบ่ง"
   },
-  "addNewFolderAfter": {
-    "message": "เพิ่มโฟลเดอร์หลังจากนี้"
+  "customIconDescription": {
+    "message": "ไอคอนต้องมีขนาด 19x19 พิกเซล มิฉะนั้นจะถูกปรับขนาดเป็นขนาดนี้"
   },
-  "addNewFolderBefore": {
-    "message": "เพิ่มโฟลเดอร์ก่อนหน้านี้"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "วินาที"
   },
-  "addSeparator": {
-    "message": "เพิ่มเส้นแบ่ง"
+  "optionOnlyShowBookmarkBar": {
+    "message": "แสดงเฉพาะที่คั่นหน้าในแถบที่คั่นหน้า"
   },
-  "advancedOptions": {
-    "message": "ตัวเลือกขั้นสูง"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "โฟลเดอร์หลัก: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "ปิดทิ้ง"
+  },
+  "accessibility": {
+    "message": "การเข้าถึง"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "ช่วงเวลารีเฟรช"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการ?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "จำสถานะก่อนหน้า (ตำแหน่งเลื่อนและโฟลเดอร์ที่เปิด)"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "ชื่อจริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "ค้นหาที่คั่นหน้า"
+  },
+  "reportError": {
+    "message": "รายงานข้อผิดพลาด"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "เพิกเฉย"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "ตัวจัดการที่คั่นหน้าป๊อปอัป ปรับปรุงจาก Neat Bookmarks สะอาดกว่า Neater Bookmarks"
+  },
+  "addSeparator": {
+    "message": "เพิ่มเส้นแบ่ง"
+  },
+  "deleteEllipsis": {
+    "message": "ลบ..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "ลบเส้นแบ่ง"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "สิ่งนี้ได้รับการรายงานไปยังนักพัฒนาแล้ว"
+  },
+  "customStyles": {
+    "message": "สไตล์ที่กำหนดเอง"
+  },
+  "resetButton": {
+    "message": "รีเซ็ต"
+  },
+  "customStylesDescription": {
+    "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
+  },
+  "openNewWindow": {
+    "message": "เปิดในหน้าต่างใหม่"
+  },
+  "optionPopupStays": {
+    "message": "ป๊อปอัปคงอยู่เมื่อเปิดที่คั่นหน้า (คลิกซ้าย)"
+  },
+  "addBookmarkBottom": {
+    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันไปที่ด้านล่างของนี้"
+  },
+  "openBookmarks": {
+    "message": "เปิดที่คั่นหน้าทั้งหมด"
+  },
+  "customSeparatorStringDescription": {
+    "message": "หาก URL ของที่คั่นหน้ามีสตริงนี้ จะแสดงเป็นเส้นแบ่ง"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างใหม่?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "ไม่"
+  },
+  "defaultIconButtonOr": {
+    "message": "หรือ"
+  },
+  "openBookmarksNewWindow": {
+    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างใหม่"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "ตัวเลือก"
+  },
+  "save": {
+    "message": "บันทึก"
+  },
+  "general": {
+    "message": "ทั่วไป"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "ตกลง"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "ซูม"
+  },
+  "addNewFolderAfter": {
+    "message": "เพิ่มโฟลเดอร์หลังจากนี้"
+  },
+  "optionClickNewTab": {
+    "message": "คลิกซ้ายเปิดที่คั่นหน้าในแท็บใหม่"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ไม่มีชื่อ)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
+  },
+  "copyTitleAndUrl": {
+    "message": "คัดลอกชื่อและ URL ไปยังคลิปบอร์ด"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "แก้ไขที่คั่นหน้า"
+  },
+  "edit": {
+    "message": "แก้ไข..."
+  },
+  "openNewTab": {
+    "message": "เปิดในแท็บใหม่"
+  },
+  "syncOptions": {
+    "message": "ตัวเลือกการซิงค์"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "ชื่อ"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างอนุรักษ์ใหม่?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "คัดลอกชื่อและ URL ทั้งหมดไปยังคลิปบอร์ด"
+  },
+  "optionAutoRefreshSync": {
+    "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "สร้างโดย $authorName$",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "คลิกกลางหรือคลิกควบคุมเปิดที่คั่นหน้าในแท็บพื้นหลังใหม่ (แทนแท็บเบื้องหน้า)"
+  },
+  "optionShowSyncStatus": {
+    "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
+  },
+  "openIncognitoWindow": {
+    "message": "เปิดในหน้าต่างอนุรักษ์"
+  },
+  "addNewFolder": {
+    "message": "เพิ่มโฟลเดอร์ย่อย"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL จริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "ใช้ค่าเริ่มต้น"
+  },
+  "optionAutoResizePopup": {
+    "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
+  },
+  "resetSettings": {
+    "message": "รีเซ็ตการตั้งค่า"
+  },
+  "addNewFolderBefore": {
+    "message": "เพิ่มโฟลเดอร์ก่อนหน้านี้"
+  },
+  "editFolder": {
+    "message": "แก้ไขโฟลเดอร์"
+  },
+  "errorOccured": {
+    "message": "โอ๊ะ เกิดข้อผิดพลาด"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันก่อนหน้านี้"
+  },
+  "advancedOptions": {
+    "message": "ตัวเลือกขั้นสูง"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างอนุรักษ์"
+  },
+  "customIcon": {
+    "message": "ไอคอนที่กำหนดเอง"
+  },
+  "delete": {
+    "message": "ลบ"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และโฟลเดอร์ย่อย $subFolderCount$ รายการที่อยู่ภายใน?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการ?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "รีเซ็ต vBookmarks เป็นการตั้งค่าเริ่มต้น"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างอนุรักษ์ใหม่?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "เพิ่มที่คั่นหน้าแท็บปัจจุบันหลังจากนี้"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างใหม่?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "คัดลอกชื่อและ URL ทั้งหมดไปยังคลิปบอร์ด"
-  },
-  "copyTitleAndUrl": {
-    "message": "คัดลอกชื่อและ URL ไปยังคลิปบอร์ด"
-  },
-  "customIcon": {
-    "message": "ไอคอนที่กำหนดเอง"
-  },
-  "customIconDescription": {
-    "message": "ไอคอนต้องมีขนาด 19x19 พิกเซล มิฉะนั้นจะถูกปรับขนาดเป็นขนาดนี้"
-  },
-  "customSeparatorColorDescription": {
-    "message": "ปรับแต่งสีเส้นแบ่ง"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "ชื่อจริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL จริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
-  },
-  "customSeparatorStringDescription": {
-    "message": "หาก URL ของที่คั่นหน้ามีสตริงนี้ จะแสดงเป็นเส้นแบ่ง"
-  },
-  "customStyles": {
-    "message": "สไตล์ที่กำหนดเอง"
-  },
-  "customStylesDescription": {
-    "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
-  },
-  "defaultIconButton": {
-    "message": "ใช้ค่าเริ่มต้น"
-  },
-  "defaultIconButtonOr": {
-    "message": "หรือ"
-  },
-  "delete": {
-    "message": "ลบ"
-  },
-  "deleteEllipsis": {
-    "message": "ลบ..."
-  },
-  "versionMessage": {
-    "message": "นี่คือ VBM $versionNumber$ ใหม่! บันทึกการเปลี่ยนแปลงอยู่ที่นี่: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "หากคุณชอบสิ่งนี้ บางทีคุณอาจบริจาคเพื่อการพัฒนาในอนาคต จำนวนเงินใดๆ ก็ต้อนรับ"
   },
-  "donationGo": {
-    "message": "ตกลง"
+  "optionCloseUnusedFolders": {
+    "message": "ปิดโฟลเดอร์ที่ไม่ได้ใช้เมื่อเปิดโฟลเดอร์"
   },
-  "donationDismiss": {
-    "message": "ปิดทิ้ง"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "แก้ไข..."
+  "replaceUrl": {
+    "message": "แทนที่สิ่งนี้ด้วย URL ปัจจุบัน"
   },
-  "editBookmark": {
-    "message": "แก้ไขที่คั่นหน้า"
-  },
-  "editFolder": {
-    "message": "แก้ไขโฟลเดอร์"
-  },
-  "errorOccured": {
-    "message": "โอ๊ะ เกิดข้อผิดพลาด"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "ตัวจัดการที่คั่นหน้าป๊อปอัป ปรับปรุงจาก Neat Bookmarks สะอาดกว่า Neater Bookmarks"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "ทั่วไป"
-  },
-  "ignore": {
-    "message": "เพิกเฉย"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "ชื่อ"
-  },
-  "nope": {
-    "message": "ไม่"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ไม่มีชื่อ)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Action to open bookmarks.",
     "message": "เปิด"
   },
-  "openBookmarks": {
-    "message": "เปิดที่คั่นหน้าทั้งหมด"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างอนุรักษ์"
-  },
-  "openBookmarksNewWindow": {
-    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างใหม่"
-  },
-  "openIncognitoWindow": {
-    "message": "เปิดในหน้าต่างอนุรักษ์"
-  },
-  "openNewTab": {
-    "message": "เปิดในแท็บใหม่"
-  },
-  "openNewWindow": {
-    "message": "เปิดในหน้าต่างใหม่"
-  },
-  "optionClickNewTab": {
-    "message": "คลิกซ้ายเปิดที่คั่นหน้าในแท็บใหม่"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "ปิดโฟลเดอร์ที่ไม่ได้ใช้เมื่อเปิดโฟลเดอร์"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "แสดงเฉพาะที่คั่นหน้าในแถบที่คั่นหน้า"
-  },
-  "optionSearchAfterEnter": {
-    "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
-  },
-  "optionOpenNewTab": {
-    "message": "คลิกกลางหรือคลิกควบคุมเปิดที่คั่นหน้าในแท็บพื้นหลังใหม่ (แทนแท็บเบื้องหน้า)"
-  },
-  "optionPopupStays": {
-    "message": "ป๊อปอัปคงอยู่เมื่อเปิดที่คั่นหน้า (คลิกซ้าย)"
-  },
-  "optionRememberPrevState": {
-    "message": "จำสถานะก่อนหน้า (ตำแหน่งเลื่อนและโฟลเดอร์ที่เปิด)"
-  },
-  "options": {
-    "message": "ตัวเลือก"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "สร้างโดย $authorName$",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "ซูม"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "โฟลเดอร์หลัก: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "ลบเส้นแบ่ง"
-  },
-  "replaceUrl": {
-    "message": "แทนที่สิ่งนี้ด้วย URL ปัจจุบัน"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "สิ่งนี้ได้รับการรายงานไปยังนักพัฒนาแล้ว"
-  },
-  "reportError": {
-    "message": "รายงานข้อผิดพลาด"
-  },
-  "resetButton": {
-    "message": "รีเซ็ต"
-  },
-  "resetSettings": {
-    "message": "รีเซ็ตการตั้งค่า"
-  },
-  "resetSettingsDescription": {
-    "message": "รีเซ็ต vBookmarks เป็นการตั้งค่าเริ่มต้น"
-  },
-  "save": {
-    "message": "บันทึก"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "ค้นหาที่คั่นหน้า"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "ตัวเลือกการซิงค์"
-  },
-  "optionShowSyncStatus": {
-    "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
-  },
-  "optionHighlightUnsynced": {
-    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
-  },
-  "optionAutoRefreshSync": {
-    "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "ช่วงเวลารีเฟรช"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "วินาที"
-  },
-  "optionAutoResizePopup": {
-    "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
-  },
-  "crossStorageMoveWarning": {
-    "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

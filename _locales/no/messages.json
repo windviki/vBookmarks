@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "Tilgjengelighet"
-  },
-  "addBookmarkAfter": {
-    "message": "Bokmerk Gjeldende Fane Etter Dette"
-  },
-  "addBookmarkBefore": {
-    "message": "Bokmerk Gjeldende Fane Før Dette"
-  },
-  "addBookmarkBottom": {
-    "message": "Bokmerk Gjeldende Fane Til Bunnen Av Dette"
+  "versionMessage": {
+    "message": "Dette er nytt VBM $versionNumber$! Endringslogg er her: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "Bokmerk Gjeldende Fane Til Toppen Av Dette"
   },
-  "addNewFolder": {
-    "message": "Legg Til Undermappe"
+  "customSeparatorColorDescription": {
+    "message": "Tilpass Skillelinjefarge"
   },
-  "addNewFolderAfter": {
-    "message": "Legg Til Mappe Etter Dette"
+  "customIconDescription": {
+    "message": "Ikonet må være i 19x19 piksler. Ellers vil det bli endret til denne størrelsen."
   },
-  "addNewFolderBefore": {
-    "message": "Legg Til Mappe Før Dette"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekunder"
   },
-  "addSeparator": {
-    "message": "Legg Til Skillelinje"
+  "optionOnlyShowBookmarkBar": {
+    "message": "Vis kun bokmerker i Bokmerkefeltet"
   },
-  "advancedOptions": {
-    "message": "Avanserte Alternativer"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Overordnet mappe: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "Avvis"
+  },
+  "accessibility": {
+    "message": "Tilgjengelighet"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Oppdateringsintervall"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Husk forrige tilstand (rulleposisjon og åpne mapper)."
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Den virkelige tittelen til bokmerket som vises som en skillelinje"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Søk Bokmerker"
+  },
+  "reportError": {
+    "message": "Rapporter Feil"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Er du sikker på at du vil slette mappen $folderName$ og $bookmarkCount$ bokmerke(r) i den?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "Ignorer"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "En popup bokmerkebehandler. Forbedret Neat Bookmarks. Penere enn Neater Bookmarks."
+  },
+  "addSeparator": {
+    "message": "Legg Til Skillelinje"
+  },
+  "deleteEllipsis": {
+    "message": "Slett..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bokmerkene kan ikke flyttes mellom synkronisert og lokal lagring. Bruk kopier/lim inn i stedet.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "Fjern Skillelinje"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Dette har blitt rapportert til utvikleren."
+  },
+  "customStyles": {
+    "message": "Egendefinerte Stiler"
+  },
+  "resetButton": {
+    "message": "Tilbakestill"
+  },
+  "customStylesDescription": {
+    "message": "Dette krever noen CSS-kunnskaper. Endre på egen risiko. Kodedeling vil være lurt gjort via"
+  },
+  "openNewWindow": {
+    "message": "Åpne i Nytt Vindu"
+  },
+  "optionPopupStays": {
+    "message": "Popup forblir åpen når du åpner (venstreklikker) bokmerker."
+  },
+  "addBookmarkBottom": {
+    "message": "Bokmerk Gjeldende Fane Til Bunnen Av Dette"
+  },
+  "openBookmarks": {
+    "message": "Åpne Alle Bokmerker"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Hvis URL-en til et bokmerke inneholder denne strengen, vil det vises som en skillelinje"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt vindu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Nei"
+  },
+  "defaultIconButtonOr": {
+    "message": "eller"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Åpne Alle Bokmerker i Nytt Vindu"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "Alternativer"
+  },
+  "save": {
+    "message": "Lagre"
+  },
+  "general": {
+    "message": "Generelt"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "addNewFolderAfter": {
+    "message": "Legg Til Mappe Etter Dette"
+  },
+  "optionClickNewTab": {
+    "message": "Venstreklikk åpner bokmerke i ny fane."
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ingen tittel)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Vis bekreftelse når du åpner mange bokmerker fra en mappe."
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopier tittel og URL til utklippstavlen"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "Rediger bokmerke"
+  },
+  "edit": {
+    "message": "Rediger..."
+  },
+  "openNewTab": {
+    "message": "Åpne i Ny Fane"
+  },
+  "syncOptions": {
+    "message": "Synkroniseringsalternativer"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Navn"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt inkognitovindu?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopier alle titler og URL-er til utklippstavlen"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Oppdater synkroniseringsstatus automatisk"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Bygget av $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "Midtklikk eller control-klikk åpner bokmerke i ny bakgrunnsfane (i stedet for forgrunnsfane)."
+  },
+  "optionShowSyncStatus": {
+    "message": "Vis synkroniseringsstatusindikatorer"
+  },
+  "openIncognitoWindow": {
+    "message": "Åpne i Inkognitovindu"
+  },
+  "addNewFolder": {
+    "message": "Legg Til Undermappe"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Den virkelige URL-en til bokmerket som vises som en skillelinje"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "Bruk standard"
+  },
+  "optionAutoResizePopup": {
+    "message": "Endre automatisk størrelsen på popup-vinduet for å passe innholdet"
+  },
+  "resetSettings": {
+    "message": "Tilbakestill innstillinger"
+  },
+  "addNewFolderBefore": {
+    "message": "Legg Til Mappe Før Dette"
+  },
+  "editFolder": {
+    "message": "Rediger mappe"
+  },
+  "errorOccured": {
+    "message": "Oops, en feil oppstod."
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "Bokmerk Gjeldende Fane Før Dette"
+  },
+  "advancedOptions": {
+    "message": "Avanserte Alternativer"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Åpne Alle Bokmerker i Inkognitovindu"
+  },
+  "customIcon": {
+    "message": "Egendefinert ikon"
+  },
+  "delete": {
+    "message": "Slett"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Fremhev ikke-synkroniserte bokmerker"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Er du sikker på at du vil slette mappen $folderName$ og $subFolderCount$ undermappe(r) i den?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "Tilbakestill vBookmarks til standardinnstillinger."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt inkognitovindu?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "Bokmerk Gjeldende Fane Etter Dette"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Er du sikker på at du vil åpne alle $count$ bokmerkene i et nytt vindu?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Kopier alle titler og URL-er til utklippstavlen"
-  },
-  "copyTitleAndUrl": {
-    "message": "Kopier tittel og URL til utklippstavlen"
-  },
-  "customIcon": {
-    "message": "Egendefinert ikon"
-  },
-  "customIconDescription": {
-    "message": "Ikonet må være i 19x19 piksler. Ellers vil det bli endret til denne størrelsen."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Tilpass Skillelinjefarge"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Den virkelige tittelen til bokmerket som vises som en skillelinje"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Den virkelige URL-en til bokmerket som vises som en skillelinje"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Hvis URL-en til et bokmerke inneholder denne strengen, vil det vises som en skillelinje"
-  },
-  "customStyles": {
-    "message": "Egendefinerte Stiler"
-  },
-  "customStylesDescription": {
-    "message": "Dette krever noen CSS-kunnskaper. Endre på egen risiko. Kodedeling vil være lurt gjort via"
-  },
-  "defaultIconButton": {
-    "message": "Bruk standard"
-  },
-  "defaultIconButtonOr": {
-    "message": "eller"
-  },
-  "delete": {
-    "message": "Slett"
-  },
-  "deleteEllipsis": {
-    "message": "Slett..."
-  },
-  "versionMessage": {
-    "message": "Dette er nytt VBM $versionNumber$! Endringslogg er her: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "Hvis du liker det, kanskje du kan donere for fremtidig utvikling. Ethvert beløp er velkomment."
   },
-  "donationGo": {
-    "message": "OK"
+  "optionCloseUnusedFolders": {
+    "message": "Lukk ubrukte mapper når du åpner en mappe."
   },
-  "donationDismiss": {
-    "message": "Avvis"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "Rediger..."
+  "replaceUrl": {
+    "message": "Erstatt dette med gjeldende URL"
   },
-  "editBookmark": {
-    "message": "Rediger bokmerke"
-  },
-  "editFolder": {
-    "message": "Rediger mappe"
-  },
-  "errorOccured": {
-    "message": "Oops, en feil oppstod."
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "En popup bokmerkebehandler. Forbedret Neat Bookmarks. Penere enn Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "Generelt"
-  },
-  "ignore": {
-    "message": "Ignorer"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Navn"
-  },
-  "nope": {
-    "message": "Nei"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ingen tittel)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Action to open bookmarks.",
     "message": "Åpne"
   },
-  "openBookmarks": {
-    "message": "Åpne Alle Bokmerker"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Åpne Alle Bokmerker i Inkognitovindu"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Åpne Alle Bokmerker i Nytt Vindu"
-  },
-  "openIncognitoWindow": {
-    "message": "Åpne i Inkognitovindu"
-  },
-  "openNewTab": {
-    "message": "Åpne i Ny Fane"
-  },
-  "openNewWindow": {
-    "message": "Åpne i Nytt Vindu"
-  },
-  "optionClickNewTab": {
-    "message": "Venstreklikk åpner bokmerke i ny fane."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Lukk ubrukte mapper når du åpner en mappe."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Vis bekreftelse når du åpner mange bokmerker fra en mappe."
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Vis kun bokmerker i Bokmerkefeltet"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"
-  },
-  "optionOpenNewTab": {
-    "message": "Midtklikk eller control-klikk åpner bokmerke i ny bakgrunnsfane (i stedet for forgrunnsfane)."
-  },
-  "optionPopupStays": {
-    "message": "Popup forblir åpen når du åpner (venstreklikker) bokmerker."
-  },
-  "optionRememberPrevState": {
-    "message": "Husk forrige tilstand (rulleposisjon og åpne mapper)."
-  },
-  "options": {
-    "message": "Alternativer"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Bygget av $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Overordnet mappe: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Fjern Skillelinje"
-  },
-  "replaceUrl": {
-    "message": "Erstatt dette med gjeldende URL"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Dette har blitt rapportert til utvikleren."
-  },
-  "reportError": {
-    "message": "Rapporter Feil"
-  },
-  "resetButton": {
-    "message": "Tilbakestill"
-  },
-  "resetSettings": {
-    "message": "Tilbakestill innstillinger"
-  },
-  "resetSettingsDescription": {
-    "message": "Tilbakestill vBookmarks til standardinnstillinger."
-  },
-  "save": {
-    "message": "Lagre"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Søk Bokmerker"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Synkroniseringsalternativer"
-  },
-  "optionShowSyncStatus": {
-    "message": "Vis synkroniseringsstatusindikatorer"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Fremhev ikke-synkroniserte bokmerker"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Oppdater synkroniseringsstatus automatisk"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Oppdateringsintervall"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekunder"
-  },
-  "optionAutoResizePopup": {
-    "message": "Endre automatisk størrelsen på popup-vinduet for å passe innholdet"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bokmerkene kan ikke flyttes mellom synkronisert og lokal lagring. Bruk kopier/lim inn i stedet.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

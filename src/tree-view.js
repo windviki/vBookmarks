@@ -39,9 +39,11 @@
  * ctx.middleClickBgTab      — middle-click opens a background tab when true
  * ctx.leftClickNewTab       — left-click opens a new tab when true
  *
- * Returns { generateTree, adaptBookmarkTooltips }: neat.js's sortFolderContents
- * rebuilds via treeView.generateTree and the resizer re-fits tooltips via
- * treeView.adaptBookmarkTooltips.
+ * Returns { generateTree, adaptBookmarkTooltips, revealFolder }: neat.js's
+ * sortFolderContents rebuilds via treeView.generateTree, the resizer re-fits
+ * tooltips via treeView.adaptBookmarkTooltips, and the command palette (P2)
+ * jumps to a folder via treeView.revealFolder (the search-result link-folder
+ * branch of bookmarkHandler runs the same function).
  * chrome.bookmarks.*, chrome.i18n.getMessage, document and setTimeout remain
  * page globals. No neatools helpers: hasClass/addClass/removeClass/toggleClass
  * → classList.* (the removeClass('open').setAttribute(...) chain became two
@@ -309,6 +311,26 @@ export function initTreeView(ctx = {}) {
         store.set('scrollTop', $tree.scrollTop);
     }
 
+    // Reveal a folder in the tree: quit search, open its ancestor chain,
+    // force remember-state recovery, focus it and rebuild with the scroll
+    // handler. Extracted from bookmarkHandler's link-folder branch (P2) so the
+    // command palette's "jump to folder" can reuse the exact same sequence.
+    const revealFolder = id => {
+        // switch to tree
+        search.quit();
+        // all parent folder ids
+        // set them as opened folders
+        const newOpens = treeRender.getParentPath(id, nodeTrees);
+        setOpens(newOpens);
+        store.set('opens', JSON.stringify(newOpens));
+        // force to recover from remember state (opened folders)
+        setRememberState(true);
+        // focus on the target folder
+        store.set('focusID', id);
+        // new handler to handle the scrolling
+        chrome.bookmarks.getTree(generateTreeForTarget);
+    };
+
     const bookmarkHandler = e => {
         e.preventDefault();
         if (e.button !== 0 && e.button !== 1)
@@ -322,21 +344,9 @@ export function initTreeView(ctx = {}) {
         const shift = e.shiftKey;
         if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
             if (el.className === "link-folder") { // search result folder
-                // switch to tree
-                search.quit();
                 // get folder id (el parent is li)
                 const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                // all parent folder ids
-                // set them as opened folders
-                const newOpens = treeRender.getParentPath(id, nodeTrees);
-                setOpens(newOpens);
-                store.set('opens', JSON.stringify(newOpens));
-                // force to recover from remember state (opened folders)
-                setRememberState(true);
-                // focus on the target folder
-                store.set('focusID', id);
-                // new handler to handle the scrolling
-                chrome.bookmarks.getTree(generateTreeForTarget);
+                revealFolder(id);
             } else {
                 const url = el.href;
                 if (ctrlMeta) { // ctrl/meta click
@@ -372,6 +382,7 @@ export function initTreeView(ctx = {}) {
 
     return {
         generateTree,
-        adaptBookmarkTooltips
+        adaptBookmarkTooltips,
+        revealFolder
     };
 }

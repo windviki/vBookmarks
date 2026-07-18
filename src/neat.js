@@ -8,6 +8,7 @@ import { initDnd } from './dnd.js';
 import { initTreeRender } from './tree-render.js';
 import { initTreeView } from './tree-view.js';
 import { initSyncUi } from './sync-ui.js';
+import { initPalette } from './palette.js';
 
 (window => {
     const store = window.store;
@@ -461,6 +462,36 @@ import { initSyncUi } from './sync-ui.js';
         e.stopPropagation();
         quickAddCurrentTab();
     }, true);
+
+    // Command palette (P2): Ctrl/Cmd+K overlay unifying bookmark/folder
+    // search, folder jump and a small command set — see src/palette.js.
+    // actions/treeView/quickAddCurrentTab are all defined above, so plain
+    // values; rootFolderId mirrors the quick-add target folder.
+    const palette = initPalette({
+        store,
+        actions,
+        treeView,
+        quickAdd: quickAddCurrentTab,
+        rootFolderId: store.get('quickAddFolderId', '1') || '1'
+    });
+
+    // Global wake-up (background.js's open-command-palette command): the
+    // fallback popup window carries ?palette=1; the chrome.action.openPopup
+    // path sets a session-storage flag instead. storage.session needs
+    // Chrome 102+ while the baseline is 88, so it is feature-detected.
+    if (new URLSearchParams(window.location.search).has('palette')) {
+        palette.open();
+        // Consume a stale flag too, so the next plain popup open stays clean.
+        if (chrome.storage && chrome.storage.session)
+            chrome.storage.session.remove('pendingPaletteOpen');
+    } else if (chrome.storage && chrome.storage.session) {
+        chrome.storage.session.get('pendingPaletteOpen', v => {
+            if (v && v.pendingPaletteOpen) {
+                palette.open();
+                chrome.storage.session.remove('pendingPaletteOpen');
+            }
+        });
+    }
 
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', e => {

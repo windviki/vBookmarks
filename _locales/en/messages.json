@@ -208,6 +208,10 @@
   "openBookmarksNewWindow": {
     "message": "Open All Bookmarks in New Window"
   },
+  "openCommandPaletteCommand": {
+    "description": "Description of the keyboard shortcut command that opens the command palette.",
+    "message": "Open command palette"
+  },
   "openIncognitoWindow": {
     "message": "Open in Incognito Window"
   },
@@ -274,6 +278,30 @@
   },
   "optionThemeDark": {
     "message": "Dark"
+  },
+  "paletteCmdNewBookmark": {
+    "description": "Command palette entry that bookmarks the current tab at the bottom of the quick-add folder.",
+    "message": "New bookmark…"
+  },
+  "paletteCmdNewFolder": {
+    "description": "Command palette entry that creates a folder at the bottom of the quick-add folder.",
+    "message": "New folder…"
+  },
+  "paletteCmdNewSeparator": {
+    "description": "Command palette entry that adds a separator at the bottom of the quick-add folder.",
+    "message": "New separator"
+  },
+  "paletteCmdQuickAdd": {
+    "description": "Command palette entry that bookmarks the current tab (same as the star button).",
+    "message": "Bookmark current tab"
+  },
+  "paletteNoResults": {
+    "description": "Shown in the command palette when nothing matches the query.",
+    "message": "No matching results"
+  },
+  "palettePlaceholder": {
+    "description": "Placeholder text for the command palette input field.",
+    "message": "Search bookmarks, folders, commands…"
   },
   "parentFolder": {
     "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",

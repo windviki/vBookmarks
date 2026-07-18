@@ -42,6 +42,15 @@
 				"default": "Alt+Shift+B"
 			},
 			"description": "__MSG_openSidePanelCommand__"
+		},
+		"open-command-palette": {
+			"suggested_key": {
+				"windows": "Ctrl+Shift+K",
+				"mac": "Command+Shift+K",
+				"chromeos": "Ctrl+Shift+K",
+				"linux": "Ctrl+Shift+K"
+			},
+			"description": "__MSG_openCommandPaletteCommand__"
 		}
 	},
 	"permissions": [

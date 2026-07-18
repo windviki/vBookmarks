@@ -878,3 +878,107 @@ menu[type=context].hide-sort #sort-folder-contents {
 #quick-add-toast.show {
     opacity: 1;
 }
+
+/* --- Command palette (P2) --------------------------------------------------
+   Ctrl/Cmd+K overlay in popup.html/sidepanel.html. Fixed and centered near
+   the top; colors come from the shared design tokens above, so the dark
+   theme follows automatically. Sits above the cover (9) and the context
+   menus (10). */
+#command-palette {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 480px;
+    padding: 8px;
+    background-color: var(--vbm-bg-elev);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    box-shadow: 0 8px 40px var(--vbm-shadow);
+    z-index: 11;
+}
+
+#command-palette[hidden] {
+    display: none;
+}
+
+#palette-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    font-size: 110%;
+    color: var(--vbm-fg);
+    background-color: var(--vbm-bg);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    outline: none;
+}
+
+#palette-input:focus {
+    border-color: var(--vbm-accent);
+    box-shadow: 0 0 0 2px var(--vbm-focus-ring);
+}
+
+#palette-results {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.palette-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.palette-row .palette-kind {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+
+.palette-row .palette-icon {
+    flex: none;
+}
+
+.palette-row .palette-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.palette-row .palette-url {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--vbm-muted);
+    font-size: 85%;
+}
+
+.palette-row:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+.palette-row.selected,
+.palette-row.selected:hover {
+    background-color: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
+.palette-row.selected .palette-url {
+    color: var(--vbm-fg-selected);
+}
+
+.palette-empty {
+    padding: 8px;
+    color: var(--vbm-muted);
+    text-align: center;
+}

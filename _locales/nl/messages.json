@@ -1,33 +1,79 @@
 {
-  "accessibility": {
-    "message": "Toegankelijkheid"
-  },
-  "addBookmarkAfter": {
-    "message": "Huidige tab hierna toevoegen"
-  },
-  "addBookmarkBefore": {
-    "message": "Huidige tab hiervoor toevoegen"
-  },
-  "addBookmarkBottom": {
-    "message": "Huidige tab onderaan toevoegen"
+  "versionMessage": {
+    "message": "Dit is de nieuwe VBM $versionNumber$! Changelog staat hier: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
   },
   "addBookmarkTop": {
     "message": "Huidige tab bovenaan toevoegen"
   },
-  "addNewFolder": {
-    "message": "Submap toevoegen"
+  "customSeparatorColorDescription": {
+    "message": "Scheidingstekenkleur aanpassen"
   },
-  "addNewFolderAfter": {
-    "message": "Map hierna toevoegen"
+  "customIconDescription": {
+    "message": "Het pictogram moet 19*19 pixels groot zijn. Anders wordt het naar deze afmeting geschaald."
   },
-  "addNewFolderBefore": {
-    "message": "Map hiervoor toevoegen"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "seconden"
   },
-  "addSeparator": {
-    "message": "Scheidingsteken toevoegen"
+  "optionOnlyShowBookmarkBar": {
+    "message": "Alleen bladwijzers in bladwijzerbalk tonen"
   },
-  "advancedOptions": {
-    "message": "Geavanceerde opties"
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Bovenliggende map: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "donationDismiss": {
+    "message": "Negeren"
+  },
+  "accessibility": {
+    "message": "Toegankelijkheid"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Vernieuwingsinterval"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Vorige status onthouden (scrollpositie en open mappen)."
+  },
+  "customSeparatorTitleDescription": {
+    "message": "De echte titel van de bladwijzer die als scheidingsteken wordt weergegeven"
+  },
+  "searchBookmarks": {
+    "description": "Plaatshoudertekst voor zoekveld.",
+    "message": "Bladwijzers zoeken"
+  },
+  "reportError": {
+    "message": "Fout melden"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Weet u zeker dat u map $folderName$ en $bookmarkCount$ bladwijzer(s) daarin wilt verwijderen?",
@@ -39,6 +85,255 @@
         "content": "$1"
       }
     }
+  },
+  "ignore": {
+    "message": "Negeren"
+  },
+  "extDesc": {
+    "description": "De extensiebeschrijving.",
+    "message": "Een pop-up bladwijzerbeheerder. Verbeterde Neat Bookmarks. Netter dan Neater Bookmarks."
+  },
+  "addSeparator": {
+    "message": "Scheidingsteken toevoegen"
+  },
+  "deleteEllipsis": {
+    "message": "Verwijderen..."
+  },
+  "crossStorageMoveWarning": {
+    "message": "Bladwijzers kunnen niet worden verplaatst tussen gesynchroniseerde en lokale opslag. Gebruik in plaats daarvan kopiëren/plakken.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "removeSeparator": {
+    "message": "Scheidingsteken verwijderen"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "reportedToDeveloper": {
+    "description": "Een bericht voor een fout opgetreden in de extensie, is gemeld aan de ontwikkelaar.",
+    "message": "Dit is gemeld aan de ontwikkelaar."
+  },
+  "customStyles": {
+    "message": "Aangepaste stijlen"
+  },
+  "resetButton": {
+    "message": "Resetten"
+  },
+  "customStylesDescription": {
+    "message": "Dit vereist enige CSS-vaardigheden. Wijzig op eigen risico. Code delen zou verstandig zijn via"
+  },
+  "openNewWindow": {
+    "message": "Openen in nieuw venster"
+  },
+  "optionPopupStays": {
+    "message": "Pop-up blijft open bij het openen (linkerklik) van bladwijzers."
+  },
+  "addBookmarkBottom": {
+    "message": "Huidige tab onderaan toevoegen"
+  },
+  "openBookmarks": {
+    "message": "Alle bladwijzers openen"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Als de URL van een bladwijzer deze tekenreeks bevat, wordt deze als scheidingsteken weergegeven"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw venster wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Nee"
+  },
+  "defaultIconButtonOr": {
+    "message": "of"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Alle bladwijzers openen in nieuw venster"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "options": {
+    "message": "Opties"
+  },
+  "save": {
+    "message": "Opslaan"
+  },
+  "general": {
+    "message": "Algemeen"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "addNewFolderAfter": {
+    "message": "Map hierna toevoegen"
+  },
+  "optionClickNewTab": {
+    "message": "Linkerklik opent bladwijzer in nieuw tabblad."
+  },
+  "noTitle": {
+    "description": "De titel voor bladwijzers zonder titel zonder http(s)-URL of mappen zonder titel.",
+    "message": "(geen titel)"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
+  },
+  "copyTitleAndUrl": {
+    "message": "Titel en URL kopiëren naar klembord"
+  },
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
+  },
+  "editBookmark": {
+    "message": "Bladwijzer bewerken"
+  },
+  "edit": {
+    "message": "Bewerken..."
+  },
+  "openNewTab": {
+    "message": "Openen in nieuw tabblad"
+  },
+  "syncOptions": {
+    "message": "Synchronisatieopties"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "name": {
+    "description": "Naam van bladwijzer of map.",
+    "message": "Naam"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw incognito-venster wilt openen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Alle titels en URL's kopiëren naar klembord"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Synchronisatiestatus automatisch vernieuwen"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Gemaakt door $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionOpenNewTab": {
+    "message": "Middelklik of control-klik opent bladwijzer in nieuw achtergrondtabblad (in plaats van voorgrond)."
+  },
+  "optionShowSyncStatus": {
+    "message": "Synchronisatiestatusindicatoren tonen"
+  },
+  "openIncognitoWindow": {
+    "message": "Openen in incognito-venster"
+  },
+  "addNewFolder": {
+    "message": "Submap toevoegen"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "De echte URL van de bladwijzer die als scheidingsteken wordt weergegeven"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "defaultIconButton": {
+    "message": "Standaard gebruiken"
+  },
+  "optionAutoResizePopup": {
+    "message": "Popup-venstergrootte automatisch aanpassen aan inhoud"
+  },
+  "resetSettings": {
+    "message": "Instellingen resetten"
+  },
+  "addNewFolderBefore": {
+    "message": "Map hiervoor toevoegen"
+  },
+  "editFolder": {
+    "message": "Map bewerken"
+  },
+  "errorOccured": {
+    "message": "Oeps, er is een fout opgetreden."
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addBookmarkBefore": {
+    "message": "Huidige tab hiervoor toevoegen"
+  },
+  "advancedOptions": {
+    "message": "Geavanceerde opties"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Alle bladwijzers openen in incognito-venster"
+  },
+  "customIcon": {
+    "message": "Aangepast pictogram"
+  },
+  "delete": {
+    "message": "Verwijderen"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Niet-gesynchroniseerde bladwijzers markeren"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Weet u zeker dat u map $folderName$ en $subFolderCount$ submap(pen) daarin wilt verwijderen?",
@@ -65,258 +360,41 @@
       }
     }
   },
-  "confirmOpenBookmarks": {
-    "description": "Bevestigingsbericht voor het openen van alle bladwijzers.",
-    "message": "Weet u zeker dat u alle $count$ bladwijzers wilt openen?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "resetSettingsDescription": {
+    "message": "vBookmarks resetten naar standaardinstellingen."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Bevestigingsbericht voor het openen van alle bladwijzers in een nieuw incognito-venster.",
-    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw incognito-venster wilt openen?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "addBookmarkAfter": {
+    "message": "Huidige tab hierna toevoegen"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Bevestigingsbericht voor het openen van alle bladwijzers in een nieuw venster.",
-    "message": "Weet u zeker dat u alle $count$ bladwijzers in een nieuw venster wilt openen?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Alle titels en URL's kopiëren naar klembord"
-  },
-  "copyTitleAndUrl": {
-    "message": "Titel en URL kopiëren naar klembord"
-  },
-  "customIcon": {
-    "message": "Aangepast pictogram"
-  },
-  "customIconDescription": {
-    "message": "Het pictogram moet 19*19 pixels groot zijn. Anders wordt het naar deze afmeting geschaald."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Scheidingstekenkleur aanpassen"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "De echte titel van de bladwijzer die als scheidingsteken wordt weergegeven"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "De echte URL van de bladwijzer die als scheidingsteken wordt weergegeven"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Als de URL van een bladwijzer deze tekenreeks bevat, wordt deze als scheidingsteken weergegeven"
-  },
-  "customStyles": {
-    "message": "Aangepaste stijlen"
-  },
-  "customStylesDescription": {
-    "message": "Dit vereist enige CSS-vaardigheden. Wijzig op eigen risico. Code delen zou verstandig zijn via"
-  },
-  "defaultIconButton": {
-    "message": "Standaard gebruiken"
-  },
-  "defaultIconButtonOr": {
-    "message": "of"
-  },
-  "delete": {
-    "message": "Verwijderen"
-  },
-  "deleteEllipsis": {
-    "message": "Verwijderen..."
-  },
-  "versionMessage": {
-    "message": "Dit is de nieuwe VBM $versionNumber$! Changelog staat hier: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationMessage": {
     "message": "Als u het leuk vindt, kunt u misschien doneren voor toekomstige ontwikkeling. Elk bedrag is welkom."
   },
-  "donationGo": {
-    "message": "OK"
+  "optionCloseUnusedFolders": {
+    "message": "Ongebruikte mappen sluiten bij het openen van een map."
   },
-  "donationDismiss": {
-    "message": "Negeren"
+  "url": {
+    "message": "URL"
   },
-  "edit": {
-    "message": "Bewerken..."
+  "replaceUrl": {
+    "message": "Vervang dit met huidige URL"
   },
-  "editBookmark": {
-    "message": "Bladwijzer bewerken"
-  },
-  "editFolder": {
-    "message": "Map bewerken"
-  },
-  "errorOccured": {
-    "message": "Oeps, er is een fout opgetreden."
-  },
-  "extDesc": {
-    "description": "De extensiebeschrijving.",
-    "message": "Een pop-up bladwijzerbeheerder. Verbeterde Neat Bookmarks. Netter dan Neater Bookmarks."
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "general": {
-    "message": "Algemeen"
-  },
-  "ignore": {
-    "message": "Negeren"
-  },
-  "name": {
-    "description": "Naam van bladwijzer of map.",
-    "message": "Naam"
-  },
-  "nope": {
-    "message": "Nee"
-  },
-  "noTitle": {
-    "description": "De titel voor bladwijzers zonder titel zonder http(s)-URL of mappen zonder titel.",
-    "message": "(geen titel)"
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
   },
   "open": {
     "description": "Actie om bladwijzers te openen.",
     "message": "Openen"
   },
-  "openBookmarks": {
-    "message": "Alle bladwijzers openen"
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Alle bladwijzers openen in incognito-venster"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Alle bladwijzers openen in nieuw venster"
-  },
-  "openIncognitoWindow": {
-    "message": "Openen in incognito-venster"
-  },
-  "openNewTab": {
-    "message": "Openen in nieuw tabblad"
-  },
-  "openNewWindow": {
-    "message": "Openen in nieuw venster"
-  },
-  "optionClickNewTab": {
-    "message": "Linkerklik opent bladwijzer in nieuw tabblad."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Ongebruikte mappen sluiten bij het openen van een map."
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Alleen bladwijzers in bladwijzerbalk tonen"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"
-  },
-  "optionOpenNewTab": {
-    "message": "Middelklik of control-klik opent bladwijzer in nieuw achtergrondtabblad (in plaats van voorgrond)."
-  },
-  "optionPopupStays": {
-    "message": "Pop-up blijft open bij het openen (linkerklik) van bladwijzers."
-  },
-  "optionRememberPrevState": {
-    "message": "Vorige status onthouden (scrollpositie en open mappen)."
-  },
-  "options": {
-    "message": "Opties"
-  },
-  "optionsFooterText": {
-    "description": "Voettekst voor de Opties pagina",
-    "message": "Gemaakt door $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "parentFolder": {
-    "description": "Bovenliggende map in informatie weergegeven in tooltip van bladwijzers in zoekresultatenlijst.",
-    "message": "Bovenliggende map: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bladwijzerbalk"
-      }
-    }
-  },
-  "removeSeparator": {
-    "message": "Scheidingsteken verwijderen"
-  },
-  "replaceUrl": {
-    "message": "Vervang dit met huidige URL"
-  },
-  "reportedToDeveloper": {
-    "description": "Een bericht voor een fout opgetreden in de extensie, is gemeld aan de ontwikkelaar.",
-    "message": "Dit is gemeld aan de ontwikkelaar."
-  },
-  "reportError": {
-    "message": "Fout melden"
-  },
-  "resetButton": {
-    "message": "Resetten"
-  },
-  "resetSettings": {
-    "message": "Instellingen resetten"
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks resetten naar standaardinstellingen."
-  },
-  "save": {
-    "message": "Opslaan"
-  },
-  "searchBookmarks": {
-    "description": "Plaatshoudertekst voor zoekveld.",
-    "message": "Bladwijzers zoeken"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "syncOptions": {
-    "message": "Synchronisatieopties"
-  },
-  "optionShowSyncStatus": {
-    "message": "Synchronisatiestatusindicatoren tonen"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Niet-gesynchroniseerde bladwijzers markeren"
-  },
-  "optionAutoRefreshSync": {
-    "message": "Synchronisatiestatus automatisch vernieuwen"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Vernieuwingsinterval"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "seconden"
-  },
-  "optionAutoResizePopup": {
-    "message": "Popup-venstergrootte automatisch aanpassen aan inhoud"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bladwijzers kunnen niet worden verplaatst tussen gesynchroniseerde en lokale opslag. Gebruik in plaats daarvan kopiëren/plakken.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   }
 }

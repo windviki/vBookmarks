@@ -371,9 +371,9 @@ const setup = (opts = {}) => {
 };
 
 describe('module API + startup wiring', () => {
-    it('returns { generateTree, adaptBookmarkTooltips } and wires the startup getTree to generateTree', () => {
+    it('returns { generateTree, adaptBookmarkTooltips, revealFolder } and wires the startup getTree to generateTree', () => {
         const { treeView, chrome } = setup({});
-        expect(Object.keys(treeView).sort()).toEqual(['adaptBookmarkTooltips', 'generateTree']);
+        expect(Object.keys(treeView).sort()).toEqual(['adaptBookmarkTooltips', 'generateTree', 'revealFolder']);
         expect(chrome.bookmarks.getTreeCalls).toHaveLength(1);
         expect(chrome.bookmarks.getTreeCalls[0]).toBe(treeView.generateTree);
     });
