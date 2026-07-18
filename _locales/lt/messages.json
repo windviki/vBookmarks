@@ -3,7 +3,7 @@
     "message": "Rodyti sinchronizavimo būklės indikatorius"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Pašalinta $count$ dublikatų žymių",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Pridėti dabartinį skirtuką į šio viršų"
+    "message": "Pridėti skirtuką į šio viršų"
   },
   "errorOccured": {
     "message": "Oi, įvyko klaida."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Išsaugomi seniausi įrašai.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Prieinamumas"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Nauja žymė…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Tema"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "Sinchronizavimo parinktys"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Pašalintas aplankas $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Tikrinama $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Pašalinti šią žymę?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nerasta neveikiančių nuorodų"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Nuskaityti iš naujo"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Rasti neveikiančias nuorodas"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Išvalyti visus: $groups$ grupės, $count$ papildomų kopijų",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Atidaryti vBookmarks šoninį skydelį"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Sekti sistemą"
   },
   "edit": {
     "message": "Redaguoti..."
@@ -172,19 +172,19 @@
     "message": "Atidaryti incognito lange"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Pridėti dabartinį skirtuką prie žymių"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Nėra skirtukų išsaugoti"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Pagal pridėjimo datą (naujausi pirmi)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Naujas skyriklis"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Neseniai pridėta"
   },
   "copyAllTitlesAndUrls": {
     "message": "Kopijuoti visus pavadinimus ir URL į iškarpinę"
@@ -222,7 +222,7 @@
     "message": "Atidaryti visas žymeles"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Atidaryti visus naujoje grupėje"
   },
   "optionConfirmOpenFolder": {
     "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Išsaugoti lango skirtukus kaip aplanką"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Naujas aplankas…"
   },
   "customSeparatorStringDescription": {
     "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Ieškoti žymių, aplankų, komandų…"
   },
   "addNewFolderBefore": {
     "message": "Pridėti aplanką prieš šį"
@@ -284,26 +284,26 @@
     "message": "Tinkinta piktograma"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Tuščia)"
   },
   "save": {
     "message": "Išsaugoti"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Atšaukti"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Rodyti tik žymeles žymelių juostoje"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Rūšiuoti ir poaplankius (rekursyviai)"
   },
   "noTitle": {
     "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
     "message": "(be pavadinimo)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Pagal pavadinimą"
   },
   "defaultIconButton": {
     "message": "Naudoti numatytąjį"
@@ -312,7 +312,7 @@
     "message": "Tinkinti skirtuko spalvą"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Išsaugota $count$ skirtukų naujame aplanke",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Aplankus viršuje"
   },
   "optionSearchAfterEnter": {
     "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Atitikmenų nerasta"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Atidaryti komandų paletę"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Atitinkančių žymių nerasta"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Sesija $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Tai perrikiuoja žymes kiekviename poaplankyje ir negali būti atšaukta."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Žymė pridėta"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Tamsi"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Rašalas (tamsi)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Popierius (šviesi)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Rūšiuoti aplanko turinį"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ dublikatai",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "Atmesti"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Išvalyti dublikatus žymes"
   },
   "general": {
     "message": "Bendri"
@@ -438,10 +438,10 @@
     "message": "Atidaryti naujame lange"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Dublikatų nerasta"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Atidaryti šoniniame skydelyje vietoj iššokančio lango"
   },
   "extDesc": {
     "description": "Plėtinio aprašymas.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Pašalinta $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,19 +471,19 @@
     "message": "Automatiškai atnaujinti sinchronizavimo būklę"
   },
   "openBookmarksNewWindow": {
-    "message": "Atidaryti visas žymeles naujame lange"
+    "message": "Atidaryti žymeles naujame lange"
   },
   "addNewFolder": {
     "message": "Pridėti pakatalogį"
   },
   "copyTitleAndUrl": {
-    "message": "Kopijuoti pavadinimą ir URL į iškarpinę"
+    "message": "Kopijuoti pavadinimą ir URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Atidaryti visas žymeles incognito lange"
+    "message": "Atidaryti žymeles inkognito lange"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Šviesi"
   },
   "optionZoom": {
     "message": "Mastelis"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Išlaikyti seniausią ir pašalinti kitas $count$ kopijas?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Pridėti dabartinį skirtuką į šio apačią"
+    "message": "Pridėti skirtuką į šio apačią"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
   },
   "donationGo": {
     "message": "Gerai"

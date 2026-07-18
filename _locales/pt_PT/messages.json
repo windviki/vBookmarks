@@ -1,9 +1,9 @@
 {
   "optionShowSyncStatus": {
-    "message": "[TODO:optionShowSyncStatus]"
+    "message": "Mostrar indicadores de estado de sincronização"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$ marcadores duplicados removidos",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Adicionar separador actual ao topo desta pasta"
+    "message": "Marcar separador no topo"
   },
   "errorOccured": {
     "message": "Oops, ocorreu um erro."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Mostrar marcadores adicionados recentemente no topo do pop-up"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Recolher a secção de adicionados recentemente por predefinição"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Remover $count$ cópias extra em $groups$ grupos? As entradas mais antigas são mantidas.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Configurações de Acessibilidade"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Novo marcador…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Tema"
   },
   "confirmOpenBookmarksNewWindow": {
     "placeholders": {
@@ -57,13 +57,13 @@
     "message": "Redefinir"
   },
   "addBookmarkBefore": {
-    "message": "Adicionar separador actual como marcador antes deste"
+    "message": "Marcar separador antes deste"
   },
   "syncOptions": {
-    "message": "[TODO:syncOptions]"
+    "message": "Opções de Sincronização"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Pasta $title$ eliminada",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Adicionar marcador a esta página (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "A verificar $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Remover este marcador?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nenhum link quebrado encontrado"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Revarrir"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Encontrar links quebrados"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Limpar tudo: $groups$ grupos, $count$ cópias extra",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Abrir painel lateral do vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Seguir sistema"
   },
   "edit": {
     "message": "Editar..."
@@ -132,7 +132,7 @@
     "message": "ou"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "[TODO:optionSyncRefreshIntervalSeconds]"
+    "message": "segundos"
   },
   "advancedOptions": {
     "message": "Opções avançadas"
@@ -171,19 +171,19 @@
     "message": "Abrir numa Janela Privada"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Marcar separador atual"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Nenhum separador para guardar"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Por data de adição (mais recentes primeiro)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Novo separador"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Adicionados recentemente"
   },
   "copyAllTitlesAndUrls": {
     "message": "Copiar todos os títulos e URLs"
@@ -215,13 +215,13 @@
     "message": "Pasta principal: \"$folderName$\""
   },
   "optionSyncRefreshInterval": {
-    "message": "[TODO:optionSyncRefreshInterval]"
+    "message": "Intervalo de atualização"
   },
   "openBookmarks": {
     "message": "Abrir Todos os Marcadores"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Abrir tudo num novo grupo"
   },
   "optionConfirmOpenFolder": {
     "message": "Mostra confirmação quando abre vários marcadores duma pasta."
@@ -244,10 +244,10 @@
     "message": "Tem a certeza que pretende apagar a pasta $folderName$, $subFolderCount$ sub-pasta(s) e $bookmarkCount$ marcador(es) incluído(s)?"
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Guardar separadores da janela como pasta"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Nova pasta…"
   },
   "customSeparatorStringDescription": {
     "message": "Se o URL de um marcador contiver este texto, será exibido como separador"
@@ -274,7 +274,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Pesquisar marcadores, pastas, comandos…"
   },
   "addNewFolderBefore": {
     "message": "Adicionar pasta antes deste"
@@ -283,26 +283,26 @@
     "message": "Ícone personalizado"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Vazio)"
   },
   "save": {
     "message": "Gravar"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Anular"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostrar apenas marcadores da barra de marcadores"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Ordenar também subpastas (recursivo)"
   },
   "noTitle": {
     "description": "Título para marcadores sem título e sem http(s) URL ou pastas sem título.",
     "message": "(sem título)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Por título"
   },
   "defaultIconButton": {
     "message": "Usar padrão"
@@ -311,7 +311,7 @@
     "message": "Personalizar cor do separador"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$ separadores guardados numa nova pasta",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -321,22 +321,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Manter pastas no topo"
   },
   "optionSearchAfterEnter": {
     "message": "Pesquisar marcadores apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Nenhum resultado correspondente"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Abrir paleta de comandos"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Nenhum marcador correspondente"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Sessão $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -346,7 +346,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Isto reordena marcadores em todas as subpastas e não pode ser desfeito."
   },
   "optionsFooterText": {
     "message": "Criado por $authorName$.",
@@ -358,19 +358,19 @@
     "description": "Footer text for the Options page"
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Marcador adicionado"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Escuro"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Tinta (escuro)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papel (claro)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Ordenar conteúdo da pasta"
   },
   "confirmDeleteFolderBookmarks": {
     "placeholders": {
@@ -384,7 +384,7 @@
     "message": "Tem a certeza que pretende apagar a pasta $folderName$ e $bookmarkCount$ marcador(es) incluídos?"
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ duplicados",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -396,7 +396,7 @@
     "message": "Abrir num Novo Separador"
   },
   "addBookmarkAfter": {
-    "message": "Adicionar separador actual como marcador depois deste"
+    "message": "Marcar separador após este"
   },
   "ignore": {
     "message": "Ignorar"
@@ -419,13 +419,13 @@
     "message": "Nome"
   },
   "optionHighlightUnsynced": {
-    "message": "[TODO:optionHighlightUnsynced]"
+    "message": "Destacar marcadores não sincronizados"
   },
   "donationDismiss": {
     "message": "Fechar"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Limpar marcadores duplicados"
   },
   "general": {
     "message": "Definições Gerais"
@@ -437,10 +437,10 @@
     "message": "Abrir numa Nova Janela"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Nenhum duplicado encontrado"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Abrir no painel lateral em vez de pop-up"
   },
   "extDesc": {
     "message": "Um gestor de marcadores popup. Enhanced Neat Bookmarks."
@@ -449,10 +449,10 @@
     "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
   },
   "crossStorageMoveWarning": {
-    "message": "[TODO:crossStorageMoveWarning]"
+    "message": "Não é possível mover marcadores entre armazenamento sincronizado e local. Use copiar/colar."
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ eliminado",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -465,10 +465,10 @@
     "message": "Memoriza o estado anterior (posição vertical e pastas abertas)."
   },
   "optionAutoRefreshSync": {
-    "message": "[TODO:optionAutoRefreshSync]"
+    "message": "Atualizar estado de sincronização automaticamente"
   },
   "openBookmarksNewWindow": {
-    "message": "Abrir Todos os Marcadores numa Nova Janela"
+    "message": "Abrir marcadores em nova janela"
   },
   "addNewFolder": {
     "message": "Adicionar subpasta"
@@ -477,10 +477,10 @@
     "message": "Copiar título e URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Abrir Todos os Marcadores numa Janela Privada"
+    "message": "Abrir marcadores em janela privada"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Claro"
   },
   "optionZoom": {
     "message": "Zoom"
@@ -497,7 +497,7 @@
     "message": "Tem a certeza que pretende apagar a pasta $folderName$ e $subFolderCount$ sub-pasta(s) incluída(s)?"
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Manter a mais antiga e remover as outras $count$ cópias?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -529,10 +529,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Adicionar separador actual ao final desta pasta"
+    "message": "Marcar separador no final"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Adicionar marcador a esta página com vBookmarks"
   },
   "donationGo": {
     "message": "OK"

@@ -1,9 +1,9 @@
 {
   "optionShowSyncStatus": {
-    "message": "[TODO:optionShowSyncStatus]"
+    "message": "Mostrar indicadores de status de sincronização"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$ favoritos duplicados removidos",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Adicionar aba atual ao topo desta pasta"
+    "message": "Favoritar aba atual no topo"
   },
   "errorOccured": {
     "message": "Oops, ocorreu um erro."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Mostrar favoritos adicionados recentemente no topo do pop-up"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Recolher seção de adicionados recentemente por padrão"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Remover $count$ cópias extras em $groups$ grupos? As entradas mais antigas são mantidas.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Configurações de Acessibilidade"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Novo favorito…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Tema"
   },
   "confirmOpenBookmarksNewWindow": {
     "placeholders": {
@@ -57,13 +57,13 @@
     "message": "Redefinir"
   },
   "addBookmarkBefore": {
-    "message": "Adicionar aba atual como favorito antes deste"
+    "message": "Favoritar aba atual antes deste"
   },
   "syncOptions": {
-    "message": "[TODO:syncOptions]"
+    "message": "Opções de Sincronização"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Pasta $title$ excluída",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Adicionar esta página aos favoritos (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Verificando $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Remover este favorito?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nenhum link quebrado encontrado"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Reexaminar"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Encontrar links quebrados"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Limpar tudo: $groups$ grupos, $count$ cópias extras",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Abrir painel lateral do vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Seguir sistema"
   },
   "edit": {
     "message": "Editar..."
@@ -132,7 +132,7 @@
     "message": "ou"
   },
   "optionSyncRefreshIntervalSeconds": {
-    "message": "[TODO:optionSyncRefreshIntervalSeconds]"
+    "message": "segundos"
   },
   "advancedOptions": {
     "message": "Opções avançadas"
@@ -171,19 +171,19 @@
     "message": "Abrir em uma janela anônima"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Favoritar aba atual"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Nenhuma aba para salvar"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Por data de adição (mais recente primeiro)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Novo separador"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Adicionados recentemente"
   },
   "copyAllTitlesAndUrls": {
     "message": "Copiar todos os títulos e URLs"
@@ -215,13 +215,13 @@
     "message": "Pasta principal: \"$folderName$\""
   },
   "optionSyncRefreshInterval": {
-    "message": "[TODO:optionSyncRefreshInterval]"
+    "message": "Intervalo de atualização"
   },
   "openBookmarks": {
     "message": "Abrir todos os favoritos"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Abrir tudo em novo grupo de abas"
   },
   "optionConfirmOpenFolder": {
     "message": "Mostrar confirmação quando abrir vários favoritos de uma pasta."
@@ -244,10 +244,10 @@
     "message": "Você tem certeza que quer apagar a pasta $folderName$, $subFolderCount$ sub-pasta(s) e $bookmarkCount$ favorito(s) incluído(s)?"
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Salvar abas da janela como pasta"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Nova pasta…"
   },
   "customSeparatorStringDescription": {
     "message": "Se a URL de um favorito contiver este texto, será exibido como separador"
@@ -274,7 +274,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Pesquisar favoritos, pastas, comandos…"
   },
   "addNewFolderBefore": {
     "message": "Adicionar pasta antes deste"
@@ -283,26 +283,26 @@
     "message": "Ícone personalizado"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Vazio)"
   },
   "save": {
     "message": "Salvar"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Desfazer"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostrar apenas favoritos da barra de favoritos"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Ordenar também subpastas (recursivo)"
   },
   "noTitle": {
     "description": "Título para favoritos sem título e sem URL http(s) ou pastas sem título.",
     "message": "(sem título)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Por título"
   },
   "defaultIconButton": {
     "message": "Usar padrão"
@@ -311,7 +311,7 @@
     "message": "Personalizar cor do separador"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$ abas salvas em uma nova pasta",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -321,22 +321,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Manter pastas no topo"
   },
   "optionSearchAfterEnter": {
     "message": "Pesquisar favoritos apenas ao pressionar ENTER (em vez de pesquisa instantânea)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Nenhum resultado correspondente"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Abrir paleta de comandos"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Nenhum favorito correspondente"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Sessão $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -346,7 +346,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Isso reordena favoritos em cada subpasta e não pode ser desfeito."
   },
   "optionsFooterText": {
     "message": "Criado por $authorName$.",
@@ -358,19 +358,19 @@
     "description": "Footer text for the Options page"
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Favorito adicionado"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Escuro"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Tinta (escuro)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papel (claro)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Ordenar Conteúdo da Pasta"
   },
   "confirmDeleteFolderBookmarks": {
     "placeholders": {
@@ -384,7 +384,7 @@
     "message": "Você tem certeza que quer apagar a pasta $folderName$ e $bookmarkCount$ favorito(s) incluído(s)?"
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ duplicados",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -396,7 +396,7 @@
     "message": "Abrir em uma nova guia"
   },
   "addBookmarkAfter": {
-    "message": "Adicionar aba atual como favorito depois deste"
+    "message": "Favoritar aba atual após este"
   },
   "ignore": {
     "message": "Ignorar"
@@ -419,13 +419,13 @@
     "message": "Nome"
   },
   "optionHighlightUnsynced": {
-    "message": "[TODO:optionHighlightUnsynced]"
+    "message": "Destacar favoritos não sincronizados"
   },
   "donationDismiss": {
     "message": "Fechar"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Limpar favoritos duplicados"
   },
   "general": {
     "message": "Definições Gerais"
@@ -437,10 +437,10 @@
     "message": "Abrir em uma nova janela"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Nenhum duplicado encontrado"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Abrir no painel lateral em vez de pop-up"
   },
   "extDesc": {
     "message": "Um gerenciador de favoritos popup. Enhanced Neat Bookmarks."
@@ -449,10 +449,10 @@
     "message": "Redimensionar automaticamente a janela popup para caber o conteúdo"
   },
   "crossStorageMoveWarning": {
-    "message": "[TODO:crossStorageMoveWarning]"
+    "message": "Não é possível mover favoritos entre armazenamento sincronizado e local. Use copiar/colar."
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ excluído",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -465,10 +465,10 @@
     "message": "Lembrar do estado anterior (posição e pastas abertas)."
   },
   "optionAutoRefreshSync": {
-    "message": "[TODO:optionAutoRefreshSync]"
+    "message": "Atualizar status de sincronização automaticamente"
   },
   "openBookmarksNewWindow": {
-    "message": "Abrir todos os favoritos em uma nova janela"
+    "message": "Abrir favoritos em nova janela"
   },
   "addNewFolder": {
     "message": "Adicionar subpasta"
@@ -477,10 +477,10 @@
     "message": "Copiar título e URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Abrir todos os favoritos em uma janela anônima"
+    "message": "Abrir favoritos em janela anônima"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Claro"
   },
   "optionZoom": {
     "message": "Zoom"
@@ -497,7 +497,7 @@
     "message": "Você tem certeza que quer apagar a pasta $folderName$ e $subFolderCount$ sub-pasta(s) incluída(s)?"
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Manter a mais antiga e remover as outras $count$ cópias?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -529,10 +529,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Adicionar aba atual ao final desta pasta"
+    "message": "Favoritar aba atual no final"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Adicionar esta página aos favoritos com vBookmarks"
   },
   "donationGo": {
     "message": "OK"

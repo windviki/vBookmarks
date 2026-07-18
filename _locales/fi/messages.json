@@ -3,7 +3,7 @@
     "message": "Näytä synkronointitilan ilmaisimet"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Poistettu $count$ kaksoiskappaletta",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Yläreunaan"
+    "message": "Lisää välilehti tämän yläpuolelle"
   },
   "errorOccured": {
     "message": "Hups, tapahtui virhe."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Näytä äskettäin lisätyt kirjanmerkit ponnahdusikkunan yläosassa"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Tiivistä äskettäin lisätyt -osio oletuksena"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Poistetaanko $count$ ylimääräistä kopiota $groups$ ryhmästä? Vanhimmat säilytetään.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Saavutettavuus"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Uusi kirjanmerkki…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Teema"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -57,13 +57,13 @@
     "message": "Nollaa"
   },
   "addBookmarkBefore": {
-    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Edelle"
+    "message": "Lisää välilehti tämän edelle"
   },
   "syncOptions": {
     "message": "Synkronointiasetukset"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Poistettu kansio $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Lisää tämä sivu kirjanmerkkeihin (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Tarkistetaan $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Poistetaanko tämä kirjanmerkki?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Ei rikkinäisiä linkkejä"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Uudelleenskannaa"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Etsi rikkinäiset linkit"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Tyhjennä kaikki: $groups$ ryhmää, $count$ ylimääräistä kopiota",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Avaa vBookmarks-sivupaneeli"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Järjestelmän mukaan"
   },
   "edit": {
     "message": "Muokkaa..."
@@ -172,19 +172,19 @@
     "message": "Avaa Incognito-ikkunassa"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Lisää nykyinen välilehti kirjanmerkiksi"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Ei tallennettavia välilehtiä"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Lisäyspäivän mukaan (uusin ensin)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Uusi erotin"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Äskettäin lisätyt"
   },
   "copyAllTitlesAndUrls": {
     "message": "Kopioi kaikki otsikot ja URL-osoitteet leikepöydälle"
@@ -222,7 +222,7 @@
     "message": "Avaa Kaikki Kirjanmerkit"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Avaa kaikki uuteen välilehtiryhmään"
   },
   "optionConfirmOpenFolder": {
     "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Tallenna ikkunan välilehdet kansioksi"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Uusi kansio…"
   },
   "customSeparatorStringDescription": {
     "message": "Jos kirjanmerkin URL-osoite sisältää tämän merkkijonon, se näytetään erottimena"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Hae kirjanmerkkejä, kansioita, komentoja…"
   },
   "addNewFolderBefore": {
     "message": "Lisää Kansio Tämän Edelle"
@@ -284,26 +284,26 @@
     "message": "Mukautettu kuvake"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Tyhjä)"
   },
   "save": {
     "message": "Tallenna"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Kumoa"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Näytä vain kirjanmerkit Kirjanmerkkipalkissa"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Järjestä myös alikansiot (rekursiivinen)"
   },
   "noTitle": {
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
     "message": "(ei otsikkoa)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Otsikon mukaan"
   },
   "defaultIconButton": {
     "message": "Käytä oletusta"
@@ -312,7 +312,7 @@
     "message": "Mukauta Erottimen Väriä"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Tallennettu $count$ välilehteä uuteen kansioon",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Pidä kansiot ylhäällä"
   },
   "optionSearchAfterEnter": {
     "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Ei vastaavia tuloksia"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Avaa komentopaletti"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Ei vastaavia kirjanmerkkejä"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Istunto $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa eikä sitä voi peruuttaa."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Kirjanmerkki lisätty"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Tumma"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Muste (tumma)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Paperi (vaalea)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Järjestä kansion sisältö"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $bookmarkCount$ kirjanmerkkiä?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ kaksoiskappaletta",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -397,7 +397,7 @@
     "message": "Avaa Uudessa Välilehdessä"
   },
   "addBookmarkAfter": {
-    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Jälkeen"
+    "message": "Lisää välilehti tämän jälkeen"
   },
   "ignore": {
     "message": "Ohita"
@@ -413,7 +413,7 @@
     "message": "Asetukset"
   },
   "replaceUrl": {
-    "message": "Korvaa tämä nykyisellä URL-osoitteella"
+    "message": "Korvaa nykyisellä URL-osoitteella"
   },
   "name": {
     "description": "Name of bookmark or folder.",
@@ -426,7 +426,7 @@
     "message": "Hylkää"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Siivoa kaksoiskappaleet"
   },
   "general": {
     "message": "Yleinen"
@@ -438,10 +438,10 @@
     "message": "Avaa Uudessa Ikkunassa"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Ei kaksoiskappaleita"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Avaa sivupaneelissa ponnahdusikkunan sijaan"
   },
   "extDesc": {
     "description": "The extension description.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Poistettu $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,19 +471,19 @@
     "message": "Päivitä synkronointitila automaattisesti"
   },
   "openBookmarksNewWindow": {
-    "message": "Avaa Kaikki Kirjanmerkit Uudessa Ikkunassa"
+    "message": "Avaa kirjanmerkit uudessa ikkunassa"
   },
   "addNewFolder": {
     "message": "Lisää Alikansio"
   },
   "copyTitleAndUrl": {
-    "message": "Kopioi otsikko ja URL-osoite leikepöydälle"
+    "message": "Kopioi otsikko ja URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Avaa Kaikki Kirjanmerkit Incognito-ikkunassa"
+    "message": "Avaa kirjanmerkit incognitossa"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Vaalea"
   },
   "optionZoom": {
     "message": "Zoomaus"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Säilytetäänkö vanhin ja poistetaan muut $count$ kopiota?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Lisää Nykyinen Välilehti Kirjanmerkiksi Tämän Alareunaan"
+    "message": "Lisää välilehti tämän alle"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Lisää tämä sivu kirjanmerkkeihin vBookmarksilla"
   },
   "donationGo": {
     "message": "OK"

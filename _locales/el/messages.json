@@ -3,7 +3,7 @@
     "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Αφαιρέθηκαν $count$ διπλότυποι σελιδοδείκτες",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Επισήμανση τρέχουσας καρτέλας στην αρχή αυτού"
+    "message": "Προσθήκη στην αρχή"
   },
   "errorOccured": {
     "message": "Ωχ, συνέβη ένα σφάλμα."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Εμφάνιση πρόσφατα προστεθέντων σελιδοδεικτών στην κορυφή του αναδυόμενου παραθύρου"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Σύμπτυξη της ενότητας πρόσφατων από προεπιλογή"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Αφαίρεση $count$ επιπλέον αντιγράφων σε $groups$ ομάδες; Διατηρούνται οι παλαιότερες εγγραφές.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Προσβασιμότητα"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Νέος σελιδοδείκτης…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Θέμα"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -57,13 +57,13 @@
     "message": "Επαναφορά"
   },
   "addBookmarkBefore": {
-    "message": "Επισήμανση τρέχουσας καρτέλας πριν από αυτό"
+    "message": "Προσθήκη σελιδοδείκτη πριν"
   },
   "syncOptions": {
     "message": "Επιλογές συγχρονισμού"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Διαγράφηκε ο φάκελος $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Προσθήκη σελιδοδείκτη (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Έλεγχος $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Αφαίρεση αυτού του σελιδοδείκτη;"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Επανάληψη σάρωσης"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Εύρεση νεκρών συνδέσμων"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Εκκαθάριση όλων: $groups$ ομάδες, $count$ επιπλέον αντίγραφα",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Άνοιγμα πλευρικού πίνακα vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Ακολουθία συστήματος"
   },
   "edit": {
     "message": "Επεξεργασία..."
@@ -169,22 +169,22 @@
     "message": "Όχι"
   },
   "openIncognitoWindow": {
-    "message": "Άνοιγμα σε Παράθυρο Ανώνυμης Περιήγησης"
+    "message": "Άνοιγμα ανώνυμης περιήγησης"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Σελιδοδείκτης τρέχουσας καρτέλας"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Δεν υπάρχουν καρτέλες προς αποθήκευση"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Κατά ημερομηνία προσθήκης (νεότερα πρώτα)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Νέος διαχωριστής"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Πρόσφατα προστέθηκαν"
   },
   "copyAllTitlesAndUrls": {
     "message": "Αντιγραφή όλων των τίτλων και URLs στο clipboard"
@@ -222,7 +222,7 @@
     "message": "Άνοιγμα Όλων των Σελιδοδεικτών"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών"
   },
   "optionConfirmOpenFolder": {
     "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Αποθήκευση καρτελών παραθύρου ως φάκελο"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Νέος φάκελος…"
   },
   "customSeparatorStringDescription": {
     "message": "Αν το URL ενός σελιδοδείκτη περιέχει αυτό το string, θα εμφανιστεί ως διαχωριστικό"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Αναζήτηση σελιδοδεικτών, φακέλων, εντολών…"
   },
   "addNewFolderBefore": {
     "message": "Προσθήκη φακέλου πριν από αυτό"
@@ -284,26 +284,26 @@
     "message": "Προσαρμοσμένο εικονίδιο"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Κενό)"
   },
   "save": {
     "message": "Αποθήκευση"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Αναίρεση"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Εμφάνιση μόνο σελιδοδεικτών στη Γραμμή Σελιδοδεικτών"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Ταξινόμηση και υποφακέλων (αναδρομικά)"
   },
   "noTitle": {
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
     "message": "(χωρίς τίτλο)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Κατά τίτλο"
   },
   "defaultIconButton": {
     "message": "Χρήση προεπιλογής"
@@ -312,7 +312,7 @@
     "message": "Προσαρμογή Χρώματος Διαχωριστικού"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Αποθηκεύτηκαν $count$ καρτέλες σε νέο φάκελο",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Διατήρηση φακέλων στην κορυφή"
   },
   "optionSearchAfterEnter": {
     "message": "Αναζήτηση σελιδοδεικτών μόνο όταν πατηθεί το ENTER (αντί για άμεση αναζήτηση)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Δεν υπάρχουν αντίστοιχα αποτελέσματα"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Άνοιγμα παλέτας εντολών"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Δεν βρέθηκαν αντίστοιχοι σελιδοδείκτες"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Συνεδρία $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο και δεν μπορεί να αναιρεθεί."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Ο σελιδοδείκτης προστέθηκε"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Σκοτεινό"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Μελάνι (σκοτεινό)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Χαρτί (φωτεινό)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Ταξινόμηση περιεχομένων φακέλου"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $bookmarkCount$ σελιδοδείκτες σε αυτόν;",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ διπλότυπα",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -397,7 +397,7 @@
     "message": "Άνοιγμα σε Νέα Καρτέλα"
   },
   "addBookmarkAfter": {
-    "message": "Επισήμανση τρέχουσας καρτέλας μετά από αυτό"
+    "message": "Προσθήκη σελιδοδείκτη μετά"
   },
   "ignore": {
     "message": "Αγνόηση"
@@ -426,7 +426,7 @@
     "message": "Αγνόηση"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Εκκαθάριση διπλότυπων σελιδοδεικτών"
   },
   "general": {
     "message": "Γενικά"
@@ -438,10 +438,10 @@
     "message": "Άνοιγμα σε Νέο Παράθυρο"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Δεν βρέθηκαν διπλότυπα"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Άνοιγμα σε πλευρικό πίνακα αντί για αναδυόμενο παράθυρο"
   },
   "extDesc": {
     "description": "The extension description.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Διαγράφηκε ο $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,19 +471,19 @@
     "message": "Αυτόματη ενημέρωση κατάστασης συγχρονισμού"
   },
   "openBookmarksNewWindow": {
-    "message": "Άνοιγμα Όλων των Σελιδοδεικτών σε Νέο Παράθυρο"
+    "message": "Άνοιγμα σε νέο παράθυρο"
   },
   "addNewFolder": {
     "message": "Προσθήκη υποφακέλου"
   },
   "copyTitleAndUrl": {
-    "message": "Αντιγραφή τίτλου και URL στο clipboard"
+    "message": "Αντιγραφή τίτλου & URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Άνοιγμα Όλων των Σελιδοδεικτών σε Παράθυρο Ανώνυμης Περιήγησης"
+    "message": "Άνοιγμα σε ανώνυμη περιήγηση"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Φωτεινό"
   },
   "optionZoom": {
     "message": "Μεγέθυνση"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Διατήρηση του παλαιότερου και αφαίρεση των άλλων $count$ αντιγράφων;",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Επισήμανση τρέχουσας καρτέλας στο τέλος αυτού"
+    "message": "Προσθήκη στο τέλος"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Προσθήκη σελιδοδείκτη με vBookmarks"
   },
   "donationGo": {
     "message": "OK"

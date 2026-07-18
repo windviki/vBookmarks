@@ -3,7 +3,7 @@
     "message": "Mostra indicatori di sincronizzazione"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Rimossi $count$ segnalibri duplicati",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Aggiungi la scheda corrente all'inizio di questa directory"
+    "message": "Aggiungi scheda in cima"
   },
   "errorOccured": {
     "message": "Si è verificato un errore."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Mostra segnalibri aggiunti di recente in cima al popup"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Comprimi la sezione aggiunti di recente per impostazione predefinita"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Rimuovere $count$ copie extra da $groups$ gruppi? Vengono conservate le voci più vecchie.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Impostazioni di accessibilità"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Nuovo segnalibro…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Tema"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -57,13 +57,13 @@
     "message": "Ripristina"
   },
   "addBookmarkBefore": {
-    "message": "Aggiungi la scheda corrente prima di questa"
+    "message": "Aggiungi scheda prima"
   },
   "syncOptions": {
     "message": "Opzioni di sincronizzazione"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Cartella $title$ eliminata",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Aggiungi ai segnalibri (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Verifica $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Rimuovere questo segnalibro?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nessun collegamento interrotto trovato"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Riscansiona"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Trova collegamenti interrotti"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Pulisci tutto: $groups$ gruppi, $count$ copie extra",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Apri pannello laterale vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Segui sistema"
   },
   "edit": {
     "message": "Modifica..."
@@ -169,22 +169,22 @@
     "message": "No"
   },
   "openIncognitoWindow": {
-    "message": "Apri in una finestra di navigazione in incognito"
+    "message": "Apri in finestra anonima"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Aggiungi scheda corrente"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Nessuna scheda da salvare"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Per data aggiunta (più recenti prima)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Nuovo separatore"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Aggiunti di recente"
   },
   "copyAllTitlesAndUrls": {
     "message": "Copia tutti i titoli e gli URL negli appunti"
@@ -222,7 +222,7 @@
     "message": "Apri tutti i preferiti"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Apri tutto in gruppo schede"
   },
   "optionConfirmOpenFolder": {
     "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Salva schede finestra come cartella"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Nuova cartella…"
   },
   "customSeparatorStringDescription": {
     "message": "Se l'URL di un segnalibro contiene questa stringa, verrà visualizzato come separatore"
@@ -275,7 +275,7 @@
     "message": "Indirizzo Web"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Cerca segnalibri, cartelle, comandi…"
   },
   "addNewFolderBefore": {
     "message": "Aggiungi cartella prima di questo"
@@ -284,26 +284,26 @@
     "message": "Icona personalizzata"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Vuota)"
   },
   "save": {
     "message": "Salva"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Annulla"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostra solo i segnalibri nella barra dei segnalibri"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Ordina anche sottocartelle (ricorsivo)"
   },
   "noTitle": {
     "description": "Nome dei preferiti senza nome non contenente indirizzi Web http(s) o delle cartelle senza nome.",
     "message": "(senza nome)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Per titolo"
   },
   "defaultIconButton": {
     "message": "Usa predefinito"
@@ -312,7 +312,7 @@
     "message": "Personalizza il colore del separatore"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Salvate $count$ schede in una nuova cartella",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Cartelle in cima"
   },
   "optionSearchAfterEnter": {
     "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Nessun risultato corrispondente"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Apri la tavolozza comandi"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Nessun segnalibro corrispondente"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Sessione $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Questa operazione riordina i segnalibri in ogni sottocartella e non può essere annullata."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Segnalibro aggiunto"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Scuro"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Inchiostro (scuro)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Carta (chiaro)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Ordina contenuto cartella"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ duplicati",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -397,7 +397,7 @@
     "message": "Apri in un'altra scheda"
   },
   "addBookmarkAfter": {
-    "message": "Aggiungi la scheda corrente dopo questo"
+    "message": "Aggiungi scheda dopo"
   },
   "ignore": {
     "message": "Ignora"
@@ -426,7 +426,7 @@
     "message": "No"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Pulisci segnalibri duplicati"
   },
   "general": {
     "message": "Impostazioni generali"
@@ -438,10 +438,10 @@
     "message": "Apri in un'altra finestra"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Nessun duplicato trovato"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Apri nel pannello laterale invece del popup"
   },
   "extDesc": {
     "description": "Descrizione dell'estensione.",
@@ -455,7 +455,7 @@
     "description": "Avviso quando si tenta di spostare i segnalibri tra tipi di archiviazione"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ eliminato",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,7 +471,7 @@
     "message": "Aggiorna automaticamente stato sincronizzazione"
   },
   "openBookmarksNewWindow": {
-    "message": "Apri tutti i preferiti in un'altra finestra"
+    "message": "Apri tutti in nuova finestra"
   },
   "addNewFolder": {
     "message": "Aggiungi una sottocartella"
@@ -480,10 +480,10 @@
     "message": "Copia titolo e URL negli appunti"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Apri tutti i preferiti in una finestra di navigazione in incognito"
+    "message": "Apri tutti in finestra anonima"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Chiaro"
   },
   "optionZoom": {
     "message": "Zoom"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Conservare la più vecchia e rimuovere le altre $count$ copie?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Aggiungi la scheda corrente alla fine di questa directory"
+    "message": "Aggiungi scheda in fondo"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Aggiungi ai segnalibri con vBookmarks"
   },
   "donationGo": {
     "message": "Certo"

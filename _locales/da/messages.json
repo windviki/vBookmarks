@@ -3,7 +3,7 @@
     "message": "Vis synkroniseringsstatusindikatorer"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Fjernede $count$ dubletbogmærker",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Bogmærk Nuværende Fane Til Top Af Dette"
+    "message": "Bogmærk fane øverst her"
   },
   "errorOccured": {
     "message": "Ups, der opstod en fejl."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Vis senest tilføjede bogmærker øverst i popuppen"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Fold sektionen for senest tilføjede sammen som standard"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Fjern $count$ ekstra kopier på tværs af $groups$ grupper? De ældste poster bevares.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Tilgængelighed"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Nyt bogmærke…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Tema"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "Synkroniseringsindstillinger"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Slettede mappen $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Bogmærk denne side (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Kontrollerer $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Fjern dette bogmærke?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Ingen døde links fundet"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Genscan"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Find døde links"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Ryd alle: $groups$ grupper, $count$ ekstra kopier",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Åbn vBookmarks sidepanel"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Følg system"
   },
   "edit": {
     "message": "Rediger..."
@@ -172,19 +172,19 @@
     "message": "Åbn i Inkognitovindue"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Bogmærk denne fane"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Ingen faner at gemme"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Efter tilføjelsesdato (nyeste først)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Ny separator"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Senest tilføjet"
   },
   "copyAllTitlesAndUrls": {
     "message": "Kopier alle titler og URL'er til udklipsholder"
@@ -222,7 +222,7 @@
     "message": "Åbn Alle Bogmærker"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Åbn alle i ny fanegruppe"
   },
   "optionConfirmOpenFolder": {
     "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Gem vinduesfaner som mappe"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Ny mappe…"
   },
   "customSeparatorStringDescription": {
     "message": "Hvis URL'en af et bogmærke indeholder denne streng, vil det blive vist som en skillelinje"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Søg i bogmærker, mapper, kommandoer…"
   },
   "addNewFolderBefore": {
     "message": "Tilføj Mappe Før Dette"
@@ -284,26 +284,26 @@
     "message": "Brugerdefineret ikon"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Tom)"
   },
   "save": {
     "message": "Gem"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Fortryd"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Vis kun bogmærker i Bogmærkelinjen"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Sortér også undermapper (rekursivt)"
   },
   "noTitle": {
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
     "message": "(ingen titel)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Efter titel"
   },
   "defaultIconButton": {
     "message": "Brug standard"
@@ -312,7 +312,7 @@
     "message": "Tilpas Skillelinjefarve"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Gemte $count$ faner i en ny mappe",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Hold mapper øverst"
   },
   "optionSearchAfterEnter": {
     "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Ingen matchende resultater"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Åbn kommandopalet"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Ingen matchende bogmærker"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Session $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Dette omordner bogmærker i hver undermappe og kan ikke fortrydes."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Bogmærke tilføjet"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Mørk"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Blæk (mørk)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papir (lys)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Sortér mappeindhold"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Er du sikker på, du vil slette mappen $folderName$ og $bookmarkCount$ bogmærke(r) i den?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ dubletter",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "Afvis"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Rens dubletbogmærker"
   },
   "general": {
     "message": "Generelt"
@@ -438,10 +438,10 @@
     "message": "Åbn i Nyt Vindue"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Ingen dubletter fundet"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Åbn i sidepanel i stedet for popup"
   },
   "extDesc": {
     "description": "The extension description.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Slettede $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -477,13 +477,13 @@
     "message": "Tilføj Undermappe"
   },
   "copyTitleAndUrl": {
-    "message": "Kopier titel og URL til udklipsholder"
+    "message": "Kopier titel og URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Åbn Alle Bogmærker i Inkognitovindue"
+    "message": "Åbn alle i inkognitovindue"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Lys"
   },
   "optionZoom": {
     "message": "Zoom"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Behold den ældste og fjern de andre $count$ kopier?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Bogmærk Nuværende Fane Til Bund Af Dette"
+    "message": "Bogmærk fane nederst her"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Bogmærk denne side med vBookmarks"
   },
   "donationGo": {
     "message": "OK"

@@ -3,7 +3,7 @@
     "message": "Показване на индикатори за статус на синхронизация"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Премахнати $count$ дублирани отметки",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Добавяне на текущия раздел в началото на това"
+    "message": "Добави раздела в началото"
   },
   "errorOccured": {
     "message": "Опа, възникна грешка."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Показване на наскоро добавените отметки в горната част на изскачащия прозорец"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Свиване на секцията с наскоро добавени по подразбиране"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Премахване на $count$ допълнителни копия от $groups$ групи? Запазват се най-старите записи.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Достъпност"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Нова отметка…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Тема"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -57,13 +57,13 @@
     "message": "Нулиране"
   },
   "addBookmarkBefore": {
-    "message": "Добавяне на текущия раздел преди това"
+    "message": "Добави раздела преди това"
   },
   "syncOptions": {
     "message": "Опции за синхронизация"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Изтрита папка $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Отметка на тази страница (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Проверка $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Премахване на този отметка?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Няма открити мъртви връзки"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Повторно сканиране"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Намиране на мъртви връзки"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Почистване на всички: $groups$ групи, $count$ допълнителни копия",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Отваряне на страничния панел на vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Следване на системата"
   },
   "edit": {
     "message": "Редактиране..."
@@ -172,19 +172,19 @@
     "message": "Отваряне в инкогнито прозорец"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Отметка на текущия раздел"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Няма раздели за запазване"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "По дата на добавяне (най-новите първи)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Нов разделител"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Наскоро добавени"
   },
   "copyAllTitlesAndUrls": {
     "message": "Копиране на всички заглавия и URL в клипборда"
@@ -222,7 +222,7 @@
     "message": "Отваряне на всички отметки"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Отвори всички в нова група"
   },
   "optionConfirmOpenFolder": {
     "message": "Показване на потвърждение при отваряне на много отметки от папка."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Запазване на разделите на прозореца като папка"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Нова папка…"
   },
   "customSeparatorStringDescription": {
     "message": "Ако URL на отметка съдържа този низ, тя ще се покаже като разделител"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Търсене на отметки, папки, команди…"
   },
   "addNewFolderBefore": {
     "message": "Добавяне на папка преди това"
@@ -284,26 +284,26 @@
     "message": "Персонализирана икона"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Празна)"
   },
   "save": {
     "message": "Запазване"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Отмяна"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Показване само на отметки от лентата с отметки"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Сортиране и на подпапки (рекурсивно)"
   },
   "noTitle": {
     "description": "Заглавие за безимени отметки без http(s) URL или безимени папки.",
     "message": "(без заглавие)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "По заглавие"
   },
   "defaultIconButton": {
     "message": "Използване по подразбиране"
@@ -312,7 +312,7 @@
     "message": "Персонализиране на цвят на разделител"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Запазени $count$ раздела в нова папка",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Папките отгоре"
   },
   "optionSearchAfterEnter": {
     "message": "Търсене на отметки само при натискане на ENTER (вместо незабавно търсене)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Няма съвпадащи резултати"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Отваряне на командна палитра"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Няма съвпадащи отметки"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Сесия $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Това пренарежда отметките във всяка подпапка и не може да бъде отменено."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Отметката е добавена"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Тъмна"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Мастило (тъмна)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Хартия (светла)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Сортиране на съдържанието на папка"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Сигурни ли сте, че искате да изтриете папка $folderName$ и $bookmarkCount$ отметка(и) в нея?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ дубликати",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -397,7 +397,7 @@
     "message": "Отваряне в нов раздел"
   },
   "addBookmarkAfter": {
-    "message": "Добавяне на текущия раздел след това"
+    "message": "Добави раздела след това"
   },
   "ignore": {
     "message": "Игнориране"
@@ -426,7 +426,7 @@
     "message": "Отхвърляне"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Почистване на дублирани отметки"
   },
   "general": {
     "message": "Общи"
@@ -438,10 +438,10 @@
     "message": "Отваряне в нов прозорец"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Няма открити дубликати"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Отваряне в страничен панел вместо изскачащ прозорец"
   },
   "extDesc": {
     "description": "Описанието на разширението.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Изтрит $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,19 +471,19 @@
     "message": "Автоматично опресняване на статуса на синхронизация"
   },
   "openBookmarksNewWindow": {
-    "message": "Отваряне на всички отметки в нов прозорец"
+    "message": "Отвори всички в нов прозорец"
   },
   "addNewFolder": {
     "message": "Добавяне на подпапка"
   },
   "copyTitleAndUrl": {
-    "message": "Копиране на заглавие и URL в клипборда"
+    "message": "Копирай заглавие и URL"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Отваряне на всички отметки в инкогнито прозорец"
+    "message": "Отвори всички в инкогнито"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Светла"
   },
   "optionZoom": {
     "message": "Мащабиране"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Запазване на най-старото и премахване на останалите $count$ копия?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Добавяне на текущия раздел в дъното на това"
+    "message": "Добави раздела в дъното"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Отметка на тази страница с vBookmarks"
   },
   "donationGo": {
     "message": "OK"

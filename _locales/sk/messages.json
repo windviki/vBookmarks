@@ -3,7 +3,7 @@
     "message": "Zobraziť indikátory stavu synchronizácie"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Odstránených $count$ duplicitných záložiek",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Pridať aktuálnu kartu na začiatok tohto"
+    "message": "Pridať kartu na začiatok"
   },
   "errorOccured": {
     "message": "Oops, nastala chyba."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Zobraziť nedávno pridané záložky v hornej časti vyskakovacieho okna"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Štandardne zbaliť sekciu nedávno pridaných"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Odstrániť $count$ extra kópií v $groups$ skupinách? Najstaršie položky sa zachovajú.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Prístupnosť"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Nová záložka…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Téma"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "Možnosti synchronizácie"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Vymazaný priečinok $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Pridať túto stránku do záložiek (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Kontrolujem $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Odstrániť túto záložku?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nenašli sa žiadne nefunkčné odkazy"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Opätovné skenovanie"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Nájsť nefunkčné odkazy"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Vyčistiť všetky: $groups$ skupín, $count$ extra kópií",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Otvoriť bočný panel vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Podľa systému"
   },
   "edit": {
     "message": "Upraviť..."
@@ -172,19 +172,19 @@
     "message": "Otvoriť v inkognito okne"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Pridať aktuálnu kartu do záložiek"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Žiadne karty na uloženie"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Podľa dátumu pridania (najnovšie prvé)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Nový oddeľovač"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Nedávno pridané"
   },
   "copyAllTitlesAndUrls": {
     "message": "Skopírovať všetky názvy a URL do schránky"
@@ -222,7 +222,7 @@
     "message": "Otvoriť všetky záložky"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Otvoriť v novej skupine"
   },
   "optionConfirmOpenFolder": {
     "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Uložiť karty okna ako priečinok"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Nový priečinok…"
   },
   "customSeparatorStringDescription": {
     "message": "Ak URL záložky obsahuje tento reťazec, zobrazí sa ako oddeľovač"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Hľadať záložky, priečinky, príkazy…"
   },
   "addNewFolderBefore": {
     "message": "Pridať priečinok pred týmto"
@@ -284,26 +284,26 @@
     "message": "Vlastná ikona"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Prázdne)"
   },
   "save": {
     "message": "Uložiť"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Späť"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Zobraziť len záložky v lište záložiek"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Zoradiť aj podpriečinky (rekurzívne)"
   },
   "noTitle": {
     "description": "Názov pre bezmenné záložky bez http(s) URL alebo bezmenné priečinky.",
     "message": "(bez názvu)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Podľa názvu"
   },
   "defaultIconButton": {
     "message": "Použiť predvolené"
@@ -312,7 +312,7 @@
     "message": "Prispôsobiť farbu oddeľovača"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Uložených $count$ kariet do nového priečinka",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Ponechať priečinky navrchu"
   },
   "optionSearchAfterEnter": {
     "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Žiadne zodpovedajúce výsledky"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Otvoriť paletu príkazov"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Žiadne zodpovedajúce záložky"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Relácia $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Toto preusporiada záložky v každom podpriečinku a nedá sa vrátiť späť."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Záložka pridaná"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Tmavá"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Atrament (tmavá)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papier (svetlá)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Zoradiť obsah priečinka"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ duplicit",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "Zrušiť"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Vyčistiť duplicitné záložky"
   },
   "general": {
     "message": "Všeobecné"
@@ -438,10 +438,10 @@
     "message": "Otvoriť v novom okne"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Nenašli sa žiadne duplicity"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Otvoriť v bočnom paneli namiesto vyskakovacieho okna"
   },
   "extDesc": {
     "description": "Popis rozšírenia.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Vymazané $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -480,10 +480,10 @@
     "message": "Skopírovať názov a URL do schránky"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Otvoriť všetky záložky v inkognito okne"
+    "message": "Otvoriť v inkognito okne"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Svetlá"
   },
   "optionZoom": {
     "message": "Priblíženie"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Zachovať najstaršiu a odstrániť ostatných $count$ kópií?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Pridať aktuálnu kartu na koniec tohto"
+    "message": "Pridať kartu na koniec"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Pridať túto stránku do záložiek pomocou vBookmarks"
   },
   "donationGo": {
     "message": "OK"

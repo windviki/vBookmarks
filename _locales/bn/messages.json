@@ -3,7 +3,7 @@
     "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$টি ডুপ্লিকেট বুকমার্ক সরানো হয়েছে",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -18,13 +18,13 @@
     "message": "ওহো, একটি ত্রুটি ঘটেছে।"
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "$groups$ গ্রুপ জুড়ে $count$ অতিরিক্ত কপি সরিয়ে ফেলবেন? পুরনো এন্ট্রিগুলো রাখা হবে।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "অ্যাক্সেসিবিলিটি"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "নতুন বুকমার্ক…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "থিম"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "সিঙ্ক অপশন"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "$title$ ফোল্ডার মুছে ফেলা হয়েছে",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "এই পৃষ্ঠা বুকমার্ক করুন (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "$done$ / $total$ চেক করা হচ্ছে…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "এই বুকমার্কটি সরিয়ে ফেলবেন?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "পুনরায় স্ক্যান"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "মৃত লিঙ্ক খুঁজুন"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "সব পরিষ্কার করুন: $groups$ গ্রুপ, $count$ অতিরিক্ত কপি",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "vBookmarks সাইড প্যানেল খুলুন"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "সিস্টেম অনুসরণ করুন"
   },
   "edit": {
     "message": "সম্পাদনা..."
@@ -172,19 +172,19 @@
     "message": "ইনকগনিটো উইন্ডোতে খুলুন"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "বর্তমান ট্যাব বুকমার্ক করুন"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "তারিখ অনুসারে (নতুন প্রথম)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "নতুন বিভাজক"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "সম্প্রতি যোগ করা হয়েছে"
   },
   "copyAllTitlesAndUrls": {
     "message": "সব শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
@@ -222,7 +222,7 @@
     "message": "সব বুকমার্ক খুলুন"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
   },
   "optionConfirmOpenFolder": {
     "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "উইন্ডো ট্যাবগুলো ফোল্ডার হিসেবে সংরক্ষণ করুন"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "নতুন ফোল্ডার…"
   },
   "customSeparatorStringDescription": {
     "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "বুকমার্ক, ফোল্ডার, কমান্ড অনুসন্ধান করুন…"
   },
   "addNewFolderBefore": {
     "message": "এর আগে ফোল্ডার যোগ করুন"
@@ -284,26 +284,26 @@
     "message": "কাস্টম আইকন"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(খালি)"
   },
   "save": {
     "message": "সংরক্ষণ করুন"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "পূর্বাবস্থায় ফিরুন"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
   },
   "noTitle": {
     "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
     "message": "(কোনো শিরোনাম নেই)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "শিরোনাম অনুসারে"
   },
   "defaultIconButton": {
     "message": "ডিফল্ট ব্যবহার করুন"
@@ -312,7 +312,7 @@
     "message": "সেপারেটর কাস্টমাইজ করুন"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$টি ট্যাব একটি নতুন ফোল্ডারে সংরক্ষিত হয়েছে",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "ফোল্ডার উপরে রাখুন"
   },
   "optionSearchAfterEnter": {
     "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "কোনো মিল পাওয়া যায়নি"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "কমান্ড প্যালেট খুলুন"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "সেশন $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্ক পুনর্বিন্যাস করবে এবং পূর্বাবস্থায় ফেরানো যাবে না।"
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "বুকমার্ক যোগ করা হয়েছে"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "গাঢ়"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "কালি (গাঢ়)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "কাগজ (হালকা)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "ফোল্ডার সাজান"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$টি ডুপ্লিকেট",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -413,7 +413,7 @@
     "message": "অপশন"
   },
   "replaceUrl": {
-    "message": "এটি বর্তমান URL দিয়ে প্রতিস্থাপন করুন"
+    "message": "বর্তমান URL দিয়ে প্রতিস্থাপন"
   },
   "name": {
     "description": "বুকমার্ক বা ফোল্ডারের নাম।",
@@ -426,7 +426,7 @@
     "message": "বাতিল করুন"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "ডুপ্লিকেট বুকমার্ক পরিষ্কার করুন"
   },
   "general": {
     "message": "সাধারণ"
@@ -438,10 +438,10 @@
     "message": "নতুন উইন্ডোতে খুলুন"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "কোনো ডুপ্লিকেট পাওয়া যায়নি"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "পপআপের পরিবর্তে সাইড প্যানেলে খুলুন"
   },
   "extDesc": {
     "description": "এক্সটেনশনের বর্ণনা।",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ মুছে ফেলা হয়েছে",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -477,13 +477,13 @@
     "message": "সাবফোল্ডার যোগ করুন"
   },
   "copyTitleAndUrl": {
-    "message": "শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
+    "message": "শিরোনাম ও URL ক্লিপবোর্ডে কপি"
   },
   "openBookmarksIncognitoWindow": {
     "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "হালকা"
   },
   "optionZoom": {
     "message": "জুম"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "সবচেয়ে পুরনোটি রেখে বাকি $count$ কপি সরিয়ে ফেলবেন?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -536,7 +536,7 @@
     "message": "বর্তমান ট্যাব এর নিচে যোগ করুন"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
   },
   "donationGo": {
     "message": "ঠিক আছে"

@@ -3,7 +3,7 @@
     "message": "Szinkronizálási állapotjelzők megjelenítése"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$ duplikált könyvjelző eltávolítva",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ennek A Tetejére"
+    "message": "Lap Könyvjelzőzése Tetejére"
   },
   "errorOccured": {
     "message": "Hoppá, hiba történt."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Legutóbb hozzáadott könyvjelzők megjelenítése a felugró ablak tetején"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Legutóbb hozzáadott szakasz összecsukása alapértelmezés szerint"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Eltávolítja $count$ másolatot $groups$ csoportból? A legrégebbiek megmaradnak.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Akadálymentesítés"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Új könyvjelző…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Téma"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -57,13 +57,13 @@
     "message": "Visszaállítás"
   },
   "addBookmarkBefore": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ez Elött"
+    "message": "Lap Könyvjelzőzése Elé"
   },
   "syncOptions": {
     "message": "Szinkronizálási beállítások"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Törölve: $title$ mappa",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Oldal könyvjelzőzése (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Ellenőrzés: $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Eltávolítja ezt a könyvjelzőt?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Nincs hibás hivatkozás"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Újravizsgálás"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Hibás hivatkozások keresése"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Összes tisztítása: $groups$ csoport, $count$ másolat",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "vBookmarks oldalsáv megnyitása"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Rendszer követése"
   },
   "edit": {
     "message": "Szerkesztés..."
@@ -172,19 +172,19 @@
     "message": "Megnyitás Inkognitó Ablakban"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Aktuális lap könyvjelzőzése"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Nincs menthető lap"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Hozzáadás dátuma szerint (újabbak elöl)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Új elválasztó"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Legutóbb hozzáadott"
   },
   "copyAllTitlesAndUrls": {
     "message": "Összes cím és URL másolása vágólapra"
@@ -222,7 +222,7 @@
     "message": "Összes Könyvjelző Megnyitása"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Megnyitás új lapcsoportban"
   },
   "optionConfirmOpenFolder": {
     "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Ablak lapjainak mentése mappaként"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Új mappa…"
   },
   "customSeparatorStringDescription": {
     "message": "Ha egy könyvjelző URL-je tartalmazza ezt a karakterláncot, elválasztóként jelenik meg"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Könyvjelzők, mappák, parancsok keresése…"
   },
   "addNewFolderBefore": {
     "message": "Mappa Hozzáadása Ez Elött"
@@ -284,26 +284,26 @@
     "message": "Egyéni ikon"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Üres)"
   },
   "save": {
     "message": "Mentés"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Visszavonás"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Almappák rendezése is (rekurzív)"
   },
   "noTitle": {
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
     "message": "(nincs cím)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Cím szerint"
   },
   "defaultIconButton": {
     "message": "Alapértelmezett használata"
@@ -312,7 +312,7 @@
     "message": "Elválasztó Színének Testreszabása"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$ lap mentve egy új mappába",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Mappák legyenek felül"
   },
   "optionSearchAfterEnter": {
     "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Nincs találat"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Parancspaletta megnyitása"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Nincs megfelelő könyvjelző"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Munkamenet $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Ez átrendezi a könyvjelzőket minden almappában, és nem vonható vissza."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Könyvjelző hozzáadva"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Sötét"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Tinta (sötét)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papír (világos)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Mappa tartalmának rendezése"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ duplikátum",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -397,7 +397,7 @@
     "message": "Megnyitás Új Lapon"
   },
   "addBookmarkAfter": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ez Után"
+    "message": "Lap Könyvjelzőzése Utána"
   },
   "ignore": {
     "message": "Mellőzés"
@@ -426,7 +426,7 @@
     "message": "Elvetés"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Duplikált könyvjelzők tisztítása"
   },
   "general": {
     "message": "Általános"
@@ -438,10 +438,10 @@
     "message": "Megnyitás Új Ablakban"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Nincs duplikátum"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Megnyitás oldalsávban a felugró ablak helyett"
   },
   "extDesc": {
     "description": "The extension description.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Törölve: $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,7 +471,7 @@
     "message": "Szinkronizálási állapot automatikus frissítése"
   },
   "openBookmarksNewWindow": {
-    "message": "Összes Könyvjelző Megnyitása Új Ablakban"
+    "message": "Könyvjelzők Megnyitása Új Ablakban"
   },
   "addNewFolder": {
     "message": "Almappa Hozzáadása"
@@ -480,10 +480,10 @@
     "message": "Cím és URL másolása vágólapra"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Összes Könyvjelző Megnyitása Inkognitó Ablakban"
+    "message": "Könyvjelzők Megnyitása Inkognitóban"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Világos"
   },
   "optionZoom": {
     "message": "Nagyítás"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Megtartja a legrégebbit és eltávolítja a többi $count$ másolatot?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ennek Az Aljára"
+    "message": "Lap Könyvjelzőzése Aljára"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Oldal könyvjelzőzése a vBookmarks segítségével"
   },
   "donationGo": {
     "message": "OK"

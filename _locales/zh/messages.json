@@ -3,7 +3,7 @@
     "message": "显示同步状态指示器"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "已移除 $count$ 个重复书签",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -18,13 +18,13 @@
     "message": "有错误出现"
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "在弹出窗口顶部显示最近添加的书签"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "默认折叠最近添加区域"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "是否移除 $groups$ 组中的 $count$ 个多余副本？将保留最早的条目。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "辅助功能"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "新建书签…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "主题"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "同步选项"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "已删除文件夹 $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "添加书签 (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "正在检查 $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "要移除此书签吗？"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "未发现失效链接"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "重新扫描"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "查找失效链接"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "全部清理：$groups$ 组，$count$ 个多余副本",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "打开 vBookmarks 侧面板"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "跟随系统"
   },
   "edit": {
     "message": "编辑 ..."
@@ -172,19 +172,19 @@
     "message": "在隐身窗口中打开"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "为当前标签页添加书签"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "没有可保存的标签页"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "按添加日期（最新在前）"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "新建分隔线"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "最近添加"
   },
   "copyAllTitlesAndUrls": {
     "message": "拷贝所有标题和链接到剪贴板"
@@ -222,7 +222,7 @@
     "message": "打开所有书签"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "在新标签页组中全部打开"
   },
   "optionConfirmOpenFolder": {
     "message": "打开多个书签前需确认"
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "将窗口标签页保存为文件夹"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "新建文件夹…"
   },
   "customSeparatorStringDescription": {
     "message": "如果任一书签URL含有以下字符串，将被显示为分隔符"
@@ -275,7 +275,7 @@
     "message": "网址"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "搜索书签、文件夹、命令…"
   },
   "addNewFolderBefore": {
     "message": "添加文件夹到此之前"
@@ -284,26 +284,26 @@
     "message": "个性化图标"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "（空）"
   },
   "save": {
     "message": "保存"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "撤销"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "仅显示书签栏中的书签"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "同时排序子文件夹（递归）"
   },
   "noTitle": {
     "description": "没 http(s) 开头的书签或没有命名的文件夹的统一标题",
     "message": "（无标题）"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "按标题"
   },
   "defaultIconButton": {
     "message": "使用默认图标"
@@ -312,7 +312,7 @@
     "message": "定制分隔符颜色"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "已将 $count$ 个标签页保存到新文件夹",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "文件夹置顶"
   },
   "optionSearchAfterEnter": {
     "message": "仅当回车时候才进行书签搜索（否则输入字符立即搜索）"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "无匹配结果"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "打开命令面板"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "无匹配书签"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "会话 $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "此操作会重新排列每个子文件夹中的书签，且无法撤销。"
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "书签已添加"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "深色"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "墨色（深色）"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "纸色（浅色）"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "排序文件夹内容"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "您确定要删除文件夹[$folderName$]（包含 $bookmarkCount$ 个书签）？",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ 个重复",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "关闭"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "清理重复书签"
   },
   "general": {
     "message": "常规功能"
@@ -438,10 +438,10 @@
     "message": "在新窗口中打开"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "未发现重复书签"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "在侧面板中打开（而非弹出窗口）"
   },
   "extDesc": {
     "description": "扩展描述",
@@ -455,7 +455,7 @@
     "description": "尝试跨存储类型移动书签时的警告消息"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "已删除 $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -483,7 +483,7 @@
     "message": "在隐身窗口中打开所有书签"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "浅色"
   },
   "optionZoom": {
     "message": "缩放"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "保留最早的，移除其他 $count$ 个副本？",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -536,7 +536,7 @@
     "message": "添加当前页到文件夹末尾"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "使用 vBookmarks 添加书签"
   },
   "donationGo": {
     "message": "好的"

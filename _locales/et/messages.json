@@ -3,7 +3,7 @@
     "message": "Näita sünkroniseerimise oleku indikaatoreid"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "Eemaldati $count$ dubleeritud järjehoidjat",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -18,13 +18,13 @@
     "message": "Ups, tekkis viga."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Kuva hiljuti lisatud järjehoidjad hüpikakna ülaosas"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Ahenda hiljuti lisatud jaotis vaikimisi"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "Eemaldada $count$ lisakoopiat $groups$ grupist? Vanimad kirjed jäetakse alles.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Juurdepääsetavus"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Uus järjehoidja…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Teema"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "Sünkroniseerimise valikud"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Kustutatud kaust $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Lisa see leht järjehoidjasse (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Kontrollin $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Eemaldada see järjehoidja?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Surnud linke ei leitud"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Uuesti skännimine"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Otsi surnud linke"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Puhasta kõik: $groups$ gruppi, $count$ lisakoopiat",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "Ava vBookmarks külgpaneel"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "Järgi süsteemi"
   },
   "edit": {
     "message": "Redigeeri..."
@@ -172,19 +172,19 @@
     "message": "Ava inkognito aknas"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Lisa praegune vahekaart järjehoidjaks"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Salvestamiseks pole vahekaarte"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Lisamiskuupäeva järgi (uusimad ees)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Uus eraldaja"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Hiljuti lisatud"
   },
   "copyAllTitlesAndUrls": {
     "message": "Kopeeri kõik pealkirjad ja URL-id lõikelauale"
@@ -222,7 +222,7 @@
     "message": "Ava kõik järjehoidjad"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Ava kõik uues vahekaardigrupis"
   },
   "optionConfirmOpenFolder": {
     "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Salvesta akna vahekaardid kaustana"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Uus kaust…"
   },
   "customSeparatorStringDescription": {
     "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Otsi järjehoidjaid, kaustu, käske…"
   },
   "addNewFolderBefore": {
     "message": "Lisa kaust selle ette"
@@ -284,26 +284,26 @@
     "message": "Kohandatud ikoon"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Tühi)"
   },
   "save": {
     "message": "Salvesta"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Tagasi võtmine"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Sorteeri ka alamkaustad (rekursiivne)"
   },
   "noTitle": {
     "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
     "message": "(pealkirjata)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Pealkirja järgi"
   },
   "defaultIconButton": {
     "message": "Kasuta vaikeväärtust"
@@ -312,7 +312,7 @@
     "message": "Kohanda eraldaja värvi"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "Salvestati $count$ vahekaarti uude kausta",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Hoia kaustad eespool"
   },
   "optionSearchAfterEnter": {
     "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Sobivaid tulemusi pole"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Ava käsupalett"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Sobivaid järjehoidjaid pole"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Seanss $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "See järjestab järjehoidjad ümber igas alamkaustas ja seda ei saa tagasi võtta."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Järjehoidja lisatud"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Tume"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Tint (tume)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Paber (hele)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Sorteeri kausta sisu"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ dubleerimist",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "Loobu"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Puhasta dubleeritud järjehoidjad"
   },
   "general": {
     "message": "Üldine"
@@ -438,10 +438,10 @@
     "message": "Ava uues aknas"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Dubleerimisi ei leitud"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Ava külgpaneelis hüpikakna asemel"
   },
   "extDesc": {
     "description": "Laiendi kirjeldus.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "Kustutatud $title$",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -480,10 +480,10 @@
     "message": "Kopeeri pealkiri ja URL lõikelauale"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Ava kõik järjehoidjad inkognito aknas"
+    "message": "Ava järjehoidjad inkognito aknas"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Hele"
   },
   "optionZoom": {
     "message": "Suum"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Jätta vanim ja eemaldada ülejäänud $count$ koopiat?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -536,7 +536,7 @@
     "message": "Lisa praegune vahe selle alla"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Lisa see leht vBookmarksiga järjehoidjasse"
   },
   "donationGo": {
     "message": "OK"

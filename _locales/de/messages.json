@@ -3,7 +3,7 @@
     "message": "Synchronisierungsstatus anzeigen"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$ doppelte Lesezeichen entfernt",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -12,19 +12,19 @@
     "description": "Alert shown after the duplicate cleanup finished."
   },
   "addBookmarkTop": {
-    "message": "Aktuellen Tab am Anfang davon hinzufügen"
+    "message": "Tab oben anfügen"
   },
   "errorOccured": {
     "message": "Oops, ein Fehler ist aufgetreten."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "Kürzlich hinzugefügte Lesezeichen oben im Popup anzeigen"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "Abschnitt „Kürzlich hinzugefügt“ standardmäßig einklappen"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "$count$ zusätzliche Kopien in $groups$ Gruppen entfernen? Die ältesten Einträge bleiben erhalten.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "Barrierefreiheit"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "Neues Lesezeichen…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "Design"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "Synchronisierungsoptionen"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "Ordner $title$ gelöscht",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "Diese Seite als Lesezeichen (Strg+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "Prüfe $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "Dieses Lesezeichen entfernen?"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "Keine defekten Links gefunden"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "Erneut scannen"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "Defekte Links suchen"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "Alle bereinigen: $groups$ Gruppen, $count$ zusätzliche Kopien",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "vBookmarks-Seitenpanel öffnen"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "System folgen"
   },
   "edit": {
     "message": "Bearbeiten..."
@@ -172,19 +172,19 @@
     "message": "In Inkognito-Fenster öffnen"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "Aktuellen Tab als Lesezeichen"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "Keine Tabs zum Speichern"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "Nach Datum (neueste zuerst)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "Neuer Trenner"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "Kürzlich hinzugefügt"
   },
   "copyAllTitlesAndUrls": {
     "message": "Alle Titel und URLs in die Zwischenablage kopieren"
@@ -222,7 +222,7 @@
     "message": "Alle Lesezeichen öffnen"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "Alle in neuer Tab-Gruppe öffnen"
   },
   "optionConfirmOpenFolder": {
     "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "Fenster-Tabs als Ordner speichern"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "Neuer Ordner…"
   },
   "customSeparatorStringDescription": {
     "message": "Wenn die URL eines Lesezeichens diese Zeichenfolge enthält, wird es als Trennzeichen angezeigt"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "Lesezeichen, Ordner, Befehle durchsuchen…"
   },
   "addNewFolderBefore": {
     "message": "Ordner davor hinzufügen"
@@ -284,26 +284,26 @@
     "message": "Benutzerdefiniertes Symbol"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(Leer)"
   },
   "save": {
     "message": "Speichern"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "Rückgängig"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Nur Lesezeichen in Lesezeichenleiste anzeigen"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "Auch Unterordner sortieren (rekursiv)"
   },
   "noTitle": {
     "description": "Der Titel für unbenannte Lesezeichen ohne http(s)-URL oder unbenannte Ordner.",
     "message": "(kein Titel)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "Nach Titel"
   },
   "defaultIconButton": {
     "message": "Standard verwenden"
@@ -312,7 +312,7 @@
     "message": "Trennzeichenfarbe anpassen"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$ Tabs in neuem Ordner gespeichert",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "Ordner oben behalten"
   },
   "optionSearchAfterEnter": {
     "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "Keine passenden Ergebnisse"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "Befehlspalette öffnen"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "Keine passenden Lesezeichen"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "Sitzung $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "Dies ordnet Lesezeichen in jedem Unterordner neu und kann nicht rückgängig gemacht werden."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "Lesezeichen hinzugefügt"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "Dunkel"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "Tinte (dunkel)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "Papier (hell)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "Ordnerinhalte sortieren"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Möchten Sie wirklich den Ordner $folderName$ und $bookmarkCount$ Lesezeichen darin löschen?",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ Duplikate",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "Verwerfen"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "Doppelte Lesezeichen bereinigen"
   },
   "general": {
     "message": "Allgemein"
@@ -438,10 +438,10 @@
     "message": "In neuem Fenster öffnen"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "Keine Duplikate gefunden"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "Im Seitenpanel statt Popup öffnen"
   },
   "extDesc": {
     "description": "Die Erweiterungsbeschreibung.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ gelöscht",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -471,19 +471,19 @@
     "message": "Synchronisierungsstatus automatisch aktualisieren"
   },
   "openBookmarksNewWindow": {
-    "message": "Alle Lesezeichen in neuem Fenster öffnen"
+    "message": "Alle in neuem Fenster öffnen"
   },
   "addNewFolder": {
     "message": "Unterordner hinzufügen"
   },
   "copyTitleAndUrl": {
-    "message": "Titel und URL in die Zwischenablage kopieren"
+    "message": "Titel+URL kopieren"
   },
   "openBookmarksIncognitoWindow": {
-    "message": "Alle Lesezeichen in Inkognito-Fenster öffnen"
+    "message": "Alle in Inkognito öffnen"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "Hell"
   },
   "optionZoom": {
     "message": "Zoom"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "Die älteste Kopie behalten und die anderen $count$ Kopien entfernen?",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -533,10 +533,10 @@
     }
   },
   "addBookmarkBottom": {
-    "message": "Aktuellen Tab am Ende davon hinzufügen"
+    "message": "Tab unten anfügen"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "Diese Seite mit vBookmarks als Lesezeichen"
   },
   "donationGo": {
     "message": "OK"

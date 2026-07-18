@@ -3,7 +3,7 @@
     "message": "نمایش شاخص‌های وضعیت همگام‌سازی"
   },
   "dupesDone": {
-    "message": "[TODO:dupesDone]",
+    "message": "$count$ نشانک تکراری حذف شد",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -18,13 +18,13 @@
     "message": "اوپس، خطایی رخ داد."
   },
   "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
+    "message": "نمایش نشانک‌های اخیراً اضافه شده در بالای پنجره بازشو"
   },
   "optionRecentCollapsed": {
-    "message": "[TODO:optionRecentCollapsed]"
+    "message": "بخش اخیراً اضافه شده به طور پیش‌فرض جمع شود"
   },
   "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
+    "message": "$count$ نسخه اضافی در $groups$ گروه حذف شود؟ قدیمی‌ترین‌ها نگه داشته می‌شوند.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -39,10 +39,10 @@
     "message": "دسترسی‌پذیری"
   },
   "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+    "message": "نشانک جدید…"
   },
   "optionTheme": {
-    "message": "[TODO:optionTheme]"
+    "message": "پوسته"
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -63,7 +63,7 @@
     "message": "گزینه‌های همگام‌سازی"
   },
   "deletedFolder": {
-    "message": "[TODO:deletedFolder]",
+    "message": "پوشه $title$ حذف شد",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -73,10 +73,10 @@
     "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
   },
   "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+    "message": "نشانک این صفحه (Ctrl+D)"
   },
   "deadChecking": {
-    "message": "[TODO:deadChecking]",
+    "message": "در حال بررسی $done$ / $total$…",
     "placeholders": {
       "done": {
         "content": "$1",
@@ -90,19 +90,19 @@
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
   "deadConfirmDelete": {
-    "message": "[TODO:deadConfirmDelete]"
+    "message": "این نشانک حذف شود؟"
   },
   "deadNone": {
-    "message": "[TODO:deadNone]"
+    "message": "پیوند مرده‌ای یافت نشد"
   },
   "deadRescan": {
-    "message": "[TODO:deadRescan]"
+    "message": "بازرسی مجدد"
   },
   "paletteCmdDead": {
-    "message": "[TODO:paletteCmdDead]"
+    "message": "یافتن پیوندهای مرده"
   },
   "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
+    "message": "پاکسازی همه: $groups$ گروه، $count$ نسخه اضافی",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -114,10 +114,10 @@
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
   "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+    "message": "باز کردن پنل کناری vBookmarks"
   },
   "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
+    "message": "همراه با سیستم"
   },
   "edit": {
     "message": "ویرایش..."
@@ -172,19 +172,19 @@
     "message": "باز کردن در پنجره ناشناس"
   },
   "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
+    "message": "نشانک‌گذاری زبانه فعلی"
   },
   "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
+    "message": "زبانه‌ای برای ذخیره وجود ندارد"
   },
   "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
+    "message": "بر اساس تاریخ افزودن (جدیدترین اول)"
   },
   "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+    "message": "جداکننده جدید"
   },
   "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+    "message": "اخیراً اضافه شده"
   },
   "copyAllTitlesAndUrls": {
     "message": "کپی همه عناوین و URLها در کلیپ‌بورد"
@@ -222,7 +222,7 @@
     "message": "باز کردن همه نشانک‌ها"
   },
   "openBookmarksInGroup": {
-    "message": "[TODO:openBookmarksInGroup]"
+    "message": "باز کردن همه در گروه زبانه جدید"
   },
   "optionConfirmOpenFolder": {
     "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
@@ -245,10 +245,10 @@
     }
   },
   "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
+    "message": "ذخیره زبانه‌های پنجره به عنوان پوشه"
   },
   "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+    "message": "پوشه جدید…"
   },
   "customSeparatorStringDescription": {
     "message": "اگر URL یک نشانک شامل این رشته باشد، به عنوان جداکننده نمایش داده خواهد شد"
@@ -275,7 +275,7 @@
     "message": "URL"
   },
   "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
+    "message": "جستجوی نشانک‌ها، پوشه‌ها، فرمان‌ها…"
   },
   "addNewFolderBefore": {
     "message": "اضافه کردن پوشه قبل از این"
@@ -284,26 +284,26 @@
     "message": "آیکون سفارشی"
   },
   "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+    "message": "(خالی)"
   },
   "save": {
     "message": "ذخیره"
   },
   "undoAction": {
-    "message": "[TODO:undoAction]"
+    "message": "بازگردانی"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "فقط نشانک‌های نوار نشانک‌ها را نشان بده"
   },
   "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+    "message": "مرتب‌سازی زیرپوشه‌ها نیز (بازگشتی)"
   },
   "noTitle": {
     "description": "عنوان برای نشانک‌های بدون عنوان بدون URL http(s) یا پوشه‌های بدون عنوان.",
     "message": "(بدون عنوان)"
   },
   "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
+    "message": "بر اساس عنوان"
   },
   "defaultIconButton": {
     "message": "استفاده از پیش‌فرض"
@@ -312,7 +312,7 @@
     "message": "شخصی‌سازی رنگ جداکننده"
   },
   "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
+    "message": "$count$ زبانه در یک پوشه جدید ذخیره شد",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -322,22 +322,22 @@
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
   "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
+    "message": "نگه‌داشتن پوشه‌ها در بالا"
   },
   "optionSearchAfterEnter": {
     "message": "جستجوی نشانک‌ها فقط زمانی که ENTER فشار داده می‌شود (به جای جستجوی فوری)"
   },
   "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
+    "message": "نتیجه‌ای یافت نشد"
   },
   "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+    "message": "باز کردن پالت فرمان"
   },
   "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+    "message": "نشانکی یافت نشد"
   },
   "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
+    "message": "جلسه $date$",
     "placeholders": {
       "date": {
         "content": "$1",
@@ -347,7 +347,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+    "message": "این کار نشانک‌ها را در هر زیرپوشه مرتب می‌کند و قابل بازگشت نیست."
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -359,19 +359,19 @@
     }
   },
   "quickAdded": {
-    "message": "[TODO:quickAdded]"
+    "message": "نشانک اضافه شد"
   },
   "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+    "message": "تاریک"
   },
   "optionThemeInk": {
-    "message": "[TODO:optionThemeInk]"
+    "message": "جوهر (تاریک)"
   },
   "optionThemePaper": {
-    "message": "[TODO:optionThemePaper]"
+    "message": "کاغذ (روشن)"
   },
   "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+    "message": "مرتب‌سازی محتویات پوشه"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
@@ -385,7 +385,7 @@
     }
   },
   "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+    "message": "$count$ تکراری",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -426,7 +426,7 @@
     "message": "رد کردن"
   },
   "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+    "message": "پاکسازی نشانک‌های تکراری"
   },
   "general": {
     "message": "عمومی"
@@ -438,10 +438,10 @@
     "message": "باز کردن در پنجره جدید"
   },
   "dupesNone": {
-    "message": "[TODO:dupesNone]"
+    "message": "مورد تکراری یافت نشد"
   },
   "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+    "message": "باز کردن در پنل کناری به جای پنجره بازشو"
   },
   "extDesc": {
     "description": "توضیحات افزونه.",
@@ -455,7 +455,7 @@
     "description": "Warning when trying to move bookmarks across storage types"
   },
   "deletedBookmark": {
-    "message": "[TODO:deletedBookmark]",
+    "message": "$title$ حذف شد",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -483,7 +483,7 @@
     "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
   },
   "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+    "message": "روشن"
   },
   "optionZoom": {
     "message": "بزرگنمایی"
@@ -500,7 +500,7 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
+    "message": "قدیمی‌ترین نگه داشته و $count$ نسخه دیگر حذف شود؟",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -536,7 +536,7 @@
     "message": "اضافه کردن تب فعلی به پایین این"
   },
   "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+    "message": "نشانک این صفحه با vBookmarks"
   },
   "donationGo": {
     "message": "تأیید"
