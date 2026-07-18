@@ -1119,3 +1119,37 @@ menu[type=context].hide-sort #sort-folder-contents {
     color: var(--vbm-muted);
     text-align: center;
 }
+
+
+/* --- v4 UX pass: single hover rhythm + palette entrance (§2.3 安静感) ---
+   Every interactive row/button eases its background change in 120ms; the
+   command palette pops with the spec'd scale(0.98→1) in the same beat. */
+#tree ul li a,
+#tree ul li span,
+#results ul li a,
+menu[type=context] .menu-item,
+.palette-row,
+.dialog .buttons button,
+#undo-toast-button {
+    -webkit-transition: background-color .12s ease-out;
+    transition: background-color .12s ease-out;
+}
+
+@keyframes vbm-palette-in {
+    from {
+        opacity: 0;
+        -webkit-transform: translateX(-50%) scale(.98);
+        transform: translateX(-50%) scale(.98);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateX(-50%) scale(1);
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* hidden 切换使 display none→block，每次打开都会重放入场动画 */
+#command-palette {
+    -webkit-animation: vbm-palette-in .12s ease-out;
+    animation: vbm-palette-in .12s ease-out;
+}
