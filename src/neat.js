@@ -7,6 +7,7 @@ import { initKeyboard } from './keyboard.js';
 import { initDnd } from './dnd.js';
 import { initTreeRender } from './tree-render.js';
 import { initTreeView } from './tree-view.js';
+import { initSyncUi } from './sync-ui.js';
 
 (window => {
     const store = window.store;
@@ -421,12 +422,17 @@ import { initTreeView } from './tree-view.js';
         resetSeparator
     });
 
+    // 同步指示器 wiring 已剥离至 src/sync-ui.js（P1，切片 9）：syncStatusChanged
+    // 监听、单个/全量指示器刷新与 window.neat 遗留导出。syncUi 在 treeView
+    // 之前初始化，refreshSyncIndicators 经返回值注入。
+    const syncUi = initSyncUi({ store });
+
     // 树视图层已剥离至 src/tree-view.js（P1，8b）：nodeTrees/onlyShowBMBar
     // 状态、generateTree（含启动的 chrome.bookmarks.getTree 与本地分隔符
     // 迁移）、树事件（scroll/focus/click/middle-click）、最近书签区与
-    // bookmarkHandler。menus/search/dialogs/actions/dnd 均已在上方就绪，
-    // refreshSyncIndicators 是下方的 function 声明（hoist 安全），故全部
-    // 直接值注入；opens/rememberState 经 get/set 回调共享 neat.js 状态。
+    // bookmarkHandler。menus/search/dialogs/actions/dnd/syncUi 均已在上方
+    // 就绪，故全部直接值注入；opens/rememberState 经 get/set 回调共享
+    // neat.js 状态。
     const treeView = initTreeView({
         store,
         tree: $tree,
@@ -436,7 +442,7 @@ import { initTreeView } from './tree-view.js';
         search,
         actions,
         dnd,
-        refreshSyncIndicators,
+        refreshSyncIndicators: syncUi.refreshSyncIndicators,
         getOpens: () => opens,
         getRememberState: () => rememberState,
         setOpens: v => { opens = v; },
@@ -785,116 +791,5 @@ import { initTreeView } from './tree-view.js';
         });
     }
 
-    // Initialize sync status event listeners
-    function initializeSyncControls() {
-        // Listen for sync status changes
-        if (window.addEventListener && window.syncManager) {
-            window.addEventListener('syncStatusChanged', (event) => {
-                // Update UI based on sync status changes
-                const { bookmarkId, status } = event.detail;
-                if (bookmarkId && status) {
-                    updateBookmarkSyncStatus(bookmarkId, status);
-                }
-            });
-        }
-    }
-
-    // Update individual bookmark sync status
-    function updateBookmarkSyncStatus(bookmarkId, syncStatus) {
-        const treeItem = document.getElementById(`neat-tree-item-${bookmarkId}`);
-        const resultsItem = document.getElementById(`results-item-${bookmarkId}`);
-
-        [treeItem, resultsItem].forEach(item => {
-            if (item) {
-                const syncIndicator = item.querySelector('.sync-indicator');
-                if (syncIndicator) {
-                    syncIndicator.remove();
-                }
-
-                if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager) {
-                    const statusClass = window.syncManager.getSyncStatusIndicator(bookmarkId);
-                    const tooltip = window.syncManager.getSyncTooltip(bookmarkId);
-                    if (statusClass) {
-                        const newIndicator = document.createElement('span');
-                        newIndicator.className = `sync-indicator ${statusClass}`;
-                        newIndicator.title = tooltip;
-                        newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
-
-                        // Insert into the favicon container
-                        const containerElement = item.querySelector('.tree-item-link') || item.querySelector('.tree-item-span');
-                        const faviconContainer = containerElement ? containerElement.querySelector('.favicon-container') : null;
-                        if (faviconContainer) {
-                            faviconContainer.appendChild(newIndicator);
-                        } else {
-                            // Fallback to old logic
-                            const fallbackContainer = item.querySelector('a') || item.querySelector('span');
-                            const imgElement = fallbackContainer.querySelector('img');
-                            if (imgElement && imgElement.nextSibling) {
-                                fallbackContainer.insertBefore(newIndicator, imgElement.nextSibling);
-                            } else {
-                                fallbackContainer.appendChild(newIndicator);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // Refresh all sync indicators in the UI
-    function refreshSyncIndicators() {
-        if (window.syncManager) {
-            window.syncManager.refreshAllSyncStatus();
-        }
-        // Update existing UI elements
-        const allTreeItems = document.querySelectorAll('[id^="neat-tree-item-"], [id^="results-item-"]');
-        allTreeItems.forEach(item => {
-            const bookmarkId = item.id.replace(/^neat-tree-item-/, '').replace(/^results-item-/, '');
-            if (bookmarkId && window.syncManager) {
-                const statusClass = window.syncManager.getSyncStatusIndicator(bookmarkId);
-                const tooltip = window.syncManager.getSyncTooltip(bookmarkId);
-
-                const syncIndicator = item.querySelector('.sync-indicator');
-                if (syncIndicator) {
-                    syncIndicator.remove();
-                }
-
-                if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && statusClass) {
-                    const newIndicator = document.createElement('span');
-                    newIndicator.className = `sync-indicator ${statusClass}`;
-                    newIndicator.title = tooltip;
-                    newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
-
-                    // Insert into the favicon container
-                    const containerElement = item.querySelector('.tree-item-link') || item.querySelector('.tree-item-span');
-                    const faviconContainer = containerElement ? containerElement.querySelector('.favicon-container') : null;
-                    if (faviconContainer) {
-                        faviconContainer.appendChild(newIndicator);
-                    } else {
-                        // Fallback to old logic
-                        const fallbackContainer = item.querySelector('a') || item.querySelector('span');
-                        const imgElement = fallbackContainer.querySelector('img');
-                        if (imgElement && imgElement.nextSibling) {
-                            fallbackContainer.insertBefore(newIndicator, imgElement.nextSibling);
-                        } else {
-                            fallbackContainer.appendChild(newIndicator);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // Expose neat functions to window
-    window.neat = {
-        refreshSyncIndicators: refreshSyncIndicators
-    };
-
-    // Initialize sync controls when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeSyncControls);
-    } else {
-        initializeSyncControls();
-    }
     });
 })(window);

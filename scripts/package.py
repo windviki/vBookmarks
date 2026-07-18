@@ -52,6 +52,7 @@ JS_FILES = [
     'src/dnd.js',
     'src/tree-render.js',
     'src/tree-view.js',
+    'src/sync-ui.js',
     'vendor/codemirror.js',
 ]
 
