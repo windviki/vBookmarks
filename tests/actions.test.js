@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterAll, vi } from 'vitest';
 
 // actions.js touches page globals (document/window/chrome) only inside
 // initActions, so the real module imports cleanly in node once the globals
@@ -30,6 +30,15 @@ const makeEl = (autoVivify = false) => ({
     _qs: {},
     appended: [],
     inserted: [],
+    classList: (() => {
+        const set = new Set();
+        return {
+            add: (...cs) => cs.forEach(c => set.add(c)),
+            remove: (...cs) => cs.forEach(c => set.delete(c)),
+            contains: c => set.has(c),
+            _set: set
+        };
+    })(),
     focus() {
         this.focused = true;
     },
@@ -212,6 +221,7 @@ const setup = (opts = {}) => {
         execCommand(cmd) {
             this.execCalls.push(cmd);
         },
+        querySelectorAll: () => [],
         body: makeEl()
     };
     globalThis.window = {
@@ -222,12 +232,10 @@ const setup = (opts = {}) => {
     };
     if (opts.syncManager)
         globalThis.window.syncManager = opts.syncManager;
-    if (opts.clipboardData)
-        globalThis.window.clipboardData = opts.clipboardData;
     const store = makeStore(opts.storeData || {});
     const calls = {
         confirm: [], edit: [], newFolder: [],
-        bmHTML: [], folderHTML: [], sepHTML: [],
+        bmHTML: [], folderHTML: [], sepHTML: [], genHTML: [],
         sepAdd: [], sepRemove: []
     };
     let newFolderCb = null;
@@ -262,6 +270,10 @@ const setup = (opts = {}) => {
         generateSeparatorHTML: padding => {
             calls.sepHTML.push(padding);
             return `<hr data-pad="${padding}">`;
+        },
+        generateHTML: (children, level) => {
+            calls.genHTML.push([children, level]);
+            return '<ul role="group"></ul>';
         },
         httpsPattern: /^https?:\/\//i,
         // P3.3 undo API double: capture/showToast land in the shared ops log
@@ -842,7 +854,7 @@ describe('copyAllTitlesAndUrls', () => {
         actions.copyAllTitlesAndUrls('5');
         expect(els['copier-input'].value).toBe('GitHub\r\nhttps://github.com/');
         expect(els['copier-input'].selected).toBe(true);
-        expect(document.execCalls).toEqual(['Copy']);
+        expect(document.execCalls).toEqual(['copy']);
     });
 
     it('copies nothing for a folder node', () => {
@@ -854,15 +866,35 @@ describe('copyAllTitlesAndUrls', () => {
         expect(document.execCalls).toEqual([]);
     });
 
-    it('prefers window.clipboardData when available', () => {
-        const setDataCalls = [];
+    it('prefers navigator.clipboard.writeText when available', () => {
+        const written = [];
+        vi.stubGlobal('navigator', {
+            clipboard: { writeText: t => { written.push(t); return Promise.resolve(); } }
+        });
         const { actions, els } = setup({
-            nodes: { '5': [{ id: '5', title: 'GitHub', url: 'https://github.com/' }] },
-            clipboardData: { setData: (...args) => setDataCalls.push(args) }
+            nodes: { '5': [{ id: '5', title: 'GitHub', url: 'https://github.com/' }] }
         });
         actions.copyAllTitlesAndUrls('5');
-        expect(setDataCalls).toEqual([['Text', 'GitHub\r\nhttps://github.com/']]);
+        expect(written).toEqual(['GitHub\r\nhttps://github.com/']);
         expect(els['copier-input'].value).toBe('');
+        expect(document.execCalls).toEqual([]);
+        vi.unstubAllGlobals();
+    });
+
+    it('falls back to the copier input when writeText rejects', async () => {
+        vi.stubGlobal('navigator', {
+            clipboard: { writeText: () => Promise.reject(new Error('denied')) }
+        });
+        const { actions, els } = setup({
+            nodes: { '5': [{ id: '5', title: 'GitHub', url: 'https://github.com/' }] }
+        });
+        actions.copyAllTitlesAndUrls('5');
+        // legacyCopy runs inside .catch — flush the microtask queue
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(els['copier-input'].value).toBe('GitHub\r\nhttps://github.com/');
+        expect(document.execCalls).toEqual(['copy']);
+        vi.unstubAllGlobals();
     });
 });
 
@@ -947,16 +979,32 @@ describe('addNewBookmarkNode (addNewNode/addNodeTo)', () => {
         expect(ul.inserted).toEqual([[created[0]._qs.li, firstKid]]);
     });
 
-    it('top into a closed folder: bookmark is created but the DOM is left alone', () => {
+    it('top into a closed folder: expands the folder and re-renders its children', () => {
         const folderNode = makeEl();
         folderNode._attrs['aria-expanded'] = 'false';
-        const { actions, chrome, created } = setup({
+        const wrapper = makeEl();
+        wrapper.dataset.level = '0';
+        folderNode.parentNode = wrapper;
+        const staleUl = makeEl();
+        folderNode._qs.ul = staleUl;
+        const { actions, chrome, calls, store } = setup({
             els: { 'neat-tree-item-20': folderNode },
-            nodes: { '20': [{ id: '20', parentId: '1', index: 1 }] }
+            nodes: { '20': [{ id: '20', parentId: '1', index: 1 }] },
+            children: { '20': [{ id: '100', title: 'New', url: 'http://new/', parentId: '20' }] }
         });
         actions.addNewBookmarkNode('20', 'top', 'http://new/', 'New');
-        expect(chrome.bookmarks.createCalls).toHaveLength(1);
-        expect(created).toEqual([]); // early return before any DOM work
+        expect(chrome.bookmarks.createCalls).toEqual([
+            { parentId: '20', index: 0, title: 'New', url: 'http://new/' }
+        ]);
+        // folder expanded + stale subtree replaced by a fresh full render
+        expect(folderNode.classList.contains('open')).toBe(true);
+        expect(folderNode.getAttribute('aria-expanded')).toBe('true');
+        expect(staleUl.removed).toBe(true);
+        expect(calls.genHTML).toEqual([
+            [[{ id: '100', title: 'New', url: 'http://new/', parentId: '20' }], 1]
+        ]);
+        expect(folderNode.appended).toHaveLength(1); // the freshly rendered ul
+        expect(store.get('opens')).toBe('[]'); // persisted from the (stubbed) tree query
     });
 
     it('bottom: appends after the last child (index from getChildren length)', () => {

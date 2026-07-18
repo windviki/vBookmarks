@@ -62,7 +62,8 @@
         "sidePanel",
         "contextMenus",
         "tabGroups",
-        "alarms"
+        "alarms",
+        "clipboardWrite"
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],

@@ -55,20 +55,28 @@ export function initActions(ctx = {}) {
     const generateBookmarkHTML = ctx.generateBookmarkHTML;
     const generateFolderHTML = ctx.generateFolderHTML;
     const generateSeparatorHTML = ctx.generateSeparatorHTML;
+    const generateHTML = ctx.generateHTML;
     const httpsPattern = ctx.httpsPattern;
     // P3.3: deletions capture an undo snapshot and toast afterwards; without
     // an injected undo API (tests, defensive) they stay plain silent deletes.
     const undo = ctx.undo || { capture() {}, showToast() {} };
 
     // ++++++++ added by windviki@gmail.com ++++++++
+    // 拷贝发生在 chrome.bookmarks.get 的异步回调里，早已脱离用户手势上下
+    // 文，execCommand('copy') 会被 Chrome 静默拒绝；navigator.clipboard
+    // .writeText 配合 manifest 的 clipboardWrite 权限不受此时序限制。
+    // 失败时回退到隐藏 textarea + execCommand 的老路径。
     const copyToClipboard = copyText => {
-        if (window.clipboardData) {
-            window.clipboardData.setData("Text", copyText);
-        } else {
+        const legacyCopy = () => {
             const copier = $('copier-input');
             copier.value = copyText;
             copier.select();
-            document.execCommand("Copy");
+            document.execCommand('copy');
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(copyText).catch(legacyCopy);
+        } else {
+            legacyCopy();
         }
     };
 
@@ -132,6 +140,34 @@ export function initActions(ctx = {}) {
             const rNode = $(`neat-tree-item-${referId}`);
             const isOpenDir = (rNode.getAttribute('aria-expanded') === 'true');
             if (!isOpenDir && (where === "top" || where === "bottom")) {
+                // 目标文件夹处于折叠态：其子 ul 尚未渲染（generateHTML 只为
+                // 展开的文件夹生成子树），此时插入 li 会造出只含新节点的残
+                // 缺 ul。旧实现直接 return，导致书签已创建但视图毫无反馈。
+                // 改为展开该文件夹并用最新 children 整体渲染（create 已完
+                // 成，新节点就在其中），与 tree-view.js 的点击展开同一路径；
+                // generateHTML 内部会顺带完成 separator 注册，无需手动 add。
+                rNode.classList.add('open');
+                rNode.setAttribute('aria-expanded', 'true');
+                const childLevel = parseInt(rNode.parentNode.dataset.level) + 1;
+                chrome.bookmarks.getChildren(parentId, children => {
+                    const div = document.createElement('div');
+                    div.innerHTML = generateHTML(children, childLevel);
+                    const ul = div.querySelector('ul');
+                    // 曾展开过的文件夹折叠后旧 ul 仍在 DOM 中，先移除再渲染，
+                    // 避免重复子树，也顺带刷新可能陈旧的内容。
+                    const stale = rNode.querySelector('ul');
+                    if (stale)
+                        stale.remove();
+                    rNode.appendChild(ul);
+                    div.remove();
+                    const added = $(`neat-tree-item-${resultBm.id}`);
+                    if (added)
+                        added.scrollIntoView({ block: 'nearest' });
+                });
+                // 持久化展开状态（对齐 tree-view 的 toggle：只写 store）
+                const openIds = Array.from(document.querySelectorAll('#tree li.open'))
+                    .map(li => li.id.replace('neat-tree-item-', ''));
+                store.set('opens', JSON.stringify(openIds));
                 return;
             }
             let lv = 0;

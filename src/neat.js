@@ -329,6 +329,7 @@ import { initUndo } from './undo.js';
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         generateFolderHTML: treeRender.generateFolderHTML,
         generateSeparatorHTML: treeRender.generateSeparatorHTML,
+        generateHTML: treeRender.generateHTML,
         httpsPattern,
         undo
     });
