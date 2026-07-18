@@ -26,7 +26,7 @@
  * Returns { isDragging, consumeNoOpen }: neat.js's zoom() guards on
  * isDragging() and bookmarkHandler swallows the post-drag click via
  * consumeNoOpen() (returns the flag once, then resets it).
- * chrome.bookmarks.get/move, chrome.i18n.getMessage, alert, window/document/
+ * chrome.bookmarks.get/move, chrome.i18n.getMessage, window/document/
  * setInterval remain page globals. No neatools helpers: plain getElementById/
  * classList/insertAdjacentElement only (hasClass → classList.contains,
  * inject → insertAdjacentElement/appendChild, destroy → remove,
@@ -45,6 +45,25 @@ export function initDnd(ctx = {}) {
         const parentId = el.dataset.parentid;
         const folderType = el.dataset.foldertype;
         return parentId === "0" || parentId === 0 || folderType !== undefined;
+    };
+
+    // Blocked cross-storage drops used to call alert() — which destroys the
+    // popup window outright. A transient toast delivers the same message
+    // without killing the context. Created on demand (kept out of the HTML
+    // so popup/sidepanel parity is untouched), styled in neat.css.
+    let blockedToastTimer = null;
+    const showBlockedToast = msg => {
+        let toast = document.getElementById('notice-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'notice-toast';
+            toast.setAttribute('role', 'status');
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(blockedToastTimer);
+        blockedToastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
     };
 
     // Check if a bookmark can be moved between storage spaces
@@ -304,7 +323,7 @@ export function initDnd(ctx = {}) {
                     if (!canMove) {
                         const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
                                    'Cannot move bookmarks between synced and local storage.';
-                        alert(msg);
+                        showBlockedToast(msg);
                         onDrop();
                         return;
                     }
@@ -341,7 +360,7 @@ export function initDnd(ctx = {}) {
                             if (!canMove) {
                                 const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
                                            'Cannot move bookmarks between synced and local storage.';
-                                alert(msg);
+                                showBlockedToast(msg);
                                 onDrop();
                                 return;
                             }
@@ -358,7 +377,7 @@ export function initDnd(ctx = {}) {
                     if (!canMove) {
                         const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
                                    'Cannot move bookmarks between synced and local storage.';
-                        alert(msg);
+                        showBlockedToast(msg);
                         onDrop();
                         return;
                     }

@@ -6,41 +6,10 @@
  * and mirrored into the page by src/sync-manager.js (P3.6).
  */
 
-/* Sync dot palette. Semantic colors (green synced / orange unsynced /
-   blue syncing / red error / gray local) with dark-theme variants, applied
-   through the same body[data-theme] mechanism as neat.css. */
-:root {
-    --vbm-synced: #4CAF50;
-    --vbm-unsynced: #FF9800;
-    --vbm-syncing: #2196F3;
-    --vbm-sync-error: #F44336;
-    --vbm-local: #607D8B;
-    --vbm-unsyncable: #CFD8DC;
-    --vbm-unsyncable-border: #B0BEC5;
-}
-
-body[data-theme="dark"] {
-    --vbm-synced: #66BB6A;
-    --vbm-unsynced: #FFA726;
-    --vbm-syncing: #64B5F6;
-    --vbm-sync-error: #EF5350;
-    --vbm-local: #90A4AE;
-    --vbm-unsyncable: #546E7A;
-    --vbm-unsyncable-border: #78909C;
-}
-
-@media (prefers-color-scheme: dark) {
-    body[data-theme="auto"] {
-        --vbm-synced: #66BB6A;
-        --vbm-unsynced: #FFA726;
-        --vbm-syncing: #64B5F6;
-        --vbm-sync-error: #EF5350;
-        --vbm-local: #90A4AE;
-        --vbm-unsyncable: #546E7A;
-        --vbm-unsyncable-border: #78909C;
-    }
-}
-
+/* Dot colors map onto theme tokens (every theme incl. ink/paper renders
+   them consistently; no per-theme overrides needed). Noise is inverted:
+   the common "synced" state shows NO dot — only states worth attention
+   get a marker (local = accent, unsyncable = muted). */
 
 /* Sync Status Indicators */
 .sync-indicator {
@@ -62,54 +31,35 @@ body[data-theme="dark"] {
     /* Ensure perfect circle */
     min-width: 6px;
     min-height: 6px;
-    transform: translateZ(0); /* Force hardware acceleration for crisp rendering */
 }
 
+/* Synced is the default state: no dot, or the whole tree turns into green
+   noise. The node keeps its status in the data model; it just stays quiet. */
 .sync-indicator.synced {
-    background: var(--vbm-synced); /* Green - harmonious and positive */
-    box-shadow: 0 0 3px var(--vbm-synced);
-}
-
-.sync-indicator.unsynced {
-    background: var(--vbm-unsynced); /* Orange - warning but friendly */
-    box-shadow: 0 0 3px var(--vbm-unsynced);
-}
-
-.sync-indicator.syncing {
-    background: var(--vbm-syncing); /* Blue - active state */
-    animation: pulse 1.5s infinite;
-    box-shadow: 0 0 3px var(--vbm-syncing);
-}
-
-.sync-indicator.sync-error {
-    background: var(--vbm-sync-error); /* Red - error state */
-    box-shadow: 0 0 3px var(--vbm-sync-error);
+    display: none;
 }
 
 .sync-indicator.local {
-    background: var(--vbm-local); /* Blue-gray - local/storage color, more harmonious than purple */
-    box-shadow: 0 0 3px var(--vbm-local);
+    background: var(--vbm-accent); /* local-only: the state worth noticing */
+    box-shadow: 0 0 3px var(--vbm-accent);
 }
 
 .sync-indicator.unsyncable {
-    background: var(--vbm-unsyncable); /* Light blue-gray - neutral, disabled look */
-    border: 1px solid var(--vbm-unsyncable-border);
+    background: var(--vbm-muted);
+    border: 1px solid var(--vbm-border);
     box-shadow: none;
 }
 
-@keyframes pulse {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.1); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-/* Sync Tooltips */
+/* Sync Tooltips — themed like the rest of the popup chrome (elevated bg,
+   token border, soft shadow) instead of the old hardcoded dark bubble. */
 .sync-tooltip {
     position: absolute;
-    background: #333;
-    color: white;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    box-shadow: 0 4px 16px var(--vbm-shadow);
     padding: 6px 10px;
-    border-radius: 4px;
+    border-radius: var(--vbm-radius);
     font-size: 11px;
     white-space: nowrap;
     z-index: 1000;
@@ -133,7 +83,7 @@ body[data-theme="dark"] {
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: #333;
+    border-top-color: var(--vbm-border);
 }
 
 .sync-indicator:hover .sync-tooltip {

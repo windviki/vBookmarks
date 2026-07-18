@@ -148,8 +148,9 @@ describe('initSyncUi', () => {
         expect(favicon._appended).toHaveLength(1);
         const indicator = favicon._appended[0];
         expect(indicator.className).toBe('sync-indicator synced');
-        expect(indicator.title).toBe('Synced just now');
+        expect(indicator.title).toBe(''); // custom tooltip only — no native title copy
         expect(indicator.innerHTML).toContain('sync-tooltip');
+        expect(indicator.innerHTML).toContain('Synced just now');
     });
 
     it('updates both the tree row and the results row for the same bookmark id', () => {
@@ -168,13 +169,18 @@ describe('initSyncUi', () => {
         expect(resultsItem._qs['.tree-item-link']._qs['.favicon-container']._appended).toHaveLength(1);
     });
 
-    it('ignores syncStatusChanged events lacking id or status', () => {
+    it('ignores events without an id, but empty status still clears a stale dot', () => {
         const item = mkItem('neat-tree-item-9');
-        syncManager._status['9'] = 'synced';
-        syncManager._tooltip['9'] = 'tip';
         initSyncUi({ store });
+        // no bookmarkId: nothing happens
         winListeners.syncStatusChanged[0]({ detail: { bookmarkId: '', status: 'synced' } });
+        expect(created).toHaveLength(0);
+        // empty status with a valid id: handler runs and removes the stale
+        // indicator (manager reports nothing for id 9, so no new dot appears)
+        const old = makeEl('SPAN');
+        item._qs['.sync-indicator'] = old;
         winListeners.syncStatusChanged[0]({ detail: { bookmarkId: '9', status: '' } });
+        expect(old.removed).toBe(true);
         expect(created).toHaveLength(0);
     });
 
@@ -243,8 +249,8 @@ describe('initSyncUi', () => {
         const syncUi = initSyncUi({ store });
         syncUi.refreshSyncIndicators();
         expect(syncManager.refreshed).toBe(1);
-        expect(a._qs['.tree-item-link']._qs['.favicon-container']._appended[0].title).toBe('tip-1');
-        expect(b._qs['.tree-item-link']._qs['.favicon-container']._appended[0].title).toBe('tip-2');
+        expect(a._qs['.tree-item-link']._qs['.favicon-container']._appended[0].innerHTML).toContain('tip-1');
+        expect(b._qs['.tree-item-link']._qs['.favicon-container']._appended[0].innerHTML).toContain('tip-2');
     });
 
     it('refreshSyncIndicators strips both id prefixes before querying the manager', () => {

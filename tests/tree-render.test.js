@@ -10,7 +10,12 @@ import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 // HTML is written out by hand below — nothing is derived from the module;
 // the two SVG icons are asserted via the shared src/icons.js contract.
 
-const MESSAGES = { noTitle: '(No title)', folderEmpty: '(Empty)' };
+const MESSAGES = {
+    noTitle: '(No title)',
+    folderEmpty: '(Empty)',
+    syncSuffixLocal: '(Local)',
+    syncSuffixSynced: '(Synced)'
+};
 
 let getChildrenCalls;
 let appendedTo;       // [id, child] pairs recorded on getElementById stubs
@@ -197,7 +202,8 @@ describe('generateBookmarkHTML', () => {
         };
         const tr = setup({ store: makeStore({}, { showSyncStatus: 'true' }) });
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1');
-        expect(html).toContain('class="sync-indicator synced" title="Synced tip"');
+        // custom tooltip only — no native title duplication
+        expect(html).toContain('<span class="sync-indicator synced">');
         expect(html).toContain('<span class="sync-tooltip">Synced tip</span>');
     });
 
@@ -247,10 +253,10 @@ describe('generateFolderHTML', () => {
         expect(html).toContain('<i>F (Local)</i>');
     });
 
-    it('adds no suffix for syncing folders or plain nodes', () => {
+    it('appends the (Synced) suffix for syncing dual-storage roots, none for plain nodes', () => {
         const tr = setup();
         expect(tr.generateFolderHTML('F', '', '10', { syncing: true, folderType: 'other' }))
-            .toContain('<i>F</i>');
+            .toContain('<i>F (Synced)</i>');
         expect(tr.generateFolderHTML('F', '', '10', { syncing: false }))
             .toContain('<i>F</i>');
     });
@@ -267,7 +273,8 @@ describe('generateFolderHTML', () => {
         };
         const tr = setup({ store: makeStore({}, { showSyncStatus: 'true' }) });
         const html = tr.generateFolderHTML('F', '', '10');
-        expect(html).toContain('class="sync-indicator pending" title="Pending tip"');
+        expect(html).toContain('<span class="sync-indicator pending">');
+        expect(html).toContain('<span class="sync-tooltip">Pending tip</span>');
     });
 });
 
@@ -324,6 +331,18 @@ describe('generateHTML', () => {
         expect(tr.generateHTML([], 2)).toBe(
             '<ul role="group" data-level="2"><li class="empty-folder" ' +
             'style="-webkit-padding-start: 28px"><i>(Empty)</i></li></ul>');
+    });
+
+    it('marks local-only rows (syncing === false) with unsynced-subtree', () => {
+        const tr = setup();
+        const html = tr.generateHTML([
+            { id: '1', parentId: '0', title: 'L', url: 'http://l/', syncing: false },
+            { id: '2', parentId: '0', title: 'S', url: 'http://s/', syncing: true },
+            { id: '3', parentId: '0', title: 'U', url: 'http://u/' }
+        ]);
+        expect(html).toContain('<li class="child unsynced-subtree " id="neat-tree-item-1"');
+        expect(html).toContain('<li class="child " id="neat-tree-item-2"');
+        expect(html).toContain('<li class="child " id="neat-tree-item-3"');
     });
 
     it('renders a bookmark li with child class, id, level and data-parentid', () => {

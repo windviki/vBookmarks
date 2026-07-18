@@ -1156,6 +1156,43 @@ menu[type=context].hide-sort #sort-folder-contents {
     outline: 2px solid var(--vbm-focus-ring);
 }
 
+/* --- Blocked-drop toast (dnd.js) ------------------------------------------
+   Same pill language as #undo-toast, minus the action button: shown when a
+   drag is rejected (cross synced/local storage move). Created on demand by
+   dnd.js; .show drives the fade. */
+#notice-toast {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    max-width: 90%;
+    padding: 6px 12px;
+    background: var(--vbm-bg-elev);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    box-shadow: 0 4px 16px var(--vbm-shadow);
+    color: var(--vbm-fg);
+    font-size: 90%;
+    text-align: center;
+    z-index: 12;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+#notice-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* --- highlightUnsynced setting ---------------------------------------------
+   Local-only (syncing === false) subtrees render dimmed when the setting is
+   on — a quiet whole-area signal that replaced the old per-row green dots. */
+body.highlight-unsynced #tree li.unsynced-subtree > a,
+body.highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span {
+    opacity: .62;
+}
+
 /* --- Command palette (P2) --------------------------------------------------
    Ctrl/Cmd+K overlay in popup.html/sidepanel.html. Fixed and centered near
    the top; colors come from the shared design tokens above, so the dark

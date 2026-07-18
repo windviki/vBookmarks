@@ -140,7 +140,7 @@ export function initTreeRender(ctx = {}) {
             const syncStatus = window.syncManager.getSyncStatusIndicator(bookmarkId);
             const syncTooltip = window.syncManager.getSyncTooltip(bookmarkId);
             if (syncStatus) {
-                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                syncIndicator = `<span class="sync-indicator ${syncStatus}">
                     <span class="sync-tooltip">${syncTooltip}</span>
                 </span>`;
             }
@@ -159,12 +159,15 @@ export function initTreeRender(ctx = {}) {
         if (!extras)
             extras = '';
 
-        // Handle dual storage folders - add suffix for non-syncing folders
+        // Handle dual storage folders - localized suffix marks which root a
+        // folder belongs to (both roots are named alike by Chrome)
         let displayTitle = title || _m('noTitle');
-        if (folderNode && folderNode.syncing === false && folderNode.folderType) {
-            // Add suffix to distinguish between syncing and non-syncing folders
-            const suffix = ' (Local)';
-            displayTitle += suffix;
+        if (folderNode && folderNode.folderType) {
+            if (folderNode.syncing === false) {
+                displayTitle += ` ${_m('syncSuffixLocal') || '(Local)'}`;
+            } else if (folderNode.syncing === true) {
+                displayTitle += ` ${_m('syncSuffixSynced') || '(Synced)'}`;
+            }
         }
 
         // Add sync status indicator if enabled
@@ -173,7 +176,7 @@ export function initTreeRender(ctx = {}) {
             const syncStatus = window.syncManager.getSyncStatusIndicator(folderId);
             const syncTooltip = window.syncManager.getSyncTooltip(folderId);
             if (syncStatus) {
-                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                syncIndicator = `<span class="sync-indicator ${syncStatus}">
                     <span class="sync-tooltip">${syncTooltip}</span>
                 </span>`;
             }
@@ -232,10 +235,14 @@ export function initTreeRender(ctx = {}) {
             const isFolder = d.dateGroupModified || children || typeof url === 'undefined';
             const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
             const classStr = isFolder ? 'parent' : 'child';
+            // syncing===false 的行打上标记：highlightUnsynced 开启时整棵本地
+            // 子树淡显（body.highlight-unsynced 规则在 neat.css），替代旧版
+            // 满树绿点的噪音式指示。
+            const unsyncedCls = (d.syncing === false) ? ' unsynced-subtree' : '';
             const isOpen = getRememberState() && getOpens().includes(id);
             const open = isOpen ? 'open' : '';
             const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
-            html += `<li class="${classStr} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
+            html += `<li class="${classStr}${unsyncedCls} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
             if (isFolder) { // folder node
                 html += generateFolderHTML(title, stylePad, id, d);
                 // only generate children for opened folder

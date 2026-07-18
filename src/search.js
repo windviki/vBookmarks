@@ -173,7 +173,7 @@ export function initSearch(ctx = {}) {
                         const syncStatus = window.syncManager.getSyncStatusIndicator(id);
                         const syncTooltip = window.syncManager.getSyncTooltip(id);
                         if (syncStatus) {
-                            syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
+                            syncIndicator = `<span class="sync-indicator ${syncStatus}">
                                 <span class="sync-tooltip">${syncTooltip}</span>
                             </span>`;
                         }

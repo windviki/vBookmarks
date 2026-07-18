@@ -109,6 +109,11 @@ import { initUndo } from './undo.js';
     if (rtl)
         body.classList.add('rtl');
 
+    // highlightUnsynced setting (dead toggle revived): dim local-only
+    // subtrees via the unsynced-subtree rows tree-render marks. Default on.
+    body.classList.toggle('highlight-unsynced',
+        store.getSyncSetting('highlightUnsynced', 'true') === 'true');
+
     // Init some variables
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
     let rememberState = !store.get('dontRememberState');

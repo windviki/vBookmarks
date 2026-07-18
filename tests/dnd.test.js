@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 
-// dnd.js touches page globals (document/window/chrome/alert/getComputedStyle/
+// dnd.js touches page globals (document/window/chrome/getComputedStyle/
 // setInterval) only inside initDnd, so the real module imports cleanly in
-// node once the globals are stubbed. ctx.tree is an element stub wired into a
+// node once the globals are stubbed. Blocked drops surface through the
+// on-demand #notice-toast element appended to body (no more alert()). ctx.tree is an element stub wired into a
 // small fake tree (a plain bookmark, a folder with a <ul> child list, a root
 // folder, a recent-section virtual entry); store/resetSeparator are injected
 // doubles; chrome.bookmarks.get/move is a recording double fed from a node
@@ -29,7 +30,6 @@ const fire = (el, type, ev) => {
 let initDnd;
 let intervals;
 let clearedIntervals;
-let alerts;
 const realSetInterval = globalThis.setInterval;
 const realClearInterval = globalThis.clearInterval;
 
@@ -42,21 +42,18 @@ beforeAll(async () => {
         clearedIntervals.push(id);
     };
     globalThis.getComputedStyle = el => el._computed || { width: '0px' };
-    globalThis.alert = msg => alerts.push(msg);
     ({ initDnd } = await import('../src/dnd.js'));
 });
 
 beforeEach(() => {
     intervals = [];
     clearedIntervals = [];
-    alerts = [];
 });
 
 afterAll(() => {
     globalThis.setInterval = realSetInterval;
     globalThis.clearInterval = realClearInterval;
     delete globalThis.getComputedStyle;
-    delete globalThis.alert;
 });
 
 const setup = (opts = {}) => {
@@ -68,6 +65,7 @@ const setup = (opts = {}) => {
             id,
             className: '',
             innerHTML: '',
+            textContent: '',
             style: {},
             dataset: {},
             parentNode: null,
@@ -137,6 +135,7 @@ const setup = (opts = {}) => {
         _listeners: {},
         body,
         getElementById: id => byId[id] || null,
+        createElement: tag => el(tag.toUpperCase()),
         addEventListener(type, fn) {
             (this._listeners[type] = this._listeners[type] || []).push(fn);
         }
@@ -212,6 +211,13 @@ const setup = (opts = {}) => {
         chrome: chromeStub, sepCalls, resetSeparator,
         makeBookmark, makeFolder, startDrag, move, up
     };
+};
+
+// The blocked-drop toast is created on demand and appended to <body>;
+// null means no toast was shown.
+const toastText = ctx => {
+    const toast = ctx.body._appended.find(n => n.id === 'notice-toast');
+    return toast ? toast.textContent : null;
 };
 
 describe('module API', () => {
@@ -633,7 +639,7 @@ describe('mouseup (drop on a folder)', () => {
 });
 
 describe('cross-storage moves', () => {
-    it('alerts and does not move when dropping next to an unsynced bookmark', () => {
+    it('shows a toast and does not move when dropping next to an unsynced bookmark', () => {
         const ctx = setup({
             nodes: {
                 '11': { id: '11', parentId: '1', index: 0 },
@@ -648,13 +654,13 @@ describe('cross-storage moves', () => {
         ctx.startDrag(dragged.a);
         ctx.move(target.a, 50, 105);
         ctx.up(target.a, 50, 105);
-        expect(alerts).toEqual(['Cannot move bookmarks between synced and local storage.']);
+        expect(toastText(ctx)).toBe('Cannot move bookmarks between synced and local storage.');
         expect(ctx.chrome.bookmarks.moveCalls).toEqual([]);
         expect(ctx.sepCalls).toHaveLength(1); // onDrop still cleans up
         expect(ctx.dnd.isDragging()).toBe(false);
     });
 
-    it('alerts with the i18n message when dropping into an unsynced folder', () => {
+    it('toasts with the i18n message when dropping into an unsynced folder', () => {
         const ctx = setup({
             i18nMessage: '不能跨存储移动书签',
             nodes: {
@@ -672,7 +678,7 @@ describe('cross-storage moves', () => {
         ctx.startDrag(dragged.a);
         ctx.move(folder.span, 50, 210);
         ctx.up(folder.span, 50, 210);
-        expect(alerts).toEqual(['不能跨存储移动书签']);
+        expect(toastText(ctx)).toBe('不能跨存储移动书签');
         expect(ctx.chrome.bookmarks.moveCalls).toEqual([]);
     });
 
@@ -690,7 +696,7 @@ describe('cross-storage moves', () => {
         ctx.startDrag(dragged.a);
         ctx.move(target.a, 50, 105);
         ctx.up(target.a, 50, 105);
-        expect(alerts).toEqual([]);
+        expect(toastText(ctx)).toBe(null);
         expect(ctx.chrome.bookmarks.moveCalls).toEqual([['11', { parentId: '1', index: 3 }]]);
     });
 });

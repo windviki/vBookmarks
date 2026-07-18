@@ -8,7 +8,7 @@ export function initSyncUi(ctx) {
     const store = ctx.store;
 
     // Update individual bookmark sync status
-    const updateBookmarkSyncStatus = (bookmarkId, syncStatus) => {
+    const updateBookmarkSyncStatus = (bookmarkId) => {
         const treeItem = document.getElementById(`neat-tree-item-${bookmarkId}`);
         const resultsItem = document.getElementById(`results-item-${bookmarkId}`);
 
@@ -25,7 +25,8 @@ export function initSyncUi(ctx) {
                     if (statusClass) {
                         const newIndicator = document.createElement('span');
                         newIndicator.className = `sync-indicator ${statusClass}`;
-                        newIndicator.title = tooltip;
+                        // 只有自定义 .sync-tooltip，不再复制到 title —— 双份
+                        // tooltip 会同时弹出（原生黄框盖在样式化气泡上）。
                         newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
 
                         // Insert into the favicon container
@@ -70,7 +71,6 @@ export function initSyncUi(ctx) {
                 if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && statusClass) {
                     const newIndicator = document.createElement('span');
                     newIndicator.className = `sync-indicator ${statusClass}`;
-                    newIndicator.title = tooltip;
                     newIndicator.innerHTML = `<span class="sync-tooltip">${tooltip}</span>`;
 
                     // Insert into the favicon container
@@ -97,10 +97,12 @@ export function initSyncUi(ctx) {
     const initializeSyncControls = () => {
         if (window.addEventListener && window.syncManager) {
             window.addEventListener('syncStatusChanged', (event) => {
-                // Update UI based on sync status changes
-                const { bookmarkId, status } = event.detail;
-                if (bookmarkId && status) {
-                    updateBookmarkSyncStatus(bookmarkId, status);
+                // Update UI based on sync status changes. Empty status is a
+                // real event too (node became unknown/unsyncable-cleared) —
+                // the handler must run to remove the stale indicator dot.
+                const { bookmarkId } = event.detail;
+                if (bookmarkId) {
+                    updateBookmarkSyncStatus(bookmarkId);
                 }
             });
         }

@@ -5,7 +5,8 @@ import { createSyncEngine, computeStatus, SYNC_STORAGE_KEY, REFRESH_ALARM } from
 // a recording double on globalThis before calling createSyncEngine(). All
 // chrome.bookmarks callbacks in the double fire synchronously; the flush
 // debounce is driven by vitest fake timers. Tooltip expectations are the
-// page contract — byte-identical to what the old SyncManager rendered.
+// inline English fallbacks (the double carries no chrome.i18n, so the
+// engine's try/catch fallback path is what runs here).
 
 const flushMicrotasks = async (rounds = 10) => {
     for (let i = 0; i < rounds; i++) {
@@ -82,24 +83,24 @@ const makeChromeDouble = () => {
 };
 
 describe('computeStatus', () => {
-    it('maps syncing=true to synced / "Synced to cloud"', () => {
+    it('maps syncing=true to synced with a localized-account tooltip', () => {
         expect(computeStatus({ id: '1', url: 'https://a.example/', syncing: true }))
-            .toEqual({ indicator: 'synced', tooltip: 'Synced to cloud' });
+            .toEqual({ indicator: 'synced', tooltip: 'Synced to your Google account' });
     });
 
-    it('maps syncing=false to local / "Local only"', () => {
+    it('maps syncing=false to local / "Local only — not uploaded"', () => {
         expect(computeStatus({ id: '1', url: 'https://a.example/', syncing: false }))
-            .toEqual({ indicator: 'local', tooltip: 'Local only' });
+            .toEqual({ indicator: 'local', tooltip: 'Local only — not uploaded' });
     });
 
-    it('keeps the folderType suffix format for synced special folders', () => {
+    it('drops the raw folderType enum from synced special-folder tooltips', () => {
         expect(computeStatus({ id: '1', folderType: 'bookmarks-bar', syncing: true }))
-            .toEqual({ indicator: 'synced', tooltip: 'bookmarks-bar (Synced)' });
+            .toEqual({ indicator: 'synced', tooltip: 'Synced to your Google account' });
     });
 
-    it('keeps the folderType suffix format for local special folders', () => {
+    it('drops the raw folderType enum from local special-folder tooltips', () => {
         expect(computeStatus({ id: '2', folderType: 'other', syncing: false }))
-            .toEqual({ indicator: 'local', tooltip: 'other (Local only)' });
+            .toEqual({ indicator: 'local', tooltip: 'Local only — not uploaded' });
     });
 
     it('reports unknown (empty strings) when syncing is undefined on old Chrome', () => {
@@ -255,12 +256,12 @@ describe('createSyncEngine', () => {
             expect(Object.keys(blob).sort()).toEqual(['0', '1', '10', '11', '12', '13', '2']);
             expect(blob['1']).toEqual({
                 indicator: 'synced',
-                tooltip: 'bookmarks-bar (Synced)',
+                tooltip: 'Synced to your Google account',
                 ts: expect.any(Number)
             });
             expect(blob['10']).toEqual({
                 indicator: 'synced',
-                tooltip: 'Synced to cloud',
+                tooltip: 'Synced to your Google account',
                 ts: expect.any(Number)
             });
             expect(blob['11'].indicator).toBe('local');
@@ -270,7 +271,7 @@ describe('createSyncEngine', () => {
                 ts: expect.any(Number)
             });
             expect(blob['13']).toEqual({ indicator: '', tooltip: '', ts: expect.any(Number) });
-            expect(blob['2'].tooltip).toBe('other (Local only)');
+            expect(blob['2'].tooltip).toBe('Local only — not uploaded');
         });
 
         it('debounces bursts into a single session write', async () => {
@@ -314,7 +315,7 @@ describe('createSyncEngine', () => {
             expect(blob['a'].indicator).toBe('synced');
             expect(blob['b']).toEqual({
                 indicator: 'local',
-                tooltip: 'Local only',
+                tooltip: 'Local only — not uploaded',
                 ts: expect.any(Number)
             });
             expect('zz' in blob).toBe(false);

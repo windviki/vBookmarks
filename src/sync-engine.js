@@ -44,9 +44,22 @@ const UNSYNCABLE_URL_PATTERNS = [
 export const isUrlSyncable = url =>
     !UNSYNCABLE_URL_PATTERNS.some(pattern => url.startsWith(pattern));
 
-// Pure node → status mapping. Tooltip wording is a page contract: it stays
-// byte-identical to what the old SyncManager rendered (folderType branch
-// included). Unknown means empty strings — never a fabricated 'synced'.
+// Localized tooltip with an English fallback: chrome.i18n is available in
+// the service worker, but unit tests inject a chrome double without it.
+const _m = (key, fallback) => {
+    try {
+        return chrome.i18n.getMessage(key) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+};
+
+// Pure node → status mapping. Tooltips are localized via chrome.i18n (keys
+// registered in _locales; English inline as the last-resort fallback). The
+// old "folderType (Synced)" concatenation leaked raw enum values and was
+// never localizable — special roots now get their suffix from tree-render
+// (syncSuffixLocal/syncSuffixSynced) on the label itself. Unknown means
+// empty strings — never a fabricated 'synced'.
 export const computeStatus = node => {
     if (!node) {
         return { indicator: '', tooltip: '' };
@@ -54,19 +67,22 @@ export const computeStatus = node => {
     if (node.syncing === true) {
         return {
             indicator: 'synced',
-            tooltip: node.folderType ? `${node.folderType} (Synced)` : 'Synced to cloud'
+            tooltip: _m('syncStatusSynced', 'Synced to your Google account')
         };
     }
     if (node.syncing === false) {
         return {
             indicator: 'local',
-            tooltip: node.folderType ? `${node.folderType} (Local only)` : 'Local only'
+            tooltip: _m('syncStatusLocal', 'Local only — not uploaded')
         };
     }
     // node.syncing === undefined (Chrome <138): status unknown. The only
     // thing still decidable is "can never sync" for blacklisted URL schemes.
     if (node.url && !isUrlSyncable(node.url)) {
-        return { indicator: 'unsyncable', tooltip: 'Cannot be synced' };
+        return {
+            indicator: 'unsyncable',
+            tooltip: _m('syncStatusUnsyncable', 'Cannot be synced')
+        };
     }
     return { indicator: '', tooltip: '' };
 };
