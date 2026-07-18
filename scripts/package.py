@@ -36,7 +36,6 @@ JS_FILES = [
     'src/fuzzy.js',
     'src/sort-utils.js',
     'src/neat.js',
-    'src/neatools.js',
     'src/popup.js',
     'src/options.js',
     'src/advanced-options.js',

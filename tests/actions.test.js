@@ -154,7 +154,6 @@ let timeouts;
 const realSetTimeout = globalThis.setTimeout;
 
 beforeAll(async () => {
-    Math.uuidFast = () => 'UUID4TEST';
     globalThis.setTimeout = (fn, ms) => {
         timeouts.push([fn, ms]);
         return 0;
@@ -874,9 +873,15 @@ describe('separator actions', () => {
             nodes: { '10': [{ id: '10', parentId: '1', index: 3, url: 'http://a/' }] }
         });
         actions.addSeparator('10', 'after');
-        expect(chrome.bookmarks.createCalls).toEqual([
-            { parentId: '1', index: 4, title: 'separator-title', url: 'http://separatethis.com/#UUID4TEST' }
-        ]);
+        expect(chrome.bookmarks.createCalls).toHaveLength(1);
+        const createCall = chrome.bookmarks.createCalls[0];
+        expect(createCall.parentId).toBe('1');
+        expect(createCall.index).toBe(4);
+        expect(createCall.title).toBe('separator-title');
+        // real uuidFast() from separators.js: RFC4122v4 shape after the '#'
+        // (36 chars, version nibble 4, variant nibble 8/9/A/B)
+        expect(createCall.url).toMatch(
+            /^http:\/\/separatethis\.com\/#[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-4[0-9A-Za-z]{3}-[89AB][0-9A-Za-z]{3}-[0-9A-Za-z]{12}$/);
         expect(calls.sepHTML).toEqual([14]); // paddingStart = 14 * (level 0 + 1)
         expect(calls.sepAdd).toEqual(['100']);
     });

@@ -1,3 +1,5 @@
+const $ = id => document.getElementById(id);
+
 (window => {
     const document = window.document;
     const chrome = window.chrome;

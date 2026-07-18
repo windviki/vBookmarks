@@ -23,96 +23,17 @@ import { initSyncUi } from './sync-ui.js';
     const chrome = window.chrome;
     const navigator = window.navigator;
     const body = document.body;
+    const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
 
     // StringList / SeparatorManager 已剥离至 src/separators.js（P1，ES module 见顶部 import）
     const separatorManager = new SeparatorManager(store);
 
-    //regex for color expressions
-    const hexColorRegex = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    // RGB -> HEX 转换已随 generateSeparatorHTML 剥离至 src/tree-render.js（模块内纯函数）
-
-    //HEX -> RGB
-    String.prototype.colorRgb = function () {
-        let sColor = this.toLowerCase();
-        if (sColor && hexColorRegex.test(sColor)) {
-            if (sColor.length === 4) {
-                let sColorNew = "#";
-                for (let i = 1; i < 4; i += 1) {
-                    sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
-                }
-                sColor = sColorNew;
-            }
-            //6 bit
-            const sColorChange = [];
-            for (let i = 1; i < 7; i += 2) {
-                sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
-            }
-            return `RGB(${sColorChange.join(",")})`;
-        } else {
-            return '';
-        }
-    };
-
-    // Private array of chars to use
-    const UUIDCHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-
-    Math.uuid = (len, radix) => {
-        let chars = UUIDCHARS,
-            uuid = [],
-            i;
-        radix = radix || chars.length;
-
-        if (len) {
-            // Compact form
-            for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
-        } else {
-            // rfc4122, version 4 form
-            let r;
-
-            // rfc4122 requires these characters
-            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-            uuid[14] = '4';
-
-            // Fill in random data.  At i==19 set the high bits of clock sequence as
-            // per rfc4122, sec. 4.1.5
-            for (i = 0; i < 36; i++) {
-                if (!uuid[i]) {
-                    r = 0 | Math.random() * 16;
-                    uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r];
-                }
-            }
-        }
-
-        return uuid.join('');
-    };
-
-    // A more performant, but slightly bulkier, RFC4122v4 solution.  We boost performance
-    // by minimizing calls to random()
-    Math.uuidFast = () => {
-        let uuid = new Array(36),
-            rnd = 0,
-            r;
-        for (let i = 0; i < 36; i++) {
-            if (i === 8 || i === 13 || i === 18 || i === 23) {
-                uuid[i] = '-';
-            } else if (i === 14) {
-                uuid[i] = '4';
-            } else {
-                if (rnd <= 0x02) rnd = 0x2000000 + (Math.random() * 0x1000000) | 0;
-                r = rnd & 0xf;
-                rnd = rnd >> 4;
-                uuid[i] = UUIDCHARS[(i === 19) ? (r & 0x3) | 0x8 : r];
-            }
-        }
-        return uuid.join('');
-    };
-
     // copyToClipboard / TreeText 已剥离至 src/actions.js（P1）
 
     // Platform detection
     const os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
-    body.addClass(os);
+    body.classList.add(os);
 
     // Chrome version detection
     const version = (() => {
@@ -122,7 +43,7 @@ import { initSyncUi } from './sync-ui.js';
         if (!matches)
             return null;
         matches.slice(1).forEach((m, i) => {
-            v[keys[i]] = m.toInt();
+            v[keys[i]] = parseInt(m, 10);
         });
         return v;
     })();
@@ -133,7 +54,7 @@ import { initSyncUi } from './sync-ui.js';
     $('edit-dialog-url').placeholder = _m('url');
     $('new-folder-dialog-name').placeholder = _m('name');
     $('quick-add-btn').title = _m('quickAddBookmark');
-    $each({
+    Object.entries({
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
         'bookmark-new-incognito-window': 'openIncognitoWindow',
@@ -174,16 +95,16 @@ import { initSyncUi } from './sync-ui.js';
         'new-folder-dialog-cancel-button': 'nope',
         'sort-dialog-ok-button': 'save',
         'sort-dialog-cancel-button': 'nope'
-    }, (msg, id) => {
+    }).forEach(([id, msg]) => {
         const el = $(id);
         const m = _m(msg);
         el.textContent = m;
     });
 
     // RTL indicator
-    const rtl = (body.getComputedStyle('direction') === 'rtl');
+    const rtl = (getComputedStyle(body).getPropertyValue('direction') === 'rtl');
     if (rtl)
-        body.addClass('rtl');
+        body.classList.add('rtl');
 
     // Init some variables
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
@@ -218,7 +139,7 @@ import { initSyncUi } from './sync-ui.js';
         if (!matches)
             return null;
         matches.slice(1).forEach(function(m, i) {
-            v[keys[i]] = m.toInt();
+            v[keys[i]] = parseInt(m, 10);
         });
         return v;
     };
@@ -476,10 +397,10 @@ import { initSyncUi } from './sync-ui.js';
     let quickAddToastTimer = null;
     const showQuickAddToast = () => {
         quickAddToast.textContent = _m('quickAdded');
-        quickAddToast.addClass('show');
+        quickAddToast.classList.add('show');
         clearTimeout(quickAddToastTimer);
         quickAddToastTimer = setTimeout(() => {
-            quickAddToast.removeClass('show');
+            quickAddToast.classList.remove('show');
         }, 1500);
     };
     const withCurrentTabBookmark = callback => {
@@ -501,9 +422,9 @@ import { initSyncUi } from './sync-ui.js';
         withCurrentTabBookmark((tab, bookmark) => {
             // neatools' toggleClass forwards no `force` flag, so branch explicitly
             if (bookmark) {
-                quickAddBtn.addClass('starred');
+                quickAddBtn.classList.add('starred');
             } else {
-                quickAddBtn.removeClass('starred');
+                quickAddBtn.classList.remove('starred');
             }
         });
     };
@@ -519,7 +440,7 @@ import { initSyncUi } from './sync-ui.js';
                     url: tab.url,
                     parentId: store.get('quickAddFolderId', '1')
                 }, () => {
-                    quickAddBtn.addClass('starred');
+                    quickAddBtn.classList.add('starred');
                     showQuickAddToast();
                 });
             }
@@ -532,9 +453,9 @@ import { initSyncUi } from './sync-ui.js';
     document.addEventListener('keydown', e => {
         if (!(e.metaKey || e.ctrlKey) || (e.key !== 'd' && e.key !== 'D'))
             return;
-        if (body.hasClass('needConfirm') || body.hasClass('needEdit') ||
-            body.hasClass('needAlert') || body.hasClass('needInputName') ||
-            body.hasClass('needSort'))
+        if (body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
+            body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
+            body.classList.contains('needSort'))
             return;
         e.preventDefault();
         e.stopPropagation();
@@ -577,7 +498,7 @@ import { initSyncUi } from './sync-ui.js';
     menus.separatorMenu.addEventListener('mousemove', contextMouseMove);
 
     const contextMouseOut = function () {
-        if (this.style.opacity.toInt())
+        if (parseInt(this.style.opacity, 10))
             this.focus();
     };
     menus.bookmarkMenu.addEventListener('mouseout', contextMouseOut);
@@ -686,7 +607,7 @@ import { initSyncUi } from './sync-ui.js';
 
     // Make webkit transitions work only after elements are settled down
     setTimeout(() => {
-        body.addClass('transitional');
+        body.classList.add('transitional');
     }, 10);
 
     // Zoom
@@ -697,7 +618,7 @@ import { initSyncUi } from './sync-ui.js';
         if (dnd.isDragging())
             return; // prevent zooming when drag-n-dropping
         const dataZoom = body.dataset.zoom;
-        const currentZoom = dataZoom ? dataZoom.toInt() : 100;
+        const currentZoom = dataZoom ? parseInt(dataZoom, 10) : 100;
         if (val === 0) {
             delete body.dataset.zoom;
             store.remove('zoom');
@@ -707,7 +628,8 @@ import { initSyncUi } from './sync-ui.js';
             body.dataset.zoom = `${z}`;
             store.set('zoom', z);
         }
-        body.addClass('dummy').removeClass('dummy'); // force redraw
+        body.classList.add('dummy'); // force redraw
+        body.classList.remove('dummy');
         resetHeight();
     };
     //use 'wheel' event and 'e.deltaY' instead (>= Chrome 61)
@@ -741,7 +663,7 @@ import { initSyncUi } from './sync-ui.js';
 
     // Fix stupid Chrome build 536 bug
     if (version.build >= 536)
-        body.addClass('chrome-536');
+        body.classList.add('chrome-536');
 
     // Fix stupid wrong offset of the page, on Chrome Mac
     if (os === 'mac') {
@@ -755,7 +677,7 @@ import { initSyncUi } from './sync-ui.js';
     if (store.get('userstyle')) {
         const style = document.createElement('style');
         style.textContent = store.get('userstyle');
-        style.inject(document.body);
+        document.body.appendChild(style);
     }
 
     // document.addEventListener('DOMContentLoaded', () => {

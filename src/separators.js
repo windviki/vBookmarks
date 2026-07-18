@@ -9,6 +9,9 @@
  * prefix (default http://separatethis.com/) or contains one of the configured
  * separator substrings. SeparatorManager also tracks the ids of separators
  * present in the rendered tree (persisted as a comma-joined list).
+ *
+ * Also hosts uuidFast() (RFC4122v4, moved out of neat.js when neatools was
+ * retired): actions.js imports it to mint unique separator URLs.
  */
 
 export class StringList {
@@ -144,4 +147,28 @@ export class SeparatorManager {
         }
         return isSeparator;
     }
+}
+
+// Private array of chars to use
+const UUIDCHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+
+// A more performant, but slightly bulkier, RFC4122v4 solution.  We boost performance
+// by minimizing calls to random()
+export function uuidFast() {
+    let uuid = new Array(36),
+        rnd = 0,
+        r;
+    for (let i = 0; i < 36; i++) {
+        if (i === 8 || i === 13 || i === 18 || i === 23) {
+            uuid[i] = '-';
+        } else if (i === 14) {
+            uuid[i] = '4';
+        } else {
+            if (rnd <= 0x02) rnd = 0x2000000 + (Math.random() * 0x1000000) | 0;
+            r = rnd & 0xf;
+            rnd = rnd >> 4;
+            uuid[i] = UUIDCHARS[(i === 19) ? (r & 0x3) | 0x8 : r];
+        }
+    }
+    return uuid.join('');
 }

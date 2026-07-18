@@ -1,3 +1,5 @@
+import { uuidFast } from './separators.js';
+
 /**
  * Popup action layer (P1 module extracted from neat.js).
  *
@@ -21,9 +23,10 @@
  * ctx.httpsPattern               — shared ^https?:// regex (neat.js uses it too)
  *
  * document/window/chrome remain page globals, as in the rest of the popup.
- * Math.uuidFast is installed on the Math global by neat.js before any action
- * can run. No neatools helpers here: plain getElementById and DOM calls only
- * (neatools' el.destroy() is inlined as parentNode.removeChild).
+ * uuidFast (for separator URLs) is imported from ./separators.js instead of
+ * being patched onto the Math global by neat.js. No neatools helpers here:
+ * plain getElementById and DOM calls only (neatools' el.destroy() is inlined
+ * as parentNode.removeChild).
  */
 export function initActions(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -80,7 +83,7 @@ export function initActions(ctx = {}) {
 
     const addSeparator = (nodeId, where) => {
         addNewNode(nodeId, where,
-            `${separatorManager.separatorURL}#${Math.uuidFast()}`,
+            `${separatorManager.separatorURL}#${uuidFast()}`,
             separatorManager.separatorTitle, true);
     };
 
