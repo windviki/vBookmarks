@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 import { initTreeRender } from '../src/tree-render.js';
-import { FOLDER_ICON, DOCUMENT_CODE_ICON } from '../src/icons.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 
 // tree-render.js touches page globals (chrome.i18n/runtime/bookmarks,
 // window.syncManager/innerWidth, document) only inside initTreeRender and the
@@ -229,7 +229,7 @@ describe('generateFolderHTML', () => {
         const tr = setup();
         const expected = [
             `<span tabindex="0" style="-webkit-padding-start: 0px" class="tree-item-span">`,
-            `\t\t   <b class="twisty"></b>`,
+            `\t\t   <b class="twisty">${CHEVRON_ICON}</b>`,
             `\t\t   <div class="favicon-container">`,
             `\t\t       ${FOLDER_ICON}`,
             `\t\t       `,

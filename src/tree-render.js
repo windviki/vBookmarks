@@ -1,4 +1,4 @@
-import { FOLDER_ICON, DOCUMENT_CODE_ICON } from './icons.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from './icons.js';
 
 /**
  * Tree HTML generation + tree data helpers (P1 module extracted from neat.js,
@@ -180,7 +180,7 @@ export function initTreeRender(ctx = {}) {
         }
 
         return `<span tabindex="0" ${extras} class="tree-item-span">
-		   <b class="twisty"></b>
+		   <b class="twisty">${CHEVRON_ICON}</b>
 		   <div class="favicon-container">
 		       ${FOLDER_ICON}
 		       ${syncIndicator}

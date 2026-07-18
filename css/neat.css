@@ -296,18 +296,20 @@ body.linux input {
 }
 
 #tree ul li span .twisty {
-    display: inline-block;
-    position: relative;
-    width: 0;
-    height: 0;
-    border-width: 4.5px 0 4.5px 8px;
-    border-color: transparent transparent transparent var(--vbm-muted);
-    border-style: solid;
-    margin: 0 4px;
-    -webkit-transition: -webkit-transform .15s;
-    transition: -webkit-transform .15s;
-    -webkit-transform: scaleX(.99);
-    transform: scaleX(.99);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin: 0 2px 0 0;
+    color: var(--vbm-muted);
+    -webkit-transition: -webkit-transform .15s ease-out;
+    transition: transform .15s ease-out;
+}
+
+#tree ul li span .twisty svg {
+    display: block;
 }
 
 .chrome-536 #tree ul li span .twisty {
@@ -385,7 +387,7 @@ menu[type=context] .menu-item:focus {
 #tree ul li span:active .twisty,
 #tree ul li span.active .twisty,
 #tree ul li span:focus .twisty {
-    border-color: transparent transparent transparent var(--vbm-fg-selected);
+    color: var(--vbm-fg-selected);
 }
 
 #tree ul ul {

@@ -28,3 +28,12 @@ export const DOCUMENT_CODE_ICON =
     '<polyline points="7 8.5 5.75 9.75 7 11"/>' +
     '<polyline points="9.5 8.5 10.75 9.75 9.5 11"/>' +
     '</svg>';
+
+// Folder twisty glyph (chevron-right; CSS rotates it 90° on .open rows and
+// mirrors it for RTL). Lives inside <b class="twisty"> in folder rows —
+// smaller optical size than the tile icons, so the stroke reads lighter.
+export const CHEVRON_ICON =
+    '<svg class="vbm-icon vbm-icon-chevron" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="6.25 4.25 10 8 6.25 11.75"/>' +
+    '</svg>';
