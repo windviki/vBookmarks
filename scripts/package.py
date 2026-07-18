@@ -40,6 +40,7 @@ JS_FILES = [
     'src/options.js',
     'src/advanced-options.js',
     'src/store.js',
+    'src/sync-engine.js',
     'src/sync-manager.js',
     'src/search-core.js',
     'src/separators.js',

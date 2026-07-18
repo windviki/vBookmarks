@@ -61,7 +61,8 @@
         "scripting",
         "sidePanel",
         "contextMenus",
-        "tabGroups"
+        "tabGroups",
+        "alarms"
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],

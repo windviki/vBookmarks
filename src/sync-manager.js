@@ -1,475 +1,110 @@
 /**
- * vBookmarks Sync Manager
- * Manages bookmark sync status and provides sync-related functionality
+ * vBookmarks Sync Manager — page-side client (P3.6)
+ *
+ * All status computation moved to src/sync-engine.js in the service worker.
+ * This classic script only mirrors the engine's published blob
+ * (chrome.storage.session key `vbmSyncStatus`: { id: { indicator, tooltip,
+ * ts } }) into memory so renderers keep reading sync status synchronously
+ * through window.syncManager — same surface as before:
+ *   getSyncStatusIndicator(id) → 'synced' | 'local' | 'unsyncable' | ''
+ *   getSyncTooltip(id)         → tooltip text or ''
+ *   refreshAllSyncStatus()     → ask the SW to recompute (fire-and-forget)
+ *
+ * Mirror misses fire a `vbm-sync-status-request` message; the answer
+ * arrives asynchronously through the storage onChanged handler below, which
+ * re-dispatches the `syncStatusChanged` window event sync-ui.js listens to
+ * (detail: { bookmarkId, status } — contract unchanged).
+ *
+ * Without chrome.storage.session (Chrome <102) the mirror stays empty and
+ * no indicators are shown — same as a cold cache before.
  */
+(() => {
+    const SESSION_KEY = 'vbmSyncStatus';
 
-class SyncManager {
-    constructor() {
-        this.syncCache = new Map(); // {id: {status, timestamp}}
-        this.cacheTTL = 5 * 60 * 1000; // 5 minutes
-        this.syncSettings = {
-            showSyncStatus: true,
-            highlightUnsynced: true,
-            autoRefreshSync: true,
-            syncRefreshInterval: 60000 // 60 seconds, min 20s
-        };
-        this.refreshInterval = null;
-        this.init();
-    }
+    const mirror = {};
+    const sessionArea = (chrome.storage && chrome.storage.session) || null;
 
-    async init() {
-        await this.loadSettings();
-        this.setupEventListeners();
-        if (this.syncSettings.autoRefreshSync) {
-            this.startAutoRefresh();
-        }
-    }
-
-    async loadSettings() {
-        // Value model: toggles may be stored as 'true'/'false' strings
-        // (options.js) or booleans (older versions) — normalize both.
-        const asBool = v => v === true || v === 'true';
-        const result = await chrome.storage.sync.get({
-            showSyncStatus: 'true',
-            highlightUnsynced: 'true',
-            autoRefreshSync: 'true',
-            syncRefreshInterval: 60
-        });
-        this.syncSettings = {
-            showSyncStatus: asBool(result.showSyncStatus),
-            highlightUnsynced: asBool(result.highlightUnsynced),
-            autoRefreshSync: asBool(result.autoRefreshSync),
-            syncRefreshInterval: (parseInt(result.syncRefreshInterval, 10) || 60) * 1000
-        };
-    }
-
-    async saveSettings() {
-        await chrome.storage.sync.set({
-            showSyncStatus: this.syncSettings.showSyncStatus ? 'true' : 'false',
-            highlightUnsynced: this.syncSettings.highlightUnsynced ? 'true' : 'false',
-            autoRefreshSync: this.syncSettings.autoRefreshSync ? 'true' : 'false',
-            syncRefreshInterval: this.syncSettings.syncRefreshInterval / 1000
-        });
-    }
-
-    setupEventListeners() {
-        chrome.bookmarks.onCreated.addListener(this.handleBookmarkChange.bind(this));
-        chrome.bookmarks.onRemoved.addListener(this.handleBookmarkRemoved.bind(this));
-        chrome.bookmarks.onChanged.addListener(this.handleBookmarkChange.bind(this));
-        chrome.bookmarks.onMoved.addListener(this.handleBookmarkChange.bind(this));
-        chrome.bookmarks.onChildrenReordered.addListener(this.handleBookmarkChange.bind(this));
-        chrome.bookmarks.onImportBegan.addListener(this.handleImportBegan.bind(this));
-        chrome.bookmarks.onImportEnded.addListener(this.handleImportEnded.bind(this));
-    }
-
-    handleBookmarkChange(id, changeInfo) {
-        this.invalidateCache(id);
-        this.updateSyncStatus(id);
-    }
-
-    handleBookmarkRemoved(id, removeInfo) {
-        this.invalidateCache(id);
-    }
-
-    handleImportBegan() {
-        this.clearCache();
-        this.notifySyncStatusChanged('import-start');
-    }
-
-    handleImportEnded() {
-        this.notifySyncStatusChanged('import-end');
-    }
-
-    invalidateCache(bookmarkId) {
-        this.syncCache.delete(bookmarkId);
-        // Also invalidate parent and children
-        this.invalidateRelatedBookmarks(bookmarkId);
-    }
-
-    setCache(bookmarkId, status) {
-        this.syncCache.set(bookmarkId, {
-            status,
-            timestamp: Date.now()
-        });
-    }
-
-    getCache(bookmarkId) {
-        const entry = this.syncCache.get(bookmarkId);
-        if (entry && (Date.now() - entry.timestamp) < this.cacheTTL) {
-            return entry.status;
-        }
-        this.syncCache.delete(bookmarkId);
-        return null;
-    }
-
-    clearExpiredCache() {
-        const now = Date.now();
-        for (const [id, entry] of this.syncCache) {
-            if ((now - entry.timestamp) > this.cacheTTL) {
-                this.syncCache.delete(id);
-            }
-        }
-    }
-
-    invalidateRelatedBookmarks(bookmarkId) {
-        // Invalidate parent folder
-        chrome.bookmarks.get(bookmarkId, (node) => {
-            if (node[0] && node[0].parentId) {
-                this.syncCache.delete(node[0].parentId);
-            }
-        });
-
-        // Invalidate children if it's a folder
-        chrome.bookmarks.getChildren(bookmarkId, (children) => {
-            children.forEach(child => {
-                this.syncCache.delete(child.id);
-            });
-        });
-    }
-
-    clearCache() {
-        this.syncCache.clear();
-    }
-
-    startAutoRefresh() {
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-        }
-        this.refreshInterval = setInterval(() => {
-            this.clearExpiredCache();
-            this.refreshAllSyncStatus();
-        }, this.syncSettings.syncRefreshInterval);
-    }
-
-    stopAutoRefresh() {
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-            this.refreshInterval = null;
-        }
-    }
-
-    async refreshAllSyncStatus() {
+    // All messages are fire-and-forget hints to the service worker; the
+    // callback only swallows lastError so an asleep SW never surfaces as
+    // an unchecked runtime error.
+    const sendMessage = message => {
         try {
-            const tree = await this.getBookmarkTree();
-            await this.updateTreeSyncStatus(tree);
-            this.notifySyncStatusChanged('refresh-complete');
+            chrome.runtime.sendMessage(message, () => {
+                void chrome.runtime.lastError;
+            });
         } catch (error) {
-            console.error('Error refreshing sync status:', error);
+            // Ignore — messaging is best-effort.
         }
-    }
+    };
 
-    getBookmarkTree() {
-        return new Promise((resolve, reject) => {
-            chrome.bookmarks.getTree(tree => {
-                if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
-                } else {
-                    // Handle dual storage tree structure
-                    if (tree && tree.length > 0) {
-                        // Process the tree to handle new folderType and syncing properties
-                        this.processBookmarkTree(tree);
-                    }
-                    resolve(tree);
-                }
-            });
-        });
-    }
-
-    processBookmarkTree(nodes) {
-        if (!nodes || !Array.isArray(nodes)) return;
-
-        nodes.forEach(node => {
-            // Process new folderType and syncing properties
-            if (node.folderType || node.syncing !== undefined) {
-                // Update cache for this node
-                this.updateSyncStatus(node.id);
-            }
-
-            // Recursively process children
-            if (node.children) {
-                this.processBookmarkTree(node.children);
-            }
-        });
-    }
-
-    async updateTreeSyncStatus(tree) {
-        for (const node of tree) {
-            await this.updateNodeSyncStatus(node);
+    const applySessionBlob = blob => {
+        for (const key of Object.keys(mirror)) {
+            delete mirror[key];
         }
-    }
+        Object.assign(mirror, blob || {});
+    };
 
-    async updateNodeSyncStatus(node) {
-        const syncStatus = await this.getSyncStatus(node);
-        this.syncCache.set(node.id, syncStatus);
-
-        if (node.children) {
-            for (const child of node.children) {
-                await this.updateNodeSyncStatus(child);
+    const onStorageChanged = (changes, area) => {
+        if (area !== 'session' || !changes[SESSION_KEY]) {
+            return;
+        }
+        const oldMap = changes[SESSION_KEY].oldValue || {};
+        const newMap = changes[SESSION_KEY].newValue || {};
+        applySessionBlob(newMap);
+        const ids = new Set([...Object.keys(oldMap), ...Object.keys(newMap)]);
+        for (const id of ids) {
+            const before = oldMap[id];
+            const after = newMap[id];
+            if (!before || !after ||
+                before.indicator !== after.indicator || before.tooltip !== after.tooltip) {
+                window.dispatchEvent(new window.CustomEvent('syncStatusChanged', {
+                    detail: { bookmarkId: id, status: after ? after.indicator : '' }
+                }));
             }
         }
-    }
+    };
 
-    async getSyncStatus(bookmarkNode) {
-        // Check cache first
-        const cached = this.getCache(bookmarkNode.id);
-        if (cached) {
-            return cached;
+    const init = () => {
+        if (!sessionArea) {
+            return;
         }
-
-        // Determine sync status based on Chrome's new syncing property
-        const status = {
-            isSynced: false,
-            syncError: null,
-            lastSynced: bookmarkNode.dateAdded,
-            isSyncing: false,
-            canSync: true,
-            syncUrl: bookmarkNode.url,
-            parentId: bookmarkNode.parentId,
-            folderType: bookmarkNode.folderType,
-            syncing: bookmarkNode.syncing
-        };
-
-        // Use Chrome's new syncing property if available
-        if (bookmarkNode.syncing !== undefined) {
-            status.isSynced = bookmarkNode.syncing;
-        } else {
-            // Fallback for older Chrome versions
-            status.isSynced = this.isBookmarkSynced(bookmarkNode);
-        }
-
-        // Check if bookmark can be synced
-        if (bookmarkNode.url && this.isUrlSyncable(bookmarkNode.url)) {
-            status.canSync = true;
-        } else if (bookmarkNode.children) {
-            // Folders can always be synced
-            status.canSync = true;
-        } else {
-            status.canSync = false;
-        }
-
-        this.syncCache.set(bookmarkNode.id, status);
-        return status;
-    }
-
-    isBookmarkSynced(bookmarkNode) {
-        // Logic to determine if bookmark is synced
-        // This is a simplified version - in practice, you'd need to check
-        // against Chrome's sync status APIs
-        return bookmarkNode.url && !bookmarkNode.url.startsWith('chrome://');
-    }
-
-    isUrlSyncable(url) {
-        // Check if URL can be synced
-        const unsyncablePatterns = [
-            'chrome://',
-            'chrome-extension://',
-            'moz-extension://',
-            'edge://',
-            'about:',
-            'data:',
-            'file:',
-            'javascript:'
-        ];
-
-        return !unsyncablePatterns.some(pattern => url.startsWith(pattern));
-    }
-
-    async updateSyncStatus(bookmarkId) {
         try {
-            const bookmark = await this.getBookmark(bookmarkId);
-            if (bookmark) {
-                const syncStatus = await this.getSyncStatus(bookmark);
-                this.setCache(bookmarkId, syncStatus);
-                this.notifySyncStatusChanged('updated', bookmarkId, syncStatus);
+            const read = sessionArea.get(SESSION_KEY);
+            if (read && typeof read.then === 'function') {
+                read.then(data => {
+                    applySessionBlob(data ? data[SESSION_KEY] : null);
+                }).catch(() => {});
             }
         } catch (error) {
-            console.error('Error updating sync status:', error);
+            // Session read failed — indicators simply stay hidden.
         }
-    }
+        chrome.storage.onChanged.addListener(onStorageChanged);
+    };
 
-    getBookmark(bookmarkId) {
-        return new Promise((resolve, reject) => {
-            chrome.bookmarks.get(bookmarkId, (node) => {
-                if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
-                } else {
-                    resolve(node[0]);
-                }
-            });
-        });
-    }
-
-    notifySyncStatusChanged(event, bookmarkId, status) {
-        // Dispatch custom event for UI updates
-        const eventDetail = {
-            event,
-            bookmarkId,
-            status,
-            timestamp: Date.now()
-        };
-
-        window.dispatchEvent(new CustomEvent('syncStatusChanged', {
-            detail: eventDetail
-        }));
-    }
-
-    async getSyncStats() {
-        const tree = await this.getBookmarkTree();
-        const stats = {
-            total: 0,
-            synced: 0,
-            unsynced: 0,
-            folders: 0,
-            syncable: 0,
-            errors: 0
-        };
-
-        this.calculateStats(tree, stats);
-        return stats;
-    }
-
-    calculateStats(nodes, stats) {
-        nodes.forEach(node => {
-            stats.total++;
-
-            if (node.children) {
-                stats.folders++;
-                this.calculateStats(node.children, stats);
-            } else {
-                const syncStatus = this.getCache(node.id) || {};
-                if (syncStatus.isSynced) {
-                    stats.synced++;
-                } else {
-                    stats.unsynced++;
-                }
-                if (syncStatus.canSync) {
-                    stats.syncable++;
-                }
-                if (syncStatus.syncError) {
-                    stats.errors++;
-                }
+    window.syncManager = {
+        getSyncStatusIndicator(bookmarkId) {
+            const entry = mirror[bookmarkId];
+            if (!entry) {
+                sendMessage({ type: 'vbm-sync-status-request', ids: [bookmarkId] });
+                return '';
             }
-        });
-    }
+            return entry.indicator || '';
+        },
 
-    async exportSyncReport() {
-        const stats = await this.getSyncStats();
-        const tree = await this.getBookmarkTree();
-        const report = {
-            timestamp: new Date().toISOString(),
-            stats,
-            details: this.generateDetailedReport(tree)
-        };
-
-        return report;
-    }
-
-    generateDetailedReport(nodes) {
-        const details = [];
-
-        nodes.forEach(node => {
-            const syncStatus = this.getCache(node.id) || {};
-            const nodeInfo = {
-                id: node.id,
-                title: node.title,
-                url: node.url,
-                type: node.children ? 'folder' : 'bookmark',
-                syncStatus: syncStatus.isSynced ? 'synced' : 'unsynced',
-                canSync: syncStatus.canSync,
-                error: syncStatus.syncError
-            };
-
-            details.push(nodeInfo);
-
-            if (node.children) {
-                nodeInfo.children = this.generateDetailedReport(node.children);
+        getSyncTooltip(bookmarkId) {
+            const entry = mirror[bookmarkId];
+            if (!entry) {
+                sendMessage({ type: 'vbm-sync-status-request', ids: [bookmarkId] });
+                return '';
             }
-        });
+            return entry.tooltip || '';
+        },
 
-        return details;
-    }
+        refreshAllSyncStatus() {
+            sendMessage({ type: 'vbm-sync-refresh' });
+            return true;
+        }
+    };
 
-    // Public methods for UI integration
-    getSyncStatusIndicator(bookmarkId) {
-        const status = this.getCache(bookmarkId);
-        if (!status) return '';
-
-        if (status.syncError) {
-            return 'sync-error';
-        }
-        if (status.isSyncing) {
-            return 'syncing';
-        }
-        if (status.syncing !== undefined) {
-            // Use Chrome's native syncing property
-            return status.syncing ? 'synced' : 'local';
-        }
-        if (status.isSynced) {
-            return 'synced';
-        }
-        if (!status.canSync) {
-            return 'unsyncable';
-        }
-        return 'unsynced';
-    }
-
-    getSyncTooltip(bookmarkId) {
-        const status = this.getCache(bookmarkId);
-        if (!status) return '';
-
-        if (status.syncError) {
-            return `Sync error: ${status.syncError}`;
-        }
-        if (status.isSyncing) {
-            return 'Syncing...';
-        }
-        if (status.syncing !== undefined) {
-            // Use Chrome's native syncing property
-            if (status.folderType) {
-                return status.syncing ?
-                    `${status.folderType} (Synced)` :
-                    `${status.folderType} (Local only)`;
-            }
-            return status.syncing ? 'Synced to cloud' : 'Local only';
-        }
-        if (status.isSynced) {
-            return 'Synced to cloud';
-        }
-        if (!status.canSync) {
-            return 'Cannot be synced';
-        }
-        return 'Not synced';
-    }
-
-    async forceSync(bookmarkId) {
-        try {
-            const bookmark = await this.getBookmark(bookmarkId);
-            if (bookmark && bookmark.url) {
-                // Implement force sync logic
-                // This would typically involve Chrome's sync APIs
-                this.notifySyncStatusChanged('force-sync', bookmarkId);
-                return true;
-            }
-        } catch (error) {
-            console.error('Error forcing sync:', error);
-            return false;
-        }
-    }
-
-    // Cleanup
-    destroy() {
-        this.stopAutoRefresh();
-        this.clearCache();
-        this.syncCache = null;
-    }
-}
-
-// Initialize sync manager when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    window.syncManager = new SyncManager();
-});
-
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = SyncManager;
-}
+    init();
+})();

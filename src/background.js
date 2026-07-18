@@ -1,4 +1,11 @@
 import { rankBookmarks, xmlEncode, matcher } from './search-core.js';
+import { createSyncEngine } from './sync-engine.js';
+
+// --- Sync status engine (P3.6) ---------------------------------------------
+// Computes bookmark sync status in the service worker and publishes it via
+// chrome.storage.session; pages mirror it through src/sync-manager.js.
+// Top-level start() so every SW cold start re-hooks the listeners (MV3).
+createSyncEngine().start();
 
 (() => {
     if (chrome.omnibox) {

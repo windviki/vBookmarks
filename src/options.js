@@ -65,49 +65,33 @@ const $ = id => document.getElementById(id);
             { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
         ];
 
-        // Initialize sync settings
+        // Initialize sync settings. One write per change is enough: the
+        // service worker (src/sync-engine.js) observes chrome.storage.sync
+        // and reschedules its refresh alarm itself, and the popup mirrors
+        // status via storage.session — no page-side direct calls needed.
         for (const setting of syncSettings) {
             const element = $(setting.id);
             const value = await getSetting(setting.key, setting.defaultValue, true);
-            element.checked = value !== 'false';
+            // Toggles may be stored as 'true'/'false' strings or booleans
+            element.checked = value !== 'false' && value !== false;
             element.addEventListener('change', async () => {
                 const newValue = element.checked ? 'true' : 'false';
                 await setSetting(setting.key, newValue, true);
-                // Update sync manager settings
-                if (window.syncManager) {
-                    window.syncManager.syncSettings[setting.key] = element.checked;
-                    if (setting.key === 'autoRefreshSync') {
-                        if (element.checked) {
-                            window.syncManager.startAutoRefresh();
-                        } else {
-                            window.syncManager.stopAutoRefresh();
-                        }
-                    }
-                    await window.syncManager.saveSettings();
-                }
-                // Refresh the UI to show/hide sync indicators immediately
-                if (window.opener && window.opener.neat && setting.key === 'showSyncStatus') {
-                    window.opener.neat.refreshSyncIndicators();
-                }
             });
         }
 
         const syncRefreshInterval = $('sync-refresh-interval');
         syncRefreshInterval.value = await getSetting('syncRefreshInterval', 60, true);
-        syncRefreshInterval.addEventListener('input', async () => {
+        // Debounced: 'input' fires per keystroke and chrome.storage.sync is
+        // rate-limited (~120 writes/min).
+        let syncRefreshIntervalTimer = null;
+        syncRefreshInterval.addEventListener('input', () => {
             const val = parseInt(syncRefreshInterval.value);
             if (val >= 20 && val <= 300) {
-                await setSetting('syncRefreshInterval', val, true);
-                // Update sync manager settings
-                if (window.syncManager) {
-                    window.syncManager.syncSettings.syncRefreshInterval = val * 1000;
-                    await window.syncManager.saveSettings();
-                    // Restart auto-refresh if enabled
-                    if (window.syncManager.syncSettings.autoRefreshSync) {
-                        window.syncManager.stopAutoRefresh();
-                        window.syncManager.startAutoRefresh();
-                    }
-                }
+                clearTimeout(syncRefreshIntervalTimer);
+                syncRefreshIntervalTimer = setTimeout(() => {
+                    setSetting('syncRefreshInterval', val, true);
+                }, 500);
             }
         });
 
