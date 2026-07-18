@@ -99,9 +99,6 @@ export const createSyncEngine = () => {
     // collapse into one session write. Losing a write to a SW shutdown is
     // fine — the next event or alarm rebuilds the map from scratch.
     const flush = () => {
-        if (!chrome.storage || !chrome.storage.session) {
-            return;
-        }
         clearTimeout(flushTimer);
         flushTimer = setTimeout(() => {
             flushTimer = null;

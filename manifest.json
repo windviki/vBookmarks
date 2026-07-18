@@ -74,7 +74,7 @@
     "content_security_policy": {
         "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
     },
-	"minimum_chrome_version": "88.0.0.0",
+	"minimum_chrome_version": "114.0.0.0",
 	"default_locale": "en",
 	"omnibox": {
 		"keyword": "*"

@@ -14,15 +14,12 @@
  * arrives asynchronously through the storage onChanged handler below, which
  * re-dispatches the `syncStatusChanged` window event sync-ui.js listens to
  * (detail: { bookmarkId, status } — contract unchanged).
- *
- * Without chrome.storage.session (Chrome <102) the mirror stays empty and
- * no indicators are shown — same as a cold cache before.
  */
 (() => {
     const SESSION_KEY = 'vbmSyncStatus';
 
     const mirror = {};
-    const sessionArea = (chrome.storage && chrome.storage.session) || null;
+    const sessionArea = chrome.storage.session;
 
     // All messages are fire-and-forget hints to the service worker; the
     // callback only swallows lastError so an asleep SW never surfaces as
@@ -65,9 +62,6 @@
     };
 
     const init = () => {
-        if (!sessionArea) {
-            return;
-        }
         try {
             const read = sessionArea.get(SESSION_KEY);
             if (read && typeof read.then === 'function') {

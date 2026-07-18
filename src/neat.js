@@ -495,14 +495,12 @@ import { initUndo } from './undo.js';
 
     // Global wake-up (background.js's open-command-palette command): the
     // fallback popup window carries ?palette=1; the chrome.action.openPopup
-    // path sets a session-storage flag instead. storage.session needs
-    // Chrome 102+ while the baseline is 88, so it is feature-detected.
+    // path sets a session-storage flag instead.
     if (new URLSearchParams(window.location.search).has('palette')) {
         palette.open();
         // Consume a stale flag too, so the next plain popup open stays clean.
-        if (chrome.storage && chrome.storage.session)
-            chrome.storage.session.remove('pendingPaletteOpen');
-    } else if (chrome.storage && chrome.storage.session) {
+        chrome.storage.session.remove('pendingPaletteOpen');
+    } else {
         chrome.storage.session.get('pendingPaletteOpen', v => {
             if (v && v.pendingPaletteOpen) {
                 palette.open();

@@ -115,12 +115,8 @@ createSyncEngine().start();
 // popup.html doubles as the side panel page (manifest.side_panel). The panel
 // is an opt-in enhancement (setting `openInSidePanel`, off by default):
 // when enabled, clicking the action opens the panel instead of the popup.
-// chrome.sidePanel needs Chrome 114+ while minimum_chrome_version is 88, so
-// every use is feature-detected.
 const applyPanelBehavior = open => {
-    if (chrome.sidePanel) {
-        chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: open }).catch(() => {});
-    }
+    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: open }).catch(() => {});
 };
 
 // Apply the persisted setting at service worker startup
@@ -142,9 +138,7 @@ chrome.commands.onCommand.addListener(async command => {
         // then raise the popup (chrome.action.openPopup, Chrome 127+) or fall
         // back to a small popup window carrying ?palette=1.
         try {
-            if (chrome.storage && chrome.storage.session) {
-                await chrome.storage.session.set({ pendingPaletteOpen: true });
-            }
+            await chrome.storage.session.set({ pendingPaletteOpen: true });
             if (chrome.action.openPopup) {
                 await chrome.action.openPopup();
             } else {
@@ -160,7 +154,7 @@ chrome.commands.onCommand.addListener(async command => {
         }
         return;
     }
-    if (command !== 'open-side-panel' || !chrome.sidePanel) {
+    if (command !== 'open-side-panel') {
         return;
     }
     try {

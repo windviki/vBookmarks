@@ -21,7 +21,7 @@ class CustomEventDouble {
     }
 }
 
-const loadClient = ({ sessionBlob, withSession = true, sendMessageImpl } = {}) => {
+const loadClient = ({ sessionBlob, sendMessageImpl } = {}) => {
     const dispatched = [];
     const sent = [];
     const storageListeners = [];
@@ -32,19 +32,17 @@ const loadClient = ({ sessionBlob, withSession = true, sendMessageImpl } = {}) =
         }
     };
     const storage = {
+        session: {
+            get(key) {
+                return Promise.resolve({ [key]: sessionBlob });
+            }
+        },
         onChanged: {
             addListener(fn) {
                 storageListeners.push(fn);
             }
         }
     };
-    if (withSession) {
-        storage.session = {
-            get(key) {
-                return Promise.resolve({ [key]: sessionBlob });
-            }
-        };
-    }
     const chrome = {
         storage,
         runtime: {
@@ -191,15 +189,6 @@ describe('sync-manager page client', () => {
         }, 'sync');
         expect(env.dispatched).toHaveLength(0);
         expect(env.window.syncManager.getSyncStatusIndicator('b')).toBe('');
-    });
-
-    it('stays quiet but functional without chrome.storage.session (Chrome <102)', async () => {
-        const env = loadClient({ withSession: false });
-        await flushMicrotasks();
-        expect(env.storageListeners).toHaveLength(0);
-        expect(env.window.syncManager.getSyncStatusIndicator('a')).toBe('');
-        expect(env.sent).toEqual([{ type: 'vbm-sync-status-request', ids: ['a'] }]);
-        expect(env.window.syncManager.refreshAllSyncStatus()).toBe(true);
     });
 
     it('swallows sendMessage failures instead of breaking rendering', () => {

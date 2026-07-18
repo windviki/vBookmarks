@@ -86,23 +86,21 @@ const makeChrome = (opts = {}) => {
             cb({ id: `${this.nextId++}`, ...props });
         }
     };
-    if (!opts.noSession) {
-        chrome.storage = {
-            session: {
-                data: { ...(opts.sessionData || {}) },
-                getCalls: [],
-                setCalls: [],
-                get(key, cb) {
-                    this.getCalls.push(key);
-                    cb({ [key]: this.data[key] });
-                },
-                set(obj) {
-                    this.setCalls.push(JSON.parse(JSON.stringify(obj)));
-                    Object.assign(this.data, obj);
-                }
+    chrome.storage = {
+        session: {
+            data: { ...(opts.sessionData || {}) },
+            getCalls: [],
+            setCalls: [],
+            get(key, cb) {
+                this.getCalls.push(key);
+                cb({ [key]: this.data[key] });
+            },
+            set(obj) {
+                this.setCalls.push(JSON.parse(JSON.stringify(obj)));
+                Object.assign(this.data, obj);
             }
-        };
-    }
+        }
+    };
     return chrome;
 };
 
@@ -191,15 +189,6 @@ describe('capture', () => {
         expect(saved).toHaveLength(10);
         expect(saved[0].node.id).toBe('2'); // t1 was shifted out
         expect(undo.peek()).toEqual({ title: 't11', isFolder: false });
-    });
-
-    it('degrades to popup-lifetime memory when storage.session is missing', async () => {
-        const { undo, changed } = setup({ noSession: true, subTrees: { '5': BOOKMARK_NODE } });
-        undo.capture('5');
-        expect(undo.peek()).toEqual({ title: 'GH', isFolder: false });
-        await expect(undo.undo()).resolves.toBe(true);
-        expect(undo.canUndo()).toBe(false);
-        expect(changed).toEqual([1]);
     });
 });
 

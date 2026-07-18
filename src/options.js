@@ -41,12 +41,6 @@ const $ = id => document.getElementById(id);
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
         ];
 
-        // chrome.sidePanel requires Chrome 114+; hide the option where the API
-        // is unavailable (minimum_chrome_version is 88)
-        if (!chrome.sidePanel) {
-            $('open-in-side-panel-item').style.display = 'none';
-        }
-
         // Initialize general settings
         for (const setting of generalSettings) {
             const element = $(setting.id);

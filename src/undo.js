@@ -10,10 +10,8 @@
  * The stack persists in chrome.storage.session under the `vbmUndoStack` key
  * (JSON array, newest last, capped at 10 entries with the oldest shifted
  * out), so it outlives popup open/close cycles but never the browser
- * session. storage.session needs Chrome 102+ while the baseline is 88, so
- * its absence is feature-detected and the stack silently degrades to pure
- * popup-lifetime memory (the pre-P3.3 behavior). Writes are plain sets after
- * every mutation — no debounce, the stack is tiny.
+ * session. Writes are plain sets after every mutation — no debounce, the
+ * stack is tiny.
  *
  * initUndo(ctx) is called once by neat.js, before initActions. ctx.onChanged
  * is the tree-refresh callback invoked after a successful undo (neat.js
@@ -60,20 +58,16 @@ export function initUndo(ctx = {}) {
     const _m = chrome.i18n.getMessage;
     let stack = [];
 
-    // storage.session mirrors the stack across popup lifetimes; without it
-    // (Chrome < 102) the closure array above is the whole store.
-    const session = (chrome.storage && chrome.storage.session) || null;
-    if (session) {
-        session.get(STORAGE_KEY, result => {
-            const saved = result && result[STORAGE_KEY];
-            // Don't clobber entries captured while the read was in flight.
-            if (Array.isArray(saved) && saved.length && !stack.length)
-                stack = saved;
-        });
-    }
+    // storage.session mirrors the stack across popup lifetimes.
+    const session = chrome.storage.session;
+    session.get(STORAGE_KEY, result => {
+        const saved = result && result[STORAGE_KEY];
+        // Don't clobber entries captured while the read was in flight.
+        if (Array.isArray(saved) && saved.length && !stack.length)
+            stack = saved;
+    });
     const persist = () => {
-        if (session)
-            session.set({ [STORAGE_KEY]: stack });
+        session.set({ [STORAGE_KEY]: stack });
     };
 
     const createNode = props => new Promise((resolve, reject) => {
