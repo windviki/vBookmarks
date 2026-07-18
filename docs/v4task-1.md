@@ -1,5 +1,7 @@
 # v4 任务包 1：vBookmarks 现代化续作（接力文档）
 
+> **状态：P1–P4 全部完成**（2026-07-18，见 §3 完成状态与偏差清单；剩余仅 P5 评估项，不承诺排期）。
+
 > 用途：新 session 的工作入口。读完本文件 + 方案总文档即可开工，无需重新调研。
 > 维护者：windviki。协作约定：每个独立改进完成后本地 git 提交（conventional commits，中英文混用）；不要动本仓库以外的文件；docker 可用但不得影响已有镜像/容器。
 
@@ -29,7 +31,14 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 
 最新 8 个 commit（全在本地 master，未推送）：`fcbcc39`(docs) → `7fdd128`(Phase 0) → `e5099dc`(存储统一) → `1789dd2`(暗色主题) → `da20641`(侧栏+模糊搜索+空态) → `4ea30d2`(三条 issue 功能) → `478e492`(sidepanel+CSP) → `aaa4892`(docs)。
 
-2026-07-17 续作进度：`dbc52b7` 完成仓库目录重组（布局见下）；随后 commit 完成 **P1 切片 1** —— src/neat.js 转为 ES module 入口（pages 两个页面 `<script type="module">`），StringList / isBlank / SeparatorManager 剥离至 `src/separators.js`（storage 镜像构造注入，保持纯逻辑），新增 tests/separators.test.js 11 例直测（总计 70 例全绿，docker 冒烟零错误）。P1 下一切片建议从 dialogs 或 search 继续逐模块剥离。
+2026-07-17/18 续作完成状态：**P1–P4 全部落地**。目录重组 `dbc52b7` 后：P1 十个切片把 neat.js（约 3500 行单 IIFE）拆成 10 个 ESM 模块 + 约 720 行 app-shell（separators→dialogs→search→actions→context-menu→keyboard→dnd→tree-render→tree-view→sync-ui），neatools.js 退役；P2 命令面板（popup 内 Ctrl/Cmd+K + `chrome.commands` 全局唤醒）；P3 六项（/dupes 重复书签清理、/session 会话保存、undo 子树快照 + toast 撤销条、文件夹全部打开为标签组、/dead 死链扫描、SyncManager 归位 service worker + chrome.alarms）；P4 八项（separator key 大小写归并、TreeText NaN、popupHeight 无单位赋值、min-chrome 114 + 降级代码清理、zoom 轮询改事件驱动、options 原生控件深色、sync-styles 死段清理、位图图标 SVG 化）。终态：653 例 vitest 全绿、package.py 无 strays、docker 冒烟四页面零 console 错误。
+
+**既定偏差（有意为之，验收时对照）**：
+
+- `src/actions.js`（546 行）与 `src/palette.js`（576 行）超过 P1 的 <400 行目标：二者是单一内聚的动作表/面板模式表，再拆只增加跳转成本，不再细分。
+- P3.5 死链扫描在 popup 页内执行（交互式任务，进度与取消需可见），未走 offscreen 文档；`<all_urls>` 本是固有 host 权限，未引入 optional_permissions。
+- `confirmDeleteFolder*` i18n 键自 P3.3（toast 撤销替代确认框）起为死文案，保留在 locales 中避免 42 个语言文件无意义翻动。
+- `scripts/sync_locales.py` 全量重写会产生键序随机的大噪音 diff；新键采用在 41 个 locale 中原位插入 `[TODO:key]` 占位（该脚本既有机制），并以 `--check-only` 验证键集一致。
 
 已实现：存储统一 src/store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（pages/sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、70 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
 
@@ -41,7 +50,7 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 
 ```bash
 cd vBookmarks
-npm run test:run                                  # 70 例应全绿
+npm run test:run                                  # 653 例应全绿
 python3 scripts/package.py --output /tmp/x.zip    # 打包自检
 node --check <改动的 js 文件>
 # docker 冒烟（headless Chrome 加载扩展查 console 错误）：
@@ -52,7 +61,7 @@ node --check <改动的 js 文件>
 ### 硬约定（违反会破坏现有机制）
 
 - 存储：同步读写一律 `store.get/set`（local 区）/`store.getSyncSetting/setSyncSetting`（sync 区）；**禁止重新引入 localStorage 直访**；异步页用 `getSetting/setSetting`。
-- i18n：新文案先加 `_locales/en/messages.json` + `_locales/zh_CN/messages.json`，其余语言回退 en（不生成 TODO 占位）。
+- i18n：新文案先加 `_locales/en/messages.json` + `_locales/zh_CN/messages.json` 实译，其余 41 locale 原位插入 `[TODO:key]` 占位（sync_locales.py 的既有机制；**不要跑它的全量重写**——键序随机产生噪音 diff），跑 `python3 scripts/sync_locales.py --check-only` 验证键集一致。
 - CSP：`script-src 'self'` 是硬线；`style-src` 已含 `'unsafe-inline'`（树缩进/分隔符颜色依赖内联样式属性，勿收紧）。
 - 测试：classic 脚本用 `fs + new Function` 沙箱测真源码（tests/store.test.js 范式），ESM 直接 import；**禁止抄写被测实现**。
 - pages/sidepanel.html 是 pages/popup.html 的复刻（仅多 `<body class="panel-mode">`），改 pages/popup.html 后必须同步复刻（tests/fuzzy.test.js 有脚本一致性断言）。
@@ -62,6 +71,8 @@ node --check <改动的 js 文件>
 
 ### P1 — neat.js 模块化拆分（下一个大版本的主体工程）
 
+> ✅ **已完成**（10 个切片 + neatools 退役，commit `63965f7`…`69218c6`）。neat.js 约 3500 → 约 720 行 app-shell + 10 个 ESM 模块；两模块超 <400 行目标（actions/palette），属有意豁免，见 §3 偏差清单。
+
 依据：总方案 §3 拆分蓝图。src/neat.js 现约 3500 行单 IIFE，是当前最大的维护风险。
 目标模块：tree-view / search / actions / context-menu / keyboard / dnd / dialogs / separators / sync-ui。
 路线已定：MV3 原生 ES modules（popup 页面 `<script type="module">` 可用），src/neatools.js 同步退役（替代对照表见《现状分析-弹窗UI.md》§5，注意它 monkey-patch 了 String/Array/Element 原型，全篇隐式依赖，需先全局替换为纯函数）。
@@ -70,9 +81,13 @@ node --check <改动的 js 文件>
 
 ### P2 — ⌘K 命令面板
 
+> ✅ **已完成**（`805e250`，src/palette.js）。popup 内 Ctrl/Cmd+K 直接开；`chrome.commands` 的 `open-command-palette`（Ctrl/Cmd+Shift+K）全局唤醒：storage.session 置旗 + `chrome.action.openPopup`（Chrome 127+），低版本回退 `?palette=1` 弹窗。
+
 依据：总方案 §2.1。在 P1 之后做（依赖模块化后的 actions 表）。对标 alyssaxuu/omni 的斜杠命令；复用 src/fuzzy.js；`chrome.commands` 唤醒（注意每个扩展最多 4 个建议快捷键）。
 
 ### P3 — Phase 3 剩余功能（按 ROI 排序）
+
+> ✅ **已完成**（六项全部落地，`2648785`…`253f451`）。第 5 项实现位置与原文不同（popup 页内扫描，非 offscreen），见 §3 偏差清单。
 
 1. **重复书签清理**：URL 归一化（去 hash/utm/尾斜杠）→ 分组展示 → 批量删除。纯逻辑易测，成本最低。
 2. **会话保存**："当前窗口所有标签存为一个文件夹"（OneTab 核心场景，tabs+bookmarks API）。
@@ -82,6 +97,8 @@ node --check <改动的 js 文件>
 6. **SyncManager 归位**：状态计算迁 service worker + `chrome.alarms`（现"60 秒自动刷新"只在 popup 开着时存活）；参考 docs/bookmark-sync-changes.md。
 
 ### P4 — 遗留观察项（小而确定的修复）
+
+> ✅ **已完成**（八项全部落地）。separator key 归并 / TreeText NaN / popupHeight 三项在 P4 预热中随 neat.js 切片修掉；sync-styles 死段随 P3.6 清理（598→305 行）；其余四项为独立 commit：min-chrome 114 `a078ab7`、zoom 事件驱动 `d76d688`、原生控件深色 `2ca9c14`、图标 SVG 化 `4dfcc40`。注意：`chrome.action.openPopup`（Chrome 127+）的 `?palette=1` 回退**保留**——基线 114 仍低于 127。
 
 - `minimum_chrome_version` 88 → 114（sidePanel/promise storage 实际基线；现靠 feature-detect 降级）。抬基线后清理降级代码。
 - `separatorURL`（src/neat.js 读）vs `separatorUrl`（src/advanced-options.js 写）大小写分叉：归并为一个 key + src/store.js 迁移（改 KNOWN_KEYS，注意幂等）。

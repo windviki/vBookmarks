@@ -74,7 +74,7 @@ npm test           # vitest in watch mode
 npm run test:run   # single run
 ```
 
-Test files: `tests/store.test.js` (evaluates the real `src/store.js` in a sandbox with mocked chrome/localStorage — covers migration, mirror precedence, debounce, `clearAll`), `tests/search-core.test.js` (imports the real `src/search-core.js` — ranking, `xmlEncode`, `matcher`), `tests/fuzzy.test.js` (sandbox-evaluates the real `src/fuzzy.js` — subsequence matching, scoring bonuses, CJK, rank ordering/positions, 10k-item perf budget; plus Phase 2b CSS/wiring assertions), `tests/sort-utils.test.js` (sandbox-evaluates the real `src/sort-utils.js` — title/dateAdded ordering, numeric and case-insensitive collation, foldersFirst, recursive deep copy, input immutability; plus the `pages/popup.html` load-order assertion) and `tests/theme.test.js` (design-token and theme-locale contract).
+Test files (22, one per module/feature — each `src/` module row above names its own suite): harness patterns are sandbox-eval (`fs` + `new Function`) for classic scripts (`tests/store.test.js`, `tests/fuzzy.test.js`, `tests/sort-utils.test.js`, `tests/sync-manager-client.test.js`) and direct ESM import with chrome.*/DOM doubles injected on `globalThis` for the rest — `tests/theme.test.js` (design-token and theme-locale contract), `tests/search-core.test.js`, the ten P1 module suites (`separators`/`dialogs`/`search`/`actions`/`context-menu`/`keyboard`/`dnd`/`tree-render`/`tree-view`/`sync-ui`), and the P2/P3 feature suites (`palette`/`dupes`/`session`/`undo`/`dead-links`/`sync-engine`). `tests/fuzzy.test.js` also asserts the `pages/popup.html`/`pages/sidepanel.html` script-list parity. Never copy the implementation under test into a test.
 
 ### Packaging (deployment)
 
@@ -94,7 +94,7 @@ python3 scripts/sync_locales.py --branch cc-dev   # import translations from ano
 python3 scripts/check_translations.py             # report: over-long UI strings, wrong-script/empty values, missing placeholders
 ```
 
-`check_translations.py` is report-only (it currently reports issues; it is not a gate). `mk`, `pt_BR`, and `pt_PT` currently lack 7 keys vs the `en` baseline (sync-options keys and `crossStorageMoveWarning`).
+`check_translations.py` is report-only (it currently reports issues; it is not a gate). All 42 locales currently hold the same 128 keys as the `en` baseline — keys without a real translation carry `[TODO:key]` placeholder messages. When adding keys: translate `en` + `zh_CN` for real, insert `[TODO:key]` placeholders **in place** into the other locales (do NOT run a full `--locale` rewrite — the script emits keys in random order and produces huge noise diffs), then verify with `--check-only`.
 
 ### Manual testing checklist (no automated E2E exists)
 
