@@ -90,9 +90,16 @@ const $ = id => document.getElementById(id);
         });
 
         const zoom = $('zoom-input');
-        setInterval(async () => {
-            zoom.value = await getSetting('zoom', 100);
-        }, 1000);
+        // Event-driven instead of a 1s poll: one initial read, then mirror
+        // external writes (advanced-options reset, another options tab).
+        // Skip while the input is focused so own-typing is never clobbered
+        // by the echo of the user's own keystroke writes.
+        zoom.value = await getSetting('zoom', 100);
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && 'zoom' in changes && document.activeElement !== zoom) {
+                zoom.value = changes.zoom.newValue ?? 100;
+            }
+        });
         zoom.addEventListener('input', async () => {
             const val = parseInt(zoom.value);
             if (val === 100) {
