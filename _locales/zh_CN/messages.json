@@ -20,6 +20,9 @@
   "optionShowRecentBookmarks": {
     "message": "在弹窗顶部显示最近添加的书签"
   },
+  "optionRecentCollapsed": {
+    "message": "默认收起\"最近添加\"分区"
+  },
   "dupesConfirmAll": {
     "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留最早添加项。",
     "placeholders": {

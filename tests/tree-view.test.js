@@ -106,10 +106,13 @@ const setup = (opts = {}) => {
                 remove: c => classes.delete(c),
                 contains: c => classes.has(c),
                 toggle: c => {
-                    if (classes.has(c))
+                    // DOMTokenList.toggle returns the new presence state
+                    if (classes.has(c)) {
                         classes.delete(c);
-                    else
-                        classes.add(c);
+                        return false;
+                    }
+                    classes.add(c);
+                    return true;
                 }
             },
             addEventListener(type, fn) {
@@ -436,6 +439,59 @@ describe('generateTree', () => {
         expect(tree.innerHTML).not.toContain('recent-section');
         expect(tree.innerHTML).toBe('HTML');
         expect(chrome.bookmarks.getRecentCalls).toEqual([]);
+    });
+
+    it('renders the recent section collapsed by default when recentBookmarksCollapsed is set, skipping the fetch', () => {
+        const { treeView, tree, chrome } = setup({
+            storeData: { showRecentBookmarks: '1', recentBookmarksCollapsed: '1' }
+        });
+        treeView.generateTree(['ROOT']);
+        expect(tree.innerHTML).toContain('id="recent-section" class="collapsed"');
+        expect(tree.innerHTML).toContain('aria-expanded="false"');
+        expect(chrome.bookmarks.getRecentCalls).toEqual([]);
+    });
+
+    it('toggles the recent section via header click and persists the preference', () => {
+        const { treeView, tree, store, chrome, el } = setup({ storeData: { showRecentBookmarks: '1' } });
+        el('UL', 'recent-list'); // present so the initial fetch is not skipped
+        treeView.generateTree(['ROOT']);
+        expect(chrome.bookmarks.getRecentCalls).toEqual([20]); // initial fetch
+        // The header lives inside $tree.innerHTML in the page; register the
+        // section/header stubs the delegated handler resolves by id.
+        const section = el('DIV', 'recent-section');
+        const header = el('DIV', 'recent-header');
+        const ev = () => ({
+            button: 0,
+            target: { closest: sel => (sel === '#recent-header' ? header : null) },
+            preventDefault() {},
+            stopImmediatePropagation() {}
+        });
+
+        fire(tree, 'click', ev());
+        expect(section.classList.contains('collapsed')).toBe(true);
+        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '1']);
+        expect(header._attrs['aria-expanded']).toBe('false');
+
+        fire(tree, 'click', ev());
+        expect(section.classList.contains('collapsed')).toBe(false);
+        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '']);
+        expect(header._attrs['aria-expanded']).toBe('true');
+        expect(chrome.bookmarks.getRecentCalls).toEqual([20, 20]); // expand re-fetches
+    });
+
+    it('toggles the recent section via Enter/Space on the focused header', () => {
+        const { treeView, tree, store, el } = setup({ storeData: { showRecentBookmarks: '1' } });
+        treeView.generateTree(['ROOT']);
+        const section = el('DIV', 'recent-section');
+        const header = el('DIV', 'recent-header');
+        fire(tree, 'keydown', {
+            key: 'Enter',
+            target: header,
+            preventDefault() {},
+            stopImmediatePropagation() {}
+        });
+        expect(section.classList.contains('collapsed')).toBe(true);
+        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '1']);
     });
 
     it('restores the persisted scrollTop when rememberState is on', () => {

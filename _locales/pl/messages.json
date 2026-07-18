@@ -20,6 +20,9 @@
   "optionShowRecentBookmarks": {
     "message": "[TODO:optionShowRecentBookmarks]"
   },
+  "optionRecentCollapsed": {
+    "message": "[TODO:optionRecentCollapsed]"
+  },
   "dupesConfirmAll": {
     "message": "[TODO:dupesConfirmAll]",
     "placeholders": {

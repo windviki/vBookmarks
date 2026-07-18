@@ -55,6 +55,8 @@
  * module-private pure function below (same implementation as tree-render.js's).
  */
 
+import { CHEVRON_ICON } from './icons.js';
+
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
 // tree-render.js 内有同款实现（模块各自私有，不交叉引用）。
@@ -117,15 +119,23 @@ export function initTreeView(ctx = {}) {
     // drag-and-drop rejects them as drag sources and drop targets.
     const RECENT_BOOKMARKS_COUNT = 20;
     const recentBookmarksEnabled = () => !!store.get('showRecentBookmarks', '1');
+    // Collapse preference lives in one key, written by both the section
+    // header chevron (popup) and the options-page checkbox.
+    const recentCollapsed = () => !!store.get('recentBookmarksCollapsed', '');
     const generateRecentSectionHTML = () => {
         if (!recentBookmarksEnabled())
             return '';
         const header = htmlspecialchars(_m('recentBookmarks'));
-        return `<div id="recent-section"><div id="recent-header">${header}</div><ul id="recent-list" role="group"></ul></div>`;
+        const collapsed = recentCollapsed();
+        return `<div id="recent-section"${collapsed ? ' class="collapsed"' : ''}>` +
+            `<div id="recent-header" role="button" tabindex="0" aria-expanded="${collapsed ? 'false' : 'true'}">` +
+            `<b class="recent-chevron">${CHEVRON_ICON}</b><span>${header}</span></div>` +
+            `<ul id="recent-list" role="group"></ul></div>`;
     };
     const refreshRecentSection = () => {
         const list = document.getElementById('recent-list');
-        if (!list)
+        // Collapsed sections skip the fetch entirely; expanding re-fetches.
+        if (!list || recentCollapsed())
             return;
         chrome.bookmarks.getRecent(RECENT_BOOKMARKS_COUNT, items => {
             let html = '';
@@ -152,6 +162,38 @@ export function initTreeView(ctx = {}) {
     };
     chrome.bookmarks.onCreated.addListener(scheduleRecentRefresh);
     chrome.bookmarks.onRemoved.addListener(scheduleRecentRefresh);
+
+    // Header chevron collapses/expands the section and persists the choice
+    // (same `recentBookmarksCollapsed` key the options page mirrors). The
+    // header is re-created on every generateTree, so the listeners delegate
+    // from $tree and run before the folder-span click handler below (which
+    // would otherwise toggle a stray 'open' class on the header).
+    const toggleRecentSection = () => {
+        const section = document.getElementById('recent-section');
+        if (!section)
+            return;
+        const collapsed = section.classList.toggle('collapsed');
+        store.set('recentBookmarksCollapsed', collapsed ? '1' : '');
+        const header = document.getElementById('recent-header');
+        if (header)
+            header.setAttribute('aria-expanded', String(!collapsed));
+        if (!collapsed)
+            refreshRecentSection();
+    };
+    $tree.addEventListener('click', e => {
+        if (e.target.closest && e.target.closest('#recent-header')) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            toggleRecentSection();
+        }
+    });
+    $tree.addEventListener('keydown', e => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.id === 'recent-header') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            toggleRecentSection();
+        }
+    });
 
     const generateTree = tree => {
         let subTree;

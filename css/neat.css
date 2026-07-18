@@ -831,11 +831,43 @@ body.panel-mode #resizer-y {
 }
 
 #recent-header {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     color: var(--vbm-muted);
     font-size: 90%;
     padding: 4px 8px 2px;
+    cursor: pointer;
+    border-radius: 4px;
     -webkit-user-select: none;
     user-select: none;
+}
+
+#recent-header:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+/* Chevron mirrors the tree twisties: rotated down when expanded, pointing
+   right (and the list hidden) when the section is collapsed. */
+#recent-header .recent-chevron {
+    display: inline-flex;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--vbm-muted);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transition: -webkit-transform .15s ease-out;
+    transition: transform .15s ease-out;
+}
+
+#recent-section.collapsed #recent-header .recent-chevron {
+    -webkit-transform: none;
+    transform: none;
+}
+
+#recent-section.collapsed #recent-list {
+    display: none;
 }
 
 /* --- Phase 3: sort folder contents dialog (issue #33) ---
