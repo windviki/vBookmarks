@@ -199,8 +199,10 @@ body.linux input {
 
 #search {
     position: relative;
-    top: -3px;
-    margin: 0 -1px -5px -1px;
+    /* 旧版用 top:-3px + 负 margin 让树区域上移，结果搜索框下缘被树盖住、
+       点击穿透到树（"很难点击到"）。回归正常文档流并抬高堆叠层级。 */
+    z-index: 2;
+    margin: 0 0 4px;
     padding: 0;
 }
 
@@ -244,6 +246,41 @@ body.linux input {
     border-color: var(--vbm-accent);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -1px;
+}
+
+/* Native webkit cancel glyph is unreliable (only appears while the field is
+   focused, ~11px target, behavior varies by version) — replaced by our own
+   #search-clear button below. */
+#search input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Custom clear button: lives in the flex row between input and quick-add.
+   visibility (not display) keeps its slot so showing/hiding never shifts
+   the input width. */
+#search-clear {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-inline-start: 2px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    visibility: hidden;
+}
+#search.has-query #search-clear {
+    visibility: visible;
+}
+#search-clear:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
 }
 
 #donation {

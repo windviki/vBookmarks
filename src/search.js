@@ -37,7 +37,20 @@ export function initSearch(ctx = {}) {
     const $results = $('results');
     let searchMode = false;
     const searchInput = $('search-input');
+    const searchClearBtn = $('search-clear');
     let prevValue = '';
+
+    // The custom clear button (native webkit cancel glyph removed in CSS):
+    // visible only while the field has text, toggled from every path that
+    // mutates searchInput.value.
+    const updateClearBtn = () => {
+        searchClearBtn.parentNode.classList.toggle('has-query', searchInput.value.length > 0);
+    };
+    if (chrome.i18n.getMessage('searchClear')) {
+        const clearLabel = _m('searchClear');
+        searchClearBtn.title = clearLabel;
+        searchClearBtn.setAttribute('aria-label', clearLabel);
+    }
 
     // Phase 2b: flat index for the fuzzy search (window.VBMFuzzy), built from
     // the full bookmark tree — folders included, separators excluded via the
@@ -88,6 +101,7 @@ export function initSearch(ctx = {}) {
             if (searchInput.value) {
                 searchInput.value = '';
             }
+            updateClearBtn();
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
@@ -116,6 +130,7 @@ export function initSearch(ctx = {}) {
         if (searchMode) {
             prevValue = '';
             searchInput.value = '';
+            updateClearBtn();
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
@@ -213,6 +228,7 @@ export function initSearch(ctx = {}) {
     };
 
     searchInput.addEventListener('input', e => {
+        updateClearBtn();
         if (!searchInput.value.length) {
             // keep focus on input
             // do not restore focus to item
@@ -220,6 +236,16 @@ export function initSearch(ctx = {}) {
         } else {
             search(null);
         }
+    });
+
+    // Clear button: wipe the query, leave search mode and hand focus back to
+    // the input so typing can restart immediately (quit(true) skips the
+    // tree-refocus; the explicit focus() below is the intended target).
+    searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        updateClearBtn();
+        quitSearchMode(true);
+        searchInput.focus();
     });
 
     searchInput.addEventListener('keydown', e => {
@@ -295,6 +321,7 @@ export function initSearch(ctx = {}) {
         searchInput.select();
         searchInput.scrollLeft = 0;
     }
+    updateClearBtn();
 
     return {
         input: searchInput,

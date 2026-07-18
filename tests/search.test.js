@@ -7,6 +7,21 @@ import { describe, it, expect, beforeAll } from 'vitest';
 // switchBookmarkMenu / separatorManager) are test doubles recording their
 // calls — no implementation copied from neat.js.
 
+const makeClassList = () => {
+    const set = new Set();
+    return {
+        add: (...cs) => cs.forEach(c => set.add(c)),
+        remove: (...cs) => cs.forEach(c => set.delete(c)),
+        toggle(c, force) {
+            const on = force === undefined ? !set.has(c) : !!force;
+            if (on) set.add(c); else set.delete(c);
+            return on;
+        },
+        contains: c => set.has(c),
+        _set: set
+    };
+};
+
 const makeEl = () => ({
     innerHTML: '',
     value: '',
@@ -18,12 +33,21 @@ const makeEl = () => ({
     offsetTop: 0,
     offsetHeight: 0,
     parentElement: null,
+    parentNode: null,
     firstElementChild: null,
     focused: false,
     selected: false,
     listeners: {},
     _qs: {},
     _qsa: {},
+    classList: makeClassList(),
+    setAttribute(k, v) {
+        (this._attrs = this._attrs || {})[k] = v;
+    },
+    getAttribute(k) {
+        const a = this._attrs || {};
+        return k in a ? a[k] : null;
+    },
     addEventListener(type, fn) {
         (this.listeners[type] = this.listeners[type] || []).push(fn);
     },
@@ -50,16 +74,6 @@ const makeEl = () => ({
         return this._qsa[sel] || [];
     }
 });
-
-const makeClassList = () => {
-    const set = new Set();
-    return {
-        add: (...cs) => cs.forEach(c => set.add(c)),
-        remove: (...cs) => cs.forEach(c => set.delete(c)),
-        contains: c => set.has(c),
-        _set: set
-    };
-};
 
 // Root node has no parentId (skipped); 'sep' is a separator (excluded);
 // Folder A is a folder (included with isFolder).
@@ -132,9 +146,13 @@ const setup = (opts = {}) => {
     const els = {
         tree: makeEl(),
         results: makeEl(),
+        search: makeEl(),
         'search-input': makeEl(),
+        'search-clear': makeEl(),
         ...(opts.extraEls || {})
     };
+    // search.js reaches the row through the clear button's parentNode
+    els['search-clear'].parentNode = els.search;
     const bodyClasses = makeClassList();
     globalThis.document = {
         getElementById: id => els[id] || null,
@@ -389,6 +407,21 @@ describe('input listeners', () => {
         expect(els.results.style.display).toBe('none');
         expect(focusTarget.focused).toBe(false); // quit(true): keep focus on input
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
+    });
+
+    it('clear button wipes the query, exits search mode and refocuses the input', () => {
+        const { s, els, store } = setup({});
+        type(els, 'git');
+        expect(s.isActive()).toBe(true);
+        expect(els.search.classList.contains('has-query')).toBe(true);
+        els['search-clear'].trigger('click');
+        expect(els['search-input'].value).toBe('');
+        expect(store.get('searchQuery')).toBe('');
+        expect(s.isActive()).toBe(false);
+        expect(els.search.classList.contains('has-query')).toBe(false);
+        expect(els.tree.style.display).toBe('block');
+        expect(els.results.style.display).toBe('none');
+        expect(els['search-input'].focused).toBe(true);
     });
 
     it('a whitespace-only input persists an empty query and quits with the focus fix', () => {
