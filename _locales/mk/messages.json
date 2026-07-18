@@ -1,275 +1,12 @@
 {
-  "crossStorageMoveWarning": {
-    "message": "[TODO:crossStorageMoveWarning]"
-  },
-  "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "versionMessage": {
-    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Копирај ги сите наслови и URL-адреси"
-  },
-  "customIcon": {
-    "message": "Своја икона"
-  },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "[TODO:optionSyncRefreshInterval]"
-  },
-  "addNewFolder": {
-    "message": "Додади подпапка"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Прикажи само обележувачи од лентата со обележувачи"
-  },
-  "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
-  },
-  "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Отворете"
-  },
-  "addBookmarkTop": {
-    "message": "Додади го тековното јазиче на врвот на оваа папка"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
-  },
-  "url": {
-    "message": "Рачно"
-  },
-  "donationDismiss": {
-    "message": "Откажи"
-  },
-  "optionsFooterText": {
-    "message": "Изградено од $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    },
-    "description": "Footer text for the Options page"
-  },
-  "openNewTab": {
-    "message": "Отвори во ново јазиче"
-  },
-  "resetSettingsDescription": {
-    "message": "Ресетирај ги vBookmarks на стандардни поставки."
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Пребарување Ознаки"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $subFolderCount$ под-фолдер (а) во неа?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "extName": {
-    "description": "The extension name.",
-    "message": "Neater Ознаки"
-  },
-  "nope": {
-    "message": "Не бе"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Отвори ги сите обележувачи во нов прозорец"
-  },
-  "optionZoom": {
-    "message": "Зум"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Затвори неискористени папки при отварање фолдер."
-  },
-  "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "donationGo": {
-    "message": "Во ред"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Отвори ги сите обележувачи во инкогнито прозорецот"
-  },
-  "optionShowSyncStatus": {
-    "message": "[TODO:optionShowSyncStatus]"
-  },
-  "addBookmarkBefore": {
-    "message": "Додади го тековното јазиче како обележувач пред ова"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "addSeparator": {
-    "message": "Додади разделник"
-  },
-  "optionOpenNewTab": {
-    "message": "Среден клик или контрола-клик се отвора во нов обележувач заднинско јазиче (наместо на преден план)."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Прилагоди боја на разделник"
-  },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "replaceUrl": {
-    "message": "Замени со тековната URL"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Вистинската URL на обележувачот прикажана како разделник"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionPopupStays": {
-    "message": "Скокачки останува отворен при отварање (лево-клик) обележувачи."
-  },
-  "resetSettings": {
-    "message": "Ресетирање Подесувања"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $bookmarkCount$ ознака (и) во неа?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "customSeparatorStringDescription": {
-    "message": "Ако URL на обележувач го содржи овој текст, ќе се прикаже како разделник"
-  },
-  "delete": {
-    "message": "Избришете"
-  },
-  "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+  "save": {
+    "message": "Зачувај"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "addBookmarkAfter": {
-    "message": "Додади го тековното јазиче како обележувач после ова"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "resetButton": {
-    "message": "Ресетирај"
-  },
-  "defaultIconButton": {
-    "message": "Користи стандардно"
-  },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Име"
-  },
-  "donationMessage": {
-    "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
-  },
-  "customStylesDescription": {
-    "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(Нема наслов)"
-  },
-  "ignore": {
-    "message": "Игнорирај"
-  },
-  "syncOptions": {
-    "message": "[TODO:syncOptions]"
-  },
-  "deleteEllipsis": {
-    "message": "Избришете ..."
+  "addNewFolderBefore": {
+    "message": "Додади папка пред ова"
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка, $subFolderCount$ под-фолдер (а) и $bookmarkCount$ ознака (и) во неа?",
@@ -285,73 +22,256 @@
       }
     }
   },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+  "optionAutoRefreshSync": {
+    "message": "[TODO:optionAutoRefreshSync]"
   },
-  "defaultIconButtonOr": {
-    "message": "или"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "nope": {
+    "message": "Не бе"
+  },
+  "customSeparatorColorDescription": {
+    "message": "Прилагоди боја на разделник"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Прикажи само обележувачи од лентата со обележувачи"
+  },
+  "customStylesDescription": {
+    "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
   "openIncognitoWindow": {
     "message": "Отвори во инкогнито прозорецот"
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ова е забележано на инвеститорот."
+  "edit": {
+    "message": "Измени ..."
   },
-  "optionAutoRefreshSync": {
-    "message": "[TODO:optionAutoRefreshSync]"
+  "optionCloseUnusedFolders": {
+    "message": "Затвори неискористени папки при отварање фолдер."
   },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+  "editFolder": {
+    "message": "Измени папка"
   },
-  "optionRememberPrevState": {
-    "message": "Запомни претходната состојба (дојдете позиција и го отвори папки)."
+  "donationMessage": {
+    "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
   },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец инкогнито?",
+  "addBookmarkTop": {
+    "message": "Додади го тековното јазиче на врвот на оваа папка"
+  },
+  "delete": {
+    "message": "Избришете"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Копирај ги сите наслови и URL-адреси"
+  },
+  "resetButton": {
+    "message": "Ресетирај"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
+  },
+  "optionsFooterText": {
+    "message": "Изградено од $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Footer text for the Options page"
+  },
+  "addBookmarkBottom": {
+    "message": "Додади го тековното јазиче на дното на оваа папка"
+  },
+  "crossStorageMoveWarning": {
+    "message": "[TODO:crossStorageMoveWarning]"
+  },
+  "addNewFolder": {
+    "message": "Додади подпапка"
+  },
+  "extName": {
+    "description": "The extension name.",
+    "message": "Neater Ознаки"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Ако URL на обележувач го содржи овој текст, ќе се прикаже како разделник"
+  },
+  "optionZoom": {
+    "message": "Зум"
+  },
+  "options": {
+    "message": "Опци"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "[TODO:optionHighlightUnsynced]"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "customIcon": {
+    "message": "Своја икона"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "errorOccured": {
+    "message": "Упс, грешка грешка."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $bookmarkCount$ ознака (и) во неа?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец?",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-  "openNewWindow": {
-    "message": "Отвори во нов прозорец"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(Нема наслов)"
   },
-  "removeSeparator": {
-    "message": "Отстрани разделник"
+  "openBookmarks": {
+    "message": "Отвори ги сите обележувачи"
   },
-  "customStyles": {
-    "message": "Прилагодено Стилови"
+  "addNewFolderAfter": {
+    "message": "Додади папка после ова"
   },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Папка: \" $folderName$ \"",
+  "defaultIconButtonOr": {
+    "message": "или"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Отвори ги сите обележувачи во инкогнито прозорецот"
+  },
+  "sessionEmpty": {
+    "message": "[TODO:sessionEmpty]"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматско менување на големината на прозорецот за да одговара на содржината"
+  },
+  "ignore": {
+    "message": "Игнорирај"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
       }
     }
   },
-  "copyTitleAndUrl": {
-    "message": "Копирај наслов и URL"
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "А neater обележувачи дрво скокачки прозорец."
   },
-  "editBookmark": {
-    "message": "Измени обележите"
+  "confirmDeleteFolderSubfolders": {
+    "message": "Дали сте сигурни дека сакате да го избришете $folderName$ папка и $subFolderCount$ под-фолдер (а) во неа?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "customIconDescription": {
-    "message": "Иконата мора да биде 19x19 пиксели. Во спротивно ќе биде променета големина."
+  "optionSearchAfterEnter": {
+    "message": "Пребарувај обележувачи само кога е притиснато ENTER (наместо инстантно пребарување)"
   },
-  "optionTheme": {
-    "message": "[TODO:optionTheme]"
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Име"
   },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+  "versionMessage": {
+    "message": "Ова е нов VBM $versionNumber$! Промените се тука: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "replaceUrl": {
+    "message": "Замени со тековната URL"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "openNewTab": {
+    "message": "Отвори во ново јазиче"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ова е забележано на инвеститорот."
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
   },
   "dupesCleanAll": {
     "message": "[TODO:dupesCleanAll]",
@@ -365,92 +285,198 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "reportError": {
-    "message": "Извештај Грешка"
+  "copyTitleAndUrl": {
+    "message": "Копирај наслов и URL"
   },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "А neater обележувачи дрво скокачки прозорец."
+  "customIconDescription": {
+    "message": "Иконата мора да биде 19x19 пиксели. Во спротивно ќе биде променета големина."
   },
-  "edit": {
-    "message": "Измени ..."
+  "syncOptions": {
+    "message": "[TODO:syncOptions]"
   },
-  "errorOccured": {
-    "message": "Упс, грешка грешка."
+  "openBookmarksNewWindow": {
+    "message": "Отвори ги сите обележувачи во нов прозорец"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "[TODO:optionSyncRefreshIntervalSeconds]"
-  },
-  "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
-  },
-  "dupesDone": {
-    "message": "[TODO:dupesDone]",
+  "sessionSaved": {
+    "message": "[TODO:sessionSaved]",
     "placeholders": {
       "count": {
-        "content": "$1"
+        "content": "$1",
+        "example": "12"
       }
     },
-    "description": "Alert shown after the duplicate cleanup finished."
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
-  "editFolder": {
-    "message": "Измени папка"
+  "deleteEllipsis": {
+    "message": "Избришете ..."
   },
-  "optionClickNewTab": {
-    "message": "Лево кликнете отвора обележувач во нов таб."
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
   },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+  "sessionFolderName": {
+    "message": "[TODO:sessionFolderName]",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "optionShowSyncStatus": {
+    "message": "[TODO:optionShowSyncStatus]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "optionPopupStays": {
+    "message": "Скокачки останува отворен при отварање (лево-клик) обележувачи."
+  },
+  "customStyles": {
+    "message": "Прилагодено Стилови"
+  },
+  "addBookmarkAfter": {
+    "message": "Додади го тековното јазиче како обележувач после ова"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Пребарување Ознаки"
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "optionOpenNewTab": {
+    "message": "Среден клик или контрола-клик се отвора во нов обележувач заднинско јазиче (наместо на преден план)."
+  },
+  "donationGo": {
+    "message": "Во ред"
+  },
+  "removeSeparator": {
+    "message": "Отстрани разделник"
   },
   "accessibility": {
     "message": "Поставувања"
   },
-  "addBookmarkBottom": {
-    "message": "Додади го тековното јазиче на дното на оваа папка"
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "addNewFolderBefore": {
-    "message": "Додади папка пред ова"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "[TODO:optionSyncRefreshIntervalSeconds]"
   },
-  "optionHighlightUnsynced": {
-    "message": "[TODO:optionHighlightUnsynced]"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionClickNewTab": {
+    "message": "Лево кликнете отвора обележувач во нов таб."
+  },
+  "paletteCmdSaveSession": {
+    "message": "[TODO:paletteCmdSaveSession]"
   },
   "customSeparatorTitleDescription": {
     "message": "Вистинскиот наслов на обележувачот прикажан како разделник"
   },
-  "options": {
-    "message": "Опци"
+  "defaultIconButton": {
+    "message": "Користи стандардно"
+  },
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "general": {
     "message": "Општи поставувања"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "url": {
+    "message": "Рачно"
   },
-  "openBookmarks": {
-    "message": "Отвори ги сите обележувачи"
+  "reportError": {
+    "message": "Извештај Грешка"
   },
-  "optionAutoResizePopup": {
-    "message": "Автоматско менување на големината на прозорецот за да одговара на содржината"
-  },
-  "addNewFolderAfter": {
-    "message": "Додади папка после ова"
-  },
-  "advancedOptions": {
-    "message": "Напредни опции"
-  },
-  "save": {
-    "message": "Зачувај"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "dupesNone": {
-    "message": "[TODO:dupesNone]"
+  "donationDismiss": {
+    "message": "Откажи"
   },
   "optionThemeAuto": {
     "message": "[TODO:optionThemeAuto]"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Дали сте сигурни дека сакате да го отворите сите $count$ обележувачи во нов прозорец инкогнито?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Запомни претходната состојба (дојдете позиција и го отвори папки)."
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "[TODO:optionSyncRefreshInterval]"
+  },
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
+  },
+  "advancedOptions": {
+    "message": "Напредни опции"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "resetSettingsDescription": {
+    "message": "Ресетирај ги vBookmarks на стандардни поставки."
+  },
+  "editBookmark": {
+    "message": "Измени обележите"
+  },
+  "addSeparator": {
+    "message": "Додади разделник"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "openNewWindow": {
+    "message": "Отвори во нов прозорец"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "resetSettings": {
+    "message": "Ресетирање Подесувања"
+  },
+  "addBookmarkBefore": {
+    "message": "Додади го тековното јазиче како обележувач пред ова"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Отворете"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Папка: \" $folderName$ \"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Вистинската URL на обележувачот прикажана како разделник"
   }
 }

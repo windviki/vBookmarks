@@ -354,6 +354,10 @@
     "description": "Command palette entry that bookmarks the current tab (same as the star button).",
     "message": "Bookmark current tab"
   },
+  "paletteCmdSaveSession": {
+    "description": "Command palette entry that saves every tab of the current window into a new bookmark folder (slash command /session).",
+    "message": "Save window tabs as folder"
+  },
   "paletteNoResults": {
     "description": "Shown in the command palette when nothing matches the query.",
     "message": "No matching results"
@@ -404,6 +408,30 @@
   "searchNoResults": {
     "description": "Shown in the popup when a search returns no matching bookmarks.",
     "message": "No matching bookmarks"
+  },
+  "sessionEmpty": {
+    "description": "Alert shown when the current window has no tabs that can be bookmarked.",
+    "message": "No tabs to save"
+  },
+  "sessionFolderName": {
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm.",
+    "message": "Session $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    }
+  },
+  "sessionSaved": {
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder.",
+    "message": "Saved $count$ tabs to a new folder",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
   },
   "url": {
     "message": "URL"

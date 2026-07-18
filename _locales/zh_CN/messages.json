@@ -1,270 +1,12 @@
 {
-  "crossStorageMoveWarning": {
-    "message": "[TODO:crossStorageMoveWarning]"
-  },
-  "dupesConfirmAll": {
-    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留最早添加项。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "versionMessage": {
-    "message": "[TODO:versionMessage]",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "[TODO:copyAllTitlesAndUrls]"
-  },
-  "customIcon": {
-    "message": "[TODO:customIcon]"
-  },
-  "openCommandPaletteCommand": {
-    "message": "打开命令面板"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "[TODO:optionConfirmOpenFolder]"
-  },
-  "openSidePanelCommand": {
-    "message": "打开 vBookmarks 侧栏"
-  },
-  "searchNoResults": {
-    "message": "未找到匹配的书签"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "[TODO:optionSyncRefreshInterval]"
-  },
-  "addNewFolder": {
-    "message": "[TODO:addNewFolder]"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "[TODO:optionOnlyShowBookmarkBar]"
-  },
-  "optionThemeLight": {
-    "message": "浅色"
-  },
-  "dupesGroupCount": {
-    "message": "$count$ 条重复",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "optionThemeDark": {
-    "message": "深色"
-  },
-  "sortByDateAdded": {
-    "message": "按添加时间（新的在前）"
-  },
-  "open": {
-    "message": "[TODO:open]"
-  },
-  "addBookmarkTop": {
-    "message": "[TODO:addBookmarkTop]"
-  },
-  "sortByTitle": {
-    "message": "按标题"
-  },
-  "paletteNoResults": {
-    "message": "没有匹配结果"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "新建书签…"
-  },
-  "url": {
-    "message": "[TODO:url]"
-  },
-  "donationDismiss": {
-    "message": "[TODO:donationDismiss]"
-  },
-  "optionsFooterText": {
-    "message": "[TODO:optionsFooterText]",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    },
-    "description": "Footer text for the Options page"
-  },
-  "openNewTab": {
-    "message": "[TODO:openNewTab]"
-  },
-  "resetSettingsDescription": {
-    "message": "[TODO:resetSettingsDescription]"
-  },
-  "searchBookmarks": {
-    "message": "[TODO:searchBookmarks]"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "[TODO:confirmDeleteFolderSubfolders]",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "confirmOpenBookmarks": {
-    "message": "[TODO:confirmOpenBookmarks]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation message for opening all bookmarks."
-  },
-  "extName": {
-    "message": "[TODO:extName]"
-  },
-  "nope": {
-    "message": "[TODO:nope]"
-  },
-  "openBookmarksNewWindow": {
-    "message": "[TODO:openBookmarksNewWindow]"
-  },
-  "optionZoom": {
-    "message": "[TODO:optionZoom]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "[TODO:optionSearchAfterEnter]"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "[TODO:optionCloseUnusedFolders]"
-  },
-  "dupesConfirmGroup": {
-    "message": "保留最早添加项，删除其余 $count$ 条？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "donationGo": {
-    "message": "[TODO:donationGo]"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "[TODO:openBookmarksIncognitoWindow]"
-  },
-  "optionShowSyncStatus": {
-    "message": "[TODO:optionShowSyncStatus]"
-  },
-  "addBookmarkBefore": {
-    "message": "[TODO:addBookmarkBefore]"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "message": "[TODO:confirmOpenBookmarksNewWindow]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation message for opening all bookmarks in a new window."
-  },
-  "addSeparator": {
-    "message": "[TODO:addSeparator]"
-  },
-  "optionOpenNewTab": {
-    "message": "[TODO:optionOpenNewTab]"
-  },
-  "customSeparatorColorDescription": {
-    "message": "[TODO:customSeparatorColorDescription]"
-  },
-  "optionOpenInSidePanel": {
-    "message": "在侧栏中打开（替代弹窗）"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "收藏当前标签页"
-  },
-  "replaceUrl": {
-    "message": "[TODO:replaceUrl]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "[TODO:customSeparatorUrlDescription]"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "在弹窗顶部显示最近添加的书签"
-  },
-  "optionPopupStays": {
-    "message": "[TODO:optionPopupStays]"
-  },
-  "resetSettings": {
-    "message": "[TODO:resetSettings]"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "[TODO:confirmDeleteFolderBookmarks]",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "customSeparatorStringDescription": {
-    "message": "[TODO:customSeparatorStringDescription]"
-  },
-  "delete": {
-    "message": "[TODO:delete]"
-  },
-  "paletteCmdDupes": {
-    "message": "清理重复书签"
+  "save": {
+    "message": "[TODO:save]"
   },
   "quickAdded": {
     "message": "已添加书签"
   },
-  "addBookmarkAfter": {
-    "message": "[TODO:addBookmarkAfter]"
-  },
-  "sortFoldersFirst": {
-    "message": "子文件夹排在前面"
-  },
-  "resetButton": {
-    "message": "[TODO:resetButton]"
-  },
-  "defaultIconButton": {
-    "message": "[TODO:defaultIconButton]"
-  },
-  "sortRecursive": {
-    "message": "同时排序子文件夹（递归）"
-  },
-  "name": {
-    "message": "[TODO:name]"
-  },
-  "donationMessage": {
-    "message": "[TODO:donationMessage]"
-  },
-  "customStylesDescription": {
-    "message": "[TODO:customStylesDescription]"
-  },
-  "noTitle": {
-    "message": "[TODO:noTitle]"
-  },
-  "ignore": {
-    "message": "[TODO:ignore]"
-  },
-  "syncOptions": {
-    "message": "[TODO:syncOptions]"
-  },
-  "deleteEllipsis": {
-    "message": "[TODO:deleteEllipsis]"
+  "addNewFolderBefore": {
+    "message": "[TODO:addNewFolderBefore]"
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "[TODO:confirmDeleteFolderSubfoldersBookmarks]",
@@ -280,72 +22,251 @@
       }
     }
   },
-  "paletteCmdNewFolder": {
-    "message": "新建文件夹…"
-  },
-  "defaultIconButtonOr": {
-    "message": "[TODO:defaultIconButtonOr]"
-  },
-  "openIncognitoWindow": {
-    "message": "[TODO:openIncognitoWindow]"
-  },
-  "reportedToDeveloper": {
-    "message": "[TODO:reportedToDeveloper]"
-  },
   "optionAutoRefreshSync": {
     "message": "[TODO:optionAutoRefreshSync]"
   },
-  "folderEmpty": {
-    "message": "（空文件夹）"
+  "sortRecursive": {
+    "message": "同时排序子文件夹（递归）"
   },
-  "optionRememberPrevState": {
-    "message": "[TODO:optionRememberPrevState]"
+  "nope": {
+    "message": "[TODO:nope]"
   },
-  "recentBookmarks": {
-    "message": "最近添加"
+  "customSeparatorColorDescription": {
+    "message": "[TODO:customSeparatorColorDescription]"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "message": "[TODO:confirmOpenBookmarksNewIncognitoWindow]",
+  "optionOnlyShowBookmarkBar": {
+    "message": "[TODO:optionOnlyShowBookmarkBar]"
+  },
+  "customStylesDescription": {
+    "message": "[TODO:customStylesDescription]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "新建书签…"
+  },
+  "contextMenuAddBookmark": {
+    "message": "用 vBookmarks 收藏此页面"
+  },
+  "dupesConfirmGroup": {
+    "message": "保留最早添加项，删除其余 $count$ 条？",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     },
-    "description": "Confirmation message for opening all bookmarks in a new incognito window."
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "openNewWindow": {
-    "message": "[TODO:openNewWindow]"
+  "openIncognitoWindow": {
+    "message": "[TODO:openIncognitoWindow]"
   },
-  "removeSeparator": {
-    "message": "[TODO:removeSeparator]"
+  "edit": {
+    "message": "[TODO:edit]"
   },
-  "customStyles": {
-    "message": "[TODO:customStyles]"
+  "optionCloseUnusedFolders": {
+    "message": "[TODO:optionCloseUnusedFolders]"
   },
-  "parentFolder": {
-    "message": "[TODO:parentFolder]",
+  "editFolder": {
+    "message": "[TODO:editFolder]"
+  },
+  "donationMessage": {
+    "message": "[TODO:donationMessage]"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ 条重复",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
+      "count": {
+        "content": "$1"
       }
     },
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list."
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
   },
-  "copyTitleAndUrl": {
-    "message": "[TODO:copyTitleAndUrl]"
+  "addBookmarkTop": {
+    "message": "[TODO:addBookmarkTop]"
   },
-  "editBookmark": {
-    "message": "[TODO:editBookmark]"
+  "delete": {
+    "message": "[TODO:delete]"
   },
-  "customIconDescription": {
-    "message": "[TODO:customIconDescription]"
+  "copyAllTitlesAndUrls": {
+    "message": "[TODO:copyAllTitlesAndUrls]"
   },
-  "optionTheme": {
-    "message": "主题"
+  "resetButton": {
+    "message": "[TODO:resetButton]"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "[TODO:optionConfirmOpenFolder]"
+  },
+  "optionThemeLight": {
+    "message": "浅色"
+  },
+  "sortFolderContents": {
+    "message": "排序文件夹内容"
+  },
+  "optionsFooterText": {
+    "message": "[TODO:optionsFooterText]",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    },
+    "description": "Footer text for the Options page"
+  },
+  "addBookmarkBottom": {
+    "message": "[TODO:addBookmarkBottom]"
+  },
+  "crossStorageMoveWarning": {
+    "message": "[TODO:crossStorageMoveWarning]"
+  },
+  "addNewFolder": {
+    "message": "[TODO:addNewFolder]"
+  },
+  "extName": {
+    "message": "[TODO:extName]"
+  },
+  "openCommandPaletteCommand": {
+    "message": "打开命令面板"
+  },
+  "customSeparatorStringDescription": {
+    "message": "[TODO:customSeparatorStringDescription]"
+  },
+  "optionZoom": {
+    "message": "[TODO:optionZoom]"
+  },
+  "options": {
+    "message": "[TODO:options]"
+  },
+  "sortByTitle": {
+    "message": "按标题"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "收藏当前标签页"
+  },
+  "optionHighlightUnsynced": {
+    "message": "[TODO:optionHighlightUnsynced]"
+  },
+  "palettePlaceholder": {
+    "message": "搜索书签、文件夹、命令…"
+  },
+  "customIcon": {
+    "message": "[TODO:customIcon]"
   },
   "quickAddBookmark": {
     "message": "收藏当前页面 (Ctrl+D)"
+  },
+  "errorOccured": {
+    "message": "[TODO:errorOccured]"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "[TODO:confirmDeleteFolderBookmarks]",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "message": "[TODO:confirmOpenBookmarksNewWindow]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation message for opening all bookmarks in a new window."
+  },
+  "noTitle": {
+    "message": "[TODO:noTitle]"
+  },
+  "openBookmarks": {
+    "message": "[TODO:openBookmarks]"
+  },
+  "addNewFolderAfter": {
+    "message": "[TODO:addNewFolderAfter]"
+  },
+  "defaultIconButtonOr": {
+    "message": "[TODO:defaultIconButtonOr]"
+  },
+  "dupesDone": {
+    "message": "已删除 $count$ 条重复书签",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "openSidePanelCommand": {
+    "message": "打开 vBookmarks 侧栏"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "[TODO:openBookmarksIncognitoWindow]"
+  },
+  "sessionEmpty": {
+    "message": "没有可保存的标签页"
+  },
+  "optionAutoResizePopup": {
+    "message": "[TODO:optionAutoResizePopup]"
+  },
+  "ignore": {
+    "message": "[TODO:ignore]"
+  },
+  "confirmOpenBookmarks": {
+    "message": "[TODO:confirmOpenBookmarks]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation message for opening all bookmarks."
+  },
+  "extDesc": {
+    "message": "[TODO:extDesc]"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "[TODO:confirmDeleteFolderSubfolders]",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "optionSearchAfterEnter": {
+    "message": "[TODO:optionSearchAfterEnter]"
+  },
+  "name": {
+    "message": "[TODO:name]"
+  },
+  "versionMessage": {
+    "message": "[TODO:versionMessage]",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "sortRecursiveWarning": {
+    "message": "将重排所有子文件夹内的书签，且无法撤销。"
+  },
+  "replaceUrl": {
+    "message": "[TODO:replaceUrl]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "新建分隔符"
+  },
+  "openNewTab": {
+    "message": "[TODO:openNewTab]"
+  },
+  "reportedToDeveloper": {
+    "message": "[TODO:reportedToDeveloper]"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "在弹窗顶部显示最近添加的书签"
   },
   "dupesCleanAll": {
     "message": "全部清理：$groups$ 组、$count$ 条多余副本",
@@ -359,91 +280,196 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "reportError": {
-    "message": "[TODO:reportError]"
+  "copyTitleAndUrl": {
+    "message": "[TODO:copyTitleAndUrl]"
   },
-  "extDesc": {
-    "message": "[TODO:extDesc]"
+  "customIconDescription": {
+    "message": "[TODO:customIconDescription]"
   },
-  "edit": {
-    "message": "[TODO:edit]"
+  "syncOptions": {
+    "message": "[TODO:syncOptions]"
   },
-  "errorOccured": {
-    "message": "[TODO:errorOccured]"
+  "openBookmarksNewWindow": {
+    "message": "[TODO:openBookmarksNewWindow]"
+  },
+  "sessionSaved": {
+    "message": "已保存 $count$ 个标签页到新文件夹",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "deleteEllipsis": {
+    "message": "[TODO:deleteEllipsis]"
+  },
+  "paletteNoResults": {
+    "message": "没有匹配结果"
+  },
+  "sessionFolderName": {
+    "message": "会话 $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "optionShowSyncStatus": {
+    "message": "[TODO:optionShowSyncStatus]"
+  },
+  "sortByDateAdded": {
+    "message": "按添加时间（新的在前）"
+  },
+  "optionPopupStays": {
+    "message": "[TODO:optionPopupStays]"
+  },
+  "customStyles": {
+    "message": "[TODO:customStyles]"
+  },
+  "addBookmarkAfter": {
+    "message": "[TODO:addBookmarkAfter]"
+  },
+  "searchBookmarks": {
+    "message": "[TODO:searchBookmarks]"
+  },
+  "optionThemeDark": {
+    "message": "深色"
+  },
+  "optionOpenNewTab": {
+    "message": "[TODO:optionOpenNewTab]"
+  },
+  "donationGo": {
+    "message": "[TODO:donationGo]"
+  },
+  "removeSeparator": {
+    "message": "[TODO:removeSeparator]"
+  },
+  "accessibility": {
+    "message": "[TODO:accessibility]"
+  },
+  "folderEmpty": {
+    "message": "（空文件夹）"
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "[TODO:optionSyncRefreshIntervalSeconds]"
   },
-  "sortFolderContents": {
-    "message": "排序文件夹内容"
+  "recentBookmarks": {
+    "message": "最近添加"
   },
-  "dupesDone": {
-    "message": "已删除 $count$ 条重复书签",
+  "optionClickNewTab": {
+    "message": "[TODO:optionClickNewTab]"
+  },
+  "paletteCmdSaveSession": {
+    "message": "保存当前窗口标签为文件夹"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "[TODO:customSeparatorTitleDescription]"
+  },
+  "defaultIconButton": {
+    "message": "[TODO:defaultIconButton]"
+  },
+  "paletteCmdDupes": {
+    "message": "清理重复书签"
+  },
+  "general": {
+    "message": "[TODO:general]"
+  },
+  "url": {
+    "message": "[TODO:url]"
+  },
+  "reportError": {
+    "message": "[TODO:reportError]"
+  },
+  "donationDismiss": {
+    "message": "[TODO:donationDismiss]"
+  },
+  "optionThemeAuto": {
+    "message": "跟随系统"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "message": "[TODO:confirmOpenBookmarksNewIncognitoWindow]",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     },
-    "description": "Alert shown after the duplicate cleanup finished."
+    "description": "Confirmation message for opening all bookmarks in a new incognito window."
   },
-  "editFolder": {
-    "message": "[TODO:editFolder]"
+  "optionRememberPrevState": {
+    "message": "[TODO:optionRememberPrevState]"
   },
-  "optionClickNewTab": {
-    "message": "[TODO:optionClickNewTab]"
+  "paletteCmdNewFolder": {
+    "message": "新建文件夹…"
   },
-  "sortRecursiveWarning": {
-    "message": "将重排所有子文件夹内的书签，且无法撤销。"
+  "optionSyncRefreshInterval": {
+    "message": "[TODO:optionSyncRefreshInterval]"
   },
-  "accessibility": {
-    "message": "[TODO:accessibility]"
-  },
-  "addBookmarkBottom": {
-    "message": "[TODO:addBookmarkBottom]"
-  },
-  "addNewFolderBefore": {
-    "message": "[TODO:addNewFolderBefore]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "[TODO:optionHighlightUnsynced]"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "[TODO:customSeparatorTitleDescription]"
-  },
-  "options": {
-    "message": "[TODO:options]"
-  },
-  "general": {
-    "message": "[TODO:general]"
-  },
-  "contextMenuAddBookmark": {
-    "message": "用 vBookmarks 收藏此页面"
-  },
-  "openBookmarks": {
-    "message": "[TODO:openBookmarks]"
-  },
-  "optionAutoResizePopup": {
-    "message": "[TODO:optionAutoResizePopup]"
-  },
-  "addNewFolderAfter": {
-    "message": "[TODO:addNewFolderAfter]"
+  "optionTheme": {
+    "message": "主题"
   },
   "advancedOptions": {
     "message": "[TODO:advancedOptions]"
   },
-  "save": {
-    "message": "[TODO:save]"
-  },
-  "palettePlaceholder": {
-    "message": "搜索书签、文件夹、命令…"
-  },
   "dupesNone": {
     "message": "没有发现重复书签"
   },
-  "optionThemeAuto": {
-    "message": "跟随系统"
+  "sortFoldersFirst": {
+    "message": "子文件夹排在前面"
   },
-  "paletteCmdNewSeparator": {
-    "message": "新建分隔符"
+  "resetSettingsDescription": {
+    "message": "[TODO:resetSettingsDescription]"
+  },
+  "editBookmark": {
+    "message": "[TODO:editBookmark]"
+  },
+  "addSeparator": {
+    "message": "[TODO:addSeparator]"
+  },
+  "dupesConfirmAll": {
+    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留最早添加项。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "openNewWindow": {
+    "message": "[TODO:openNewWindow]"
+  },
+  "optionOpenInSidePanel": {
+    "message": "在侧栏中打开（替代弹窗）"
+  },
+  "resetSettings": {
+    "message": "[TODO:resetSettings]"
+  },
+  "addBookmarkBefore": {
+    "message": "[TODO:addBookmarkBefore]"
+  },
+  "searchNoResults": {
+    "message": "未找到匹配的书签"
+  },
+  "open": {
+    "message": "[TODO:open]"
+  },
+  "parentFolder": {
+    "message": "[TODO:parentFolder]",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    },
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list."
+  },
+  "customSeparatorUrlDescription": {
+    "message": "[TODO:customSeparatorUrlDescription]"
   }
 }

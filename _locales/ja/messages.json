@@ -1,276 +1,12 @@
 {
-  "crossStorageMoveWarning": {
-    "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "versionMessage": {
-    "message": "これは新しい VBM $versionNumber$ です! 変更ログはこちら: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "クリップボードへのすべてのタイトルとURLをコピー"
-  },
-  "customIcon": {
-    "message": "カスタムアイコン"
-  },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "フォルダから多くのブックマークを開くとき、警告する"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "更新間隔"
-  },
-  "addNewFolder": {
-    "message": "フォルダを追加"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "ブックマークバーのブックマークのみを表示する"
-  },
-  "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
-  },
-  "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "open": {
-    "description": "ブックマークを開く",
-    "message": "開く"
-  },
-  "addBookmarkTop": {
-    "message": "このトップに現在のタブを追加します"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "donationDismiss": {
-    "message": "いいえ"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "作成者 $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "openNewTab": {
-    "message": "新しいタブで開く"
-  },
-  "resetSettingsDescription": {
-    "message": "デフォルトの設定にvBookmarksをリセットします"
-  },
-  "searchBookmarks": {
-    "description": "検索フィールドのためのプレースホルダーテキスト",
-    "message": "ブックマークの検索"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "$count$ 個のブックマークを開こうとしています。よろしいですか。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "extName": {
-    "description": "拡張名",
-    "message": "vBookmarks"
-  },
-  "nope": {
-    "message": "いいえ"
-  },
-  "openBookmarksNewWindow": {
-    "message": "すべてのブックマークを新しいウィンドウで開く"
-  },
-  "optionZoom": {
-    "message": "拡大"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
-  },
-  "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "donationGo": {
-    "message": "はい"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "すべてのブックマークをシークレットウィンドウで開く"
-  },
-  "optionShowSyncStatus": {
-    "message": "同期ステータスインジケーターを表示"
-  },
-  "addBookmarkBefore": {
-    "message": "この前に現在のタブを追加します"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "$count$ 個のブックマークを新しいウィンドウで開こうとしています。よろしいですか。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "addSeparator": {
-    "message": "区切りを追加"
-  },
-  "optionOpenNewTab": {
-    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
-  },
-  "customSeparatorColorDescription": {
-    "message": "区切り文字の色をカスタマイズ"
-  },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "replaceUrl": {
-    "message": "現在のURLに置き換えてください"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "セパレータとして表示され、このブックマークのURL"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionPopupStays": {
-    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
-  },
-  "resetSettings": {
-    "message": "設定をリセットします"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "customSeparatorStringDescription": {
-    "message": "ブックマークのURLは、この文字列が含まれている場合は、区切り文字として表示されます"
-  },
-  "delete": {
-    "message": "削除"
-  },
-  "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+  "save": {
+    "message": "保存"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "addBookmarkAfter": {
-    "message": "この後に現在のタブを追加します"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "resetButton": {
-    "message": "リセットされます"
-  },
-  "defaultIconButton": {
-    "message": "デフォルトを使用"
-  },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
-  },
-  "name": {
-    "description": "ブックマークとフォルダの名前",
-    "message": "名前"
-  },
-  "donationMessage": {
-    "message": "気に入ったら、将来の開発のために寄付してください。どんな金額でも大歓迎です。"
-  },
-  "customStylesDescription": {
-    "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
-  },
-  "noTitle": {
-    "description": "名前の無いブックマークのための名前",
-    "message": "無題"
-  },
-  "ignore": {
-    "message": "無視"
-  },
-  "syncOptions": {
-    "message": "同期オプション"
-  },
-  "deleteEllipsis": {
-    "message": "削除..."
+  "addNewFolderBefore": {
+    "message": "この前にフォルダを追加します"
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
@@ -286,73 +22,257 @@
       }
     }
   },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+  "optionAutoRefreshSync": {
+    "message": "同期ステータスを自動更新"
   },
-  "defaultIconButtonOr": {
-    "message": " または "
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "nope": {
+    "message": "いいえ"
+  },
+  "customSeparatorColorDescription": {
+    "message": "区切り文字の色をカスタマイズ"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "ブックマークバーのブックマークのみを表示する"
+  },
+  "customStylesDescription": {
+    "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
   "openIncognitoWindow": {
     "message": "シークレットウィンドウで開く"
   },
-  "reportedToDeveloper": {
-    "description": "拡張エラーで発生した、開発者に報告してください",
-    "message": "開発者にエラーメッセージを報告"
+  "edit": {
+    "message": "編集..."
   },
-  "optionAutoRefreshSync": {
-    "message": "同期ステータスを自動更新"
+  "optionCloseUnusedFolders": {
+    "message": "フォルダを開くとき、アクティブでないフォルダを閉じる"
   },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+  "editFolder": {
+    "message": "フォルダの編集"
   },
-  "optionRememberPrevState": {
-    "message": "スクロール位置と開いたフォルダの情報を保持する"
+  "donationMessage": {
+    "message": "気に入ったら、将来の開発のために寄付してください。どんな金額でも大歓迎です。"
   },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "$count$ 個のブックマークを新しいシークレットウィンドウで開こうとしています。よろしいですか。",
+  "addBookmarkTop": {
+    "message": "このトップに現在のタブを追加します"
+  },
+  "delete": {
+    "message": "削除"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "クリップボードへのすべてのタイトルとURLをコピー"
+  },
+  "resetButton": {
+    "message": "リセットされます"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "フォルダから多くのブックマークを開くとき、警告する"
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "作成者 $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "addBookmarkBottom": {
+    "message": "このボトムに現在のタブを追加します"
+  },
+  "crossStorageMoveWarning": {
+    "message": "同期済みとローカルストレージの間でブックマークを移動できません。コピー/貼り付けを使用してください。",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "addNewFolder": {
+    "message": "フォルダを追加"
+  },
+  "extName": {
+    "description": "拡張名",
+    "message": "vBookmarks"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "customSeparatorStringDescription": {
+    "message": "ブックマークのURLは、この文字列が含まれている場合は、区切り文字として表示されます"
+  },
+  "optionZoom": {
+    "message": "拡大"
+  },
+  "options": {
+    "message": "オプション"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "未同期のブックマークをハイライト"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "customIcon": {
+    "message": "カスタムアイコン"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "errorOccured": {
+    "message": "エラーが発生しました"
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "$count$ 個のブックマークを新しいウィンドウで開こうとしています。よろしいですか。",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-  "openNewWindow": {
-    "message": "新しいウィンドウで開く"
+  "noTitle": {
+    "description": "名前の無いブックマークのための名前",
+    "message": "無題"
   },
-  "removeSeparator": {
-    "message": "区切り文字を削除"
+  "openBookmarks": {
+    "message": "すべてのブックマークを開く"
   },
-  "customStyles": {
-    "message": "カスタムスタイル"
+  "addNewFolderAfter": {
+    "message": "この後にフォルダを追加します"
   },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "フォルダ名 \"$folderName$\"",
+  "defaultIconButtonOr": {
+    "message": " または "
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "すべてのブックマークをシークレットウィンドウで開く"
+  },
+  "sessionEmpty": {
+    "message": "[TODO:sessionEmpty]"
+  },
+  "optionAutoResizePopup": {
+    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
+  },
+  "ignore": {
+    "message": "無視"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "$count$ 個のブックマークを開こうとしています。よろしいですか。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
       }
     }
   },
-  "copyTitleAndUrl": {
-    "message": "クリップボードへのコピーのタイトルとURL"
+  "extDesc": {
+    "description": "詳細な説明",
+    "message": "すっきりしたツリー構造のブックマーク"
   },
-  "editBookmark": {
-    "message": "ブックマークの編集"
+  "confirmDeleteFolderSubfolders": {
+    "message": "$folderName$ フォルダと $subFolderCount$ 個のサブフォルダを削除します。よろしいですか。",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "customIconDescription": {
-    "message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
+  "optionSearchAfterEnter": {
+    "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"
   },
-  "optionTheme": {
-    "message": "[TODO:optionTheme]"
+  "name": {
+    "description": "ブックマークとフォルダの名前",
+    "message": "名前"
   },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+  "versionMessage": {
+    "message": "これは新しい VBM $versionNumber$ です! 変更ログはこちら: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "replaceUrl": {
+    "message": "現在のURLに置き換えてください"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "openNewTab": {
+    "message": "新しいタブで開く"
+  },
+  "reportedToDeveloper": {
+    "description": "拡張エラーで発生した、開発者に報告してください",
+    "message": "開発者にエラーメッセージを報告"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
   },
   "dupesCleanAll": {
     "message": "[TODO:dupesCleanAll]",
@@ -366,92 +286,198 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "reportError": {
-    "message": "エラーレポート"
+  "copyTitleAndUrl": {
+    "message": "クリップボードへのコピーのタイトルとURL"
   },
-  "extDesc": {
-    "description": "詳細な説明",
-    "message": "すっきりしたツリー構造のブックマーク"
+  "customIconDescription": {
+    "message": "アイコンは19* 19ピクセルのディメンションである必要があります。それ以外は、この寸法にリサイズされます。"
   },
-  "edit": {
-    "message": "編集..."
+  "syncOptions": {
+    "message": "同期オプション"
   },
-  "errorOccured": {
-    "message": "エラーが発生しました"
+  "openBookmarksNewWindow": {
+    "message": "すべてのブックマークを新しいウィンドウで開く"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
-  },
-  "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
-  },
-  "dupesDone": {
-    "message": "[TODO:dupesDone]",
+  "sessionSaved": {
+    "message": "[TODO:sessionSaved]",
     "placeholders": {
       "count": {
-        "content": "$1"
+        "content": "$1",
+        "example": "12"
       }
     },
-    "description": "Alert shown after the duplicate cleanup finished."
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
-  "editFolder": {
-    "message": "フォルダの編集"
+  "deleteEllipsis": {
+    "message": "削除..."
   },
-  "optionClickNewTab": {
-    "message": "ブックマークを新しいタブで開く"
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
   },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+  "sessionFolderName": {
+    "message": "[TODO:sessionFolderName]",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "optionShowSyncStatus": {
+    "message": "同期ステータスインジケーターを表示"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "optionPopupStays": {
+    "message": "ブックマークをクリックしたとき、ポップアップを表示したままにする"
+  },
+  "customStyles": {
+    "message": "カスタムスタイル"
+  },
+  "addBookmarkAfter": {
+    "message": "この後に現在のタブを追加します"
+  },
+  "searchBookmarks": {
+    "description": "検索フィールドのためのプレースホルダーテキスト",
+    "message": "ブックマークの検索"
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "optionOpenNewTab": {
+    "message": "マウスホイール・クリック、または「Ctrl」キーを押しながらクリックしたとき、ブックマークを新しい背面タブで開く"
+  },
+  "donationGo": {
+    "message": "はい"
+  },
+  "removeSeparator": {
+    "message": "区切り文字を削除"
   },
   "accessibility": {
     "message": "アクセシビリティ"
   },
-  "addBookmarkBottom": {
-    "message": "このボトムに現在のタブを追加します"
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "addNewFolderBefore": {
-    "message": "この前にフォルダを追加します"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
   },
-  "optionHighlightUnsynced": {
-    "message": "未同期のブックマークをハイライト"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionClickNewTab": {
+    "message": "ブックマークを新しいタブで開く"
+  },
+  "paletteCmdSaveSession": {
+    "message": "[TODO:paletteCmdSaveSession]"
   },
   "customSeparatorTitleDescription": {
     "message": "セパレータとして表示され、このブックマークのタイトル"
   },
-  "options": {
-    "message": "オプション"
+  "defaultIconButton": {
+    "message": "デフォルトを使用"
+  },
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "general": {
     "message": "全般"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "url": {
+    "message": "URL"
   },
-  "openBookmarks": {
-    "message": "すべてのブックマークを開く"
+  "reportError": {
+    "message": "エラーレポート"
   },
-  "optionAutoResizePopup": {
-    "message": "ポップアップウィンドウのサイズをコンテンツに合わせて自動調整する"
-  },
-  "addNewFolderAfter": {
-    "message": "この後にフォルダを追加します"
-  },
-  "advancedOptions": {
-    "message": "拡張オプション"
-  },
-  "save": {
-    "message": "保存"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "dupesNone": {
-    "message": "[TODO:dupesNone]"
+  "donationDismiss": {
+    "message": "いいえ"
   },
   "optionThemeAuto": {
     "message": "[TODO:optionThemeAuto]"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "$count$ 個のブックマークを新しいシークレットウィンドウで開こうとしています。よろしいですか。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "スクロール位置と開いたフォルダの情報を保持する"
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "更新間隔"
+  },
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
+  },
+  "advancedOptions": {
+    "message": "拡張オプション"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "resetSettingsDescription": {
+    "message": "デフォルトの設定にvBookmarksをリセットします"
+  },
+  "editBookmark": {
+    "message": "ブックマークの編集"
+  },
+  "addSeparator": {
+    "message": "区切りを追加"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "openNewWindow": {
+    "message": "新しいウィンドウで開く"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "resetSettings": {
+    "message": "設定をリセットします"
+  },
+  "addBookmarkBefore": {
+    "message": "この前に現在のタブを追加します"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "open": {
+    "description": "ブックマークを開く",
+    "message": "開く"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "フォルダ名 \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "customSeparatorUrlDescription": {
+    "message": "セパレータとして表示され、このブックマークのURL"
   }
 }

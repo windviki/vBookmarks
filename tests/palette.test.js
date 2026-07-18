@@ -53,6 +53,10 @@ const MSGS = {
     paletteCmdNewFolder: 'New folder…',
     paletteCmdNewSeparator: 'New separator',
     paletteCmdDupes: 'Clean duplicate bookmarks',
+    paletteCmdSaveSession: 'Save window tabs as folder',
+    sessionFolderName: 'Session $date$',
+    sessionSaved: 'Saved $1 tabs to a new folder',
+    sessionEmpty: 'No tabs to save',
     palettePlaceholder: 'Search bookmarks, folders, commands…',
     paletteNoResults: 'No matching results',
     dupesGroupCount: '$1 duplicates',
@@ -188,6 +192,7 @@ const setup = (opts = {}) => {
         bookmarks: {
             getTreeCalls: 0,
             removeCalls: [],
+            createCalls: [],
             getTree(cb) {
                 this.getTreeCalls++;
                 cb(treeData);
@@ -195,13 +200,19 @@ const setup = (opts = {}) => {
             remove(id, cb) {
                 this.removeCalls.push(id);
                 cb();
+            },
+            create(props, cb) {
+                this.createCalls.push(props);
+                cb({ id: `n${this.createCalls.length}`, ...props });
             }
         },
         tabs: {
             queryCalls: [],
             query(q, cb) {
                 this.queryCalls.push(q);
-                cb(tab ? [tab] : []);
+                // opts.tabs (array) serves the multi-tab session flow;
+                // opts.tab keeps the single-active-tab command working.
+                cb('tabs' in opts ? opts.tabs : (tab ? [tab] : []));
             }
         },
         windows: { WINDOW_ID_CURRENT: -1 },
@@ -379,10 +390,11 @@ describe('Ctrl/Cmd+K toggle', () => {
 });
 
 describe('result composition', () => {
-    it('an empty query renders only the five commands, named via i18n', () => {
+    it('an empty query renders only the six commands, named via i18n', () => {
         const { palette, results, rowClasses } = setup({});
         palette.open();
         expect(rowClasses()).toEqual([
+            'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
@@ -394,6 +406,7 @@ describe('result composition', () => {
         expect(results._appended[2]._innerHTML).toContain(MSGS.paletteCmdNewFolder);
         expect(results._appended[3]._innerHTML).toContain(MSGS.paletteCmdNewSeparator);
         expect(results._appended[4]._innerHTML).toContain(MSGS.paletteCmdDupes);
+        expect(results._appended[5]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
     });
 
     it('a non-empty query lists matching commands before bookmarks/folders', () => {
@@ -424,7 +437,7 @@ describe('result composition', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
         type('/');
-        expect(rowClasses()).toHaveLength(5);
+        expect(rowClasses()).toHaveLength(6);
     });
 
     it('ranks real fuzzy title hits above url-only hits', () => {
@@ -469,11 +482,11 @@ describe('result composition', () => {
     it('re-renders on every input event', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
-        expect(rowClasses()).toHaveLength(5);
+        expect(rowClasses()).toHaveLength(6);
         type('gmail');
         expect(rowClasses()).toHaveLength(2);
         type('');
-        expect(rowClasses()).toHaveLength(5);
+        expect(rowClasses()).toHaveLength(6);
     });
 
     it('rebuilds a fresh index on the next open', () => {
@@ -504,9 +517,9 @@ describe('keyboard navigation', () => {
 
     it('rolls over at both ends', () => {
         const { palette, input, keydown, selectedIndex } = setup({});
-        palette.open(); // 5 command rows
+        palette.open(); // 6 command rows
         keydown(input, { key: 'ArrowUp' }); // wraps to the last row
-        expect(selectedIndex()).toBe(4);
+        expect(selectedIndex()).toBe(5);
         keydown(input, { key: 'ArrowDown' }); // wraps back to the first
         expect(selectedIndex()).toBe(0);
     });
@@ -808,7 +821,7 @@ describe('dupes mode (P3.1)', () => {
         expect(ctx.palette.isOpen()).toBe(false);
         // next open is plain normal mode again
         ctx.palette.open();
-        expect(ctx.rowClasses()).toHaveLength(5);
+        expect(ctx.rowClasses()).toHaveLength(6);
         expect(ctx.rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
     });
 
@@ -819,7 +832,109 @@ describe('dupes mode (P3.1)', () => {
         ctx.keydown(ctx.input, { key: 'Escape' });
         expect(ctx.palette.isOpen()).toBe(false);
         ctx.palette.open();
-        expect(ctx.rowClasses()).toHaveLength(5);
+        expect(ctx.rowClasses()).toHaveLength(6);
         expect(ctx.rowClasses()[0]).toBe('palette-row palette-command');
+    });
+});
+
+// --- P3.2: save window tabs as folder --------------------------------------
+// The command sits at index 5 in the command set (after /dupes). The chrome
+// double's tabs.query fires synchronously but saveSession resolves through a
+// promise chain, so the assertions after a run await flush().
+const makeSessionTabs = () => [
+    { id: 1, url: 'https://a.com/', title: 'A' },
+    { id: 2, url: 'chrome://extensions/', title: 'Extensions' }, // unbookmarkable
+    { id: 3, url: 'https://b.com/page', title: '' },             // title -> url
+    { id: 4, url: 'https://a.com/', title: 'A dupe' }            // same-window dupe
+];
+
+const runSessionCommand = ctx => {
+    ctx.palette.open();
+    // first ArrowDown selects row 0; the session command is row 5
+    for (let n = 0; n < 6; n++)
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+    ctx.keydown(ctx.input, { key: 'Enter' });
+};
+
+describe('session save command (P3.2)', () => {
+    it('lists the save-session command last, named via i18n', () => {
+        const { palette, results, rowClasses } = setup({});
+        palette.open();
+        expect(rowClasses()).toHaveLength(6);
+        expect(rowClasses()[5]).toBe('palette-row palette-command');
+        expect(results._appended[5]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
+    });
+
+    it("the slash alias matches by prefix: '/sess' already lists it", () => {
+        const { palette, results, rowClasses, type } = setup({});
+        palette.open();
+        type('/sess');
+        expect(rowClasses()).toEqual(['palette-row palette-command']);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
+    });
+
+    it('queries the current window and creates the folder plus filtered bookmarks in order', async () => {
+        const ctx = setup({ tabs: makeSessionTabs(), rootFolderId: '7' });
+        runSessionCommand(ctx);
+        await flush();
+        expect(ctx.chrome.tabs.queryCalls).toEqual([{ currentWindow: true }]);
+        const calls = ctx.chrome.bookmarks.createCalls;
+        expect(calls).toHaveLength(3); // folder + 2 bookmarks (dupe and chrome:// dropped)
+        expect(calls[0].parentId).toBe('7');
+        // the create double hands out ids n1, n2, … in call order: n1 = the folder
+        expect(calls[1]).toEqual({ parentId: 'n1', title: 'A', url: 'https://a.com/' });
+        expect(calls[2]).toEqual({ parentId: 'n1', title: 'https://b.com/page', url: 'https://b.com/page' });
+    });
+
+    it('names the folder from the sessionFolderName template with a YYYY-MM-DD HH:mm stamp', async () => {
+        const ctx = setup({ tabs: makeSessionTabs() });
+        runSessionCommand(ctx);
+        await flush();
+        expect(ctx.chrome.bookmarks.createCalls[0].title)
+            .toMatch(/^Session \d{4}-\d{2}-\d{2} \d{2}:\d{2}$/);
+    });
+
+    it('closes the panel, alerts the saved count and refreshes the tree on success', async () => {
+        const ctx = setup({ tabs: makeSessionTabs() });
+        runSessionCommand(ctx);
+        expect(ctx.palette.isOpen()).toBe(true); // keepOpen across the async save
+        await flush();
+        expect(ctx.palette.isOpen()).toBe(false);
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['Saved 2 tabs to a new folder']);
+        expect(ctx.onChangedCalls).toHaveLength(1);
+    });
+
+    it('runs through the slash alias too', async () => {
+        const ctx = setup({ tabs: makeSessionTabs() });
+        ctx.palette.open();
+        ctx.type('/session');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        await flush();
+        expect(ctx.chrome.bookmarks.createCalls).toHaveLength(3);
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['Saved 2 tabs to a new folder']);
+    });
+
+    it('alerts sessionEmpty and keeps the panel open when the window has no tabs', async () => {
+        const ctx = setup({ tabs: [] });
+        runSessionCommand(ctx);
+        await flush();
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['No tabs to save']);
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.chrome.bookmarks.createCalls).toEqual([]);
+        expect(ctx.onChangedCalls).toEqual([]);
+    });
+
+    it('treats a window of only unbookmarkable tabs as empty', async () => {
+        const ctx = setup({
+            tabs: [
+                { id: 1, url: 'chrome://extensions/', title: 'Extensions' },
+                { id: 2, url: 'about:blank', title: '' }
+            ]
+        });
+        runSessionCommand(ctx);
+        await flush();
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['No tabs to save']);
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.chrome.bookmarks.createCalls).toEqual([]);
     });
 });

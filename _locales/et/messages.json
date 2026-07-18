@@ -1,276 +1,12 @@
 {
-  "crossStorageMoveWarning": {
-    "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "versionMessage": {
-    "message": "See on uus VBM $versionNumber$! Muudatuste logi on siin: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Kopeeri kõik pealkirjad ja URL-id lõikelauale"
-  },
-  "customIcon": {
-    "message": "Kohandatud ikoon"
-  },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Värskendamise intervall"
-  },
-  "addNewFolder": {
-    "message": "Lisa alamkaust"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
-  },
-  "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
-  },
-  "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "open": {
-    "description": "Tegevus järjehoidjate avamiseks.",
-    "message": "Ava"
-  },
-  "addBookmarkTop": {
-    "message": "Lisa praegune vahe selle peale"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "donationDismiss": {
-    "message": "Loobu"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Looja $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "openNewTab": {
-    "message": "Ava uues vahelehes"
-  },
-  "resetSettingsDescription": {
-    "message": "Lähtesta vBookmarks vaikeseadetele."
-  },
-  "searchBookmarks": {
-    "description": "Placeholder tekst otsinguväljale.",
-    "message": "Otsi järjehoidjaid"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $subFolderCount$ alamkausta(-d) selles?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "nope": {
-    "message": "Ei"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Ava kõik järjehoidjad uues aknas"
-  },
-  "optionZoom": {
-    "message": "Suum"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Sulge kasutamata kaustad kausta avamisel."
-  },
-  "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Ava kõik järjehoidjad inkognito aknas"
-  },
-  "optionShowSyncStatus": {
-    "message": "Näita sünkroniseerimise oleku indikaatoreid"
-  },
-  "addBookmarkBefore": {
-    "message": "Lisa praegune vahe selle ette"
-  },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues aknas?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "addSeparator": {
-    "message": "Lisa eraldaja"
-  },
-  "optionOpenNewTab": {
-    "message": "Keskmine klõps või control-klõps avab järjehoidja uues taustavahelehes (mitte esiplaanil)."
-  },
-  "customSeparatorColorDescription": {
-    "message": "Kohanda eraldaja värvi"
-  },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "replaceUrl": {
-    "message": "Asenda praeguse URL-iga"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Järjehoidja tegelik URL, mida kuvatakse eraldajana"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionPopupStays": {
-    "message": "Hüpikaken jääb avatuks järjehoidjate avamisel (vasak klõps)."
-  },
-  "resetSettings": {
-    "message": "Lähtesta seaded"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "customSeparatorStringDescription": {
-    "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
-  },
-  "delete": {
-    "message": "Kustuta"
-  },
-  "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
+  "save": {
+    "message": "Salvesta"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "addBookmarkAfter": {
-    "message": "Lisa praegune vahe selle järele"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "resetButton": {
-    "message": "Lähtesta"
-  },
-  "defaultIconButton": {
-    "message": "Kasuta vaikeväärtust"
-  },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
-  },
-  "name": {
-    "description": "Järjehoidja või kausta nimi.",
-    "message": "Nimi"
-  },
-  "donationMessage": {
-    "message": "Kui teile meeldib, võib-olla saate annetada selle tulevase arengu jaoks. Igat summat teretatakse."
-  },
-  "customStylesDescription": {
-    "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
-  },
-  "noTitle": {
-    "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
-    "message": "(pealkirjata)"
-  },
-  "ignore": {
-    "message": "Ignoreeri"
-  },
-  "syncOptions": {
-    "message": "Sünkroniseerimise valikud"
-  },
-  "deleteEllipsis": {
-    "message": "Kustuta..."
+  "addNewFolderBefore": {
+    "message": "Lisa kaust selle ette"
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$, $subFolderCount$ alamkausta(-d) ja $bookmarkCount$ järjehoidja(-d) selles?",
@@ -286,73 +22,257 @@
       }
     }
   },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
+  "optionAutoRefreshSync": {
+    "message": "Automaatselt värskenda sünkroniseerimise olekut"
   },
-  "defaultIconButtonOr": {
-    "message": "või"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "nope": {
+    "message": "Ei"
+  },
+  "customSeparatorColorDescription": {
+    "message": "Kohanda eraldaja värvi"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Kuva ainult järjehoidjad järjehoidjade ribal"
+  },
+  "customStylesDescription": {
+    "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
   "openIncognitoWindow": {
     "message": "Ava inkognito aknas"
   },
-  "reportedToDeveloper": {
-    "description": "Sõnum laiendis tekkinud veast, teavitatud arendajat.",
-    "message": "See on teatatud arendajale."
+  "edit": {
+    "message": "Redigeeri..."
   },
-  "optionAutoRefreshSync": {
-    "message": "Automaatselt värskenda sünkroniseerimise olekut"
+  "optionCloseUnusedFolders": {
+    "message": "Sulge kasutamata kaustad kausta avamisel."
   },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
+  "editFolder": {
+    "message": "Redigeeri kausta"
   },
-  "optionRememberPrevState": {
-    "message": "Jäta eelmine olek meelde (kerimise asend ja avatud kaustad)."
+  "donationMessage": {
+    "message": "Kui teile meeldib, võib-olla saate annetada selle tulevase arengu jaoks. Igat summat teretatakse."
   },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues inkognito aknas?",
+  "addBookmarkTop": {
+    "message": "Lisa praegune vahe selle peale"
+  },
+  "delete": {
+    "message": "Kustuta"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Kopeeri kõik pealkirjad ja URL-id lõikelauale"
+  },
+  "resetButton": {
+    "message": "Lähtesta"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Looja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "addBookmarkBottom": {
+    "message": "Lisa praegune vahe selle alla"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Järjehoidjaid ei saa teisaldada sünkroniseeritud ja kohaliku salvesti vahel. Kasutage selle asemel kopeerimist/kleepimist.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "addNewFolder": {
+    "message": "Lisa alamkaust"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Kui järjehoidja URL sisaldab seda sõnet, kuvatakse seda eraldajana"
+  },
+  "optionZoom": {
+    "message": "Suum"
+  },
+  "options": {
+    "message": "Valikud"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Esile kütta sünkroniseerimata järjehoidjad"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "customIcon": {
+    "message": "Kohandatud ikoon"
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "errorOccured": {
+    "message": "Ups, tekkis viga."
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues aknas?",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-  "openNewWindow": {
-    "message": "Ava uues aknas"
+  "noTitle": {
+    "description": "Pealkiri nimeta järjehoidjatele ilma http(s) URL-ita või nimetatele kaustadele.",
+    "message": "(pealkirjata)"
   },
-  "removeSeparator": {
-    "message": "Eemalda eraldaja"
+  "openBookmarks": {
+    "message": "Ava kõik järjehoidjad"
   },
-  "customStyles": {
-    "message": "Kohandatud stiilid"
+  "addNewFolderAfter": {
+    "message": "Lisa kaust selle järele"
   },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Vanemkaust: \"$folderName$\"",
+  "defaultIconButtonOr": {
+    "message": "või"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
     "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Ava kõik järjehoidjad inkognito aknas"
+  },
+  "sessionEmpty": {
+    "message": "[TODO:sessionEmpty]"
+  },
+  "optionAutoResizePopup": {
+    "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
+  },
+  "ignore": {
+    "message": "Ignoreeri"
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
       }
     }
   },
-  "copyTitleAndUrl": {
-    "message": "Kopeeri pealkiri ja URL lõikelauale"
+  "extDesc": {
+    "description": "Laiendi kirjeldus.",
+    "message": "Hüpikakna järjehoidjate haldur. Täiendatud Neat Bookmarks. Korralikum kui Neater Bookmarks."
   },
-  "editBookmark": {
-    "message": "Redigeeri järjehoidjat"
+  "confirmDeleteFolderSubfolders": {
+    "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $subFolderCount$ alamkausta(-d) selles?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "customIconDescription": {
-    "message": "Ikoon peab olema 19*19 piksli suurune. Vastasel korral muudetakse see selle suuruseni."
+  "optionSearchAfterEnter": {
+    "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"
   },
-  "optionTheme": {
-    "message": "[TODO:optionTheme]"
+  "name": {
+    "description": "Järjehoidja või kausta nimi.",
+    "message": "Nimi"
   },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
+  "versionMessage": {
+    "message": "See on uus VBM $versionNumber$! Muudatuste logi on siin: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "replaceUrl": {
+    "message": "Asenda praeguse URL-iga"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "openNewTab": {
+    "message": "Ava uues vahelehes"
+  },
+  "reportedToDeveloper": {
+    "description": "Sõnum laiendis tekkinud veast, teavitatud arendajat.",
+    "message": "See on teatatud arendajale."
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
   },
   "dupesCleanAll": {
     "message": "[TODO:dupesCleanAll]",
@@ -366,92 +286,198 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "reportError": {
-    "message": "Teata veast"
+  "copyTitleAndUrl": {
+    "message": "Kopeeri pealkiri ja URL lõikelauale"
   },
-  "extDesc": {
-    "description": "Laiendi kirjeldus.",
-    "message": "Hüpikakna järjehoidjate haldur. Täiendatud Neat Bookmarks. Korralikum kui Neater Bookmarks."
+  "customIconDescription": {
+    "message": "Ikoon peab olema 19*19 piksli suurune. Vastasel korral muudetakse see selle suuruseni."
   },
-  "edit": {
-    "message": "Redigeeri..."
+  "syncOptions": {
+    "message": "Sünkroniseerimise valikud"
   },
-  "errorOccured": {
-    "message": "Ups, tekkis viga."
+  "openBookmarksNewWindow": {
+    "message": "Ava kõik järjehoidjad uues aknas"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundit"
-  },
-  "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
-  },
-  "dupesDone": {
-    "message": "[TODO:dupesDone]",
+  "sessionSaved": {
+    "message": "[TODO:sessionSaved]",
     "placeholders": {
       "count": {
-        "content": "$1"
+        "content": "$1",
+        "example": "12"
       }
     },
-    "description": "Alert shown after the duplicate cleanup finished."
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
-  "editFolder": {
-    "message": "Redigeeri kausta"
+  "deleteEllipsis": {
+    "message": "Kustuta..."
   },
-  "optionClickNewTab": {
-    "message": "Vasak klõps avab järjehoidja uues vahelehes."
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
   },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+  "sessionFolderName": {
+    "message": "[TODO:sessionFolderName]",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "optionShowSyncStatus": {
+    "message": "Näita sünkroniseerimise oleku indikaatoreid"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "optionPopupStays": {
+    "message": "Hüpikaken jääb avatuks järjehoidjate avamisel (vasak klõps)."
+  },
+  "customStyles": {
+    "message": "Kohandatud stiilid"
+  },
+  "addBookmarkAfter": {
+    "message": "Lisa praegune vahe selle järele"
+  },
+  "searchBookmarks": {
+    "description": "Placeholder tekst otsinguväljale.",
+    "message": "Otsi järjehoidjaid"
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "optionOpenNewTab": {
+    "message": "Keskmine klõps või control-klõps avab järjehoidja uues taustavahelehes (mitte esiplaanil)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "removeSeparator": {
+    "message": "Eemalda eraldaja"
   },
   "accessibility": {
     "message": "Juurdepääsetavus"
   },
-  "addBookmarkBottom": {
-    "message": "Lisa praegune vahe selle alla"
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "addNewFolderBefore": {
-    "message": "Lisa kaust selle ette"
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundit"
   },
-  "optionHighlightUnsynced": {
-    "message": "Esile kütta sünkroniseerimata järjehoidjad"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "optionClickNewTab": {
+    "message": "Vasak klõps avab järjehoidja uues vahelehes."
+  },
+  "paletteCmdSaveSession": {
+    "message": "[TODO:paletteCmdSaveSession]"
   },
   "customSeparatorTitleDescription": {
     "message": "Järjehoidja tegelik pealkiri, mida kuvatakse eraldajana"
   },
-  "options": {
-    "message": "Valikud"
+  "defaultIconButton": {
+    "message": "Kasuta vaikeväärtust"
+  },
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "general": {
     "message": "Üldine"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "url": {
+    "message": "URL"
   },
-  "openBookmarks": {
-    "message": "Ava kõik järjehoidjad"
+  "reportError": {
+    "message": "Teata veast"
   },
-  "optionAutoResizePopup": {
-    "message": "Muuda hüpikakna suurust automaatselt sisu järgi"
-  },
-  "addNewFolderAfter": {
-    "message": "Lisa kaust selle järele"
-  },
-  "advancedOptions": {
-    "message": "Täpsemad valikud"
-  },
-  "save": {
-    "message": "Salvesta"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "dupesNone": {
-    "message": "[TODO:dupesNone]"
+  "donationDismiss": {
+    "message": "Loobu"
   },
   "optionThemeAuto": {
     "message": "[TODO:optionThemeAuto]"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Kas olete kindel, et soovite avada kõik $count$ järjehoidjat uues inkognito aknas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionRememberPrevState": {
+    "message": "Jäta eelmine olek meelde (kerimise asend ja avatud kaustad)."
+  },
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Värskendamise intervall"
+  },
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
+  },
+  "advancedOptions": {
+    "message": "Täpsemad valikud"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
+  },
+  "resetSettingsDescription": {
+    "message": "Lähtesta vBookmarks vaikeseadetele."
+  },
+  "editBookmark": {
+    "message": "Redigeeri järjehoidjat"
+  },
+  "addSeparator": {
+    "message": "Lisa eraldaja"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "openNewWindow": {
+    "message": "Ava uues aknas"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "resetSettings": {
+    "message": "Lähtesta seaded"
+  },
+  "addBookmarkBefore": {
+    "message": "Lisa praegune vahe selle ette"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "open": {
+    "description": "Tegevus järjehoidjate avamiseks.",
+    "message": "Ava"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Vanemkaust: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Järjehoidja tegelik URL, mida kuvatakse eraldajana"
   }
 }

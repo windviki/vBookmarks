@@ -22,15 +22,22 @@
  * ctx.rootFolderId — folder the create-style commands drop new nodes into
  *                    (neat.js passes store.get('quickAddFolderId', '1'))
  * ctx.dialogs      — dialogs.js API (ConfirmDialog/AlertDialog), used by the
- *                    /dupes cleanup confirmations
+ *                    /dupes cleanup confirmations and the session-save alerts
  * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
- *                    cleanup removed nodes
+ *                    cleanup removed nodes or a session save added a folder
  *
  * P3.1 adds a second panel mode: running the "dupes" command (slash name
  * /dupes) switches the result list to duplicate-bookmark groups — one row
  * per normalized-URL collision plus a clean-all row on top — with
  * ConfirmDialog-guarded batch deletion behind each. Escape closes the
  * panel outright; the mode resets on close, there is no nested "back".
+ *
+ * P3.2 adds the session-save command (slash name /session): it snapshots
+ * the current window's tabs into a new bookmark folder under
+ * ctx.rootFolderId (session.js does the scheme filtering, dedup and the
+ * sequential creation), then alerts the saved count and repaints the tree
+ * through ctx.onChanged. A window with nothing bookmarkable gets the
+ * sessionEmpty alert and the panel stays open.
  *
  * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
  * (URL ?palette=1 / storage.session flag) on top of open().
@@ -42,6 +49,7 @@
  */
 
 import { normalizeUrl, findDupes, planDeletion } from './dupes.js';
+import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
@@ -172,6 +180,30 @@ export function initPalette(ctx = {}) {
         });
     };
 
+    // --- Session save (P3.2) ------------------------------------------------
+    // Snapshot the current window's tabs into a fresh folder under
+    // rootFolderId. keepOpen so the nothing-bookmarkable case can alert
+    // without dropping the panel; the success path closes explicitly before
+    // alerting, mirroring cleanAll's close-then-alert order.
+    const saveWindowSession = () => {
+        chrome.tabs.query({ 'currentWindow': true }, tabs => {
+            const bookmarks = tabsToBookmarks(tabs);
+            if (!bookmarks.length) {
+                dialogs.AlertDialog.open(_m('sessionEmpty'));
+                return;
+            }
+            saveSession({
+                rootFolderId,
+                folderName: sessionFolderName(new Date(), _m('sessionFolderName')),
+                tabs: bookmarks
+            }).then(({ count }) => {
+                close();
+                dialogs.AlertDialog.open(_m('sessionSaved', `${count}`));
+                onChanged();
+            });
+        });
+    };
+
     // --- Command set v1 -----------------------------------------------------
     // Names resolve through i18n at render time; fn runs on Enter/click.
     // "New folder" rides actions.addNewBookmarkNode with an empty url —
@@ -180,7 +212,9 @@ export function initPalette(ctx = {}) {
     // mirrors quickAddCurrentTab's silent no-op when there is no current tab.
     // The dupes command carries keepOpen: it switches the panel into dupes
     // mode instead of closing it; `slash` is its omni-style alias, matched
-    // as a prefix of a '/'-prefixed query.
+    // as a prefix of a '/'-prefixed query. The session command keeps the
+    // panel open across its async save the same way, closing explicitly on
+    // success so the empty-window alert can leave the panel up.
     const newBookmarkFromTab = () => {
         chrome.tabs.query({
             'active': true,
@@ -197,7 +231,8 @@ export function initPalette(ctx = {}) {
         { name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
         { name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
         { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
-        { slash: 'dupes', keepOpen: true, name: () => _m('paletteCmdDupes'), fn: enterDupesMode }
+        { slash: 'dupes', keepOpen: true, name: () => _m('paletteCmdDupes'), fn: enterDupesMode },
+        { slash: 'session', keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession }
     ];
 
     // --- Rendering ------------------------------------------------------------

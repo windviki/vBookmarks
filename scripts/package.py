@@ -54,6 +54,7 @@ JS_FILES = [
     'src/sync-ui.js',
     'src/palette.js',
     'src/dupes.js',
+    'src/session.js',
     'vendor/codemirror.js',
 ]
 
