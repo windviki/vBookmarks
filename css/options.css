@@ -100,8 +100,12 @@ h1 small{
 	color: var(--vbm-muted);
 }
 h2{
-	font-size: 1em;
-	padding: 0 1em;
+	font-size: .85em;
+	font-weight: 600;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: var(--vbm-muted);
+	padding: 0 .4em;
 }
 .options-nav{
 	float: __MSG_@@bidi_end_edge__;
@@ -233,4 +237,41 @@ fieldset p{
 	border-top: 1px solid var(--vbm-border);
 	margin-top: 40px;
 	line-height: 2em;
+}
+
+
+/* --- v4 UX pass: native buttons & text inputs follow the tokens ---
+   color-scheme (P4) darkens UA defaults; these rules make buttons and text
+   inputs match the page surface instead of standing out as light slabs in
+   the dark theme (advanced options page especially). */
+button,
+input[type=file]::file-selector-button {
+	background: var(--vbm-bg-elev);
+	color: var(--vbm-fg);
+	border: 1px solid var(--vbm-border);
+	border-radius: 6px;
+	padding: .3em 1.2em;
+	font: inherit;
+	cursor: pointer;
+}
+button:hover,
+input[type=file]::file-selector-button:hover {
+	background: var(--vbm-bg-hover);
+}
+input:not([type]),
+input[type=text],
+input[type=url] {
+	background: var(--vbm-bg-elev);
+	color: var(--vbm-fg);
+	border: 1px solid var(--vbm-border);
+	border-radius: 6px;
+	padding: 2px 6px;
+	font: inherit;
+}
+input:not([type]):focus,
+input[type=text]:focus,
+input[type=url]:focus {
+	border-color: var(--vbm-accent);
+	outline: 2px solid var(--vbm-focus-ring);
+	outline-offset: -1px;
 }
