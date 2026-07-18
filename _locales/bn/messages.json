@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "সব বুকমার্ক খুলুন"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
   },

@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Apri tutti i preferiti"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
   },

@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Avaa Kaikki Kirjanmerkit"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
   },

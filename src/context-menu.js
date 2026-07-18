@@ -314,6 +314,16 @@ export function initContextMenu(ctx = {}) {
                         return;
                     actions.openBookmarks(urls);
                     break;
+                // P3.4: batch-open as a named tab group. The folder's <i>
+                // carries the displayed title (the span's own textContent
+                // would include the sync-tooltip text).
+                case 'open-bookmarks-in-group': {
+                    if (noURLS)
+                        return;
+                    const titleNode = currentContext.querySelector('i');
+                    actions.openBookmarksInGroup(urls, titleNode ? titleNode.textContent.trim() : '');
+                    break;
+                }
                 case 'folder-new-window':
                     if (noURLS)
                         return;

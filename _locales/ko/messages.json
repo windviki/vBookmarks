@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "모든 북마크 열기"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
   },

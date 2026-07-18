@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "פתח את כל הסימניות"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
   },

@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Mở Tất Cả Dấu Trang"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
   },

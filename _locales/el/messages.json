@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Άνοιγμα Όλων των Σελιδοδεικτών"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
   },

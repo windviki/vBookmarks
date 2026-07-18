@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Tüm yer imlerini aç"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Bir klasörden birçok yer imi açarken onay göster."
   },

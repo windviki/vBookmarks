@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Åbn Alle Bogmærker"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
   },

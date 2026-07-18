@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
+import fs from 'node:fs';
 
 // context-menu.js touches page globals (document/window/chrome/setTimeout)
 // only inside initContextMenu, so the real module imports cleanly in node
@@ -137,7 +138,7 @@ const setup = (opts = {}) => {
     const actions = {};
     for (const name of ['openBookmark', 'openBookmarkNewTab', 'openBookmarkNewWindow',
         'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl', 'openBookmarks',
-        'openBookmarksNewWindow', 'editBookmarkFolder', 'deleteBookmark',
+        'openBookmarksInGroup', 'openBookmarksNewWindow', 'editBookmarkFolder', 'deleteBookmark',
         'deleteBookmarks', 'addSeparator', 'deleteSeparator'])
         actions[name] = (...args) => actionCalls.push([name, ...args]);
     const sortCalls = [];
@@ -160,12 +161,16 @@ const setup = (opts = {}) => {
         a.parentNode = li;
         return { li, a };
     };
-    // A folder row: <li id="neat-tree-item-7" data-parentid="1"><span></span></li>
-    const makeFolderRow = (id = '7', parentid = '1') => {
+    // A folder row: <li id="neat-tree-item-7" data-parentid="1"><span><i>title</i></span></li>
+    // (the <i> carries the displayed folder title, mirrored from generateFolderHTML)
+    const makeFolderRow = (id = '7', parentid = '1', title = '') => {
         const li = el('LI', `neat-tree-item-${id}`);
         li.dataset.parentid = parentid;
         const span = el('SPAN');
         span.parentNode = li;
+        const i = el('I');
+        i.textContent = title;
+        span._qs.i = i;
         return { li, span };
     };
     // A separator row: a bookmark <a> that contains an <hr>
@@ -618,6 +623,89 @@ describe('folderContextHandler', () => {
         fire(ctx.folderMenu, 'mouseup',
             makeEvent({ button: 0, target: ctx.menuItem('folder-window') }));
         expect(ctx.actionCalls).toEqual([]);
+    });
+});
+
+describe('open-bookmarks-in-group menu item (P3.4)', () => {
+    const folderChildren = [
+        { id: 'a', url: 'http://a/' },
+        { id: 'b' }, // subfolder: no url
+        { id: 'c', url: 'http://c/' }
+    ];
+    const openFolderMenu = (ctx, id = '7', parentid = '1', title = 'My Folder') => {
+        const { span } = ctx.makeFolderRow(id, parentid, title);
+        ctx.openOn(span);
+    };
+
+    it('dispatches openBookmarksInGroup with the child urls and the trimmed folder title', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        openFolderMenu(ctx, '7', '1', '  My Folder  ');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], 'My Folder']
+        ]);
+        expect(ctx.folderMenu.style.opacity).toBe('0'); // closed after dispatch
+    });
+
+    it('does nothing for a folder with only subfolders', () => {
+        const ctx = setup({ children: { '9': [{ id: 'a' }, { id: 'b' }] } });
+        openFolderMenu(ctx, '9');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([]);
+        expect(ctx.folderMenu.style.opacity).toBe('0'); // still closed afterwards
+    });
+
+    it('falls back to an empty group title when the row has no <i> title node', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        const { span } = ctx.makeFolderRow('7', '1', 'My Folder');
+        span._qs.i = null;
+        ctx.openOn(span);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], '']
+        ]);
+    });
+
+    it('also dispatches on a root folder row (same root rule as folder-window: no hiding)', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        openFolderMenu(ctx, '7', '0', 'Bookmarks Bar');
+        // the only root-driven tweak is hide-sort, which never covers this item
+        expect(ctx.folderMenu.classList.contains('hide-sort')).toBe(true);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], 'Bookmarks Bar']
+        ]);
+    });
+
+    it('does nothing when no menu is open (no context row)', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([]);
+    });
+
+    // Wiring contract: the item lives in the folder menu of both pages
+    // (parity), right after folder-window, and neat.js assigns its text from
+    // the openBookmarksInGroup message (the id→msg map every menu item uses).
+    it('exists in popup.html and sidepanel.html right after folder-window, with a neat.js text mapping', () => {
+        const item = '<div id="open-bookmarks-in-group" class="menu-item" tabindex="-1"></div>';
+        const anchor = '<div id="folder-window" class="menu-item" tabindex="-1"></div>';
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            const anchorAt = html.indexOf(anchor);
+            expect(anchorAt, page).toBeGreaterThan(-1);
+            // the item immediately follows the anchor (modulo line indent)
+            const after = html.slice(anchorAt + anchor.length).replace(/^\s+/, '');
+            expect(after.startsWith(item), page).toBe(true);
+        }
+        const neatSource = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+        expect(neatSource).toContain("'open-bookmarks-in-group': 'openBookmarksInGroup'");
+        const enMessages = JSON.parse(fs.readFileSync(new URL('../_locales/en/messages.json', import.meta.url), 'utf8'));
+        expect(enMessages.openBookmarksInGroup.message).toBeTruthy();
     });
 });
 

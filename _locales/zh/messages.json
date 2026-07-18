@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "打开所有书签"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "打开多个书签前需确认"
   },

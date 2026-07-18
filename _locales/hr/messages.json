@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Otvori sve oznake"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Prikaži potvrdu pri otvaranju mnogo oznaka iz mape."
   },

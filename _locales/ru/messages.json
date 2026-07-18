@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Открыть все закладки"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
   },

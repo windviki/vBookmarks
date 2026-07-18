@@ -190,6 +190,9 @@
   "openBookmarks": {
     "message": "[TODO:openBookmarks]"
   },
+  "openBookmarksInGroup": {
+    "message": "全部打开为标签组"
+  },
   "optionConfirmOpenFolder": {
     "message": "[TODO:optionConfirmOpenFolder]"
   },

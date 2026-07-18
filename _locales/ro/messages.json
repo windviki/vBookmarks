@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Deschide Toate Semnele de Carte"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
   },

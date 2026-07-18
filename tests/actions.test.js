@@ -125,15 +125,34 @@ const makeChrome = ops => ({
         queried: [],
         created: [],
         updated: [],
+        grouped: [],
+        nextTabId: 500,
         query(q, cb) {
             this.queried.push(q);
             cb([this.current]);
         },
-        create(props) {
+        create(props, cb) {
             this.created.push(props);
+            if (cb)
+                cb({ id: `${this.nextTabId++}`, ...props });
         },
         update(id, props) {
             this.updated.push([id, props]);
+        },
+        // P3.4: chrome.tabs.group — records the call, answers group id 900
+        group(props, cb) {
+            this.grouped.push(props);
+            if (cb)
+                cb(900);
+        }
+    },
+    // P3.4: chrome.tabGroups (the update half of the tab-group wiring)
+    tabGroups: {
+        updated: [],
+        update(groupId, props, cb) {
+            this.updated.push([groupId, props]);
+            if (cb)
+                cb();
         }
     },
     windows: {
@@ -262,12 +281,12 @@ const setup = (opts = {}) => {
 };
 
 describe('module API', () => {
-    it('returns the original actions table plus the two separator actions', () => {
+    it('returns the original actions table plus the separator and tab-group actions', () => {
         const { actions } = setup({});
         const names = [
             'openBookmark', 'openBookmarkNewTab', 'openBookmarkNewWindow',
             'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl',
-            'openBookmarks', 'openBookmarksNewWindow',
+            'openBookmarks', 'openBookmarksInGroup', 'openBookmarksNewWindow',
             'editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks',
             'addSeparator', 'deleteSeparator'
         ];
@@ -408,6 +427,108 @@ describe('openBookmarks confirm threshold', () => {
         expect(calls.confirm).toEqual([]);
         expect(chrome.tabs.created).toHaveLength(11);
         expect(chrome.tabs.created[0].active).toBe(false);
+    });
+});
+
+describe('openBookmarksInGroup', () => {
+    const urls = n => Array.from({ length: n }, (_, i) => `https://x/${i}`);
+    const palette = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'];
+
+    it('opens ≤10 bookmarks directly: first tab active, the rest in background, then groups them', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
+        expect(calls.confirm).toEqual([]);
+        expect(chrome.tabs.created).toEqual([
+            { url: 'https://x/0', active: true },
+            { url: 'https://x/1', active: false },
+            { url: 'https://x/2', active: false }
+        ]);
+        // every created tab id lands in one chrome.tabs.group call, in order
+        expect(chrome.tabs.grouped).toEqual([{ tabIds: ['500', '501', '502'] }]);
+    });
+
+    it('names the group after the folder and colors it from the palette', () => {
+        const { actions, chrome } = setup({});
+        actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
+        expect(chrome.tabGroups.updated).toHaveLength(1);
+        const [groupId, props] = chrome.tabGroups.updated[0];
+        expect(groupId).toBe(900);
+        expect(props.title).toBe('Dev Stuff');
+        expect(palette).toContain(props.color);
+    });
+
+    it('always picks the same color for the same folder title', () => {
+        const { actions, chrome } = setup({});
+        actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
+        actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
+        expect(chrome.tabGroups.updated).toHaveLength(2);
+        expect(chrome.tabGroups.updated[0][1].color).toBe(chrome.tabGroups.updated[1][1].color);
+    });
+
+    it('keeps the color inside the tabGroups palette for any title (including empty)', () => {
+        const { actions, chrome } = setup({});
+        for (const title of ['a', '书签', 'Dev Stuff', 'x'.repeat(200), ''])
+            actions.openBookmarksInGroup(urls(1), title);
+        expect(chrome.tabGroups.updated).toHaveLength(5);
+        for (const [, props] of chrome.tabGroups.updated)
+            expect(palette).toContain(props.color);
+    });
+
+    it('confirms above the limit and only opens after fn1', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openBookmarksInGroup(urls(11), 'Big');
+        expect(chrome.tabs.created).toEqual([]);
+        expect(chrome.tabs.grouped).toEqual([]);
+        expect(calls.confirm).toHaveLength(1);
+        expect(calls.confirm[0].dialog).toBe('confirmOpenBookmarks[11]');
+        expect(calls.confirm[0].button1).toBe('<strong>open</strong>');
+        expect(calls.confirm[0].button2).toBe('nope');
+        calls.confirm[0].fn1();
+        expect(chrome.tabs.created).toHaveLength(11);
+        expect(chrome.tabs.created[0].active).toBe(true);
+        expect(chrome.tabs.grouped).toHaveLength(1);
+        expect(chrome.tabs.grouped[0].tabIds).toHaveLength(11);
+        expect(chrome.tabGroups.updated[0][1].title).toBe('Big');
+    });
+
+    it('opens nothing when the confirm is never approved', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openBookmarksInGroup(urls(11), 'Big');
+        expect(calls.confirm).toHaveLength(1);
+        expect(chrome.tabs.created).toEqual([]);
+        expect(chrome.tabs.grouped).toEqual([]);
+        expect(chrome.tabGroups.updated).toEqual([]);
+    });
+
+    it('skips the confirm entirely when dontConfirmOpenFolder is set', () => {
+        const { actions, chrome, calls } = setup({ storeData: { dontConfirmOpenFolder: '1' } });
+        actions.openBookmarksInGroup(urls(11), 'Big');
+        expect(calls.confirm).toEqual([]);
+        expect(chrome.tabs.created).toHaveLength(11);
+        expect(chrome.tabs.grouped).toHaveLength(1);
+    });
+
+    it('degrades to a plain batch-open when chrome.tabs.group is missing (old Chrome)', () => {
+        const { actions, chrome } = setup({});
+        delete chrome.tabs.group;
+        actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
+        expect(chrome.tabs.created).toHaveLength(3);
+        expect(chrome.tabGroups.updated).toEqual([]); // no group, no error
+    });
+
+    it('degrades to a plain batch-open when chrome.tabGroups is missing', () => {
+        const { actions, chrome } = setup({});
+        delete chrome.tabGroups;
+        actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
+        expect(chrome.tabs.created).toHaveLength(3);
+        expect(chrome.tabs.grouped).toEqual([]);
+    });
+
+    it('does not touch the input urls array', () => {
+        const { actions } = setup({});
+        const list = urls(3);
+        actions.openBookmarksInGroup(list, 'Dev Stuff');
+        expect(list).toEqual(['https://x/0', 'https://x/1', 'https://x/2']);
     });
 });
 

@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Alle Lesezeichen öffnen"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
   },

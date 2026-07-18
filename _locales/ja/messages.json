@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "すべてのブックマークを開く"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "フォルダから多くのブックマークを開くとき、警告する"
   },

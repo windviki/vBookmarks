@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Buka Semua Markah"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
   },

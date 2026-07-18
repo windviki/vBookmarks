@@ -60,7 +60,8 @@
         "storage",
         "scripting",
         "sidePanel",
-        "contextMenus"
+        "contextMenus",
+        "tabGroups"
 	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],

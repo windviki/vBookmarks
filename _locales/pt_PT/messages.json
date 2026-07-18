@@ -191,6 +191,9 @@
   "openBookmarks": {
     "message": "Abrir Todos os Marcadores"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Mostra confirmação quando abre vários marcadores duma pasta."
   },

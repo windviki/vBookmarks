@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Atvērt visas grāmatzīmes"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
   },

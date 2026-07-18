@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Otevřít Všechny Záložky"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
   },

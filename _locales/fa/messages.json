@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "باز کردن همه نشانک‌ها"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
   },

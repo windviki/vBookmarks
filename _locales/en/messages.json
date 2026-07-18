@@ -284,6 +284,10 @@
   "openBookmarksIncognitoWindow": {
     "message": "Open All Bookmarks in Incognito Window"
   },
+  "openBookmarksInGroup": {
+    "description": "Folder context-menu item: opens every bookmark of the folder as tabs in one new browser tab group, titled and colored after the folder.",
+    "message": "Open all in new tab group"
+  },
   "openBookmarksNewWindow": {
     "message": "Open All Bookmarks in New Window"
   },

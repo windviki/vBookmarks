@@ -191,6 +191,9 @@
   "openBookmarks": {
     "message": "Abrir todos os favoritos"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Mostrar confirmação quando abrir vários favoritos de uma pasta."
   },

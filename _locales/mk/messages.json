@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Отвори ги сите обележувачи"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
   },

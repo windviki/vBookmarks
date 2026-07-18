@@ -5,7 +5,7 @@ import { uuidFast } from './separators.js';
  *
  * Owns every bookmark operation behind the click handlers, the context-menu
  * dispatch and the keyboard shortcuts: opening bookmarks/folders (current
- * tab, new tab, new window, incognito), adding bookmarks/folders/separators
+ * tab, new tab, new window, incognito, tab group), adding bookmarks/folders/separators
  * at a position relative to a tree node, editing and deleting entries (with
  * the focus hand-off to a sibling row), copying title+URL text and replacing
  * URLs. neat.js only sees the table returned at the bottom; every
@@ -32,6 +32,19 @@ import { uuidFast } from './separators.js';
  * plain getElementById and DOM calls only (neatools' el.destroy() is inlined
  * as parentNode.removeChild).
  */
+
+// P3.4: chrome.tabGroups accepts exactly these nine group colors.
+const tabGroupColors = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'];
+
+// Deterministic group color for a folder title: a plain charCode-sum hash
+// modulo the palette, so the same folder name always lands on the same color.
+const pickGroupColor = title => {
+    let hash = 0;
+    for (let i = 0; i < title.length; i++)
+        hash += title.charCodeAt(i);
+    return tabGroupColors[hash % tabGroupColors.length];
+};
+
 export function initActions(ctx = {}) {
     const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
@@ -379,6 +392,52 @@ export function initActions(ctx = {}) {
                         url: urls[i],
                         active: false
                     });
+                }
+            };
+            if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
+                dialogs.ConfirmDialog.open({
+                    dialog: _m('confirmOpenBookmarks', `${urlsLen}`),
+                    button1: `<strong>${_m('open')}</strong>`,
+                    button2: _m('nope'),
+                    fn1: open
+                });
+            } else {
+                open();
+            }
+        },
+
+        // P3.4: same batch-open as openBookmarks (same >10 ConfirmDialog
+        // gate), then the new tabs become one named tab group. On a Chrome
+        // too old for tab groups the feature-detect fails and the tabs stay
+        // a plain batch-open — no error, just no group.
+        openBookmarksInGroup: (urls, groupTitle) => {
+            const urlsLen = urls.length;
+            const open = () => {
+                const tabIds = [];
+                let pending = urlsLen;
+                const onCreated = tab => {
+                    tabIds.push(tab.id);
+                    if (--pending > 0)
+                        return;
+                    if (!(chrome.tabs.group && chrome.tabGroups))
+                        return;
+                    chrome.tabs.group({ tabIds: tabIds }, groupId => {
+                        chrome.tabGroups.update(groupId, {
+                            title: groupTitle,
+                            color: pickGroupColor(groupTitle)
+                        });
+                    });
+                };
+                chrome.tabs.create({
+                    url: urls[0],
+                    active: true
+                    // first tab will be selected
+                }, onCreated);
+                for (let i = 1; i < urlsLen; i++) {
+                    chrome.tabs.create({
+                        url: urls[i],
+                        active: false
+                    }, onCreated);
                 }
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {

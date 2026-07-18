@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Alle bladwijzers openen"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
   },

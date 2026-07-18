@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "Atidaryti visas žymeles"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
   },

@@ -192,6 +192,9 @@
   "openBookmarks": {
     "message": "فتح جميع العلامات المرجعية"
   },
+  "openBookmarksInGroup": {
+    "message": "[TODO:openBookmarksInGroup]"
+  },
   "optionConfirmOpenFolder": {
     "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
   },

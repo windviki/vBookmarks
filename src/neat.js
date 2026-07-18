@@ -80,6 +80,7 @@ import { initUndo } from './undo.js';
         // 'copy-all-titles-and-urls' : 'copyAllTitlesAndUrls',
         'replace-url': 'replaceUrl',
         'folder-window': 'openBookmarks',
+        'open-bookmarks-in-group': 'openBookmarksInGroup',
         'folder-new-window': 'openBookmarksNewWindow',
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
