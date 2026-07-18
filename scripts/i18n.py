@@ -17,6 +17,10 @@ LLM configuration (translate / verify --fix):
   VBM_LLM_BASE_URL  default https://api.moonshot.cn/v1
   VBM_LLM_API_KEY   required; clear error when unset
   VBM_LLM_MODEL     default kimi-k2-0905-preview
+  VBM_LLM_API_TYPE  'openai' (default, /chat/completions + Bearer) or
+                    'anthropic_messages' (/v1/messages + x-api-key)
+  All four may also live in a git-ignored .env file at the repo root
+  (KEY=VALUE lines); real environment variables win over .env values.
 
 Usage:
   python3 scripts/i18n.py audit [--verbose]
@@ -37,6 +41,28 @@ import urllib.request
 REPO_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 LOCALES_DIR = os.path.join(REPO_ROOT, '_locales')
 EN_LOCALE = 'en'
+
+
+def load_dotenv():
+    """Minimal .env loader (KEY=VALUE lines, # comments); existing
+    environment variables always win. Silently ignored when absent."""
+    path = os.path.join(REPO_ROOT, '.env')
+    try:
+        with open(path, encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#') or '=' not in line:
+                    continue
+                key, _, value = line.partition('=')
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = value
+    except OSError:
+        pass
+
+
+load_dotenv()
 
 # ---------------------------------------------------------------------------
 # Key usage classification (audit output; translate prompt; verify length check)
@@ -127,8 +153,10 @@ LOCALE_NAMES = {
 LLM_BASE_URL_ENV = 'VBM_LLM_BASE_URL'
 LLM_API_KEY_ENV = 'VBM_LLM_API_KEY'
 LLM_MODEL_ENV = 'VBM_LLM_MODEL'
+LLM_API_TYPE_ENV = 'VBM_LLM_API_TYPE'
 LLM_DEFAULT_BASE_URL = 'https://api.moonshot.cn/v1'
 LLM_DEFAULT_MODEL = 'kimi-k2-0905-preview'
+LLM_DEFAULT_API_TYPE = 'openai'  # or 'anthropic_messages'
 LLM_TIMEOUT = 120          # seconds
 LLM_RETRIES = 2            # retries after the first failed attempt
 TRANSLATE_CHUNK_SIZE = 40  # max keys per LLM request
@@ -477,37 +505,72 @@ def get_llm_config():
     """Read env config; exit(2) with a clear hint when the API key is unset."""
     base_url = os.environ.get(LLM_BASE_URL_ENV, '').strip() or LLM_DEFAULT_BASE_URL
     model = os.environ.get(LLM_MODEL_ENV, '').strip() or LLM_DEFAULT_MODEL
+    api_type = os.environ.get(LLM_API_TYPE_ENV, '').strip() or LLM_DEFAULT_API_TYPE
+    if api_type not in ('openai', 'anthropic_messages'):
+        print(f'错误: {LLM_API_TYPE_ENV} 仅支持 openai / anthropic_messages，'
+              f'当前为 {api_type!r}', file=sys.stderr)
+        sys.exit(2)
     api_key = os.environ.get(LLM_API_KEY_ENV, '').strip()
     if not api_key:
         print(f'错误: 未设置环境变量 {LLM_API_KEY_ENV}，无法调用 LLM。', file=sys.stderr)
-        print('请先设置 API key，例如：', file=sys.stderr)
+        print('请先设置 API key（或写入仓库根目录的 .env 文件），例如：', file=sys.stderr)
         print(f'  export {LLM_API_KEY_ENV}="sk-..."', file=sys.stderr)
         print('可选环境变量：', file=sys.stderr)
         print(f'  {LLM_BASE_URL_ENV}  默认 {LLM_DEFAULT_BASE_URL}', file=sys.stderr)
         print(f'  {LLM_MODEL_ENV}  默认 {LLM_DEFAULT_MODEL}', file=sys.stderr)
+        print(f'  {LLM_API_TYPE_ENV}  默认 {LLM_DEFAULT_API_TYPE}（可选 anthropic_messages）',
+              file=sys.stderr)
         sys.exit(2)
-    return {'base_url': base_url.rstrip('/'), 'api_key': api_key, 'model': model}
+    return {'base_url': base_url.rstrip('/'), 'api_key': api_key,
+            'model': model, 'api_type': api_type}
 
 
 def llm_chat(messages, cfg):
-    """POST {base}/chat/completions (OpenAI-compatible) via urllib.
+    """Call the configured LLM via urllib.
+    api_type 'openai': POST {base}/chat/completions (Bearer auth).
+    api_type 'anthropic_messages': POST {base}/v1/messages (x-api-key auth,
+    system messages lifted into the top-level `system` field).
     Retries LLM_RETRIES times on failure; raises RuntimeError afterwards."""
-    url = cfg['base_url'] + '/chat/completions'
-    body = json.dumps({
-        'model': cfg['model'],
-        'messages': messages,
-        'temperature': 0.2,
-    }).encode('utf-8')
-    last_err = None
-    for attempt in range(1 + LLM_RETRIES):
-        req = urllib.request.Request(url, data=body, headers={
+    if cfg['api_type'] == 'anthropic_messages':
+        url = cfg['base_url'] + '/v1/messages'
+        system = '\n'.join(m['content'] for m in messages if m['role'] == 'system')
+        body = json.dumps({
+            'model': cfg['model'],
+            'max_tokens': 8192,
+            'temperature': 0.2,
+            'system': system,
+            'messages': [m for m in messages if m['role'] != 'system'],
+        }).encode('utf-8')
+        headers = {
+            'Content-Type': 'application/json',
+            'x-api-key': cfg['api_key'],
+            'anthropic-version': '2023-06-01',
+        }
+
+        def extract(payload):
+            return ''.join(part.get('text', '') for part in payload['content'])
+    else:
+        url = cfg['base_url'] + '/chat/completions'
+        body = json.dumps({
+            'model': cfg['model'],
+            'messages': messages,
+            'temperature': 0.2,
+        }).encode('utf-8')
+        headers = {
             'Content-Type': 'application/json',
             'Authorization': f"Bearer {cfg['api_key']}",
-        })
+        }
+
+        def extract(payload):
+            return payload['choices'][0]['message']['content']
+
+    last_err = None
+    for attempt in range(1 + LLM_RETRIES):
+        req = urllib.request.Request(url, data=body, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=LLM_TIMEOUT) as resp:
                 payload = json.loads(resp.read().decode('utf-8'))
-            return payload['choices'][0]['message']['content']
+            return extract(payload)
         except (urllib.error.URLError, urllib.error.HTTPError,
                 TimeoutError, json.JSONDecodeError, KeyError, IndexError) as e:
             last_err = e
