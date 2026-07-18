@@ -1,12 +1,14 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 import { initTreeRender } from '../src/tree-render.js';
+import { FOLDER_ICON, DOCUMENT_CODE_ICON } from '../src/icons.js';
 
 // tree-render.js touches page globals (chrome.i18n/runtime/bookmarks,
 // window.syncManager/innerWidth, document) only inside initTreeRender and the
 // returned functions, so the real module imports cleanly in node once the
 // globals are stubbed. store/separatorManager are injected doubles; opens and
 // rememberState arrive as getters so tests can flip them per case. Expected
-// HTML is written out by hand below — nothing is derived from the module.
+// HTML is written out by hand below — nothing is derived from the module;
+// the two SVG icons are asserted via the shared src/icons.js contract.
 
 const MESSAGES = { noTitle: '(No title)', folderEmpty: '(Empty)' };
 
@@ -161,10 +163,11 @@ describe('generateBookmarkHTML', () => {
             .toContain('<i>(No title)</i>');
     });
 
-    it('uses the document-code favicon for javascript: urls', () => {
+    it('uses the inline document-code icon for javascript: urls', () => {
         const tr = setup();
         const html = tr.generateBookmarkHTML('JS', 'javascript:alert(1)', '', '1');
-        expect(html).toContain('src="/assets/icons/document-code.png"');
+        expect(html).toContain(DOCUMENT_CODE_ICON);
+        expect(html).not.toContain('.png');
         expect(html).toContain('title="javascript:alert(1)"');
     });
 
@@ -228,7 +231,7 @@ describe('generateFolderHTML', () => {
             `<span tabindex="0" style="-webkit-padding-start: 0px" class="tree-item-span">`,
             `\t\t   <b class="twisty"></b>`,
             `\t\t   <div class="favicon-container">`,
-            `\t\t       <img src="/assets/icons/folder.png" width="16" height="16" alt="">`,
+            `\t\t       ${FOLDER_ICON}`,
             `\t\t       `,
             `\t\t   </div>`,
             `\t\t   <i>F</i>`,

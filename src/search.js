@@ -20,6 +20,8 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
+import { FOLDER_ICON } from './icons.js';
+
 export function initSearch(ctx = {}) {
     const $ = id => document.getElementById(id);
     const body = document.body;
@@ -167,7 +169,7 @@ export function initSearch(ctx = {}) {
                     html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
                             <a href="" class="link-folder tree-item-link">
                             <div class="favicon-container">
-                            <img src="/assets/icons/folder.png" width="16" height="16" alt="">
+                            ${FOLDER_ICON}
                             ${syncIndicator}
                             </div>
                             <i>${folderTitle}</i>

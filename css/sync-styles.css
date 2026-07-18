@@ -188,6 +188,15 @@ body[data-theme="dark"] {
     vertical-align: middle;
 }
 
+/* Inline SVG icons (folder / document-code, P4) fill the same 16px slot */
+.favicon-container .vbm-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0 !important;
+    vertical-align: middle;
+}
+
 /* Text elements */
 #tree ul li a.tree-item-link i,
 #tree ul li span.tree-item-span i,

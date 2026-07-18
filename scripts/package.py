@@ -58,6 +58,7 @@ JS_FILES = [
     'src/dead-links.js',
     'src/session.js',
     'src/undo.js',
+    'src/icons.js',
     'vendor/codemirror.js',
 ]
 
@@ -76,8 +77,6 @@ IMAGES = [
     'assets/icons/icon32.png',
     'assets/icons/icon48.png',
     'assets/icons/icon128.png',
-    'assets/icons/folder.png',
-    'assets/icons/document-code.png',
 ]
 
 # Metadata files for store listing and user reference

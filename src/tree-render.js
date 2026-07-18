@@ -1,3 +1,5 @@
+import { FOLDER_ICON, DOCUMENT_CODE_ICON } from './icons.js';
+
 /**
  * Tree HTML generation + tree data helpers (P1 module extracted from neat.js,
  * slice 8a — the pure rendering/data half of the tree view; events and state
@@ -118,13 +120,15 @@ export function initTreeRender(ctx = {}) {
         if (!extras)
             extras = '';
         const u = htmlspecialchars(url);
-        let favicon = getFaviconUrl(url);
         let tooltipURL = url;
-        if (/^javascript:/i.test(url)) {
-            if (url.length > 140)
-                tooltipURL = `${url.slice(0, 140)}...`;
-            favicon = '/assets/icons/document-code.png';
-        }
+        // `javascript:` bookmarklets get the inline document-code glyph
+        // (P4 — bitmap retired); everything else goes through _favicon.
+        const isBookmarklet = /^javascript:/i.test(url);
+        const faviconHtml = isBookmarklet
+            ? DOCUMENT_CODE_ICON
+            : `<img src="${getFaviconUrl(url)}" width="16" height="16" alt="">`;
+        if (isBookmarklet && url.length > 140)
+            tooltipURL = `${url.slice(0, 140)}...`;
         tooltipURL = htmlspecialchars(tooltipURL);
         const name = (title && titlePositions && titlePositions.length)
             ? highlightTitlePositions(title, titlePositions)
@@ -144,7 +148,7 @@ export function initTreeRender(ctx = {}) {
 
         return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
                 <div class="favicon-container">
-                    <img src="${favicon}" width="16" height="16" alt="">
+                    ${faviconHtml}
                     ${syncIndicator}
                 </div>
                 <i>${name}</i>
@@ -178,7 +182,7 @@ export function initTreeRender(ctx = {}) {
         return `<span tabindex="0" ${extras} class="tree-item-span">
 		   <b class="twisty"></b>
 		   <div class="favicon-container">
-		       <img src="/assets/icons/folder.png" width="16" height="16" alt="">
+		       ${FOLDER_ICON}
 		       ${syncIndicator}
 		   </div>
 		   <i>${displayTitle}</i>

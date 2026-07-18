@@ -67,6 +67,7 @@
 import { normalizeUrl, findDupes, planDeletion } from './dupes.js';
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
 import { filterScannable, startDeadScan, collectDead, statusLabel } from './dead-links.js';
+import { FOLDER_ICON } from './icons.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
@@ -357,7 +358,7 @@ export function initPalette(ctx = {}) {
         if (row.kind === 'command') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'folder') {
-            li.innerHTML = `<img class="palette-icon" src="/assets/icons/folder.png" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(row.title)}</span>`;
+            li.innerHTML = `${FOLDER_ICON}<span class="palette-title">${htmlspecialchars(row.title)}</span>`;
         } else if (row.kind === 'dupes-all' || row.kind === 'dead-rescan') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'dupe') {

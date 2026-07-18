@@ -1002,6 +1002,20 @@ menu[type=context].hide-sort #sort-folder-contents {
     flex: none;
 }
 
+.palette-row .vbm-icon {
+    flex: none;
+}
+
+/* Inline SVG icons (src/icons.js, P4): color comes from currentColor, so
+   theme changes recolor them for free. */
+.vbm-icon-folder {
+    color: var(--vbm-accent);
+}
+
+.vbm-icon-doc-code {
+    color: var(--vbm-muted);
+}
+
 .palette-row .palette-title {
     overflow: hidden;
     text-overflow: ellipsis;
