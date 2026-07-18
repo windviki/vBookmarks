@@ -60,10 +60,13 @@ export function initContextMenu(ctx = {}) {
         }
         $bookmarkContextMenu.style.left = '-999px';
         $bookmarkContextMenu.style.opacity = '0';
+        $bookmarkContextMenu.style.transform = 'scale(.98)';
         $folderContextMenu.style.left = '-999px';
         $folderContextMenu.style.opacity = '0';
+        $folderContextMenu.style.transform = 'scale(.98)';
         $separatorContextMenu.style.left = '-999px';
         $separatorContextMenu.style.opacity = '0';
+        $separatorContextMenu.style.transform = 'scale(.98)';
     };
 
     body.addEventListener('click', clearMenu);
@@ -132,6 +135,7 @@ export function initContextMenu(ctx = {}) {
             menu.style.left = `${pageX}px`;
             menu.style.top = `${pageY}px`;
             menu.style.opacity = '1';
+            menu.style.transform = 'scale(1)';
             menu.focus();
         }
     });

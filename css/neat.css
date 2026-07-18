@@ -484,9 +484,13 @@ menu[type=context] .menu-item:focus {
 }
 
 menu[type=context] {
-    -webkit-transition: opacity .3s;
-    transition: opacity .3s;
+    -webkit-transition: opacity .15s ease-out, -webkit-transform .15s ease-out;
+    transition: opacity .15s ease-out, transform .15s ease-out;
     opacity: 0;
+    -webkit-transform: scale(.98);
+    transform: scale(.98);
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
     margin: 0;
     padding: 5px 0;
     list-style: none;
@@ -495,20 +499,30 @@ menu[type=context] {
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     background-color: var(--vbm-bg-elev);
-    -webkit-box-shadow: 0 2px 6px var(--vbm-shadow);
-    box-shadow: 0 2px 6px var(--vbm-shadow);
+    -webkit-box-shadow: 0 8px 24px var(--vbm-shadow);
+    box-shadow: 0 8px 24px var(--vbm-shadow);
     outline: 0;
     max-width: 100%;
 }
 
 menu[type=context] .menu-item {
     display: block;
-    padding: 0 10px;
-    line-height: 20px;
+    padding: 0 12px;
+    line-height: 26px;
     text-shadow: none;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+menu[type=context] .menu-item:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+/* destructive entries read as danger even before hover */
+menu[type=context] #bookmark-delete,
+menu[type=context] #folder-delete {
+    color: var(--vbm-danger);
 }
 
 
