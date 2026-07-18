@@ -108,7 +108,7 @@ All 43 locales currently hold the same 131 keys as the `en` baseline — keys wi
 
 ### Headless smoke test (Docker)
 
-A verified recipe lives outside the repo (`/tmp/vbm-smoke/smoke.js` pattern): image `zenika/alpine-chrome:with-puppeteer`, bake the extension in with a Dockerfile `COPY` (bind mounts do not work in some DinD setups), launch Chromium with `--load-extension=/ext` and `headless: 'new'` (old headless does not load extensions), then assert the service worker registers and popup/panel/options pages raise zero console errors. This caught two ship-blockers: `side_panel.default_path` rejects query strings, and `style-src 'self'` blocked all inline style attributes.
+The harness lives in `scripts/screenshots/` — `run.sh` tars the repo into a Docker build context (bind mounts do not work in some DinD setups), builds `zenika/alpine-chrome:with-puppeteer`, and runs `smoke.js` (asserts the service worker registers and popup/panel/options/advanced pages raise zero console errors), then `shots.js` + `shots-themes.js` to capture interaction-state and theme screenshots into `tmp/shots/`. `--smoke-only` skips the screenshots. Chromium launches with `--load-extension=/ext` and `headless: 'new'` (old headless does not load extensions). This caught two ship-blockers: `side_panel.default_path` rejects query strings, and `style-src 'self'` blocked all inline style attributes.
 
 ## Code Style and Conventions
 
