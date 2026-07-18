@@ -1,5 +1,6 @@
 /* vBookmarks design tokens — keep this block in sync with neat.css. */
 :root {
+    color-scheme: light;
     --vbm-bg: #ffffff;
     --vbm-bg-elev: #ffffff;
     --vbm-bg-hover: rgba(0, 0, 0, 0.05);
@@ -21,6 +22,7 @@
 }
 
 body[data-theme="dark"] {
+    color-scheme: dark;
     --vbm-bg: #1b1c1f;
     --vbm-bg-elev: #26282c;
     --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -42,6 +44,7 @@ body[data-theme="dark"] {
 
 @media (prefers-color-scheme: dark) {
     body[data-theme="auto"] {
+        color-scheme: dark;
         --vbm-bg: #1b1c1f;
         --vbm-bg-elev: #26282c;
         --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -156,6 +159,12 @@ h2{
 	margin: 0 5px 0 0;
 }
 .options-list li input[type=number]{
+	background: var(--vbm-bg-elev);
+	color: var(--vbm-fg);
+	border: 1px solid var(--vbm-border);
+	border-radius: 6px;
+	padding: 2px 4px;
+	font: inherit;
 	vertical-align: middle;
 	margin: 0;
 	margin-__MSG_@@bidi_start_edge__: 2em;
