@@ -50,6 +50,7 @@ JS_FILES = [
     'src/dialogs.js',
     'src/keyboard.js',
     'src/dnd.js',
+    'src/tree-render.js',
     'vendor/codemirror.js',
 ]
 

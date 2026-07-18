@@ -5,6 +5,7 @@ import { initActions } from './actions.js';
 import { initContextMenu } from './context-menu.js';
 import { initKeyboard } from './keyboard.js';
 import { initDnd } from './dnd.js';
+import { initTreeRender } from './tree-render.js';
 
 (window => {
     const store = window.store;
@@ -27,38 +28,7 @@ import { initDnd } from './dnd.js';
 
     //regex for color expressions
     const hexColorRegex = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    //RGB -> HEX
-    String.prototype.colorHex = function () {
-        const that = this;
-        if (/^(rgb|RGB)/.test(that)) {
-            const aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-            let strHex = "#";
-            for (let i = 0; i < aColor.length; i++) {
-                let hex = Number(aColor[i]).toString(16);
-                if (hex === "0") {
-                    hex += hex;
-                }
-                strHex += hex;
-            }
-            if (strHex.length !== 7) {
-                strHex = that;
-            }
-            return strHex;
-        } else if (hexColorRegex.test(that)) {
-            const aNum = that.replace(/#/, "").split("");
-            if (aNum.length === 6) {
-                return that;
-            } else if (aNum.length === 3) {
-                let numHex = "#";
-                for (let i = 0; i < aNum.length; i += 1) {
-                    numHex += (aNum[i] + aNum[i]);
-                }
-                return numHex;
-            }
-        } else {
-            return '';
-        }
-    };
+    // RGB -> HEX 转换已随 generateSeparatorHTML 剥离至 src/tree-render.js（模块内纯函数）
 
     //HEX -> RGB
     String.prototype.colorRgb = function () {
@@ -244,293 +214,22 @@ import { initDnd } from './dnd.js';
         }
     };
 
-    const getFaviconUrl = (url) => {
-        // return `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(url)}&size=32`;
-        // return chrome.runtime.getURL(`_favicon/?pageUrl=${encodeURIComponent(url)}&size=64`);
-        const favUrl = new URL(chrome.runtime.getURL("/_favicon/"));
-        favUrl.searchParams.set("pageUrl", url);
-        favUrl.searchParams.set("size", "32");
-        return favUrl.toString();
-    };
-
-    // Escape a title and wrap the characters at the given (pre-escape) indices
-    // in <mark> tags. Built one character at a time so escaping never shifts
-    // the indices. Used to highlight fuzzy-search matches (Phase 2b).
-    const highlightTitlePositions = (title, positions) => {
-        if (!positions || !positions.length)
-            return title.htmlspecialchars();
-        const posSet = new Set(positions);
-        let html = '';
-        let inMark = false;
-        for (let i = 0; i < title.length; i++) {
-            const hit = posSet.has(i);
-            if (hit && !inMark) {
-                html += '<mark>';
-                inMark = true;
-            } else if (!hit && inMark) {
-                html += '</mark>';
-                inMark = false;
-            }
-            html += title.charAt(i).htmlspecialchars();
-        }
-        if (inMark)
-            html += '</mark>';
-        return html;
-    };
-
-    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions) => {
-        if (!extras)
-            extras = '';
-        const u = url.htmlspecialchars();
-        // let favicon = `chrome://favicon/${u}`;
-        // let favicon = 'assets/design/icon-2.png';
-        let favicon = getFaviconUrl(url);
-        let tooltipURL = url;
-        if (/^javascript:/i.test(url)) {
-            if (url.length > 140)
-                tooltipURL = `${url.slice(0, 140)}...`;
-            favicon = '/assets/icons/document-code.png';
-        }
-        tooltipURL = tooltipURL.htmlspecialchars();
-        const name = (title && titlePositions && titlePositions.length)
-            ? highlightTitlePositions(title, titlePositions)
-            : (title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')));
-
-        // Add sync status indicator if enabled
-        let syncIndicator = '';
-        if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && bookmarkId) {
-            const syncStatus = window.syncManager.getSyncStatusIndicator(bookmarkId);
-            const syncTooltip = window.syncManager.getSyncTooltip(bookmarkId);
-            if (syncStatus) {
-                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
-                    <span class="sync-tooltip">${syncTooltip}</span>
-                </span>`;
-            }
-        }
-
-        return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
-                <div class="favicon-container">
-                    <img src="${favicon}" width="16" height="16" alt="">
-                    ${syncIndicator}
-                </div>
-                <i>${name}</i>
-                </a>`;
-    };
-
-    const generateFolderHTML = (title, extras, folderId, folderNode) => {
-        if (!extras)
-            extras = '';
-
-        // Handle dual storage folders - add suffix for non-syncing folders
-        let displayTitle = title || _m('noTitle');
-        if (folderNode && folderNode.syncing === false && folderNode.folderType) {
-            // Add suffix to distinguish between syncing and non-syncing folders
-            const suffix = ' (Local)';
-            displayTitle += suffix;
-        }
-
-        // Add sync status indicator if enabled
-        let syncIndicator = '';
-        if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && folderId) {
-            const syncStatus = window.syncManager.getSyncStatusIndicator(folderId);
-            const syncTooltip = window.syncManager.getSyncTooltip(folderId);
-            if (syncStatus) {
-                syncIndicator = `<span class="sync-indicator ${syncStatus}" title="${syncTooltip}">
-                    <span class="sync-tooltip">${syncTooltip}</span>
-                </span>`;
-            }
-        }
-
-        return `<span tabindex="0" ${extras} class="tree-item-span">
-		   <b class="twisty"></b>
-		   <div class="favicon-container">
-		       <img src="/assets/icons/folder.png" width="16" height="16" alt="">
-		       ${syncIndicator}
-		   </div>
-		   <i>${displayTitle}</i>
-		   </span>`;
-    };
-
-    const generateSeparatorHTML = paddingStart => {
-        let color = '#888888';
-        if (store.get('separatorcolor')) {
-            color = store.get('separatorcolor').colorHex();
-        }
-        const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
-        const hrWidth = window.innerWidth - paddingStart - 40;
-        const hrStyle = `style="width: ${hrWidth}px; border: 1px dotted ${color};"`;
-        return `<a href="#" tabindex="0" ${aStyle} class="tree-item-link">
-                <div class="favicon-container">
-                    <img width="16" height="16" style="display:none;" alt="">
-                </div>
-                <i></i>
-                <hr class="child" role="treeitem" ${hrStyle}>
-                </a>`;
-    };
-
-    const generateHTML = (data, level) => {
-        if (!level)
-            level = 0;
-        const paddingStart = 14 * level;
-        const group = (level === 0) ? 'tree' : 'group';
-        // Phase 2b: an expanded folder with no children renders a muted
-        // "(Empty)" row. It contains no focusable a/span element, so keyboard
-        // navigation and the click handlers ignore it. This covers both child
-        // loading paths (pre-rendered open folders and lazy expand), which
-        // both funnel through generateHTML.
-        if (!data.length) {
-            return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart}px"><i>${_m('folderEmpty')}</i></li></ul>`;
-        }
-        let html = `<ul role="${group}" data-level="${level}">`;
-
-        for (let i = 0, l = data.length; i < l; i++) {
-            const d = data[i];
-            const children = d.children;
-            const title = d.title.htmlspecialchars();
-            const url = d.url;
-            const id = d.id;
-            const parentID = d.parentId;
-            const idHTML = id ? `id="neat-tree-item-${id}"` : '';
-            const isFolder = d.dateGroupModified || children || typeof url === 'undefined';
-            const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
-            const classStr = isFolder ? 'parent' : 'child';
-            const isOpen = rememberState && opens.contains(id);
-            const open = isOpen ? 'open' : '';
-            const ariaStr = isFolder ? `aria-expanded="${isOpen}"` : '';
-            html += `<li class="${classStr} ${open}" ${idHTML} level="${level}" role="treeitem" ${ariaStr} data-parentid="${parentID}">`;
-            if (isFolder) { // folder node
-                html += generateFolderHTML(title, stylePad, id, d);
-                // only generate children for opened folder
-                if (isOpen) {
-                    if (children) {
-                        html += generateHTML(children, level + 1);
-                    } else {
-                        (_id => {
-                            chrome.bookmarks.getChildren(_id, children => {
-                                const html = generateHTML(children, level + 1);
-                                const div = document.createElement('div');
-                                div.innerHTML = html;
-                                const ul = div.querySelector('ul');
-                                ul.inject($(`neat-tree-item-${_id}`));
-                                div.destroy();
-                            });
-                        })(id);
-                    }
-                }
-            } else { // bookmark node
-                if (separatorManager.isSeparator(title, url)) {
-                    html += generateSeparatorHTML(paddingStart);
-                    separatorManager.add(id);
-                } else {
-                    html += generateBookmarkHTML(title, url, stylePad, id);
-                }
-            }
-            html += '</li>';
-        }
-        html += '</ul>';
-        return html;
-    };
-
     // addSeparator / deleteSeparator 已剥离至 src/actions.js（P1，经 actions 表调用）
 
     separatorManager.clear();
     const $tree = $('tree');
 
+    // 树 HTML 生成与树数据辅助已剥离至 src/tree-render.js（P1，ES module 见
+    // 顶部 import）。opens/rememberState 状态仍在这里（8b 再迁），模块经
+    // getter 在调用时读取。
+    const treeRender = initTreeRender({
+        store,
+        separatorManager,
+        getOpens: () => opens,
+        getRememberState: () => rememberState
+    });
+
     const nodeTrees = {};
-    const generateNodeTrees = (data, list) => {
-        if (data) {
-            for (let i = 0, l = data.length; i < l; i++) {
-                const d = data[i];
-                if (!d.url) {
-                    // Use isRootFolder to properly identify root folders in dual-storage Chrome
-                    if (!isRootFolder(d)) {
-                        list[d.id] = d.parentId;
-                    }
-                    generateNodeTrees(d.children, list);
-                }
-            }
-        }
-    };
-
-    const getParentPath = (nodeID, list) => {
-        const nodePath = [];
-        nodePath.push(nodeID);
-        let lastID = nodeID;
-        while (nodeID) {
-            if (nodeID in list) {
-                if (lastID === list[nodeID]) {
-                    break;
-                }
-                nodePath.push(list[nodeID]);
-                nodeID = list[nodeID];
-                lastID = nodeID;
-            } else {
-                break;
-            }
-        }
-        return nodePath.reverse();
-    };
-
-    // Find folder by folderType in the tree (supports dual storage)
-    const findFolderByType = (tree, folderType) => {
-        if (!tree || !Array.isArray(tree)) return null;
-
-        function searchFolder(nodes) {
-            if (!nodes || !Array.isArray(nodes)) return null;
-
-            for (const node of nodes) {
-                if (node.folderType === folderType) {
-                    return node;
-                }
-                if (node.children) {
-                    const found = searchFolder(node.children);
-                    if (found) return found;
-                }
-            }
-            return null;
-        }
-
-        return searchFolder(tree);
-    };
-
-    // Get effective subtree handling dual-storage Chrome (multiple root nodes)
-    const getEffectiveSubTree = (tree) => {
-        if (!tree || !Array.isArray(tree) || tree.length === 0) {
-            return [];
-        }
-
-        // Check if we have the new dual-storage structure (multiple root nodes)
-        const hasFolderType = tree.some(node => node.folderType !== undefined);
-
-        if (hasFolderType) {
-            // New Chrome with dual storage: tree may have multiple root nodes
-            // Return all root nodes' children combined
-            const allChildren = [];
-            tree.forEach(rootNode => {
-                if (rootNode.children && Array.isArray(rootNode.children)) {
-                    allChildren.push(...rootNode.children);
-                }
-            });
-            return allChildren;
-        } else {
-            // Old Chrome: single root node structure
-            // Legacy: tree[0].children contains the three main folders
-            return tree[0].children || [];
-        }
-    };
-
-    // Check if a node is a root folder (supports dual storage)
-    const isRootFolder = (node) => {
-        // Handle both object (from tree) and plain object with string properties
-        const nodeParentId = node.parentId;
-        const nodeFolderType = node.folderType;
-
-        // Check for root folder indicators:
-        // - parentId === "0" (string) or parentId === 0 (number)
-        // - folderType is defined (bookmarks-bar/other/mobile)
-        return nodeParentId === 0 || nodeParentId === "0" ||
-               nodeFolderType !== undefined;
-    };
 
     // Phase 3 (issue #34): virtual "recently added" section pinned to the top
     // of the tree. Entries come from chrome.bookmarks.getRecent and are real
@@ -558,7 +257,7 @@ import { initDnd } from './dnd.js';
                 if (!d.url || separatorManager.isSeparator(d.title, d.url))
                     continue;
                 html += `<li class="child" id="neat-recent-item-${d.id}" level="0" role="treeitem" data-parentid="${d.parentId}">` +
-                    generateBookmarkHTML(d.title, d.url, 'style="-webkit-padding-start: 0px" data-virtual="1"', d.id) +
+                    treeRender.generateBookmarkHTML(d.title, d.url, 'style="-webkit-padding-start: 0px" data-virtual="1"', d.id) +
                     '</li>';
             }
             list.innerHTML = html;
@@ -581,7 +280,7 @@ import { initDnd } from './dnd.js';
         let subTree;
         if (onlyShowBMBar) {
             // Find the bookmarks bar folder using folderType instead of fixed position
-            const bookmarksBarFolder = findFolderByType(tree, 'bookmarks-bar');
+            const bookmarksBarFolder = treeRender.findFolderByType(tree, 'bookmarks-bar');
             if (bookmarksBarFolder) {
                 subTree = bookmarksBarFolder.children || [];
             } else {
@@ -590,10 +289,10 @@ import { initDnd } from './dnd.js';
             }
         } else {
             // Use getEffectiveSubTree to handle dual-storage Chrome
-            subTree = getEffectiveSubTree(tree);
+            subTree = treeRender.getEffectiveSubTree(tree);
         }
-        const html = generateHTML(subTree);
-        generateNodeTrees(subTree, nodeTrees);
+        const html = treeRender.generateHTML(subTree);
+        treeRender.generateNodeTrees(subTree, nodeTrees);
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
 
@@ -683,7 +382,7 @@ import { initDnd } from './dnd.js';
         if (!children) {
             const id = parent.id.replace('neat-tree-item-', '');
             chrome.bookmarks.getChildren(id, children => {
-                const html = generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
+                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
                 const div = document.createElement('div');
                 div.innerHTML = html;
                 const ul = div.querySelector('ul');
@@ -816,8 +515,8 @@ import { initDnd } from './dnd.js';
         store,
         separatorManager,
         switchBookmarkMenu: menus.switchBookmarkMenu,
-        generateBookmarkHTML,
-        highlightTitlePositions,
+        generateBookmarkHTML: treeRender.generateBookmarkHTML,
+        highlightTitlePositions: treeRender.highlightTitlePositions,
         rememberState
     });
 
@@ -904,9 +603,9 @@ import { initDnd } from './dnd.js';
         dialogs,
         search,
         separatorManager,
-        generateBookmarkHTML,
-        generateFolderHTML,
-        generateSeparatorHTML,
+        generateBookmarkHTML: treeRender.generateBookmarkHTML,
+        generateFolderHTML: treeRender.generateFolderHTML,
+        generateSeparatorHTML: treeRender.generateSeparatorHTML,
         httpsPattern
     });
 
@@ -945,7 +644,7 @@ import { initDnd } from './dnd.js';
                 const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 // all parent folder ids
                 // set them as opened folders
-                opens = getParentPath(id, nodeTrees);
+                opens = treeRender.getParentPath(id, nodeTrees);
                 store.set('opens', JSON.stringify(opens));
                 // force to recover from remember state (opened folders)
                 rememberState = true;
