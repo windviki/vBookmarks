@@ -157,14 +157,29 @@ body.linux input {
     padding: 0;
 }
 
+/* Tokenized search field: inherits the theme instead of the native white
+   input chrome (which glared in dark mode and showed a doubled native
+   border in light mode). Same visual language as the dialog inputs:
+   elevated bg, 1px token border, accent border + soft ring on focus. */
 #search input {
     width: 100%;
     padding: 6px 8px;
     margin: 0;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+}
+
+#search input::placeholder {
+    color: var(--vbm-muted);
+    opacity: 1;
 }
 
 #search input:focus {
+    border-color: var(--vbm-accent);
     outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
 }
 
 #donation {
