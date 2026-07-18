@@ -4,7 +4,7 @@ Package vBookmarks extension into a zip file for Chrome Web Store submission
 or offline distribution.
 
 Reads manifest.json for the version number and produces:
-    release/vBookmarks_[ver].zip
+    tmp/vBookmarks_[ver].zip  (tmp/ is git-ignored)
 
 Only files needed at runtime or for store listing are included.
 Dev tools, IDE config, screenshots, and source design files are excluded.
@@ -99,7 +99,6 @@ EXCLUDE_DIRS = {
     'tests',
     'node_modules',
     'tmp',  # local dev artifacts (screenshots, zips), git-ignored
-    'legacy',  # dead MV2 artifacts (background.html, checkupdate.json)
     '_locales',  # handled separately below
 }
 
@@ -242,7 +241,7 @@ def main():
     )
     parser.add_argument(
         '--output', '-o',
-        help='Output zip path (default: release/vBookmarks_[ver].zip)'
+        help='Output zip path (default: tmp/vBookmarks_[ver].zip)'
     )
     args = parser.parse_args()
 
@@ -253,9 +252,9 @@ def main():
     if args.output:
         output_path = args.output
     else:
-        release_dir = os.path.join(root, 'release')
-        os.makedirs(release_dir, exist_ok=True)
-        output_path = os.path.join(release_dir, f'vBookmarks_{version}.zip')
+        out_dir = os.path.join(root, 'tmp')
+        os.makedirs(out_dir, exist_ok=True)
+        output_path = os.path.join(out_dir, f'vBookmarks_{version}.zip')
 
     included = collect_files(root, manifest)
 

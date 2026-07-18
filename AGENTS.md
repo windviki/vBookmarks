@@ -53,10 +53,9 @@ Supporting directories:
 
 - `scripts/` — Python 3 tooling: `package.py` (release zip), `i18n.py` (unified locale tooling: audit/missing/translate/verify)
 - `tests/` — Vitest unit tests
-- `docs/` — `README.md` (EN) / `README.zh.md` (ZH) with full feature list and changelog, `CLAUDE.md` (similar guidance for Claude Code), `PLAN.md` (completed optimization plan), `bookmark-sync-changes.md` (Chrome bookmarks sync API changes reference), `评估与优化方案.md` (Chinese code evaluation), and the 2026-07 modernization analysis set: `现状分析-弹窗UI.md`, `现状分析-架构与存储.md`, `趋势调研-MV3平台与书签品类.md`, `现代化演进总方案.md` (phased roadmap). **Note:** the 2026-07-17 directory reorganization postdates the analysis docs — file paths in them refer to the old flat layout; this file is the current reference.
-- `release/` — legacy `.crx` builds of old versions (historical artifacts, do not edit)
+- `docs/` — `README.md` (EN) / `README.zh.md` (ZH) with full feature list and changelog, `CLAUDE.md` (pointer here for Claude Code), `bookmark-sync-changes.md` (Chrome bookmarks sync API changes reference), and the 2026-07 modernization analysis set: `现状分析-弹窗UI.md`, `现状分析-架构与存储.md`, `趋势调研-MV3平台与书签品类.md`, `现代化演进总方案.md` (phased roadmap), `v4task-1.md` (executed v4 plan). **Note:** the 2026-07-17 directory reorganization postdates the analysis docs — file paths in them refer to the old flat layout; this file is the current reference. Obsolete artifacts (old `release/*.crx`, `legacy/` MV2 files, `PLAN.md`, `评估与优化方案.md`) were dropped at v4.0 and live in git history.
 - `donation/` — donation page assets
-- `assets/store/` — screenshots used only by the store listing / READMEs; `assets/design/` — design sources (`icon.psd`, `neat.xar`) and unused alternative icons; `legacy/` — dead MV2 artifacts (`background.html`, `checkupdate.json`). All three are excluded from packaging.
+- `assets/store/` — screenshots used only by the store listing / READMEs; `assets/design/` — design sources (`icon.psd`, `neat.xar`) and unused alternative icons. Both excluded from packaging.
 
 There is a `.gitignore` (ignores `node_modules/`), no lint config, and no CI configuration in the repo.
 
@@ -79,7 +78,7 @@ Test files (22, one per module/feature — each `src/` module row above names it
 ### Packaging (deployment)
 
 ```bash
-python3 scripts/package.py                 # writes release/vBookmarks_<version>.zip (version from manifest.json)
+python3 scripts/package.py                 # writes tmp/vBookmarks_<version>.zip (version from manifest.json; tmp/ is git-ignored)
 python3 scripts/package.py --output x.zip
 ```
 
