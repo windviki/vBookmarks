@@ -472,7 +472,11 @@ import { initPalette } from './palette.js';
         actions,
         treeView,
         quickAdd: quickAddCurrentTab,
-        rootFolderId: store.get('quickAddFolderId', '1') || '1'
+        rootFolderId: store.get('quickAddFolderId', '1') || '1',
+        // P3.1: the /dupes mode confirms batch deletions through the dialogs
+        // and repaints the tree (same call the sort flow uses) afterwards.
+        dialogs,
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
 
     // Global wake-up (background.js's open-command-palette command): the

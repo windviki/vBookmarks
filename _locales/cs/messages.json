@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Toto je nové VBM $versionNumber$! Seznam změn je zde: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Přidat Záložku Aktuálního Panelu Na Začátek Toto"
+  "copyAllTitlesAndUrls": {
+    "message": "Zkopírovat všechny názvy a URL do schránky"
   },
-  "customSeparatorColorDescription": {
-    "message": "Přizpůsobit Barvu Oddělovače"
+  "customIcon": {
+    "message": "Vlastní ikona"
   },
-  "customIconDescription": {
-    "message": "Ikona musí mít rozměry 19x19 pixelů. Jinak bude změněna na tento rozměr."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekund"
+  "optionConfirmOpenFolder": {
+    "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval obnovení"
+  },
+  "addNewFolder": {
+    "message": "Přidat Podsložku"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Zobrazit pouze záložky v Liště Záložek"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Nadřazená složka: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Otevřít"
+  },
+  "addBookmarkTop": {
+    "message": "Přidat Záložku Aktuálního Panelu Na Začátek Toto"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Zavřít"
   },
-  "accessibility": {
-    "message": "Přístupnost"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Vytvořil $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Otevřít v Novém Panelu"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Interval obnovení"
+  "resetSettingsDescription": {
+    "message": "Resetovat vBookmarks na výchozí nastavení."
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Hledat Záložky"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Opravdu chcete smazat složku $folderName$ a $subFolderCount$ podsložek v ní?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Pamatovat si předchozí stav (pozice posunu a otevřené složky)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Skutečný název záložky, který je zobrazen jako oddělovač"
+  "nope": {
+    "message": "Ne"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Hledat Záložky"
+  "openBookmarksNewWindow": {
+    "message": "Otevřít Všechny Záložky v Novém Okně"
   },
-  "reportError": {
-    "message": "Nahlásit Chybu"
+  "optionZoom": {
+    "message": "Přiblížení"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zavřít nepoužívané složky při otevření složky."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otevřít Všechny Záložky v Anonymním Okně"
+  },
+  "optionShowSyncStatus": {
+    "message": "Zobrazit indikátory stavu synchronizace"
+  },
+  "addBookmarkBefore": {
+    "message": "Přidat Záložku Aktuálního Panelu Před Toto"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek v novém okně?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Přidat Oddělovač"
+  },
+  "optionOpenNewTab": {
+    "message": "Prostřední klik nebo control-klik otevře záložku v novém panelu na pozadí (místo na popředí)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Přizpůsobit Barvu Oddělovače"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Nahradit toto aktuální URL"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Skutečná URL záložky, která je zobrazena jako oddělovač"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Popup zůstává otevřený při otevírání (levý klik) záložek."
+  },
+  "resetSettings": {
+    "message": "Resetovat nastavení"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Opravdu chcete smazat složku $folderName$ a $bookmarkCount$ záložek v ní?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Ignorovat"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Popup správce záložek. Vylepšené Neat Bookmarks. Přehlednější než Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Přidat Oddělovač"
-  },
-  "deleteEllipsis": {
-    "message": "Smazat..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Odstranit Oddělovač"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "To bylo nahlášeno vývojáři."
-  },
-  "customStyles": {
-    "message": "Vlastní Styly"
-  },
-  "resetButton": {
-    "message": "Resetovat"
-  },
-  "customStylesDescription": {
-    "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
-  },
-  "openNewWindow": {
-    "message": "Otevřít v Novém Okně"
-  },
-  "optionPopupStays": {
-    "message": "Popup zůstává otevřený při otevírání (levý klik) záložek."
-  },
-  "addBookmarkBottom": {
-    "message": "Přidat Záložku Aktuálního Panelu Na Konec Toto"
-  },
-  "openBookmarks": {
-    "message": "Otevřít Všechny Záložky"
-  },
   "customSeparatorStringDescription": {
     "message": "Pokud URL záložky obsahuje tento řetězec, bude zobrazena jako oddělovač"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Opravdu chcete otevřít všech $count$ záložek v novém okně?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Smazat"
   },
-  "nope": {
-    "message": "Ne"
-  },
-  "defaultIconButtonOr": {
-    "message": "nebo"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otevřít Všechny Záložky v Novém Okně"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Možnosti"
-  },
-  "save": {
-    "message": "Uložit"
-  },
-  "general": {
-    "message": "Obecné"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Přiblížení"
-  },
-  "addNewFolderAfter": {
-    "message": "Přidat Složku Za Toto"
-  },
-  "optionClickNewTab": {
-    "message": "Levý klik otevře záložku v novém panelu."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(bez názvu)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
-  },
-  "copyTitleAndUrl": {
-    "message": "Zkopírovat název a URL do schránky"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Upravit záložku"
+  "addBookmarkAfter": {
+    "message": "Přidat Záložku Aktuálního Panelu Za Toto"
   },
-  "edit": {
-    "message": "Upravit..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Otevřít v Novém Panelu"
+  "resetButton": {
+    "message": "Resetovat"
   },
-  "syncOptions": {
-    "message": "Možnosti synchronizace"
+  "defaultIconButton": {
+    "message": "Použít výchozí"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name of bookmark or folder.",
     "message": "Název"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Opravdu chcete otevřít všech $count$ záložek v novém anonymním okně?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Pokud se vám to líbí, možná můžete přispět na jeho budoucí vývoj. Jakákoliv částka je vítána."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Zkopírovat všechny názvy a URL do schránky"
+  "customStylesDescription": {
+    "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
   },
-  "optionAutoRefreshSync": {
-    "message": "Automaticky obnovovat stav synchronizace"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(bez názvu)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Ignorovat"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Možnosti synchronizace"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Vytvořil $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Prostřední klik nebo control-klik otevře záložku v novém panelu na pozadí (místo na popředí)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Zobrazit indikátory stavu synchronizace"
-  },
-  "openIncognitoWindow": {
-    "message": "Otevřít v Anonymním Okně"
-  },
-  "addNewFolder": {
-    "message": "Přidat Podsložku"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Skutečná URL záložky, která je zobrazena jako oddělovač"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Použít výchozí"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
-  },
-  "resetSettings": {
-    "message": "Resetovat nastavení"
-  },
-  "addNewFolderBefore": {
-    "message": "Přidat Složku Před Toto"
-  },
-  "editFolder": {
-    "message": "Upravit složku"
-  },
-  "errorOccured": {
-    "message": "Jejda, došlo k chybě."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Přidat Záložku Aktuálního Panelu Před Toto"
-  },
-  "advancedOptions": {
-    "message": "Pokročilé Možnosti"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otevřít Všechny Záložky v Anonymním Okně"
-  },
-  "customIcon": {
-    "message": "Vlastní ikona"
-  },
-  "delete": {
-    "message": "Smazat"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Zvýraznit nesynchronizované záložky"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Opravdu chcete smazat složku $folderName$ a $subFolderCount$ podsložek v ní?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Smazat..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Opravdu chcete smazat složku $folderName$, $subFolderCount$ podsložek a $bookmarkCount$ záložek v ní?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Resetovat vBookmarks na výchozí nastavení."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Přidat Záložku Aktuálního Panelu Za Toto"
+  "defaultIconButtonOr": {
+    "message": "nebo"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Otevřít v Anonymním Okně"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "To bylo nahlášeno vývojáři."
   },
-  "donationMessage": {
-    "message": "Pokud se vám to líbí, možná můžete přispět na jeho budoucí vývoj. Jakákoliv částka je vítána."
+  "optionAutoRefreshSync": {
+    "message": "Automaticky obnovovat stav synchronizace"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Zavřít nepoužívané složky při otevření složky."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Pamatovat si předchozí stav (pozice posunu a otevřené složky)."
   },
-  "replaceUrl": {
-    "message": "Nahradit toto aktuální URL"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek v novém anonymním okně?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Otevřít v Novém Okně"
+  },
+  "removeSeparator": {
+    "message": "Odstranit Oddělovač"
+  },
+  "customStyles": {
+    "message": "Vlastní Styly"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Nadřazená složka: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Zkopírovat název a URL do schránky"
+  },
+  "editBookmark": {
+    "message": "Upravit záložku"
+  },
+  "customIconDescription": {
+    "message": "Ikona musí mít rozměry 19x19 pixelů. Jinak bude změněna na tento rozměr."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Otevřít"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Nahlásit Chybu"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Popup správce záložek. Vylepšené Neat Bookmarks. Přehlednější než Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Upravit..."
+  },
+  "errorOccured": {
+    "message": "Jejda, došlo k chybě."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekund"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Upravit složku"
+  },
+  "optionClickNewTab": {
+    "message": "Levý klik otevře záložku v novém panelu."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Přístupnost"
+  },
+  "addBookmarkBottom": {
+    "message": "Přidat Záložku Aktuálního Panelu Na Konec Toto"
+  },
+  "addNewFolderBefore": {
+    "message": "Přidat Složku Před Toto"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Zvýraznit nesynchronizované záložky"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Skutečný název záložky, který je zobrazen jako oddělovač"
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "general": {
+    "message": "Obecné"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Otevřít Všechny Záložky"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
+  },
+  "addNewFolderAfter": {
+    "message": "Přidat Složku Za Toto"
+  },
+  "advancedOptions": {
+    "message": "Pokročilé Možnosti"
+  },
+  "save": {
+    "message": "Uložit"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Lesezeichen können nicht zwischen synchronisiertem und lokalem Speicher verschoben werden. Verwenden Sie stattdessen Kopieren/Einfügen.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Dies ist das neue VBM $versionNumber$! Änderungsprotokoll finden Sie hier: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Aktuellen Tab am Anfang davon hinzufügen"
+  "copyAllTitlesAndUrls": {
+    "message": "Alle Titel und URLs in die Zwischenablage kopieren"
   },
-  "customSeparatorColorDescription": {
-    "message": "Trennzeichenfarbe anpassen"
+  "customIcon": {
+    "message": "Benutzerdefiniertes Symbol"
   },
-  "customIconDescription": {
-    "message": "Das Symbol muss 19*19 Pixel groß sein. Andernfalls wird es auf diese Größe skaliert."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "Sekunden"
+  "optionConfirmOpenFolder": {
+    "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Aktualisierungsintervall"
+  },
+  "addNewFolder": {
+    "message": "Unterordner hinzufügen"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Nur Lesezeichen in Lesezeichenleiste anzeigen"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Übergeordneter Ordner: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Aktion zum Öffnen von Lesezeichen.",
+    "message": "Öffnen"
+  },
+  "addBookmarkTop": {
+    "message": "Aktuellen Tab am Anfang davon hinzufügen"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Verwerfen"
   },
-  "accessibility": {
-    "message": "Barrierefreiheit"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Erstellt von $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "In neuem Tab öffnen"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Aktualisierungsintervall"
+  "resetSettingsDescription": {
+    "message": "vBookmarks auf Standardeinstellungen zurücksetzen."
+  },
+  "searchBookmarks": {
+    "description": "Platzhaltertext für Suchfeld.",
+    "message": "Lesezeichen durchsuchen"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Möchten Sie wirklich den Ordner $folderName$ und $subFolderCount$ Unterordner darin löschen?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Vorherigen Zustand merken (Scroll-Position und geöffnete Ordner)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Der eigentliche Titel des Lesezeichens, das als Trennzeichen angezeigt wird"
+  "nope": {
+    "message": "Nein"
   },
-  "searchBookmarks": {
-    "description": "Platzhaltertext für Suchfeld.",
-    "message": "Lesezeichen durchsuchen"
+  "openBookmarksNewWindow": {
+    "message": "Alle Lesezeichen in neuem Fenster öffnen"
   },
-  "reportError": {
-    "message": "Fehler melden"
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Ungenutzte Ordner beim Öffnen eines Ordners schließen."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Alle Lesezeichen in Inkognito-Fenster öffnen"
+  },
+  "optionShowSyncStatus": {
+    "message": "Synchronisierungsstatus anzeigen"
+  },
+  "addBookmarkBefore": {
+    "message": "Aktuellen Tab davor hinzufügen"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Fenster öffnen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Trennzeichen hinzufügen"
+  },
+  "optionOpenNewTab": {
+    "message": "Mittelklick oder Strg-Klick öffnet Lesezeichen in neuem Hintergrund-Tab (statt Vordergrund)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Trennzeichenfarbe anpassen"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Dies durch aktuelle URL ersetzen"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Die eigentliche URL des Lesezeichens, das als Trennzeichen angezeigt wird"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Popup bleibt beim Öffnen (Linksklick) von Lesezeichen offen."
+  },
+  "resetSettings": {
+    "message": "Einstellungen zurücksetzen"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Möchten Sie wirklich den Ordner $folderName$ und $bookmarkCount$ Lesezeichen darin löschen?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Ignorieren"
-  },
-  "extDesc": {
-    "description": "Die Erweiterungsbeschreibung.",
-    "message": "Ein Popup-Lesezeichen-Manager. Verbesserte Neat Bookmarks. Ordentlicher als Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Trennzeichen hinzufügen"
-  },
-  "deleteEllipsis": {
-    "message": "Löschen..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Lesezeichen können nicht zwischen synchronisiertem und lokalem Speicher verschoben werden. Verwenden Sie stattdessen Kopieren/Einfügen.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Trennzeichen entfernen"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "Eine Nachricht für einen in der Erweiterung aufgetretenen Fehler, wurde dem Entwickler gemeldet.",
-    "message": "Dies wurde dem Entwickler gemeldet."
-  },
-  "customStyles": {
-    "message": "Benutzerdefinierte Stile"
-  },
-  "resetButton": {
-    "message": "Zurücksetzen"
-  },
-  "customStylesDescription": {
-    "message": "Dies erfordert einige CSS-Kenntnisse. Ändern Sie auf eigenes Risiko. Es wäre klug, Code über"
-  },
-  "openNewWindow": {
-    "message": "In neuem Fenster öffnen"
-  },
-  "optionPopupStays": {
-    "message": "Popup bleibt beim Öffnen (Linksklick) von Lesezeichen offen."
-  },
-  "addBookmarkBottom": {
-    "message": "Aktuellen Tab am Ende davon hinzufügen"
-  },
-  "openBookmarks": {
-    "message": "Alle Lesezeichen öffnen"
-  },
   "customSeparatorStringDescription": {
     "message": "Wenn die URL eines Lesezeichens diese Zeichenfolge enthält, wird es als Trennzeichen angezeigt"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Fenster öffnen?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Löschen"
   },
-  "nope": {
-    "message": "Nein"
-  },
-  "defaultIconButtonOr": {
-    "message": "oder"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Alle Lesezeichen in neuem Fenster öffnen"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Optionen"
-  },
-  "save": {
-    "message": "Speichern"
-  },
-  "general": {
-    "message": "Allgemein"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "addNewFolderAfter": {
-    "message": "Ordner danach hinzufügen"
-  },
-  "optionClickNewTab": {
-    "message": "Linksklick öffnet Lesezeichen in neuem Tab."
-  },
-  "noTitle": {
-    "description": "Der Titel für unbenannte Lesezeichen ohne http(s)-URL oder unbenannte Ordner.",
-    "message": "(kein Titel)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
-  },
-  "copyTitleAndUrl": {
-    "message": "Titel und URL in die Zwischenablage kopieren"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Lesezeichen bearbeiten"
+  "addBookmarkAfter": {
+    "message": "Aktuellen Tab danach hinzufügen"
   },
-  "edit": {
-    "message": "Bearbeiten..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "In neuem Tab öffnen"
+  "resetButton": {
+    "message": "Zurücksetzen"
   },
-  "syncOptions": {
-    "message": "Synchronisierungsoptionen"
+  "defaultIconButton": {
+    "message": "Standard verwenden"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name des Lesezeichens oder Ordners.",
     "message": "Name"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Inkognito-Fenster öffnen?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Wenn es Ihnen gefällt, könnten Sie vielleicht für die zukünftige Entwicklung spenden. Jeder Betrag ist willkommen."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Alle Titel und URLs in die Zwischenablage kopieren"
+  "customStylesDescription": {
+    "message": "Dies erfordert einige CSS-Kenntnisse. Ändern Sie auf eigenes Risiko. Es wäre klug, Code über"
   },
-  "optionAutoRefreshSync": {
-    "message": "Synchronisierungsstatus automatisch aktualisieren"
+  "noTitle": {
+    "description": "Der Titel für unbenannte Lesezeichen ohne http(s)-URL oder unbenannte Ordner.",
+    "message": "(kein Titel)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Ignorieren"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Synchronisierungsoptionen"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Erstellt von $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Mittelklick oder Strg-Klick öffnet Lesezeichen in neuem Hintergrund-Tab (statt Vordergrund)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Synchronisierungsstatus anzeigen"
-  },
-  "openIncognitoWindow": {
-    "message": "In Inkognito-Fenster öffnen"
-  },
-  "addNewFolder": {
-    "message": "Unterordner hinzufügen"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Die eigentliche URL des Lesezeichens, das als Trennzeichen angezeigt wird"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Standard verwenden"
-  },
-  "optionAutoResizePopup": {
-    "message": "Popup-Fenstergröße automatisch an den Inhalt anpassen"
-  },
-  "resetSettings": {
-    "message": "Einstellungen zurücksetzen"
-  },
-  "addNewFolderBefore": {
-    "message": "Ordner davor hinzufügen"
-  },
-  "editFolder": {
-    "message": "Ordner bearbeiten"
-  },
-  "errorOccured": {
-    "message": "Oops, ein Fehler ist aufgetreten."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Aktuellen Tab davor hinzufügen"
-  },
-  "advancedOptions": {
-    "message": "Erweiterte Optionen"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Alle Lesezeichen in Inkognito-Fenster öffnen"
-  },
-  "customIcon": {
-    "message": "Benutzerdefiniertes Symbol"
-  },
-  "delete": {
-    "message": "Löschen"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Nicht synchronisierte Lesezeichen hervorheben"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Möchten Sie wirklich den Ordner $folderName$ und $subFolderCount$ Unterordner darin löschen?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Löschen..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Möchten Sie wirklich den Ordner $folderName$, $subFolderCount$ Unterordner und $bookmarkCount$ Lesezeichen darin löschen?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "vBookmarks auf Standardeinstellungen zurücksetzen."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Aktuellen Tab danach hinzufügen"
+  "defaultIconButtonOr": {
+    "message": "oder"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "In Inkognito-Fenster öffnen"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "Eine Nachricht für einen in der Erweiterung aufgetretenen Fehler, wurde dem Entwickler gemeldet.",
+    "message": "Dies wurde dem Entwickler gemeldet."
   },
-  "donationMessage": {
-    "message": "Wenn es Ihnen gefällt, könnten Sie vielleicht für die zukünftige Entwicklung spenden. Jeder Betrag ist willkommen."
+  "optionAutoRefreshSync": {
+    "message": "Synchronisierungsstatus automatisch aktualisieren"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Ungenutzte Ordner beim Öffnen eines Ordners schließen."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Vorherigen Zustand merken (Scroll-Position und geöffnete Ordner)."
   },
-  "replaceUrl": {
-    "message": "Dies durch aktuelle URL ersetzen"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Möchten Sie wirklich alle $count$ Lesezeichen in einem neuen Inkognito-Fenster öffnen?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "In neuem Fenster öffnen"
+  },
+  "removeSeparator": {
+    "message": "Trennzeichen entfernen"
+  },
+  "customStyles": {
+    "message": "Benutzerdefinierte Stile"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Übergeordneter Ordner: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Titel und URL in die Zwischenablage kopieren"
+  },
+  "editBookmark": {
+    "message": "Lesezeichen bearbeiten"
+  },
+  "customIconDescription": {
+    "message": "Das Symbol muss 19*19 Pixel groß sein. Andernfalls wird es auf diese Größe skaliert."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Aktion zum Öffnen von Lesezeichen.",
-    "message": "Öffnen"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Fehler melden"
+  },
+  "extDesc": {
+    "description": "Die Erweiterungsbeschreibung.",
+    "message": "Ein Popup-Lesezeichen-Manager. Verbesserte Neat Bookmarks. Ordentlicher als Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Bearbeiten..."
+  },
+  "errorOccured": {
+    "message": "Oops, ein Fehler ist aufgetreten."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "Sekunden"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Ordner bearbeiten"
+  },
+  "optionClickNewTab": {
+    "message": "Linksklick öffnet Lesezeichen in neuem Tab."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Barrierefreiheit"
+  },
+  "addBookmarkBottom": {
+    "message": "Aktuellen Tab am Ende davon hinzufügen"
+  },
+  "addNewFolderBefore": {
+    "message": "Ordner davor hinzufügen"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Nicht synchronisierte Lesezeichen hervorheben"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Der eigentliche Titel des Lesezeichens, das als Trennzeichen angezeigt wird"
+  },
+  "options": {
+    "message": "Optionen"
+  },
+  "general": {
+    "message": "Allgemein"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Alle Lesezeichen öffnen"
+  },
+  "optionAutoResizePopup": {
+    "message": "Popup-Fenstergröße automatisch an den Inhalt anpassen"
+  },
+  "addNewFolderAfter": {
+    "message": "Ordner danach hinzufügen"
+  },
+  "advancedOptions": {
+    "message": "Erweiterte Optionen"
+  },
+  "save": {
+    "message": "Speichern"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

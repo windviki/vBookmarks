@@ -52,8 +52,27 @@ const MSGS = {
     paletteCmdNewBookmark: 'New bookmark…',
     paletteCmdNewFolder: 'New folder…',
     paletteCmdNewSeparator: 'New separator',
+    paletteCmdDupes: 'Clean duplicate bookmarks',
     palettePlaceholder: 'Search bookmarks, folders, commands…',
-    paletteNoResults: 'No matching results'
+    paletteNoResults: 'No matching results',
+    dupesGroupCount: '$1 duplicates',
+    dupesCleanAll: 'Clean all: $1 groups, $2 extra copies',
+    dupesConfirmGroup: 'Keep the oldest and remove the other $1 copies?',
+    dupesConfirmAll: 'Remove $1 extra copies across $2 groups? Oldest entries are kept.',
+    dupesNone: 'No duplicates found',
+    dupesDone: 'Removed $1 duplicate bookmarks',
+    delete: 'Delete',
+    nope: 'Nope'
+};
+
+// chrome.i18n.getMessage double: $1/$2 substitution on top of the table.
+const getMessage = (key, subs) => {
+    let msg = key in MSGS ? MSGS[key] : key;
+    if (subs !== undefined) {
+        const arr = Array.isArray(subs) ? subs : [subs];
+        msg = msg.replace(/\$(\d+)/g, (m, n) => (arr[n - 1] !== undefined ? arr[n - 1] : m));
+    }
+    return msg;
 };
 
 // Root '0' (synthetic), two root folders, one nested folder with a bookmark.
@@ -165,12 +184,17 @@ const setup = (opts = {}) => {
     const treeData = opts.tree || makeTree();
     const tab = 'tab' in opts ? opts.tab : { id: 7, url: 'https://tab.example/', title: 'Tab Title' };
     const chromeStub = {
-        i18n: { getMessage: key => (key in MSGS ? MSGS[key] : key) },
+        i18n: { getMessage },
         bookmarks: {
             getTreeCalls: 0,
+            removeCalls: [],
             getTree(cb) {
                 this.getTreeCalls++;
                 cb(treeData);
+            },
+            remove(id, cb) {
+                this.removeCalls.push(id);
+                cb();
             }
         },
         tabs: {
@@ -210,12 +234,29 @@ const setup = (opts = {}) => {
         }
     };
     const quickAddCalls = [];
+    const dialogs = {
+        ConfirmDialog: {
+            openCalls: [],
+            open(opts) {
+                this.openCalls.push(opts);
+            }
+        },
+        AlertDialog: {
+            openCalls: [],
+            open(msg) {
+                this.openCalls.push(msg);
+            }
+        }
+    };
+    const onChangedCalls = [];
     const palette = initPalette({
         store: {},
         actions,
         treeView,
         quickAdd: () => quickAddCalls.push(1),
-        rootFolderId: opts.rootFolderId || '1'
+        rootFolderId: opts.rootFolderId || '1',
+        dialogs,
+        onChanged: () => onChangedCalls.push(1)
     });
 
     const keydown = (target, props) => {
@@ -232,7 +273,7 @@ const setup = (opts = {}) => {
 
     return {
         palette, doc, body, chrome: chromeStub, actions, treeView, quickAddCalls,
-        paletteEl, input, results, tree, el, treeData,
+        paletteEl, input, results, tree, el, treeData, dialogs, onChangedCalls,
         keydown, type, rowClasses, selectedIndex
     };
 };
@@ -338,10 +379,11 @@ describe('Ctrl/Cmd+K toggle', () => {
 });
 
 describe('result composition', () => {
-    it('an empty query renders only the four commands, named via i18n', () => {
+    it('an empty query renders only the five commands, named via i18n', () => {
         const { palette, results, rowClasses } = setup({});
         palette.open();
         expect(rowClasses()).toEqual([
+            'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
             'palette-row palette-command',
@@ -351,6 +393,7 @@ describe('result composition', () => {
         expect(results._appended[1]._innerHTML).toContain(MSGS.paletteCmdNewBookmark);
         expect(results._appended[2]._innerHTML).toContain(MSGS.paletteCmdNewFolder);
         expect(results._appended[3]._innerHTML).toContain(MSGS.paletteCmdNewSeparator);
+        expect(results._appended[4]._innerHTML).toContain(MSGS.paletteCmdDupes);
     });
 
     it('a non-empty query lists matching commands before bookmarks/folders', () => {
@@ -381,7 +424,7 @@ describe('result composition', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
         type('/');
-        expect(rowClasses()).toHaveLength(4);
+        expect(rowClasses()).toHaveLength(5);
     });
 
     it('ranks real fuzzy title hits above url-only hits', () => {
@@ -426,11 +469,11 @@ describe('result composition', () => {
     it('re-renders on every input event', () => {
         const { palette, rowClasses, type } = setup({});
         palette.open();
-        expect(rowClasses()).toHaveLength(4);
+        expect(rowClasses()).toHaveLength(5);
         type('gmail');
         expect(rowClasses()).toHaveLength(2);
         type('');
-        expect(rowClasses()).toHaveLength(4);
+        expect(rowClasses()).toHaveLength(5);
     });
 
     it('rebuilds a fresh index on the next open', () => {
@@ -461,9 +504,9 @@ describe('keyboard navigation', () => {
 
     it('rolls over at both ends', () => {
         const { palette, input, keydown, selectedIndex } = setup({});
-        palette.open(); // 4 command rows
+        palette.open(); // 5 command rows
         keydown(input, { key: 'ArrowUp' }); // wraps to the last row
-        expect(selectedIndex()).toBe(3);
+        expect(selectedIndex()).toBe(4);
         keydown(input, { key: 'ArrowDown' }); // wraps back to the first
         expect(selectedIndex()).toBe(0);
     });
@@ -602,5 +645,181 @@ describe('command set v1', () => {
         const ctx = setup({});
         runCommand(ctx, 3);
         expect(ctx.actions.addSeparatorCalls).toEqual([['1', 'bottom']]);
+    });
+});
+
+// --- P3.1: /dupes mode -------------------------------------------------------
+// A tree where two URLs collide after normalization: group a.com has three
+// copies (hash/utm variants), group b.com/page has two, plus one unique
+// bookmark. getTree hands out `treeData` by reference, so tests mutate it
+// between calls to simulate the deletions landing in the real backend.
+const makeDupeTree = () => [{
+    id: '0',
+    title: '',
+    children: [
+        {
+            id: '1', title: 'Bookmarks bar', dateAdded: 10,
+            children: [
+                { id: '11', title: 'A oldest', url: 'https://a.com/', dateAdded: 100 },
+                { id: '12', title: 'A mid', url: 'https://a.com/#frag', dateAdded: 200 },
+                { id: '13', title: 'A newest', url: 'https://a.com/?utm_source=x', dateAdded: 300 },
+                { id: '14', title: 'B oldest', url: 'https://b.com/page', dateAdded: 150 },
+                { id: '15', title: 'B newest', url: 'https://b.com/page#x', dateAdded: 250 },
+                { id: '16', title: 'Unique', url: 'https://c.com/', dateAdded: 50 }
+            ]
+        }
+    ]
+}];
+
+const dropIds = (tree, ids) => {
+    const bar = tree[0].children[0];
+    bar.children = bar.children.filter(n => !ids.includes(n.id));
+};
+
+// removeSequentially resolves through a promise chain even with a synchronous
+// chrome.bookmarks.remove double — flush the microtask queue to observe it.
+const flush = () => new Promise(resolve => setTimeout(resolve, 0));
+
+const enterDupesMode = ctx => {
+    ctx.palette.open();
+    ctx.type('/dupes');
+    ctx.keydown(ctx.input, { key: 'Enter' });
+};
+
+describe('dupes mode (P3.1)', () => {
+    it("typing '/dupes' surfaces the dupes command alone, via its slash alias", () => {
+        const { palette, results, rowClasses, type } = setup({});
+        palette.open();
+        type('/dupes');
+        expect(rowClasses()).toEqual(['palette-row palette-command']);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdDupes);
+    });
+
+    it("the slash alias matches by prefix: '/d' already lists it", () => {
+        const { palette, results, rowClasses, type } = setup({});
+        palette.open();
+        type('/dup');
+        expect(rowClasses()).toContain('palette-row palette-command');
+        expect(results._appended.some(li => li._innerHTML.includes(MSGS.paletteCmdDupes))).toBe(true);
+    });
+
+    it('executing the command switches into dupes mode without closing the panel', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dupes-all',
+            'palette-row palette-dupe',
+            'palette-row palette-dupe'
+        ]);
+    });
+
+    it('the clean-all row spells out the group and extra-copy totals', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        expect(ctx.results._appended[0]._innerHTML)
+            .toContain('Clean all: 2 groups, 3 extra copies');
+    });
+
+    it('group rows render the oldest title, the dupe count and the normalized URL', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        const rowA = ctx.results._appended[1]._innerHTML;
+        expect(rowA).toContain('A oldest');      // title from the earliest entry
+        expect(rowA).toContain('3 duplicates');  // dupesGroupCount
+        expect(rowA).toContain('https://a.com'); // normalized key
+        expect(rowA).not.toContain('utm_source');
+        const rowB = ctx.results._appended[2]._innerHTML;
+        expect(rowB).toContain('B oldest');
+        expect(rowB).toContain('2 duplicates');
+        expect(rowB).toContain('https://b.com/page');
+    });
+
+    it('shows the dupesNone empty-state when nothing collides', () => {
+        const ctx = setup({}); // default tree has no duplicates
+        enterDupesMode(ctx);
+        expect(ctx.results._appended).toHaveLength(1);
+        expect(ctx.results._appended[0].className).toBe('palette-empty');
+        expect(ctx.results._appended[0].textContent).toBe(MSGS.dupesNone);
+    });
+
+    it('Enter on a group row opens a keep-oldest ConfirmDialog and keeps the panel open', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // row 1 = group a.com
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        const opts = ctx.dialogs.ConfirmDialog.openCalls[0];
+        expect(opts.dialog).toBe('Keep the oldest and remove the other 2 copies?');
+        expect(opts.button1).toContain(MSGS.delete);
+        expect(opts.button2).toBe(MSGS.nope);
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('confirming a group removes the newer copies in order, refreshes and stays in dupes mode', async () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        fire(ctx.results._appended[1], 'click', makeEvent({})); // group a.com
+        // the backend lost ids 12+13 by the time fn1's refresh re-reads it
+        dropIds(ctx.treeData, ['12', '13']);
+        ctx.dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(ctx.chrome.bookmarks.removeCalls).toEqual(['12', '13']); // oldest kept
+        expect(ctx.onChangedCalls).toHaveLength(1);
+        expect(ctx.palette.isOpen()).toBe(true);
+        // rebuilt from the fresh tree: only group b.com remains
+        expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dupes-all',
+            'palette-row palette-dupe'
+        ]);
+        expect(ctx.results._appended[0]._innerHTML)
+            .toContain('Clean all: 1 groups, 1 extra copies');
+    });
+
+    it('cancelling the group dialog removes nothing', async () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        fire(ctx.results._appended[1], 'click', makeEvent({}));
+        // cancelling = fn1 never runs (ConfirmDialog's own fn2 is a no-op)
+        await flush();
+        expect(ctx.chrome.bookmarks.removeCalls).toEqual([]);
+        expect(ctx.onChangedCalls).toEqual([]);
+    });
+
+    it('Enter on the clean-all row confirms with the cross-group totals', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        ctx.keydown(ctx.input, { key: 'Enter' }); // no selection: row 0 = clean-all
+        const opts = ctx.dialogs.ConfirmDialog.openCalls[0];
+        expect(opts.dialog).toBe('Remove 3 extra copies across 2 groups? Oldest entries are kept.');
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('confirming clean-all removes every doomed copy, alerts the count and closes to normal mode', async () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        ctx.dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(ctx.chrome.bookmarks.removeCalls).toEqual(['12', '13', '15']);
+        expect(ctx.onChangedCalls).toHaveLength(1);
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['Removed 3 duplicate bookmarks']);
+        expect(ctx.palette.isOpen()).toBe(false);
+        // next open is plain normal mode again
+        ctx.palette.open();
+        expect(ctx.rowClasses()).toHaveLength(5);
+        expect(ctx.rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
+    });
+
+    it('Escape closes straight out of dupes mode; the next open starts in normal mode', () => {
+        const ctx = setup({ tree: makeDupeTree() });
+        enterDupesMode(ctx);
+        expect(ctx.rowClasses()[0]).toBe('palette-row palette-dupes-all');
+        ctx.keydown(ctx.input, { key: 'Escape' });
+        expect(ctx.palette.isOpen()).toBe(false);
+        ctx.palette.open();
+        expect(ctx.rowClasses()).toHaveLength(5);
+        expect(ctx.rowClasses()[0]).toBe('palette-row palette-command');
     });
 });

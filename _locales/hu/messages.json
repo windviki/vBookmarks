@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Ez az új VBM $versionNumber$! Változásnapló itt: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ennek A Tetejére"
+  "copyAllTitlesAndUrls": {
+    "message": "Összes cím és URL másolása vágólapra"
   },
-  "customSeparatorColorDescription": {
-    "message": "Elválasztó Színének Testreszabása"
+  "customIcon": {
+    "message": "Egyéni ikon"
   },
-  "customIconDescription": {
-    "message": "Az ikonnak 19x19 pixel méretűnek kell lennie. Egyébként átméretezésre kerül erre a méretre."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "másodperc"
+  "optionConfirmOpenFolder": {
+    "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Frissítési időköz"
+  },
+  "addNewFolder": {
+    "message": "Almappa Hozzáadása"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Csak a könyvjelzők megjelenítése a Könyvjelzőlécen"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Szülőmappa: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Megnyitás"
+  },
+  "addBookmarkTop": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ennek A Tetejére"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Elvetés"
   },
-  "accessibility": {
-    "message": "Akadálymentesítés"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Készítette $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Megnyitás Új Lapon"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Frissítési időköz"
+  "resetSettingsDescription": {
+    "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Könyvjelzők Keresése"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $subFolderCount$ almappát?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Előző állapot megjegyzése (görgetési pozíció és nyitott mappák)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "A könyvjelző valós címe, amely elválasztóként jelenik meg"
+  "nope": {
+    "message": "Nem"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Könyvjelzők Keresése"
+  "openBookmarksNewWindow": {
+    "message": "Összes Könyvjelző Megnyitása Új Ablakban"
   },
-  "reportError": {
-    "message": "Hiba Jelentése"
+  "optionZoom": {
+    "message": "Nagyítás"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Nem használt mappák bezárása mappa megnyitásakor."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Összes Könyvjelző Megnyitása Inkognitó Ablakban"
+  },
+  "optionShowSyncStatus": {
+    "message": "Szinkronizálási állapotjelzők megjelenítése"
+  },
+  "addBookmarkBefore": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ez Elött"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új ablakban?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Elválasztó Hozzáadása"
+  },
+  "optionOpenNewTab": {
+    "message": "Középső kattintás vagy control-kattintás új háttér lapon nyitja meg a könyvjelzőt (előtér helyett)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Elválasztó Színének Testreszabása"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Cserélje le ezt a jelenlegi URL-rel"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "A könyvjelző valós URL-je, amely elválasztóként jelenik meg"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "A felugró ablak nyitva marad a könyvjelzők megnyitásakor (bal kattintás)."
+  },
+  "resetSettings": {
+    "message": "Beállítások visszaállítása"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Mellőzés"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Egy felugró könyvjelzőkezelő. Fejlesztett Neat Bookmarks. Rendezettebb, mint a Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Elválasztó Hozzáadása"
-  },
-  "deleteEllipsis": {
-    "message": "Törlés..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "A könyvjelzők nem helyezhetők át a szinkronizált és a helyi tárhely között. Használja a másolás/beillesztés funkciót.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Elválasztó Eltávolítása"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ezt jelentették a fejlesztőnek."
-  },
-  "customStyles": {
-    "message": "Egyéni Stílusok"
-  },
-  "resetButton": {
-    "message": "Visszaállítás"
-  },
-  "customStylesDescription": {
-    "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
-  },
-  "openNewWindow": {
-    "message": "Megnyitás Új Ablakban"
-  },
-  "optionPopupStays": {
-    "message": "A felugró ablak nyitva marad a könyvjelzők megnyitásakor (bal kattintás)."
-  },
-  "addBookmarkBottom": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ennek Az Aljára"
-  },
-  "openBookmarks": {
-    "message": "Összes Könyvjelző Megnyitása"
-  },
   "customSeparatorStringDescription": {
     "message": "Ha egy könyvjelző URL-je tartalmazza ezt a karakterláncot, elválasztóként jelenik meg"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új ablakban?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Törlés"
   },
-  "nope": {
-    "message": "Nem"
-  },
-  "defaultIconButtonOr": {
-    "message": "vagy"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Összes Könyvjelző Megnyitása Új Ablakban"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Beállítások"
-  },
-  "save": {
-    "message": "Mentés"
-  },
-  "general": {
-    "message": "Általános"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Nagyítás"
-  },
-  "addNewFolderAfter": {
-    "message": "Mappa Hozzáadása Ez Után"
-  },
-  "optionClickNewTab": {
-    "message": "Bal kattintás új lapon nyitja meg a könyvjelzőt."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(nincs cím)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
-  },
-  "copyTitleAndUrl": {
-    "message": "Cím és URL másolása vágólapra"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Könyvjelző szerkesztése"
+  "addBookmarkAfter": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ez Után"
   },
-  "edit": {
-    "message": "Szerkesztés..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Megnyitás Új Lapon"
+  "resetButton": {
+    "message": "Visszaállítás"
   },
-  "syncOptions": {
-    "message": "Szinkronizálási beállítások"
+  "defaultIconButton": {
+    "message": "Alapértelmezett használata"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name of bookmark or folder.",
     "message": "Név"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új inkognitó ablakban?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Ha tetszik, talán adományozhat a jövőbeli fejlesztéshez. Bármilyen összeget szívesen fogadunk."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Összes cím és URL másolása vágólapra"
+  "customStylesDescription": {
+    "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
   },
-  "optionAutoRefreshSync": {
-    "message": "Szinkronizálási állapot automatikus frissítése"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(nincs cím)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Mellőzés"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Szinkronizálási beállítások"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Készítette $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Középső kattintás vagy control-kattintás új háttér lapon nyitja meg a könyvjelzőt (előtér helyett)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Szinkronizálási állapotjelzők megjelenítése"
-  },
-  "openIncognitoWindow": {
-    "message": "Megnyitás Inkognitó Ablakban"
-  },
-  "addNewFolder": {
-    "message": "Almappa Hozzáadása"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "A könyvjelző valós URL-je, amely elválasztóként jelenik meg"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Alapértelmezett használata"
-  },
-  "optionAutoResizePopup": {
-    "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
-  },
-  "resetSettings": {
-    "message": "Beállítások visszaállítása"
-  },
-  "addNewFolderBefore": {
-    "message": "Mappa Hozzáadása Ez Elött"
-  },
-  "editFolder": {
-    "message": "Mappa szerkesztése"
-  },
-  "errorOccured": {
-    "message": "Hoppá, hiba történt."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ez Elött"
-  },
-  "advancedOptions": {
-    "message": "Haladó Beállítások"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Összes Könyvjelző Megnyitása Inkognitó Ablakban"
-  },
-  "customIcon": {
-    "message": "Egyéni ikon"
-  },
-  "delete": {
-    "message": "Törlés"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Szinkronizálatlan könyvjelzők kiemelése"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $subFolderCount$ almappát?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Törlés..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát, a benne lévő $subFolderCount$ almappát és $bookmarkCount$ könyvjelzőt?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "vBookmarks visszaállítása alapértelmezett beállításokra."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Jelenlegi Lap Könyvjelzőzése Ez Után"
+  "defaultIconButtonOr": {
+    "message": "vagy"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Megnyitás Inkognitó Ablakban"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ezt jelentették a fejlesztőnek."
   },
-  "donationMessage": {
-    "message": "Ha tetszik, talán adományozhat a jövőbeli fejlesztéshez. Bármilyen összeget szívesen fogadunk."
+  "optionAutoRefreshSync": {
+    "message": "Szinkronizálási állapot automatikus frissítése"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Nem használt mappák bezárása mappa megnyitásakor."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Előző állapot megjegyzése (görgetési pozíció és nyitott mappák)."
   },
-  "replaceUrl": {
-    "message": "Cserélje le ezt a jelenlegi URL-rel"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Biztosan megnyitja az összes $count$ könyvjelzőt új inkognitó ablakban?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Megnyitás Új Ablakban"
+  },
+  "removeSeparator": {
+    "message": "Elválasztó Eltávolítása"
+  },
+  "customStyles": {
+    "message": "Egyéni Stílusok"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Szülőmappa: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Cím és URL másolása vágólapra"
+  },
+  "editBookmark": {
+    "message": "Könyvjelző szerkesztése"
+  },
+  "customIconDescription": {
+    "message": "Az ikonnak 19x19 pixel méretűnek kell lennie. Egyébként átméretezésre kerül erre a méretre."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Megnyitás"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Hiba Jelentése"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Egy felugró könyvjelzőkezelő. Fejlesztett Neat Bookmarks. Rendezettebb, mint a Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Szerkesztés..."
+  },
+  "errorOccured": {
+    "message": "Hoppá, hiba történt."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "másodperc"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Mappa szerkesztése"
+  },
+  "optionClickNewTab": {
+    "message": "Bal kattintás új lapon nyitja meg a könyvjelzőt."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Akadálymentesítés"
+  },
+  "addBookmarkBottom": {
+    "message": "Jelenlegi Lap Könyvjelzőzése Ennek Az Aljára"
+  },
+  "addNewFolderBefore": {
+    "message": "Mappa Hozzáadása Ez Elött"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Szinkronizálatlan könyvjelzők kiemelése"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "A könyvjelző valós címe, amely elválasztóként jelenik meg"
+  },
+  "options": {
+    "message": "Beállítások"
+  },
+  "general": {
+    "message": "Általános"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Összes Könyvjelző Megnyitása"
+  },
+  "optionAutoResizePopup": {
+    "message": "Felugró ablak automatikus átméretezése a tartalomhoz igazítva"
+  },
+  "addNewFolderAfter": {
+    "message": "Mappa Hozzáadása Ez Után"
+  },
+  "advancedOptions": {
+    "message": "Haladó Beállítások"
+  },
+  "save": {
+    "message": "Mentés"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

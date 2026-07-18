@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "सिंक किए गए और स्थानीय स्टोरेज के बीच बुकमार्क नहीं ले जाए जा सकते। कॉपी/पेस्ट का उपयोग करें।",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "यह नया VBM $versionNumber$ है! चेंजलॉग यहाँ है: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "वर्तमान टैब को इसके ऊपर जोड़ें"
+  "copyAllTitlesAndUrls": {
+    "message": "सभी शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
   },
-  "customSeparatorColorDescription": {
-    "message": "सेपरेटर रंग कस्टमाइज़ करें"
+  "customIcon": {
+    "message": "कस्टम आइकन"
   },
-  "customIconDescription": {
-    "message": "आइकन 19*19 पिक्सेल आयाम का होना चाहिए। अन्यथा इसे इस आयाम में रीसाइज़ किया जाएगा।"
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "सेकंड"
+  "optionConfirmOpenFolder": {
+    "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "रिफ्रेश अंतराल"
+  },
+  "addNewFolder": {
+    "message": "सबफोल्डर जोड़ें"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "केवल बुकमार्क बार में बुकमार्क दिखाएं"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "पैरेंट फोल्डर: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "बुकमार्क खोलने की क्रिया।",
+    "message": "खोलें"
+  },
+  "addBookmarkTop": {
+    "message": "वर्तमान टैब को इसके ऊपर जोड़ें"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "खारिज करें"
   },
-  "accessibility": {
-    "message": "पहुंच"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$ द्वारा बनाया गया।",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "नए टैब में खोलें"
   },
-  "optionSyncRefreshInterval": {
-    "message": "रिफ्रेश अंतराल"
+  "resetSettingsDescription": {
+    "message": "vBookmarks को डिफ़ॉल्ट सेटिंग पर रीसेट करें।"
+  },
+  "searchBookmarks": {
+    "description": "सर्च फील्ड के लिए प्लेसहोल्डर टेक्स्ट।",
+    "message": "बुकमार्क खोजें"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $subFolderCount$ सबफोल्डर हटाना चाहते हैं?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "पिछली स्थिति याद रखें (स्क्रॉल पोजीशन और खुले फोल्डर)।"
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "बुकमार्क का वास्तविक शीर्षक जो सेपरेटर के रूप में दिखाया जाता है"
+  "nope": {
+    "message": "नहीं"
   },
-  "searchBookmarks": {
-    "description": "सर्च फील्ड के लिए प्लेसहोल्डर टेक्स्ट।",
-    "message": "बुकमार्क खोजें"
+  "openBookmarksNewWindow": {
+    "message": "नई विंडो में सभी बुकमार्क खोलें"
   },
-  "reportError": {
-    "message": "त्रुटि रिपोर्ट करें"
+  "optionZoom": {
+    "message": "ज़ूम"
+  },
+  "optionSearchAfterEnter": {
+    "message": "केवल ENTER दबाने पर बुकमार्क खोजें (तत्काल खोज के बजाय)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "फोल्डर खोलते समय अप्रयुक्त फोल्डर बंद करें।"
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "ठीक है"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "इनकॉग्निटो विंडो में सभी बुकमार्क खोलें"
+  },
+  "optionShowSyncStatus": {
+    "message": "सिंक स्थिति संकेतक दिखाएं"
+  },
+  "addBookmarkBefore": {
+    "message": "वर्तमान टैब को इसके पहले जोड़ें"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "क्या आप वाकई नई विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "सेपरेटर जोड़ें"
+  },
+  "optionOpenNewTab": {
+    "message": "मिडिल क्लिक या कंट्रोल-क्लिक बुकमार्क को नए बैकग्राउंड टैब में खोलता है (फोरग्राउंड के बजाय)।"
+  },
+  "customSeparatorColorDescription": {
+    "message": "सेपरेटर रंग कस्टमाइज़ करें"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "इसे वर्तमान URL से बदलें"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "बुकमार्क का वास्तविक URL जो सेपरेटर के रूप में दिखाया जाता है"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "बुकमार्क खोलते समय (बाएँ क्लिक) पॉपअप खुला रहता है।"
+  },
+  "resetSettings": {
+    "message": "सेटिंग रीसेट करें"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "नज़रअंदाज़ करें"
-  },
-  "extDesc": {
-    "description": "एक्सटेंशन का विवरण।",
-    "message": "एक पॉपअप बुकमार्क मैनेजर। बेहतर Neat Bookmarks। Neater Bookmarks से अधिक व्यवस्थित।"
-  },
-  "addSeparator": {
-    "message": "सेपरेटर जोड़ें"
-  },
-  "deleteEllipsis": {
-    "message": "हटाएं..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "सिंक किए गए और स्थानीय स्टोरेज के बीच बुकमार्क नहीं ले जाए जा सकते। कॉपी/पेस्ट का उपयोग करें।",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "सेपरेटर हटाएं"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "एक्सटेंशन में हुई त्रुटि के लिए संदेश, डेवलपर को रिपोर्ट किया गया है।",
-    "message": "यह डेवलपर को रिपोर्ट किया गया है।"
-  },
-  "customStyles": {
-    "message": "कस्टम स्टाइल"
-  },
-  "resetButton": {
-    "message": "रीसेट करें"
-  },
-  "customStylesDescription": {
-    "message": "इसके लिए कुछ CSS कौशल की आवश्यकता है। अपने जोखिम पर हैक करें। कोड शेयरिंग के लिए के माध्यम से करना बुद्धिमानी होगी"
-  },
-  "openNewWindow": {
-    "message": "नई विंडो में खोलें"
-  },
-  "optionPopupStays": {
-    "message": "बुकमार्क खोलते समय (बाएँ क्लिक) पॉपअप खुला रहता है।"
-  },
-  "addBookmarkBottom": {
-    "message": "वर्तमान टैब को इसके नीचे जोड़ें"
-  },
-  "openBookmarks": {
-    "message": "सभी बुकमार्क खोलें"
-  },
   "customSeparatorStringDescription": {
     "message": "यदि किसी बुकमार्क के URL में यह स्ट्रिंग है, तो इसे सेपरेटर के रूप में दिखाया जाएगा"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "क्या आप वाकई नई विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "हटाएं"
   },
-  "nope": {
-    "message": "नहीं"
-  },
-  "defaultIconButtonOr": {
-    "message": "या"
-  },
-  "openBookmarksNewWindow": {
-    "message": "नई विंडो में सभी बुकमार्क खोलें"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "विकल्प"
-  },
-  "save": {
-    "message": "सहेजें"
-  },
-  "general": {
-    "message": "सामान्य"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "ठीक है"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "ज़ूम"
-  },
-  "addNewFolderAfter": {
-    "message": "इसके बाद फोल्डर जोड़ें"
-  },
-  "optionClickNewTab": {
-    "message": "बाएँ क्लिक बुकमार्क को नए टैब में खोलता है।"
-  },
-  "noTitle": {
-    "description": "बिना शीर्षक वाले बुकमार्क के लिए शीर्षक जिनके पास http(s) URL नहीं है या बिना शीर्षक वाले फोल्डर।",
-    "message": "(कोई शीर्षक नहीं)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
-  },
-  "copyTitleAndUrl": {
-    "message": "शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "बुकमार्क संपादित करें"
+  "addBookmarkAfter": {
+    "message": "वर्तमान टैब को इसके बाद जोड़ें"
   },
-  "edit": {
-    "message": "संपादित करें..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "नए टैब में खोलें"
+  "resetButton": {
+    "message": "रीसेट करें"
   },
-  "syncOptions": {
-    "message": "सिंक विकल्प"
+  "defaultIconButton": {
+    "message": "डिफ़ॉल्ट उपयोग करें"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "बुकमार्क या फोल्डर का नाम।",
     "message": "नाम"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "क्या आप वाकई नई इनकॉग्निटो विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "यदि आपको यह पसंद है, तो शायद आप इसके भविष्य के विकास के लिए दान कर सकते हैं। कोई भी राशि स्वागत है।"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "सभी शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
+  "customStylesDescription": {
+    "message": "इसके लिए कुछ CSS कौशल की आवश्यकता है। अपने जोखिम पर हैक करें। कोड शेयरिंग के लिए के माध्यम से करना बुद्धिमानी होगी"
   },
-  "optionAutoRefreshSync": {
-    "message": "सिंक स्थिति ऑटो-रिफ्रेश करें"
+  "noTitle": {
+    "description": "बिना शीर्षक वाले बुकमार्क के लिए शीर्षक जिनके पास http(s) URL नहीं है या बिना शीर्षक वाले फोल्डर।",
+    "message": "(कोई शीर्षक नहीं)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "नज़रअंदाज़ करें"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "सिंक विकल्प"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$ द्वारा बनाया गया।",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "मिडिल क्लिक या कंट्रोल-क्लिक बुकमार्क को नए बैकग्राउंड टैब में खोलता है (फोरग्राउंड के बजाय)।"
-  },
-  "optionShowSyncStatus": {
-    "message": "सिंक स्थिति संकेतक दिखाएं"
-  },
-  "openIncognitoWindow": {
-    "message": "इनकॉग्निटो विंडो में खोलें"
-  },
-  "addNewFolder": {
-    "message": "सबफोल्डर जोड़ें"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "बुकमार्क का वास्तविक URL जो सेपरेटर के रूप में दिखाया जाता है"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "डिफ़ॉल्ट उपयोग करें"
-  },
-  "optionAutoResizePopup": {
-    "message": "पॉपअप विंडो को सामग्री के अनुसार ऑटो-रिसाइज़ करें"
-  },
-  "resetSettings": {
-    "message": "सेटिंग रीसेट करें"
-  },
-  "addNewFolderBefore": {
-    "message": "इसके पहले फोल्डर जोड़ें"
-  },
-  "editFolder": {
-    "message": "फोल्डर संपादित करें"
-  },
-  "errorOccured": {
-    "message": "ओह, एक त्रुटि हुई।"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "वर्तमान टैब को इसके पहले जोड़ें"
-  },
-  "advancedOptions": {
-    "message": "उन्नत विकल्प"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "इनकॉग्निटो विंडो में सभी बुकमार्क खोलें"
-  },
-  "customIcon": {
-    "message": "कस्टम आइकन"
-  },
-  "delete": {
-    "message": "हटाएं"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "असिंक बुकमार्क को हाइलाइट करें"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "केवल ENTER दबाने पर बुकमार्क खोजें (तत्काल खोज के बजाय)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $subFolderCount$ सबफोल्डर हटाना चाहते हैं?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "हटाएं..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "क्या आप वाकई $folderName$ फोल्डर, $subFolderCount$ सबफोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "vBookmarks को डिफ़ॉल्ट सेटिंग पर रीसेट करें।"
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "वर्तमान टैब को इसके बाद जोड़ें"
+  "defaultIconButtonOr": {
+    "message": "या"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "इनकॉग्निटो विंडो में खोलें"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "एक्सटेंशन में हुई त्रुटि के लिए संदेश, डेवलपर को रिपोर्ट किया गया है।",
+    "message": "यह डेवलपर को रिपोर्ट किया गया है।"
   },
-  "donationMessage": {
-    "message": "यदि आपको यह पसंद है, तो शायद आप इसके भविष्य के विकास के लिए दान कर सकते हैं। कोई भी राशि स्वागत है।"
+  "optionAutoRefreshSync": {
+    "message": "सिंक स्थिति ऑटो-रिफ्रेश करें"
   },
-  "optionCloseUnusedFolders": {
-    "message": "फोल्डर खोलते समय अप्रयुक्त फोल्डर बंद करें।"
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "पिछली स्थिति याद रखें (स्क्रॉल पोजीशन और खुले फोल्डर)।"
   },
-  "replaceUrl": {
-    "message": "इसे वर्तमान URL से बदलें"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "क्या आप वाकई नई इनकॉग्निटो विंडो में सभी $count$ बुकमार्क खोलना चाहते हैं?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "नई विंडो में खोलें"
+  },
+  "removeSeparator": {
+    "message": "सेपरेटर हटाएं"
+  },
+  "customStyles": {
+    "message": "कस्टम स्टाइल"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "पैरेंट फोल्डर: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "शीर्षक और URL क्लिपबोर्ड में कॉपी करें"
+  },
+  "editBookmark": {
+    "message": "बुकमार्क संपादित करें"
+  },
+  "customIconDescription": {
+    "message": "आइकन 19*19 पिक्सेल आयाम का होना चाहिए। अन्यथा इसे इस आयाम में रीसाइज़ किया जाएगा।"
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "बुकमार्क खोलने की क्रिया।",
-    "message": "खोलें"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "त्रुटि रिपोर्ट करें"
+  },
+  "extDesc": {
+    "description": "एक्सटेंशन का विवरण।",
+    "message": "एक पॉपअप बुकमार्क मैनेजर। बेहतर Neat Bookmarks। Neater Bookmarks से अधिक व्यवस्थित।"
+  },
+  "edit": {
+    "message": "संपादित करें..."
+  },
+  "errorOccured": {
+    "message": "ओह, एक त्रुटि हुई।"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "सेकंड"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "फोल्डर संपादित करें"
+  },
+  "optionClickNewTab": {
+    "message": "बाएँ क्लिक बुकमार्क को नए टैब में खोलता है।"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "पहुंच"
+  },
+  "addBookmarkBottom": {
+    "message": "वर्तमान टैब को इसके नीचे जोड़ें"
+  },
+  "addNewFolderBefore": {
+    "message": "इसके पहले फोल्डर जोड़ें"
+  },
+  "optionHighlightUnsynced": {
+    "message": "असिंक बुकमार्क को हाइलाइट करें"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "बुकमार्क का वास्तविक शीर्षक जो सेपरेटर के रूप में दिखाया जाता है"
+  },
+  "options": {
+    "message": "विकल्प"
+  },
+  "general": {
+    "message": "सामान्य"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "सभी बुकमार्क खोलें"
+  },
+  "optionAutoResizePopup": {
+    "message": "पॉपअप विंडो को सामग्री के अनुसार ऑटो-रिसाइज़ करें"
+  },
+  "addNewFolderAfter": {
+    "message": "इसके बाद फोल्डर जोड़ें"
+  },
+  "advancedOptions": {
+    "message": "उन्नत विकल्प"
+  },
+  "save": {
+    "message": "सहेजें"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

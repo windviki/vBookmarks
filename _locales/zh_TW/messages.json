@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。",
+    "description": "嘗試跨儲存類型移動書籤時的警告訊息"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "歡迎使用新版本 $versionNumber$！更新記錄：$versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "添加當前頁到資料夾前端"
+  "copyAllTitlesAndUrls": {
+    "message": "拷貝所有標題和鏈接到剪貼板"
   },
-  "customSeparatorColorDescription": {
-    "message": "定制分割條顏色"
+  "customIcon": {
+    "message": "個性化圖標"
   },
-  "customIconDescription": {
-    "message": "圖標必須為19*19像素，否則會被縮放至此大小"
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "秒"
+  "optionConfirmOpenFolder": {
+    "message": "開啟多個書籤前需確認"
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "刷新間隔"
+  },
+  "addNewFolder": {
+    "message": "添加子資料夾"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "僅顯示書籤欄中的書籤"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "所在目錄：$folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "開啟書籤的動作",
+    "message": "開啟"
+  },
+  "addBookmarkTop": {
+    "message": "添加當前頁到資料夾前端"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "網址"
   },
   "donationDismiss": {
     "message": "關閉"
   },
-  "accessibility": {
-    "message": "輔助功能"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "作者：$authorName$",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "在新分頁中開啟"
   },
-  "optionSyncRefreshInterval": {
-    "message": "刷新間隔"
+  "resetSettingsDescription": {
+    "message": "重置所有選項到默認值"
+  },
+  "searchBookmarks": {
+    "description": "搜索框裡的提示文字",
+    "message": "搜尋書籤"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "記住上次狀態（滾動軸位置、已展開資料夾）"
+  "extName": {
+    "description": "擴充功能名稱",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "被用作分割條的書籤節點的标题"
+  "nope": {
+    "message": "取消"
   },
-  "searchBookmarks": {
-    "description": "搜索框裡的提示文字",
-    "message": "搜尋書籤"
+  "openBookmarksNewWindow": {
+    "message": "在新視窗中開啟所有書籤"
   },
-  "reportError": {
-    "message": "報告此錯誤"
+  "optionZoom": {
+    "message": "縮放"
+  },
+  "optionSearchAfterEnter": {
+    "message": "僅當回車之後才進行書籤搜尋（否則輸入字符立即搜尋）"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "展開資料夾時收合其他資料夾"
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "好的"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "在無痕式視窗中開啟所有書籤"
+  },
+  "optionShowSyncStatus": {
+    "message": "顯示同步狀態指示器"
+  },
+  "addBookmarkBefore": {
+    "message": "添加當前頁書籤到此之前"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "您確定要在新視窗中開啟 $count$ 個書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "添加分隔符"
+  },
+  "optionOpenNewTab": {
+    "message": "用滑鼠中鍵或按住 Ctrl 鍵左擊在背景開啟書籤"
+  },
+  "customSeparatorColorDescription": {
+    "message": "定制分割條顏色"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "替換為當前頁的URL"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "被用作分割條的書籤節點的URL"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "開啟（滑鼠左擊）書籤時 Popup 頁面不關閉"
+  },
+  "resetSettings": {
+    "message": "重置所有選項"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "您確定要刪除資料夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "忽略"
-  },
-  "extDesc": {
-    "description": "擴充功能描述",
-    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
-  },
-  "addSeparator": {
-    "message": "添加分隔符"
-  },
-  "deleteEllipsis": {
-    "message": "刪除 ..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "無法在同步和本地儲存空間之間移動書籤。請使用複製/貼上功能。",
-    "description": "嘗試跨儲存類型移動書籤時的警告訊息"
-  },
-  "removeSeparator": {
-    "message": "移除分隔符"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "擴展中發生了一個錯誤，已經報告給開發者",
-    "message": "錯誤報告"
-  },
-  "customStyles": {
-    "message": "定制CSS"
-  },
-  "resetButton": {
-    "message": "重置"
-  },
-  "customStylesDescription": {
-    "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
-  },
-  "openNewWindow": {
-    "message": "在新視窗中開啟"
-  },
-  "optionPopupStays": {
-    "message": "開啟（滑鼠左擊）書籤時 Popup 頁面不關閉"
-  },
-  "addBookmarkBottom": {
-    "message": "添加當前頁到資料夾末尾"
-  },
-  "openBookmarks": {
-    "message": "開啟所有書籤"
-  },
   "customSeparatorStringDescription": {
     "message": "如果任一書籤URL含有以下字符串，將被顯示為分割條"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "您確定要在新視窗中開啟 $count$ 個書籤？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "刪除"
   },
-  "nope": {
-    "message": "取消"
-  },
-  "defaultIconButtonOr": {
-    "message": " 或者 "
-  },
-  "openBookmarksNewWindow": {
-    "message": "在新視窗中開啟所有書籤"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "擴充功能名稱",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "設定"
-  },
-  "save": {
-    "message": "儲存"
-  },
-  "general": {
-    "message": "一般功能"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "好的"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "縮放"
-  },
-  "addNewFolderAfter": {
-    "message": "添加資料夾到此之後"
-  },
-  "optionClickNewTab": {
-    "message": "左擊書籤在新分頁中開啟"
-  },
-  "noTitle": {
-    "description": "無 http(s) 開頭的書籤或無命名的資料夾的預設標題",
-    "message": "（無標題）"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "開啟多個書籤前需確認"
-  },
-  "copyTitleAndUrl": {
-    "message": "拷貝標題和鏈接到剪貼板"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "編輯書籤"
+  "addBookmarkAfter": {
+    "message": "添加當前頁書籤到此之後"
   },
-  "edit": {
-    "message": "編輯 ..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "在新分頁中開啟"
+  "resetButton": {
+    "message": "重置"
   },
-  "syncOptions": {
-    "message": "同步選項"
+  "defaultIconButton": {
+    "message": "使用默認圖標"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "書籤名或資料夾名",
     "message": "名稱"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "您確定要在無痕式視窗中開啟 $count$ 個書籤？",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "拷貝所有標題和鏈接到剪貼板"
+  "customStylesDescription": {
+    "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
   },
-  "optionAutoRefreshSync": {
-    "message": "自動刷新同步狀態"
+  "noTitle": {
+    "description": "無 http(s) 開頭的書籤或無命名的資料夾的預設標題",
+    "message": "（無標題）"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "忽略"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "同步選項"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "作者：$authorName$",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "用滑鼠中鍵或按住 Ctrl 鍵左擊在背景開啟書籤"
-  },
-  "optionShowSyncStatus": {
-    "message": "顯示同步狀態指示器"
-  },
-  "openIncognitoWindow": {
-    "message": "在無痕式視窗中開啟"
-  },
-  "addNewFolder": {
-    "message": "添加子資料夾"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "被用作分割條的書籤節點的URL"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "使用默認圖標"
-  },
-  "optionAutoResizePopup": {
-    "message": "自動調整彈出視窗大小以適應內容"
-  },
-  "resetSettings": {
-    "message": "重置所有選項"
-  },
-  "addNewFolderBefore": {
-    "message": "添加資料夾到此之前"
-  },
-  "editFolder": {
-    "message": "編輯資料夾"
-  },
-  "errorOccured": {
-    "message": "有錯誤出現"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "添加當前頁書籤到此之前"
-  },
-  "advancedOptions": {
-    "message": "進階設定"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "在無痕式視窗中開啟所有書籤"
-  },
-  "customIcon": {
-    "message": "個性化圖標"
-  },
-  "delete": {
-    "message": "刪除"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "高亮未同步的書籤"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "僅當回車之後才進行書籤搜尋（否則輸入字符立即搜尋）"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄）？",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "刪除 ..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "您確定要刪除資料夾[$folderName$]（包含 $subFolderCount$ 個子目錄和 $bookmarkCount$ 個書籤）？",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "重置所有選項到默認值"
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "添加當前頁書籤到此之後"
+  "defaultIconButtonOr": {
+    "message": " 或者 "
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "在無痕式視窗中開啟"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "擴展中發生了一個錯誤，已經報告給開發者",
+    "message": "錯誤報告"
   },
-  "donationMessage": {
-    "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
+  "optionAutoRefreshSync": {
+    "message": "自動刷新同步狀態"
   },
-  "optionCloseUnusedFolders": {
-    "message": "展開資料夾時收合其他資料夾"
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "網址"
+  "optionRememberPrevState": {
+    "message": "記住上次狀態（滾動軸位置、已展開資料夾）"
   },
-  "replaceUrl": {
-    "message": "替換為當前頁的URL"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "您確定要在無痕式視窗中開啟 $count$ 個書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "在新視窗中開啟"
+  },
+  "removeSeparator": {
+    "message": "移除分隔符"
+  },
+  "customStyles": {
+    "message": "定制CSS"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "所在目錄：$folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "拷貝標題和鏈接到剪貼板"
+  },
+  "editBookmark": {
+    "message": "編輯書籤"
+  },
+  "customIconDescription": {
+    "message": "圖標必須為19*19像素，否則會被縮放至此大小"
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "開啟書籤的動作",
-    "message": "開啟"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "報告此錯誤"
+  },
+  "extDesc": {
+    "description": "擴充功能描述",
+    "message": "靈巧實用的彈出書籤管理器，NeatBookmarks的加強版"
+  },
+  "edit": {
+    "message": "編輯 ..."
+  },
+  "errorOccured": {
+    "message": "有錯誤出現"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "秒"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "編輯資料夾"
+  },
+  "optionClickNewTab": {
+    "message": "左擊書籤在新分頁中開啟"
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "輔助功能"
+  },
+  "addBookmarkBottom": {
+    "message": "添加當前頁到資料夾末尾"
+  },
+  "addNewFolderBefore": {
+    "message": "添加資料夾到此之前"
+  },
+  "optionHighlightUnsynced": {
+    "message": "高亮未同步的書籤"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "被用作分割條的書籤節點的标题"
+  },
+  "options": {
+    "message": "設定"
+  },
+  "general": {
+    "message": "一般功能"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "開啟所有書籤"
+  },
+  "optionAutoResizePopup": {
+    "message": "自動調整彈出視窗大小以適應內容"
+  },
+  "addNewFolderAfter": {
+    "message": "添加資料夾到此之後"
+  },
+  "advancedOptions": {
+    "message": "進階設定"
+  },
+  "save": {
+    "message": "儲存"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Đây là VBM $versionNumber$ mới! Nhật ký thay đổi ở đây: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Đánh dấu Tab Hiện Tại Vào Đầu Của Đây"
+  "copyAllTitlesAndUrls": {
+    "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
   },
-  "customSeparatorColorDescription": {
-    "message": "Tùy chỉnh Màu Dòng Kẻ"
+  "customIcon": {
+    "message": "Biểu tượng tùy chỉnh"
   },
-  "customIconDescription": {
-    "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "giây"
+  "optionConfirmOpenFolder": {
+    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Khoảng thời gian làm mới"
+  },
+  "addNewFolder": {
+    "message": "Thêm Thư Mục Con"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Thư mục cha: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Mở"
+  },
+  "addBookmarkTop": {
+    "message": "Đánh dấu Tab Hiện Tại Vào Đầu Của Đây"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Bỏ qua"
   },
-  "accessibility": {
-    "message": "Khả năng truy cập"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Xây dựng bởi $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Mở trong Tab Mới"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Khoảng thời gian làm mới"
+  "resetSettingsDescription": {
+    "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Tìm kiếm Dấu Trang"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
+  "nope": {
+    "message": "Không"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Tìm kiếm Dấu Trang"
+  "openBookmarksNewWindow": {
+    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Mới"
   },
-  "reportError": {
-    "message": "Báo Cáo Lỗi"
+  "optionZoom": {
+    "message": "Thu phóng"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Ẩn Danh"
+  },
+  "optionShowSyncStatus": {
+    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  },
+  "addBookmarkBefore": {
+    "message": "Đánh dấu Tab Hiện Tại Trước Đây"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ mới?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Thêm Dòng Kẻ"
+  },
+  "optionOpenNewTab": {
+    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tùy chỉnh Màu Dòng Kẻ"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Thay thế điều này bằng URL hiện tại"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
+  },
+  "resetSettings": {
+    "message": "Đặt lại cài đặt"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Bỏ qua"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Thêm Dòng Kẻ"
-  },
-  "deleteEllipsis": {
-    "message": "Xóa..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Xóa Dòng Kẻ"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Điều này đã được báo cáo cho nhà phát triển."
-  },
-  "customStyles": {
-    "message": "Kiểu Tùy Chỉnh"
-  },
-  "resetButton": {
-    "message": "Đặt lại"
-  },
-  "customStylesDescription": {
-    "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
-  },
-  "openNewWindow": {
-    "message": "Mở trong Cửa Sổ Mới"
-  },
-  "optionPopupStays": {
-    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
-  },
-  "addBookmarkBottom": {
-    "message": "Đánh dấu Tab Hiện Tại Vào Đáy Của Đây"
-  },
-  "openBookmarks": {
-    "message": "Mở Tất Cả Dấu Trang"
-  },
   "customSeparatorStringDescription": {
     "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ mới?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Xóa"
   },
-  "nope": {
-    "message": "Không"
-  },
-  "defaultIconButtonOr": {
-    "message": "hoặc"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Mới"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Tùy Chọn"
-  },
-  "save": {
-    "message": "Lưu"
-  },
-  "general": {
-    "message": "Chung"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Thu phóng"
-  },
-  "addNewFolderAfter": {
-    "message": "Thêm Thư Mục Sau Đây"
-  },
-  "optionClickNewTab": {
-    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(không tiêu đề)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
-  },
-  "copyTitleAndUrl": {
-    "message": "Sao chép tiêu đề và URL vào clipboard"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Chỉnh sửa dấu trang"
+  "addBookmarkAfter": {
+    "message": "Đánh dấu Tab Hiện Tại Sau Đây"
   },
-  "edit": {
-    "message": "Chỉnh sửa..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Mở trong Tab Mới"
+  "resetButton": {
+    "message": "Đặt lại"
   },
-  "syncOptions": {
-    "message": "Tùy chọn đồng bộ hóa"
+  "defaultIconButton": {
+    "message": "Sử dụng mặc định"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name of bookmark or folder.",
     "message": "Tên"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ ẩn danh mới?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
+  "customStylesDescription": {
+    "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
   },
-  "optionAutoRefreshSync": {
-    "message": "Tự động làm mới trạng thái đồng bộ"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(không tiêu đề)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Bỏ qua"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Tùy chọn đồng bộ hóa"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Xây dựng bởi $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
-  },
-  "openIncognitoWindow": {
-    "message": "Mở trong Cửa Sổ Ẩn Danh"
-  },
-  "addNewFolder": {
-    "message": "Thêm Thư Mục Con"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Sử dụng mặc định"
-  },
-  "optionAutoResizePopup": {
-    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
-  },
-  "resetSettings": {
-    "message": "Đặt lại cài đặt"
-  },
-  "addNewFolderBefore": {
-    "message": "Thêm Thư Mục Trước Đây"
-  },
-  "editFolder": {
-    "message": "Chỉnh sửa thư mục"
-  },
-  "errorOccured": {
-    "message": "Ồ, đã xảy ra lỗi."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Đánh dấu Tab Hiện Tại Trước Đây"
-  },
-  "advancedOptions": {
-    "message": "Tùy Chọn Nâng Cao"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Mở Tất Cả Dấu Trang trong Cửa Sổ Ẩn Danh"
-  },
-  "customIcon": {
-    "message": "Biểu tượng tùy chỉnh"
-  },
-  "delete": {
-    "message": "Xóa"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Tô sáng dấu trang chưa đồng bộ"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Xóa..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$, $subFolderCount$ thư mục con và $bookmarkCount$ dấu trang trong đó?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Đánh dấu Tab Hiện Tại Sau Đây"
+  "defaultIconButtonOr": {
+    "message": "hoặc"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Mở trong Cửa Sổ Ẩn Danh"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Điều này đã được báo cáo cho nhà phát triển."
   },
-  "donationMessage": {
-    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
+  "optionAutoRefreshSync": {
+    "message": "Tự động làm mới trạng thái đồng bộ"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
   },
-  "replaceUrl": {
-    "message": "Thay thế điều này bằng URL hiện tại"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ ẩn danh mới?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Mở trong Cửa Sổ Mới"
+  },
+  "removeSeparator": {
+    "message": "Xóa Dòng Kẻ"
+  },
+  "customStyles": {
+    "message": "Kiểu Tùy Chỉnh"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Thư mục cha: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Sao chép tiêu đề và URL vào clipboard"
+  },
+  "editBookmark": {
+    "message": "Chỉnh sửa dấu trang"
+  },
+  "customIconDescription": {
+    "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Mở"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Báo Cáo Lỗi"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Chỉnh sửa..."
+  },
+  "errorOccured": {
+    "message": "Ồ, đã xảy ra lỗi."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "giây"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Chỉnh sửa thư mục"
+  },
+  "optionClickNewTab": {
+    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Khả năng truy cập"
+  },
+  "addBookmarkBottom": {
+    "message": "Đánh dấu Tab Hiện Tại Vào Đáy Của Đây"
+  },
+  "addNewFolderBefore": {
+    "message": "Thêm Thư Mục Trước Đây"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Tô sáng dấu trang chưa đồng bộ"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "options": {
+    "message": "Tùy Chọn"
+  },
+  "general": {
+    "message": "Chung"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Mở Tất Cả Dấu Trang"
+  },
+  "optionAutoResizePopup": {
+    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
+  },
+  "addNewFolderAfter": {
+    "message": "Thêm Thư Mục Sau Đây"
+  },
+  "advancedOptions": {
+    "message": "Tùy Chọn Nâng Cao"
+  },
+  "save": {
+    "message": "Lưu"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

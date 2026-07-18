@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "동기화된 저장소와 로컬 저장소 간에는 북마크를 이동할 수 없습니다. 복사/붙여넣기를 사용하세요.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "새로운 VBM $versionNumber$입니다! 변경 로그는 여기에 있습니다: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "현재 탭을 이 항목의 맨 위에 추가"
+  "copyAllTitlesAndUrls": {
+    "message": "모든 제목과 URL을 클립보드에 복사"
   },
-  "customSeparatorColorDescription": {
-    "message": "구분자 색상 사용자 지정"
+  "customIcon": {
+    "message": "사용자 지정 아이콘"
   },
-  "customIconDescription": {
-    "message": "아이콘은 19*19 픽셀 크기여야 합니다. 그렇지 않으면 이 크기로 조정됩니다."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "초"
+  "optionConfirmOpenFolder": {
+    "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "새로고침 간격"
+  },
+  "addNewFolder": {
+    "message": "하위 폴더 추가"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "북마크 막대의 북마크만 표시"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "상위 폴더: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "북마크를 여는 작업",
+    "message": "열기"
+  },
+  "addBookmarkTop": {
+    "message": "현재 탭을 이 항목의 맨 위에 추가"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "무시"
   },
-  "accessibility": {
-    "message": "접근성"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$님께서 제작하셨습니다.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "새 탭에서 열기"
   },
-  "optionSyncRefreshInterval": {
-    "message": "새로고침 간격"
+  "resetSettingsDescription": {
+    "message": "vBookmarks를 기본 설정으로 재설정합니다."
+  },
+  "searchBookmarks": {
+    "description": "검색 필드의 자리 표시자 텍스트",
+    "message": "북마크 검색"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "$folderName$ 폴더와 그 안의 $subFolderCount$개 하위 폴더를 삭제하시겠습니까?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "이전 상태 기억 (스크롤 위치와 열린 폴더)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "구분자로 표시되는 북마크의 실제 제목"
+  "nope": {
+    "message": "아니요"
   },
-  "searchBookmarks": {
-    "description": "검색 필드의 자리 표시자 텍스트",
-    "message": "북마크 검색"
+  "openBookmarksNewWindow": {
+    "message": "새 창에서 모든 북마크 열기"
   },
-  "reportError": {
-    "message": "오류 보고"
+  "optionZoom": {
+    "message": "확대/축소"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Enter 키를 누를 때만 북마크 검색 (즉시 검색 대신)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "폴더를 열 때 사용하지 않는 폴더를 닫습니다."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "확인"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "시크릿 창에서 모든 북마크 열기"
+  },
+  "optionShowSyncStatus": {
+    "message": "동기화 상태 표시기 표시"
+  },
+  "addBookmarkBefore": {
+    "message": "현재 탭을 이전에 추가"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "새 창에서 $count$개의 모든 북마크를 여시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "구분자 추가"
+  },
+  "optionOpenNewTab": {
+    "message": "가운데 클릭 또는 컨트롤 클릭으로 북마크를 새 배경 탭에서 엽니다 (전경 대신)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "구분자 색상 사용자 지정"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "이것을 현재 URL로 교체"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "구분자로 표시되는 북마크의 실제 URL"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "북마크를 열 때 (왼쪽 클릭) 팝업이 열린 상태로 유지됩니다."
+  },
+  "resetSettings": {
+    "message": "설정 재설정"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ 폴더와 그 안의 $bookmarkCount$개 북마크를 삭제하시겠습니까?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "무시"
-  },
-  "extDesc": {
-    "description": "확장 프로그램 설명",
-    "message": "팝업 북마크 관리자. 향상된 Neat Bookmarks. Neater Bookmarks보다 더 깔끔합니다."
-  },
-  "addSeparator": {
-    "message": "구분자 추가"
-  },
-  "deleteEllipsis": {
-    "message": "삭제..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "동기화된 저장소와 로컬 저장소 간에는 북마크를 이동할 수 없습니다. 복사/붙여넣기를 사용하세요.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "구분자 제거"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "확장 프로그램에서 발생한 오류가 개발자에게 보고되었습니다.",
-    "message": "이것이 개발자에게 보고되었습니다."
-  },
-  "customStyles": {
-    "message": "사용자 지정 스타일"
-  },
-  "resetButton": {
-    "message": "재설정"
-  },
-  "customStylesDescription": {
-    "message": "일부 CSS 기술이 필요합니다. 자신의 책임하에 수정하십시오. 코드 공유는 통해 하는 것이 현명할 것입니다"
-  },
-  "openNewWindow": {
-    "message": "새 창에서 열기"
-  },
-  "optionPopupStays": {
-    "message": "북마크를 열 때 (왼쪽 클릭) 팝업이 열린 상태로 유지됩니다."
-  },
-  "addBookmarkBottom": {
-    "message": "현재 탭을 이 항목의 맨 아래에 추가"
-  },
-  "openBookmarks": {
-    "message": "모든 북마크 열기"
-  },
   "customSeparatorStringDescription": {
     "message": "북마크의 URL에 이 문자열이 포함되면 구분자로 표시됩니다"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "새 창에서 $count$개의 모든 북마크를 여시겠습니까?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "삭제"
   },
-  "nope": {
-    "message": "아니요"
-  },
-  "defaultIconButtonOr": {
-    "message": "또는"
-  },
-  "openBookmarksNewWindow": {
-    "message": "새 창에서 모든 북마크 열기"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "옵션"
-  },
-  "save": {
-    "message": "저장"
-  },
-  "general": {
-    "message": "일반"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "확인"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "확대/축소"
-  },
-  "addNewFolderAfter": {
-    "message": "이후에 폴더 추가"
-  },
-  "optionClickNewTab": {
-    "message": "왼쪽 클릭으로 북마크를 새 탭에서 엽니다."
-  },
-  "noTitle": {
-    "description": "http(s) URL이 없는 제목 없는 북마크나 제목 없는 폴더의 제목",
-    "message": "(제목 없음)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
-  },
-  "copyTitleAndUrl": {
-    "message": "제목과 URL을 클립보드에 복사"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "북마크 편집"
+  "addBookmarkAfter": {
+    "message": "현재 탭을 이후에 추가"
   },
-  "edit": {
-    "message": "편집..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "새 탭에서 열기"
+  "resetButton": {
+    "message": "재설정"
   },
-  "syncOptions": {
-    "message": "동기화 옵션"
+  "defaultIconButton": {
+    "message": "기본값 사용"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "북마크 또는 폴더의 이름",
     "message": "이름"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "새 시크릿 창에서 $count$개의 모든 북마크를 여시겠습니까?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "마음에 드셨다면 향후 개발을 위해 기부해 주실 수 있습니다. 모든 금액을 환영합니다."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "모든 제목과 URL을 클립보드에 복사"
+  "customStylesDescription": {
+    "message": "일부 CSS 기술이 필요합니다. 자신의 책임하에 수정하십시오. 코드 공유는 통해 하는 것이 현명할 것입니다"
   },
-  "optionAutoRefreshSync": {
-    "message": "동기화 상태 자동 새로고침"
+  "noTitle": {
+    "description": "http(s) URL이 없는 제목 없는 북마크나 제목 없는 폴더의 제목",
+    "message": "(제목 없음)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "무시"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "동기화 옵션"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$님께서 제작하셨습니다.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "가운데 클릭 또는 컨트롤 클릭으로 북마크를 새 배경 탭에서 엽니다 (전경 대신)."
-  },
-  "optionShowSyncStatus": {
-    "message": "동기화 상태 표시기 표시"
-  },
-  "openIncognitoWindow": {
-    "message": "시크릿 창에서 열기"
-  },
-  "addNewFolder": {
-    "message": "하위 폴더 추가"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "구분자로 표시되는 북마크의 실제 URL"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "기본값 사용"
-  },
-  "optionAutoResizePopup": {
-    "message": "팝업 창 크기를 콘텐츠에 맞게 자동 조정"
-  },
-  "resetSettings": {
-    "message": "설정 재설정"
-  },
-  "addNewFolderBefore": {
-    "message": "이전에 폴더 추가"
-  },
-  "editFolder": {
-    "message": "폴더 편집"
-  },
-  "errorOccured": {
-    "message": "죄송합니다, 오류가 발생했습니다."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "현재 탭을 이전에 추가"
-  },
-  "advancedOptions": {
-    "message": "고급 옵션"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "시크릿 창에서 모든 북마크 열기"
-  },
-  "customIcon": {
-    "message": "사용자 지정 아이콘"
-  },
-  "delete": {
-    "message": "삭제"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "동기화되지 않은 북마크 강조 표시"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Enter 키를 누를 때만 북마크 검색 (즉시 검색 대신)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "$folderName$ 폴더와 그 안의 $subFolderCount$개 하위 폴더를 삭제하시겠습니까?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "삭제..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "$folderName$ 폴더, 그 안의 $subFolderCount$개 하위 폴더와 $bookmarkCount$개 북마크를 삭제하시겠습니까?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "vBookmarks를 기본 설정으로 재설정합니다."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "현재 탭을 이후에 추가"
+  "defaultIconButtonOr": {
+    "message": "또는"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "시크릿 창에서 열기"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "확장 프로그램에서 발생한 오류가 개발자에게 보고되었습니다.",
+    "message": "이것이 개발자에게 보고되었습니다."
   },
-  "donationMessage": {
-    "message": "마음에 드셨다면 향후 개발을 위해 기부해 주실 수 있습니다. 모든 금액을 환영합니다."
+  "optionAutoRefreshSync": {
+    "message": "동기화 상태 자동 새로고침"
   },
-  "optionCloseUnusedFolders": {
-    "message": "폴더를 열 때 사용하지 않는 폴더를 닫습니다."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "이전 상태 기억 (스크롤 위치와 열린 폴더)."
   },
-  "replaceUrl": {
-    "message": "이것을 현재 URL로 교체"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "새 시크릿 창에서 $count$개의 모든 북마크를 여시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "새 창에서 열기"
+  },
+  "removeSeparator": {
+    "message": "구분자 제거"
+  },
+  "customStyles": {
+    "message": "사용자 지정 스타일"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "상위 폴더: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "제목과 URL을 클립보드에 복사"
+  },
+  "editBookmark": {
+    "message": "북마크 편집"
+  },
+  "customIconDescription": {
+    "message": "아이콘은 19*19 픽셀 크기여야 합니다. 그렇지 않으면 이 크기로 조정됩니다."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "북마크를 여는 작업",
-    "message": "열기"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "오류 보고"
+  },
+  "extDesc": {
+    "description": "확장 프로그램 설명",
+    "message": "팝업 북마크 관리자. 향상된 Neat Bookmarks. Neater Bookmarks보다 더 깔끔합니다."
+  },
+  "edit": {
+    "message": "편집..."
+  },
+  "errorOccured": {
+    "message": "죄송합니다, 오류가 발생했습니다."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "초"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "폴더 편집"
+  },
+  "optionClickNewTab": {
+    "message": "왼쪽 클릭으로 북마크를 새 탭에서 엽니다."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "접근성"
+  },
+  "addBookmarkBottom": {
+    "message": "현재 탭을 이 항목의 맨 아래에 추가"
+  },
+  "addNewFolderBefore": {
+    "message": "이전에 폴더 추가"
+  },
+  "optionHighlightUnsynced": {
+    "message": "동기화되지 않은 북마크 강조 표시"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "구분자로 표시되는 북마크의 실제 제목"
+  },
+  "options": {
+    "message": "옵션"
+  },
+  "general": {
+    "message": "일반"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "모든 북마크 열기"
+  },
+  "optionAutoResizePopup": {
+    "message": "팝업 창 크기를 콘텐츠에 맞게 자동 조정"
+  },
+  "addNewFolderAfter": {
+    "message": "이후에 폴더 추가"
+  },
+  "advancedOptions": {
+    "message": "고급 옵션"
+  },
+  "save": {
+    "message": "저장"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

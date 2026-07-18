@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "No se pueden mover marcadores entre el almacenamiento sincronizado y local. Use copiar/pegar en su lugar.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "¡Este es el nuevo VBM $versionNumber$! El registro de cambios está aquí: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Añadir pestaña actual al principio de esto"
+  "copyAllTitlesAndUrls": {
+    "message": "Copiar todos los títulos y URLs al portapapeles"
   },
-  "customSeparatorColorDescription": {
-    "message": "Personalizar color del separador"
+  "customIcon": {
+    "message": "Icono personalizado"
   },
-  "customIconDescription": {
-    "message": "El icono debe tener dimensiones de 19*19 píxeles. De lo contrario, se redimensionará a esta dimensión."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "segundos"
+  "optionConfirmOpenFolder": {
+    "message": "Mostrar confirmación al abrir muchos marcadores desde una carpeta."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Intervalo de actualización"
+  },
+  "addNewFolder": {
+    "message": "Añadir subcarpeta"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Mostrar solo marcadores en la barra de marcadores"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Carpeta principal: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Acción para abrir marcadores.",
+    "message": "Abrir"
+  },
+  "addBookmarkTop": {
+    "message": "Añadir pestaña actual al principio de esto"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Descartar"
   },
-  "accessibility": {
-    "message": "Accesibilidad"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Creado por $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Abrir en nueva pestaña"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Intervalo de actualización"
+  "resetSettingsDescription": {
+    "message": "Restablecer vBookmarks a la configuración predeterminada."
+  },
+  "searchBookmarks": {
+    "description": "Texto de marcador de posición para el campo de búsqueda.",
+    "message": "Buscar marcadores"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $subFolderCount$ subcarpeta(s) en ella?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Recordar estado anterior (posición de desplazamiento y carpetas abiertas)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "El título real del marcador que se muestra como separador"
+  "nope": {
+    "message": "No"
   },
-  "searchBookmarks": {
-    "description": "Texto de marcador de posición para el campo de búsqueda.",
-    "message": "Buscar marcadores"
+  "openBookmarksNewWindow": {
+    "message": "Abrir todos los marcadores en ventana nueva"
   },
-  "reportError": {
-    "message": "Reportar error"
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Cerrar carpetas no utilizadas al abrir una carpeta."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "Aceptar"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Abrir todos los marcadores en ventana incógnita"
+  },
+  "optionShowSyncStatus": {
+    "message": "Mostrar indicadores de sincronización"
+  },
+  "addBookmarkBefore": {
+    "message": "Añadir pestaña actual antes de esto"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Añadir separador"
+  },
+  "optionOpenNewTab": {
+    "message": "Clic central o control-clic abre el marcador en nueva pestaña de fondo (en lugar de primer plano)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizar color del separador"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Reemplazar esto con la URL actual"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "La URL real del marcador que se muestra como separador"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "La ventana emergente permanece abierta al abrir (clic izquierdo) marcadores."
+  },
+  "resetSettings": {
+    "message": "Restablecer configuración"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $bookmarkCount$ marcador(es) en ella?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Ignorar"
-  },
-  "extDesc": {
-    "description": "La descripción de la extensión.",
-    "message": "Un gestor de marcadores emergente. Neat Bookmarks mejorado. Más ordenado que Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Añadir separador"
-  },
-  "deleteEllipsis": {
-    "message": "Eliminar..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "No se pueden mover marcadores entre el almacenamiento sincronizado y local. Use copiar/pegar en su lugar.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Eliminar separador"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "Un mensaje para un error ocurrido en la extensión, ha sido reportado al desarrollador.",
-    "message": "Esto ha sido reportado al desarrollador."
-  },
-  "customStyles": {
-    "message": "Estilos personalizados"
-  },
-  "resetButton": {
-    "message": "Restablecer"
-  },
-  "customStylesDescription": {
-    "message": "Esto requiere algunos conocimientos de CSS. Modifique bajo su propio riesgo. Sería sabio compartir el código a través de"
-  },
-  "openNewWindow": {
-    "message": "Abrir en ventana nueva"
-  },
-  "optionPopupStays": {
-    "message": "La ventana emergente permanece abierta al abrir (clic izquierdo) marcadores."
-  },
-  "addBookmarkBottom": {
-    "message": "Añadir pestaña actual al final de esto"
-  },
-  "openBookmarks": {
-    "message": "Abrir todos los marcadores"
-  },
   "customSeparatorStringDescription": {
     "message": "Si la URL de un marcador contiene esta cadena, se mostrará como separador"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Eliminar"
   },
-  "nope": {
-    "message": "No"
-  },
-  "defaultIconButtonOr": {
-    "message": "o"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Abrir todos los marcadores en ventana nueva"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Opciones"
-  },
-  "save": {
-    "message": "Guardar"
-  },
-  "general": {
-    "message": "General"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "Aceptar"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "addNewFolderAfter": {
-    "message": "Añadir carpeta después de esto"
-  },
-  "optionClickNewTab": {
-    "message": "Clic izquierdo abre el marcador en nueva pestaña."
-  },
-  "noTitle": {
-    "description": "El título para marcadores sin título sin URL http(s) o carpetas sin título.",
-    "message": "(sin título)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Mostrar confirmación al abrir muchos marcadores desde una carpeta."
-  },
-  "copyTitleAndUrl": {
-    "message": "Copiar título y URL al portapapeles"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Editar marcador"
+  "addBookmarkAfter": {
+    "message": "Añadir pestaña actual después de esto"
   },
-  "edit": {
-    "message": "Editar..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Abrir en nueva pestaña"
+  "resetButton": {
+    "message": "Restablecer"
   },
-  "syncOptions": {
-    "message": "Opciones de sincronización"
+  "defaultIconButton": {
+    "message": "Usar predeterminado"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Nombre del marcador o carpeta.",
     "message": "Nombre"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana incógnita?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Si le gusta, quizás pueda donar para su futuro desarrollo. Cualquier cantidad es bienvenida."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Copiar todos los títulos y URLs al portapapeles"
+  "customStylesDescription": {
+    "message": "Esto requiere algunos conocimientos de CSS. Modifique bajo su propio riesgo. Sería sabio compartir el código a través de"
   },
-  "optionAutoRefreshSync": {
-    "message": "Actualizar automáticamente estado de sincronización"
+  "noTitle": {
+    "description": "El título para marcadores sin título sin URL http(s) o carpetas sin título.",
+    "message": "(sin título)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Ignorar"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Opciones de sincronización"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Creado por $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Clic central o control-clic abre el marcador en nueva pestaña de fondo (en lugar de primer plano)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Mostrar indicadores de sincronización"
-  },
-  "openIncognitoWindow": {
-    "message": "Abrir en ventana incógnita"
-  },
-  "addNewFolder": {
-    "message": "Añadir subcarpeta"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "La URL real del marcador que se muestra como separador"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Usar predeterminado"
-  },
-  "optionAutoResizePopup": {
-    "message": "Ajustar automáticamente el tamaño de la ventana emergente para adaptarse al contenido"
-  },
-  "resetSettings": {
-    "message": "Restablecer configuración"
-  },
-  "addNewFolderBefore": {
-    "message": "Añadir carpeta antes de esto"
-  },
-  "editFolder": {
-    "message": "Editar carpeta"
-  },
-  "errorOccured": {
-    "message": "Ups, ocurrió un error."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Añadir pestaña actual antes de esto"
-  },
-  "advancedOptions": {
-    "message": "Opciones avanzadas"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Abrir todos los marcadores en ventana incógnita"
-  },
-  "customIcon": {
-    "message": "Icono personalizado"
-  },
-  "delete": {
-    "message": "Eliminar"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Resaltar marcadores no sincronizados"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $subFolderCount$ subcarpeta(s) en ella?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Eliminar..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "¿Está seguro de que desea eliminar la carpeta $folderName$, $subFolderCount$ subcarpeta(s) y $bookmarkCount$ marcador(es) en ella?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Restablecer vBookmarks a la configuración predeterminada."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Añadir pestaña actual después de esto"
+  "defaultIconButtonOr": {
+    "message": "o"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Abrir en ventana incógnita"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "Un mensaje para un error ocurrido en la extensión, ha sido reportado al desarrollador.",
+    "message": "Esto ha sido reportado al desarrollador."
   },
-  "donationMessage": {
-    "message": "Si le gusta, quizás pueda donar para su futuro desarrollo. Cualquier cantidad es bienvenida."
+  "optionAutoRefreshSync": {
+    "message": "Actualizar automáticamente estado de sincronización"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Cerrar carpetas no utilizadas al abrir una carpeta."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Recordar estado anterior (posición de desplazamiento y carpetas abiertas)."
   },
-  "replaceUrl": {
-    "message": "Reemplazar esto con la URL actual"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "¿Está seguro de que desea abrir todos los $count$ marcadores en una nueva ventana incógnita?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Abrir en ventana nueva"
+  },
+  "removeSeparator": {
+    "message": "Eliminar separador"
+  },
+  "customStyles": {
+    "message": "Estilos personalizados"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Carpeta principal: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Copiar título y URL al portapapeles"
+  },
+  "editBookmark": {
+    "message": "Editar marcador"
+  },
+  "customIconDescription": {
+    "message": "El icono debe tener dimensiones de 19*19 píxeles. De lo contrario, se redimensionará a esta dimensión."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Acción para abrir marcadores.",
-    "message": "Abrir"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Reportar error"
+  },
+  "extDesc": {
+    "description": "La descripción de la extensión.",
+    "message": "Un gestor de marcadores emergente. Neat Bookmarks mejorado. Más ordenado que Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Editar..."
+  },
+  "errorOccured": {
+    "message": "Ups, ocurrió un error."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "segundos"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Editar carpeta"
+  },
+  "optionClickNewTab": {
+    "message": "Clic izquierdo abre el marcador en nueva pestaña."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Accesibilidad"
+  },
+  "addBookmarkBottom": {
+    "message": "Añadir pestaña actual al final de esto"
+  },
+  "addNewFolderBefore": {
+    "message": "Añadir carpeta antes de esto"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Resaltar marcadores no sincronizados"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "El título real del marcador que se muestra como separador"
+  },
+  "options": {
+    "message": "Opciones"
+  },
+  "general": {
+    "message": "General"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Abrir todos los marcadores"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ajustar automáticamente el tamaño de la ventana emergente para adaptarse al contenido"
+  },
+  "addNewFolderAfter": {
+    "message": "Añadir carpeta después de esto"
+  },
+  "advancedOptions": {
+    "message": "Opciones avanzadas"
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

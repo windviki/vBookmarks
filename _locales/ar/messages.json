@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك.",
+    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "هذا هو VBM الجديد $versionNumber$! سجل التغييرات هنا: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "إضافة علامة التبويب الحالية في أعلى هذا"
+  "copyAllTitlesAndUrls": {
+    "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
   },
-  "customSeparatorColorDescription": {
-    "message": "تخصيص لون الفاصل"
+  "customIcon": {
+    "message": "أيقونة مخصصة"
   },
-  "customIconDescription": {
-    "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "ثواني"
+  "optionConfirmOpenFolder": {
+    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "فترة التحديث"
+  },
+  "addNewFolder": {
+    "message": "إضافة مجلد فرعي"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "المجلد الأصلي: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "إجراء لفتح العلامات المرجعية.",
+    "message": "فتح"
+  },
+  "addBookmarkTop": {
+    "message": "إضافة علامة التبويب الحالية في أعلى هذا"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "تجاهل"
   },
-  "accessibility": {
-    "message": "إمكانية الوصول"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "تم إنشاؤه بواسطة $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "فتح في علامة تبويب جديدة"
   },
-  "optionSyncRefreshInterval": {
-    "message": "فترة التحديث"
+  "resetSettingsDescription": {
+    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
+  },
+  "searchBookmarks": {
+    "description": "نص عنصر نائب لحقل البحث.",
+    "message": "بحث في العلامات المرجعية"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "تذكر الحالة السابقة (موضع التمرير والمجلدات المفتوحة)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  "nope": {
+    "message": "لا"
   },
-  "searchBookmarks": {
-    "description": "نص عنصر نائب لحقل البحث.",
-    "message": "بحث في العلامات المرجعية"
+  "openBookmarksNewWindow": {
+    "message": "فتح جميع العلامات المرجعية في نافذة جديدة"
   },
-  "reportError": {
-    "message": "الإبلاغ عن خطأ"
+  "optionZoom": {
+    "message": "تكبير"
+  },
+  "optionSearchAfterEnter": {
+    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "موافق"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "فتح جميع العلامات المرجعية في نافذة متخفية"
+  },
+  "optionShowSyncStatus": {
+    "message": "إظهار مؤشرات حالة المزامنة"
+  },
+  "addBookmarkBefore": {
+    "message": "إضافة علامة التبويب الحالية قبل هذا"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة جديدة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "إضافة فاصل"
+  },
+  "optionOpenNewTab": {
+    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "تخصيص لون الفاصل"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "استبدال هذا بعنوان URL الحالي"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
+  },
+  "resetSettings": {
+    "message": "إعادة تعيين الإعدادات"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "تجاهل"
-  },
-  "extDesc": {
-    "description": "وصف الامتداد.",
-    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "إضافة فاصل"
-  },
-  "deleteEllipsis": {
-    "message": "حذف..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك.",
-    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين"
-  },
-  "removeSeparator": {
-    "message": "إزالة الفاصل"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
-    "message": "تم الإبلاغ عن هذا إلى المطور."
-  },
-  "customStyles": {
-    "message": "أنماط مخصصة"
-  },
-  "resetButton": {
-    "message": "إعادة تعيين"
-  },
-  "customStylesDescription": {
-    "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
-  },
-  "openNewWindow": {
-    "message": "فتح في نافذة جديدة"
-  },
-  "optionPopupStays": {
-    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
-  },
-  "addBookmarkBottom": {
-    "message": "إضافة علامة التبويب الحالية في أسفل هذا"
-  },
-  "openBookmarks": {
-    "message": "فتح جميع العلامات المرجعية"
-  },
   "customSeparatorStringDescription": {
     "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة جديدة؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "حذف"
   },
-  "nope": {
-    "message": "لا"
-  },
-  "defaultIconButtonOr": {
-    "message": "أو"
-  },
-  "openBookmarksNewWindow": {
-    "message": "فتح جميع العلامات المرجعية في نافذة جديدة"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "خيارات"
-  },
-  "save": {
-    "message": "حفظ"
-  },
-  "general": {
-    "message": "عام"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "موافق"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "تكبير"
-  },
-  "addNewFolderAfter": {
-    "message": "إضافة مجلد بعد هذا"
-  },
-  "optionClickNewTab": {
-    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
-  },
-  "noTitle": {
-    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
-    "message": "(بلا عنوان)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
-  },
-  "copyTitleAndUrl": {
-    "message": "نسخ العنوان وعنوان URL إلى الحافظة"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "تحرير علامة مرجعية"
+  "addBookmarkAfter": {
+    "message": "إضافة علامة التبويب الحالية بعد هذا"
   },
-  "edit": {
-    "message": "تحرير..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "فتح في علامة تبويب جديدة"
+  "resetButton": {
+    "message": "إعادة تعيين"
   },
-  "syncOptions": {
-    "message": "خيارات المزامنة"
+  "defaultIconButton": {
+    "message": "استخدام الافتراضي"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "اسم العلامة المرجعية أو المجلد.",
     "message": "الاسم"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة متخفية جديدة؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
+  "customStylesDescription": {
+    "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
   },
-  "optionAutoRefreshSync": {
-    "message": "تحديث حالة المزامنة تلقائياً"
+  "noTitle": {
+    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
+    "message": "(بلا عنوان)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "تجاهل"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "خيارات المزامنة"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "تم إنشاؤه بواسطة $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
-  },
-  "optionShowSyncStatus": {
-    "message": "إظهار مؤشرات حالة المزامنة"
-  },
-  "openIncognitoWindow": {
-    "message": "فتح في نافذة متخفية"
-  },
-  "addNewFolder": {
-    "message": "إضافة مجلد فرعي"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "استخدام الافتراضي"
-  },
-  "optionAutoResizePopup": {
-    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
-  },
-  "resetSettings": {
-    "message": "إعادة تعيين الإعدادات"
-  },
-  "addNewFolderBefore": {
-    "message": "إضافة مجلد قبل هذا"
-  },
-  "editFolder": {
-    "message": "تحرير مجلد"
-  },
-  "errorOccured": {
-    "message": "عفواً، حدث خطأ."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "إضافة علامة التبويب الحالية قبل هذا"
-  },
-  "advancedOptions": {
-    "message": "خيارات متقدمة"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "فتح جميع العلامات المرجعية في نافذة متخفية"
-  },
-  "customIcon": {
-    "message": "أيقونة مخصصة"
-  },
-  "delete": {
-    "message": "حذف"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "إبراز العلامات المرجعية غير المتزامنة"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "حذف..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي و $bookmarkCount$ علامة مرجعية فيه؟",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "إضافة علامة التبويب الحالية بعد هذا"
+  "defaultIconButtonOr": {
+    "message": "أو"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "فتح في نافذة متخفية"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
+    "message": "تم الإبلاغ عن هذا إلى المطور."
   },
-  "donationMessage": {
-    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
+  "optionAutoRefreshSync": {
+    "message": "تحديث حالة المزامنة تلقائياً"
   },
-  "optionCloseUnusedFolders": {
-    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "تذكر الحالة السابقة (موضع التمرير والمجلدات المفتوحة)."
   },
-  "replaceUrl": {
-    "message": "استبدال هذا بعنوان URL الحالي"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة متخفية جديدة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "فتح في نافذة جديدة"
+  },
+  "removeSeparator": {
+    "message": "إزالة الفاصل"
+  },
+  "customStyles": {
+    "message": "أنماط مخصصة"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "المجلد الأصلي: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "نسخ العنوان وعنوان URL إلى الحافظة"
+  },
+  "editBookmark": {
+    "message": "تحرير علامة مرجعية"
+  },
+  "customIconDescription": {
+    "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "إجراء لفتح العلامات المرجعية.",
-    "message": "فتح"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "الإبلاغ عن خطأ"
+  },
+  "extDesc": {
+    "description": "وصف الامتداد.",
+    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
+  },
+  "edit": {
+    "message": "تحرير..."
+  },
+  "errorOccured": {
+    "message": "عفواً، حدث خطأ."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "ثواني"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "تحرير مجلد"
+  },
+  "optionClickNewTab": {
+    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "إمكانية الوصول"
+  },
+  "addBookmarkBottom": {
+    "message": "إضافة علامة التبويب الحالية في أسفل هذا"
+  },
+  "addNewFolderBefore": {
+    "message": "إضافة مجلد قبل هذا"
+  },
+  "optionHighlightUnsynced": {
+    "message": "إبراز العلامات المرجعية غير المتزامنة"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "options": {
+    "message": "خيارات"
+  },
+  "general": {
+    "message": "عام"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "فتح جميع العلامات المرجعية"
+  },
+  "optionAutoResizePopup": {
+    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
+  },
+  "addNewFolderAfter": {
+    "message": "إضافة مجلد بعد هذا"
+  },
+  "advancedOptions": {
+    "message": "خيارات متقدمة"
+  },
+  "save": {
+    "message": "حفظ"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

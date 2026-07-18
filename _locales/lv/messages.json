@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Šis ir jaunais VBM $versionNumber$! Izmaiņu žurnāls šeit: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Pievienot pašreizējo cilni šīs augšā"
+  "copyAllTitlesAndUrls": {
+    "message": "Kopēt visus nosaukumus un URL starpliktuvē"
   },
-  "customSeparatorColorDescription": {
-    "message": "Pielāgot atdalītāja krāsu"
+  "customIcon": {
+    "message": "Pielāgota ikona"
   },
-  "customIconDescription": {
-    "message": "Ikonai jābūt 19*19 pikseļu izmērā. Pretējā gadījumā tā tiks mainīta uz šo izmēru."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundes"
+  "optionConfirmOpenFolder": {
+    "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Atsvaidzināšanas intervāls"
+  },
+  "addNewFolder": {
+    "message": "Pievienot apakšmapi"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Rādīt tikai grāmatzīmes grāmatzīmju joslā"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Vecāku mape: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Darbība grāmatzīmju atvēršanai.",
+    "message": "Atvērt"
+  },
+  "addBookmarkTop": {
+    "message": "Pievienot pašreizējo cilni šīs augšā"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Atmest"
   },
-  "accessibility": {
-    "message": "Pieejamība"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Izveidoja $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Atvērt jaunā cilnē"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Atsvaidzināšanas intervāls"
+  "resetSettingsDescription": {
+    "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
+  },
+  "searchBookmarks": {
+    "description": "Aizstājējteksts meklēšanas laukam.",
+    "message": "Meklēt grāmatzīmes"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $subFolderCount$ apakšmapi(-es) tajā?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju un atvērtās mapes)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Grāmatzīmes īstais nosaukums, kas tiek rādīts kā atdalītājs"
+  "nope": {
+    "message": "Nē"
   },
-  "searchBookmarks": {
-    "description": "Aizstājējteksts meklēšanas laukam.",
-    "message": "Meklēt grāmatzīmes"
+  "openBookmarksNewWindow": {
+    "message": "Atvērt visas grāmatzīmes jaunā logā"
   },
-  "reportError": {
-    "message": "Ziņot par kļūdu"
+  "optionZoom": {
+    "message": "Tālummaiņa"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Aizvērt neizmantotās mapes, atverot mapi."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "Labi"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atvērt visas grāmatzīmes incognito logā"
+  },
+  "optionShowSyncStatus": {
+    "message": "Rādīt sinhronizācijas statusa indikatorus"
+  },
+  "addBookmarkBefore": {
+    "message": "Pievienot pašreizējo cilni pirms šīs"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā logā?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Pievienot atdalītāju"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidējais klikšķis vai control-klikšķis atver grāmatzīmi jaunā fona cilnē (nevis priekšplānā)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Pielāgot atdalītāja krāsu"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Aizstāt ar pašreizējo URL"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Grāmatzīmes īstais URL, kas tiek rādīts kā atdalītājs"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Uznirstošais logs paliek atvērts, atverot (kreisais klikšķis) grāmatzīmes."
+  },
+  "resetSettings": {
+    "message": "Atiestatīt iestatījumus"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $bookmarkCount$ grāmatzīmi(-es) tajā?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Ignorēt"
-  },
-  "extDesc": {
-    "description": "Paplašinājuma apraksts.",
-    "message": "Uznirstošs grāmatzīmju pārvaldnieks. Uzlabotais Neat Bookmarks. Kārtīgāks par Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Pievienot atdalītāju"
-  },
-  "deleteEllipsis": {
-    "message": "Dzēst..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Grāmatzīmes nevar pārvietot starp sinhronizēto un vietējo krātuvi. Tā vietā izmantojiet kopēt/ielīmēt.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Noņemt atdalītāju"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "Ziņojums par kļūdu paplašinājumā, ziņots izstrādātājam.",
-    "message": "Šis ir ziņots izstrādātājam."
-  },
-  "customStyles": {
-    "message": "Pielāgoti stili"
-  },
-  "resetButton": {
-    "message": "Atiestatīt"
-  },
-  "customStylesDescription": {
-    "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
-  },
-  "openNewWindow": {
-    "message": "Atvērt jaunā logā"
-  },
-  "optionPopupStays": {
-    "message": "Uznirstošais logs paliek atvērts, atverot (kreisais klikšķis) grāmatzīmes."
-  },
-  "addBookmarkBottom": {
-    "message": "Pievienot pašreizējo cilni šīs apakšā"
-  },
-  "openBookmarks": {
-    "message": "Atvērt visas grāmatzīmes"
-  },
   "customSeparatorStringDescription": {
     "message": "Ja grāmatzīmes URL satur šo virkni, tā tiks rādīta kā atdalītājs"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā logā?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Dzēst"
   },
-  "nope": {
-    "message": "Nē"
-  },
-  "defaultIconButtonOr": {
-    "message": "vai"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Atvērt visas grāmatzīmes jaunā logā"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Opcijas"
-  },
-  "save": {
-    "message": "Saglabāt"
-  },
-  "general": {
-    "message": "Vispārīgi"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "Labi"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Tālummaiņa"
-  },
-  "addNewFolderAfter": {
-    "message": "Pievienot mapi pēc šīs"
-  },
-  "optionClickNewTab": {
-    "message": "Kreisais klikšķis atver grāmatzīmi jaunā cilnē."
-  },
-  "noTitle": {
-    "description": "Nosaukums bezvārda grāmatzīmēm bez http(s) URL vai bezvārda mapēm.",
-    "message": "(bez nosaukuma)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
-  },
-  "copyTitleAndUrl": {
-    "message": "Kopēt nosaukumu un URL starpliktuvē"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Rediģēt grāmatzīmi"
+  "addBookmarkAfter": {
+    "message": "Pievienot pašreizējo cilni pēc šīs"
   },
-  "edit": {
-    "message": "Rediģēt..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Atvērt jaunā cilnē"
+  "resetButton": {
+    "message": "Atiestatīt"
   },
-  "syncOptions": {
-    "message": "Sinhronizācijas opcijas"
+  "defaultIconButton": {
+    "message": "Izmantot noklusējuma"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Grāmatzīmes vai mapes nosaukums.",
     "message": "Nosaukums"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā incognito logā?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Ja jums patīk, varbūt jūs varētu ziedot tās turpmākai attīstībai. Jebkura summa ir laipni gaidīta."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Kopēt visus nosaukumus un URL starpliktuvē"
+  "customStylesDescription": {
+    "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
   },
-  "optionAutoRefreshSync": {
-    "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
+  "noTitle": {
+    "description": "Nosaukums bezvārda grāmatzīmēm bez http(s) URL vai bezvārda mapēm.",
+    "message": "(bez nosaukuma)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Ignorēt"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Sinhronizācijas opcijas"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Izveidoja $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Vidējais klikšķis vai control-klikšķis atver grāmatzīmi jaunā fona cilnē (nevis priekšplānā)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Rādīt sinhronizācijas statusa indikatorus"
-  },
-  "openIncognitoWindow": {
-    "message": "Atvērt incognito logā"
-  },
-  "addNewFolder": {
-    "message": "Pievienot apakšmapi"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Grāmatzīmes īstais URL, kas tiek rādīts kā atdalītājs"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Izmantot noklusējuma"
-  },
-  "optionAutoResizePopup": {
-    "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
-  },
-  "resetSettings": {
-    "message": "Atiestatīt iestatījumus"
-  },
-  "addNewFolderBefore": {
-    "message": "Pievienot mapi pirms šīs"
-  },
-  "editFolder": {
-    "message": "Rediģēt mapi"
-  },
-  "errorOccured": {
-    "message": "Ups, notika kļūda."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Pievienot pašreizējo cilni pirms šīs"
-  },
-  "advancedOptions": {
-    "message": "Paplašinātās opcijas"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Atvērt visas grāmatzīmes incognito logā"
-  },
-  "customIcon": {
-    "message": "Pielāgota ikona"
-  },
-  "delete": {
-    "message": "Dzēst"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Izcelt nesinhronizētās grāmatzīmes"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $subFolderCount$ apakšmapi(-es) tajā?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Dzēst..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$, $subFolderCount$ apakšmapi(-es) un $bookmarkCount$ grāmatzīmi(-es) tajā?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Atiestatīt vBookmarks uz noklusējuma iestatījumiem."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Pievienot pašreizējo cilni pēc šīs"
+  "defaultIconButtonOr": {
+    "message": "vai"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Atvērt incognito logā"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "Ziņojums par kļūdu paplašinājumā, ziņots izstrādātājam.",
+    "message": "Šis ir ziņots izstrādātājam."
   },
-  "donationMessage": {
-    "message": "Ja jums patīk, varbūt jūs varētu ziedot tās turpmākai attīstībai. Jebkura summa ir laipni gaidīta."
+  "optionAutoRefreshSync": {
+    "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Aizvērt neizmantotās mapes, atverot mapi."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju un atvērtās mapes)."
   },
-  "replaceUrl": {
-    "message": "Aizstāt ar pašreizējo URL"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Vai tiešām vēlaties atvērt visas $count$ grāmatzīmes jaunā incognito logā?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Atvērt jaunā logā"
+  },
+  "removeSeparator": {
+    "message": "Noņemt atdalītāju"
+  },
+  "customStyles": {
+    "message": "Pielāgoti stili"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Vecāku mape: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Kopēt nosaukumu un URL starpliktuvē"
+  },
+  "editBookmark": {
+    "message": "Rediģēt grāmatzīmi"
+  },
+  "customIconDescription": {
+    "message": "Ikonai jābūt 19*19 pikseļu izmērā. Pretējā gadījumā tā tiks mainīta uz šo izmēru."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Darbība grāmatzīmju atvēršanai.",
-    "message": "Atvērt"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Ziņot par kļūdu"
+  },
+  "extDesc": {
+    "description": "Paplašinājuma apraksts.",
+    "message": "Uznirstošs grāmatzīmju pārvaldnieks. Uzlabotais Neat Bookmarks. Kārtīgāks par Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Rediģēt..."
+  },
+  "errorOccured": {
+    "message": "Ups, notika kļūda."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundes"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Rediģēt mapi"
+  },
+  "optionClickNewTab": {
+    "message": "Kreisais klikšķis atver grāmatzīmi jaunā cilnē."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Pieejamība"
+  },
+  "addBookmarkBottom": {
+    "message": "Pievienot pašreizējo cilni šīs apakšā"
+  },
+  "addNewFolderBefore": {
+    "message": "Pievienot mapi pirms šīs"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Izcelt nesinhronizētās grāmatzīmes"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Grāmatzīmes īstais nosaukums, kas tiek rādīts kā atdalītājs"
+  },
+  "options": {
+    "message": "Opcijas"
+  },
+  "general": {
+    "message": "Vispārīgi"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Atvērt visas grāmatzīmes"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automātiski mainīt uznirstošā loga izmēru atbilstoši saturam"
+  },
+  "addNewFolderAfter": {
+    "message": "Pievienot mapi pēc šīs"
+  },
+  "advancedOptions": {
+    "message": "Paplašinātās opcijas"
+  },
+  "save": {
+    "message": "Saglabāt"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

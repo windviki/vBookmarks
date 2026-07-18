@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Нельзя перемещать закладки между синхронизированным и локальным хранилищем. Используйте копирование/вставку.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Это новый VBM $versionNumber$! Список изменений находится здесь: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Добавить закладку вверху папки"
+  "copyAllTitlesAndUrls": {
+    "message": "Скопировать все заголовки и URL-адреса в буфер обмена"
   },
-  "customSeparatorColorDescription": {
-    "message": "Настроить цвет разделителя "
+  "customIcon": {
+    "message": "Кастомная иконка"
   },
-  "customIconDescription": {
-    "message": "Значок должен быть в 19x19 пикселей. Иначе он будет изменен до размера (?)."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "секунд"
+  "optionConfirmOpenFolder": {
+    "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Интервал обновления"
+  },
+  "addNewFolder": {
+    "message": "Добавить подпапку"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Показывать только закладки в панели закладок"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Родительская папка: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Действие для открытия закладки.",
+    "message": "Открыть"
+  },
+  "addBookmarkTop": {
+    "message": "Добавить закладку вверху папки"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Нет"
   },
-  "accessibility": {
-    "message": "Доступность Настройки"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Built by $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Открыть в новой вкладке"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Интервал обновления"
+  "resetSettingsDescription": {
+    "message": "Сброс vBookmarks к настройкам по умолчанию  "
+  },
+  "searchBookmarks": {
+    "description": "Впишите текст для поиска.",
+    "message": "Поиск"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Вы уверены, что хотите удалить папку $folderName$ с $subFolderCount$ вложенной(-ыми) подпапкой(-ами)?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Помнить предыдущее состояние (открытые папки и положение прокрутки)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Настоящее название закладки, которое отображается как разделитель "
+  "nope": {
+    "message": "Отмена"
   },
-  "searchBookmarks": {
-    "description": "Впишите текст для поиска.",
-    "message": "Поиск"
+  "openBookmarksNewWindow": {
+    "message": "Открыть все закладки в новом окне"
   },
-  "reportError": {
-    "message": "Сообщение об ошибке"
+  "optionZoom": {
+    "message": "Увеличить"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Закрыть неиспользуемые папки при открытии папки."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "хорошо"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Открыть все закладки в новом окне (инкогнито)"
+  },
+  "optionShowSyncStatus": {
+    "message": "Показывать индикаторы синхронизации"
+  },
+  "addBookmarkBefore": {
+    "message": "Добавить закладку ВЫШЕ этой"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Добавить разделитель"
+  },
+  "optionOpenNewTab": {
+    "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Настроить цвет разделителя "
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Заменить текущим URL"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Настоящий URL-адрес закладки, который отображается как разделитель "
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Всплывающее окно расширения остается открытым при клике ЛКМ по закладкам."
+  },
+  "resetSettings": {
+    "message": "Сброс настроек"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Вы уверены, что хотите удалить папку $folderName$ с $bookmarkCount$ вложенными закладками?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Игнорировать"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
-  },
-  "addSeparator": {
-    "message": "Добавить разделитель"
-  },
-  "deleteEllipsis": {
-    "message": "Удалить..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Нельзя перемещать закладки между синхронизированным и локальным хранилищем. Используйте копирование/вставку.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Удалить разделитель"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "Сообщение при возникновении ошибки в расширении, сообщается разработчику.",
-    "message": "Об этом сообщено разработчику."
-  },
-  "customStyles": {
-    "message": "Пользовательский стиль"
-  },
-  "resetButton": {
-    "message": "Сбросить"
-  },
-  "customStylesDescription": {
-    "message": "Для этого требуется некоторый навык CSS. Кодируйте на свой страх и риск. Обмен кодом был бы разумным "
-  },
-  "openNewWindow": {
-    "message": "Открыть в новом окне"
-  },
-  "optionPopupStays": {
-    "message": "Всплывающее окно расширения остается открытым при клике ЛКМ по закладкам."
-  },
-  "addBookmarkBottom": {
-    "message": "Добавить закладку внизу папки"
-  },
-  "openBookmarks": {
-    "message": "Открыть все закладки"
-  },
   "customSeparatorStringDescription": {
     "message": "Если URL-адрес закладки содержит эту строку, она будет отображаться как разделитель "
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Удалить"
   },
-  "nope": {
-    "message": "Отмена"
-  },
-  "defaultIconButtonOr": {
-    "message": " или "
-  },
-  "openBookmarksNewWindow": {
-    "message": "Открыть все закладки в новом окне"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Основные настройки"
-  },
-  "save": {
-    "message": "Сохранить"
-  },
-  "general": {
-    "message": "Общие параметры"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "хорошо"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Увеличить"
-  },
-  "addNewFolderAfter": {
-    "message": "Добавить папку НИЖЕ этого"
-  },
-  "optionClickNewTab": {
-    "message": "Клик ЛКМ открывает закладку в новой вкладке."
-  },
-  "noTitle": {
-    "description": "Заголовок для безымянных закладок не имеющих ссылки и безымянных папок.",
-    "message": "(без заголовка)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
-  },
-  "copyTitleAndUrl": {
-    "message": "Копировать название и URL в буфер обмена"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Изменить закладку"
+  "addBookmarkAfter": {
+    "message": "Добавить закладку НИЖЕ этой"
   },
-  "edit": {
-    "message": "Редактировать..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Открыть в новой вкладке"
+  "resetButton": {
+    "message": "Сбросить"
   },
-  "syncOptions": {
-    "message": "Параметры синхронизации"
+  "defaultIconButton": {
+    "message": "Использовать дефолтную"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Имя закладки или папки",
     "message": "Имя"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне в режиме инкогнито?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Если вам это нравится, возможно, вы сможете пожертвовать на его дальнейшее развитие. Приветствуется любая сумма."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Скопировать все заголовки и URL-адреса в буфер обмена"
+  "customStylesDescription": {
+    "message": "Для этого требуется некоторый навык CSS. Кодируйте на свой страх и риск. Обмен кодом был бы разумным "
   },
-  "optionAutoRefreshSync": {
-    "message": "Автоматически обновлять статус синхронизации"
+  "noTitle": {
+    "description": "Заголовок для безымянных закладок не имеющих ссылки и безымянных папок.",
+    "message": "(без заголовка)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Игнорировать"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Параметры синхронизации"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Built by $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Клик СКМ или CTRL+клик открывает закладку в фоновой вкладке."
-  },
-  "optionShowSyncStatus": {
-    "message": "Показывать индикаторы синхронизации"
-  },
-  "openIncognitoWindow": {
-    "message": "Открыть в новом окне (инкогнито)"
-  },
-  "addNewFolder": {
-    "message": "Добавить подпапку"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Настоящий URL-адрес закладки, который отображается как разделитель "
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Использовать дефолтную"
-  },
-  "optionAutoResizePopup": {
-    "message": "Автоматически изменять размер всплывающего окна под содержимое"
-  },
-  "resetSettings": {
-    "message": "Сброс настроек"
-  },
-  "addNewFolderBefore": {
-    "message": "Добавить папку ВЫШЕ этого"
-  },
-  "editFolder": {
-    "message": "Изменить папку"
-  },
-  "errorOccured": {
-    "message": "К сожалению,\r\n\t\tпроизошла ошибка."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Добавить закладку ВЫШЕ этой"
-  },
-  "advancedOptions": {
-    "message": "Расширенные настройки"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Открыть все закладки в новом окне (инкогнито)"
-  },
-  "customIcon": {
-    "message": "Кастомная иконка"
-  },
-  "delete": {
-    "message": "Удалить"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Подсвечивать несинхронизированные закладки"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Поиск в закладках только при нажатии Enter (вместо мгновенного поиска)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Вы уверены, что хотите удалить папку $folderName$ с $subFolderCount$ вложенной(-ыми) подпапкой(-ами)?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Удалить..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Вы уверены, что хотите удалить папку $folderName$, $subFolderCount$ подпапки и $bookmarkCount$ вложенных закладок?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Сброс vBookmarks к настройкам по умолчанию  "
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Добавить закладку НИЖЕ этой"
+  "defaultIconButtonOr": {
+    "message": " или "
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Открыть в новом окне (инкогнито)"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "Сообщение при возникновении ошибки в расширении, сообщается разработчику.",
+    "message": "Об этом сообщено разработчику."
   },
-  "donationMessage": {
-    "message": "Если вам это нравится, возможно, вы сможете пожертвовать на его дальнейшее развитие. Приветствуется любая сумма."
+  "optionAutoRefreshSync": {
+    "message": "Автоматически обновлять статус синхронизации"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Закрыть неиспользуемые папки при открытии папки."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Помнить предыдущее состояние (открытые папки и положение прокрутки)."
   },
-  "replaceUrl": {
-    "message": "Заменить текущим URL"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Вы уверены, что вы хотите открыть все $count$ закладок в новом окне в режиме инкогнито?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Открыть в новом окне"
+  },
+  "removeSeparator": {
+    "message": "Удалить разделитель"
+  },
+  "customStyles": {
+    "message": "Пользовательский стиль"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Родительская папка: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Копировать название и URL в буфер обмена"
+  },
+  "editBookmark": {
+    "message": "Изменить закладку"
+  },
+  "customIconDescription": {
+    "message": "Значок должен быть в 19x19 пикселей. Иначе он будет изменен до размера (?)."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Действие для открытия закладки.",
-    "message": "Открыть"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Сообщение об ошибке"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Всплывающий менеджер закладок. Расширенный NeatBookmarks."
+  },
+  "edit": {
+    "message": "Редактировать..."
+  },
+  "errorOccured": {
+    "message": "К сожалению,\r\n\t\tпроизошла ошибка."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "секунд"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Изменить папку"
+  },
+  "optionClickNewTab": {
+    "message": "Клик ЛКМ открывает закладку в новой вкладке."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Доступность Настройки"
+  },
+  "addBookmarkBottom": {
+    "message": "Добавить закладку внизу папки"
+  },
+  "addNewFolderBefore": {
+    "message": "Добавить папку ВЫШЕ этого"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Подсвечивать несинхронизированные закладки"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Настоящее название закладки, которое отображается как разделитель "
+  },
+  "options": {
+    "message": "Основные настройки"
+  },
+  "general": {
+    "message": "Общие параметры"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Открыть все закладки"
+  },
+  "optionAutoResizePopup": {
+    "message": "Автоматически изменять размер всплывающего окна под содержимое"
+  },
+  "addNewFolderAfter": {
+    "message": "Добавить папку НИЖЕ этого"
+  },
+  "advancedOptions": {
+    "message": "Расширенные настройки"
+  },
+  "save": {
+    "message": "Сохранить"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

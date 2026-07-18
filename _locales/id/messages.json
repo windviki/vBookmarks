@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "Ini adalah VBM $versionNumber$ baru! Log perubahan ada di sini: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "Markah Tab Saat Ini Ke Atas Ini"
+  "copyAllTitlesAndUrls": {
+    "message": "Salin semua judul dan URL ke clipboard"
   },
-  "customSeparatorColorDescription": {
-    "message": "Kustomisasi Warna Pemisah"
+  "customIcon": {
+    "message": "Ikon kustom"
   },
-  "customIconDescription": {
-    "message": "Ikon harus berukuran 19x19 piksel. Jika tidak akan diubah ukurannya menjadi ukuran ini."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "detik"
+  "optionConfirmOpenFolder": {
+    "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval penyegaran"
+  },
+  "addNewFolder": {
+    "message": "Tambah Sub Folder"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Hanya tampilkan markah di Bilah Markah"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Folder induk: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Buka"
+  },
+  "addBookmarkTop": {
+    "message": "Markah Tab Saat Ini Ke Atas Ini"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "Tutup"
   },
-  "accessibility": {
-    "message": "Aksesibilitas"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Dibangun oleh $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "Buka di Tab Baru"
   },
-  "optionSyncRefreshInterval": {
-    "message": "Interval penyegaran"
+  "resetSettingsDescription": {
+    "message": "Reset vBookmarks ke pengaturan default."
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Cari Markah"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $subFolderCount$ sub-folder di dalamnya?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "Ingat keadaan sebelumnya (posisi gulir dan folder yang dibuka)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "Judul asli dari markah yang ditampilkan sebagai pemisah"
+  "nope": {
+    "message": "Tidak"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Cari Markah"
+  "openBookmarksNewWindow": {
+    "message": "Buka Semua Markah di Jendela Baru"
   },
-  "reportError": {
-    "message": "Laporkan Kesalahan"
+  "optionZoom": {
+    "message": "Perbesar"
+  },
+  "optionSearchAfterEnter": {
+    "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Tutup folder yang tidak digunakan saat membuka folder."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Buka Semua Markah di Jendela Penyamaran"
+  },
+  "optionShowSyncStatus": {
+    "message": "Tampilkan indikator status sinkronisasi"
+  },
+  "addBookmarkBefore": {
+    "message": "Markah Tab Saat Ini Sebelum Ini"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela baru?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "Tambah Pemisah"
+  },
+  "optionOpenNewTab": {
+    "message": "Klik tengah atau control-klik membuka markah di tab latar belakang baru (bukan latar depan)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Kustomisasi Warna Pemisah"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "Ganti ini dengan URL saat ini"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL asli dari markah yang ditampilkan sebagai pemisah"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "Popup tetap terbuka saat membuka (klik kiri) markah."
+  },
+  "resetSettings": {
+    "message": "Reset pengaturan"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $bookmarkCount$ markah di dalamnya?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "Abaikan"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Manajer markah popup. Neat Bookmarks yang ditingkatkan. Lebih rapi dari Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "Tambah Pemisah"
-  },
-  "deleteEllipsis": {
-    "message": "Hapus..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "Bookmark tidak dapat dipindahkan antara penyimpanan yang disinkronkan dan lokal. Gunakan salin/tempel sebagai gantinya.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "Hapus Pemisah"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Ini telah dilaporkan ke pengembang."
-  },
-  "customStyles": {
-    "message": "Gaya Kustom"
-  },
-  "resetButton": {
-    "message": "Reset"
-  },
-  "customStylesDescription": {
-    "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
-  },
-  "openNewWindow": {
-    "message": "Buka di Jendela Baru"
-  },
-  "optionPopupStays": {
-    "message": "Popup tetap terbuka saat membuka (klik kiri) markah."
-  },
-  "addBookmarkBottom": {
-    "message": "Markah Tab Saat Ini Ke Dasar Ini"
-  },
-  "openBookmarks": {
-    "message": "Buka Semua Markah"
-  },
   "customSeparatorStringDescription": {
     "message": "Jika URL dari markah berisi string ini, akan ditampilkan sebagai pemisah"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela baru?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "Hapus"
   },
-  "nope": {
-    "message": "Tidak"
-  },
-  "defaultIconButtonOr": {
-    "message": "atau"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Buka Semua Markah di Jendela Baru"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "Opsi"
-  },
-  "save": {
-    "message": "Simpan"
-  },
-  "general": {
-    "message": "Umum"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "Perbesar"
-  },
-  "addNewFolderAfter": {
-    "message": "Tambah Folder Setelah Ini"
-  },
-  "optionClickNewTab": {
-    "message": "Klik kiri membuka markah di tab baru."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(tanpa judul)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
-  },
-  "copyTitleAndUrl": {
-    "message": "Salin judul dan URL ke clipboard"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "Edit markah"
+  "addBookmarkAfter": {
+    "message": "Markah Tab Saat Ini Setelah Ini"
   },
-  "edit": {
-    "message": "Edit..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "Buka di Tab Baru"
+  "resetButton": {
+    "message": "Reset"
   },
-  "syncOptions": {
-    "message": "Opsi Sinkronisasi"
+  "defaultIconButton": {
+    "message": "Gunakan default"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name of bookmark or folder.",
     "message": "Nama"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela penyamaran baru?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "Jika Anda menyukainya, mungkin Anda bisa menyumbang untuk pengembangan di masa depan. Jumlah berapa pun disambut baik."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Salin semua judul dan URL ke clipboard"
+  "customStylesDescription": {
+    "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
   },
-  "optionAutoRefreshSync": {
-    "message": "Segarkan status sinkronisasi otomatis"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(tanpa judul)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "Abaikan"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "Opsi Sinkronisasi"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Dibangun oleh $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "Klik tengah atau control-klik membuka markah di tab latar belakang baru (bukan latar depan)."
-  },
-  "optionShowSyncStatus": {
-    "message": "Tampilkan indikator status sinkronisasi"
-  },
-  "openIncognitoWindow": {
-    "message": "Buka di Jendela Penyamaran"
-  },
-  "addNewFolder": {
-    "message": "Tambah Sub Folder"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL asli dari markah yang ditampilkan sebagai pemisah"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "Gunakan default"
-  },
-  "optionAutoResizePopup": {
-    "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
-  },
-  "resetSettings": {
-    "message": "Reset pengaturan"
-  },
-  "addNewFolderBefore": {
-    "message": "Tambah Folder Sebelum Ini"
-  },
-  "editFolder": {
-    "message": "Edit folder"
-  },
-  "errorOccured": {
-    "message": "Ups, terjadi kesalahan."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "Markah Tab Saat Ini Sebelum Ini"
-  },
-  "advancedOptions": {
-    "message": "Opsi Lanjutan"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Buka Semua Markah di Jendela Penyamaran"
-  },
-  "customIcon": {
-    "message": "Ikon kustom"
-  },
-  "delete": {
-    "message": "Hapus"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Sorot markah yang belum disinkronisasi"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $subFolderCount$ sub-folder di dalamnya?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "Hapus..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$, $subFolderCount$ sub-folder dan $bookmarkCount$ markah di dalamnya?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "Reset vBookmarks ke pengaturan default."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "Markah Tab Saat Ini Setelah Ini"
+  "defaultIconButtonOr": {
+    "message": "atau"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "Buka di Jendela Penyamaran"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Ini telah dilaporkan ke pengembang."
   },
-  "donationMessage": {
-    "message": "Jika Anda menyukainya, mungkin Anda bisa menyumbang untuk pengembangan di masa depan. Jumlah berapa pun disambut baik."
+  "optionAutoRefreshSync": {
+    "message": "Segarkan status sinkronisasi otomatis"
   },
-  "optionCloseUnusedFolders": {
-    "message": "Tutup folder yang tidak digunakan saat membuka folder."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "Ingat keadaan sebelumnya (posisi gulir dan folder yang dibuka)."
   },
-  "replaceUrl": {
-    "message": "Ganti ini dengan URL saat ini"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Apakah Anda yakin ingin membuka semua $count$ markah di jendela penyamaran baru?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "Buka di Jendela Baru"
+  },
+  "removeSeparator": {
+    "message": "Hapus Pemisah"
+  },
+  "customStyles": {
+    "message": "Gaya Kustom"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Folder induk: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "Salin judul dan URL ke clipboard"
+  },
+  "editBookmark": {
+    "message": "Edit markah"
+  },
+  "customIconDescription": {
+    "message": "Ikon harus berukuran 19x19 piksel. Jika tidak akan diubah ukurannya menjadi ukuran ini."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Buka"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "Laporkan Kesalahan"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Manajer markah popup. Neat Bookmarks yang ditingkatkan. Lebih rapi dari Neater Bookmarks."
+  },
+  "edit": {
+    "message": "Edit..."
+  },
+  "errorOccured": {
+    "message": "Ups, terjadi kesalahan."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "detik"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "Edit folder"
+  },
+  "optionClickNewTab": {
+    "message": "Klik kiri membuka markah di tab baru."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "Aksesibilitas"
+  },
+  "addBookmarkBottom": {
+    "message": "Markah Tab Saat Ini Ke Dasar Ini"
+  },
+  "addNewFolderBefore": {
+    "message": "Tambah Folder Sebelum Ini"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Sorot markah yang belum disinkronisasi"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Judul asli dari markah yang ditampilkan sebagai pemisah"
+  },
+  "options": {
+    "message": "Opsi"
+  },
+  "general": {
+    "message": "Umum"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "Buka Semua Markah"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ubah ukuran jendela popup otomatis agar sesuai dengan konten"
+  },
+  "addNewFolderAfter": {
+    "message": "Tambah Folder Setelah Ini"
+  },
+  "advancedOptions": {
+    "message": "Opsi Lanjutan"
+  },
+  "save": {
+    "message": "Simpan"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }

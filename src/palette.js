@@ -21,6 +21,16 @@
  * ctx.quickAdd     — neat.js's quickAddCurrentTab
  * ctx.rootFolderId — folder the create-style commands drop new nodes into
  *                    (neat.js passes store.get('quickAddFolderId', '1'))
+ * ctx.dialogs      — dialogs.js API (ConfirmDialog/AlertDialog), used by the
+ *                    /dupes cleanup confirmations
+ * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
+ *                    cleanup removed nodes
+ *
+ * P3.1 adds a second panel mode: running the "dupes" command (slash name
+ * /dupes) switches the result list to duplicate-bookmark groups — one row
+ * per normalized-URL collision plus a clean-all row on top — with
+ * ConfirmDialog-guarded batch deletion behind each. Escape closes the
+ * panel outright; the mode resets on close, there is no nested "back".
  *
  * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
  * (URL ?palette=1 / storage.session flag) on top of open().
@@ -30,6 +40,8 @@
  * module-private htmlspecialchars below (same implementation as
  * tree-render.js's, modules stay self-contained).
  */
+
+import { normalizeUrl, findDupes, planDeletion } from './dupes.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
@@ -42,6 +54,8 @@ export function initPalette(ctx = {}) {
     const actions = ctx.actions;
     const treeView = ctx.treeView;
     const quickAdd = ctx.quickAdd;
+    const dialogs = ctx.dialogs;
+    const onChanged = ctx.onChanged || (() => {});
     const rootFolderId = ctx.rootFolderId || '1';
 
     const $palette = $('command-palette');
@@ -54,12 +68,119 @@ export function initPalette(ctx = {}) {
     const anyDialogOpen = () =>
         DIALOG_CLASSES.some(c => document.body.classList.contains(c));
 
+    // --- State --------------------------------------------------------------
+    let openState = false;
+    let index = [];          // flattened { id, title, url, dateAdded, isFolder }
+    let rows = [];           // rendered rows: { kind, el, id, url, name, fn }
+    let selected = -1;       // index into rows, -1 = nothing highlighted
+    let mode = 'normal';     // 'normal' | 'dupes'
+    let dupeGroups = [];     // findDupes() result backing the dupes-mode rows
+
+    // Flatten a bookmark tree: a node with children is a folder, everything
+    // else a bookmark; the synthetic root ('0') is skipped. Shared by the
+    // fuzzy index and the dupes scan.
+    const flattenTree = tree => {
+        const items = [];
+        const walk = nodes => {
+            for (let i = 0, l = nodes.length; i < l; i++) {
+                const node = nodes[i];
+                if (node.children) {
+                    if (node.id !== '0') {
+                        items.push({
+                            id: node.id,
+                            title: node.title || '',
+                            url: '',
+                            dateAdded: node.dateAdded || 0,
+                            isFolder: true
+                        });
+                    }
+                    walk(node.children);
+                } else {
+                    items.push({
+                        id: node.id,
+                        title: node.title || '',
+                        url: node.url || '',
+                        dateAdded: node.dateAdded || 0,
+                        isFolder: false
+                    });
+                }
+            }
+        };
+        walk(tree || []);
+        return items;
+    };
+
+    // Rebuild the fuzzy index from a fresh bookmark tree (called on every
+    // open so entries never go stale while the popup lives).
+    const rebuildIndex = () => {
+        chrome.bookmarks.getTree(tree => {
+            index = flattenTree(tree);
+            render(); // re-render with the fresh index (input may hold a query)
+        });
+    };
+
+    // --- Dupes mode (P3.1) ----------------------------------------------------
+    // chrome.bookmarks.remove is callback-only; chain the ids so the deletions
+    // hit the backend strictly one after another, then report done.
+    const removeSequentially = items =>
+        items.reduce((chain, item) => chain.then(() =>
+            new Promise(resolve => chrome.bookmarks.remove(item.id, resolve))),
+            Promise.resolve());
+
+    const refreshDupes = () => {
+        chrome.bookmarks.getTree(tree => {
+            dupeGroups = findDupes(flattenTree(tree).filter(b => !b.isFolder));
+            render();
+        });
+    };
+
+    const enterDupesMode = () => {
+        mode = 'dupes';
+        $input.value = '';
+        refreshDupes();
+    };
+
+    const cleanGroup = group => {
+        const doomed = planDeletion(group); // keep the oldest entry
+        dialogs.ConfirmDialog.open({
+            dialog: _m('dupesConfirmGroup', `${doomed.length}`),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                removeSequentially(doomed).then(() => {
+                    onChanged();
+                    refreshDupes(); // stay in dupes mode with the rebuilt list
+                });
+            }
+        });
+    };
+
+    const cleanAll = () => {
+        const doomed = dupeGroups.reduce((all, g) => all.concat(planDeletion(g)), []);
+        const groupCount = dupeGroups.length;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('dupesConfirmAll', [`${doomed.length}`, `${groupCount}`]),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                removeSequentially(doomed).then(() => {
+                    onChanged();
+                    close();
+                    dialogs.AlertDialog.open(_m('dupesDone', `${doomed.length}`));
+                });
+            }
+        });
+    };
+
     // --- Command set v1 -----------------------------------------------------
     // Names resolve through i18n at render time; fn runs on Enter/click.
     // "New folder" rides actions.addNewBookmarkNode with an empty url —
     // addNewNode routes an empty newUrl into the NewFolderDialog flow, the
     // same idiom the context menu's add-folder-* entries use. "New bookmark"
     // mirrors quickAddCurrentTab's silent no-op when there is no current tab.
+    // The dupes command carries keepOpen: it switches the panel into dupes
+    // mode instead of closing it; `slash` is its omni-style alias, matched
+    // as a prefix of a '/'-prefixed query.
     const newBookmarkFromTab = () => {
         chrome.tabs.query({
             'active': true,
@@ -75,51 +196,9 @@ export function initPalette(ctx = {}) {
         { name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
         { name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
         { name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
-        { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') }
+        { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
+        { slash: 'dupes', keepOpen: true, name: () => _m('paletteCmdDupes'), fn: enterDupesMode }
     ];
-
-    // --- State --------------------------------------------------------------
-    let openState = false;
-    let index = [];          // flattened { id, title, url, dateAdded, isFolder }
-    let rows = [];           // rendered rows: { kind, el, id, url, name, fn }
-    let selected = -1;       // index into rows, -1 = nothing highlighted
-
-    // Rebuild the fuzzy index from a fresh bookmark tree (called on every
-    // open so entries never go stale while the popup lives).
-    const rebuildIndex = () => {
-        chrome.bookmarks.getTree(tree => {
-            const items = [];
-            const walk = nodes => {
-                for (let i = 0, l = nodes.length; i < l; i++) {
-                    const node = nodes[i];
-                    if (node.children) {
-                        // skip the synthetic root ('0'), keep real roots
-                        if (node.id !== '0') {
-                            items.push({
-                                id: node.id,
-                                title: node.title || '',
-                                url: '',
-                                dateAdded: node.dateAdded || 0,
-                                isFolder: true
-                            });
-                        }
-                        walk(node.children);
-                    } else {
-                        items.push({
-                            id: node.id,
-                            title: node.title || '',
-                            url: node.url || '',
-                            dateAdded: node.dateAdded || 0,
-                            isFolder: false
-                        });
-                    }
-                }
-            };
-            walk(tree || []);
-            index = items;
-            render(); // re-render with the fresh index (input may hold a query)
-        });
-    };
 
     // --- Rendering ------------------------------------------------------------
     const faviconUrl = url =>
@@ -132,6 +211,10 @@ export function initPalette(ctx = {}) {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'folder') {
             li.innerHTML = `<img class="palette-icon" src="/assets/icons/folder.png" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(row.title)}</span>`;
+        } else if (row.kind === 'dupes-all') {
+            li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
+        } else if (row.kind === 'dupe') {
+            li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-url">${htmlspecialchars(row.count)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
         } else {
             const title = row.title || row.url;
             li.innerHTML = `<img class="palette-icon" src="${faviconUrl(row.url)}" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(title)}</span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
@@ -152,20 +235,57 @@ export function initPalette(ctx = {}) {
         }
     };
 
+    // Dupes mode: the query box is inert — rows are the clean-all command
+    // (with the totals spelled out) plus one row per colliding group, or a
+    // single empty-state line when the tree has no duplicates.
+    const renderDupes = () => {
+        if (!dupeGroups.length) {
+            const li = document.createElement('li');
+            li.className = 'palette-empty';
+            li.textContent = _m('dupesNone');
+            $results.appendChild(li);
+            return;
+        }
+        const extra = dupeGroups.reduce((n, g) => n + g.items.length - 1, 0);
+        addRow({
+            kind: 'dupes-all',
+            fn: cleanAll,
+            name: _m('dupesCleanAll', [`${dupeGroups.length}`, `${extra}`])
+        });
+        for (let i = 0, l = dupeGroups.length; i < l; i++) {
+            const group = dupeGroups[i];
+            addRow({
+                kind: 'dupe',
+                fn: () => cleanGroup(group),
+                title: group.title || group.key,
+                count: _m('dupesGroupCount', `${group.items.length}`),
+                url: group.key
+            });
+        }
+    };
+
     const render = () => {
         rows = [];
         selected = -1;
         $results.innerHTML = '';
+        if (mode === 'dupes') {
+            renderDupes();
+            updateSelection();
+            return;
+        }
         const query = $input.value.trim();
         const slashMode = query.charAt(0) === '/';
         const q = slashMode ? query.slice(1) : query;
         // Commands: all on an empty query, fuzzy-filtered otherwise. A '/'
-        // prefix restricts the panel to commands (omni-style slash frame).
+        // prefix restricts the panel to commands (omni-style slash frame) and
+        // also matches each command's slash alias by prefix, so '/d' already
+        // surfaces /dupes.
         for (let i = 0, l = commands.length; i < l; i++) {
             const cmd = commands[i];
             const name = cmd.name();
-            if (!q || window.VBMFuzzy.score(q, name))
-                addRow({ kind: 'command', name, fn: cmd.fn });
+            if (!q || window.VBMFuzzy.score(q, name) ||
+                (slashMode && cmd.slash && cmd.slash.indexOf(q) === 0))
+                addRow({ kind: 'command', name, fn: cmd.fn, keepOpen: !!cmd.keepOpen });
         }
         if (!slashMode && q) {
             const hits = window.VBMFuzzy.rank(q, index).slice(0, 50);
@@ -186,12 +306,21 @@ export function initPalette(ctx = {}) {
     };
 
     // --- Execution ------------------------------------------------------------
+    // Command rows run their fn and close (unless they opt into keepOpen —
+    // /dupes swaps the panel into dupes mode instead). Dupe rows open a
+    // ConfirmDialog over the panel; the actual deletion runs from its
+    // callback, so the panel itself stays put.
     const execute = (i, newTab) => {
         const row = rows[i];
         if (!row)
             return;
         if (row.kind === 'command') {
             row.fn();
+            if (row.keepOpen)
+                return;
+        } else if (row.kind === 'dupes-all' || row.kind === 'dupe') {
+            row.fn();
+            return;
         } else if (row.kind === 'folder') {
             treeView.revealFolder(row.id);
         } else if (newTab) {
@@ -252,6 +381,8 @@ export function initPalette(ctx = {}) {
         if (!openState)
             return;
         openState = false;
+        mode = 'normal'; // dupes mode never survives a close
+        dupeGroups = [];
         $palette.hidden = true;
         // Hand focus back to the tree: the focused row, else its first row,
         // else just drop focus from the input.

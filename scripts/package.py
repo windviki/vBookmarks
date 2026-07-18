@@ -53,6 +53,7 @@ JS_FILES = [
     'src/tree-view.js',
     'src/sync-ui.js',
     'src/palette.js',
+    'src/dupes.js',
     'vendor/codemirror.js',
 ]
 

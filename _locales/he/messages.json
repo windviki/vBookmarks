@@ -1,4 +1,20 @@
 {
+  "crossStorageMoveWarning": {
+    "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
   "versionMessage": {
     "message": "זהו VBM $versionNumber$ חדש! יומן שינויים כאן: $versionTips$",
     "placeholders": {
@@ -10,48 +26,102 @@
       }
     }
   },
-  "addBookmarkTop": {
-    "message": "הוסף סימנייה ללשונית הנוכחית לראש זה"
+  "copyAllTitlesAndUrls": {
+    "message": "העתק את כל הכותרות וה-URLs ללוח הגזירים"
   },
-  "customSeparatorColorDescription": {
-    "message": "התאם אישית צבע מפריד"
+  "customIcon": {
+    "message": "אייקון מותאם אישית"
   },
-  "customIconDescription": {
-    "message": "האייקון חייב להיות במידות 19x19 פיקסלים. אחרת ישנה את גודלו למידות אלו."
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "שניות"
+  "optionConfirmOpenFolder": {
+    "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "מרווח רענון"
+  },
+  "addNewFolder": {
+    "message": "הוסף תיקיית משנה"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "הצג רק סימניות בסרגל הסימניות"
   },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "תיקיית אב: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
   "optionThemeLight": {
     "message": "[TODO:optionThemeLight]"
+  },
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "פתח"
+  },
+  "addBookmarkTop": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לראש זה"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "url": {
+    "message": "URL"
   },
   "donationDismiss": {
     "message": "סגור"
   },
-  "accessibility": {
-    "message": "נגישות"
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "נוצר על ידי $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "openNewTab": {
+    "message": "פתח בלשונית חדשה"
   },
-  "optionSyncRefreshInterval": {
-    "message": "מרווח רענון"
+  "resetSettingsDescription": {
+    "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  },
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "חפש סימניות"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$subFolderCount$ תיקיות משנה בה?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
@@ -62,18 +132,84 @@
       }
     }
   },
-  "optionRememberPrevState": {
-    "message": "זכור מצב קודם (מיקום גלילה ותיקיות פתוחות)."
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
   },
-  "customSeparatorTitleDescription": {
-    "message": "הכותרת האמיתית של סימנייה המוצגת כמפריד"
+  "nope": {
+    "message": "לא"
   },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "חפש סימניות"
+  "openBookmarksNewWindow": {
+    "message": "פתח את כל הסימניות בחלון חדש"
   },
-  "reportError": {
-    "message": "דווח על שגיאה"
+  "optionZoom": {
+    "message": "זום"
+  },
+  "optionSearchAfterEnter": {
+    "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "סגור תיקיות שאינן בשימוש בעת פתיחת תיקייה."
+  },
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "donationGo": {
+    "message": "OK"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "פתח את כל הסימניות בחלון גלישה פרטית"
+  },
+  "optionShowSyncStatus": {
+    "message": "הצג מחווני מצב סנכרון"
+  },
+  "addBookmarkBefore": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לפני זה"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון חדש?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "addSeparator": {
+    "message": "הוסף מפריד"
+  },
+  "optionOpenNewTab": {
+    "message": "לחיצה אמצעית או control-לחיצה פותחת סימנייה בלשונית חדשה ברקע (במקום בחזית)."
+  },
+  "customSeparatorColorDescription": {
+    "message": "התאם אישית צבע מפריד"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "replaceUrl": {
+    "message": "החלף זאת ב-URL הנוכחי"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "ה-URL האמיתי של סימנייה המוצגת כמפריד"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "optionPopupStays": {
+    "message": "חלון קופץ נשאר פתוח בעת פתיחת (לחיצה שמאלית) סימניות."
+  },
+  "resetSettings": {
+    "message": "איפוס הגדרות"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$bookmarkCount$ סימניות בה?",
@@ -86,265 +222,55 @@
       }
     }
   },
-  "ignore": {
-    "message": "התעלם"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
-  },
-  "addSeparator": {
-    "message": "הוסף מפריד"
-  },
-  "deleteEllipsis": {
-    "message": "מחק..."
-  },
-  "crossStorageMoveWarning": {
-    "message": "לא ניתן להעביר סימניות בין אחסון מסונכרן למקומי. השתמש בהעתקה/הדבקה במקום זאת.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "removeSeparator": {
-    "message": "הסר מפריד"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "זה דווח למפתח."
-  },
-  "customStyles": {
-    "message": "סגנונות מותאמים אישית"
-  },
-  "resetButton": {
-    "message": "איפוס"
-  },
-  "customStylesDescription": {
-    "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
-  },
-  "openNewWindow": {
-    "message": "פתח בחלון חדש"
-  },
-  "optionPopupStays": {
-    "message": "חלון קופץ נשאר פתוח בעת פתיחת (לחיצה שמאלית) סימניות."
-  },
-  "addBookmarkBottom": {
-    "message": "הוסף סימנייה ללשונית הנוכחית לתחתית זה"
-  },
-  "openBookmarks": {
-    "message": "פתח את כל הסימניות"
-  },
   "customSeparatorStringDescription": {
     "message": "אם ה-URL של סימנייה מכיל מחרוזת זו, היא תוצג כמפריד"
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון חדש?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "delete": {
+    "message": "מחק"
   },
-  "nope": {
-    "message": "לא"
-  },
-  "defaultIconButtonOr": {
-    "message": "או"
-  },
-  "openBookmarksNewWindow": {
-    "message": "פתח את כל הסימניות בחלון חדש"
-  },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "options": {
-    "message": "אפשרויות"
-  },
-  "save": {
-    "message": "שמור"
-  },
-  "general": {
-    "message": "כללי"
-  },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
-  },
-  "donationGo": {
-    "message": "OK"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionZoom": {
-    "message": "זום"
-  },
-  "addNewFolderAfter": {
-    "message": "הוסף תיקייה אחרי זה"
-  },
-  "optionClickNewTab": {
-    "message": "לחיצה שמאלית פותחת סימנייה בלשונית חדשה."
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ללא כותרת)"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
-  },
-  "copyTitleAndUrl": {
-    "message": "העתק כותרת ו-URL ללוח הגזירים"
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
   },
   "quickAdded": {
     "message": "[TODO:quickAdded]"
   },
-  "editBookmark": {
-    "message": "ערוך סימנייה"
+  "addBookmarkAfter": {
+    "message": "הוסף סימנייה ללשונית הנוכחית אחרי זה"
   },
-  "edit": {
-    "message": "ערוך..."
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "openNewTab": {
-    "message": "פתח בלשונית חדשה"
+  "resetButton": {
+    "message": "איפוס"
   },
-  "syncOptions": {
-    "message": "אפשרויות סנכרון"
+  "defaultIconButton": {
+    "message": "השתמש בברירת מחדל"
   },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
   },
   "name": {
     "description": "Name of bookmark or folder.",
     "message": "שם"
   },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון גלישה פרטית חדש?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "donationMessage": {
+    "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
   },
-  "copyAllTitlesAndUrls": {
-    "message": "העתק את כל הכותרות וה-URLs ללוח הגזירים"
+  "customStylesDescription": {
+    "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
   },
-  "optionAutoRefreshSync": {
-    "message": "רענן מצב סנכרון אוטומטית"
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ללא כותרת)"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
+  "ignore": {
+    "message": "התעלם"
   },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
+  "syncOptions": {
+    "message": "אפשרויות סנכרון"
   },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "נוצר על ידי $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionOpenNewTab": {
-    "message": "לחיצה אמצעית או control-לחיצה פותחת סימנייה בלשונית חדשה ברקע (במקום בחזית)."
-  },
-  "optionShowSyncStatus": {
-    "message": "הצג מחווני מצב סנכרון"
-  },
-  "openIncognitoWindow": {
-    "message": "פתח בחלון גלישה פרטית"
-  },
-  "addNewFolder": {
-    "message": "הוסף תיקיית משנה"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "ה-URL האמיתי של סימנייה המוצגת כמפריד"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "defaultIconButton": {
-    "message": "השתמש בברירת מחדל"
-  },
-  "optionAutoResizePopup": {
-    "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
-  },
-  "resetSettings": {
-    "message": "איפוס הגדרות"
-  },
-  "addNewFolderBefore": {
-    "message": "הוסף תיקייה לפני זה"
-  },
-  "editFolder": {
-    "message": "ערוך תיקייה"
-  },
-  "errorOccured": {
-    "message": "אופס, אירעה שגיאה."
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "addBookmarkBefore": {
-    "message": "הוסף סימנייה ללשונית הנוכחית לפני זה"
-  },
-  "advancedOptions": {
-    "message": "אפשרויות מתקדמות"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "פתח את כל הסימניות בחלון גלישה פרטית"
-  },
-  "customIcon": {
-    "message": "אייקון מותאם אישית"
-  },
-  "delete": {
-    "message": "מחק"
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "הדגש סימניות שאינן מסונכרנות"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "optionSearchAfterEnter": {
-    "message": "חפש סימניות רק כאשר לוחצים ENTER (במקום חיפוש מיידי)"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$subFolderCount$ תיקיות משנה בה?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+  "deleteEllipsis": {
+    "message": "מחק..."
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$, $subFolderCount$ תיקיות משנה ו-$bookmarkCount$ סימניות בה?",
@@ -360,41 +286,172 @@
       }
     }
   },
-  "resetSettingsDescription": {
-    "message": "אפס את vBookmarks להגדרות ברירת המחדל."
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "addBookmarkAfter": {
-    "message": "הוסף סימנייה ללשונית הנוכחית אחרי זה"
+  "defaultIconButtonOr": {
+    "message": "או"
   },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
+  "openIncognitoWindow": {
+    "message": "פתח בחלון גלישה פרטית"
   },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "זה דווח למפתח."
   },
-  "donationMessage": {
-    "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
+  "optionAutoRefreshSync": {
+    "message": "רענן מצב סנכרון אוטומטית"
   },
-  "optionCloseUnusedFolders": {
-    "message": "סגור תיקיות שאינן בשימוש בעת פתיחת תיקייה."
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
   },
-  "url": {
-    "message": "URL"
+  "optionRememberPrevState": {
+    "message": "זכור מצב קודם (מיקום גלילה ותיקיות פתוחות)."
   },
-  "replaceUrl": {
-    "message": "החלף זאת ב-URL הנוכחי"
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "האם אתה בטוח שברצונך לפתוח את כל $count$ הסימניות בחלון גלישה פרטית חדש?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "openNewWindow": {
+    "message": "פתח בחלון חדש"
+  },
+  "removeSeparator": {
+    "message": "הסר מפריד"
+  },
+  "customStyles": {
+    "message": "סגנונות מותאמים אישית"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "תיקיית אב: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "copyTitleAndUrl": {
+    "message": "העתק כותרת ו-URL ללוח הגזירים"
+  },
+  "editBookmark": {
+    "message": "ערוך סימנייה"
+  },
+  "customIconDescription": {
+    "message": "האייקון חייב להיות במידות 19x19 פיקסלים. אחרת ישנה את גודלו למידות אלו."
   },
   "optionTheme": {
     "message": "[TODO:optionTheme]"
   },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "פתח"
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
   },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "reportError": {
+    "message": "דווח על שגיאה"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "מנהל סימניות קופץ. Neat Bookmarks משופר. נקי יותר מ-Neater Bookmarks."
+  },
+  "edit": {
+    "message": "ערוך..."
+  },
+  "errorOccured": {
+    "message": "אופס, אירעה שגיאה."
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "שניות"
   },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
+  },
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "editFolder": {
+    "message": "ערוך תיקייה"
+  },
+  "optionClickNewTab": {
+    "message": "לחיצה שמאלית פותחת סימנייה בלשונית חדשה."
+  },
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
+  },
+  "accessibility": {
+    "message": "נגישות"
+  },
+  "addBookmarkBottom": {
+    "message": "הוסף סימנייה ללשונית הנוכחית לתחתית זה"
+  },
+  "addNewFolderBefore": {
+    "message": "הוסף תיקייה לפני זה"
+  },
+  "optionHighlightUnsynced": {
+    "message": "הדגש סימניות שאינן מסונכרנות"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "הכותרת האמיתית של סימנייה המוצגת כמפריד"
+  },
+  "options": {
+    "message": "אפשרויות"
+  },
+  "general": {
+    "message": "כללי"
+  },
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
+  },
+  "openBookmarks": {
+    "message": "פתח את כל הסימניות"
+  },
+  "optionAutoResizePopup": {
+    "message": "שנה גודל חלון הקופץ אוטומטית לפי תוכן"
+  },
+  "addNewFolderAfter": {
+    "message": "הוסף תיקייה אחרי זה"
+  },
+  "advancedOptions": {
+    "message": "אפשרויות מתקדמות"
+  },
+  "save": {
+    "message": "שמור"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
   }
 }
