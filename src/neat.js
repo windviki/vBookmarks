@@ -147,7 +147,12 @@ import { initUndo } from './undo.js';
         return v;
     };
 
-    // Donation
+    // Donation (v4 gentle-ask model): no countdown, no forced navigation,
+    // no focus stealing. The card reappears on every popup open until the
+    // user makes an explicit choice — closing the popup never counts as an
+    // answer, so the ask cannot be ignored away, but it never blocks usage
+    // either. Choices: Donate (opens the page, long snooze), Later (short
+    // snooze), Don't show again (permanent opt-out).
     let newOrUpgrade = true;
     const mf = chrome.runtime.getManifest();
     const currentVer = parseVersion(mf["version"]);
@@ -169,8 +174,11 @@ import { initUndo } from './undo.js';
         store.set('openCount', parseInt(store.get('openCount'), 10) + 1);
     }
     if (!store.get('donationKey')) {
-        store.set('donationKey', 1);
+        // New installs get a grace window of ~30 popup opens before the
+        // first ask, so the request comes after real usage value.
+        store.set('donationKey', 30);
     }
+    store.remove('donationCountDown'); // retired in v4 (was the 10s timer)
 
     const $donation = $('donation');
     const showDonation = (show) => {
@@ -180,30 +188,16 @@ import { initUndo } from './undo.js';
                     [mf["version"], 'Github']);
             }
             $('donation-text').innerHTML = _m('donationMessage');
-            $donation.style.display = 'block';
-            let seconds = store.get('donationCountDown') > 0 ? store.get('donationCountDown') : 10;
-            let countDown = setInterval(() => {
-                store.set('donationCountDown', seconds);
-                if (seconds <= 0) {
-                    $('donation-go').innerHTML = _m('donationGo');
-                    $('donation-go').disabled = false;
-                    clearInterval(countDown);
-                    store.set('donationCountDown', 0);
-                } else {
-                    $('donation-go').innerHTML = `${seconds}s`;
-                    $('donation-go').disabled = true;
-                    $('donation-go').focus();
-                }
-                seconds--;
-            }, 1000);
-        } else {
-            $donation.style.display = 'none';
+            $('donation-go').innerHTML = _m('donationGo');
+            $('donation-later').innerHTML = _m('donationLater');
+            $('donation-never').innerHTML = _m('donationNever');
         }
+        $donation.style.display = show ? 'block' : 'none';
     }
 
-    if (newOrUpgrade || store.get('donationCountDown') > 0
-        || !store.get('donationFactor')
-        || parseInt(store.get('donationFactor'), 10) >= parseInt(store.get('donationKey'), 10)) {
+    if (!store.get('donationDisabled')
+        && (newOrUpgrade || !store.get('donationFactor')
+            || parseInt(store.get('donationFactor'), 10) >= parseInt(store.get('donationKey'), 10))) {
         showDonation(true);
     } else {
         store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
@@ -385,17 +379,21 @@ import { initUndo } from './undo.js';
         leftClickNewTab
     });
 
-    // donation
-    $('donation-go').addEventListener('click', () => {  
+    // donation: three explicit answers to the ask (see the v4 model above)
+    const donationSnooze = step => {
         showDonation(false);
-        store.set('donationCountDown', 0);
         store.set('donationFactor', 1);
-        if (parseInt(store.get('donationKey'), 10) > 3200) {
-            store.set('donationKey', 3200);
-        } else {
-            store.set('donationKey', parseInt(store.get('donationKey'), 10) + 800);
-        }
+        const key = parseInt(store.get('donationKey'), 10);
+        store.set('donationKey', Math.min(key + step, 3200));
+    };
+    $('donation-go').addEventListener('click', () => {
+        donationSnooze(800); // donors get the longest quiet period
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
+    });
+    $('donation-later').addEventListener('click', () => donationSnooze(120));
+    $('donation-never').addEventListener('click', () => {
+        showDonation(false);
+        store.set('donationDisabled', '1');
     });
 
     $('new-version-text').addEventListener('click', () => {

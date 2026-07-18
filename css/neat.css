@@ -248,70 +248,93 @@ body.linux input {
 
 #donation {
     display: none;
-    width: 98%;
     position: relative;
-    top: 0;
-    margin: 2px;
-    padding: 2px;
+    margin: 2px 4px 6px;
     background: var(--vbm-bg-elev);
     z-index: 9;
-    border: 0;
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    box-shadow: 0 2px 4px var(--vbm-shadow);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    box-shadow: 0 2px 6px var(--vbm-shadow);
 }
 
-#donation li {
-    font: menu;
-    font-size: 10px;
+#donation-card {
     display: flex;
-    overflow: hidden;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    font: menu;
+    font-size: 11px;
+}
+
+#donation-heart {
+    flex: none;
+    margin-top: 2px;
+    color: var(--vbm-accent);
 }
 
 #information-text {
     color: var(--vbm-muted);
-    font-size: 9px;
-    margin: 4px 0px 4px 0px;
+    min-width: 0;
 }
 
 #new-version-text {
     color: var(--vbm-accent);
-    margin: 2px 10px 2px 2px;
+    margin: 0 0 2px;
 }
 
 #donation-text {
-    margin: 2px 10px 2px 2px;
+    margin: 0;
+    line-height: 1.45;
 }
 
-.donation-button {
-    position: relative;
-    color: var(--vbm-accent);
-    vertical-align: middle;
-    min-width: 28px;
-    margin: 4px 2px 4px 2px;
-    padding: 0;
-    z-index: 10;
-    background-color: transparent;
-    border: 2px solid transparent;
+#donation-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+#donation-actions button {
+    font: inherit;
     cursor: pointer;
-    font: menu;
-    font-size: 10px;
-    text-align: center;
+    border-radius: 6px;
 }
 
-.donation-button:disabled {
-    text-decoration: none;
+#donation-go {
+    padding: 2px 12px;
+    border: 1px solid var(--vbm-accent);
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+    font-weight: 600;
+}
+
+#donation-go:hover {
+    -webkit-filter: brightness(1.08);
+    filter: brightness(1.08);
+}
+
+#donation-later {
+    padding: 2px 10px;
+    border: 1px solid var(--vbm-border);
+    background: transparent;
+    color: var(--vbm-fg);
+}
+
+#donation-later:hover {
+    background: var(--vbm-bg-hover);
+}
+
+#donation-never {
+    margin-inline-start: auto;
+    padding: 2px 4px;
+    border: 0;
+    background: transparent;
     color: var(--vbm-muted);
 }
 
-.donation-button:not([disabled]):hover {
+#donation-never:hover {
+    color: var(--vbm-fg);
     text-decoration: underline;
-}
-
-.donation-button:focus {
-    outline: thin dotted;
 }
 
 #results,
