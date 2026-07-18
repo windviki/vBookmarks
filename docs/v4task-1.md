@@ -38,7 +38,7 @@ vBookmarks 是 Chrome MV3 书签管理扩展（Neat Bookmarks 的 fork），数�
 - `src/actions.js`（546 行）与 `src/palette.js`（576 行）超过 P1 的 <400 行目标：二者是单一内聚的动作表/面板模式表，再拆只增加跳转成本，不再细分。
 - P3.5 死链扫描在 popup 页内执行（交互式任务，进度与取消需可见），未走 offscreen 文档；`<all_urls>` 本是固有 host 权限，未引入 optional_permissions。
 - `confirmDeleteFolder*` i18n 键自 P3.3（toast 撤销替代确认框）起为死文案，保留在 locales 中避免 42 个语言文件无意义翻动。
-- `scripts/sync_locales.py` 全量重写会产生键序随机的大噪音 diff；新键采用在 41 个 locale 中原位插入 `[TODO:key]` 占位（该脚本既有机制），并以 `--check-only` 验证键集一致。
+- 旧 `scripts/sync_locales.py` 全量重写会产生键序随机的大噪音 diff；新键采用在 41 个 locale 中原位插入 `[TODO:key]` 占位。该脚本与 `check_translations.py` 已退役，统一由 `scripts/i18n.py`（audit/missing/translate/verify）接替，键集一致性以 `python3 scripts/i18n.py missing` / `verify` 验证。
 
 已实现：存储统一 src/store.js（迁移/双区镜像/debounce）、design tokens + 三态暗色、side panel 可选开启（pages/sidepanel.html）、fzf 模糊搜索、空态、最近书签分区（#34）、文件夹排序（#33）、快速收藏（#30）、omnibox 修复、70 例 vitest 真源码测试全绿、docker 冒烟四页面零错误。
 
@@ -61,7 +61,7 @@ node --check <改动的 js 文件>
 ### 硬约定（违反会破坏现有机制）
 
 - 存储：同步读写一律 `store.get/set`（local 区）/`store.getSyncSetting/setSyncSetting`（sync 区）；**禁止重新引入 localStorage 直访**；异步页用 `getSetting/setSetting`。
-- i18n：新文案先加 `_locales/en/messages.json` + `_locales/zh_CN/messages.json` 实译，其余 41 locale 原位插入 `[TODO:key]` 占位（sync_locales.py 的既有机制；**不要跑它的全量重写**——键序随机产生噪音 diff），跑 `python3 scripts/sync_locales.py --check-only` 验证键集一致。
+- i18n：新文案先加 `_locales/en/messages.json` + `_locales/zh_CN/messages.json` 实译，其余 41 locale 原位插入 `[TODO:key]` 占位（保持各文件既有键序），跑 `python3 scripts/i18n.py missing` 验证键集一致；旧 sync_locales.py / check_translations.py 已退役。
 - CSP：`script-src 'self'` 是硬线；`style-src` 已含 `'unsafe-inline'`（树缩进/分隔符颜色依赖内联样式属性，勿收紧）。
 - 测试：classic 脚本用 `fs + new Function` 沙箱测真源码（tests/store.test.js 范式），ESM 直接 import；**禁止抄写被测实现**。
 - pages/sidepanel.html 是 pages/popup.html 的复刻（仅多 `<body class="panel-mode">`），改 pages/popup.html 后必须同步复刻（tests/fuzzy.test.js 有脚本一致性断言）。

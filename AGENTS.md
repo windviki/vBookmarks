@@ -47,11 +47,11 @@ Runtime code is grouped by kind: first-party JS in `src/`, extension pages in `p
 | `css/sync-styles.css` | Styles for sync-status indicators |
 | `css/neat.css` | Popup styles |
 | `assets/icons/` | Images referenced by code/manifest (shipped): `icon.png`, `icon16.png`, `icon32.png`, `icon48.png`, `icon128.png`. Tree folder rows and `javascript:` bookmarklets use inline SVG instead (see `src/icons.js`) |
-| `_locales/<lang>/messages.json` | 42 locales (`en` is the baseline, 101 keys); accessed via `chrome.i18n.getMessage()` and `__MSG_*__` in the manifest |
+| `_locales/<lang>/messages.json` | 43 locales (`en` is the baseline, 131 keys); accessed via `chrome.i18n.getMessage()` and `__MSG_*__` in the manifest |
 
 Supporting directories:
 
-- `scripts/` — Python 3 tooling: `package.py` (release zip), `sync_locales.py` (locale sync), `check_translations.py` (translation quality report)
+- `scripts/` — Python 3 tooling: `package.py` (release zip), `i18n.py` (unified locale tooling: audit/missing/translate/verify)
 - `tests/` — Vitest unit tests
 - `docs/` — `README.md` (EN) / `README.zh.md` (ZH) with full feature list and changelog, `CLAUDE.md` (similar guidance for Claude Code), `PLAN.md` (completed optimization plan), `bookmark-sync-changes.md` (Chrome bookmarks sync API changes reference), `评估与优化方案.md` (Chinese code evaluation), and the 2026-07 modernization analysis set: `现状分析-弹窗UI.md`, `现状分析-架构与存储.md`, `趋势调研-MV3平台与书签品类.md`, `现代化演进总方案.md` (phased roadmap). **Note:** the 2026-07-17 directory reorganization postdates the analysis docs — file paths in them refer to the old flat layout; this file is the current reference.
 - `release/` — legacy `.crx` builds of old versions (historical artifacts, do not edit)
@@ -87,14 +87,16 @@ The zip is for Chrome Web Store submission. The include/exclude lists at the top
 
 ### Locale management
 
+`scripts/i18n.py` (stdlib only) is the single entry point — the older `sync_locales.py` / `check_translations.py` are retired:
+
 ```bash
-python3 scripts/sync_locales.py --check-only      # diff all locales against the en baseline (no changes)
-python3 scripts/sync_locales.py --locale fr       # rewrite one locale to match en keys (missing keys become [TODO:key])
-python3 scripts/sync_locales.py --branch cc-dev   # import translations from another git branch first
-python3 scripts/check_translations.py             # report: over-long UI strings, wrong-script/empty values, missing placeholders
+python3 scripts/i18n.py audit                 # scan all _m()/__MSG_*__ references vs en definitions (undefined/unused keys)
+python3 scripts/i18n.py missing               # per-locale report vs en baseline: missing / [TODO] / suspect-equal-to-en
+python3 scripts/i18n.py translate --locale fr --apply   # LLM-translate a locale's pending keys, write back in key order
+python3 scripts/i18n.py verify                # gate: key-set alignment + no [TODO] + $placeholder$ integrity + menu-length warnings
 ```
 
-`check_translations.py` is report-only (it currently reports issues; it is not a gate). All 42 locales currently hold the same 128 keys as the `en` baseline — keys without a real translation carry `[TODO:key]` placeholder messages. When adding keys: translate `en` + `zh_CN` for real, insert `[TODO:key]` placeholders **in place** into the other locales (do NOT run a full `--locale` rewrite — the script emits keys in random order and produces huge noise diffs), then verify with `--check-only`.
+All 43 locales currently hold the same 131 keys as the `en` baseline — keys without a real translation carry `[TODO:key]` placeholder messages. When adding keys: translate `en` + `zh_CN` for real, insert `[TODO:key]` placeholders **in place** (right after their `en` neighbor) into the other locales — do NOT reorder keys — then check with `python3 scripts/i18n.py missing` (exit 1 from `verify` while TODOs remain is expected). `translate` fills every pending key of a locale in one batched run (40 keys/request) against an OpenAI-compatible chat API — `VBM_LLM_API_KEY` required, `VBM_LLM_BASE_URL` (default `https://api.moonshot.cn/v1`) and `VBM_LLM_MODEL` (default `kimi-k2-0905-preview`) optional. The built-in Chinese prompt explains the bookmark-manager context and per-category constraints (menu items stay short, options may be long, `$placeholder$` tokens must survive); dry-run is the default, `--apply` writes back preserving each file's key order and `placeholders` structure. `verify` also warns about over-long menu strings (35 chars / 18 CJK) and supports `--fix` for auto-shortening via the LLM.
 
 ### Manual testing checklist (no automated E2E exists)
 
@@ -112,7 +114,7 @@ A verified recipe lives outside the repo (`/tmp/vbm-smoke/smoke.js` pattern): im
 
 - **4-space indentation**, ES6+ in newer code (`const`/`let`, arrow functions, `async`/`await`) — match the surrounding style of the file you edit.
 - Page scripts are wrapped in an IIFE: `(window => { ... })(window)`; `src/background.js` uses `(() => { ... })()`. The extracted `src/*.js` P1 modules are plain ES modules exporting `initX(ctx)`.
-- i18n alias at the top of each page script: `const _m = chrome.i18n.getMessage;` — use `_m('key')` for all user-visible strings; add new strings to `_locales/en/messages.json` first and run `scripts/sync_locales.py` to propagate keys.
+- i18n alias at the top of each page script: `const _m = chrome.i18n.getMessage;` — use `_m('key')` for all user-visible strings; add new strings to `_locales/en/messages.json` first and follow the Locale management flow (`scripts/i18n.py`).
 - `src/neatools.js` is retired (P1): no prototype extensions, no global helpers anywhere. Element lookup uses `document.getElementById` — files that need it repeatedly declare a local `const $ = id => document.getElementById(id);` (see `src/neat.js`, `src/keyboard.js`, `src/options.js`); `htmlspecialchars`/`escapeRegExp`/`colorHex`/`uuidFast` live as module-private pure functions or named exports (`uuidFast` is exported from `src/separators.js`). UI labels are assigned in `initXxx()` functions on `DOMContentLoaded`, not in HTML.
 - Sections in `src/neat.js` are delimited by `// Section` comments; historical author changes are wrapped in `// ++++++++ added/modified by windviki@gmail.com ++++++++` markers.
 - **Settings storage is unified in `src/store.js` — be deliberate:**

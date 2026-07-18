@@ -264,7 +264,7 @@
   },
   "confirmOpenBookmarks": {
     "description": "Confirmation message for opening all bookmarks.",
-    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count $?",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count$?",
     "placeholders": {
       "count": {
         "content": "$1"
