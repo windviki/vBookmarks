@@ -730,15 +730,24 @@ body.panel-mode #resizer-y {
 }
 
 /* --- Phase 2b: fuzzy search highlight + empty states --- */
+/* Hit characters are accent-tinted badges, not just recolored text: at 12px
+   a hue-only delta is nearly unscannable, especially in the dark theme
+   (#a8c7fa accent vs #e3e5e8 body). color-mix needs Chrome 111+, baseline
+   is 114. */
 #results mark {
-    background-color: transparent;
+    background-color: color-mix(in srgb, var(--vbm-accent) 18%, transparent);
     color: var(--vbm-accent);
     font-weight: 600;
+    border-radius: 3px;
+    padding: 0 1px;
+    margin: 0 -1px;
 }
 
-/* keep the hit readable on the selected/focused row */
+/* keep the hit readable on the selected/focused row: the row itself is
+   already accent-tinted, so the badge flattens to bold inherit text */
 #results ul li a:focus mark,
 #results ul li a.active mark {
+    background-color: transparent;
     color: inherit;
 }
 
