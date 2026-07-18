@@ -98,6 +98,7 @@ EXCLUDE_DIRS = {
     'docs',
     'tests',
     'node_modules',
+    'tmp',  # local dev artifacts (screenshots, zips), git-ignored
     'legacy',  # dead MV2 artifacts (background.html, checkupdate.json)
     '_locales',  # handled separately below
 }
@@ -117,6 +118,7 @@ EXCLUDE_FILES = {
     'package.json',
     'package-lock.json',
     '.gitignore',
+    '.env',  # local LLM credentials, git-ignored
 }
 
 # Locale directories to exclude (not in the supported set)
