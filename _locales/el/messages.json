@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "δευτερόλεπτα"
   },
+  "syncStatusSynced": {
+    "message": "Συγχρονίστηκε με τον λογαριασμό σας Google"
+  },
+  "syncStatusLocal": {
+    "message": "Μόνο τοπικά — δεν μεταφορτώθηκε"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Δεν είναι δυνατός ο συγχρονισμός"
+  },
+  "syncSuffixSynced": {
+    "message": "(Συγχρονίστηκε)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Τοπικά)"
+  },
   "advancedOptions": {
     "message": "Προχωρημένες Επιλογές"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Αναζήτηση Σελιδοδεικτών"
+  },
+  "searchClear": {
+    "message": "Εκκαθάριση αναζήτησης"
   },
   "reportError": {
     "message": "Αναφορά Σφάλματος"
@@ -539,6 +557,12 @@
     "message": "Προσθήκη σελιδοδείκτη με vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Δωρεά"
+  },
+  "donationLater": {
+    "message": "Αργότερα"
+  },
+  "donationNever": {
+    "message": "Να μην εμφανιστεί ξανά"
   }
 }

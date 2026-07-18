@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "วินาที"
   },
+  "syncStatusSynced": {
+    "message": "ซิงค์กับบัญชี Google ของคุณแล้ว"
+  },
+  "syncStatusLocal": {
+    "message": "เฉพาะในเครื่อง — ยังไม่ได้อัปโหลด"
+  },
+  "syncStatusUnsyncable": {
+    "message": "ไม่สามารถซิงค์ได้"
+  },
+  "syncSuffixSynced": {
+    "message": "(ซิงค์แล้ว)"
+  },
+  "syncSuffixLocal": {
+    "message": "(ในเครื่อง)"
+  },
   "advancedOptions": {
     "message": "ตัวเลือกขั้นสูง"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "ค้นหาที่คั่นหน้า"
+  },
+  "searchClear": {
+    "message": "ล้างการค้นหา"
   },
   "reportError": {
     "message": "รายงานข้อผิดพลาด"
@@ -539,6 +557,12 @@
     "message": "บุ๊กมาร์กหน้านี้ด้วย vBookmarks"
   },
   "donationGo": {
-    "message": "ตกลง"
+    "message": "บริจาค"
+  },
+  "donationLater": {
+    "message": "ภายหลัง"
+  },
+  "donationNever": {
+    "message": "ไม่ต้องแสดงอีก"
   }
 }

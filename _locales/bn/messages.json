@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "সেকেন্ড"
   },
+  "syncStatusSynced": {
+    "message": "আপনার Google অ্যাকাউন্টে সিঙ্ক হয়েছে"
+  },
+  "syncStatusLocal": {
+    "message": "শুধুমাত্র স্থানীয় — আপলোড করা হয়নি"
+  },
+  "syncStatusUnsyncable": {
+    "message": "সিঙ্ক করা যাবে না"
+  },
+  "syncSuffixSynced": {
+    "message": "(সিঙ্ক হয়েছে)"
+  },
+  "syncSuffixLocal": {
+    "message": "(স্থানীয়)"
+  },
   "advancedOptions": {
     "message": "উন্নত অপশন"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
     "message": "বুকমার্ক খুঁজুন"
+  },
+  "searchClear": {
+    "message": "অনুসন্ধান মুছুন"
   },
   "reportError": {
     "message": "ত্রুটি রিপোর্ট করুন"
@@ -539,6 +557,12 @@
     "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
   },
   "donationGo": {
-    "message": "ঠিক আছে"
+    "message": "দান করুন"
+  },
+  "donationLater": {
+    "message": "পরে"
+  },
+  "donationNever": {
+    "message": "আবার দেখাবেন না"
   }
 }

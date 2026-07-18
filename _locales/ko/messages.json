@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "초"
   },
+  "syncStatusSynced": {
+    "message": "Google 계정에 동기화됨"
+  },
+  "syncStatusLocal": {
+    "message": "로컬 전용 — 업로드되지 않음"
+  },
+  "syncStatusUnsyncable": {
+    "message": "동기화할 수 없음"
+  },
+  "syncSuffixSynced": {
+    "message": "(동기화됨)"
+  },
+  "syncSuffixLocal": {
+    "message": "(로컬)"
+  },
   "advancedOptions": {
     "message": "고급 옵션"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "검색 필드의 자리 표시자 텍스트",
     "message": "북마크 검색"
+  },
+  "searchClear": {
+    "message": "검색 지우기"
   },
   "reportError": {
     "message": "오류 보고"
@@ -539,6 +557,12 @@
     "message": "vBookmarks로 이 페이지 북마크"
   },
   "donationGo": {
-    "message": "확인"
+    "message": "기부하기"
+  },
+  "donationLater": {
+    "message": "나중에"
+  },
+  "donationNever": {
+    "message": "다시 표시 안 함"
   }
 }

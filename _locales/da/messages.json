@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekunder"
   },
+  "syncStatusSynced": {
+    "message": "Synkroniseret til din Google-konto"
+  },
+  "syncStatusLocal": {
+    "message": "Kun lokalt — ikke uploadet"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Kan ikke synkroniseres"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkroniseret)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokal)"
+  },
   "advancedOptions": {
     "message": "Avancerede Indstillinger"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Søg Bogmærker"
+  },
+  "searchClear": {
+    "message": "Ryd søgning"
   },
   "reportError": {
     "message": "Rapporter Fejl"
@@ -539,6 +557,12 @@
     "message": "Bogmærk denne side med vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Donér"
+  },
+  "donationLater": {
+    "message": "Senere"
+  },
+  "donationNever": {
+    "message": "Vis ikke igen"
   }
 }

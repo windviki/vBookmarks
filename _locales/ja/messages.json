@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "秒"
   },
+  "syncStatusSynced": {
+    "message": "Googleアカウントに同期済み"
+  },
+  "syncStatusLocal": {
+    "message": "ローカルのみ — 未アップロード"
+  },
+  "syncStatusUnsyncable": {
+    "message": "同期不可"
+  },
+  "syncSuffixSynced": {
+    "message": "(同期済み)"
+  },
+  "syncSuffixLocal": {
+    "message": "(ローカル)"
+  },
   "advancedOptions": {
     "message": "拡張オプション"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "検索フィールドのためのプレースホルダーテキスト",
     "message": "ブックマークの検索"
+  },
+  "searchClear": {
+    "message": "検索をクリア"
   },
   "reportError": {
     "message": "エラーレポート"
@@ -539,6 +557,12 @@
     "message": "vBookmarksでこのページをブックマーク"
   },
   "donationGo": {
-    "message": "はい"
+    "message": "寄付する"
+  },
+  "donationLater": {
+    "message": "後で"
+  },
+  "donationNever": {
+    "message": "再表示しない"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "detik"
   },
+  "syncStatusSynced": {
+    "message": "Disinkronkan ke akun Google Anda"
+  },
+  "syncStatusLocal": {
+    "message": "Lokal saja — tidak diunggah"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Tidak dapat disinkronkan"
+  },
+  "syncSuffixSynced": {
+    "message": "(Disinkronkan)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokal)"
+  },
   "advancedOptions": {
     "message": "Opsi Lanjutan"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Cari Markah"
+  },
+  "searchClear": {
+    "message": "Hapus pencarian"
   },
   "reportError": {
     "message": "Laporkan Kesalahan"
@@ -539,6 +557,12 @@
     "message": "Bookmark halaman ini dengan vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Donasi"
+  },
+  "donationLater": {
+    "message": "Nanti"
+  },
+  "donationNever": {
+    "message": "Jangan tampilkan lagi"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekuntia"
   },
+  "syncStatusSynced": {
+    "message": "Synkronoitu Google-tilillesi"
+  },
+  "syncStatusLocal": {
+    "message": "Vain paikallinen — ei ladattu"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ei voida synkronoida"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkronoitu)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Paikallinen)"
+  },
   "advancedOptions": {
     "message": "Lisäasetukset"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Etsi Kirjanmerkkejä"
+  },
+  "searchClear": {
+    "message": "Tyhjennä haku"
   },
   "reportError": {
     "message": "Raportoi Virheestä"
@@ -539,6 +557,12 @@
     "message": "Lisää tämä sivu kirjanmerkkeihin vBookmarksilla"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Lahjoita"
+  },
+  "donationLater": {
+    "message": "Myöhemmin"
+  },
+  "donationNever": {
+    "message": "Älä näytä uudelleen"
   }
 }

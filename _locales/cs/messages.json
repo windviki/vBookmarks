@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekund"
   },
+  "syncStatusSynced": {
+    "message": "Synchronizováno s účtem Google"
+  },
+  "syncStatusLocal": {
+    "message": "Pouze lokálně – nenahráno"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nelze synchronizovat"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synchronizováno)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokální)"
+  },
   "advancedOptions": {
     "message": "Pokročilé Možnosti"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Hledat Záložky"
+  },
+  "searchClear": {
+    "message": "Vymazat hledání"
   },
   "reportError": {
     "message": "Nahlásit Chybu"
@@ -539,6 +557,12 @@
     "message": "Přidat stránku do záložek pomocí vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Přispět"
+  },
+  "donationLater": {
+    "message": "Později"
+  },
+  "donationNever": {
+    "message": "Již nezobrazovat"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "секунд"
   },
+  "syncStatusSynced": {
+    "message": "Синхронізовано з вашим обліковим записом Google"
+  },
+  "syncStatusLocal": {
+    "message": "Лише локально — не завантажено"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Не можна синхронізувати"
+  },
+  "syncSuffixSynced": {
+    "message": "(Синхронізовано)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Локально)"
+  },
   "advancedOptions": {
     "message": "Розширені опції"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Текст-заповнювач для поля пошуку.",
     "message": "Пошук закладок"
+  },
+  "searchClear": {
+    "message": "Очистити пошук"
   },
   "reportError": {
     "message": "Повідомити про помилку"
@@ -539,6 +557,12 @@
     "message": "Додати сторінку до закладок через vBookmarks"
   },
   "donationGo": {
-    "message": "Так"
+    "message": "Пожертвувати"
+  },
+  "donationLater": {
+    "message": "Пізніше"
+  },
+  "donationNever": {
+    "message": "Не показувати знову"
   }
 }

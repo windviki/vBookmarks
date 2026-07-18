@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "secunde"
   },
+  "syncStatusSynced": {
+    "message": "Sincronizat cu contul Google"
+  },
+  "syncStatusLocal": {
+    "message": "Doar local — neîncărcat"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nu poate fi sincronizat"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sincronizat)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
   "advancedOptions": {
     "message": "Opțiuni Avansate"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Caută Semne de Carte"
+  },
+  "searchClear": {
+    "message": "Șterge căutarea"
   },
   "reportError": {
     "message": "Raportează Eroare"
@@ -539,6 +557,12 @@
     "message": "Marchează această pagină cu vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Donează"
+  },
+  "donationLater": {
+    "message": "Mai târziu"
+  },
+  "donationNever": {
+    "message": "Nu mai afișa"
   }
 }

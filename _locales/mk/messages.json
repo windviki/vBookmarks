@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "секунди"
   },
+  "syncStatusSynced": {
+    "message": "Синхронизирано со вашата Google сметка"
+  },
+  "syncStatusLocal": {
+    "message": "Само локално — не е прикачено"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Не може да се синхронизира"
+  },
+  "syncSuffixSynced": {
+    "message": "(Синхронизирано)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Локално)"
+  },
   "advancedOptions": {
     "message": "Напредни опции"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Пребарување Ознаки"
+  },
+  "searchClear": {
+    "message": "Исчисти пребарување"
   },
   "reportError": {
     "message": "Извештај Грешка"
@@ -538,6 +556,12 @@
     "message": "Обележи ја оваа страница со vBookmarks"
   },
   "donationGo": {
-    "message": "Во ред"
+    "message": "Донирај"
+  },
+  "donationLater": {
+    "message": "Подоцна"
+  },
+  "donationNever": {
+    "message": "Не прикажувај повторно"
   }
 }

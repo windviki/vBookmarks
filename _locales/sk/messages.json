@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekúnd"
   },
+  "syncStatusSynced": {
+    "message": "Synchronizované s účtom Google"
+  },
+  "syncStatusLocal": {
+    "message": "Len lokálne – nenahrané"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nedá sa synchronizovať"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synchronizované)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokálne)"
+  },
   "advancedOptions": {
     "message": "Pokročilé možnosti"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Zástupný text pre vyhľadávacie pole.",
     "message": "Hľadať záložky"
+  },
+  "searchClear": {
+    "message": "Vymazať vyhľadávanie"
   },
   "reportError": {
     "message": "Nahlásiť chybu"
@@ -539,6 +557,12 @@
     "message": "Pridať túto stránku do záložiek pomocou vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Prispieť"
+  },
+  "donationLater": {
+    "message": "Neskôr"
+  },
+  "donationNever": {
+    "message": "Nezobrazovať znova"
   }
 }

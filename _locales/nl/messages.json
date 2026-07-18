@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "seconden"
   },
+  "syncStatusSynced": {
+    "message": "Gesynchroniseerd met uw Google-account"
+  },
+  "syncStatusLocal": {
+    "message": "Alleen lokaal — niet geüpload"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Kan niet worden gesynchroniseerd"
+  },
+  "syncSuffixSynced": {
+    "message": "(Gesynchroniseerd)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokaal)"
+  },
   "advancedOptions": {
     "message": "Geavanceerde opties"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Plaatshoudertekst voor zoekveld.",
     "message": "Bladwijzers zoeken"
+  },
+  "searchClear": {
+    "message": "Zoekopdracht wissen"
   },
   "reportError": {
     "message": "Fout melden"
@@ -539,6 +557,12 @@
     "message": "Deze pagina bladwijzeren met vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Doneren"
+  },
+  "donationLater": {
+    "message": "Later"
+  },
+  "donationNever": {
+    "message": "Niet meer tonen"
   }
 }

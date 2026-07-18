@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "सेकंड"
   },
+  "syncStatusSynced": {
+    "message": "आपके Google खाते से सिंक किया गया"
+  },
+  "syncStatusLocal": {
+    "message": "केवल स्थानीय — अपलोड नहीं किया गया"
+  },
+  "syncStatusUnsyncable": {
+    "message": "सिंक नहीं किया जा सकता"
+  },
+  "syncSuffixSynced": {
+    "message": "(सिंक किया गया)"
+  },
+  "syncSuffixLocal": {
+    "message": "(स्थानीय)"
+  },
   "advancedOptions": {
     "message": "उन्नत विकल्प"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "सर्च फील्ड के लिए प्लेसहोल्डर टेक्स्ट।",
     "message": "बुकमार्क खोजें"
+  },
+  "searchClear": {
+    "message": "खोज साफ़ करें"
   },
   "reportError": {
     "message": "त्रुटि रिपोर्ट करें"
@@ -539,6 +557,12 @@
     "message": "vBookmarks के साथ इस पृष्ठ को बुकमार्क करें"
   },
   "donationGo": {
-    "message": "ठीक है"
+    "message": "दान करें"
+  },
+  "donationLater": {
+    "message": "बाद में"
+  },
+  "donationNever": {
+    "message": "फिर न दिखाएं"
   }
 }

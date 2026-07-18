@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekunder"
   },
+  "syncStatusSynced": {
+    "message": "Synkroniserat till ditt Google-konto"
+  },
+  "syncStatusLocal": {
+    "message": "Endast lokalt — inte uppladdat"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Kan inte synkroniseras"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synkroniserat)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokalt)"
+  },
   "advancedOptions": {
     "message": "Avancerade alternativ"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Platshållartext för sökfältet.",
     "message": "Sök bokmärken"
+  },
+  "searchClear": {
+    "message": "Rensa sökning"
   },
   "reportError": {
     "message": "Rapportera fel"
@@ -539,6 +557,12 @@
     "message": "Bokmärk denna sida med vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Donera"
+  },
+  "donationLater": {
+    "message": "Senare"
+  },
+  "donationNever": {
+    "message": "Visa inte igen"
   }
 }

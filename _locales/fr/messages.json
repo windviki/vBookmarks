@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "secondes"
   },
+  "syncStatusSynced": {
+    "message": "Synchronisé avec votre compte Google"
+  },
+  "syncStatusLocal": {
+    "message": "Local uniquement — non téléchargé"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ne peut pas être synchronisé"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synchronisé)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
   "advancedOptions": {
     "message": "Options avancées"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Espace réservé au champ de recherche.",
     "message": "Recherche de favoris"
+  },
+  "searchClear": {
+    "message": "Effacer la recherche"
   },
   "reportError": {
     "message": "Signaler une erreur"
@@ -539,6 +557,12 @@
     "message": "Ajouter cette page aux signets avec vBookmarks"
   },
   "donationGo": {
-    "message": "Bien"
+    "message": "Faire un don"
+  },
+  "donationLater": {
+    "message": "Plus tard"
+  },
+  "donationNever": {
+    "message": "Ne plus afficher"
   }
 }

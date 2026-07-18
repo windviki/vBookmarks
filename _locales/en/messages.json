@@ -254,7 +254,13 @@
     "message": "If you like it, maybe you can donate for its future development. Any amount is welcome."
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Donate"
+  },
+  "donationLater": {
+    "message": "Later"
+  },
+  "donationNever": {
+    "message": "Don't show again"
   },
   "donationDismiss": {
     "message": "Dismiss"
@@ -469,6 +475,9 @@
     "description": "Placeholder text for search field.",
     "message": "Search Bookmarks"
   },
+  "searchClear": {
+    "message": "Clear search"
+  },
   "searchNoResults": {
     "description": "Shown in the popup when a search returns no matching bookmarks.",
     "message": "No matching bookmarks"
@@ -517,6 +526,21 @@
   },
   "optionSyncRefreshIntervalSeconds": {
     "message": "seconds"
+  },
+  "syncStatusSynced": {
+    "message": "Synced to your Google account"
+  },
+  "syncStatusLocal": {
+    "message": "Local only — not uploaded"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Cannot be synced"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synced)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
   },
   "optionAutoResizePopup": {
     "message": "Auto-resize popup window to fit content"

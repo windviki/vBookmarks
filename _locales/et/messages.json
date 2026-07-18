@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekundit"
   },
+  "syncStatusSynced": {
+    "message": "Sünkroonitud teie Google'i kontoga"
+  },
+  "syncStatusLocal": {
+    "message": "Ainult kohalik – pole üles laaditud"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ei saa sünkroonida"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sünkroonitud)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Kohalik)"
+  },
   "advancedOptions": {
     "message": "Täpsemad valikud"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder tekst otsinguväljale.",
     "message": "Otsi järjehoidjaid"
+  },
+  "searchClear": {
+    "message": "Tühjenda otsing"
   },
   "reportError": {
     "message": "Teata veast"
@@ -539,6 +557,12 @@
     "message": "Lisa see leht vBookmarksiga järjehoidjasse"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Anneta"
+  },
+  "donationLater": {
+    "message": "Hiljem"
+  },
+  "donationNever": {
+    "message": "Ära näita enam"
   }
 }

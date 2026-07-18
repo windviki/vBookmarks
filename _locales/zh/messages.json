@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "秒"
   },
+  "syncStatusSynced": {
+    "message": "已同步到您的 Google 账号"
+  },
+  "syncStatusLocal": {
+    "message": "仅本地 — 未上传"
+  },
+  "syncStatusUnsyncable": {
+    "message": "无法同步"
+  },
+  "syncSuffixSynced": {
+    "message": "(已同步)"
+  },
+  "syncSuffixLocal": {
+    "message": "(本地)"
+  },
   "advancedOptions": {
     "message": "高级选项"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "搜索框里的提示文字",
     "message": "书签搜索"
+  },
+  "searchClear": {
+    "message": "清除搜索"
   },
   "reportError": {
     "message": "报告此错误"
@@ -539,6 +557,12 @@
     "message": "使用 vBookmarks 添加书签"
   },
   "donationGo": {
-    "message": "好的"
+    "message": "捐赠"
+  },
+  "donationLater": {
+    "message": "稍后"
+  },
+  "donationNever": {
+    "message": "不再显示"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekundi"
   },
+  "syncStatusSynced": {
+    "message": "Sinkronizirano s Google računom"
+  },
+  "syncStatusLocal": {
+    "message": "Samo lokalno — nije preneseno"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Ne može se sinkronizirati"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinkronizirano)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokalno)"
+  },
   "advancedOptions": {
     "message": "Napredne opcije"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder tekst za polje pretraživanja.",
     "message": "Traži oznake"
+  },
+  "searchClear": {
+    "message": "Očisti pretragu"
   },
   "reportError": {
     "message": "Prijavi grešku"
@@ -539,6 +557,12 @@
     "message": "Označi ovu stranicu s vBookmarks"
   },
   "donationGo": {
-    "message": "U redu"
+    "message": "Doniraj"
+  },
+  "donationLater": {
+    "message": "Kasnije"
+  },
+  "donationNever": {
+    "message": "Ne prikazuj više"
   }
 }

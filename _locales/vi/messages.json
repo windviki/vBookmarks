@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "giây"
   },
+  "syncStatusSynced": {
+    "message": "Đã đồng bộ với tài khoản Google của bạn"
+  },
+  "syncStatusLocal": {
+    "message": "Chỉ cục bộ — chưa tải lên"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Không thể đồng bộ"
+  },
+  "syncSuffixSynced": {
+    "message": "(Đã đồng bộ)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Cục bộ)"
+  },
   "advancedOptions": {
     "message": "Tùy Chọn Nâng Cao"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Tìm kiếm Dấu Trang"
+  },
+  "searchClear": {
+    "message": "Xóa tìm kiếm"
   },
   "reportError": {
     "message": "Báo Cáo Lỗi"
@@ -539,6 +557,12 @@
     "message": "Đánh dấu trang này bằng vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Quyên góp"
+  },
+  "donationLater": {
+    "message": "Để sau"
+  },
+  "donationNever": {
+    "message": "Không hiển thị lại"
   }
 }

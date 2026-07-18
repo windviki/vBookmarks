@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekundžių"
   },
+  "syncStatusSynced": {
+    "message": "Sinchronizuota su jūsų Google paskyra"
+  },
+  "syncStatusLocal": {
+    "message": "Tik vietinis – neįkelta"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Negalima sinchronizuoti"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinchronizuota)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Vietinis)"
+  },
   "advancedOptions": {
     "message": "Išplėstiniai parametrai"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder tekstas paieškos laukui.",
     "message": "Ieškoti žymelių"
+  },
+  "searchClear": {
+    "message": "Išvalyti paiešką"
   },
   "reportError": {
     "message": "Pranešti apie klaidą"
@@ -539,6 +557,12 @@
     "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
   },
   "donationGo": {
-    "message": "Gerai"
+    "message": "Paaukoti"
+  },
+  "donationLater": {
+    "message": "Vėliau"
+  },
+  "donationNever": {
+    "message": "Nerodyti daugiau"
   }
 }

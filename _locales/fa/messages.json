@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "ثانیه"
   },
+  "syncStatusSynced": {
+    "message": "همگام‌سازی شده با حساب Google شما"
+  },
+  "syncStatusLocal": {
+    "message": "فقط محلی — آپلود نشده"
+  },
+  "syncStatusUnsyncable": {
+    "message": "قابل همگام‌سازی نیست"
+  },
+  "syncSuffixSynced": {
+    "message": "(همگام‌سازی شده)"
+  },
+  "syncSuffixLocal": {
+    "message": "(محلی)"
+  },
   "advancedOptions": {
     "message": "گزینه‌های پیشرفته"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "متن نگهدارنده برای فیلد جستجو.",
     "message": "جستجوی نشانک‌ها"
+  },
+  "searchClear": {
+    "message": "پاک کردن جستجو"
   },
   "reportError": {
     "message": "گزارش خطا"
@@ -539,6 +557,12 @@
     "message": "نشانک این صفحه با vBookmarks"
   },
   "donationGo": {
-    "message": "تأیید"
+    "message": "کمک مالی"
+  },
+  "donationLater": {
+    "message": "بعداً"
+  },
+  "donationNever": {
+    "message": "دیگر نشان نده"
   }
 }

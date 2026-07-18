@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "секунд"
   },
+  "syncStatusSynced": {
+    "message": "Синхронизировано с вашим аккаунтом Google"
+  },
+  "syncStatusLocal": {
+    "message": "Только локально — не загружено"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Не может быть синхронизировано"
+  },
+  "syncSuffixSynced": {
+    "message": "(Синхронизировано)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Локально)"
+  },
   "advancedOptions": {
     "message": "Расширенные настройки"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Впишите текст для поиска.",
     "message": "Поиск"
+  },
+  "searchClear": {
+    "message": "Очистить поиск"
   },
   "reportError": {
     "message": "Сообщение об ошибке"
@@ -539,6 +557,12 @@
     "message": "Добавить страницу в закладки с vBookmarks"
   },
   "donationGo": {
-    "message": "хорошо"
+    "message": "Пожертвовать"
+  },
+  "donationLater": {
+    "message": "Позже"
+  },
+  "donationNever": {
+    "message": "Больше не показывать"
   }
 }

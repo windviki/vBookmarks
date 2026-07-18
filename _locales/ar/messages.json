@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "ثواني"
   },
+  "syncStatusSynced": {
+    "message": "متزامن مع حساب Google الخاص بك"
+  },
+  "syncStatusLocal": {
+    "message": "محلي فقط — لم يتم الرفع"
+  },
+  "syncStatusUnsyncable": {
+    "message": "لا يمكن المزامنة"
+  },
+  "syncSuffixSynced": {
+    "message": "(متزامن)"
+  },
+  "syncSuffixLocal": {
+    "message": "(محلي)"
+  },
   "advancedOptions": {
     "message": "خيارات متقدمة"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "نص عنصر نائب لحقل البحث.",
     "message": "بحث في العلامات المرجعية"
+  },
+  "searchClear": {
+    "message": "مسح البحث"
   },
   "reportError": {
     "message": "الإبلاغ عن خطأ"
@@ -539,6 +557,12 @@
     "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
   },
   "donationGo": {
-    "message": "موافق"
+    "message": "تبرع"
+  },
+  "donationLater": {
+    "message": "لاحقًا"
+  },
+  "donationNever": {
+    "message": "لا تظهر مرة أخرى"
   }
 }

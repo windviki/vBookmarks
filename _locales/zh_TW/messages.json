@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "秒"
   },
+  "syncStatusSynced": {
+    "message": "已同步至您的 Google 帳戶"
+  },
+  "syncStatusLocal": {
+    "message": "僅限本機 — 未上傳"
+  },
+  "syncStatusUnsyncable": {
+    "message": "無法同步"
+  },
+  "syncSuffixSynced": {
+    "message": "(已同步)"
+  },
+  "syncSuffixLocal": {
+    "message": "(本機)"
+  },
   "advancedOptions": {
     "message": "進階設定"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "搜索框裡的提示文字",
     "message": "搜尋書籤"
+  },
+  "searchClear": {
+    "message": "清除搜尋"
   },
   "reportError": {
     "message": "報告此錯誤"
@@ -539,6 +557,12 @@
     "message": "使用 vBookmarks 將此頁加入書籤"
   },
   "donationGo": {
-    "message": "好的"
+    "message": "贊助"
+  },
+  "donationLater": {
+    "message": "稍後"
+  },
+  "donationNever": {
+    "message": "不再顯示"
   }
 }

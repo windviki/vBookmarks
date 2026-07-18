@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "שניות"
   },
+  "syncStatusSynced": {
+    "message": "מסונכרן לחשבון Google שלך"
+  },
+  "syncStatusLocal": {
+    "message": "מקומי בלבד — לא הועלה"
+  },
+  "syncStatusUnsyncable": {
+    "message": "לא ניתן לסנכרן"
+  },
+  "syncSuffixSynced": {
+    "message": "(מסונכרן)"
+  },
+  "syncSuffixLocal": {
+    "message": "(מקומי)"
+  },
   "advancedOptions": {
     "message": "אפשרויות מתקדמות"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "חפש סימניות"
+  },
+  "searchClear": {
+    "message": "נקה חיפוש"
   },
   "reportError": {
     "message": "דווח על שגיאה"
@@ -539,6 +557,12 @@
     "message": "הוסף סימניה לדף זה באמצעות vBookmarks"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "תרום"
+  },
+  "donationLater": {
+    "message": "מאוחר יותר"
+  },
+  "donationNever": {
+    "message": "אל תציג שוב"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "saniye"
   },
+  "syncStatusSynced": {
+    "message": "Google hesabınıza senkronize edildi"
+  },
+  "syncStatusLocal": {
+    "message": "Yalnızca yerel — yüklenmedi"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Senkronize edilemez"
+  },
+  "syncSuffixSynced": {
+    "message": "(Senkronize)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Yerel)"
+  },
   "advancedOptions": {
     "message": "Gelişmiş Seçenekler"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Arama alanı için yer tutucu metin.",
     "message": "Yer imlerini ara"
+  },
+  "searchClear": {
+    "message": "Aramayı Temizle"
   },
   "reportError": {
     "message": "Hata raporu"
@@ -539,6 +557,12 @@
     "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
   },
   "donationGo": {
-    "message": "Tamam"
+    "message": "Bağış Yap"
+  },
+  "donationLater": {
+    "message": "Sonra"
+  },
+  "donationNever": {
+    "message": "Tekrar Gösterme"
   }
 }

@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "sekundes"
   },
+  "syncStatusSynced": {
+    "message": "Sinhronizēts ar jūsu Google kontu"
+  },
+  "syncStatusLocal": {
+    "message": "Tikai lokāli — nav augšupielādēts"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nevar sinhronizēt"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinhronizēts)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokāls)"
+  },
   "advancedOptions": {
     "message": "Paplašinātās opcijas"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Aizstājējteksts meklēšanas laukam.",
     "message": "Meklēt grāmatzīmes"
+  },
+  "searchClear": {
+    "message": "Notīrīt meklēšanu"
   },
   "reportError": {
     "message": "Ziņot par kļūdu"
@@ -539,6 +557,12 @@
     "message": "Pievienot šo lapu grāmatzīmēm ar vBookmarks"
   },
   "donationGo": {
-    "message": "Labi"
+    "message": "Ziedot"
+  },
+  "donationLater": {
+    "message": "Vēlāk"
+  },
+  "donationNever": {
+    "message": "Nerādīt vairs"
   }
 }

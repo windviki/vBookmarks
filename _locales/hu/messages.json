@@ -134,6 +134,21 @@
   "optionSyncRefreshIntervalSeconds": {
     "message": "másodperc"
   },
+  "syncStatusSynced": {
+    "message": "Szinkronizálva a Google-fiókjával"
+  },
+  "syncStatusLocal": {
+    "message": "Csak helyi – nincs feltöltve"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nem szinkronizálható"
+  },
+  "syncSuffixSynced": {
+    "message": "(Szinkronizált)"
+  },
+  "syncSuffixLocal": {
+    "message": "(Helyi)"
+  },
   "advancedOptions": {
     "message": "Haladó Beállítások"
   },
@@ -192,6 +207,9 @@
   "searchBookmarks": {
     "description": "Placeholder text for search field.",
     "message": "Könyvjelzők Keresése"
+  },
+  "searchClear": {
+    "message": "Keresés törlése"
   },
   "reportError": {
     "message": "Hiba Jelentése"
@@ -539,6 +557,12 @@
     "message": "Oldal könyvjelzőzése a vBookmarks segítségével"
   },
   "donationGo": {
-    "message": "OK"
+    "message": "Adományozás"
+  },
+  "donationLater": {
+    "message": "Később"
+  },
+  "donationNever": {
+    "message": "Ne jelenjen meg többet"
   }
 }
