@@ -216,6 +216,10 @@ body.linux input {
     background: var(--vbm-bg-elev);
     color: var(--vbm-fg);
     border: 1px solid var(--vbm-border);
+    /* The field sits directly on the window background, so the 10%-alpha
+       token border all but vanishes (esp. top/left edges). Strengthen it
+       with a theme-adaptive mix; old Chromes keep the token fallback. */
+    border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
     border-radius: var(--vbm-radius);
 }
 
@@ -748,7 +752,7 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 #edit-dialog .dialog-text {
-    margin: 0;
+    margin: 0 0 .6em;
     font-weight: bold;
 }
 
@@ -764,6 +768,10 @@ menu[type=context].hide-editables #folder-delete {
     font: inherit;
 }
 
+#edit-dialog input + input {
+    margin-top: 8px;
+}
+
 #edit-dialog input:focus,
 #new-folder-dialog input:focus {
     border-color: var(--vbm-accent);
@@ -775,16 +783,8 @@ menu[type=context].hide-editables #folder-delete {
     outline-color: var(--vbm-danger);
 }
 
-#edit-dialog .buttons {
-    margin: 0;
-}
-
-#edit-dialog .buttons button {
-    font-weight: bold;
-}
-
 #new-folder-dialog .dialog-text {
-    margin: 0;
+    margin: 0 0 .6em;
     font-weight: bold;
 }
 
@@ -792,23 +792,15 @@ menu[type=context].hide-editables #folder-delete {
     outline-color: var(--vbm-danger);
 }
 
-#new-folder-dialog .buttons {
-    margin: 0;
-}
-
-#new-folder-dialog .buttons button {
-    font-weight: bold;
-}
-
 .needAlert #alert-dialog,
 .needConfirm #confirm-dialog,
 .needEdit #edit-dialog {
-    top: 0;
+    top: 40px; /* clear of the search row, no overlap */
     opacity: 1;
 }
 
 .needInputName #new-folder-dialog {
-    top: 0;
+    top: 40px;
     opacity: 1;
 }
 
@@ -1005,6 +997,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     margin-left: 6px;
     padding: 0;
     border: 1px solid var(--vbm-border);
+    border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
     border-radius: var(--vbm-radius);
     background: var(--vbm-bg-elev);
     color: var(--vbm-muted);
