@@ -4,6 +4,7 @@ import { initSearch } from './search.js';
 import { initActions } from './actions.js';
 import { initContextMenu } from './context-menu.js';
 import { initKeyboard } from './keyboard.js';
+import { initDnd } from './dnd.js';
 
 (window => {
     const store = window.store;
@@ -531,45 +532,6 @@ import { initKeyboard } from './keyboard.js';
                nodeFolderType !== undefined;
     };
 
-    // Check if a DOM element represents a root folder (for drag/drop)
-    const isDOMElementRootFolder = (el) => {
-        if (!el || !el.dataset) return false;
-        // Check dataset attributes which may contain folderType info
-        const parentId = el.dataset.parentid;
-        const folderType = el.dataset.foldertype;
-        return parentId === "0" || parentId === 0 || folderType !== undefined;
-    };
-
-    // Check if a bookmark can be moved between storage spaces
-    const canMoveBetweenStorage = (sourceId, targetParentId, callback) => {
-        chrome.bookmarks.get(sourceId, (sourceNodes) => {
-            if (!sourceNodes || !sourceNodes.length) {
-                callback(true);
-                return;
-            }
-            const sourceNode = sourceNodes[0];
-
-            chrome.bookmarks.get(sourceNode.parentId, (sourceParentNodes) => {
-                const sourceParent = sourceParentNodes && sourceParentNodes[0];
-
-                chrome.bookmarks.get(targetParentId, (targetParentNodes) => {
-                    const targetParent = targetParentNodes && targetParentNodes[0];
-
-                    // If no sync info, allow (old Chrome or no sync enabled)
-                    if (!sourceParent || !targetParent ||
-                        sourceParent.syncing === undefined ||
-                        targetParent.syncing === undefined) {
-                        callback(true);
-                        return;
-                    }
-
-                    // Block cross-storage moves in dual-storage Chrome
-                    callback(sourceParent.syncing === targetParent.syncing);
-                });
-            });
-        });
-    };
-
     // Phase 3 (issue #34): virtual "recently added" section pinned to the top
     // of the tree. Entries come from chrome.bookmarks.getRecent and are real
     // bookmarks, so opening, the context menu and Delete all operate on the
@@ -950,7 +912,6 @@ import { initKeyboard } from './keyboard.js';
 
     const middleClickBgTab = !!store.get('middleClickBgTab');
     const leftClickNewTab = !!store.get('leftClickNewTab');
-    let noOpenBookmark = false;
 
     function generateTreeForTarget(trees) {
         generateTree(trees);
@@ -970,10 +931,9 @@ import { initKeyboard } from './keyboard.js';
         if (e.button !== 0 && e.button !== 1)
             return;
         // only take left-click
-        if (noOpenBookmark) { // flag that disables opening bookmark
-            noOpenBookmark = false;
+        // noOpenBookmark 已收归 src/dnd.js：拖拽落点无效时吞掉随后的点击
+        if (dnd.consumeNoOpen()) // flag that disables opening bookmark
             return;
-        }
         const el = e.target;
         const ctrlMeta = (e.ctrlKey || e.metaKey || (e.button === 1));
         const shift = e.shiftKey;
@@ -1125,7 +1085,7 @@ import { initKeyboard } from './keyboard.js';
     // Context menus live in src/context-menu.js (P1, init'd next to initSearch
     // above): the three menus, the body contextmenu handler and every
     // menu-item dispatch. What remains here is menus.* call sites: clearMenu
-    // in the drag code below, and the menu elements the context mousemove /
+    // in the resizer code below, and the menu elements the context mousemove /
     // mouseout handlers bind to (menus.bookmarkMenu/folderMenu/separatorMenu).
 
     // Keyboard navigation lives in src/keyboard.js (P1): the tree/results
@@ -1159,314 +1119,19 @@ import { initKeyboard } from './keyboard.js';
     menus.folderMenu.addEventListener('mouseout', contextMouseOut);
     menus.separatorMenu.addEventListener('mouseout', contextMouseOut);
 
-    // Drag and drop, baby
-    let draggedBookmark = null;
-    let draggedOut = false;
-    let canDrop = false;
-    let zoomLevel = 1;
-    const bookmarkClone = $('bookmark-clone');
-    const dropOverlay = $('drop-overlay');
-    $tree.addEventListener('mousedown', e => {
-        if (e.button !== 0) //left-click
-            return;
-        let el = e.target;
-        if ((el.tagName) === 'HR') {
-            el = el.parentNode; //a
-        }
-        const elParent = el.parentNode; //li
-        if (el.dataset && el.dataset.virtual) // recent-section entries can't be dragged
-            return;
-        // can move any bookmarks/folders except the default root folders
-        if ((el.tagName === 'A' && elParent.hasClass('child')) ||
-            (el.tagName === 'SPAN' && elParent.hasClass('parent') && !isDOMElementRootFolder(elParent))) {
-            e.preventDefault();
-            draggedOut = false;
-            draggedBookmark = el; //a
-            if (store.get('zoom'))
-                zoomLevel = parseInt(store.get('zoom'), 10) / 100;
-            bookmarkClone.innerHTML = el.innerHTML; //<a>..</a>
-            el.focus();
-        }
-    });
-    let scrollTree = null,
-        scrollTreeInterval = 100,
-        scrollTreeSpot = 10;
-    const stopScrollTree = () => {
-        clearInterval(scrollTree);
-        scrollTree = null;
-    };
-    document.addEventListener('mousemove', e => {
-        let top;
-        let elRectBottom;
-        let elRectTop;
-        let elRect;
-        if (e.button !== 0)
-            return;
-        if (!draggedBookmark)
-            return;
-        e.preventDefault();
-        let el = e.target;
-        let clientX = e.clientX;
-        let clientY = e.clientY;
-        //fixed clientY
-        clientY += document.body.scrollTop;
-        //hovering over the dragged element itself
-        if (el === draggedBookmark) {
-            bookmarkClone.style.left = '-999px';
-            dropOverlay.style.left = '-999px';
-            canDrop = false;
-            return;
-        }
-        draggedOut = true;
-        //cursor moves outside the tree
-        const treeTop = $tree.offsetTop,
-            treeBottom = window.innerHeight;
-        if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom) {
-            bookmarkClone.style.left = '-999px';
-            dropOverlay.style.left = '-999px';
-            canDrop = false;
-        }
-        // if hovering over the top or bottom edges of the tree,
-        // scroll the tree
-        const treeScrollHeight = $tree.scrollHeight,
-            treeOffsetHeight = $tree.offsetHeight;
-        if (treeScrollHeight > treeOffsetHeight) { // only scroll when it's scrollable
-            const treeScrollTop = $tree.scrollTop;
-            if (clientY <= treeTop + scrollTreeSpot) {
-                if (treeScrollTop === 0) {
-                    stopScrollTree();
-                } else if (!scrollTree)
-                    scrollTree = setInterval(() => {
-                        $tree.scrollBy(0, -scrollTreeSpot);
-                        dropOverlay.style.left = '-999px';
-                    }, scrollTreeInterval);
-            } else if (clientY >= treeBottom - scrollTreeSpot) {
-                if (treeScrollTop === (treeScrollHeight - treeOffsetHeight)) {
-                    stopScrollTree();
-                } else if (!scrollTree)
-                    scrollTree = setInterval(() => {
-                        $tree.scrollBy(0, scrollTreeSpot);
-                        dropOverlay.style.left = '-999px';
-                    }, scrollTreeInterval);
-            } else {
-                stopScrollTree();
-            }
-        }
-        // collapse the folder before moving it
-        const draggedBookmarkParent = draggedBookmark.parentNode;
-        if (draggedBookmark.tagName === 'SPAN' && draggedBookmarkParent.hasClass('open')) {
-            draggedBookmarkParent.removeClass('open').setAttribute('aria-expanded', false);
-        }
-        clientX /= zoomLevel;
-        clientY /= zoomLevel;
-        if ((el.tagName) === 'HR') {
-            el = el.parentNode; //a
-        }
-        if (el.dataset && el.dataset.virtual) {
-            // recent-section entries are not valid drop targets
-            canDrop = false;
-            bookmarkClone.style.top = `${clientY}px`;
-            bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;
-            dropOverlay.style.left = '-999px';
-            return;
-        }
-        if (el.tagName === 'A' /* || el.tagName === 'HR'*/) {
-            canDrop = true;
-            bookmarkClone.style.top = `${clientY}px`;
-            bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;
-            elRect = el.getBoundingClientRect();
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            //fixed elRectBottom
-            elRectBottom = elRect.bottom + document.body.scrollTop;
-            top = (clientY >= elRectTop + elRect.height / 2) ? elRectBottom : elRectTop;
-            dropOverlay.className = 'bookmark';
-            dropOverlay.style.top = `${top}px`;
-            dropOverlay.style.left = rtl ? '0px' : `${el.style.webkitPaddingStart.toInt() + 16}px`;
-            dropOverlay.style.width = `${el.getComputedStyle('width').toInt() - 12}px`;
-            dropOverlay.style.height = null;
-        } else if (el.tagName === 'SPAN') {
-            canDrop = true;
-            bookmarkClone.style.top = `${clientY}px`;
-            bookmarkClone.style.left = `${clientX}px`;
-            elRect = el.getBoundingClientRect();
-            top = null;
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            //fixed elRectBottom
-            elRectBottom = elRect.bottom + document.body.scrollTop;
-            const elRectHeight = elRect.height;
-            const elParent = el.parentNode;
-            if (!isDOMElementRootFolder(elParent)) {
-                if (clientY < elRectTop + elRectHeight * .3) {
-                    top = elRectTop;
-                } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
-                    top = elRectBottom;
-                }
-            }
-            if (top === null) {
-                dropOverlay.className = 'folder';
-                dropOverlay.style.top = `${elRectTop}px`;
-                dropOverlay.style.left = '0px';
-                dropOverlay.style.width = `${elRect.width}px`;
-                dropOverlay.style.height = `${elRect.height}px`;
-            } else {
-                dropOverlay.className = 'bookmark';
-                dropOverlay.style.top = `${top}px`;
-                dropOverlay.style.left = `${el.style.webkitPaddingStart.toInt() + 16}px`;
-                dropOverlay.style.width = `${el.getComputedStyle('width').toInt() - 12}px`;
-                dropOverlay.style.height = null;
-            }
-        }
-    });
-    const onDrop = () => {
-        draggedBookmark = null;
-        bookmarkClone.style.left = '-999px';
-        dropOverlay.style.left = '-999px';
-        canDrop = false;
-        resetSeparator();
-    };
-    document.addEventListener('mouseup', e => {
-        let moveBottom;
-        let elRectTop;
-        let elRect;
-        if (e.button !== 0) //left-click
-            return;
-        if (!draggedBookmark)
-            return;
-        stopScrollTree();
-        if (!canDrop) {
-            if (draggedOut)
-                noOpenBookmark = true;
-            draggedOut = false;
-            onDrop();
-            return;
-        }
-        //el is the target element "A" "SPAN"
-        let el = e.target;
-        if ((el.tagName) === 'HR') {
-            el = el.parentNode; //a
-        }
-        let elParent = el.parentNode; //li
-        const id = elParent.id.replace('neat-tree-item-', '');
-        if (!id) {
-            onDrop();
-            return;
-        }
-        const draggedBookmarkParent = draggedBookmark.parentNode; //li
-        const draggedID = draggedBookmarkParent.id.replace('neat-tree-item-', '');
-
-        const dragDisplay = () => {
-            //display
-            draggedBookmarkParent.inject(elParent, moveBottom ? 'after' : 'before');
-            draggedBookmark.style.webkitPaddingStart = el.style.webkitPaddingStart;
-            draggedBookmark.focus();
-            draggedBookmarkParent.setAttribute("level", elParent.getAttribute("level"));
-            draggedBookmarkParent.setAttribute("data-parentid", elParent.getAttribute("data-parentid"));
-            onDrop();
-        }
-        //fixed clientY
-        const clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
-        if (el.tagName === 'A') { //dropped target is bookmark
-            elRect = el.getBoundingClientRect();
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            moveBottom = (clientY >= elRectTop + elRect.height / 2);
-            chrome.bookmarks.get(id, node => {
-                if (!node || !node.length)
-                    return;
-                node = node[0];
-                let index = node.index;
-                const parentId = node.parentId;
-
-                // Check for cross-storage move
-                canMoveBetweenStorage(draggedID, parentId, (canMove) => {
-                    if (!canMove) {
-                        const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
-                                   'Cannot move bookmarks between synced and local storage.';
-                        alert(msg);
-                        onDrop();
-                        return;
-                    }
-                    chrome.bookmarks.move(draggedID, {
-                        parentId: parentId,
-                        index: moveBottom ? ++index : index
-                    }, dragDisplay);
-                });
-            });
-        } else if (el.tagName === 'SPAN') { //dropped target is directory
-            elRect = el.getBoundingClientRect();
-            let move = 0; // 0 = middle, 1 = top, 2 = bottom
-            elRectTop = elRect.top;
-            const elRectHeight = elRect.height;
-            elParent = el.parentNode; //li
-            if (!isDOMElementRootFolder(elParent)) {
-                if (clientY < elRectTop + elRectHeight * .3) {
-                    move = 1;
-                } else if (clientY > elRectTop + elRectHeight * .7 && !elParent.hasClass('open')) {
-                    move = 2;
-                }
-            }
-            if (move > 0) { //top or bottom
-                moveBottom = (move === 2);
-                chrome.bookmarks.get(id, node => {
-                    if (!node || !node.length)
-                        return;
-                    node = node[0];
-                    let index = node.index;
-                    const parentId = node.parentId;
-                    if (draggedID) {
-                        // Check for cross-storage move
-                        canMoveBetweenStorage(draggedID, parentId, (canMove) => {
-                            if (!canMove) {
-                                const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
-                                           'Cannot move bookmarks between synced and local storage.';
-                                alert(msg);
-                                onDrop();
-                                return;
-                            }
-                            chrome.bookmarks.move(draggedID, {
-                                parentId: parentId,
-                                index: moveBottom ? ++index : index
-                            }, dragDisplay);
-                        });
-                    }
-                });
-            } else { //middle position
-                // Check for cross-storage move before moving into folder
-                canMoveBetweenStorage(draggedID, id, (canMove) => {
-                    if (!canMove) {
-                        const msg = chrome.i18n.getMessage('crossStorageMoveWarning') ||
-                                   'Cannot move bookmarks between synced and local storage.';
-                        alert(msg);
-                        onDrop();
-                        return;
-                    }
-                    chrome.bookmarks.move(draggedID, {
-                        parentId: id
-                    }, () => {
-                    const ul = elParent.querySelector('ul');
-                    const level = parseInt(elParent.parentNode.dataset.level) + 1;
-                    draggedBookmark.style.webkitPaddingStart = `${14 * level}px`;
-                    if (ul) {
-                        // a stale "(Empty)" marker must not survive a real drop
-                        const emptyRow = ul.querySelector(':scope > li.empty-folder');
-                        if (emptyRow)
-                            emptyRow.destroy();
-                        draggedBookmarkParent.inject(ul); //inject into bottom of ul
-                        draggedBookmarkParent.setAttribute("level", parseInt(elParent.getAttribute("level")) + 1);
-                        draggedBookmarkParent.setAttribute("data-parentid", id);
-                    } else {
-                        draggedBookmarkParent.destroy();
-                    }
-                    el.focus();
-                    onDrop();
-                }); // close chrome.bookmarks.move callback
-                }); // close canMoveBetweenStorage callback
-            }
-        } else {
-            onDrop();
-        }
+    // Drag & drop ordering lives in src/dnd.js (P1): the tree mousedown drag
+    // start, the document mousemove drop-target tracking (clone + overlay,
+    // auto-scroll, drop-zone math) and the document mouseup drop
+    // (chrome.bookmarks.move + DOM re-insertion). isDOMElementRootFolder and
+    // canMoveBetweenStorage moved along (only dnd used them). resetSeparator
+    // 是下方的 function 声明，hoist 到 store.ready.then 作用域顶部，此处注入
+    // 安全；bookmarkHandler(上方) 与 zoom 块(下方) 经返回值引用 dnd，都只在
+    // 用户事件时执行，TDZ 安全。
+    const dnd = initDnd({
+        tree: $tree,
+        store,
+        rtl,
+        resetSeparator
     });
 
     // Resizer
@@ -1579,7 +1244,7 @@ import { initKeyboard } from './keyboard.js';
         body.dataset.zoom = store.get('zoom');
     }
     const zoom = val => {
-        if (draggedBookmark)
+        if (dnd.isDragging())
             return; // prevent zooming when drag-n-dropping
         const dataZoom = body.dataset.zoom;
         const currentZoom = dataZoom ? dataZoom.toInt() : 100;
