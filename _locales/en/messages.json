@@ -388,6 +388,12 @@
   "optionThemeDark": {
     "message": "Dark"
   },
+  "optionThemeInk": {
+    "message": "Ink (dark)"
+  },
+  "optionThemePaper": {
+    "message": "Paper (light)"
+  },
   "paletteCmdDead": {
     "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
     "message": "Find dead links"

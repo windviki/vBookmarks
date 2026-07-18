@@ -137,6 +137,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');
         document.getElementById('option-theme-dark').innerText = __m('optionThemeDark');
+        document.getElementById('option-theme-ink').innerText = __m('optionThemeInk');
+        document.getElementById('option-theme-paper').innerText = __m('optionThemePaper');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
 

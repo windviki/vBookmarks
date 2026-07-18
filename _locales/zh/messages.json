@@ -364,6 +364,12 @@
   "optionThemeDark": {
     "message": "[TODO:optionThemeDark]"
   },
+  "optionThemeInk": {
+    "message": "[TODO:optionThemeInk]"
+  },
+  "optionThemePaper": {
+    "message": "[TODO:optionThemePaper]"
+  },
   "sortFolderContents": {
     "message": "[TODO:sortFolderContents]"
   },

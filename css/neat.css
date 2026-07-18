@@ -65,6 +65,53 @@ body[data-theme="dark"] {
     }
 }
 
+/* --- Ink: fable / scientific-instrument dark -------------------------
+   Deep blue-black bench surface; electric indigo accent with a cool
+   phosphor glow, like magnetic field lines on an oscilloscope.
+   Explicit theme only — "auto" never maps here. */
+body[data-theme="ink"] {
+    --vbm-bg: #0e1118;
+    --vbm-bg-elev: #171c28;
+    --vbm-bg-hover: rgba(139, 156, 255, 0.09);
+    --vbm-bg-selected: #26314f;
+    --vbm-fg: #e4e8f4;
+    --vbm-fg-selected: #aab8ff;
+    --vbm-muted: #8b93a9;
+    --vbm-border: rgba(148, 163, 205, 0.16);
+    --vbm-accent: #8b9cff;
+    --vbm-accent-fg: #10142e;
+    --vbm-focus-ring: rgba(139, 156, 255, 0.45);
+    --vbm-danger: #f2a196;
+    --vbm-scrim: rgba(0, 0, 0, 0.6);
+    --vbm-shadow: rgba(0, 0, 0, 0.55);
+    --vbm-flash: var(--vbm-bg-selected);
+    --vbm-scrollbar: rgba(139, 147, 169, 0.5);
+    --vbm-scrollbar-hover: rgba(139, 147, 169, 0.8);
+}
+
+/* --- Paper: warm instrument-dial light --------------------------------
+   Rice-paper base, ink text, vermilion seal accent — the calm precision
+   of a well-made analog instrument. Explicit theme only. */
+body[data-theme="paper"] {
+    --vbm-bg: #f6f2e9;
+    --vbm-bg-elev: #fffdf7;
+    --vbm-bg-hover: rgba(43, 38, 32, 0.05);
+    --vbm-bg-selected: #efe2ca;
+    --vbm-fg: #2b2620;
+    --vbm-fg-selected: #b03a20;
+    --vbm-muted: #82796a;
+    --vbm-border: rgba(74, 63, 48, 0.16);
+    --vbm-accent: #c2402a;
+    --vbm-accent-fg: #fff8f0;
+    --vbm-focus-ring: rgba(194, 64, 42, 0.35);
+    --vbm-danger: #b3261e;
+    --vbm-scrim: rgba(43, 38, 32, 0.3);
+    --vbm-shadow: rgba(74, 63, 48, 0.25);
+    --vbm-flash: rgba(194, 64, 42, 0.15);
+    --vbm-scrollbar: rgba(130, 121, 106, 0.5);
+    --vbm-scrollbar-hover: rgba(130, 121, 106, 0.8);
+}
+
 body {
     direction: __MSG_@@bidi_dir__;
     font: menu;

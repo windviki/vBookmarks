@@ -59,6 +59,17 @@ describe('theme design tokens in neat.css', () => {
         }
     });
 
+    // The explicit fable-taste themes (ink = dark, paper = light) must be
+    // complete token overrides too; partial blocks would fall back to the
+    // default light tokens and visually break.
+    it.each(['ink', 'paper'])('overrides all 12 tokens in body[data-theme="%s"]', name => {
+        const block = extractBlock(neatCss, `body[data-theme="${name}"]`);
+        expect(block).not.toBe('');
+        for (const token of TOKENS) {
+            expect(block).toContain(`${token}:`);
+        }
+    });
+
     it('has a prefers-color-scheme dark fallback for body[data-theme="auto"]', () => {
         const mediaBlock = extractBlock(neatCss, '@media (prefers-color-scheme: dark)');
         expect(mediaBlock).not.toBe('');
@@ -67,16 +78,17 @@ describe('theme design tokens in neat.css', () => {
 });
 
 describe('theme i18n messages', () => {
-    const KEYS = ['optionTheme', 'optionThemeAuto', 'optionThemeLight', 'optionThemeDark'];
+    const KEYS = ['optionTheme', 'optionThemeAuto', 'optionThemeLight', 'optionThemeDark',
+        'optionThemeInk', 'optionThemePaper'];
 
-    it('defines the 4 theme option keys in en', () => {
+    it('defines the 6 theme option keys in en', () => {
         for (const key of KEYS) {
             expect(enMessages[key], key).toBeDefined();
             expect(enMessages[key].message).toBeTruthy();
         }
     });
 
-    it('defines the 4 theme option keys in zh_CN', () => {
+    it('defines the 6 theme option keys in zh_CN', () => {
         for (const key of KEYS) {
             expect(zhCNMessages[key], key).toBeDefined();
             expect(zhCNMessages[key].message).toBeTruthy();
