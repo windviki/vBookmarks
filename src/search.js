@@ -107,9 +107,9 @@ export function initSearch(ctx = {}) {
     };
 
     // Drop the query + mode without touching the tree/results display or
-    // focus. Called by neat.js after a search result has been opened, where
-    // the popup is about to navigate away anyway (the original code inlined
-    // these five statements in bookmarkHandler).
+    // focus. Called by tree-view.js's bookmarkHandler after a search result
+    // has been opened, where the popup is about to navigate away anyway (the
+    // original code inlined these five statements in bookmarkHandler).
     const resetSearchState = () => {
         if (searchMode) {
             prevValue = '';

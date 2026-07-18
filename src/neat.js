@@ -6,6 +6,7 @@ import { initContextMenu } from './context-menu.js';
 import { initKeyboard } from './keyboard.js';
 import { initDnd } from './dnd.js';
 import { initTreeRender } from './tree-render.js';
+import { initTreeView } from './tree-view.js';
 
 (window => {
     const store = window.store;
@@ -187,32 +188,7 @@ import { initTreeRender } from './tree-render.js';
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
     let rememberState = !store.get('dontRememberState');
     const httpsPattern = /^https?:\/\//i;
-    const onlyShowBMBar = !!store.get('onlyShowBMBar');
-
-    // Adaptive bookmark tooltips
-    const adaptBookmarkTooltips = () => {
-        const bookmarks = document.querySelectorAll('li.child a');
-        for (let i = 0, l = bookmarks.length; i < l; i++) {
-            const bookmark = bookmarks[i];
-            if (bookmark.querySelector('hr')) {
-                bookmark.title = '';
-            } else {
-                if (bookmark.hasClass('titled')) {
-                    if (bookmark.scrollWidth <= bookmark.offsetWidth) {
-                        bookmark.title = bookmark.href;
-                        bookmark.removeClass('titled');
-                    }
-                } else if (bookmark.scrollWidth > bookmark.offsetWidth) {
-                    const text = bookmark.querySelector('i').textContent;
-                    const title = bookmark.title;
-                    if (text !== title) {
-                        bookmark.title = `${text}\n${title}`;
-                        bookmark.addClass('titled');
-                    }
-                }
-            }
-        }
-    };
+    // onlyShowBMBar 与 adaptBookmarkTooltips 已剥离至 src/tree-view.js（P1，8b）
 
     // addSeparator / deleteSeparator 已剥离至 src/actions.js（P1，经 actions 表调用）
 
@@ -220,8 +196,8 @@ import { initTreeRender } from './tree-render.js';
     const $tree = $('tree');
 
     // 树 HTML 生成与树数据辅助已剥离至 src/tree-render.js（P1，ES module 见
-    // 顶部 import）。opens/rememberState 状态仍在这里（8b 再迁），模块经
-    // getter 在调用时读取。
+    // 顶部 import）。opens/rememberState 状态留在 neat.js：treeRender 经
+    // getter 读取，treeView 经下方注入的 get/set 回调共享同一份状态。
     const treeRender = initTreeRender({
         store,
         separatorManager,
@@ -229,191 +205,9 @@ import { initTreeRender } from './tree-render.js';
         getRememberState: () => rememberState
     });
 
-    const nodeTrees = {};
-
-    // Phase 3 (issue #34): virtual "recently added" section pinned to the top
-    // of the tree. Entries come from chrome.bookmarks.getRecent and are real
-    // bookmarks, so opening, the context menu and Delete all operate on the
-    // real bookmark id (matching Chrome's bookmark manager). To avoid
-    // duplicate element ids with the real tree items below, the <li> uses a
-    // 'neat-recent-item-' id prefix; the anchors carry data-virtual="1" so
-    // drag-and-drop rejects them as drag sources and drop targets.
-    const RECENT_BOOKMARKS_COUNT = 20;
-    const recentBookmarksEnabled = () => !!store.get('showRecentBookmarks', '1');
-    const generateRecentSectionHTML = () => {
-        if (!recentBookmarksEnabled())
-            return '';
-        const header = _m('recentBookmarks').htmlspecialchars();
-        return `<div id="recent-section"><div id="recent-header">${header}</div><ul id="recent-list" role="group"></ul></div>`;
-    };
-    const refreshRecentSection = () => {
-        const list = $('recent-list');
-        if (!list)
-            return;
-        chrome.bookmarks.getRecent(RECENT_BOOKMARKS_COUNT, items => {
-            let html = '';
-            for (let i = 0, l = items.length; i < l; i++) {
-                const d = items[i];
-                if (!d.url || separatorManager.isSeparator(d.title, d.url))
-                    continue;
-                html += `<li class="child" id="neat-recent-item-${d.id}" level="0" role="treeitem" data-parentid="${d.parentId}">` +
-                    treeRender.generateBookmarkHTML(d.title, d.url, 'style="-webkit-padding-start: 0px" data-virtual="1"', d.id) +
-                    '</li>';
-            }
-            list.innerHTML = html;
-        });
-    };
-    // Keep the section fresh while the popup stays open; debounced so bulk
-    // imports don't make it flicker. onRemoved is covered too, otherwise a
-    // just-deleted bookmark would linger in the list.
-    let refreshRecentTimer = null;
-    const scheduleRecentRefresh = () => {
-        if (!recentBookmarksEnabled())
-            return;
-        clearTimeout(refreshRecentTimer);
-        refreshRecentTimer = setTimeout(refreshRecentSection, 300);
-    };
-    chrome.bookmarks.onCreated.addListener(scheduleRecentRefresh);
-    chrome.bookmarks.onRemoved.addListener(scheduleRecentRefresh);
-
-    const generateTree = tree => {
-        let subTree;
-        if (onlyShowBMBar) {
-            // Find the bookmarks bar folder using folderType instead of fixed position
-            const bookmarksBarFolder = treeRender.findFolderByType(tree, 'bookmarks-bar');
-            if (bookmarksBarFolder) {
-                subTree = bookmarksBarFolder.children || [];
-            } else {
-                // Fallback to old logic if folderType not available
-                subTree = tree[0].children[0].children;
-            }
-        } else {
-            // Use getEffectiveSubTree to handle dual-storage Chrome
-            subTree = treeRender.getEffectiveSubTree(tree);
-        }
-        const html = treeRender.generateHTML(subTree);
-        treeRender.generateNodeTrees(subTree, nodeTrees);
-        // Keep the fuzzy-search index in sync with the freshly loaded tree
-        search.updateIndex(tree);
-
-        $tree.innerHTML = generateRecentSectionHTML() + html;
-        refreshRecentSection();
-
-        // Refresh sync indicators after tree is generated
-        if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
-            setTimeout(() => {
-                refreshSyncIndicators();
-            }, 100);
-        }
-
-        if (rememberState) {
-            $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
-        }
-
-        const focusID = store.get('focusID');
-        if (typeof focusID !== 'undefined' && focusID !== null) {
-            const focusEl = $(`neat-tree-item-${focusID}`);
-            if (focusEl) {
-                const oriOverflow = $tree.style.overflow;
-                $tree.style.overflow = 'hidden';
-                focusEl.style.width = '100%';
-                focusEl.firstElementChild.addClass('focus');
-                setTimeout(() => {
-                    $tree.style.overflow = oriOverflow;
-                }, 1);
-                setTimeout(() => {
-                    store.remove('focusID');
-                }, 4000);
-            }
-        }
-
-        setTimeout(adaptBookmarkTooltips, 100);
-
-        // try to load local separator list used in last version
-        const sm = new SeparatorManager(store);
-        sm.load();
-        const seps = sm.getAll();
-        for (let i = 0; i < seps.length; i++) {
-            if (seps[i]) {
-                actions.addSeparator(seps[i], 'after');
-            }
-        }
-        // and discard this setting from now on
-        sm.clear();
-        sm.save();
-
-        tree = null;
-    };
-
-    chrome.bookmarks.getTree(generateTree);
-
-    // Events for the tree
-    $tree.addEventListener('scroll', () => {
-        store.set('scrollTop', $tree.scrollTop);
-    });
-    $tree.addEventListener('focus', e => {
-        const el = e.target;
-        const tagName = el.tagName;
-        const focusEl = $tree.querySelector('.focus');
-        if (focusEl)
-            focusEl.removeClass('focus');
-        if (tagName === 'A' || tagName === 'SPAN') {
-            store.set('focusID', el.parentNode.id.replace('neat-tree-item-', ''));
-        } else {
-            store.set('focusID', null);
-        }
-    }, true);
-    const closeUnusedFolders = store.get('closeUnusedFolders');
-    $tree.addEventListener('click', e => {
-        if (e.button !== 0)
-            return;
-        const el = e.target;
-        const tagName = el.tagName;
-        if (tagName !== 'SPAN')
-            return;
-        if (e.shiftKey || e.ctrlKey)
-            return;
-        const parent = el.parentNode;
-        parent.toggleClass('open');
-        const expanded = parent.hasClass('open');
-        parent.setAttribute('aria-expanded', expanded);
-        const children = parent.querySelector('ul');
-        // expand children for unexpanded folder node
-        if (!children) {
-            const id = parent.id.replace('neat-tree-item-', '');
-            chrome.bookmarks.getChildren(id, children => {
-                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
-                const div = document.createElement('div');
-                div.innerHTML = html;
-                const ul = div.querySelector('ul');
-                ul.inject(parent);
-                div.destroy();
-                setTimeout(adaptBookmarkTooltips, 100);
-            });
-        }
-        if (closeUnusedFolders && expanded) {
-            const siblings = parent.getSiblings('li');
-            for (let i = 0, l = siblings.length; i < l; i++) {
-                const li = siblings[i];
-                if (li.hasClass('parent')) {
-                    li.removeClass('open').setAttribute('aria-expanded', false);
-                }
-            }
-        }
-        let opens = $tree.querySelectorAll('li.open');
-        opens = Array.map(li => li.id.replace('neat-tree-item-', ''), opens);
-        store.set('opens', JSON.stringify(opens));
-    });
-    // Force middle clicks to trigger the focus event
-    $tree.addEventListener('mouseup', e => {
-        if (e.button !== 1)
-            return;
-        const el = e.target;
-        const tagName = el.tagName;
-        if (tagName !== 'A' && tagName !== 'SPAN')
-            return;
-        el.focus();
-    });
+    // 树视图层（nodeTrees、最近书签区、generateTree、树事件与启动的
+    // chrome.bookmarks.getTree）已剥离至 src/tree-view.js（P1，8b），
+    // 在 actions/dnd 初始化之后经 initTreeView 装配（见下方）。
 
     // parse version to dictionary
     const parseVersion = function(strversion) {
@@ -508,8 +302,8 @@ import { initTreeRender } from './tree-render.js';
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
     // index, the results pane and every searchInput listener. generateTree
-    // refreshes the index via search.updateIndex; everything else goes
-    // through the returned API. switchBookmarkMenu comes from the menus
+    // (tree-view) refreshes the index via search.updateIndex; everything else
+    // goes through the returned API. switchBookmarkMenu comes from the menus
     // module (it hides the add-* menu entries while search is active).
     const search = initSearch({
         store,
@@ -517,7 +311,8 @@ import { initTreeRender } from './tree-render.js';
         switchBookmarkMenu: menus.switchBookmarkMenu,
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         highlightTitlePositions: treeRender.highlightTitlePositions,
-        rememberState
+        // 与上方 rememberState 初值相同的确定性推导（search 只读取启动初值）
+        rememberState: !store.get('dontRememberState')
     });
 
     // Popup auto-height
@@ -585,7 +380,8 @@ import { initTreeRender } from './tree-render.js';
                     Promise.resolve());
             });
             applyLevel(sorted).then(() => {
-                chrome.bookmarks.getTree(generateTree);
+                // treeView 在下方声明；此调用只在排序动作的异步回调里执行，TDZ 安全
+                chrome.bookmarks.getTree(treeView.generateTree);
             });
         });
     };
@@ -594,10 +390,9 @@ import { initTreeRender } from './tree-render.js';
     const dialogs = initDialogs({ onSort: sortFolderContents });
 
     // Actions live in src/actions.js (P1): the whole bookmark action layer —
-    // open/add/edit/delete/copy plus addSeparator/deleteSeparator. generateTree
-    // and the menu/keyboard handlers reach them through this table; generateTree
-    // only runs from async chrome callbacks, so the const is always initialized
-    // before actions.addSeparator can fire (same pattern as `search` above).
+    // open/add/edit/delete/copy plus addSeparator/deleteSeparator. The
+    // menu/keyboard handlers and the tree-view module reach them through this
+    // table (actions inits above initTreeView, so no lazy getter is needed).
     const actions = initActions({
         store,
         dialogs,
@@ -612,78 +407,43 @@ import { initTreeRender } from './tree-render.js';
     const middleClickBgTab = !!store.get('middleClickBgTab');
     const leftClickNewTab = !!store.get('leftClickNewTab');
 
-    function generateTreeForTarget(trees) {
-        generateTree(trees);
-        // This must be put int chrome API handler function. 
-        // Otherwise it may be called before generation completed.
-        if (store.get('focusID')) {
-            const item = $tree.querySelector(`#neat-tree-item-${store.get('focusID')}`);
-            if (item) {
-                item.scrollIntoView();
-            }
-        }
-        store.set('scrollTop', $tree.scrollTop);
-    }
+    // Drag & drop ordering lives in src/dnd.js (P1): the tree mousedown drag
+    // start, the document mousemove drop-target tracking (clone + overlay,
+    // auto-scroll, drop-zone math) and the document mouseup drop
+    // (chrome.bookmarks.move + DOM re-insertion). isDOMElementRootFolder and
+    // canMoveBetweenStorage moved along (only dnd used them). resetSeparator
+    // 是下方的 function 声明，hoist 到 store.ready.then 作用域顶部，此处注入
+    // 安全；zoom 块(下方) 经返回值引用 dnd，只在用户事件时执行，TDZ 安全。
+    const dnd = initDnd({
+        tree: $tree,
+        store,
+        rtl,
+        resetSeparator
+    });
 
-    const bookmarkHandler = e => {
-        e.preventDefault();
-        if (e.button !== 0 && e.button !== 1)
-            return;
-        // only take left-click
-        // noOpenBookmark 已收归 src/dnd.js：拖拽落点无效时吞掉随后的点击
-        if (dnd.consumeNoOpen()) // flag that disables opening bookmark
-            return;
-        const el = e.target;
-        const ctrlMeta = (e.ctrlKey || e.metaKey || (e.button === 1));
-        const shift = e.shiftKey;
-        if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
-            if (el.className === "link-folder") { // search result folder
-                // switch to tree
-                search.quit();
-                // get folder id (el parent is li)
-                const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                // all parent folder ids
-                // set them as opened folders
-                opens = treeRender.getParentPath(id, nodeTrees);
-                store.set('opens', JSON.stringify(opens));
-                // force to recover from remember state (opened folders)
-                rememberState = true;
-                // focus on the target folder
-                store.set('focusID', id);
-                // new handler to handle the scrolling
-                chrome.bookmarks.getTree(generateTreeForTarget);
-            } else {
-                const url = el.href;
-                if (ctrlMeta) { // ctrl/meta click
-                    actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);
-                } else { // click
-                    if (shift) {
-                        actions.openBookmarkNewWindow(url);
-                    } else {
-                        leftClickNewTab ? actions.openBookmarkNewTab(url, true, true) : actions.openBookmark(url);
-                    }
-                }
-                search.reset();
-            }
-        } else if (el.tagName === 'SPAN') { // folder
-            const li = el.parentNode;
-            const id = li.id.replace('neat-tree-item-', '');
-            chrome.bookmarks.getChildren(id, children => {
-                const urls = Array.map(c => c.url, children).clean();
-                const urlsLen = urls.length;
-                if (!urlsLen)
-                    return;
-                if (ctrlMeta) { // ctrl/meta click
-                    actions.openBookmarks(urls, middleClickBgTab ? shift : !shift);
-                } else if (shift) { // shift click
-                    actions.openBookmarksNewWindow(urls);
-                }
-            });
-        }
-    };
-    $tree.addEventListener('click', bookmarkHandler);
-    search.results.addEventListener('click', bookmarkHandler);
-    $tree.addEventListener('auxclick', bookmarkHandler);
+    // 树视图层已剥离至 src/tree-view.js（P1，8b）：nodeTrees/onlyShowBMBar
+    // 状态、generateTree（含启动的 chrome.bookmarks.getTree 与本地分隔符
+    // 迁移）、树事件（scroll/focus/click/middle-click）、最近书签区与
+    // bookmarkHandler。menus/search/dialogs/actions/dnd 均已在上方就绪，
+    // refreshSyncIndicators 是下方的 function 声明（hoist 安全），故全部
+    // 直接值注入；opens/rememberState 经 get/set 回调共享 neat.js 状态。
+    const treeView = initTreeView({
+        store,
+        tree: $tree,
+        separatorManager,
+        SeparatorManager,
+        treeRender,
+        search,
+        actions,
+        dnd,
+        refreshSyncIndicators,
+        getOpens: () => opens,
+        getRememberState: () => rememberState,
+        setOpens: v => { opens = v; },
+        setRememberState: v => { rememberState = v; },
+        middleClickBgTab,
+        leftClickNewTab
+    });
 
     // donation
     $('donation-go').addEventListener('click', () => {  
@@ -818,21 +578,6 @@ import { initTreeRender } from './tree-render.js';
     menus.folderMenu.addEventListener('mouseout', contextMouseOut);
     menus.separatorMenu.addEventListener('mouseout', contextMouseOut);
 
-    // Drag & drop ordering lives in src/dnd.js (P1): the tree mousedown drag
-    // start, the document mousemove drop-target tracking (clone + overlay,
-    // auto-scroll, drop-zone math) and the document mouseup drop
-    // (chrome.bookmarks.move + DOM re-insertion). isDOMElementRootFolder and
-    // canMoveBetweenStorage moved along (only dnd used them). resetSeparator
-    // 是下方的 function 声明，hoist 到 store.ready.then 作用域顶部，此处注入
-    // 安全；bookmarkHandler(上方) 与 zoom 块(下方) 经返回值引用 dnd，都只在
-    // 用户事件时执行，TDZ 安全。
-    const dnd = initDnd({
-        tree: $tree,
-        store,
-        rtl,
-        resetSeparator
-    });
-
     // Resizer
     const $resizerx = $('resizer-x');
     const $resizery = $('resizer-y');
@@ -887,7 +632,7 @@ import { initTreeRender } from './tree-render.js';
         if (e.type === 'mouseup') {
             resizerXDown = false;
             resizerYDown = false;
-            adaptBookmarkTooltips();
+            treeView.adaptBookmarkTooltips();
         }
         if (isX) {
             // record current width

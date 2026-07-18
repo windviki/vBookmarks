@@ -537,7 +537,7 @@ export function initActions(ctx = {}) {
     };
 
     // Separator actions ride on the same table: the context-menu dispatch and
-    // generateTree's legacy-separator migration in neat.js reach them as
+    // generateTree's legacy-separator migration in tree-view.js reach them as
     // actions.addSeparator / actions.deleteSeparator.
     actions.addSeparator = addSeparator;
     actions.deleteSeparator = deleteSeparator;
