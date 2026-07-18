@@ -263,7 +263,11 @@ fieldset p{
 	box-shadow: inset 0 1px 5px var(--vbm-border);
 	border: 1px solid var(--vbm-border);
 }
-/* The CodeMirror editor intentionally keeps its default light theme. */
+/* CodeMirror follows the theme now: light themes (default/paper) keep
+   the classic light editor; dark themes (dark/ink, or "auto" under a
+   dark OS) get the token-driven surface and dark-friendly syntax palette
+   below. These rules must out-specificity vendor/codemirror.css, which
+   loads after this file. */
 .CodeMirror{
 	-webkit-box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
 	box-shadow: inset 0 1px 5px rgba(0,0,0,.1);
@@ -274,6 +278,110 @@ fieldset p{
 	width: 40em;
 	cursor: text;
 	text-shadow: none;
+}
+body[data-theme="dark"] .CodeMirror,
+body[data-theme="ink"] .CodeMirror {
+	background: var(--vbm-bg-elev);
+	border-color: var(--vbm-border);
+	color: var(--vbm-fg);
+	-webkit-box-shadow: inset 0 1px 5px var(--vbm-shadow);
+	box-shadow: inset 0 1px 5px var(--vbm-shadow);
+}
+body[data-theme="dark"] .CodeMirror-gutter,
+body[data-theme="ink"] .CodeMirror-gutter {
+	background-color: var(--vbm-bg);
+	border-right-color: var(--vbm-border);
+}
+body[data-theme="dark"] .CodeMirror-gutter-text,
+body[data-theme="ink"] .CodeMirror-gutter-text { color: var(--vbm-muted); }
+body[data-theme="dark"] .CodeMirror-cursor,
+body[data-theme="ink"] .CodeMirror-cursor { border-left-color: var(--vbm-fg) !important; }
+body[data-theme="dark"] span.CodeMirror-selected,
+body[data-theme="ink"] span.CodeMirror-selected,
+body[data-theme="dark"] .CodeMirror-focused span.CodeMirror-selected,
+body[data-theme="ink"] .CodeMirror-focused span.CodeMirror-selected {
+	background: var(--vbm-bg-selected) !important;
+	color: var(--vbm-fg) !important;
+}
+body[data-theme="dark"] .CodeMirror-matchingbracket,
+body[data-theme="ink"] .CodeMirror-matchingbracket { color: #98c379 !important; }
+body[data-theme="dark"] .CodeMirror-nonmatchingbracket,
+body[data-theme="ink"] .CodeMirror-nonmatchingbracket { color: #e06c75 !important; }
+body[data-theme="dark"] .cm-s-default span.cm-keyword,
+body[data-theme="ink"] .cm-s-default span.cm-keyword { color: #c678dd; }
+body[data-theme="dark"] .cm-s-default span.cm-atom,
+body[data-theme="ink"] .cm-s-default span.cm-atom { color: #d19a66; }
+body[data-theme="dark"] .cm-s-default span.cm-number,
+body[data-theme="ink"] .cm-s-default span.cm-number { color: #d19a66; }
+body[data-theme="dark"] .cm-s-default span.cm-def,
+body[data-theme="ink"] .cm-s-default span.cm-def { color: #61afef; }
+body[data-theme="dark"] .cm-s-default span.cm-variable,
+body[data-theme="ink"] .cm-s-default span.cm-variable { color: var(--vbm-fg); }
+body[data-theme="dark"] .cm-s-default span.cm-variable-2,
+body[data-theme="ink"] .cm-s-default span.cm-variable-2 { color: #61afef; }
+body[data-theme="dark"] .cm-s-default span.cm-variable-3,
+body[data-theme="ink"] .cm-s-default span.cm-variable-3 { color: #98c379; }
+body[data-theme="dark"] .cm-s-default span.cm-property,
+body[data-theme="ink"] .cm-s-default span.cm-property { color: #56b6c2; }
+body[data-theme="dark"] .cm-s-default span.cm-operator,
+body[data-theme="ink"] .cm-s-default span.cm-operator { color: var(--vbm-fg); }
+body[data-theme="dark"] .cm-s-default span.cm-comment,
+body[data-theme="ink"] .cm-s-default span.cm-comment { color: #7f848e; }
+body[data-theme="dark"] .cm-s-default span.cm-string,
+body[data-theme="ink"] .cm-s-default span.cm-string { color: #98c379; }
+body[data-theme="dark"] .cm-s-default span.cm-meta,
+body[data-theme="ink"] .cm-s-default span.cm-meta { color: var(--vbm-muted); }
+body[data-theme="dark"] .cm-s-default span.cm-error,
+body[data-theme="ink"] .cm-s-default span.cm-error { color: #e06c75; }
+body[data-theme="dark"] .cm-s-default span.cm-qualifier,
+body[data-theme="ink"] .cm-s-default span.cm-qualifier { color: #56b6c2; }
+body[data-theme="dark"] .cm-s-default span.cm-builtin,
+body[data-theme="ink"] .cm-s-default span.cm-builtin { color: #61afef; }
+body[data-theme="dark"] .cm-s-default span.cm-bracket,
+body[data-theme="ink"] .cm-s-default span.cm-bracket { color: var(--vbm-fg); }
+body[data-theme="dark"] .cm-s-default span.cm-tag,
+body[data-theme="ink"] .cm-s-default span.cm-tag { color: #e06c75; }
+body[data-theme="dark"] .cm-s-default span.cm-attribute,
+body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
+@media (prefers-color-scheme: dark) {
+	body[data-theme="auto"] .CodeMirror {
+		background: var(--vbm-bg-elev);
+		border-color: var(--vbm-border);
+		color: var(--vbm-fg);
+		-webkit-box-shadow: inset 0 1px 5px var(--vbm-shadow);
+		box-shadow: inset 0 1px 5px var(--vbm-shadow);
+	}
+	body[data-theme="auto"] .CodeMirror-gutter {
+		background-color: var(--vbm-bg);
+		border-right-color: var(--vbm-border);
+	}
+	body[data-theme="auto"] .CodeMirror-gutter-text { color: var(--vbm-muted); }
+	body[data-theme="auto"] .CodeMirror-cursor { border-left-color: var(--vbm-fg) !important; }
+	body[data-theme="auto"] span.CodeMirror-selected,
+	body[data-theme="auto"] .CodeMirror-focused span.CodeMirror-selected {
+		background: var(--vbm-bg-selected) !important;
+		color: var(--vbm-fg) !important;
+	}
+	body[data-theme="auto"] .CodeMirror-matchingbracket { color: #98c379 !important; }
+	body[data-theme="auto"] .CodeMirror-nonmatchingbracket { color: #e06c75 !important; }
+	body[data-theme="auto"] .cm-s-default span.cm-keyword { color: #c678dd; }
+	body[data-theme="auto"] .cm-s-default span.cm-atom { color: #d19a66; }
+	body[data-theme="auto"] .cm-s-default span.cm-number { color: #d19a66; }
+	body[data-theme="auto"] .cm-s-default span.cm-def { color: #61afef; }
+	body[data-theme="auto"] .cm-s-default span.cm-variable { color: var(--vbm-fg); }
+	body[data-theme="auto"] .cm-s-default span.cm-variable-2 { color: #61afef; }
+	body[data-theme="auto"] .cm-s-default span.cm-variable-3 { color: #98c379; }
+	body[data-theme="auto"] .cm-s-default span.cm-property { color: #56b6c2; }
+	body[data-theme="auto"] .cm-s-default span.cm-operator { color: var(--vbm-fg); }
+	body[data-theme="auto"] .cm-s-default span.cm-comment { color: #7f848e; }
+	body[data-theme="auto"] .cm-s-default span.cm-string { color: #98c379; }
+	body[data-theme="auto"] .cm-s-default span.cm-meta { color: var(--vbm-muted); }
+	body[data-theme="auto"] .cm-s-default span.cm-error { color: #e06c75; }
+	body[data-theme="auto"] .cm-s-default span.cm-qualifier { color: #56b6c2; }
+	body[data-theme="auto"] .cm-s-default span.cm-builtin { color: #61afef; }
+	body[data-theme="auto"] .cm-s-default span.cm-bracket { color: var(--vbm-fg); }
+	body[data-theme="auto"] .cm-s-default span.cm-tag { color: #e06c75; }
+	body[data-theme="auto"] .cm-s-default span.cm-attribute { color: #d19a66; }
 }
 #footer{
 	color: var(--vbm-muted);
