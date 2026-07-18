@@ -55,6 +55,7 @@ JS_FILES = [
     'src/palette.js',
     'src/dupes.js',
     'src/session.js',
+    'src/undo.js',
     'vendor/codemirror.js',
 ]
 

@@ -21,6 +21,10 @@ import { uuidFast } from './separators.js';
  * ctx.generateFolderHTML(title, extras, id, node)     — folder row HTML
  * ctx.generateSeparatorHTML(paddingStart)             — separator row HTML
  * ctx.httpsPattern               — shared ^https?:// regex (neat.js uses it too)
+ * ctx.undo                       — initUndo API (capture/showToast, P3.3): every delete
+ *                                  path snapshots the subtree BEFORE removing it and
+ *                                  ends with a toast offering undo. Optional — a missing
+ *                                  ctx.undo degrades to plain deletes with no toast.
  *
  * document/window/chrome remain page globals, as in the rest of the popup.
  * uuidFast (for separator URLs) is imported from ./separators.js instead of
@@ -39,6 +43,9 @@ export function initActions(ctx = {}) {
     const generateFolderHTML = ctx.generateFolderHTML;
     const generateSeparatorHTML = ctx.generateSeparatorHTML;
     const httpsPattern = ctx.httpsPattern;
+    // P3.3: deletions capture an undo snapshot and toast afterwards; without
+    // an injected undo API (tests, defensive) they stay plain silent deletes.
+    const undo = ctx.undo || { capture() {}, showToast() {} };
 
     // ++++++++ added by windviki@gmail.com ++++++++
     const copyToClipboard = copyText => {
@@ -89,9 +96,12 @@ export function initActions(ctx = {}) {
 
     const deleteSeparator = id => {
         const li = $(`neat-tree-item-${id}`);
+        undo.capture(id);
         chrome.bookmarks.removeTree(id, () => {
             li.parentNode && li.parentNode.removeChild(li);
             separatorManager.remove(id);
+            // Separators carry no meaningful title — toast with an empty one.
+            undo.showToast(_m('deletedBookmark', ['']));
         });
         const nearLi = li.nextElementSibling || li.previousElementSibling;
         if (nearLi)
@@ -482,6 +492,12 @@ export function initActions(ctx = {}) {
         deleteBookmark: id => {
             const li1 = $(`neat-tree-item-${id}`);
             const li2 = $(`results-item-${id}`);
+            // The row's <i> carries the displayed title (the anchor also
+            // holds a sync-tooltip span, so its textContent would pollute
+            // the toast). Results rows share the same markup.
+            const titleNode = (li1 && li1.querySelector('i')) || (li2 && li2.querySelector('i'));
+            const title = titleNode ? titleNode.textContent.trim() : '';
+            undo.capture(id);
             chrome.bookmarks.remove(id, () => {
                 if (li1) {
                     const nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
@@ -495,46 +511,26 @@ export function initActions(ctx = {}) {
                     if (search.isActive() && nearLi2)
                         nearLi2.querySelector('a, span').focus();
                 }
+                undo.showToast(_m('deletedBookmark', [title]));
             });
         },
 
+        // P3.3: no more ConfirmDialog for non-empty folders — the undo toast
+        // is the safety net, so every folder delete takes the same path.
+        // bookmarkCount/folderCount stay in the signature (callers pass them)
+        // but are no longer read.
         deleteBookmarks: (id, bookmarkCount, folderCount) => {
             const li = $(`neat-tree-item-${id}`);
             const item = li.querySelector('span');
-            if (bookmarkCount || folderCount) {
-                let dialog;
-                const folderName = `<cite>${item.textContent.trim()}</cite>`;
-                if (bookmarkCount && folderCount) {
-                    dialog = _m('confirmDeleteFolderSubfoldersBookmarks', [folderName, folderCount, bookmarkCount]);
-                } else if (bookmarkCount) {
-                    dialog = _m('confirmDeleteFolderBookmarks', [folderName, bookmarkCount]);
-                } else {
-                    dialog = _m('confirmDeleteFolderSubfolders', [folderName, folderCount]);
-                }
-                dialogs.ConfirmDialog.open({
-                    dialog: dialog,
-                    button1: `<strong>${_m('delete')}</strong>`,
-                    button2: _m('nope'),
-                    fn1: () => {
-                        chrome.bookmarks.removeTree(id, () => {
-                            li.parentNode && li.parentNode.removeChild(li);
-                        });
-                        const nearLi = li.nextElementSibling || li.previousElementSibling;
-                        if (nearLi)
-                            nearLi.querySelector('a, span').focus();
-                    },
-                    fn2: () => {
-                        li.querySelector('a, span').focus();
-                    }
-                });
-            } else {
-                chrome.bookmarks.removeTree(id, () => {
-                    li.parentNode && li.parentNode.removeChild(li);
-                });
-                const nearLi = li.nextElementSibling || li.previousElementSibling;
-                if (nearLi)
-                    nearLi.querySelector('a, span').focus();
-            }
+            const folderName = item.textContent.trim();
+            undo.capture(id);
+            chrome.bookmarks.removeTree(id, () => {
+                li.parentNode && li.parentNode.removeChild(li);
+                undo.showToast(_m('deletedFolder', [folderName]));
+            });
+            const nearLi = li.nextElementSibling || li.previousElementSibling;
+            if (nearLi)
+                nearLi.querySelector('a, span').focus();
         }
 
     };

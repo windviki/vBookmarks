@@ -7,8 +7,6 @@ class SyncManager {
     constructor() {
         this.syncCache = new Map(); // {id: {status, timestamp}}
         this.cacheTTL = 5 * 60 * 1000; // 5 minutes
-        this.undoStack = []; // Store recently deleted bookmarks for undo
-        this.maxUndoItems = 10; // Keep max 10 items
         this.syncSettings = {
             showSyncStatus: true,
             highlightUnsynced: true,
@@ -70,16 +68,6 @@ class SyncManager {
     }
 
     handleBookmarkRemoved(id, removeInfo) {
-        // Store deleted bookmark for potential undo
-        this.undoStack.push({
-            id: id,
-            node: removeInfo.node,
-            timestamp: Date.now()
-        });
-        // Keep only recent items
-        if (this.undoStack.length > this.maxUndoItems) {
-            this.undoStack.shift();
-        }
         this.invalidateCache(id);
     }
 
@@ -141,49 +129,6 @@ class SyncManager {
 
     clearCache() {
         this.syncCache.clear();
-    }
-
-    // Undo functionality
-    canUndo() {
-        return this.undoStack.length > 0;
-    }
-
-    async undoLastDeletion() {
-        if (!this.canUndo()) return false;
-
-        const lastDeleted = this.undoStack.pop();
-        try {
-            // Recreate the bookmark/folder
-            const createDetails = {
-                parentId: lastDeleted.node.parentId,
-                title: lastDeleted.node.title
-            };
-
-            if (lastDeleted.node.url) {
-                createDetails.url = lastDeleted.node.url;
-            } else {
-                createDetails.url = null; // Folder
-            }
-
-            const result = await new Promise((resolve, reject) => {
-                chrome.bookmarks.create(createDetails, (result) => {
-                    if (chrome.runtime.lastError) {
-                        reject(chrome.runtime.lastError);
-                    } else {
-                        resolve(result);
-                    }
-                });
-            });
-
-            // If it was a folder with children, we can't restore children easily
-            // This is a basic implementation
-            return true;
-        } catch (error) {
-            console.error('Failed to undo deletion:', error);
-            // Put it back in stack
-            this.undoStack.push(lastDeleted);
-            return false;
-        }
     }
 
     startAutoRefresh() {

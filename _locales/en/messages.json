@@ -131,6 +131,30 @@
   "delete": {
     "message": "Delete"
   },
+  "deletedBookmark": {
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators).",
+    "message": "Deleted $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    }
+  },
+  "deletedFolder": {
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name.",
+    "message": "Deleted folder $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    }
+  },
+  "undoAction": {
+    "description": "Label of the undo button on the deletion toast.",
+    "message": "Undo"
+  },
   "dupesCleanAll": {
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
     "message": "Clean all: $groups$ groups, $count$ extra copies",

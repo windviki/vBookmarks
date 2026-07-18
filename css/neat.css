@@ -879,6 +879,58 @@ menu[type=context].hide-sort #sort-folder-contents {
     opacity: 1;
 }
 
+/* --- Undo toast (P3.3) -----------------------------------------------------
+   Deletion undo bar in popup.html/sidepanel.html. Fixed and centered along
+   the bottom; colors come from the shared design tokens above, so the dark
+   theme follows automatically. Sits above the command palette (11). */
+#undo-toast {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 90%;
+    padding: 6px 10px;
+    background: var(--vbm-bg-elev);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    box-shadow: 0 4px 16px var(--vbm-shadow);
+    color: var(--vbm-fg);
+    font-size: 90%;
+    z-index: 12;
+}
+
+#undo-toast[hidden] {
+    display: none;
+}
+
+#undo-toast-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#undo-toast-button {
+    flex: none;
+    padding: 2px 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font: inherit;
+    cursor: pointer;
+}
+
+#undo-toast-button:hover {
+    background: var(--vbm-bg-hover);
+}
+
+#undo-toast-button:focus {
+    outline: 2px solid var(--vbm-focus-ring);
+}
+
 /* --- Command palette (P2) --------------------------------------------------
    Ctrl/Cmd+K overlay in popup.html/sidepanel.html. Fixed and centered near
    the top; colors come from the shared design tokens above, so the dark

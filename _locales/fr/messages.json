@@ -1,12 +1,202 @@
 {
-  "save": {
-    "message": "sauvegarder"
+  "optionShowSyncStatus": {
+    "message": "Afficher les indicateurs de synchronisation"
   },
-  "quickAdded": {
-    "message": "[TODO:quickAdded]"
+  "dupesDone": {
+    "message": "[TODO:dupesDone]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
-  "addNewFolderBefore": {
-    "message": "Ajouter un dossier avant"
+  "addBookmarkTop": {
+    "message": "Ajouter l'onglet actuel à vos favoris en haut"
+  },
+  "errorOccured": {
+    "message": "Oops, une erreur s’est produite."
+  },
+  "optionShowRecentBookmarks": {
+    "message": "[TODO:optionShowRecentBookmarks]"
+  },
+  "dupesConfirmAll": {
+    "message": "[TODO:dupesConfirmAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "accessibility": {
+    "message": "Accessibilité"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "[TODO:paletteCmdNewBookmark]"
+  },
+  "optionTheme": {
+    "message": "[TODO:optionTheme]"
+  },
+  "confirmOpenBookmarksNewWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new window.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les $count$ favoeis dans une nouvelle fenêtre?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "resetButton": {
+    "message": "Réinitialiser"
+  },
+  "addBookmarkBefore": {
+    "message": "Ajouter l'onglet actuel à vos favoris avant"
+  },
+  "syncOptions": {
+    "message": "Options de synchronisation"
+  },
+  "deletedFolder": {
+    "message": "[TODO:deletedFolder]",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "quickAddBookmark": {
+    "message": "[TODO:quickAddBookmark]"
+  },
+  "dupesCleanAll": {
+    "message": "[TODO:dupesCleanAll]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
+  "openSidePanelCommand": {
+    "message": "[TODO:openSidePanelCommand]"
+  },
+  "optionThemeAuto": {
+    "message": "[TODO:optionThemeAuto]"
+  },
+  "edit": {
+    "message": "Editer..."
+  },
+  "customIconDescription": {
+    "message": "L'icône doit être au dimensions 19x19 pixels. Sinon, il sera redimensionné à cette dimension."
+  },
+  "resetSettingsDescription": {
+    "message": "Réinitialiser vBookmarks aux paramètres par défaut."
+  },
+  "defaultIconButtonOr": {
+    "message": "ou"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "secondes"
+  },
+  "advancedOptions": {
+    "message": "Options avancées"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "removeSeparator": {
+    "message": "Supprimer le séparateur"
+  },
+  "resetSettings": {
+    "message": "Réinitialiser les options"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Le vrai titre du favoris s'affiche comme séparateur"
+  },
+  "donationMessage": {
+    "message": "Si vous l'aimez, vous pouvez peut-être faire un don pour son développement futur. Tout montant est le bienvenu."
+  },
+  "optionClickNewTab": {
+    "message": "un click gauche ouvre le favoris dans un nouvel onglet."
+  },
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count$ dans une nouvelle fenêtre incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "nope": {
+    "message": "Non"
+  },
+  "openIncognitoWindow": {
+    "message": "Ouvrir dans une fenetre privée"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "[TODO:paletteCmdQuickAdd]"
+  },
+  "sessionEmpty": {
+    "message": "[TODO:sessionEmpty]"
+  },
+  "sortByDateAdded": {
+    "message": "[TODO:sortByDateAdded]"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "[TODO:paletteCmdNewSeparator]"
+  },
+  "recentBookmarks": {
+    "message": "[TODO:recentBookmarks]"
+  },
+  "copyAllTitlesAndUrls": {
+    "message": "Copier tous les titres et URL dans le presse-papiers"
+  },
+  "searchBookmarks": {
+    "description": "Espace réservé au champ de recherche.",
+    "message": "Recherche de favoris"
+  },
+  "reportError": {
+    "message": "Signaler une erreur"
+  },
+  "addNewFolderAfter": {
+    "message": "Ajouter un dossier après"
+  },
+  "editBookmark": {
+    "message": "Editer le favoris"
+  },
+  "editFolder": {
+    "message": "Editer Dossier"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Dossier parent: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Intervalle de rafraîchissement"
+  },
+  "openBookmarks": {
+    "message": "Ouvrir tous les favoris"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
+  },
+  "addSeparator": {
+    "message": "Ajouter un séparateur"
   },
   "confirmDeleteFolderSubfoldersBookmarks": {
     "message": "Etes-vous sûr que vous voulez supprimer $folderName$, $subFolderCount$ sous-dossier(s) et $bookmarkCount$ favoris ?",
@@ -22,83 +212,110 @@
       }
     }
   },
-  "optionAutoRefreshSync": {
-    "message": "Actualiser automatiquement l'état de synchronisation"
+  "paletteCmdSaveSession": {
+    "message": "[TODO:paletteCmdSaveSession]"
   },
-  "sortRecursive": {
-    "message": "[TODO:sortRecursive]"
+  "paletteCmdNewFolder": {
+    "message": "[TODO:paletteCmdNewFolder]"
   },
-  "nope": {
-    "message": "Non"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Personnaliser la couleur du séparateur"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Afficher uniquement les favoris de la barre des favoris"
+  "customSeparatorStringDescription": {
+    "message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
   },
   "customStylesDescription": {
     "message": "Cela nécessite des compétences CSS. Pirater à vos risques et périls. Le partage de code serait judicieux via"
   },
-  "paletteCmdNewBookmark": {
-    "message": "[TODO:paletteCmdNewBookmark]"
-  },
-  "contextMenuAddBookmark": {
-    "message": "[TODO:contextMenuAddBookmark]"
-  },
-  "dupesConfirmGroup": {
-    "message": "[TODO:dupesConfirmGroup]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "openIncognitoWindow": {
-    "message": "Ouvrir dans une fenetre privée"
-  },
-  "edit": {
-    "message": "Editer..."
-  },
   "optionCloseUnusedFolders": {
     "message": "Fermer les dossiers non utilisés lors de l'ouverture d'un nouveau dossier."
   },
-  "editFolder": {
-    "message": "Editer Dossier"
+  "optionPopupStays": {
+    "message": "La fenêtre contextuelle reste ouverte lors de l'ouverture (clic gauche) des favoris."
   },
-  "donationMessage": {
-    "message": "Si vous l'aimez, vous pouvez peut-être faire un don pour son développement futur. Tout montant est le bienvenu."
-  },
-  "dupesGroupCount": {
-    "message": "[TODO:dupesGroupCount]",
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count $?",
     "placeholders": {
       "count": {
         "content": "$1"
       }
+    }
+  },
+  "url": {
+    "message": "URL"
+  },
+  "palettePlaceholder": {
+    "message": "[TODO:palettePlaceholder]"
+  },
+  "addNewFolderBefore": {
+    "message": "Ajouter un dossier avant"
+  },
+  "customIcon": {
+    "message": "Icône personnalisée"
+  },
+  "folderEmpty": {
+    "message": "[TODO:folderEmpty]"
+  },
+  "save": {
+    "message": "sauvegarder"
+  },
+  "undoAction": {
+    "message": "[TODO:undoAction]"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Afficher uniquement les favoris de la barre des favoris"
+  },
+  "sortRecursive": {
+    "message": "[TODO:sortRecursive]"
+  },
+  "noTitle": {
+    "description": "Titre des favoris sans titre sans URL http (s) ou dossiers sans titre.",
+    "message": "(Sans titre)"
+  },
+  "sortByTitle": {
+    "message": "[TODO:sortByTitle]"
+  },
+  "defaultIconButton": {
+    "message": "utilisation par défaut"
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personnaliser la couleur du séparateur"
+  },
+  "sessionSaved": {
+    "message": "[TODO:sessionSaved]",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
     },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
-  "addBookmarkTop": {
-    "message": "Ajouter l'onglet actuel à vos favoris en haut"
+  "sortFoldersFirst": {
+    "message": "[TODO:sortFoldersFirst]"
   },
-  "delete": {
-    "message": "Supprimer"
+  "optionSearchAfterEnter": {
+    "message": "Rechercher des signets uniquement lorsque vous appuyez sur ENTER (au lieu d'une recherche instantanée)"
   },
-  "copyAllTitlesAndUrls": {
-    "message": "Copier tous les titres et URL dans le presse-papiers"
+  "paletteNoResults": {
+    "message": "[TODO:paletteNoResults]"
   },
-  "resetButton": {
-    "message": "Réinitialiser"
+  "openCommandPaletteCommand": {
+    "message": "[TODO:openCommandPaletteCommand]"
   },
-  "optionConfirmOpenFolder": {
-    "message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
+  "searchNoResults": {
+    "message": "[TODO:searchNoResults]"
   },
-  "optionThemeLight": {
-    "message": "[TODO:optionThemeLight]"
+  "sessionFolderName": {
+    "message": "[TODO:sessionFolderName]",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
-  "sortFolderContents": {
-    "message": "[TODO:sortFolderContents]"
+  "sortRecursiveWarning": {
+    "message": "[TODO:sortRecursiveWarning]"
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
@@ -109,52 +326,14 @@
       }
     }
   },
-  "addBookmarkBottom": {
-    "message": "Ajouter l'onglet actuel à vos favoris en bas"
+  "quickAdded": {
+    "message": "[TODO:quickAdded]"
   },
-  "crossStorageMoveWarning": {
-    "message": "Les signets ne peuvent pas être déplacés entre le stockage synchronisé et local. Utilisez plutôt copier/coller.",
-    "description": "Warning when trying to move bookmarks across storage types"
+  "optionThemeDark": {
+    "message": "[TODO:optionThemeDark]"
   },
-  "addNewFolder": {
-    "message": "Ajouter un sous-dossier"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "openCommandPaletteCommand": {
-    "message": "[TODO:openCommandPaletteCommand]"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Si l'URL d'un favoris contient cette chaîne, elle sera affichée comme séparateur"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "options": {
-    "message": "Options"
-  },
-  "sortByTitle": {
-    "message": "[TODO:sortByTitle]"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "[TODO:paletteCmdQuickAdd]"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Mettre en évidence les favoris non synchronisés"
-  },
-  "palettePlaceholder": {
-    "message": "[TODO:palettePlaceholder]"
-  },
-  "customIcon": {
-    "message": "Icône personnalisée"
-  },
-  "quickAddBookmark": {
-    "message": "[TODO:quickAddBookmark]"
-  },
-  "errorOccured": {
-    "message": "Oops, une erreur s’est produite."
+  "sortFolderContents": {
+    "message": "[TODO:sortFolderContents]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $bookmarkCount$ favoris ?",
@@ -167,64 +346,109 @@
       }
     }
   },
-  "confirmOpenBookmarksNewWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new window.",
-    "message": "Etes-vous sûr que vous voulez ouvrir tous les $count$ favoeis dans une nouvelle fenêtre?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "noTitle": {
-    "description": "Titre des favoris sans titre sans URL http (s) ou dossiers sans titre.",
-    "message": "(Sans titre)"
-  },
-  "openBookmarks": {
-    "message": "Ouvrir tous les favoris"
-  },
-  "addNewFolderAfter": {
-    "message": "Ajouter un dossier après"
-  },
-  "defaultIconButtonOr": {
-    "message": "ou"
-  },
-  "dupesDone": {
-    "message": "[TODO:dupesDone]",
+  "dupesGroupCount": {
+    "message": "[TODO:dupesGroupCount]",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     },
-    "description": "Alert shown after the duplicate cleanup finished."
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
   },
-  "openSidePanelCommand": {
-    "message": "[TODO:openSidePanelCommand]"
+  "openNewTab": {
+    "message": "Ouvrir dans un nouvel onglet"
   },
-  "openBookmarksIncognitoWindow": {
-    "message": "Ouvrir tous les favoris dans une fenetre privée"
-  },
-  "sessionEmpty": {
-    "message": "[TODO:sessionEmpty]"
-  },
-  "optionAutoResizePopup": {
-    "message": "Redimensionner automatiquement la fenêtre popup pour adapter le contenu"
+  "addBookmarkAfter": {
+    "message": "Ajouter l'onglet actuel aux favoris après"
   },
   "ignore": {
     "message": "Ignorer"
   },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count $?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+  "open": {
+    "description": "Action pour ouvrir les favoris.",
+    "message": "Ouvrir"
+  },
+  "optionOpenNewTab": {
+    "message": "Le clic du milieu ou le ctrl-clic ouvre le favoris dans le nouvel onglet d'arrière-plan (au lieu du premier plan)."
+  },
+  "options": {
+    "message": "Options"
+  },
+  "replaceUrl": {
+    "message": "Remplacer par l'URL actuelle"
+  },
+  "name": {
+    "description": "Nom du favoris ou du dossier.",
+    "message": "Nom"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Mettre en évidence les favoris non synchronisés"
+  },
+  "donationDismiss": {
+    "message": "Rejeter"
+  },
+  "paletteCmdDupes": {
+    "message": "[TODO:paletteCmdDupes]"
+  },
+  "general": {
+    "message": "General"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "L'URL réelle du favoris s'affiche comme séparateur"
+  },
+  "openNewWindow": {
+    "message": "Ouvrir dans une nouvelle fenetre"
+  },
+  "dupesNone": {
+    "message": "[TODO:dupesNone]"
+  },
+  "optionOpenInSidePanel": {
+    "message": "[TODO:optionOpenInSidePanel]"
   },
   "extDesc": {
     "description": "La description de l’extension.",
     "message": "Un gestionnaire de favoris. Enhanced Neat Bookmarks."
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionner automatiquement la fenêtre popup pour adapter le contenu"
+  },
+  "crossStorageMoveWarning": {
+    "message": "Les signets ne peuvent pas être déplacés entre le stockage synchronisé et local. Utilisez plutôt copier/coller.",
+    "description": "Warning when trying to move bookmarks across storage types"
+  },
+  "deletedBookmark": {
+    "message": "[TODO:deletedBookmark]",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "optionRememberPrevState": {
+    "message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
+  },
+  "optionAutoRefreshSync": {
+    "message": "Actualiser automatiquement l'état de synchronisation"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Ouvrir tous les favoris dans une nouvelle fenetre"
+  },
+  "addNewFolder": {
+    "message": "Ajouter un sous-dossier"
+  },
+  "copyTitleAndUrl": {
+    "message": "Copier le titre et l’URL dans le presse-papiers"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Ouvrir tous les favoris dans une fenetre privée"
+  },
+  "optionThemeLight": {
+    "message": "[TODO:optionThemeLight]"
+  },
+  "optionZoom": {
+    "message": "Zoom"
   },
   "confirmDeleteFolderSubfolders": {
     "message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $subFolderCount$ sous-dossier(s)?",
@@ -237,12 +461,27 @@
       }
     }
   },
-  "optionSearchAfterEnter": {
-    "message": "Rechercher des signets uniquement lorsque vous appuyez sur ENTER (au lieu d'une recherche instantanée)"
+  "dupesConfirmGroup": {
+    "message": "[TODO:dupesConfirmGroup]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "name": {
-    "description": "Nom du favoris ou du dossier.",
-    "message": "Nom"
+  "reportedToDeveloper": {
+    "description": "Un message pour une erreur produite dans l'extension, a été signalé au développeur.",
+    "message": "Cela a été signalé au développeur."
+  },
+  "delete": {
+    "message": "Supprimer"
+  },
+  "customStyles": {
+    "message": "Styles personnalisés"
+  },
+  "deleteEllipsis": {
+    "message": "Supprimer..."
   },
   "versionMessage": {
     "message": "C'est le nouveau VBM $versionNumber$! Le journal des modifications est ici: $versionTips$",
@@ -255,229 +494,13 @@
       }
     }
   },
-  "sortRecursiveWarning": {
-    "message": "[TODO:sortRecursiveWarning]"
+  "addBookmarkBottom": {
+    "message": "Ajouter l'onglet actuel à vos favoris en bas"
   },
-  "replaceUrl": {
-    "message": "Remplacer par l'URL actuelle"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "[TODO:paletteCmdNewSeparator]"
-  },
-  "openNewTab": {
-    "message": "Ouvrir dans un nouvel onglet"
-  },
-  "reportedToDeveloper": {
-    "description": "Un message pour une erreur produite dans l'extension, a été signalé au développeur.",
-    "message": "Cela a été signalé au développeur."
-  },
-  "optionShowRecentBookmarks": {
-    "message": "[TODO:optionShowRecentBookmarks]"
-  },
-  "dupesCleanAll": {
-    "message": "[TODO:dupesCleanAll]",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "copyTitleAndUrl": {
-    "message": "Copier le titre et l’URL dans le presse-papiers"
-  },
-  "customIconDescription": {
-    "message": "L'icône doit être au dimensions 19x19 pixels. Sinon, il sera redimensionné à cette dimension."
-  },
-  "syncOptions": {
-    "message": "Options de synchronisation"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Ouvrir tous les favoris dans une nouvelle fenetre"
-  },
-  "sessionSaved": {
-    "message": "[TODO:sessionSaved]",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "deleteEllipsis": {
-    "message": "Supprimer..."
-  },
-  "paletteNoResults": {
-    "message": "[TODO:paletteNoResults]"
-  },
-  "sessionFolderName": {
-    "message": "[TODO:sessionFolderName]",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "optionShowSyncStatus": {
-    "message": "Afficher les indicateurs de synchronisation"
-  },
-  "sortByDateAdded": {
-    "message": "[TODO:sortByDateAdded]"
-  },
-  "optionPopupStays": {
-    "message": "La fenêtre contextuelle reste ouverte lors de l'ouverture (clic gauche) des favoris."
-  },
-  "customStyles": {
-    "message": "Styles personnalisés"
-  },
-  "addBookmarkAfter": {
-    "message": "Ajouter l'onglet actuel aux favoris après"
-  },
-  "searchBookmarks": {
-    "description": "Espace réservé au champ de recherche.",
-    "message": "Recherche de favoris"
-  },
-  "optionThemeDark": {
-    "message": "[TODO:optionThemeDark]"
-  },
-  "optionOpenNewTab": {
-    "message": "Le clic du milieu ou le ctrl-clic ouvre le favoris dans le nouvel onglet d'arrière-plan (au lieu du premier plan)."
+  "contextMenuAddBookmark": {
+    "message": "[TODO:contextMenuAddBookmark]"
   },
   "donationGo": {
     "message": "Bien"
-  },
-  "removeSeparator": {
-    "message": "Supprimer le séparateur"
-  },
-  "accessibility": {
-    "message": "Accessibilité"
-  },
-  "folderEmpty": {
-    "message": "[TODO:folderEmpty]"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "secondes"
-  },
-  "recentBookmarks": {
-    "message": "[TODO:recentBookmarks]"
-  },
-  "optionClickNewTab": {
-    "message": "un click gauche ouvre le favoris dans un nouvel onglet."
-  },
-  "paletteCmdSaveSession": {
-    "message": "[TODO:paletteCmdSaveSession]"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Le vrai titre du favoris s'affiche comme séparateur"
-  },
-  "defaultIconButton": {
-    "message": "utilisation par défaut"
-  },
-  "paletteCmdDupes": {
-    "message": "[TODO:paletteCmdDupes]"
-  },
-  "general": {
-    "message": "General"
-  },
-  "url": {
-    "message": "URL"
-  },
-  "reportError": {
-    "message": "Signaler une erreur"
-  },
-  "donationDismiss": {
-    "message": "Rejeter"
-  },
-  "optionThemeAuto": {
-    "message": "[TODO:optionThemeAuto]"
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Etes-vous sûr que vous voulez ouvrir tous les favoris $count$ dans une nouvelle fenêtre incognito?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "optionRememberPrevState": {
-    "message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
-  },
-  "paletteCmdNewFolder": {
-    "message": "[TODO:paletteCmdNewFolder]"
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Intervalle de rafraîchissement"
-  },
-  "optionTheme": {
-    "message": "[TODO:optionTheme]"
-  },
-  "advancedOptions": {
-    "message": "Options avancées"
-  },
-  "dupesNone": {
-    "message": "[TODO:dupesNone]"
-  },
-  "sortFoldersFirst": {
-    "message": "[TODO:sortFoldersFirst]"
-  },
-  "resetSettingsDescription": {
-    "message": "Réinitialiser vBookmarks aux paramètres par défaut."
-  },
-  "editBookmark": {
-    "message": "Editer le favoris"
-  },
-  "addSeparator": {
-    "message": "Ajouter un séparateur"
-  },
-  "dupesConfirmAll": {
-    "message": "[TODO:dupesConfirmAll]",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
-      }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
-  },
-  "openNewWindow": {
-    "message": "Ouvrir dans une nouvelle fenetre"
-  },
-  "optionOpenInSidePanel": {
-    "message": "[TODO:optionOpenInSidePanel]"
-  },
-  "resetSettings": {
-    "message": "Réinitialiser les options"
-  },
-  "addBookmarkBefore": {
-    "message": "Ajouter l'onglet actuel à vos favoris avant"
-  },
-  "searchNoResults": {
-    "message": "[TODO:searchNoResults]"
-  },
-  "open": {
-    "description": "Action pour ouvrir les favoris.",
-    "message": "Ouvrir"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Dossier parent: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "customSeparatorUrlDescription": {
-    "message": "L'URL réelle du favoris s'affiche comme séparateur"
   }
 }

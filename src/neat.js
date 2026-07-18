@@ -9,6 +9,7 @@ import { initTreeRender } from './tree-render.js';
 import { initTreeView } from './tree-view.js';
 import { initSyncUi } from './sync-ui.js';
 import { initPalette } from './palette.js';
+import { initUndo } from './undo.js';
 
 (window => {
     const store = window.store;
@@ -312,6 +313,15 @@ import { initPalette } from './palette.js';
     // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children.
     const dialogs = initDialogs({ onSort: sortFolderContents });
 
+    // Undo stack + deletion toast (P3.3) live in src/undo.js. The onChanged
+    // closure only runs after a successful undo — long after initTreeView
+    // below — so the treeView reference is TDZ-safe (same pattern as
+    // sortFolderContents above). Must init before initActions, which
+    // receives it as ctx.undo for the delete paths.
+    const undo = initUndo({
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
+    });
+
     // Actions live in src/actions.js (P1): the whole bookmark action layer —
     // open/add/edit/delete/copy plus addSeparator/deleteSeparator. The
     // menu/keyboard handlers and the tree-view module reach them through this
@@ -324,7 +334,8 @@ import { initPalette } from './palette.js';
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         generateFolderHTML: treeRender.generateFolderHTML,
         generateSeparatorHTML: treeRender.generateSeparatorHTML,
-        httpsPattern
+        httpsPattern,
+        undo
     });
 
     const middleClickBgTab = !!store.get('middleClickBgTab');

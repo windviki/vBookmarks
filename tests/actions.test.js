@@ -82,7 +82,7 @@ const makeStore = (data = {}) => ({
     }
 });
 
-const makeChrome = () => ({
+const makeChrome = ops => ({
     i18n: { getMessage: (key, subs) => subs ? `${key}[${[].concat(subs).join('|')}]` : key },
     bookmarks: {
         getNodes: {},
@@ -109,11 +109,13 @@ const makeChrome = () => ({
         },
         remove(id, cb) {
             this.removeCalls.push(id);
+            ops && ops.push(['remove', id]);
             if (cb)
                 cb();
         },
         removeTree(id, cb) {
             this.removeTreeCalls.push(id);
+            ops && ops.push(['removeTree', id]);
             if (cb)
                 cb();
         }
@@ -171,7 +173,8 @@ afterAll(() => {
 
 const setup = (opts = {}) => {
     const els = { 'copier-input': makeEl(), ...(opts.els || {}) };
-    const chromeStub = makeChrome();
+    const ops = []; // ordered [api, ...args] log across chrome + undo doubles
+    const chromeStub = makeChrome(ops);
     Object.assign(chromeStub.bookmarks.getNodes, opts.nodes || {});
     Object.assign(chromeStub.bookmarks.childNodes, opts.children || {});
     if (opts.tabUrl)
@@ -241,10 +244,19 @@ const setup = (opts = {}) => {
             calls.sepHTML.push(padding);
             return `<hr data-pad="${padding}">`;
         },
-        httpsPattern: /^https?:\/\//i
+        httpsPattern: /^https?:\/\//i,
+        // P3.3 undo API double: capture/showToast land in the shared ops log
+        // so tests can assert the delete-time call order. opts.noUndo omits
+        // it entirely to exercise the defensive fallback.
+        ...(opts.noUndo ? {} : {
+            undo: {
+                capture: id => ops.push(['capture', id]),
+                showToast: message => ops.push(['toast', message])
+            }
+        })
     });
     return {
-        actions, els, created, chrome: chromeStub, store, calls, searchState,
+        actions, els, created, chrome: chromeStub, store, calls, searchState, ops,
         callNewFolder: title => newFolderCb(title)
     };
 };
@@ -555,11 +567,58 @@ describe('deleteBookmark', () => {
         const sib = makeEl();
         sib._qs['a, span'] = sibFocus;
         li.nextElementSibling = sib;
-        const { actions, chrome } = setup({ els: { 'neat-tree-item-5': li } });
+        const { actions, chrome, ops } = setup({ els: { 'neat-tree-item-5': li } });
         actions.deleteBookmark('5');
         expect(chrome.bookmarks.removeCalls).toEqual(['5']);
         expect(parent.removedChildren).toEqual([li]);
         expect(sibFocus.focused).toBe(true);
+        // P3.3: snapshot before the delete, toast after it (row has no <i>
+        // title node in this fixture, so the title substitution is empty)
+        expect(ops).toEqual([
+            ['capture', '5'],
+            ['remove', '5'],
+            ['toast', 'deletedBookmark[]']
+        ]);
+    });
+
+    it('toasts the deleted row title (read from the <i> title node)', () => {
+        const titleEl = makeEl();
+        titleEl.textContent = 'GitHub';
+        const li = makeEl();
+        li._qs.i = titleEl;
+        li.parentNode = makeParent();
+        const { actions, ops } = setup({ els: { 'neat-tree-item-5': li } });
+        actions.deleteBookmark('5');
+        expect(ops).toEqual([
+            ['capture', '5'],
+            ['remove', '5'],
+            ['toast', 'deletedBookmark[GitHub]']
+        ]);
+    });
+
+    it('falls back to the results row title when the tree row is gone', () => {
+        const titleEl = makeEl();
+        titleEl.textContent = 'Via Results';
+        const resultsLi = makeEl();
+        resultsLi._qs.i = titleEl;
+        resultsLi.parentNode = makeParent();
+        const { actions, ops } = setup({
+            els: { 'results-item-5': resultsLi },
+            searchActive: true
+        });
+        actions.deleteBookmark('5');
+        expect(ops[0]).toEqual(['capture', '5']);
+        expect(ops[1]).toEqual(['remove', '5']);
+        expect(ops[2]).toEqual(['toast', 'deletedBookmark[Via Results]']);
+    });
+
+    it('still deletes silently when no undo API is injected', () => {
+        const li = makeEl();
+        li.parentNode = makeParent();
+        const { actions, chrome, ops } = setup({ els: { 'neat-tree-item-5': li }, noUndo: true });
+        actions.deleteBookmark('5');
+        expect(chrome.bookmarks.removeCalls).toEqual(['5']);
+        expect(ops).toEqual([['remove', '5']]); // no capture, no toast
     });
 
     it('focuses the results sibling instead of the tree sibling when search is active', () => {
@@ -617,44 +676,40 @@ describe('deleteBookmarks', () => {
         return { li, item, parent, sibFocus, ownFocus, ...ctx };
     };
 
-    it('confirms with the combined message, then removeTree + sibling focus on fn1', () => {
-        const { actions, chrome, calls, parent, li, sibFocus } = setupFolder();
+    // P3.3: the ConfirmDialog is gone — a captured snapshot + undo toast is
+    // the safety net for every folder delete, non-empty or not.
+    it('captures the folder, removes the tree and toasts — no ConfirmDialog', () => {
+        const { actions, calls, ops, parent, li, sibFocus } = setupFolder();
         actions.deleteBookmarks('9', 3, 2);
-        expect(calls.confirm).toHaveLength(1);
-        expect(calls.confirm[0].dialog).toBe('confirmDeleteFolderSubfoldersBookmarks[<cite>My Folder</cite>|2|3]');
-        expect(calls.confirm[0].button1).toBe('<strong>delete</strong>');
-        expect(calls.confirm[0].button2).toBe('nope');
-        expect(chrome.bookmarks.removeTreeCalls).toEqual([]);
-        calls.confirm[0].fn1();
-        expect(chrome.bookmarks.removeTreeCalls).toEqual(['9']);
+        expect(calls.confirm).toEqual([]);
+        expect(ops).toEqual([
+            ['capture', '9'],
+            ['removeTree', '9'],
+            ['toast', 'deletedFolder[My Folder]']
+        ]);
         expect(parent.removedChildren).toEqual([li]);
         expect(sibFocus.focused).toBe(true);
     });
 
-    it('fn2 refocuses the folder row itself without deleting', () => {
-        const { actions, chrome, calls, li, ownFocus } = setupFolder();
-        actions.deleteBookmarks('9', 3, 2);
-        calls.confirm[0].fn2();
-        expect(chrome.bookmarks.removeTreeCalls).toEqual([]);
-        expect(ownFocus.focused).toBe(true);
-    });
-
-    it('uses the bookmarks-only and subfolders-only messages', () => {
-        const onlyBookmarks = setupFolder();
-        onlyBookmarks.actions.deleteBookmarks('9', 3, 0);
-        expect(onlyBookmarks.calls.confirm[0].dialog).toBe('confirmDeleteFolderBookmarks[<cite>My Folder</cite>|3]');
-        const onlyFolders = setupFolder();
-        onlyFolders.actions.deleteBookmarks('9', 0, 2);
-        expect(onlyFolders.calls.confirm[0].dialog).toBe('confirmDeleteFolderSubfolders[<cite>My Folder</cite>|2]');
-    });
-
-    it('deletes an empty folder directly without confirming', () => {
-        const { actions, chrome, calls, parent, li, sibFocus } = setupFolder();
+    it('takes the same no-confirm path for an empty folder', () => {
+        const { actions, calls, ops, parent, li, sibFocus } = setupFolder();
         actions.deleteBookmarks('9', 0, 0);
         expect(calls.confirm).toEqual([]);
-        expect(chrome.bookmarks.removeTreeCalls).toEqual(['9']);
+        expect(ops).toEqual([
+            ['capture', '9'],
+            ['removeTree', '9'],
+            ['toast', 'deletedFolder[My Folder]']
+        ]);
         expect(parent.removedChildren).toEqual([li]);
         expect(sibFocus.focused).toBe(true);
+    });
+
+    it('still removes the tree silently when no undo API is injected', () => {
+        const { actions, chrome, calls, ops } = setupFolder({ noUndo: true });
+        actions.deleteBookmarks('9', 3, 2);
+        expect(calls.confirm).toEqual([]);
+        expect(chrome.bookmarks.removeTreeCalls).toEqual(['9']);
+        expect(ops).toEqual([['removeTree', '9']]);
     });
 });
 
@@ -886,7 +941,7 @@ describe('separator actions', () => {
         expect(calls.sepAdd).toEqual(['100']);
     });
 
-    it('deleteSeparator removes the tree, the row and the registry entry, then focuses a sibling', () => {
+    it('deleteSeparator captures, removes the tree, the row and the registry entry, toasts, then focuses a sibling', () => {
         const li = makeEl();
         const parent = makeParent();
         li.parentNode = parent;
@@ -894,11 +949,17 @@ describe('separator actions', () => {
         const sib = makeEl();
         sib._qs['a, span'] = sibFocus;
         li.nextElementSibling = sib;
-        const { actions, chrome, calls } = setup({ els: { 'neat-tree-item-30': li } });
+        const { actions, chrome, calls, ops } = setup({ els: { 'neat-tree-item-30': li } });
         actions.deleteSeparator('30');
         expect(chrome.bookmarks.removeTreeCalls).toEqual(['30']);
         expect(parent.removedChildren).toEqual([li]);
         expect(calls.sepRemove).toEqual(['30']);
         expect(sibFocus.focused).toBe(true);
+        // separators carry no meaningful title — the toast gets an empty one
+        expect(ops).toEqual([
+            ['capture', '30'],
+            ['removeTree', '30'],
+            ['toast', 'deletedBookmark[]']
+        ]);
     });
 });
