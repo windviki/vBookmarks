@@ -279,42 +279,29 @@ describe('generateFolderHTML', () => {
 });
 
 describe('generateSeparatorHTML', () => {
-    it('defaults to #888888 and sizes the hr from innerWidth', () => {
+    it('uses CSS-driven separator-row with theme tokens (no inline color/width)', () => {
         const tr = setup();
         const html = tr.generateSeparatorHTML(14);
+        // Separator is now CSS-driven: the <a> gets the separator-row class and
+        // the <hr> uses absolute positioning (left:0 / right:8px) to auto-fill
+        // the row. Colors come from --vbm-border, no more inline styles.
         expect(html).toContain('style="-webkit-padding-start: 14px"');
-        expect(html).toContain('style="width: 346px; border: 1px dotted #888888;"');
+        expect(html).toContain('class="tree-item-link separator-row"');
+        expect(html).toContain('<hr class="separator-line" role="separator">');
     });
 
-    it('converts an rgb() separatorcolor to hex', () => {
-        const tr = setup({ store: makeStore({ separatorcolor: 'rgb(136,136,136)' }) });
-        expect(tr.generateSeparatorHTML(0))
-            .toContain('border: 1px dotted #888888;');
-    });
-
-    it('doubles a 3-digit hex separatorcolor', () => {
-        const tr = setup({ store: makeStore({ separatorcolor: '#abc' }) });
-        expect(tr.generateSeparatorHTML(0))
-            .toContain('border: 1px dotted #aabbcc;');
-    });
-
-    it('keeps a 6-digit hex separatorcolor untouched', () => {
-        const tr = setup({ store: makeStore({ separatorcolor: '#A1b2C3' }) });
-        expect(tr.generateSeparatorHTML(0))
-            .toContain('border: 1px dotted #A1b2C3;');
-    });
-
-    it('yields an empty color for non-rgb non-hex values (legacy quirk)', () => {
-        const tr = setup({ store: makeStore({ separatorcolor: 'red' }) });
-        expect(tr.generateSeparatorHTML(0))
-            .toContain('border: 1px dotted ;');
-    });
-
-    it('recomputes the hr width from the live window.innerWidth', () => {
-        globalThis.window.innerWidth = 800;
+    it('does not set inline border or width styles (CSS handles both)', () => {
         const tr = setup();
-        expect(tr.generateSeparatorHTML(28))
-            .toContain('style="width: 732px;');
+        const html = tr.generateSeparatorHTML(0);
+        expect(html).not.toContain('border:');
+        expect(html).not.toContain('width:');
+    });
+
+    it('drops the separatorcolor store key (retired — themes handle color)', () => {
+        const tr = setup({ store: makeStore({ separatorcolor: '#abc' }) });
+        const html = tr.generateSeparatorHTML(0);
+        expect(html).not.toContain('#abc');
+        expect(html).not.toContain('#aabbcc');
     });
 });
 
@@ -425,7 +412,7 @@ describe('generateHTML', () => {
             { id: '1', parentId: '0', title: '---', url: 'http://sep.example/' },
             { id: '2', parentId: '0', title: 'Real', url: 'http://e.com/' }
         ]);
-        expect(html).toContain('<hr class="child" role="treeitem"');
+        expect(html).toContain('<hr class="separator-line" role="separator">');
         expect(html).toContain('<i>Real</i>');
         expect(separatorManager.added).toEqual(['1']);
     });

@@ -279,7 +279,11 @@ const setup = (opts = {}) => {
         results,
         input: searchInput,
         isActive: () => flags.searchActive,
-        quit: () => searchCalls.push('quit')
+        quit: () => {
+            searchCalls.push('quit');
+            flags.searchActive = false;
+            searchInput.value = '';
+        }
     };
     const clearMenuCalls = [];
     const menus = {

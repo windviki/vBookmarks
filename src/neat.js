@@ -245,35 +245,25 @@ import { initUndo } from './undo.js';
     });
 
     // Popup auto-height
+    const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
     const resetHeight = () => {
         // The side panel is naturally full height; never resize it
         if (IS_PANEL)
             return;
-        // Check if auto-resize is enabled (default to true for backward compatibility)
-        const autoResizeEnabled = store.get('autoResizePopup') !== 'false';
-
-        if (!autoResizeEnabled) {
-            // If auto-resize is disabled, use the stored height or default to 600px
-            const storedHeight = store.get('popupHeight') || '600';
-            body.style.height = `${storedHeight}px`;
+        // When auto-resize is disabled, do absolutely nothing — the user manages
+        // popup dimensions via manual resize handles only. Any height mutation
+        // here would override the user's deliberate sizing.
+        if (!autoResizeEnabled())
             return;
-        }
 
         const zoomLevel = store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1;
         const neatTree = $tree.firstElementChild;
         if (neatTree) {
             const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-            // console.log(`fullHeight = ${fullHeight}`);
             chrome.tabs.getZoom(zoomFactor => {
-                // zoomFactor is the zoom factor in chrome setting. e.g. 125%
-                // left 50px at bottom if the screen is too short
                 const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                // console.log(`zoomFactor = ${zoomFactor}, maxHeight = ${maxHeight}`);
-                // 300 <= height <= maxHeight
                 const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
-                // console.log(`height = ${height}`);
                 const newHeightStyle = `${height}px`;
-                // Slide up faster than down
                 body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
                 body.style.height = newHeightStyle;
                 store.set('popupHeight', height);
@@ -417,13 +407,13 @@ import { initUndo } from './undo.js';
     const quickAddBtn = $('quick-add-btn');
     const quickAddToast = $('quick-add-toast');
     let quickAddToastTimer = null;
-    const showQuickAddToast = () => {
-        quickAddToast.textContent = _m('quickAdded');
+    const showQuickAddToast = (msgKey, sub) => {
+        quickAddToast.textContent = _m(msgKey, sub ? [sub] : undefined);
         quickAddToast.classList.add('show');
         clearTimeout(quickAddToastTimer);
         quickAddToastTimer = setTimeout(() => {
             quickAddToast.classList.remove('show');
-        }, 1500);
+        }, 1800);
     };
     const withCurrentTabBookmark = callback => {
         chrome.tabs.query({
@@ -442,11 +432,12 @@ import { initUndo } from './undo.js';
     };
     const refreshQuickAddState = () => {
         withCurrentTabBookmark((tab, bookmark) => {
-            // neatools' toggleClass forwards no `force` flag, so branch explicitly
             if (bookmark) {
                 quickAddBtn.classList.add('starred');
+                quickAddBtn.title = _m('quickRemoveBookmark');
             } else {
                 quickAddBtn.classList.remove('starred');
+                quickAddBtn.title = _m('quickAddBookmark');
             }
         });
     };
@@ -454,16 +445,29 @@ import { initUndo } from './undo.js';
         withCurrentTabBookmark((tab, bookmark) => {
             if (!tab)
                 return;
-            if (bookmark) { // already bookmarked: edit the existing one
-                actions.editBookmarkFolder(bookmark.id);
+            if (bookmark) {
+                // Already bookmarked: remove it (mirrors Chrome's native star).
+                // Track the id we're removing so the star refresh won't re-add it.
+                const rmId = bookmark.id;
+                chrome.bookmarks.remove(rmId, () => {
+                    quickAddBtn.classList.remove('starred');
+                    quickAddBtn.title = _m('quickAddBookmark');
+                    showQuickAddToast('quickRemoved');
+                });
             } else {
+                const parentId = store.get('quickAddFolderId', '1');
                 chrome.bookmarks.create({
                     title: tab.title || tab.url,
                     url: tab.url,
-                    parentId: store.get('quickAddFolderId', '1')
+                    parentId
                 }, () => {
                     quickAddBtn.classList.add('starred');
-                    showQuickAddToast();
+                    quickAddBtn.title = _m('quickRemoveBookmark');
+                    // Show target folder name for discoverability
+                    chrome.bookmarks.get(parentId, nodes => {
+                        const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
+                        showQuickAddToast('quickAddedTo', folderName);
+                    });
                 });
             }
         });
@@ -501,6 +505,14 @@ import { initUndo } from './undo.js';
         // P3.5: /dead filters separators out of the scan through the manager.
         separatorManager
     });
+
+    // Tool button (⋮): opens the command palette for feature discovery —
+    // dead-link scan, duplicate cleanup, session save, and all slash commands.
+    const toolBtn = $('tool-btn');
+    if (toolBtn) {
+        toolBtn.title = _m('toolButtonTitle');
+        toolBtn.addEventListener('click', () => palette.open());
+    }
 
     // Global wake-up (background.js's open-command-palette command): the
     // fallback popup window carries ?palette=1; the chrome.action.openPopup
@@ -571,25 +583,11 @@ import { initUndo } from './undo.js';
         screenX = 0, 
         screenY = 0;
 
-    // Reset separators
-    function resetSeparator() {
-        const seps = separatorManager.getAll();
-        for (let i = 0; i < seps.length; i++) {
-            if (seps[i]) {
-                const bmNode = $(`neat-tree-item-${seps[i]}`); //li
-                if (!bmNode) {
-                    return;
-                }
-                let lv = bmNode.getAttribute('level'); //getAttribute!
-                if (!lv) {
-                    lv = 1;
-                }
-                const paddingStart = lv * 14;
-                const hrWidth = window.innerWidth - paddingStart - 40;
-                bmNode.querySelector('hr').style.width = `${hrWidth}`; //li.a.hr
-            }
-        }
-    }
+    // Reset separators — CSS-driven since v4.1: .separator-row + .separator-line
+    // use absolute positioning (left:0 / right:8px) that auto-adapts to any width.
+    // The old inline-width recalc is retired; this stays as a no-op because dnd.js
+    // and the resizer still call it for post-drag / post-resize cleanup.
+    function resetSeparator() {}
 
     // Drag the edge
     $resizerx.addEventListener('mousedown', e => {

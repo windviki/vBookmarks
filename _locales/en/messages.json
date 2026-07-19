@@ -584,6 +584,28 @@
   "quickAdded": {
     "message": "Bookmark added"
   },
+  "quickAddedTo": {
+    "message": "Bookmark added to $folderName$",
+    "description": "Toast shown after the star button bookmarks the current tab, naming the target folder.",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bookmark removed",
+    "description": "Toast shown after the star button removes a bookmark (second click on an already-bookmarked page)."
+  },
+  "quickRemoveBookmark": {
+    "message": "Remove this bookmark (Ctrl+D)",
+    "description": "Tooltip of the quick-add star button when the current page is already bookmarked."
+  },
+  "toolButtonTitle": {
+    "message": "Tools (Ctrl+K)",
+    "description": "Tooltip of the toolbar button that opens the command palette for duplicate cleanup, dead-link scan, session save, etc."
+  },
   "contextMenuAddBookmark": {
     "message": "Bookmark this page with vBookmarks",
     "description": "Page context menu item that saves the current page as a bookmark."

@@ -447,19 +447,20 @@ export function initKeyboard(ctx = {}) {
     // Closing dialogs on escape (dialog state helpers come from src/dialogs.js)
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
+            // If the search-input handler already consumed this ESC (it calls
+            // preventDefault before clearing the input), don't process it again
+            // — the user just wanted to clear the search, not close the popup.
+            if (e.defaultPrevented)
+                return;
             if (dialogs.anyOpen()) { // esc
                 e.preventDefault();
                 dialogs.closeDialogs();
-            } else {
-                if (search.isActive()) {
-                    // Pressing esc shouldn't close the popup when search field has value
-                    e.preventDefault();
+            } else if (search.isActive() || search.input.value) {
+                e.preventDefault();
+                if (search.isActive())
                     search.quit();
-                }
-                if (search.input.value) {
-                    e.preventDefault();
+                else
                     search.input.value = '';
-                }
             }
         } else if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
             search.input.focus();

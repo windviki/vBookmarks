@@ -36,43 +36,6 @@ import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from './icons.js';
 const htmlspecialchars = s =>
     s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
-// RGB -> HEX, formerly String.prototype.colorHex in neat.js (byte-identical
-// semantics, quirks included): rgb(a)? strings become #hex with per-component
-// "0" → "00" padding only; a result that is not exactly 7 chars falls back to
-// the input unchanged. 6-digit #hex passes through, 3-digit #hex is doubled,
-// anything else returns ''.
-const hexColorRegex = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-const colorHex = (that) => {
-    if (/^(rgb|RGB)/.test(that)) {
-        const aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-        let strHex = "#";
-        for (let i = 0; i < aColor.length; i++) {
-            let hex = Number(aColor[i]).toString(16);
-            if (hex === "0") {
-                hex += hex;
-            }
-            strHex += hex;
-        }
-        if (strHex.length !== 7) {
-            strHex = that;
-        }
-        return strHex;
-    } else if (hexColorRegex.test(that)) {
-        const aNum = that.replace(/#/, "").split("");
-        if (aNum.length === 6) {
-            return that;
-        } else if (aNum.length === 3) {
-            let numHex = "#";
-            for (let i = 0; i < aNum.length; i += 1) {
-                numHex += (aNum[i] + aNum[i]);
-            }
-            return numHex;
-        }
-    } else {
-        return '';
-    }
-};
-
 // neat.js keeps its own copy for the actions ctx; generateBookmarkHTML uses
 // this module-local one.
 const httpsPattern = /^https?:\/\//i;
@@ -193,19 +156,13 @@ export function initTreeRender(ctx = {}) {
     };
 
     const generateSeparatorHTML = paddingStart => {
-        let color = '#888888';
-        if (store.get('separatorcolor')) {
-            color = colorHex(store.get('separatorcolor'));
-        }
+        // CSS-driven: separator-line uses absolute positioning with left:0 /
+        // right:8px inside the relative a.separator-row — it stretches from
+        // the icon left edge to the right margin automatically, using the
+        // theme border token. No more inline color or manual width calc.
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
-        const hrWidth = window.innerWidth - paddingStart - 40;
-        const hrStyle = `style="width: ${hrWidth}px; border: 1px dotted ${color};"`;
-        return `<a href="#" tabindex="0" ${aStyle} class="tree-item-link">
-                <div class="favicon-container">
-                    <img width="16" height="16" style="display:none;" alt="">
-                </div>
-                <i></i>
-                <hr class="child" role="treeitem" ${hrStyle}>
+        return `<a href="" tabindex="0" ${aStyle} class="tree-item-link separator-row">
+                <hr class="separator-line" role="separator">
                 </a>`;
     };
 

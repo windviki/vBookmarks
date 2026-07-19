@@ -199,9 +199,8 @@ body.linux input {
 
 #search {
     position: relative;
-    /* 旧版用 top:-3px + 负 margin 让树区域上移，结果搜索框下缘被树盖住、
-       点击穿透到树（"很难点击到"）。回归正常文档流并抬高堆叠层级。 */
-    z-index: 2;
+    /* 必须高于 donation 卡片（z-index:9），否则卡片可见时搜索栏被遮挡完全点不了 */
+    z-index: 10;
     margin: 0 0 4px;
     padding: 0;
 }
@@ -264,8 +263,8 @@ body.linux input {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     margin-inline-start: 2px;
     padding: 0;
     border: 0;
@@ -1057,9 +1056,9 @@ menu[type=context].hide-sort #sort-folder-contents {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    width: 26px;
-    height: 26px;
-    margin-left: 6px;
+    width: 30px;
+    height: 30px;
+    margin-left: 4px;
     padding: 0;
     border: 1px solid var(--vbm-border);
     border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
@@ -1107,6 +1106,62 @@ menu[type=context].hide-sort #sort-folder-contents {
 
 #quick-add-toast.show {
     opacity: 1;
+}
+
+/* --- Separator rows (v4.1 UX pass) -------------------------------------------
+   Tasteful single line using the theme border token, stretching from the icon
+   left edge to the right margin. Inline width recalc is no longer needed. */
+#tree ul li a.separator-row {
+    position: relative;
+    cursor: default !important;
+}
+#tree ul li a.separator-row:hover {
+    background-color: transparent;
+}
+#tree ul li a.separator-row:hover i,
+#tree ul li a.separator-row:focus i {
+    text-decoration: none;
+}
+#tree ul li a.separator-row hr.separator-line {
+    position: absolute;
+    left: 0;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    border-top: 1px solid var(--vbm-border);
+    margin: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* --- Toolbar button (v4.1) ---------------------------------------------------
+   Subtle ⋮ icon next to the star, opening the command palette for feature
+   discovery (dead links, dupes, session save). Same look as the star button. */
+#tool-btn {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    margin-left: 4px;
+    padding: 0;
+    border: 1px solid var(--vbm-border);
+    border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-muted);
+    cursor: pointer;
+}
+#tool-btn:hover {
+    background: var(--vbm-bg-hover);
+    border-color: var(--vbm-accent);
+    color: var(--vbm-accent);
+}
+#tool-btn:focus {
+    outline: 2px solid var(--vbm-focus-ring);
 }
 
 /* --- Undo toast (P3.3) -----------------------------------------------------
