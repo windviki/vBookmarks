@@ -40,6 +40,7 @@ export function initKeyboard(ctx = {}) {
     const body = ctx.body;
     const os = ctx.os;
     const rtl = ctx.rtl;
+    const palette = ctx.palette; // ESC layering: close palette before popup
 
     // neatools' String.prototype.escapeRegExp, kept as a pure function
     const escapeRegExp = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -466,6 +467,11 @@ export function initKeyboard(ctx = {}) {
             if (dialogs.anyOpen()) { // esc
                 e.preventDefault();
                 dialogs.closeDialogs();
+            } else if (palette && palette.isOpen()) {
+                // ESC layering: after context menus and dialogs, close the
+                // command palette before letting Chrome close the popup.
+                e.preventDefault();
+                palette.close();
             } else if (search.isActive() || search.input.value) {
                 e.preventDefault();
                 if (search.isActive())

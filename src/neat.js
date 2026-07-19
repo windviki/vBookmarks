@@ -587,7 +587,8 @@ import { initUndo } from './undo.js';
         dialogs,
         body,
         os,
-        rtl
+        rtl,
+        palette  // ESC layering: close palette before letting Chrome close popup
     });
 
     const contextMouseMove = e => {
