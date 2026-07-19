@@ -254,11 +254,14 @@ import { initUndo } from './undo.js';
         rememberState: !store.get('dontRememberState')
     });
 
-    // Popup auto-height — only grow to fit content; never shrink unless the
-    // visible tree is dramatically shorter than the current window (avoids the
-    // jarring "popup jumps on every folder expand/collapse" effect).
+    // Popup auto-height — only grow, never shrink on user interaction.
+    // Shrinking on folder collapse is jarring ("popup jumps"): the user
+    // toggled a folder, they didn't ask the window to resize. The popup
+    // height only shrinks on the initial load (fresh viewport);
+    // interaction-triggered calls only grow. When autoResizePopup is off
+    // the popup keeps its saved / default height unconditionally.
     const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
-    const resetHeight = () => {
+    const resetHeight = (allowShrink) => {
         if (IS_PANEL)
             return;
         if (!autoResizeEnabled())
@@ -278,17 +281,18 @@ import { initUndo } from './undo.js';
 
             let targetH;
             if (clampedContent > currentH) {
-                // Content grew (folder expanded, node added): grow with it.
+                // Content outgrew the popup: grow with it.
                 targetH = clampedContent;
                 body.style.transitionDuration = '.3s';
-            } else if (clampedContent < currentH * 0.55) {
-                // Content is substantially shorter than the window: shrink
-                // gracefully so the popup doesn't waste space.
+            } else if (allowShrink && clampedContent <= currentH &&
+                       contentH <= maxH && clampedContent < currentH * 0.7) {
+                // Only shrink when explicitly allowed AND the full tree fits
+                // within the max height without scroll AND there's real waste.
                 targetH = clampedContent;
                 body.style.transitionDuration = '.15s';
             } else {
-                // Content is close to or slightly shorter than current window:
-                // stay put. The user's viewport is about right.
+                // Stay put: content is shorter but the popup is a comfortable
+                // size. Never shrink on folder toggle events.
                 return;
             }
             body.style.height = `${targetH}px`;
@@ -297,10 +301,11 @@ import { initUndo } from './undo.js';
     };
 
     if (!search.isActive())
-        resetHeight();
+        resetHeight(true);
 
-    $tree.addEventListener('click', resetHeight);
-    $tree.addEventListener('keyup', resetHeight);
+    // Interaction-triggered calls never shrink — only grow.
+    $tree.addEventListener('click', () => resetHeight(false));
+    $tree.addEventListener('keyup', () => resetHeight(false));
 
     // Reorder the children of folderId with serial bookmarks.move calls, then
     // rebuild the tree (the opens memory restores the expanded state).
@@ -709,7 +714,7 @@ import { initUndo } from './undo.js';
         }
         body.classList.add('dummy'); // force redraw
         body.classList.remove('dummy');
-        resetHeight();
+        resetHeight(true);
     };
     //use 'wheel' event and 'e.deltaY' instead (>= Chrome 61)
     function wheelHandler(e) {
