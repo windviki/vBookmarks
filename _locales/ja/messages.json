@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "すべての$count$個の無効なブックマークを削除しますか？この操作は元に戻せません。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "このブックマークを削除しますか？"
+  },
+  "deadDeleteAll": {
+    "message": "すべての$count$個の無効なブックマークを削除",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"

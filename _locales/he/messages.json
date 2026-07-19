@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "למחוק את כל $count$ הסימניות המתות? לא ניתן לבטל זאת בצעד אחד.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "להסיר סימניה זו?"
+  },
+  "deadDeleteAll": {
+    "message": "מחק את כל $count$ הסימניות המתות",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "לא נמצאו קישורים מתים"

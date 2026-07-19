@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Xóa tất cả $count$ dấu trang chết? Hành động này không thể hoàn tác trong một bước.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Xóa dấu trang này?"
+  },
+  "deadDeleteAll": {
+    "message": "Xóa tất cả $count$ dấu trang chết",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"

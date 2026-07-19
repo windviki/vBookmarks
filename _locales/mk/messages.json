@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Избриши ги сите $count$ мртви обележувачи? Ова не може да се врати во еден чекор.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Да го отстранам овој обележувач?"
+  },
+  "deadDeleteAll": {
+    "message": "Избриши ги сите $count$ мртви обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Нема пронајдени мртви врски"

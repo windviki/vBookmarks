@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Poistetaanko kaikki $count$ kuollutta kirjanmerkkiä? Tätä ei voi kumota yhdellä kertaa.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Poistetaanko tämä kirjanmerkki?"
+  },
+  "deadDeleteAll": {
+    "message": "Poista kaikki $count$ kuollutta kirjanmerkkiä",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"

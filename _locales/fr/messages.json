@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Supprimer les $count$ signets morts ? Cette action ne peut pas être annulée en une seule étape.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Supprimer ce signet ?"
+  },
+  "deadDeleteAll": {
+    "message": "Supprimer les $count$ signets morts",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Aucun lien mort trouvé"

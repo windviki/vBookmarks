@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "$count$개의 끊어진 북마크를 모두 삭제하시겠습니까? 이 작업은 한 번에 되돌릴 수 없습니다.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "이 북마크를 삭제할까요?"
+  },
+  "deadDeleteAll": {
+    "message": "$count$개의 끊어진 북마크 모두 삭제",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "끊긴 링크 없음"

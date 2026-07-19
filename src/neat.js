@@ -18,6 +18,16 @@ import { initUndo } from './undo.js';
     // class; here we only need the flag.
     const IS_PANEL = window.location.search.includes('panel=1')
         || window.document.body.classList.contains('panel-mode');
+
+    // Prevent Chrome's native context menu from the very first pixel — the
+    // store.ready gated initContextMenu below registers the full handler with
+    // custom menus, but there is a gap between DOM parse and store.ready
+    // resolution during which right-clicks would either show Chrome's native
+    // menu or (worse) do nothing visible. This early no-op preventDefault
+    // closes that gap; once initContextMenu attaches its own body
+    // contextmenu listener both coexist — ours always wins.
+    window.document.body.addEventListener('contextmenu', e => e.preventDefault());
+
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
     store.ready.then(() => {
@@ -244,31 +254,46 @@ import { initUndo } from './undo.js';
         rememberState: !store.get('dontRememberState')
     });
 
-    // Popup auto-height
+    // Popup auto-height — only grow to fit content; never shrink unless the
+    // visible tree is dramatically shorter than the current window (avoids the
+    // jarring "popup jumps on every folder expand/collapse" effect).
     const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
     const resetHeight = () => {
-        // The side panel is naturally full height; never resize it
         if (IS_PANEL)
             return;
-        // When auto-resize is disabled, do absolutely nothing — the user manages
-        // popup dimensions via manual resize handles only. Any height mutation
-        // here would override the user's deliberate sizing.
         if (!autoResizeEnabled())
             return;
 
         const zoomLevel = store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1;
         const neatTree = $tree.firstElementChild;
-        if (neatTree) {
-            const fullHeight = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
-            chrome.tabs.getZoom(zoomFactor => {
-                const maxHeight = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
-                const height = Math.max(300 / zoomFactor, Math.min(fullHeight, maxHeight));
-                const newHeightStyle = `${height}px`;
-                body.style.transitionDuration = (fullHeight < window.innerHeight) ? '.3s' : '.1s';
-                body.style.height = newHeightStyle;
-                store.set('popupHeight', height);
-            });
-        }
+        if (!neatTree)
+            return;
+
+        const contentH = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+        const currentH = body.offsetHeight;
+        chrome.tabs.getZoom(zoomFactor => {
+            const minH = Math.max(300 / zoomFactor, 200);
+            const maxH = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+            const clampedContent = Math.max(minH, Math.min(contentH, maxH));
+
+            let targetH;
+            if (clampedContent > currentH) {
+                // Content grew (folder expanded, node added): grow with it.
+                targetH = clampedContent;
+                body.style.transitionDuration = '.3s';
+            } else if (clampedContent < currentH * 0.55) {
+                // Content is substantially shorter than the window: shrink
+                // gracefully so the popup doesn't waste space.
+                targetH = clampedContent;
+                body.style.transitionDuration = '.15s';
+            } else {
+                // Content is close to or slightly shorter than current window:
+                // stay put. The user's viewport is about right.
+                return;
+            }
+            body.style.height = `${targetH}px`;
+            store.set('popupHeight', targetH);
+        });
     };
 
     if (!search.isActive())

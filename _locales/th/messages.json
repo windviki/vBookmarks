@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "ลบที่คั่นหน้าตายทั้งหมด $count$ รายการ? การดำเนินการนี้ไม่สามารถยกเลิกได้ในครั้งเดียว",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "ลบบุ๊กมาร์กนี้?"
+  },
+  "deadDeleteAll": {
+    "message": "ลบที่คั่นหน้าตายทั้งหมด $count$ รายการ",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "ไม่พบลิงก์เสีย"

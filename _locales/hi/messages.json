@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "क्या आप $count$ मृत बुकमार्क हटाना चाहते हैं? यह एक कदम में पूर्ववत नहीं किया जा सकता।",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "इस बुकमार्क को हटाएँ?"
+  },
+  "deadDeleteAll": {
+    "message": "सभी $count$ मृत बुकमार्क हटाएँ",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "कोई मृत लिंक नहीं मिला"

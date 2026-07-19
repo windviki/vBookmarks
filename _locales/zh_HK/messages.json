@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "確定刪除全部 $count$ 個失效書籤？此操作無法一步復原。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "要移除這個書籤嗎？"
+  },
+  "deadDeleteAll": {
+    "message": "刪除全部 $count$ 個失效書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "找不到失效連結"

@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Eliminare tutti i $count$ segnalibri morti? Questa operazione non può essere annullata in un unico passaggio.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Rimuovere questo segnalibro?"
+  },
+  "deadDeleteAll": {
+    "message": "Elimina tutti i $count$ segnalibri morti",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nessun collegamento interrotto trovato"

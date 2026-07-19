@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Kustutada kõik $count$ surnud järjehoidjat? Seda ei saa ühe sammuga tagasi võtta.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Eemaldada see järjehoidja?"
+  },
+  "deadDeleteAll": {
+    "message": "Kustutada kõik $count$ surnud järjehoidjat",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Surnud linke ei leitud"

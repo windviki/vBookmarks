@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Eliminar todos os $count$ marcadores mortos? Esta ação não pode ser desfeita de uma só vez.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Remover este marcador?"
+  },
+  "deadDeleteAll": {
+    "message": "Eliminar todos os $count$ marcadores mortos",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"

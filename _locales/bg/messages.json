@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Да изтрия всичките $count$ мъртви отметки? Това не може да бъде отменено с една стъпка.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Премахване на този отметка?"
+  },
+  "deadDeleteAll": {
+    "message": "Изтрий всичките $count$ мъртви отметки",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Няма открити мъртви връзки"

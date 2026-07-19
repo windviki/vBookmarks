@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Odstrániť všetky $count$ mŕtve záložky? Tento krok nie je možné vrátiť jedným krokom.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Odstrániť túto záložku?"
+  },
+  "deadDeleteAll": {
+    "message": "Odstrániť všetky $count$ mŕtve záložky",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nenašli sa žiadne nefunkčné odkazy"

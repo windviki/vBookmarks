@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Alle $count$ toten Lesezeichen löschen? Dies kann nicht in einem Schritt rückgängig gemacht werden.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Dieses Lesezeichen entfernen?"
+  },
+  "deadDeleteAll": {
+    "message": "Alle $count$ toten Lesezeichen löschen",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Keine defekten Links gefunden"

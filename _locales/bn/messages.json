@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "সব $count$টি মৃত বুকমার্ক মুছবেন? এটি এক ধাপে পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "এই বুকমার্কটি সরিয়ে ফেলবেন?"
+  },
+  "deadDeleteAll": {
+    "message": "সব $count$টি মৃত বুকমার্ক মুছুন",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"

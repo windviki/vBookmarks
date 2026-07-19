@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "هل تريد حذف جميع الإشارات المرجعية المعطلة ($count$)؟ لا يمكن التراجع عن هذا في خطوة واحدة.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "إزالة هذه الإشارة المرجعية؟"
+  },
+  "deadDeleteAll": {
+    "message": "حذف جميع الإشارات المرجعية المعطلة ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "لم يتم العثور على روابط معطلة"

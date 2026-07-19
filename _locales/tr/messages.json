@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Tüm $count$ ölü yer imlerini silmek istiyor musunuz? Bu işlem tek adımda geri alınamaz.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Bu yer imi silinsin mi?"
+  },
+  "deadDeleteAll": {
+    "message": "Tüm $count$ ölü yer imlerini sil",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"

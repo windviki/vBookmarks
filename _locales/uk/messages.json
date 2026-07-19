@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Видалити всі $count$ мертвих закладок? Цю дію не можна скасувати одним кроком.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Видалити цю закладку?"
+  },
+  "deadDeleteAll": {
+    "message": "Видалити всі $count$ мертвих закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Мертвих посилань не знайдено"

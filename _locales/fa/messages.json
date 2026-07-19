@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "همه $count$ نشانک مرده حذف شوند؟ این کار در یک مرحله قابل بازگشت نیست.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "این نشانک حذف شود؟"
+  },
+  "deadDeleteAll": {
+    "message": "حذف همه $count$ نشانک مرده",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "پیوند مرده‌ای یافت نشد"

@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Alle $count$ dode bladwijzers verwijderen? Dit kan niet in één stap ongedaan worden gemaakt.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Deze bladwijzer verwijderen?"
+  },
+  "deadDeleteAll": {
+    "message": "Alle $count$ dode bladwijzers verwijderen",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Geen dode links gevonden"

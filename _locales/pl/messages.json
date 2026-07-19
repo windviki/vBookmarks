@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Usunąć wszystkie $count$ martwe zakładki? Tej operacji nie można cofnąć jednym krokiem.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Usunąć tę zakładkę?"
+  },
+  "deadDeleteAll": {
+    "message": "Usuń wszystkie $count$ martwe zakładki",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nie znaleziono martwych linków"

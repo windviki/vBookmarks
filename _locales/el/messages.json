@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Διαγραφή όλων των $count$ νεκρών σελιδοδεικτών; Αυτό δεν μπορεί να αναιρεθεί σε ένα βήμα.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Αφαίρεση αυτού του σελιδοδείκτη;"
+  },
+  "deadDeleteAll": {
+    "message": "Διαγραφή όλων των $count$ νεκρών σελιδοδεικτών",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"

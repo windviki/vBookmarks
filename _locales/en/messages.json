@@ -142,9 +142,29 @@
       }
     }
   },
+  "deadConfirmAll": {
+    "description": "Confirmation before batch-deleting every dead bookmark from the scan results. $count$ is the number of dead bookmarks.",
+    "message": "Delete all $count$ dead bookmarks? This cannot be undone in one step.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "description": "Confirmation before deleting one bookmark from the palette's dead-link scan results.",
     "message": "Remove this bookmark?"
+  },
+  "deadDeleteAll": {
+    "description": "Top row of the palette's dead-link scan results; deletes every dead bookmark in one batch. $count$ is the total.",
+    "message": "Delete all $count$ dead bookmarks",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",

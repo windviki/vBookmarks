@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Slett alle $count$ døde bokmerker? Dette kan ikke angres i ett trinn.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Fjern dette bokmerket?"
+  },
+  "deadDeleteAll": {
+    "message": "Slett alle $count$ døde bokmerker",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Ingen døde lenker funnet"

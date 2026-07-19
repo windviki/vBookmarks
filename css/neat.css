@@ -199,10 +199,12 @@ body.linux input {
 
 #search {
     position: relative;
-    /* 必须高于 donation 卡片（z-index:9），否则卡片可见时搜索栏被遮挡完全点不了 */
-    z-index: 10;
+    z-index: 2;
     margin: 0 0 4px;
     padding: 0;
+    /* isolate the search row's stacking so no child (toast, buttons) leaks
+       behind the tree or other elements */
+    isolation: isolate;
 }
 
 /* Tokenized search field: inherits the theme instead of the native white
@@ -287,7 +289,7 @@ body.linux input {
     position: relative;
     margin: 2px 4px 6px;
     background: var(--vbm-bg-elev);
-    z-index: 9;
+    z-index: 1;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     box-shadow: 0 2px 6px var(--vbm-shadow);
@@ -1074,7 +1076,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     color: var(--vbm-accent);
 }
 
-#quick-add-btn:focus {
+#quick-add-btn:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
 }
 
@@ -1100,6 +1102,9 @@ menu[type=context].hide-sort #sort-folder-contents {
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
+    /* Never expand upward into the button row */
+    max-height: 24px;
+    overflow: hidden;
     -webkit-transition: opacity .3s;
     transition: opacity .3s;
 }
@@ -1110,24 +1115,19 @@ menu[type=context].hide-sort #sort-folder-contents {
 
 /* --- Separator rows (v4.1 UX pass) -------------------------------------------
    Tasteful single line using the theme border token, stretching from the icon
-   left edge to the right margin. Inline width recalc is no longer needed. */
+   left edge to the right margin. Flex-based: the <a> owns the height, the <hr>
+   fills the inline axis automatically — no manual width calc needed. */
 #tree ul li a.separator-row {
-    position: relative;
+    display: flex;
+    align-items: center;
+    height: 1.67em;           /* match the row line-height so the row has presence */
     cursor: default !important;
 }
 #tree ul li a.separator-row:hover {
     background-color: transparent;
 }
-#tree ul li a.separator-row:hover i,
-#tree ul li a.separator-row:focus i {
-    text-decoration: none;
-}
 #tree ul li a.separator-row hr.separator-line {
-    position: absolute;
-    left: 0;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex: 1;
     border: 0;
     border-top: 1px solid var(--vbm-border);
     margin: 0;

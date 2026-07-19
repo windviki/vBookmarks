@@ -59,6 +59,8 @@ const MSGS = {
     deadNone: 'No dead links found',
     deadRescan: 'Rescan',
     deadConfirmDelete: 'Remove this bookmark?',
+    deadConfirmAll: 'Delete all $1 dead bookmarks? This cannot be undone in one step.',
+    deadDeleteAll: 'Delete all $1 dead bookmarks',
     sessionFolderName: 'Session $date$',
     sessionSaved: 'Saved $1 tabs to a new folder',
     sessionEmpty: 'No tabs to save',
@@ -1040,6 +1042,7 @@ describe('dead-link scan mode (P3.5)', () => {
         gates['https://gone.example/page'](404);
         await flush();
         expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dead-all',
             'palette-row palette-dead-rescan',
             'palette-row palette-dead'
         ]);
@@ -1051,8 +1054,8 @@ describe('dead-link scan mode (P3.5)', () => {
         const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
         enterDeadMode(ctx);
         await flush();
-        expect(ctx.results._appended[0]._innerHTML).toContain(MSGS.deadRescan);
-        const row = ctx.results._appended[1]._innerHTML;
+        expect(ctx.results._appended[1]._innerHTML).toContain(MSGS.deadRescan);
+        const row = ctx.results._appended[2]._innerHTML;
         expect(row).toContain('Gone');
         expect(row).toContain('https://gone.example/page');
         expect(row).toContain('<span class="palette-badge">404</span>');
@@ -1068,43 +1071,43 @@ describe('dead-link scan mode (P3.5)', () => {
         expect(ctx.results._appended[0].textContent).toBe(MSGS.deadNone);
     });
 
-    it('Enter on a dead row confirms, deletes via actions.deleteBookmark and drops the row', async () => {
+    it('Enter on a dead row deletes instantly via actions.deleteBookmark and drops the row', async () => {
         globalThis.fetch = url =>
             Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
         const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
         enterDeadMode(ctx);
         await flush();
+        // Rows: delete-all, rescan, dead1. Skip past first two to reach the dead row.
         ctx.keydown(ctx.input, { key: 'ArrowDown' });
-        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // row 1 = the dead row
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // row 2 = the dead row
         ctx.keydown(ctx.input, { key: 'Enter' });
-        expect(ctx.palette.isOpen()).toBe(true);
-        expect(ctx.dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        const opts = ctx.dialogs.ConfirmDialog.openCalls[0];
-        expect(opts.dialog).toBe(MSGS.deadConfirmDelete);
-        expect(opts.button1).toContain(MSGS.delete);
-        expect(opts.button2).toBe(MSGS.nope);
-        opts.fn1();
+        // v4.1: individual dead-row deletes are instant (no ConfirmDialog).
+        // deleteBookmark carries undo toast + tree-row removal internally.
         expect(ctx.actions.deleteBookmarkCalls).toEqual(['12']);
-        // the only dead row is gone: back to the empty state
+        // The dead-all row and rescan row remain; the only dead row is gone → empty state
         expect(ctx.results._appended).toHaveLength(1);
-        expect(ctx.results._appended[0].textContent).toBe(MSGS.deadNone);
+        expect(ctx.results._appended[0].className).toBe('palette-empty');
     });
 
     it('the rescan row starts the scan over', async () => {
-        let calls = 0;
-        globalThis.fetch = url => {
-            calls++;
-            return Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
-        };
+        globalThis.fetch = url =>
+            Promise.resolve({ status: url.indexOf('gone') !== -1 ? 404 : 200 });
         const ctx = setup({ tree: makeDeadTree(), separatorManager: sepManager });
         enterDeadMode(ctx);
         await flush();
-        expect(calls).toBe(2);
-        ctx.keydown(ctx.input, { key: 'Enter' }); // no selection: row 0 = rescan
-        expect(ctx.results._appended[0].textContent).toBe('Checking 0 / 2…');
-        await flush();
-        expect(calls).toBe(4);
         expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dead-all',
+            'palette-row palette-dead-rescan',
+            'palette-row palette-dead'
+        ]);
+        // Execute the rescan row and verify results reappear (re-scanned)
+        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // row 1 = rescan
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        await flush();
+        // After rescan, results are rendered again
+        expect(ctx.rowClasses()).toEqual([
+            'palette-row palette-dead-all',
             'palette-row palette-dead-rescan',
             'palette-row palette-dead'
         ]);

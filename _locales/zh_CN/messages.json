@@ -101,8 +101,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "删除全部 $count$ 个失效书签？此操作无法一步撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "删除这条书签？"
+  },
+  "deadDeleteAll": {
+    "message": "删除全部 $count$ 个失效书签",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "没有发现死链"

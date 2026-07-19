@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Törli az összes $count$ hibás könyvjelzőt? Ez egy lépésben nem vonható vissza.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Eltávolítja ezt a könyvjelzőt?"
+  },
+  "deadDeleteAll": {
+    "message": "Összes $count$ hibás könyvjelző törlése",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nincs hibás hivatkozás"

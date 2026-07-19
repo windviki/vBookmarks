@@ -89,8 +89,26 @@
     },
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$."
   },
+  "deadConfirmAll": {
+    "message": "Ștergeți toate cele $count$ marcaje moarte? Aceasta nu poate fi anulată într-un singur pas.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
   "deadConfirmDelete": {
     "message": "Eliminați acest marcaj?"
+  },
+  "deadDeleteAll": {
+    "message": "Ștergeți toate cele $count$ marcaje moarte",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
   },
   "deadNone": {
     "message": "Nicio legătură moartă găsită"

@@ -245,24 +245,37 @@ export function initPalette(ctx = {}) {
     };
 
     const removeDeadItem = item => {
+        actions.deleteBookmark(item.id);
+        deadResults.delete(item.id);
+        deadItems = deadItems.filter(b => b.id !== item.id);
+        render();
+    };
+
+    const removeAllDead = () => {
+        const dead = collectDead(deadItems, deadResults);
         dialogs.ConfirmDialog.open({
-            dialog: _m('deadConfirmDelete'),
+            dialog: _m('deadConfirmAll', `${dead.length}`),
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
-                // deleteBookmark carries undo capture + toast + tree-row
-                // removal; the palette only drops its own row.
-                actions.deleteBookmark(item.id);
-                deadResults.delete(item.id);
-                deadItems = deadItems.filter(b => b.id !== item.id);
-                render();
+                const ids = dead.map(b => b.id);
+                // Delete sequentially so undo captures stack per-item
+                ids.reduce((chain, id) => chain.then(() =>
+                    new Promise(resolve => {
+                        actions.deleteBookmark(id);
+                        deadResults.delete(id);
+                        resolve();
+                    })), Promise.resolve()).then(() => {
+                    deadItems = deadItems.filter(b => !ids.includes(b.id));
+                    render();
+                });
             }
         });
     };
 
     // Dead mode: the query box is inert — while scanning, one progress line;
-    // afterwards a rescan row plus one badged row per dead bookmark, or the
-    // deadNone empty-state when everything resolved ok.
+    // afterwards a "delete all" row + rescan row + one badged row per dead
+    // bookmark, or the deadNone empty-state when everything resolved ok.
     const renderDead = () => {
         if (!deadResults) {
             const li = document.createElement('li');
@@ -279,6 +292,7 @@ export function initPalette(ctx = {}) {
             $results.appendChild(li);
             return;
         }
+        addRow({ kind: 'dead-all', fn: removeAllDead, name: _m('deadDeleteAll', `${dead.length}`) });
         addRow({ kind: 'dead-rescan', fn: startDeadModeScan, name: _m('deadRescan') });
         for (let i = 0, l = dead.length; i < l; i++) {
             const item = dead[i];
@@ -359,7 +373,7 @@ export function initPalette(ctx = {}) {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'folder') {
             li.innerHTML = `${FOLDER_ICON}<span class="palette-title">${htmlspecialchars(row.title)}</span>`;
-        } else if (row.kind === 'dupes-all' || row.kind === 'dead-rescan') {
+        } else if (row.kind === 'dupes-all' || row.kind === 'dead-all' || row.kind === 'dead-rescan') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'dupe') {
             li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-url">${htmlspecialchars(row.count)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
@@ -474,7 +488,8 @@ export function initPalette(ctx = {}) {
             if (row.keepOpen)
                 return;
         } else if (row.kind === 'dupes-all' || row.kind === 'dupe' ||
-                   row.kind === 'dead-rescan' || row.kind === 'dead') {
+                   row.kind === 'dead-rescan' || row.kind === 'dead' ||
+                   row.kind === 'dead-all') {
             row.fn();
             return;
         } else if (row.kind === 'folder') {
