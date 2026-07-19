@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Обележувачот е додаден"
   },
+  "quickAddedTo": {
+    "message": "Обележувачот е додаден во $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Обележувачот е отстранет"
+  },
+  "quickRemoveBookmark": {
+    "message": "Отстрани го овој обележувач (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Алатки (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Темна"
   },

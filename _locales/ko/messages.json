@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "북마크 추가됨"
   },
+  "quickAddedTo": {
+    "message": "$folderName$에 북마크 추가됨",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "북마크 제거됨"
+  },
+  "quickRemoveBookmark": {
+    "message": "이 북마크 제거 (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "도구 (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "다크"
   },

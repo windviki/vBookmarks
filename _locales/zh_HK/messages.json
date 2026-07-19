@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "書籤已新增"
   },
+  "quickAddedTo": {
+    "message": "書籤已新增至 $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "書籤已移除"
+  },
+  "quickRemoveBookmark": {
+    "message": "移除書籤 (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "工具 (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "深色"
   },

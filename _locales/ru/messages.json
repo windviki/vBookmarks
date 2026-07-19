@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Закладка добавлена"
   },
+  "quickAddedTo": {
+    "message": "Закладка добавлена в $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Закладка удалена"
+  },
+  "quickRemoveBookmark": {
+    "message": "Удалить эту закладку (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Инструменты (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Тёмная"
   },

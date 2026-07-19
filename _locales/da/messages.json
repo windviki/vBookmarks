@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Bogmærke tilføjet"
   },
+  "quickAddedTo": {
+    "message": "Bogmærke tilføjet til $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bogmærke fjernet"
+  },
+  "quickRemoveBookmark": {
+    "message": "Fjern dette bogmærke (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Værktøjer (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Mørk"
   },

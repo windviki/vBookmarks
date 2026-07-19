@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "बुकमार्क जोड़ा गया"
   },
+  "quickAddedTo": {
+    "message": "$folderName$ में बुकमार्क जोड़ा गया",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "बुकमार्क हटाया गया"
+  },
+  "quickRemoveBookmark": {
+    "message": "यह बुकमार्क हटाएँ (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "उपकरण (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "गहरा"
   },

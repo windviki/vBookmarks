@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Lesezeichen hinzugefügt"
   },
+  "quickAddedTo": {
+    "message": "Lesezeichen zu $folderName$ hinzugefügt",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Lesezeichen entfernt"
+  },
+  "quickRemoveBookmark": {
+    "message": "Lesezeichen entfernen (Strg+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Werkzeuge (Strg+K)"
+  },
   "optionThemeDark": {
     "message": "Dunkel"
   },

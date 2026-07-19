@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "تمت إضافة الإشارة المرجعية"
   },
+  "quickAddedTo": {
+    "message": "تمت إضافة الإشارة المرجعية إلى $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "تمت إزالة الإشارة المرجعية"
+  },
+  "quickRemoveBookmark": {
+    "message": "إزالة هذه الإشارة المرجعية (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "أدوات (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "داكن"
   },

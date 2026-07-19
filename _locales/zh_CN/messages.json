@@ -373,6 +373,24 @@
   "quickAdded": {
     "message": "已添加书签"
   },
+  "quickAddedTo": {
+    "message": "书签已添加到 $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "书签已移除"
+  },
+  "quickRemoveBookmark": {
+    "message": "移除该书签 (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "工具 (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "深色"
   },

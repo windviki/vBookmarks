@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "ブックマークを追加しました"
   },
+  "quickAddedTo": {
+    "message": "$folderName$ にブックマークを追加しました",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "ブックマークを削除しました"
+  },
+  "quickRemoveBookmark": {
+    "message": "このブックマークを削除 (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "ツール (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "ダーク"
   },

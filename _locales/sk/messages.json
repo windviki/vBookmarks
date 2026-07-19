@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Záložka pridaná"
   },
+  "quickAddedTo": {
+    "message": "Záložka pridaná do $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Záložka odstránená"
+  },
+  "quickRemoveBookmark": {
+    "message": "Odstrániť túto záložku (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Nástroje (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tmavá"
   },

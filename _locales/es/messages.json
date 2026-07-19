@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Marcador añadido"
   },
+  "quickAddedTo": {
+    "message": "Marcador añadido a $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Marcador eliminado"
+  },
+  "quickRemoveBookmark": {
+    "message": "Eliminar este marcador (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Herramientas (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Oscuro"
   },

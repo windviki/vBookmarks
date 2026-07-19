@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "เพิ่มบุ๊กมาร์กแล้ว"
   },
+  "quickAddedTo": {
+    "message": "บุ๊กมาร์กเพิ่มไปยัง $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "ลบบุ๊กมาร์กแล้ว"
+  },
+  "quickRemoveBookmark": {
+    "message": "ลบบุ๊กมาร์กนี้ (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "เครื่องมือ (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "มืด"
   },

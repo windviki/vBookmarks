@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Segnalibro aggiunto"
   },
+  "quickAddedTo": {
+    "message": "Segnalibro aggiunto a $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Segnalibro rimosso"
+  },
+  "quickRemoveBookmark": {
+    "message": "Rimuovi questo segnalibro (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Strumenti (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Scuro"
   },

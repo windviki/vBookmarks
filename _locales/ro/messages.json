@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Marcaj adăugat"
   },
+  "quickAddedTo": {
+    "message": "Marcaj adăugat în $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Marcaj eliminat"
+  },
+  "quickRemoveBookmark": {
+    "message": "Elimină acest marcaj (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Unelte (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Întunecat"
   },

@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "نشانک اضافه شد"
   },
+  "quickAddedTo": {
+    "message": "نشانک به $folderName$ اضافه شد",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "نشانک حذف شد"
+  },
+  "quickRemoveBookmark": {
+    "message": "حذف این نشانک (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "ابزارها (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "تاریک"
   },

@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Zakładka dodana"
   },
+  "quickAddedTo": {
+    "message": "Zakładka dodana do $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Zakładka usunięta"
+  },
+  "quickRemoveBookmark": {
+    "message": "Usuń tę zakładkę (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Narzędzia (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Ciemny"
   },

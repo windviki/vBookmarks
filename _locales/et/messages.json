@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Järjehoidja lisatud"
   },
+  "quickAddedTo": {
+    "message": "Järjehoidja lisatud kausta $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Järjehoidja eemaldatud"
+  },
+  "quickRemoveBookmark": {
+    "message": "Eemalda see järjehoidja (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Tööriistad (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tume"
   },

@@ -378,6 +378,24 @@
   "quickAdded": {
     "message": "Favorito adicionado"
   },
+  "quickAddedTo": {
+    "message": "Favorito adicionado a $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Favorito removido"
+  },
+  "quickRemoveBookmark": {
+    "message": "Remover este favorito (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Ferramentas (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Escuro"
   },

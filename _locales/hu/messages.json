@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Könyvjelző hozzáadva"
   },
+  "quickAddedTo": {
+    "message": "Könyvjelző hozzáadva: $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Könyvjelző eltávolítva"
+  },
+  "quickRemoveBookmark": {
+    "message": "Könyvjelző eltávolítása (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Eszközök (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Sötét"
   },

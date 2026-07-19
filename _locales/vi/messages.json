@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Đã thêm dấu trang"
   },
+  "quickAddedTo": {
+    "message": "Đã thêm dấu trang vào $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Đã xóa dấu trang"
+  },
+  "quickRemoveBookmark": {
+    "message": "Xóa dấu trang này (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Công cụ (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tối"
   },

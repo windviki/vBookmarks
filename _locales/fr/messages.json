@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Signet ajouté"
   },
+  "quickAddedTo": {
+    "message": "Signet ajouté à $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Signet supprimé"
+  },
+  "quickRemoveBookmark": {
+    "message": "Supprimer ce signet (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Outils (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Sombre"
   },

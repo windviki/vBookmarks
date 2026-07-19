@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Закладку додано"
   },
+  "quickAddedTo": {
+    "message": "Закладку додано до $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Закладку видалено"
+  },
+  "quickRemoveBookmark": {
+    "message": "Видалити цю закладку (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Інструменти (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Темна"
   },

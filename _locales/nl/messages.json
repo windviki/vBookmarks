@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Bladwijzer toegevoegd"
   },
+  "quickAddedTo": {
+    "message": "Bladwijzer toegevoegd aan $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bladwijzer verwijderd"
+  },
+  "quickRemoveBookmark": {
+    "message": "Deze bladwijzer verwijderen (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Hulpmiddelen (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Donker"
   },

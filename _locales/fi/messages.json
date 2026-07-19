@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Kirjanmerkki lisätty"
   },
+  "quickAddedTo": {
+    "message": "Kirjanmerkki lisätty kohteeseen $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Kirjanmerkki poistettu"
+  },
+  "quickRemoveBookmark": {
+    "message": "Poista tämä kirjanmerkki (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Työkalut (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tumma"
   },

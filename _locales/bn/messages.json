@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "বুকমার্ক যোগ করা হয়েছে"
   },
+  "quickAddedTo": {
+    "message": "$folderName$-এ বুকমার্ক যোগ করা হয়েছে",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "বুকমার্ক সরানো হয়েছে"
+  },
+  "quickRemoveBookmark": {
+    "message": "এই বুকমার্ক সরান (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "সরঞ্জাম (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "গাঢ়"
   },

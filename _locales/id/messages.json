@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Bookmark ditambahkan"
   },
+  "quickAddedTo": {
+    "message": "Bookmark ditambahkan ke $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bookmark dihapus"
+  },
+  "quickRemoveBookmark": {
+    "message": "Hapus bookmark ini (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Alat (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Gelap"
   },

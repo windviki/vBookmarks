@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Отметката е добавена"
   },
+  "quickAddedTo": {
+    "message": "Отметката е добавена в $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Отметката е премахната"
+  },
+  "quickRemoveBookmark": {
+    "message": "Премахване на отметка (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Инструменти (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Тъмна"
   },

@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Yer imi eklendi"
   },
+  "quickAddedTo": {
+    "message": "Yer imi $folderName$ klasörüne eklendi",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Yer imi kaldırıldı"
+  },
+  "quickRemoveBookmark": {
+    "message": "Bu yer imini kaldır (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Araçlar (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Koyu"
   },

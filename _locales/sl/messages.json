@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Zaznamek dodan"
   },
+  "quickAddedTo": {
+    "message": "Zaznamek dodan v $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Zaznamek odstranjen"
+  },
+  "quickRemoveBookmark": {
+    "message": "Odstrani ta zaznamek (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Orodja (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Temna"
   },

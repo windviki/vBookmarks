@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Grāmatzīme pievienota"
   },
+  "quickAddedTo": {
+    "message": "Grāmatzīme pievienota $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Grāmatzīme noņemta"
+  },
+  "quickRemoveBookmark": {
+    "message": "Noņemt šo grāmatzīmi (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Rīki (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tumša"
   },

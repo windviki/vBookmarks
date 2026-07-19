@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Oznaka dodana"
   },
+  "quickAddedTo": {
+    "message": "Zabilješka dodana u $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Zabilješka uklonjena"
+  },
+  "quickRemoveBookmark": {
+    "message": "Ukloni ovu zabilješku (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Alati (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Tamna"
   },

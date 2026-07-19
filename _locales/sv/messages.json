@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Bokmärke tillagt"
   },
+  "quickAddedTo": {
+    "message": "Bokmärke tillagt i $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Bokmärke borttaget"
+  },
+  "quickRemoveBookmark": {
+    "message": "Ta bort detta bokmärke (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Verktyg (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Mörkt"
   },

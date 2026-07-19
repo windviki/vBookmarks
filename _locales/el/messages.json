@@ -379,6 +379,24 @@
   "quickAdded": {
     "message": "Ο σελιδοδείκτης προστέθηκε"
   },
+  "quickAddedTo": {
+    "message": "Ο σελιδοδείκτης προστέθηκε στο $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoved": {
+    "message": "Ο σελιδοδείκτης αφαιρέθηκε"
+  },
+  "quickRemoveBookmark": {
+    "message": "Αφαίρεση σελιδοδείκτη (Ctrl+D)"
+  },
+  "toolButtonTitle": {
+    "message": "Εργαλεία (Ctrl+K)"
+  },
   "optionThemeDark": {
     "message": "Σκοτεινό"
   },
