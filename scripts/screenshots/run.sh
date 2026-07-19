@@ -24,13 +24,13 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,shots.js,shots-themes.js,shots-i18n.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js} "$CTX/"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 docker run --rm "$IMAGE"
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
-for suite in shots.js shots-themes.js shots-i18n.js; do
+for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/$suite" >/dev/null

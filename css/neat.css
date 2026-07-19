@@ -967,7 +967,7 @@ body.panel-mode #resizer-y {
     gap: 2px;
     color: var(--vbm-muted);
     font-size: 90%;
-    padding: 4px 8px 2px;
+    padding: 4px 0 2px;
     cursor: pointer;
     border-radius: 4px;
     -webkit-user-select: none;

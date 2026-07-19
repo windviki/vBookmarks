@@ -125,13 +125,20 @@ export function initContextMenu(ctx = {}) {
             const menuHeight = menu.offsetHeight;
             const pageX = rtl ? Math.max(0, e.pageX - menuWidth) :
                 Math.min(e.pageX, body.offsetWidth - menuWidth);
+            // The search bar (z-index:10) renders above context menus; the
+            // menu's top must never land inside the search row or the top
+            // entries will be unreadable / unreachable.
+            const searchBar = document.getElementById('search');
+            const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) : 0;
             let pageY;
             const boundY = window.innerHeight - e.clientY;
             if (boundY > menuHeight) {
                 pageY = e.pageY;
             } else {
-                pageY = Math.max(e.pageY - menuHeight, 0);
+                pageY = Math.max(e.pageY - menuHeight, menuMinY);
             }
+            // Clamp to the search-bar baseline regardless of the branch above
+            pageY = Math.max(pageY, menuMinY);
             menu.style.left = `${pageX}px`;
             menu.style.top = `${pageY}px`;
             menu.style.opacity = '1';
