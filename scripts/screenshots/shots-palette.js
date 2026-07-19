@@ -26,9 +26,13 @@ const SEED = `
     await create({ parentId: '1', title: 'Stack Overflow Q', url: 'https://stackoverflow.com/questions/12345' });
     await create({ parentId: work.id, title: 'SO dup', url: 'https://stackoverflow.com/questions/12345' });
 
-    // --- A dead/non-routable URL for /dead ---
+    // --- A dead/non-routable URLs for /dead (more entries so the scan
+    // takes long enough to capture the "scanning" progress line) ---
     await create({ parentId: '1', title: 'Dead Link (example)', url: 'https://example.invalid/dead-page' });
-    await create({ parentId: '1', title: 'Bogus host', url: 'https://thishost.does.not.exist.example/' });
+    await create({ parentId: '1', title: 'Bogus host 1', url: 'https://thishost.does.not.exist.example/' });
+    await create({ parentId: '1', title: 'Bogus host 2', url: 'https://another.dead.example.com/link' });
+    await create({ parentId: '1', title: 'Bogus host 3', url: 'https://no-such-domain.invalid/page' });
+    await create({ parentId: '1', title: 'Bogus host 4', url: 'https://definitely.not.a.real.host.test/' });
 
     // --- A separator so we can see /dead filtering it ---
     await create({ parentId: '1', title: '|', url: 'http://separatethis.com/sep-1' });
@@ -49,9 +53,22 @@ const SEED = `
 
     const errors = [];
     const watch = (page, tag) => {
-        page.on('pageerror', e => errors.push(`${tag} pageerror: ${e.message}`));
+        page.on('pageerror', e => {
+            // /dead scan fetch failures are expected — the scanner probes dead
+            // URLs and the browser logs network errors. These are not app bugs.
+            const msg = e.message;
+            if (msg.includes('Failed to load resource') || msg.includes('net::'))
+                return;
+            errors.push(`${tag} pageerror: ${msg}`);
+        });
         page.on('console', m => {
-            if (m.type() === 'error') errors.push(`${tag} console.error: ${m.text()}`);
+            if (m.type() !== 'error') return;
+            const txt = m.text();
+            // Same filter for console.error: network failures during dead-link
+            // scan are the expected outcome, not a page-level error.
+            if (txt.includes('Failed to load resource') || txt.includes('net::'))
+                return;
+            errors.push(`${tag} console.error: ${txt}`);
         });
     };
 
@@ -118,7 +135,11 @@ const SEED = `
     await sleep(800);
     await page.screenshot({ path: '/tmp/shots/16-palette-session.png' });
 
-    // Close any alert that popped up
+    // /session opened an alert over the (still-open, keepOpen) palette.
+    // The palette's Escape handler stopPropagates, so the first Escape
+    // closes the palette; a second Escape dismisses the alert dialog.
+    await page.keyboard.press('Escape');
+    await sleep(200);
     await page.keyboard.press('Escape');
     await sleep(300);
 
@@ -130,12 +151,12 @@ const SEED = `
     await page.type('#palette-input', '/dead', { delay: 50 });
     await sleep(400);
     await page.keyboard.press('Enter');
-    // The scan starts immediately; wait a moment then capture mid-scan
-    await sleep(600);
+    // The scan starts immediately; capture while the progress line is visible
+    await sleep(400);
     await page.screenshot({ path: '/tmp/shots/17-palette-dead-scanning.png' });
 
     // --- 18-palette-dead-results: wait for scan to finish ----------------
-    await sleep(15000); // dead links will timeout ~8s each
+    await sleep(20000); // dead links (HEAD + GET retry) time out ~8s each, 2 URLs
     await page.screenshot({ path: '/tmp/shots/18-palette-dead-results.png' });
 
     // --- 19-palette-search: search bookmarks from the palette ------------

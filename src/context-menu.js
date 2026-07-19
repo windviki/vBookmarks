@@ -75,6 +75,12 @@ export function initContextMenu(ctx = {}) {
     //invalid event handler?
     window.addEventListener('scroll', clearMenu);
     $results.addEventListener('scroll', clearMenu);
+    // Palette results (dead-link list etc.) scroll must also dismiss menus,
+    // otherwise a right-click menu opened inside the palette stays frozen
+    // while the list scrolls underneath it.
+    const $paletteResults = $('palette-results');
+    if ($paletteResults)
+        $paletteResults.addEventListener('scroll', clearMenu);
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
 

@@ -83,6 +83,7 @@ export function initPalette(ctx = {}) {
     const dialogs = ctx.dialogs;
     const onChanged = ctx.onChanged || (() => {});
     const rootFolderId = ctx.rootFolderId || '1';
+    const clearMenu = ctx.clearMenu; // context-menu.js's clearMenu (Escape layering)
 
     const $palette = $('command-palette');
     const $input = $('palette-input');
@@ -529,6 +530,12 @@ export function initPalette(ctx = {}) {
                 break;
             case 'Escape':
                 e.preventDefault();
+                // If a context menu is open over the palette (e.g. right-clicked
+                // a dead-link row), just dismiss the menu — don't close the panel.
+                if (clearMenu && document.body.querySelector('.active')) {
+                    clearMenu();
+                    return;
+                }
                 e.stopPropagation(); // keep keyboard.js's document Escape handler out
                 close();
                 break;

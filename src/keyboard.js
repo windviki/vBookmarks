@@ -444,7 +444,7 @@ export function initKeyboard(ctx = {}) {
     menus.folderMenu.addEventListener('keydown', contextKeyDown);
     //menus.separatorMenu.addEventListener('keydown', contextKeyDown);
 
-    // Closing dialogs on escape (dialog state helpers come from src/dialogs.js)
+    // Closing dialogs / context menus on escape (dialog state helpers come from src/dialogs.js)
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             // If the search-input handler already consumed this ESC (it calls
@@ -452,6 +452,17 @@ export function initKeyboard(ctx = {}) {
             // — the user just wanted to clear the search, not close the popup.
             if (e.defaultPrevented)
                 return;
+            // Context menu open (but not focused — focused menus are handled
+            // by contextKeyDown above which calls preventDefault). Dismiss
+            // the menu without closing anything else.
+            const active = body.querySelector('.active');
+            if (active) {
+                e.preventDefault();
+                active.classList.remove('active');
+                active.focus();
+                menus.clearMenu();
+                return;
+            }
             if (dialogs.anyOpen()) { // esc
                 e.preventDefault();
                 dialogs.closeDialogs();

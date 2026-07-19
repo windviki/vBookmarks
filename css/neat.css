@@ -1,7 +1,19 @@
 /* vBookmarks design tokens. Light values are the default; the dark palette
    applies either explicitly (body[data-theme="dark"]) or via the OS setting
    when the user picked "auto" (body[data-theme="auto"]). Keep this block in
-   sync with the one in options.css. */
+   sync with the one in options.css.
+
+   ── z-index layering (deterministic, one source of truth) ──────────────
+   Layer 0  auto         base content (#container, #tree, #results)
+   Layer 1  z-index: 1   #donation banner
+   Layer 2  z-index: 2   #search bar
+   Layer 3  z-index: 100 #command-palette (Ctrl+K overlay)
+   Layer 4  z-index: 200 #cover + .dialog (modal backdrop & dialogs)
+                           → dialog must cover palette when a confirm/alert
+                             pops over /dupes or /dead inside the panel
+   Layer 5  z-index: 300 menu[type=context] (right-click context menus)
+   Layer 6  z-index: 400 #undo-toast, #notice-toast (temporary toasts)
+   ───────────────────────────────────────────────────────────────────── */
 :root {
     --vbm-bg: #ffffff;
     --vbm-bg-elev: #ffffff;
@@ -636,7 +648,7 @@ menu[type=context] {
     list-style: none;
     position: absolute;
     left: -999px;
-    z-index: 12;
+    z-index: 300;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     background-color: var(--vbm-bg-elev);
@@ -718,8 +730,8 @@ menu[type=context].hide-editables #folder-delete {
     width: 100%;
     opacity: 0;
     background-color: var(--vbm-scrim);
-    /* above the donation card (9), below palette (11) and toasts (12) */
-    z-index: 10;
+    /* above palette (100), pairs with .dialog at the same level */
+    z-index: 200;
 }
 
 .transitional #cover {
@@ -752,9 +764,8 @@ menu[type=context].hide-editables #folder-delete {
     border-radius: var(--vbm-radius);
     -webkit-box-shadow: 0 0 100px var(--vbm-shadow);
     box-shadow: 0 0 100px var(--vbm-shadow);
-    /* above the donation card (9): a dialog opened while the card is
-       visible must never slide behind it */
-    z-index: 10;
+    /* Layer 4 — above palette (100), paired with #cover (200) */
+    z-index: 200;
 }
 
 .transitional .dialog {
@@ -1189,7 +1200,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     box-shadow: 0 4px 16px var(--vbm-shadow);
     color: var(--vbm-fg);
     font-size: 90%;
-    z-index: 13;
+    z-index: 400;
 }
 
 #undo-toast[hidden] {
@@ -1239,7 +1250,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     color: var(--vbm-fg);
     font-size: 90%;
     text-align: center;
-    z-index: 13;
+    z-index: 400;
     opacity: 0;
     pointer-events: none;
     transition: opacity .18s ease, transform .18s ease;
@@ -1275,7 +1286,7 @@ body.highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span {
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     box-shadow: 0 8px 40px var(--vbm-shadow);
-    z-index: 11;
+    z-index: 100;
 }
 
 #command-palette[hidden] {

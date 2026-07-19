@@ -73,7 +73,7 @@
 		"<all_urls>"
     ],
     "content_security_policy": {
-        "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+        "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;"
     },
 	"minimum_chrome_version": "114.0.0.0",
 	"default_locale": "en",

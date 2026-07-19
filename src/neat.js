@@ -268,11 +268,10 @@ import { initUndo } from './undo.js';
             return;
 
         const zoomLevel = store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1;
-        const neatTree = $tree.firstElementChild;
-        if (!neatTree)
-            return;
-
-        const contentH = (neatTree.offsetHeight + $tree.offsetTop + 16) * zoomLevel;
+        // scrollHeight captures the full scrollable content (recent section +
+        // main tree), unlike firstElementChild.offsetHeight which only measures
+        // the first child and misses the bulk of a long bookmark tree.
+        const contentH = ($tree.scrollHeight + $tree.offsetTop + 16) * zoomLevel;
         const currentH = body.offsetHeight;
         chrome.tabs.getZoom(zoomFactor => {
             const minH = Math.max(300 / zoomFactor, 200);
@@ -533,7 +532,10 @@ import { initUndo } from './undo.js';
         dialogs,
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
         // P3.5: /dead filters separators out of the scan through the manager.
-        separatorManager
+        separatorManager,
+        // Palette Escape: dismiss context menu first if one is open over the
+        // panel (e.g. right-clicked a dead-link row), only then close the panel.
+        clearMenu: menus.clearMenu
     });
 
     // Tool button (⋮): opens the command palette for feature discovery —
