@@ -342,6 +342,11 @@ export function initActions(ctx = {}) {
                     url: openURL,
                     active: selected
                 });
+                // 注：当前台打开新标签页时，Chrome 会自动关闭 popup（焦点转移），
+                // 即使 bookmarkClickStayOpen 为 true 也无法阻止；但后台打开时
+                // popup 可以保持，此时显式关闭逻辑才生效。
+                if (!bookmarkClickStayOpen)
+                    setTimeout(window.close, 200);
             };
             chrome.tabs.query({
                     'active': true,

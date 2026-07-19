@@ -480,6 +480,8 @@ export function initPalette(ctx = {}) {
     // /dupes swaps the panel into dupes mode instead). Dupe rows open a
     // ConfirmDialog over the panel; the actual deletion runs from its
     // callback, so the panel itself stays put.
+    const leftClickNewTab = ctx.leftClickNewTab;
+
     const execute = (i, newTab) => {
         const row = rows[i];
         if (!row)
@@ -497,6 +499,9 @@ export function initPalette(ctx = {}) {
             treeView.revealFolder(row.id);
         } else if (newTab) {
             actions.openBookmarkNewTab(row.url, true);
+        } else if (leftClickNewTab) {
+            // 遵从 options 里 tree 视图的单击设置：新标签页后台打开
+            actions.openBookmarkNewTab(row.url, true, true);
         } else {
             actions.openBookmark(row.url);
         }
@@ -530,13 +535,13 @@ export function initPalette(ctx = {}) {
                 break;
             case 'Escape':
                 e.preventDefault();
+                e.stopImmediatePropagation();
                 // If a context menu is open over the palette (e.g. right-clicked
                 // a dead-link row), just dismiss the menu — don't close the panel.
                 if (clearMenu && document.body.querySelector('.active')) {
                     clearMenu();
                     return;
                 }
-                e.stopPropagation(); // keep keyboard.js's document Escape handler out
                 close();
                 break;
         }

@@ -353,12 +353,13 @@ describe('openBookmark', () => {
 });
 
 describe('openBookmarkNewTab', () => {
-    it('creates a background tab when selected is false', () => {
+    it('creates a background tab when selected is false, then closes popup', () => {
         const { actions, chrome } = setup({});
         actions.openBookmarkNewTab('https://a/', false);
         expect(chrome.tabs.created).toEqual([{ url: 'https://a/', active: false }]);
         expect(chrome.tabs.updated).toEqual([]);
-        expect(timeouts).toEqual([]); // opening a plain new tab never closes the popup
+        // 修复：openBookmarkNewTab 现统一在 bookmarkClickStayOpen=false 时关闭 popup
+        expect(timeouts).toEqual([[window.close, 200]]);
     });
 
     it('reuses a chrome://newtab tab when blankTabCheck is on, then closes', () => {

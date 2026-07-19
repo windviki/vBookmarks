@@ -14,11 +14,16 @@ const makeEvent = (props = {}) => {
     const ev = {
         defaultPrevented: false,
         propagationStopped: false,
+        immediatePropagationStopped: false,
         preventDefault() {
             ev.defaultPrevented = true;
         },
         stopPropagation() {
             ev.propagationStopped = true;
+        },
+        stopImmediatePropagation() {
+            ev.propagationStopped = true;
+            ev.immediatePropagationStopped = true;
         },
         ...props
     };

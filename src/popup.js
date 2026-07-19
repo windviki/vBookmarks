@@ -21,6 +21,14 @@
         || document.body.classList.contains('panel-mode');
     if (IS_PANEL) {
         document.body.classList.add('panel-mode');
+        // 追踪侧边栏打开状态：加载时标记为打开，卸载时清除。
+        // background.js 根据此标志在 openInSidePanel 关闭时动态切换
+        // openPanelOnActionClick，使得下次点击扩展图标时关闭侧边栏
+        // 而非同时打开 popup。
+        chrome.storage.session.set({ sidePanelIsOpen: true });
+        window.addEventListener('pagehide', () => {
+            chrome.storage.session.set({ sidePanelIsOpen: false });
+        });
     }
 
     async function initPopup() {

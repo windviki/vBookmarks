@@ -535,7 +535,9 @@ import { initUndo } from './undo.js';
         separatorManager,
         // Palette Escape: dismiss context menu first if one is open over the
         // panel (e.g. right-clicked a dead-link row), only then close the panel.
-        clearMenu: menus.clearMenu
+        clearMenu: menus.clearMenu,
+        // P4: follow the tree-view click setting for bookmark opens
+        leftClickNewTab
     });
 
     // Tool button (⋮): opens the command palette for feature discovery —

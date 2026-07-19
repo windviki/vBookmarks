@@ -127,7 +127,26 @@ chrome.storage.local.get('openInSidePanel', data => {
 // React to setting changes immediately (options page writes chrome.storage.local)
 chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local' && 'openInSidePanel' in changes) {
-        applyPanelBehavior(!!changes.openInSidePanel.newValue);
+        const newValue = !!changes.openInSidePanel.newValue;
+        if (newValue) {
+            // 用户开启了边栏选项：始终使用面板切换模式
+            applyPanelBehavior(true);
+        } else {
+            // 用户关闭了边栏选项：检查当前面板是否打开
+            // 若面板打开中，保持 toggle 模式以便下次点击关闭面板
+            chrome.storage.session.get('sidePanelIsOpen', session => {
+                applyPanelBehavior(!!session.sidePanelIsOpen);
+            });
+        }
+    }
+    // 侧边栏打开/关闭状态变化（由 popup.js 在 IS_PANEL 模式下写入）
+    // 仅在用户未开启边栏选项时动态切换 action 行为
+    if (areaName === 'session' && 'sidePanelIsOpen' in changes) {
+        chrome.storage.local.get('openInSidePanel', data => {
+            if (!data.openInSidePanel) {
+                applyPanelBehavior(!!changes.sidePanelIsOpen.newValue);
+            }
+        });
     }
 });
 
@@ -157,10 +176,15 @@ chrome.commands.onCommand.addListener(async command => {
     if (command !== 'open-side-panel') {
         return;
     }
+    // 提前标记侧边栏打开状态，确保在页面加载完成前
+    // storage.onChanged 已触发 applyPanelBehavior(true)
+    await chrome.storage.session.set({ sidePanelIsOpen: true });
     try {
         const currentWindow = await chrome.windows.getCurrent();
         await chrome.sidePanel.open({ windowId: currentWindow.id });
     } catch (error) {
+        // 打开失败时清除标记
+        await chrome.storage.session.remove('sidePanelIsOpen');
         console.warn('vBookmarks: failed to open side panel:', error);
     }
 });

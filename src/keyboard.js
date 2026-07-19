@@ -448,13 +448,15 @@ export function initKeyboard(ctx = {}) {
     // Closing dialogs / context menus on escape.
     // Capture phase so we run before any child handler and before Chrome's
     // built-in "Escape closes popup" behaviour.  We always preventDefault +
-    // stopPropagation on Escape — Chrome never sees the key, so the popup
-    // only closes when we explicitly call window.close() as the last resort.
+    // stopImmediatePropagation on Escape — Chrome never sees the key, so the
+    // popup only closes when we explicitly call window.close() as the last resort.
+    // stopImmediatePropagation is used (not stopPropagation) to also block any
+    // other capture-phase listeners on the same document node.
     document.addEventListener('keydown', e => {
         if (e.key !== 'Escape') return;
 
         e.preventDefault();
-        e.stopPropagation(); // prevent Chrome's window-level popup-close
+        e.stopImmediatePropagation(); // block all other handlers + Chrome's popup-close
 
         if (dialogs.anyOpen()) { // esc
             dialogs.closeDialogs();
@@ -482,6 +484,17 @@ export function initKeyboard(ctx = {}) {
         // Nothing left to dismiss — close the popup.
         if (typeof window.close === 'function') window.close();
     }, true); // capture — first in line
+
+    // Safety net: also intercept keyup Escape to prevent Chrome from closing
+    // the popup if it processes the keyup phase instead of (or in addition to)
+    // the keydown phase. Same layered fallthrough as above.
+    document.addEventListener('keyup', e => {
+        if (e.key !== 'Escape') return;
+        // If we already handled the corresponding keydown, preventDefault here
+        // too ensures Chrome doesn't see an "unprocessed" Escape at any stage.
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }, true);
 
     document.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
