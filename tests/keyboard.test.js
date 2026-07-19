@@ -377,7 +377,7 @@ describe('module API', () => {
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
         expect(separatorMenu._listeners.keydown).toBeUndefined(); // binding stays commented out
-        expect(doc._listeners.keydown).toHaveLength(1); // document Escape / Ctrl+F
+        expect(doc._listeners.keydown).toHaveLength(2); // capture ESC + bubbling Ctrl+F
     });
 });
 
@@ -998,11 +998,13 @@ describe('document Escape / Ctrl+F', () => {
         expect(searchInput.value).toBe('');
     });
 
-    it('Escape with nothing to do lets the event through (popup closes)', () => {
+    it('Escape with nothing to do prevents default (we manage popup close ourselves)', () => {
         const { fireDoc, searchCalls, closeDialogsCalls } = setup({});
         const ev = makeEvent({ key: 'Escape' });
         fireDoc('keydown', ev);
-        expect(ev.defaultPrevented).toBe(false);
+        // We always preventDefault to stop Chrome's built-in popup-close.
+        // When there's nothing left to dismiss, window.close() is called explicitly.
+        expect(ev.defaultPrevented).toBe(true);
         expect(searchCalls).toEqual([]);
         expect(closeDialogsCalls).toEqual([]);
     });

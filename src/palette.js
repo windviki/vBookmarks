@@ -580,17 +580,14 @@ export function initPalette(ctx = {}) {
 
     const isOpen = () => openState;
 
-    // Close the palette when focus leaves it (click outside, Tab out, …).
-    // A short timeout lets the new focus target settle so we can check whether
-    // focus landed on a context menu (.active) — in that case keep the palette
-    // open so ESC can dismiss the menu first, then the palette.
-    $palette.addEventListener('focusout', () => {
-        setTimeout(() => {
-            if (!openState) return;
-            if (document.body.querySelector('.active')) return;
-            if ($palette.contains(document.activeElement)) return;
-            close();
-        }, 0);
+    // Close the palette on outside clicks (tree, search bar). Keep it open
+    // when clicking inside the palette or on a context menu / dialog.
+    document.addEventListener('mousedown', e => {
+        if (!openState) return;
+        if ($palette.contains(e.target)) return;
+        if (e.target.closest('menu[type=context]')) return;
+        if (anyDialogOpen()) return;
+        close();
     });
 
     // Ctrl/Cmd+K toggles the palette. Capture phase so the tree's type-ahead

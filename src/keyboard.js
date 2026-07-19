@@ -445,41 +445,46 @@ export function initKeyboard(ctx = {}) {
     menus.folderMenu.addEventListener('keydown', contextKeyDown);
     //menus.separatorMenu.addEventListener('keydown', contextKeyDown);
 
-    // Closing dialogs / context menus on escape (dialog state helpers come from src/dialogs.js)
+    // Closing dialogs / context menus on escape.
+    // Capture phase so we run before any child handler and before Chrome's
+    // built-in "Escape closes popup" behaviour.  We always preventDefault +
+    // stopPropagation on Escape — Chrome never sees the key, so the popup
+    // only closes when we explicitly call window.close() as the last resort.
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            // If the search-input handler already consumed this ESC (it calls
-            // preventDefault before clearing the input), don't process it again
-            // — the user just wanted to clear the search, not close the popup.
-            if (e.defaultPrevented)
-                return;
-            // Context menu open (but not focused — focused menus are handled
-            // by contextKeyDown above which calls preventDefault). Dismiss
-            // the menu without closing anything else.
-            const active = body.querySelector('.active');
-            if (active) {
-                e.preventDefault();
-                active.classList.remove('active');
-                active.focus();
-                menus.clearMenu();
-                return;
-            }
-            if (dialogs.anyOpen()) { // esc
-                e.preventDefault();
-                dialogs.closeDialogs();
-            } else if (palette && palette.isOpen()) {
-                // ESC layering: after context menus and dialogs, close the
-                // command palette before letting Chrome close the popup.
-                e.preventDefault();
-                palette.close();
-            } else if (search.isActive() || search.input.value) {
-                e.preventDefault();
-                if (search.isActive())
-                    search.quit();
-                else
-                    search.input.value = '';
-            }
-        } else if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
+        if (e.key !== 'Escape') return;
+
+        e.preventDefault();
+        e.stopPropagation(); // prevent Chrome's window-level popup-close
+
+        if (dialogs.anyOpen()) { // esc
+            dialogs.closeDialogs();
+            return;
+        }
+        // Context menu open — dismiss just the menu.
+        const active = body.querySelector('.active');
+        if (active) {
+            active.classList.remove('active');
+            active.focus();
+            menus.clearMenu();
+            return;
+        }
+        if (palette && palette.isOpen()) {
+            palette.close();
+            return;
+        }
+        if (search.isActive() || search.input.value) {
+            if (search.isActive())
+                search.quit();
+            else
+                search.input.value = '';
+            return;
+        }
+        // Nothing left to dismiss — close the popup.
+        if (typeof window.close === 'function') window.close();
+    }, true); // capture — first in line
+
+    document.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
             search.input.focus();
             search.input.select();
             e.preventDefault();
