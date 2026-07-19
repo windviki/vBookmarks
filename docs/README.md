@@ -46,7 +46,6 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 **Experience**
 
-- The donation banner was redesigned into a gentle three-choice card (Donate / Later / Don't show again) — no more countdowns, focus traps or forced clicks.
 - Search field fixed and modernized: click-through dead zone removed, a proper clear button that always appears when text is present.
 - Adding a bookmark/folder/separator into a collapsed folder now works visibly: the folder expands and shows the new node immediately (previously it silently appeared only after reopening the popup).
 - "Copy title and URL" works again — moved to the async Clipboard API (`clipboardWrite` permission) since `execCommand('copy')` was silently rejected outside user-gesture context.
@@ -121,7 +120,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 **ver4.0 2026/07/18**
 
-New: Ink & Paper "fable" themes; command palette (`Ctrl/Cmd+K`); quick-add star button; collapsible recently-added section; redesigned gentle donation card; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
+New: Ink & Paper "fable" themes; command palette (`Ctrl/Cmd+K`); quick-add star button; collapsible recently-added section; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
 
 Fixed: search field click-through and unreliable native clear button (custom clear button now); adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added).
 
