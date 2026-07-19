@@ -92,6 +92,13 @@ export function initContextMenu(ctx = {}) {
         if ((el.tagName) === 'HR') {
             el = el.parentNode; //a
         }
+        // Walk up to the nearest a/span when a child element (img, i, div, …)
+        // captured the event — covers recent-section bookmarks and tree rows
+        // whose ::after / favicon / sync-indicator received the click.
+        if (el.tagName !== 'A' && el.tagName !== 'SPAN' && el.closest) {
+            const nearest = el.closest('a, span');
+            if (nearest) el = nearest;
+        }
         let menu;
         if (el.tagName === 'A') {
             if (el.querySelector('hr')) {
