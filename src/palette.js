@@ -370,10 +370,15 @@ export function initPalette(ctx = {}) {
     const addRow = row => {
         const li = document.createElement('li');
         li.className = `palette-row palette-${row.kind}`;
+        // Bookmark/folder rows carry <a> tags and results-item-${id} IDs so the
+        // existing context-menu.js handler (which walks up to nearest a/span and
+        // strips the results-item- prefix) can open bookmark/folder context menus
+        // on palette rows — no special-casing needed.
         if (row.kind === 'command') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'folder') {
-            li.innerHTML = `${FOLDER_ICON}<span class="palette-title">${htmlspecialchars(row.title)}</span>`;
+            li.id = row.id ? `results-item-${row.id}` : '';
+            li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${htmlspecialchars(row.title)}</i></a>`;
         } else if (row.kind === 'dupes-all' || row.kind === 'dead-all' || row.kind === 'dead-rescan') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
         } else if (row.kind === 'dupe') {
@@ -381,11 +386,16 @@ export function initPalette(ctx = {}) {
         } else if (row.kind === 'dead') {
             li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-badge">${htmlspecialchars(row.badge)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
         } else {
+            // bookmark row: <a> tag so context-menu.js recognises it
             const title = row.title || row.url;
-            li.innerHTML = `<img class="palette-icon" src="${faviconUrl(row.url)}" width="16" height="16" alt=""><span class="palette-title">${htmlspecialchars(title)}</span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
+            li.id = row.id ? `results-item-${row.id}` : '';
+            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt=""></div><i>${htmlspecialchars(title)}</i></a>`;
         }
         const i = rows.length;
-        li.addEventListener('click', () => execute(i, false));
+        li.addEventListener('click', e => {
+            e.preventDefault(); // prevent <a> navigation, let execute() drive
+            execute(i, false);
+        });
         $results.appendChild(li);
         row.el = li;
         rows.push(row);
@@ -528,6 +538,87 @@ export function initPalette(ctx = {}) {
             case 'ArrowUp':
                 e.preventDefault();
                 moveSelection(-1);
+                break;
+            case 'ArrowRight': {
+                e.preventDefault();
+                // Dispatch a synthetic contextmenu event on the selected row
+                // so the existing context-menu.js handler opens the appropriate
+                // bookmark/folder/separator menu — same pattern as tree view
+                // (keyboard.js ArrowRight → contextmenu dispatch).
+                const row = rows[selected >= 0 ? selected : 0];
+                if (!row)
+                    break;
+                const el = row.el.querySelector('a') || row.el;
+                const rect = el.getBoundingClientRect();
+                const ev = new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: rect.right,
+                    clientY: rect.bottom
+                });
+                el.dispatchEvent(ev);
+                break;
+            }
+            case 'ArrowLeft':
+                e.preventDefault();
+                // Close context menu if one is open over the palette, otherwise
+                // go back from dupes/dead sub-mode to normal mode.
+                if (clearMenu && document.body.querySelector('.active')) {
+                    clearMenu();
+                } else if (mode === 'dupes' || mode === 'dead') {
+                    mode = 'normal';
+                    $input.value = '';
+                    render();
+                }
+                break;
+            case 'Home':
+                e.preventDefault();
+                if (rows.length) {
+                    selected = 0;
+                    updateSelection();
+                }
+                break;
+            case 'End':
+                e.preventDefault();
+                if (rows.length) {
+                    selected = rows.length - 1;
+                    updateSelection();
+                }
+                break;
+            case 'Delete': {
+                e.preventDefault();
+                const row = rows[selected >= 0 ? selected : 0];
+                if (!row)
+                    break;
+                // Only bookmark and folder rows (not commands/dupes/dead)
+                if (row.kind === 'bookmark') {
+                    actions.deleteBookmark(row.id);
+                    close();
+                } else if (row.kind === 'folder') {
+                    // Delete a folder — needs children count for the toast.
+                    // chrome.bookmarks API must be called; we keep it simple:
+                    // fall back to context-menu delete which does the full flow.
+                    chrome.bookmarks.getChildren(row.id, children => {
+                        const urlsLen = children.map(c => c.url).filter(Boolean).length;
+                        actions.deleteBookmarks(row.id, urlsLen, children.length - urlsLen);
+                    });
+                    close();
+                }
+                break;
+            }
+            case 'F2':
+                e.preventDefault();
+                // F2 renames (non-Mac only, matching tree view's F2 behavior)
+                {
+                    const row = rows[selected >= 0 ? selected : 0];
+                    if (!row)
+                        break;
+                    if (row.kind === 'bookmark' || row.kind === 'folder') {
+                        actions.editBookmarkFolder(row.id);
+                        close();
+                    }
+                }
                 break;
             case 'Enter':
                 e.preventDefault();

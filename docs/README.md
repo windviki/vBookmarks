@@ -62,19 +62,29 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 # Notes for advanced features
 
 1. **Omnibox search** — type `*` in the address bar, press Space, then enter your keywords.
-2. **Full keyboard support** — ↑↓←→ to move, Space/Enter to open, Home/End, PageUp/PageDown, Delete all work as expected.
+2. **Full keyboard support** in both the tree view and the command palette (`Ctrl/Cmd+K`):
+   - **↑↓** move selection, **←→** open / close the right-click context menu on the selected item
+   - **Enter** / **Space** to open the selected bookmark; **Ctrl/Cmd+Enter** to open in a new tab
+   - **Home** / **End** to jump to the first / last item
+   - **PageUp** / **PageDown** to scroll by one screen
+   - **Delete** to delete the selected bookmark or folder
+   - Type-ahead filtering: start typing to find items by name (auto‑focus in the palette)
 3. Press `F2` on a selected bookmark/folder to rename it.
 4. Middle-click a folder to open all its bookmarks (as a color-coded tab group).
-5. `Ctrl+F` focuses the search field; `Esc` clears the search.
-6. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
-7. Decide whether the popup closes after opening a bookmark (option in settings).
-8. Show only the Bookmark Bar (option in settings).
-9. Open bookmarks in background tabs (option in settings).
-10. Control the popup zoom level in settings.
-11. **Advanced settings** (entry at the top right of the settings page): customize separator title/URL/style.
-12. **Advanced settings**: custom CSS for the whole popup (CodeMirror editor), e.g. `* { font-family: Consolas; }`.
-13. **Advanced settings**: replace the toolbar icon with your own.
-14. Disable popup auto-resize to keep a fixed height.
+5. `Ctrl+F` focuses the search field; `Esc` clears the search, dismisses the context menu, or closes the palette — layered from inner to outer.
+6. **Command palette** (`Ctrl/Cmd+K` inside the popup, `Ctrl/Cmd+Shift+K` globally):
+   - Fuzzy‑search bookmarks and folders, jump to a folder in the tree, or run slash‑commands
+   - Slash‑commands: `/dupes` find duplicates, `/dead` scan for dead links, `/session` save current window tabs
+   - Full keyboard navigation mirrors the tree view (↑↓←→, Enter, Home/End, Delete, F2)
+7. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
+8. Decide whether the popup closes after opening a bookmark (option in settings).
+9. Show only the Bookmark Bar (option in settings).
+10. Open bookmarks in background tabs (option in settings).
+11. Control the popup zoom level in settings.
+12. **Advanced settings** (entry at the top right of the settings page): customize separator title/URL/style.
+13. **Advanced settings**: custom CSS for the whole popup (CodeMirror editor), e.g. `* { font-family: Consolas; }`.
+14. **Advanced settings**: replace the toolbar icon with your own.
+15. Disable popup auto-resize to keep a fixed height.
 
 
 # For developers
@@ -82,7 +92,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 661 cases across 22 suites)
+# Unit tests (Vitest, 677 cases across 23 suites)
 npm install
 npm run test:run
 

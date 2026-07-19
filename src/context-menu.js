@@ -107,7 +107,13 @@ export function initContextMenu(ctx = {}) {
         }
         let menu;
         if (el.tagName === 'A') {
-            if (el.querySelector('hr')) {
+            if (el.classList.contains('link-folder')) {
+                // Folder link (search results / palette folder rows) — show
+                // folder context menu. Root-level folder detection (hide-sort)
+                // isn't needed here; these are never root folders.
+                menu = $folderContextMenu;
+                menu.classList.remove('hide-sort');
+            } else if (el.querySelector('hr')) {
                 menu = $separatorContextMenu;
                 if (el.parentNode.dataset.parentid === '0') {
                     menu.classList.add('hide-editables');
@@ -268,7 +274,7 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
-        const id = li.id.replace('neat-tree-item-', '');
+        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
         chrome.bookmarks.getChildren(id, children => {
             // neatools' Array.map(c => c.url, children).clean(): urls of the
             // children that have one (folders have none, null/undefined dropped)
@@ -390,7 +396,7 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
-        const id = li.id.replace('neat-tree-item-', '');
+        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
         switch (el.id) {
             case 'remove-separator':
                 actions.deleteSeparator(id);

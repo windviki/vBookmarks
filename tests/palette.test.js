@@ -464,8 +464,9 @@ describe('result composition', () => {
         palette.open();
         type('gmail');
         expect(results._appended).toHaveLength(2);
-        expect(results._appended[0]._innerHTML).toContain('<span class="palette-title">Gmail</span>');
-        expect(results._appended[1]._innerHTML).toContain('<span class="palette-title">mail archive</span>');
+        // bookmark rows now use <a> + <i> structure matching search results
+        expect(results._appended[0]._innerHTML).toContain('<i>Gmail</i>');
+        expect(results._appended[1]._innerHTML).toContain('<i>mail archive</i>');
         // sanity: the double really is the implementation under test
         expect(VBMFuzzy.score('gmail', 'Gmail')).not.toBeNull();
     });
