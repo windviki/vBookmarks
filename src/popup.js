@@ -21,13 +21,27 @@
         || document.body.classList.contains('panel-mode');
     if (IS_PANEL) {
         document.body.classList.add('panel-mode');
-        // 追踪侧边栏打开状态：加载时标记为打开，卸载时清除。
-        // background.js 根据此标志在 openInSidePanel 关闭时动态切换
-        // openPanelOnActionClick，使得下次点击扩展图标时关闭侧边栏
-        // 而非同时打开 popup。
+        // 追踪侧边栏打开状态，使得 openInSidePanel 关闭时：
+        // - 面板加载 → 切换到 toggle 模式，下次点击关闭面板
+        // - 面板关闭 → 直接重置为 popup 模式（在 pagehide 中同步调用，
+        //   避免 storage.onChanged 异步链路导致的竞态条件）
         chrome.storage.session.set({ sidePanelIsOpen: true });
         window.addEventListener('pagehide', () => {
             chrome.storage.session.set({ sidePanelIsOpen: false });
+            // 直接重置 panel behavior，不等 background 的 onChanged 回调。
+            // pagehide 中 JS 仍可执行，同步发起调用确保在用户下次点击前生效。
+            chrome.storage.local.get('openInSidePanel', data => {
+                if (!data.openInSidePanel) {
+                    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false })
+                        .catch(() => {});
+                }
+            });
+        });
+        // bfcache 恢复时重新标记面板为打开状态
+        window.addEventListener('pageshow', e => {
+            if (e.persisted) {
+                chrome.storage.session.set({ sidePanelIsOpen: true });
+            }
         });
     }
 
