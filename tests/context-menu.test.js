@@ -602,12 +602,12 @@ describe('folderContextHandler', () => {
         expect(ctx.actionCalls).toEqual([['deleteBookmarks', '7', 2, 1]]);
     });
 
-    it('add-folder-separator adds a separator inside the folder (bottom)', () => {
+    it('add-folder-separator adds a separator after the folder', () => {
         const ctx = setup({ children: { '7': folderChildren } });
         openFolderMenu(ctx);
         fire(ctx.folderMenu, 'mouseup',
             makeEvent({ button: 0, target: ctx.menuItem('add-folder-separator') }));
-        expect(ctx.actionCalls).toEqual([['addSeparator', '7', 'bottom']]);
+        expect(ctx.actionCalls).toEqual([['addSeparator', '7', 'after']]);
     });
 
     it('ignores clicks outside menu-items without fetching children', () => {

@@ -199,15 +199,24 @@ export function initActions(ctx = {}) {
             const div = document.createElement('div');
             div.innerHTML = html;
             const li = div.querySelector('li');
-            let ul = pNode.querySelector('ul');
-            // fix ul
-            if (!ul) {
-                const tmpDiv = document.createElement('div');
-                tmpDiv.innerHTML = `<ul role="group" data-level="${lv}"></ul>`;
-                const newUl = tmpDiv.querySelector('ul');
-                pNode.appendChild(newUl);
+            // 'before'/'after' 插入位置相对于 rNode，优先以 rNode.parentNode
+            // 作为正确的父级 ul；根级节点 pNode 退化为 document.body 时，
+            // querySelector('ul') 可能找到错误容器（如 #recent-list）。
+            // 若 rNode.parentNode 不可用则回退到 pNode.querySelector（兼容测试 mock）。
+            let ul;
+            if ((where === 'before' || where === 'after') && rNode.parentNode) {
+                ul = rNode.parentNode; // rNode 所在的 <ul>
+            } else {
                 ul = pNode.querySelector('ul');
-                tmpDiv.parentNode && tmpDiv.parentNode.removeChild(tmpDiv);
+                // fix ul
+                if (!ul) {
+                    const tmpDiv = document.createElement('div');
+                    tmpDiv.innerHTML = `<ul role="group" data-level="${lv}"></ul>`;
+                    const newUl = tmpDiv.querySelector('ul');
+                    pNode.appendChild(newUl);
+                    ul = pNode.querySelector('ul');
+                    tmpDiv.parentNode && tmpDiv.parentNode.removeChild(tmpDiv);
+                }
             }
             // a stale "(Empty)" marker must not survive a real child insert
             const emptyRow = ul.querySelector(':scope > li.empty-folder');

@@ -327,7 +327,7 @@ export function initContextMenu(ctx = {}) {
                     actions.addNewBookmarkNode(id, 'top', '', '');
                     break;
                 case 'add-folder-separator':
-                    actions.addSeparator(id, 'bottom');
+                    actions.addSeparator(id, 'after');
                     break;
                 case 'copy-all-titles-and-urls':
                     actions.copyAllTitlesAndUrls(id);
