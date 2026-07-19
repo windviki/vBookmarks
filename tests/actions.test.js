@@ -576,7 +576,7 @@ describe('openBookmarksNewWindow', () => {
 describe('editBookmarkFolder', () => {
     it('opens the bookmark edit dialog and re-renders the row on save', () => {
         const a = makeEl();
-        a.style.cssText = 'padding-left: 14px';
+        a.style.cssText = 'padding-left: 16px';
         const li = makeEl();
         li._qs.a = a;
         li.firstElementChild = makeEl();
@@ -593,7 +593,7 @@ describe('editBookmarkFolder', () => {
 
         calls.edit[0].fn('New', 'https://new.example/');
         expect(chrome.bookmarks.updateCalls).toEqual([['5', { title: 'New', url: 'https://new.example/' }]]);
-        expect(calls.bmHTML).toEqual([['New', 'https://new.example/', 'style="padding-left: 14px"', '5']]);
+        expect(calls.bmHTML).toEqual([['New', 'https://new.example/', 'style="padding-left: 16px"', '5']]);
         expect(li.innerHTML).toBe('<a data-bm="5">New</a>');
         expect(li.firstElementChild.focused).toBe(true);
     });
@@ -942,7 +942,7 @@ describe('addNewBookmarkNode (addNewNode/addNodeTo)', () => {
         expect(chrome.bookmarks.createCalls).toEqual([
             { parentId: '1', index: 3, title: 'New', url: 'http://new/' }
         ]);
-        expect(calls.bmHTML).toEqual([['New', 'http://new/', 'style="-webkit-padding-start: 14px"', '100']]);
+        expect(calls.bmHTML).toEqual([['New', 'http://new/', 'style="-webkit-padding-start: 16px"', '100']]);
         const li = created[0]._qs.li;
         expect(ul.inserted).toEqual([[li, rNode]]);
         expect(created[0].innerHTML).toContain('id="neat-tree-item-100"');
@@ -1107,7 +1107,7 @@ describe('separator actions', () => {
         // (36 chars, version nibble 4, variant nibble 8/9/A/B)
         expect(createCall.url).toMatch(
             /^http:\/\/separatethis\.com\/#[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-4[0-9A-Za-z]{3}-[89AB][0-9A-Za-z]{3}-[0-9A-Za-z]{12}$/);
-        expect(calls.sepHTML).toEqual([14]); // paddingStart = 14 * (level 0 + 1)
+        expect(calls.sepHTML).toEqual([16]); // paddingStart = 16 * (level 0 + 1)
         expect(calls.sepAdd).toEqual(['100']);
     });
 

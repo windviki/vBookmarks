@@ -169,7 +169,7 @@ export function initTreeRender(ctx = {}) {
     const generateHTML = (data, level) => {
         if (!level)
             level = 0;
-        const paddingStart = 14 * level;
+        const paddingStart = 16 * level;
         const group = (level === 0) ? 'tree' : 'group';
         // Phase 2b: an expanded folder with no children renders a muted
         // "(Empty)" row. It contains no focusable a/span element, so keyboard

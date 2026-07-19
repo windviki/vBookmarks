@@ -329,13 +329,13 @@ describe('mousemove (drop-target tracking)', () => {
         const dragged = makeBookmark('11');
         const target = makeBookmark('2');
         target.a._rect = { top: 100, bottom: 120, height: 20, width: 200 };
-        target.a.style.webkitPaddingStart = '14px';
+        target.a.style.webkitPaddingStart = '16px';
         target.a._computed = { width: '200px' };
         startDrag(dragged.a);
         move(target.a, 50, 105); // < 100 + 20/2
         expect(dropOverlay.className).toBe('bookmark');
         expect(dropOverlay.style.top).toBe('100px');
-        expect(dropOverlay.style.left).toBe('30px'); // 14 + 16
+        expect(dropOverlay.style.left).toBe('32px'); // 16 + 16
         expect(dropOverlay.style.width).toBe('188px'); // 200 - 12
         expect(dropOverlay.style.height).toBe(null);
     });
@@ -598,7 +598,7 @@ describe('mouseup (drop on a folder)', () => {
         expect(ctx.chrome.bookmarks.moveCalls).toEqual([['11', { parentId: '7' }]]);
         expect(emptyRow.removed).toBe(true); // stale "(Empty)" marker dropped
         expect(ul._appended).toEqual([dragged.li]);
-        expect(dragged.a.style.webkitPaddingStart).toBe('14px'); // 14 * (0 + 1)
+        expect(dragged.a.style.webkitPaddingStart).toBe('16px'); // 16 * (0 + 1)
         expect(dragged.li._attrs.level).toBe(2); // folder level 1 + 1
         expect(dragged.li._attrs['data-parentid']).toBe('7');
         expect(folder.span.focused).toBe(true);

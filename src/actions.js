@@ -178,7 +178,7 @@ export function initActions(ctx = {}) {
             } else {
                 lv = parseInt(pNode.parentNode.dataset.level) + 1;
             }
-            const paddingStart = 14 * lv;
+            const paddingStart = 16 * lv;
             const idHTML = resultBm.id ? `id="neat-tree-item-${resultBm.id}"` : '';
             const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
             const classStr = `class="${addBm ? "child" : "parent"}"`;

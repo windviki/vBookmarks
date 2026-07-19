@@ -427,7 +427,8 @@ body.linux input {
     display: flex;
     align-items: center;
     line-height: 1.67em;
-    padding: 0 4px;
+    padding-block: 0;
+    padding-inline-end: 4px;
     text-decoration: none;
     color: var(--vbm-fg);
     outline: 0;
