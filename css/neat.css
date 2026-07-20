@@ -533,6 +533,40 @@ body.linux input {
     font-style: normal;
 }
 
+/* Unscoped tree-item-link / favicon-container rules for palette (#command-palette)
+   and any other containers outside #tree / #results. Mirrors the scoped rules
+   above so the flexbox three-slot model works uniformly everywhere. */
+.tree-item-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1.67em;
+}
+
+.tree-item-link .favicon-container {
+    flex: none;
+    display: flex;
+    align-items: center;
+    width: 20px;
+}
+
+.tree-item-link .favicon-container img,
+.tree-item-link .favicon-container svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
+.tree-item-link i {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: normal;
+}
+
 #results ul li a:hover i,
 #tree ul li a:hover i {
     text-decoration: underline;

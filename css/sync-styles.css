@@ -1,9 +1,11 @@
 /**
  * vBookmarks Sync Status Styles
- * Sync indicator dots + tooltips on tree/search rows, plus the tree row
- * layout (flex rows, favicon-container positioning) the indicators rely
- * on. Status itself is computed in src/sync-engine.js (service worker)
+ * Sync indicator dots + tooltips on tree/search rows.
+ * Status is computed in src/sync-engine.js (service worker)
  * and mirrored into the page by src/sync-manager.js (P3.6).
+ *
+ * Layout (flexbox three-slot model) is handled entirely by neat.css.
+ * This file only styles the sync indicator overlay.
  */
 
 /* Dot colors map onto theme tokens (every theme incl. ink/paper renders
@@ -90,175 +92,23 @@
     opacity: 1;
 }
 
-/* Favicon container - positioning context for the sync indicator */
+/* Favicon container — positioning context for the absolute sync indicator dot.
+   width/display/flex are handled by neat.css (per-context selectors). */
 .favicon-container {
     position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    margin-right: 4px;
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
 }
 
-/* ========================================================================= */
-/* MAIN TREE LAYOUT */
-/* ========================================================================= */
-
-/* Base tree item styling - override existing neat.css styles */
-#tree ul li a.tree-item-link,
-#results ul li a.tree-item-link {
-    display: flex !important;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    line-height: 1.67em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: relative;
-}
-
-#tree ul li span.tree-item-span {
-    display: flex !important;
-    align-items: center;
-    line-height: 1.67em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Images inside favicon container */
-.favicon-container img {
-    display: block;
-    width: 16px;
-    height: 16px;
-    margin: 0 !important; /* Override any existing margins */
-    vertical-align: middle;
-}
-
-/* Inline SVG icons (folder / document-code, P4) fill the same 16px slot */
-.favicon-container .vbm-icon {
-    display: block;
-    width: 16px;
-    height: 16px;
-    margin: 0 !important;
-    vertical-align: middle;
-}
-
-/* Text elements */
-#tree ul li a.tree-item-link i,
-#tree ul li span.tree-item-span i,
-#results ul li a.tree-item-link i,
-#results ul li a.link-folder.tree-item-link i {
-    display: block;
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-style: normal;
-    line-height: 1.67em;
-    margin: 0;
-    padding: 0;
-}
-
-/* ========================================================================= */
-/* MAIN TREE SPECIFIC STYLES */
-/* ========================================================================= */
-
-/* Main tree bookmarks */
-#tree ul li a.tree-item-link {
-    padding: 0 4px;
-    gap: 4px;
-}
-
-#tree ul li a.tree-item-link .favicon-container {
-    margin-left: 12px; /* Align with folder icons: twisty(8px+4pxmargin) = 12px */
-    margin-right: 4px;
-}
-
-/* Main tree folders */
-#tree ul li span.tree-item-span {
-    padding: 0 4px;
-    gap: 4px;
-}
-
-#tree ul li span.tree-item-span .favicon-container {
-    margin-right: 4px;
-}
-
-/* Fallback for browsers that don't support gap */
-@supports not (gap: 4px) {
-    #tree ul li a.tree-item-link > *:not(:last-child),
-    #tree ul li span.tree-item-span > *:not(:last-child),
-    #results ul li a.tree-item-link > *:not(:last-child),
-    #results ul li a.link-folder.tree-item-link > *:not(:last-child) {
-        margin-right: 4px;
-    }
-}
-
-#tree ul li span.tree-item-span .twisty {
-    flex-shrink: 0;
-    margin-right: 4px;
-}
-
-/* ========================================================================= */
-/* SEARCH RESULTS SPECIFIC STYLES */
-/* ========================================================================= */
-
-/* Search results bookmarks */
-#results ul li a.tree-item-link {
-    padding: 0 4px;
-    gap: 4px;
-    padding-left: 16px; /* Consistent left margin */
-}
-
-#results ul li a.tree-item-link .favicon-container {
-    margin-right: 4px;
-}
-
-/* Search results folders */
-#results ul li a.link-folder.tree-item-link {
-    display: flex !important;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    line-height: 1.67em;
-    padding: 0 4px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    padding-left: 16px;
-    gap: 4px;
-}
-
-#results ul li a.link-folder.tree-item-link .favicon-container {
-    margin-right: 4px;
-}
-
-/* ========================================================================= */
-/* NESTED LEVELS */
-/* ========================================================================= */
-
-/* Handle nested levels in main tree */
-#tree ul ul li a.tree-item-link {
-    padding-left: 20px; /* Indent nested bookmarks */
-}
-
-#tree ul ul li a.tree-item-link .favicon-container {
-    margin-left: 0; /* Reset margin for nested bookmarks since container has padding */
-}
-
-#tree ul ul li span.tree-item-span {
-    margin-left: 20px; /* Indent nested folders */
-}
-
-/* Position sync indicator over favicon - simplified since base class handles positioning */
+/* Position sync indicator over favicon — the dot sits at bottom-right of
+   the 16×16 icon area. */
 .favicon-container .sync-indicator {
-    /* Position relative to the favicon-container */
     position: absolute;
     bottom: 1px;
     right: 1px;
+}
+
+/* Image/SVG margin reset inside favicon container — override any browser
+   defaults or legacy margins so the flex slot model works cleanly. */
+.favicon-container img,
+.favicon-container .vbm-icon {
+    margin: 0 !important;
 }
