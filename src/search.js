@@ -432,10 +432,20 @@ export function initSearch(ctx = {}) {
     });
 
     // v4 task 2: render search history block in empty search view
+    const $historyArea = $('search-history-area');
+    const $resultsArea = $('search-results-area');
+
     const renderHistoryBlock = () => {
-        if (store.get('searchHistoryEnabled', '1') === 'false') return;
+        if (!$historyArea) return;
+        if (store.get('searchHistoryEnabled', '1') === 'false') {
+            $historyArea.innerHTML = '';
+            return;
+        }
         const hist = loadHistory();
-        if (!hist.length) return;
+        if (!hist.length) {
+            $historyArea.innerHTML = '';
+            return;
+        }
         let html = `<div class="search-history">`;
         html += `<div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
         html += `<ul>`;
@@ -454,10 +464,10 @@ export function initSearch(ctx = {}) {
         }
         html += `<li><button class="search-history-clear">${_m('searchHistoryClear') || 'Clear all'}</button></li>`;
         html += `</ul></div>`;
-        $results.innerHTML = html;
+        $historyArea.innerHTML = html;
 
         // Click to re-search
-        $results.querySelectorAll('.search-history-query').forEach(el => {
+        $historyArea.querySelectorAll('.search-history-query').forEach(el => {
             el.addEventListener('click', () => {
                 searchInput.value = el.dataset.query;
                 updateClearBtn();
@@ -465,7 +475,7 @@ export function initSearch(ctx = {}) {
             });
         });
         // Remove single item
-        $results.querySelectorAll('.search-history-remove').forEach(el => {
+        $historyArea.querySelectorAll('.search-history-remove').forEach(el => {
             el.addEventListener('click', e => {
                 e.stopPropagation();
                 let hist = loadHistory();
@@ -475,11 +485,11 @@ export function initSearch(ctx = {}) {
             });
         });
         // Clear all
-        const clearBtn = $results.querySelector('.search-history-clear');
+        const clearBtn = $historyArea.querySelector('.search-history-clear');
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
                 clearHistory();
-                $results.innerHTML = '';
+                $historyArea.innerHTML = '';
             });
         }
     };
