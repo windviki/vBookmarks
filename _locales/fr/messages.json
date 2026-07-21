@@ -600,5 +600,152 @@
   },
   "donationNever": {
     "message": "Ne plus afficher"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewRecent": {
+    "message": "[TODO:viewRecent]"
+  },
+  "viewStats": {
+    "message": "[TODO:viewStats]"
+  },
+  "viewDead": {
+    "message": "[TODO:viewDead]"
+  },
+  "viewDupes": {
+    "message": "[TODO:viewDupes]"
+  },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "optionRecentCount": {
+    "message": "[TODO:optionRecentCount]"
+  },
+  "optionDeadProxy": {
+    "message": "[TODO:optionDeadProxy]"
+  },
+  "deadProxyHint": {
+    "message": "[TODO:deadProxyHint]"
+  },
+  "optionSearchHistory": {
+    "message": "[TODO:optionSearchHistory]"
+  },
+  "optionStatsEnabled": {
+    "message": "[TODO:optionStatsEnabled]"
+  },
+  "optionDeadScan": {
+    "message": "[TODO:optionDeadScan]"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "[TODO:optionDeadScanConcurrency]"
+  },
+  "optionDeadScanTimeout": {
+    "message": "[TODO:optionDeadScanTimeout]"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]"
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
+  },
+  "paletteCmdOptions": {
+    "message": "[TODO:paletteCmdOptions]"
+  },
+  "dupesStrategyOldest": {
+    "message": "[TODO:dupesStrategyOldest]"
+  },
+  "dupesStrategyNewest": {
+    "message": "[TODO:dupesStrategyNewest]"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "[TODO:dupesStrategyBookmarkBar]"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "[TODO:dupesStrategyShortestTitle]"
+  },
+  "dupesStrategyShallowest": {
+    "message": "[TODO:dupesStrategyShallowest]"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "[TODO:dupesStrategyMostVisited]"
+  },
+  "dupesApplyAll": {
+    "message": "[TODO:dupesApplyAll]"
+  },
+  "dupesGroupCleanRest": {
+    "message": "[TODO:dupesGroupCleanRest]"
+  },
+  "dupesPreviewSummary": {
+    "message": "[TODO:dupesPreviewSummary]"
+  },
+  "dupesScopeAll": {
+    "message": "[TODO:dupesScopeAll]"
+  },
+  "dupesScopeBar": {
+    "message": "[TODO:dupesScopeBar]"
+  },
+  "dupesIgnoreScheme": {
+    "message": "[TODO:dupesIgnoreScheme]"
+  },
+  "deadLastScanAt": {
+    "message": "[TODO:deadLastScanAt]"
+  },
+  "deadStartHint": {
+    "message": "[TODO:deadStartHint]"
+  },
+  "deadMark": {
+    "message": "[TODO:deadMark]"
+  },
+  "deadUnmark": {
+    "message": "[TODO:deadUnmark]"
+  },
+  "deadMarked": {
+    "message": "[TODO:deadMarked]"
+  },
+  "deadMarkAll": {
+    "message": "[TODO:deadMarkAll]"
+  },
+  "deadUnmarkAll": {
+    "message": "[TODO:deadUnmarkAll]"
+  },
+  "deadFilterAll": {
+    "message": "[TODO:deadFilterAll]"
+  },
+  "deadFilterDead": {
+    "message": "[TODO:deadFilterDead]"
+  },
+  "deadFilterBlocked": {
+    "message": "[TODO:deadFilterBlocked]"
+  },
+  "statsSortByCount": {
+    "message": "[TODO:statsSortByCount]"
+  },
+  "statsSortByRecent": {
+    "message": "[TODO:statsSortByRecent]"
+  },
+  "statsClearData": {
+    "message": "[TODO:statsClearData]"
+  },
+  "statsEmpty": {
+    "message": "[TODO:statsEmpty]"
+  },
+  "statsVisitCount": {
+    "message": "[TODO:statsVisitCount]"
+  },
+  "recentEmpty": {
+    "message": "[TODO:recentEmpty]"
   }
 }

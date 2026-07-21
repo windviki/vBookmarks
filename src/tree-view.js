@@ -305,6 +305,8 @@ export function initTreeView(ctx = {}) {
                 const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
                 revealFolder(id);
             } else {
+                const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
+                actions.recordVisit(id);
                 const url = el.href;
                 if (ctrlMeta) { // ctrl/meta click
                     actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);

@@ -148,6 +148,8 @@ export const collectDead = (items, results) =>
     });
 
 export const statusLabel = result => {
+    if (result.status === 'blocked')
+        return 'blocked';
     if (typeof result.status === 'number')
         return `${result.status}`;
     return result.error === 'AbortError' ? 'timeout' : 'error';

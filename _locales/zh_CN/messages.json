@@ -671,5 +671,8 @@
   "optionStatsEnabled": { "message": "收集访问统计" },
   "optionDeadScan": { "message": "死链扫描" },
   "optionDeadScanConcurrency": { "message": "并发检测数" },
-  "optionDeadScanTimeout": { "message": "单次检测超时" }
+  "optionDeadScanTimeout": { "message": "单次检测超时" },
+  "searchHistoryTitle": { "message": "最近搜索" },
+  "searchHistoryClear": { "message": "全部清除" },
+  "searchHistoryRemove": { "message": "移除" }
 }

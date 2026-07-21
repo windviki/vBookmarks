@@ -60,6 +60,8 @@ export function initActions(ctx = {}) {
     // P3.3: deletions capture an undo snapshot and toast afterwards; without
     // an injected undo API (tests, defensive) they stay plain silent deletes.
     const undo = ctx.undo || { capture() {}, showToast() {} };
+    // v4 task 2 slice D: visit tracking on bookmark opens
+    const visitStats = ctx.visitStats || { recordVisit() {} };
 
     // ++++++++ added by windviki@gmail.com ++++++++
     // 拷贝发生在 chrome.bookmarks.get 的异步回调里，早已脱离用户手势上下
@@ -659,6 +661,11 @@ export function initActions(ctx = {}) {
             }
         }
 
+    };
+
+    // v4 task 2 slice D: record a bookmark visit (called by click handlers)
+    actions.recordVisit = (id) => {
+        if (id) visitStats.recordVisit(id);
     };
 
     // Separator actions ride on the same table: the context-menu dispatch and

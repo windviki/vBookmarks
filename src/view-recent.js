@@ -115,12 +115,28 @@ export function initViewRecent(ctx = {}) {
         // Regular bookmark open
         const ctrlMeta = e.ctrlKey || e.metaKey || e.button === 1;
         const shift = e.shiftKey;
+        // v4 task 2 slice D: record visit on bookmark open
+        actions.recordVisit(id);
+
         if (ctrlMeta) {
             actions.openBookmarkNewTab(a.href, !shift);
         } else if (shift) {
             actions.openBookmarkNewWindow(a.href);
         } else {
             actions.openBookmark(a.href);
+        }
+    });
+
+    // v4 task 2: right-click on a recent row → "Reveal in Tree"
+    container.addEventListener('contextmenu', e => {
+        const li = e.target.closest('li');
+        if (!li) return;
+        e.preventDefault();
+        const id = li.id.replace('neat-recent-item-', '');
+        if (id) {
+            search.reset();
+            viewManager.activate('tree');
+            treeView.revealFolder(id);
         }
     });
 

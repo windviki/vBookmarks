@@ -494,6 +494,13 @@ import { initVisitStats } from './visit-stats.js';
                     } catch (e) { /* ignore */ }
                 }
             }
+            // v4 task 2: restore last query + show history on empty input
+            if (search && !search.isActive()) {
+                search.restoreLastQuery();
+                if (!search.input.value) {
+                    search.renderHistoryBlock();
+                }
+            }
         },
         deactivate(ctx) {
             const results = document.getElementById('results');

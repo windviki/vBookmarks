@@ -418,9 +418,51 @@ export function initSearch(ctx = {}) {
         searchHistorySessionFlag = true;
     });
 
+    // v4 task 2: render search history block in empty search view
+    const renderHistoryBlock = () => {
+        if (store.get('searchHistoryEnabled', '1') === 'false') return;
+        const hist = loadHistory();
+        if (!hist.length) return;
+        let html = `<div class="search-history"><div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
+        html += `<ul>`;
+        for (const q of hist) {
+            html += `<li class="search-history-item">`;
+            html += `<span class="search-history-query" role="button" tabindex="0">${q}</span>`;
+            html += `<button class="search-history-remove" data-query="${q}" aria-label="${_m('searchHistoryRemove') || 'Remove'}">×</button>`;
+            html += '</li>';
+        }
+        html += `<li><button class="search-history-clear">${_m('searchHistoryClear') || 'Clear all'}</button></li>`;
+        html += `</ul></div>`;
+        $results.innerHTML = html;
+
+        // Click to re-search
+        $results.querySelectorAll('.search-history-query').forEach(el => {
+            el.addEventListener('click', () => {
+                searchInput.value = el.textContent;
+                updateClearBtn();
+                search();
+            });
+        });
+        // Remove single item
+        $results.querySelectorAll('.search-history-remove').forEach(el => {
+            el.addEventListener('click', () => {
+                let hist = loadHistory();
+                hist = hist.filter(h => h !== el.dataset.query);
+                saveHistory(hist);
+                renderHistoryBlock();
+            });
+        });
+        // Clear all
+        const clearBtn = $results.querySelector('.search-history-clear');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                clearHistory();
+                $results.innerHTML = '';
+            });
+        }
+    };
+
     // Restore last query on search view activation (first time only)
-    const origSearch = search;
-    // Hook into search view activation for auto-restore
     // (called when search view is activated with empty input)
 
     return {
@@ -437,6 +479,7 @@ export function initSearch(ctx = {}) {
         recordSearchHistory,
         restoreLastQuery,
         onResultOpen,
+        renderHistoryBlock,
         get historyEnabled() { return store.get('searchHistoryEnabled', '1') !== 'false'; }
     };
 }

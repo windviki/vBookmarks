@@ -300,7 +300,7 @@ describe('module API', () => {
             'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl',
             'openBookmarks', 'openBookmarksInGroup', 'openBookmarksNewWindow',
             'editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks',
-            'addSeparator', 'deleteSeparator'
+            'recordVisit', 'addSeparator', 'deleteSeparator'
         ];
         for (const name of names)
             expect(typeof actions[name], name).toBe('function');

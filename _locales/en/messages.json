@@ -738,5 +738,8 @@
   "optionStatsEnabled": { "message": "Collect visit statistics" },
   "optionDeadScan": { "message": "Dead-link scan" },
   "optionDeadScanConcurrency": { "message": "Concurrent checks" },
-  "optionDeadScanTimeout": { "message": "Timeout per check" }
+  "optionDeadScanTimeout": { "message": "Timeout per check" },
+  "searchHistoryTitle": { "message": "Recent searches" },
+  "searchHistoryClear": { "message": "Clear all" },
+  "searchHistoryRemove": { "message": "Remove" }
 }

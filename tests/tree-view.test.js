@@ -291,12 +291,14 @@ const setup = (opts = {}) => {
         openBookmarksCalls: [],
         openBookmarksNewWindowCalls: [],
         addSeparatorCalls: [],
+        recordVisitCalls: [],
         openBookmark(url) { this.openBookmarkCalls.push([url]); },
         openBookmarkNewTab(url, bg, active) { this.openBookmarkNewTabCalls.push([url, bg, active]); },
         openBookmarkNewWindow(url) { this.openBookmarkNewWindowCalls.push([url]); },
         openBookmarks(urls, bg) { this.openBookmarksCalls.push([urls, bg]); },
         openBookmarksNewWindow(urls) { this.openBookmarksNewWindowCalls.push([urls]); },
-        addSeparator(id, where) { this.addSeparatorCalls.push([id, where]); }
+        addSeparator(id, where) { this.addSeparatorCalls.push([id, where]); },
+        recordVisit(id) { this.recordVisitCalls.push(id); }
     };
     const dnd = {
         noOpen: !!opts.noOpen,
