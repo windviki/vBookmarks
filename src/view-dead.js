@@ -11,6 +11,7 @@
  */
 
 import { filterScannable, startDeadScan, collectDead, statusLabel, checkUrl } from './dead-links.js';
+import { initListKeyboard } from './list-keyboard.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -319,6 +320,18 @@ export function initViewDead(ctx = {}) {
             });
         });
     };
+
+    // v4 task 2: keyboard navigation
+    initListKeyboard(container, {
+        onEnter(id) {
+            // Open the dead link on Enter (useful for inspection)
+            chrome.bookmarks.get(id, nodes => {
+                if (nodes && nodes.length && nodes[0].url) {
+                    actions.openBookmark(nodes[0].url);
+                }
+            });
+        }
+    });
 
     return {
         badge() {

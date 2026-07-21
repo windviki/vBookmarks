@@ -2075,6 +2075,28 @@ body.panel-mode .row-path-double,
     color: var(--vbm-fg);
 }
 
+/* v4 task 2: list view focus/selection (matches tree view .focus) */
+#view-recent .focus,
+#view-stats .focus,
+#view-dead .focus,
+#view-dupes .focus,
+#search-results-area .focus {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    outline: none;
+    border-radius: 3px;
+}
+
+/* Ensure focus ring only on keyboard focus, not click */
+#view-recent a:focus-visible,
+#view-stats a:focus-visible,
+#view-dead a:focus-visible,
+#view-dupes a:focus-visible,
+#search-results-area a:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
 /* --- Search view two-section layout (§4.3) --- */
 #view-search {
     display: flex;

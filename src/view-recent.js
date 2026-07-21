@@ -4,7 +4,8 @@
  * Extracted from tree-view.js's virtual recent section (§2.1).
  * Owns: chrome.bookmarks.getRecent(N) fetch, bookmark HTML rendering via
  * treeRender.generateBookmarkHTML, separator filtering, onCreated/onRemoved
- * + 300ms debounced refresh, and "reveal in tree" jump (right-click + R key).
+ * + 300ms debounced refresh, "reveal in tree" jump (right-click + R key),
+ * and arrow-key keyboard navigation (via list-keyboard.js).
  *
  * initViewRecent(ctx) — called once by neat.js after treeView/treeRender init.
  * ctx.store          — settings mirror (showRecentBookmarks, recentCount, deadMarks)
@@ -15,6 +16,7 @@
  * ctx.viewManager    — view-manager.js (for activate)
  * ctx.search         — search.js (reset state on link-folder click)
  */
+import { initListKeyboard } from './list-keyboard.js';
 
 export function initViewRecent(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -147,6 +149,19 @@ export function initViewRecent(ctx = {}) {
             actions.openBookmarkNewWindow(a.href);
         } else {
             actions.openBookmark(a.href);
+        }
+    });
+
+    // v4 task 2: arrow-key keyboard navigation (list-keyboard.js)
+    initListKeyboard(container, {
+        onEnter(id) {
+            // Open bookmark on Enter
+            chrome.bookmarks.get(id, nodes => {
+                if (nodes && nodes.length && nodes[0].url) {
+                    actions.recordVisit(id);
+                    actions.openBookmark(nodes[0].url);
+                }
+            });
         }
     });
 

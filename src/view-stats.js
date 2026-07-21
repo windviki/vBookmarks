@@ -8,6 +8,8 @@
  * ctx.store, ctx.visitStats, ctx.actions, ctx.dialogs, ctx.viewManager
  */
 
+import { initListKeyboard } from './list-keyboard.js';
+
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);
     const store = ctx.store;
@@ -113,6 +115,18 @@ export function initViewStats(ctx = {}) {
             });
         });
     };
+
+    // v4 task 2: keyboard navigation
+    initListKeyboard(container, {
+        onEnter(id) {
+            chrome.bookmarks.get(id, nodes => {
+                if (nodes && nodes.length && nodes[0].url) {
+                    if (visitStats) visitStats.recordVisit(id);
+                    actions.openBookmark(nodes[0].url);
+                }
+            });
+        }
+    });
 
     return {
         activate() { refresh(); },

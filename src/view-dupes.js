@@ -10,6 +10,7 @@
  */
 
 import { findDupes, planDeletion, pickKeeper } from './dupes.js';
+import { initListKeyboard } from './list-keyboard.js';
 
 export function initViewDupes(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -274,6 +275,9 @@ export function initViewDupes(ctx = {}) {
             });
         });
     };
+
+    // v4 task 2: keyboard navigation
+    initListKeyboard(container, {});
 
     return {
         badge() {

@@ -60,6 +60,7 @@ JS_FILES = [
     'src/undo.js',
     'src/icons.js',
     'src/view-manager.js',
+    'src/list-keyboard.js',
     'src/view-recent.js',
     'src/view-stats.js',
     'src/view-dead.js',

@@ -503,13 +503,13 @@ import { initVisitStats } from './visit-stats.js';
                 }
             }
             // v4 task 2: on search view activation
+            // Always show history block (top section).
+            // If there was a last query, the results area will show it below.
+            // If no last query, the results area stays empty until user types.
             if (search) {
+                search.renderHistoryBlock();
                 if (!search.isActive()) {
-                    // Not in search mode: show history or restore last query
                     search.restoreLastQuery();
-                    if (!search.input.value) {
-                        search.renderHistoryBlock();
-                    }
                 }
             }
         },
