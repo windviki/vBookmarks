@@ -1329,11 +1329,33 @@ menu[type=context].hide-sort #sort-folder-contents {
 }
 
 /* --- highlightUnsynced setting ---------------------------------------------
-   Local-only (syncing === false) subtrees render dimmed when the setting is
-   on — a quiet whole-area signal that replaced the old per-row green dots. */
+   Local-only (syncing === false) subtrees get visual treatment per theme:
+   - Light (default/paper/auto+light): text shifts to --vbm-muted —
+     clearly readable (~3.5:1 contrast) but visually distinct from synced.
+     Without this, opacity .62 on #202124 washes out to ~#787878 — illegible.
+   - Dark (dark/ink/auto+dark): opacity reduction blends naturally with
+     the dark background without sacrificing readability. */
 body.highlight-unsynced #tree li.unsynced-subtree > a,
 body.highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span {
-    opacity: .62;
+    color: var(--vbm-muted);
+}
+
+/* Dark theme override: opacity works better than muted-color on dark bg */
+body[data-theme="dark"].highlight-unsynced #tree li.unsynced-subtree > a,
+body[data-theme="dark"].highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span,
+body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > a,
+body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span {
+    color: inherit;
+    opacity: .55;
+}
+
+/* Auto theme: system dark preference → opacity path */
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"].highlight-unsynced #tree li.unsynced-subtree > a,
+    body[data-theme="auto"].highlight-unsynced #tree li.unsynced-subtree > span.tree-item-span {
+        color: inherit;
+        opacity: .55;
+    }
 }
 
 /* --- Command palette (P2) --------------------------------------------------
