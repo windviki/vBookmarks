@@ -624,22 +624,39 @@ export function initActions(ctx = {}) {
             });
         },
 
-        // P3.3: no more ConfirmDialog for non-empty folders — the undo toast
-        // is the safety net, so every folder delete takes the same path.
-        // bookmarkCount/folderCount stay in the signature (callers pass them)
-        // but are no longer read.
+        // v4 task 2 A2: 非空文件夹删除确认守卫（§5.7）。
+        // confirmDeleteFolder 默认 on：非空文件夹先弹确认，空文件夹/单书签保持
+        // 直接删+toast。bookmarkCount/folderCount 由 keyboard.js/context-menu.js
+        // 在调用时统计（AGENTS.md Known Quirks 中计数已存在但无消费者——接回）。
         deleteBookmarks: (id, bookmarkCount, folderCount) => {
             const li = $(`neat-tree-item-${id}`);
             const item = li.querySelector('span');
             const folderName = item.textContent.trim();
-            undo.capture(id);
-            chrome.bookmarks.removeTree(id, () => {
-                li.parentNode && li.parentNode.removeChild(li);
-                undo.showToast(_m('deletedFolder', [folderName]));
-            });
-            const nearLi = li.nextElementSibling || li.previousElementSibling;
-            if (nearLi)
-                nearLi.querySelector('a, span').focus();
+            const totalChildren = (bookmarkCount || 0) + (folderCount || 0);
+
+            const doDelete = () => {
+                undo.capture(id);
+                chrome.bookmarks.removeTree(id, () => {
+                    li.parentNode && li.parentNode.removeChild(li);
+                    undo.showToast(_m('deletedFolder', [folderName]));
+                });
+                const nearLi = li.nextElementSibling || li.previousElementSibling;
+                if (nearLi)
+                    nearLi.querySelector('a, span').focus();
+            };
+
+            // 确认开关（默认 on）；仅非空文件夹触发
+            const confirmEnabled = store.get('confirmDeleteFolder', '1') !== 'false';
+            if (confirmEnabled && totalChildren > 0) {
+                dialogs.ConfirmDialog.open({
+                    dialog: _m('confirmDeleteFolder', `${totalChildren}`),
+                    button1: `<strong>${_m('confirmDeleteFolderButton')}</strong>`,
+                    button2: _m('nope'),
+                    fn1: doDelete
+                });
+            } else {
+                doDelete();
+            }
         }
 
     };

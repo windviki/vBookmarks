@@ -629,5 +629,100 @@
   "contextMenuAddBookmark": {
     "message": "Bookmark this page with vBookmarks",
     "description": "Page context menu item that saves the current page as a bookmark."
-  }
+  },
+  "viewTree": {
+    "message": "Tree",
+    "description": "Tab label for the tree/bookmarks view"
+  },
+  "viewSearch": {
+    "message": "Search",
+    "description": "Tab label for the search view"
+  },
+  "viewRecent": {
+    "message": "Recent",
+    "description": "Tab label for the recently added view"
+  },
+  "viewStats": {
+    "message": "Stats",
+    "description": "Tab label for the visit statistics view"
+  },
+  "viewDead": {
+    "message": "Dead",
+    "description": "Tab label for the dead links view"
+  },
+  "viewDupes": {
+    "message": "Dupes",
+    "description": "Tab label for the duplicate bookmarks view"
+  },
+  "optionsGroupViews": {
+    "message": "Views",
+    "description": "Section heading for view-related options on the options page"
+  },
+  "optionShowViewTabs": {
+    "message": "Show view tabs",
+    "description": "Option label: toggle visibility of the view tab bar"
+  },
+  "optionShowItemPath": {
+    "message": "Show folder path in list rows",
+    "description": "Option label: toggle parent-folder path display in list view rows"
+  },
+  "confirmDeleteFolder": {
+    "message": "This folder contains $count$ item(s). You can undo the deletion.",
+    "description": "Confirmation dialog text when deleting a non-empty folder",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Delete",
+    "description": "Confirm button text for non-empty folder deletion dialog"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirm before deleting non-empty folders",
+    "description": "Option label: toggle delete confirmation dialog for non-empty folders"
+  },
+  "paletteCmdOptions": {
+    "message": "Open Settings",
+    "description": "Palette command to open the options page"
+  },
+  "dupesStrategyOldest": { "message": "Keep oldest" },
+  "dupesStrategyNewest": { "message": "Keep newest" },
+  "dupesStrategyBookmarkBar": { "message": "Keep in bookmarks bar" },
+  "dupesStrategyShortestTitle": { "message": "Keep shortest title" },
+  "dupesStrategyShallowest": { "message": "Keep shallowest" },
+  "dupesStrategyMostVisited": { "message": "Keep most visited" },
+  "dupesApplyAll": { "message": "Apply all" },
+  "dupesGroupCleanRest": { "message": "Clean rest" },
+  "dupesPreviewSummary": {
+    "message": "$groups$ groups, $count$ to remove",
+    "placeholders": { "groups": { "content": "$1" }, "count": { "content": "$2" } }
+  },
+  "dupesScopeAll": { "message": "All bookmarks" },
+  "dupesScopeBar": { "message": "Bookmarks bar only" },
+  "dupesIgnoreScheme": { "message": "Ignore http/https" },
+  "deadLastScanAt": {
+    "message": "Last scan: $time$",
+    "placeholders": { "time": { "content": "$1" } }
+  },
+  "deadStartHint": { "message": "Scan bookmarks for dead links." },
+  "deadMark": { "message": "Mark" },
+  "deadUnmark": { "message": "Unmark" },
+  "deadMarked": { "message": "marked" },
+  "deadMarkAll": { "message": "Mark all" },
+  "deadUnmarkAll": { "message": "Clear marks" },
+  "deadFilterAll": { "message": "All" },
+  "deadFilterDead": { "message": "Dead only" },
+  "deadFilterBlocked": { "message": "Blocked only" },
+  "statsSortByCount": { "message": "By count" },
+  "statsSortByRecent": { "message": "By recent" },
+  "statsClearData": { "message": "Clear visit statistics" },
+  "statsEmpty": { "message": "No visit data yet. Open bookmarks to collect statistics." },
+  "statsVisitCount": {
+    "message": "$count$ visits",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "recentEmpty": { "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page." }
 }

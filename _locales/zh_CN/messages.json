@@ -592,5 +592,76 @@
   },
   "donationNever": {
     "message": "不再显示"
-  }
+  },
+  "viewTree": {
+    "message": "书签树"
+  },
+  "viewSearch": {
+    "message": "搜索"
+  },
+  "viewRecent": {
+    "message": "最近"
+  },
+  "viewStats": {
+    "message": "统计"
+  },
+  "viewDead": {
+    "message": "死链"
+  },
+  "viewDupes": {
+    "message": "重复"
+  },
+  "optionsGroupViews": {
+    "message": "视图"
+  },
+  "optionShowViewTabs": {
+    "message": "显示视图标签栏"
+  },
+  "optionShowItemPath": {
+    "message": "列表行显示文件夹路径"
+  },
+  "confirmDeleteFolder": {
+    "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "删除"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "删除非空文件夹前确认"
+  },
+  "paletteCmdOptions": { "message": "打开设置" },
+  "dupesStrategyOldest": { "message": "保留最早" },
+  "dupesStrategyNewest": { "message": "保留最新" },
+  "dupesStrategyBookmarkBar": { "message": "保留书签栏内" },
+  "dupesStrategyShortestTitle": { "message": "保留最短标题" },
+  "dupesStrategyShallowest": { "message": "保留最浅层" },
+  "dupesStrategyMostVisited": { "message": "保留最常访问" },
+  "dupesApplyAll": { "message": "全部应用" },
+  "dupesGroupCleanRest": { "message": "清除其余" },
+  "dupesPreviewSummary": { "message": "$groups$ 组, 将移除 $count$ 条" },
+  "dupesScopeAll": { "message": "全部书签" },
+  "dupesScopeBar": { "message": "仅书签栏" },
+  "dupesIgnoreScheme": { "message": "忽略 http/https" },
+  "deadLastScanAt": { "message": "上次扫描: $time$" },
+  "deadStartHint": { "message": "扫描书签中的死链" },
+  "deadMark": { "message": "标记" },
+  "deadUnmark": { "message": "取消标记" },
+  "deadMarked": { "message": "已标记" },
+  "deadMarkAll": { "message": "全部标记" },
+  "deadUnmarkAll": { "message": "清除标记" },
+  "deadFilterAll": { "message": "全部" },
+  "deadFilterDead": { "message": "仅死链" },
+  "deadFilterBlocked": { "message": "仅被屏蔽" },
+  "statsSortByCount": { "message": "按次数" },
+  "statsSortByRecent": { "message": "按最近" },
+  "statsClearData": { "message": "清除统计数据" },
+  "statsEmpty": { "message": "暂无访问数据，打开书签以收集统计。" },
+  "statsVisitCount": { "message": "$count$ 次访问" },
+  "recentEmpty": { "message": "暂无最近书签，按 Ctrl+D 收藏当前页。" }
 }

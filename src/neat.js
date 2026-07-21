@@ -10,6 +10,7 @@ import { initTreeView } from './tree-view.js';
 import { initSyncUi } from './sync-ui.js';
 import { initPalette } from './palette.js';
 import { initUndo } from './undo.js';
+import { initViewManager } from './view-manager.js';
 
 (window => {
     const store = window.store;
@@ -251,7 +252,10 @@ import { initUndo } from './undo.js';
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         highlightTitlePositions: treeRender.highlightTitlePositions,
         // 与上方 rememberState 初值相同的确定性推导（search 只读取启动初值）
-        rememberState: !store.get('dontRememberState')
+        rememberState: !store.get('dontRememberState'),
+        // v4 task 2: view activation for search mode
+        activateView: id => viewManager.activate(id),
+        getActiveView: () => viewManager.getActiveId()
     });
 
     // Popup auto-height — only grow, never shrink on user interaction.
@@ -409,6 +413,97 @@ import { initUndo } from './undo.js';
         leftClickNewTab
     });
 
+    // ---- v4 task 2: View Manager (§3) ------------------------------------
+    // 视图系统入口：注册表 + tab 条 + 切换状态机 + 路径映射。
+    // tree/search/recent/stats/dead/dupes 六个视图在此注册；
+    // recent/stats/dead/dupes 目前为占位桩（切片 B/C/D 落实）。
+    const viewManager = initViewManager({
+        store,
+        treeRender,
+        isPanel: IS_PANEL
+    });
+
+    // 注册 tree 视图（默认）
+    viewManager.register({
+        id: 'tree',
+        titleKey: 'viewTree',
+        icon: '',  // icon handled by tab bar rendering via VIEW_ICONS
+        slash: 'tree',
+        container: $('view-tree'),
+        activate(ctx) {
+            // tree 视图内容由 tree-view.js 的 generateTree 原生管理；
+            // 切回时恢复滚动位置与焦点
+            const tree = document.getElementById('tree');
+            if (tree && ctx.store) {
+                const vs = ctx.store.get('viewState');
+                if (vs) {
+                    try {
+                        const state = JSON.parse(vs);
+                        if (state.tree && tree.scrollTop !== undefined) {
+                            tree.scrollTop = state.tree;
+                        }
+                    } catch (e) { /* ignore */ }
+                }
+            }
+        },
+        deactivate(ctx) {
+            // 离开 tree 视图时保存 scrollTop
+            const tree = document.getElementById('tree');
+            if (tree && ctx.store) {
+                let vs = {};
+                try { vs = JSON.parse(ctx.store.get('viewState') || '{}'); } catch (e) {}
+                vs.tree = tree.scrollTop;
+                ctx.store.set('viewState', JSON.stringify(vs));
+            }
+        }
+    });
+
+    // 注册 search 视图
+    viewManager.register({
+        id: 'search',
+        titleKey: 'viewSearch',
+        icon: '',
+        slash: 'search',
+        container: $('view-search'),
+        activate(ctx) {
+            // search 视图内容由 search.js 管理；
+            // 切回时恢复滚动
+            const results = document.getElementById('results');
+            if (results && ctx.store) {
+                const vs = ctx.store.get('viewState');
+                if (vs) {
+                    try {
+                        const state = JSON.parse(vs);
+                        if (state.search) results.scrollTop = state.search;
+                    } catch (e) { /* ignore */ }
+                }
+            }
+        },
+        deactivate(ctx) {
+            const results = document.getElementById('results');
+            if (results && ctx.store) {
+                let vs = {};
+                try { vs = JSON.parse(ctx.store.get('viewState') || '{}'); } catch (e) {}
+                vs.search = results.scrollTop;
+                ctx.store.set('viewState', JSON.stringify(vs));
+            }
+        }
+    });
+
+    // 注册 remaining 视图（占位桩，切片 B/C/D 落实）
+    for (const id of ['recent', 'stats', 'dead', 'dupes']) {
+        viewManager.register({
+            id,
+            titleKey: `view${id.charAt(0).toUpperCase() + id.slice(1)}`,
+            icon: '',
+            slash: id,
+            container: $(`view-${id}`)
+        });
+    }
+
+    // 启动视图系统
+    viewManager.init();
+
     // donation: three explicit answers to the ask (see the v4 model above)
     const donationSnooze = step => {
         showDonation(false);
@@ -537,7 +632,9 @@ import { initUndo } from './undo.js';
         // panel (e.g. right-clicked a dead-link row), only then close the panel.
         clearMenu: menus.clearMenu,
         // P4: follow the tree-view click setting for bookmark opens
-        leftClickNewTab
+        leftClickNewTab,
+        // v4 task 2: view activation for view-jump commands
+        activateView: id => viewManager.activate(id)
     });
 
     // Tool button (⋮): opens the command palette for feature discovery —
@@ -590,7 +687,8 @@ import { initUndo } from './undo.js';
         body,
         os,
         rtl,
-        palette  // ESC layering: close palette before letting Chrome close popup
+        palette,  // ESC layering: close palette before letting Chrome close popup
+        viewManager  // v4 task 2: Esc layering + Ctrl+1-6 view switching
     });
 
     const contextMouseMove = e => {

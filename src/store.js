@@ -43,6 +43,20 @@
     const KNOWN_KEYS = [
         // popup state
         'opens', 'popupHeight', 'popupWidth', 'zoom', 'searchQuery', 'scrollTop', 'focusID',
+        // view system (v4 task 2)
+        'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        // search history (v4 task 2)
+        'searchLastQuery', 'searchHistory', 'searchHistoryEnabled',
+        // recent view (v4 task 2)
+        'recentCount',
+        // stats view (v4 task 2)
+        'visitStats', 'statsEnabled', 'statsSort',
+        // dead view (v4 task 2)
+        'deadLastScan', 'deadProxyTemplate', 'deadMarks', 'deadScanConcurrency', 'deadScanTimeout',
+        // dupes view (v4 task 2)
+        'dupesStrategy', 'dupesScope', 'dupesIgnoreScheme',
+        // delete confirmation (v4 task 2 A2)
+        'confirmDeleteFolder',
         // general options
         'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',

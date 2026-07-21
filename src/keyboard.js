@@ -41,6 +41,7 @@ export function initKeyboard(ctx = {}) {
     const os = ctx.os;
     const rtl = ctx.rtl;
     const palette = ctx.palette; // ESC layering: close palette before popup
+    const viewManager = ctx.viewManager; // v4 task 2: Esc layering + Ctrl+1-6 view switching
 
     // neatools' String.prototype.escapeRegExp, kept as a pure function
     const escapeRegExp = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -474,6 +475,10 @@ export function initKeyboard(ctx = {}) {
             palette.close();
             return;
         }
+        // v4 task 2: view-specific Escape (dead-scan abort, non-tree→tree)
+        if (viewManager && viewManager.dispatchEsc()) {
+            return;
+        }
         if (search.isActive() || search.input.value) {
             if (search.isActive())
                 search.quit();
@@ -503,6 +508,22 @@ export function initKeyboard(ctx = {}) {
             e.preventDefault();
         }
     });
+
+    // v4 task 2: Ctrl/Cmd+1-6 direct view switching (capture phase, skip while
+    // input is focused so search/palette can still type numbers)
+    if (viewManager) {
+        document.addEventListener('keydown', e => {
+            if (!(e.metaKey || e.ctrlKey)) return;
+            const tag = document.activeElement ? document.activeElement.tagName : '';
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+            const num = parseInt(e.key, 10);
+            if (num >= 1 && num <= 6) {
+                e.preventDefault();
+                const viewIds = ['tree', 'search', 'recent', 'stats', 'dead', 'dupes'];
+                viewManager.activate(viewIds[num - 1]);
+            }
+        }, true);
+    }
 
     return { treeKeyDown, treeKeyUp, contextKeyDown };
 }

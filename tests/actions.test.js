@@ -810,19 +810,13 @@ describe('deleteBookmarks', () => {
         return { li, item, parent, sibFocus, ownFocus, ...ctx };
     };
 
-    // P3.3: the ConfirmDialog is gone — a captured snapshot + undo toast is
-    // the safety net for every folder delete, non-empty or not.
-    it('captures the folder, removes the tree and toasts — no ConfirmDialog', () => {
-        const { actions, calls, ops, parent, li, sibFocus } = setupFolder();
+    // v4 task 2 A2: confirmDeleteFolder defaults on ('1').
+    // Non-empty folders (3+2=5 children) trigger ConfirmDialog.
+    it('shows ConfirmDialog for non-empty folder when confirmDeleteFolder is on (default)', () => {
+        const { actions, calls } = setupFolder();
         actions.deleteBookmarks('9', 3, 2);
-        expect(calls.confirm).toEqual([]);
-        expect(ops).toEqual([
-            ['capture', '9'],
-            ['removeTree', '9'],
-            ['toast', 'deletedFolder[My Folder]']
-        ]);
-        expect(parent.removedChildren).toEqual([li]);
-        expect(sibFocus.focused).toBe(true);
+        expect(calls.confirm.length).toBe(1);
+        expect(calls.confirm[0].dialog).toBe('confirmDeleteFolder[5]');
     });
 
     it('takes the same no-confirm path for an empty folder', () => {
@@ -839,7 +833,10 @@ describe('deleteBookmarks', () => {
     });
 
     it('still removes the tree silently when no undo API is injected', () => {
-        const { actions, chrome, calls, ops } = setupFolder({ noUndo: true });
+        const { actions, chrome, calls, ops, store } = setupFolder({ noUndo: true });
+        // v4 task 2 A2: confirmDeleteFolder defaults on; disable for the
+        // "no undo" path which tests pure delete-without-undo behavior.
+        store._data.confirmDeleteFolder = 'false';
         actions.deleteBookmarks('9', 3, 2);
         expect(calls.confirm).toEqual([]);
         expect(chrome.bookmarks.removeTreeCalls).toEqual(['9']);

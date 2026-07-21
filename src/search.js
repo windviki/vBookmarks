@@ -40,6 +40,11 @@ export function initSearch(ctx = {}) {
     const searchClearBtn = $('search-clear');
     let prevValue = '';
 
+    // v4 task 2: view system integration
+    const activateView = ctx.activateView || (() => {});
+    const getActiveView = ctx.getActiveView || (() => 'tree');
+    let sourceViewId = 'tree';
+
     // The custom clear button (native webkit cancel glyph removed in CSS):
     // visible only while the field has text, toggled from every path that
     // mutates searchInput.value.
@@ -107,6 +112,8 @@ export function initSearch(ctx = {}) {
             switchBookmarkMenu(false);
             $tree.style.display = 'block';
             $results.style.display = 'none';
+            // v4 task 2: return to source view
+            activateView(sourceViewId);
 
             if (ignoreFocus === null || !ignoreFocus) {
                 // fix focus
@@ -152,6 +159,9 @@ export function initSearch(ctx = {}) {
         prevValue = value;
         searchMode = true;
         switchBookmarkMenu(true);
+        // v4 task 2: activate search view, remember source
+        sourceViewId = getActiveView();
+        activateView('search');
 
         const renderResults = results => {
             let html = '<ul role="list">';

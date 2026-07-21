@@ -1519,3 +1519,211 @@ menu[type=context] .menu-item,
     -webkit-animation: vbm-palette-in .12s ease-out;
     animation: vbm-palette-in .12s ease-out;
 }
+
+/* =====================================================================
+   v4 task 2: View tabs + view container (§3.2 tab 条视觉规范)
+   ===================================================================== */
+
+/* Tab bar: 32px tall, sits between search bar and views */
+#view-tabs {
+    display: flex;
+    flex: none;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--vbm-border);
+    background: var(--vbm-bg);
+    overflow: hidden; /* no horizontal scrollbar; equi-width + ellipsis */
+}
+
+#view-tabs [role="tab"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1 1 0;        /* equi-width distribution */
+    min-width: 0;        /* allow shrink below content */
+    height: 100%;
+    padding: 0 6px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--vbm-muted);
+    font: menu;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    transition: color .15s ease, border-color .15s ease;
+}
+
+#view-tabs [role="tab"]:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+#view-tabs [role="tab"]:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Active tab: accent color + bottom indicator bar */
+#view-tabs [role="tab"].active,
+#view-tabs [role="tab"][aria-selected="true"] {
+    color: var(--vbm-accent);
+    border-bottom-color: var(--vbm-accent);
+}
+
+/* Tab label: hidden in narrow popup (icon-only), shown in wide/panel.
+   CSS container query (Chrome 114+) for 480px breakpoint; panel-mode
+   always shows labels. */
+#view-tabs .tab-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: none;  /* hidden by default (narrow popup) */
+}
+
+/* Wide popup: show labels */
+@container (min-width: 480px) {
+    #view-tabs .tab-label {
+        display: inline;
+    }
+}
+
+/* Side panel: always show labels */
+body.panel-mode #view-tabs .tab-label {
+    display: inline;
+}
+
+/* Tab badge (dead/dupes count) — top-right 9px dot */
+.tab-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    border-radius: 7px;
+    background: var(--vbm-danger);
+    color: var(--vbm-accent-fg);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 14px;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* --- View container & panes --- */
+#views {
+    flex: 1 1 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.view-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 1;
+    transition: opacity .15s ease;
+}
+
+.view-pane[style*="display: none"] {
+    opacity: 0;
+}
+
+.view-content {
+    padding: 0;
+}
+
+/* Screen-reader-only announcer */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* --- Row path label (§3.6) --- */
+.row-path {
+    color: var(--vbm-muted);
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45%;
+    margin-inline-start: auto;
+    flex-shrink: 1;
+    text-align: end;
+}
+
+/* Narrow: single-line with path right-aligned */
+.view-row-single .row-path {
+    display: inline;
+}
+
+/* Wide/panel: two-line path */
+body.panel-mode .row-path-double,
+@container (min-width: 480px) {
+    .row-path-double .row-path {
+        display: block;
+        max-width: 100%;
+        margin-inline-start: 0;
+        text-align: start;
+        padding-inline-start: 20px; /* align with title after favicon */
+    }
+}
+
+/* --- Dead mark overlay on favicon (§5.5c) --- */
+.dead-mark {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    z-index: 11;
+    pointer-events: none;
+}
+
+.dead-mark::before,
+.dead-mark::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 1.5px;
+    background: var(--vbm-danger);
+    top: 50%;
+    left: 50%;
+}
+
+.dead-mark::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dead-mark::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Reduced motion: disable tab indicator slide and fade */
+@media (prefers-reduced-motion: reduce) {
+    #view-tabs [role="tab"],
+    .view-pane {
+        transition: none;
+    }
+
+    #command-palette {
+        -webkit-animation: none;
+        animation: none;
+    }
+
+    @keyframes vbm-palette-in {}
+}

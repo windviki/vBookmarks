@@ -64,9 +64,8 @@
  * tree-render.js's, modules stay self-contained).
  */
 
-import { normalizeUrl, findDupes, planDeletion } from './dupes.js';
+import { normalizeUrl } from './dupes.js';
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
-import { filterScannable, startDeadScan, collectDead, statusLabel } from './dead-links.js';
 import { FOLDER_ICON } from './icons.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
@@ -95,24 +94,16 @@ export function initPalette(ctx = {}) {
     const anyDialogOpen = () =>
         DIALOG_CLASSES.some(c => document.body.classList.contains(c));
 
+    // v4 task 2: view-activation bridge — replaces the old dupes/dead sub-mode
+    // state machine. The palette now dispatches to the view system instead of
+    // hosting dupes/dead inline.
+    const activateView = ctx.activateView || (() => {});
+
     // --- State --------------------------------------------------------------
     let openState = false;
     let index = [];          // flattened { id, title, url, dateAdded, isFolder }
     let rows = [];           // rendered rows: { kind, el, id, url, name, fn }
     let selected = -1;       // index into rows, -1 = nothing highlighted
-    let mode = 'normal';     // 'normal' | 'dupes' | 'dead'
-    let dupeGroups = [];     // findDupes() result backing the dupes-mode rows
-    let deadScan = null;     // startDeadScan() controller while a scan runs
-    let deadItems = [];      // scannable bookmarks of the current scan
-    let deadResults = null;  // Map id → checkUrl result (null = scan in flight)
-    let deadProgress = 0;    // settled checks, for the deadChecking line
-
-    // /dead must never probe separators (their URLs are http(s)); the manager
-    // is injected by neat.js, tests may leave it out.
-    const separatorManager = ctx.separatorManager;
-    const isSeparator = separatorManager
-        ? (title, url) => separatorManager.isSeparator(title, url)
-        : null;
 
     // Flatten a bookmark tree: a node with children is a folder, everything
     // else a bookmark; the synthetic root ('0') is skipped. Shared by the
@@ -157,157 +148,10 @@ export function initPalette(ctx = {}) {
         });
     };
 
-    // --- Dupes mode (P3.1) ----------------------------------------------------
-    // chrome.bookmarks.remove is callback-only; chain the ids so the deletions
-    // hit the backend strictly one after another, then report done.
-    const removeSequentially = items =>
-        items.reduce((chain, item) => chain.then(() =>
-            new Promise(resolve => chrome.bookmarks.remove(item.id, resolve))),
-            Promise.resolve());
+    // v4 task 2: dupes/dead sub-modes retired — replaced by view-activation
+    // commands that jump to the dedicated views (view-dupes.js / view-dead.js).
 
-    const refreshDupes = () => {
-        chrome.bookmarks.getTree(tree => {
-            dupeGroups = findDupes(flattenTree(tree).filter(b => !b.isFolder));
-            render();
-        });
-    };
-
-    const enterDupesMode = () => {
-        mode = 'dupes';
-        $input.value = '';
-        refreshDupes();
-    };
-
-    const cleanGroup = group => {
-        const doomed = planDeletion(group); // keep the oldest entry
-        dialogs.ConfirmDialog.open({
-            dialog: _m('dupesConfirmGroup', `${doomed.length}`),
-            button1: `<strong>${_m('delete')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                removeSequentially(doomed).then(() => {
-                    onChanged();
-                    refreshDupes(); // stay in dupes mode with the rebuilt list
-                });
-            }
-        });
-    };
-
-    const cleanAll = () => {
-        const doomed = dupeGroups.reduce((all, g) => all.concat(planDeletion(g)), []);
-        const groupCount = dupeGroups.length;
-        dialogs.ConfirmDialog.open({
-            dialog: _m('dupesConfirmAll', [`${doomed.length}`, `${groupCount}`]),
-            button1: `<strong>${_m('delete')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                removeSequentially(doomed).then(() => {
-                    onChanged();
-                    close();
-                    dialogs.AlertDialog.open(_m('dupesDone', `${doomed.length}`));
-                });
-            }
-        });
-    };
-
-    // --- Dead-link scan (P3.5) ----------------------------------------------
-    // The scan runs in the popup itself (see the module header). Every stage
-    // re-checks `mode`: the panel may close — and abort the scan — while the
-    // tree read or a check is in flight, and late resolutions must not paint.
-    const startDeadModeScan = () => {
-        deadResults = null;
-        deadProgress = 0;
-        chrome.bookmarks.getTree(tree => {
-            if (mode !== 'dead')
-                return;
-            deadItems = filterScannable(flattenTree(tree), isSeparator);
-            render(); // progress line at 0/total
-            deadScan = startDeadScan(deadItems, {
-                onProgress: done => {
-                    deadProgress = done;
-                    if (mode === 'dead')
-                        render();
-                }
-            });
-            deadScan.promise.then(results => {
-                deadScan = null;
-                if (mode !== 'dead') // closed mid-scan: drop the partials
-                    return;
-                deadResults = results;
-                render();
-            });
-        });
-    };
-
-    const enterDeadMode = () => {
-        mode = 'dead';
-        $input.value = '';
-        startDeadModeScan();
-    };
-
-    const removeDeadItem = item => {
-        actions.deleteBookmark(item.id);
-        deadResults.delete(item.id);
-        deadItems = deadItems.filter(b => b.id !== item.id);
-        render();
-    };
-
-    const removeAllDead = () => {
-        const dead = collectDead(deadItems, deadResults);
-        dialogs.ConfirmDialog.open({
-            dialog: _m('deadConfirmAll', `${dead.length}`),
-            button1: `<strong>${_m('delete')}</strong>`,
-            button2: _m('nope'),
-            fn1: () => {
-                const ids = dead.map(b => b.id);
-                // Delete sequentially so undo captures stack per-item
-                ids.reduce((chain, id) => chain.then(() =>
-                    new Promise(resolve => {
-                        actions.deleteBookmark(id);
-                        deadResults.delete(id);
-                        resolve();
-                    })), Promise.resolve()).then(() => {
-                    deadItems = deadItems.filter(b => !ids.includes(b.id));
-                    render();
-                });
-            }
-        });
-    };
-
-    // Dead mode: the query box is inert — while scanning, one progress line;
-    // afterwards a "delete all" row + rescan row + one badged row per dead
-    // bookmark, or the deadNone empty-state when everything resolved ok.
-    const renderDead = () => {
-        if (!deadResults) {
-            const li = document.createElement('li');
-            li.className = 'palette-empty';
-            li.textContent = _m('deadChecking', [`${deadProgress}`, `${deadItems.length}`]);
-            $results.appendChild(li);
-            return;
-        }
-        const dead = collectDead(deadItems, deadResults);
-        if (!dead.length) {
-            const li = document.createElement('li');
-            li.className = 'palette-empty';
-            li.textContent = _m('deadNone');
-            $results.appendChild(li);
-            return;
-        }
-        addRow({ kind: 'dead-all', fn: removeAllDead, name: _m('deadDeleteAll', `${dead.length}`) });
-        addRow({ kind: 'dead-rescan', fn: startDeadModeScan, name: _m('deadRescan') });
-        for (let i = 0, l = dead.length; i < l; i++) {
-            const item = dead[i];
-            addRow({
-                kind: 'dead',
-                fn: () => removeDeadItem(item),
-                title: item.title || item.url,
-                url: item.url,
-                badge: statusLabel(deadResults.get(item.id))
-            });
-        }
-    };
-
-    // --- Session save (P3.2) ------------------------------------------------
+    // --- Rendering ------------------------------------------------------------
     // Snapshot the current window's tabs into a fresh folder under
     // rootFolderId. keepOpen so the nothing-bookmarkable case can alert
     // without dropping the panel; the success path closes explicitly before
@@ -354,13 +198,24 @@ export function initPalette(ctx = {}) {
         });
     };
     const commands = [
+        // Action commands
         { name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
         { name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
         { name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
         { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
-        { slash: 'dupes', keepOpen: true, name: () => _m('paletteCmdDupes'), fn: enterDupesMode },
-        { slash: 'dead', keepOpen: true, name: () => _m('paletteCmdDead'), fn: enterDeadMode },
-        { slash: 'session', keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession }
+        // v4 task 2: view-jump commands (replace old dupes/dead sub-modes)
+        { slash: 'tree', name: () => _m('viewTree'), fn: () => { activateView('tree'); } },
+        { slash: 'search', name: () => _m('viewSearch'), fn: () => { activateView('search'); } },
+        { slash: 'recent', name: () => _m('viewRecent'), fn: () => { activateView('recent'); } },
+        { slash: 'stats', name: () => _m('viewStats'), fn: () => { activateView('stats'); } },
+        { slash: 'dupes', name: () => _m('viewDupes'), fn: () => { activateView('dupes'); } },
+        { slash: 'dead', name: () => _m('viewDead'), fn: () => { activateView('dead'); } },
+        // Session save (keep existing behavior)
+        { slash: 'session', keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
+        // v3: open settings page (chrome.runtime.openOptionsPage)
+        { slash: 'options', name: () => _m('paletteCmdOptions') || 'Open Settings', fn: () => {
+            if (chrome.runtime.openOptionsPage) chrome.runtime.openOptionsPage();
+        }}
     ];
 
     // --- Rendering ------------------------------------------------------------
@@ -410,49 +265,12 @@ export function initPalette(ctx = {}) {
         }
     };
 
-    // Dupes mode: the query box is inert — rows are the clean-all command
-    // (with the totals spelled out) plus one row per colliding group, or a
-    // single empty-state line when the tree has no duplicates.
-    const renderDupes = () => {
-        if (!dupeGroups.length) {
-            const li = document.createElement('li');
-            li.className = 'palette-empty';
-            li.textContent = _m('dupesNone');
-            $results.appendChild(li);
-            return;
-        }
-        const extra = dupeGroups.reduce((n, g) => n + g.items.length - 1, 0);
-        addRow({
-            kind: 'dupes-all',
-            fn: cleanAll,
-            name: _m('dupesCleanAll', [`${dupeGroups.length}`, `${extra}`])
-        });
-        for (let i = 0, l = dupeGroups.length; i < l; i++) {
-            const group = dupeGroups[i];
-            addRow({
-                kind: 'dupe',
-                fn: () => cleanGroup(group),
-                title: group.title || group.key,
-                count: _m('dupesGroupCount', `${group.items.length}`),
-                url: group.key
-            });
-        }
-    };
+    // v4 task 2: dupes/dead rendering retired — views now handle their own UI.
 
     const render = () => {
         rows = [];
         selected = -1;
         $results.innerHTML = '';
-        if (mode === 'dupes') {
-            renderDupes();
-            updateSelection();
-            return;
-        }
-        if (mode === 'dead') {
-            renderDead();
-            updateSelection();
-            return;
-        }
         const query = $input.value.trim();
         const slashMode = query.charAt(0) === '/';
         const q = slashMode ? query.slice(1) : query;
@@ -500,11 +318,6 @@ export function initPalette(ctx = {}) {
             row.fn();
             if (row.keepOpen)
                 return;
-        } else if (row.kind === 'dupes-all' || row.kind === 'dupe' ||
-                   row.kind === 'dead-rescan' || row.kind === 'dead' ||
-                   row.kind === 'dead-all') {
-            row.fn();
-            return;
         } else if (row.kind === 'folder') {
             treeView.revealFolder(row.id);
         } else if (newTab) {
@@ -562,14 +375,10 @@ export function initPalette(ctx = {}) {
             }
             case 'ArrowLeft':
                 e.preventDefault();
-                // Close context menu if one is open over the palette, otherwise
-                // go back from dupes/dead sub-mode to normal mode.
+                // Close context menu if one is open over the palette.
+                // v4 task 2: sub-mode back navigation retired (use Esc to close).
                 if (clearMenu && document.body.querySelector('.active')) {
                     clearMenu();
-                } else if (mode === 'dupes' || mode === 'dead') {
-                    mode = 'normal';
-                    $input.value = '';
-                    render();
                 }
                 break;
             case 'Home':
@@ -655,14 +464,7 @@ export function initPalette(ctx = {}) {
         if (!openState)
             return;
         openState = false;
-        mode = 'normal'; // dupes/dead mode never survives a close
-        dupeGroups = [];
-        if (deadScan) { // abort an in-flight dead-link scan
-            deadScan.abort();
-            deadScan = null;
-        }
-        deadItems = [];
-        deadResults = null;
+        // v4 task 2: no more sub-mode state to reset.
         $palette.hidden = true;
         // Hand focus back to the tree: the focused row, else its first row,
         // else just drop focus from the input.

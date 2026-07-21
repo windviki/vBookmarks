@@ -1,968 +1,426 @@
-# v4 任务包 2：Tab/View 视图系统重构设计
+# v4 任务包 2：视图化（Tabs/Views）重构设计方案
 
-> 状态：**方案设计阶段**（待评审确认后实施）
-> 依赖：v4task-1（P1–P4 全部完成）
-> 目标：引入 tab 视图架构，统一 popup 与 side panel 的导航体验，为 side panel 全功能迁移铺路
+> **状态：设计待评审 v3**（2026-07-21；v2：tab 视觉规范、搜索历史、死链缓存/代理/标记、去重策略、路径标签；v3：删除非空文件夹确认回归、选项开关与自定义入口全集、options"视图"分组、明确不纳入清单）。
+> 本文只做设计，不含实施；实施时按 §9 分切片执行。
+> 前置阅读：`AGENTS.md`、`docs/v4task-1.md`（协作约定与硬约定）、《现代化演进总方案.md》§7.1（侧栏策略）、§2（品味三原则）。
+> 需求来源：维护者提出的"最近添加"功能重构——引入 tab/视图概念，为未来逐步向 side panel 迁移做准备。
 
----
+## 1. 背景与需求
 
-## 1. 动机与目标
+维护者需求（要点）：
 
-### 1.1 现状问题
+1. 在 popup 与 side panel 中，把"最近添加"区域所在的容器重构为**类似浏览器 tab 的视图容器**，容纳多个视图。
+2. 视图清单（6 个）：**tree（默认）、search（搜索）、recent（最近添加）、stats（访问统计）、dead（死链）、dupes（重复管理）**。
+3. 命令面板（palette）可在**任意视图**呼出，输入命令跳转视图；面板中**所有可点击指令都要提供 `/` slash command** 键盘快速操作。
+4. 重点协调问题：默认视图已有搜索框、palette 也有输入框，再引入 search 视图后，三者关系如何组织——搜索入口、输入框与搜索结果的呈现位置。
+5. v2 增补：tab 视觉与各主题呈现；搜索历史与上次结果恢复；死链缓存/代理双通道/标记 overlay；去重分组与快捷策略；列表行父路径标签（可关）。
+6. v3 增补：**删除非空文件夹时弹 ConfirmDialog 确认**（涉及多个书签，误删成本高）；以及随新功能一次性配套的选项开关与自定义入口全集（§5.7、§7）。
 
-当前 popup/sidepanel 的"内容区域"是一个扁平结构：
+本文的目标是把这套需求细化为可直接实施的设计：视图抽象、tab UI、状态持久化、键盘/Esc 收纳、palette 命令统一、搜索体系协调、六个视图的逐一设计、横切行为变更、设置项迁移、分阶段路线。
 
-```
-#container
-├── #search (工具栏：搜索框 + 星标 + 工具按钮)
-├── #tree  (主内容区)
-│   ├── #recent-section (最近添加，虚拟置顶区)
-│   └── 主树 (书签文件夹层级)
-└── #results (搜索结果显示区)
-```
+## 2. 现状依据（为什么现在适合做视图化）
 
-存在以下结构性问题：
+### 2.1 代码库已存在三个"准视图"，但机制各自为政
 
-1. **"最近添加"是一个廉价的附加功能**——它被硬编码在树视图顶部 (`tree-view.js:120-196`)，无法独立导航，折叠后完全不可见，没有自己的"主页"身份
-2. **功能发现性差**——死链扫描、重复管理、会话保存等功能全部藏在 `Ctrl+K` 命令面板的斜杠命令后面，新用户几乎无法发现
-3. **缺乏视图切换机制**——用户只能在"树视图 + 搜索过滤"之间二选一，没有能力在不同功能视图间独立切换
-4. **为 side panel 铺路**——side panel 有更大的纵向空间（`100vh`），popup 只有 600px 高，二者需要统一的视图导航模型
-5. **搜索输入框定位模糊**——工具栏搜索框和命令面板各有一个输入框，都做搜索，用户容易混淆
+| 准视图 | 现状机制 | 证据 |
+|---|---|---|
+| 树 / 搜索结果 | `#tree` 与 `#results` 双容器，搜索模式 = `#tree` display:none 替换 | `pages/popup.html:25-26`；`src/search.js:195-197` |
+| 命令面板 | `#command-palette` overlay + `hidden` 切换；内部再有 `mode: normal/dupes/dead` 字符串状态机 | `pages/popup.html:80`；`src/palette.js:103,562` |
+| 最近添加 | 寄生在树顶部的虚拟区 `#recent-section`，前置拼接到树 HTML | `src/tree-view.js:125-134, 218` |
 
-### 1.2 设计目标
+dupes/dead 两个功能**唯一入口是 palette 的 `/dupes`、`/dead` 命令**，以面板内 mode 的形式存在（`src/palette.js:361-362`，import 无其他消费者）。它们是"临时模式"而非正式视图——是视图化最自然的迁移对象。
 
-1. **引入 Tab 视图系统**——在工具栏下方增加一个水平 tab 栏，容纳 6 个独立视图
-2. **最近添加升级为独立视图**——从树顶的虚拟区域变成一个完整的 tab 页
-3. **命令面板可在任意视图呼出**——`Ctrl+K` 全局可用，不因切换视图而失效
-4. **所有 palette 命令提供 `/` slash command**——命令面板中所有可点击指令，都有对应的 `/` 前缀快捷输入
-5. **理清搜索三件套的关系**——工具栏搜索框、命令面板输入、搜索视图三者各司其职
+### 2.2 可复用的资产
 
----
+- **单 DOM 双页面已验证**：sidepanel.html 与 popup.html 仅差 `<body class="panel-mode">` 一行，全部模块共享；`src/popup.js:20-24` 与 `src/neat.js:19-20` 用同一判定跳过 popup 专属逻辑。视图层只需在共享 DOM 上加一层，popup/panel 天然一致。
+- **虚拟区先例**：recent 区的 DOM id 命名空间（`neat-recent-item-`）、`data-virtual="1"` 防拖拽（`src/tree-view.js:113-119`）、折叠状态单 key 持久化、onCreated/onRemoved + 300ms 防抖刷新（`src/tree-view.js:156-164`）——可直接抽离为独立视图。
+- **纯逻辑模块已就位**：`src/dupes.js`、`src/dead-links.js`、`src/fuzzy.js` 全部零 chrome/DOM 依赖，vitest 直测。
+- **sync indicator 的 overlay 模式**：favicon 右下角圆点 + CSS token 着色（`css/sync-styles.css`）——死链标记 overlay 直接复刻此模式。
+- **路径数据已有纯函数**：`src/tree-render.js` 的 `generateNodeTrees`/`getParentPath` 可构建 id→父路径映射；搜索结果现状已有异步补父文件夹 tooltip 的先例。
+- **删除确认的复活资产**：P3.3 用 undo toast 取代 ConfirmDialog 后，`confirmDeleteFolder*` i18n key 成为死文案但**保留在 43 个 locale 中未删**（v4task-1 §3 偏差清单）；且 `keyboard.js`/`context-menu.js **至今仍统计子节点数**（计数已无消费者，AGENTS.md Known Quirks）。恢复"非空文件夹确认"= 复活死 key + 接上现成计数，几乎零成本（§5.7）。
+- **palette 命令表结构**：`{ name, fn, slash?, keepOpen? }`（`src/palette.js:356-364`），slash 前缀匹配已实现（`:446-459`）——视图注册表以此为蓝本。
+- **统一存储**：`src/store.js` 内存镜像 + KNOWN_KEYS 白名单（`:43-55`）。
 
-## 2. 整体架构设计
+### 2.3 不可翻案的既定决策（约束）
 
-### 2.1 Tab 视图系统
+- popup 永远是默认呈现，功能完整不裁剪；side panel 是可选增强（总方案 §7.1）。
+- 不引入框架/打包器；ES module `initX(ctx)` 工厂 + neat.js 编排。
+- 本地优先：chrome.bookmarks 直读；**不新增权限**（AGENTS.md:128）。
+- 每模块 <400 行（超出需有意豁免）；每个新模块配一个 vitest suite；popup.html 改动必须同步 sidepanel.html（parity 断言）。
+- 品味三原则：速度感、秩序感、安静感；五主题 auto/light/dark/ink/paper 全部 token 驱动。
+- **范围纪律**（总方案 §5）：本任务包只收与视图化直接相关的增强；§11 列出明确不纳入的项。
 
-```
-┌──────────────────────────────────────────────┐
-│  #search (工具栏：搜索框 + 星标 + 工具 ⋮)      │
-├──────────────────────────────────────────────┤
-│  #tab-bar (Tab 栏)                            │
-│  [🌳 Tree] [🔍 Search] [🕐 Recent]            │
-│  [📊 Stats] [💀 Dead] [📋 Dupes]              │
-├──────────────────────────────────────────────┤
-│  #view-container (视图容器，flex:1 占满剩余空间) │
-│                                              │
-│  当前活跃视图的内容渲染在这里                    │
-│  (替代原来的 #tree / #results 二选一)          │
-│                                              │
-├──────────────────────────────────────────────┤
-│  #undo-toast (底部浮层，固定定位)              │
-└──────────────────────────────────────────────┘
-```
+## 3. 总体设计：视图架构
 
-#### Tab 定义
+### 3.1 视图注册表与生命周期
 
-| Tab ID | 标签名(i18n key) | 图标 | 默认可见 | 说明 |
-|--------|------------------|------|---------|------|
-| `tree` | `tabTree` | 🌳 文件夹 | ✅ 是 | 默认视图，文件夹树 + 展开/收起 |
-| `search` | `tabSearch` | 🔍 放大镜 | ✅ 是 | 全功能搜索视图 |
-| `recent` | `tabRecent` | 🕐 时钟 | ✅ 是 | 最近添加的书签（原 #recent-section 升级） |
-| `stats` | `tabStats` | 📊 柱状图 | ✅ 是 | 访问统计视图（站内点击/访问频率） |
-| `dead` | `tabDead` | 💀  skull | ✅ 是 | 死链扫描与管理 |
-| `dupes` | `tabDupes` | 📋 复制品 | ✅ 是 | 重复书签检测与清理 |
+新增 `src/view-manager.js`（ESM，`initViewManager(ctx)`），是视图层的唯一入口：
 
-**Tab 可见性设置**：用户在 options 页可配置哪些 tab 显示/隐藏（默认全部显示）。与现有 `showRecentBookmarks` 设置的关系见 §5 迁移方案。
-
-#### Tab 栏 UI 规格
-
-- 水平排列，位于搜索工具栏下方、视图容器上方
-- 活跃 tab 高亮（`--vbm-accent` 底部边框 + 加粗文字）
-- 支持键盘导航：`Ctrl+1~6` 快速切换（或在 tab 栏聚焦时 `← →` 切换、`Enter` 激活）
-- tab 栏支持横向溢出滚动（popup 宽度仅 320px，6 个 tab 可能超出；side panel 空间更充裕）
-- 每个 tab 显示图标 + 短文字（图标优先，文字在空间充裕时显示）
-
-#### Tab 切换行为
-
-- 点击 tab：切换到对应视图
-- 键盘快捷键：
-  - `Ctrl+1`–`Ctrl+6`：直接跳转到对应 tab
-  - `Ctrl+Shift+]` / `Ctrl+Shift+[`：切换到下一个/上一个 tab
-- 切换视图时保留各视图的独立状态（滚动位置、搜索词、展开状态）
-- 默认激活 `tree` view（保持现有用户体验不变）
-
-### 2.2 DOM 结构变更
-
-```html
-<!-- popup.html / sidepanel.html 变更概要 -->
-<div id="container">
-    <!-- 搜索工具栏保持不变 -->
-    <div id="search" role="search">
-        <!-- search input + clear + star + tool buttons -->
-    </div>
-
-    <!-- 新增：Tab 栏 -->
-    <nav id="tab-bar" role="tablist" aria-label="Views">
-        <!-- JS 动态生成 tab 按钮 -->
-    </nav>
-
-    <!-- 替代原来的 #tree + #results 二选一结构 -->
-    <div id="view-container">
-        <!-- 每个视图的内容面板，仅活跃视图可见 -->
-        <div id="view-tree" role="tabpanel" class="view-panel">...</div>
-        <div id="view-search" role="tabpanel" class="view-panel" hidden>...</div>
-        <div id="view-recent" role="tabpanel" class="view-panel" hidden>...</div>
-        <div id="view-stats" role="tabpanel" class="view-panel" hidden>...</div>
-        <div id="view-dead" role="tabpanel" class="view-panel" hidden>...</div>
-        <div id="view-dupes" role="tabpanel" class="view-panel" hidden>...</div>
-    </div>
-</div>
-
-<!-- 其余保持：drop-overlay, bookmark-clone, context menus, resizers, cover,
-     command-palette, dialogs, undo-toast -->
-```
-
-**关键变更**：
-- `#tree` 和 `#results` 不再是顶层容器，改为在对应 view panel 内部
-- `#view-container` 替代 `#tree`/`#results` 成为主内容区
-- `#command-palette` 保持在 `#view-container` 外部（overlay 层），z-index 100
-
-### 2.3 CSS 布局变更
-
-```css
-/* #container 保持 flex column */
-
-#tab-bar {
-    flex: none;
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-    border-bottom: 1px solid var(--vbm-border);
-    padding: 0 4px;
-    /* 窄滚动条 */
-    scrollbar-width: thin;
-}
-
-.tab-btn {
-    flex: none;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 10px;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    background: transparent;
-    color: var(--vbm-muted);
-    font: menu;
-    font-size: 90%;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color .12s ease-out, color .12s ease-out,
-                border-color .12s ease-out;
-}
-
-.tab-btn:hover {
-    background: var(--vbm-bg-hover);
-    color: var(--vbm-fg);
-}
-
-.tab-btn.active {
-    color: var(--vbm-accent);
-    border-bottom-color: var(--vbm-accent);
-    font-weight: 600;
-}
-
-.tab-btn .tab-icon {
-    width: 14px;
-    height: 14px;
-    flex: none;
-}
-
-/* Side panel: 更大空间时显示文字 */
-body.panel-mode .tab-btn .tab-label {
-    display: inline;
-}
-/* Popup: 窄空间时文字可选隐藏，仅图标 */
-@media (max-width: 360px) {
-    .tab-btn .tab-label {
-        display: none;
-    }
-}
-
-#view-container {
-    flex: 1;
-    overflow: hidden;  /* 各 view panel 内部自行处理溢出 */
-    position: relative;
-}
-
-.view-panel {
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.view-panel[hidden] {
-    display: none;
+```text
+ViewDef = {
+  id:          'tree' | 'search' | 'recent' | 'stats' | 'dead' | 'dupes',
+  titleKey:    i18n key（tab 文案/aria-label）,
+  icon:        内联 SVG（src/icons.js 新增常量，16px 网格 1.5px 描边 currentColor）,
+  slash:       'tree' | 'search' | 'recent' | 'stats' | 'dead' | 'dupes',
+  container:   视图根元素（#view-<id>）,
+  badge():     可选，返回 tab 角标计数（dead=已标记死链数，dupes=重复组数；0/undefined 不显示）,
+  activate(ctx),    // 切入：渲染/刷新数据、恢复滚动与焦点、resetHeight
+  deactivate(ctx),  // 切出：保存滚动与焦点
+  onEscape(): bool, // 视图内 Esc 自定义处理（true = 已消费）
 }
 ```
 
----
-
-## 3. 六个视图详细设计
-
-### 3.1 Tree View（树视图）— 默认
-
-**职责**：当前主树视图的精确复刻，文件夹层级浏览。
-
-**内容**：
-- 原 `#tree` 的内容（包含 bookmark 树 + 原 `#recent-section` 移除后的纯树）
-- "最近添加"区域**不再**出现在此视图中（移到独立的 Recent View）
-
-**工具栏搜索框行为**：
-- 行为和现在完全一致：输入 → 模糊搜索 → 结果显示在 `#results` 面板
-- `#results` 面板在 Tree View 内部渲染（覆盖或切换树内容）
-- 快捷键：`Ctrl+F` 聚焦搜索框（不变）
-
-**键盘快捷键**：
-- 所有现有树导航快捷键不变（`↑↓←→`、`Enter`、`Delete`、`F2`、type-ahead）
-- `Ctrl+1`：切换到 Tree View（无论当前在哪个 view）
-
-**迁移要点**：
-- 将原 `#tree` 元素移入 `#view-tree` panel 内部
-- 移除 `tree-view.js` 中的 `#recent-section` 相关代码（移到 Recent View）
-- 搜索过滤逻辑保持 `search.js` 不变
-
----
-
-### 3.2 Search View（搜索视图）— **核心设计决策**
-
-**这是本次设计中最关键的视图**，需要明确它与工具栏搜索框和命令面板的关系。
-
-#### 设计原则：三件套分工明确
-
-```
-┌─────────────────────────────────────────────────────────┐
-│  输入方式          │  触发          │  做什么            │
-├─────────────────────────────────────────────────────────┤
-│  工具栏搜索框       │  始终可见       │  快速过滤当前视图   │
-│  (#search-input)   │  Ctrl+F 聚焦   │  内容（实时）       │
-├─────────────────────────────────────────────────────────┤
-│  搜索视图搜索框     │  切换到 Search  │  全功能书签搜索     │
-│  (view-search 内)  │  View tab 可见  │  (范围/排序/更多)   │
-├─────────────────────────────────────────────────────────┤
-│  命令面板          │  Ctrl+K 呼出    │  命令执行 + 快速    │
-│  (#palette-input)  │  全局 overlay  │  跳转书签/文件夹    │
-└─────────────────────────────────────────────────────────┘
-```
-
-**关键决策：搜索视图拥有自己独立的搜索输入框，不和工具栏搜索框合并。**
-
-理由：
-1. **角色不同**：工具栏搜索是"快速过滤"（always-on, lightweight），搜索视图是"深度搜索"（dedicated, full-featured）
-2. **范围不同**：工具栏搜索过滤当前视图的可见内容；搜索视图搜索全部书签
-3. **结果呈现不同**：工具栏搜索结果在紧凑的 `#results` 面板中；搜索视图有完整的内容区域，可以展示更多信息（路径、标签、缩略图）
-4. **借鉴最佳实践**：VS Code 的 Search 面板和 Quick Open 是两个独立功能；Figma 的搜索和命令面板各司其职
-
-#### 搜索视图内容设计
-
-```
-┌──────────────────────────────────────────────┐
-│  #view-search                                │
-│  ┌──────────────────────────────────────────┐│
-│  │ 🔍 [搜索全部书签...              ] [⏻]  ││ ← 独立搜索输入框
-│  ├──────────────────────────────────────────┤│
-│  │ 范围: [全部 ▼]  排序: [相关度 ▼]  [⚙]  ││ ← 搜索选项栏
-│  ├──────────────────────────────────────────┤│
-│  │                                          ││
-│  │ 搜索结果列表 (虚拟滚动或上限 200 条)       ││
-│  │ ┌──────────────────────────────────────┐ ││
-│  │ │ 🔗 书签标题            /路径/文件夹   │ ││
-│  │ │    url.com · 5天前添加              │ ││
-│  │ ├──────────────────────────────────────┤ ││
-│  │ │ 📁 文件夹名称          包含 N 项      │ ││
-│  │ │    /父文件夹路径                     │ ││
-│  │ ├──────────────────────────────────────┤ ││
-│  │ │ ...                                  │ ││
-│  │ └──────────────────────────────────────┘ ││
-│  │                                          ││
-│  └──────────────────────────────────────────┘│
-└──────────────────────────────────────────────┘
-```
-
-**搜索输入框**（在 Search View 内容区）：
-- 占位符：`"搜索全部书签..."`
-- 输入即搜（实时模糊匹配，debounce 150ms）
-- 支持搜索选项：
-  - 范围：全部书签 / 当前文件夹 / 书签栏
-  - 排序：相关度（默认）/ 按日期 / 按标题
-  - （未来可扩展：按域名筛选、按标签筛选）
-- 清除按钮（×）
-- 结果数量指示器
-
-**搜索结果列表**：
-- 每条结果显示：
-  - favicon + 标题（高亮匹配字符）
-  - URL（截断）
-  - 父文件夹路径（面包屑）
-  - 添加日期（相对时间："3天前"）
-- 点击行为（与现有搜索结果一致）：
-  - 左键：打开书签 / 跳转到文件夹
-  - Ctrl/Cmd+点击：新标签页打开
-  - 右键：完整上下文菜单
-  - Delete：删除
-- 无结果时显示空态："未找到匹配的书签"
-- 结果数量截断：200 条（vs 当前 100 条，search view 有更多空间）
-
-**与工具栏搜索框的交互**：
-- 用户在 Tree View 时 → 工具栏搜索框做快速过滤（现有行为）
-- 用户切换到 Search View → 输入焦点自动移到搜索视图的搜索输入框
-- 工具栏搜索框在 Search View 中**仍然可见但行为改变**：
-  - 如果用户在工具栏搜索框输入，它会触发搜索视图的搜索（相当于代理）
-  - **或者更简单**：在 Search View 中，工具栏搜索框输入自动同步到搜索视图的输入框
-  - **最终方案**：在 Search View 中，工具栏搜索框的 `placeholder` 变为 `"在搜索视图中搜索..."`，输入事件直接委托给搜索视图的搜索输入框（两个输入框值双向同步，用户体验上是同一个搜索）
-
-**搜索视图的工具栏搜索框方案（最终决策）**：
-
-采用"**委派同步**"模式：在 Search View 激活时，工具栏搜索框的输入事件委派给搜索视图的主搜索框，两个输入框的值保持双向同步。
-
-- 用户在工具栏搜索框输入 → 值同步写入搜索视图搜索框 → 触发搜索
-- 用户在搜索视图搜索框输入 → 值同步写入工具栏搜索框
-- 好处：用户无论从哪个输入框开始搜索，体验一致；不需要记住"在哪个 view 用哪个框"
-- 实现：Search View 激活时，`search.js` 的 input listener 检查当前 view，若为 `search` 则转发
-
-```
-用户在 Search View 中:
-  工具栏搜索框 ←→ 搜索视图搜索框 (双向同步)
-                     ↓
-                  执行搜索
-                     ↓
-              渲染结果到搜索视图
-```
-
----
-
-### 3.3 Recent View（最近添加视图）
-
-**职责**：原 `#recent-section` 的独立升级版，展示最近添加的书签。
-
-**变更**：
-- 从 `tree-view.js` 中提取 `#recent-section` 相关代码
-- 迁移到独立的 `src/recent-view.js` 模块
-- 不再折叠在树视图顶部，而是拥有完整的内容区域
-
-**内容**：
-```
-┌──────────────────────────────────────────────┐
-│  #view-recent                                │
-│  ┌──────────────────────────────────────────┐│
-│  │ 最近添加 (20)          [按日期 ▼] [展开]  ││ ← 标题栏
-│  ├──────────────────────────────────────────┤│
-│  │ 🔗 书签标题 1           5分钟前          ││
-│  │    url.com · /父文件夹                   ││
-│  │ 🔗 书签标题 2           1小时前          ││
-│  │    ...                                   ││
-│  │ 🔗 书签标题 20          3天前            ││
-│  └──────────────────────────────────────────┘│
-└──────────────────────────────────────────────┘
-```
-
-**功能增强**：
-- 展示数量可配置（默认 20，options 中可改为 30/50/100）
-- 支持排序：按添加时间倒序（默认）/ 正序 / 按标题
-- 支持按文件夹分组："在 '工作' 中添加了 3 项" / "在 '阅读' 中添加了 5 项"
-- 滚动加载更多（"显示更多" 按钮，每次 +20）
-- 每条支持右键菜单和 Delete 删除
-- 支持"清空最近记录"（仅从视图中移除，不删除书签 — — 通过设置时间窗口实现）
-
-**工具栏搜索框行为**：
-- 在 Recent View 中，工具栏搜索框过滤最近添加的条目
-- Placeholder 变为 `"过滤最近添加..."`
-
-**迁移路径**：
-- 移除 `tree-view.js:120-196` 的 `#recent-section` 代码
-- 移除 `neat.css:1034-1082` 的 `#recent-section` 样式
-- `showRecentBookmarks` 设置改为控制 Recent Tab 的可见性
-- `recentBookmarksCollapsed` 设置退役（不再需要折叠，因为有了独立 tab）
-- `chrome.bookmarks.onCreated/onRemoved` 监听器从 `tree-view.js` 移到新的 `recent-view.js`
-
----
-
-### 3.4 Stats View（访问统计视图）
-
-**职责**：展示书签的使用统计，帮助用户了解哪些书签最常用/最不常用。
-
-**注意**：Chrome 书签 API **不提供**访问频率数据。vBookmarks 需要通过 `chrome.tabs.onUpdated` / `chrome.tabs.onCreated` 监听来自己收集统计。这是一个需要后台 service worker 持续运行的功能。
-
-**内容**：
-```
-┌──────────────────────────────────────────────┐
-│  #view-stats                                 │
-│  ┌──────────────────────────────────────────┐│
-│  │ 📊 访问统计                              ││
-│  ├──────────────────────────────────────────┤│
-│  │ [最常访问] [最少访问] [从未访问] [最近]   ││ ← 子过滤
-│  ├──────────────────────────────────────────┤│
-│  │ #  书签                      访问次数     ││
-│  │ 1  🔗 GitHub              1,245 次       ││
-│  │ 2  🔗 Gmail                 892 次       ││
-│  │ 3  🔗 ...                               ││
-│  └──────────────────────────────────────────┘│
-└──────────────────────────────────────────────┘
-```
-
-**数据收集方案**：
-- Service worker 中监听标签页导航事件
-- 当 URL 匹配某个书签时，累加计数
-- 数据存储在 `chrome.storage.local`（`visitStats` key）
-- 数据结构：`{ [bookmarkId]: { count: N, lastVisit: timestamp } }`
-
-**功能**：
-- 二级过滤：最常访问 / 最少访问 / 从未访问 / 最近访问
-- 点击打开书签（和正常行为一致）
-- 右键菜单完整支持
-- "从未访问"列表帮助用户清理无用书签（可一键选择全部从未访问的书签）
-- "重置统计"按钮
-
-**工具栏搜索框行为**：
-- 在 Stats View 中，工具栏搜索框过滤统计列表中的书签标题
-
-**实施优先级**：
-- 此功能依赖后台数据收集，且需要一段时间的用户数据积累才有意义
-- 建议作为本任务包的最后一步实施
-- 初始可展示占位状态："统计数据收集中，请稍后再来"
-
----
-
-### 3.5 Dead Links View（死链视图）
-
-**职责**：原 palette `/dead` 命令的独立升级版，死链扫描与管理。
-
-**变更**：
-- 从 `palette.js` 中提取 `/dead` 模式的全部代码
-- 迁移到独立的 `src/dead-view.js` 模块
-- 不再限于命令面板的小弹窗，拥有完整内容区域
-
-**内容**：
-```
-┌──────────────────────────────────────────────┐
-│  #view-dead                                  │
-│  ┌──────────────────────────────────────────┐│
-│  │ 💀 死链扫描                              ││
-│  │ [🔍 开始扫描] [全部删除(N)] [⏹ 停止]    ││ ← 操作栏
-│  ├──────────────────────────────────────────┤│
-│  │ 状态: 正在扫描... 45/230 (19%)           ││ ← 进度条
-│  ├──────────────────────────────────────────┤│
-│  │ 💀 书签标题 1                404         ││
-│  │    url.com/dead-page                     ││
-│  │ 💀 书签标题 2                timeout     ││
-│  │    url.com/another-dead                  ││
-│  │ ...                                      ││
-│  │                                          ││
-│  │ ✅ 扫描完成。发现 12 个死链，230 个正常。 ││ ← 完成态
-│  └──────────────────────────────────────────┘│
-└──────────────────────────────────────────────┘
-```
-
-**功能增强**（相对 palette `/dead`）：
-- 更宽敞的结果展示（不再受 palette 小窗限制）
-- 带进度条的扫描过程可视化
-- 扫描结果支持排序（按 HTTP 状态码 / 按标题 / 按响应时间）
-- 单个重试（只重新检查某一项）
-- 导出死链列表（复制到剪贴板）
-- 扫描完成后"一键删除全部死链"
-- 保留上次扫描结果（不清除），直到下次扫描覆盖
-
-**工具栏搜索框行为**：
-- 在 Dead Links View 中，工具栏搜索框过滤死链列表中的标题/URL
-
-**迁移路径**：
-- palette `/dead` 命令保留，但行为改为"切换到 Dead Links View tab"
-- 或者：palette `/dead` 命令**消除**，用户直接通过 tab 栏进入 Dead Links View
-- **推荐**：保留 `/dead` 作为快捷方式 → 切换到 Dead Links View 并自动开始扫描
-
----
-
-### 3.6 Dupes View（重复管理视图）
-
-**职责**：原 palette `/dupes` 命令的独立升级版，重复书签检测与清理。
-
-**变更**：
-- 从 `palette.js` 中提取 `/dupes` 模式的全部代码
-- 迁移到独立的 `src/dupes-view.js` 模块
-
-**内容**：
-```
-┌──────────────────────────────────────────────┐
-│  #view-dupes                                 │
-│  ┌──────────────────────────────────────────┐│
-│  │ 📋 重复书签              发现 3 组重复    ││
-│  │ [🔍 重新扫描] [清理全部(N)]              ││ ← 操作栏
-│  ├──────────────────────────────────────────┤│
-│  │ ┌─ 重复组 1 ─────────────────────────┐  ││
-│  │ │ github.com                          │  ││
-│  │ │ 🔗 GitHub (保留)   /书签栏          │  ││
-│  │ │ 🔗 GitHub · 较早    /书签栏/工作    │  ││
-│  │ │ 🔗 GitHub · 更早    /其他书签       │  ││
-│  │ │ [清理此组 (2)]                      │  ││
-│  │ └─────────────────────────────────────┘  ││
-│  │ ┌─ 重复组 2 ─────────────────────────┐  ││
-│  │ │ ...                                 │  ││
-│  │ └─────────────────────────────────────┘  ││
-│  │                                          ││
-│  │ ✅ 没有发现重复书签                       ││ ← 空态
-│  └──────────────────────────────────────────┘│
-└──────────────────────────────────────────────┘
-```
-
-**功能增强**（相对 palette `/dupes`）：
-- 分组展示更清晰（每组一个卡片）
-- 每个组内展示每个书签的完整路径（父文件夹链）
-- "保留"标签标记将被保留的书签（最早添加的那个）
-- 支持手动选择保留哪一个（不强制保留最早）
-- 逐个清理 + 全部清理
-- 保留扫描结果，直到手动刷新
-
-**工具栏搜索框行为**：
-- 在 Dupes View 中，工具栏搜索框过滤重复组中的 URL/标题
-
-**迁移路径**：
-- palette `/dupes` 命令保留，行为改为"切换到 Dupes View tab"
-- 或 `/dupes` 消除，通过 tab 进入
-- **推荐**：保留 `/dupes` 快捷方式 → 切换到 Dupes View
-
----
-
-## 4. 搜索三件套协调方案
-
-**这是本次设计中最需要回答的问题**。下面给出完整协调方案：
-
-### 4.1 三个输入框的定位
-
-```
-                   工具栏搜索框              命令面板              搜索视图搜索框
-                   (#search-input)        (#palette-input)      (view-search 内)
-                   ──────────────         ───────────────       ────────────────
-触发方式            始终可见               Ctrl+K 呼出           切换到 Search View
-                   Ctrl+F 聚焦            (全局 overlay)         (tab 内可见)
-
-主要用途            快速过滤当前视图        命令 + 快速跳转         全功能书签搜索
-
-搜索范围            当前视图的可见数据       所有书签 + 命令         所有书签
-                   (视图感知)
-
-结果呈现            紧凑列表               下拉列表               全区域列表
-                   (#results 面板)        (palette-results)      (主内容区)
-
-输入行为            实时过滤                实时匹配               实时搜索
-                   (即时)                 (即时)                 (debounce 150ms)
-
-支持的功能          模糊匹配                模糊匹配 + 命令        模糊匹配 +
-                   键盘导航                斜杠命令                过滤选项 +
-                   Enter 打开              Enter 执行            面包屑路径 +
-                                                           更多元数据
-```
-
-### 4.2 跨视图的搜索框行为矩阵
-
-| 活跃 View | 工具栏搜索框 placeholder | 工具栏搜索行为 | 搜索视图搜索框 |
-|-----------|------------------------|---------------|---------------|
-| Tree | `"搜索书签..."` | 模糊搜索全部书签 → `#results` | 不可见 |
-| **Search** | `"搜索书签..."` **（同步到搜索视图）** | 输入同步到搜索视图搜索框 | 可见、活跃、双向同步工具栏 |
-| Recent | `"过滤最近添加..."` | 过滤 `#recent-list` 条目 | 不可见 |
-| Stats | `"过滤统计..."` | 过滤统计列表条目 | 不可见 |
-| Dead | `"过滤死链..."` | 过滤死链列表条目 | 不可见 |
-| Dupes | `"过滤重复项..."` | 过滤重复组条目 | 不可见 |
-
-### 4.3 Search View 激活时的同步协议
-
-```
-用户在工具栏搜索框输入:
-  search-input.addEventListener('input', ...)
-    → if (当前 view === 'search')
-        → 同步写入 view-search-input.value
-        → 触发搜索视图的搜索逻辑
-
-用户在搜索视图搜索框输入:
-  view-search-input.addEventListener('input', ...)
-    → 执行全功能搜索
-    → 同步写入 search-input.value
-    → 搜索结果渲染到 #view-search
-
-切换离开 Search View:
-  → 搜索视图状态保留（搜索词、结果列表）
-  → 工具栏搜索框恢复独立行为
-```
-
-### 4.4 入口与快捷键一览
-
-| 操作 | 快捷键 | 说明 |
-|------|--------|------|
-| 聚焦工具栏搜索框 | `Ctrl+F` / `Cmd+F` | 现有行为不变 |
-| 打开命令面板 | `Ctrl+K` / `Cmd+K` | popup 内；全局 `Ctrl+Shift+K` |
-| 切换到搜索视图 | `Ctrl+2` | 自动聚焦搜索视图的搜索框 |
-| 切换到树视图 | `Ctrl+1` | 聚焦回树 |
-| 退出搜索/过滤 | `Esc` | 现有行为不变 |
-| 切换 tab | `Ctrl+1~6` | 直接跳转到对应 tab |
-| 上一个/下一个 tab | `Ctrl+Shift+[` / `Ctrl+Shift+]` | 循环切换 |
-
----
-
-## 5. 设置迁移方案
-
-### 5.1 现有设置变更
-
-| 现有 key | 当前用途 | v4task-2 行为 |
-|----------|---------|--------------|
-| `showRecentBookmarks` | 控制树顶部 #recent-section 可见 | **迁移**：控制 Recent Tab 是否在 tab 栏显示 |
-| `recentBookmarksCollapsed` | #recent-section 折叠状态 | **退役**：独立 Recent View 不再有折叠 |
-| `searchAfterEnter` | 回车才触发搜索 | **保留**：适用于 Search View 和工具栏搜索 |
-| `closeUnusedFolders` | 手风琴模式 | **保留**：Tree View 专属 |
-
-### 5.2 新增设置
-
-| 新 key | 默认值 | 用途 |
-|--------|--------|------|
-| `visibleTabs` | `["tree","search","recent","stats","dead","dupes"]` | 控制哪些 tab 显示 |
-| `defaultTab` | `"tree"` | 启动时的默认 tab |
-| `visitStats` | `{}` | 访问统计数据（service worker 写入） |
-| `statsEnabled` | `"true"` | 是否启用访问统计收集 |
-| `recentCount` | `"20"` | Recent View 展示数量 |
-
-### 5.3 store.js 迁移逻辑
-
-```javascript
-// store.js KNOWN_KEYS 新增
-'recentCount', 'visibleTabs', 'defaultTab',
-'visitStats', 'statsEnabled'
-
-// 迁移：showRecentBookmarks → visibleTabs 推导
-if (store.get('showRecentBookmarks') === '') {  // '' = false
-    // 用户之前关闭了最近添加，在 visibleTabs 中移除 'recent'
-    const tabs = store.get('visibleTabs', [...]);
-    // 需要从默认列表中移除 'recent'
-}
-
-// 退役 recentBookmarksCollapsed — 不再读取
-```
-
----
-
-## 6. 模块架构变更
-
-### 6.1 新模块
-
-| 新文件 | 职责 | 来源 |
-|--------|------|------|
-| `src/tab-bar.js` | Tab 栏渲染、切换、键盘导航 | 全新 |
-| `src/search-view.js` | 搜索视图（全功能搜索输入 + 结果列表 + 过滤选项） | 全新（与 `search.js` 协作） |
-| `src/recent-view.js` | 最近添加视图 | 从 `tree-view.js` 提取 `#recent-section` 代码 |
-| `src/stats-view.js` | 访问统计视图 | 全新 |
-| `src/dead-view.js` | 死链视图 | 从 `palette.js` 提取 `/dead` 模式代码 |
-| `src/dupes-view.js` | 重复管理视图 | 从 `palette.js` 提取 `/dupes` 模式代码 |
-
-### 6.2 现有模块变更
+- 注册表是数组（顺序即 tab 顺序），tree 恒为 index 0 且不可隐藏。
+- 切换 = 单例状态机：任一时刻只有一个 active view；`views.activate(id)` 负责 deactivate 旧视图 → display 切换 → activate 新视图 → 写 `activeView`。
+- DOM：在 `#container` 内、tab 条之下新增 `#views`，内含每视图一个 `<section id="view-<id>">`；现有 `#tree` 与 `#results` 分别成为 `view-tree` / `view-search` 的内容根，**元素 id 不动**，只做包裹。
+- 三个准视图的收纳：search.js 的 display 替换逻辑退役（§4）；`#recent-section` 抽为 `src/view-recent.js`（§5.3）；palette 的 dupes/dead mode 迁为 `src/view-dead.js`/`src/view-dupes.js`（§5.5/5.6）。
+
+### 3.2 tab 条视觉规范（v2 细化 + v3 开关）
+
+**结构**：`#view-tabs`（`role="tablist"`）位于 `#search` 条之下、`#views` 之上；每个 tab 为 `<button role="tab" aria-selected>`，内部三段：SVG 图标 + `<span class="tab-label">` + 可选 `<span class="tab-badge">`。
+
+**图标与文本规则**：
+
+- 图标：每视图一枚 16px 内联 SVG（`src/icons.js` 新增 `VIEW_ICONS`），线性 1.5px 描边 `currentColor`。图标语义：tree=树/列表、search=放大镜（与 header 搜索框图标一致，强化"同一搜索"心智）、recent=时钟、stats=柱状图、dead=断链、dupes=叠层双页。
+- **popup 窄态（默认 320px）**：图标 tab——label 视觉隐藏（保留 `aria-label` 与 `title` tooltip）；6 tab 等宽分布，无溢出。
+- **popup 宽态 / panel-mode**：显示"图标 + 文字"。CSS 容器查询（`#container` 上 container-type，断点 480px，Chrome 114+ 原生支持）+ `body.panel-mode` 兜底始终显示文字。label 溢出时等宽压缩 + ellipsis，**不出现横向滚动条**。
+- 高度 32px；对标浏览器标签条但克制（无圆角卡片、无关闭按钮）。
+
+**状态与主题呈现**：
+
+| 状态 | 呈现 |
+|---|---|
+| 当前 tab | 底部 2px 指示条 `var(--vbm-accent)` + 图标/文字 accent 色；指示条 `transform` 位移（150ms ease-out） |
+| 非当前 | 图标/文字 `var(--vbm-muted)` |
+| hover | 背景微变色（低 alpha token） |
+| focus-visible | 可见 focus ring |
+| badge 角标 | 右上角 9px 圆点计数，`var(--vbm-danger)` 底白字；仅 dead/dupes 有值时显示 |
+
+- **五主题零特判**：全部走 `var(--vbm-*)` token；ink/paper 下指示条/角标自动随 accent/danger 变色；暗色不做反色处理。
+- `prefers-reduced-motion` 下关闭指示条滑动与淡入。
+- 验收：`shots-themes.js` 补 tab 条五主题状态图；`shots-i18n.js` 的 ar（RTL）检查 tab 顺序镜像。
+
+**v3 新增开关 `showViewTabs`（默认 on）**：关闭后隐藏整条 tab 条，回到"纯 tree + 搜索"的极简界面——视图仍可通过 palette `/` 命令与 Ctrl/Cmd+数字键切换（自定义入口不因隐藏而失效）。这是安静感原则给极简用户的出口。
+
+**视图内容切换**：150ms opacity 单属性淡入；视图切换时对屏幕阅读器用 `aria-live="polite"` 通报视图名（a11y 小项）。
+
+### 3.3 视图状态持久化
+
+- 新增 key（全部登记 KNOWN_KEYS）：`activeView`（popup 恒回 tree；panel-mode 持久恢复）、`viewState`（单 key JSON，各视图 scrollTop）；功能 key 见 §7 汇总表。
+- 迁移（幂等可重入）：`showRecentBookmarks` 语义改为"显示 recent 页签"，默认值不变；`recentBookmarksCollapsed` 成死 key，保留不删。
+
+### 3.4 键盘与 Esc 分层收纳
+
+四个现状挂接点收进视图抽象：listener 挂载元素（`src/keyboard.js:329-330`）、li id 前缀正则（`:275,340`）、Esc 分层链（`:453-484`）、type-ahead 可见项扫描（`:291`）。
+
+- **挂载点抽象**：列表型视图在 ViewDef 声明 `listContainer`，keyboard.js 向 view-manager 遍历注册。tree/search 行为逐键保持现状。
+- **行 id 方案**：泛化为 `data-node-id` + 统一行 class `.vbm-row`；`neat-recent-item-` 前缀随 recent 视图化清理。
+- **type-ahead 边界**：仅 tree/search 启用。
+- **Esc 分层链**：`dialogs → context menu → palette → 视图 onEscape（如 dead 中止扫描）→ search 非空查询则清空 → 非 tree 视图回 tree → window.close`。"Esc 回 tree"是新增行为（浏览器式返回），tree/search 路径与今天逐键一致。
+- Ctrl/Cmd+F 聚焦 header 框（不变）；Ctrl/Cmd+K 呼出 palette 已在 document 捕获阶段、视图无关（保持并测试固化）；Ctrl/Cmd+1…6 直达视图（捕获阶段，输入框聚焦时不拦截）。
+
+### 3.5 命令面板升级：视图即命令
+
+- **每个视图 = 一个 palette 命令**（Go to Tree/Search/Recent/Stats/Dead/Dupes），slash 别名即视图 id；执行 = 关 palette + `views.activate(id)`。
+- **全部可点击指令补齐 slash 别名**：
+
+  | 命令 | 现状 | slash |
+  |---|---|---|
+  | Bookmark current tab | 无 | `/add` |
+  | New bookmark… | 无 | `/new` |
+  | New folder… | 无 | `/folder` |
+  | New separator | 无 | `/sep` |
+  | Save window tabs as folder | `/session` | 保持 |
+  | Clean duplicate bookmarks | `/dupes` | 语义改为**跳转 dupes 视图** |
+  | Find dead links | `/dead` | 语义改为**跳转 dead 视图** |
+  | **Open settings**（v3 新增） | — | `/options`（`chrome.runtime.openOptionsPage`，面板内所有视图之外的唯一出口命令） |
+
+- palette 的 `mode: dupes|dead` 状态机退役，回归单一 normal 模式，消除"Esc 无嵌套返回"（`src/palette.js:562` 注释的尴尬）。
+- 结果合成规则不变；全局唤醒链路（`open-command-palette` command）与视图无关，不动。
+
+### 3.6 通用列表行规范：父路径标签（v2 新增）
+
+search / recent / stats / dead / dupes 五个列表型视图的结果行，统一支持**父文件夹路径标签**：
+
+- **数据**：树重建时用 `tree-render.js` 纯函数构建 `id → 父路径` 映射，挂 view-manager ctx 共享；与现有 tooltip 补路径逻辑合并，避免重复遍历。
+- **呈现（两种形态，共用 480px 容器查询断点）**：窄态 = 单行右对齐 `<span class="row-path">`（muted、ellipsis、max-width 45%；标题列优先省略）；宽态/panel = 双行（第二行整行 muted 路径 `folder1 / folder2 / …`）。
+- **tooltip 统一**：`标题 + URL + 路径`（吸收现有 search 结果的父文件夹 tooltip 行为）。
+- **设置项 `showItemPath`（默认 on）**：关闭时所有列表行回到单行紧凑样式；tree 视图有层级缩进表达路径，不适用。
+- RTL：路径 `dir="auto"`，ar 截图验证。
+
+## 4. 搜索体系的组织协调（重点设计）
+
+### 4.1 设计原则：一个搜索引擎，三种入口，各司其职
+
+| 输入框 | 定位 | 职责 |
+|---|---|---|
+| **header 常驻搜索框**（`#search-input`） | 浏览型搜索 | 输入即激活 search 视图，结果在视图容器中呈现 |
+| **palette 输入框**（overlay 瞬时存在） | 动作型搜索 | 命令 + 快速打开：选中即执行/打开即关闭 |
+| **search 视图** | 搜索结果的**呈现地**，不含独立输入框 | 结果列表、文件夹定位、搜索历史、空态 |
+
+核心取舍：**输入框唯一化**——search 视图复用 header 框作输入端（切到 search tab 即自动 focus）。popup 内任何时刻最多一个常驻输入框（header）+ palette 瞬时框；一个"浏览型"，一个"动作型"，职责互不重叠。
+
+> 已否决：search 视图内置第二输入框（焦点打架、状态同步复杂、违反安静感）。
+
+### 4.2 header 搜索框与 search 视图的联动
+
+- **输入即切视图**：header 框从空变为非空 → `views.activate('search')`（记录来源视图）；清空/Esc 且查询为空 → 返回来源视图。结果渲染进 search 视图容器（原 `#results`，id 不变）。
+- 用户感知与今天**完全一致**（"输入出结果，清空回树"），内部从 display 替换变为视图切换。
+- 点击 search tab / `/search` / Ctrl/Cmd+F 进入 search 视图，header 框自动 focus，内容按 §4.3 规则呈现。
+- `searchAfterEnter` 配置行为不变。
+
+### 4.3 搜索历史与上次结果恢复（v2 新增 + v3 开关）
+
+- **上次结果恢复**：独立 key `searchLastQuery`（不复用受 `dontRememberState` 控制的 `searchQuery`；跨会话恢复仍遵循 `dontRememberState`）。规则：本次打开后**首次**进入 search 视图时，header 框为空且 `searchLastQuery` 非空 → 回填并立即重算（索引重建 <10ms，重算而非快照，数据永远新鲜）；用户显式清空后本会话不再自动回填（内存 flag）。
+- **搜索历史**：key `searchHistory`，MRU 数组上限 10，trim 去重，空串不入。
+  - **记录时机**（避免增量前缀 spam）：① `searchAfterEnter` 模式按 Enter；② 打开/点击任意结果；③ 离开 search 视图或页面关闭时记入当前非空查询。
+  - **呈现**：search 视图空查询态 = "最近搜索"区块（时钟图标 + 查询词 + 单条 × 移除 + 清空全部）；点击 = 回填并搜索。无历史时只显示空态文案。
+- **v3 新增开关 `searchHistoryEnabled`（默认 on）**：关闭后不记录新历史、不显示历史区块；options 提供"同时清空已有历史"的说明文案。隐私敏感的本地数据都应可关——与 `statsEnabled` 同一原则。
+- MRU 纯逻辑抽为 `src/search.js` 命名导出，vitest 直测。
+
+### 4.4 palette 与 search 视图的分工与跳转
+
+- palette 普通查询保持现状（命令优先 + 模糊书签 50 条），使命是"快速打开"。
+- 桥接：普通查询非空时末行追加"在搜索视图中搜索 '{query}'"（`paletteCmdSearchInView`），slash 形式 `/search foo` 带词跳转。
+- omnibox（`*` + Space）是浏览器级入口，不进视图体系，不动。
+
+### 4.5 搜索入口全景（汇总表）
+
+| 入口 | 位置 | 行为 | 结果呈现 |
+|---|---|---|---|
+| 直接输入 | header 搜索框（Ctrl/Cmd+F 聚焦或点击） | 增量模糊搜索 | search 视图 |
+| search tab | tab 条 | 进入并 focus；首次进入恢复上次结果 | search 视图 |
+| 搜索历史行 | search 视图空查询态 | 回填并搜索 | search 视图 |
+| `/search [query]` | palette | 跳转（可带词） | search 视图 |
+| palette 普通查询 | palette overlay | 快速打开 | palette 自身（瞬时） |
+| palette "在搜索视图中搜索" | palette 结果末行 | 带词跳转 | search 视图 |
+| type-ahead | tree/search 列表聚焦时打字 | 列表内定位（非搜索） | 当前列表高亮 |
+| omnibox `*` | 浏览器地址栏 | 浏览器级搜索 | omnibox 下拉 |
+
+呈现规则：**输入框只在两处出现**（header 常驻 + palette 瞬时）；**结果只在两处呈现**（search 视图驻留 + palette 选中即消失）；视图容器内永远不放搜索输入框。
+
+## 5. 六个视图逐一设计
+
+### 5.1 tree（默认视图）
+
+- 内容：现有 `#tree`（separators、sync indicators、懒加载、DnD、右键菜单）。
+- 变化：`#recent-section` 不再前置拼接；行构建叠加死链标记 overlay（§5.5c）；删除非空文件夹接入确认（§5.7）。
+- 状态：opens/scrollTop/focusID 现有机制原样保留。
+
+### 5.2 search（搜索视图）
+
+- 内容：原 `#results` 容器（id 不变）+ 空态/历史区块（§4.3）。
+- 输入端 = header 搜索框；结果渲染、`<mark>` 高亮、`revealFolder` 跳转、100 条截断、无结果空态沿用现状。
+- 行呈现按 §3.6 显示父路径标签。
+- `searchMode` 标志语义与"search 视图激活"对齐。
+
+### 5.3 recent（最近添加视图）
+
+- 数据源：`chrome.bookmarks.getRecent(N)`；**N 设置化** `recentCount`（默认 20，options 10/20/50/100）。过滤分隔符。
+- 渲染：复用 `treeRender.generateBookmarkHTML`；`data-virtual="1"` 防拖拽；扁平 `<ul>`；行按 §3.6 显示父路径标签（"它存在哪个文件夹"正是高频诉求）。
+- 实时性：onCreated/onRemoved + 300ms 防抖刷新；非激活时跳过 fetch（沿用现状优化语义）。
+- 交互：打开/右键菜单/键盘与 tree 书签行一致。
+- **v3 新增行操作："在树中定位"**（右键菜单项 + 键盘 `R`）——recent 的场景是"刚存完想找它在哪/挪位置"，复用现有 `revealFolder`/focusID 机制跳到 tree 视图并定位该节点；与 search 结果文件夹行的跳转同一链路。
+- 空态：引导文案（如"按 Ctrl+D 收藏当前页"）。
+- 设置迁移：`showRecentBookmarks` 控制 recent 页签显隐。
+
+### 5.4 stats（访问统计视图）
+
+- **权限决策：不引入 `history` 权限**（安装警告是信任灾难）。
+- 数据方案：**扩展自建轻量统计**：
+  - `src/visit-stats.js`（纯逻辑可测）：`{ [bookmarkId]: { c, t } }`，单 key `visitStats`，防抖落盘。
+  - 采集点一（页面侧）：actions 打开路径与 bookmarkHandler 点击埋点。
+  - 采集点二（切片 E，service worker 侧）：`chrome.tabs.onUpdated` 匹配书签 URL 集合，覆盖"地址栏/其他入口打开"。
+  - 隐私与体积：`statsEnabled`（默认 on，关闭即停采）；只记书签树内 id，重建树时 prune。
+- 展示：默认按次数降序（标题 + URL + 次数徽标 + 最近访问相对时间）；**排序切换（按次数/按最近）的选择持久化 `statsSort`（v3 新增，默认 count）**；行按 §3.6 显示父路径标签；点击正常打开并自增。
+- **v3 新增数据管理入口**：stats 视图底部（或空态区）"清空统计数据"按钮（ConfirmDialog 门控）+ options 页同功能按钮——本地行为数据必须给用户一键清除的出口，与 `statsEnabled` 开关配套。
+- 跨视图联动：`visitStats` 是 dupes `keep-most-visited` 策略的数据源。
+- 开放问题：optional_permissions 导入 chrome.history（§10）。
+
+### 5.5 dead（死链视图，v2 细化 + v3 批量与调参）
+
+迁移自 palette mode='dead'，扫描引擎 `src/dead-links.js` 扩展复用。
+
+**a) 上次扫描结果缓存**：key `deadLastScan` = `{ ts, scannedCount, results: { [id]: { status, code } } }`，完成即落盘。视图打开：有缓存 → 直接渲染 + 顶部"上次扫描 YYYY-MM-DD HH:mm · N 个书签 · 重新扫描"；无缓存 → 引导行，不自动扫描。
+
+**b) 用户指定代理 + 双通道判定**：
+
+- 设置项 `deadProxyTemplate`（options，默认空 = 仅直连）：探测中转 URL 模板，含 `{url}` 占位。
+- 技术边界：fetch 无法走 CONNECT 隧道（https 目标经传统 HTTP 代理不可行）；`chrome.proxy` API 改全局代理 + 新权限——**已否决**。代理通道 = "中转服务回源探测"语义；options 文案明示**书签 URL 会发送给该第三方服务**。
+- 判定矩阵（`checkUrl` 双通道化，纯逻辑可测）：
+
+  | 直连 | 代理 | 最终状态 | 徽标 |
+  |---|---|---|---|
+  | ok | — | `ok` | 无 |
+  | fail | 未配置 | `dead` | × |
+  | fail | ok | `blocked`（直连不可达，代理可达——被墙/区域限制，非死链） | "直连×" |
+  | fail | fail | `dead`（双通道确认） | × |
+  | 非 http(s) | — | `skipped` | — |
+
+- **v3 新增调参项（advanced options）**：`deadScanConcurrency`（并发，默认 4，区间 1–16）、`deadScanTimeout`（单请求超时秒，默认 8，区间 2–30）——代理中转通常更慢，大书签库用户需要调；放 advanced 页避免 general 页膨胀。
+
+**c) 死链标记与 tree 视图 overlay**：
+
+- key `deadMarks`（id 数组）：dead 视图行内"标记/取消标记"（按钮 + 键盘 `M`）→ 所有列表（tree/search/recent）favicon **右上角**叠加醒目红 ×（`var(--vbm-danger)`；sync 圆点在右下角，不重叠），CSS 复刻 sync indicator overlay 模式（`css/sync-styles.css` 追加段）。
+- 取消：toggle；重扫后 `ok` 的 id 自动移出；书签删除时 prune。
+- **v3 新增批量操作**：视图顶部"全部标记"（把当前结果集中的 dead/blocked 行一次标记）与"清除所有标记"按钮（均 ConfirmDialog 门控）；**状态筛选**（全部 / 仅 dead / 仅 blocked 三态切换，视图内控件不持久化）。
+- tab 角标：`badge()` = `deadMarks.length`。
+
+**d) 生命周期**：扫描中切出不中止（闭包持有，切回续见进度）；Esc 中止；删除走 undo 链路；批量删除 ConfirmDialog 门控。popup 关闭中止进行中扫描，但 `deadLastScan` 已落盘不丢（从"前功尽弃"变"断点可见"）；panel 是长扫描的归宿。
+
+### 5.6 dupes（重复管理视图，v2 细化 + v3 范围与归一化选项）
+
+迁移自 palette mode='dupes'，`src/dupes.js` 扩展。
+
+**a) 按组展示 + 组内逐条操作**：
+
+- 组头：归一化 URL + 组内计数 + "清除其余"；组内逐行（标题 + §3.6 路径标签 + dateAdded + 访问次数若可用）。
+- 每行：**保留**（radio 语义，每组恰好一个 keeper，点击覆盖策略）、**删除此条**（按钮/Delete 键，undo 链路）。
+- 将删行预览态：danger 色 + strikethrough；保留行 ✓——先预览后执行，批量动作 ConfirmDialog 门控。
+
+**b) 顶部快捷策略工具条**（按人工整理习惯规划 keeper 规则，segmented control）：
+
+| 策略 | keeper 规则 | 典型人工习惯 |
+|---|---|---|
+| `keep-oldest`（默认） | dateAdded 最早 | "最早收藏的是原始位置" |
+| `keep-newest` | dateAdded 最新 | "最新存的是刚整理过的" |
+| `keep-bookmark-bar` | 优先书签栏根 `'1'` 子树内（多条取最旧，都不在回落最旧） | "书签栏是门面，副本别动它" |
+| `keep-shortest-title` | 标题最短（并列取最旧） | "短标题是手动改过的干净命名" |
+| `keep-shallowest` | 父路径层级最浅（并列取最旧） | "浅层好找，深层是随手丢的" |
+| `keep-most-visited` | `visitStats` 计数最高（无数据回落最旧；stats 关闭时置灰） | "常用的那个才是正主" |
+
+- 纯函数 `pickKeeper(group, strategy, ctx)` 入 `src/dupes.js`，vitest 直测；选择持久化 `dupesStrategy`。
+- 顶部：策略 segmented + 汇总（"N 组 · 将释放 M 条"）+ **全部应用**（ConfirmDialog → 串行 remove → undo toast → onChanged）。
+
+**c) v3 新增范围与归一化选项**：
+
+- **扫描范围 `dupesScope`**（视图内选择器，持久化，默认 `all`）：`all` 全书签树 / `bar` 仅书签栏子树——"只清理门面"是高频诉求；深folder 限定留待后续（需文件夹选择器，成本不匹配）。
+- **归一化开关 `dupesIgnoreScheme`**（视图内 checkbox，持久化，默认 off）：忽略 http/https 差异视为同一 URL——协议升级是真实重复来源；开启即时重算分组。默认关是因为少数站点双协议内容不同，误并风险由用户显式承担。
+- tab 角标：`badge()` = 重复组数。
+
+### 5.7 横切行为变更：删除非空文件夹需确认（v3 新增，维护者点名）
+
+- **现状**：P3.3 起删除一律"直接删 + toast 撤销条"，`confirmDeleteFolder*` 两个 i18n key 死文案保留在 43 locale；`keyboard.js`/`context-menu.js 仍统计子节点数但无消费者`（AGENTS.md Known Quirks）。
+- **新行为**：删除**非空文件夹**（子孙节点数 > 0）→ 先弹 ConfirmDialog："该文件夹包含 N 个项目，删除后可撤销。"（复活 `confirmDeleteFolder*` 死 key，文案含 `$count$`）确认后才执行删除 + undo capture + toast。**空文件夹与单个书签保持现状**（直接删 + toast，安静感不受损）。
+- **触发点全覆盖**：文件夹右键菜单 Delete、键盘 Delete 键（`treeKeyUp`）、`actions.deleteBookmarks` 批量路径含非空文件夹时——三处统一走 actions 层的同一确认守卫（计数逻辑本来就在，把消费者接回）。
+- **开关 `confirmDeleteFolder`（默认 on）**：关闭后回到纯 toast 流——尊重 P3.3 的安静流偏好者；这是对 P3.3 决策的**有限回摆**，需在 release note 说明理由（非空文件夹误删成本高，toast 8s 窗口可能错过；undo 仍是最后兜底）。
+- 测试：确认/取消/开关关闭三路径 + 空文件夹不弹 + 批量混合选择只弹一次。
+
+## 6. popup 与 side panel 的关系
+
+- 同一套 DOM/模块；popup.html 的 DOM 变更**必须逐行同步 sidepanel.html**（parity 断言拦截）。
+- 形态差异仅由 `body.panel-mode` 与容器查询表达：tab 文字（§3.2）、列表行单行/双行（§3.6）、`activeView` 恢复（§3.3）、dead 扫描生命周期（§5.5d）。
+- 本任务不做 panel 双栏；视图层落地后双栏变为纯 CSS/布局议题——这是"为 panel 迁移做准备"的准确落点。
+
+## 7. 存储与设置项变更汇总（v3 全集）
+
+| Key | 类型 | 说明 | 设置入口 |
+|---|---|---|---|
+| `activeView` | 新增 | 当前视图；仅 panel-mode 持久恢复 | —（行为性） |
+| `viewState` | 新增 | JSON，各视图 scrollTop | — |
+| `showViewTabs` | 新增 | tab 条显隐，默认 on（§3.2） | options·视图组 |
+| `showItemPath` | 新增 | 列表行路径标签，默认 on（§3.6） | options·视图组 |
+| `searchLastQuery` | 新增 | 上次搜索词（§4.3） | — |
+| `searchHistory` | 新增 | MRU 上限 10（§4.3） | — |
+| `searchHistoryEnabled` | 新增 | 历史开关，默认 on（§4.3） | options·视图组 |
+| `recentCount` | 新增 | recent 条数，默认 20 | options·视图组 |
+| `visitStats` | 新增 | JSON 统计数据 | —（清空按钮） |
+| `statsEnabled` | 新增 | 统计开关，默认 on | options·视图组 |
+| `statsSort` | 新增 | 排序记忆，默认 count（§5.4） | 视图内控件 |
+| `deadLastScan` | 新增 | JSON 扫描缓存 | — |
+| `deadProxyTemplate` | 新增 | 中转 URL 模板，默认空（§5.5b） | options·视图组（附隐私文案） |
+| `deadMarks` | 新增 | id 数组 | — |
+| `deadScanConcurrency` | 新增 | 并发，默认 4（§5.5b） | advanced options |
+| `deadScanTimeout` | 新增 | 超时秒，默认 8（§5.5b） | advanced options |
+| `dupesStrategy` | 新增 | 默认 `keep-oldest` | 视图内控件 |
+| `dupesScope` | 新增 | `all`/`bar`，默认 all（§5.6c） | 视图内控件 |
+| `dupesIgnoreScheme` | 新增 | 忽略协议差异，默认 off（§5.6c） | 视图内控件 |
+| `confirmDeleteFolder` | 新增 | 非空文件夹删除确认，默认 on（§5.7） | options·General |
+| `showRecentBookmarks` | 语义迁移 | → recent 页签显隐，默认不变 | options·视图组 |
+| `recentBookmarksCollapsed` | 废弃 | 保留不删 | 从 options UI 移除 |
+
+**options 页新增"视图"（Views）分组**（v3）：把 `showViewTabs`/`showItemPath`/`showRecentBookmarks`/`recentCount`/`searchHistoryEnabled`/`statsEnabled`/`deadProxyTemplate` 集中为一个 section，避免散落 General 组造成设置页膨胀；分组标题走 i18n `optionsGroupViews`。`confirmDeleteFolder` 属删除行为，留在 General 组。
+
+## 8. i18n key 规划（v3 全集）
+
+en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i18n.py missing` 验证：
+
+- tab/视图：`viewTree`/`viewSearch`/`viewRecent`/`viewStats`/`viewDead`/`viewDupes`；分组 `optionsGroupViews`
+- palette：六个跳转命令（`paletteCmdGo*` 或复用 view*，实施时二选一回写本文）、`paletteCmdSearchInView`、`paletteCmdOptions`
+- 搜索历史：`searchHistoryTitle`/`searchHistoryClear`/`searchHistoryRemove`/`optionSearchHistory`
+- recent：`recentRevealInTree`
+- dead：`deadLastScanAt`(`$time$`)/`deadRescan`/`deadStartHint`/`deadMark`/`deadUnmark`/`deadMarked`/`deadMarkAll`/`deadUnmarkAll`/`deadFilterAll`/`deadFilterDead`/`deadFilterBlocked`/`deadStatusBlocked`/`optionDeadProxy`/`deadProxyHint`/`optionDeadScanConcurrency`/`optionDeadScanTimeout`
+- dupes：`dupesStrategyOldest`/`Newest`/`BookmarkBar`/`ShortestTitle`/`Shallowest`/`MostVisited`/`dupesApplyAll`(`$count$`)/`dupesKeepThis`/`dupesRemoveRow`/`dupesGroupCleanRest`/`dupesPreviewSummary`(`$groups$`,`$count$`)/`dupesScopeAll`/`dupesScopeBar`/`dupesIgnoreScheme`
+- stats：`optionStatsEnabled`/`statsSortByCount`/`statsSortByRecent`/`statsEmpty`/`statsVisitCount`(`$count$`)/`statsClearData`
+- 路径标签：`optionShowItemPath`；tab 开关 `optionShowViewTabs`
+- 删除确认：**复活 `confirmDeleteFolder`/`confirmDeleteFolderButton` 死 key**（文案按"删除后可撤销"微调 + `$count$`）+ `optionConfirmDeleteFolder`
+- 搜索空态：`searchViewHint`
+
+## 9. 分阶段实施路线（v3）
+
+每切片独立可提交、独立冒烟。
+
+| 切片 | 内容 | 验收 |
+|---|---|---|
+| **A. 视图基础设施** | `src/view-manager.js` + tab 条全视觉规范（§3.2 含 `showViewTabs`）+ tree/search 收纳 + Esc 分层 + keyboard 挂载抽象 + 通用行规范（§3.6 + `showItemPath`）+ `activeView`/`viewState` + options"视图"分组骨架 | 行为零变化：653 例保持全绿；view-manager suite；parity；冒烟零错误；shots-themes 补 tab |
+| **A2. 删除确认回归**（微切片，§5.7） | actions 层确认守卫 + 复活 `confirmDeleteFolder*` + `confirmDeleteFolder` 开关 | 确认/取消/关闭三路径测试；空文件夹不弹；批量混合只弹一次 |
+| **B. recent 视图化 + 搜索增强** | `src/view-recent.js`（含"在树中定位"）+ `recentCount` + `showRecentBookmarks` 迁移 + 前缀清理；`searchHistory`/`searchLastQuery`/`searchHistoryEnabled` 与历史区块 | recent tab 等价现状 + 路径标签 + 定位；迁移幂等测试；MRU 纯逻辑测试 |
+| **C. dupes/dead 视图化 + palette 统一** | `src/view-dupes.js`（分组 + 策略 + 范围 + 协议开关）/`src/view-dead.js`（缓存 + 代理双通道 + 标记 overlay + 批量标记 + 筛选 + 调参）；`dupes.js`/`dead-links.js` 扩展；palette mode 退役；slash 全集（含 `/options`）；搜索桥接行 | palette suite 适配；`pickKeeper` 六策略测试；双通道矩阵测试；overlay 渲染测试；`/d` 前缀仍命中 |
+| **D. stats 视图** | `src/visit-stats.js` + `src/view-stats.js` + `statsEnabled`/`statsSort`/清空入口 + dupes `keep-most-visited` 联动 | 采集/排序/prune/清空测试；开关关闭零写入 |
+| **E.（可选）SW 侧匹配采集** | `chrome.tabs.onUpdated` 书签 URL 匹配计数 | background suite doubles 覆盖 |
+
+公共验收：`npm run test:run` 全绿；`package.py` 无 strays；`node --check`；docker 冒烟；`i18n.py missing` 键集一致。
+
+## 10. 风险与开放问题
+
+1. **存量感知**：树顶 recent 区移除是唯一可见收缩；recent tab 默认可见紧随 tree；`showRecentBookmarks` 语义自动映射。
+2. **Esc 回 tree 的新行为**：release note 明示；负面反馈则加回退开关。
+3. **`activeView` 双形态语义**：popup 恒 tree / panel 恢复上次；备选设置项"记住上次视图"视反馈再加。
+4. **代理探测的边界与隐私**：https 目标必须走中转服务语义（用户自备，门槛高，预期进阶用户）；**URL 外发第三方**必须文案明示；默认空 = 行为同现状。`chrome.proxy` 已否决。
+5. **P3.3 决策的有限回摆**（§5.7）：删除确认回归与"toast 替代确认减少打断"的原决策存在张力——以"仅非空文件夹 + 可关"限定影响面；若维护者更倾向彻底安静流，可降为默认 off 的选项（本文按维护者点名要求默认 on）。
+6. **overlay 渲染开销**：与 sync indicator 同模式，Set 查找，风险低；`deadMarks` 一致性（ok 自动清除）需测试。
+7. **stats 无法回溯历史**：optional_permissions 导入 history 单列任务再议。
+8. **`dupesIgnoreScheme` 误并风险**：少数站点双协议内容不同——默认 off + 即时重算可预览，风险由用户显式承担。
+9. **选项膨胀**：本任务包新增 12 个设置 key——用"视图分组 + 视图内控件 + advanced 页"三级安置（§7）控制 general 页膨胀；每个开关都与具体功能捆绑，不设"为开关而开关"的项。
+10. **行数纪律**：palette.js 迁出 mode 后回落 <400 行，可摘掉 v4task-1 豁免说明；dupes.js/dead-links.js 扩展后守 <400 行，超出按纯逻辑再拆。
+
+## 11. 明确不纳入本任务包的项（范围纪律）
+
+| 项 | 理由 | 去向 |
+|---|---|---|
+| tab 顺序自定义/拖拽排序 | 六视图固定顺序足够，拖拽是过度工程 | 有真实诉求再议 |
+| recent 按日期分组（今天/昨天/本周） | 渲染与键盘导航复杂度不成比例；`recentCount` 调大已覆盖大部分诉求 | 视图化落地后评估 |
+| panel 双栏（左树右列表） | 本任务只铺视图层；双栏是 panel 迁移的主体工程 | 后续任务包 |
+| 卡片网格/封面缩略图视图 | 总方案已定 Phase 4，且只进 panel | Phase 4 评估 |
+| stats 数据导出 | YAGNI；本地 JSON 用户可自行读取 | 有诉求再议 |
+| dupes 按任意子文件夹限定范围 | 需文件夹选择器 UI，成本不匹配；`dupesScope=bar` 覆盖高频场景 | 有诉求再议 |
+| history 权限导入历史访问频次 | 权限评估独立进行 | optional_permissions 专题 |
+| AI 打标/readingList 集成 | v4task-1 P5 已定不承诺排期 | 不变 |
+
+## 附录 A：新增/变更文件清单（预估）
 
 | 文件 | 变更 |
-|------|------|
-| `src/neat.js` | 引入 tab-bar，注入 view 模块，调整初始化顺序 |
-| `src/search.js` | 增加"视图感知"行为：在不同 view 中搜索行为不同。导出视图同步接口 |
-| `src/tree-view.js` | 移除 `#recent-section` 代码（~80 行）。tree 改为在 `#view-tree` 内渲染 |
-| `src/tree-render.js` | 基本不变（纯 HTML 生成） |
-| `src/palette.js` | `/dead` 和 `/dupes` 命令改为"切换到对应 tab"而非内联渲染。命令集注册 api 供 tab-bar 消费 |
-| `src/keyboard.js` | 新增 `Ctrl+1~6` tab 切换、`Ctrl+Shift+[`/`]` 上一个/下一个 tab |
-| `src/background.js` | 新增访问统计的标签页导航监听 |
-| `pages/popup.html` | 新增 `#tab-bar` + `#view-container` + 6 个 view panel |
-| `pages/sidepanel.html` | 同步 popup.html 的 DOM 变更 |
-| `css/neat.css` | 新增 tab-bar、view-container、各 view panel 样式。移除 #recent-section 样式 |
-
-### 6.3 初始化流程
-
-```
-store.ready
-  ├── separatorManager
-  ├── treeRender = initTreeRender(...)
-  ├── menus = initContextMenu(...)
-  ├── search = initSearch(...)            ← search.js 需要知道"当前 view"
-  ├── syncUi = initSyncUi(...)
-  ├── dialogs = initDialogs(...)
-  ├── undo = initUndo(...)
-  ├── actions = initActions(...)
-  ├── dnd = initDnd(...)
-  │
-  ├── [NEW] tabBar = initTabBar(...)      ← 创建 tab 栏 + 视图容器
-  │   ├── 注册 6 个视图模块
-  │   ├── 设定默认活跃 tab = 'tree'
-  │   └── 暴露 switchTab(id) API
-  │
-  ├── treeView = initTreeView(...)        ← 在 #view-tree 内渲染
-  ├── searchView = initSearchView(...)    ← 新模块
-  ├── recentView = initRecentView(...)    ← 新模块（从 tree-view 提取）
-  ├── statsView = initStatsView(...)      ← 新模块
-  ├── deadView = initDeadView(...)        ← 从 palette 提取
-  ├── dupesView = initDupesView(...)      ← 从 palette 提取
-  │
-  ├── palette = initPalette({
-  │       ...
-  │       switchTab: tabBar.switchTab,    ← palette 命令可以切换 tab
-  │       ...
-  │   })
-  │
-  └── initKeyboard({ tabBar, ... })       ← 新增 tab 快捷键
-```
-
----
-
-## 7. 命令面板（Palette）与 Slash Command 增强
-
-### 7.1 要求
-
-> 命令面板里面出现的所有可点击指令，也都需要提供 `/` slash command 支持键盘快速操作
-
-### 7.2 当前命令集
-
-```javascript
-// palette.js 当前注册的命令 (commands 数组)
-{ slash: 'dupes',    name: '查找重复书签',   fn: enterDupesMode }
-{ slash: 'dead',     name: '扫描死链',       fn: enterDeadMode }
-{ slash: 'session',  name: '保存当前会话',    fn: saveWindowSession }
-// 无 slash 的常规命令
-{ name: '快速添加当前页',  fn: quickAdd }
-{ name: '新建书签',       fn: newBookmarkFromTab }
-{ name: '新建文件夹',      fn: addNewFolder }
-{ name: '新建分隔符',      fn: addSeparator }
-```
-
-### 7.3 增强后的命令集
-
-所有命令都应有 `/` 前缀别名：
-
-| Slash 命令 | 名称 | 行为 | Tab 关联 |
-|-----------|------|------|---------|
-| `/tree` | 切换到树视图 | 切换到 Tree View tab | Tree |
-| `/search` | 打开搜索视图 | 切换到 Search View tab 并聚焦搜索框 | Search |
-| `/recent` | 打开最近添加 | 切换到 Recent View tab | Recent |
-| `/stats` | 打开访问统计 | 切换到 Stats View tab | Stats |
-| `/dead` | 扫描死链 | 切换到 Dead Links View tab 并开始扫描 | Dead |
-| `/dupes` | 查找重复书签 | 切换到 Dupes View tab 并开始扫描 | Dupes |
-| `/add` | 快速添加当前页 | 书签当前标签页 | — |
-| `/newbookmark` | 新建书签 | 从当前标签页新建 | — |
-| `/newfolder` | 新建文件夹 | 在当前根文件夹下新建 | — |
-| `/newsep` | 新建分隔符 | 在当前根文件夹下新建分隔符 | — |
-| `/session` | 保存会话 | 保存当前窗口所有标签 | — |
-| `/sort` | 排序文件夹 | 打开排序对话框 | — |
-| `/settings` | 打开设置 | 打开 options 页 | — |
-| `/help` | 显示帮助 | 列出所有可用命令 | — |
-
-### 7.4 Palette 命令注册 API
-
-为了保持扩展性，将命令注册改为显式 API：
-
-```javascript
-// palette.js 导出
-export function initPalette(ctx) {
-    const registry = [];
-
-    return {
-        // 注册命令
-        registerCommand({ slash, name, fn, keepOpen, description }) {
-            registry.push({ slash, name, fn, keepOpen, description });
-        },
-        // 打开/关闭
-        open() { ... },
-        close() { ... },
-        isOpen() { ... },
-    };
-}
-```
-
-各视图模块调用 `palette.registerCommand()` 注册自己的命令。palette 的 render 函数不再硬编码命令列表。
-
----
-
-## 8. 键盘快捷键完整方案
-
-### 8.1 新增快捷键
-
-| 快捷键 | 作用域 | 行为 |
-|--------|--------|------|
-| `Ctrl+1` ~ `Ctrl+6` | 全局 (popup/sidepanel) | 切换到对应 tab |
-| `Ctrl+Shift+]` | 全局 | 下一个 tab |
-| `Ctrl+Shift+[` | 全局 | 上一个 tab |
-| `Ctrl+K` | 全局 | 打开命令面板（不变） |
-| `Ctrl+F` | 全局 | 聚焦工具栏搜索框（不变） |
-| `Ctrl+D` | 全局 | 快速添加当前页（不变） |
-
-### 8.2 Esc 层级（不变）
-
-```
-Escape 键捕获顺序 (keyboard.js:455-486):
-  1. 对话框打开 → 关闭对话框
-  2. 右键菜单打开 → 关闭菜单
-  3. 命令面板打开 → 关闭面板
-  4. 搜索激活中 → 退出搜索模式
-  5. 以上均无 → 关闭弹窗/侧栏
-```
-
-### 8.3 keyboard.js 改造点
-
-```javascript
-// 新增 handler
-document.addEventListener('keydown', e => {
-    if (e.ctrlKey || e.metaKey) {
-        // Ctrl+1~6: 切换 tab
-        const num = parseInt(e.key);
-        if (num >= 1 && num <= 6) {
-            e.preventDefault();
-            tabBar.switchTabByIndex(num - 1);
-            return;
-        }
-        // Ctrl+Shift+]: 下一个 tab
-        if (e.shiftKey && e.key === ']') {
-            e.preventDefault();
-            tabBar.nextTab();
-            return;
-        }
-        // Ctrl+Shift+[: 上一个 tab
-        if (e.shiftKey && e.key === '[') {
-            e.preventDefault();
-            tabBar.prevTab();
-            return;
-        }
-    }
-});
-```
-
----
-
-## 9. CSS 设计（设计 token 延续）
-
-### 9.1 Tab 栏颜色
-
-全部使用现有设计 token，不引入新硬编码颜色：
-
-```css
-.tab-btn {
-    color: var(--vbm-muted);           /* 非活跃 tab 文字 */
-    border-bottom-color: transparent;  /* 非活跃 tab 指示器 */
-}
-.tab-btn:hover {
-    background: var(--vbm-bg-hover);   /* hover */
-    color: var(--vbm-fg);
-}
-.tab-btn.active {
-    color: var(--vbm-accent);          /* 活跃 tab 文字 */
-    border-bottom-color: var(--vbm-accent); /* 活跃 tab 指示器 */
-}
-```
-
-### 9.2 视图面板
-
-```css
-.view-panel {
-    background-color: var(--vbm-bg);   /* 继承主题背景 */
-    color: var(--vbm-fg);             /* 继承主题文字 */
-}
-```
-
-### 9.3 移除的样式
-
-- `#recent-section` 全部样式（`neat.css:1034-1082`）
-- `#tree .open>ul` 的 `height: auto` 保持不变（Tree View 仍需要）
-
----
-
-## 10. 实施阶段
-
-### 阶段 1：基础设施（Tab 栏 + 视图容器）
-
-1. 创建 `src/tab-bar.js`：tab 栏渲染、切换、键盘导航
-2. 修改 `pages/popup.html` 和 `pages/sidepanel.html`：新增 `#tab-bar` + `#view-container`
-3. 修改 `css/neat.css`：tab 栏和视图容器样式
-4. 修改 `src/neat.js`：集成 tab-bar 初始化
-5. 修改 `src/keyboard.js`：新增 tab 切换快捷键
-6. **测试**：tab 栏渲染、切换、快捷键正确
-
-### 阶段 2：Tree View + Search View 迁移
-
-1. 将现有 `#tree` 融入 `#view-tree`
-2. 移除 `tree-view.js` 中 `#recent-section` 代码
-3. 创建 `src/search-view.js`：全功能搜索视图
-4. 修改 `src/search.js`：视图感知 + 搜索视图同步协议
-5. **测试**：Tree View 功能无损；Search View 搜索正确；同步协议工作
-
-### 阶段 3：Recent View 迁移
-
-1. 创建 `src/recent-view.js`：从 `tree-view.js` 提取
-2. 处理 `showRecentBookmarks` / `recentBookmarksCollapsed` 设置迁移
-3. **测试**：Recent View 展示正确、排序/过滤功能正常
-
-### 阶段 4：Dead + Dupes View 迁移
-
-1. 创建 `src/dead-view.js`：从 `palette.js` 提取
-2. 创建 `src/dupes-view.js`：从 `palette.js` 提取
-3. 修改 `src/palette.js`：`/dead` `/dupes` 改为切换到对应 tab
-4. 增强 palette 命令注册 API
-5. **测试**：死链扫描、重复检测功能不变；tab 切换正确
-
-### 阶段 5：Stats View + 收尾
-
-1. 创建 `src/stats-view.js`：访问统计视图
-2. 修改 `src/background.js`：添加访问统计监听
-3. 补齐所有 slash commands
-4. 完整 i18n（en + zh_CN 实译，其余 41 locale 占位）
-5. 更新 `scripts/package.py` 新增的 JS_FILES
-6. **测试**：完整回归，653 例现有测试保持绿 + 新测试
-
----
-
-## 11. 风险与注意事项
-
-### 11.1 代码量风险
-
-- `palette.js` (705 行) 会减少（提取 dead/dupes 代码），但 `dead-view.js` 和 `dupes-view.js` 是净增加
-- `tree-view.js` (430 行) 减少 ~80 行
-- 新增 6 个 view 模块 + 1 个 tab-bar 模块，总代码量预计增加 ~800-1200 行
-- 需严格控制每个模块的职责边界，避免模块间循环依赖
-
-### 11.2 popup.html 与 sidepanel.html 同步
-
-- 遵循现有约定：改 `pages/popup.html` 后必须同步复刻到 `pages/sidepanel.html`
-- sidepanel.html 的差异仅为 `<body class="panel-mode">`
-
-### 11.3 性能
-
-- 6 个 view panel 的 DOM 全部存在于文档中（但仅活跃视图可见）
-- 非活跃视图应延迟加载/初始化（懒初始化模式）
-- 搜索视图的 debounce 150ms 避免频繁渲染
-
-### 11.4 向后兼容
-
-- Tree View 是默认 tab，行为与现有体验一致
-- 现有设置被迁移而非删除
-- 用户升级后首次打开看到的是 Tree View（默认 tab），与升级前一致
-
----
-
-## 12. 待定决策（需评审确认）
-
-- [ ] **Tab 栏位置**：在搜索工具栏下方（推荐）还是搜索工具栏上方？
-- [ ] **Tab 栏在 Popup 的窄空间表现**：320px 宽时是否只显示图标（隐藏文字）？
-- [ ] **Search View 中双搜索框同步方案**：确认"委派同步"方案还是其他方案？
-- [ ] **Stats View 的范围**：是否需要 service worker 后台统计，还是仅做占位 UI？
-- [ ] **`/dead` `/dupes` 命令行为**：保留为切换到 tab 的快捷方式（推荐），还是完全消除？
-- [ ] **`recentBookmarksCollapsed` 退役后的替代**：是否需要为 Recent View 提供任何"收起"机制？
-
----
-
-## 13. 参考资料
-
-- [VS Code Search UX](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) — 搜索面板与命令面板各司其职的设计范式
-- [Chrome Side Panel API](https://developer.chrome.com/docs/extensions/reference/api/sidePanel) — side panel 持久化特性
-- [Chrome Tab Groups API](https://developer.chrome.com/docs/extensions/reference/api/tabGroups) — 已有的全部打开为标签组功能
-- 项目内文档：
-  - `docs/v4task-1.md` — 已完成任务与约定
-  - `docs/现代化演进总方案.md` — 总方案 §4 路线图
-  - `docs/现状分析-弹窗UI.md` — 现有 UI 架构分析
+|---|---|
+| `src/view-manager.js` | 新增（注册表 + tab 条 + 切换状态机 + 路径映射） |
+| `src/view-recent.js` / `src/view-stats.js` / `src/view-dead.js` / `src/view-dupes.js` | 新增 |
+| `src/visit-stats.js` | 新增（切片 D） |
+| `src/search.js` | display 替换退役，接入视图激活；搜索历史 MRU 纯函数 |
+| `src/tree-view.js` | recent 段迁出；dead 标记 overlay 渲染 |
+| `src/tree-render.js` | 行模板支持 overlay 徽标与路径标签 |
+| `src/actions.js` | 删除确认守卫（§5.7）；打开路径埋点（切片 D） |
+| `src/palette.js` | mode 状态机退役；命令表统一；slash 全集（含 `/options`）；搜索桥接行 |
+| `src/keyboard.js` | 挂载点抽象；Esc 分层；data-node-id 化；数字键直达；M/R 行操作 |
+| `src/dupes.js` | `pickKeeper` 策略、scope/协议归一化参数 |
+| `src/dead-links.js` | 双通道 `checkUrl`、并发/超时可配 |
+| `src/icons.js` | 6 个 tab 图标 + 策略/标记小图标 |
+| `src/store.js` | KNOWN_KEYS 登记 + 迁移 |
+| `src/neat.js` | initViewManager 编排接入 |
+| `pages/popup.html` / `pages/sidepanel.html` | `#view-tabs` + `#views` 结构（双页同步） |
+| `css/neat.css` | tab/视图容器/路径标签（末尾追加，token 化，容器查询） |
+| `css/sync-styles.css` | dead 标记 overlay 样式段 |
+| `src/options.js` / `pages/options.html` | "视图"分组 + `confirmDeleteFolder`；各新设置项 |
+| `src/advanced-options.js` / `pages/advanced-options.html` | deadScanConcurrency/deadScanTimeout |
+| `_locales/*/messages.json` | §8 key 清单（复活 2 个死 key） |
+| `scripts/package.py` | JS_FILES 登记 |
+| `scripts/screenshots/` | shots-themes 补 tab；shots-palette 改视图截图 |
+| `tests/` | view-manager/view-recent/view-stats/visit-stats 新 suite；actions 删除确认用例；dupes/dead-links 扩展用例；palette/keyboard/search/tree-view suite 适配 |
