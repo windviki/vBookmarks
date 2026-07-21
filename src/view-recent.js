@@ -46,18 +46,27 @@ export function initViewRecent(ctx = {}) {
         } catch (e) { return new Set(); }
     };
 
-    // Render one bookmark row with path label and optional dead mark
+    // Render one bookmark row with timestamp, path label, and dead mark
     const renderRow = (bookmark) => {
         const deadMarks = getDeadMarks();
         const deadOverlay = deadMarks.has(bookmark.id)
             ? '<span class="dead-mark" aria-label="Marked as dead link"></span>' : '';
+        const showPath = store.get('showItemPath', '1') !== 'false';
+        const dateStr = bookmark.dateAdded
+            ? new Date(bookmark.dateAdded).toLocaleString()
+            : '';
 
-        // Row with favicon, title, and dead-mark overlay
+        // Two-line layout: title + metadata row (path | date)
         return `<li class="child vbm-row" id="neat-recent-item-${bookmark.id}" ` +
             `level="0" role="treeitem" data-node-id="${bookmark.id}" data-parentid="${bookmark.parentId}">` +
+            `<div class="recent-row-wrapper">` +
             treeRender.generateBookmarkHTML(bookmark.title, bookmark.url,
                 'style="-webkit-padding-start: 0px" data-virtual="1"', bookmark.id) +
-            deadOverlay + '</li>';
+            deadOverlay +
+            `<div class="recent-meta">` +
+            (showPath ? `<span class="row-path" data-parentid="${bookmark.parentId}">...</span>` : '') +
+            (dateStr ? `<span class="recent-date">${dateStr}</span>` : '') +
+            `</div></div></li>`;
     };
 
     const refresh = () => {
@@ -80,6 +89,20 @@ export function initViewRecent(ctx = {}) {
             }
             html += '</ul>';
             container.innerHTML = html;
+
+            // Resolve parent folder names for path labels
+            if (store.get('showItemPath', '1') !== 'false') {
+                container.querySelectorAll('.row-path').forEach(el => {
+                    const pid = el.dataset.parentid;
+                    if (pid) {
+                        chrome.bookmarks.get(pid, nodes => {
+                            if (nodes && nodes.length) {
+                                el.textContent = nodes[0].title || '';
+                            }
+                        });
+                    }
+                });
+            }
         });
     };
 

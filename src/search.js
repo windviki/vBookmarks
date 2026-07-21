@@ -215,10 +215,9 @@ export function initSearch(ctx = {}) {
                     continue;
                 if (showPath && li.querySelector('a')) {
                     // Add path label placeholder — resolved asynchronously
-                    const pathSpan = document.createElement('span');
-                    pathSpan.className = 'row-path';
-                    pathSpan.textContent = '...';
-                    li.querySelector('a').appendChild(pathSpan);
+                    const a = li.querySelector('a');
+                    const tmp = a.innerHTML;
+                    a.innerHTML = tmp + '<span class="row-path">...</span>';
                 }
                 chrome.bookmarks.get(parentId, node => {
                     if (!node || !node.length)
@@ -361,14 +360,14 @@ export function initSearch(ctx = {}) {
         store.set('searchHistory', JSON.stringify(arr));
     };
 
-    const addToHistory = (query) => {
+    const addToHistory = (query, resultCount) => {
         if (!query || !query.trim()) return;
         if (store.get('searchHistoryEnabled', '1') === 'false') return;
         const q = query.trim();
         let hist = loadHistory();
-        // Dedup: remove existing entry, then unshift
-        hist = hist.filter(h => h !== q);
-        hist.unshift(q);
+        // Dedup by query text: remove existing, unshift new entry
+        hist = hist.filter(h => (typeof h === 'string' ? h : h.q) !== q);
+        hist.unshift({ q, c: resultCount || 0, t: Date.now() });
         if (hist.length > MAX_HISTORY) hist = hist.slice(0, MAX_HISTORY);
         saveHistory(hist);
     };
@@ -377,10 +376,12 @@ export function initSearch(ctx = {}) {
         store.set('searchHistory', '[]');
     };
 
-    // Record current non-empty query into history (called on Enter/click/leave)
+    // Record current non-empty query into history with result count
     const recordSearchHistory = () => {
         if (searchInput.value && searchInput.value.trim()) {
-            addToHistory(searchInput.value);
+            // Count current results (approximate: number of rendered result rows)
+            const resultRows = $results.querySelectorAll('li:not(.empty-state)');
+            addToHistory(searchInput.value, resultRows.length);
         }
     };
 
@@ -435,11 +436,19 @@ export function initSearch(ctx = {}) {
         if (store.get('searchHistoryEnabled', '1') === 'false') return;
         const hist = loadHistory();
         if (!hist.length) return;
-        let html = `<div class="search-history"><div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
+        let html = `<div class="search-history">`;
+        html += `<div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
         html += `<ul>`;
-        for (const q of hist) {
+        for (const entry of hist) {
+            const q = typeof entry === 'string' ? entry : entry.q;
+            const c = typeof entry === 'object' ? (entry.c || 0) : 0;
+            const t = typeof entry === 'object' && entry.t ? new Date(entry.t).toLocaleString() : '';
             html += `<li class="search-history-item">`;
-            html += `<span class="search-history-query" role="button" tabindex="0">${q}</span>`;
+            html += `<span class="search-history-query" role="button" tabindex="0" data-query="${q}">`;
+            html += `<span class="sh-query-text">${q}</span>`;
+            if (c > 0) html += `<span class="sh-query-count">${c} results</span>`;
+            if (t) html += `<span class="sh-query-time">${t}</span>`;
+            html += `</span>`;
             html += `<button class="search-history-remove" data-query="${q}" aria-label="${_m('searchHistoryRemove') || 'Remove'}">×</button>`;
             html += '</li>';
         }
@@ -450,16 +459,17 @@ export function initSearch(ctx = {}) {
         // Click to re-search
         $results.querySelectorAll('.search-history-query').forEach(el => {
             el.addEventListener('click', () => {
-                searchInput.value = el.textContent;
+                searchInput.value = el.dataset.query;
                 updateClearBtn();
                 search();
             });
         });
         // Remove single item
         $results.querySelectorAll('.search-history-remove').forEach(el => {
-            el.addEventListener('click', () => {
+            el.addEventListener('click', e => {
+                e.stopPropagation();
                 let hist = loadHistory();
-                hist = hist.filter(h => h !== el.dataset.query);
+                hist = hist.filter(h => (typeof h === 'string' ? h : h.q) !== el.dataset.query);
                 saveHistory(hist);
                 renderHistoryBlock();
             });

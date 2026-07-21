@@ -502,11 +502,14 @@ import { initVisitStats } from './visit-stats.js';
                     } catch (e) { /* ignore */ }
                 }
             }
-            // v4 task 2: restore last query + show history on empty input
-            if (search && !search.isActive()) {
-                search.restoreLastQuery();
-                if (!search.input.value) {
-                    search.renderHistoryBlock();
+            // v4 task 2: on search view activation
+            if (search) {
+                if (!search.isActive()) {
+                    // Not in search mode: show history or restore last query
+                    search.restoreLastQuery();
+                    if (!search.input.value) {
+                        search.renderHistoryBlock();
+                    }
                 }
             }
         },
@@ -517,6 +520,10 @@ import { initVisitStats } from './visit-stats.js';
                 try { vs = JSON.parse(ctx.store.get('viewState') || '{}'); } catch (e) {}
                 vs.search = results.scrollTop;
                 ctx.store.set('viewState', JSON.stringify(vs));
+            }
+            // v4 task 2: leave search view → clear search input + results
+            if (search) {
+                search.quit(true);
             }
         }
     });

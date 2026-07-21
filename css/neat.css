@@ -2026,6 +2026,27 @@ body.panel-mode .row-path-double,
     white-space: nowrap;
 }
 
+/* --- Recent view row meta (§5.3) --- */
+.recent-row-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.recent-meta {
+    display: flex;
+    gap: 8px;
+    padding: 0 0 2px 20px; /* align with title after favicon (20px slot) */
+    font-size: 10px;
+    color: var(--vbm-muted);
+}
+
+.recent-date {
+    white-space: nowrap;
+    margin-inline-start: auto;
+}
+
 /* --- Search history styles (§4.3) --- */
 .search-history {
     padding: 8px;
@@ -2060,6 +2081,24 @@ body.panel-mode .row-path-double,
     flex: 1;
     font-size: 12px;
     color: var(--vbm-fg);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.sh-query-text {
+    font-size: 12px;
+}
+
+.sh-query-count {
+    font-size: 10px;
+    color: var(--vbm-muted);
+}
+
+.sh-query-time {
+    font-size: 9px;
+    color: var(--vbm-muted);
 }
 
 .search-history-remove {
