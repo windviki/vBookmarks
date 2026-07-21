@@ -602,150 +602,183 @@
     "message": "Visa inte igen"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Träd"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Sök"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Senaste"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistik"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Döda"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dubletter"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vyer"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Visa vyflikar"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Visa mappsökväg i listrader"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Antal senaste bokmärken"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Proxy-URL-mall för död länkkontroll"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Bokmärkes-URL:er skickas till proxytjänsten."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Aktivera sökhistorik"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Samla besöksstatistik"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Död länksökning"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Samtidiga kontroller"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Timeout per kontroll"
+  },
+  "searchHistoryTitle": {
+    "message": "Senaste sökningar"
+  },
+  "searchHistoryClear": {
+    "message": "Rensa alla"
+  },
+  "searchHistoryRemove": {
+    "message": "Ta bort"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Bekräfta innan icke-tomma mappar raderas"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Denna mapp innehåller $count$ objekt. Du kan ångra borttagningen.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Ta bort"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Öppna inställningar"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Behåll äldsta"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Behåll nyaste"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Behåll i bokmärkesfältet"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Behåll kortaste titeln"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Behåll ytligast"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Behåll mest besökta"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Tillämpa alla"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Rensa resten"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grupper, $count$ att ta bort",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Alla bokmärken"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Endast bokmärkesfältet"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorera http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Senaste skanning: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skanna bokmärken efter döda länkar."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Markera"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Avmarkera"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "markerade"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Markera alla"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Rensa markeringar"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Alla"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Endast döda"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Endast blockerade"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Efter antal"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Efter senaste"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Rensa besöksstatistik"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Inga besöksdata än. Öppna bokmärken för att samla statistik."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ besök",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Inga senaste bokmärken. Tryck Ctrl+D för att bokmärka aktuell sida."
   }
 }

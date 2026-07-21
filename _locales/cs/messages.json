@@ -602,150 +602,183 @@
     "message": "Již nezobrazovat"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Strom"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Hledat"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nedávné"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistiky"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Mrtvé"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicity"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Zobrazení"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Zobrazit karty zobrazení"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Zobrazit cestu složky v řádcích seznamu"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Počet nedávných záložek"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Šablona URL proxy pro kontrolu mrtvých odkazů"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL záložek budou odeslány proxy službě."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Povolit historii vyhledávání"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Sbírat statistiky návštěv"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Kontrola mrtvých odkazů"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Souběžné kontroly"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Časový limit na kontrolu"
+  },
+  "searchHistoryTitle": {
+    "message": "Nedávná hledání"
+  },
+  "searchHistoryClear": {
+    "message": "Vymazat vše"
+  },
+  "searchHistoryRemove": {
+    "message": "Odstranit"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potvrdit před smazáním neprázdných složek"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Tato složka obsahuje $count$ položek. Smazání lze vrátit zpět.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Smazat"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Otevřít nastavení"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Ponechat nejstarší"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Ponechat nejnovější"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Ponechat v liště záložek"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Ponechat nejkratší název"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Ponechat nejmělčí"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Ponechat nejnavštěvovanější"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Použít vše"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Vyčistit zbytek"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ skupin, $count$ k odstranění",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Všechny záložky"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Pouze lišta záložek"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorovat http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Poslední sken: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skenovat záložky na mrtvé odkazy."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Označit"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Odznačit"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "označeno"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Označit vše"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Vymazat označení"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Vše"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Pouze mrtvé"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Pouze blokované"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Podle počtu"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Podle data"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Vymazat statistiky návštěv"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Zatím žádná data o návštěvách. Otevřete záložky pro sběr statistik."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ návštěv",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Žádné nedávné záložky. Stiskněte Ctrl+D pro přidání aktuální stránky."
   }
 }

@@ -602,150 +602,183 @@
     "message": "Ne plus afficher"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Arborescence"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Recherche"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Récent"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistiques"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Morts"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Doublons"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vues"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Afficher les onglets de vue"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Afficher le chemin du dossier dans les lignes"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Nombre de favoris récents"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Modèle d'URL proxy pour la vérification des liens morts"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Les URL des favoris seront envoyées au service proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Activer l'historique de recherche"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Collecter les statistiques de visite"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Analyse des liens morts"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Vérifications simultanées"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Délai d'attente par vérification"
+  },
+  "searchHistoryTitle": {
+    "message": "Recherches récentes"
+  },
+  "searchHistoryClear": {
+    "message": "Tout effacer"
+  },
+  "searchHistoryRemove": {
+    "message": "Supprimer"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Confirmer avant de supprimer les dossiers non vides"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Ce dossier contient $count$ élément(s). Vous pouvez annuler la suppression.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Supprimer"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Ouvrir les paramètres"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Garder le plus ancien"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Garder le plus récent"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Garder dans la barre de favoris"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Garder le titre le plus court"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Garder le moins profond"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Garder le plus visité"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Tout appliquer"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Nettoyer le reste"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ groupes, $count$ à supprimer",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tous les favoris"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Barre de favoris uniquement"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorer http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Dernière analyse : $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Analyser les favoris pour les liens morts."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Marquer"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Démarquer"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "marqué(s)"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Tout marquer"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Effacer les marques"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tous"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Morts uniquement"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Bloqués uniquement"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Par nombre"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Par récent"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Effacer les statistiques de visite"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Aucune donnée de visite pour l'instant. Ouvrez des favoris pour collecter des statistiques."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ visites",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Aucun favori récent. Appuyez sur Ctrl+D pour ajouter la page actuelle aux favoris."
   }
 }

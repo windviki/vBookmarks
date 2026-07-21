@@ -602,150 +602,183 @@
     "message": "لا تظهر مرة أخرى"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "شجرة"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "بحث"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "الأخيرة"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "إحصائيات"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "معطلة"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "مكررة"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "عروض"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "إظهار علامات التبويب"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "إظهار مسار المجلد في الصفوف"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "عدد الإشارات المرجعية الحديثة"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "قالب عنوان URL للوكيل لفحص الروابط المعطلة"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "سيتم إرسال عناوين URL للإشارات المرجعية إلى خدمة الوكيل."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "تمكين سجل البحث"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "جمع إحصائيات الزيارة"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "فحص الروابط المعطلة"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "الفحوصات المتزامنة"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "المهلة لكل فحص"
+  },
+  "searchHistoryTitle": {
+    "message": "عمليات البحث الأخيرة"
+  },
+  "searchHistoryClear": {
+    "message": "مسح الكل"
+  },
+  "searchHistoryRemove": {
+    "message": "إزالة"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "حذف"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "فتح الإعدادات"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "الاحتفاظ بالأقدم"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "الاحتفاظ بالأحدث"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "الاحتفاظ في شريط الإشارات"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "الاحتفاظ بأقصر عنوان"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "الاحتفاظ بالأقل عمقًا"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "الاحتفاظ بالأكثر زيارة"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "تطبيق الكل"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "تنظيف الباقي"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ مجموعة، $count$ للإزالة",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "جميع الإشارات"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "شريط الإشارات فقط"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "تجاهل http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "آخر فحص: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "فحص الإشارات بحثًا عن روابط معطلة."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "وضع علامة"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "إزالة العلامة"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "مُعلَّم"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "وضع علامة على الكل"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "مسح العلامات"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "الكل"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "المعطلة فقط"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "المحظورة فقط"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "حسب العدد"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "حسب الأحدث"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "مسح إحصائيات الزيارة"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "لا توجد بيانات زيارة بعد. افتح الإشارات المرجعية لجمع الإحصائيات."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ زيارة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
   }
 }

@@ -602,150 +602,183 @@
     "message": "Nezobrazovať znova"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Strom"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Hľadať"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nedávne"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Štatistiky"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Mŕtve"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicitné"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Zobrazenia"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Zobraziť karty zobrazení"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Zobraziť cestu priečinka v riadkoch zoznamu"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Počet nedávnych záložiek"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Šablóna URL proxy pre kontrolu mŕtvych odkazov"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL záložiek budú odoslané proxy službe."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Povoliť históriu vyhľadávania"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Zbierať štatistiky návštev"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Kontrola mŕtvych odkazov"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Súbežné kontroly"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Časový limit na kontrolu"
+  },
+  "searchHistoryTitle": {
+    "message": "Nedávne vyhľadávania"
+  },
+  "searchHistoryClear": {
+    "message": "Vymazať všetko"
+  },
+  "searchHistoryRemove": {
+    "message": "Odstrániť"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potvrdiť pred odstránením neprázdnych priečinkov"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Odstrániť"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Otvoriť nastavenia"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Ponechať najstaršie"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Ponechať najnovšie"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Ponechať v lište záložiek"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Ponechať najkratší názov"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Ponechať najplytšie"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Ponechať najnavštevovanejšie"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Použiť všetko"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Vyčistiť zvyšok"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ skupín, $count$ na odstránenie",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Všetky záložky"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Iba lišta záložiek"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorovať http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Posledná kontrola: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Prehľadať záložky na mŕtve odkazy."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Označiť"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Zrušiť označenie"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "označené"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Označiť všetko"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Vymazať označenia"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Všetko"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Iba mŕtve"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Iba blokované"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Podľa počtu"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Podľa nedávnych"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Vymazať štatistiky návštev"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Zatiaľ žiadne údaje o návštevách. Otvorte záložky na zber štatistík."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ návštev",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Žiadne nedávne záložky. Stlačte Ctrl+D pre uloženie aktuálnej stránky."
   }
 }

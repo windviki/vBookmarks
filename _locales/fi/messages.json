@@ -602,150 +602,183 @@
     "message": "Älä näytä uudelleen"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Puu"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Haku"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Viimeisimmät"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Tilastot"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Kuolleet"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Kopiot"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Näkymät"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Näytä näkymävälilehdet"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Näytä kansiopolku listariveillä"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Viimeaikaisten kirjanmerkkien määrä"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Välityspalvelimen URL-malli kuolleiden linkkien tarkistukseen"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Kirjanmerkkien URL-osoitteet lähetetään välityspalvelimelle."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Ota hakuhistoria käyttöön"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Kerää käyntitilastoja"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Kuolleiden linkkien skannaus"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Samanaikaiset tarkistukset"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Aikakatkaisu per tarkistus"
+  },
+  "searchHistoryTitle": {
+    "message": "Viimeisimmät haut"
+  },
+  "searchHistoryClear": {
+    "message": "Tyhjennä kaikki"
+  },
+  "searchHistoryRemove": {
+    "message": "Poista"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Vahvista ennen tyhjien kansioiden poistoa"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Tämä kansio sisältää $count$ kohdetta. Poiston voi kumota.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Poista"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Avaa asetukset"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Säilytä vanhin"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Säilytä uusin"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Säilytä kirjanmerkkipalkissa"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Säilytä lyhin otsikko"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Säilytä matalin"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Säilytä eniten vierailtu"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Käytä kaikkia"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Siivoa loput"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ ryhmää, $count$ poistettavaa",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Kaikki kirjanmerkit"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Vain kirjanmerkkipalkki"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ohita http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Viimeisin skannaus: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skannaa kirjanmerkit kuolleiden linkkien varalta."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Merkitse"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Poista merkintä"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "merkitty"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Merkitse kaikki"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Tyhjennä merkinnät"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Kaikki"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Vain kuolleet"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Vain estetyt"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Määrän mukaan"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Viimeisimmän mukaan"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Tyhjennä käyntitilastot"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Ei vielä käyntitietoja. Avaa kirjanmerkkejä tilastojen keräämiseksi."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ käyntiä",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Ei viimeaikaisia kirjanmerkkejä. Paina Ctrl+D lisätäksesi nykyisen sivun kirjanmerkkeihin."
   }
 }

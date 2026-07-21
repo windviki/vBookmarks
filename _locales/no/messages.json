@@ -602,150 +602,183 @@
     "message": "Ikke vis igjen"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Tre"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Søk"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nylig"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistikk"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Døde"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikater"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Visninger"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Vis visningsfaner"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Vis mappesti i listelinjer"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Antall nylige bokmerker"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Proxy-URL-mal for dødlenkesjekk"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Bokmerke-URL-er sendes til proxy-tjenesten."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Aktiver søkehistorikk"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Samle besøksstatistikk"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Dødlenkeskanning"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Samtidige kontroller"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Tidsavbrudd per kontroll"
+  },
+  "searchHistoryTitle": {
+    "message": "Nylige søk"
+  },
+  "searchHistoryClear": {
+    "message": "Tøm alle"
+  },
+  "searchHistoryRemove": {
+    "message": "Fjern"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Bekreft før sletting av ikke-tomme mapper"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Denne mappen inneholder $count$ element(er). Du kan angre slettingen.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Slett"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Åpne innstillinger"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Behold eldste"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Behold nyeste"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Behold i bokmerkelinjen"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Behold korteste tittel"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Behold grunneste"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Behold mest besøkte"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Bruk alle"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Rens resten"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grupper, $count$ å fjerne",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Alle bokmerker"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Kun bokmerkelinjen"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorer http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Siste skanning: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skann bokmerker for døde lenker."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Merk"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Avmerk"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "merket"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Merk alle"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Fjern merker"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Alle"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Kun døde"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Kun blokkerte"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Etter antall"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Etter nylig"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Tøm besøksstatistikk"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Ingen besøksdata ennå. Åpne bokmerker for å samle statistikk."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ besøk",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Ingen nylige bokmerker. Trykk Ctrl+D for å bokmerke gjeldende side."
   }
 }

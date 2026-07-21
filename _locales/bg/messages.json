@@ -602,150 +602,183 @@
     "message": "Не показвай отново"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Дърво"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Търсене"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Последни"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Статистика"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Мъртви"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Дубликати"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Изгледи"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Показване на разделите за изглед"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Показване на пътя на папката в редовете"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Брой скорошни отметки"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "URL шаблон на прокси за проверка на мъртви връзки"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL адресите на отметките ще бъдат изпратени до прокси услугата."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Активиране на история на търсенията"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Събиране на статистика за посещения"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Сканиране за мъртви връзки"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Едновременни проверки"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Таймаут за проверка"
+  },
+  "searchHistoryTitle": {
+    "message": "Последни търсения"
+  },
+  "searchHistoryClear": {
+    "message": "Изчисти всички"
+  },
+  "searchHistoryRemove": {
+    "message": "Премахни"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Потвърждение преди изтриване на непразни папки"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Тази папка съдържа $count$ елемент(а). Можете да отмените изтриването.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Изтрий"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Отвори настройки"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Запази най-стария"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Запази най-новия"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Запази в лентата с отметки"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Запази най-краткото заглавие"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Запази най-плиткия"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Запази най-посещавания"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Приложи всички"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Почисти останалите"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ групи, $count$ за премахване",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Всички отметки"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Само лентата с отметки"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Игнорирай http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Последно сканиране: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Сканирайте отметките за мъртви връзки."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Маркирай"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Отмаркирай"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "маркирани"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Маркирай всички"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Изчисти маркировките"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Всички"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Само мъртви"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Само блокирани"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "По брой"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "По скорошни"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Изчистване на статистиката за посещения"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Все още няма данни за посещения. Отворете отметки, за да съберете статистика."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ посещения",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Няма скорошни отметки. Натиснете Ctrl+D, за да отбележите текущата страница."
   }
 }

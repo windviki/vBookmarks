@@ -602,150 +602,183 @@
     "message": "Ne prikaži več"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Drevo"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Iskanje"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nedavno"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Mrtve"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Podvojene"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Pogledi"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Pokaži zavihke pogledov"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Pokaži pot mape v vrsticah seznama"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Število nedavnih zaznamkov"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Predloga URL-ja proxyja za preverjanje mrtvih povezav"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-ji zaznamkov bodo poslani proxy storitvi."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Omogoči zgodovino iskanja"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Zbiraj statistiko obiskov"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Preverjanje mrtvih povezav"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Sočasna preverjanja"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Časovna omejitev na preverjanje"
+  },
+  "searchHistoryTitle": {
+    "message": "Nedavna iskanja"
+  },
+  "searchHistoryClear": {
+    "message": "Počisti vse"
+  },
+  "searchHistoryRemove": {
+    "message": "Odstrani"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potrdi pred brisanjem nepraznih map"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Ta mapa vsebuje $count$ elementov. Brisanje lahko razveljavite.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Izbriši"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Odpri nastavitve"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Ohrani najstarejše"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Ohrani najnovejše"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Ohrani v vrstici zaznamkov"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Ohrani najkrajši naslov"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Ohrani najplitvejše"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Ohrani najbolj obiskane"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Uporabi vse"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Počisti ostalo"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ skupin, $count$ za odstranitev",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Vsi zaznamki"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Samo vrstica zaznamkov"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Prezri http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Zadnje skeniranje: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skeniraj zaznamke za mrtve povezave."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Označi"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Odznači"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "označeno"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Označi vse"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Počisti oznake"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Vse"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Samo mrtve"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Samo blokirane"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Po številu"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Po nedavnem"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Počisti statistiko obiskov"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Ni podatkov o obiskih. Odprite zaznamke za zbiranje statistike."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ obiskov",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Ni nedavnih zaznamkov. Pritisnite Ctrl+D za dodajanje trenutne strani."
   }
 }

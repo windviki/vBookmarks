@@ -602,150 +602,183 @@
     "message": "Να μην εμφανιστεί ξανά"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Δέντρο"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Αναζήτηση"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Πρόσφατα"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Στατιστικά"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Νεκρά"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Διπλότυπα"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Προβολές"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Εμφάνιση καρτελών προβολής"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Εμφάνιση διαδρομής φακέλου στις γραμμές λίστας"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Αριθμός πρόσφατων σελιδοδεικτών"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Πρότυπο URL διακομιστή μεσολάβησης για έλεγχο νεκρών συνδέσμων"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Τα URL των σελιδοδεικτών θα σταλούν στην υπηρεσία διακομιστή μεσολάβησης."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Ενεργοποίηση ιστορικού αναζήτησης"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Συλλογή στατιστικών επισκέψεων"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Σάρωση νεκρών συνδέσμων"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Ταυτόχρονοι έλεγχοι"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Χρονικό όριο ανά έλεγχο"
+  },
+  "searchHistoryTitle": {
+    "message": "Πρόσφατες αναζητήσεις"
+  },
+  "searchHistoryClear": {
+    "message": "Εκκαθάριση όλων"
+  },
+  "searchHistoryRemove": {
+    "message": "Αφαίρεση"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Επιβεβαίωση πριν από τη διαγραφή μη κενών φακέλων"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Αυτός ο φάκελος περιέχει $count$ στοιχείο(α). Μπορείτε να αναιρέσετε τη διαγραφή.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Διαγραφή"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Άνοιγμα Ρυθμίσεων"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Διατήρηση παλαιότερου"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Διατήρηση νεότερου"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Διατήρηση στη γραμμή σελιδοδεικτών"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Διατήρηση συντομότερου τίτλου"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Διατήρηση ρηχότερου"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Διατήρηση πιο επισκέψιμου"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Εφαρμογή όλων"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Καθαρισμός υπολοίπων"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ ομάδες, $count$ προς αφαίρεση",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Όλοι οι σελιδοδείκτες"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Μόνο γραμμή σελιδοδεικτών"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Αγνόηση http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Τελευταία σάρωση: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Σάρωση σελιδοδεικτών για νεκρούς συνδέσμους."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Σήμανση"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Αποσήμανση"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "σημειωμένα"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Σήμανση όλων"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Εκκαθάριση σημάνσεων"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Όλα"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Μόνο νεκρά"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Μόνο αποκλεισμένα"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Κατά πλήθος"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Κατά πρόσφατα"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Εκκαθάριση στατιστικών επισκέψεων"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Δεν υπάρχουν ακόμη δεδομένα επισκέψεων. Ανοίξτε σελιδοδείκτες για συλλογή στατιστικών."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ επισκέψεις",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Δεν υπάρχουν πρόσφατοι σελιδοδείκτες. Πατήστε Ctrl+D για σελιδοδείκτη της τρέχουσας σελίδας."
   }
 }

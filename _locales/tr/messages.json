@@ -602,150 +602,183 @@
     "message": "Tekrar Gösterme"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Ağaç"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Ara"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Son"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "İstatistikler"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Ölü"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Kopyalar"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Görünümler"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Görünüm sekmelerini göster"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Liste satırlarında klasör yolunu göster"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Son yer imi sayısı"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Ölü bağlantı kontrolü için proxy URL şablonu"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Yer imi URL'leri proxy hizmetine gönderilecektir."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Arama geçmişini etkinleştir"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Ziyaret istatistiklerini topla"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Ölü bağlantı taraması"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Eşzamanlı kontroller"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Kontrol başına zaman aşımı"
+  },
+  "searchHistoryTitle": {
+    "message": "Son aramalar"
+  },
+  "searchHistoryClear": {
+    "message": "Tümünü temizle"
+  },
+  "searchHistoryRemove": {
+    "message": "Kaldır"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Boş olmayan klasörleri silmeden önce onayla"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Bu klasör $count$ öğe içeriyor. Silme işlemini geri alabilirsiniz.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Sil"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Ayarları Aç"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "En eskiyi koru"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "En yeni koru"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Yer imi çubuğunda tut"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "En kısa başlığı koru"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "En sığ olanı koru"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "En çok ziyaret edileni koru"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Tümünü uygula"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Kalanları temizle"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grup, $count$ kaldırılacak",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tüm yer imleri"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Yalnızca yer imi çubuğu"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https'i yoksay"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Son tarama: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Ölü bağlantılar için yer imlerini tara."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "İşaretle"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "İşareti kaldır"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "işaretli"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Tümünü işaretle"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "İşaretleri temizle"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tümü"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Yalnızca ölü"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Yalnızca engellenen"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Sayıya göre"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Son eklenene göre"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Ziyaret istatistiklerini temizle"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Henüz ziyaret verisi yok. İstatistik toplamak için yer imlerini açın."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ ziyaret",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Son yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
   }
 }

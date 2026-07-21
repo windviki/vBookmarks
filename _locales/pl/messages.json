@@ -602,150 +602,183 @@
     "message": "Nie pokazuj więcej"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Drzewo"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Szukaj"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Ostatnie"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statystyki"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Martwe"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikaty"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Widoki"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Pokaż karty widoków"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Pokaż ścieżkę folderu w wierszach listy"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Liczba ostatnich zakładek"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Szablon URL proxy do sprawdzania martwych linków"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Adresy URL zakładek zostaną wysłane do usługi proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Włącz historię wyszukiwania"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Zbieraj statystyki odwiedzin"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Skanowanie martwych linków"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Równoczesne sprawdzanie"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Limit czasu na sprawdzenie"
+  },
+  "searchHistoryTitle": {
+    "message": "Ostatnie wyszukiwania"
+  },
+  "searchHistoryClear": {
+    "message": "Wyczyść wszystko"
+  },
+  "searchHistoryRemove": {
+    "message": "Usuń"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potwierdzaj przed usunięciem niepustych folderów"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Ten folder zawiera $count$ element(y). Możesz cofnąć usunięcie.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Usuń"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Otwórz ustawienia"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Zachowaj najstarsze"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Zachowaj najnowsze"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Zachowaj na pasku zakładek"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Zachowaj najkrótszy tytuł"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Zachowaj najpłytsze"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Zachowaj najczęściej odwiedzane"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Zastosuj wszystkie"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Wyczyść resztę"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grup(y), $count$ do usunięcia",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Wszystkie zakładki"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Tylko pasek zakładek"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignoruj http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Ostatnie skanowanie: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skanuj zakładki w poszukiwaniu martwych linków."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Oznacz"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Odznacz"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "oznaczone"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Oznacz wszystkie"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Wyczyść oznaczenia"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Wszystkie"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Tylko martwe"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Tylko zablokowane"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Według liczby"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Według ostatnich"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Wyczyść statystyki odwiedzin"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Brak danych o odwiedzinach. Otwórz zakładki, aby zbierać statystyki."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ wizyt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Brak ostatnich zakładek. Naciśnij Ctrl+D, aby dodać bieżącą stronę."
   }
 }

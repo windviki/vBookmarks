@@ -602,150 +602,183 @@
     "message": "Не показувати знову"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Дерево"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Пошук"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Нещодавні"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Статистика"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Мертві"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Дублікати"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Види"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Показувати вкладки видів"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Показувати шлях до папки в рядках списку"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Кількість нещодавніх закладок"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Шаблон URL проксі для перевірки мертвих посилань"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-адреси закладок будуть надіслані до проксі-сервісу."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Увімкнути історію пошуку"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Збирати статистику відвідувань"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Сканування мертвих посилань"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Одночасні перевірки"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Час очікування на перевірку"
+  },
+  "searchHistoryTitle": {
+    "message": "Нещодавні пошуки"
+  },
+  "searchHistoryClear": {
+    "message": "Очистити все"
+  },
+  "searchHistoryRemove": {
+    "message": "Видалити"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Підтверджувати перед видаленням непорожніх папок"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Ця папка містить $count$ елемент(ів). Ви можете скасувати видалення.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Видалити"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Відкрити налаштування"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Залишити найстаріші"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Залишити найновіші"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Залишити на панелі закладок"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Залишити найкоротшу назву"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Залишити найповерховіші"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Залишити найвідвідуваніші"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Застосувати все"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Очистити решту"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ груп, $count$ до видалення",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Всі закладки"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Лише панель закладок"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ігнорувати http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Останнє сканування: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Сканувати закладки на мертві посилання."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Позначити"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Зняти позначку"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "позначено"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Позначити все"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Очистити позначки"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Всі"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Лише мертві"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Лише заблоковані"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "За кількістю"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "За нещодавніми"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Очистити статистику відвідувань"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Даних про відвідування ще немає. Відкрийте закладки, щоб збирати статистику."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ відвідувань",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Немає нещодавніх закладок. Натисніть Ctrl+D, щоб додати поточну сторінку."
   }
 }

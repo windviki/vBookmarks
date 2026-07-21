@@ -602,150 +602,183 @@
     "message": "Non mostrare più"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Albero"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Cerca"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Recenti"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistiche"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Rotti"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicati"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Viste"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Mostra schede vista"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Mostra percorso cartella nelle righe"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Numero di segnalibri recenti"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Modello URL proxy per controllo link morti"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Gli URL dei segnalibri verranno inviati al servizio proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Abilita cronologia ricerche"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Raccogli statistiche visite"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Scansione link morti"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Controlli simultanei"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Timeout per controllo"
+  },
+  "searchHistoryTitle": {
+    "message": "Ricerche recenti"
+  },
+  "searchHistoryClear": {
+    "message": "Cancella tutto"
+  },
+  "searchHistoryRemove": {
+    "message": "Rimuovi"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Conferma prima di eliminare cartelle non vuote"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Elimina"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Apri Impostazioni"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Mantieni il più vecchio"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Mantieni il più recente"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Mantieni nella barra segnalibri"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Mantieni titolo più corto"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Mantieni il meno profondo"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Mantieni il più visitato"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Applica tutto"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Pulisci il resto"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ gruppi, $count$ da rimuovere",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tutti i segnalibri"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Solo barra segnalibri"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignora http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Ultima scansione: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Scansiona i segnalibri per link rotti."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Segna"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Deseleziona"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "segnato"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Segna tutto"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Cancella segni"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tutti"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Solo rotti"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Solo bloccati"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Per conteggio"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Per recenti"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Cancella statistiche visite"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Nessun dato di visita. Apri segnalibri per raccogliere statistiche."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ visite",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente."
   }
 }

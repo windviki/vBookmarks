@@ -602,150 +602,183 @@
     "message": "Nerādīt vairs"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Koks"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Meklēt"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nesenie"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Miris"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dublikāti"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Skatījumi"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Rādīt skatījumu cilnes"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Rādīt mapes ceļu saraksta rindās"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Nesenās grāmatzīmes skaits"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "URL veidne mirušo saišu pārbaudei"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Grāmatzīmju URL tiks nosūtīti uz starpniekserveri."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Iespējot meklēšanas vēsturi"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Vākt apmeklējumu statistiku"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Mirušo saišu skenēšana"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Vienlaicīgas pārbaudes"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Pārbaudes taimauts"
+  },
+  "searchHistoryTitle": {
+    "message": "Nesenie meklējumi"
+  },
+  "searchHistoryClear": {
+    "message": "Notīrīt visu"
+  },
+  "searchHistoryRemove": {
+    "message": "Noņemt"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Apstiprināt pirms ne tukšu mapju dzēšanas"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Šī mape satur $count$ vienumu(s). Dzēšanu var atsaukt.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Dzēst"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Atvērt iestatījumus"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Saglabāt vecāko"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Saglabāt jaunāko"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Saglabāt grāmatzīmju joslā"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Saglabāt īsāko nosaukumu"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Saglabāt seklāko"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Saglabāt visvairāk apmeklēto"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Pielietot visu"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Notīrīt pārējos"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grupas, $count$ jānoņem",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Visas grāmatzīmes"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Tikai grāmatzīmju josla"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorēt http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Pēdējā skenēšana: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skenēt grāmatzīmes, lai atrastu mirušas saites."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Atzīmēt"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Noņemt atzīmi"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "atzīmēts"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Atzīmēt visu"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Notīrīt atzīmes"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Visi"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Tikai mirušie"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Tikai bloķētie"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Pēc skaita"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Pēc nesenuma"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Notīrīt apmeklējumu statistiku"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Nav apmeklējumu datu. Atveriet grāmatzīmes, lai vāktu statistiku."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ apmeklējumi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nav nesenās grāmatzīmes. Spiediet Ctrl+D, lai pievienotu pašreizējo lapu."
   }
 }

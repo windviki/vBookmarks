@@ -602,150 +602,183 @@
     "message": "Không hiển thị lại"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Cây"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Tìm kiếm"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Gần đây"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Thống kê"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Chết"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Trùng"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Chế độ xem"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Hiển thị tab chế độ xem"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Hiển thị đường dẫn thư mục trong danh sách"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Số lượng dấu trang gần đây"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Mẫu URL proxy cho kiểm tra liên kết chết"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL dấu trang sẽ được gửi đến dịch vụ proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Bật lịch sử tìm kiếm"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Thu thập thống kê truy cập"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Quét liên kết chết"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Số lần kiểm tra đồng thời"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Thời gian chờ mỗi lần kiểm tra"
+  },
+  "searchHistoryTitle": {
+    "message": "Tìm kiếm gần đây"
+  },
+  "searchHistoryClear": {
+    "message": "Xóa tất cả"
+  },
+  "searchHistoryRemove": {
+    "message": "Xóa"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Xác nhận trước khi xóa thư mục không rỗng"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Thư mục này chứa $count$ mục. Bạn có thể hoàn tác việc xóa.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Xóa"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Mở Cài đặt"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Giữ cũ nhất"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Giữ mới nhất"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Giữ trong thanh dấu trang"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Giữ tiêu đề ngắn nhất"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Giữ nông nhất"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Giữ truy cập nhiều nhất"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Áp dụng tất cả"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Dọn sạch phần còn lại"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ nhóm, $count$ sẽ xóa",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tất cả dấu trang"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Chỉ thanh dấu trang"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Bỏ qua http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Lần quét cuối: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Quét dấu trang để tìm liên kết chết."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Đánh dấu"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Bỏ đánh dấu"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "đã đánh dấu"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Đánh dấu tất cả"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Xóa đánh dấu"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tất cả"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Chỉ chết"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Chỉ bị chặn"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Theo số lượng"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Theo gần đây"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Xóa thống kê truy cập"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Chưa có dữ liệu truy cập. Mở dấu trang để thu thập thống kê."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ lượt truy cập",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Không có dấu trang gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
   }
 }

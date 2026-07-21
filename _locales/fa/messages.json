@@ -602,150 +602,183 @@
     "message": "دیگر نشان نده"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "درخت"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "جستجو"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "اخیر"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "آمار"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "مرده"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "تکراری"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "نماها"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "نمایش زبانه‌های نما"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "نمایش مسیر پوشه در ردیف‌های لیست"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "تعداد نشانک‌های اخیر"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "الگوی URL پروکسی برای بررسی پیوندهای مرده"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URLهای نشانک به سرویس پروکسی ارسال خواهند شد."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "فعال‌سازی تاریخچه جستجو"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "جمع‌آوری آمار بازدید"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "بررسی پیوندهای مرده"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "بررسی‌های هم‌زمان"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "مهلت زمانی برای هر بررسی"
+  },
+  "searchHistoryTitle": {
+    "message": "جستجوهای اخیر"
+  },
+  "searchHistoryClear": {
+    "message": "پاک کردن همه"
+  },
+  "searchHistoryRemove": {
+    "message": "حذف"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "تأیید قبل از حذف پوشه‌های غیرخالی"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "این پوشه شامل $count$ آیتم است. می‌توانید حذف را لغو کنید.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "حذف"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "باز کردن تنظیمات"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "نگه‌داشتن قدیمی‌ترین"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "نگه‌داشتن جدیدترین"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "نگه‌داشتن در نوار نشانک‌ها"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "نگه‌داشتن کوتاه‌ترین عنوان"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "نگه‌داشتن کم‌عمق‌ترین"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "نگه‌داشتن پربازدیدترین"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "اعمال همه"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "پاک‌سازی بقیه"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ گروه، $count$ برای حذف",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "همه نشانک‌ها"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "فقط نوار نشانک‌ها"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "نادیده گرفتن http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "آخرین اسکن: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "اسکن نشانک‌ها برای پیوندهای مرده."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "علامت‌گذاری"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "لغو علامت"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "علامت‌گذاری شده"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "علامت‌گذاری همه"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "پاک کردن علامت‌ها"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "همه"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "فقط مرده"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "فقط مسدود شده"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "بر اساس تعداد"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "بر اساس اخیر"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "پاک کردن آمار بازدید"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "هنوز داده‌ای از بازدید وجود ندارد. برای جمع‌آوری آمار، نشانک‌ها را باز کنید."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ بازدید",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "نشانک اخیری وجود ندارد. برای نشانک‌گذاری صفحه فعلی، Ctrl+D را فشار دهید."
   }
 }

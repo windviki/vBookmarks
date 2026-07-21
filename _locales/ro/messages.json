@@ -602,150 +602,183 @@
     "message": "Nu mai afișa"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Arbore"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Căutare"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Recent"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistici"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Moarte"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicate"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vizualizări"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Afișează filele de vizualizare"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Afișează calea folderului în rânduri"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Numărul de marcaje recente"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Șablon URL proxy pentru verificarea linkurilor moarte"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-urile marcajelor vor fi trimise către serviciul proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Activează istoricul căutărilor"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Colectează statistici de vizită"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Scanare linkuri moarte"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Verificări concurente"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Timeout per verificare"
+  },
+  "searchHistoryTitle": {
+    "message": "Căutări recente"
+  },
+  "searchHistoryClear": {
+    "message": "Șterge tot"
+  },
+  "searchHistoryRemove": {
+    "message": "Elimină"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Confirmă înainte de a șterge foldere negoale"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Acest folder conține $count$ element(e). Puteți anula ștergerea.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Șterge"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Deschide Setări"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Păstrează cel mai vechi"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Păstrează cel mai nou"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Păstrează în bara de marcaje"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Păstrează titlul cel mai scurt"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Păstrează cel mai superficial"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Păstrează cel mai vizitat"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Aplică tot"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Curăță restul"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grupuri, $count$ de eliminat",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Toate marcajele"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Doar bara de marcaje"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignoră http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Ultima scanare: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Scanează marcajele pentru linkuri moarte."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Marchează"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Demarchează"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "marcat(ă)"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Marchează tot"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Șterge marcajele"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Toate"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Doar moarte"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Doar blocate"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "După număr"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "După recent"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Șterge statisticile vizitelor"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Nu există încă date de vizită. Deschideți marcajele pentru a colecta statistici."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ vizite",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nicio marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
   }
 }

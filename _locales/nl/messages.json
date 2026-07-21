@@ -602,150 +602,183 @@
     "message": "Niet meer tonen"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Boom"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Zoeken"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Recent"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistieken"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Dood"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicaten"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Weergaven"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Toon weergavetabbladen"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Toon mappad in lijstrijen"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Aantal recente bladwijzers"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Proxy-URL-sjabloon voor dode-linkcontrole"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Bladwijzer-URL's worden naar de proxyservice verzonden."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Zoekgeschiedenis inschakelen"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Bezoekstatistieken verzamelen"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Dode-linkcontrole"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Gelijktijdige controles"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Time-out per controle"
+  },
+  "searchHistoryTitle": {
+    "message": "Recente zoekopdrachten"
+  },
+  "searchHistoryClear": {
+    "message": "Alles wissen"
+  },
+  "searchHistoryRemove": {
+    "message": "Verwijderen"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Bevestigen bij verwijderen van niet-lege mappen"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Deze map bevat $count$ item(s). U kunt het verwijderen ongedaan maken.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Verwijderen"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Instellingen openen"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Oudste behouden"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Nieuwste behouden"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "In bladwijzerbalk behouden"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Kortste titel behouden"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Ondiepste behouden"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Meest bezochte behouden"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Alles toepassen"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Rest opschonen"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ groepen, $count$ te verwijderen",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Alle bladwijzers"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Alleen bladwijzerbalk"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Negeer http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Laatste scan: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Scan bladwijzers op dode links."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Markeren"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Demarkeren"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "gemarkeerd"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Alles markeren"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Markeringen wissen"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Alle"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Alleen dood"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Alleen geblokkeerd"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Op aantal"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Op recent"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Wis bezoekstatistieken"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Nog geen bezoekgegevens. Open bladwijzers om statistieken te verzamelen."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ bezoeken",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Geen recente bladwijzers. Druk op Ctrl+D om de huidige pagina als bladwijzer op te slaan."
   }
 }

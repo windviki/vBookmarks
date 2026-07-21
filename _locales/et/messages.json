@@ -602,150 +602,183 @@
     "message": "Ära näita enam"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Puu"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Otsing"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Hiljutised"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Surnud"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikaadid"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vaated"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Kuva vahekaardid"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Kuva kaustatee loendiridades"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Hiljutiste järjehoidjate arv"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Puhverserveri URL-mall surnud linkide kontrollimiseks"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Järjehoidjate URL-id saadetakse puhverserveri teenusesse."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Luba otsinguajalugu"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Kogu külastusstatistikat"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Surnud linkide skaneerimine"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Samaaegsed kontrollid"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Ajalõpp kontrolli kohta"
+  },
+  "searchHistoryTitle": {
+    "message": "Hiljutised otsingud"
+  },
+  "searchHistoryClear": {
+    "message": "Tühjenda kõik"
+  },
+  "searchHistoryRemove": {
+    "message": "Eemalda"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Kinnita enne mittetühjade kaustade kustutamist"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "See kaust sisaldab $count$ üksust. Saate kustutamise tagasi võtta.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Kustuta"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Ava seaded"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Säilita vanim"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Säilita uusim"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Säilita järjehoidjate ribal"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Säilita lühim pealkiri"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Säilita kõige pealiskaudsem"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Säilita enim külastatud"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Rakenda kõik"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Puhasta ülejäänud"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ gruppi, $count$ eemaldada",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Kõik järjehoidjad"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Ainult järjehoidjate riba"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Eira http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Viimane skaneerimine: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Skaneeri järjehoidjad surnud linkide suhtes."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Märgi"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Eemalda märge"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "märgitud"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Märgi kõik"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Tühjenda märked"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Kõik"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Ainult surnud"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Ainult blokeeritud"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Arvu järgi"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Hiljutiste järgi"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Tühista külastusstatistika"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Külastusandmeid pole veel. Avage järjehoidjad statistika kogumiseks."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ külastust",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Hiljutisi järjehoidjaid pole. Vajutage Ctrl+D, et lisada praegune leht järjehoidjatesse."
   }
 }

@@ -635,44 +635,142 @@
   "optionConfirmDeleteFolder": {
     "message": "删除非空文件夹前确认"
   },
-  "paletteCmdOptions": { "message": "打开设置" },
-  "dupesStrategyOldest": { "message": "保留最早" },
-  "dupesStrategyNewest": { "message": "保留最新" },
-  "dupesStrategyBookmarkBar": { "message": "保留书签栏内" },
-  "dupesStrategyShortestTitle": { "message": "保留最短标题" },
-  "dupesStrategyShallowest": { "message": "保留最浅层" },
-  "dupesStrategyMostVisited": { "message": "保留最常访问" },
-  "dupesApplyAll": { "message": "全部应用" },
-  "dupesGroupCleanRest": { "message": "清除其余" },
-  "dupesPreviewSummary": { "message": "$groups$ 组, 将移除 $count$ 条" },
-  "dupesScopeAll": { "message": "全部书签" },
-  "dupesScopeBar": { "message": "仅书签栏" },
-  "dupesIgnoreScheme": { "message": "忽略 http/https" },
-  "deadLastScanAt": { "message": "上次扫描: $time$" },
-  "deadStartHint": { "message": "扫描书签中的死链" },
-  "deadMark": { "message": "标记" },
-  "deadUnmark": { "message": "取消标记" },
-  "deadMarked": { "message": "已标记" },
-  "deadMarkAll": { "message": "全部标记" },
-  "deadUnmarkAll": { "message": "清除标记" },
-  "deadFilterAll": { "message": "全部" },
-  "deadFilterDead": { "message": "仅死链" },
-  "deadFilterBlocked": { "message": "仅被屏蔽" },
-  "statsSortByCount": { "message": "按次数" },
-  "statsSortByRecent": { "message": "按最近" },
-  "statsClearData": { "message": "清除统计数据" },
-  "statsEmpty": { "message": "暂无访问数据，打开书签以收集统计。" },
-  "statsVisitCount": { "message": "$count$ 次访问" },
-  "recentEmpty": { "message": "暂无最近书签，按 Ctrl+D 收藏当前页。" },
-  "optionRecentCount": { "message": "最近书签显示数量" },
-  "optionDeadProxy": { "message": "死链检测代理 URL 模板" },
-  "deadProxyHint": { "message": "书签 URL 将发送给代理服务。" },
-  "optionSearchHistory": { "message": "启用搜索历史" },
-  "optionStatsEnabled": { "message": "收集访问统计" },
-  "optionDeadScan": { "message": "死链扫描" },
-  "optionDeadScanConcurrency": { "message": "并发检测数" },
-  "optionDeadScanTimeout": { "message": "单次检测超时" },
-  "searchHistoryTitle": { "message": "最近搜索" },
-  "searchHistoryClear": { "message": "全部清除" },
-  "searchHistoryRemove": { "message": "移除" }
+  "paletteCmdOptions": {
+    "message": "打开设置"
+  },
+  "dupesStrategyOldest": {
+    "message": "保留最早"
+  },
+  "dupesStrategyNewest": {
+    "message": "保留最新"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "保留书签栏内"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "保留最短标题"
+  },
+  "dupesStrategyShallowest": {
+    "message": "保留最浅层"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "保留最常访问"
+  },
+  "dupesApplyAll": {
+    "message": "全部应用"
+  },
+  "dupesGroupCleanRest": {
+    "message": "清除其余"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ 组, 将移除 $count$ 条",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesScopeAll": {
+    "message": "全部书签"
+  },
+  "dupesScopeBar": {
+    "message": "仅书签栏"
+  },
+  "dupesIgnoreScheme": {
+    "message": "忽略 http/https"
+  },
+  "deadLastScanAt": {
+    "message": "上次扫描: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStartHint": {
+    "message": "扫描书签中的死链"
+  },
+  "deadMark": {
+    "message": "标记"
+  },
+  "deadUnmark": {
+    "message": "取消标记"
+  },
+  "deadMarked": {
+    "message": "已标记"
+  },
+  "deadMarkAll": {
+    "message": "全部标记"
+  },
+  "deadUnmarkAll": {
+    "message": "清除标记"
+  },
+  "deadFilterAll": {
+    "message": "全部"
+  },
+  "deadFilterDead": {
+    "message": "仅死链"
+  },
+  "deadFilterBlocked": {
+    "message": "仅被屏蔽"
+  },
+  "statsSortByCount": {
+    "message": "按次数"
+  },
+  "statsSortByRecent": {
+    "message": "按最近"
+  },
+  "statsClearData": {
+    "message": "清除统计数据"
+  },
+  "statsEmpty": {
+    "message": "暂无访问数据，打开书签以收集统计。"
+  },
+  "statsVisitCount": {
+    "message": "$count$ 次访问",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "recentEmpty": {
+    "message": "暂无最近书签，按 Ctrl+D 收藏当前页。"
+  },
+  "optionRecentCount": {
+    "message": "最近书签显示数量"
+  },
+  "optionDeadProxy": {
+    "message": "死链检测代理 URL 模板"
+  },
+  "deadProxyHint": {
+    "message": "书签 URL 将发送给代理服务。"
+  },
+  "optionSearchHistory": {
+    "message": "启用搜索历史"
+  },
+  "optionStatsEnabled": {
+    "message": "收集访问统计"
+  },
+  "optionDeadScan": {
+    "message": "死链扫描"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "并发检测数"
+  },
+  "optionDeadScanTimeout": {
+    "message": "单次检测超时"
+  },
+  "searchHistoryTitle": {
+    "message": "最近搜索"
+  },
+  "searchHistoryClear": {
+    "message": "全部清除"
+  },
+  "searchHistoryRemove": {
+    "message": "移除"
+  }
 }

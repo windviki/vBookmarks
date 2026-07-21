@@ -602,150 +602,183 @@
     "message": "Nicht mehr anzeigen"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Baum"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Suche"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Zuletzt"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistiken"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Tote Links"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikate"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Ansichten"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Ansichts-Tabs anzeigen"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Ordnerpfad in Listenzeilen anzeigen"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Anzahl der aktuellen Lesezeichen"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Proxy-URL-Vorlage für defekte Link-Prüfung"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Lesezeichen-URLs werden an den Proxy-Dienst gesendet."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Suchverlauf aktivieren"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Besuchsstatistiken sammeln"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Defekte-Link-Prüfung"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Gleichzeitige Prüfungen"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Zeitlimit pro Prüfung"
+  },
+  "searchHistoryTitle": {
+    "message": "Letzte Suchanfragen"
+  },
+  "searchHistoryClear": {
+    "message": "Alle löschen"
+  },
+  "searchHistoryRemove": {
+    "message": "Entfernen"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Bestätigung vor dem Löschen nicht leerer Ordner"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Dieser Ordner enthält $count$ Element(e). Sie können das Löschen rückgängig machen.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Löschen"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Einstellungen öffnen"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Älteste behalten"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Neueste behalten"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "In Lesezeichenleiste behalten"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Kürzesten Titel behalten"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Flachste behalten"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Meistbesuchte behalten"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Alle anwenden"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Rest bereinigen"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ Gruppen, $count$ zu entfernen",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Alle Lesezeichen"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Nur Lesezeichenleiste"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https ignorieren"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Letzter Scan: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Lesezeichen auf tote Links scannen."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Markieren"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Markierung entfernen"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "markiert"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Alle markieren"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Markierungen löschen"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Alle"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Nur tote"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Nur blockierte"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Nach Anzahl"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Nach Datum"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Besuchsstatistiken löschen"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Noch keine Besuchsdaten. Lesezeichen öffnen, um Statistiken zu sammeln."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ Besuche",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Keine aktuellen Lesezeichen. Drücken Sie Strg+D, um die aktuelle Seite als Lesezeichen zu speichern."
   }
 }

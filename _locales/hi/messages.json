@@ -602,150 +602,183 @@
     "message": "फिर न दिखाएं"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "ट्री"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "खोज"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "हाल ही के"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "आँकड़े"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "मृत"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "डुप्लिकेट"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "दृश्य"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "दृश्य टैब दिखाएँ"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "सूची पंक्तियों में फ़ोल्डर पथ दिखाएँ"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "हालिया बुकमार्कों की संख्या"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "डेड-लिंक जाँच के लिए प्रॉक्सी URL टेम्पलेट"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "बुकमार्क URL प्रॉक्सी सेवा को भेजे जाएँगे।"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "खोज इतिहास सक्षम करें"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "विज़िट आँकड़े एकत्र करें"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "डेड-लिंक स्कैन"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "समवर्ती जाँचें"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "प्रति जाँच समय-सीमा"
+  },
+  "searchHistoryTitle": {
+    "message": "हाल की खोजें"
+  },
+  "searchHistoryClear": {
+    "message": "सभी साफ़ करें"
+  },
+  "searchHistoryRemove": {
+    "message": "हटाएँ"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "गैर-खाली फ़ोल्डर हटाने से पहले पुष्टि करें"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "इस फ़ोल्डर में $count$ आइटम हैं। आप हटाना पूर्ववत कर सकते हैं।",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "हटाएँ"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "सेटिंग खोलें"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "सबसे पुराना रखें"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "सबसे नया रखें"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "बुकमार्क बार में रखें"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "सबसे छोटा शीर्षक रखें"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "सबसे उथला रखें"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "सबसे अधिक देखा गया रखें"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "सभी लागू करें"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "बाकी साफ़ करें"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ समूह, $count$ हटाने के लिए",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "सभी बुकमार्क"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "केवल बुकमार्क बार"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https अनदेखा करें"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "अंतिम स्कैन: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "मृत लिंक के लिए बुकमार्क स्कैन करें।"
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "चिह्नित करें"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "चिह्न हटाएँ"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "चिह्नित"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "सभी चिह्नित करें"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "चिह्न साफ़ करें"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "सभी"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "केवल मृत"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "केवल अवरुद्ध"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "गणना के अनुसार"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "हाल के अनुसार"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "विज़िट आँकड़े साफ़ करें"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "अभी तक कोई विज़िट डेटा नहीं। आँकड़े जुटाने के लिए बुकमार्क खोलें।"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ विज़िट",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "कोई हालिया बुकमार्क नहीं। वर्तमान पृष्ठ को बुकमार्क करने के लिए Ctrl+D दबाएँ।"
   }
 }

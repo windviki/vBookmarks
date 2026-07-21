@@ -602,150 +602,183 @@
     "message": "No mostrar de nuevo"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Árbol"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Buscar"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Reciente"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Estadísticas"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Rotas"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicados"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vistas"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Mostrar pestañas de vista"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Mostrar ruta de carpeta en filas"
   },
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Número de marcadores recientes"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Plantilla de URL de proxy para verificar enlaces rotos"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Las URL de los marcadores se enviarán al servicio proxy."
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Habilitar historial de búsqueda"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Recopilar estadísticas de visitas"
   },
   "optionDeadScan": {
-    "message": "[TODO:optionDeadScan]"
+    "message": "Escaneo de enlaces rotos"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Verificaciones concurrentes"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Tiempo de espera por verificación"
+  },
+  "searchHistoryTitle": {
+    "message": "Búsquedas recientes"
+  },
+  "searchHistoryClear": {
+    "message": "Borrar todo"
+  },
+  "searchHistoryRemove": {
+    "message": "Eliminar"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Confirmar antes de eliminar carpetas no vacías"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]"
+    "message": "Esta carpeta contiene $count$ elemento(s). Puede deshacer la eliminación.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Eliminar"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Abrir configuración"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Conservar la más antigua"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Conservar la más nueva"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Conservar en barra de marcadores"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Conservar título más corto"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Conservar la menos profunda"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Conservar la más visitada"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]"
+    "message": "Aplicar todo"
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Limpiar resto"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]"
+    "message": "$groups$ grupos, $count$ para eliminar",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Todos los marcadores"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Solo barra de marcadores"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorar http/https"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]"
+    "message": "Último escaneo: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]"
+    "message": "Escanear marcadores en busca de enlaces rotos."
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Marcar"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Desmarcar"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "marcado(s)"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Marcar todo"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Limpiar marcas"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Todo"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Solo rotos"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Solo bloqueados"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Por cantidad"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Por reciente"
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Borrar estadísticas de visitas"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Aún no hay datos de visitas. Abre marcadores para recopilar estadísticas."
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ visitas",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "No hay marcadores recientes. Presiona Ctrl+D para marcar la página actual."
   }
 }
