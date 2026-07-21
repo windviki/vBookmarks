@@ -11,6 +11,11 @@ import { initSyncUi } from './sync-ui.js';
 import { initPalette } from './palette.js';
 import { initUndo } from './undo.js';
 import { initViewManager } from './view-manager.js';
+import { initViewRecent } from './view-recent.js';
+import { initViewDupes } from './view-dupes.js';
+import { initViewDead } from './view-dead.js';
+import { initViewStats } from './view-stats.js';
+import { initVisitStats } from './visit-stats.js';
 
 (window => {
     const store = window.store;
@@ -364,7 +369,9 @@ import { initViewManager } from './view-manager.js';
         generateSeparatorHTML: treeRender.generateSeparatorHTML,
         generateHTML: treeRender.generateHTML,
         httpsPattern,
-        undo
+        undo,
+        // v4 task 2 slice D: visit tracking on bookmark opens
+        visitStats
     });
 
     const middleClickBgTab = !!store.get('middleClickBgTab');
@@ -415,24 +422,37 @@ import { initViewManager } from './view-manager.js';
 
     // ---- v4 task 2: View Manager (§3) ------------------------------------
     // 视图系统入口：注册表 + tab 条 + 切换状态机 + 路径映射。
-    // tree/search/recent/stats/dead/dupes 六个视图在此注册；
-    // recent/stats/dead/dupes 目前为占位桩（切片 B/C/D 落实）。
     const viewManager = initViewManager({
         store,
         treeRender,
         isPanel: IS_PANEL
     });
 
+    // 初始化 visit stats（切片 D），dupes keep-most-visited 策略依赖此数据源
+    const visitStats = initVisitStats({ store });
+
+    // 初始化各视图模块（切片 B/C/D）
+    const viewRecent = initViewRecent({
+        store, treeRender, separatorManager, actions, treeView, viewManager, search
+    });
+    const viewDupes = initViewDupes({
+        store, treeRender, actions, dialogs, viewManager
+    });
+    const viewDead = initViewDead({
+        store, treeRender, actions, dialogs, viewManager, separatorManager,
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
+    });
+    const viewStats = initViewStats({
+        store, visitStats, actions, dialogs, viewManager
+    });
+
     // 注册 tree 视图（默认）
     viewManager.register({
         id: 'tree',
         titleKey: 'viewTree',
-        icon: '',  // icon handled by tab bar rendering via VIEW_ICONS
         slash: 'tree',
         container: $('view-tree'),
         activate(ctx) {
-            // tree 视图内容由 tree-view.js 的 generateTree 原生管理；
-            // 切回时恢复滚动位置与焦点
             const tree = document.getElementById('tree');
             if (tree && ctx.store) {
                 const vs = ctx.store.get('viewState');
@@ -447,7 +467,6 @@ import { initViewManager } from './view-manager.js';
             }
         },
         deactivate(ctx) {
-            // 离开 tree 视图时保存 scrollTop
             const tree = document.getElementById('tree');
             if (tree && ctx.store) {
                 let vs = {};
@@ -462,12 +481,9 @@ import { initViewManager } from './view-manager.js';
     viewManager.register({
         id: 'search',
         titleKey: 'viewSearch',
-        icon: '',
         slash: 'search',
         container: $('view-search'),
         activate(ctx) {
-            // search 视图内容由 search.js 管理；
-            // 切回时恢复滚动
             const results = document.getElementById('results');
             if (results && ctx.store) {
                 const vs = ctx.store.get('viewState');
@@ -490,16 +506,48 @@ import { initViewManager } from './view-manager.js';
         }
     });
 
-    // 注册 remaining 视图（占位桩，切片 B/C/D 落实）
-    for (const id of ['recent', 'stats', 'dead', 'dupes']) {
-        viewManager.register({
-            id,
-            titleKey: `view${id.charAt(0).toUpperCase() + id.slice(1)}`,
-            icon: '',
-            slash: id,
-            container: $(`view-${id}`)
-        });
-    }
+    // 注册 recent 视图
+    viewManager.register({
+        id: 'recent',
+        titleKey: 'viewRecent',
+        slash: 'recent',
+        container: $('view-recent'),
+        activate() { viewRecent.activate(); },
+        deactivate() { viewRecent.deactivate(); }
+    });
+
+    // 注册 stats 视图
+    viewManager.register({
+        id: 'stats',
+        titleKey: 'viewStats',
+        slash: 'stats',
+        container: $('view-stats'),
+        activate() { viewStats.activate(); },
+        deactivate() { viewStats.deactivate(); }
+    });
+
+    // 注册 dead 视图（含 badge 角标：已标记死链数）
+    viewManager.register({
+        id: 'dead',
+        titleKey: 'viewDead',
+        slash: 'dead',
+        container: $('view-dead'),
+        badge: () => viewDead.badge ? viewDead.badge() : 0,
+        activate() { viewDead.activate(); },
+        deactivate() { viewDead.deactivate(); },
+        onEscape() { return viewDead.onEscape ? viewDead.onEscape() : false; }
+    });
+
+    // 注册 dupes 视图（含 badge 角标：重复组数）
+    viewManager.register({
+        id: 'dupes',
+        titleKey: 'viewDupes',
+        slash: 'dupes',
+        container: $('view-dupes'),
+        badge: () => viewDupes.badge ? viewDupes.badge() : 0,
+        activate() { viewDupes.activate(); },
+        deactivate() { viewDupes.deactivate(); }
+    });
 
     // 启动视图系统
     viewManager.init();

@@ -113,6 +113,24 @@ const $ = id => document.getElementById(id);
             }
         });
 
+        // v4 task 2: Dead-link scan tuning (§5.5b)
+        const deadConcurrency = $('dead-scan-concurrency');
+        if (deadConcurrency) {
+            deadConcurrency.value = store.get('deadScanConcurrency', '4');
+            deadConcurrency.addEventListener('change', () => {
+                const v = parseInt(deadConcurrency.value, 10);
+                if (v >= 1 && v <= 16) store.set('deadScanConcurrency', String(v));
+            });
+        }
+        const deadTimeout = $('dead-scan-timeout');
+        if (deadTimeout) {
+            deadTimeout.value = store.get('deadScanTimeout', '8');
+            deadTimeout.addEventListener('change', () => {
+                const v = parseInt(deadTimeout.value, 10);
+                if (v >= 2 && v <= 30) store.set('deadScanTimeout', String(v));
+            });
+        }
+
         $('reset-button').addEventListener('click', () => {
             store.clearAll().then(() => {
                 alert('vBookmarks has been reset.');
@@ -133,6 +151,11 @@ const $ = id => document.getElementById(id);
         document.getElementById('custom-separator-url-description').innerText = __m('customSeparatorUrlDescription');
         document.getElementById('custom-separator-string-description').innerText = __m('customSeparatorStringDescription');
         document.getElementById('custom-styles-description').innerText = __m('customStylesDescription');
+        document.getElementById('dead-scan-options').innerText = __m('optionDeadScan') || 'Dead-link scan';
+        const d1 = document.getElementById('dead-scan-concurrency-desc');
+        if (d1) d1.innerText = __m('optionDeadScanConcurrency') || 'Concurrent checks';
+        const d2 = document.getElementById('dead-scan-timeout-desc');
+        if (d2) d2.innerText = __m('optionDeadScanTimeout') || 'Timeout per check';
         document.getElementById('reset-settings').innerText = __m('resetSettings');
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');

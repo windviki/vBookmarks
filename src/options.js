@@ -35,8 +35,6 @@ const $ = id => document.getElementById(id);
             { id: 'confirm-open-folder', key: 'dontConfirmOpenFolder', defaultValue: '', inverted: true },
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
-            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
-            { id: 'recent-collapsed', key: 'recentBookmarksCollapsed', defaultValue: '', inverted: false },
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
@@ -50,6 +48,52 @@ const $ = id => document.getElementById(id);
             element.addEventListener('change', async () => {
                 const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
                 await setSetting(setting.key, newValue);
+            });
+        }
+
+        // v4 task 2: View settings (§7)
+        const viewSettings = [
+            { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
+            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
+            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
+            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
+            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
+            { id: 'confirm-delete-folder', key: 'confirmDeleteFolder', defaultValue: '1', inverted: false }
+        ];
+
+        for (const setting of viewSettings) {
+            const element = $(setting.id);
+            if (!element) continue;
+            const value = await getSetting(setting.key, setting.defaultValue);
+            element.checked = setting.inverted ? !value : !!value;
+            element.addEventListener('change', async () => {
+                const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
+                await setSetting(setting.key, newValue);
+            });
+        }
+
+        // Recent count (number input)
+        const recentCount = $('recent-count');
+        if (recentCount) {
+            recentCount.value = await getSetting('recentCount', 20);
+            recentCount.addEventListener('input', async () => {
+                const val = parseInt(recentCount.value);
+                if (val >= 10 && val <= 100) {
+                    await setSetting('recentCount', val);
+                }
+            });
+        }
+
+        // Dead proxy template (text input)
+        const deadProxyEl = $('dead-proxy-template');
+        if (deadProxyEl) {
+            deadProxyEl.value = await getSetting('deadProxyTemplate', '');
+            let deadProxyTimer = null;
+            deadProxyEl.addEventListener('input', () => {
+                clearTimeout(deadProxyTimer);
+                deadProxyTimer = setTimeout(async () => {
+                    await setSetting('deadProxyTemplate', deadProxyEl.value);
+                }, 500);
             });
         }
 
@@ -141,6 +185,17 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-theme-paper').innerText = __m('optionThemePaper');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
+
+        // Views settings labels (v4 task 2)
+        document.getElementById('views-group').innerText = __m('optionsGroupViews');
+        const vLabel = (id, key) => { const el = document.getElementById(id); if (el) el.innerText = __m(key); };
+        vLabel('option-show-view-tabs', 'optionShowViewTabs');
+        vLabel('option-show-item-path', 'optionShowItemPath');
+        vLabel('option-search-history-enabled', 'optionSearchHistory');
+        vLabel('option-stats-enabled', 'optionStatsEnabled');
+        vLabel('option-recent-count', 'optionRecentCount');
+        vLabel('option-dead-proxy', 'optionDeadProxy');
+        vLabel('option-confirm-delete-folder', 'optionConfirmDeleteFolder');
 
         // Sync settings labels
         document.getElementById('sync-options').innerText = __m('syncOptions');

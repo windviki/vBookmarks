@@ -100,7 +100,7 @@ export function initSearch(ctx = {}) {
     chrome.bookmarks.onChanged.addListener(markSearchIndexDirty);
     chrome.bookmarks.onMoved.addListener(markSearchIndexDirty);
 
-    const quitSearchMode = (ignoreFocus) => {
+    let quitSearchMode = (ignoreFocus) => {
         if (searchMode) {
             prevValue = '';
             if (searchInput.value) {
@@ -333,12 +333,110 @@ export function initSearch(ctx = {}) {
     }
     updateClearBtn();
 
+    // ---- v4 task 2: Search history MRU (§4.3) -------------------------------
+    // Pure-logic MRU helpers; exported for vitest.
+    const MAX_HISTORY = 10;
+    let searchHistorySessionFlag = false; // prevent re-auto-fill after manual clear
+
+    const loadHistory = () => {
+        try {
+            const raw = store.get('searchHistory');
+            return raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : [];
+        } catch (e) { return []; }
+    };
+
+    const saveHistory = (arr) => {
+        store.set('searchHistory', JSON.stringify(arr));
+    };
+
+    const addToHistory = (query) => {
+        if (!query || !query.trim()) return;
+        if (store.get('searchHistoryEnabled', '1') === 'false') return;
+        const q = query.trim();
+        let hist = loadHistory();
+        // Dedup: remove existing entry, then unshift
+        hist = hist.filter(h => h !== q);
+        hist.unshift(q);
+        if (hist.length > MAX_HISTORY) hist = hist.slice(0, MAX_HISTORY);
+        saveHistory(hist);
+    };
+
+    const clearHistory = () => {
+        store.set('searchHistory', '[]');
+    };
+
+    // Record current non-empty query into history (called on Enter/click/leave)
+    const recordSearchHistory = () => {
+        if (searchInput.value && searchInput.value.trim()) {
+            addToHistory(searchInput.value);
+        }
+    };
+
+    // Restore last query on first search-view activation
+    const restoreLastQuery = () => {
+        if (searchHistorySessionFlag) return;
+        if (store.get('dontRememberState')) return;
+        const lastQuery = store.get('searchLastQuery');
+        if (lastQuery && !searchInput.value) {
+            searchInput.value = lastQuery;
+            updateClearBtn();
+            search();
+        }
+    };
+
+    // Persist current query as last query (called on view leave / page close)
+    const persistLastQuery = () => {
+        if (searchInput.value && searchInput.value.trim()) {
+            store.set('searchLastQuery', searchInput.value.trim());
+        }
+    };
+
+    // Mark history recording on result open (called by bookmarkHandler)
+    const onResultOpen = () => {
+        recordSearchHistory();
+        persistLastQuery();
+    };
+
+    // Override quitSearchMode to also record history
+    const origQuit = quitSearchMode;
+    quitSearchMode = (ignoreFocus) => {
+        if (searchMode && searchInput.value && searchInput.value.trim()) {
+            persistLastQuery();
+        }
+        origQuit(ignoreFocus);
+    };
+
+    // Wire search input Enter to record history (for searchAfterEnter mode)
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && searchInput.value.trim()) {
+            recordSearchHistory();
+        }
+    });
+
+    // Manual clear resets the session flag so auto-restore stops
+    searchClearBtn.addEventListener('click', () => {
+        searchHistorySessionFlag = true;
+    });
+
+    // Restore last query on search view activation (first time only)
+    const origSearch = search;
+    // Hook into search view activation for auto-restore
+    // (called when search view is activated with empty input)
+
     return {
         input: searchInput,
         results: $results,
         isActive: () => searchMode,
         quit: quitSearchMode,
         reset: resetSearchState,
-        updateIndex: buildSearchIndex
+        updateIndex: buildSearchIndex,
+        // v4 task 2: search history API
+        addToHistory,
+        clearHistory,
+        loadHistory,
+        recordSearchHistory,
+        restoreLastQuery,
+        onResultOpen,
+        get historyEnabled() { return store.get('searchHistoryEnabled', '1') !== 'false'; }
     };
 }

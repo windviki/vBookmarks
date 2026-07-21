@@ -153,10 +153,12 @@ export function initViewDead(ctx = {}) {
 
             const concurrency = parseInt(store.get('deadScanConcurrency', '4'), 10) || 4;
             const timeoutMs = (parseInt(store.get('deadScanTimeout', '8'), 10) || 8) * 1000;
+            const proxyTemplate = store.get('deadProxyTemplate', '') || undefined;
 
             deadScan = startDeadScan(deadItems, {
                 concurrency,
                 timeoutMs,
+                proxyTemplate,
                 onProgress: done => {
                     deadProgress = done;
                     renderResults();
@@ -319,6 +321,10 @@ export function initViewDead(ctx = {}) {
     };
 
     return {
+        badge() {
+            // Tab badge = count of marked dead links
+            return getDeadMarks().size;
+        },
         activate() {
             // Restore cache on first activation (no scan yet)
             if (!deadResults && !deadScan) {

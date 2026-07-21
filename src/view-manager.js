@@ -52,7 +52,8 @@ export function initViewManager(ctx = {}) {
         btn.dataset.viewId = def.id;
         btn.setAttribute('aria-label', _m(def.titleKey));
         btn.title = _m(def.titleKey);
-        btn.innerHTML = `${def.icon}<span class="tab-label">${_m(def.titleKey)}</span>`;
+        const icon = VIEW_ICONS[def.id] || '';
+        btn.innerHTML = `${icon}<span class="tab-label">${_m(def.titleKey)}</span>`;
         // badge
         const badge = document.createElement('span');
         badge.className = 'tab-badge';

@@ -276,6 +276,10 @@ export function initViewDupes(ctx = {}) {
     };
 
     return {
+        badge() {
+            // Tab badge = count of duplicate groups
+            return dupeGroups.length;
+        },
         activate() { refresh(); },
         deactivate() {},
         refresh

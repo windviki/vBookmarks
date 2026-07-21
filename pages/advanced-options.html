@@ -32,6 +32,12 @@
     <p></p>
     <textarea id="userstyle"></textarea>
 </fieldset>
+<!-- v4 task 2: Dead-link scan tuning (§5.5b) -->
+<fieldset>
+    <legend><span id="dead-scan-options"></span></legend>
+    <p><span id="dead-scan-concurrency-desc"></span> <input type="number" min="1" max="16" value="4" id="dead-scan-concurrency" style="width:60px"></p>
+    <p><span id="dead-scan-timeout-desc"></span> <input type="number" min="2" max="30" value="8" id="dead-scan-timeout" style="width:60px"> seconds</p>
+</fieldset>
 <fieldset>
     <legend><span id="reset-settings"></span></legend>
     <div><span id="reset-settings-description"></span><button id="reset-button"></button></div>

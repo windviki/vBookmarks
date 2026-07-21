@@ -663,5 +663,13 @@
   "statsClearData": { "message": "清除统计数据" },
   "statsEmpty": { "message": "暂无访问数据，打开书签以收集统计。" },
   "statsVisitCount": { "message": "$count$ 次访问" },
-  "recentEmpty": { "message": "暂无最近书签，按 Ctrl+D 收藏当前页。" }
+  "recentEmpty": { "message": "暂无最近书签，按 Ctrl+D 收藏当前页。" },
+  "optionRecentCount": { "message": "最近书签显示数量" },
+  "optionDeadProxy": { "message": "死链检测代理 URL 模板" },
+  "deadProxyHint": { "message": "书签 URL 将发送给代理服务。" },
+  "optionSearchHistory": { "message": "启用搜索历史" },
+  "optionStatsEnabled": { "message": "收集访问统计" },
+  "optionDeadScan": { "message": "死链扫描" },
+  "optionDeadScanConcurrency": { "message": "并发检测数" },
+  "optionDeadScanTimeout": { "message": "单次检测超时" }
 }

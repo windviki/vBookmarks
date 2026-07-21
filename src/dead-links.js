@@ -31,9 +31,8 @@ const HTTP_URL = /^https?:\/\//i;
 // HEAD responses that mean "method refused", not "bookmark dead".
 const HEAD_REFUSED = [405, 501, 403];
 
-export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
-    if (!HTTP_URL.test(url || ''))
-        return Promise.resolve({ status: 'skipped', ok: true });
+// Single-channel probe (unchanged core logic)
+const probeChannel = (url, { timeoutMs = 8000, signal } = {}) => {
     const controller = new AbortController();
     if (signal) {
         if (signal.aborted)
@@ -54,7 +53,46 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
         .finally(() => clearTimeout(timer));
 };
 
-export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, signal } = {}) =>
+/**
+ * checkUrl — probe a bookmark URL, optionally via a proxy template.
+ *
+ * Dual-channel matrix (§5.5b):
+ *   direct ok                    → { status, ok: true }
+ *   direct fail, no proxy        → { status, ok: false }
+ *   direct fail, proxy ok        → { status: 'blocked', ok: true }  (直连不可达，代理可达)
+ *   direct fail, proxy fail      → { status, ok: false }            (双通道确认死链)
+ *   non-http(s)                  → { status: 'skipped', ok: true }
+ */
+export const checkUrl = (url, { timeoutMs = 8000, signal, proxyTemplate } = {}) => {
+    if (!HTTP_URL.test(url || ''))
+        return Promise.resolve({ status: 'skipped', ok: true });
+
+    return probeChannel(url, { timeoutMs, signal }).then(directResult => {
+        if (directResult.ok)
+            return directResult;
+
+        // Direct failed — try proxy if configured
+        if (!proxyTemplate)
+            return directResult; // no proxy → it's just dead
+
+        const proxyUrl = proxyTemplate.replace('{url}', encodeURIComponent(url));
+        // Proxy channel uses longer timeout (typically slower)
+        const proxyTimeout = timeoutMs * 1.5;
+        return probeChannel(proxyUrl, { timeoutMs: proxyTimeout, signal }).then(proxyResult => {
+            if (proxyResult.ok) {
+                // Direct failed but proxy succeeded → blocked (GFW / regional)
+                return { status: 'blocked', ok: true, directStatus: directResult.status };
+            }
+            // Both failed → confirmed dead
+            return directResult;
+        }).catch(() => {
+            // Proxy itself errored → fall back to direct result
+            return directResult;
+        });
+    });
+};
+
+export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, signal, proxyTemplate } = {}) =>
     new Promise(resolve => {
         const results = new Map();
         const total = items.length;
@@ -78,7 +116,7 @@ export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProg
             while (!settled && running < concurrency && next < total) {
                 const item = items[next++];
                 running++;
-                checkUrl(item.url, { timeoutMs, signal }).then(result => {
+                checkUrl(item.url, { timeoutMs, signal, proxyTemplate }).then(result => {
                     running--;
                     if (settled) // cancelled while this check was in flight
                         return;
@@ -115,7 +153,7 @@ export const statusLabel = result => {
     return result.error === 'AbortError' ? 'timeout' : 'error';
 };
 
-// Owns the AbortController so the palette just keeps { promise, abort }.
+// Owns the AbortController. Passes proxyTemplate through from opts.
 export const startDeadScan = (items, opts = {}) => {
     const controller = new AbortController();
     const external = opts.signal;
@@ -125,6 +163,10 @@ export const startDeadScan = (items, opts = {}) => {
         else
             external.addEventListener('abort', () => controller.abort(), { once: true });
     }
-    const promise = scanBookmarks(items, { ...opts, signal: controller.signal });
+    const promise = scanBookmarks(items, {
+        ...opts,
+        signal: controller.signal,
+        proxyTemplate: opts.proxyTemplate
+    });
     return { promise, abort: () => controller.abort() };
 };

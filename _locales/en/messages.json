@@ -724,5 +724,19 @@
     "message": "$count$ visits",
     "placeholders": { "count": { "content": "$1" } }
   },
-  "recentEmpty": { "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page." }
+  "recentEmpty": { "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page." },
+  "optionRecentCount": { "message": "Number of recent bookmarks" },
+  "optionDeadProxy": {
+    "message": "Proxy URL template for dead-link check",
+    "description": "Template with {url} placeholder. URLs will be sent to this service."
+  },
+  "deadProxyHint": {
+    "message": "Bookmark URLs will be sent to the proxy service.",
+    "description": "Privacy notice for the proxy URL template"
+  },
+  "optionSearchHistory": { "message": "Enable search history" },
+  "optionStatsEnabled": { "message": "Collect visit statistics" },
+  "optionDeadScan": { "message": "Dead-link scan" },
+  "optionDeadScanConcurrency": { "message": "Concurrent checks" },
+  "optionDeadScanTimeout": { "message": "Timeout per check" }
 }
