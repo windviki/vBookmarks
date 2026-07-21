@@ -151,6 +151,16 @@ import { initVisitStats } from './visit-stats.js';
         getRememberState: () => rememberState
     });
 
+    // ---- v4 task 2: View Manager (§3) ------------------------------------
+    // Must init before search (search.activateView references viewManager).
+    // Views are registered later after all dependents (treeView, search, etc.)
+    // are initialized.
+    const viewManager = initViewManager({
+        store,
+        treeRender,
+        isPanel: IS_PANEL
+    });
+
     // 树视图层（nodeTrees、最近书签区、generateTree、树事件与启动的
     // chrome.bookmarks.getTree）已剥离至 src/tree-view.js（P1，8b），
     // 在 actions/dnd 初始化之后经 initTreeView 装配（见下方）。
@@ -351,6 +361,10 @@ import { initVisitStats } from './visit-stats.js';
     // below — so the treeView reference is TDZ-safe (same pattern as
     // sortFolderContents above). Must init before initActions, which
     // receives it as ctx.undo for the delete paths.
+    // v4 task 2 slice D: visit stats must init before actions (actions.recordVisit
+    // delegates to visitStats). Must also init before view modules below.
+    const visitStats = initVisitStats({ store });
+
     const undo = initUndo({
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
@@ -420,17 +434,8 @@ import { initVisitStats } from './visit-stats.js';
         leftClickNewTab
     });
 
-    // ---- v4 task 2: View Manager (§3) ------------------------------------
-    // 视图系统入口：注册表 + tab 条 + 切换状态机 + 路径映射。
-    const viewManager = initViewManager({
-        store,
-        treeRender,
-        isPanel: IS_PANEL
-    });
-
-    // 初始化 visit stats（切片 D），dupes keep-most-visited 策略依赖此数据源
-    const visitStats = initVisitStats({ store });
-
+    // viewManager 已在上方初始化（search 依赖它）。
+    // visitStats 已在上方初始化（见 initActions 之前），此处复用该实例。
     // 初始化各视图模块（切片 B/C/D）
     const viewRecent = initViewRecent({
         store, treeRender, separatorManager, actions, treeView, viewManager, search
