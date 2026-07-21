@@ -201,6 +201,7 @@ body.linux input {
     right: 0;
     bottom: 0;
     left: 0;
+    container-type: inline-size; /* v4 task 2: container queries for tab bar / path labels */
 }
 
 #copier-input {

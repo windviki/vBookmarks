@@ -109,10 +109,25 @@ export function initTreeRender(ctx = {}) {
             }
         }
 
+        // v4 task 2: dead-mark overlay — red × on top-right of favicon (§5.5c)
+        let deadMarkHtml = '';
+        if (bookmarkId && !isBookmarklet) {
+            try {
+                const raw = store.get('deadMarks');
+                if (raw) {
+                    const marks = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                    if (marks && marks.includes && marks.includes(bookmarkId)) {
+                        deadMarkHtml = '<span class="dead-mark" aria-label="Marked as dead link"></span>';
+                    }
+                }
+            } catch (e) { /* ignore parse errors */ }
+        }
+
         return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
                 <div class="favicon-container">
                     ${faviconHtml}
                     ${syncIndicator}
+                    ${deadMarkHtml}
                 </div>
                 <i>${name}</i>
                 </a>`;

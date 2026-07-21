@@ -173,7 +173,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
-        document.getElementById('option-recent-collapsed').innerText = __m('optionRecentCollapsed');
+        // v4 task 2: recentBookmarksCollapsed deprecated, removed from UI
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');

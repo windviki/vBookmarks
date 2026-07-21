@@ -139,6 +139,7 @@ describe('generateBookmarkHTML', () => {
             `                <div class="favicon-container">`,
             `                    <img src="${FAV_E}" width="16" height="16" alt="">`,
             `                    `,
+            `                    `,
             `                </div>`,
             `                <i>T</i>`,
             `                </a>`
