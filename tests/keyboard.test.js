@@ -377,8 +377,7 @@ describe('module API', () => {
         expect(Object.keys(keyboard).sort()).toEqual(['contextKeyDown', 'treeKeyDown', 'treeKeyUp']);
         expect(tree._listeners.keydown).toHaveLength(1);
         expect(tree._listeners.keyup).toHaveLength(1);
-        expect(results._listeners.keydown).toHaveLength(1);
-        expect(results._listeners.keyup).toHaveLength(1);
+        // v4 task 2: search.results keyboard moved to list-keyboard.js
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
         expect(separatorMenu._listeners.keydown).toBeUndefined(); // binding stays commented out
@@ -592,7 +591,7 @@ describe('treeKeyDown — End/Home', () => {
         expect(f1.link.focused).toBe(true);
     });
 
-    it('End on the results pane focuses the last result', () => {
+    it.skip('End on the results pane focuses the last result — moved to list-keyboard.js', () => {
         const { results, r1, r2, doc } = setup({ searchActive: true });
         doc.activeElement = r1.link;
         fire(results, 'keydown', makeEvent({ key: 'End' }));
@@ -607,7 +606,7 @@ describe('treeKeyDown — End/Home', () => {
         expect(r2.link.focused).toBe(false);
     });
 
-    it('Home on the results pane focuses the first result', () => {
+    it.skip('Home on the results pane focuses the first result — moved to list-keyboard.js', () => {
         const { results, r1, r2, doc } = setup({ searchActive: true });
         doc.activeElement = r2.link;
         fire(results, 'keydown', makeEvent({ key: 'Home' }));
@@ -688,11 +687,9 @@ describe('treeKeyDown — F2 / Delete', () => {
         const recent = ctx.row('A', 'neat-recent-item-7');
         ctx.doc.activeElement = recent.link;
         fire(ctx.tree, 'keydown', makeEvent({ key: 'F2' }));
-        ctx.doc.activeElement = ctx.r1.link;
-        fire(ctx.results, 'keydown', makeEvent({ key: 'F2' }));
+        // v4 task 2: search.results F2 moved to list-keyboard.js
         expect(ctx.actionCalls).toEqual([
-            ['editBookmarkFolder', '7'],
-            ['editBookmarkFolder', '91']
+            ['editBookmarkFolder', '7']
         ]);
     });
 
@@ -811,7 +808,7 @@ describe('treeKeyUp — Delete', () => {
         expect(actionCalls).toEqual([['deleteBookmarks', '5', 2, 1]]);
     });
 
-    it('works on the results pane, stripping the results-item- prefix', () => {
+    it.skip('works on the results pane, stripping the results-item- prefix — moved to list-keyboard.js', () => {
         const { results, r1, doc, actionCalls } = setup({ searchActive: true });
         doc.activeElement = r1.link;
         fire(results, 'keyup', makeEvent({ key: 'Delete' }));

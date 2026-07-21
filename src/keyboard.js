@@ -327,8 +327,9 @@ export function initKeyboard(ctx = {}) {
             }
         }
     };
+    // v4 task 2: list-keyboard.js now handles search results;
+    // keyboard.js only manages the tree view.
     $tree.addEventListener('keydown', treeKeyDown);
-    search.results.addEventListener('keydown', treeKeyDown);
 
     const treeKeyUp = e => {
         let item = document.activeElement;
@@ -353,7 +354,7 @@ export function initKeyboard(ctx = {}) {
         }
     };
     $tree.addEventListener('keyup', treeKeyUp);
-    search.results.addEventListener('keyup', treeKeyUp);
+    // v4 task 2: search.results keyup handled by list-keyboard.js
 
     //use keyboardEvent.key (>= Chrome 51)
     const contextKeyDown = function (e) {

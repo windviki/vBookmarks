@@ -21,6 +21,7 @@
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
 import { FOLDER_ICON } from './icons.js';
+import { initListKeyboard } from './list-keyboard.js';
 
 export function initSearch(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -496,6 +497,11 @@ export function initSearch(ctx = {}) {
 
     // Restore last query on search view activation (first time only)
     // (called when search view is activated with empty input)
+
+    // v4 task 2: keyboard navigation for search results
+    // On Enter, dispatch a click on the focused <a> to reuse the existing
+    // bookmarkHandler (tree-view.js) which handles opening + search.reset.
+    initListKeyboard($results, {});
 
     return {
         input: searchInput,
