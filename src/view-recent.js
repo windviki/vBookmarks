@@ -127,18 +127,9 @@ export function initViewRecent(ctx = {}) {
         }
     });
 
-    // v4 task 2: right-click on a recent row → "Reveal in Tree"
-    container.addEventListener('contextmenu', e => {
-        const li = e.target.closest('li');
-        if (!li) return;
-        e.preventDefault();
-        const id = li.id.replace('neat-recent-item-', '');
-        if (id) {
-            search.reset();
-            viewManager.activate('tree');
-            treeView.revealFolder(id);
-        }
-    });
+    // Right-click: let the existing context-menu.js handle it naturally.
+    // context-menu.js already strips neat-recent-item- prefix and shows the
+    // bookmark context menu (Open/Edit/Delete/etc). No custom handler needed.
 
     // Keyboard: Delete to remove, R to reveal in tree
     container.addEventListener('keyup', e => {
@@ -151,9 +142,15 @@ export function initViewRecent(ctx = {}) {
             actions.deleteBookmark(id);
         } else if (e.key === 'r' || e.key === 'R') {
             e.preventDefault();
+            // Reveal the parent folder, then focus the bookmark itself
+            const parentId = li.dataset.parentid;
             search.reset();
             viewManager.activate('tree');
-            treeView.revealFolder(id);
+            if (parentId) {
+                treeView.revealBookmark ? treeView.revealBookmark(id, parentId) : treeView.revealFolder(parentId);
+            } else {
+                treeView.revealFolder(id);
+            }
         }
     });
 

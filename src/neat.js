@@ -290,7 +290,10 @@ import { initVisitStats } from './visit-stats.js';
         // scrollHeight captures the full scrollable content (recent section +
         // main tree), unlike firstElementChild.offsetHeight which only measures
         // the first child and misses the bulk of a long bookmark tree.
-        const contentH = ($tree.scrollHeight + $tree.offsetTop + 16) * zoomLevel;
+        // v4 task 2: #tree is now nested inside #view-tree > #views; offsetTop
+        // is 0 inside the pane, so add the header chrome heights explicitly.
+        const headerH = ($('search')?.offsetHeight || 28) + ($('view-tabs')?.offsetHeight || 32);
+        const contentH = ($tree.scrollHeight + headerH + 16) * zoomLevel;
         const currentH = body.offsetHeight;
         chrome.tabs.getZoom(zoomFactor => {
             const minH = Math.max(300 / zoomFactor, 200);

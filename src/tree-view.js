@@ -339,9 +339,24 @@ export function initTreeView(ctx = {}) {
     search.results.addEventListener('click', bookmarkHandler);
     $tree.addEventListener('auxclick', bookmarkHandler);
 
+    // v4 task 2: reveal a bookmark in the tree — open its parent folder chain,
+    // then focus the bookmark row after rebuild.
+    const revealBookmark = (bookmarkId, parentFolderId) => {
+        search.quit();
+        // Open parent folder chain using parent folder ID
+        const newOpens = treeRender.getParentPath(parentFolderId, nodeTrees);
+        setOpens(newOpens);
+        store.set('opens', JSON.stringify(newOpens));
+        setRememberState(true);
+        // Focus on the bookmark itself (not the folder)
+        store.set('focusID', bookmarkId);
+        chrome.bookmarks.getTree(generateTreeForTarget);
+    };
+
     return {
         generateTree,
         adaptBookmarkTooltips,
-        revealFolder
+        revealFolder,
+        revealBookmark
     };
 }

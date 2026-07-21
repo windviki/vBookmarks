@@ -1714,6 +1714,373 @@ body.panel-mode .row-path-double,
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+/* =====================================================================
+   v4 task 2: Dupes view styles (§5.6)
+   ===================================================================== */
+
+.dupes-toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+}
+
+.dupes-scope {
+    font: menu;
+    font-size: 11px;
+    padding: 2px 4px;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: 4px;
+}
+
+.dupes-check {
+    font-size: 11px;
+    color: var(--vbm-muted);
+    cursor: pointer;
+}
+
+.dupes-strategies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.dupes-strategy {
+    font: menu;
+    font-size: 10px;
+    padding: 2px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dupes-strategy.active {
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+    border-color: var(--vbm-accent);
+}
+
+.dupes-strategy:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.dupes-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    font-size: 11px;
+    color: var(--vbm-muted);
+}
+
+.dupes-summary button {
+    font: menu;
+    font-size: 11px;
+    margin-left: auto;
+}
+
+.dupes-group {
+    margin: 0;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.dupes-group-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: var(--vbm-bg-hover);
+    font-size: 11px;
+}
+
+.dupes-group-url {
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--vbm-fg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.dupes-group-count {
+    color: var(--vbm-muted);
+    white-space: nowrap;
+    font-size: 10px;
+}
+
+.dupes-group-header button {
+    font: menu;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.dupes-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 4px 20px;
+    font-size: 11px;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.dupes-row.keeper {
+    background: color-mix(in srgb, var(--vbm-accent) 8%, transparent);
+}
+
+.dupes-row.doomed {
+    opacity: 0.55;
+}
+
+.dupes-keep-mark {
+    width: 14px;
+    color: var(--vbm-accent);
+    font-weight: bold;
+    flex: none;
+}
+
+.dupes-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dupes-url {
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--vbm-muted);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dupes-date {
+    font-size: 10px;
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+/* --- Dead view styles (§5.5) --- */
+.dead-header {
+    padding: 6px 8px;
+    font-size: 11px;
+    color: var(--vbm-muted);
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.dead-progress {
+    padding: 8px;
+    font-size: 12px;
+    color: var(--vbm-muted);
+    text-align: center;
+}
+
+.dead-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+}
+
+.dead-actions select {
+    font: menu;
+    font-size: 11px;
+    padding: 2px 4px;
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: 4px;
+}
+
+.dead-actions button {
+    font: menu;
+    font-size: 10px;
+}
+
+.dead-marks-count {
+    color: var(--vbm-muted);
+    font-size: 10px;
+}
+
+.dead-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dead-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.dead-row.marked {
+    background: color-mix(in srgb, var(--vbm-danger) 8%, transparent);
+}
+
+.dead-status {
+    font-weight: bold;
+    min-width: 40px;
+    color: var(--vbm-danger);
+    font-size: 10px;
+}
+
+.dead-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dead-url {
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--vbm-muted);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- Stats view styles (§5.4) --- */
+.stats-toolbar {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+.stats-sort {
+    font: menu;
+    font-size: 11px;
+    padding: 2px 10px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+}
+
+.stats-sort.active {
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+    border-color: var(--vbm-accent);
+}
+
+.stats-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.stats-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-bottom: 1px solid var(--vbm-border);
+    cursor: pointer;
+}
+
+.stats-row:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.stats-count {
+    min-width: 50px;
+    color: var(--vbm-accent);
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.stats-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stats-time {
+    font-size: 10px;
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+/* --- Search history styles (§4.3) --- */
+.search-history {
+    padding: 8px;
+}
+
+.search-history-title {
+    font-size: 11px;
+    color: var(--vbm-muted);
+    margin-bottom: 6px;
+    padding: 0 4px;
+}
+
+.search-history ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-history-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-history-item:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.search-history-query {
+    flex: 1;
+    font-size: 12px;
+    color: var(--vbm-fg);
+}
+
+.search-history-remove {
+    font-size: 14px;
+    border: 0;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.search-history-clear {
+    font: menu;
+    font-size: 11px;
+    color: var(--vbm-muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
 /* Reduced motion: disable tab indicator slide and fade */
 @media (prefers-reduced-motion: reduce) {
     #view-tabs [role="tab"],

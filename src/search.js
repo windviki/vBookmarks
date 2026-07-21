@@ -207,18 +207,30 @@ export function initSearch(ctx = {}) {
             $results.style.display = 'block';
 
             let lis = $results.querySelectorAll('li');
+            const showPath = store.get('showItemPath', '1') !== 'false';
             for (let i = 0, l = lis.length; i < l; i++) {
                 const li = lis[i];
                 const parentId = li.dataset.parentid;
                 if (!parentId) // empty-state row
                     continue;
+                if (showPath && li.querySelector('a')) {
+                    // Add path label placeholder — resolved asynchronously
+                    const pathSpan = document.createElement('span');
+                    pathSpan.className = 'row-path';
+                    pathSpan.textContent = '...';
+                    li.querySelector('a').appendChild(pathSpan);
+                }
                 chrome.bookmarks.get(parentId, node => {
                     if (!node || !node.length)
                         return;
                     const a = li.querySelector('a');
-                    // Add parent folder
                     if (a && node[0]) {
                         a.title = `${_m('parentFolder', node[0].title || 'root')}\n${a.title}`;
+                        // v4 task 2: update path label
+                        const path = li.querySelector('.row-path');
+                        if (path) {
+                            path.textContent = node[0].title || '';
+                        }
                     }
                 });
             }
