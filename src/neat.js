@@ -434,7 +434,9 @@ import { initVisitStats } from './visit-stats.js';
         setOpens: v => { opens = v; },
         setRememberState: v => { rememberState = v; },
         middleClickBgTab,
-        leftClickNewTab
+        leftClickNewTab,
+        viewManager,
+        visitStats
     });
 
     // viewManager 已在上方初始化（search 依赖它）。
@@ -528,47 +530,74 @@ import { initVisitStats } from './visit-stats.js';
         }
     });
 
+    // v4 task 2: helper for viewState scrollTop persistence (§3.3)
+    const viewScroll = (containerId) => ({
+        activate() {
+            const el = document.getElementById(containerId);
+            if (el && store) {
+                try {
+                    const vs = JSON.parse(store.get('viewState') || '{}');
+                    if (vs[containerId] !== undefined) el.scrollTop = vs[containerId];
+                } catch (e) { /* ignore */ }
+            }
+        },
+        deactivate() {
+            const el = document.getElementById(containerId);
+            if (el && store) {
+                try {
+                    const vs = JSON.parse(store.get('viewState') || '{}');
+                    vs[containerId] = el.scrollTop;
+                    store.set('viewState', JSON.stringify(vs));
+                } catch (e) { /* ignore */ }
+            }
+        }
+    });
+
     // 注册 recent 视图
+    const recentScroll = viewScroll('recent-content');
     viewManager.register({
         id: 'recent',
         titleKey: 'viewRecent',
         slash: 'recent',
         container: $('view-recent'),
-        activate() { viewRecent.activate(); },
-        deactivate() { viewRecent.deactivate(); }
+        activate() { recentScroll.activate(); viewRecent.activate(); },
+        deactivate() { recentScroll.deactivate(); viewRecent.deactivate(); }
     });
 
     // 注册 stats 视图
+    const statsScroll = viewScroll('stats-content');
     viewManager.register({
         id: 'stats',
         titleKey: 'viewStats',
         slash: 'stats',
         container: $('view-stats'),
-        activate() { viewStats.activate(); },
-        deactivate() { viewStats.deactivate(); }
+        activate() { statsScroll.activate(); viewStats.activate(); },
+        deactivate() { statsScroll.deactivate(); viewStats.deactivate(); }
     });
 
     // 注册 dead 视图（含 badge 角标：已标记死链数）
+    const deadScroll = viewScroll('dead-content');
     viewManager.register({
         id: 'dead',
         titleKey: 'viewDead',
         slash: 'dead',
         container: $('view-dead'),
         badge: () => viewDead.badge ? viewDead.badge() : 0,
-        activate() { viewDead.activate(); },
-        deactivate() { viewDead.deactivate(); },
+        activate() { deadScroll.activate(); viewDead.activate(); },
+        deactivate() { deadScroll.deactivate(); viewDead.deactivate(); },
         onEscape() { return viewDead.onEscape ? viewDead.onEscape() : false; }
     });
 
     // 注册 dupes 视图（含 badge 角标：重复组数）
+    const dupesScroll = viewScroll('dupes-content');
     viewManager.register({
         id: 'dupes',
         titleKey: 'viewDupes',
         slash: 'dupes',
         container: $('view-dupes'),
         badge: () => viewDupes.badge ? viewDupes.badge() : 0,
-        activate() { viewDupes.activate(); },
-        deactivate() { viewDupes.deactivate(); }
+        activate() { dupesScroll.activate(); viewDupes.activate(); },
+        deactivate() { dupesScroll.deactivate(); viewDupes.deactivate(); }
     });
 
     // 启动视图系统

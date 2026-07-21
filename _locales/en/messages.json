@@ -684,6 +684,10 @@
     "message": "Confirm before deleting non-empty folders",
     "description": "Option label: toggle delete confirmation dialog for non-empty folders"
   },
+  "paletteCmdSearchInView": {
+    "message": "Search in search view for \"$query$\"",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
   "paletteCmdOptions": {
     "message": "Open Settings",
     "description": "Palette command to open the options page"

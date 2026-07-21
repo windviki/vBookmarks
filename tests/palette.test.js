@@ -427,7 +427,8 @@ describe('result composition', () => {
             'palette-row palette-command', // New bookmark…
             'palette-row palette-command', // New folder…
             'palette-row palette-command', // New separator
-            'palette-row palette-bookmark' // New bookmark ideas
+            'palette-row palette-bookmark', // New bookmark ideas
+            'palette-row palette-command'  // bridge: Search in search view
         ]);
         expect(results._appended[3]._innerHTML).toContain('New bookmark ideas');
     });
@@ -454,7 +455,7 @@ describe('result composition', () => {
         const { palette, results, type } = setup({});
         palette.open();
         type('gmail');
-        expect(results._appended).toHaveLength(2);
+        expect(results._appended).toHaveLength(3); // 2 hits + 1 bridge row
         // bookmark rows now use <a> + <i> structure matching search results
         expect(results._appended[0]._innerHTML).toContain('<i>Gmail</i>');
         expect(results._appended[1]._innerHTML).toContain('<i>mail archive</i>');
@@ -466,10 +467,10 @@ describe('result composition', () => {
         const { palette, results, rowClasses, type } = setup({});
         palette.open();
         type('github'); // nested inside folder 14
-        expect(rowClasses()).toEqual(['palette-row palette-bookmark']);
+        expect(rowClasses()).toEqual(['palette-row palette-bookmark', 'palette-row palette-command']);
         expect(results._appended[0]._innerHTML).toContain('GitHub');
         type('dev'); // the nested folder itself
-        expect(rowClasses()).toEqual(['palette-row palette-folder']);
+        expect(rowClasses()).toEqual(['palette-row palette-folder', 'palette-row palette-command']);
         expect(results._appended[0]._innerHTML).toContain('Dev');
     });
 
@@ -477,7 +478,7 @@ describe('result composition', () => {
         const { palette, results, rowClasses, type } = setup({});
         palette.open();
         type('bookmarks bar'); // matches only the "Bookmarks bar" root folder
-        expect(rowClasses()).toEqual(['palette-row palette-folder']);
+        expect(rowClasses()).toEqual(['palette-row palette-folder', 'palette-row palette-command']);
         expect(results._appended[0]._innerHTML).toContain('Bookmarks bar');
     });
 
@@ -495,7 +496,7 @@ describe('result composition', () => {
         palette.open();
         expect(rowClasses()).toHaveLength(12); // v4 task 2: 12 commands
         type('gmail');
-        expect(rowClasses()).toHaveLength(2);
+        expect(rowClasses()).toHaveLength(3); // 2 hits + 1 bridge row
         type('');
         expect(rowClasses()).toHaveLength(12); // v4 task 2: 12 commands
     });
@@ -509,7 +510,7 @@ describe('result composition', () => {
         palette.close();
         palette.open();
         type('freshly');
-        expect(rowClasses()).toEqual(['palette-row palette-bookmark']);
+        expect(rowClasses()).toEqual(['palette-row palette-bookmark', 'palette-row palette-command']);
     });
 });
 

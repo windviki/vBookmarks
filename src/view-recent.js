@@ -66,7 +66,7 @@ export function initViewRecent(ctx = {}) {
                 'style="-webkit-padding-start: 0px" data-virtual="1"', bookmark.id) +
             deadOverlay +
             `<div class="recent-meta">` +
-            (showPath ? `<span class="row-path" data-parentid="${bookmark.parentId}">...</span>` : '') +
+            (showPath ? `<span class="row-path" data-parentid="${bookmark.parentId}" dir="auto">...</span>` : '') +
             (dateStr ? `<span class="recent-date">${dateStr}</span>` : '') +
             `</div></div></li>`;
     };

@@ -71,3 +71,10 @@ export const VIEW_ICONS = {
         '<rect x="3" y="2.5" width="9" height="11" rx="1"/><rect x="5.5" y="1" width="9" height="11" rx="1"/>' +
         '</svg>'
 };
+
+// Small utility icons used within view content (not tab bar)
+export const CLOCK_ICON =
+    '<svg class="vbm-icon vbm-icon-clock" width="12" height="12" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="8" cy="8" r="6"/><polyline points="8 4.5 8 8 10.5 10"/>' +
+    '</svg>';

@@ -84,7 +84,8 @@ export function initListKeyboard(container, opts = {}) {
                     if (active && container.contains(active)) {
                         if (opts.onEnter) {
                             const li = active.closest('li');
-                            const id = li ? (li.id || '').replace(/^(neat-recent|neat-tree|results)-item-/, '') : '';
+                            // v4 task 2: prefer data-node-id, fall back to id prefix extraction
+                            const id = li ? (li.dataset.nodeId || (li.id || '').replace(/^(neat-recent|neat-tree|results)-item-/, '')) : '';
                             opts.onEnter(id, active);
                         } else {
                             active.click();

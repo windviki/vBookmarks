@@ -635,6 +635,10 @@
   "optionConfirmDeleteFolder": {
     "message": "删除非空文件夹前确认"
   },
+  "paletteCmdSearchInView": {
+    "message": "在搜索视图中搜索 \"$query$\"",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
   "paletteCmdOptions": {
     "message": "打开设置"
   },

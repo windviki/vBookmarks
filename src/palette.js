@@ -294,6 +294,19 @@ export function initPalette(ctx = {}) {
                     { kind: 'bookmark', id: hit.id, title: hit.title, url: hit.url });
             }
         }
+        // v4 task 2: bridge row — "Search in search view for '{query}'" (§4.4)
+        if (!slashMode && q && rows.length > 0) {
+            const bridgeName = (_m('paletteCmdSearchInView') || 'Search in search view for "$query$"').replace('$query$', q);
+            addRow({ kind: 'command', name: bridgeName, fn: () => {
+                // Close palette, fill header search box, activate search view
+                const si = document.getElementById('search-input');
+                if (si) {
+                    si.value = q;
+                    si.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                activateView('search');
+            }, keepOpen: false });
+        }
         if (!rows.length) {
             const li = document.createElement('li');
             li.className = 'palette-empty';

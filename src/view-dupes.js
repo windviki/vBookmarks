@@ -166,8 +166,13 @@ export function initViewDupes(ctx = {}) {
         html += ` <button id="dupes-apply-all" class="danger">${_m('dupesApplyAll') || 'Apply all'}</button></div>`;
 
         // Groups
+        let groupIdx = 0;
         for (const group of dupeGroups) {
-            const keeper = pickKeeper(group.items, selectedStrategy, { bookmarkBarIds });
+            // v4 task 2: manual keeper override via click (§5.6a)
+            const manualId = dupeGroups._manualKeepers && dupeGroups._manualKeepers[groupIdx];
+            const keeper = manualId
+                ? group.items.find(b => b.id === manualId) || pickKeeper(group.items, selectedStrategy, { bookmarkBarIds })
+                : pickKeeper(group.items, selectedStrategy, { bookmarkBarIds });
             const doomed = group.items.filter(b => b.id !== keeper.id);
 
             html += `<div class="dupes-group">`;
@@ -179,7 +184,8 @@ export function initViewDupes(ctx = {}) {
 
             for (const item of group.items) {
                 const isKeeper = item.id === keeper.id;
-                html += `<div class="dupes-row${isKeeper ? ' keeper' : ' doomed'}" data-id="${item.id}">`;
+                const groupIdx = dupeGroups.indexOf(group);
+                html += `<div class="dupes-row${isKeeper ? ' keeper' : ' doomed'}" data-id="${item.id}" data-group-idx="${groupIdx}">`;
                 html += `<span class="dupes-keep-mark">${isKeeper ? '✓ ' : ''}</span>`;
                 html += `<span class="dupes-title">${item.title || item.url}</span>`;
                 html += `<span class="dupes-url">${item.url}</span>`;
@@ -190,6 +196,7 @@ export function initViewDupes(ctx = {}) {
                 html += '</div>';
             }
             html += '</div>';
+            groupIdx++;
         }
 
         container.innerHTML = html;
@@ -272,6 +279,25 @@ export function initViewDupes(ctx = {}) {
                 actions.deleteBookmark(id);
                 // Refresh after a short delay for deletion to propagate
                 setTimeout(() => refresh(), 200);
+            });
+        });
+
+        // v4 task 2: keeper override — click a doomed row to make it the keeper (§5.6a)
+        container.querySelectorAll('.dupes-row.doomed').forEach(row => {
+            row.addEventListener('click', e => {
+                // Don't trigger when clicking the remove button
+                if (e.target.closest('.dupes-remove-row')) return;
+                const groupIdx = parseInt(row.dataset.groupIdx, 10);
+                const itemId = row.dataset.id;
+                const group = dupeGroups[groupIdx];
+                if (!group) return;
+                // Swap keeper: remove old keeper, set clicked item as sole keeper for this group
+                // We use a special override marker: set dupesStrategy to a per-group manual mode
+                // Simpler: just set a "manual keeper" in dupeGroups custom data
+                if (!dupeGroups._manualKeepers) dupeGroups._manualKeepers = {};
+                dupeGroups._manualKeepers[groupIdx] = itemId;
+                // Update pickKeeper to check _manualKeepers first
+                render();
             });
         });
     };

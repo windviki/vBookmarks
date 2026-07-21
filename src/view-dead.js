@@ -333,6 +333,16 @@ export function initViewDead(ctx = {}) {
         }
     });
 
+    // v4 task 2: abort active scan on popup close (§5.5d)
+    if (typeof window !== 'undefined') {
+        window.addEventListener('pagehide', () => {
+            if (deadScan) {
+                deadScan.abort();
+                deadScan = null;
+            }
+        });
+    }
+
     return {
         badge() {
             // Tab badge = count of marked dead links

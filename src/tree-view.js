@@ -81,6 +81,8 @@ export function initTreeView(ctx = {}) {
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
     // onlyShowBMBar 启动开关（只有 generateTree 读取）。
     const nodeTrees = {};
+    const viewManager = ctx.viewManager;
+    const visitStats = ctx.visitStats;
     const onlyShowBMBar = !!store.get('onlyShowBMBar');
 
     // Adaptive bookmark tooltips
@@ -126,8 +128,26 @@ export function initTreeView(ctx = {}) {
             // Use getEffectiveSubTree to handle dual-storage Chrome
             subTree = treeRender.getEffectiveSubTree(tree);
         }
-        const html = treeRender.generateHTML(subTree);
         treeRender.generateNodeTrees(subTree, nodeTrees);
+        // v4 task 2: share parent-path map with view-manager for cross-view path labels
+        if (viewManager && viewManager.setParentPathMap) {
+            viewManager.setParentPathMap({...nodeTrees});
+        }
+        // v4 task 2: prune visit stats for deleted bookmarks
+        if (visitStats && visitStats.prune) {
+            const validIds = new Set(Object.keys(nodeTrees));
+            visitStats.prune(validIds);
+        }
+        // Build deadMarks set for overlay rendering in tree rows
+        const deadMarks = (() => {
+            try {
+                const raw = store.get('deadMarks');
+                if (!raw) return new Set();
+                const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                return new Set(arr || []);
+            } catch (e) { return new Set(); }
+        })();
+        const html = treeRender.generateHTML(subTree, 0, deadMarks);
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
 
@@ -217,7 +237,15 @@ export function initTreeView(ctx = {}) {
         if (!children) {
             const id = parent.id.replace('neat-tree-item-', '');
             chrome.bookmarks.getChildren(id, children => {
-                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
+                const deadMarks = (() => {
+                    try {
+                        const raw = store.get('deadMarks');
+                        if (!raw) return new Set();
+                        const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                        return new Set(arr || []);
+                    } catch (e) { return new Set(); }
+                })();
+                const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1, deadMarks);
                 const div = document.createElement('div');
                 div.innerHTML = html;
                 const ul = div.querySelector('ul');

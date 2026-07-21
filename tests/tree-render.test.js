@@ -436,7 +436,7 @@ describe('generateHTML', () => {
 });
 
 describe('generateNodeTrees', () => {
-    it('records non-root folders and skips roots and bookmarks', () => {
+    it('records non-root folders and bookmarks (skips roots)', () => {
         const tr = setup();
         const list = {};
         tr.generateNodeTrees([
@@ -445,7 +445,7 @@ describe('generateNodeTrees', () => {
                 { id: '11', parentId: 'R', title: 'B1', url: 'http://e.com/' }
             ] }
         ], list);
-        expect(list).toEqual({ 10: 'R' });
+        expect(list).toEqual({ 10: 'R', 11: 'R' });
     });
 
     it('recurses into nested children', () => {

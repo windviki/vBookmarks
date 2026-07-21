@@ -20,7 +20,7 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON } from './icons.js';
+import { FOLDER_ICON, CLOCK_ICON } from './icons.js';
 import { initListKeyboard } from './list-keyboard.js';
 
 export function initSearch(ctx = {}) {
@@ -111,9 +111,10 @@ export function initSearch(ctx = {}) {
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
-            $tree.style.display = 'block';
-            $results.style.display = 'none';
-            // v4 task 2: return to source view
+            // v4 task 2: show history area, hide results area (results cleared)
+            if ($historyArea) $historyArea.style.display = '';
+            if ($resultsArea) $resultsArea.style.display = 'none';
+            // return to source view
             activateView(sourceViewId);
 
             if (ignoreFocus === null || !ignoreFocus) {
@@ -175,7 +176,7 @@ export function initSearch(ctx = {}) {
                 const result = results[i];
                 const id = result.id;
                 if (!result.isFolder) {
-                    html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
+                    html += `<li data-parentid="${result.parentId}" data-node-id="${result.id}" id="results-item-${id}" role="listitem">
                             ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions)}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
@@ -192,7 +193,7 @@ export function initSearch(ctx = {}) {
 
                     const folderTitle = result.title ?
                         highlightTitlePositions(result.title, result.positions) : _m('noTitle');
-                    html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
+                    html += `<li data-node-id="${id}" id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
                             <a href="" class="link-folder tree-item-link">
                             <div class="favicon-container">
                             ${FOLDER_ICON}
@@ -203,9 +204,11 @@ export function initSearch(ctx = {}) {
                 }
             }
             html += '</ul>';
-            $tree.style.display = 'none';
+            // v4 task 2: view-manager handles container display; manage area visibility
+            if ($historyArea) $historyArea.style.display = 'none';
             $results.innerHTML = html;
-            $results.style.display = 'block';
+            if ($resultsArea) $resultsArea.style.display = '';
+            $results.style.display = '';
 
             let lis = $results.querySelectorAll('li');
             const showPath = store.get('showItemPath', '1') !== 'false';
@@ -218,14 +221,17 @@ export function initSearch(ctx = {}) {
                     // Add path label placeholder — resolved asynchronously
                     const a = li.querySelector('a');
                     const tmp = a.innerHTML;
-                    a.innerHTML = tmp + '<span class="row-path">...</span>';
+                    a.innerHTML = tmp + '<span class="row-path" dir="auto">...</span>';
                 }
                 chrome.bookmarks.get(parentId, node => {
                     if (!node || !node.length)
                         return;
                     const a = li.querySelector('a');
                     if (a && node[0]) {
-                        a.title = `${_m('parentFolder', node[0].title || 'root')}\n${a.title}`;
+                        // v4 task 2: unified tooltip = title + URL + path (§3.6)
+                        const bookmarkTitle = li.querySelector('i') ? li.querySelector('i').textContent : '';
+                        const bookmarkUrl = a.getAttribute('href') || '';
+                        a.title = `${bookmarkTitle}\n${bookmarkUrl}\n${_m('parentFolder', node[0].title || 'root')}`;
                         // v4 task 2: update path label
                         const path = li.querySelector('.row-path');
                         if (path) {
@@ -336,6 +342,10 @@ export function initSearch(ctx = {}) {
         body.classList.remove('searchFocus');
     });
 
+    // v4 task 2: declare area refs before saved-query restore (may call search())
+    const $historyArea = $('search-history-area');
+    const $resultsArea = $('search-results-area');
+
     // Saved search query
     if (ctx.rememberState && store.get('searchQuery')) {
         searchInput.value = store.get('searchQuery');
@@ -433,19 +443,23 @@ export function initSearch(ctx = {}) {
     });
 
     // v4 task 2: render search history block in empty search view
-    const $historyArea = $('search-history-area');
-    const $resultsArea = $('search-results-area');
-
     const renderHistoryBlock = () => {
         if (!$historyArea) return;
         if (store.get('searchHistoryEnabled', '1') === 'false') {
             $historyArea.innerHTML = '';
+            $historyArea.style.display = 'none';
             return;
         }
         const hist = loadHistory();
         if (!hist.length) {
             $historyArea.innerHTML = '';
+            $historyArea.style.display = 'none';
             return;
+        }
+        // Show history area, hide results (unless a query is active)
+        if (!searchMode) {
+            $historyArea.style.display = '';
+            if ($resultsArea) $resultsArea.style.display = 'none';
         }
         let html = `<div class="search-history">`;
         html += `<div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
@@ -456,6 +470,7 @@ export function initSearch(ctx = {}) {
             const t = typeof entry === 'object' && entry.t ? new Date(entry.t).toLocaleString() : '';
             html += `<li class="search-history-item">`;
             html += `<span class="search-history-query" role="button" tabindex="0" data-query="${q}">`;
+            html += `${CLOCK_ICON} `;
             html += `<span class="sh-query-text">${q}</span>`;
             if (c > 0) html += `<span class="sh-query-count">${c} results</span>`;
             if (t) html += `<span class="sh-query-time">${t}</span>`;

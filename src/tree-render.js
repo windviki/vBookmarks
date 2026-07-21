@@ -79,7 +79,7 @@ export function initTreeRender(ctx = {}) {
         return html;
     };
 
-    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions) => {
+    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions, deadMarks) => {
         if (!extras)
             extras = '';
         const u = htmlspecialchars(url);
@@ -110,17 +110,20 @@ export function initTreeRender(ctx = {}) {
         }
 
         // v4 task 2: dead-mark overlay — red × on top-right of favicon (§5.5c)
+        // Accept optional pre-computed Set for performance; fall back to store read.
         let deadMarkHtml = '';
         if (bookmarkId && !isBookmarklet) {
-            try {
-                const raw = store.get('deadMarks');
-                if (raw) {
-                    const marks = typeof raw === 'string' ? JSON.parse(raw) : raw;
-                    if (marks && marks.includes && marks.includes(bookmarkId)) {
-                        deadMarkHtml = '<span class="dead-mark" aria-label="Marked as dead link"></span>';
-                    }
-                }
-            } catch (e) { /* ignore parse errors */ }
+            const marks = deadMarks || (() => {
+                try {
+                    const raw = store.get('deadMarks');
+                    if (!raw) return null;
+                    const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                    return arr && arr.includes ? arr : null;
+                } catch (e) { return null; }
+            })();
+            if (marks && (marks.has ? marks.has(bookmarkId) : marks.includes(bookmarkId))) {
+                deadMarkHtml = '<span class="dead-mark" aria-label="Marked as dead link"></span>';
+            }
         }
 
         return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
@@ -181,7 +184,7 @@ export function initTreeRender(ctx = {}) {
                 </a>`;
     };
 
-    const generateHTML = (data, level) => {
+    const generateHTML = (data, level, deadMarks) => {
         if (!level)
             level = 0;
         const paddingStart = 16 * level;
@@ -220,11 +223,11 @@ export function initTreeRender(ctx = {}) {
                 // only generate children for opened folder
                 if (isOpen) {
                     if (children) {
-                        html += generateHTML(children, level + 1);
+                        html += generateHTML(children, level + 1, deadMarks);
                     } else {
                         (_id => {
                             chrome.bookmarks.getChildren(_id, children => {
-                                const html = generateHTML(children, level + 1);
+                                const html = generateHTML(children, level + 1, deadMarks);
                                 const div = document.createElement('div');
                                 div.innerHTML = html;
                                 const ul = div.querySelector('ul');
@@ -239,7 +242,7 @@ export function initTreeRender(ctx = {}) {
                     html += generateSeparatorHTML(paddingStart);
                     separatorManager.add(id);
                 } else {
-                    html += generateBookmarkHTML(title, url, stylePad, id);
+                    html += generateBookmarkHTML(title, url, stylePad, id, undefined, deadMarks);
                 }
             }
             html += '</li>';
@@ -258,6 +261,9 @@ export function initTreeRender(ctx = {}) {
                         list[d.id] = d.parentId;
                     }
                     generateNodeTrees(d.children, list);
+                } else {
+                    // v4 task 2: include bookmarks so getParentPath works for bookmark IDs (§3.6)
+                    list[d.id] = d.parentId;
                 }
             }
         }

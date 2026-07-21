@@ -198,17 +198,19 @@ export function initViewManager(ctx = {}) {
     };
 
     // Build parent path string for a bookmark id: "folderA / folderB"
+    // Uses parentPathMap (id→parentId, built from tree-render's nodeTrees).
+    // Resolves folder titles via chrome.bookmarks.get (batched async pattern).
+    // Returns a placeholder format; titles are resolved at render time by the caller.
     const getParentPathString = (bookmarkId) => {
         const path = treeRender.getParentPath(bookmarkId, parentPathMap);
-        // path is [rootId, ..., parentId, bookmarkId]; drop the bookmark itself and any root
-        const folders = path.slice(0, -1).filter(id => id && parentPathMap[id] !== undefined || id === path[0]);
-        // Actually, let's just resolve titles: path is id→parentId chain from node to root,
-        // so path[0] is root, path[path.length-1] is the bookmark itself.
-        // We want everything except root(s) and the bookmark itself.
+        // path is [rootId, ..., parentFolderId, bookmarkId]; skip roots and bookmark itself
         if (!path || path.length <= 2) return '';
-        // Skip the first root element, skip the last (bookmark itself)
+        // Skip the first root element(s), skip the last (bookmark itself)
         const folderIds = path.slice(1, -1);
-        return folderIds.map(id => '').join(' / '); // Titles resolved at render time
+        // Filter to only nodes known in parentPathMap
+        const known = folderIds.filter(id => id && parentPathMap[id] !== undefined);
+        if (!known.length) return '';
+        return known.join(' / '); // IDs joined; callers resolve titles via chrome.bookmarks.get
     };
 
     return {

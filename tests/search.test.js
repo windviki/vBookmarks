@@ -149,6 +149,8 @@ const setup = (opts = {}) => {
         search: makeEl(),
         'search-input': makeEl(),
         'search-clear': makeEl(),
+        'search-history-area': makeEl(),
+        'search-results-area': makeEl(),
         ...(opts.extraEls || {})
     };
     // search.js reaches the row through the clear button's parentNode
@@ -223,8 +225,8 @@ describe('search execution + rendering', () => {
         expect(html).toContain('class="link-folder tree-item-link"');
         expect(html).toContain('id="results-item-1"');
         expect(calls.highlightTitlePositions).toEqual([{ title: 'Folder A', positions: [] }]);
-        expect(els.tree.style.display).toBe('none');
-        expect(els.results.style.display).toBe('block');
+        expect(els['search-history-area'].style.display).toBe('none');
+        expect(els['search-results-area'].style.display).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true]);
         expect(store.get('searchQuery')).toBe('git');
     });
@@ -271,14 +273,20 @@ describe('search execution + rendering', () => {
         });
         const a = makeEl();
         a.title = 'old-tip';
+        a.setAttribute('href', 'http://e.com/');
+        // v4 task 2: mock <i> child for unified tooltip extraction
+        const iEl = makeEl();
+        iEl.textContent = 'old-tip';
         const li = makeEl();
+        li._qs.i = iEl;
         li.dataset.parentid = '1';
         li._qs.a = a;
         const emptyRow = makeEl(); // no data-parentid: skipped
         els.results._qsa.li = [li, emptyRow];
         type(els, 'git');
         expect(chrome.bookmarks.getCalls).toEqual(['1']);
-        expect(a.title).toBe('parentFolder[parent-of-1]\nold-tip');
+        // v4 task 2: unified tooltip = title + URL + path
+        expect(a.title).toBe('old-tip\nhttp://e.com/\nparentFolder[parent-of-1]');
     });
 });
 
@@ -330,8 +338,8 @@ describe('quit / reset semantics', () => {
         expect(els['search-input'].value).toBe('');
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
+        expect(els['search-results-area'].style.display).toBe('none');
+        expect(els['search-history-area'].style.display).toBe('');
         expect(focusTarget.focused).toBe(true);
     });
 
@@ -374,8 +382,8 @@ describe('quit / reset semantics', () => {
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
         // unlike quit(): tree stays hidden, results stay visible, no focus fix
-        expect(els.tree.style.display).toBe('none');
-        expect(els.results.style.display).toBe('block');
+        expect(els['search-history-area'].style.display).toBe('none');
+        expect(els['search-results-area'].style.display).toBe('');
         expect(focusTarget.focused).toBe(false);
         // prevValue was cleared, so the same query runs again
         type(els, 'git');
@@ -403,8 +411,8 @@ describe('input listeners', () => {
         type(els, '');
         expect(s.isActive()).toBe(false);
         expect(store.get('searchQuery')).toBe('');
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
+        expect(els['search-results-area'].style.display).toBe('none');
+        expect(els['search-history-area'].style.display).toBe('');
         expect(focusTarget.focused).toBe(false); // quit(true): keep focus on input
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
     });
@@ -419,8 +427,8 @@ describe('input listeners', () => {
         expect(store.get('searchQuery')).toBe('');
         expect(s.isActive()).toBe(false);
         expect(els.search.classList.contains('has-query')).toBe(false);
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
+        expect(els['search-results-area'].style.display).toBe('none');
+        expect(els['search-history-area'].style.display).toBe('');
         expect(els['search-input'].focused).toBe(true);
     });
 
