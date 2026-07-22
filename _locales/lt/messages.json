@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nėra naujausių žymių. Paspauskite Ctrl+D, kad pažymėtumėte dabartinį puslapį."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

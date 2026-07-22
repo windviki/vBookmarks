@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Žádné nedávné záložky. Stiskněte Ctrl+D pro přidání aktuální stránky."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

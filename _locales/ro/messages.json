@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nicio marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

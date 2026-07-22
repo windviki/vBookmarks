@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

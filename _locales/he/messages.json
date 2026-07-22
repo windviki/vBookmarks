@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "אין סימניות אחרונות. לחץ Ctrl+D כדי להוסיף סימניה לדף הנוכחי."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

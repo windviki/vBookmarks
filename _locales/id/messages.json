@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Tidak ada bookmark terbaru. Tekan Ctrl+D untuk mem-bookmark halaman saat ini."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

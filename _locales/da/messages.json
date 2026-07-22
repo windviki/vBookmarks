@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Ingen nylige bogmærker. Tryk Ctrl+D for at bogmærke den aktuelle side."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

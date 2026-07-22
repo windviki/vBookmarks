@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "نشانک اخیری وجود ندارد. برای نشانک‌گذاری صفحه فعلی، Ctrl+D را فشار دهید."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

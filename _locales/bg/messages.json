@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Няма скорошни отметки. Натиснете Ctrl+D, за да отбележите текущата страница."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

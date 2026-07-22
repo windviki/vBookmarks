@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "कोई हालिया बुकमार्क नहीं। वर्तमान पृष्ठ को बुकमार्क करने के लिए Ctrl+D दबाएँ।"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Нет недавних закладок. Нажмите Ctrl+D, чтобы добавить текущую страницу."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nema nedavnih zabilješki. Pritisnite Ctrl+D za zabilježavanje trenutne stranice."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

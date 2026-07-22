@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Keine aktuellen Lesezeichen. Drücken Sie Strg+D, um die aktuelle Seite als Lesezeichen zu speichern."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

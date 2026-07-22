@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "No hay marcadores recientes. Presiona Ctrl+D para marcar la página actual."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

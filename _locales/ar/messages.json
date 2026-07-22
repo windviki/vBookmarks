@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

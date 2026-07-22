@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "কোনো সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D চাপুন।"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

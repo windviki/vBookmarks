@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Aucun favori récent. Appuyez sur Ctrl+D pour ajouter la page actuelle aux favoris."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

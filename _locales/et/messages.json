@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Hiljutisi järjehoidjaid pole. Vajutage Ctrl+D, et lisada praegune leht järjehoidjatesse."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

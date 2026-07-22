@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Geen recente bladwijzers. Druk op Ctrl+D om de huidige pagina als bladwijzer op te slaan."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

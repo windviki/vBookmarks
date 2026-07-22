@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "暂无最近书签。按 Ctrl+D 收藏当前页面。"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

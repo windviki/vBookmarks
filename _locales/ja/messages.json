@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "最近のブックマークはありません。Ctrl+D で現在のページをブックマークに追加できます。"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

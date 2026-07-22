@@ -776,5 +776,9 @@
   },
   "recentEmpty": {
     "message": "Nenhum favorito recente. Pressione Ctrl+D para favoritar a página atual."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

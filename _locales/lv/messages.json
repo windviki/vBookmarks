@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nav nesenās grāmatzīmes. Spiediet Ctrl+D, lai pievienotu pašreizējo lapu."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

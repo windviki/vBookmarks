@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Немає нещодавніх закладок. Натисніть Ctrl+D, щоб додати поточну сторінку."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

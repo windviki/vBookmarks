@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "尚無最近書籤。按 Ctrl+D 將目前頁面加入書籤。"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

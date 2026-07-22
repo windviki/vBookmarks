@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Nincsenek legutóbbi könyvjelzők. Nyomja meg a Ctrl+D billentyűkombinációt az aktuális oldal könyvjelzők közé tételéhez."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }

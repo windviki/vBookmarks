@@ -780,5 +780,9 @@
   },
   "recentEmpty": {
     "message": "Không có dấu trang gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "description": "Palette bridge row: jump to search view with the current query"
   }
 }
