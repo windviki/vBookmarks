@@ -296,7 +296,7 @@ export function initPalette(ctx = {}) {
         }
         // v4 task 2: bridge row — "Search in search view for '{query}'" (§4.4)
         if (!slashMode && q && rows.length > 0) {
-            const bridgeName = (_m('paletteCmdSearchInView') || 'Search in search view for "$query$"').replace('$query$', q);
+            const bridgeName = (_m('paletteCmdSearchInView') || 'Search in search view for "{{query}}"').replace('{{query}}', q);
             addRow({ kind: 'command', name: bridgeName, fn: () => {
                 // Close palette, fill header search box, activate search view
                 const si = document.getElementById('search-input');

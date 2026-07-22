@@ -685,51 +685,118 @@
     "description": "Option label: toggle delete confirmation dialog for non-empty folders"
   },
   "paletteCmdSearchInView": {
-    "message": "Search in search view for \"$query$\"",
+    "message": "Search in search view for \"{{query}}\"",
     "description": "Palette bridge row: jump to search view with the current query"
   },
   "paletteCmdOptions": {
     "message": "Open Settings",
     "description": "Palette command to open the options page"
   },
-  "dupesStrategyOldest": { "message": "Keep oldest" },
-  "dupesStrategyNewest": { "message": "Keep newest" },
-  "dupesStrategyBookmarkBar": { "message": "Keep in bookmarks bar" },
-  "dupesStrategyShortestTitle": { "message": "Keep shortest title" },
-  "dupesStrategyShallowest": { "message": "Keep shallowest" },
-  "dupesStrategyMostVisited": { "message": "Keep most visited" },
-  "dupesApplyAll": { "message": "Apply all" },
-  "dupesGroupCleanRest": { "message": "Clean rest" },
+  "dupesStrategyOldest": {
+    "message": "Keep oldest"
+  },
+  "dupesStrategyNewest": {
+    "message": "Keep newest"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Keep in bookmarks bar"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Keep shortest title"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Keep shallowest"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Keep most visited"
+  },
+  "dupesApplyAll": {
+    "message": "Apply all"
+  },
+  "dupesGroupCleanRest": {
+    "message": "Clean rest"
+  },
   "dupesPreviewSummary": {
     "message": "$groups$ groups, $count$ to remove",
-    "placeholders": { "groups": { "content": "$1" }, "count": { "content": "$2" } }
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
-  "dupesScopeAll": { "message": "All bookmarks" },
-  "dupesScopeBar": { "message": "Bookmarks bar only" },
-  "dupesIgnoreScheme": { "message": "Ignore http/https" },
+  "dupesScopeAll": {
+    "message": "All bookmarks"
+  },
+  "dupesScopeBar": {
+    "message": "Bookmarks bar only"
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignore http/https"
+  },
   "deadLastScanAt": {
     "message": "Last scan: $time$",
-    "placeholders": { "time": { "content": "$1" } }
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
   },
-  "deadStartHint": { "message": "Scan bookmarks for dead links." },
-  "deadMark": { "message": "Mark" },
-  "deadUnmark": { "message": "Unmark" },
-  "deadMarked": { "message": "marked" },
-  "deadMarkAll": { "message": "Mark all" },
-  "deadUnmarkAll": { "message": "Clear marks" },
-  "deadFilterAll": { "message": "All" },
-  "deadFilterDead": { "message": "Dead only" },
-  "deadFilterBlocked": { "message": "Blocked only" },
-  "statsSortByCount": { "message": "By count" },
-  "statsSortByRecent": { "message": "By recent" },
-  "statsClearData": { "message": "Clear visit statistics" },
-  "statsEmpty": { "message": "No visit data yet. Open bookmarks to collect statistics." },
+  "deadStartHint": {
+    "message": "Scan bookmarks for dead links."
+  },
+  "deadMark": {
+    "message": "Mark"
+  },
+  "deadUnmark": {
+    "message": "Unmark"
+  },
+  "deadMarked": {
+    "message": "marked"
+  },
+  "deadMarkAll": {
+    "message": "Mark all"
+  },
+  "deadUnmarkAll": {
+    "message": "Clear marks"
+  },
+  "deadFilterAll": {
+    "message": "All"
+  },
+  "deadFilterDead": {
+    "message": "Dead only"
+  },
+  "deadFilterBlocked": {
+    "message": "Blocked only"
+  },
+  "statsSortByCount": {
+    "message": "By count"
+  },
+  "statsSortByRecent": {
+    "message": "By recent"
+  },
+  "statsClearData": {
+    "message": "Clear visit statistics"
+  },
+  "statsEmpty": {
+    "message": "No visit data yet. Open bookmarks to collect statistics."
+  },
   "statsVisitCount": {
     "message": "$count$ visits",
-    "placeholders": { "count": { "content": "$1" } }
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "recentEmpty": { "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page." },
-  "optionRecentCount": { "message": "Number of recent bookmarks" },
+  "recentEmpty": {
+    "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page."
+  },
+  "optionRecentCount": {
+    "message": "Number of recent bookmarks"
+  },
   "optionDeadProxy": {
     "message": "Proxy URL template for dead-link check",
     "description": "Template with {url} placeholder. URLs will be sent to this service."
@@ -738,12 +805,28 @@
     "message": "Bookmark URLs will be sent to the proxy service.",
     "description": "Privacy notice for the proxy URL template"
   },
-  "optionSearchHistory": { "message": "Enable search history" },
-  "optionStatsEnabled": { "message": "Collect visit statistics" },
-  "optionDeadScan": { "message": "Dead-link scan" },
-  "optionDeadScanConcurrency": { "message": "Concurrent checks" },
-  "optionDeadScanTimeout": { "message": "Timeout per check" },
-  "searchHistoryTitle": { "message": "Recent searches" },
-  "searchHistoryClear": { "message": "Clear all" },
-  "searchHistoryRemove": { "message": "Remove" }
+  "optionSearchHistory": {
+    "message": "Enable search history"
+  },
+  "optionStatsEnabled": {
+    "message": "Collect visit statistics"
+  },
+  "optionDeadScan": {
+    "message": "Dead-link scan"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Concurrent checks"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout per check"
+  },
+  "searchHistoryTitle": {
+    "message": "Recent searches"
+  },
+  "searchHistoryClear": {
+    "message": "Clear all"
+  },
+  "searchHistoryRemove": {
+    "message": "Remove"
+  }
 }
