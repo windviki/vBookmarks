@@ -208,7 +208,7 @@ export function initSearch(ctx = {}) {
             if ($historyArea) $historyArea.style.display = 'none';
             $results.innerHTML = html;
             if ($resultsArea) $resultsArea.style.display = '';
-            $results.style.display = '';
+            $results.style.display = 'block';  // CSS default is display:none for #results
 
             let lis = $results.querySelectorAll('li');
             const showPath = store.get('showItemPath', '1') !== 'false';

@@ -437,7 +437,13 @@ body.linux input {
 
 #results ul li a:hover,
 #tree ul li a:hover,
-#tree ul li span:hover {
+#tree ul li span:hover,
+#recent-content ul li a:hover,
+#stats-content ul li a:hover,
+#dead-content ul li a:hover,
+#dupes-content ul li a:hover,
+.view-content ul li a:hover,
+.view-content ul li span:hover {
     background-color: var(--vbm-bg-hover);
 }
 
@@ -569,10 +575,22 @@ body.linux input {
 }
 
 #results ul li a:hover i,
-#tree ul li a:hover i {
+#tree ul li a:hover i,
+#results ul li a:hover i,
+#recent-content ul li a:hover i,
+#stats-content ul li a:hover i,
+#dead-content ul li a:hover i,
+#dupes-content ul li a:hover i,
+.view-content ul li a:hover i {
     text-decoration: underline;
 }
 
+.view-content ul li a:active,
+.view-content ul li a.active,
+.view-content ul li a:focus,
+.view-content ul li span:active,
+.view-content ul li span.active,
+.view-content ul li span:focus,
 #results ul li a:active,
 #results ul li a.active,
 #results ul li a:focus,
@@ -588,6 +606,8 @@ menu[type=context] .menu-item:focus {
     outline: 0;
 }
 
+.view-content ul li a:focus,
+.view-content ul li span:focus,
 #results ul li a:focus,
 #tree ul li a:focus,
 #tree ul li span:focus,
@@ -640,7 +660,15 @@ menu[type=context] .menu-item:focus {
 }
 
 #tree ul li a.focus,
-#tree ul li span.focus {
+#tree ul li span.focus,
+#results ul li a.focus,
+#recent-content ul li a.focus,
+#stats-content ul li a.focus,
+#stats-content ul li span.focus,
+#dead-content ul li a.focus,
+#dupes-content ul li a.focus,
+.view-content ul li a.focus,
+.view-content ul li span.focus {
     -webkit-animation-name: blueFade;
     animation-name: blueFade;
     -webkit-animation-duration: 3s;
