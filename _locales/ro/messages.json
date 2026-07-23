@@ -1,48 +1,99 @@
 {
-  "optionShowSyncStatus": {
-    "message": "Afișați indicatorii de stare a sincronizării"
+  "accessibility": {
+    "message": "Accesibilitate"
   },
-  "dupesDone": {
-    "message": "Eliminate $count$ marcaje duplicate",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkAfter": {
+    "message": "Adaugă fila curentă după aceasta"
+  },
+  "addBookmarkBefore": {
+    "message": "Adaugă fila curentă înainte"
+  },
+  "addBookmarkBottom": {
+    "message": "Adaugă fila curentă la bază"
   },
   "addBookmarkTop": {
     "message": "Adaugă fila curentă la vârf"
   },
-  "errorOccured": {
-    "message": "Ups, a apărut o eroare."
+  "addNewFolder": {
+    "message": "Adaugă Subdosar"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
+  "addNewFolderAfter": {
+    "message": "Adaugă Dosar După Acesta"
   },
-  "optionRecentCollapsed": {
-    "message": "Restrânge secțiunea adăugate recent în mod implicit"
+  "addNewFolderBefore": {
+    "message": "Adaugă Dosar Înainte de Acesta"
   },
-  "dupesConfirmAll": {
-    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Se păstrează cele mai vechi.",
+  "addSeparator": {
+    "message": "Adaugă Separator"
+  },
+  "advancedOptions": {
+    "message": "Opțiuni Avansate"
+  },
+  "confirmDeleteFolder": {
+    "message": "Acest folder conține $count$ element(e). Puteți anula ștergerea.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Șterge"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $subFolderCount$ subdosar(e) din el?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$, $subFolderCount$ subdosar(e) și $bookmarkCount$ semn(e) de carte din el?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte?",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Accesibilitate"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Marcaj nou…"
-  },
-  "optionTheme": {
-    "message": "Temă"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte într-o fereastră incognito nouă?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -53,27 +104,45 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Resetare"
+  "contextMenuAddBookmark": {
+    "message": "Marchează această pagină cu vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "Adaugă fila curentă înainte"
+  "copyAllTitlesAndUrls": {
+    "message": "Copiază toate titlurile și URL-urile în clipboard"
   },
-  "syncOptions": {
-    "message": "Opțiuni de sincronizare"
+  "copyTitleAndUrl": {
+    "message": "Copiază titlul și URL-ul"
   },
-  "deletedFolder": {
-    "message": "Dosar șters $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Semnele de carte nu pot fi mutate între stocarea sincronizată și cea locală. Utilizați copiere/lipire.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "Marchează această pagină (Ctrl+D)"
+  "customIcon": {
+    "message": "Iconiță personalizată"
+  },
+  "customIconDescription": {
+    "message": "Iconița trebuie să aibă dimensiunea 19x19 pixeli. Altfel va fi redimensionată la această dimensiune."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizează Culoarea Separatorului"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Dacă URL-ul unui semn de carte conține acest șir, va fi afișat ca separator"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Titlul real al semnului de carte care este afișat ca separator"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL-ul real al semnului de carte care este afișat ca separator"
+  },
+  "customStyles": {
+    "message": "Stiluri Personalizate"
+  },
+  "customStylesDescription": {
+    "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
+  },
+  "deadBlocked": {
+    "message": "blocat"
   },
   "deadChecking": {
     "message": "Se verifică $done$ / $total$…",
@@ -110,14 +179,105 @@
       }
     }
   },
+  "deadFilterAll": {
+    "message": "Toate"
+  },
+  "deadFilterBlocked": {
+    "message": "Doar blocate"
+  },
+  "deadFilterDead": {
+    "message": "Doar moarte"
+  },
+  "deadLastScanAt": {
+    "message": "Ultima scanare: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Marchează"
+  },
+  "deadMarkAll": {
+    "message": "Marchează tot"
+  },
+  "deadMarked": {
+    "message": "marcat(ă)"
+  },
   "deadNone": {
     "message": "Nicio legătură moartă găsită"
+  },
+  "deadProxyHint": {
+    "message": "URL-urile marcajelor vor fi trimise către serviciul proxy."
   },
   "deadRescan": {
     "message": "Re-verificare"
   },
-  "paletteCmdDead": {
-    "message": "Găsește legături moarte"
+  "deadScanning": {
+    "message": "Scanare"
+  },
+  "deadSkipped": {
+    "message": "sărit"
+  },
+  "deadStartHint": {
+    "message": "Scanează marcajele pentru linkuri moarte."
+  },
+  "deadUnmark": {
+    "message": "Demarchează"
+  },
+  "deadUnmarkAll": {
+    "message": "Șterge marcajele"
+  },
+  "defaultIconButton": {
+    "message": "Folosește implicit"
+  },
+  "defaultIconButtonOr": {
+    "message": "sau"
+  },
+  "delete": {
+    "message": "Șterge"
+  },
+  "deleteEllipsis": {
+    "message": "Șterge..."
+  },
+  "deletedBookmark": {
+    "message": "Șters $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Dosar șters $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "Închide"
+  },
+  "donationGo": {
+    "message": "Donează"
+  },
+  "donationLater": {
+    "message": "Mai târziu"
+  },
+  "donationMessage": {
+    "message": "Dacă vă place, poate puteți dona pentru dezvoltarea viitoare. Orice sumă este binevenită."
+  },
+  "donationNever": {
+    "message": "Nu mai afișa"
+  },
+  "dupesApplyAll": {
+    "message": "Aplică tot"
   },
   "dupesCleanAll": {
     "message": "Curăță tot: $groups$ grupuri, $count$ copii suplimentare",
@@ -131,427 +291,20 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "openSidePanelCommand": {
-    "message": "Deschide panoul lateral vBookmarks"
+  "dupesClearRest": {
+    "message": "Șterge restul"
   },
-  "optionThemeAuto": {
-    "message": "Urmează sistemul"
-  },
-  "edit": {
-    "message": "Editare..."
-  },
-  "customIconDescription": {
-    "message": "Iconița trebuie să aibă dimensiunea 19x19 pixeli. Altfel va fi redimensionată la această dimensiune."
-  },
-  "resetSettingsDescription": {
-    "message": "Resetează vBookmarks la setările implicite."
-  },
-  "defaultIconButtonOr": {
-    "message": "sau"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "secunde"
-  },
-  "syncStatusSynced": {
-    "message": "Sincronizat cu contul Google"
-  },
-  "syncStatusLocal": {
-    "message": "Doar local — neîncărcat"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nu poate fi sincronizat"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sincronizat)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Local)"
-  },
-  "advancedOptions": {
-    "message": "Opțiuni Avansate"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "Elimină Separator"
-  },
-  "resetSettings": {
-    "message": "Resetare setări"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Titlul real al semnului de carte care este afișat ca separator"
-  },
-  "donationMessage": {
-    "message": "Dacă vă place, poate puteți dona pentru dezvoltarea viitoare. Orice sumă este binevenită."
-  },
-  "optionClickNewTab": {
-    "message": "Click stânga deschide semnul de carte în tab nou."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte într-o fereastră incognito nouă?",
+  "dupesConfirmAll": {
+    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Se păstrează cele mai vechi.",
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "Nu"
-  },
-  "openIncognitoWindow": {
-    "message": "Deschide în Fereastră Incognito"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Marchează fila curentă"
-  },
-  "sessionEmpty": {
-    "message": "Nicio filă de salvat"
-  },
-  "sortByDateAdded": {
-    "message": "După data adăugării (cele mai noi primele)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Separator nou"
-  },
-  "recentBookmarks": {
-    "message": "Adăugate recent"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Copiază toate titlurile și URL-urile în clipboard"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Caută Semne de Carte"
-  },
-  "searchClear": {
-    "message": "Șterge căutarea"
-  },
-  "reportError": {
-    "message": "Raportează Eroare"
-  },
-  "addNewFolderAfter": {
-    "message": "Adaugă Dosar După Acesta"
-  },
-  "editBookmark": {
-    "message": "Editare semn de carte"
-  },
-  "editFolder": {
-    "message": "Editare dosar"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Dosar părinte: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval de actualizare"
-  },
-  "openBookmarks": {
-    "message": "Deschide Toate Semnele de Carte"
-  },
-  "openBookmarksInGroup": {
-    "message": "Deschide tot în grup nou"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
-  },
-  "addSeparator": {
-    "message": "Adaugă Separator"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$, $subFolderCount$ subdosar(e) și $bookmarkCount$ semn(e) de carte din el?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
       },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
+      "groups": {
         "content": "$2"
       }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Salvează filele ferestrei ca dosar"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Dosar nou…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Dacă URL-ul unui semn de carte conține acest șir, va fi afișat ca separator"
-  },
-  "customStylesDescription": {
-    "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Închide dosarele neutilizate la deschiderea unui dosar."
-  },
-  "optionPopupStays": {
-    "message": "Popup-ul rămâne deschis la deschiderea (click stânga) semnelor de carte."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Sunteți sigur că doriți să deschideți toate cele $count$ semne de carte?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "Caută marcaje, dosare, comenzi…"
-  },
-  "addNewFolderBefore": {
-    "message": "Adaugă Dosar Înainte de Acesta"
-  },
-  "customIcon": {
-    "message": "Iconiță personalizată"
-  },
-  "folderEmpty": {
-    "message": "(Gol)"
-  },
-  "save": {
-    "message": "Salvează"
-  },
-  "undoAction": {
-    "message": "Anulare"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Afișează doar semne de carte în Bara de Semne de Carte"
-  },
-  "sortRecursive": {
-    "message": "Sortează și subfolderele (recursiv)"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(fără titlu)"
-  },
-  "sortByTitle": {
-    "message": "După titlu"
-  },
-  "defaultIconButton": {
-    "message": "Folosește implicit"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Personalizează Culoarea Separatorului"
-  },
-  "sessionSaved": {
-    "message": "Salvate $count$ file într-un dosar nou",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
     },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Păstrează folderele deasupra"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
-  },
-  "paletteNoResults": {
-    "message": "Niciun rezultat potrivit"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Deschide paleta de comenzi"
-  },
-  "searchNoResults": {
-    "message": "Nicio marcaj potrivit"
-  },
-  "sessionFolderName": {
-    "message": "Sesiune $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Aceasta reordonează marcajele în fiecare subfolder și nu poate fi anulată."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Construit de $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Marcaj adăugat"
-  },
-  "quickAddedTo": {
-    "message": "Marcaj adăugat în $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Marcaj eliminat"
-  },
-  "quickRemoveBookmark": {
-    "message": "Elimină acest marcaj (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Unelte (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Întunecat"
-  },
-  "optionThemeInk": {
-    "message": "Cerneală (întunecat)"
-  },
-  "optionThemePaper": {
-    "message": "Hârtie (luminos)"
-  },
-  "sortFolderContents": {
-    "message": "Sortează conținutul folderului"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicate",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Deschide în Tab Nou"
-  },
-  "addBookmarkAfter": {
-    "message": "Adaugă fila curentă după aceasta"
-  },
-  "ignore": {
-    "message": "Ignoră"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Deschide"
-  },
-  "optionOpenNewTab": {
-    "message": "Click mijlociu sau control-click deschide semnul de carte în tab nou de fundal (în loc de prim-plan)."
-  },
-  "options": {
-    "message": "Opțiuni"
-  },
-  "replaceUrl": {
-    "message": "Înlocuiește acesta cu URL-ul curent"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Nume"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Evidențiați semnele de carte nesincronizate"
-  },
-  "donationDismiss": {
-    "message": "Închide"
-  },
-  "paletteCmdDupes": {
-    "message": "Curăță marcaje duplicate"
-  },
-  "general": {
-    "message": "General"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL-ul real al semnului de carte care este afișat ca separator"
-  },
-  "openNewWindow": {
-    "message": "Deschide în Fereastră Nouă"
-  },
-  "dupesNone": {
-    "message": "Niciun duplicat găsit"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Deschide în panoul lateral în loc de popup"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Un manager de semne de carte popup. Neat Bookmarks îmbunătățit. Mai ordonat decât Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Semnele de carte nu pot fi mutate între stocarea sincronizată și cea locală. Utilizați copiere/lipire.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "Șters $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Memorează starea anterioară (poziția de scroll și dosarele deschise)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Actualizare automată a stării sincronizării"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Deschide în fereastră nouă"
-  },
-  "addNewFolder": {
-    "message": "Adaugă Subdosar"
-  },
-  "copyTitleAndUrl": {
-    "message": "Copiază titlul și URL-ul"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Deschide în fereastră incognito"
-  },
-  "optionThemeLight": {
-    "message": "Luminos"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $subFolderCount$ subdosar(e) din el?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
   "dupesConfirmGroup": {
     "message": "Păstrați cea mai veche și eliminați celelalte $count$ copii?",
@@ -562,146 +315,35 @@
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Acest lucru a fost raportat dezvoltatorului."
-  },
-  "delete": {
-    "message": "Șterge"
-  },
-  "customStyles": {
-    "message": "Stiluri Personalizate"
-  },
-  "deleteEllipsis": {
-    "message": "Șterge..."
-  },
-  "versionMessage": {
-    "message": "Acesta este noul VBM $versionNumber$! Jurnalul modificărilor este aici: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Adaugă fila curentă la bază"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Marchează această pagină cu vBookmarks"
-  },
-  "donationGo": {
-    "message": "Donează"
-  },
-  "donationLater": {
-    "message": "Mai târziu"
-  },
-  "donationNever": {
-    "message": "Nu mai afișa"
-  },
-  "viewTree": {
-    "message": "Arbore"
-  },
-  "viewSearch": {
-    "message": "Căutare"
-  },
-  "viewRecent": {
-    "message": "Recent"
-  },
-  "viewStats": {
-    "message": "Statistici"
-  },
-  "viewDead": {
-    "message": "Moarte"
-  },
-  "viewDupes": {
-    "message": "Duplicate"
-  },
-  "optionsGroupViews": {
-    "message": "Vizualizări"
-  },
-  "optionShowViewTabs": {
-    "message": "Afișează filele de vizualizare"
-  },
-  "optionShowItemPath": {
-    "message": "Afișează calea folderului în rânduri"
-  },
-  "optionRecentCount": {
-    "message": "Numărul de marcaje recente"
-  },
-  "optionDeadProxy": {
-    "message": "Șablon URL proxy pentru verificarea linkurilor moarte"
-  },
-  "deadProxyHint": {
-    "message": "URL-urile marcajelor vor fi trimise către serviciul proxy."
-  },
-  "optionSearchHistory": {
-    "message": "Activează istoricul căutărilor"
-  },
-  "optionStatsEnabled": {
-    "message": "Colectează statistici de vizită"
-  },
-  "optionDeadScan": {
-    "message": "Scanare linkuri moarte"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Verificări concurente"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Timeout per verificare"
-  },
-  "searchHistoryTitle": {
-    "message": "Căutări recente"
-  },
-  "searchHistoryClear": {
-    "message": "Șterge tot"
-  },
-  "searchHistoryRemove": {
-    "message": "Elimină"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Confirmă înainte de a șterge foldere negoale"
-  },
-  "confirmDeleteFolder": {
-    "message": "Acest folder conține $count$ element(e). Puteți anula ștergerea.",
+  "dupesDone": {
+    "message": "Eliminate $count$ marcaje duplicate",
     "placeholders": {
       "count": {
-        "content": "$1",
-        "example": "5"
+        "content": "$1"
       }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Șterge"
-  },
-  "paletteCmdOptions": {
-    "message": "Deschide Setări"
-  },
-  "dupesStrategyOldest": {
-    "message": "Păstrează cel mai vechi"
-  },
-  "dupesStrategyNewest": {
-    "message": "Păstrează cel mai nou"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Păstrează în bara de marcaje"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Păstrează titlul cel mai scurt"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Păstrează cel mai superficial"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Păstrează cel mai vizitat"
-  },
-  "dupesApplyAll": {
-    "message": "Aplică tot"
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
   "dupesGroupCleanRest": {
     "message": "Curăță restul"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplicate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignoră http/https"
+  },
+  "dupesKeeperSet": {
+    "message": "Păstrător"
+  },
+  "dupesNone": {
+    "message": "Niciun duplicat găsit"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ grupuri, $count$ de eliminat",
@@ -720,55 +362,412 @@
   "dupesScopeBar": {
     "message": "Doar bara de marcaje"
   },
-  "dupesIgnoreScheme": {
-    "message": "Ignoră http/https"
+  "dupesStrategyBookmarkBar": {
+    "message": "Păstrează în bara de marcaje"
   },
-  "deadLastScanAt": {
-    "message": "Ultima scanare: $time$",
+  "dupesStrategyMostVisited": {
+    "message": "Păstrează cel mai vizitat"
+  },
+  "dupesStrategyNewest": {
+    "message": "Păstrează cel mai nou"
+  },
+  "dupesStrategyOldest": {
+    "message": "Păstrează cel mai vechi"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Păstrează cel mai superficial"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Păstrează titlul cel mai scurt"
+  },
+  "edit": {
+    "message": "Editare..."
+  },
+  "editBookmark": {
+    "message": "Editare semn de carte"
+  },
+  "editFolder": {
+    "message": "Editare dosar"
+  },
+  "errorOccured": {
+    "message": "Ups, a apărut o eroare."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Un manager de semne de carte popup. Neat Bookmarks îmbunătățit. Mai ordonat decât Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Gol)"
+  },
+  "general": {
+    "message": "General"
+  },
+  "ignore": {
+    "message": "Ignoră"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Nume"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(fără titlu)"
+  },
+  "nope": {
+    "message": "Nu"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Deschide"
+  },
+  "openBookmarks": {
+    "message": "Deschide Toate Semnele de Carte"
+  },
+  "openBookmarksInGroup": {
+    "message": "Deschide tot în grup nou"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Deschide în fereastră incognito"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Deschide în fereastră nouă"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Deschide paleta de comenzi"
+  },
+  "openIncognitoWindow": {
+    "message": "Deschide în Fereastră Incognito"
+  },
+  "openNewTab": {
+    "message": "Deschide în Tab Nou"
+  },
+  "openNewWindow": {
+    "message": "Deschide în Fereastră Nouă"
+  },
+  "openSidePanelCommand": {
+    "message": "Deschide panoul lateral vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Actualizare automată a stării sincronizării"
+  },
+  "optionAutoResizePopup": {
+    "message": "Redimensionează automat fereastra popup pentru a se potrivi cu conținutul"
+  },
+  "optionClickNewTab": {
+    "message": "Click stânga deschide semnul de carte în tab nou."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Închide dosarele neutilizate la deschiderea unui dosar."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirmă înainte de a șterge foldere negoale"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
+  },
+  "optionDeadProxy": {
+    "message": "Șablon URL proxy pentru verificarea linkurilor moarte"
+  },
+  "optionDeadScan": {
+    "message": "Scanare linkuri moarte"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Verificări concurente"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout per verificare"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Evidențiați semnele de carte nesincronizate"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Afișează doar semne de carte în Bara de Semne de Carte"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Deschide în panoul lateral în loc de popup"
+  },
+  "optionOpenNewTab": {
+    "message": "Click mijlociu sau control-click deschide semnul de carte în tab nou de fundal (în loc de prim-plan)."
+  },
+  "optionPopupStays": {
+    "message": "Popup-ul rămâne deschis la deschiderea (click stânga) semnelor de carte."
+  },
+  "optionRecentCollapsed": {
+    "message": "Restrânge secțiunea adăugate recent în mod implicit"
+  },
+  "optionRecentCount": {
+    "message": "Numărul de marcaje recente"
+  },
+  "optionRememberPrevState": {
+    "message": "Memorează starea anterioară (poziția de scroll și dosarele deschise)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"
+  },
+  "optionSearchHistory": {
+    "message": "Activează istoricul căutărilor"
+  },
+  "optionShowItemPath": {
+    "message": "Afișează calea folderului în rânduri"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
+  },
+  "optionShowSyncStatus": {
+    "message": "Afișați indicatorii de stare a sincronizării"
+  },
+  "optionShowViewTabs": {
+    "message": "Afișează filele de vizualizare"
+  },
+  "optionStatsEnabled": {
+    "message": "Colectează statistici de vizită"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval de actualizare"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "secunde"
+  },
+  "optionTheme": {
+    "message": "Temă"
+  },
+  "optionThemeAuto": {
+    "message": "Urmează sistemul"
+  },
+  "optionThemeDark": {
+    "message": "Întunecat"
+  },
+  "optionThemeInk": {
+    "message": "Cerneală (întunecat)"
+  },
+  "optionThemeLight": {
+    "message": "Luminos"
+  },
+  "optionThemePaper": {
+    "message": "Hârtie (luminos)"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Opțiuni"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Construit de $authorName$.",
     "placeholders": {
-      "time": {
+      "authorName": {
         "content": "$1"
       }
     }
   },
-  "deadStartHint": {
-    "message": "Scanează marcajele pentru linkuri moarte."
+  "optionsGroupViews": {
+    "message": "Vizualizări"
   },
-  "deadMark": {
-    "message": "Marchează"
+  "paletteCmdBookmarkTab": {
+    "message": "Marchează fila curentă"
   },
-  "deadUnmark": {
+  "paletteCmdDead": {
+    "message": "Găsește legături moarte"
+  },
+  "paletteCmdDupes": {
+    "message": "Curăță marcaje duplicate"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Marcaj nou…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Dosar nou…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Separator nou"
+  },
+  "paletteCmdOptions": {
+    "message": "Deschide Setări"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Marchează fila curentă"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Salvează filele ferestrei ca dosar"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Caută în vizualizarea de căutare pentru „{{query}}”",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
+  "paletteNoResults": {
+    "message": "Niciun rezultat potrivit"
+  },
+  "palettePlaceholder": {
+    "message": "Caută marcaje, dosare, comenzi…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Dosar părinte: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Marchează această pagină (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Marcaj adăugat"
+  },
+  "quickAddedTo": {
+    "message": "Marcaj adăugat în $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Elimină acest marcaj (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Marcaj eliminat"
+  },
+  "recentBookmarks": {
+    "message": "Adăugate recent"
+  },
+  "recentEmpty": {
+    "message": "Nicio marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
+  },
+  "recentRevealInTree": {
+    "message": "Dezvăluie în arbore"
+  },
+  "removeSeparator": {
+    "message": "Elimină Separator"
+  },
+  "replaceUrl": {
+    "message": "Înlocuiește acesta cu URL-ul curent"
+  },
+  "reportError": {
+    "message": "Raportează Eroare"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Acest lucru a fost raportat dezvoltatorului."
+  },
+  "resetButton": {
+    "message": "Resetare"
+  },
+  "resetSettings": {
+    "message": "Resetare setări"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetează vBookmarks la setările implicite."
+  },
+  "rowActionDelete": {
+    "message": "Șterge"
+  },
+  "rowActionMark": {
+    "message": "Marchează ca mort"
+  },
+  "rowActionReveal": {
+    "message": "Dezvăluie în arbore"
+  },
+  "rowActionUnmark": {
     "message": "Demarchează"
   },
-  "deadMarked": {
-    "message": "marcat(ă)"
+  "save": {
+    "message": "Salvează"
   },
-  "deadMarkAll": {
-    "message": "Marchează tot"
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Caută Semne de Carte"
   },
-  "deadUnmarkAll": {
-    "message": "Șterge marcajele"
+  "searchClear": {
+    "message": "Șterge căutarea"
   },
-  "deadFilterAll": {
-    "message": "Toate"
+  "searchHistoryClear": {
+    "message": "Șterge tot"
   },
-  "deadFilterDead": {
-    "message": "Doar moarte"
+  "searchHistoryRemove": {
+    "message": "Elimină"
   },
-  "deadFilterBlocked": {
-    "message": "Doar blocate"
+  "searchHistoryTitle": {
+    "message": "Căutări recente"
+  },
+  "searchNoResults": {
+    "message": "Nicio marcaj potrivit"
+  },
+  "searchViewHint": {
+    "message": "Tastează pentru a căuta în marcajele tale."
+  },
+  "sessionEmpty": {
+    "message": "Nicio filă de salvat"
+  },
+  "sessionFolderName": {
+    "message": "Sesiune $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Salvate $count$ file într-un dosar nou",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "După data adăugării (cele mai noi primele)"
+  },
+  "sortByTitle": {
+    "message": "După titlu"
+  },
+  "sortFolderContents": {
+    "message": "Sortează conținutul folderului"
+  },
+  "sortFoldersFirst": {
+    "message": "Păstrează folderele deasupra"
+  },
+  "sortRecursive": {
+    "message": "Sortează și subfolderele (recursiv)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Aceasta reordonează marcajele în fiecare subfolder și nu poate fi anulată."
+  },
+  "statsClearConfirm": {
+    "message": "Ștergi toate intrările de statistici de vizită $count$?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Șterge statisticile vizitelor"
+  },
+  "statsDisabled": {
+    "message": "Statisticile de vizită sunt dezactivate. Activează-le în opțiuni."
+  },
+  "statsEmpty": {
+    "message": "Nu există încă date de vizită. Deschideți marcajele pentru a colecta statistici."
   },
   "statsSortByCount": {
     "message": "După număr"
   },
   "statsSortByRecent": {
     "message": "După recent"
-  },
-  "statsClearData": {
-    "message": "Șterge statisticile vizitelor"
-  },
-  "statsEmpty": {
-    "message": "Nu există încă date de vizită. Deschideți marcajele pentru a colecta statistici."
   },
   "statsVisitCount": {
     "message": "$count$ vizite",
@@ -778,11 +777,102 @@
       }
     }
   },
-  "recentEmpty": {
-    "message": "Nicio marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
+  "syncOptions": {
+    "message": "Opțiuni de sincronizare"
   },
-  "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
-    "description": "Palette bridge row: jump to search view with the current query"
+  "syncStatusLocal": {
+    "message": "Doar local — neîncărcat"
+  },
+  "syncStatusSynced": {
+    "message": "Sincronizat cu contul Google"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nu poate fi sincronizat"
+  },
+  "syncSuffixLocal": {
+    "message": "(Local)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sincronizat)"
+  },
+  "timeDaysAgo": {
+    "message": "acum $n$ zile",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "acum $n$ ore",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "Chiar acum"
+  },
+  "timeMinutesAgo": {
+    "message": "acum $n$ min",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "Ieri"
+  },
+  "toolButtonTitle": {
+    "message": "Unelte (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Anulare"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "Acesta este noul VBM $versionNumber$! Jurnalul modificărilor este aici: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Moarte"
+  },
+  "viewDupes": {
+    "message": "Duplicate"
+  },
+  "viewRecent": {
+    "message": "Recent"
+  },
+  "viewSearch": {
+    "message": "Căutare"
+  },
+  "viewStats": {
+    "message": "Statistici"
+  },
+  "viewSwitchAnnounce": {
+    "message": "S-a comutat la $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Arbore"
   }
 }

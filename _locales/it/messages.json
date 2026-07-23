@@ -1,48 +1,99 @@
 {
-  "optionShowSyncStatus": {
-    "message": "Mostra indicatori di sincronizzazione"
+  "accessibility": {
+    "message": "Impostazioni di accessibilità"
   },
-  "dupesDone": {
-    "message": "Rimossi $count$ segnalibri duplicati",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkAfter": {
+    "message": "Aggiungi scheda dopo"
+  },
+  "addBookmarkBefore": {
+    "message": "Aggiungi scheda prima"
+  },
+  "addBookmarkBottom": {
+    "message": "Aggiungi scheda in fondo"
   },
   "addBookmarkTop": {
     "message": "Aggiungi scheda in cima"
   },
-  "errorOccured": {
-    "message": "Si è verificato un errore."
+  "addNewFolder": {
+    "message": "Aggiungi una sottocartella"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Mostra segnalibri aggiunti di recente in cima al popup"
+  "addNewFolderAfter": {
+    "message": "Aggiungi cartella dopo questo"
   },
-  "optionRecentCollapsed": {
-    "message": "Comprimi la sezione aggiunti di recente per impostazione predefinita"
+  "addNewFolderBefore": {
+    "message": "Aggiungi cartella prima di questo"
   },
-  "dupesConfirmAll": {
-    "message": "Rimuovere $count$ copie extra da $groups$ gruppi? Vengono conservate le voci più vecchie.",
+  "addSeparator": {
+    "message": "Add Separator"
+  },
+  "advancedOptions": {
+    "message": "Advanced Options"
+  },
+  "confirmDeleteFolder": {
+    "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Elimina"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Sei sicuro di voler eliminare la cartella $folderName$ e $subFolderCount$ sottocartelle al suo interno?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Sei sicuro di voler eliminare la cartella $folderName$, $subFolderCount$ sottocartelle e $bookmarkCount$ segnalibri al suo interno?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Aprire tutti i $count$ preferiti?",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Impostazioni di accessibilità"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Nuovo segnalibro…"
-  },
-  "optionTheme": {
-    "message": "Tema"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Aprire tutti i $count$ preferiti in una finestra di navigazione in incognito?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -53,27 +104,45 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Ripristina"
+  "contextMenuAddBookmark": {
+    "message": "Aggiungi ai segnalibri con vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "Aggiungi scheda prima"
+  "copyAllTitlesAndUrls": {
+    "message": "Copia tutti i titoli e gli URL negli appunti"
   },
-  "syncOptions": {
-    "message": "Opzioni di sincronizzazione"
+  "copyTitleAndUrl": {
+    "message": "Copia titolo e URL negli appunti"
   },
-  "deletedFolder": {
-    "message": "Cartella $title$ eliminata",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Non è possibile spostare i segnalibri tra l'archiviazione sincronizzata e quella locale. Utilizza invece copia/incolla.",
+    "description": "Avviso quando si tenta di spostare i segnalibri tra tipi di archiviazione"
   },
-  "quickAddBookmark": {
-    "message": "Aggiungi ai segnalibri (Ctrl+D)"
+  "customIcon": {
+    "message": "Icona personalizzata"
+  },
+  "customIconDescription": {
+    "message": "L'icona deve avere una risoluzione di 19×19, altrimenti verrà ridimensionata."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Personalizza il colore del separatore"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Se l'URL di un segnalibro contiene questa stringa, verrà visualizzato come separatore"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Il vero titolo del segnalibro che viene mostrato come separatore"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "L'URL reale del segnalibro che viene mostrato come separatore"
+  },
+  "customStyles": {
+    "message": "Stili personalizzati"
+  },
+  "customStylesDescription": {
+    "message": "Ciò richiede alcune abilità CSS. Hack a proprio rischio."
+  },
+  "deadBlocked": {
+    "message": "bloccato"
   },
   "deadChecking": {
     "message": "Verifica $done$ / $total$…",
@@ -110,14 +179,105 @@
       }
     }
   },
+  "deadFilterAll": {
+    "message": "Tutti"
+  },
+  "deadFilterBlocked": {
+    "message": "Solo bloccati"
+  },
+  "deadFilterDead": {
+    "message": "Solo rotti"
+  },
+  "deadLastScanAt": {
+    "message": "Ultima scansione: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Segna"
+  },
+  "deadMarkAll": {
+    "message": "Segna tutto"
+  },
+  "deadMarked": {
+    "message": "segnato"
+  },
   "deadNone": {
     "message": "Nessun collegamento interrotto trovato"
+  },
+  "deadProxyHint": {
+    "message": "Gli URL dei segnalibri verranno inviati al servizio proxy."
   },
   "deadRescan": {
     "message": "Riscansiona"
   },
-  "paletteCmdDead": {
-    "message": "Trova collegamenti interrotti"
+  "deadScanning": {
+    "message": "Scansione"
+  },
+  "deadSkipped": {
+    "message": "saltato"
+  },
+  "deadStartHint": {
+    "message": "Scansiona i segnalibri per link rotti."
+  },
+  "deadUnmark": {
+    "message": "Deseleziona"
+  },
+  "deadUnmarkAll": {
+    "message": "Cancella segni"
+  },
+  "defaultIconButton": {
+    "message": "Usa predefinito"
+  },
+  "defaultIconButtonOr": {
+    "message": "oppure"
+  },
+  "delete": {
+    "message": "Elimina"
+  },
+  "deleteEllipsis": {
+    "message": "Elimina..."
+  },
+  "deletedBookmark": {
+    "message": "$title$ eliminato",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Cartella $title$ eliminata",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "No"
+  },
+  "donationGo": {
+    "message": "Dona"
+  },
+  "donationLater": {
+    "message": "Più tardi"
+  },
+  "donationMessage": {
+    "message": "Se ti piace, forse puoi donare per il suo sviluppo futuro. Qualsiasi importo è il benvenuto."
+  },
+  "donationNever": {
+    "message": "Non mostrare più"
+  },
+  "dupesApplyAll": {
+    "message": "Applica tutto"
   },
   "dupesCleanAll": {
     "message": "Pulisci tutto: $groups$ gruppi, $count$ copie extra",
@@ -131,427 +291,20 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "openSidePanelCommand": {
-    "message": "Apri pannello laterale vBookmarks"
+  "dupesClearRest": {
+    "message": "Cancella resto"
   },
-  "optionThemeAuto": {
-    "message": "Segui sistema"
-  },
-  "edit": {
-    "message": "Modifica..."
-  },
-  "customIconDescription": {
-    "message": "L'icona deve avere una risoluzione di 19×19, altrimenti verrà ridimensionata."
-  },
-  "resetSettingsDescription": {
-    "message": "Ripristina tutte le impostazioni ai valori predefiniti."
-  },
-  "defaultIconButtonOr": {
-    "message": "oppure"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "secondi"
-  },
-  "syncStatusSynced": {
-    "message": "Sincronizzato con il tuo account Google"
-  },
-  "syncStatusLocal": {
-    "message": "Solo locale — non caricato"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Impossibile sincronizzare"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sincronizzato)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Locale)"
-  },
-  "advancedOptions": {
-    "message": "Advanced Options"
-  },
-  "extName": {
-    "description": "Nome dell'estensione.",
-    "message": "Neater Bookmarks"
-  },
-  "removeSeparator": {
-    "message": "Rimuovi separatore"
-  },
-  "resetSettings": {
-    "message": "Ripristina impostazioni predefinite"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Il vero titolo del segnalibro che viene mostrato come separatore"
-  },
-  "donationMessage": {
-    "message": "Se ti piace, forse puoi donare per il suo sviluppo futuro. Qualsiasi importo è il benvenuto."
-  },
-  "optionClickNewTab": {
-    "message": "Apri i preferiti in un'altra finestra quando si fa clic con il pulsante sinistro del mouse su di essi."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Aprire tutti i $count$ preferiti in una finestra di navigazione in incognito?",
+  "dupesConfirmAll": {
+    "message": "Rimuovere $count$ copie extra da $groups$ gruppi? Vengono conservate le voci più vecchie.",
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "No"
-  },
-  "openIncognitoWindow": {
-    "message": "Apri in finestra anonima"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Aggiungi scheda corrente"
-  },
-  "sessionEmpty": {
-    "message": "Nessuna scheda da salvare"
-  },
-  "sortByDateAdded": {
-    "message": "Per data aggiunta (più recenti prima)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Nuovo separatore"
-  },
-  "recentBookmarks": {
-    "message": "Aggiunti di recente"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Copia tutti i titoli e gli URL negli appunti"
-  },
-  "searchBookmarks": {
-    "description": "Testo iniziale del campo di ricerca.",
-    "message": "Cerca preferiti"
-  },
-  "searchClear": {
-    "message": "Cancella ricerca"
-  },
-  "reportError": {
-    "message": "Segnala questo errore"
-  },
-  "addNewFolderAfter": {
-    "message": "Aggiungi cartella dopo questo"
-  },
-  "editBookmark": {
-    "message": "Modifica preferito"
-  },
-  "editFolder": {
-    "message": "Modifica cartella"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Cartella principale: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Intervallo di aggiornamento"
-  },
-  "openBookmarks": {
-    "message": "Apri tutti i preferiti"
-  },
-  "openBookmarksInGroup": {
-    "message": "Apri tutto in gruppo schede"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
-  },
-  "addSeparator": {
-    "message": "Add Separator"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "Sei sicuro di voler eliminare la cartella $folderName$, $subFolderCount$ sottocartelle e $bookmarkCount$ segnalibri al suo interno?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
       },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
+      "groups": {
         "content": "$2"
       }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Salva schede finestra come cartella"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Nuova cartella…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Se l'URL di un segnalibro contiene questa stringa, verrà visualizzato come separatore"
-  },
-  "customStylesDescription": {
-    "message": "Ciò richiede alcune abilità CSS. Hack a proprio rischio."
-  },
-  "optionCloseUnusedFolders": {
-    "message": "All'apertura di una cartella, chiudi tutte le altre."
-  },
-  "optionPopupStays": {
-    "message": "Non chiudere la finestra di Neater Bookmarks quando si aprono i preferiti (clic con il pulsante sinistro del mouse)."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Aprire tutti i $count$ preferiti?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "Indirizzo Web"
-  },
-  "palettePlaceholder": {
-    "message": "Cerca segnalibri, cartelle, comandi…"
-  },
-  "addNewFolderBefore": {
-    "message": "Aggiungi cartella prima di questo"
-  },
-  "customIcon": {
-    "message": "Icona personalizzata"
-  },
-  "folderEmpty": {
-    "message": "(Vuota)"
-  },
-  "save": {
-    "message": "Salva"
-  },
-  "undoAction": {
-    "message": "Annulla"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Mostra solo i segnalibri nella barra dei segnalibri"
-  },
-  "sortRecursive": {
-    "message": "Ordina anche sottocartelle (ricorsivo)"
-  },
-  "noTitle": {
-    "description": "Nome dei preferiti senza nome non contenente indirizzi Web http(s) o delle cartelle senza nome.",
-    "message": "(senza nome)"
-  },
-  "sortByTitle": {
-    "message": "Per titolo"
-  },
-  "defaultIconButton": {
-    "message": "Usa predefinito"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Personalizza il colore del separatore"
-  },
-  "sessionSaved": {
-    "message": "Salvate $count$ schede in una nuova cartella",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
     },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Cartelle in cima"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
-  },
-  "paletteNoResults": {
-    "message": "Nessun risultato corrispondente"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Apri la tavolozza comandi"
-  },
-  "searchNoResults": {
-    "message": "Nessun segnalibro corrispondente"
-  },
-  "sessionFolderName": {
-    "message": "Sessione $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Questa operazione riordina i segnalibri in ogni sottocartella e non può essere annullata."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Costruito da $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Segnalibro aggiunto"
-  },
-  "quickAddedTo": {
-    "message": "Segnalibro aggiunto a $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Segnalibro rimosso"
-  },
-  "quickRemoveBookmark": {
-    "message": "Rimuovi questo segnalibro (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Strumenti (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Scuro"
-  },
-  "optionThemeInk": {
-    "message": "Inchiostro (scuro)"
-  },
-  "optionThemePaper": {
-    "message": "Carta (chiaro)"
-  },
-  "sortFolderContents": {
-    "message": "Ordina contenuto cartella"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicati",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Apri in un'altra scheda"
-  },
-  "addBookmarkAfter": {
-    "message": "Aggiungi scheda dopo"
-  },
-  "ignore": {
-    "message": "Ignora"
-  },
-  "open": {
-    "description": "Azione per aprire i preferiti.",
-    "message": "Apri"
-  },
-  "optionOpenNewTab": {
-    "message": "Apri i preferiti in un'altra scheda in secondo piano (anziché in primo piano) quando si fa clic con il pulsante centrale del mouse su di essi o con il pulsante sinistro su di essi tenendo premuto il tasto Ctrl."
-  },
-  "options": {
-    "message": "Opzioni"
-  },
-  "replaceUrl": {
-    "message": "Sostituiscilo con l'URL corrente"
-  },
-  "name": {
-    "description": "Nome del preferito o della cartella.",
-    "message": "Nome"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Evidenzia segnalibri non sincronizzati"
-  },
-  "donationDismiss": {
-    "message": "No"
-  },
-  "paletteCmdDupes": {
-    "message": "Pulisci segnalibri duplicati"
-  },
-  "general": {
-    "message": "Impostazioni generali"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "L'URL reale del segnalibro che viene mostrato come separatore"
-  },
-  "openNewWindow": {
-    "message": "Apri in un'altra finestra"
-  },
-  "dupesNone": {
-    "message": "Nessun duplicato trovato"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Apri nel pannello laterale invece del popup"
-  },
-  "extDesc": {
-    "description": "Descrizione dell'estensione.",
-    "message": "Una visualizzazione ad albero più ordinata dei preferiti."
-  },
-  "optionAutoResizePopup": {
-    "message": "Ridimensiona automaticamente la finestra popup per adattarla al contenuto"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Non è possibile spostare i segnalibri tra l'archiviazione sincronizzata e quella locale. Utilizza invece copia/incolla.",
-    "description": "Avviso quando si tenta di spostare i segnalibri tra tipi di archiviazione"
-  },
-  "deletedBookmark": {
-    "message": "$title$ eliminato",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Memorizza lo stato della finestra di Neater Bookmarks (posizione di scorrimento dell'elenco e cartelle aperte)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Aggiorna automaticamente stato sincronizzazione"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Apri tutti in nuova finestra"
-  },
-  "addNewFolder": {
-    "message": "Aggiungi una sottocartella"
-  },
-  "copyTitleAndUrl": {
-    "message": "Copia titolo e URL negli appunti"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Apri tutti in finestra anonima"
-  },
-  "optionThemeLight": {
-    "message": "Chiaro"
-  },
-  "optionZoom": {
-    "message": "Zoom"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Sei sicuro di voler eliminare la cartella $folderName$ e $subFolderCount$ sottocartelle al suo interno?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
   "dupesConfirmGroup": {
     "message": "Conservare la più vecchia e rimuovere le altre $count$ copie?",
@@ -562,146 +315,35 @@
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "reportedToDeveloper": {
-    "description": "Allo sviluppatore è stato inviato un messaggio per l'errore che si è verificato all'estensione.",
-    "message": "Segnalato allo sviluppatore."
-  },
-  "delete": {
-    "message": "Elimina"
-  },
-  "customStyles": {
-    "message": "Stili personalizzati"
-  },
-  "deleteEllipsis": {
-    "message": "Elimina..."
-  },
-  "versionMessage": {
-    "message": "Questo è il nuovo VBM $versionNumber$! Il registro delle modifiche è qui: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Aggiungi scheda in fondo"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Aggiungi ai segnalibri con vBookmarks"
-  },
-  "donationGo": {
-    "message": "Dona"
-  },
-  "donationLater": {
-    "message": "Più tardi"
-  },
-  "donationNever": {
-    "message": "Non mostrare più"
-  },
-  "viewTree": {
-    "message": "Albero"
-  },
-  "viewSearch": {
-    "message": "Cerca"
-  },
-  "viewRecent": {
-    "message": "Recenti"
-  },
-  "viewStats": {
-    "message": "Statistiche"
-  },
-  "viewDead": {
-    "message": "Rotti"
-  },
-  "viewDupes": {
-    "message": "Duplicati"
-  },
-  "optionsGroupViews": {
-    "message": "Viste"
-  },
-  "optionShowViewTabs": {
-    "message": "Mostra schede vista"
-  },
-  "optionShowItemPath": {
-    "message": "Mostra percorso cartella nelle righe"
-  },
-  "optionRecentCount": {
-    "message": "Numero di segnalibri recenti"
-  },
-  "optionDeadProxy": {
-    "message": "Modello URL proxy per controllo link morti"
-  },
-  "deadProxyHint": {
-    "message": "Gli URL dei segnalibri verranno inviati al servizio proxy."
-  },
-  "optionSearchHistory": {
-    "message": "Abilita cronologia ricerche"
-  },
-  "optionStatsEnabled": {
-    "message": "Raccogli statistiche visite"
-  },
-  "optionDeadScan": {
-    "message": "Scansione link morti"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Controlli simultanei"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Timeout per controllo"
-  },
-  "searchHistoryTitle": {
-    "message": "Ricerche recenti"
-  },
-  "searchHistoryClear": {
-    "message": "Cancella tutto"
-  },
-  "searchHistoryRemove": {
-    "message": "Rimuovi"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Conferma prima di eliminare cartelle non vuote"
-  },
-  "confirmDeleteFolder": {
-    "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
+  "dupesDone": {
+    "message": "Rimossi $count$ segnalibri duplicati",
     "placeholders": {
       "count": {
-        "content": "$1",
-        "example": "5"
+        "content": "$1"
       }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Elimina"
-  },
-  "paletteCmdOptions": {
-    "message": "Apri Impostazioni"
-  },
-  "dupesStrategyOldest": {
-    "message": "Mantieni il più vecchio"
-  },
-  "dupesStrategyNewest": {
-    "message": "Mantieni il più recente"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Mantieni nella barra segnalibri"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Mantieni titolo più corto"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Mantieni il meno profondo"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Mantieni il più visitato"
-  },
-  "dupesApplyAll": {
-    "message": "Applica tutto"
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
   "dupesGroupCleanRest": {
     "message": "Pulisci il resto"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplicati",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignora http/https"
+  },
+  "dupesKeeperSet": {
+    "message": "Conservato"
+  },
+  "dupesNone": {
+    "message": "Nessun duplicato trovato"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ gruppi, $count$ da rimuovere",
@@ -720,55 +362,412 @@
   "dupesScopeBar": {
     "message": "Solo barra segnalibri"
   },
-  "dupesIgnoreScheme": {
-    "message": "Ignora http/https"
+  "dupesStrategyBookmarkBar": {
+    "message": "Mantieni nella barra segnalibri"
   },
-  "deadLastScanAt": {
-    "message": "Ultima scansione: $time$",
+  "dupesStrategyMostVisited": {
+    "message": "Mantieni il più visitato"
+  },
+  "dupesStrategyNewest": {
+    "message": "Mantieni il più recente"
+  },
+  "dupesStrategyOldest": {
+    "message": "Mantieni il più vecchio"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Mantieni il meno profondo"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Mantieni titolo più corto"
+  },
+  "edit": {
+    "message": "Modifica..."
+  },
+  "editBookmark": {
+    "message": "Modifica preferito"
+  },
+  "editFolder": {
+    "message": "Modifica cartella"
+  },
+  "errorOccured": {
+    "message": "Si è verificato un errore."
+  },
+  "extDesc": {
+    "description": "Descrizione dell'estensione.",
+    "message": "Una visualizzazione ad albero più ordinata dei preferiti."
+  },
+  "extName": {
+    "description": "Nome dell'estensione.",
+    "message": "Neater Bookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Vuota)"
+  },
+  "general": {
+    "message": "Impostazioni generali"
+  },
+  "ignore": {
+    "message": "Ignora"
+  },
+  "name": {
+    "description": "Nome del preferito o della cartella.",
+    "message": "Nome"
+  },
+  "noTitle": {
+    "description": "Nome dei preferiti senza nome non contenente indirizzi Web http(s) o delle cartelle senza nome.",
+    "message": "(senza nome)"
+  },
+  "nope": {
+    "message": "No"
+  },
+  "open": {
+    "description": "Azione per aprire i preferiti.",
+    "message": "Apri"
+  },
+  "openBookmarks": {
+    "message": "Apri tutti i preferiti"
+  },
+  "openBookmarksInGroup": {
+    "message": "Apri tutto in gruppo schede"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Apri tutti in finestra anonima"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Apri tutti in nuova finestra"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Apri la tavolozza comandi"
+  },
+  "openIncognitoWindow": {
+    "message": "Apri in finestra anonima"
+  },
+  "openNewTab": {
+    "message": "Apri in un'altra scheda"
+  },
+  "openNewWindow": {
+    "message": "Apri in un'altra finestra"
+  },
+  "openSidePanelCommand": {
+    "message": "Apri pannello laterale vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Aggiorna automaticamente stato sincronizzazione"
+  },
+  "optionAutoResizePopup": {
+    "message": "Ridimensiona automaticamente la finestra popup per adattarla al contenuto"
+  },
+  "optionClickNewTab": {
+    "message": "Apri i preferiti in un'altra finestra quando si fa clic con il pulsante sinistro del mouse su di essi."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "All'apertura di una cartella, chiudi tutte le altre."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Conferma prima di eliminare cartelle non vuote"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
+  },
+  "optionDeadProxy": {
+    "message": "Modello URL proxy per controllo link morti"
+  },
+  "optionDeadScan": {
+    "message": "Scansione link morti"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Controlli simultanei"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Timeout per controllo"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Evidenzia segnalibri non sincronizzati"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Mostra solo i segnalibri nella barra dei segnalibri"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Apri nel pannello laterale invece del popup"
+  },
+  "optionOpenNewTab": {
+    "message": "Apri i preferiti in un'altra scheda in secondo piano (anziché in primo piano) quando si fa clic con il pulsante centrale del mouse su di essi o con il pulsante sinistro su di essi tenendo premuto il tasto Ctrl."
+  },
+  "optionPopupStays": {
+    "message": "Non chiudere la finestra di Neater Bookmarks quando si aprono i preferiti (clic con il pulsante sinistro del mouse)."
+  },
+  "optionRecentCollapsed": {
+    "message": "Comprimi la sezione aggiunti di recente per impostazione predefinita"
+  },
+  "optionRecentCount": {
+    "message": "Numero di segnalibri recenti"
+  },
+  "optionRememberPrevState": {
+    "message": "Memorizza lo stato della finestra di Neater Bookmarks (posizione di scorrimento dell'elenco e cartelle aperte)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"
+  },
+  "optionSearchHistory": {
+    "message": "Abilita cronologia ricerche"
+  },
+  "optionShowItemPath": {
+    "message": "Mostra percorso cartella nelle righe"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Mostra segnalibri aggiunti di recente in cima al popup"
+  },
+  "optionShowSyncStatus": {
+    "message": "Mostra indicatori di sincronizzazione"
+  },
+  "optionShowViewTabs": {
+    "message": "Mostra schede vista"
+  },
+  "optionStatsEnabled": {
+    "message": "Raccogli statistiche visite"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Intervallo di aggiornamento"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "secondi"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Segui sistema"
+  },
+  "optionThemeDark": {
+    "message": "Scuro"
+  },
+  "optionThemeInk": {
+    "message": "Inchiostro (scuro)"
+  },
+  "optionThemeLight": {
+    "message": "Chiaro"
+  },
+  "optionThemePaper": {
+    "message": "Carta (chiaro)"
+  },
+  "optionZoom": {
+    "message": "Zoom"
+  },
+  "options": {
+    "message": "Opzioni"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Costruito da $authorName$.",
     "placeholders": {
-      "time": {
+      "authorName": {
         "content": "$1"
       }
     }
   },
-  "deadStartHint": {
-    "message": "Scansiona i segnalibri per link rotti."
+  "optionsGroupViews": {
+    "message": "Viste"
   },
-  "deadMark": {
-    "message": "Segna"
+  "paletteCmdBookmarkTab": {
+    "message": "Aggiungi scheda ai segnalibri"
   },
-  "deadUnmark": {
+  "paletteCmdDead": {
+    "message": "Trova collegamenti interrotti"
+  },
+  "paletteCmdDupes": {
+    "message": "Pulisci segnalibri duplicati"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Nuovo segnalibro…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Nuova cartella…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Nuovo separatore"
+  },
+  "paletteCmdOptions": {
+    "message": "Apri Impostazioni"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Aggiungi scheda corrente"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Salva schede finestra come cartella"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Cerca nella vista per \"{{query}}\"",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
+  "paletteNoResults": {
+    "message": "Nessun risultato corrispondente"
+  },
+  "palettePlaceholder": {
+    "message": "Cerca segnalibri, cartelle, comandi…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Cartella principale: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Aggiungi ai segnalibri (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Segnalibro aggiunto"
+  },
+  "quickAddedTo": {
+    "message": "Segnalibro aggiunto a $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Rimuovi questo segnalibro (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Segnalibro rimosso"
+  },
+  "recentBookmarks": {
+    "message": "Aggiunti di recente"
+  },
+  "recentEmpty": {
+    "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente."
+  },
+  "recentRevealInTree": {
+    "message": "Mostra nell'albero"
+  },
+  "removeSeparator": {
+    "message": "Rimuovi separatore"
+  },
+  "replaceUrl": {
+    "message": "Sostituiscilo con l'URL corrente"
+  },
+  "reportError": {
+    "message": "Segnala questo errore"
+  },
+  "reportedToDeveloper": {
+    "description": "Allo sviluppatore è stato inviato un messaggio per l'errore che si è verificato all'estensione.",
+    "message": "Segnalato allo sviluppatore."
+  },
+  "resetButton": {
+    "message": "Ripristina"
+  },
+  "resetSettings": {
+    "message": "Ripristina impostazioni predefinite"
+  },
+  "resetSettingsDescription": {
+    "message": "Ripristina tutte le impostazioni ai valori predefiniti."
+  },
+  "rowActionDelete": {
+    "message": "Elimina"
+  },
+  "rowActionMark": {
+    "message": "Segna come morto"
+  },
+  "rowActionReveal": {
+    "message": "Mostra nell'albero"
+  },
+  "rowActionUnmark": {
     "message": "Deseleziona"
   },
-  "deadMarked": {
-    "message": "segnato"
+  "save": {
+    "message": "Salva"
   },
-  "deadMarkAll": {
-    "message": "Segna tutto"
+  "searchBookmarks": {
+    "description": "Testo iniziale del campo di ricerca.",
+    "message": "Cerca preferiti"
   },
-  "deadUnmarkAll": {
-    "message": "Cancella segni"
+  "searchClear": {
+    "message": "Cancella ricerca"
   },
-  "deadFilterAll": {
-    "message": "Tutti"
+  "searchHistoryClear": {
+    "message": "Cancella tutto"
   },
-  "deadFilterDead": {
-    "message": "Solo rotti"
+  "searchHistoryRemove": {
+    "message": "Rimuovi"
   },
-  "deadFilterBlocked": {
-    "message": "Solo bloccati"
+  "searchHistoryTitle": {
+    "message": "Ricerche recenti"
+  },
+  "searchNoResults": {
+    "message": "Nessun segnalibro corrispondente"
+  },
+  "searchViewHint": {
+    "message": "Digita per cercare nei tuoi segnalibri."
+  },
+  "sessionEmpty": {
+    "message": "Nessuna scheda da salvare"
+  },
+  "sessionFolderName": {
+    "message": "Sessione $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Salvate $count$ schede in una nuova cartella",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "Per data aggiunta (più recenti prima)"
+  },
+  "sortByTitle": {
+    "message": "Per titolo"
+  },
+  "sortFolderContents": {
+    "message": "Ordina contenuto cartella"
+  },
+  "sortFoldersFirst": {
+    "message": "Cartelle in cima"
+  },
+  "sortRecursive": {
+    "message": "Ordina anche sottocartelle (ricorsivo)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Questa operazione riordina i segnalibri in ogni sottocartella e non può essere annullata."
+  },
+  "statsClearConfirm": {
+    "message": "Cancellare tutte le $count$ voci di statistiche visite?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Cancella statistiche visite"
+  },
+  "statsDisabled": {
+    "message": "Le statistiche visite sono disabilitate. Abilitali nelle opzioni."
+  },
+  "statsEmpty": {
+    "message": "Nessun dato di visita. Apri segnalibri per raccogliere statistiche."
   },
   "statsSortByCount": {
     "message": "Per conteggio"
   },
   "statsSortByRecent": {
     "message": "Per recenti"
-  },
-  "statsClearData": {
-    "message": "Cancella statistiche visite"
-  },
-  "statsEmpty": {
-    "message": "Nessun dato di visita. Apri segnalibri per raccogliere statistiche."
   },
   "statsVisitCount": {
     "message": "$count$ visite",
@@ -778,11 +777,102 @@
       }
     }
   },
-  "recentEmpty": {
-    "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente."
+  "syncOptions": {
+    "message": "Opzioni di sincronizzazione"
   },
-  "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
-    "description": "Palette bridge row: jump to search view with the current query"
+  "syncStatusLocal": {
+    "message": "Solo locale — non caricato"
+  },
+  "syncStatusSynced": {
+    "message": "Sincronizzato con il tuo account Google"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Impossibile sincronizzare"
+  },
+  "syncSuffixLocal": {
+    "message": "(Locale)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sincronizzato)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ giorni fa",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ ore fa",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "Proprio ora"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ min fa",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "Ieri"
+  },
+  "toolButtonTitle": {
+    "message": "Strumenti (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Annulla"
+  },
+  "url": {
+    "message": "Indirizzo Web"
+  },
+  "versionMessage": {
+    "message": "Questo è il nuovo VBM $versionNumber$! Il registro delle modifiche è qui: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Rotti"
+  },
+  "viewDupes": {
+    "message": "Duplicati"
+  },
+  "viewRecent": {
+    "message": "Recenti"
+  },
+  "viewSearch": {
+    "message": "Cerca"
+  },
+  "viewStats": {
+    "message": "Statistiche"
+  },
+  "viewSwitchAnnounce": {
+    "message": "Passato a $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Albero"
   }
 }

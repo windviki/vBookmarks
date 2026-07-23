@@ -1,48 +1,99 @@
 {
-  "optionShowSyncStatus": {
-    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  "accessibility": {
+    "message": "Khả năng truy cập"
   },
-  "dupesDone": {
-    "message": "Đã xóa $count$ dấu trang trùng lặp",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkAfter": {
+    "message": "Đánh dấu Tab Hiện Tại Sau Đây"
+  },
+  "addBookmarkBefore": {
+    "message": "Đánh dấu Tab Hiện Tại Trước Đây"
+  },
+  "addBookmarkBottom": {
+    "message": "Đánh dấu tab này vào cuối"
   },
   "addBookmarkTop": {
     "message": "Đánh dấu tab này vào đầu"
   },
-  "errorOccured": {
-    "message": "Ồ, đã xảy ra lỗi."
+  "addNewFolder": {
+    "message": "Thêm Thư Mục Con"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
+  "addNewFolderAfter": {
+    "message": "Thêm Thư Mục Sau Đây"
   },
-  "optionRecentCollapsed": {
-    "message": "Thu gọn phần thêm gần đây theo mặc định"
+  "addNewFolderBefore": {
+    "message": "Thêm Thư Mục Trước Đây"
   },
-  "dupesConfirmAll": {
-    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Giữ lại mục cũ nhất.",
+  "addSeparator": {
+    "message": "Thêm Dòng Kẻ"
+  },
+  "advancedOptions": {
+    "message": "Tùy Chọn Nâng Cao"
+  },
+  "confirmDeleteFolder": {
+    "message": "Thư mục này chứa $count$ mục. Bạn có thể hoàn tác việc xóa.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Xóa"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$, $subFolderCount$ thư mục con và $bookmarkCount$ dấu trang trong đó?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang?",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Khả năng truy cập"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Dấu trang mới…"
-  },
-  "optionTheme": {
-    "message": "Giao diện"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ ẩn danh mới?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -53,27 +104,45 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Đặt lại"
+  "contextMenuAddBookmark": {
+    "message": "Đánh dấu trang này bằng vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "Đánh dấu Tab Hiện Tại Trước Đây"
+  "copyAllTitlesAndUrls": {
+    "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
   },
-  "syncOptions": {
-    "message": "Tùy chọn đồng bộ hóa"
+  "copyTitleAndUrl": {
+    "message": "Sao chép tiêu đề & URL"
   },
-  "deletedFolder": {
-    "message": "Đã xóa thư mục $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "Đánh dấu trang này (Ctrl+D)"
+  "customIcon": {
+    "message": "Biểu tượng tùy chỉnh"
+  },
+  "customIconDescription": {
+    "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tùy chỉnh Màu Dòng Kẻ"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
+  },
+  "customStyles": {
+    "message": "Kiểu Tùy Chỉnh"
+  },
+  "customStylesDescription": {
+    "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
+  },
+  "deadBlocked": {
+    "message": "đã chặn"
   },
   "deadChecking": {
     "message": "Đang kiểm tra $done$ / $total$…",
@@ -110,14 +179,105 @@
       }
     }
   },
+  "deadFilterAll": {
+    "message": "Tất cả"
+  },
+  "deadFilterBlocked": {
+    "message": "Chỉ bị chặn"
+  },
+  "deadFilterDead": {
+    "message": "Chỉ chết"
+  },
+  "deadLastScanAt": {
+    "message": "Lần quét cuối: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Đánh dấu"
+  },
+  "deadMarkAll": {
+    "message": "Đánh dấu tất cả"
+  },
+  "deadMarked": {
+    "message": "đã đánh dấu"
+  },
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"
+  },
+  "deadProxyHint": {
+    "message": "URL dấu trang sẽ được gửi đến dịch vụ proxy."
   },
   "deadRescan": {
     "message": "Quét lại"
   },
-  "paletteCmdDead": {
-    "message": "Tìm liên kết hỏng"
+  "deadScanning": {
+    "message": "Đang quét"
+  },
+  "deadSkipped": {
+    "message": "đã bỏ qua"
+  },
+  "deadStartHint": {
+    "message": "Quét dấu trang để tìm liên kết chết."
+  },
+  "deadUnmark": {
+    "message": "Bỏ đánh dấu"
+  },
+  "deadUnmarkAll": {
+    "message": "Xóa đánh dấu"
+  },
+  "defaultIconButton": {
+    "message": "Sử dụng mặc định"
+  },
+  "defaultIconButtonOr": {
+    "message": "hoặc"
+  },
+  "delete": {
+    "message": "Xóa"
+  },
+  "deleteEllipsis": {
+    "message": "Xóa..."
+  },
+  "deletedBookmark": {
+    "message": "Đã xóa $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Đã xóa thư mục $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "Bỏ qua"
+  },
+  "donationGo": {
+    "message": "Quyên góp"
+  },
+  "donationLater": {
+    "message": "Để sau"
+  },
+  "donationMessage": {
+    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
+  },
+  "donationNever": {
+    "message": "Không hiển thị lại"
+  },
+  "dupesApplyAll": {
+    "message": "Áp dụng tất cả"
   },
   "dupesCleanAll": {
     "message": "Dọn sạch tất cả: $groups$ nhóm, $count$ bản sao thừa",
@@ -131,427 +291,20 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "openSidePanelCommand": {
-    "message": "Mở bảng điều khiển bên vBookmarks"
+  "dupesClearRest": {
+    "message": "Xóa phần còn lại"
   },
-  "optionThemeAuto": {
-    "message": "Theo hệ thống"
-  },
-  "edit": {
-    "message": "Chỉnh sửa..."
-  },
-  "customIconDescription": {
-    "message": "Biểu tượng phải có kích thước 19x19 pixel. Nếu không sẽ được thay đổi kích thước thành kích thước này."
-  },
-  "resetSettingsDescription": {
-    "message": "Đặt lại vBookmarks về cài đặt mặc định."
-  },
-  "defaultIconButtonOr": {
-    "message": "hoặc"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "giây"
-  },
-  "syncStatusSynced": {
-    "message": "Đã đồng bộ với tài khoản Google của bạn"
-  },
-  "syncStatusLocal": {
-    "message": "Chỉ cục bộ — chưa tải lên"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Không thể đồng bộ"
-  },
-  "syncSuffixSynced": {
-    "message": "(Đã đồng bộ)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Cục bộ)"
-  },
-  "advancedOptions": {
-    "message": "Tùy Chọn Nâng Cao"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "Xóa Dòng Kẻ"
-  },
-  "resetSettings": {
-    "message": "Đặt lại cài đặt"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Tiêu đề thực của dấu trang được hiển thị như một dòng kẻ"
-  },
-  "donationMessage": {
-    "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
-  },
-  "optionClickNewTab": {
-    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang trong cửa sổ ẩn danh mới?",
+  "dupesConfirmAll": {
+    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Giữ lại mục cũ nhất.",
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "Không"
-  },
-  "openIncognitoWindow": {
-    "message": "Mở trong Cửa Sổ Ẩn Danh"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Đánh dấu tab hiện tại"
-  },
-  "sessionEmpty": {
-    "message": "Không có tab để lưu"
-  },
-  "sortByDateAdded": {
-    "message": "Theo ngày thêm (mới nhất trước)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Dấu phân cách mới"
-  },
-  "recentBookmarks": {
-    "message": "Đã thêm gần đây"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Sao chép tất cả tiêu đề và URL vào clipboard"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Tìm kiếm Dấu Trang"
-  },
-  "searchClear": {
-    "message": "Xóa tìm kiếm"
-  },
-  "reportError": {
-    "message": "Báo Cáo Lỗi"
-  },
-  "addNewFolderAfter": {
-    "message": "Thêm Thư Mục Sau Đây"
-  },
-  "editBookmark": {
-    "message": "Chỉnh sửa dấu trang"
-  },
-  "editFolder": {
-    "message": "Chỉnh sửa thư mục"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Thư mục cha: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Khoảng thời gian làm mới"
-  },
-  "openBookmarks": {
-    "message": "Mở Tất Cả Dấu Trang"
-  },
-  "openBookmarksInGroup": {
-    "message": "Mở tất cả trong nhóm tab mới"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
-  },
-  "addSeparator": {
-    "message": "Thêm Dòng Kẻ"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$, $subFolderCount$ thư mục con và $bookmarkCount$ dấu trang trong đó?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
       },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
+      "groups": {
         "content": "$2"
       }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Lưu các tab cửa sổ thành thư mục"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Thư mục mới…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Nếu URL của dấu trang chứa chuỗi này, nó sẽ được hiển thị như một dòng kẻ"
-  },
-  "customStylesDescription": {
-    "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
-  },
-  "optionPopupStays": {
-    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Bạn có chắc chắn muốn mở tất cả $count$ dấu trang?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "Tìm kiếm dấu trang, thư mục, lệnh…"
-  },
-  "addNewFolderBefore": {
-    "message": "Thêm Thư Mục Trước Đây"
-  },
-  "customIcon": {
-    "message": "Biểu tượng tùy chỉnh"
-  },
-  "folderEmpty": {
-    "message": "(Trống)"
-  },
-  "save": {
-    "message": "Lưu"
-  },
-  "undoAction": {
-    "message": "Hoàn tác"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
-  },
-  "sortRecursive": {
-    "message": "Sắp xếp cả thư mục con (đệ quy)"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(không tiêu đề)"
-  },
-  "sortByTitle": {
-    "message": "Theo tiêu đề"
-  },
-  "defaultIconButton": {
-    "message": "Sử dụng mặc định"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Tùy chỉnh Màu Dòng Kẻ"
-  },
-  "sessionSaved": {
-    "message": "Đã lưu $count$ tab vào thư mục mới",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
     },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Giữ thư mục ở trên"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
-  },
-  "paletteNoResults": {
-    "message": "Không có kết quả phù hợp"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Mở bảng lệnh"
-  },
-  "searchNoResults": {
-    "message": "Không có dấu trang phù hợp"
-  },
-  "sessionFolderName": {
-    "message": "Phiên $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Thao tác này sắp xếp lại dấu trang trong mọi thư mục con và không thể hoàn tác."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Xây dựng bởi $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Đã thêm dấu trang"
-  },
-  "quickAddedTo": {
-    "message": "Đã thêm dấu trang vào $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Đã xóa dấu trang"
-  },
-  "quickRemoveBookmark": {
-    "message": "Xóa dấu trang này (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Công cụ (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Tối"
-  },
-  "optionThemeInk": {
-    "message": "Mực (tối)"
-  },
-  "optionThemePaper": {
-    "message": "Giấy (sáng)"
-  },
-  "sortFolderContents": {
-    "message": "Sắp xếp nội dung thư mục"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ bản trùng",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Mở trong Tab Mới"
-  },
-  "addBookmarkAfter": {
-    "message": "Đánh dấu Tab Hiện Tại Sau Đây"
-  },
-  "ignore": {
-    "message": "Bỏ qua"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Mở"
-  },
-  "optionOpenNewTab": {
-    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
-  },
-  "options": {
-    "message": "Tùy Chọn"
-  },
-  "replaceUrl": {
-    "message": "Thay thế điều này bằng URL hiện tại"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Tên"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Tô sáng dấu trang chưa đồng bộ"
-  },
-  "donationDismiss": {
-    "message": "Bỏ qua"
-  },
-  "paletteCmdDupes": {
-    "message": "Dọn dấu trang trùng lặp"
-  },
-  "general": {
-    "message": "Chung"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL thực của dấu trang được hiển thị như một dòng kẻ"
-  },
-  "openNewWindow": {
-    "message": "Mở trong Cửa Sổ Mới"
-  },
-  "dupesNone": {
-    "message": "Không tìm thấy bản trùng"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Mở trong bảng điều khiển bên thay vì cửa sổ bật lên"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Không thể di chuyển dấu trang giữa lưu trữ đã đồng bộ hóa và lưu trữ cục bộ. Hãy sử dụng sao chép/dán.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "Đã xóa $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Tự động làm mới trạng thái đồng bộ"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Mở tất cả trong cửa sổ mới"
-  },
-  "addNewFolder": {
-    "message": "Thêm Thư Mục Con"
-  },
-  "copyTitleAndUrl": {
-    "message": "Sao chép tiêu đề & URL"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Mở tất cả trong cửa sổ ẩn danh"
-  },
-  "optionThemeLight": {
-    "message": "Sáng"
-  },
-  "optionZoom": {
-    "message": "Thu phóng"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $subFolderCount$ thư mục con trong đó?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
   "dupesConfirmGroup": {
     "message": "Giữ lại bản cũ nhất và xóa $count$ bản sao còn lại?",
@@ -562,146 +315,35 @@
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "Điều này đã được báo cáo cho nhà phát triển."
-  },
-  "delete": {
-    "message": "Xóa"
-  },
-  "customStyles": {
-    "message": "Kiểu Tùy Chỉnh"
-  },
-  "deleteEllipsis": {
-    "message": "Xóa..."
-  },
-  "versionMessage": {
-    "message": "Đây là VBM $versionNumber$ mới! Nhật ký thay đổi ở đây: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Đánh dấu tab này vào cuối"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Đánh dấu trang này bằng vBookmarks"
-  },
-  "donationGo": {
-    "message": "Quyên góp"
-  },
-  "donationLater": {
-    "message": "Để sau"
-  },
-  "donationNever": {
-    "message": "Không hiển thị lại"
-  },
-  "viewTree": {
-    "message": "Cây"
-  },
-  "viewSearch": {
-    "message": "Tìm kiếm"
-  },
-  "viewRecent": {
-    "message": "Gần đây"
-  },
-  "viewStats": {
-    "message": "Thống kê"
-  },
-  "viewDead": {
-    "message": "Chết"
-  },
-  "viewDupes": {
-    "message": "Trùng"
-  },
-  "optionsGroupViews": {
-    "message": "Chế độ xem"
-  },
-  "optionShowViewTabs": {
-    "message": "Hiển thị tab chế độ xem"
-  },
-  "optionShowItemPath": {
-    "message": "Hiển thị đường dẫn thư mục trong danh sách"
-  },
-  "optionRecentCount": {
-    "message": "Số lượng dấu trang gần đây"
-  },
-  "optionDeadProxy": {
-    "message": "Mẫu URL proxy cho kiểm tra liên kết chết"
-  },
-  "deadProxyHint": {
-    "message": "URL dấu trang sẽ được gửi đến dịch vụ proxy."
-  },
-  "optionSearchHistory": {
-    "message": "Bật lịch sử tìm kiếm"
-  },
-  "optionStatsEnabled": {
-    "message": "Thu thập thống kê truy cập"
-  },
-  "optionDeadScan": {
-    "message": "Quét liên kết chết"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Số lần kiểm tra đồng thời"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Thời gian chờ mỗi lần kiểm tra"
-  },
-  "searchHistoryTitle": {
-    "message": "Tìm kiếm gần đây"
-  },
-  "searchHistoryClear": {
-    "message": "Xóa tất cả"
-  },
-  "searchHistoryRemove": {
-    "message": "Xóa"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Xác nhận trước khi xóa thư mục không rỗng"
-  },
-  "confirmDeleteFolder": {
-    "message": "Thư mục này chứa $count$ mục. Bạn có thể hoàn tác việc xóa.",
+  "dupesDone": {
+    "message": "Đã xóa $count$ dấu trang trùng lặp",
     "placeholders": {
       "count": {
-        "content": "$1",
-        "example": "5"
+        "content": "$1"
       }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Xóa"
-  },
-  "paletteCmdOptions": {
-    "message": "Mở Cài đặt"
-  },
-  "dupesStrategyOldest": {
-    "message": "Giữ cũ nhất"
-  },
-  "dupesStrategyNewest": {
-    "message": "Giữ mới nhất"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Giữ trong thanh dấu trang"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "Giữ tiêu đề ngắn nhất"
-  },
-  "dupesStrategyShallowest": {
-    "message": "Giữ nông nhất"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "Giữ truy cập nhiều nhất"
-  },
-  "dupesApplyAll": {
-    "message": "Áp dụng tất cả"
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
   "dupesGroupCleanRest": {
     "message": "Dọn sạch phần còn lại"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ bản trùng",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesIgnoreScheme": {
+    "message": "Bỏ qua http/https"
+  },
+  "dupesKeeperSet": {
+    "message": "Giữ lại"
+  },
+  "dupesNone": {
+    "message": "Không tìm thấy bản trùng"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ nhóm, $count$ sẽ xóa",
@@ -720,55 +362,412 @@
   "dupesScopeBar": {
     "message": "Chỉ thanh dấu trang"
   },
-  "dupesIgnoreScheme": {
-    "message": "Bỏ qua http/https"
+  "dupesStrategyBookmarkBar": {
+    "message": "Giữ trong thanh dấu trang"
   },
-  "deadLastScanAt": {
-    "message": "Lần quét cuối: $time$",
+  "dupesStrategyMostVisited": {
+    "message": "Giữ truy cập nhiều nhất"
+  },
+  "dupesStrategyNewest": {
+    "message": "Giữ mới nhất"
+  },
+  "dupesStrategyOldest": {
+    "message": "Giữ cũ nhất"
+  },
+  "dupesStrategyShallowest": {
+    "message": "Giữ nông nhất"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Giữ tiêu đề ngắn nhất"
+  },
+  "edit": {
+    "message": "Chỉnh sửa..."
+  },
+  "editBookmark": {
+    "message": "Chỉnh sửa dấu trang"
+  },
+  "editFolder": {
+    "message": "Chỉnh sửa thư mục"
+  },
+  "errorOccured": {
+    "message": "Ồ, đã xảy ra lỗi."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Trình quản lý dấu trang dạng popup. Cải tiến Neat Bookmarks. Gọn gàng hơn Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Trống)"
+  },
+  "general": {
+    "message": "Chung"
+  },
+  "ignore": {
+    "message": "Bỏ qua"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Tên"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(không tiêu đề)"
+  },
+  "nope": {
+    "message": "Không"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Mở"
+  },
+  "openBookmarks": {
+    "message": "Mở Tất Cả Dấu Trang"
+  },
+  "openBookmarksInGroup": {
+    "message": "Mở tất cả trong nhóm tab mới"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Mở tất cả trong cửa sổ ẩn danh"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Mở tất cả trong cửa sổ mới"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Mở bảng lệnh"
+  },
+  "openIncognitoWindow": {
+    "message": "Mở trong Cửa Sổ Ẩn Danh"
+  },
+  "openNewTab": {
+    "message": "Mở trong Tab Mới"
+  },
+  "openNewWindow": {
+    "message": "Mở trong Cửa Sổ Mới"
+  },
+  "openSidePanelCommand": {
+    "message": "Mở bảng điều khiển bên vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Tự động làm mới trạng thái đồng bộ"
+  },
+  "optionAutoResizePopup": {
+    "message": "Tự động điều chỉnh kích thước cửa sổ popup để phù hợp với nội dung"
+  },
+  "optionClickNewTab": {
+    "message": "Nhấp chuột trái mở dấu trang trong tab mới."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Đóng các thư mục không sử dụng khi mở một thư mục."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Xác nhận trước khi xóa thư mục không rỗng"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
+  },
+  "optionDeadProxy": {
+    "message": "Mẫu URL proxy cho kiểm tra liên kết chết"
+  },
+  "optionDeadScan": {
+    "message": "Quét liên kết chết"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Số lần kiểm tra đồng thời"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Thời gian chờ mỗi lần kiểm tra"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Tô sáng dấu trang chưa đồng bộ"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Chỉ hiển thị dấu trang trong Thanh Dấu Trang"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Mở trong bảng điều khiển bên thay vì cửa sổ bật lên"
+  },
+  "optionOpenNewTab": {
+    "message": "Nhấp chuột giữa hoặc control-nhấp mở dấu trang trong tab nền mới (thay vì tab nền trước)."
+  },
+  "optionPopupStays": {
+    "message": "Popup vẫn mở khi mở dấu trang (nhấp chuột trái)."
+  },
+  "optionRecentCollapsed": {
+    "message": "Thu gọn phần thêm gần đây theo mặc định"
+  },
+  "optionRecentCount": {
+    "message": "Số lượng dấu trang gần đây"
+  },
+  "optionRememberPrevState": {
+    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"
+  },
+  "optionSearchHistory": {
+    "message": "Bật lịch sử tìm kiếm"
+  },
+  "optionShowItemPath": {
+    "message": "Hiển thị đường dẫn thư mục trong danh sách"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
+  },
+  "optionShowSyncStatus": {
+    "message": "Hiển thị chỉ báo trạng thái đồng bộ"
+  },
+  "optionShowViewTabs": {
+    "message": "Hiển thị tab chế độ xem"
+  },
+  "optionStatsEnabled": {
+    "message": "Thu thập thống kê truy cập"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Khoảng thời gian làm mới"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "giây"
+  },
+  "optionTheme": {
+    "message": "Giao diện"
+  },
+  "optionThemeAuto": {
+    "message": "Theo hệ thống"
+  },
+  "optionThemeDark": {
+    "message": "Tối"
+  },
+  "optionThemeInk": {
+    "message": "Mực (tối)"
+  },
+  "optionThemeLight": {
+    "message": "Sáng"
+  },
+  "optionThemePaper": {
+    "message": "Giấy (sáng)"
+  },
+  "optionZoom": {
+    "message": "Thu phóng"
+  },
+  "options": {
+    "message": "Tùy Chọn"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Xây dựng bởi $authorName$.",
     "placeholders": {
-      "time": {
+      "authorName": {
         "content": "$1"
       }
     }
   },
-  "deadStartHint": {
-    "message": "Quét dấu trang để tìm liên kết chết."
+  "optionsGroupViews": {
+    "message": "Chế độ xem"
   },
-  "deadMark": {
-    "message": "Đánh dấu"
+  "paletteCmdBookmarkTab": {
+    "message": "Đánh dấu tab hiện tại"
   },
-  "deadUnmark": {
+  "paletteCmdDead": {
+    "message": "Tìm liên kết hỏng"
+  },
+  "paletteCmdDupes": {
+    "message": "Dọn dấu trang trùng lặp"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Dấu trang mới…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Thư mục mới…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Dấu phân cách mới"
+  },
+  "paletteCmdOptions": {
+    "message": "Mở Cài đặt"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Đánh dấu tab hiện tại"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Lưu các tab cửa sổ thành thư mục"
+  },
+  "paletteCmdSearchInView": {
+    "message": "Tìm kiếm trong chế độ xem tìm kiếm cho \"{{query}}\"",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
+  "paletteNoResults": {
+    "message": "Không có kết quả phù hợp"
+  },
+  "palettePlaceholder": {
+    "message": "Tìm kiếm dấu trang, thư mục, lệnh…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Thư mục cha: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Đánh dấu trang này (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Đã thêm dấu trang"
+  },
+  "quickAddedTo": {
+    "message": "Đã thêm dấu trang vào $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Xóa dấu trang này (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Đã xóa dấu trang"
+  },
+  "recentBookmarks": {
+    "message": "Đã thêm gần đây"
+  },
+  "recentEmpty": {
+    "message": "Không có dấu trang gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
+  },
+  "recentRevealInTree": {
+    "message": "Hiện trong cây"
+  },
+  "removeSeparator": {
+    "message": "Xóa Dòng Kẻ"
+  },
+  "replaceUrl": {
+    "message": "Thay thế điều này bằng URL hiện tại"
+  },
+  "reportError": {
+    "message": "Báo Cáo Lỗi"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "Điều này đã được báo cáo cho nhà phát triển."
+  },
+  "resetButton": {
+    "message": "Đặt lại"
+  },
+  "resetSettings": {
+    "message": "Đặt lại cài đặt"
+  },
+  "resetSettingsDescription": {
+    "message": "Đặt lại vBookmarks về cài đặt mặc định."
+  },
+  "rowActionDelete": {
+    "message": "Xóa"
+  },
+  "rowActionMark": {
+    "message": "Đánh dấu hỏng"
+  },
+  "rowActionReveal": {
+    "message": "Hiện trong cây"
+  },
+  "rowActionUnmark": {
     "message": "Bỏ đánh dấu"
   },
-  "deadMarked": {
-    "message": "đã đánh dấu"
+  "save": {
+    "message": "Lưu"
   },
-  "deadMarkAll": {
-    "message": "Đánh dấu tất cả"
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Tìm kiếm Dấu Trang"
   },
-  "deadUnmarkAll": {
-    "message": "Xóa đánh dấu"
+  "searchClear": {
+    "message": "Xóa tìm kiếm"
   },
-  "deadFilterAll": {
-    "message": "Tất cả"
+  "searchHistoryClear": {
+    "message": "Xóa tất cả"
   },
-  "deadFilterDead": {
-    "message": "Chỉ chết"
+  "searchHistoryRemove": {
+    "message": "Xóa"
   },
-  "deadFilterBlocked": {
-    "message": "Chỉ bị chặn"
+  "searchHistoryTitle": {
+    "message": "Tìm kiếm gần đây"
+  },
+  "searchNoResults": {
+    "message": "Không có dấu trang phù hợp"
+  },
+  "searchViewHint": {
+    "message": "Nhập để tìm kiếm dấu trang của bạn."
+  },
+  "sessionEmpty": {
+    "message": "Không có tab để lưu"
+  },
+  "sessionFolderName": {
+    "message": "Phiên $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Đã lưu $count$ tab vào thư mục mới",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "Theo ngày thêm (mới nhất trước)"
+  },
+  "sortByTitle": {
+    "message": "Theo tiêu đề"
+  },
+  "sortFolderContents": {
+    "message": "Sắp xếp nội dung thư mục"
+  },
+  "sortFoldersFirst": {
+    "message": "Giữ thư mục ở trên"
+  },
+  "sortRecursive": {
+    "message": "Sắp xếp cả thư mục con (đệ quy)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Thao tác này sắp xếp lại dấu trang trong mọi thư mục con và không thể hoàn tác."
+  },
+  "statsClearConfirm": {
+    "message": "Xóa tất cả $count$ mục thống kê truy cập?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Xóa thống kê truy cập"
+  },
+  "statsDisabled": {
+    "message": "Thống kê truy cập đã bị tắt. Bật chúng trong tùy chọn."
+  },
+  "statsEmpty": {
+    "message": "Chưa có dữ liệu truy cập. Mở dấu trang để thu thập thống kê."
   },
   "statsSortByCount": {
     "message": "Theo số lượng"
   },
   "statsSortByRecent": {
     "message": "Theo gần đây"
-  },
-  "statsClearData": {
-    "message": "Xóa thống kê truy cập"
-  },
-  "statsEmpty": {
-    "message": "Chưa có dữ liệu truy cập. Mở dấu trang để thu thập thống kê."
   },
   "statsVisitCount": {
     "message": "$count$ lượt truy cập",
@@ -778,11 +777,102 @@
       }
     }
   },
-  "recentEmpty": {
-    "message": "Không có dấu trang gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
+  "syncOptions": {
+    "message": "Tùy chọn đồng bộ hóa"
   },
-  "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
-    "description": "Palette bridge row: jump to search view with the current query"
+  "syncStatusLocal": {
+    "message": "Chỉ cục bộ — chưa tải lên"
+  },
+  "syncStatusSynced": {
+    "message": "Đã đồng bộ với tài khoản Google của bạn"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Không thể đồng bộ"
+  },
+  "syncSuffixLocal": {
+    "message": "(Cục bộ)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Đã đồng bộ)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ ngày trước",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ giờ trước",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "Vừa xong"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ phút trước",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "Hôm qua"
+  },
+  "toolButtonTitle": {
+    "message": "Công cụ (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Hoàn tác"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "Đây là VBM $versionNumber$ mới! Nhật ký thay đổi ở đây: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Chết"
+  },
+  "viewDupes": {
+    "message": "Trùng"
+  },
+  "viewRecent": {
+    "message": "Gần đây"
+  },
+  "viewSearch": {
+    "message": "Tìm kiếm"
+  },
+  "viewStats": {
+    "message": "Thống kê"
+  },
+  "viewSwitchAnnounce": {
+    "message": "Đã chuyển sang $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Cây"
   }
 }

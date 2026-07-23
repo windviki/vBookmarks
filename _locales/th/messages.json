@@ -1,48 +1,99 @@
 {
-  "optionShowSyncStatus": {
-    "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
+  "accessibility": {
+    "message": "การเข้าถึง"
   },
-  "dupesDone": {
-    "message": "ลบ $count$ บุ๊กมาร์กที่ซ้ำกันแล้ว",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkAfter": {
+    "message": "เพิ่มที่คั่นหน้าหลังนี้"
+  },
+  "addBookmarkBefore": {
+    "message": "เพิ่มที่คั่นหน้าก่อนนี้"
+  },
+  "addBookmarkBottom": {
+    "message": "เพิ่มที่คั่นหน้าล่างสุด"
   },
   "addBookmarkTop": {
     "message": "เพิ่มที่คั่นหน้าบนสุด"
   },
-  "errorOccured": {
-    "message": "โอ๊ะ เกิดข้อผิดพลาด"
+  "addNewFolder": {
+    "message": "เพิ่มโฟลเดอร์ย่อย"
   },
-  "optionShowRecentBookmarks": {
-    "message": "แสดงบุ๊กมาร์กที่เพิ่มล่าสุดที่ด้านบนของป๊อปอัป"
+  "addNewFolderAfter": {
+    "message": "เพิ่มโฟลเดอร์หลังจากนี้"
   },
-  "optionRecentCollapsed": {
-    "message": "ยุบส่วนที่เพิ่มล่าสุดโดยค่าเริ่มต้น"
+  "addNewFolderBefore": {
+    "message": "เพิ่มโฟลเดอร์ก่อนหน้านี้"
   },
-  "dupesConfirmAll": {
-    "message": "ลบ $count$ สำเนาเกินใน $groups$ กลุ่ม? รายการที่เก่าที่สุดจะถูกเก็บไว้",
+  "addSeparator": {
+    "message": "เพิ่มเส้นแบ่ง"
+  },
+  "advancedOptions": {
+    "message": "ตัวเลือกขั้นสูง"
+  },
+  "confirmDeleteFolder": {
+    "message": "โฟลเดอร์นี้มี $count$ รายการ คุณสามารถยกเลิกการลบได้",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "ลบ"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และโฟลเดอร์ย่อย $subFolderCount$ รายการที่อยู่ภายใน?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ โฟลเดอร์ย่อย $subFolderCount$ รายการ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการ?",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "การเข้าถึง"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "บุ๊กมาร์กใหม่…"
-  },
-  "optionTheme": {
-    "message": "ธีม"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างอนุรักษ์ใหม่?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -53,27 +104,45 @@
       }
     }
   },
-  "resetButton": {
-    "message": "รีเซ็ต"
+  "contextMenuAddBookmark": {
+    "message": "บุ๊กมาร์กหน้านี้ด้วย vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "เพิ่มที่คั่นหน้าก่อนนี้"
+  "copyAllTitlesAndUrls": {
+    "message": "คัดลอกชื่อและ URL ทั้งหมดไปยังคลิปบอร์ด"
   },
-  "syncOptions": {
-    "message": "ตัวเลือกการซิงค์"
+  "copyTitleAndUrl": {
+    "message": "คัดลอกชื่อและ URL ไปยังคลิปบอร์ด"
   },
-  "deletedFolder": {
-    "message": "ลบโฟลเดอร์ $title$ แล้ว",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "บุ๊กมาร์กหน้านี้ (Ctrl+D)"
+  "customIcon": {
+    "message": "ไอคอนที่กำหนดเอง"
+  },
+  "customIconDescription": {
+    "message": "ไอคอนต้องมีขนาด 19x19 พิกเซล มิฉะนั้นจะถูกปรับขนาดเป็นขนาดนี้"
+  },
+  "customSeparatorColorDescription": {
+    "message": "ปรับแต่งสีเส้นแบ่ง"
+  },
+  "customSeparatorStringDescription": {
+    "message": "หาก URL ของที่คั่นหน้ามีสตริงนี้ จะแสดงเป็นเส้นแบ่ง"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "ชื่อจริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL จริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
+  },
+  "customStyles": {
+    "message": "สไตล์ที่กำหนดเอง"
+  },
+  "customStylesDescription": {
+    "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
+  },
+  "deadBlocked": {
+    "message": "ถูกบล็อก"
   },
   "deadChecking": {
     "message": "กำลังตรวจสอบ $done$ / $total$…",
@@ -110,14 +179,105 @@
       }
     }
   },
+  "deadFilterAll": {
+    "message": "ทั้งหมด"
+  },
+  "deadFilterBlocked": {
+    "message": "เฉพาะที่ถูกบล็อก"
+  },
+  "deadFilterDead": {
+    "message": "เฉพาะลิงก์เสีย"
+  },
+  "deadLastScanAt": {
+    "message": "สแกนล่าสุด: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "ทำเครื่องหมาย"
+  },
+  "deadMarkAll": {
+    "message": "ทำเครื่องหมายทั้งหมด"
+  },
+  "deadMarked": {
+    "message": "ที่ทำเครื่องหมาย"
+  },
   "deadNone": {
     "message": "ไม่พบลิงก์เสีย"
+  },
+  "deadProxyHint": {
+    "message": "URL ของบุ๊กมาร์กจะถูกส่งไปยังบริการพร็อกซี"
   },
   "deadRescan": {
     "message": "สแกนใหม่"
   },
-  "paletteCmdDead": {
-    "message": "ค้นหาลิงก์เสีย"
+  "deadScanning": {
+    "message": "กำลังสแกน"
+  },
+  "deadSkipped": {
+    "message": "ข้าม"
+  },
+  "deadStartHint": {
+    "message": "สแกนบุ๊กมาร์กเพื่อหาลิงก์เสีย"
+  },
+  "deadUnmark": {
+    "message": "ยกเลิกเครื่องหมาย"
+  },
+  "deadUnmarkAll": {
+    "message": "ล้างเครื่องหมาย"
+  },
+  "defaultIconButton": {
+    "message": "ใช้ค่าเริ่มต้น"
+  },
+  "defaultIconButtonOr": {
+    "message": "หรือ"
+  },
+  "delete": {
+    "message": "ลบ"
+  },
+  "deleteEllipsis": {
+    "message": "ลบ..."
+  },
+  "deletedBookmark": {
+    "message": "ลบ $title$ แล้ว",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "ลบโฟลเดอร์ $title$ แล้ว",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "ปิดทิ้ง"
+  },
+  "donationGo": {
+    "message": "บริจาค"
+  },
+  "donationLater": {
+    "message": "ภายหลัง"
+  },
+  "donationMessage": {
+    "message": "หากคุณชอบสิ่งนี้ บางทีคุณอาจบริจาคเพื่อการพัฒนาในอนาคต จำนวนเงินใดๆ ก็ต้อนรับ"
+  },
+  "donationNever": {
+    "message": "ไม่ต้องแสดงอีก"
+  },
+  "dupesApplyAll": {
+    "message": "ใช้ทั้งหมด"
   },
   "dupesCleanAll": {
     "message": "ล้างทั้งหมด: $groups$ กลุ่ม, $count$ สำเนาเกิน",
@@ -131,427 +291,20 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "openSidePanelCommand": {
-    "message": "เปิดแผงด้านข้าง vBookmarks"
+  "dupesClearRest": {
+    "message": "ล้างส่วนที่เหลือ"
   },
-  "optionThemeAuto": {
-    "message": "ตามระบบ"
-  },
-  "edit": {
-    "message": "แก้ไข..."
-  },
-  "customIconDescription": {
-    "message": "ไอคอนต้องมีขนาด 19x19 พิกเซล มิฉะนั้นจะถูกปรับขนาดเป็นขนาดนี้"
-  },
-  "resetSettingsDescription": {
-    "message": "รีเซ็ต vBookmarks เป็นการตั้งค่าเริ่มต้น"
-  },
-  "defaultIconButtonOr": {
-    "message": "หรือ"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "วินาที"
-  },
-  "syncStatusSynced": {
-    "message": "ซิงค์กับบัญชี Google ของคุณแล้ว"
-  },
-  "syncStatusLocal": {
-    "message": "เฉพาะในเครื่อง — ยังไม่ได้อัปโหลด"
-  },
-  "syncStatusUnsyncable": {
-    "message": "ไม่สามารถซิงค์ได้"
-  },
-  "syncSuffixSynced": {
-    "message": "(ซิงค์แล้ว)"
-  },
-  "syncSuffixLocal": {
-    "message": "(ในเครื่อง)"
-  },
-  "advancedOptions": {
-    "message": "ตัวเลือกขั้นสูง"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "ลบเส้นแบ่ง"
-  },
-  "resetSettings": {
-    "message": "รีเซ็ตการตั้งค่า"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "ชื่อจริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
-  },
-  "donationMessage": {
-    "message": "หากคุณชอบสิ่งนี้ บางทีคุณอาจบริจาคเพื่อการพัฒนาในอนาคต จำนวนเงินใดๆ ก็ต้อนรับ"
-  },
-  "optionClickNewTab": {
-    "message": "คลิกซ้ายเปิดที่คั่นหน้าในแท็บใหม่"
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการในหน้าต่างอนุรักษ์ใหม่?",
+  "dupesConfirmAll": {
+    "message": "ลบ $count$ สำเนาเกินใน $groups$ กลุ่ม? รายการที่เก่าที่สุดจะถูกเก็บไว้",
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "ไม่"
-  },
-  "openIncognitoWindow": {
-    "message": "เปิดในหน้าต่างอนุรักษ์"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "บุ๊กมาร์กแท็บปัจจุบัน"
-  },
-  "sessionEmpty": {
-    "message": "ไม่มีแท็บให้บันทึก"
-  },
-  "sortByDateAdded": {
-    "message": "ตามวันที่เพิ่ม (ใหม่สุดก่อน)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "ตัวคั่นใหม่"
-  },
-  "recentBookmarks": {
-    "message": "เพิ่มล่าสุด"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "คัดลอกชื่อและ URL ทั้งหมดไปยังคลิปบอร์ด"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "ค้นหาที่คั่นหน้า"
-  },
-  "searchClear": {
-    "message": "ล้างการค้นหา"
-  },
-  "reportError": {
-    "message": "รายงานข้อผิดพลาด"
-  },
-  "addNewFolderAfter": {
-    "message": "เพิ่มโฟลเดอร์หลังจากนี้"
-  },
-  "editBookmark": {
-    "message": "แก้ไขที่คั่นหน้า"
-  },
-  "editFolder": {
-    "message": "แก้ไขโฟลเดอร์"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "โฟลเดอร์หลัก: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "ช่วงเวลารีเฟรช"
-  },
-  "openBookmarks": {
-    "message": "เปิดที่คั่นหน้าทั้งหมด"
-  },
-  "openBookmarksInGroup": {
-    "message": "เปิดทั้งหมดในกลุ่มแท็บใหม่"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
-  },
-  "addSeparator": {
-    "message": "เพิ่มเส้นแบ่ง"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ โฟลเดอร์ย่อย $subFolderCount$ รายการ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
       },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
+      "groups": {
         "content": "$2"
       }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "บันทึกแท็บหน้าต่างเป็นโฟลเดอร์"
-  },
-  "paletteCmdNewFolder": {
-    "message": "โฟลเดอร์ใหม่…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "หาก URL ของที่คั่นหน้ามีสตริงนี้ จะแสดงเป็นเส้นแบ่ง"
-  },
-  "customStylesDescription": {
-    "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "ปิดโฟลเดอร์ที่ไม่ได้ใช้เมื่อเปิดโฟลเดอร์"
-  },
-  "optionPopupStays": {
-    "message": "ป๊อปอัปคงอยู่เมื่อเปิดที่คั่นหน้า (คลิกซ้าย)"
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการเปิดที่คั่นหน้าทั้งหมด $count$ รายการ?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "ค้นหาบุ๊กมาร์ก โฟลเดอร์ คำสั่ง…"
-  },
-  "addNewFolderBefore": {
-    "message": "เพิ่มโฟลเดอร์ก่อนหน้านี้"
-  },
-  "customIcon": {
-    "message": "ไอคอนที่กำหนดเอง"
-  },
-  "folderEmpty": {
-    "message": "(ว่าง)"
-  },
-  "save": {
-    "message": "บันทึก"
-  },
-  "undoAction": {
-    "message": "เลิกทำ"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "แสดงเฉพาะที่คั่นหน้าในแถบที่คั่นหน้า"
-  },
-  "sortRecursive": {
-    "message": "จัดเรียงโฟลเดอร์ย่อยด้วย (แบบเรียกซ้ำ)"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(ไม่มีชื่อ)"
-  },
-  "sortByTitle": {
-    "message": "ตามชื่อ"
-  },
-  "defaultIconButton": {
-    "message": "ใช้ค่าเริ่มต้น"
-  },
-  "customSeparatorColorDescription": {
-    "message": "ปรับแต่งสีเส้นแบ่ง"
-  },
-  "sessionSaved": {
-    "message": "บันทึก $count$ แท็บไปยังโฟลเดอร์ใหม่แล้ว",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
     },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "เก็บโฟลเดอร์ไว้ด้านบน"
-  },
-  "optionSearchAfterEnter": {
-    "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
-  },
-  "paletteNoResults": {
-    "message": "ไม่พบผลลัพธ์ที่ตรงกัน"
-  },
-  "openCommandPaletteCommand": {
-    "message": "เปิดจานคำสั่ง"
-  },
-  "searchNoResults": {
-    "message": "ไม่พบบุ๊กมาร์กที่ตรงกัน"
-  },
-  "sessionFolderName": {
-    "message": "เซสชัน $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "การดำเนินการนี้จะจัดเรียงบุ๊กมาร์กในทุกโฟลเดอร์ย่อยและไม่สามารถยกเลิกได้"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "สร้างโดย $authorName$",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "เพิ่มบุ๊กมาร์กแล้ว"
-  },
-  "quickAddedTo": {
-    "message": "บุ๊กมาร์กเพิ่มไปยัง $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "ลบบุ๊กมาร์กแล้ว"
-  },
-  "quickRemoveBookmark": {
-    "message": "ลบบุ๊กมาร์กนี้ (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "เครื่องมือ (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "มืด"
-  },
-  "optionThemeInk": {
-    "message": "หมึก (มืด)"
-  },
-  "optionThemePaper": {
-    "message": "กระดาษ (สว่าง)"
-  },
-  "sortFolderContents": {
-    "message": "จัดเรียงเนื้อหาโฟลเดอร์"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ รายการซ้ำ",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "เปิดในแท็บใหม่"
-  },
-  "addBookmarkAfter": {
-    "message": "เพิ่มที่คั่นหน้าหลังนี้"
-  },
-  "ignore": {
-    "message": "เพิกเฉย"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "เปิด"
-  },
-  "optionOpenNewTab": {
-    "message": "คลิกกลางหรือคลิกควบคุมเปิดที่คั่นหน้าในแท็บพื้นหลังใหม่ (แทนแท็บเบื้องหน้า)"
-  },
-  "options": {
-    "message": "ตัวเลือก"
-  },
-  "replaceUrl": {
-    "message": "แทนที่สิ่งนี้ด้วย URL ปัจจุบัน"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "ชื่อ"
-  },
-  "optionHighlightUnsynced": {
-    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
-  },
-  "donationDismiss": {
-    "message": "ปิดทิ้ง"
-  },
-  "paletteCmdDupes": {
-    "message": "ล้างบุ๊กมาร์กที่ซ้ำกัน"
-  },
-  "general": {
-    "message": "ทั่วไป"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL จริงของที่คั่นหน้าที่แสดงเป็นเส้นแบ่ง"
-  },
-  "openNewWindow": {
-    "message": "เปิดในหน้าต่างใหม่"
-  },
-  "dupesNone": {
-    "message": "ไม่พบรายการซ้ำ"
-  },
-  "optionOpenInSidePanel": {
-    "message": "เปิดในแผงด้านข้างแทนป๊อปอัป"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "ตัวจัดการที่คั่นหน้าป๊อปอัป ปรับปรุงจาก Neat Bookmarks สะอาดกว่า Neater Bookmarks"
-  },
-  "optionAutoResizePopup": {
-    "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
-  },
-  "crossStorageMoveWarning": {
-    "message": "ไม่สามารถย้ายที่คั่นหน้าระหว่างที่จัดเก็บที่ซิงค์และที่จัดเก็บในเครื่องได้ โปรดใช้คัดลอก/วาง",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "ลบ $title$ แล้ว",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "จำสถานะก่อนหน้า (ตำแหน่งเลื่อนและโฟลเดอร์ที่เปิด)"
-  },
-  "optionAutoRefreshSync": {
-    "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
-  },
-  "openBookmarksNewWindow": {
-    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างใหม่"
-  },
-  "addNewFolder": {
-    "message": "เพิ่มโฟลเดอร์ย่อย"
-  },
-  "copyTitleAndUrl": {
-    "message": "คัดลอกชื่อและ URL ไปยังคลิปบอร์ด"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างนิรนาม"
-  },
-  "optionThemeLight": {
-    "message": "สว่าง"
-  },
-  "optionZoom": {
-    "message": "ซูม"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และโฟลเดอร์ย่อย $subFolderCount$ รายการที่อยู่ภายใน?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
   "dupesConfirmGroup": {
     "message": "เก็บรายการที่เก่าที่สุดและลบ $count$ สำเนาอื่น?",
@@ -562,146 +315,35 @@
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "สิ่งนี้ได้รับการรายงานไปยังนักพัฒนาแล้ว"
-  },
-  "delete": {
-    "message": "ลบ"
-  },
-  "customStyles": {
-    "message": "สไตล์ที่กำหนดเอง"
-  },
-  "deleteEllipsis": {
-    "message": "ลบ..."
-  },
-  "versionMessage": {
-    "message": "นี่คือ VBM $versionNumber$ ใหม่! บันทึกการเปลี่ยนแปลงอยู่ที่นี่: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "เพิ่มที่คั่นหน้าล่างสุด"
-  },
-  "contextMenuAddBookmark": {
-    "message": "บุ๊กมาร์กหน้านี้ด้วย vBookmarks"
-  },
-  "donationGo": {
-    "message": "บริจาค"
-  },
-  "donationLater": {
-    "message": "ภายหลัง"
-  },
-  "donationNever": {
-    "message": "ไม่ต้องแสดงอีก"
-  },
-  "viewTree": {
-    "message": "ต้นไม้"
-  },
-  "viewSearch": {
-    "message": "ค้นหา"
-  },
-  "viewRecent": {
-    "message": "ล่าสุด"
-  },
-  "viewStats": {
-    "message": "สถิติ"
-  },
-  "viewDead": {
-    "message": "ลิงก์เสีย"
-  },
-  "viewDupes": {
-    "message": "ซ้ำ"
-  },
-  "optionsGroupViews": {
-    "message": "มุมมอง"
-  },
-  "optionShowViewTabs": {
-    "message": "แสดงแท็บมุมมอง"
-  },
-  "optionShowItemPath": {
-    "message": "แสดงเส้นทางโฟลเดอร์ในแถวรายการ"
-  },
-  "optionRecentCount": {
-    "message": "จำนวนบุ๊กมาร์กล่าสุด"
-  },
-  "optionDeadProxy": {
-    "message": "เทมเพลต URL พร็อกซีสำหรับตรวจสอบลิงก์เสีย"
-  },
-  "deadProxyHint": {
-    "message": "URL ของบุ๊กมาร์กจะถูกส่งไปยังบริการพร็อกซี"
-  },
-  "optionSearchHistory": {
-    "message": "เปิดใช้งานประวัติการค้นหา"
-  },
-  "optionStatsEnabled": {
-    "message": "เก็บสถิติการเข้าชม"
-  },
-  "optionDeadScan": {
-    "message": "สแกนลิงก์เสีย"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "การตรวจสอบพร้อมกัน"
-  },
-  "optionDeadScanTimeout": {
-    "message": "หมดเวลาต่อการตรวจสอบ"
-  },
-  "searchHistoryTitle": {
-    "message": "การค้นหาล่าสุด"
-  },
-  "searchHistoryClear": {
-    "message": "ล้างทั้งหมด"
-  },
-  "searchHistoryRemove": {
-    "message": "ลบ"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "ยืนยันก่อนลบโฟลเดอร์ที่ไม่ว่าง"
-  },
-  "confirmDeleteFolder": {
-    "message": "โฟลเดอร์นี้มี $count$ รายการ คุณสามารถยกเลิกการลบได้",
+  "dupesDone": {
+    "message": "ลบ $count$ บุ๊กมาร์กที่ซ้ำกันแล้ว",
     "placeholders": {
       "count": {
-        "content": "$1",
-        "example": "5"
+        "content": "$1"
       }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "ลบ"
-  },
-  "paletteCmdOptions": {
-    "message": "เปิดการตั้งค่า"
-  },
-  "dupesStrategyOldest": {
-    "message": "เก็บรายการเก่าสุด"
-  },
-  "dupesStrategyNewest": {
-    "message": "เก็บรายการใหม่สุด"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "เก็บในแถบบุ๊กมาร์ก"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "เก็บชื่อสั้นที่สุด"
-  },
-  "dupesStrategyShallowest": {
-    "message": "เก็บระดับตื้นที่สุด"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "เก็บที่เข้าชมมากที่สุด"
-  },
-  "dupesApplyAll": {
-    "message": "ใช้ทั้งหมด"
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
   "dupesGroupCleanRest": {
     "message": "ล้างส่วนที่เหลือ"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ รายการซ้ำ",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesIgnoreScheme": {
+    "message": "ไม่สนใจ http/https"
+  },
+  "dupesKeeperSet": {
+    "message": "ผู้รักษา"
+  },
+  "dupesNone": {
+    "message": "ไม่พบรายการซ้ำ"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ กลุ่ม, $count$ รายการที่จะลบ",
@@ -720,55 +362,412 @@
   "dupesScopeBar": {
     "message": "เฉพาะแถบบุ๊กมาร์ก"
   },
-  "dupesIgnoreScheme": {
-    "message": "ไม่สนใจ http/https"
+  "dupesStrategyBookmarkBar": {
+    "message": "เก็บในแถบบุ๊กมาร์ก"
   },
-  "deadLastScanAt": {
-    "message": "สแกนล่าสุด: $time$",
+  "dupesStrategyMostVisited": {
+    "message": "เก็บที่เข้าชมมากที่สุด"
+  },
+  "dupesStrategyNewest": {
+    "message": "เก็บรายการใหม่สุด"
+  },
+  "dupesStrategyOldest": {
+    "message": "เก็บรายการเก่าสุด"
+  },
+  "dupesStrategyShallowest": {
+    "message": "เก็บระดับตื้นที่สุด"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "เก็บชื่อสั้นที่สุด"
+  },
+  "edit": {
+    "message": "แก้ไข..."
+  },
+  "editBookmark": {
+    "message": "แก้ไขที่คั่นหน้า"
+  },
+  "editFolder": {
+    "message": "แก้ไขโฟลเดอร์"
+  },
+  "errorOccured": {
+    "message": "โอ๊ะ เกิดข้อผิดพลาด"
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "ตัวจัดการที่คั่นหน้าป๊อปอัป ปรับปรุงจาก Neat Bookmarks สะอาดกว่า Neater Bookmarks"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(ว่าง)"
+  },
+  "general": {
+    "message": "ทั่วไป"
+  },
+  "ignore": {
+    "message": "เพิกเฉย"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "ชื่อ"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(ไม่มีชื่อ)"
+  },
+  "nope": {
+    "message": "ไม่"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "เปิด"
+  },
+  "openBookmarks": {
+    "message": "เปิดที่คั่นหน้าทั้งหมด"
+  },
+  "openBookmarksInGroup": {
+    "message": "เปิดทั้งหมดในกลุ่มแท็บใหม่"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างนิรนาม"
+  },
+  "openBookmarksNewWindow": {
+    "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างใหม่"
+  },
+  "openCommandPaletteCommand": {
+    "message": "เปิดจานคำสั่ง"
+  },
+  "openIncognitoWindow": {
+    "message": "เปิดในหน้าต่างอนุรักษ์"
+  },
+  "openNewTab": {
+    "message": "เปิดในแท็บใหม่"
+  },
+  "openNewWindow": {
+    "message": "เปิดในหน้าต่างใหม่"
+  },
+  "openSidePanelCommand": {
+    "message": "เปิดแผงด้านข้าง vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
+  },
+  "optionAutoResizePopup": {
+    "message": "ปรับขนาดหน้าต่างป็อปอัพโดยอัตโนมัติให้พอดีกับเนื้อหา"
+  },
+  "optionClickNewTab": {
+    "message": "คลิกซ้ายเปิดที่คั่นหน้าในแท็บใหม่"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "ปิดโฟลเดอร์ที่ไม่ได้ใช้เมื่อเปิดโฟลเดอร์"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "ยืนยันก่อนลบโฟลเดอร์ที่ไม่ว่าง"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
+  },
+  "optionDeadProxy": {
+    "message": "เทมเพลต URL พร็อกซีสำหรับตรวจสอบลิงก์เสีย"
+  },
+  "optionDeadScan": {
+    "message": "สแกนลิงก์เสีย"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "การตรวจสอบพร้อมกัน"
+  },
+  "optionDeadScanTimeout": {
+    "message": "หมดเวลาต่อการตรวจสอบ"
+  },
+  "optionHighlightUnsynced": {
+    "message": "ไฮไลต์ที่คั่นหน้าที่ยังไม่ซิงค์"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "แสดงเฉพาะที่คั่นหน้าในแถบที่คั่นหน้า"
+  },
+  "optionOpenInSidePanel": {
+    "message": "เปิดในแผงด้านข้างแทนป๊อปอัป"
+  },
+  "optionOpenNewTab": {
+    "message": "คลิกกลางหรือคลิกควบคุมเปิดที่คั่นหน้าในแท็บพื้นหลังใหม่ (แทนแท็บเบื้องหน้า)"
+  },
+  "optionPopupStays": {
+    "message": "ป๊อปอัปคงอยู่เมื่อเปิดที่คั่นหน้า (คลิกซ้าย)"
+  },
+  "optionRecentCollapsed": {
+    "message": "ยุบส่วนที่เพิ่มล่าสุดโดยค่าเริ่มต้น"
+  },
+  "optionRecentCount": {
+    "message": "จำนวนบุ๊กมาร์กล่าสุด"
+  },
+  "optionRememberPrevState": {
+    "message": "จำสถานะก่อนหน้า (ตำแหน่งเลื่อนและโฟลเดอร์ที่เปิด)"
+  },
+  "optionSearchAfterEnter": {
+    "message": "ค้นหาที่คั่นหน้าเฉพาะเมื่อกด ENTER (แทนการค้นหาทันที)"
+  },
+  "optionSearchHistory": {
+    "message": "เปิดใช้งานประวัติการค้นหา"
+  },
+  "optionShowItemPath": {
+    "message": "แสดงเส้นทางโฟลเดอร์ในแถวรายการ"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "แสดงบุ๊กมาร์กที่เพิ่มล่าสุดที่ด้านบนของป๊อปอัป"
+  },
+  "optionShowSyncStatus": {
+    "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
+  },
+  "optionShowViewTabs": {
+    "message": "แสดงแท็บมุมมอง"
+  },
+  "optionStatsEnabled": {
+    "message": "เก็บสถิติการเข้าชม"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "ช่วงเวลารีเฟรช"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "วินาที"
+  },
+  "optionTheme": {
+    "message": "ธีม"
+  },
+  "optionThemeAuto": {
+    "message": "ตามระบบ"
+  },
+  "optionThemeDark": {
+    "message": "มืด"
+  },
+  "optionThemeInk": {
+    "message": "หมึก (มืด)"
+  },
+  "optionThemeLight": {
+    "message": "สว่าง"
+  },
+  "optionThemePaper": {
+    "message": "กระดาษ (สว่าง)"
+  },
+  "optionZoom": {
+    "message": "ซูม"
+  },
+  "options": {
+    "message": "ตัวเลือก"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "สร้างโดย $authorName$",
     "placeholders": {
-      "time": {
+      "authorName": {
         "content": "$1"
       }
     }
   },
-  "deadStartHint": {
-    "message": "สแกนบุ๊กมาร์กเพื่อหาลิงก์เสีย"
+  "optionsGroupViews": {
+    "message": "มุมมอง"
   },
-  "deadMark": {
-    "message": "ทำเครื่องหมาย"
+  "paletteCmdBookmarkTab": {
+    "message": "บุ๊กมาร์กแท็บปัจจุบัน"
   },
-  "deadUnmark": {
+  "paletteCmdDead": {
+    "message": "ค้นหาลิงก์เสีย"
+  },
+  "paletteCmdDupes": {
+    "message": "ล้างบุ๊กมาร์กที่ซ้ำกัน"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "บุ๊กมาร์กใหม่…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "โฟลเดอร์ใหม่…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "ตัวคั่นใหม่"
+  },
+  "paletteCmdOptions": {
+    "message": "เปิดการตั้งค่า"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "บุ๊กมาร์กแท็บปัจจุบัน"
+  },
+  "paletteCmdSaveSession": {
+    "message": "บันทึกแท็บหน้าต่างเป็นโฟลเดอร์"
+  },
+  "paletteCmdSearchInView": {
+    "message": "ค้นหาในมุมมองค้นหาสำหรับ \"{{query}}\"",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
+  "paletteNoResults": {
+    "message": "ไม่พบผลลัพธ์ที่ตรงกัน"
+  },
+  "palettePlaceholder": {
+    "message": "ค้นหาบุ๊กมาร์ก โฟลเดอร์ คำสั่ง…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "โฟลเดอร์หลัก: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "บุ๊กมาร์กหน้านี้ (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "เพิ่มบุ๊กมาร์กแล้ว"
+  },
+  "quickAddedTo": {
+    "message": "บุ๊กมาร์กเพิ่มไปยัง $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "ลบบุ๊กมาร์กนี้ (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "ลบบุ๊กมาร์กแล้ว"
+  },
+  "recentBookmarks": {
+    "message": "เพิ่มล่าสุด"
+  },
+  "recentEmpty": {
+    "message": "ไม่มีบุ๊กมาร์กล่าสุด กด Ctrl+D เพื่อบุ๊กมาร์กหน้านี้"
+  },
+  "recentRevealInTree": {
+    "message": "แสดงในต้นไม้"
+  },
+  "removeSeparator": {
+    "message": "ลบเส้นแบ่ง"
+  },
+  "replaceUrl": {
+    "message": "แทนที่สิ่งนี้ด้วย URL ปัจจุบัน"
+  },
+  "reportError": {
+    "message": "รายงานข้อผิดพลาด"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "สิ่งนี้ได้รับการรายงานไปยังนักพัฒนาแล้ว"
+  },
+  "resetButton": {
+    "message": "รีเซ็ต"
+  },
+  "resetSettings": {
+    "message": "รีเซ็ตการตั้งค่า"
+  },
+  "resetSettingsDescription": {
+    "message": "รีเซ็ต vBookmarks เป็นการตั้งค่าเริ่มต้น"
+  },
+  "rowActionDelete": {
+    "message": "ลบ"
+  },
+  "rowActionMark": {
+    "message": "ทำเครื่องหมายว่าตาย"
+  },
+  "rowActionReveal": {
+    "message": "แสดงในต้นไม้"
+  },
+  "rowActionUnmark": {
     "message": "ยกเลิกเครื่องหมาย"
   },
-  "deadMarked": {
-    "message": "ที่ทำเครื่องหมาย"
+  "save": {
+    "message": "บันทึก"
   },
-  "deadMarkAll": {
-    "message": "ทำเครื่องหมายทั้งหมด"
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "ค้นหาที่คั่นหน้า"
   },
-  "deadUnmarkAll": {
-    "message": "ล้างเครื่องหมาย"
+  "searchClear": {
+    "message": "ล้างการค้นหา"
   },
-  "deadFilterAll": {
-    "message": "ทั้งหมด"
+  "searchHistoryClear": {
+    "message": "ล้างทั้งหมด"
   },
-  "deadFilterDead": {
-    "message": "เฉพาะลิงก์เสีย"
+  "searchHistoryRemove": {
+    "message": "ลบ"
   },
-  "deadFilterBlocked": {
-    "message": "เฉพาะที่ถูกบล็อก"
+  "searchHistoryTitle": {
+    "message": "การค้นหาล่าสุด"
+  },
+  "searchNoResults": {
+    "message": "ไม่พบบุ๊กมาร์กที่ตรงกัน"
+  },
+  "searchViewHint": {
+    "message": "พิมพ์เพื่อค้นหาบุ๊กมาร์กของคุณ"
+  },
+  "sessionEmpty": {
+    "message": "ไม่มีแท็บให้บันทึก"
+  },
+  "sessionFolderName": {
+    "message": "เซสชัน $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "บันทึก $count$ แท็บไปยังโฟลเดอร์ใหม่แล้ว",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "ตามวันที่เพิ่ม (ใหม่สุดก่อน)"
+  },
+  "sortByTitle": {
+    "message": "ตามชื่อ"
+  },
+  "sortFolderContents": {
+    "message": "จัดเรียงเนื้อหาโฟลเดอร์"
+  },
+  "sortFoldersFirst": {
+    "message": "เก็บโฟลเดอร์ไว้ด้านบน"
+  },
+  "sortRecursive": {
+    "message": "จัดเรียงโฟลเดอร์ย่อยด้วย (แบบเรียกซ้ำ)"
+  },
+  "sortRecursiveWarning": {
+    "message": "การดำเนินการนี้จะจัดเรียงบุ๊กมาร์กในทุกโฟลเดอร์ย่อยและไม่สามารถยกเลิกได้"
+  },
+  "statsClearConfirm": {
+    "message": "ล้างรายการสถิติการเยี่ยมชมทั้งหมด $count$ รายการหรือไม่",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "ล้างสถิติการเข้าชม"
+  },
+  "statsDisabled": {
+    "message": "สถิติการเยี่ยมชมถูกปิดใช้งาน เปิดใช้งานในตัวเลือก"
+  },
+  "statsEmpty": {
+    "message": "ยังไม่มีข้อมูลการเข้าชม เปิดบุ๊กมาร์กเพื่อเก็บสถิติ"
   },
   "statsSortByCount": {
     "message": "ตามจำนวน"
   },
   "statsSortByRecent": {
     "message": "ตามล่าสุด"
-  },
-  "statsClearData": {
-    "message": "ล้างสถิติการเข้าชม"
-  },
-  "statsEmpty": {
-    "message": "ยังไม่มีข้อมูลการเข้าชม เปิดบุ๊กมาร์กเพื่อเก็บสถิติ"
   },
   "statsVisitCount": {
     "message": "$count$ ครั้งที่เข้าชม",
@@ -778,11 +777,102 @@
       }
     }
   },
-  "recentEmpty": {
-    "message": "ไม่มีบุ๊กมาร์กล่าสุด กด Ctrl+D เพื่อบุ๊กมาร์กหน้านี้"
+  "syncOptions": {
+    "message": "ตัวเลือกการซิงค์"
   },
-  "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
-    "description": "Palette bridge row: jump to search view with the current query"
+  "syncStatusLocal": {
+    "message": "เฉพาะในเครื่อง — ยังไม่ได้อัปโหลด"
+  },
+  "syncStatusSynced": {
+    "message": "ซิงค์กับบัญชี Google ของคุณแล้ว"
+  },
+  "syncStatusUnsyncable": {
+    "message": "ไม่สามารถซิงค์ได้"
+  },
+  "syncSuffixLocal": {
+    "message": "(ในเครื่อง)"
+  },
+  "syncSuffixSynced": {
+    "message": "(ซิงค์แล้ว)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ วันที่แล้ว",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ ชม. ที่แล้ว",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "เมื่อสักครู่"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ นาทีที่แล้ว",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "เมื่อวาน"
+  },
+  "toolButtonTitle": {
+    "message": "เครื่องมือ (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "เลิกทำ"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "นี่คือ VBM $versionNumber$ ใหม่! บันทึกการเปลี่ยนแปลงอยู่ที่นี่: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "ลิงก์เสีย"
+  },
+  "viewDupes": {
+    "message": "ซ้ำ"
+  },
+  "viewRecent": {
+    "message": "ล่าสุด"
+  },
+  "viewSearch": {
+    "message": "ค้นหา"
+  },
+  "viewStats": {
+    "message": "สถิติ"
+  },
+  "viewSwitchAnnounce": {
+    "message": "เปลี่ยนเป็น $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "ต้นไม้"
   }
 }

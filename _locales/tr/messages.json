@@ -1,48 +1,99 @@
 {
-  "optionShowSyncStatus": {
-    "message": "Senkronizasyon durumu göstergelerini göster"
+  "accessibility": {
+    "message": "Erişilebilirlik"
   },
-  "dupesDone": {
-    "message": "$count$ yinelenen yer imi silindi",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkAfter": {
+    "message": "Geçerli sekmeyi bundan sonra ekle"
+  },
+  "addBookmarkBefore": {
+    "message": "Geçerli sekmeyi bundan önce ekle"
+  },
+  "addBookmarkBottom": {
+    "message": "Sekmeyi bunun altına ekle"
   },
   "addBookmarkTop": {
     "message": "Sekmeyi bunun üstüne ekle"
   },
-  "errorOccured": {
-    "message": "Hata oluştu."
+  "addNewFolder": {
+    "message": "Alt klasör ekle"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
+  "addNewFolderAfter": {
+    "message": "Bundan sonra klasör ekle"
   },
-  "optionRecentCollapsed": {
-    "message": "Son eklenen bölümünü varsayılan olarak daralt"
+  "addNewFolderBefore": {
+    "message": "Bundan önce klasör ekle"
   },
-  "dupesConfirmAll": {
-    "message": "$groups$ gruptaki $count$ fazla kopya silinsin mi? En eski girişler korunur.",
+  "addSeparator": {
+    "message": "Ayırıcı ekle"
+  },
+  "advancedOptions": {
+    "message": "Gelişmiş Seçenekler"
+  },
+  "confirmDeleteFolder": {
+    "message": "Bu klasör $count$ öğe içeriyor. Silme işlemini geri alabilirsiniz.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
+      },
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Sil"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "$folderName$ klasörünü ve içindeki $subFolderCount$ alt klasörü silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "$folderName$ klasörünü, içindeki $subFolderCount$ alt klasörü ve $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
+  },
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Tüm $count$ yer imini açmak istediğinizden emin misiniz?",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "groups": {
-        "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Erişilebilirlik"
-  },
-  "paletteCmdNewBookmark": {
-    "message": "Yeni yer imi…"
-  },
-  "optionTheme": {
-    "message": "Tema"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Tüm $count$ yer imini yeni bir gizli pencerede açmak istediğinizden emin misiniz?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -53,27 +104,45 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Sıfırla"
+  "contextMenuAddBookmark": {
+    "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
   },
-  "addBookmarkBefore": {
-    "message": "Geçerli sekmeyi bundan önce ekle"
+  "copyAllTitlesAndUrls": {
+    "message": "Tüm başlıkları ve URL'leri panoya kopyala"
   },
-  "syncOptions": {
-    "message": "Senkronizasyon Seçenekleri"
+  "copyTitleAndUrl": {
+    "message": "Başlığı ve URL'yi panoya kopyala"
   },
-  "deletedFolder": {
-    "message": "$title$ klasörü silindi",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "Bu sayfayı yer imlerine ekle (Ctrl+D)"
+  "customIcon": {
+    "message": "Özel simge"
+  },
+  "customIconDescription": {
+    "message": "Simge 19*19 piksel boyutunda olmalıdır. Aksi takdirde bu boyuta yeniden boyutlandırılacaktır."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Ayırıcı Rengini Özelleştir"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Bir yer iminin URL'si bu dizeyi içeriyorsa, ayırıcı olarak gösterilecektir"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Ayırıcı olarak gösterilen yer iminin gerçek başlığı"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Ayırıcı olarak gösterilen yer iminin gerçek URL'si"
+  },
+  "customStyles": {
+    "message": "Özel stiller"
+  },
+  "customStylesDescription": {
+    "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
+  },
+  "deadBlocked": {
+    "message": "engellendi"
   },
   "deadChecking": {
     "message": "$done$ / $total$ kontrol ediliyor…",
@@ -110,14 +179,105 @@
       }
     }
   },
+  "deadFilterAll": {
+    "message": "Tümü"
+  },
+  "deadFilterBlocked": {
+    "message": "Yalnızca engellenen"
+  },
+  "deadFilterDead": {
+    "message": "Yalnızca ölü"
+  },
+  "deadLastScanAt": {
+    "message": "Son tarama: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "İşaretle"
+  },
+  "deadMarkAll": {
+    "message": "Tümünü işaretle"
+  },
+  "deadMarked": {
+    "message": "işaretli"
+  },
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
+  },
+  "deadProxyHint": {
+    "message": "Yer imi URL'leri proxy hizmetine gönderilecektir."
   },
   "deadRescan": {
     "message": "Yeniden Tara"
   },
-  "paletteCmdDead": {
-    "message": "Ölü bağlantıları bul"
+  "deadScanning": {
+    "message": "Taranıyor"
+  },
+  "deadSkipped": {
+    "message": "atlandı"
+  },
+  "deadStartHint": {
+    "message": "Ölü bağlantılar için yer imlerini tara."
+  },
+  "deadUnmark": {
+    "message": "İşareti kaldır"
+  },
+  "deadUnmarkAll": {
+    "message": "İşaretleri temizle"
+  },
+  "defaultIconButton": {
+    "message": "Varsayılanı kullan"
+  },
+  "defaultIconButtonOr": {
+    "message": "veya"
+  },
+  "delete": {
+    "message": "Sil"
+  },
+  "deleteEllipsis": {
+    "message": "Sil..."
+  },
+  "deletedBookmark": {
+    "message": "$title$ silindi",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "$title$ klasörü silindi",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "Yoksay"
+  },
+  "donationGo": {
+    "message": "Bağış Yap"
+  },
+  "donationLater": {
+    "message": "Sonra"
+  },
+  "donationMessage": {
+    "message": "Beğendiyseniz, gelecekteki geliştirme için bağış yapmayı düşünebilirsiniz. Her tutar kabul edilir."
+  },
+  "donationNever": {
+    "message": "Tekrar Gösterme"
+  },
+  "dupesApplyAll": {
+    "message": "Tümünü uygula"
   },
   "dupesCleanAll": {
     "message": "Tümünü temizle: $groups$ grup, $count$ fazla kopya",
@@ -131,427 +291,20 @@
     },
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
   },
-  "openSidePanelCommand": {
-    "message": "vBookmarks yan panelini aç"
+  "dupesClearRest": {
+    "message": "Kalanı temizle"
   },
-  "optionThemeAuto": {
-    "message": "Sistemi takip et"
-  },
-  "edit": {
-    "message": "Düzenle..."
-  },
-  "customIconDescription": {
-    "message": "Simge 19*19 piksel boyutunda olmalıdır. Aksi takdirde bu boyuta yeniden boyutlandırılacaktır."
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
-  },
-  "defaultIconButtonOr": {
-    "message": "veya"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "saniye"
-  },
-  "syncStatusSynced": {
-    "message": "Google hesabınıza senkronize edildi"
-  },
-  "syncStatusLocal": {
-    "message": "Yalnızca yerel — yüklenmedi"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Senkronize edilemez"
-  },
-  "syncSuffixSynced": {
-    "message": "(Senkronize)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Yerel)"
-  },
-  "advancedOptions": {
-    "message": "Gelişmiş Seçenekler"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "Ayırıcıyı kaldır"
-  },
-  "resetSettings": {
-    "message": "Ayarları sıfırla"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Ayırıcı olarak gösterilen yer iminin gerçek başlığı"
-  },
-  "donationMessage": {
-    "message": "Beğendiyseniz, gelecekteki geliştirme için bağış yapmayı düşünebilirsiniz. Her tutar kabul edilir."
-  },
-  "optionClickNewTab": {
-    "message": "Sol tık yer imini yeni sekmede açar."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Tüm $count$ yer imini yeni bir gizli pencerede açmak istediğinizden emin misiniz?",
+  "dupesConfirmAll": {
+    "message": "$groups$ gruptaki $count$ fazla kopya silinsin mi? En eski girişler korunur.",
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "Hayır"
-  },
-  "openIncognitoWindow": {
-    "message": "Gizli pencerede aç"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Geçerli sekmeyi yer imlerine ekle"
-  },
-  "sessionEmpty": {
-    "message": "Kaydedilecek sekme yok"
-  },
-  "sortByDateAdded": {
-    "message": "Eklenme tarihine göre (önce en yeni)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Yeni ayraç"
-  },
-  "recentBookmarks": {
-    "message": "Son eklenenler"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Tüm başlıkları ve URL'leri panoya kopyala"
-  },
-  "searchBookmarks": {
-    "description": "Arama alanı için yer tutucu metin.",
-    "message": "Yer imlerini ara"
-  },
-  "searchClear": {
-    "message": "Aramayı Temizle"
-  },
-  "reportError": {
-    "message": "Hata raporu"
-  },
-  "addNewFolderAfter": {
-    "message": "Bundan sonra klasör ekle"
-  },
-  "editBookmark": {
-    "message": "Yer imini düzenle"
-  },
-  "editFolder": {
-    "message": "Klasörü düzenle"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Üst klasör: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Yenileme aralığı"
-  },
-  "openBookmarks": {
-    "message": "Tüm yer imlerini aç"
-  },
-  "openBookmarksInGroup": {
-    "message": "Tümünü yeni sekme grubunda aç"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Bir klasörden birçok yer imi açarken onay göster."
-  },
-  "addSeparator": {
-    "message": "Ayırıcı ekle"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "$folderName$ klasörünü, içindeki $subFolderCount$ alt klasörü ve $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
       },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
+      "groups": {
         "content": "$2"
       }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Pencere sekmelerini klasör olarak kaydet"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Yeni klasör…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Bir yer iminin URL'si bu dizeyi içeriyorsa, ayırıcı olarak gösterilecektir"
-  },
-  "customStylesDescription": {
-    "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Klasör açılırken kullanılmayan klasörleri kapat."
-  },
-  "optionPopupStays": {
-    "message": "Yer imleri açılırken (sol tık) açılır pencere açık kalır."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Tüm $count$ yer imini açmak istediğinizden emin misiniz?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "Yer imleri, klasörler, komutlar ara…"
-  },
-  "addNewFolderBefore": {
-    "message": "Bundan önce klasör ekle"
-  },
-  "customIcon": {
-    "message": "Özel simge"
-  },
-  "folderEmpty": {
-    "message": "(Boş)"
-  },
-  "save": {
-    "message": "Kaydet"
-  },
-  "undoAction": {
-    "message": "Geri Al"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
-  },
-  "sortRecursive": {
-    "message": "Alt klasörleri de sırala (özyinelemeli)"
-  },
-  "noTitle": {
-    "description": "Http(s) URL'si olmayan başlıksız yer imleri veya başlıksız klasörler için başlık.",
-    "message": "(başlık yok)"
-  },
-  "sortByTitle": {
-    "message": "Başlığa göre"
-  },
-  "defaultIconButton": {
-    "message": "Varsayılanı kullan"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Ayırıcı Rengini Özelleştir"
-  },
-  "sessionSaved": {
-    "message": "$count$ sekme yeni bir klasöre kaydedildi",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
     },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Klasörler üstte kalsın"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
-  },
-  "paletteNoResults": {
-    "message": "Eşleşen sonuç yok"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Komut paletini aç"
-  },
-  "searchNoResults": {
-    "message": "Eşleşen yer imi yok"
-  },
-  "sessionFolderName": {
-    "message": "Oturum $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar ve geri alınamaz."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$ tarafından oluşturuldu.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Yer imi eklendi"
-  },
-  "quickAddedTo": {
-    "message": "Yer imi $folderName$ klasörüne eklendi",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Yer imi kaldırıldı"
-  },
-  "quickRemoveBookmark": {
-    "message": "Bu yer imini kaldır (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Araçlar (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Koyu"
-  },
-  "optionThemeInk": {
-    "message": "Mürekkep (koyu)"
-  },
-  "optionThemePaper": {
-    "message": "Kağıt (açık)"
-  },
-  "sortFolderContents": {
-    "message": "Klasör İçeriğini Sırala"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ yinelenen",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Yeni sekmede aç"
-  },
-  "addBookmarkAfter": {
-    "message": "Geçerli sekmeyi bundan sonra ekle"
-  },
-  "ignore": {
-    "message": "Yoksay"
-  },
-  "open": {
-    "description": "Yer imlerini açma eylemi.",
-    "message": "Aç"
-  },
-  "optionOpenNewTab": {
-    "message": "Orta tık veya kontrol-tık yer imini yeni arka plan sekmesinde açar (ön plan yerine)."
-  },
-  "options": {
-    "message": "Seçenekler"
-  },
-  "replaceUrl": {
-    "message": "Bunu mevcut URL ile değiştir"
-  },
-  "name": {
-    "description": "Yer imi veya klasörün adı.",
-    "message": "Ad"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Senkronize edilmemiş yer imlerini vurgula"
-  },
-  "donationDismiss": {
-    "message": "Yoksay"
-  },
-  "paletteCmdDupes": {
-    "message": "Yinelenen yer imlerini temizle"
-  },
-  "general": {
-    "message": "Genel"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Ayırıcı olarak gösterilen yer iminin gerçek URL'si"
-  },
-  "openNewWindow": {
-    "message": "Yeni pencerede aç"
-  },
-  "dupesNone": {
-    "message": "Yinelenen bulunamadı"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Açılır pencere yerine yan panelde aç"
-  },
-  "extDesc": {
-    "description": "Eklentinin açıklaması.",
-    "message": "Açılır pencere yer imi yöneticisi. Geliştirilmiş Neat Bookmarks. Neater Bookmarks'tan daha düzenli."
-  },
-  "optionAutoResizePopup": {
-    "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Yer imleri eşitlenen ve yerel depolama alanı arasında taşınamaz. Bunun yerine kopyala/yapıştır kullanın.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "$title$ silindi",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Önceki durumu hatırla (kaydırma konumu ve açık klasörler)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Senkronizasyon durumunu otomatik yenile"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Tüm yer imlerini yeni pencerede aç"
-  },
-  "addNewFolder": {
-    "message": "Alt klasör ekle"
-  },
-  "copyTitleAndUrl": {
-    "message": "Başlığı ve URL'yi panoya kopyala"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Tüm yer imlerini gizli pencerede aç"
-  },
-  "optionThemeLight": {
-    "message": "Açık"
-  },
-  "optionZoom": {
-    "message": "Yakınlaştırma"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "$folderName$ klasörünü ve içindeki $subFolderCount$ alt klasörü silmek istediğinizden emin misiniz?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
   "dupesConfirmGroup": {
     "message": "En eski kalsın, diğer $count$ kopya silinsin mi?",
@@ -562,146 +315,35 @@
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
   },
-  "reportedToDeveloper": {
-    "description": "Eklentide oluşan bir hata için mesaj, geliştiriciye rapor edildi.",
-    "message": "Bu geliştiriciye rapor edildi."
-  },
-  "delete": {
-    "message": "Sil"
-  },
-  "customStyles": {
-    "message": "Özel stiller"
-  },
-  "deleteEllipsis": {
-    "message": "Sil..."
-  },
-  "versionMessage": {
-    "message": "Bu yeni VBM $versionNumber$! Değişiklik günlüğü burada: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Sekmeyi bunun altına ekle"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
-  },
-  "donationGo": {
-    "message": "Bağış Yap"
-  },
-  "donationLater": {
-    "message": "Sonra"
-  },
-  "donationNever": {
-    "message": "Tekrar Gösterme"
-  },
-  "viewTree": {
-    "message": "Ağaç"
-  },
-  "viewSearch": {
-    "message": "Ara"
-  },
-  "viewRecent": {
-    "message": "Son"
-  },
-  "viewStats": {
-    "message": "İstatistikler"
-  },
-  "viewDead": {
-    "message": "Ölü"
-  },
-  "viewDupes": {
-    "message": "Kopyalar"
-  },
-  "optionsGroupViews": {
-    "message": "Görünümler"
-  },
-  "optionShowViewTabs": {
-    "message": "Görünüm sekmelerini göster"
-  },
-  "optionShowItemPath": {
-    "message": "Liste satırlarında klasör yolunu göster"
-  },
-  "optionRecentCount": {
-    "message": "Son yer imi sayısı"
-  },
-  "optionDeadProxy": {
-    "message": "Ölü bağlantı kontrolü için proxy URL şablonu"
-  },
-  "deadProxyHint": {
-    "message": "Yer imi URL'leri proxy hizmetine gönderilecektir."
-  },
-  "optionSearchHistory": {
-    "message": "Arama geçmişini etkinleştir"
-  },
-  "optionStatsEnabled": {
-    "message": "Ziyaret istatistiklerini topla"
-  },
-  "optionDeadScan": {
-    "message": "Ölü bağlantı taraması"
-  },
-  "optionDeadScanConcurrency": {
-    "message": "Eşzamanlı kontroller"
-  },
-  "optionDeadScanTimeout": {
-    "message": "Kontrol başına zaman aşımı"
-  },
-  "searchHistoryTitle": {
-    "message": "Son aramalar"
-  },
-  "searchHistoryClear": {
-    "message": "Tümünü temizle"
-  },
-  "searchHistoryRemove": {
-    "message": "Kaldır"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Boş olmayan klasörleri silmeden önce onayla"
-  },
-  "confirmDeleteFolder": {
-    "message": "Bu klasör $count$ öğe içeriyor. Silme işlemini geri alabilirsiniz.",
+  "dupesDone": {
+    "message": "$count$ yinelenen yer imi silindi",
     "placeholders": {
       "count": {
-        "content": "$1",
-        "example": "5"
+        "content": "$1"
       }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Sil"
-  },
-  "paletteCmdOptions": {
-    "message": "Ayarları Aç"
-  },
-  "dupesStrategyOldest": {
-    "message": "En eskiyi koru"
-  },
-  "dupesStrategyNewest": {
-    "message": "En yeni koru"
-  },
-  "dupesStrategyBookmarkBar": {
-    "message": "Yer imi çubuğunda tut"
-  },
-  "dupesStrategyShortestTitle": {
-    "message": "En kısa başlığı koru"
-  },
-  "dupesStrategyShallowest": {
-    "message": "En sığ olanı koru"
-  },
-  "dupesStrategyMostVisited": {
-    "message": "En çok ziyaret edileni koru"
-  },
-  "dupesApplyAll": {
-    "message": "Tümünü uygula"
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
   },
   "dupesGroupCleanRest": {
     "message": "Kalanları temizle"
+  },
+  "dupesGroupCount": {
+    "message": "$count$ yinelenen",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesIgnoreScheme": {
+    "message": "http/https'i yoksay"
+  },
+  "dupesKeeperSet": {
+    "message": "Koruyucu"
+  },
+  "dupesNone": {
+    "message": "Yinelenen bulunamadı"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ grup, $count$ kaldırılacak",
@@ -720,55 +362,412 @@
   "dupesScopeBar": {
     "message": "Yalnızca yer imi çubuğu"
   },
-  "dupesIgnoreScheme": {
-    "message": "http/https'i yoksay"
+  "dupesStrategyBookmarkBar": {
+    "message": "Yer imi çubuğunda tut"
   },
-  "deadLastScanAt": {
-    "message": "Son tarama: $time$",
+  "dupesStrategyMostVisited": {
+    "message": "En çok ziyaret edileni koru"
+  },
+  "dupesStrategyNewest": {
+    "message": "En yeni koru"
+  },
+  "dupesStrategyOldest": {
+    "message": "En eskiyi koru"
+  },
+  "dupesStrategyShallowest": {
+    "message": "En sığ olanı koru"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "En kısa başlığı koru"
+  },
+  "edit": {
+    "message": "Düzenle..."
+  },
+  "editBookmark": {
+    "message": "Yer imini düzenle"
+  },
+  "editFolder": {
+    "message": "Klasörü düzenle"
+  },
+  "errorOccured": {
+    "message": "Hata oluştu."
+  },
+  "extDesc": {
+    "description": "Eklentinin açıklaması.",
+    "message": "Açılır pencere yer imi yöneticisi. Geliştirilmiş Neat Bookmarks. Neater Bookmarks'tan daha düzenli."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Boş)"
+  },
+  "general": {
+    "message": "Genel"
+  },
+  "ignore": {
+    "message": "Yoksay"
+  },
+  "name": {
+    "description": "Yer imi veya klasörün adı.",
+    "message": "Ad"
+  },
+  "noTitle": {
+    "description": "Http(s) URL'si olmayan başlıksız yer imleri veya başlıksız klasörler için başlık.",
+    "message": "(başlık yok)"
+  },
+  "nope": {
+    "message": "Hayır"
+  },
+  "open": {
+    "description": "Yer imlerini açma eylemi.",
+    "message": "Aç"
+  },
+  "openBookmarks": {
+    "message": "Tüm yer imlerini aç"
+  },
+  "openBookmarksInGroup": {
+    "message": "Tümünü yeni sekme grubunda aç"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Tüm yer imlerini gizli pencerede aç"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Tüm yer imlerini yeni pencerede aç"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Komut paletini aç"
+  },
+  "openIncognitoWindow": {
+    "message": "Gizli pencerede aç"
+  },
+  "openNewTab": {
+    "message": "Yeni sekmede aç"
+  },
+  "openNewWindow": {
+    "message": "Yeni pencerede aç"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks yan panelini aç"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Senkronizasyon durumunu otomatik yenile"
+  },
+  "optionAutoResizePopup": {
+    "message": "Açılır pencere boyutunu içeriğe göre otomatik olarak ayarla"
+  },
+  "optionClickNewTab": {
+    "message": "Sol tık yer imini yeni sekmede açar."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Klasör açılırken kullanılmayan klasörleri kapat."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Boş olmayan klasörleri silmeden önce onayla"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Bir klasörden birçok yer imi açarken onay göster."
+  },
+  "optionDeadProxy": {
+    "message": "Ölü bağlantı kontrolü için proxy URL şablonu"
+  },
+  "optionDeadScan": {
+    "message": "Ölü bağlantı taraması"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Eşzamanlı kontroller"
+  },
+  "optionDeadScanTimeout": {
+    "message": "Kontrol başına zaman aşımı"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Senkronize edilmemiş yer imlerini vurgula"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Sadece yer imleri çubuğundaki yer imlerini göster"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Açılır pencere yerine yan panelde aç"
+  },
+  "optionOpenNewTab": {
+    "message": "Orta tık veya kontrol-tık yer imini yeni arka plan sekmesinde açar (ön plan yerine)."
+  },
+  "optionPopupStays": {
+    "message": "Yer imleri açılırken (sol tık) açılır pencere açık kalır."
+  },
+  "optionRecentCollapsed": {
+    "message": "Son eklenen bölümünü varsayılan olarak daralt"
+  },
+  "optionRecentCount": {
+    "message": "Son yer imi sayısı"
+  },
+  "optionRememberPrevState": {
+    "message": "Önceki durumu hatırla (kaydırma konumu ve açık klasörler)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
+  },
+  "optionSearchHistory": {
+    "message": "Arama geçmişini etkinleştir"
+  },
+  "optionShowItemPath": {
+    "message": "Liste satırlarında klasör yolunu göster"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
+  },
+  "optionShowSyncStatus": {
+    "message": "Senkronizasyon durumu göstergelerini göster"
+  },
+  "optionShowViewTabs": {
+    "message": "Görünüm sekmelerini göster"
+  },
+  "optionStatsEnabled": {
+    "message": "Ziyaret istatistiklerini topla"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Yenileme aralığı"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "saniye"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Sistemi takip et"
+  },
+  "optionThemeDark": {
+    "message": "Koyu"
+  },
+  "optionThemeInk": {
+    "message": "Mürekkep (koyu)"
+  },
+  "optionThemeLight": {
+    "message": "Açık"
+  },
+  "optionThemePaper": {
+    "message": "Kağıt (açık)"
+  },
+  "optionZoom": {
+    "message": "Yakınlaştırma"
+  },
+  "options": {
+    "message": "Seçenekler"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$ tarafından oluşturuldu.",
     "placeholders": {
-      "time": {
+      "authorName": {
         "content": "$1"
       }
     }
   },
-  "deadStartHint": {
-    "message": "Ölü bağlantılar için yer imlerini tara."
+  "optionsGroupViews": {
+    "message": "Görünümler"
   },
-  "deadMark": {
-    "message": "İşaretle"
+  "paletteCmdBookmarkTab": {
+    "message": "Geçerli Sekmeyi Yer İmi Ekle"
   },
-  "deadUnmark": {
+  "paletteCmdDead": {
+    "message": "Ölü bağlantıları bul"
+  },
+  "paletteCmdDupes": {
+    "message": "Yinelenen yer imlerini temizle"
+  },
+  "paletteCmdNewBookmark": {
+    "message": "Yeni yer imi…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Yeni klasör…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Yeni ayraç"
+  },
+  "paletteCmdOptions": {
+    "message": "Ayarları Aç"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Geçerli sekmeyi yer imlerine ekle"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Pencere sekmelerini klasör olarak kaydet"
+  },
+  "paletteCmdSearchInView": {
+    "message": "\"{{query}}\" için arama görünümünde ara",
+    "description": "Palette bridge row: jump to search view with the current query"
+  },
+  "paletteNoResults": {
+    "message": "Eşleşen sonuç yok"
+  },
+  "palettePlaceholder": {
+    "message": "Yer imleri, klasörler, komutlar ara…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Üst klasör: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Bu sayfayı yer imlerine ekle (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Yer imi eklendi"
+  },
+  "quickAddedTo": {
+    "message": "Yer imi $folderName$ klasörüne eklendi",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Bu yer imini kaldır (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Yer imi kaldırıldı"
+  },
+  "recentBookmarks": {
+    "message": "Son eklenenler"
+  },
+  "recentEmpty": {
+    "message": "Son yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
+  },
+  "recentRevealInTree": {
+    "message": "Ağaçta Göster"
+  },
+  "removeSeparator": {
+    "message": "Ayırıcıyı kaldır"
+  },
+  "replaceUrl": {
+    "message": "Bunu mevcut URL ile değiştir"
+  },
+  "reportError": {
+    "message": "Hata raporu"
+  },
+  "reportedToDeveloper": {
+    "description": "Eklentide oluşan bir hata için mesaj, geliştiriciye rapor edildi.",
+    "message": "Bu geliştiriciye rapor edildi."
+  },
+  "resetButton": {
+    "message": "Sıfırla"
+  },
+  "resetSettings": {
+    "message": "Ayarları sıfırla"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks'ı varsayılan ayarlara sıfırla."
+  },
+  "rowActionDelete": {
+    "message": "Sil"
+  },
+  "rowActionMark": {
+    "message": "Ölü olarak işaretle"
+  },
+  "rowActionReveal": {
+    "message": "Ağaçta göster"
+  },
+  "rowActionUnmark": {
     "message": "İşareti kaldır"
   },
-  "deadMarked": {
-    "message": "işaretli"
+  "save": {
+    "message": "Kaydet"
   },
-  "deadMarkAll": {
-    "message": "Tümünü işaretle"
+  "searchBookmarks": {
+    "description": "Arama alanı için yer tutucu metin.",
+    "message": "Yer imlerini ara"
   },
-  "deadUnmarkAll": {
-    "message": "İşaretleri temizle"
+  "searchClear": {
+    "message": "Aramayı Temizle"
   },
-  "deadFilterAll": {
-    "message": "Tümü"
+  "searchHistoryClear": {
+    "message": "Tümünü temizle"
   },
-  "deadFilterDead": {
-    "message": "Yalnızca ölü"
+  "searchHistoryRemove": {
+    "message": "Kaldır"
   },
-  "deadFilterBlocked": {
-    "message": "Yalnızca engellenen"
+  "searchHistoryTitle": {
+    "message": "Son aramalar"
+  },
+  "searchNoResults": {
+    "message": "Eşleşen yer imi yok"
+  },
+  "searchViewHint": {
+    "message": "Yer imlerinizi aramak için yazın."
+  },
+  "sessionEmpty": {
+    "message": "Kaydedilecek sekme yok"
+  },
+  "sessionFolderName": {
+    "message": "Oturum $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "$count$ sekme yeni bir klasöre kaydedildi",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "Eklenme tarihine göre (önce en yeni)"
+  },
+  "sortByTitle": {
+    "message": "Başlığa göre"
+  },
+  "sortFolderContents": {
+    "message": "Klasör İçeriğini Sırala"
+  },
+  "sortFoldersFirst": {
+    "message": "Klasörler üstte kalsın"
+  },
+  "sortRecursive": {
+    "message": "Alt klasörleri de sırala (özyinelemeli)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar ve geri alınamaz."
+  },
+  "statsClearConfirm": {
+    "message": "$count$ ziyaret istatistiği girişinin tümü silinsin mi?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Ziyaret istatistiklerini temizle"
+  },
+  "statsDisabled": {
+    "message": "Ziyaret istatistikleri devre dışı. Ayarlardan etkinleştirin."
+  },
+  "statsEmpty": {
+    "message": "Henüz ziyaret verisi yok. İstatistik toplamak için yer imlerini açın."
   },
   "statsSortByCount": {
     "message": "Sayıya göre"
   },
   "statsSortByRecent": {
     "message": "Son eklenene göre"
-  },
-  "statsClearData": {
-    "message": "Ziyaret istatistiklerini temizle"
-  },
-  "statsEmpty": {
-    "message": "Henüz ziyaret verisi yok. İstatistik toplamak için yer imlerini açın."
   },
   "statsVisitCount": {
     "message": "$count$ ziyaret",
@@ -778,11 +777,102 @@
       }
     }
   },
-  "recentEmpty": {
-    "message": "Son yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
+  "syncOptions": {
+    "message": "Senkronizasyon Seçenekleri"
   },
-  "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
-    "description": "Palette bridge row: jump to search view with the current query"
+  "syncStatusLocal": {
+    "message": "Yalnızca yerel — yüklenmedi"
+  },
+  "syncStatusSynced": {
+    "message": "Google hesabınıza senkronize edildi"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Senkronize edilemez"
+  },
+  "syncSuffixLocal": {
+    "message": "(Yerel)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Senkronize)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ gün önce",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ saat önce",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "Az önce"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ dk önce",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "Dün"
+  },
+  "toolButtonTitle": {
+    "message": "Araçlar (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Geri Al"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "Bu yeni VBM $versionNumber$! Değişiklik günlüğü burada: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Ölü"
+  },
+  "viewDupes": {
+    "message": "Kopyalar"
+  },
+  "viewRecent": {
+    "message": "Son"
+  },
+  "viewSearch": {
+    "message": "Ara"
+  },
+  "viewStats": {
+    "message": "İstatistikler"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$'e geçildi",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Ağaç"
   }
 }
