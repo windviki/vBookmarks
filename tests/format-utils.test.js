@@ -68,6 +68,33 @@ describe('formatRelativeTime', () => {
         expect(result).toBe(new Date(pastDate).toLocaleDateString());
     });
 
+    it('passes the number as substitution arg to _m (Chrome i18n $1 replacement)', () => {
+        const calls = [];
+        const tracker = (key, sub) => {
+            calls.push({ key, sub });
+            // Simulate Chrome i18n: $n$ → $1 → sub
+            const msgs = {
+                timeJustNow: 'Just now',
+                timeMinutesAgo: '$n$ min ago',
+                timeHoursAgo: '$n$ hr ago',
+                timeYesterday: 'Yesterday',
+                timeDaysAgo: '$n$ days ago'
+            };
+            return msgs[key] || key;
+        };
+        formatRelativeTime(now - 3 * 60 * 1000, tracker);
+        expect(calls.some(c => c.key === 'timeMinutesAgo' && c.sub === '3')).toBe(true);
+
+        formatRelativeTime(now - 5 * 3600 * 1000, tracker);
+        expect(calls.some(c => c.key === 'timeHoursAgo' && c.sub === '5')).toBe(true);
+
+        formatRelativeTime(now - 3 * 86400 * 1000, tracker);
+        expect(calls.some(c => c.key === 'timeDaysAgo' && c.sub === '3')).toBe(true);
+
+        formatRelativeTime(now, tracker);
+        expect(calls.some(c => c.key === 'timeJustNow' && c.sub === undefined)).toBe(true);
+    });
+
     it('works with Chinese messages', () => {
         const zh = (key) => {
             const msgs = {
