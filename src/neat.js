@@ -449,11 +449,11 @@ import { initVisitStats } from './visit-stats.js';
         store, treeRender, actions, dialogs, viewManager
     });
     const viewDead = initViewDead({
-        store, treeRender, actions, dialogs, viewManager, separatorManager,
+        store, treeRender, actions, dialogs, viewManager, separatorManager, treeView,
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
     const viewStats = initViewStats({
-        store, visitStats, actions, dialogs, viewManager
+        store, visitStats, actions, dialogs, viewManager, treeView
     });
 
     // 注册 tree 视图（默认）

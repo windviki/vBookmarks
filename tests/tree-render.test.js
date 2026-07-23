@@ -282,11 +282,11 @@ describe('generateFolderHTML', () => {
 describe('generateSeparatorHTML', () => {
     it('uses CSS-driven separator-row with theme tokens (no inline color/width)', () => {
         const tr = setup();
-        const html = tr.generateSeparatorHTML(16);
+        const html = tr.generateSeparatorHTML(12);  // v4 task 2: --vbm-indent 12px
         // Separator is now CSS-driven: the <a> gets the separator-row class and
         // the <hr> uses absolute positioning (left:0 / right:8px) to auto-fill
         // the row. Colors come from --vbm-border, no more inline styles.
-        expect(html).toContain('style="-webkit-padding-start: 16px"');
+        expect(html).toContain('style="-webkit-padding-start: 12px"');
         expect(html).toContain('class="tree-item-link separator-row"');
         expect(html).toContain('<hr class="separator-line" role="separator">');
     });
@@ -318,7 +318,7 @@ describe('generateHTML', () => {
         const tr = setup();
         expect(tr.generateHTML([], 2)).toBe(
             '<ul role="group" data-level="2"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 32px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 24px"><i>(Empty)</i></li></ul>');
     });
 
     it('marks local-only rows (syncing === false) with unsynced-subtree', () => {
@@ -368,7 +368,7 @@ describe('generateHTML', () => {
         expect(html).toContain('aria-expanded="true"');
         expect(html).toContain('<ul role="group" data-level="1">');
         expect(html).toContain('level="1" role="treeitem"');
-        expect(html).toContain('style="-webkit-padding-start: 16px"');
+        expect(html).toContain('style="-webkit-padding-start: 12px"');
         expect(html).toContain('<i>Kid</i>');
     });
 

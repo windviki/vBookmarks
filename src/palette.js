@@ -9,51 +9,27 @@
  * chrome.bookmarks.getTree — a node with children is a folder, everything
  * else a bookmark), result composition (commands first, then
  * window.VBMFuzzy-ranked bookmarks/folders; a leading '/' restricts the
- * panel to commands so P3 can register /dupes, /dead & co. later) and the
- * keyboard/mouse dispatch (arrows with rollover, Enter, Ctrl/Cmd+Enter for a
- * new tab, Escape, click = Enter).
+ * panel to commands), keyboard/mouse dispatch (arrows with rollover,
+ * Enter, Ctrl/Cmd+Enter for a new tab, Escape, click = Enter).
+ *
+ * v4 task 2: dupes/dead sub-modes retired — now dispatched as view-jump
+ * commands (activateView). Slash aliases for all action commands added (§3.5).
  *
  * initPalette(ctx) is called once by neat.js after treeView/actions init.
- * ctx.store        — settings store (reserved; the palette reads nothing yet)
- * ctx.actions      — actions.js API (openBookmark/openBookmarkNewTab/
- *                    addNewBookmarkNode/addSeparator; deleteBookmark for the
- *                    /dead row disposal, undo capture + toast included)
+ * ctx.store        — settings store
+ * ctx.actions      — actions.js API
  * ctx.treeView     — tree-view.js API (revealFolder)
  * ctx.quickAdd     — neat.js's quickAddCurrentTab
  * ctx.rootFolderId — folder the create-style commands drop new nodes into
- *                    (neat.js passes store.get('quickAddFolderId', '1'))
  * ctx.dialogs      — dialogs.js API (ConfirmDialog/AlertDialog), used by the
  *                    /dupes cleanup confirmations and the session-save alerts
  * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
  *                    cleanup removed nodes or a session save added a folder
- * ctx.separatorManager — separators.js API (isSeparator); /dead filters
- *                    separators out of the scan set
+ * ctx.separatorManager — separators.js API (isSeparator)
  *
- * P3.1 adds a second panel mode: running the "dupes" command (slash name
- * /dupes) switches the result list to duplicate-bookmark groups — one row
- * per normalized-URL collision plus a clean-all row on top — with
- * ConfirmDialog-guarded batch deletion behind each. Escape closes the
- * panel outright; the mode resets on close, there is no nested "back".
- *
- * P3.2 adds the session-save command (slash name /session): it snapshots
- * the current window's tabs into a new bookmark folder under
- * ctx.rootFolderId (session.js does the scheme filtering, dedup and the
- * sequential creation), then alerts the saved count and repaints the tree
- * through ctx.onChanged. A window with nothing bookmarkable gets the
- * sessionEmpty alert and the panel stays open.
- *
- * P3.5 adds the dead-link scan (slash name /dead): the flattened tree
- * (bookmarks only, separators filtered out through ctx.separatorManager —
- * their URLs are http(s) and would be probed otherwise) goes through
- * dead-links.js's concurrency-pooled fetch scan right inside the popup.
- * While it runs, the result list is a single progress line; afterwards it
- * is a rescan row plus one row per dead bookmark, badged with the HTTP
- * status (or 'timeout'/'error'). Enter on a dead row confirms through
- * ConfirmDialog and deletes via ctx.actions.deleteBookmark, so the undo
- * capture + toast + tree-row removal ride along; Escape aborts the scan.
- * The scan deliberately lives in the popup, not an offscreen document:
- * disposal is interactive (the user watches progress, then acts on rows),
- * and <all_urls> host permission already covers the cross-origin fetches.
+ * v4 task 2: Dupes/dead scanning moved to view-dupes.js and view-dead.js.
+ * Slash commands /dupes and /dead now jump to those views via activateView().
+ * Session save (/session) remains as a one-shot ConfirmDialog flow.
  *
  * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
  * (URL ?palette=1 / storage.session flag) on top of open().
@@ -198,11 +174,11 @@ export function initPalette(ctx = {}) {
         });
     };
     const commands = [
-        // Action commands
-        { name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
-        { name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
-        { name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
-        { name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
+        // Action commands (§3.5: each has a slash alias for keyboard access)
+        { slash: 'add', name: () => _m('paletteCmdBookmarkTab') || 'Bookmark Current Tab', fn: () => quickAdd() },
+        { slash: 'new', name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
+        { slash: 'folder', name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
+        { slash: 'sep', name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
         // v4 task 2: view-jump commands (replace old dupes/dead sub-modes)
         { slash: 'tree', name: () => _m('viewTree'), fn: () => { activateView('tree'); } },
         { slash: 'search', name: () => _m('viewSearch'), fn: () => { activateView('search'); } },
@@ -234,12 +210,6 @@ export function initPalette(ctx = {}) {
         } else if (row.kind === 'folder') {
             li.id = row.id ? `results-item-${row.id}` : '';
             li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${htmlspecialchars(row.title)}</i></a>`;
-        } else if (row.kind === 'dupes-all' || row.kind === 'dead-all' || row.kind === 'dead-rescan') {
-            li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
-        } else if (row.kind === 'dupe') {
-            li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-url">${htmlspecialchars(row.count)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
-        } else if (row.kind === 'dead') {
-            li.innerHTML = `<span class="palette-title">${htmlspecialchars(row.title)} <span class="palette-badge">${htmlspecialchars(row.badge)}</span></span><span class="palette-url">${htmlspecialchars(row.url)}</span>`;
         } else {
             // bookmark row: <a> tag so context-menu.js recognises it
             const title = row.title || row.url;

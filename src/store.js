@@ -48,7 +48,9 @@
         // search history (v4 task 2)
         'searchLastQuery', 'searchHistory', 'searchHistoryEnabled',
         // recent view (v4 task 2)
-        'recentCount',
+        'recentCount', 'showRecentBookmarks',
+        // quick-add (v4 task 2)
+        'quickAddFolderId',
         // stats view (v4 task 2)
         'visitStats', 'statsEnabled', 'statsSort',
         // dead view (v4 task 2)
@@ -65,7 +67,7 @@
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme',
         // version & donation
-        'currentVersion', 'openCount', 'donationKey', 'donationCountDown', 'donationFactor'
+        'currentVersion', 'openCount', 'donationKey', 'donationCountDown', 'donationFactor', 'donationDisabled'
     ];
 
     // Keys that live in chrome.storage.sync (user preferences synced across devices).

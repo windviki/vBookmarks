@@ -24,6 +24,7 @@ export function initViewDead(ctx = {}) {
     const onChanged = ctx.onChanged || (() => {});
     const _m = chrome.i18n.getMessage;
 
+    const treeView = ctx.treeView;
     const container = $('dead-content');
     if (!container) return { activate() {}, deactivate() {}, startScan() {} };
 
@@ -406,8 +407,18 @@ export function initViewDead(ctx = {}) {
             });
         },
         onReveal(id) {
-            // R key: reveal in tree (§2.3)
-            if (viewManager) viewManager.activate('tree');
+            // R key: reveal bookmark in tree (§2.3)
+            if (!id || !treeView) { viewManager && viewManager.activate('tree'); return; }
+            chrome.bookmarks.get(id, nodes => {
+                if (!nodes || !nodes.length) { viewManager && viewManager.activate('tree'); return; }
+                const parentId = nodes[0].parentId;
+                viewManager && viewManager.activate('tree');
+                if (treeView.revealBookmark) {
+                    treeView.revealBookmark(id, parentId);
+                } else if (parentId) {
+                    treeView.revealFolder(parentId);
+                }
+            });
         },
         onExtraKey(key, id) {
             // M key: mark/unmark (§2.3)

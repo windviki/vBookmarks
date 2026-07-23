@@ -5,7 +5,7 @@
  * Sortable by count (default) or recency, with a clear-data button.
  *
  * initViewStats(ctx)
- * ctx.store, ctx.visitStats, ctx.actions, ctx.dialogs, ctx.viewManager
+ * ctx.store, ctx.visitStats, ctx.actions, ctx.dialogs, ctx.viewManager, ctx.treeView
  */
 
 import { initListKeyboard } from './list-keyboard.js';
@@ -17,6 +17,8 @@ export function initViewStats(ctx = {}) {
     const visitStats = ctx.visitStats;
     const actions = ctx.actions;
     const dialogs = ctx.dialogs;
+    const viewManager = ctx.viewManager;
+    const treeView = ctx.treeView;
     const _m = chrome.i18n.getMessage;
 
     const container = $('stats-content');
@@ -137,9 +139,18 @@ export function initViewStats(ctx = {}) {
             });
         },
         onReveal(id) {
-            // R key: reveal in tree (§2.3)
-            const viewManager = ctx.viewManager;
-            if (viewManager) viewManager.activate('tree');
+            // R key: reveal bookmark in tree (§2.3)
+            if (!id || !treeView) { viewManager && viewManager.activate('tree'); return; }
+            chrome.bookmarks.get(id, nodes => {
+                if (!nodes || !nodes.length) { viewManager && viewManager.activate('tree'); return; }
+                const parentId = nodes[0].parentId;
+                viewManager && viewManager.activate('tree');
+                if (treeView.revealBookmark) {
+                    treeView.revealBookmark(id, parentId);
+                } else if (parentId) {
+                    treeView.revealFolder(parentId);
+                }
+            });
         }
     });
 

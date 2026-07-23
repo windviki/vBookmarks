@@ -442,9 +442,10 @@ body.linux input {
 #tree ul li span {
     display: flex;
     align-items: center;
-    line-height: 1.67em;
+    min-height: var(--vbm-row-h);
+    line-height: var(--vbm-line-height);
     padding-block: 0;
-    padding-inline-end: 4px;
+    padding-inline-end: var(--vbm-row-pad-x);
     text-decoration: none;
     color: var(--vbm-fg);
     outline: 0;
@@ -473,20 +474,20 @@ body.linux input {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
+    width: var(--vbm-icon-col);
     height: 16px;
     color: var(--vbm-muted);
     -webkit-transition: -webkit-transform .15s ease-out;
     transition: transform .15s ease-out;
 }
 
-/* 书签行用 ::before 伪元素占位 twisty 槽（16px），保证文本与同级文件夹对齐。
-   搜索结果同样获得 16px 缩进，与树视图宽度节奏一致。 */
+/* 书签行用 ::before 伪元素占位 twisty 槽（20px = --vbm-icon-col），保证文本与同级文件夹对齐。
+   搜索结果同样获得 20px 缩进，与树视图宽度节奏一致。 */
 #tree ul li a::before,
 #results ul li a::before {
     content: '';
     flex: none;
-    width: 16px;
+    width: var(--vbm-icon-col);
 }
 /* 文件夹链接（link-folder）已经自带视觉标记，不需要额外缩进槽 */
 #tree ul li a.link-folder::before,
@@ -563,7 +564,8 @@ body.linux input {
     align-items: center;
     text-decoration: none;
     color: inherit;
-    line-height: 1.67em;
+    min-height: var(--vbm-row-h);
+    line-height: var(--vbm-line-height);
 }
 
 .tree-item-link .favicon-container {
@@ -1245,7 +1247,7 @@ menu[type=context].hide-sort #sort-folder-contents {
 #tree ul li a.separator-row {
     display: flex;
     align-items: center;
-    height: 1.67em;           /* match the row line-height so the row has presence */
+    min-height: var(--vbm-row-h);
     cursor: default !important;
 }
 /* 分隔符行不需要 twisty 占位槽 */
@@ -1983,7 +1985,7 @@ body.panel-mode #view-tabs .tab-label {
 /* --- Row path label (§3.6) --- */
 .row-path {
     color: var(--vbm-muted);
-    font-size: 10px;
+    font-size: var(--vbm-font-size-sm);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2006,7 +2008,7 @@ body.panel-mode .row-path-double,
         max-width: 100%;
         margin-inline-start: 0;
         text-align: start;
-        padding-inline-start: 20px; /* align with title after favicon */
+        padding-inline-start: var(--vbm-icon-col); /* align with title after favicon */
     }
 }
 
@@ -2131,8 +2133,8 @@ body.panel-mode .row-path-double,
 
 .dupes-group-url {
     font-family: monospace;
-    font-size: 10px;
-    color: var(--vbm-fg);
+    font-size: var(--vbm-font-size-sm);
+    color: var(--vbm-muted);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2371,15 +2373,15 @@ body.panel-mode .row-path-double,
 }
 
 .recent-row-wrapper .tree-item-link {
-    padding: 4px 8px 2px 8px !important;
+    padding: 4px var(--vbm-row-pad-x) 2px var(--vbm-row-pad-x) !important;
 }
 
 .recent-meta {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 0 8px 4px 28px; /* align after favicon (16px icon + 8px gap + 4px padding) */
-    font-size: 10px;
+    padding: 0 8px 4px calc(var(--vbm-icon-col) + 8px); /* align after favicon column */
+    font-size: var(--vbm-font-size-sm);
     color: var(--vbm-muted);
 }
 
@@ -2394,7 +2396,26 @@ body.panel-mode .row-path-double,
 .recent-date {
     white-space: nowrap;
     color: var(--vbm-muted);
-    font-size: 10px;
+    font-size: var(--vbm-font-size-sm);
+}
+
+/* Narrow: hide second-line meta; wide/panel (≥480px): show path · absolute time */
+.recent-meta-wide {
+    display: none;
+}
+body.panel-mode .recent-meta-wide,
+@container (min-width: 480px) {
+    .recent-meta-wide {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 0 8px 4px calc(var(--vbm-icon-col) + 8px);
+        font-size: var(--vbm-font-size-sm);
+        color: var(--vbm-muted);
+    }
+    .recent-meta-wide .row-path {
+        font-size: var(--vbm-font-size-sm);
+    }
 }
 
 #view-recent li:hover .recent-meta .row-path {

@@ -53,7 +53,7 @@ afterAll(() => {
 });
 
 const MSGS = {
-    paletteCmdQuickAdd: 'Bookmark current tab',
+    paletteCmdBookmarkTab: 'Bookmark current tab',
     paletteCmdNewBookmark: 'New bookmark…',
     paletteCmdNewFolder: 'New folder…',
     paletteCmdNewSeparator: 'New separator',
@@ -413,7 +413,7 @@ describe('result composition', () => {
         // v4 task 2: 12 commands (4 action + 6 view-jump + session + options)
         expect(rowClasses().filter(c => c === 'palette-row palette-command')).toHaveLength(12);
         // first 4 are action commands
-        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdQuickAdd);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdBookmarkTab);
         expect(results._appended[1]._innerHTML).toContain(MSGS.paletteCmdNewBookmark);
         expect(results._appended[2]._innerHTML).toContain(MSGS.paletteCmdNewFolder);
         expect(results._appended[3]._innerHTML).toContain(MSGS.paletteCmdNewSeparator);

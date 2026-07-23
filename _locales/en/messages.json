@@ -125,8 +125,20 @@
   "defaultIconButton": {
     "message": "Use default"
   },
+  "deadScanning": {
+    "description": "Shown during active dead-link scan with progress",
+    "message": "Scanning"
+  },
+  "deadSkipped": {
+    "description": "Status badge for skipped (non-http) bookmarks in the dead links view",
+    "message": "skipped"
+  },
   "defaultIconButtonOr": {
     "message": "or"
+  },
+  "deadBlocked": {
+    "description": "Status badge shown on blocked links (direct fails but proxy succeeds) in the dead links view",
+    "message": "blocked"
   },
   "deadChecking": {
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
@@ -588,6 +600,26 @@
   "sortByDateAdded": {
     "message": "By date added (newest first)"
   },
+  "recentRevealInTree": {
+    "description": "Context menu / keyboard action to locate a recent bookmark in the tree view",
+    "message": "Reveal in Tree"
+  },
+  "rowActionDelete": {
+    "description": "Aria-label for the delete row button in list views",
+    "message": "Delete"
+  },
+  "rowActionMark": {
+    "description": "Aria-label for the mark-as-dead row button in the dead links view",
+    "message": "Mark as dead"
+  },
+  "rowActionReveal": {
+    "description": "Aria-label for the reveal-in-tree row button in list views",
+    "message": "Reveal in tree"
+  },
+  "rowActionUnmark": {
+    "description": "Aria-label for the unmark-dead row button in the dead links view",
+    "message": "Unmark"
+  },
   "sortFoldersFirst": {
     "message": "Keep folders on top"
   },
@@ -688,6 +720,10 @@
     "message": "Search in search view for \"{{query}}\"",
     "description": "Palette bridge row: jump to search view with the current query"
   },
+  "paletteCmdBookmarkTab": {
+    "description": "Palette command: bookmark the current active tab",
+    "message": "Bookmark Current Tab"
+  },
   "paletteCmdOptions": {
     "message": "Open Settings",
     "description": "Palette command to open the options page"
@@ -732,6 +768,14 @@
   },
   "dupesScopeBar": {
     "message": "Bookmarks bar only"
+  },
+  "dupesClearRest": {
+    "description": "Button label to clear all but the keeper in a duplicate group",
+    "message": "Clear rest"
+  },
+  "dupesKeeperSet": {
+    "description": "Aria-label announcing the current keeper bookmark in a duplicate group",
+    "message": "Keeper"
   },
   "dupesIgnoreScheme": {
     "message": "Ignore http/https"
@@ -828,5 +872,71 @@
   },
   "searchHistoryRemove": {
     "message": "Remove"
+  },
+  "searchViewHint": {
+    "description": "Shown in the search view when there is no search history yet",
+    "message": "Type to search your bookmarks."
+  },
+  "statsClearConfirm": {
+    "description": "ConfirmDialog message when clearing all visit statistics. $count$ is the number of entries.",
+    "message": "Clear all $count$ visit statistics entries?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "statsDisabled": {
+    "description": "Shown when visit statistics are disabled in options",
+    "message": "Visit statistics are disabled. Enable them in options."
+  },
+  "timeDaysAgo": {
+    "description": "Relative time label for N days ago. $n$ is the day count.",
+    "message": "$n$ days ago",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "description": "Relative time label for N hours ago. $n$ is the hour count.",
+    "message": "$n$ hr ago",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeJustNow": {
+    "description": "Relative time label shown when something happened less than a minute ago",
+    "message": "Just now"
+  },
+  "timeMinutesAgo": {
+    "description": "Relative time label for N minutes ago. $n$ is the minute count.",
+    "message": "$n$ min ago",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "30"
+      }
+    }
+  },
+  "timeYesterday": {
+    "description": "Relative time label for yesterday",
+    "message": "Yesterday"
+  },
+  "viewSwitchAnnounce": {
+    "description": "Aria-live announcement when switching views. $name$ is the view's display name.",
+    "message": "Switched to $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Recent"
+      }
+    }
   }
 }

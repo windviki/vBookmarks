@@ -491,6 +491,16 @@ export function initSearch(ctx = {}) {
                 updateClearBtn();
                 search();
             });
+            // v4 task 2: Delete key on history row removes it (§3.2)
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Delete') {
+                    e.preventDefault();
+                    let hist = loadHistory();
+                    hist = hist.filter(h => (typeof h === 'string' ? h : h.q) !== el.dataset.query);
+                    saveHistory(hist);
+                    renderHistoryBlock();
+                }
+            });
         });
         // Remove single item
         $historyArea.querySelectorAll('.search-history-remove').forEach(el => {

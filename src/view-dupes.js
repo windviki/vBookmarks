@@ -13,6 +13,18 @@ import { findDupes, planDeletion, pickKeeper } from './dupes.js';
 import { initListKeyboard } from './list-keyboard.js';
 import { CHEVRON_ICON } from './icons.js';
 
+// Mid-truncate a URL for group header display (§3.6)
+// "https://example.com/very/long/path/page" → "example.com/very/lo…/page"
+const midTruncate = (url, maxLen = 48) => {
+    if (!url || url.length <= maxLen) return url;
+    // Strip protocol for display
+    let display = url.replace(/^https?:\/\//, '');
+    if (display.length <= maxLen) return display;
+    const headLen = Math.floor(maxLen * 0.55);
+    const tailLen = maxLen - headLen - 1; // -1 for the ellipsis char
+    return display.slice(0, headLen) + '…' + display.slice(-tailLen);
+};
+
 export function initViewDupes(ctx = {}) {
     const $ = id => document.getElementById(id);
     const store = ctx.store;
@@ -175,14 +187,14 @@ export function initViewDupes(ctx = {}) {
                 : pickKeeper(group.items, selectedStrategy, { bookmarkBarIds });
             const doomed = group.items.filter(b => b.id !== keeper.id);
 
-            // Group header with chevron, normalized URL, count pill, clean-rest button
+            // Group header: <li> so it participates in .focus model (§3.6)
             html += `<div class="dupes-group">`;
-            html += `<div class="dupes-group-header" data-group-idx="${groupIdx}" tabindex="0" role="button" aria-expanded="true">`;
+            html += `<li class="dupes-group-header vbm-row" data-group-idx="${groupIdx}" data-node-id="group-${groupIdx}" tabindex="0" role="button" aria-expanded="true" style="cursor:pointer">`;
             html += `<span class="dupes-group-chevron">${CHEVRON_ICON}</span>`;
-            html += `<span class="dupes-group-url">${group.key}</span>`;
+            html += `<span class="dupes-group-url" title="${group.key}">${midTruncate(group.key)}</span>`;
             html += `<span class="vbm-count-pill">${group.items.length}</span>`;
             html += `<button class="vbm-row-btn dupes-clean-group" data-group-idx="${groupIdx}" aria-label="${_m('dupesGroupCleanRest') || 'Clear rest'}">${_m('dupesGroupCleanRest') || 'Clear rest'}</button>`;
-            html += '</div>';
+            html += '</li>';
 
             for (const item of group.items) {
                 const isKeeper = item.id === keeper.id;
@@ -298,13 +310,14 @@ export function initViewDupes(ctx = {}) {
 
         // Group header click: toggle expand/collapse (§3.6)
         container.querySelectorAll('.dupes-group-header').forEach(header => {
-            header.addEventListener('click', () => {
+            header.addEventListener('click', e => {
+                if (e.target.closest('.dupes-clean-group')) return; // don't toggle on clean button
                 const groupDiv = header.closest('.dupes-group');
                 if (!groupDiv) return;
                 const isCollapsed = groupDiv.classList.toggle('collapsed');
                 header.setAttribute('aria-expanded', String(!isCollapsed));
-                const rows = groupDiv.querySelectorAll('.vbm-row');
-                rows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
+                const memberRows = groupDiv.querySelectorAll('.vbm-row:not(.dupes-group-header)');
+                memberRows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
             });
         });
 
@@ -335,19 +348,17 @@ export function initViewDupes(ctx = {}) {
     // v4 task 2: full keyboard navigation with view-specific keys (§2.3)
     initListKeyboard(container, {
         onEnter(id) {
-            // Open bookmark
-            const li = container.querySelector(`[data-node-id="${id}"]`);
-            if (!li) return;
             // Check if this is a group header
-            const groupHeader = li.closest('.dupes-group')?.querySelector('.dupes-group-header');
-            if (li.classList.contains('dupes-group-header') || li === groupHeader) {
-                // Toggle expand/collapse
-                const groupDiv = li.closest('.dupes-group');
-                if (groupDiv) {
-                    const isCollapsed = groupDiv.classList.toggle('collapsed');
-                    (li.classList.contains('dupes-group-header') ? li : groupHeader).setAttribute('aria-expanded', String(!isCollapsed));
-                    const rows = groupDiv.querySelectorAll('.vbm-row');
-                    rows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
+            if (id && id.startsWith('group-')) {
+                const li = container.querySelector(`[data-node-id="${id}"]`);
+                if (li) {
+                    const groupDiv = li.closest('.dupes-group');
+                    if (groupDiv) {
+                        const isCollapsed = groupDiv.classList.toggle('collapsed');
+                        li.setAttribute('aria-expanded', String(!isCollapsed));
+                        const memberRows = groupDiv.querySelectorAll('.vbm-row:not(.dupes-group-header)');
+                        memberRows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
+                    }
                 }
                 return;
             }

@@ -60,7 +60,7 @@ export function initViewRecent(ctx = {}) {
             ? new Date(bookmark.dateAdded).toLocaleString()
             : '';
 
-        // Narrow mode: single-line with relative time in meta
+        // Narrow mode: right zone = relative time only (§3.3)
         // Wide/panel mode (≥480px): two-line with path · absolute time below
         return `<li class="child vbm-row" id="neat-recent-item-${bookmark.id}" ` +
             `level="0" role="treeitem" data-node-id="${bookmark.id}" data-parentid="${bookmark.parentId}">` +
@@ -69,10 +69,10 @@ export function initViewRecent(ctx = {}) {
                 'style="-webkit-padding-start: 0px" data-virtual="1"', bookmark.id) +
             deadOverlay +
             `<div class="recent-meta">` +
-            (showPath ? `<span class="row-path" data-parentid="${bookmark.parentId}" dir="auto">...</span>` : '') +
-            (showPath ? '<span aria-hidden="true">·</span>' : '') +
             `<span class="recent-date" title="${absDate}">${relTime}</span>` +
-            `</div></div></li>`;
+            `</div>` +
+            (showPath ? `<div class="recent-meta-wide"><span class="row-path" data-parentid="${bookmark.parentId}" dir="auto">...</span><span aria-hidden="true"> · </span><span>${absDate}</span></div>` : '') +
+            `</div></li>`;
     };
 
     const refresh = () => {
@@ -96,7 +96,7 @@ export function initViewRecent(ctx = {}) {
             html += '</ul>';
             container.innerHTML = html;
 
-            // Resolve parent folder names for path labels
+            // Resolve parent folder names for path labels (both narrow and wide)
             if (store.get('showItemPath', '1') !== 'false') {
                 container.querySelectorAll('.row-path').forEach(el => {
                     const pid = el.dataset.parentid;
