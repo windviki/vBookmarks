@@ -172,10 +172,11 @@ export function initViewDupes(ctx = {}) {
             return;
         }
 
-        // Summary + apply all
+        // Summary + apply all ($groups$/$count$ placeholders sub'd via Chrome i18n)
         const totalExtra = dupeGroups.reduce((n, g) => n + g.items.length - 1, 0);
-        html += `<div class="dupes-summary">${(_m('dupesPreviewSummary') || '$groups$ groups, $count$ to remove')
-            .replace('$groups$', String(dupeGroups.length)).replace('$count$', String(totalExtra))}`;
+        const summaryText = _m('dupesPreviewSummary', [String(dupeGroups.length), String(totalExtra)])
+            || '$groups$ groups, $count$ to remove'.replace('$groups$', String(dupeGroups.length)).replace('$count$', String(totalExtra));
+        html += `<div class="dupes-summary">${summaryText}`;
         html += ` <button id="dupes-apply-all" class="danger">${_m('dupesApplyAll') || 'Apply all'}</button></div>`;
 
         // Groups (§3.6)

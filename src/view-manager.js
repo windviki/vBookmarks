@@ -140,6 +140,9 @@ export function initViewManager(ctx = {}) {
             def.activate({ store, treeRender, parentPathMap });
         }
 
+        // Refresh badges after view activation (dead/dupes may have loaded new data)
+        setTimeout(() => refreshAllBadges(), 100);
+
         // aria-live announcement
         const announcer = $('view-announcer');
         if (announcer) {
@@ -168,9 +171,8 @@ export function initViewManager(ctx = {}) {
         const exists = registry.some(d => d.id === saved);
         activate(exists ? saved : 'tree');
 
-        // Listen for showViewTabs changes (options page may toggle it)
-        // We poll via store.get on each activation; not event-driven, but
-        // it's read fresh every time.
+        // Refresh tab badges after init (dead/dupes may load data asynchronously)
+        setTimeout(() => refreshAllBadges(), 200);
     };
 
     // --- Esc layering -------------------------------------------------------

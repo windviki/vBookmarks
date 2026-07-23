@@ -528,6 +528,7 @@ body.linux input {
     display: flex;
     align-items: center;
     width: 20px;
+    position: relative; /* anchor for sync-indicator + dead-mark absolute positioning */
 }
 
 #tree ul li a .favicon-container img,
@@ -1716,6 +1717,9 @@ body.panel-mode #view-tabs .tab-label {
     gap: var(--vbm-meta-gap);
     cursor: default;
 }
+.vbm-row:hover {
+    background-color: var(--vbm-bg-hover);
+}
 
 /* Icon column: all views share 20px icon slot for vertical alignment */
 .vbm-icon-col {
@@ -1820,14 +1824,6 @@ body.panel-mode #view-tabs .tab-label {
 
 .dead-mark::after {
     transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-/* Sync indicator overlay: positioned bottom-right of icon (§1.4) */
-.favicon-container .sync-indicator {
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    z-index: 10;
 }
 
 /* --- Status badge pill (dead view, §3.5) --- */
@@ -2403,7 +2399,17 @@ body.panel-mode .row-path-double,
 .recent-meta-wide {
     display: none;
 }
-body.panel-mode .recent-meta-wide,
+body.panel-mode .recent-meta-wide {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 0 8px 4px calc(var(--vbm-icon-col) + 8px);
+    font-size: var(--vbm-font-size-sm);
+    color: var(--vbm-muted);
+}
+body.panel-mode .recent-meta-wide .row-path {
+    font-size: var(--vbm-font-size-sm);
+}
 @container (min-width: 480px) {
     .recent-meta-wide {
         display: flex;

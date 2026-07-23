@@ -28,16 +28,16 @@ export function formatRelativeTime(ts, _m) {
         return _m('timeJustNow') || '刚刚';
     }
     if (diffMin < 60) {
-        return (_m('timeMinutesAgo') || '$n$分钟前').replace('$n$', String(diffMin));
+        return (_m('timeMinutesAgo', String(diffMin)) || '$n$分钟前').replace('$n$', String(diffMin));
     }
     if (diffHr < 24) {
-        return (_m('timeHoursAgo') || '$n$小时前').replace('$n$', String(diffHr));
+        return (_m('timeHoursAgo', String(diffHr)) || '$n$小时前').replace('$n$', String(diffHr));
     }
     if (diffDay === 1) {
         return _m('timeYesterday') || '昨天';
     }
     if (diffDay <= 7) {
-        return (_m('timeDaysAgo') || '$n$天前').replace('$n$', String(diffDay));
+        return (_m('timeDaysAgo', String(diffDay)) || '$n$天前').replace('$n$', String(diffDay));
     }
     // >7 days: show date
     return new Date(ts).toLocaleDateString();

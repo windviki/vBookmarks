@@ -111,9 +111,8 @@ export function initSearch(ctx = {}) {
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
-            // v4 task 2: show history area, hide results area (results cleared)
-            if ($historyArea) $historyArea.style.display = '';
-            if ($resultsArea) $resultsArea.style.display = 'none';
+            // v4 task 2: keep both areas visible (dual-area layout)
+            // results stay as-is (last search), history stays visible
             // return to source view
             activateView(sourceViewId);
 
@@ -204,8 +203,7 @@ export function initSearch(ctx = {}) {
                 }
             }
             html += '</ul>';
-            // v4 task 2: view-manager handles container display; manage area visibility
-            if ($historyArea) $historyArea.style.display = 'none';
+            // v4 task 2: dual-area layout — history stays on top, results fill bottom
             $results.innerHTML = html;
             if ($resultsArea) $resultsArea.style.display = '';
             $results.style.display = 'block';  // CSS default is display:none for #results
@@ -452,11 +450,8 @@ export function initSearch(ctx = {}) {
         }
         const hist = loadHistory();
 
-        // Show history area, hide results (unless a query is active)
-        if (!searchMode) {
-            $historyArea.style.display = '';
-            if ($resultsArea) $resultsArea.style.display = 'none';
-        }
+        // Show history area on top; results stay visible below (dual-area layout)
+        $historyArea.style.display = '';
 
         // v4 task 2: searchViewHint when no history (§3.2)
         if (!hist.length) {

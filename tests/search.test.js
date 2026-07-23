@@ -225,7 +225,8 @@ describe('search execution + rendering', () => {
         expect(html).toContain('class="link-folder tree-item-link"');
         expect(html).toContain('id="results-item-1"');
         expect(calls.highlightTitlePositions).toEqual([{ title: 'Folder A', positions: [] }]);
-        expect(els['search-history-area'].style.display).toBe('none');
+        // v4 task 2: dual-area — history stays visible alongside results
+        expect(['', undefined]).toContain(els['search-history-area'].style.display);
         expect(els['search-results-area'].style.display).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true]);
         expect(store.get('searchQuery')).toBe('git');
@@ -338,8 +339,9 @@ describe('quit / reset semantics', () => {
         expect(els['search-input'].value).toBe('');
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
-        expect(els['search-results-area'].style.display).toBe('none');
-        expect(els['search-history-area'].style.display).toBe('');
+        // v4 task 2: dual-area — results persist, view-manager hides the container
+        // v4 task 2: dual-area — history stays visible (real DOM: '' when unset)
+        expect(['', undefined]).toContain(els['search-history-area'].style.display);
         expect(focusTarget.focused).toBe(true);
     });
 
@@ -381,8 +383,8 @@ describe('quit / reset semantics', () => {
         expect(els['search-input'].value).toBe('');
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
-        // unlike quit(): tree stays hidden, results stay visible, no focus fix
-        expect(els['search-history-area'].style.display).toBe('none');
+        // v4 task 2: dual-area — history and results both visible
+        expect(['', undefined]).toContain(els['search-history-area'].style.display);
         expect(els['search-results-area'].style.display).toBe('');
         expect(focusTarget.focused).toBe(false);
         // prevValue was cleared, so the same query runs again
@@ -411,8 +413,8 @@ describe('input listeners', () => {
         type(els, '');
         expect(s.isActive()).toBe(false);
         expect(store.get('searchQuery')).toBe('');
-        expect(els['search-results-area'].style.display).toBe('none');
-        expect(els['search-history-area'].style.display).toBe('');
+        // v4 task 2: dual-area — results persist, history visible
+        expect(['', undefined]).toContain(els['search-history-area'].style.display);
         expect(focusTarget.focused).toBe(false); // quit(true): keep focus on input
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
     });
@@ -427,8 +429,8 @@ describe('input listeners', () => {
         expect(store.get('searchQuery')).toBe('');
         expect(s.isActive()).toBe(false);
         expect(els.search.classList.contains('has-query')).toBe(false);
-        expect(els['search-results-area'].style.display).toBe('none');
-        expect(els['search-history-area'].style.display).toBe('');
+        // v4 task 2: dual-area — results persist, history visible
+        expect(['', undefined]).toContain(els['search-history-area'].style.display);
         expect(els['search-input'].focused).toBe(true);
     });
 
