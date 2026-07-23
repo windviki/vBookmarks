@@ -49,30 +49,23 @@ export function initViewRecent(ctx = {}) {
         } catch (e) { return new Set(); }
     };
 
-    // Render one bookmark row with relative time, path label, and dead mark (§3.3)
+    // Render one bookmark row with relative time (§3.3)
     const renderRow = (bookmark) => {
         const deadMarks = getDeadMarks();
-        const deadOverlay = deadMarks.has(bookmark.id)
-            ? '<span class="dead-mark" aria-label="Marked as dead link"></span>' : '';
         const showPath = store.get('showItemPath', '1') !== 'false';
         const relTime = formatRelativeTime(bookmark.dateAdded || 0, _m);
         const absDate = bookmark.dateAdded
             ? new Date(bookmark.dateAdded).toLocaleString()
             : '';
 
-        // Narrow mode: right zone = relative time only (§3.3)
-        // Wide/panel mode (≥480px): two-line with path · absolute time below
+        // generateBookmarkHTML renders dead-mark inside favicon-container when deadMarks passed
         return `<li class="child vbm-row" id="neat-recent-item-${bookmark.id}" ` +
             `level="0" role="treeitem" data-node-id="${bookmark.id}" data-parentid="${bookmark.parentId}">` +
-            `<div class="recent-row-wrapper">` +
             treeRender.generateBookmarkHTML(bookmark.title, bookmark.url,
-                'style="-webkit-padding-start: 0px" data-virtual="1"', bookmark.id) +
-            deadOverlay +
-            `<div class="recent-meta">` +
+                'style="-webkit-padding-start: 0px" data-virtual="1"', bookmark.id, undefined, deadMarks) +
+            (showPath ? `<span class="row-path row-path-recent" data-parentid="${bookmark.parentId}" dir="auto" title="${absDate}">...</span>` : '') +
             `<span class="recent-date" title="${absDate}">${relTime}</span>` +
-            `</div>` +
-            (showPath ? `<div class="recent-meta-wide"><span class="row-path" data-parentid="${bookmark.parentId}" dir="auto">...</span><span aria-hidden="true"> · </span><span>${absDate}</span></div>` : '') +
-            `</div></li>`;
+            `</li>`;
     };
 
     const refresh = () => {

@@ -476,28 +476,28 @@ export function initKeyboard(ctx = {}) {
             palette.close();
             return;
         }
-        // v4 task 2: view-specific Escape (dead-scan abort, non-tree→tree)
-        if (viewManager && viewManager.dispatchEsc()) {
+        // v4 task 2: search-mode Esc takes priority over view dispatch
+        // 1st Esc with query → clear input + record history, stay in search
+        // 2nd Esc (empty input) → quit back to tree via dispatchEsc
+        if (search.isActive() && search.input.value) {
+            search.input.value = '';
+            search.recordSearchHistory && search.recordSearchHistory();
+            search.persistLastQuery && search.persistLastQuery();
+            search.renderHistoryBlock && search.renderHistoryBlock();
+            // Update clear-button visibility
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.parentNode.classList.toggle('has-query', false);
             return;
         }
         if (search.isActive() || search.input.value) {
-            // v4 task 2: two-step Esc in search view
-            // 1st Esc with value → clear input + record history, stay in search
-            // 2nd Esc (empty input) → quit back to tree
-            if (search.isActive() && search.input.value) {
-                search.input.value = '';
-                search.recordSearchHistory && search.recordSearchHistory();
-                search.persistLastQuery && search.persistLastQuery();
-                search.renderHistoryBlock && search.renderHistoryBlock();
-                // Update clear-button visibility
-                const clearBtn = document.getElementById('search-clear');
-                if (clearBtn) clearBtn.parentNode.classList.toggle('has-query', false);
-                return;
-            }
             if (search.isActive())
                 search.quit();
             else
                 search.input.value = '';
+            return;
+        }
+        // v4 task 2: view-specific Escape (dead-scan abort, non-tree→tree)
+        if (viewManager && viewManager.dispatchEsc()) {
             return;
         }
         // Nothing left to dismiss — close the popup.

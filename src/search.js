@@ -402,16 +402,12 @@ export function initSearch(ctx = {}) {
         }
     };
 
-    // Restore last query on first search-view activation
+    // v4 task 2: NOT auto-filling search input on re-entry.
+    // The last results persist in the results area; search bar stays empty.
+    // History is rendered by renderHistoryBlock on view activation.
+    // (Old behavior: auto-fill lastQuery + re-search — removed.)
     const restoreLastQuery = () => {
-        if (searchHistorySessionFlag) return;
-        if (store.get('dontRememberState')) return;
-        const lastQuery = store.get('searchLastQuery');
-        if (lastQuery && !searchInput.value) {
-            searchInput.value = lastQuery;
-            updateClearBtn();
-            search();
-        }
+        // No-op: results persist, input stays empty on re-entry
     };
 
     // Persist current query as last query (called on view leave / page close)

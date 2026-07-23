@@ -122,13 +122,14 @@ export function initViewDupes(ctx = {}) {
             }
 
             dupeGroups = findDupes(bookmarks);
-
-            // Update tab badge
-            if (viewManager && viewManager.refreshAllBadges) {
-                viewManager.refreshAllBadges();
-            }
-
             render();
+
+            // Update tab badge AFTER render (dupeGroups is now populated)
+            setTimeout(() => {
+                if (viewManager && viewManager.refreshAllBadges) {
+                    viewManager.refreshAllBadges();
+                }
+            }, 50);
         });
     };
 

@@ -50,8 +50,12 @@ export function initViewDead(ctx = {}) {
 
     const setDeadMarks = (marks) => {
         store.set('deadMarks', JSON.stringify([...marks]));
+        refreshBadge();
+    };
+
+    const refreshBadge = () => {
         if (viewManager && viewManager.refreshAllBadges) {
-            viewManager.refreshAllBadges();
+            setTimeout(() => viewManager.refreshAllBadges(), 50);
         }
     };
 
@@ -458,11 +462,13 @@ export function initViewDead(ctx = {}) {
                         const allItems = flattenTree(tree);
                         deadItems = filterScannable(allItems, isSeparator);
                         renderResults();
+                        refreshBadge();
                     });
                     return;
                 }
             }
             renderResults();
+            refreshBadge();
         },
         deactivate() {
             // Don't abort on deactivate — scan continues in background
