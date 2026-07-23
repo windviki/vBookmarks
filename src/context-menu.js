@@ -84,6 +84,15 @@ export function initContextMenu(ctx = {}) {
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
 
+    // v4 task 2: dismiss context menu on scroll of any view pane
+    if (typeof document.querySelectorAll === 'function') {
+        const viewPanes = document.querySelectorAll('.view-pane, .view-content');
+        for (const pane of viewPanes) {
+            pane.addEventListener('scroll', clearMenu);
+            pane.addEventListener('focus', clearMenu, true);
+        }
+    }
+
     let macCloseContextMenu = false;
     body.addEventListener('contextmenu', e => {
         e.preventDefault();

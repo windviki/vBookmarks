@@ -980,14 +980,15 @@ describe('document Escape / Ctrl+F', () => {
         expect(searchInput.value).toBe('query');
     });
 
-    it('Escape quits an active search and clears the input', () => {
+    it('Escape with active search + query clears input, records history, stays in view (v4 task 2 two-step)', () => {
         const { fireDoc, searchInput, searchCalls } = setup({ searchActive: true });
         searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         fireDoc('keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(searchCalls).toEqual(['quit']);
+        // v4 task 2: first Esc clears input + records, does NOT quit
         expect(searchInput.value).toBe('');
+        // 'quit' is only called on 2nd Esc (empty input)
     });
 
     it('Escape with text in the input clears it without quitting search', () => {

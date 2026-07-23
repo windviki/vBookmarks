@@ -549,6 +549,7 @@ export function initSearch(ctx = {}) {
         clearHistory,
         loadHistory,
         recordSearchHistory,
+        persistLastQuery,
         restoreLastQuery,
         onResultOpen,
         renderHistoryBlock,

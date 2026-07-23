@@ -140,6 +140,8 @@ export function initViewDupes(ctx = {}) {
     const applyStrategy = (strategyId) => {
         selectedStrategy = strategyId;
         store.set('dupesStrategy', strategyId);
+        // Clear manual keepers — strategy change should re-evaluate all groups
+        if (dupeGroups._manualKeepers) dupeGroups._manualKeepers = {};
         render();
     };
 

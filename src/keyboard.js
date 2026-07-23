@@ -481,6 +481,19 @@ export function initKeyboard(ctx = {}) {
             return;
         }
         if (search.isActive() || search.input.value) {
+            // v4 task 2: two-step Esc in search view
+            // 1st Esc with value → clear input + record history, stay in search
+            // 2nd Esc (empty input) → quit back to tree
+            if (search.isActive() && search.input.value) {
+                search.input.value = '';
+                search.recordSearchHistory && search.recordSearchHistory();
+                search.persistLastQuery && search.persistLastQuery();
+                search.renderHistoryBlock && search.renderHistoryBlock();
+                // Update clear-button visibility
+                const clearBtn = document.getElementById('search-clear');
+                if (clearBtn) clearBtn.parentNode.classList.toggle('has-query', false);
+                return;
+            }
             if (search.isActive())
                 search.quit();
             else

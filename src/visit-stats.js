@@ -112,19 +112,19 @@ export function initVisitStats(ctx = {}) {
                     const urls = Object.keys(urlToIds);
                     if (!urls.length) { historyLoaded = true; resolve(0); return; }
 
-                    // Query history for each URL (batched, max 100 per query)
-                    const results = {};
-                    let pending = urls.length;
+                    // Query history for each URL (batched)
+                    const visitCounts = {};  // url → count
                     const chunkSize = 50;
 
                     const processChunk = (startIdx) => {
                         const chunk = urls.slice(startIdx, startIdx + chunkSize);
                         if (!chunk.length) {
-                            // All done
+                            // All done: merge visitCounts into historyData per bookmark id
                             historyData = {};
-                            for (const [url, ids] of Object.entries(results)) {
-                                for (const id of ids) {
-                                    historyData[id] = (historyData[id] || 0) + results[url];
+                            for (const [url, bookmarkIds] of Object.entries(urlToIds)) {
+                                const count = visitCounts[url] || 0;
+                                for (const bid of bookmarkIds) {
+                                    historyData[bid] = (historyData[bid] || 0) + count;
                                 }
                             }
                             historyLoaded = true;
@@ -132,12 +132,11 @@ export function initVisitStats(ctx = {}) {
                             return;
                         }
 
-                        // Process each URL in the chunk
                         let chunkPending = chunk.length;
                         for (const url of chunk) {
                             chrome.history.getVisits({ url }, (visits) => {
                                 if (visits && visits.length > 0) {
-                                    results[url] = visits.length;
+                                    visitCounts[url] = visits.length;
                                 }
                                 chunkPending--;
                                 if (chunkPending === 0) {
