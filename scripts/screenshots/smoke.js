@@ -50,6 +50,138 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         search: !!document.querySelector('#search')
     }));
     console.log('popup stats:', JSON.stringify(stats));
+
+    // ====================================================================
+    // v4 task 2 inspection: sync-indicator, tab badges, recent, search
+    // ====================================================================
+    const inspect = await page.evaluate(() => {
+        const r = {};
+
+        // 1. Sync-indicator in tree
+        const dots = document.querySelectorAll('#tree .sync-indicator:not(.synced)');
+        const dotInfos = [];
+        dots.forEach((dot, i) => {
+            const cs = getComputedStyle(dot);
+            const rect = dot.getBoundingClientRect();
+            dotInfos.push({
+                w: cs.width, h: cs.height,
+                rectW: Math.round(rect.width), rectH: Math.round(rect.height),
+                pos: cs.position, bottom: cs.bottom, right: cs.right,
+                borderRadius: cs.borderRadius,
+                isCircle: cs.width === cs.height && (cs.borderRadius === '50%' || cs.borderRadius.includes('50%')),
+            });
+        });
+        r.syncDotCount = dotInfos.length;
+        r.syncDots = dotInfos.slice(0, 2);
+        r.syncOK = dotInfos.length === 0 || dotInfos.every(d => d.isCircle && d.w === '6px');
+
+        // 2. Tab badges
+        const tabs = document.querySelectorAll('#view-tabs [role="tab"]');
+        r.tabBadges = [];
+        tabs.forEach(t => {
+            const b = t.querySelector('.tab-badge');
+            r.tabBadges.push({ id: t.dataset.viewId, hidden: b ? b.hidden : true, text: b ? b.textContent : '' });
+        });
+
+        // 3. Favicon-container sizing
+        const fc = document.querySelector('#tree .favicon-container');
+        if (fc) {
+            const cs = getComputedStyle(fc);
+            r.faviconContainer = { width: cs.width, position: cs.position };
+        }
+
+        // 4. Row-height token
+        const rowH = getComputedStyle(document.documentElement).getPropertyValue('--vbm-row-h').trim();
+        r.rowH = rowH;
+
+        return r;
+    });
+    console.log('inspect:', JSON.stringify(inspect));
+    if (!inspect.syncOK && inspect.syncDotCount > 0) {
+        console.log('WARNING: sync-indicator not 6px circle!', JSON.stringify(inspect.syncDots));
+    }
+
+    // Switch to dupes view, check badge and rendering
+    const dupesTab = await page.$('#view-tab-dupes');
+    if (dupesTab) { await dupesTab.click(); await sleep(600); }
+    const dupesInspect = await page.evaluate(() => {
+        const badge = document.querySelector('#view-tab-dupes .tab-badge');
+        const summary = document.querySelector('#dupes-content .dupes-summary');
+        const groups = document.querySelectorAll('#dupes-content .dupes-group');
+        const firstPill = document.querySelector('#dupes-content .vbm-count-pill');
+        const keeperRadio = document.querySelector('#dupes-content .vbm-keeper-radio.filled');
+        return {
+            badgeHidden: badge ? badge.hidden : true,
+            badgeText: badge ? badge.textContent : '',
+            summaryText: summary ? summary.textContent.trim() : '',
+            groupCount: groups.length,
+            firstPillText: firstPill ? firstPill.textContent.trim() : '',
+            hasFilledKeeper: !!keeperRadio,
+        };
+    });
+    console.log('dupes:', JSON.stringify(dupesInspect));
+
+    // Recent view
+    const recentTab = await page.$('#view-tab-recent');
+    if (recentTab) { await recentTab.click(); await sleep(500); }
+    const recentInspect = await page.evaluate(() => {
+        const rows = document.querySelectorAll('#recent-content li.vbm-row');
+        const first = rows[0];
+        const wrapper = first ? first.querySelector('.recent-row-wrapper') : null;
+        const date = first ? first.querySelector('.recent-date') : null;
+        return {
+            rowCount: rows.length,
+            hasWrapper: !!wrapper,
+            dateText: date ? date.textContent : '',
+            firstRowHTML: first ? first.innerHTML.substring(0, 200) : '',
+        };
+    });
+    console.log('recent:', JSON.stringify(recentInspect));
+
+    // Search view ESC test
+    const searchTab = await page.$('#view-tab-search');
+    if (searchTab) { await searchTab.click(); await sleep(400); }
+    const input = await page.$('#search-input');
+    if (input) {
+        await input.click();
+        await input.type('test', { delay: 30 });
+        await sleep(400);
+    }
+    const searchAfterType = await page.evaluate(() => ({
+        inputVal: document.getElementById('search-input')?.value,
+        historyAreaDisp: document.getElementById('search-history-area')?.style.display,
+        resultsAreaDisp: document.getElementById('search-results-area')?.style.display,
+    }));
+    console.log('search typed:', JSON.stringify(searchAfterType));
+
+    // ESC → should clear input, stay in search
+    await page.keyboard.press('Escape');
+    await sleep(400);
+    const afterEsc1 = await page.evaluate(() => ({
+        inputVal: document.getElementById('search-input')?.value,
+        historyAreaDisp: document.getElementById('search-history-area')?.style.display,
+        historyHTML: document.getElementById('search-history-area')?.innerHTML?.substring(0, 200),
+        resultsAreaDisp: document.getElementById('search-results-area')?.style.display,
+        viewTreeHidden: document.getElementById('view-tree')?.style.display === 'none',
+    }));
+    console.log('after 1st Esc:', JSON.stringify(afterEsc1));
+
+    // ESC again → should go back to tree
+    await page.keyboard.press('Escape');
+    await sleep(400);
+    const afterEsc2 = await page.evaluate(() => ({
+        inputVal: document.getElementById('search-input')?.value,
+        viewTreeVisible: document.getElementById('view-tree')?.style.display !== 'none',
+    }));
+    console.log('after 2nd Esc:', JSON.stringify(afterEsc2));
+
+    // Back to tree for screenshot
+    await page.evaluate(() => {
+        const treeTab = document.querySelector('#view-tab-tree');
+        if (treeTab) treeTab.click();
+    });
+    await sleep(300);
+
     await page.screenshot({ path: '/tmp/shots/popup-light.png' });
 
     // 3. dark mode via emulated prefers-color-scheme (theme=auto default)

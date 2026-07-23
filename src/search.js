@@ -111,10 +111,8 @@ export function initSearch(ctx = {}) {
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
-            // v4 task 2: keep both areas visible (dual-area layout)
-            // results stay as-is (last search), history stays visible
-            // return to source view
-            activateView(sourceViewId);
+            // v4 task 2: always return to tree view (user spec)
+            activateView('tree');
 
             if (ignoreFocus === null || !ignoreFocus) {
                 // fix focus
@@ -160,8 +158,10 @@ export function initSearch(ctx = {}) {
         prevValue = value;
         searchMode = true;
         switchBookmarkMenu(true);
-        // v4 task 2: activate search view, remember source
-        sourceViewId = getActiveView();
+        // v4 task 2: remember source view (only if coming from another view)
+        if (getActiveView() !== 'search') {
+            sourceViewId = getActiveView();
+        }
         activateView('search');
 
         const renderResults = results => {
