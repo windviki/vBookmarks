@@ -33,6 +33,17 @@
     --vbm-scrollbar: rgba(95, 99, 104, 0.5);
     --vbm-scrollbar-hover: rgba(95, 99, 104, 0.8);
     --vbm-radius: 8px;
+    /* v4 task 2 list spec: row anatomy tokens (§1.2) */
+    --vbm-row-h: 28px;
+    --vbm-row-pad-x: 4px;
+    --vbm-icon-col: 20px;
+    --vbm-indent: 12px;
+    --vbm-meta-gap: 8px;
+    --vbm-warning: #f9ab00;
+    /* v4 task 2 list spec: typography */
+    --vbm-font-size: 13px;
+    --vbm-line-height: 1.45;
+    --vbm-font-size-sm: 12px;
 }
 
 body[data-theme="dark"] {
@@ -48,6 +59,7 @@ body[data-theme="dark"] {
     --vbm-accent-fg: #0b57d0;
     --vbm-focus-ring: rgba(168, 199, 250, 0.45);
     --vbm-danger: #f28b82;
+    --vbm-warning: #fdd663;
     --vbm-scrim: rgba(0, 0, 0, 0.55);
     --vbm-shadow: rgba(0, 0, 0, 0.5);
     --vbm-flash: var(--vbm-bg-selected);
@@ -69,6 +81,7 @@ body[data-theme="dark"] {
         --vbm-accent-fg: #0b57d0;
         --vbm-focus-ring: rgba(168, 199, 250, 0.45);
         --vbm-danger: #f28b82;
+        --vbm-warning: #fdd663;
         --vbm-scrim: rgba(0, 0, 0, 0.55);
         --vbm-shadow: rgba(0, 0, 0, 0.5);
         --vbm-flash: var(--vbm-bg-selected);
@@ -94,6 +107,7 @@ body[data-theme="ink"] {
     --vbm-accent-fg: #10142e;
     --vbm-focus-ring: rgba(139, 156, 255, 0.45);
     --vbm-danger: #f2a196;
+    --vbm-warning: #fdd663;
     --vbm-scrim: rgba(0, 0, 0, 0.6);
     --vbm-shadow: rgba(0, 0, 0, 0.55);
     --vbm-flash: var(--vbm-bg-selected);
@@ -117,6 +131,7 @@ body[data-theme="paper"] {
     --vbm-accent-fg: #fff8f0;
     --vbm-focus-ring: rgba(194, 64, 42, 0.35);
     --vbm-danger: #b3261e;
+    --vbm-warning: #e37400;
     --vbm-scrim: rgba(43, 38, 32, 0.3);
     --vbm-shadow: rgba(74, 63, 48, 0.25);
     --vbm-flash: rgba(194, 64, 42, 0.15);
@@ -659,6 +674,9 @@ menu[type=context] .menu-item:focus {
     }
 }
 
+/* v4 task 2 list spec: .focus class uses static selected background,
+   NOT outline (§1.3: "选中背景即焦点指示"). Animation removed in favor
+   of immediate visual feedback matching tree's existing behavior. */
 #tree ul li a.focus,
 #tree ul li span.focus,
 #results ul li a.focus,
@@ -669,10 +687,9 @@ menu[type=context] .menu-item:focus {
 #dupes-content ul li a.focus,
 .view-content ul li a.focus,
 .view-content ul li span.focus {
-    -webkit-animation-name: blueFade;
-    animation-name: blueFade;
-    -webkit-animation-duration: 3s;
-    animation-duration: 3s;
+    background-color: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    outline: none;
 }
 
 #bookmark-clone {
@@ -1682,6 +1699,287 @@ body.panel-mode #view-tabs .tab-label {
     border: 0;
 }
 
+/* =====================================================================
+   v4 task 2 list spec: unified row anatomy (§1.1–§1.6)
+   ===================================================================== */
+
+/* Base row: 28px tall, system font 13px/1.45 */
+.vbm-row {
+    display: flex;
+    align-items: center;
+    min-height: var(--vbm-row-h);
+    padding: 0 var(--vbm-row-pad-x);
+    font-size: var(--vbm-font-size);
+    line-height: var(--vbm-line-height);
+    gap: var(--vbm-meta-gap);
+    cursor: default;
+}
+
+/* Icon column: all views share 20px icon slot for vertical alignment */
+.vbm-icon-col {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--vbm-icon-col);
+    position: relative; /* anchor for overlays */
+}
+
+.vbm-icon-col img,
+.vbm-icon-col svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
+/* Title: flex-1, ellipsis */
+.vbm-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Meta right zone: flex-shrink:0, gap 6px between internal elements */
+.vbm-meta {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--vbm-font-size-sm);
+    color: var(--vbm-muted);
+    white-space: nowrap;
+}
+
+/* Row button: hidden by default, visible on row hover/focus (§1.5) */
+.vbm-row-btn {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    visibility: hidden;
+}
+.vbm-row:hover .vbm-row-btn,
+.vbm-row.focus .vbm-row-btn,
+.vbm-row-btn:focus-visible {
+    visibility: visible;
+}
+.vbm-row-btn:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+/* --- State: danger preview (dupes doomed / delete preview, §1.3) --- */
+.vbm-row.danger-preview .vbm-title,
+.vbm-row.danger-preview .vbm-meta {
+    color: var(--vbm-danger);
+    text-decoration: line-through;
+}
+
+/* --- State: keeper selected (dupes, §1.3) --- */
+.vbm-row.keeper-selected {
+    /* accent color for radio mark, row bg unchanged */
+}
+
+/* --- Dead mark overlay on favicon (§1.4, updated per v4task-2-list spec) --- */
+.dead-mark {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    z-index: 11;
+    pointer-events: none;
+}
+
+.dead-mark::before,
+.dead-mark::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 1.5px;
+    background: var(--vbm-danger);
+    top: 50%;
+    left: 50%;
+}
+
+.dead-mark::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dead-mark::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Sync indicator overlay: positioned bottom-right of icon (§1.4) */
+.favicon-container .sync-indicator {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    z-index: 10;
+}
+
+/* --- Status badge pill (dead view, §3.5) --- */
+.vbm-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 4px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.vbm-badge.danger {
+    background: color-mix(in srgb, var(--vbm-danger) 15%, transparent);
+    color: var(--vbm-danger);
+}
+.vbm-badge.warning {
+    background: color-mix(in srgb, var(--vbm-warning) 15%, transparent);
+    color: var(--vbm-warning);
+}
+.vbm-badge.muted {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-muted);
+}
+
+/* --- Count pill (stats, dupes, §3.4) --- */
+.vbm-count-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 6px;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* --- Pill segmented control (sort toggle, filter toggle) --- */
+.vbm-segmented {
+    display: inline-flex;
+    gap: 0;
+    border: 1px solid var(--vbm-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.vbm-segmented button {
+    padding: 2px 10px;
+    border: 0;
+    border-inline-end: 1px solid var(--vbm-border);
+    background: transparent;
+    color: var(--vbm-muted);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.vbm-segmented button:last-child {
+    border-inline-end: 0;
+}
+.vbm-segmented button.active {
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+}
+.vbm-segmented button:hover:not(.active) {
+    background: var(--vbm-bg-hover);
+}
+.vbm-segmented button:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Keeper radio mark (dupes, §3.6) */
+.vbm-keeper-radio {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vbm-accent);
+    font-size: 12px;
+    font-weight: bold;
+}
+/* Empty radio: hollow circle using CSS */
+.vbm-keeper-radio.empty::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid var(--vbm-muted);
+    border-radius: 50%;
+}
+/* Filled radio: solid circle */
+.vbm-keeper-radio.filled::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--vbm-accent);
+}
+
+/* Dupes group header chevron (§3.6) */
+.dupes-group-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    color: var(--vbm-muted);
+    transition: transform .15s ease;
+}
+.dupes-group:not(.collapsed) .dupes-group-chevron {
+    transform: rotate(90deg);
+}
+.dupes-group.collapsed .dupes-group-chevron {
+    transform: none;
+}
+
+/* Progress bar (dead scan, §3.5) */
+.vbm-progress {
+    width: 100%;
+    height: 2px;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0;
+    border-radius: 1px;
+    background: var(--vbm-bg-hover);
+}
+.vbm-progress::-webkit-progress-bar {
+    background: var(--vbm-bg-hover);
+    border-radius: 1px;
+}
+.vbm-progress::-webkit-progress-value {
+    background: var(--vbm-accent);
+    border-radius: 1px;
+    transition: width .2s ease;
+}
+
+/* Skeleton loading row (§4) */
+.vbm-skeleton {
+    height: var(--vbm-row-h);
+    margin: 2px 4px;
+    border-radius: 4px;
+    background: var(--vbm-bg-hover);
+    animation: vbm-skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes vbm-skeleton-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
 /* --- Row path label (§3.6) --- */
 .row-path {
     color: var(--vbm-muted);
@@ -2162,6 +2460,23 @@ body.panel-mode .row-path-double,
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 4px 8px 6px;
+    display: flex;
+    align-items: center;
+}
+.search-history-title .search-history-clear {
+    margin-inline-start: auto;
+    font: menu;
+    font-size: 10px;
+    color: var(--vbm-muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-transform: none;
+    font-weight: normal;
+    letter-spacing: 0;
+}
+.search-history-title .search-history-clear:hover {
+    color: var(--vbm-danger);
 }
 
 .search-history ul,
@@ -2232,21 +2547,7 @@ body.panel-mode .row-path-double,
     color: var(--vbm-danger);
 }
 
-.search-history-clear {
-    font: menu;
-    font-size: 10px;
-    color: var(--vbm-muted);
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    padding: 6px 10px;
-    width: 100%;
-    text-align: start;
-}
-
-.search-history-clear:hover {
-    color: var(--vbm-danger);
-}
+/* search-history-clear is now inside .search-history-title (see above) */
 
 /* Reduced motion: disable tab indicator slide and fade */
 @media (prefers-reduced-motion: reduce) {

@@ -526,5 +526,100 @@ export function initKeyboard(ctx = {}) {
         }, true);
     }
 
+    // v4 task 2: TabStrip keyboard navigation (§2.2)
+    // roving tabindex: only active tab is in tab order; ←/→ move between tabs
+    const $tabs = $('view-tabs');
+    if ($tabs) {
+        $tabs.addEventListener('keydown', e => {
+            const tag = document.activeElement ? document.activeElement.tagName : '';
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+            const tabs = Array.from($tabs.querySelectorAll('[role="tab"]'));
+            if (!tabs.length) return;
+            const currentIdx = tabs.indexOf(document.activeElement);
+
+            switch (e.key) {
+                case 'ArrowRight':
+                case 'ArrowLeft': {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const forward = (e.key === 'ArrowRight') !== !!rtl;
+                    if (currentIdx < 0) {
+                        // Focus the active tab
+                        const active = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+                        active.focus();
+                    } else {
+                        const next = forward
+                            ? (currentIdx + 1) % tabs.length
+                            : (currentIdx - 1 + tabs.length) % tabs.length;
+                        tabs[next].focus();
+                    }
+                    // auto-activate on focus (§2.2)
+                    const focused = tabs[forward ? (currentIdx + 1) % tabs.length : (currentIdx - 1 + tabs.length) % tabs.length];
+                    if (focused && viewManager) {
+                        const viewId = focused.dataset.viewId;
+                        if (viewId) viewManager.activate(viewId);
+                    }
+                    break;
+                }
+                case 'Home':
+                    e.preventDefault();
+                    e.stopPropagation();
+                    tabs[0].focus();
+                    if (viewManager && tabs[0].dataset.viewId) viewManager.activate(tabs[0].dataset.viewId);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    e.stopPropagation();
+                    tabs[tabs.length - 1].focus();
+                    if (viewManager && tabs[tabs.length - 1].dataset.viewId) viewManager.activate(tabs[tabs.length - 1].dataset.viewId);
+                    break;
+                case 'ArrowDown':
+                    // TabStrip ↓ → focus first row in list (§2.1)
+                    e.preventDefault();
+                    e.stopPropagation();
+                    {
+                        const activeViewId = viewManager ? viewManager.getActiveId() : 'tree';
+                        const listContainer = document.querySelector(`#view-${activeViewId} .view-content, #${activeViewId}-content`);
+                        if (listContainer) {
+                            const firstFocusable = listContainer.querySelector('li:not(.empty-state) a, li:not(.empty-state) span[tabindex], li:not(.empty-state) [role="button"]');
+                            if (firstFocusable) {
+                                listContainer.querySelector('.focus')?.classList.remove('focus');
+                                firstFocusable.classList.add('focus');
+                                firstFocusable.focus();
+                            }
+                        }
+                    }
+                    break;
+                case 'ArrowUp':
+                    // TabStrip ↑ → focus search input (§2.1)
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (search && search.input) search.input.focus();
+                    break;
+            }
+        });
+
+        // roving tabindex: only active tab gets tabindex=0, rest get -1
+        const updateTabIndexes = () => {
+            const tabs = $tabs.querySelectorAll('[role="tab"]');
+            for (const tab of tabs) {
+                const selected = tab.getAttribute('aria-selected') === 'true';
+                tab.setAttribute('tabindex', selected ? '0' : '-1');
+            }
+        };
+        // Update on view activation
+        const origActivate = viewManager ? viewManager.activate : null;
+        if (viewManager && origActivate) {
+            const orig = origActivate.bind(viewManager);
+            viewManager.activate = (id) => {
+                orig(id);
+                setTimeout(updateTabIndexes, 0);
+            };
+        }
+        // Initial setup
+        updateTabIndexes();
+    }
+
     return { treeKeyDown, treeKeyUp, contextKeyDown };
 }

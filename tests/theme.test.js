@@ -21,7 +21,8 @@ const TOKENS = [
     '--vbm-accent',
     '--vbm-accent-fg',
     '--vbm-focus-ring',
-    '--vbm-danger'
+    '--vbm-danger',
+    '--vbm-warning'
 ];
 
 // Extract the body of the first block opened after `selector`, honoring
@@ -45,14 +46,14 @@ describe('theme design tokens in neat.css', () => {
     const rootBlock = extractBlock(neatCss, ':root');
     const darkBlock = extractBlock(neatCss, 'body[data-theme="dark"]');
 
-    it('defines all 12 tokens in :root', () => {
+    it('defines all 13 tokens in :root', () => {
         expect(rootBlock).not.toBe('');
         for (const token of TOKENS) {
             expect(rootBlock).toContain(`${token}:`);
         }
     });
 
-    it('overrides all 12 tokens in body[data-theme="dark"]', () => {
+    it('overrides all 13 tokens in body[data-theme="dark"]', () => {
         expect(darkBlock).not.toBe('');
         for (const token of TOKENS) {
             expect(darkBlock).toContain(`${token}:`);
@@ -62,7 +63,7 @@ describe('theme design tokens in neat.css', () => {
     // The explicit fable-taste themes (ink = dark, paper = light) must be
     // complete token overrides too; partial blocks would fall back to the
     // default light tokens and visually break.
-    it.each(['ink', 'paper'])('overrides all 12 tokens in body[data-theme="%s"]', name => {
+    it.each(['ink', 'paper'])('overrides all 13 tokens in body[data-theme="%s"]', name => {
         const block = extractBlock(neatCss, `body[data-theme="${name}"]`);
         expect(block).not.toBe('');
         for (const token of TOKENS) {

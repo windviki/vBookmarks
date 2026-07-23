@@ -17,6 +17,7 @@
  * ctx.search         — search.js (reset state on link-folder click)
  */
 import { initListKeyboard } from './list-keyboard.js';
+import { formatRelativeTime } from './format-utils.js';
 
 export function initViewRecent(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -48,17 +49,19 @@ export function initViewRecent(ctx = {}) {
         } catch (e) { return new Set(); }
     };
 
-    // Render one bookmark row with timestamp, path label, and dead mark
+    // Render one bookmark row with relative time, path label, and dead mark (§3.3)
     const renderRow = (bookmark) => {
         const deadMarks = getDeadMarks();
         const deadOverlay = deadMarks.has(bookmark.id)
             ? '<span class="dead-mark" aria-label="Marked as dead link"></span>' : '';
         const showPath = store.get('showItemPath', '1') !== 'false';
-        const dateStr = bookmark.dateAdded
+        const relTime = formatRelativeTime(bookmark.dateAdded || 0, _m);
+        const absDate = bookmark.dateAdded
             ? new Date(bookmark.dateAdded).toLocaleString()
             : '';
 
-        // Two-line layout: title + metadata row (path | date)
+        // Narrow mode: single-line with relative time in meta
+        // Wide/panel mode (≥480px): two-line with path · absolute time below
         return `<li class="child vbm-row" id="neat-recent-item-${bookmark.id}" ` +
             `level="0" role="treeitem" data-node-id="${bookmark.id}" data-parentid="${bookmark.parentId}">` +
             `<div class="recent-row-wrapper">` +
@@ -67,7 +70,8 @@ export function initViewRecent(ctx = {}) {
             deadOverlay +
             `<div class="recent-meta">` +
             (showPath ? `<span class="row-path" data-parentid="${bookmark.parentId}" dir="auto">...</span>` : '') +
-            (dateStr ? `<span class="recent-date">${dateStr}</span>` : '') +
+            (showPath ? '<span aria-hidden="true">·</span>' : '') +
+            `<span class="recent-date" title="${absDate}">${relTime}</span>` +
             `</div></div></li>`;
     };
 
@@ -152,16 +156,32 @@ export function initViewRecent(ctx = {}) {
         }
     });
 
-    // v4 task 2: arrow-key keyboard navigation (list-keyboard.js)
+    // v4 task 2: full keyboard navigation (§2.3)
     initListKeyboard(container, {
         onEnter(id) {
-            // Open bookmark on Enter
             chrome.bookmarks.get(id, nodes => {
                 if (nodes && nodes.length && nodes[0].url) {
                     actions.recordVisit(id);
                     actions.openBookmark(nodes[0].url);
                 }
             });
+        },
+        onDelete(id) {
+            actions.deleteBookmark(id);
+        },
+        onReveal(id) {
+            const li = container.querySelector(`[data-node-id="${id}"]`);
+            const parentId = li ? li.dataset.parentid : null;
+            search.reset();
+            viewManager.activate('tree');
+            if (parentId && treeView.revealBookmark) {
+                treeView.revealBookmark(id, parentId);
+            } else if (parentId) {
+                treeView.revealFolder(parentId);
+            }
+        },
+        onF2(id) {
+            actions.editBookmarkFolder(id);
         }
     });
 

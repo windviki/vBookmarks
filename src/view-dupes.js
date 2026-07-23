@@ -11,6 +11,7 @@
 
 import { findDupes, planDeletion, pickKeeper } from './dupes.js';
 import { initListKeyboard } from './list-keyboard.js';
+import { CHEVRON_ICON } from './icons.js';
 
 export function initViewDupes(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -133,7 +134,7 @@ export function initViewDupes(ctx = {}) {
     const render = () => {
         let html = '';
 
-        // Toolbar: scope selector + scheme checkbox
+        // Top toolbar (row 0): strategy selector + summary + apply all (§3.6)
         html += '<div class="dupes-toolbar">';
         html += `<select id="dupes-scope" class="dupes-scope">`;
         html += `<option value="all"${selectedScope === 'all' ? ' selected' : ''}>${_m('dupesScopeAll') || 'All bookmarks'}</option>`;
@@ -142,14 +143,14 @@ export function initViewDupes(ctx = {}) {
         html += `<label class="dupes-check"><input type="checkbox" id="dupes-ignore-scheme"${ignoreScheme ? ' checked' : ''}> ${_m('dupesIgnoreScheme') || 'Ignore http/https'}</label>`;
         html += '</div>';
 
-        // Strategy selector
+        // Strategy selector as styled <select> for space efficiency (§3.6)
         html += '<div class="dupes-strategies">';
+        html += '<select id="dupes-strategy" class="dupes-scope">';
         for (const s of STRATEGIES) {
-            const label = _m(s.key) || s.id;
             const disabled = s.id === 'keep-most-visited' && store.get('statsEnabled', '1') === 'false';
-            html += `<button class="dupes-strategy${selectedStrategy === s.id ? ' active' : ''}" ` +
-                `data-strategy="${s.id}"${disabled ? ' disabled' : ''}>${label}</button>`;
+            html += `<option value="${s.id}"${selectedStrategy === s.id ? ' selected' : ''}${disabled ? ' disabled' : ''}>${_m(s.key) || s.id}</option>`;
         }
+        html += '</select>';
         html += '</div>';
 
         if (!dupeGroups.length) {
@@ -165,35 +166,44 @@ export function initViewDupes(ctx = {}) {
             .replace('$groups$', String(dupeGroups.length)).replace('$count$', String(totalExtra))}`;
         html += ` <button id="dupes-apply-all" class="danger">${_m('dupesApplyAll') || 'Apply all'}</button></div>`;
 
-        // Groups
+        // Groups (§3.6)
         let groupIdx = 0;
         for (const group of dupeGroups) {
-            // v4 task 2: manual keeper override via click (§5.6a)
             const manualId = dupeGroups._manualKeepers && dupeGroups._manualKeepers[groupIdx];
             const keeper = manualId
                 ? group.items.find(b => b.id === manualId) || pickKeeper(group.items, selectedStrategy, { bookmarkBarIds })
                 : pickKeeper(group.items, selectedStrategy, { bookmarkBarIds });
             const doomed = group.items.filter(b => b.id !== keeper.id);
 
+            // Group header with chevron, normalized URL, count pill, clean-rest button
             html += `<div class="dupes-group">`;
-            html += `<div class="dupes-group-header">`;
+            html += `<div class="dupes-group-header" data-group-idx="${groupIdx}" tabindex="0" role="button" aria-expanded="true">`;
+            html += `<span class="dupes-group-chevron">${CHEVRON_ICON}</span>`;
             html += `<span class="dupes-group-url">${group.key}</span>`;
-            html += `<span class="dupes-group-count">${group.items.length} items</span>`;
-            html += `<button class="dupes-clean-group" data-group-idx="${dupeGroups.indexOf(group)}">${_m('dupesGroupCleanRest') || 'Clean rest'}</button>`;
+            html += `<span class="vbm-count-pill">${group.items.length}</span>`;
+            html += `<button class="vbm-row-btn dupes-clean-group" data-group-idx="${groupIdx}" aria-label="${_m('dupesGroupCleanRest') || 'Clear rest'}">${_m('dupesGroupCleanRest') || 'Clear rest'}</button>`;
             html += '</div>';
 
             for (const item of group.items) {
                 const isKeeper = item.id === keeper.id;
-                const groupIdx = dupeGroups.indexOf(group);
-                html += `<div class="dupes-row${isKeeper ? ' keeper' : ' doomed'}" data-id="${item.id}" data-group-idx="${groupIdx}">`;
-                html += `<span class="dupes-keep-mark">${isKeeper ? '✓ ' : ''}</span>`;
-                html += `<span class="dupes-title">${item.title || item.url}</span>`;
-                html += `<span class="dupes-url">${item.url}</span>`;
-                html += `<span class="dupes-date">${new Date(item.dateAdded || 0).toLocaleDateString()}</span>`;
+                const rowClass = isKeeper ? 'keeper-selected' : 'danger-preview';
+                html += `<li class="vbm-row ${rowClass}" data-id="${item.id}" data-group-idx="${groupIdx}" data-node-id="${item.id}" role="listitem">`;
+                // Keeper radio mark (§3.6)
+                html += `<span class="vbm-keeper-radio${isKeeper ? ' filled' : ' empty'}" aria-label="${isKeeper ? (_m('dupesKeeperSet') || 'Keeper') : ''}">${isKeeper ? '✓' : ''}</span>`;
+                // Favicon placeholder (icon column alignment)
+                html += `<span class="vbm-icon-col"><img src="${chrome.runtime.getURL('/_favicon/')}?pageUrl=${encodeURIComponent(item.url)}&size=32" width="16" height="16" alt=""></span>`;
+                // Title — member rows NEVER show URL (§3.6 信息不重复原则)
+                const displayTitle = item.title || item.url;
+                html += `<span class="vbm-title" title="${displayTitle}\n${item.url}">${displayTitle}</span>`;
+                // Meta: parent path + dateAdded
+                html += `<span class="vbm-meta">`;
+                html += `<span class="row-path" data-parentid="${item.parentId}" dir="auto">...</span>`;
+                html += `<span class="dupes-date">${item.dateAdded ? new Date(item.dateAdded).toLocaleDateString() : ''}</span>`;
                 if (!isKeeper) {
-                    html += `<button class="dupes-remove-row" data-id="${item.id}">✕</button>`;
+                    html += `<button class="vbm-row-btn dupes-remove-row" data-id="${item.id}" aria-label="${_m('rowActionDelete') || 'Delete'}">✕</button>`;
                 }
-                html += '</div>';
+                html += `</span>`;
+                html += '</li>';
             }
             html += '</div>';
             groupIdx++;
@@ -201,13 +211,26 @@ export function initViewDupes(ctx = {}) {
 
         container.innerHTML = html;
         bindEvents();
+
+        // Resolve parent path labels asynchronously
+        container.querySelectorAll('.dupes-row .row-path, .vbm-row .row-path').forEach(el => {
+            const pid = el.dataset.parentid;
+            if (pid) {
+                chrome.bookmarks.get(pid, nodes => {
+                    if (nodes && nodes.length) {
+                        el.textContent = nodes[0].title || '';
+                    }
+                });
+            }
+        });
     };
 
     const bindEvents = () => {
-        // Strategy buttons
-        container.querySelectorAll('.dupes-strategy').forEach(btn => {
-            btn.addEventListener('click', () => applyStrategy(btn.dataset.strategy));
-        });
+        // Strategy selector (now a <select> element)
+        const strategySel = container.querySelector('#dupes-strategy');
+        if (strategySel) {
+            strategySel.addEventListener('change', () => applyStrategy(strategySel.value));
+        }
 
         // Scope change
         const scopeSel = container.querySelector('#dupes-scope');
@@ -253,7 +276,8 @@ export function initViewDupes(ctx = {}) {
 
         // Clean group
         container.querySelectorAll('.dupes-clean-group').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation(); // don't trigger group header toggle
                 const idx = parseInt(btn.dataset.groupIdx, 10);
                 const group = dupeGroups[idx];
                 if (!group) return;
@@ -272,38 +296,91 @@ export function initViewDupes(ctx = {}) {
             });
         });
 
+        // Group header click: toggle expand/collapse (§3.6)
+        container.querySelectorAll('.dupes-group-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const groupDiv = header.closest('.dupes-group');
+                if (!groupDiv) return;
+                const isCollapsed = groupDiv.classList.toggle('collapsed');
+                header.setAttribute('aria-expanded', String(!isCollapsed));
+                const rows = groupDiv.querySelectorAll('.vbm-row');
+                rows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
+            });
+        });
+
         // Remove single row
         container.querySelectorAll('.dupes-remove-row').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
                 const id = btn.dataset.id;
                 actions.deleteBookmark(id);
-                // Refresh after a short delay for deletion to propagate
                 setTimeout(() => refresh(), 200);
             });
         });
 
-        // v4 task 2: keeper override — click a doomed row to make it the keeper (§5.6a)
-        container.querySelectorAll('.dupes-row.doomed').forEach(row => {
+        // Keeper override: click a doomed row to make it keeper (§3.6)
+        container.querySelectorAll('.vbm-row.danger-preview').forEach(row => {
             row.addEventListener('click', e => {
-                // Don't trigger when clicking the remove button
-                if (e.target.closest('.dupes-remove-row')) return;
+                if (e.target.closest('.dupes-remove-row') || e.target.closest('.vbm-row-btn')) return;
                 const groupIdx = parseInt(row.dataset.groupIdx, 10);
+                if (isNaN(groupIdx)) return;
                 const itemId = row.dataset.id;
-                const group = dupeGroups[groupIdx];
-                if (!group) return;
-                // Swap keeper: remove old keeper, set clicked item as sole keeper for this group
-                // We use a special override marker: set dupesStrategy to a per-group manual mode
-                // Simpler: just set a "manual keeper" in dupeGroups custom data
                 if (!dupeGroups._manualKeepers) dupeGroups._manualKeepers = {};
                 dupeGroups._manualKeepers[groupIdx] = itemId;
-                // Update pickKeeper to check _manualKeepers first
                 render();
             });
         });
     };
 
-    // v4 task 2: keyboard navigation
-    initListKeyboard(container, {});
+    // v4 task 2: full keyboard navigation with view-specific keys (§2.3)
+    initListKeyboard(container, {
+        onEnter(id) {
+            // Open bookmark
+            const li = container.querySelector(`[data-node-id="${id}"]`);
+            if (!li) return;
+            // Check if this is a group header
+            const groupHeader = li.closest('.dupes-group')?.querySelector('.dupes-group-header');
+            if (li.classList.contains('dupes-group-header') || li === groupHeader) {
+                // Toggle expand/collapse
+                const groupDiv = li.closest('.dupes-group');
+                if (groupDiv) {
+                    const isCollapsed = groupDiv.classList.toggle('collapsed');
+                    (li.classList.contains('dupes-group-header') ? li : groupHeader).setAttribute('aria-expanded', String(!isCollapsed));
+                    const rows = groupDiv.querySelectorAll('.vbm-row');
+                    rows.forEach(r => { r.style.display = isCollapsed ? 'none' : ''; });
+                }
+                return;
+            }
+            chrome.bookmarks.get(id, nodes => {
+                if (nodes && nodes.length && nodes[0].url) {
+                    actions.openBookmark(nodes[0].url);
+                }
+            });
+        },
+        onDelete(id) {
+            actions.deleteBookmark(id);
+            setTimeout(() => refresh(), 200);
+        },
+        onReveal(id) {
+            if (viewManager) viewManager.activate('tree');
+        },
+        onExtraKey(key, id) {
+            // K key: set keeper (§2.3)
+            if (key === 'k' || key === 'K') {
+                const li = container.querySelector(`[data-node-id="${id}"]`);
+                if (li) {
+                    const groupIdx = parseInt(li.dataset.groupIdx, 10);
+                    if (!isNaN(groupIdx)) {
+                        if (!dupeGroups._manualKeepers) dupeGroups._manualKeepers = {};
+                        dupeGroups._manualKeepers[groupIdx] = id;
+                        render();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    });
 
     return {
         badge() {

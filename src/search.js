@@ -451,18 +451,21 @@ export function initSearch(ctx = {}) {
             return;
         }
         const hist = loadHistory();
-        if (!hist.length) {
-            $historyArea.innerHTML = '';
-            $historyArea.style.display = 'none';
-            return;
-        }
+
         // Show history area, hide results (unless a query is active)
         if (!searchMode) {
             $historyArea.style.display = '';
             if ($resultsArea) $resultsArea.style.display = 'none';
         }
+
+        // v4 task 2: searchViewHint when no history (§3.2)
+        if (!hist.length) {
+            $historyArea.innerHTML = `<div class="empty-state" style="padding:24px 8px;text-align:center;color:var(--vbm-muted)"><i>${_m('searchViewHint') || 'Type to search your bookmarks.'}</i></div>`;
+            return;
+        }
+
         let html = `<div class="search-history">`;
-        html += `<div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}</div>`;
+        html += `<div class="search-history-title">${_m('searchHistoryTitle') || 'Recent searches'}<button class="search-history-clear" tabindex="-1">${_m('searchHistoryClear') || 'Clear all'}</button></div>`;
         html += `<ul>`;
         for (const entry of hist) {
             const q = typeof entry === 'string' ? entry : entry.q;
@@ -478,7 +481,6 @@ export function initSearch(ctx = {}) {
             html += `<button class="search-history-remove" data-query="${q}" aria-label="${_m('searchHistoryRemove') || 'Remove'}">×</button>`;
             html += '</li>';
         }
-        html += `<li><button class="search-history-clear">${_m('searchHistoryClear') || 'Clear all'}</button></li>`;
         html += `</ul></div>`;
         $historyArea.innerHTML = html;
 
@@ -513,10 +515,14 @@ export function initSearch(ctx = {}) {
     // Restore last query on search view activation (first time only)
     // (called when search view is activated with empty input)
 
-    // v4 task 2: keyboard navigation for search results
-    // On Enter, dispatch a click on the focused <a> to reuse the existing
-    // bookmarkHandler (tree-view.js) which handles opening + search.reset.
-    initListKeyboard($results, {});
+    // v4 task 2: keyboard navigation for search results (§2.3)
+    initListKeyboard($results, {
+        onReveal(id) {
+            // R key: reveal in tree — jump to tree view
+            const viewManager = ctx.viewManager;
+            if (viewManager) viewManager.activate('tree');
+        }
+    });
 
     return {
         input: searchInput,

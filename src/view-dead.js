@@ -202,43 +202,55 @@ export function initViewDead(ctx = {}) {
         const cache = loadCache();
         let html = '';
 
-        // Header: last scan info + controls
+        // Top action row (row 0): scan controls + progress (§3.5)
+        html += '<div class="dead-actions">';
+
+        // Scanning state: determinate progress bar
+        if (deadScan && !deadResults) {
+            const pct = deadItems.length ? Math.round((deadProgress / deadItems.length) * 100) : 0;
+            html += `<span>${_m('deadScanning') || 'Scanning'} ${deadProgress}/${deadItems.length}</span>`;
+            html += `<progress class="vbm-progress" value="${deadProgress}" max="${deadItems.length}" style="flex:1;min-width:60px"></progress>`;
+            html += `<span>${pct}%</span>`;
+            html += ` <button id="dead-abort">${_m('cancel') || 'Cancel'}</button>`;
+            container.innerHTML = html;
+            bindEvents();
+            return;
+        }
+
+        // Cached header: last scan info + rescan
         if (cache && cache.ts) {
             const d = new Date(cache.ts);
             const dateStr = d.toLocaleString();
-            html += `<div class="dead-header">`;
             html += `<span>${(_m('deadLastScanAt') || 'Last scan: $time$').replace('$time$', dateStr)}</span>`;
             html += ` · <span>${cache.scannedCount} bookmarks</span>`;
             html += ` <button id="dead-rescan">${_m('deadRescan') || 'Rescan'}</button>`;
-            html += '</div>';
         }
 
-        // Scanning progress
-        if (deadScan && !deadResults) {
-            html += `<div class="dead-progress">${_m('deadChecking', [`${deadProgress}`, `${deadItems.length}`])}</div>`;
-            html += `<button id="dead-abort">Cancel scan</button>`;
-            container.innerHTML = html;
-            bindEvents();
-            return;
-        }
-
-        // No results yet
+        // No results yet: actionable empty state
         if (!deadResults) {
-            html += `<div class="empty-state"><i>${_m('deadStartHint') || 'Scan bookmarks for dead links.'}</i></div>`;
-            html += `<button id="dead-rescan">${_m('deadRescan') || 'Start scan'}</button>`;
+            if (!cache || !cache.ts) {
+                html += `<span>${_m('deadStartHint') || 'Scan bookmarks for dead links.'}</span>`;
+                html += ` <button id="dead-rescan">${_m('deadRescan') || 'Start scan'}</button>`;
+            }
+            html += '</div>';
             container.innerHTML = html;
             bindEvents();
             return;
         }
 
-        // Batch actions
+        // Filter: segmented toggle + batch actions
+        html += '<span class="vbm-segmented" id="dead-filter-segmented" style="margin-left:8px">';
+        html += `<button data-filter="all"${scanFilter==='all'?' class="active"':''}>${_m('deadFilterAll')||'All'}</button>`;
+        html += `<button data-filter="dead"${scanFilter==='dead'?' class="active"':''}>${_m('deadFilterDead')||'Dead'}</button>`;
+        html += `<button data-filter="blocked"${scanFilter==='blocked'?' class="active"':''}>${_m('deadFilterBlocked')||'Blocked'}</button>`;
+        html += '</span>';
+        html += '</div>';
+
+        // Batch actions row
         const deadMarks = getDeadMarks();
         html += '<div class="dead-actions">';
-        html += `<select id="dead-filter"><option value="all"${scanFilter==='all'?' selected':''}>${_m('deadFilterAll')||'All'}</option>`;
-        html += `<option value="dead"${scanFilter==='dead'?' selected':''}>${_m('deadFilterDead')||'Dead only'}</option>`;
-        html += `<option value="blocked"${scanFilter==='blocked'?' selected':''}>${_m('deadFilterBlocked')||'Blocked only'}</option></select>`;
-        html += ` <button id="dead-mark-all">${_m('deadMarkAll') || 'Mark all'}</button>`;
-        html += ` <button id="dead-unmark-all">${_m('deadUnmarkAll') || 'Clear marks'}</button>`;
+        html += `<button id="dead-mark-all">${_m('deadMarkAll') || 'Mark all'}</button>`;
+        html += `<button id="dead-unmark-all">${_m('deadUnmarkAll') || 'Clear marks'}</button>`;
         html += ` <span class="dead-marks-count">${deadMarks.size} ${_m('deadMarked') || 'marked'}</span>`;
         html += ` <button id="dead-rescan">${_m('deadRescan') || 'Rescan'}</button>`;
         html += '</div>';
@@ -251,24 +263,66 @@ export function initViewDead(ctx = {}) {
             return;
         }
 
-        // Results list
+        // Results list with vbm-row anatomy (§3.5)
         html += '<ul class="dead-list">';
         for (const item of filtered) {
             const result = deadResults.get(item.id);
-            const badge = statusLabel(result);
+            const statusBadge = getStatusBadge(result);
             const marked = deadMarks.has(item.id);
-            html += `<li class="dead-row${marked ? ' marked' : ''}" data-id="${item.id}">`;
-            html += `<span class="dead-status">${badge}</span>`;
-            html += `<span class="dead-title">${item.title || item.url}</span>`;
-            html += `<span class="dead-url">${item.url}</span>`;
-            html += `<button class="dead-mark-btn" data-id="${item.id}">${marked ? (_m('deadUnmark')||'Unmark') : (_m('deadMark')||'Mark')}</button>`;
-            html += `<button class="dead-delete-btn" data-id="${item.id}">✕</button>`;
+            html += `<li class="vbm-row dead-row${marked ? ' marked' : ''}" data-id="${item.id}" data-node-id="${item.id}" role="listitem">`;
+            // Icon column with dead mark overlay
+            html += `<span class="vbm-icon-col">`;
+            if (item.url) {
+                const favUrl = new URL(chrome.runtime.getURL('/_favicon/'));
+                favUrl.searchParams.set('pageUrl', item.url);
+                favUrl.searchParams.set('size', '32');
+                html += `<img src="${favUrl.toString()}" width="16" height="16" alt="">`;
+                if (marked) html += '<span class="dead-mark" aria-label="Marked as dead link"></span>';
+            }
+            html += '</span>';
+            // Title
+            html += `<span class="vbm-title" title="${item.title || item.url}\n${item.url || ''}">${item.title || item.url}</span>`;
+            // Meta: status badge + path
+            html += `<span class="vbm-meta">${statusBadge}`;
+            html += `<span class="row-path" data-parentid="${item.parentId || ''}" dir="auto">...</span>`;
+            // Row buttons: mark + delete (§1.5)
+            html += `<button class="vbm-row-btn dead-mark-btn" data-id="${item.id}" aria-label="${marked ? (_m('rowActionUnmark') || 'Unmark') : (_m('rowActionMark') || 'Mark')}">${marked ? '⚑' : '⚐'}</button>`;
+            html += `<button class="vbm-row-btn dead-delete-btn" data-id="${item.id}" aria-label="${_m('rowActionDelete') || 'Delete'}">✕</button>`;
+            html += '</span>';
             html += '</li>';
         }
         html += '</ul>';
 
         container.innerHTML = html;
         bindEvents();
+
+        // Resolve parent path labels
+        container.querySelectorAll('.dead-row .row-path').forEach(el => {
+            const pid = el.dataset.parentid;
+            if (pid) {
+                chrome.bookmarks.get(pid, nodes => {
+                    if (nodes && nodes.length) {
+                        el.textContent = nodes[0].title || '';
+                    }
+                });
+            }
+        });
+    };
+
+    // Build status badge HTML with proper token classes (§3.5)
+    const getStatusBadge = (result) => {
+        if (!result || result.ok) return '';
+        if (result.status === 'blocked') {
+            let label = _m('deadBlocked') || 'blocked';
+            return `<span class="vbm-badge warning">${label}</span>`;
+        }
+        if (result.status === 'skipped') {
+            let label = _m('deadSkipped') || 'skipped';
+            return `<span class="vbm-badge muted">${label}</span>`;
+        }
+        // dead/error
+        let label = statusLabel(result);
+        return `<span class="vbm-badge danger">${label}</span>`;
     };
 
     const bindEvents = () => {
@@ -280,12 +334,14 @@ export function initViewDead(ctx = {}) {
         const abortBtn = container.querySelector('#dead-abort');
         if (abortBtn) abortBtn.addEventListener('click', abortScan);
 
-        // Filter select
-        const filterSel = container.querySelector('#dead-filter');
-        if (filterSel) {
-            filterSel.addEventListener('change', () => {
-                scanFilter = filterSel.value;
-                renderResults();
+        // Segmented filter buttons (§3.5)
+        const filterSeg = container.querySelector('#dead-filter-segmented');
+        if (filterSeg) {
+            filterSeg.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    scanFilter = btn.dataset.filter;
+                    renderResults();
+                });
             });
         }
 
@@ -299,15 +355,21 @@ export function initViewDead(ctx = {}) {
 
         // Individual mark/unmark
         container.querySelectorAll('.dead-mark-btn').forEach(btn => {
-            btn.addEventListener('click', () => toggleMark(btn.dataset.id));
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                toggleMark(btn.dataset.id);
+            });
         });
 
         // Individual delete
         container.querySelectorAll('.dead-delete-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
                 const id = btn.dataset.id;
+                const titleEl = btn.closest('.dead-row').querySelector('.vbm-title');
+                const title = titleEl ? titleEl.textContent : id;
                 dialogs.ConfirmDialog.open({
-                    dialog: _m('deadConfirmDelete', [btn.closest('.dead-row').querySelector('.dead-title').textContent]),
+                    dialog: _m('deadConfirmDelete', [title]),
                     button1: `<strong>${_m('delete')}</strong>`,
                     button2: _m('nope'),
                     fn1: () => {
@@ -321,15 +383,39 @@ export function initViewDead(ctx = {}) {
         });
     };
 
-    // v4 task 2: keyboard navigation
+    // v4 task 2: full keyboard navigation with view-specific keys (§2.3)
     initListKeyboard(container, {
         onEnter(id) {
-            // Open the dead link on Enter (useful for inspection)
             chrome.bookmarks.get(id, nodes => {
                 if (nodes && nodes.length && nodes[0].url) {
                     actions.openBookmark(nodes[0].url);
                 }
             });
+        },
+        onDelete(id) {
+            dialogs.ConfirmDialog.open({
+                dialog: _m('deadConfirmDelete', [id]),
+                button1: `<strong>${_m('delete')}</strong>`,
+                button2: _m('nope'),
+                fn1: () => {
+                    actions.deleteBookmark(id);
+                    deadResults.delete(id);
+                    deadItems = deadItems.filter(b => b.id !== id);
+                    renderResults();
+                }
+            });
+        },
+        onReveal(id) {
+            // R key: reveal in tree (§2.3)
+            if (viewManager) viewManager.activate('tree');
+        },
+        onExtraKey(key, id) {
+            // M key: mark/unmark (§2.3)
+            if (key === 'm' || key === 'M') {
+                toggleMark(id);
+                return true; // consumed
+            }
+            return false;
         }
     });
 

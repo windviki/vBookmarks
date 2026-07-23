@@ -9,6 +9,7 @@
  */
 
 import { initListKeyboard } from './list-keyboard.js';
+import { formatRelativeTime } from './format-utils.js';
 
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -27,8 +28,13 @@ export function initViewStats(ctx = {}) {
         const stats = visitStats ? visitStats.getStats() : {};
         const entries = Object.entries(stats);
 
+        // Empty state with statsEnabled check (§3.4)
         if (!entries.length) {
-            container.innerHTML = `<div class="empty-state"><i>${_m('statsEmpty') || 'No visit data yet. Open bookmarks to collect statistics.'}</i></div>`;
+            const statsOn = store.get('statsEnabled', '1') !== 'false';
+            const msg = statsOn
+                ? (_m('statsEmpty') || 'Statistics will accumulate as you browse.')
+                : (_m('statsDisabled') || 'Visit statistics are disabled. Enable in options.');
+            container.innerHTML = `<div class="empty-state"><i>${msg}</i></div>`;
             return;
         }
 
@@ -42,22 +48,27 @@ export function initViewStats(ctx = {}) {
 
         let html = '';
 
-        // Sort toggle
+        // Toolbar: segmented sort + clear button (§3.4)
         html += '<div class="stats-toolbar">';
-        html += `<button class="stats-sort${sortBy==='count'?' active':''}" data-sort="count">${_m('statsSortByCount') || 'By count'}</button>`;
-        html += `<button class="stats-sort${sortBy==='recent'?' active':''}" data-sort="recent">${_m('statsSortByRecent') || 'By recent'}</button>`;
+        html += '<span class="vbm-segmented">';
+        html += `<button class="${sortBy==='count'?'active':''}" data-sort="count">${_m('statsSortByCount') || 'By count'}</button>`;
+        html += `<button class="${sortBy==='recent'?'active':''}" data-sort="recent">${_m('statsSortByRecent') || 'By recent'}</button>`;
+        html += '</span>';
         html += ` <button id="stats-clear" class="danger">${_m('statsClearData') || 'Clear data'}</button>`;
         html += '</div>';
 
         html += '<ul class="stats-list">';
         for (const [id, data] of entries) {
             const count = data.c || 0;
-            const time = data.t ? new Date(data.t).toLocaleString() : '';
-            // Title will be resolved asynchronously
-            html += `<li class="stats-row" data-id="${id}">`;
-            html += `<span class="stats-count">${(_m('statsVisitCount') || '$count$ visits').replace('$count$', String(count))}</span>`;
-            html += `<span class="stats-title" id="stats-title-${id}">...</span>`;
-            html += time ? `<span class="stats-time">${time}</span>` : '';
+            const relTime = formatRelativeTime(data.t || 0, _m);
+            // v4 task 2: count pill with tabular-nums (§3.4)
+            html += `<li class="vbm-row stats-row" data-id="${id}" data-node-id="${id}" role="listitem">`;
+            html += `<span class="vbm-icon-col"></span>`; // icon column alignment
+            html += `<span class="vbm-title" id="stats-title-${id}">...</span>`;
+            html += `<span class="vbm-meta">`;
+            html += `<span class="vbm-count-pill">✕${count}</span>`;
+            html += relTime ? `<span>${relTime}</span>` : '';
+            html += `</span>`;
             html += '</li>';
         }
         html += '</ul>';
@@ -77,7 +88,7 @@ export function initViewStats(ctx = {}) {
         }
 
         // Sort buttons
-        container.querySelectorAll('.stats-sort').forEach(btn => {
+        container.querySelectorAll('.stats-toolbar .vbm-segmented button').forEach(btn => {
             btn.addEventListener('click', () => {
                 sortBy = btn.dataset.sort;
                 store.set('statsSort', sortBy);
@@ -106,7 +117,6 @@ export function initViewStats(ctx = {}) {
             row.addEventListener('click', () => {
                 const id = row.dataset.id;
                 if (visitStats) visitStats.recordVisit(id);
-                // Open in current tab
                 chrome.bookmarks.get(id, nodes => {
                     if (nodes && nodes.length && nodes[0].url) {
                         actions.openBookmark(nodes[0].url);
@@ -116,7 +126,7 @@ export function initViewStats(ctx = {}) {
         });
     };
 
-    // v4 task 2: keyboard navigation
+    // v4 task 2: full keyboard navigation (§2.3)
     initListKeyboard(container, {
         onEnter(id) {
             chrome.bookmarks.get(id, nodes => {
@@ -125,6 +135,11 @@ export function initViewStats(ctx = {}) {
                     actions.openBookmark(nodes[0].url);
                 }
             });
+        },
+        onReveal(id) {
+            // R key: reveal in tree (§2.3)
+            const viewManager = ctx.viewManager;
+            if (viewManager) viewManager.activate('tree');
         }
     });
 
