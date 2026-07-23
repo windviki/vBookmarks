@@ -61,6 +61,7 @@ JS_FILES = [
     'src/icons.js',
     'src/view-manager.js',
     'src/list-keyboard.js',
+    'src/format-utils.js',
     'src/view-recent.js',
     'src/view-stats.js',
     'src/view-dead.js',
