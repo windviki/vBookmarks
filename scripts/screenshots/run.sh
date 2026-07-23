@@ -24,11 +24,19 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js,verify-keyboard.js} "$CTX/"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 docker run --rm "$IMAGE"
 [ "${1:-}" = "--smoke-only" ] && exit 0
+
+# v4 task 2: keyboard / focus-model / search-flow verification
+echo "── keyboard verification ──"
+name="vbm-verify-kb-$$"
+docker rm -f "$name" >/dev/null 2>&1 || true
+docker create --name "$name" "$IMAGE" node /work/verify-keyboard.js >/dev/null
+docker start -a "$name"
+docker rm "$name" >/dev/null
 
 for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js; do
     name="vbm-shots-$$-${suite%.js}"
