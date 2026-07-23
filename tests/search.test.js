@@ -457,7 +457,7 @@ describe('input listeners', () => {
         expect(s.isActive()).toBe(true);
     });
 
-    it('Escape with a query quits without focus fix; with empty input it is a no-op', () => {
+    it('Escape with a query clears input + records history, stays in search view (v4 task 2 two-step Esc)', () => {
         const { s, els } = setup({});
         const focusTarget = makeEl();
         els.tree._qs['.focus'] = focusTarget;
@@ -465,8 +465,10 @@ describe('input listeners', () => {
         let prevented = 0;
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
         expect(prevented).toBe(1);
-        expect(s.isActive()).toBe(false);
-        expect(focusTarget.focused).toBe(false); // quit(true)
+        // v4 task 2: first Esc clears input, stays in search view
+        expect(s.isActive()).toBe(true);
+        expect(els['search-input'].value).toBe('');
+        // second Esc (global handler) will return to tree
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
         expect(prevented).toBe(1); // input empty: popup is allowed to close
     });

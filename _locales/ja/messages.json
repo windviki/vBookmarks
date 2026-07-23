@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "まだ訪問データがありません。ブックマークを開いて統計を収集してください。"
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "件数順"
   },

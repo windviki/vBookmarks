@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Nog geen bezoekgegevens. Open bladwijzers om statistieken te verzamelen."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Op aantal"
   },

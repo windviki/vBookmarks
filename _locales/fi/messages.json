@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Ei vielä käyntitietoja. Avaa kirjanmerkkejä tilastojen keräämiseksi."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Määrän mukaan"
   },

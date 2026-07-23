@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "এখনো কোনো ভিজিট ডেটা নেই। পরিসংখ্যান সংগ্রহ করতে বুকমার্ক খুলুন।"
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "গণনা অনুসারে"
   },

@@ -769,6 +769,9 @@
   "statsEmpty": {
     "message": "暂无访问数据，打开书签以收集统计。"
   },
+  "statsEnableHistory": {
+    "message": "导入浏览历史"
+  },
   "statsSortByCount": {
     "message": "按次数"
   },

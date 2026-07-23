@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "ยังไม่มีข้อมูลการเข้าชม เปิดบุ๊กมาร์กเพื่อเก็บสถิติ"
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "ตามจำนวน"
   },

@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "अभी तक कोई विज़िट डेटा नहीं। आँकड़े जुटाने के लिए बुकमार्क खोलें।"
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "गणना के अनुसार"
   },

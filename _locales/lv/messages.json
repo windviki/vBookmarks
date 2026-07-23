@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Nav apmeklējumu datu. Atveriet grāmatzīmes, lai vāktu statistiku."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Pēc skaita"
   },

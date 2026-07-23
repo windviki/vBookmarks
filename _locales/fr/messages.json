@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Aucune donnée de visite pour l'instant. Ouvrez des favoris pour collecter des statistiques."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Par nombre"
   },

@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "لا توجد بيانات زيارة بعد. افتح الإشارات المرجعية لجمع الإحصائيات."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "حسب العدد"
   },

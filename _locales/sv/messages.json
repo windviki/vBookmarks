@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Inga besöksdata än. Öppna bokmärken för att samla statistik."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Efter antal"
   },

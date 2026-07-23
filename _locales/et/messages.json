@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Külastusandmeid pole veel. Avage järjehoidjad statistika kogumiseks."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Arvu järgi"
   },

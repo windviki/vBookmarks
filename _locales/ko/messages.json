@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "아직 방문 데이터가 없습니다. 북마크를 열어 통계를 수집하세요."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "개수별"
   },

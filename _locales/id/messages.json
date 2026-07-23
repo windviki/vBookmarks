@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Belum ada data kunjungan. Buka bookmark untuk mengumpulkan statistik."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Berdasarkan jumlah"
   },

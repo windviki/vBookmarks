@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Nu există încă date de vizită. Deschideți marcajele pentru a colecta statistici."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "După număr"
   },

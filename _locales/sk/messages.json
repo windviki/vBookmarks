@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Zatiaľ žiadne údaje o návštevách. Otvorte záložky na zber štatistík."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Podľa počtu"
   },

@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Henüz ziyaret verisi yok. İstatistik toplamak için yer imlerini açın."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Sayıya göre"
   },

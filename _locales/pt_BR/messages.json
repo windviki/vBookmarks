@@ -759,6 +759,9 @@
   "statsEmpty": {
     "message": "Nenhum dado de visita ainda. Abra favoritos para coletar estatísticas."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Por quantidade"
   },

@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Ni podatkov o obiskih. Odprite zaznamke za zbiranje statistike."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Po številu"
   },

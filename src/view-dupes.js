@@ -202,7 +202,7 @@ export function initViewDupes(ctx = {}) {
                 const rowClass = isKeeper ? 'keeper-selected' : 'danger-preview';
                 html += `<li class="vbm-row ${rowClass}" data-id="${item.id}" data-group-idx="${groupIdx}" data-node-id="${item.id}" role="listitem">`;
                 // Keeper radio mark (§3.6)
-                html += `<span class="vbm-keeper-radio${isKeeper ? ' filled' : ' empty'}" aria-label="${isKeeper ? (_m('dupesKeeperSet') || 'Keeper') : ''}">${isKeeper ? '✓' : ''}</span>`;
+                html += `<span class="vbm-keeper-radio${isKeeper ? ' filled' : ' empty'}" aria-label="${isKeeper ? (_m('dupesKeeperSet') || 'Keeper') : ''}"></span>`;
                 // Favicon placeholder (icon column alignment)
                 html += `<span class="vbm-icon-col"><img src="${chrome.runtime.getURL('/_favicon/')}?pageUrl=${encodeURIComponent(item.url)}&size=32" width="16" height="16" alt=""></span>`;
                 // Title — member rows NEVER show URL (§3.6 信息不重复原则)

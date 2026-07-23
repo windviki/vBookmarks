@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Noch keine Besuchsdaten. Lesezeichen öffnen, um Statistiken zu sammeln."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Nach Anzahl"
   },

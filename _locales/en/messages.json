@@ -887,6 +887,10 @@
       }
     }
   },
+  "statsEnableHistory": {
+    "description": "Button to request the history permission for importing browsing history into visit stats",
+    "message": "Import browsing history"
+  },
   "statsDisabled": {
     "description": "Shown when visit statistics are disabled in options",
     "message": "Visit statistics are disabled. Enable them in options."

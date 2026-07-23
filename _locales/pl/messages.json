@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Brak danych o odwiedzinach. Otwórz zakładki, aby zbierać statystyki."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Według liczby"
   },

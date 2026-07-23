@@ -326,10 +326,18 @@ export function initSearch(ctx = {}) {
             }
         } else if (e.key === 'Escape') { // esc
             if (searchInput.value) {
-                // Pressing esc shouldn't close the popup when search field has value
+                // v4 task 2: first Esc → record history, clear input, keep results visible
                 e.preventDefault();
-                quitSearchMode(true);
+                recordSearchHistory();
+                persistLastQuery();
+                searchInput.value = '';
+                updateClearBtn();
+                // Don't quit search mode — stay in search view, results persist
+                // Re-render history block so the new entry appears
+                renderHistoryBlock();
             }
+            // If input is already empty, let the global Esc handler deal with it
+            // (keyboard.js dispatchEsc → back to tree)
         }
     });
 

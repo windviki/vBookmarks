@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "עדיין אין נתוני ביקור. פתח סימניות כדי לאסוף סטטיסטיקות."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "לפי כמות"
   },

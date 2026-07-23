@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Данных о посещениях пока нет. Откройте закладки для сбора статистики."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "По количеству"
   },

@@ -26,17 +26,33 @@ export function initViewStats(ctx = {}) {
 
     let sortBy = store.get('statsSort', 'count'); // 'count' | 'recent'
 
+    let historyPermChecked = false;
+
     const refresh = () => {
         const stats = visitStats ? visitStats.getStats() : {};
         const entries = Object.entries(stats);
 
-        // Empty state with statsEnabled check (§3.4)
+        // Empty state with statsEnabled check (§3.4) + history permission prompt
         if (!entries.length) {
             const statsOn = store.get('statsEnabled', '1') !== 'false';
-            const msg = statsOn
-                ? (_m('statsEmpty') || 'Statistics will accumulate as you browse.')
-                : (_m('statsDisabled') || 'Visit statistics are disabled. Enable in options.');
-            container.innerHTML = `<div class="empty-state"><i>${msg}</i></div>`;
+            if (!statsOn) {
+                container.innerHTML = `<div class="empty-state"><i>${_m('statsDisabled') || 'Visit statistics are disabled. Enable in options.'}</i></div>`;
+            } else {
+                let html = `<div class="empty-state"><i>${_m('statsEmpty') || 'Statistics will accumulate as you browse.'}</i></div>`;
+                // Offer to import Chrome history
+                if (visitStats && visitStats.requestHistoryPermission && !historyPermChecked) {
+                    html += `<div style="text-align:center;margin-top:8px"><button id="stats-enable-history">${_m('statsEnableHistory') || 'Import browsing history'}</button></div>`;
+                }
+                container.innerHTML = html;
+                const btn = container.querySelector('#stats-enable-history');
+                if (btn) btn.addEventListener('click', () => {
+                    visitStats.requestHistoryPermission().then(granted => {
+                        historyPermChecked = true;
+                        if (granted) refresh();
+                        else container.innerHTML = `<div class="empty-state"><i>${_m('statsEmpty') || 'No visit data yet.'}</i></div>`;
+                    });
+                });
+            }
             return;
         }
 
@@ -155,7 +171,14 @@ export function initViewStats(ctx = {}) {
     });
 
     return {
-        activate() { refresh(); },
+        activate() {
+            // Import Chrome history data on first activation
+            if (visitStats && visitStats.importHistory) {
+                visitStats.importHistory().then(() => refresh());
+            } else {
+                refresh();
+            }
+        },
         deactivate() {},
         refresh
     };

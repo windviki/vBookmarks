@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Nessun dato di visita. Apri segnalibri per raccogliere statistiche."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Per conteggio"
   },

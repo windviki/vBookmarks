@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Még nincs látogatási adat. Nyissa meg a könyvjelzőket a statisztikák gyűjtéséhez."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "Darabszám szerint"
   },

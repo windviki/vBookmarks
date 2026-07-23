@@ -65,6 +65,9 @@
         "alarms",
         "clipboardWrite"
 	],
+	"optional_permissions": [
+		"history"
+	],
     "web_accessible_resources": [{
         "resources": [ "_favicon/*" ],
         "matches": ["<all_urls>"]

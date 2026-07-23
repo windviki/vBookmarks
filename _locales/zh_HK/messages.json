@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "暫無瀏覽數據。開啟書籤以收集統計資料。"
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "按數量"
   },

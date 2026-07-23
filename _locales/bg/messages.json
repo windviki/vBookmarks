@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "Все още няма данни за посещения. Отворете отметки, за да съберете статистика."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "По брой"
   },

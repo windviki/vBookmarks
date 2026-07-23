@@ -541,11 +541,7 @@ body.linux input {
     flex: none;
 }
 
-/* sync-indicator 叠加在图标槽内，不挤压标题 */
-#tree ul li .favicon-container .sync-indicator,
-#results ul li .favicon-container .sync-indicator {
-    flex: none;
-}
+/* sync-indicator and dead-mark are absolutely positioned — no flex needed */
 
 #results ul li i,
 #tree ul li i {

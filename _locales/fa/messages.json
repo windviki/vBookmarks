@@ -763,6 +763,9 @@
   "statsEmpty": {
     "message": "هنوز داده‌ای از بازدید وجود ندارد. برای جمع‌آوری آمار، نشانک‌ها را باز کنید."
   },
+  "statsEnableHistory": {
+    "message": "[TODO:statsEnableHistory]"
+  },
   "statsSortByCount": {
     "message": "بر اساس تعداد"
   },
