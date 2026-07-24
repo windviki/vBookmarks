@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Mostrar confirmación al abrir muchos marcadores desde una carpeta."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Añadir separador"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Ordenar contenido de carpeta"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "¿Está seguro de que desea eliminar la carpeta $folderName$ y $bookmarkCount$ marcador(es) en ella?",

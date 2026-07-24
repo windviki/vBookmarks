@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "اضافه کردن جداکننده"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "مرتب‌سازی محتویات پوشه"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",

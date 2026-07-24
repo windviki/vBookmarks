@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "フォルダから多くのブックマークを開くとき、警告する"
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "区切りを追加"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "フォルダを並べ替え"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",

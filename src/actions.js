@@ -624,22 +624,41 @@ export function initActions(ctx = {}) {
             });
         },
 
-        // P3.3: no more ConfirmDialog for non-empty folders — the undo toast
-        // is the safety net, so every folder delete takes the same path.
-        // bookmarkCount/folderCount stay in the signature (callers pass them)
-        // but are no longer read.
+        // v4 task-2 (§5.7): deleting a NON-EMPTY folder asks for
+        // confirmation first — a limited walk-back of the P3.3 quiet flow
+        // (a misclicked folder delete is expensive and the toast's undo
+        // window can be missed). Empty folders and single bookmarks keep
+        // the direct delete+toast path; confirmDeleteFolder (default on)
+        // restores the pure toast flow when turned off. The counts come
+        // from the callers (keyboard.js/context-menu.js/palette.js), which
+        // kept counting children after P3.3 — this reconnects the consumer.
         deleteBookmarks: (id, bookmarkCount, folderCount) => {
             const li = $(`neat-tree-item-${id}`);
             const item = li.querySelector('span');
             const folderName = item.textContent.trim();
-            undo.capture(id);
-            chrome.bookmarks.removeTree(id, () => {
-                li.parentNode && li.parentNode.removeChild(li);
-                undo.showToast(_m('deletedFolder', [folderName]));
-            });
-            const nearLi = li.nextElementSibling || li.previousElementSibling;
-            if (nearLi)
-                nearLi.querySelector('a, span').focus();
+            const doDelete = () => {
+                undo.capture(id);
+                chrome.bookmarks.removeTree(id, () => {
+                    li.parentNode && li.parentNode.removeChild(li);
+                    undo.showToast(_m('deletedFolder', [folderName]));
+                });
+                const nearLi = li.nextElementSibling || li.previousElementSibling;
+                if (nearLi)
+                    nearLi.querySelector('a, span').focus();
+            };
+            // Mixed contents (bookmarks + subfolders) are summed into one
+            // count — a single dialog per folder delete.
+            const totalChildren = (bookmarkCount || 0) + (folderCount || 0);
+            if (totalChildren > 0 && !!store.get('confirmDeleteFolder', '1')) {
+                dialogs.ConfirmDialog.open({
+                    dialog: _m('confirmDeleteFolder', `${totalChildren}`),
+                    button1: `<strong>${_m('confirmDeleteFolderButton')}</strong>`,
+                    button2: _m('nope'),
+                    fn1: doDelete
+                });
+            } else {
+                doDelete();
+            }
         }
 
     };

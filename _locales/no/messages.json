@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Vis bekreftelse når du åpner mange bokmerker fra en mappe."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Legg Til Skillelinje"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sorter mappeinnhold"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Er du sikker på at du vil slette mappen $folderName$ og $bookmarkCount$ bokmerke(r) i den?",

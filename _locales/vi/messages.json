@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Thêm Dòng Kẻ"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sắp xếp nội dung thư mục"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",

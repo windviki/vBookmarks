@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Показувати підтвердження при відкритті багатьох закладок з папки."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Додати розділювач"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Сортувати вміст папки"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ви впевнені, що хочете видалити папку $folderName$ та $bookmarkCount$ закладку(и) в ній?",

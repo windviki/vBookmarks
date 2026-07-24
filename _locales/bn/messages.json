@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "সেপারেটর যোগ করুন"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "ফোল্ডার সাজান"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",

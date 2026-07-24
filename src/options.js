@@ -33,6 +33,8 @@ const $ = id => document.getElementById(id);
             { id: 'close-unused-folders', key: 'closeUnusedFolders', defaultValue: '', inverted: false },
             { id: 'popup-stay-open', key: 'bookmarkClickStayOpen', defaultValue: '', inverted: false },
             { id: 'confirm-open-folder', key: 'dontConfirmOpenFolder', defaultValue: '', inverted: true },
+            // v4 task-2 (§5.7): non-empty folder delete confirmation, default on
+            { id: 'confirm-delete-folder', key: 'confirmDeleteFolder', defaultValue: '1', inverted: false },
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
             { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
@@ -142,6 +144,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-close-unused-folders').innerText = __m('optionCloseUnusedFolders');
         document.getElementById('option-popup-stay-open').innerText = __m('optionPopupStays');
         document.getElementById('option-confirm-open-folder').innerText = __m('optionConfirmOpenFolder');
+        document.getElementById('option-confirm-delete-folder').innerText = __m('optionConfirmDeleteFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');

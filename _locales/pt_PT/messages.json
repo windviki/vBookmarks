@@ -285,6 +285,9 @@
   "optionConfirmOpenFolder": {
     "message": "Mostra confirmação quando abre vários marcadores duma pasta."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Adicionar separador"
   },
@@ -451,6 +454,17 @@
   },
   "sortFolderContents": {
     "message": "Ordenar conteúdo da pasta"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "placeholders": {

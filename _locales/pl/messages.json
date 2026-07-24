@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Pokaż potwierdzenie przy otwieraniu wielu zakładek z folderu."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Dodaj separator"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sortuj zawartość folderu"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Czy na pewno chcesz usunąć folder $folderName$ i $bookmarkCount$ zakładek w nim?",

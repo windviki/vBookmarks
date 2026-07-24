@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Přidat Oddělovač"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Seřadit obsah složky"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Opravdu chcete smazat složku $folderName$ a $bookmarkCount$ záložek v ní?",

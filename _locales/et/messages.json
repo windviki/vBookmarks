@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Lisa eraldaja"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sorteeri kausta sisu"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",

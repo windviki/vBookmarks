@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "打开多个书签前需确认"
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "添加分隔符"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "排序文件夹内容"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "您确定要删除文件夹[$folderName$]（包含 $bookmarkCount$ 个书签）？",

@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Elválasztó Hozzáadása"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Mappa tartalmának rendezése"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",

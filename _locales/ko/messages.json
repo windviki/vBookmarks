@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "구분자 추가"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "폴더 정렬"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ 폴더와 그 안의 $bookmarkCount$개 북마크를 삭제하시겠습니까?",

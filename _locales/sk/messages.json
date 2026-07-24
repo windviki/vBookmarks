@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Pridať oddeľovač"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Zoradiť obsah priečinka"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",

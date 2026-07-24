@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Lägg till avskiljare"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sortera mappinnehåll"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Är du säker på att du vill ta bort mappen $folderName$ och $bookmarkCount$ bokmärke(n) i den?",

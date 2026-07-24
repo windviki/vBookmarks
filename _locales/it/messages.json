@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Mostra un messaggio di conferma all'apertura di molti preferiti da una cartella."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Add Separator"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Ordina contenuto cartella"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Eliminare la cartella $folderName$ e i $bookmarkCount$ preferiti contenuti in essa?",

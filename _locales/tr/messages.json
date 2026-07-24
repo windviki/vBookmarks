@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Bir klasörden birçok yer imi açarken onay göster."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Ayırıcı ekle"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Klasör İçeriğini Sırala"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",

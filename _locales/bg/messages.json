@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Показване на потвърждение при отваряне на много отметки от папка."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Добавяне на разделител"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Сортиране на съдържанието на папка"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Сигурни ли сте, че искате да изтриете папка $folderName$ и $bookmarkCount$ отметка(и) в нея?",

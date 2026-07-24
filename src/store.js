@@ -49,6 +49,8 @@
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        // v4 task-2: non-empty folder delete confirmation (slice A2, §5.7)
+        'confirmDeleteFolder',
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme',

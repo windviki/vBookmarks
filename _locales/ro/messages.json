@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Adaugă Separator"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Sortează conținutul folderului"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",

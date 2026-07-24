@@ -281,6 +281,9 @@
   "optionConfirmOpenFolder": {
     "message": "从文件夹打开大量书签时显示确认。"
   },
+  "optionConfirmDeleteFolder": {
+    "message": "删除非空文件夹前确认"
+  },
   "addSeparator": {
     "message": "添加分隔线"
   },
@@ -446,6 +449,17 @@
   },
   "sortFolderContents": {
     "message": "排序文件夹内容"
+  },
+  "confirmDeleteFolder": {
+    "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "删除"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "确定要删除文件夹 $folderName$ 及其中的 $bookmarkCount$ 个书签吗？",

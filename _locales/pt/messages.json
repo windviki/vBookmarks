@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Exibir confirmação ao abrir muitos favoritos de uma pasta."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Adicionar separador"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Ordenar conteúdo da pasta"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Tem certeza de que deseja excluir a pasta $folderName$ e $bookmarkCount$ favorito(s) nela?",

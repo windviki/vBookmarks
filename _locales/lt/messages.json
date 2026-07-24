@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Pridėti skirtuką"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Rūšiuoti aplanko turinį"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",

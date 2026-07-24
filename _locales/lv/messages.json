@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Pievienot atdalītāju"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Kārtot mapes saturu"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $bookmarkCount$ grāmatzīmi(-es) tajā?",

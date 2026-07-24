@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Добавить разделитель"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Сортировать содержимое папки"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Вы уверены, что хотите удалить папку $folderName$ с $bookmarkCount$ вложенными закладками?",

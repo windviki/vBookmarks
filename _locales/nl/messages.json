@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Scheidingsteken toevoegen"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Mapinhoud sorteren"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Weet u zeker dat u map $folderName$ en $bookmarkCount$ bladwijzer(s) daarin wilt verwijderen?",

@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "إضافة فاصل"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "فرز محتويات المجلد"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",

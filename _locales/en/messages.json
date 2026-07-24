@@ -29,6 +29,17 @@
   "advancedOptions": {
     "message": "Advanced Options"
   },
+  "confirmDeleteFolder": {
+    "message": "This folder contains $count$ item(s). You can undo the deletion.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Delete"
+  },
   "confirmDeleteFolderBookmarks": {
     "message": "Are you sure you want to delete $folderName$ folder and $bookmarkCount$ bookmark(s) in it?",
     "placeholders": {
@@ -368,6 +379,9 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Display confirmation when opening a lot of bookmarks from a folder."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Confirm before deleting non-empty folders"
   },
   "optionOnlyShowBookmarkBar": {
     "message": "Only show bookmarks in Bookmark Bar"

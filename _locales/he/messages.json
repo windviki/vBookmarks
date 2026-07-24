@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "הוסף מפריד"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "מיין תוכן תיקייה"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$bookmarkCount$ סימניות בה?",

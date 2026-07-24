@@ -810,10 +810,45 @@ describe('deleteBookmarks', () => {
         return { li, item, parent, sibFocus, ownFocus, ...ctx };
     };
 
-    // P3.3: the ConfirmDialog is gone — a captured snapshot + undo toast is
-    // the safety net for every folder delete, non-empty or not.
-    it('captures the folder, removes the tree and toasts — no ConfirmDialog', () => {
-        const { actions, calls, ops, parent, li, sibFocus } = setupFolder();
+    // v4 task-2 §5.7: a non-empty folder confirms first (default on) — a
+    // limited walk-back of P3.3; empty folders keep the direct delete+toast
+    // path, and the switch restores it for everything.
+    it('confirms a non-empty folder first, deleting only on confirm', () => {
+        const { actions, calls, ops, parent, li, sibFocus } = setupFolder({
+            storeData: { confirmDeleteFolder: '1' }
+        });
+        actions.deleteBookmarks('9', 3, 2);
+        expect(ops).toEqual([]); // nothing deleted yet
+        // mixed contents (bookmarks + subfolders): one dialog, summed count
+        expect(calls.confirm).toHaveLength(1);
+        expect(calls.confirm[0].dialog).toBe('confirmDeleteFolder[5]');
+        expect(calls.confirm[0].button1).toBe('<strong>confirmDeleteFolderButton</strong>');
+        expect(calls.confirm[0].button2).toBe('nope');
+        calls.confirm[0].fn1(); // the user confirms
+        expect(ops).toEqual([
+            ['capture', '9'],
+            ['removeTree', '9'],
+            ['toast', 'deletedFolder[My Folder]']
+        ]);
+        expect(parent.removedChildren).toEqual([li]);
+        expect(sibFocus.focused).toBe(true);
+    });
+
+    it('does nothing while the confirmation stays unanswered', () => {
+        const { actions, calls, ops, chrome } = setupFolder({
+            storeData: { confirmDeleteFolder: '1' }
+        });
+        actions.deleteBookmarks('9', 1, 0);
+        expect(calls.confirm).toHaveLength(1);
+        // no fn1 call: no capture, no removeTree, no toast
+        expect(ops).toEqual([]);
+        expect(chrome.bookmarks.removeTreeCalls).toEqual([]);
+    });
+
+    it('deletes directly when confirmDeleteFolder is off', () => {
+        const { actions, calls, ops, parent, li, sibFocus } = setupFolder({
+            storeData: { confirmDeleteFolder: '' }
+        });
         actions.deleteBookmarks('9', 3, 2);
         expect(calls.confirm).toEqual([]);
         expect(ops).toEqual([
@@ -825,8 +860,10 @@ describe('deleteBookmarks', () => {
         expect(sibFocus.focused).toBe(true);
     });
 
-    it('takes the same no-confirm path for an empty folder', () => {
-        const { actions, calls, ops, parent, li, sibFocus } = setupFolder();
+    it('takes the no-confirm path for an empty folder even with the setting on', () => {
+        const { actions, calls, ops, parent, li, sibFocus } = setupFolder({
+            storeData: { confirmDeleteFolder: '1' }
+        });
         actions.deleteBookmarks('9', 0, 0);
         expect(calls.confirm).toEqual([]);
         expect(ops).toEqual([

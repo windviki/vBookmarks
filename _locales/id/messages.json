@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Tambah Pemisah"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Urutkan Isi Folder"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $bookmarkCount$ markah di dalamnya?",

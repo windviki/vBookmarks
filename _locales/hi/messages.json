@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "सेपरेटर जोड़ें"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "फ़ोल्डर सामग्री क्रमबद्ध करें"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",

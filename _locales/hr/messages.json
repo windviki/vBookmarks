@@ -286,6 +286,9 @@
   "optionConfirmOpenFolder": {
     "message": "Prikaži potvrdu pri otvaranju mnogo oznaka iz mape."
   },
+  "optionConfirmDeleteFolder": {
+    "message": "[TODO:optionConfirmDeleteFolder]"
+  },
   "addSeparator": {
     "message": "Dodaj separator"
   },
@@ -452,6 +455,17 @@
   },
   "sortFolderContents": {
     "message": "Razvrstaj sadržaj mape"
+  },
+  "confirmDeleteFolder": {
+    "message": "[TODO:confirmDeleteFolder]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "[TODO:confirmDeleteFolderButton]"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Jeste li sigurni da želite izbrisati mapu $folderName$ i $bookmarkCount$ oznaku(e) u njoj?",
