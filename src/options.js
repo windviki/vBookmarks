@@ -37,8 +37,6 @@ const $ = id => document.getElementById(id);
             { id: 'confirm-delete-folder', key: 'confirmDeleteFolder', defaultValue: '1', inverted: false },
             { id: 'remember-prev-state', key: 'dontRememberState', defaultValue: '', inverted: true },
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
-            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
-            { id: 'recent-collapsed', key: 'recentBookmarksCollapsed', defaultValue: '', inverted: false },
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
             { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
@@ -62,11 +60,16 @@ const $ = id => document.getElementById(id);
             { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
         ];
 
-        // v4 task-2: the "Views" group (docs/v4task-2.md §7). Tab strip and
-        // list-row path labels, both default on.
+        // v4 task-2: the "Views" group (docs/v4task-2.md §7). Tab strip,
+        // list-row path labels, the recent tab and search history — all on
+        // by default. (showRecentBookmarks moved here from General when the
+        // in-tree recent section became a view; recentBookmarksCollapsed is
+        // now a dead key — stored value kept, UI removed.)
         const viewSettings = [
             { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
-            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false }
+            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
+            { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
+            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
         ];
         for (const setting of viewSettings) {
             const element = $(setting.id);
@@ -77,6 +80,16 @@ const $ = id => document.getElementById(id);
                 await setSetting(setting.key, newValue);
             });
         }
+        // Turning search history off also wipes the stored history (the hint
+        // under the checkbox tells the user so).
+        $('search-history-enabled').addEventListener('change', async () => {
+            if (!$('search-history-enabled').checked)
+                await setSetting('searchHistory', '[]');
+        });
+        // Recent-view size: fixed choices keep the list useful but bounded.
+        const recentCount = $('recent-count');
+        recentCount.value = await getSetting('recentCount', '20');
+        recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
 
         // Initialize sync settings. One write per change is enough: the
         // service worker (src/sync-engine.js) observes chrome.storage.sync
@@ -147,8 +160,6 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-confirm-delete-folder').innerText = __m('optionConfirmDeleteFolder');
         document.getElementById('option-remember-prev-state').innerText = __m('optionRememberPrevState');
         document.getElementById('option-only-show-bmbar').innerText = __m('optionOnlyShowBookmarkBar');
-        document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
-        document.getElementById('option-recent-collapsed').innerText = __m('optionRecentCollapsed');
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');
@@ -156,6 +167,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('views-options').innerText = __m('optionsGroupViews');
         document.getElementById('option-show-view-tabs').innerText = __m('optionShowViewTabs');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
+        document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
+        document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
+        document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
+        document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

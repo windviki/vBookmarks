@@ -347,8 +347,8 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 
 - tab/视图：`viewTree`/`viewSearch`/`viewRecent`/`viewStats`/`viewDead`/`viewDupes`；分组 `optionsGroupViews`
 - palette：六个跳转命令（`paletteCmdGo*` 或复用 view*，实施时二选一回写本文）、`paletteCmdSearchInView`、`paletteCmdOptions`
-- 搜索历史：`searchHistoryTitle`/`searchHistoryClear`/`searchHistoryRemove`/`optionSearchHistory`
-- recent：`recentRevealInTree`
+- 搜索历史：`searchHistoryTitle`/`searchHistoryClear`/`searchHistoryRemove`/`optionSearchHistory`；实施补充（切片 B 回写）：`searchHistoryResultCount`(`$n$`)/`optionSearchHistoryHint`
+- recent：`recentRevealInTree`；实施补充（切片 B 回写）：`recentEmpty`/`optionRecentCount` + 相对时间桶 `timeJustNow`/`timeMinutesAgo`(`$n$`)/`timeHoursAgo`(`$n$`)/`timeYesterday`/`timeDaysAgo`(`$n$`)（搜索历史时间戳共用）
 - dead：`deadLastScanAt`(`$time$`)/`deadRescan`/`deadStartHint`/`deadMark`/`deadUnmark`/`deadMarked`/`deadMarkAll`/`deadUnmarkAll`/`deadFilterAll`/`deadFilterDead`/`deadFilterBlocked`/`deadStatusBlocked`/`optionDeadProxy`/`deadProxyHint`/`optionDeadScanConcurrency`/`optionDeadScanTimeout`
 - dupes：`dupesStrategyOldest`/`Newest`/`BookmarkBar`/`ShortestTitle`/`Shallowest`/`MostVisited`/`dupesApplyAll`(`$count$`)/`dupesKeepThis`/`dupesRemoveRow`/`dupesGroupCleanRest`/`dupesPreviewSummary`(`$groups$`,`$count$`)/`dupesScopeAll`/`dupesScopeBar`/`dupesIgnoreScheme`
 - stats：`optionStatsEnabled`/`statsSortByCount`/`statsSortByRecent`/`statsEmpty`/`statsVisitCount`(`$count$`)/`statsClearData`

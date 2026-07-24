@@ -329,7 +329,8 @@ const setup = (opts = {}) => {
         setOpens: v => { state.opens = v; },
         setRememberState: v => { state.rememberState = v; },
         middleClickBgTab: !!opts.middleClickBgTab,
-        leftClickNewTab: !!opts.leftClickNewTab
+        leftClickNewTab: !!opts.leftClickNewTab,
+        views: opts.views
     });
 
     // A folder row <li id="neat-tree-item-N" class="parent"><span></span></li>
@@ -374,17 +375,12 @@ const setup = (opts = {}) => {
 };
 
 describe('module API + startup wiring', () => {
-    it('returns { generateTree, adaptBookmarkTooltips, revealFolder } and wires the startup getTree to generateTree', () => {
+    it('returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree, bookmarkHandler } and wires the startup getTree to generateTree', () => {
         const { treeView, chrome } = setup({});
-        expect(Object.keys(treeView).sort()).toEqual(['adaptBookmarkTooltips', 'generateTree', 'revealFolder']);
+        expect(Object.keys(treeView).sort()).toEqual(
+            ['adaptBookmarkTooltips', 'bookmarkHandler', 'generateTree', 'revealFolder', 'revealInTree']);
         expect(chrome.bookmarks.getTreeCalls).toHaveLength(1);
         expect(chrome.bookmarks.getTreeCalls[0]).toBe(treeView.generateTree);
-    });
-
-    it('registers recent-section refresh on onCreated and onRemoved', () => {
-        const { chrome } = setup({});
-        expect(typeof chrome.bookmarks.onCreated.fn).toBe('function');
-        expect(typeof chrome.bookmarks.onRemoved.fn).toBe('function');
     });
 });
 
@@ -421,77 +417,12 @@ describe('generateTree', () => {
         expect(search.updateIndexCalls).toEqual([['ROOT']]);
     });
 
-    it('writes the recent section (escaped header) plus the tree HTML into $tree.innerHTML', () => {
-        const { treeView, tree } = setup({
-            storeData: { showRecentBookmarks: '1' },
-            messages: { recentBookmarks: 'R>"<' }
-        });
+    it('writes the tree HTML directly into $tree.innerHTML (the recent section moved to view-recent.js)', () => {
+        const { treeView, tree, chrome } = setup({ storeData: { showRecentBookmarks: '1' } });
         treeView.generateTree(['ROOT']);
-        expect(tree.innerHTML).toContain('<div id="recent-section">');
-        expect(tree.innerHTML).toContain('R&gt;&quot;&lt;'); // > then < then " escape order
-        expect(tree.innerHTML).toContain('HTML');
-        expect(tree.innerHTML.indexOf('recent-section')).toBeLessThan(tree.innerHTML.indexOf('HTML'));
-    });
-
-    it('omits the recent section entirely when disabled', () => {
-        const { treeView, tree, chrome } = setup({ storeData: { showRecentBookmarks: '' } });
-        treeView.generateTree(['ROOT']);
-        expect(tree.innerHTML).not.toContain('recent-section');
         expect(tree.innerHTML).toBe('HTML');
-        expect(chrome.bookmarks.getRecentCalls).toEqual([]);
-    });
-
-    it('renders the recent section collapsed by default when recentBookmarksCollapsed is set, skipping the fetch', () => {
-        const { treeView, tree, chrome } = setup({
-            storeData: { showRecentBookmarks: '1', recentBookmarksCollapsed: '1' }
-        });
-        treeView.generateTree(['ROOT']);
-        expect(tree.innerHTML).toContain('id="recent-section" class="collapsed"');
-        expect(tree.innerHTML).toContain('aria-expanded="false"');
-        expect(chrome.bookmarks.getRecentCalls).toEqual([]);
-    });
-
-    it('toggles the recent section via header click and persists the preference', () => {
-        const { treeView, tree, store, chrome, el } = setup({ storeData: { showRecentBookmarks: '1' } });
-        el('UL', 'recent-list'); // present so the initial fetch is not skipped
-        treeView.generateTree(['ROOT']);
-        expect(chrome.bookmarks.getRecentCalls).toEqual([20]); // initial fetch
-        // The header lives inside $tree.innerHTML in the page; register the
-        // section/header stubs the delegated handler resolves by id.
-        const section = el('DIV', 'recent-section');
-        const header = el('DIV', 'recent-header');
-        const ev = () => ({
-            button: 0,
-            target: { closest: sel => (sel === '#recent-header' ? header : null) },
-            preventDefault() {},
-            stopImmediatePropagation() {}
-        });
-
-        fire(tree, 'click', ev());
-        expect(section.classList.contains('collapsed')).toBe(true);
-        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '1']);
-        expect(header._attrs['aria-expanded']).toBe('false');
-
-        fire(tree, 'click', ev());
-        expect(section.classList.contains('collapsed')).toBe(false);
-        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '']);
-        expect(header._attrs['aria-expanded']).toBe('true');
-        expect(chrome.bookmarks.getRecentCalls).toEqual([20, 20]); // expand re-fetches
-    });
-
-    it('toggles the recent section via Enter/Space on the focused header', () => {
-        const { treeView, tree, store, el } = setup({ storeData: { showRecentBookmarks: '1' } });
-        treeView.generateTree(['ROOT']);
-        const section = el('DIV', 'recent-section');
-        const header = el('DIV', 'recent-header');
-        fire(tree, 'keydown', {
-            key: 'Enter',
-            target: header,
-            preventDefault() {},
-            stopImmediatePropagation() {}
-        });
-        expect(section.classList.contains('collapsed')).toBe(true);
-        expect(store.sets).toContainEqual(['recentBookmarksCollapsed', '1']);
+        expect(tree.innerHTML).not.toContain('recent-section');
+        expect(chrome.bookmarks.getRecentCalls).toEqual([]); // tree-view no longer fetches recents
     });
 
     it('restores the persisted scrollTop when rememberState is on', () => {
@@ -848,68 +779,35 @@ describe('bookmarkHandler', () => {
     });
 });
 
-describe('recent bookmarks section', () => {
-    const recentItems = [
-        { id: '101', parentId: '1', title: 'A', url: 'http://a/' },
-        { id: '102', parentId: '1', title: 'sep', url: 'http://sep/' },
-        { id: '103', parentId: '1', title: 'no url yet' }
-    ];
-
-    it('renders getRecent(20) entries into #recent-list, skipping separators and url-less items', () => {
-        const ctx = setup({
-            storeData: { showRecentBookmarks: '1' },
-            recentItems,
-            separatorUrls: ['http://sep/']
-        });
-        const list = ctx.el('UL', 'recent-list');
-        ctx.treeView.generateTree(['ROOT']);
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([20]);
-        expect(list.innerHTML).toContain('id="neat-recent-item-101"');
-        expect(list.innerHTML).toContain('data-parentid="1"');
-        expect(list.innerHTML).toContain('<a>101</a>');
-        expect(list.innerHTML).not.toContain('102'); // separator filtered out
-        expect(list.innerHTML).not.toContain('103'); // no url
-        expect(ctx.separatorChecks).toContainEqual(['sep', 'http://sep/']);
-        // virtual-entry extras are forwarded to the row template
-        expect(ctx.treeRender.calls.generateBookmarkHTML[0]).toEqual(
-            ['A', 'http://a/', 'style="-webkit-padding-start: 0px" data-virtual="1"', '101']);
+describe('revealInTree (v4 task-2 §2.3)', () => {
+    it('runs the revealFolder chain and activates the tree view', () => {
+        const activateCalls = [];
+        const views = { activate: (...args) => activateCalls.push(args) };
+        const ctx = setup({ parentPath: ['1', '7'], rememberState: false, views });
+        ctx.treeView.revealInTree('7');
+        expect(ctx.search.quitCalls).toBe(1);
+        expect(ctx.treeRender.calls.getParentPath[0][0]).toBe('7');
+        expect(ctx.state.opens).toEqual(['1', '7']);
+        expect(ctx.state.rememberState).toBe(true);
+        expect(ctx.store.sets).toContainEqual(['focusID', '7']);
+        expect(ctx.chrome.bookmarks.getTreeCalls).toHaveLength(2); // startup + reveal
+        expect(activateCalls).toEqual([['tree', { keepFocus: true }]]);
     });
 
-    it('debounces onCreated: a single event refreshes the list once after 300ms', () => {
-        const ctx = setup({ storeData: { showRecentBookmarks: '1' }, recentItems });
-        ctx.el('UL', 'recent-list');
-        ctx.chrome.bookmarks.onCreated.fn();
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([]); // debounced
-        expect(timeouts.filter(t => t[1] === 300)).toHaveLength(1);
-        tick(300);
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([20]);
+    it('still reveals when no views API is injected (minimal setups)', () => {
+        const ctx = setup({ parentPath: ['7'], rememberState: false });
+        ctx.treeView.revealInTree('7');
+        expect(ctx.store.sets).toContainEqual(['focusID', '7']);
+        expect(ctx.chrome.bookmarks.getTreeCalls).toHaveLength(2);
     });
 
-    it('debounces a burst of onCreated/onRemoved events into one refresh', () => {
-        const ctx = setup({ storeData: { showRecentBookmarks: '1' }, recentItems });
-        ctx.el('UL', 'recent-list');
-        ctx.chrome.bookmarks.onCreated.fn();
-        ctx.chrome.bookmarks.onRemoved.fn();
-        expect(clearedTimeouts).toContain(1); // the first timer got cancelled
-        expect(timeouts.filter(t => t[1] === 300)).toHaveLength(1);
-        tick(300);
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([20]); // exactly one refresh
-    });
-
-    it('schedules no refresh when the section is disabled', () => {
-        const ctx = setup({ storeData: { showRecentBookmarks: '' }, recentItems });
-        ctx.chrome.bookmarks.onCreated.fn();
-        ctx.chrome.bookmarks.onRemoved.fn();
-        expect(timeouts.filter(t => t[1] === 300)).toEqual([]);
-        tickAll();
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([]);
-    });
-
-    it('does nothing when the section element is absent from the page', () => {
-        const ctx = setup({ storeData: { showRecentBookmarks: '1' }, recentItems });
-        ctx.chrome.bookmarks.onCreated.fn();
-        tick(300);
-        expect(ctx.chrome.bookmarks.getRecentCalls).toEqual([]); // no #recent-list registered
+    it('the link-folder click branch prefers data-node-id over the id prefix', () => {
+        const ctx = setup({ parentPath: ['7'] });
+        const { li, a } = ctx.makeBookmark('70', { linkFolder: true });
+        li.id = 'results-item-70';
+        li.dataset.nodeId = '7';
+        fire(ctx.tree, 'click', makeEvent({ button: 0, target: a }));
+        expect(ctx.treeRender.calls.getParentPath[0][0]).toBe('7');
     });
 });
 

@@ -1,4 +1,13 @@
 {
+  "optionRecentCount": {
+    "message": "最近添加书签的显示条数"
+  },
+  "optionSearchHistory": {
+    "message": "记录搜索历史"
+  },
+  "optionSearchHistoryHint": {
+    "message": "关闭后将同时清空已有历史。"
+  },
   "optionShowSyncStatus": {
     "message": "显示同步状态指示器"
   },
@@ -31,6 +40,62 @@
   },
   "optionShowItemPath": {
     "message": "在列表行上显示所在文件夹路径"
+  },
+  "recentEmpty": {
+    "message": "暂无最近添加的书签。按 Ctrl+D 收藏当前页。"
+  },
+  "recentRevealInTree": {
+    "message": "在树中定位"
+  },
+  "searchHistoryClear": {
+    "message": "清空全部"
+  },
+  "searchHistoryRemove": {
+    "message": "移除该记录"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ 条结果",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "最近搜索"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ 天前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ 小时前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "刚刚"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ 分钟前",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "昨天"
+  },
+  "viewRecent": {
+    "message": "最近添加"
   },
   "viewTree": {
     "message": "书签树"

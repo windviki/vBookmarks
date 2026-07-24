@@ -25,6 +25,10 @@
  *   deactivate()            — optional leave hook
  *   onEscape()    — optional view-local Escape consumer; return true when
  *                   the key was consumed (dead scan abort, …)
+ *   onKey(e)      — optional view-local letter-key consumer (M/R/K,
+ *                   docs/v4task-2-list.md §2.3); keyboard.js consults it in
+ *                   the treeKeyDown default branch, before the type-ahead
+ *                   gate. Return true when the key was consumed.
  *   focus()       — optional default focus target (search focuses the input)
  *
  * The two structural views (tree/search) are registered here at init because
@@ -305,10 +309,12 @@ export function initViewManager(ctx = {}) {
 
     // --- Keyboard registration ------------------------------------------------
     // List views the keyboard layer binds its navigation handlers to; each
-    // entry carries its type-ahead capability (tree/search only per spec).
+    // entry carries its type-ahead capability (tree/search only per spec) and
+    // the view-local key consumer (M/R/K — docs/v4task-2-list.md §2.3),
+    // which keyboard.js consults before the type-ahead branch.
     const lists = () => visibleViews()
         .filter(v => v.listEl)
-        .map(v => ({ id: v.id, el: v.listEl, typeAhead: v.typeAhead !== false }));
+        .map(v => ({ id: v.id, el: v.listEl, typeAhead: v.typeAhead !== false, onKey: v.onKey || null }));
     const listOf = el => {
         const all = lists();
         for (let i = 0, l = all.length; i < l; i++) {

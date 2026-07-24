@@ -401,14 +401,21 @@ describe('keyboard registration (lists/listOf)', () => {
             container: makeEl(), listEl: makeEl(), hidden: true
         });
         expect(views.lists()).toEqual([
-            { id: 'tree', el: byId.tree, typeAhead: true },
-            { id: 'search', el: byId.results, typeAhead: true },
-            { id: 'recent', el: recent.listEl, typeAhead: false }
+            { id: 'tree', el: byId.tree, typeAhead: true, onKey: null },
+            { id: 'search', el: byId.results, typeAhead: true, onKey: null },
+            { id: 'recent', el: recent.listEl, typeAhead: false, onKey: null }
         ]);
         expect(views.listOf(byId.tree).id).toBe('tree');
         expect(views.listOf(byId.results).id).toBe('search');
-        expect(views.listOf(recent.listEl)).toEqual({ id: 'recent', el: recent.listEl, typeAhead: false });
+        expect(views.listOf(recent.listEl)).toEqual({ id: 'recent', el: recent.listEl, typeAhead: false, onKey: null });
         expect(views.listOf({})).toBeNull();
+    });
+
+    it('passes a view onKey hook through to its lists() entry', () => {
+        const { views, addRecent } = setup({});
+        const onKey = () => true;
+        addRecent({ typeAhead: false, onKey });
+        expect(views.lists()[2].onKey).toBe(onKey);
     });
 });
 

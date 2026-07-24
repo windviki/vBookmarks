@@ -5,17 +5,16 @@
  *
  * Owns: the tree-view state (the nodeTrees parent map and the onlyShowBMBar
  * startup flag), generateTree (subtree selection incl. onlyShowBMBar, the
- * search-index refresh, the recent-section mount, the sync-indicator refresh,
- * scroll/focus restore and the legacy local-separator migration) plus the
- * startup chrome.bookmarks.getTree call, the four tree event handlers (scroll
+ * search-index refresh, the sync-indicator refresh, scroll/focus restore and
+ * the legacy local-separator migration) plus the startup
+ * chrome.bookmarks.getTree call, the four tree event handlers (scroll
  * persistence, focus tracking with focusID, folder expand/collapse incl. lazy
  * child loading + closeUnusedFolders sibling collapse + opens persistence,
  * middle-click focus forcing), generateTreeForTarget (the search-result jump
- * scroll handler), bookmarkHandler (bookmark/folder open dispatch on
- * click/auxclick for both the tree and the search results pane) and the
- * virtual "recently added" section (generateRecentSectionHTML /
- * refreshRecentSection / debounced scheduleRecentRefresh on
- * chrome.bookmarks.onCreated/onRemoved).
+ * scroll handler) and bookmarkHandler (bookmark/folder open dispatch on
+ * click/auxclick for the tree, the search results pane and — bound by
+ * src/view-recent.js — the recent view's list). The virtual "recently added"
+ * section moved out to src/view-recent.js in v4 task-2 (slice B).
  *
  * initTreeView(ctx) is called once by neat.js right after actions/dnd init —
  * menus/search/dialogs/actions/dnd are all ready by then, so everything is
@@ -24,7 +23,6 @@
  * SeparatorManager an imported class there, so both arrive via ctx too.
  * ctx.store                 — settings store
  * ctx.tree                  — the #tree element (all tree event bindings)
- * ctx.separatorManager      — separator filtering in refreshRecentSection
  * ctx.SeparatorManager      — class, for the legacy local-separator migration
  * ctx.treeRender            — tree-render.js API (generateHTML & co.)
  * ctx.search                — search.js API (updateIndex/quit/reset/results)
@@ -39,11 +37,14 @@
  * ctx.middleClickBgTab      — middle-click opens a background tab when true
  * ctx.leftClickNewTab       — left-click opens a new tab when true
  *
- * Returns { generateTree, adaptBookmarkTooltips, revealFolder }: neat.js's
- * sortFolderContents rebuilds via treeView.generateTree, the resizer re-fits
- * tooltips via treeView.adaptBookmarkTooltips, and the command palette (P2)
- * jumps to a folder via treeView.revealFolder (the search-result link-folder
- * branch of bookmarkHandler runs the same function).
+ * Returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree,
+ * bookmarkHandler }: neat.js's sortFolderContents rebuilds via
+ * treeView.generateTree, the resizer re-fits tooltips via
+ * treeView.adaptBookmarkTooltips, the command palette (P2) jumps to a folder
+ * via treeView.revealFolder (the search-result link-folder branch of
+ * bookmarkHandler runs the same chain), and src/view-recent.js binds its
+ * list clicks to treeView.bookmarkHandler and its R key to
+ * treeView.revealInTree.
  * chrome.bookmarks.*, chrome.i18n.getMessage, document and setTimeout remain
  * page globals. No neatools helpers: hasClass/addClass/removeClass/toggleClass
  * → classList.* (the removeClass('open').setAttribute(...) chain became two
@@ -55,18 +56,9 @@
  * module-private pure function below (same implementation as tree-render.js's).
  */
 
-import { CHEVRON_ICON } from './icons.js';
-
-// neatools' String.prototype.htmlspecialchars as a pure function: escape
-// >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
-// tree-render.js 内有同款实现（模块各自私有，不交叉引用）。
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-
 export function initTreeView(ctx = {}) {
     const store = ctx.store;
     const $tree = ctx.tree;
-    const separatorManager = ctx.separatorManager;
     const SeparatorManager = ctx.SeparatorManager;
     const treeRender = ctx.treeRender;
     const search = ctx.search;
@@ -81,7 +73,9 @@ export function initTreeView(ctx = {}) {
     // v4 task-2 §3.6: optional hook receiving the full bookmark tree on every
     // generateTree — neat.js feeds it to view-manager.buildPathMap.
     const onTreeGenerated = ctx.onTreeGenerated;
-    const _m = chrome.i18n.getMessage;
+    // v4 task-2: view-manager API — revealInTree activates the tree view
+    // (optional so minimal test setups keep working).
+    const views = ctx.views;
 
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
     // onlyShowBMBar 启动开关（只有 generateTree 读取）。
@@ -113,91 +107,6 @@ export function initTreeView(ctx = {}) {
         }
     };
 
-    // Phase 3 (issue #34): virtual "recently added" section pinned to the top
-    // of the tree. Entries come from chrome.bookmarks.getRecent and are real
-    // bookmarks, so opening, the context menu and Delete all operate on the
-    // real bookmark id (matching Chrome's bookmark manager). To avoid
-    // duplicate element ids with the real tree items below, the <li> uses a
-    // 'neat-recent-item-' id prefix; the anchors carry data-virtual="1" so
-    // drag-and-drop rejects them as drag sources and drop targets.
-    const RECENT_BOOKMARKS_COUNT = 20;
-    const recentBookmarksEnabled = () => !!store.get('showRecentBookmarks', '1');
-    // Collapse preference lives in one key, written by both the section
-    // header chevron (popup) and the options-page checkbox.
-    const recentCollapsed = () => !!store.get('recentBookmarksCollapsed', '');
-    const generateRecentSectionHTML = () => {
-        if (!recentBookmarksEnabled())
-            return '';
-        const header = htmlspecialchars(_m('recentBookmarks'));
-        const collapsed = recentCollapsed();
-        return `<div id="recent-section"${collapsed ? ' class="collapsed"' : ''}>` +
-            `<div id="recent-header" role="button" tabindex="0" aria-expanded="${collapsed ? 'false' : 'true'}">` +
-            `<b class="recent-chevron">${CHEVRON_ICON}</b><span>${header}</span></div>` +
-            `<ul id="recent-list" role="group"></ul></div>`;
-    };
-    const refreshRecentSection = () => {
-        const list = document.getElementById('recent-list');
-        // Collapsed sections skip the fetch entirely; expanding re-fetches.
-        if (!list || recentCollapsed())
-            return;
-        chrome.bookmarks.getRecent(RECENT_BOOKMARKS_COUNT, items => {
-            let html = '';
-            for (let i = 0, l = items.length; i < l; i++) {
-                const d = items[i];
-                if (!d.url || separatorManager.isSeparator(d.title, d.url))
-                    continue;
-                html += `<li class="child" id="neat-recent-item-${d.id}" level="0" role="treeitem" data-parentid="${d.parentId}">` +
-                    treeRender.generateBookmarkHTML(d.title, d.url, 'style="-webkit-padding-start: 0px" data-virtual="1"', d.id) +
-                    '</li>';
-            }
-            list.innerHTML = html;
-        });
-    };
-    // Keep the section fresh while the popup stays open; debounced so bulk
-    // imports don't make it flicker. onRemoved is covered too, otherwise a
-    // just-deleted bookmark would linger in the list.
-    let refreshRecentTimer = null;
-    const scheduleRecentRefresh = () => {
-        if (!recentBookmarksEnabled())
-            return;
-        clearTimeout(refreshRecentTimer);
-        refreshRecentTimer = setTimeout(refreshRecentSection, 300);
-    };
-    chrome.bookmarks.onCreated.addListener(scheduleRecentRefresh);
-    chrome.bookmarks.onRemoved.addListener(scheduleRecentRefresh);
-
-    // Header chevron collapses/expands the section and persists the choice
-    // (same `recentBookmarksCollapsed` key the options page mirrors). The
-    // header is re-created on every generateTree, so the listeners delegate
-    // from $tree and run before the folder-span click handler below (which
-    // would otherwise toggle a stray 'open' class on the header).
-    const toggleRecentSection = () => {
-        const section = document.getElementById('recent-section');
-        if (!section)
-            return;
-        const collapsed = section.classList.toggle('collapsed');
-        store.set('recentBookmarksCollapsed', collapsed ? '1' : '');
-        const header = document.getElementById('recent-header');
-        if (header)
-            header.setAttribute('aria-expanded', String(!collapsed));
-        if (!collapsed)
-            refreshRecentSection();
-    };
-    $tree.addEventListener('click', e => {
-        if (e.target.closest && e.target.closest('#recent-header')) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            toggleRecentSection();
-        }
-    });
-    $tree.addEventListener('keydown', e => {
-        if ((e.key === 'Enter' || e.key === ' ') && e.target.id === 'recent-header') {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            toggleRecentSection();
-        }
-    });
-
     const generateTree = tree => {
         let subTree;
         if (onlyShowBMBar) {
@@ -222,8 +131,7 @@ export function initTreeView(ctx = {}) {
         if (onTreeGenerated)
             onTreeGenerated(tree);
 
-        $tree.innerHTML = generateRecentSectionHTML() + html;
-        refreshRecentSection();
+        $tree.innerHTML = html;
 
         // Refresh sync indicators after tree is generated
         if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
@@ -380,6 +288,16 @@ export function initTreeView(ctx = {}) {
         chrome.bookmarks.getTree(generateTreeForTarget);
     };
 
+    // v4 task-2 (docs/v4task-2-list.md §2.3): "Reveal in tree" from any list
+    // view (recent/search R key + context-menu item) — activate the tree
+    // view, then run the same reveal chain (works for bookmark ids too: the
+    // row is focused via focusID, its ancestors opened).
+    const revealInTree = id => {
+        revealFolder(id);
+        if (views)
+            views.activate('tree', { keepFocus: true });
+    };
+
     const bookmarkHandler = e => {
         e.preventDefault();
         if (e.button !== 0 && e.button !== 1)
@@ -393,9 +311,11 @@ export function initTreeView(ctx = {}) {
         const shift = e.shiftKey;
         if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
             if (el.className === "link-folder") { // search result folder
-                // get folder id (el parent is li)
-                const id = el.parentNode.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                revealFolder(id);
+                // get folder id (el parent is li); data-node-id is the
+                // v4 task-2 unified row id
+                const id = el.parentNode.dataset.nodeId
+                    || el.parentNode.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
+                revealInTree(id);
             } else {
                 const url = el.href;
                 if (ctrlMeta) { // ctrl/meta click
@@ -432,6 +352,10 @@ export function initTreeView(ctx = {}) {
     return {
         generateTree,
         adaptBookmarkTooltips,
-        revealFolder
+        revealFolder,
+        revealInTree,
+        // bound per list container: tree above, search results above, and the
+        // recent view's list (src/view-recent.js)
+        bookmarkHandler
     };
 }

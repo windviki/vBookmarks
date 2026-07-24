@@ -112,7 +112,7 @@ export function initDnd(ctx = {}) {
             el = el.parentNode; //a
         }
         const elParent = el.parentNode; //li
-        if (el.dataset && el.dataset.virtual) // recent-section entries can't be dragged
+        if (el.dataset && el.dataset.virtual) // recent-view entries can't be dragged
             return;
         // can move any bookmarks/folders except the default root folders
         if ((el.tagName === 'A' && elParent.classList.contains('child')) ||
@@ -202,7 +202,7 @@ export function initDnd(ctx = {}) {
             el = el.parentNode; //a
         }
         if (el.dataset && el.dataset.virtual) {
-            // recent-section entries are not valid drop targets
+            // recent-view entries are not valid drop targets
             canDrop = false;
             bookmarkClone.style.top = `${clientY}px`;
             bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;

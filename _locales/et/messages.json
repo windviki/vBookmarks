@@ -1,4 +1,13 @@
 {
+  "optionRecentCount": {
+    "message": "[TODO:optionRecentCount]"
+  },
+  "optionSearchHistory": {
+    "message": "[TODO:optionSearchHistory]"
+  },
+  "optionSearchHistoryHint": {
+    "message": "[TODO:optionSearchHistoryHint]"
+  },
   "optionShowSyncStatus": {
     "message": "Näita sünkroniseerimise oleku indikaatoreid"
   },
@@ -31,6 +40,62 @@
   },
   "optionShowItemPath": {
     "message": "[TODO:optionShowItemPath]"
+  },
+  "recentEmpty": {
+    "message": "[TODO:recentEmpty]"
+  },
+  "recentRevealInTree": {
+    "message": "[TODO:recentRevealInTree]"
+  },
+  "searchHistoryClear": {
+    "message": "[TODO:searchHistoryClear]"
+  },
+  "searchHistoryRemove": {
+    "message": "[TODO:searchHistoryRemove]"
+  },
+  "searchHistoryResultCount": {
+    "message": "[TODO:searchHistoryResultCount]",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "[TODO:searchHistoryTitle]"
+  },
+  "timeDaysAgo": {
+    "message": "[TODO:timeDaysAgo]",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "[TODO:timeHoursAgo]",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "[TODO:timeJustNow]"
+  },
+  "timeMinutesAgo": {
+    "message": "[TODO:timeMinutesAgo]",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "[TODO:timeYesterday]"
+  },
+  "viewRecent": {
+    "message": "[TODO:viewRecent]"
   },
   "viewTree": {
     "message": "[TODO:viewTree]"

@@ -96,6 +96,10 @@ const setup = (opts = {}) => {
         'add-folder-after-bookmark', 'bookmark-context-menu-sep2',
         'add-separator', 'bookmark-context-menu-sep3'])
         el('DIV', id);
+    // v4 task-2: the "Reveal in tree" entry + its separator (hidden on tree
+    // rows, shown on recent/results rows)
+    el('DIV', 'reveal-in-tree');
+    el('HR', 'reveal-in-tree-sep');
     const tree = el('DIV', 'tree');
     const body = el('BODY', 'body');
     body.offsetWidth = opts.bodyWidth === undefined ? 500 : opts.bodyWidth;
@@ -143,13 +147,15 @@ const setup = (opts = {}) => {
         actions[name] = (...args) => actionCalls.push([name, ...args]);
     const sortCalls = [];
     const dialogs = { SortDialog: { open: id => sortCalls.push(id) } };
+    const revealCalls = [];
 
     const menus = initContextMenu({
         tree,
         os: opts.os || 'linux',
         rtl: !!opts.rtl,
         get actions() { return actions; },
-        get dialogs() { return dialogs; }
+        get dialogs() { return dialogs; },
+        revealInTree: id => revealCalls.push(id)
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href></a></li>
@@ -190,7 +196,7 @@ const setup = (opts = {}) => {
     return {
         menus, byId, el, body, tree, results,
         bookmarkMenu, folderMenu, separatorMenu,
-        chrome: chromeStub, actionCalls, sortCalls,
+        chrome: chromeStub, actionCalls, sortCalls, revealCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, menuItem, openOn,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
@@ -741,5 +747,49 @@ describe('switchBookmarkMenu', () => {
         menus.switchBookmarkMenu(false);
         for (const id of ids)
             expect(byId[id].style.display, id).toBe('block');
+    });
+});
+
+describe('reveal-in-tree menu item (v4 task-2 §2.4)', () => {
+    it('stays hidden on tree rows, shows on recent and results rows', () => {
+        const { openOn, makeBookmarkRow, byId } = setup({});
+        const treeRow = makeBookmarkRow('42');
+        openOn(treeRow.a);
+        expect(byId['reveal-in-tree'].style.display).toBe('none');
+        expect(byId['reveal-in-tree-sep'].style.display).toBe('none');
+        const recentRow = makeBookmarkRow('43');
+        recentRow.li.id = 'recent-item-43';
+        openOn(recentRow.a);
+        expect(byId['reveal-in-tree'].style.display).toBe('block');
+        expect(byId['reveal-in-tree-sep'].style.display).toBe('block');
+        const resultsRow = makeBookmarkRow('44');
+        resultsRow.li.id = 'results-item-44';
+        openOn(resultsRow.a);
+        expect(byId['reveal-in-tree'].style.display).toBe('block');
+    });
+
+    it('dispatches ctx.revealInTree with the data-node-id row id', () => {
+        const { openOn, makeBookmarkRow, menuItem, bookmarkMenu, revealCalls } = setup({});
+        const row = makeBookmarkRow('42');
+        row.li.id = 'recent-item-42'; // prefix would strip to 42
+        row.li.dataset.nodeId = '99';
+        openOn(row.a);
+        fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('reveal-in-tree') }));
+        expect(revealCalls).toEqual(['99']);
+    });
+
+    it('falls back to the id prefix when data-node-id is absent', () => {
+        const { openOn, makeBookmarkRow, menuItem, bookmarkMenu, revealCalls } = setup({});
+        const row = makeBookmarkRow('42');
+        row.li.id = 'results-item-42';
+        openOn(row.a);
+        fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('reveal-in-tree') }));
+        expect(revealCalls).toEqual(['42']);
+    });
+
+    it('does nothing when no menu is open (no context row)', () => {
+        const { menuItem, bookmarkMenu, revealCalls } = setup({});
+        fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('reveal-in-tree') }));
+        expect(revealCalls).toEqual([]);
     });
 });

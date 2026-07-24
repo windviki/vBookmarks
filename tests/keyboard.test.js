@@ -289,6 +289,16 @@ const setup = (opts = {}) => {
             searchCalls.push('quit');
             flags.searchActive = false;
             searchInput.value = '';
+        },
+        // v4 task-2 slice B: two-level Esc — records + clears a live query
+        // and stays in the view; declines (false) with an empty box.
+        escape: () => {
+            if (!searchInput.value)
+                return false;
+            searchCalls.push('escape');
+            flags.searchActive = false;
+            searchInput.value = '';
+            return true;
         }
     };
     const clearMenuCalls = [];
@@ -709,6 +719,15 @@ describe('treeKeyDown — F2 / Delete', () => {
         expect(actionCalls).toEqual([]);
     });
 
+    it('F2 prefers the data-node-id row id over the element id prefix', () => {
+        const ctx = setup({});
+        const r = ctx.row('A', 'recent-item-3'); // prefix would strip to 3
+        r.li.dataset.nodeId = '77';
+        ctx.doc.activeElement = r.link;
+        fire(ctx.tree, 'keydown', makeEvent({ key: 'F2' }));
+        expect(ctx.actionCalls).toEqual([['editBookmarkFolder', '77']]);
+    });
+
     it('Delete on keydown is swallowed (the delete action fires on keyup)', () => {
         const { tree, b11, doc, actionCalls } = setup({});
         doc.activeElement = b11.link;
@@ -831,6 +850,19 @@ describe('treeKeyUp — Delete', () => {
         fire(tree, 'keyup', ev);
         expect(actionCalls).toEqual([]);
         expect(ev.defaultPrevented).toBe(false);
+    });
+
+    it('prefers the data-node-id row id; skips rows with no resolvable id', () => {
+        const ctx = setup({});
+        const r = ctx.row('A', 'recent-item-3'); // prefix would strip to 3
+        r.li.dataset.nodeId = '77';
+        ctx.doc.activeElement = r.link;
+        fire(ctx.tree, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(ctx.actionCalls).toEqual([['deleteBookmark', '77']]);
+        const bare = ctx.row('A', 'recent-item-'); // strips to '' → no id
+        ctx.doc.activeElement = bare.link;
+        fire(ctx.tree, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(ctx.actionCalls).toEqual([['deleteBookmark', '77']]); // unchanged
     });
 });
 
@@ -989,23 +1021,37 @@ describe('document Escape / Ctrl+F', () => {
         expect(searchInput.value).toBe('query');
     });
 
-    it('Escape quits an active search and clears the input', () => {
+    it('Escape routes an active search through the two-level search.escape', () => {
         const { fireDoc, searchInput, searchCalls } = setup({ searchActive: true });
         searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         fireDoc('keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(searchCalls).toEqual(['quit']);
+        expect(searchCalls).toEqual(['escape']);
         expect(searchInput.value).toBe('');
     });
 
-    it('Escape with text in the input clears it without quitting search', () => {
+    it('Escape with text in the input lets search.escape clear it (no quit)', () => {
         const { fireDoc, searchInput, searchCalls } = setup({});
         searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         fireDoc('keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(searchCalls).toEqual([]);
+        expect(searchCalls).toEqual(['escape']);
+        expect(searchInput.value).toBe('');
+    });
+
+    it('Escape falls back to quit/clear for a pre-slice-B search API without escape()', () => {
+        const { fireDoc, searchInput, search, searchCalls } = setup({ searchActive: true });
+        delete search.escape; // legacy double: keyboard.js mirrors the old wiring
+        searchInput.value = 'query';
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(searchCalls).toEqual(['quit']);
+        expect(searchInput.value).toBe('');
+        // inactive with leftover text: cleared inline
+        searchInput.value = 'draft';
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(searchCalls).toEqual(['quit']);
         expect(searchInput.value).toBe('');
     });
 
@@ -1140,6 +1186,31 @@ describe('view-manager integration (v4 task-2)', () => {
         expect(timeouts).toEqual([]); // not even the keyBuffer timer
         // a typeAhead list on the same key behaves normally
         const ctx2 = setup({ views: mk(true) });
+        const rows2 = ctx2.buildTypeRows();
+        ctx2.doc.activeElement = rows2.alpha.a;
+        fire(ctx2.tree, 'keydown', makeEvent({ key: 'b' }));
+        expect(rows2.beta.a.focused).toBe(true);
+    });
+
+    it('view onKey hooks consume letters before the type-ahead gate (§2.3)', () => {
+        const mk = onKey => ({ tree }) => {
+            const entry = { id: 'recent', el: tree, typeAhead: true, onKey };
+            return makeViews({
+                lists: () => [entry],
+                listOf: el => (el === tree ? entry : null)
+            }).views;
+        };
+        // consumed: no type-ahead, not even the keyBuffer timer
+        const seen = [];
+        const ctx = setup({ views: mk(e => { seen.push(e.key); return true; }) });
+        const rows = ctx.buildTypeRows();
+        ctx.doc.activeElement = rows.alpha.a;
+        fire(ctx.tree, 'keydown', makeEvent({ key: 'r' }));
+        expect(seen).toEqual(['r']);
+        expect(rows.beta.a.focused).toBe(false);
+        expect(timeouts).toEqual([]);
+        // declined: type-ahead proceeds as usual
+        const ctx2 = setup({ views: mk(() => false) });
         const rows2 = ctx2.buildTypeRows();
         ctx2.doc.activeElement = rows2.alpha.a;
         fire(ctx2.tree, 'keydown', makeEvent({ key: 'b' }));

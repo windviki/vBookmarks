@@ -60,6 +60,7 @@ JS_FILES = [
     'src/undo.js',
     'src/icons.js',
     'src/view-manager.js',
+    'src/view-recent.js',
     'vendor/codemirror.js',
 ]
 

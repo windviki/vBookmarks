@@ -208,6 +208,68 @@
       }
     }
   },
+  "optionRecentCount": {
+    "message": "Number of recently added bookmarks to show"
+  },
+  "optionSearchHistory": {
+    "message": "Record search history"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Turning this off also clears the existing history."
+  },
+  "recentEmpty": {
+    "message": "No recent bookmarks. Press Ctrl+D to bookmark the current page."
+  },
+  "recentRevealInTree": {
+    "message": "Reveal in Tree"
+  },
+  "searchHistoryClear": {
+    "message": "Clear all"
+  },
+  "searchHistoryRemove": {
+    "message": "Remove this search"
+  },
+  "searchHistoryResultCount": {
+    "message": "$n$ result(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchHistoryTitle": {
+    "message": "Recent searches"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ days ago",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ hr ago",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "just now"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ min ago",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "yesterday"
+  },
   "undoAction": {
     "description": "Label of the undo button on the deletion toast.",
     "message": "Undo"
@@ -604,6 +666,9 @@
   },
   "optionShowItemPath": {
     "message": "Show the parent folder path on list rows"
+  },
+  "viewRecent": {
+    "message": "Recent"
   },
   "viewTree": {
     "message": "Tree"

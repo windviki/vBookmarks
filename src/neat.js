@@ -11,6 +11,7 @@ import { initSyncUi } from './sync-ui.js';
 import { initPalette } from './palette.js';
 import { initUndo } from './undo.js';
 import { initViewManager } from './view-manager.js';
+import { initViewRecent } from './view-recent.js';
 
 (window => {
     const store = window.store;
@@ -68,6 +69,7 @@ import { initViewManager } from './view-manager.js';
     $('new-folder-dialog-name').placeholder = _m('name');
     $('quick-add-btn').title = _m('quickAddBookmark');
     Object.entries({
+        'reveal-in-tree': 'recentRevealInTree',
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
         'bookmark-new-incognito-window': 'openIncognitoWindow',
@@ -237,7 +239,10 @@ import { initViewManager } from './view-manager.js';
         os,
         rtl,
         get actions() { return actions; },
-        get dialogs() { return dialogs; }
+        get dialogs() { return dialogs; },
+        // v4 task-2: "Reveal in tree" menu dispatch — treeView inits far
+        // below, but menu handlers only run on user events (TDZ-safe).
+        get revealInTree() { return id => treeView.revealInTree(id); }
     });
 
     // View manager (v4 task-2): the tab strip + view switching layer. Must
@@ -422,8 +427,22 @@ import { initViewManager } from './view-manager.js';
         setRememberState: v => { rememberState = v; },
         middleClickBgTab,
         leftClickNewTab,
+        // v4 task-2: view switching (revealInTree activates the tree view)
+        views,
         // v4 task-2 §3.6: every tree rebuild refreshes the shared path map
         onTreeGenerated: t => views.buildPathMap(t)
+    });
+
+    // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
+    // its own tab. Refresh is event-driven (onCreated/onRemoved + debounce)
+    // and only runs while the tab is active; treeView is already initialized
+    // above, so direct injection is safe.
+    initViewRecent({
+        store,
+        views,
+        treeRender,
+        separatorManager,
+        treeView
     });
 
     // donation: three explicit answers to the ask (see the v4 model above)

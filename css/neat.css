@@ -1021,8 +1021,11 @@ body.panel-mode #resizer-y {
 }
 
 /* no-results row: text only, no focusable element inside, so keyboard
-   navigation and clicks ignore it */
-#results ul li.empty-state {
+   navigation and clicks ignore it. v4 task-2: the same empty state serves
+   the recent list and the search-history area. */
+#results ul li.empty-state,
+#recent-list ul li.empty-state,
+#search-history-area ul li.empty-state {
     color: var(--vbm-muted);
     text-align: center;
     padding: 24px 8px;
@@ -1036,56 +1039,6 @@ body.panel-mode #resizer-y {
     padding-bottom: 1px;
 }
 
-
-/* --- Phase 3: recent bookmarks section (issue #34) ---
-   Virtual "recently added" section pinned to the top of the tree: muted
-   small header, a 1px bottom separator, no folder icon. Entries reuse the
-   normal tree-item styles; only the section frame is defined here. */
-#recent-section {
-    border-bottom: 1px solid var(--vbm-border);
-    margin-bottom: 2px;
-    padding-bottom: 2px;
-}
-
-#recent-header {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    color: var(--vbm-muted);
-    font-size: 90%;
-    padding: 4px 0 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-#recent-header:hover {
-    background-color: var(--vbm-bg-hover);
-}
-
-/* Chevron mirrors the tree twisties: rotated down when expanded, pointing
-   right (and the list hidden) when the section is collapsed. */
-#recent-header .recent-chevron {
-    display: inline-flex;
-    flex: none;
-    width: 16px;
-    height: 16px;
-    color: var(--vbm-muted);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-    -webkit-transition: -webkit-transform .15s ease-out;
-    transition: transform .15s ease-out;
-}
-
-#recent-section.collapsed #recent-header .recent-chevron {
-    -webkit-transform: none;
-    transform: none;
-}
-
-#recent-section.collapsed #recent-list {
-    display: none;
-}
 
 /* --- Phase 3: sort folder contents dialog (issue #33) ---
    Reuses the shared body-class + #cover dialog pattern. */
@@ -1720,4 +1673,204 @@ body.panel-mode .vbm-row .row-path {
 
 body.panel-mode .vbm-row .row-sub {
     display: block;
+}
+
+/* === v4 task-2 slice B: recent view + search history area ===
+   #recent-list mirrors the #results/#tree pane chrome; its rows reuse the
+   unscoped .tree-item-link rules, so only the container and the row states
+   the scoped #tree/#results rules provided are re-declared here. */
+
+#recent-list {
+    background-color: var(--vbm-bg);
+    overflow: auto;
+    outline: 0;
+    padding: 3px 0;
+    -webkit-box-shadow: inset 0 4px 4px -4px var(--vbm-border);
+    box-shadow: inset 0 4px 4px -4px var(--vbm-border);
+    flex: 1;
+    position: relative;
+}
+
+#recent-list ul,
+#recent-list ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+/* Bookmark rows only — the same 16px twisty placeholder slot the tree and
+   results panes give bookmark rows, keeping titles aligned across views. */
+#recent-list ul li a::before {
+    content: '';
+    flex: none;
+    width: 16px;
+}
+
+#recent-list ul li a * {
+    pointer-events: none;
+}
+
+#recent-list ul li a:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+#recent-list ul li a:hover i {
+    text-decoration: underline;
+}
+
+#recent-list ul li a:active,
+#recent-list ul li a.active,
+#recent-list ul li a:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 0;
+}
+
+#recent-list ul li a:focus {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Search-history area (top half of #view-search): a muted head row with a
+   "clear all" text button, then one row per past query. */
+#search-history-area {
+    flex: none;
+    border-bottom: 1px solid var(--vbm-border);
+    padding: 3px 0;
+}
+
+#search-history-area:empty {
+    display: none;
+}
+
+#search-history-area ul,
+#search-history-area ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-history-head {
+    display: flex;
+    align-items: center;
+    padding: 2px 8px;
+    color: var(--vbm-muted);
+    font-size: 12px;
+}
+
+.search-history-head i {
+    flex: 1;
+    min-width: 0;
+    font-style: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#search-history-clear {
+    flex: none;
+    border: 0;
+    background: transparent;
+    color: var(--vbm-muted);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 2px;
+}
+
+#search-history-clear:hover {
+    color: var(--vbm-fg);
+    text-decoration: underline;
+}
+
+/* Row: anchor (clock + query + count + time) plus a hover-revealed × */
+.search-history-row {
+    display: flex;
+    align-items: center;
+}
+
+.search-history-row a {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    line-height: 1.67em;
+    padding-inline-end: 4px;
+    text-decoration: none;
+    color: var(--vbm-fg);
+    outline: 0;
+}
+
+.search-history-row a:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+.search-history-row a:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+.search-history-row a::before {
+    content: '';
+    flex: none;
+    width: 16px;
+}
+
+.history-clock {
+    flex: none;
+    display: flex;
+    align-items: center;
+    width: 20px;
+    color: var(--vbm-muted);
+}
+
+.history-clock svg {
+    width: 16px;
+    height: 16px;
+}
+
+.search-history-row a i {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: normal;
+}
+
+.history-meta,
+.history-time {
+    flex: none;
+    margin-inline-start: 8px;
+    color: var(--vbm-muted);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* §1.5 row action button: invisible until the row is hovered or focused
+   (focus-within keeps it reachable by keyboard). */
+.row-btn {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-inline-end: 4px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    visibility: hidden;
+    line-height: 1;
+}
+
+.vbm-row:hover .row-btn,
+.vbm-row:focus-within .row-btn {
+    visibility: visible;
+}
+
+.row-btn:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
 }

@@ -43,6 +43,11 @@ export function initContextMenu(ctx = {}) {
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
     let currentContext = null;
 
+    // v4 task-2: unified row-id extraction — data-node-id first (the row id
+    // every list view shares), the legacy prefix strip as fallback.
+    const rowId = li =>
+        (li.dataset && li.dataset.nodeId) || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
+
     const clearMenu = e => {
         currentContext = null;
         const active = body.querySelector('.active');
@@ -99,7 +104,7 @@ export function initContextMenu(ctx = {}) {
             el = el.parentNode; //a
         }
         // Walk up to the nearest a/span when a child element (img, i, div, …)
-        // captured the event — covers recent-section bookmarks and tree rows
+        // captured the event — covers recent-view bookmarks and tree rows
         // whose ::after / favicon / sync-indicator received the click.
         if (el.tagName !== 'A' && el.tagName !== 'SPAN' && el.closest) {
             const nearest = el.closest('a, span');
@@ -122,6 +127,17 @@ export function initContextMenu(ctx = {}) {
                 }
             } else {
                 menu = $bookmarkContextMenu;
+                // v4 task-2: "Reveal in tree" only makes sense for rows that
+                // live outside the tree view (recent list / search results);
+                // on a tree row the entry would be a no-op, so hide it there.
+                const revealItem = $('reveal-in-tree');
+                if (revealItem) {
+                    const inTree = el.parentNode.id.startsWith('neat-tree-item-');
+                    revealItem.style.display = inTree ? 'none' : 'block';
+                    const revealSep = $('reveal-in-tree-sep');
+                    if (revealSep)
+                        revealSep.style.display = inTree ? 'none' : 'block';
+                }
             }
         } else if (el.tagName === 'SPAN') {
             menu = $folderContextMenu;
@@ -185,7 +201,7 @@ export function initContextMenu(ctx = {}) {
             return;
         const url = currentContext.href;
         const li = currentContext.parentNode;
-        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
+        const id = rowId(li);
         switch (el.id) {
             // ++++++++ modified by windviki@gmail.com ++++++++
             case 'add-bookmark-before-bookmark':
@@ -239,16 +255,17 @@ export function initContextMenu(ctx = {}) {
             case 'bookmark-new-incognito-window':
                 actions.openBookmarkNewWindow(url, true);
                 break;
+            case 'reveal-in-tree':
+                // v4 task-2: jump from a recent-list / search-results row to
+                // the same bookmark inside the tree view.
+                ctx.revealInTree(rowId(li));
+                break;
             case 'bookmark-edit': {
-                const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                actions.editBookmarkFolder(id);
+                actions.editBookmarkFolder(rowId(li));
             }
                 break;
             case 'bookmark-delete': {
-                const li = currentContext.parentNode;
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                actions.deleteBookmark(id);
+                actions.deleteBookmark(rowId(li));
             }
                 break;
         }
@@ -274,7 +291,7 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
-        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
+        const id = rowId(li);
         chrome.bookmarks.getChildren(id, children => {
             // neatools' Array.map(c => c.url, children).clean(): urls of the
             // children that have one (folders have none, null/undefined dropped)
@@ -396,7 +413,7 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const li = currentContext.parentNode;
-        const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
+        const id = rowId(li);
         switch (el.id) {
             case 'remove-separator':
                 actions.deleteSeparator(id);

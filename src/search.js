@@ -15,6 +15,20 @@
  * unified 标题+URL+路径 tooltips (the async per-row parent-folder tooltip
  * fetch is retired — the path map covers it in one tree walk).
  *
+ * Slice B (docs/v4task-2.md §4.3 + docs/v4task-2-list.md §3.2):
+ * - `searchHistory` — MRU of {q, ts, n}, limit 10, trim-deduped (the pure
+ *   pushSearchHistory below is vitest-covered). Recorded on Enter in
+ *   searchAfterEnter mode, on result open (reset), on view leave / popup
+ *   close, and on the two-level Esc clear; gated by `searchHistoryEnabled`.
+ * - `searchLastQuery` — refilled + rerun on the first search-view entry with
+ *   an empty box; cross-session restore follows dontRememberState; an
+ *   explicit clear stops the refill for the session.
+ * - Two-level Esc (§2.3/§3.2): first Esc records + clears the box but keeps
+ *   the results and stays in the search view; the second falls through to
+ *   the view layer (back to the tree).
+ * - The view is split into an upper `#search-history-area` (history rows or
+ *   the hint) and the lower results list (kept between searches).
+ *
  * initSearch(ctx) is called once by neat.js after DOM parse.
  * ctx.store                    — chrome.storage mirror (searchQuery, focusID, settings)
  * ctx.separatorManager         — filters separators out of the flat index
@@ -22,18 +36,35 @@
  * ctx.generateBookmarkHTML(title, url, extras, id, positions, meta) — bookmark row HTML
  * ctx.highlightTitlePositions(title, positions) — escaped, <mark>-wrapped title
  * ctx.rememberState            — restore the persisted query on startup when true
- * ctx.views                    — view-manager API (activate/attach/pathOf)
+ * ctx.views                    — view-manager API (activate/attach/pathOf/isActive)
  *
  * window.VBMFuzzy is loaded by fuzzy.js (classic script) before neat.js.
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON } from './icons.js';
+import { FOLDER_ICON, VIEW_ICONS } from './icons.js';
+import { relativeTimeBucket } from './tree-render.js';
 
 // Same escape recipe as tree-render.js's module-private copy (modules stay
 // self-contained): escape >, then <, then ".
 const htmlspecialchars = s =>
     s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+// §4.3: the search-history MRU as a pure function — trim, drop empties,
+// dedupe by exact query, newest first, capped at `limit`. Entries are
+// {q, ts, n} (query, timestamp, last result count); malformed entries are
+// tolerated (skipped) since the store value is user data.
+export const pushSearchHistory = (list, entry, limit = 10) => {
+    const q = ((entry && entry.q) || '').trim();
+    if (!q)
+        return list || [];
+    const next = [{ q, ts: (entry && entry.ts) || 0, n: (entry && entry.n) | 0 }];
+    for (const item of list || []) {
+        if (item && typeof item.q === 'string' && item.q !== q)
+            next.push({ q: item.q, ts: item.ts || 0, n: item.n | 0 });
+    }
+    return next.slice(0, limit);
+};
 
 export function initSearch(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -55,6 +86,40 @@ export function initSearch(ctx = {}) {
         attach: () => {}, pathOf: () => ''
     };
     let returnView = 'tree';
+
+    // --- Search history + last-query restore (§4.3) --------------------------
+    const historyEnabled = () => !!store.get('searchHistoryEnabled', '1');
+    const readHistory = () => {
+        try {
+            const list = JSON.parse(store.get('searchHistory') || '[]');
+            return Array.isArray(list) ? list : [];
+        } catch (e) {
+            return [];
+        }
+    };
+    let lastResultCount = 0;
+    const recordHistory = q => {
+        q = (q || '').trim();
+        if (!q || !historyEnabled())
+            return;
+        store.set('searchHistory', JSON.stringify(
+            pushSearchHistory(readHistory(), { q, ts: Date.now(), n: lastResultCount })));
+    };
+    // The relTime label renderer shared with the recent view (bucket logic
+    // lives in tree-render.js): a bucket key + n, or the absolute date past
+    // 7 days.
+    const relTimeLabel = ts => {
+        const b = relativeTimeBucket(ts, Date.now());
+        if (b.key === null)
+            return new Date(ts).toLocaleDateString();
+        return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
+    };
+    // Refill source for the first empty-box entry into the search view. The
+    // persisted previous-session value only counts when rememberState is on
+    // (§4.3: cross-session restore follows dontRememberState); searches in
+    // this session update it live.
+    let sessionLastQuery = ctx.rememberState ? (store.get('searchLastQuery') || '') : '';
+    let lastQueryCleared = false; // explicit clear stops the session refill
 
     const searchAfterEnter = !!store.get('searchAfterEnter');
     const $results = $('results');
@@ -123,6 +188,7 @@ export function initSearch(ctx = {}) {
             prevValue = '';
             if (searchInput.value) {
                 searchInput.value = '';
+                lastQueryCleared = true; // explicit clear: no session refill
             }
             updateClearBtn();
             store.set('searchQuery', '');
@@ -139,8 +205,10 @@ export function initSearch(ctx = {}) {
     // focus. Called by tree-view.js's bookmarkHandler after a search result
     // has been opened, where the popup is about to navigate away anyway (the
     // original code inlined these five statements in bookmarkHandler).
+    // §4.3: opening a result is one of the history-record timings.
     const resetSearchState = () => {
         if (searchMode) {
+            recordHistory(searchInput.value);
             prevValue = '';
             searchInput.value = '';
             updateClearBtn();
@@ -150,18 +218,126 @@ export function initSearch(ctx = {}) {
         }
     };
 
-    // Empty-query content of the search view (slice A: a plain hint row;
-    // slice B replaces it with the search-history area).
-    const renderEmptyHint = () => {
-        $results.innerHTML = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+    // --- History area (upper half of the search view, §3.2) -------------------
+    // Always rendered on view entry: the history rows + clear-all when
+    // there is history, the searchViewHint guide row otherwise. The lower
+    // #results list keeps the last search's output between searches.
+    const $historyArea = $('search-history-area');
+    const renderHistoryArea = () => {
+        if (!$historyArea)
+            return;
+        const list = historyEnabled() ? readHistory() : [];
+        if (!list.length) {
+            $historyArea.innerHTML = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+            return;
+        }
+        let html = `<div class="search-history-head"><i>${htmlspecialchars(_m('searchHistoryTitle'))}</i>` +
+            `<button type="button" id="search-history-clear" tabindex="-1">${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
+            '<ul role="list">';
+        for (let i = 0, l = list.length; i < l; i++) {
+            const entry = list[i];
+            const q = entry.q || '';
+            html += `<li class="vbm-row search-history-row" role="listitem">` +
+                `<a href="" tabindex="0" data-q="${htmlspecialchars(q)}" title="${htmlspecialchars(q)}">` +
+                `<span class="history-clock">${VIEW_ICONS.recent}</span>` +
+                `<i>${htmlspecialchars(q)}</i>` +
+                `<span class="history-meta">${_m('searchHistoryResultCount', `${entry.n | 0}`)}</span>` +
+                `<span class="history-time">${relTimeLabel(entry.ts)}</span>` +
+                `</a>` +
+                `<button type="button" class="row-btn search-history-remove" tabindex="-1" data-q="${htmlspecialchars(q)}" aria-label="${_m('searchHistoryRemove')}">×</button>` +
+                `</li>`;
+        }
+        html += '</ul>';
+        $historyArea.innerHTML = html;
     };
+    const removeHistoryEntry = q => {
+        store.set('searchHistory', JSON.stringify(readHistory().filter(e => e.q !== q)));
+        renderHistoryArea();
+    };
+    const runHistoryQuery = q => {
+        searchInput.value = q;
+        updateClearBtn();
+        search(true); // explicit pick: runs even in searchAfterEnter mode
+        searchInput.focus();
+    };
+    if ($historyArea) {
+        $historyArea.addEventListener('click', e => {
+            const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+            if (closest('#search-history-clear')) {
+                e.preventDefault();
+                store.set('searchHistory', '[]');
+                renderHistoryArea();
+                return;
+            }
+            const removeBtn = closest('.search-history-remove');
+            if (removeBtn) {
+                e.preventDefault();
+                removeHistoryEntry(removeBtn.dataset.q);
+                return;
+            }
+            const a = closest('a[data-q]');
+            if (a) {
+                e.preventDefault();
+                runHistoryQuery(a.dataset.q);
+            }
+        });
+        // Row keyboard equivalents (§3.2): Enter reruns, Delete removes the
+        // entry (the × button is the mouse path). Link activation on Enter is
+        // the keydown default action, so preventDefault avoids a double run.
+        $historyArea.addEventListener('keydown', e => {
+            const a = document.activeElement;
+            if (!a || !a.dataset || typeof a.dataset.q === 'undefined')
+                return;
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                runHistoryQuery(a.dataset.q);
+            } else if (e.key === 'Delete') {
+                e.preventDefault();
+                removeHistoryEntry(a.dataset.q);
+            }
+        });
+    }
+
+    // Two-level Esc (docs/v4task-2-list.md §2.3/§3.2): the first Esc records
+    // the query into the history, clears the box and keeps the results in
+    // place — the search view stays put for the next search. With an empty
+    // box it declines, letting the view layer walk back to the tree.
+    const escapeSearch = () => {
+        if (!searchInput.value)
+            return false;
+        recordHistory(searchInput.value);
+        lastQueryCleared = true;
+        prevValue = '';
+        searchInput.value = '';
+        updateClearBtn();
+        store.set('searchQuery', '');
+        if (searchMode) {
+            searchMode = false;
+            switchBookmarkMenu(false);
+        }
+        renderHistoryArea();
+        return true;
+    };
+
     views.attach('search', {
         activate: () => {
-            if (!searchInput.value)
-                renderEmptyHint();
+            // §4.3: first empty-box entry refills + reruns the last query
+            // (recompute, never a snapshot — the data is always fresh).
+            if (!searchInput.value && sessionLastQuery && !lastQueryCleared) {
+                searchInput.value = sessionLastQuery;
+                updateClearBtn();
+                search(true);
+                searchInput.select();
+                return;
+            }
+            renderHistoryArea();
         },
+        // §4.3 record timing ③: leaving the view with a live query.
+        deactivate: () => recordHistory(searchInput.value),
         focus: () => searchInput.focus()
     });
+    if (typeof window.addEventListener === 'function')
+        window.addEventListener('pagehide', () => recordHistory(searchInput.value));
 
     const search = (e) => {
         const value = searchInput.value.trim();
@@ -185,8 +361,11 @@ export function initSearch(ctx = {}) {
         if (value === prevValue)
             return;
         prevValue = value;
+        sessionLastQuery = value;
+        store.set('searchLastQuery', value);
 
         const renderResults = results => {
+            lastResultCount = results.length;
             let html = '<ul role="list">';
             if (!results.length) {
                 // Phase 2b: no-results empty state (no a/span inside, so
@@ -199,7 +378,7 @@ export function initSearch(ctx = {}) {
                 if (!result.isFolder) {
                     // §3.6: rows carry their parent-folder path label + the
                     // unified 标题/URL/路径 tooltip (via the meta argument).
-                    html += `<li class="vbm-row" data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
+                    html += `<li class="vbm-row" data-parentid="${result.parentId}" data-node-id="${id}" id="results-item-${id}" role="listitem">
                             ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
@@ -220,7 +399,7 @@ export function initSearch(ctx = {}) {
                     const folderPath = views.pathOf(id);
                     const folderTip = htmlspecialchars(result.title || _m('noTitle'))
                         + (folderPath ? `\n${htmlspecialchars(folderPath)}` : '');
-                    html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
+                    html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}" data-node-id="${id}">
                             <a href="" class="link-folder tree-item-link" title="${folderTip}">
                             <div class="favicon-container">
                             ${FOLDER_ICON}
@@ -275,11 +454,20 @@ export function initSearch(ctx = {}) {
                 const firstResult = $results.querySelector('ul>li:first-child a');
                 if (firstResult)
                     firstResult.focus();
+            } else if (views.isActive('search')) {
+                // Empty query in the search view (§3.2): the upper history
+                // rows are the first landing spot, then the kept results.
+                const firstHistory = $historyArea ? $historyArea.querySelector('a[data-q]') : null;
+                const target = firstHistory || $results.querySelector('ul>li:first-child a');
+                if (target)
+                    target.focus();
             } else {
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
         } else if (e.key === 'Enter' && searchInput.value.length) { // enter
             if (searchAfterEnter) {
+                // §4.3 record timing ①: Enter in searchAfterEnter mode.
+                recordHistory(searchInput.value);
                 search(e);
             } else {
                 const item = $results.querySelector('ul>li:first-child a');
@@ -318,9 +506,10 @@ export function initSearch(ctx = {}) {
             }
         } else if (e.key === 'Escape') { // esc
             if (searchInput.value) {
-                // Pressing esc shouldn't close the popup when search field has value
+                // First Esc clears the box but keeps the results + the view
+                // (two-level, §3.2); the document chain walks back on the 2nd.
                 e.preventDefault();
-                quitSearchMode(true);
+                escapeSearch();
             }
         }
     });
@@ -347,6 +536,7 @@ export function initSearch(ctx = {}) {
         isActive: () => searchMode,
         quit: quitSearchMode,
         reset: resetSearchState,
+        escape: escapeSearch,
         updateIndex: buildSearchIndex
     };
 }

@@ -69,6 +69,29 @@ export const buildPathMap = tree => {
     return paths;
 };
 
+// v4 task-2 (docs/v4task-2-list.md §3.3): relative-time buckets for the
+// recent view's right slot and the search-history rows — 刚刚 / N 分钟 /
+// N 小时 / 昨天 / N 天, past 7 days the caller shows the absolute date
+// (key === null). Pure: ts/now in ms, out a {key, n} bucket, so vitest
+// exercises the boundaries directly.
+export const relativeTimeBucket = (ts, now) => {
+    const diff = Math.max(0, (now || 0) - (ts || 0));
+    const MIN = 60000;
+    const HOUR = 60 * MIN;
+    const DAY = 24 * HOUR;
+    if (diff < MIN)
+        return { key: 'timeJustNow' };
+    if (diff < HOUR)
+        return { key: 'timeMinutesAgo', n: Math.floor(diff / MIN) };
+    if (diff < DAY)
+        return { key: 'timeHoursAgo', n: Math.floor(diff / HOUR) };
+    if (diff < 2 * DAY)
+        return { key: 'timeYesterday' };
+    if (diff <= 7 * DAY)
+        return { key: 'timeDaysAgo', n: Math.floor(diff / DAY) };
+    return { key: null }; // absolute date
+};
+
 export function initTreeRender(ctx = {}) {
     const store = ctx.store;
     const separatorManager = ctx.separatorManager;
@@ -132,15 +155,25 @@ export function initTreeRender(ctx = {}) {
         // parent-folder tooltip), and the row gains path labels when the
         // showItemPath setting is on: inline `.row-path` in the narrow popup,
         // a second muted line `.row-sub` at ≥480px / in panel mode (CSS
-        // container query picks the form).
+        // container query picks the form). Views with a custom meta slot
+        // (recent: relative time on the right, `path · absolute time` as the
+        // second line — docs/v4task-2-list.md §3.3) override the two label
+        // slots wholesale via meta.rightText / meta.subText; both slots are
+        // escaped here, so callers compose them from raw text.
         const path = (meta && meta.path) ? String(meta.path) : '';
         const tooltip = path
             ? `${htmlspecialchars(title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')))}\n${tooltipURL}\n${htmlspecialchars(path)}`
             : tooltipURL;
         const showPath = path && !!store.get('showItemPath', '1');
-        const nameHtml = showPath
-            ? `<span class="row-main"><i>${name}</i><span class="row-sub" dir="auto">${htmlspecialchars(path)}</span></span>` +
-              `<span class="row-path" dir="auto">${htmlspecialchars(path)}</span>`
+        const rightText = meta && typeof meta.rightText === 'string'
+            ? meta.rightText : (showPath ? path : '');
+        const subText = meta && typeof meta.subText === 'string'
+            ? meta.subText : (showPath ? path : '');
+        const nameHtml = (rightText || subText)
+            ? `<span class="row-main"><i>${name}</i>` +
+              (subText ? `<span class="row-sub" dir="auto">${htmlspecialchars(subText)}</span>` : '') +
+              `</span>` +
+              (rightText ? `<span class="row-path" dir="auto">${htmlspecialchars(rightText)}</span>` : '')
             : `<i>${name}</i>`;
 
         // Add sync status indicator if enabled

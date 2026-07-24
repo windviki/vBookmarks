@@ -14,7 +14,7 @@
  * menus/search/actions/dialogs all init further up, so every collaborator is
  * injected directly (no lazy getters needed, unlike src/context-menu.js):
  * ctx.tree    — the #tree element (keydown/keyup bindings + fallback lookups)
- * ctx.search  — initSearch API (.results/.input/.isActive()/.quit())
+ * ctx.search  — initSearch API (.results/.input/.isActive()/.quit()/.escape())
  * ctx.actions — initActions API (editBookmarkFolder/deleteBookmark(s))
  * ctx.menus   — initContextMenu API (clearMenu + the menu elements)
  * ctx.dialogs — initDialogs API (anyOpen/closeDialogs)
@@ -296,8 +296,11 @@ export function initKeyboard(ctx = {}) {
             {
                 if (os === 'mac')
                     break;
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
-                actions.editBookmarkFolder(id);
+                // data-node-id is the v4 task-2 unified row id; the legacy
+                // prefix strip stays for rows that predate it.
+                const id = li.dataset.nodeId || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
+                if (id)
+                    actions.editBookmarkFolder(id);
             }
                 break;
             case 'Delete': // delete
@@ -305,10 +308,13 @@ export function initKeyboard(ctx = {}) {
             default: {
                 if (keyValue.length > 1)
                     return;
-                // Type-ahead lives on tree/search only (docs/v4task-2.md
-                // §3.4): other list views consume letter keys through their
-                // own view hooks (M/R/K) instead.
+                // View-local letter keys (M/R/K — docs/v4task-2-list.md
+                // §2.3) are consumed before the type-ahead gate; type-ahead
+                // itself lives on tree/search only (docs/v4task-2.md §3.4):
+                // other list views consume letter keys through onKey.
                 const listView = views.listOf(this);
+                if (listView && listView.onKey && listView.onKey(e))
+                    return;
                 if (listView && listView.typeAhead === false)
                     return;
                 const key = keyValue;
@@ -371,7 +377,9 @@ export function initKeyboard(ctx = {}) {
         switch (e.key) {
             case "Delete": // delete
                 e.preventDefault();
-                const id = li.id.replace(/(neat-tree|neat-recent|results)-item-/, '');
+                const id = li.dataset.nodeId || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
+                if (!id)
+                    break;
                 if (li.classList.contains('parent')) {
                     chrome.bookmarks.getChildren(id, children => {
                         // neatools' Array.map(c => c.url, children).clean():
@@ -510,16 +518,20 @@ export function initKeyboard(ctx = {}) {
             return;
         }
         // v4 task-2 §3.4 Esc layering: the active view's own consumer first
-        // (e.g. aborting a dead-link scan), then the search query clear,
-        // then the browser-style "back to tree", then window.close.
+        // (e.g. aborting a dead-link scan), then the search query clear
+        // (two-level in the search view, docs/v4task-2-list.md §2.3), then
+        // the browser-style "back to tree", then window.close.
         if (views.onEscapeActive()) {
             return;
         }
-        if (search.isActive() || search.input.value) {
-            if (search.isActive())
-                search.quit();
-            else
-                search.input.value = '';
+        if (search.escape ? search.escape() : (search.isActive() || search.input.value)) {
+            // Fallback for pre-slice-B search doubles without escape():
+            if (!search.escape) {
+                if (search.isActive())
+                    search.quit();
+                else
+                    search.input.value = '';
+            }
             return;
         }
         // Non-tree view: Esc returns to the tree (new browser-style back).

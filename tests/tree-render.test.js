@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
-import { initTreeRender, buildPathMap } from '../src/tree-render.js';
+import { initTreeRender, buildPathMap, relativeTimeBucket } from '../src/tree-render.js';
 import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 
 // tree-render.js touches page globals (chrome.i18n/runtime/bookmarks,
@@ -261,6 +261,62 @@ describe('generateBookmarkHTML', () => {
             .toContain('title="http://e.com/"');
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {}))
             .not.toContain('row-path');
+    });
+
+    // v4 task-2 slice B (docs/v4task-2-list.md §3.3): meta.rightText/subText
+    // override the two label slots wholesale (recent view's custom meta).
+    it('meta.rightText/subText override the path labels and are escaped', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A',
+            rightText: '5 min< ago',
+            subText: 'Folder A · 2026/7/24 "10:00"'
+        });
+        expect(html).toContain('<span class="row-path" dir="auto">5 min&lt; ago</span>');
+        expect(html).toContain('<span class="row-sub" dir="auto">Folder A · 2026/7/24 &quot;10:00&quot;</span>');
+        expect(html).not.toContain('>Folder A</span>'); // the path label is fully replaced
+    });
+
+    it('meta.rightText/subText ignore the showItemPath setting', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A', rightText: 'just now', subText: 'yesterday'
+        });
+        expect(html).toContain('<span class="row-path" dir="auto">just now</span>');
+        expect(html).toContain('<span class="row-sub" dir="auto">yesterday</span>');
+    });
+
+    it('an empty-string override suppresses that slot', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A', rightText: '', subText: ''
+        });
+        expect(html).toContain('<i>T</i>'); // plain name slot
+        expect(html).not.toContain('row-path');
+    });
+});
+
+describe('relativeTimeBucket (v4 task-2 slice B)', () => {
+    const NOW = 1000000000000;
+    const MIN = 60000, HOUR = 60 * MIN, DAY = 24 * HOUR;
+    const bucket = ageMs => relativeTimeBucket(NOW - ageMs, NOW);
+
+    it('buckets the boundary ages per docs/v4task-2-list.md §3.3', () => {
+        expect(bucket(0)).toEqual({ key: 'timeJustNow' });
+        expect(bucket(MIN - 1)).toEqual({ key: 'timeJustNow' });
+        expect(bucket(MIN)).toEqual({ key: 'timeMinutesAgo', n: 1 });
+        expect(bucket(59 * MIN)).toEqual({ key: 'timeMinutesAgo', n: 59 });
+        expect(bucket(HOUR)).toEqual({ key: 'timeHoursAgo', n: 1 });
+        expect(bucket(23 * HOUR)).toEqual({ key: 'timeHoursAgo', n: 23 });
+        expect(bucket(DAY)).toEqual({ key: 'timeYesterday' });
+        expect(bucket(2 * DAY - 1)).toEqual({ key: 'timeYesterday' });
+        expect(bucket(2 * DAY)).toEqual({ key: 'timeDaysAgo', n: 2 });
+        expect(bucket(7 * DAY)).toEqual({ key: 'timeDaysAgo', n: 7 });
+        expect(bucket(7 * DAY + 1)).toEqual({ key: null }); // caller shows the absolute date
+    });
+
+    it('clamps future timestamps to just-now', () => {
+        expect(relativeTimeBucket(NOW + HOUR, NOW)).toEqual({ key: 'timeJustNow' });
     });
 });
 

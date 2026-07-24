@@ -93,8 +93,8 @@ const TREE = [{
 
 const makeStore = (data = {}) => ({
     _data: { ...data },
-    get(key) {
-        return this._data[key];
+    get(key, dflt) {
+        return key in this._data ? this._data[key] : dflt;
     },
     set(key, v) {
         this._data[key] = v;
@@ -131,6 +131,7 @@ const makeChrome = () => {
 };
 
 let initSearch;
+let pushSearchHistory;
 
 beforeAll(async () => {
     globalThis.MouseEvent = class {
@@ -139,7 +140,7 @@ beforeAll(async () => {
             Object.assign(this, opts);
         }
     };
-    ({ initSearch } = await import('../src/search.js'));
+    ({ initSearch, pushSearchHistory } = await import('../src/search.js'));
 });
 
 const setup = (opts = {}) => {
@@ -149,6 +150,7 @@ const setup = (opts = {}) => {
         search: makeEl(),
         'search-input': makeEl(),
         'search-clear': makeEl(),
+        'search-history-area': makeEl(),
         ...(opts.extraEls || {})
     };
     // search.js reaches the row through the clear button's parentNode
@@ -156,7 +158,8 @@ const setup = (opts = {}) => {
     const bodyClasses = makeClassList();
     globalThis.document = {
         getElementById: id => els[id] || null,
-        body: { classList: bodyClasses }
+        body: { classList: bodyClasses },
+        activeElement: null
     };
     const fuzzy = {
         calls: [],
@@ -166,7 +169,13 @@ const setup = (opts = {}) => {
             return this.results;
         }
     };
-    globalThis.window = { VBMFuzzy: fuzzy, addEventListener: () => {} };
+    const winListeners = {};
+    globalThis.window = {
+        VBMFuzzy: fuzzy,
+        addEventListener: (type, fn) => {
+            (winListeners[type] = winListeners[type] || []).push(fn);
+        }
+    };
     if (opts.syncManager)
         globalThis.window.syncManager = opts.syncManager;
     const chromeStub = makeChrome();
@@ -174,14 +183,19 @@ const setup = (opts = {}) => {
     const store = makeStore(opts.storeData || {});
     const calls = { switchBookmarkMenu: [], generateBookmarkHTML: [], highlightTitlePositions: [] };
     // v4 task-2: the display swap is replaced by the view layer. The double
-    // records activate() calls and captures the hooks search.js attaches to
-    // the structural 'search' view.
+    // records activate() calls, tracks the active view like the real manager
+    // and captures the hooks search.js attaches to the structural 'search'
+    // view.
     const viewCalls = [];
     const viewHooks = {};
+    let currentView = opts.activeView || 'tree';
     const views = {
-        activate: (id, o) => viewCalls.push([id, o]),
-        activeId: () => opts.activeView || 'tree',
-        isActive: id => (opts.activeView || 'tree') === id,
+        activate: (id, o) => {
+            viewCalls.push([id, o]);
+            currentView = id;
+        },
+        activeId: () => currentView,
+        isActive: id => currentView === id,
         attach: (id, hooks) => {
             viewHooks[id] = hooks;
         },
@@ -202,7 +216,7 @@ const setup = (opts = {}) => {
         rememberState: !!opts.rememberState,
         views
     });
-    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks };
+    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, winListeners };
 };
 
 const type = (els, value) => {
@@ -231,6 +245,8 @@ describe('search execution + rendering', () => {
         const html = els.results.innerHTML;
         expect(html).toContain('<ul role="list">');
         expect(html).toContain('id="results-item-11"');
+        expect(html).toContain('data-node-id="11"'); // unified row id (v4 task-2)
+        expect(html).toContain('data-node-id="1"'); // folder rows too
         expect(html).toContain('<li class="vbm-row"'); // §3 row anatomy
         expect(html).toContain('href="https://github.com/"');
         expect(calls.generateBookmarkHTML[0]).toEqual({
@@ -300,11 +316,13 @@ describe('search execution + rendering', () => {
         expect(chrome.bookmarks.getCalls).toEqual([]);
     });
 
-    it('renders the empty-query hint when the search view activates without a query', () => {
+    it('renders the empty-query hint into the history area when the search view activates without a query', () => {
         const { els, viewHooks } = setup({});
         viewHooks.search.activate();
-        expect(els.results.innerHTML).toContain(
+        // §3.2: the hint lives in the upper history area; results stay untouched
+        expect(els['search-history-area'].innerHTML).toContain(
             '<li class="empty-state" role="listitem"><i>searchViewHint</i></li>');
+        expect(els.results.innerHTML).toBe('');
         // a filled input keeps its current results instead
         els.results.innerHTML = 'x';
         els['search-input'].value = 'git';
@@ -477,16 +495,27 @@ describe('input listeners', () => {
         expect(s.isActive()).toBe(true);
     });
 
-    it('Escape with a query quits keeping the focus; with empty input it is a no-op', () => {
-        const { s, els, viewCalls } = setup({});
+    it('Escape with a query records + clears the box but keeps the results and the view (two-level, §3.2)', () => {
+        const { s, els, store, viewCalls } = setup({});
         type(els, 'git');
+        const keptResults = els.results.innerHTML;
         let prevented = 0;
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
         expect(prevented).toBe(1);
         expect(s.isActive()).toBe(false);
-        expect(viewCalls[1]).toEqual(['tree', { keepFocus: true }]); // quit(true)
+        expect(els['search-input'].value).toBe('');
+        expect(store.get('searchQuery')).toBe('');
+        // the query landed in the history, the results stay in place and no
+        // return activation fires — the search view stays put
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['git']);
+        expect(els.results.innerHTML).toBe(keptResults);
+        expect(viewCalls).toEqual([['search', { keepFocus: true }]]);
+        // the history area now shows the recorded entry instead of the hint
+        expect(els['search-history-area'].innerHTML).toContain('data-q="git"');
+        // second Esc on the empty box declines: the document chain walks back
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
-        expect(prevented).toBe(1); // input empty: popup is allowed to close
+        expect(prevented).toBe(1);
+        expect(s.escape()).toBe(false);
     });
 
     it('ArrowDown focuses the first result in search mode, the first tree row otherwise', () => {
@@ -579,5 +608,228 @@ describe('saved query restore', () => {
         expect(fuzzy.calls).toHaveLength(0);
         expect(s.isActive()).toBe(false);
         expect(els['search-input'].selected).toBe(true);
+    });
+});
+
+describe('pushSearchHistory (§4.3 pure MRU)', () => {
+    it('trims the query, newest first, entries normalized to {q, ts, n}', () => {
+        expect(pushSearchHistory([], { q: '  git  ', ts: 5, n: 3 }))
+            .toEqual([{ q: 'git', ts: 5, n: 3 }]);
+        expect(pushSearchHistory(null, { q: 'a' }))
+            .toEqual([{ q: 'a', ts: 0, n: 0 }]);
+    });
+
+    it('drops empty/blank queries, keeping the list untouched', () => {
+        const list = [{ q: 'x', ts: 1, n: 0 }];
+        expect(pushSearchHistory(list, { q: '   ' })).toEqual(list);
+        expect(pushSearchHistory(list, null)).toEqual(list);
+        expect(pushSearchHistory(list, {})).toEqual(list);
+    });
+
+    it('dedupes by exact query: the re-searched entry moves to the front', () => {
+        const list = [{ q: 'a', ts: 1, n: 1 }, { q: 'b', ts: 2, n: 2 }];
+        expect(pushSearchHistory(list, { q: 'a', ts: 3, n: 4 }))
+            .toEqual([{ q: 'a', ts: 3, n: 4 }, { q: 'b', ts: 2, n: 2 }]);
+        // case differs → a distinct entry
+        expect(pushSearchHistory(list, { q: 'A', ts: 3, n: 0 })[1].q).toBe('a');
+    });
+
+    it('caps the list at the limit (default 10)', () => {
+        let list = [];
+        for (let i = 0; i < 12; i++)
+            list = pushSearchHistory(list, { q: `q${i}`, ts: i, n: 0 });
+        expect(list).toHaveLength(10);
+        expect(list[0].q).toBe('q11');
+        expect(list[9].q).toBe('q2');
+        expect(pushSearchHistory([{ q: 'a' }, { q: 'b' }], { q: 'c' }, 2)).toHaveLength(2);
+    });
+
+    it('tolerates malformed stored entries', () => {
+        const list = [null, { q: 1 }, 'junk', { q: 'ok', ts: 2 }];
+        expect(pushSearchHistory(list, { q: 'new', ts: 9, n: 1 }))
+            .toEqual([{ q: 'new', ts: 9, n: 1 }, { q: 'ok', ts: 2, n: 0 }]);
+    });
+});
+
+describe('search history area (§3.2/§4.3)', () => {
+    const HISTORY = JSON.stringify([{ q: 'old query', ts: Date.now(), n: 3 }]);
+
+    it('renders history rows (clock + query + count + time) with a clear-all head', () => {
+        const { els, viewHooks } = setup({ storeData: { searchHistory: HISTORY } });
+        viewHooks.search.activate();
+        const html = els['search-history-area'].innerHTML;
+        expect(html).toContain('class="search-history-head"');
+        expect(html).toContain('id="search-history-clear"');
+        expect(html).toContain('class="vbm-row search-history-row"');
+        expect(html).toContain('data-q="old query"');
+        expect(html).toContain('class="history-clock"');
+        expect(html).toContain('<span class="history-meta">searchHistoryResultCount[3]</span>');
+        expect(html).toContain('<span class="history-time">timeJustNow</span>');
+        expect(html).toContain('class="row-btn search-history-remove"');
+    });
+
+    it('escapes queries in the row markup', () => {
+        const { els, viewHooks } = setup({
+            storeData: { searchHistory: JSON.stringify([{ q: '<b>"x"', ts: 1, n: 0 }]) }
+        });
+        viewHooks.search.activate();
+        expect(els['search-history-area'].innerHTML).toContain('data-q="&lt;b&gt;&quot;x&quot;"');
+    });
+
+    it('shows only the hint when history is disabled (entries stay stored but hidden)', () => {
+        const { els, viewHooks } = setup({
+            storeData: { searchHistoryEnabled: '', searchHistory: HISTORY }
+        });
+        viewHooks.search.activate();
+        const html = els['search-history-area'].innerHTML;
+        expect(html).toContain('searchViewHint');
+        expect(html).not.toContain('data-q=');
+    });
+
+    it('clicking a history row reruns the query immediately — even in searchAfterEnter mode', () => {
+        const { els, viewHooks, fuzzy, store } = setup({
+            storeData: { searchHistory: HISTORY, searchAfterEnter: '1' }
+        });
+        viewHooks.search.activate();
+        const anchor = { dataset: { q: 'old query' } };
+        els['search-history-area'].trigger('click', {
+            target: { closest: sel => (sel === 'a[data-q]' ? anchor : null) }
+        });
+        expect(els['search-input'].value).toBe('old query');
+        expect(fuzzy.calls).toHaveLength(1); // explicit pick bypasses searchAfterEnter
+        expect(fuzzy.calls[0].query).toBe('old query');
+        expect(els['search-input'].focused).toBe(true);
+        expect(store.get('searchQuery')).toBe('old query');
+    });
+
+    it('the × button removes a single entry; the head button clears them all', () => {
+        const { els, viewHooks, store } = setup({
+            storeData: { searchHistory: JSON.stringify([{ q: 'a', ts: 1, n: 0 }, { q: 'b', ts: 2, n: 0 }]) }
+        });
+        viewHooks.search.activate();
+        els['search-history-area'].trigger('click', {
+            target: { closest: sel => (sel === '.search-history-remove' ? { dataset: { q: 'a' } } : null) }
+        });
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['b']);
+        els['search-history-area'].trigger('click', {
+            target: { closest: sel => (sel === '#search-history-clear' ? {} : null) }
+        });
+        expect(store.get('searchHistory')).toBe('[]');
+        expect(els['search-history-area'].innerHTML).toContain('searchViewHint');
+    });
+
+    it('Enter on a focused row reruns it, Delete removes it', () => {
+        const { els, viewHooks, store } = setup({ storeData: { searchHistory: HISTORY } });
+        viewHooks.search.activate();
+        globalThis.document.activeElement = { dataset: { q: 'old query' } };
+        els['search-history-area'].trigger('keydown', { key: 'Enter' });
+        expect(els['search-input'].value).toBe('old query');
+        els['search-history-area'].trigger('keydown', { key: 'Delete' });
+        expect(store.get('searchHistory')).toBe('[]');
+        // unrelated focus: the handler stays out of the way
+        globalThis.document.activeElement = null;
+        els['search-history-area'].trigger('keydown', { key: 'Enter' });
+        expect(els['search-input'].value).toBe('old query'); // unchanged
+    });
+
+    it('ArrowDown on an empty query in the search view lands on the first history row, else the first result', () => {
+        const { els } = setup({ activeView: 'search', storeData: { searchHistory: HISTORY } });
+        const input = els['search-input'];
+        input.value = '';
+        input.selectionEnd = 0;
+        const historyLink = makeEl();
+        els['search-history-area']._qs['a[data-q]'] = historyLink;
+        input.trigger('keydown', { key: 'ArrowDown' });
+        expect(historyLink.focused).toBe(true);
+        // no history row → falls through to the first kept result
+        const ctx = setup({ activeView: 'search' });
+        ctx.els['search-input'].value = '';
+        ctx.els['search-input'].selectionEnd = 0;
+        const resultLink = makeEl();
+        ctx.els.results._qs['ul>li:first-child a'] = resultLink;
+        ctx.els['search-input'].trigger('keydown', { key: 'ArrowDown' });
+        expect(resultLink.focused).toBe(true);
+    });
+});
+
+describe('search history record timings (§4.3)', () => {
+    it('records on result open (reset), with the last result count', () => {
+        const { s, els, store } = setup({
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] },
+                { id: '2', parentId: '0', title: 'HN', url: 'https://news.ycombinator.com/', isFolder: false, positions: [] }
+            ]
+        });
+        type(els, 'git');
+        s.reset(); // tree-view's bookmarkHandler calls this after opening a result
+        const history = JSON.parse(store.get('searchHistory'));
+        expect(history.map(e => e.q)).toEqual(['git']);
+        expect(history[0].n).toBe(2);
+    });
+
+    it('records on view leave (deactivate) and on popup close (pagehide)', () => {
+        const { els, viewHooks, store, winListeners } = setup({});
+        type(els, 'git');
+        viewHooks.search.deactivate();
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['git']);
+        expect(winListeners.pagehide).toHaveLength(1);
+        els['search-input'].value = 'second';
+        winListeners.pagehide[0]();
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['second', 'git']);
+    });
+
+    it('records on Enter in searchAfterEnter mode', () => {
+        const { els, store } = setup({ storeData: { searchAfterEnter: '1' } });
+        type(els, 'git');
+        expect(store.get('searchHistory')).toBeUndefined(); // nothing yet
+        els['search-input'].trigger('keydown', { key: 'Enter' });
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['git']);
+    });
+
+    it('never records when the history switch is off', () => {
+        const { s, els, store, viewHooks } = setup({ storeData: { searchHistoryEnabled: '' } });
+        type(els, 'git');
+        s.reset();
+        viewHooks.search.deactivate();
+        expect(store.get('searchHistory')).toBeUndefined();
+    });
+});
+
+describe('last-query restore (§4.3)', () => {
+    it('refills + reruns the persisted searchLastQuery on the first empty-box view entry (rememberState on)', () => {
+        const { els, viewHooks, fuzzy } = setup({
+            rememberState: true,
+            storeData: { searchLastQuery: 'git' }
+        });
+        viewHooks.search.activate();
+        expect(els['search-input'].value).toBe('git');
+        expect(fuzzy.calls).toHaveLength(1);
+        expect(fuzzy.calls[0].query).toBe('git');
+        expect(els['search-input'].selected).toBe(true);
+    });
+
+    it('ignores the persisted searchLastQuery when rememberState is off', () => {
+        const { els, viewHooks, fuzzy } = setup({
+            rememberState: false,
+            storeData: { searchLastQuery: 'git' }
+        });
+        viewHooks.search.activate();
+        expect(els['search-input'].value).toBe('');
+        expect(fuzzy.calls).toHaveLength(0);
+    });
+
+    it('tracks the session query live: reset (result opened) keeps the refill, quit/Esc clear stops it', () => {
+        const { s, els, viewHooks, fuzzy } = setup({});
+        type(els, 'git'); // sessionLastQuery := 'git' (and persisted)
+        s.reset(); // opening a result clears the box without touching the refill flag
+        expect(els['search-input'].value).toBe('');
+        viewHooks.search.activate();
+        expect(els['search-input'].value).toBe('git');
+        expect(fuzzy.calls).toHaveLength(2);
+        // explicit clear (quit / two-level Esc) stops the refill for the session
+        s.quit();
+        viewHooks.search.activate();
+        expect(els['search-input'].value).toBe('');
+        expect(fuzzy.calls).toHaveLength(2); // no silent rerun
     });
 });
