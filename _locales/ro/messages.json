@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Restrânge secțiunea adăugate recent în mod implicit"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Se păstrează cele mai vechi.",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "Nicio marcaj potrivit"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Sesiune $date$",

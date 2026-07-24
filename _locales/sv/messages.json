@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Dölj avsnittet för nyligen tillagda som standard"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Ta bort $count$ extra kopior i $groups$ grupper? Äldsta posterna behålls.",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "Inga matchande bokmärken"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Session $date$",

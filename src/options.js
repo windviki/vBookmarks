@@ -60,6 +60,22 @@ const $ = id => document.getElementById(id);
             { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
         ];
 
+        // v4 task-2: the "Views" group (docs/v4task-2.md §7). Tab strip and
+        // list-row path labels, both default on.
+        const viewSettings = [
+            { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
+            { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false }
+        ];
+        for (const setting of viewSettings) {
+            const element = $(setting.id);
+            const value = await getSetting(setting.key, setting.defaultValue);
+            element.checked = setting.inverted ? !value : !!value;
+            element.addEventListener('change', async () => {
+                const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
+                await setSetting(setting.key, newValue);
+            });
+        }
+
         // Initialize sync settings. One write per change is enough: the
         // service worker (src/sync-engine.js) observes chrome.storage.sync
         // and reschedules its refresh alarm itself, and the popup mirrors
@@ -133,6 +149,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');
+        // Views group (v4 task-2)
+        document.getElementById('views-options').innerText = __m('optionsGroupViews');
+        document.getElementById('option-show-view-tabs').innerText = __m('optionShowViewTabs');
+        document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

@@ -10,6 +10,7 @@ import { initTreeView } from './tree-view.js';
 import { initSyncUi } from './sync-ui.js';
 import { initPalette } from './palette.js';
 import { initUndo } from './undo.js';
+import { initViewManager } from './view-manager.js';
 
 (window => {
     const store = window.store;
@@ -239,6 +240,15 @@ import { initUndo } from './undo.js';
         get dialogs() { return dialogs; }
     });
 
+    // View manager (v4 task-2): the tab strip + view switching layer. Must
+    // init before initSearch — the search module maps its mode onto the view
+    // state machine at init (saved-query restore activates the search view).
+    const views = initViewManager({
+        store,
+        isPanel: IS_PANEL,
+        rtl
+    });
+
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
     // index, the results pane and every searchInput listener. generateTree
     // (tree-view) refreshes the index via search.updateIndex; everything else
@@ -251,7 +261,9 @@ import { initUndo } from './undo.js';
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         highlightTitlePositions: treeRender.highlightTitlePositions,
         // 与上方 rememberState 初值相同的确定性推导（search 只读取启动初值）
-        rememberState: !store.get('dontRememberState')
+        rememberState: !store.get('dontRememberState'),
+        // v4 task-2: search mode rides the view state machine
+        views
     });
 
     // Popup auto-height — only grow, never shrink on user interaction.
@@ -261,6 +273,7 @@ import { initUndo } from './undo.js';
     // interaction-triggered calls only grow. When autoResizePopup is off
     // the popup keeps its saved / default height unconditionally.
     const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
+    const $views = $('views');
     const resetHeight = (allowShrink) => {
         if (IS_PANEL)
             return;
@@ -271,7 +284,9 @@ import { initUndo } from './undo.js';
         // scrollHeight captures the full scrollable content (recent section +
         // main tree), unlike firstElementChild.offsetHeight which only measures
         // the first child and misses the bulk of a long bookmark tree.
-        const contentH = ($tree.scrollHeight + $tree.offsetTop + 16) * zoomLevel;
+        // v4 task-2: #tree now lives inside #views > section, so the chrome
+        // above the list (search bar + tab strip) is measured from #views.
+        const contentH = ($tree.scrollHeight + $views.offsetTop + 16) * zoomLevel;
         const currentH = body.offsetHeight;
         chrome.tabs.getZoom(zoomFactor => {
             const minH = Math.max(300 / zoomFactor, 200);
@@ -406,7 +421,9 @@ import { initUndo } from './undo.js';
         setOpens: v => { opens = v; },
         setRememberState: v => { rememberState = v; },
         middleClickBgTab,
-        leftClickNewTab
+        leftClickNewTab,
+        // v4 task-2 §3.6: every tree rebuild refreshes the shared path map
+        onTreeGenerated: t => views.buildPathMap(t)
     });
 
     // donation: three explicit answers to the ask (see the v4 model above)
@@ -590,7 +607,8 @@ import { initUndo } from './undo.js';
         body,
         os,
         rtl,
-        palette  // ESC layering: close palette before letting Chrome close popup
+        palette,  // ESC layering: close palette before letting Chrome close popup
+        views     // v4 task-2: list registry + view-level Escape behavior
     });
 
     const contextMouseMove = e => {

@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Fold sektionen for senest tilføjede sammen som standard"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Fjern $count$ ekstra kopier på tværs af $groups$ grupper? De ældste poster bevares.",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "Ingen matchende bogmærker"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Session $date$",

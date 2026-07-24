@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Ve výchozím nastavení sbalit sekci nedávno přidaných"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Odstranit $count$ kopií napříč $groups$ skupinami? Nejstarší položky zůstanou.",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "Žádné odpovídající záložky"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Relace $date$",

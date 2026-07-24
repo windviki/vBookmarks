@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Skjul nylig lagt til-seksjonen som standard"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Fjern $count$ ekstra kopier i $groups$ grupper? Eldste oppføringer beholdes.",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "Ingen samsvarende bokmerker"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Økt $date$",

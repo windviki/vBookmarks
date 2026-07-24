@@ -33,6 +33,10 @@
     --vbm-scrollbar: rgba(95, 99, 104, 0.5);
     --vbm-scrollbar-hover: rgba(95, 99, 104, 0.8);
     --vbm-radius: 8px;
+    /* v4 task-2 (docs/v4task-2-list.md §5): list-row metrics + amber warning */
+    --vbm-row-h: 28px;
+    --vbm-indent: 12px;
+    --vbm-warning: #f9ab00;
 }
 
 body[data-theme="dark"] {
@@ -53,6 +57,7 @@ body[data-theme="dark"] {
     --vbm-flash: var(--vbm-bg-selected);
     --vbm-scrollbar: rgba(154, 160, 166, 0.5);
     --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+    --vbm-warning: #fdd663;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,6 +79,7 @@ body[data-theme="dark"] {
         --vbm-flash: var(--vbm-bg-selected);
         --vbm-scrollbar: rgba(154, 160, 166, 0.5);
         --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
+        --vbm-warning: #fdd663;
     }
 }
 
@@ -99,6 +105,7 @@ body[data-theme="ink"] {
     --vbm-flash: var(--vbm-bg-selected);
     --vbm-scrollbar: rgba(139, 147, 169, 0.5);
     --vbm-scrollbar-hover: rgba(139, 147, 169, 0.8);
+    --vbm-warning: #e6c35c;
 }
 
 /* --- Paper: warm instrument-dial light --------------------------------
@@ -122,6 +129,7 @@ body[data-theme="paper"] {
     --vbm-flash: rgba(194, 64, 42, 0.15);
     --vbm-scrollbar: rgba(130, 121, 106, 0.5);
     --vbm-scrollbar-hover: rgba(130, 121, 106, 0.8);
+    --vbm-warning: #a87b00;
 }
 
 body {
@@ -399,10 +407,8 @@ body.linux input {
     position: relative;
 }
 
-/* Hidden by default; neat.js toggles via el.style.display (CSP-safe CSSOM) */
-#results {
-    display: none;
-}
+/* v4 task-2: #results lives inside #view-search — visibility is the view
+   layer's job (section hidden attribute), the pane itself stays block. */
 
 #clipboardcopier {
     width: 0;
@@ -1518,4 +1524,200 @@ menu[type=context] .menu-item,
 #command-palette {
     -webkit-animation: vbm-palette-in .12s ease-out;
     animation: vbm-palette-in .12s ease-out;
+}
+
+/* === v4 task-2: view tabs, view container & list-row path labels (slice A) ===
+   #view-tabs sits between the search bar and #views; tabs are icon-only in
+   the narrow popup, icon+label at ≥480px (container query) and always in
+   panel mode. Everything runs on --vbm-* tokens — zero per-theme rules. */
+
+#container {
+    container-type: inline-size;
+}
+
+#view-tabs {
+    position: relative;
+    display: flex;
+    flex: none;
+    height: 32px;
+    border-bottom: 1px solid var(--vbm-border);
+}
+
+body.no-view-tabs #view-tabs {
+    display: none;
+}
+
+.view-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: var(--vbm-muted);
+    font: menu;
+    cursor: pointer;
+}
+
+.view-tab:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.view-tab[aria-selected="true"] {
+    color: var(--vbm-accent);
+}
+
+.view-tab:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+.view-tab .tab-icon {
+    flex: none;
+    display: inline-flex;
+}
+
+/* Narrow popup: icon-only tabs (label survives via aria-label/title) */
+.view-tab .tab-label {
+    display: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.panel-mode .view-tab .tab-label {
+    display: inline;
+}
+
+@container (min-width: 480px) {
+    .view-tab .tab-label {
+        display: inline;
+    }
+}
+
+/* Badge dot (dead marks / dupe groups): danger token, white count */
+.view-tab .tab-badge {
+    flex: none;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    background: var(--vbm-danger);
+    color: #fff;
+    font-size: 9px;
+    line-height: 14px;
+    text-align: center;
+}
+
+/* Active-tab indicator: 2px accent bar sliding via transform (150ms) */
+.tab-indicator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--vbm-accent);
+    transition: transform .15s ease-out, width .15s ease-out;
+    pointer-events: none;
+}
+
+#views {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.view {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.view[hidden] {
+    display: none;
+}
+
+/* 150ms single-property fade on view switch (killed by reduced-motion) */
+@keyframes vbm-view-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.view-enter {
+    animation: vbm-view-fade .15s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tab-indicator {
+        transition: none;
+    }
+    .view-enter {
+        animation: none;
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* §3.6 row parent-path labels: narrow = inline right-aligned .row-path
+   (title column wins the shrink race); wide/panel = second muted line. */
+.vbm-row .row-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.vbm-row .row-sub {
+    display: none;
+    color: var(--vbm-muted);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vbm-row .row-path {
+    flex: none;
+    max-width: 45%;
+    margin-inline-start: 8px;
+    color: var(--vbm-muted);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: end;
+}
+
+@container (min-width: 480px) {
+    .vbm-row .row-path {
+        display: none;
+    }
+    .vbm-row .row-sub {
+        display: block;
+    }
+}
+
+body.panel-mode .vbm-row .row-path {
+    display: none;
+}
+
+body.panel-mode .vbm-row .row-sub {
+    display: block;
 }

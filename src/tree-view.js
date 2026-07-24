@@ -78,6 +78,9 @@ export function initTreeView(ctx = {}) {
     const setRememberState = ctx.setRememberState;
     const middleClickBgTab = ctx.middleClickBgTab;
     const leftClickNewTab = ctx.leftClickNewTab;
+    // v4 task-2 §3.6: optional hook receiving the full bookmark tree on every
+    // generateTree — neat.js feeds it to view-manager.buildPathMap.
+    const onTreeGenerated = ctx.onTreeGenerated;
     const _m = chrome.i18n.getMessage;
 
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
@@ -214,6 +217,10 @@ export function initTreeView(ctx = {}) {
         treeRender.generateNodeTrees(subTree, nodeTrees);
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
+        // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
+        // map from the same full tree (list-row path labels).
+        if (onTreeGenerated)
+            onTreeGenerated(tree);
 
         $tree.innerHTML = generateRecentSectionHTML() + html;
         refreshRecentSection();

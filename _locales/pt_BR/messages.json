@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "Recolher seção de adicionados recentemente por padrão"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "Remover $count$ cópias extras em $groups$ grupos? As entradas mais antigas são mantidas.",
     "placeholders": {
@@ -370,6 +393,9 @@
   },
   "searchNoResults": {
     "message": "Nenhum favorito correspondente"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "Sessão $date$",

@@ -37,3 +37,37 @@ export const CHEVRON_ICON =
     'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<polyline points="6.25 4.25 10 8 6.25 11.75"/>' +
     '</svg>';
+
+// v4 task-2: one 16px line icon per view tab (docs/v4task-2.md §3.2). Same
+// grid/stroke recipe as the tile icons above; colored by the tab's CSS
+// `color` (muted normally, accent when selected). The search glyph matches
+// the header search box on purpose — same search, two entry points.
+const viewIcon = (cls, inner) =>
+    `<svg class="vbm-icon vbm-icon-view-${cls}" width="16" height="16" viewBox="0 0 16 16" ` +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    inner + '</svg>';
+
+export const VIEW_ICONS = {
+    tree: viewIcon('tree',
+        '<circle cx="8" cy="3.1" r="1.6"/>' +
+        '<path d="M8 4.7v2.6M8 7.3H4.4v2.4M8 7.3h3.2v2.4"/>' +
+        '<circle cx="4.4" cy="11.3" r="1.6"/>' +
+        '<circle cx="11.6" cy="11.3" r="1.6"/>'),
+    search: viewIcon('search',
+        '<circle cx="7" cy="7" r="4.7"/>' +
+        '<line x1="10.3" y1="10.3" x2="13.6" y2="13.6"/>'),
+    recent: viewIcon('recent',
+        '<circle cx="8" cy="8" r="5.8"/>' +
+        '<polyline points="8 4.8 8 8 10.4 9.6"/>'),
+    stats: viewIcon('stats',
+        '<path d="M2.7 13.3h10.6"/>' +
+        '<line x1="4.7" y1="10" x2="4.7" y2="13.3"/>' +
+        '<line x1="8" y1="5.3" x2="8" y2="13.3"/>' +
+        '<line x1="11.3" y1="8" x2="11.3" y2="13.3"/>'),
+    dead: viewIcon('dead',
+        '<path d="M6.2 9.8a2.6 2.6 0 0 1-3.7 0l-.6-.6a2.6 2.6 0 0 1 3.7-3.7"/>' +
+        '<path d="M9.8 6.2a2.6 2.6 0 0 1 3.7 0l.6.6a2.6 2.6 0 0 1-3.7 3.7"/>'),
+    dupes: viewIcon('dupes',
+        '<rect x="5.3" y="5.3" width="8" height="8" rx="1.3"/>' +
+        '<path d="M10.7 5.3V3.7a1.33 1.33 0 0 0-1.34-1.33H4a1.33 1.33 0 0 0-1.33 1.33v5.34A1.33 1.33 0 0 0 4 10.37h1.3"/>')
+};

@@ -8,19 +8,32 @@
  * restore on startup, and every searchInput listener. neat.js only sees the
  * API returned at the bottom.
  *
+ * v4 task-2: the old #tree/#results display swap is retired — search mode
+ * is mapped onto the view layer (docs/v4task-2.md §4): typing in the header
+ * box activates the search view (the source view is remembered for the quit
+ * path), `views.pathOf` feeds the §3.6 parent-path row labels and the
+ * unified 标题+URL+路径 tooltips (the async per-row parent-folder tooltip
+ * fetch is retired — the path map covers it in one tree walk).
+ *
  * initSearch(ctx) is called once by neat.js after DOM parse.
  * ctx.store                    — chrome.storage mirror (searchQuery, focusID, settings)
  * ctx.separatorManager         — filters separators out of the flat index
  * ctx.switchBookmarkMenu(disable) — hides/restores context-menu entries
- * ctx.generateBookmarkHTML(title, url, extras, id, positions) — bookmark row HTML
+ * ctx.generateBookmarkHTML(title, url, extras, id, positions, meta) — bookmark row HTML
  * ctx.highlightTitlePositions(title, positions) — escaped, <mark>-wrapped title
  * ctx.rememberState            — restore the persisted query on startup when true
+ * ctx.views                    — view-manager API (activate/attach/pathOf)
  *
  * window.VBMFuzzy is loaded by fuzzy.js (classic script) before neat.js.
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
 import { FOLDER_ICON } from './icons.js';
+
+// Same escape recipe as tree-render.js's module-private copy (modules stay
+// self-contained): escape >, then <, then ".
+const htmlspecialchars = s =>
+    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 export function initSearch(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -32,6 +45,16 @@ export function initSearch(ctx = {}) {
     const generateBookmarkHTML = ctx.generateBookmarkHTML;
     const highlightTitlePositions = ctx.highlightTitlePositions;
     const $tree = $('tree');
+
+    // v4 task-2: the display swap (#tree vs #results) is retired — search
+    // mode now maps onto the view layer. Typing activates the search view
+    // (remembering the source view), quitting returns to it. The defensive
+    // fallback keeps minimal test setups alive; neat.js always injects it.
+    const views = ctx.views || {
+        activate: () => {}, activeId: () => 'tree', isActive: () => false,
+        attach: () => {}, pathOf: () => ''
+    };
+    let returnView = 'tree';
 
     const searchAfterEnter = !!store.get('searchAfterEnter');
     const $results = $('results');
@@ -105,24 +128,14 @@ export function initSearch(ctx = {}) {
             store.set('searchQuery', '');
             searchMode = false;
             switchBookmarkMenu(false);
-            $tree.style.display = 'block';
-            $results.style.display = 'none';
-
-            if (ignoreFocus === null || !ignoreFocus) {
-                // fix focus
-                let item = $tree.querySelector('.focus');
-                // not found focus, focus on the root node
-                if (!item) {
-                    item = $tree.querySelector('li:first-child>span');
-                }
-                if (item) {
-                    item.focus();
-                }
-            }
+            // Back to the view the search was started from. activate()'s
+            // default focus restore replaces the old manual tree-row refocus;
+            // quit(true) keeps the focus in the input (clear-button path).
+            views.activate(returnView, { keepFocus: ignoreFocus === true });
         }
     };
 
-    // Drop the query + mode without touching the tree/results display or
+    // Drop the query + mode without leaving the search view or touching
     // focus. Called by tree-view.js's bookmarkHandler after a search result
     // has been opened, where the popup is about to navigate away anyway (the
     // original code inlined these five statements in bookmarkHandler).
@@ -137,6 +150,19 @@ export function initSearch(ctx = {}) {
         }
     };
 
+    // Empty-query content of the search view (slice A: a plain hint row;
+    // slice B replaces it with the search-history area).
+    const renderEmptyHint = () => {
+        $results.innerHTML = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+    };
+    views.attach('search', {
+        activate: () => {
+            if (!searchInput.value)
+                renderEmptyHint();
+        },
+        focus: () => searchInput.focus()
+    });
+
     const search = (e) => {
         const value = searchInput.value.trim();
         store.set('searchQuery', value);
@@ -147,11 +173,18 @@ export function initSearch(ctx = {}) {
         if (searchAfterEnter && !e) {
             return;
         }
+        if (!searchMode) {
+            // Entering search mode: remember where to return on quit
+            returnView = views.activeId() === 'search' ? returnView : views.activeId();
+            searchMode = true;
+            switchBookmarkMenu(true);
+        }
+        // 输入即切视图 (§4.2): typing drives the search view active. keepFocus —
+        // the keystroke owns the input.
+        views.activate('search', { keepFocus: true });
         if (value === prevValue)
             return;
         prevValue = value;
-        searchMode = true;
-        switchBookmarkMenu(true);
 
         const renderResults = results => {
             let html = '<ul role="list">';
@@ -164,8 +197,10 @@ export function initSearch(ctx = {}) {
                 const result = results[i];
                 const id = result.id;
                 if (!result.isFolder) {
-                    html += `<li data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
-                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions)}</li>`;
+                    // §3.6: rows carry their parent-folder path label + the
+                    // unified 标题/URL/路径 tooltip (via the meta argument).
+                    html += `<li class="vbm-row" data-parentid="${result.parentId}" id="results-item-${id}" role="listitem">
+                            ${generateBookmarkHTML(result.title, result.url, '', result.id, result.positions, { path: views.pathOf(id) })}</li>`;
                 } else {  // folder
                     // Add sync status indicator for folders in search results
                     let syncIndicator = '';
@@ -181,8 +216,12 @@ export function initSearch(ctx = {}) {
 
                     const folderTitle = result.title ?
                         highlightTitlePositions(result.title, result.positions) : _m('noTitle');
+                    // §3.6 tooltip unification for folder rows: 标题 + 路径
+                    const folderPath = views.pathOf(id);
+                    const folderTip = htmlspecialchars(result.title || _m('noTitle'))
+                        + (folderPath ? `\n${htmlspecialchars(folderPath)}` : '');
                     html += `<li id="results-item-${id}" role="listitem" data-parentid="${result.parentId}">
-                            <a href="" class="link-folder tree-item-link">
+                            <a href="" class="link-folder tree-item-link" title="${folderTip}">
                             <div class="favicon-container">
                             ${FOLDER_ICON}
                             ${syncIndicator}
@@ -192,28 +231,7 @@ export function initSearch(ctx = {}) {
                 }
             }
             html += '</ul>';
-            $tree.style.display = 'none';
             $results.innerHTML = html;
-            $results.style.display = 'block';
-
-            let lis = $results.querySelectorAll('li');
-            for (let i = 0, l = lis.length; i < l; i++) {
-                const li = lis[i];
-                const parentId = li.dataset.parentid;
-                if (!parentId) // empty-state row
-                    continue;
-                chrome.bookmarks.get(parentId, node => {
-                    if (!node || !node.length)
-                        return;
-                    const a = li.querySelector('a');
-                    // Add parent folder
-                    if (a && node[0]) {
-                        a.title = `${_m('parentFolder', node[0].title || 'root')}\n${a.title}`;
-                    }
-                });
-            }
-
-            lis = null;
         };
 
         // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed

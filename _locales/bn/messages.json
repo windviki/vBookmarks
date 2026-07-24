@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "$groups$ গ্রুপ জুড়ে $count$ অতিরিক্ত কপি সরিয়ে ফেলবেন? পুরনো এন্ট্রিগুলো রাখা হবে।",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "সেশন $date$",

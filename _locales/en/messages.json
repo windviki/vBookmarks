@@ -502,6 +502,9 @@
     "description": "Shown in the popup when a search returns no matching bookmarks.",
     "message": "No matching bookmarks"
   },
+  "searchViewHint": {
+    "message": "Type in the box above to search your bookmarks"
+  },
   "sessionEmpty": {
     "description": "Alert shown when the current window has no tabs that can be bookmarked.",
     "message": "No tabs to save"
@@ -578,6 +581,29 @@
   },
   "optionRecentCollapsed": {
     "message": "Collapse the recently added section by default"
+  },
+  "optionsGroupViews": {
+    "message": "Views"
+  },
+  "optionShowViewTabs": {
+    "message": "Show view tabs below the search box"
+  },
+  "optionShowItemPath": {
+    "message": "Show the parent folder path on list rows"
+  },
+  "viewTree": {
+    "message": "Tree"
+  },
+  "viewSearch": {
+    "message": "Search"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ view",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "sortFolderContents": {
     "message": "Sort Folder Contents"

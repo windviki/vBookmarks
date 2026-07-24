@@ -21,6 +21,13 @@
  * ctx.body    — document.body (the .active row lookup in contextKeyDown)
  * ctx.os      — 'mac' | 'win' | 'linux' | 'other'
  * ctx.rtl     — true when the popup is right-to-left
+ * ctx.views   — view-manager API (v4 task-2): the list-container registry the
+ *               nav handlers bind to (lists/listOf, replacing the hardcoded
+ *               #tree/#results pair), the view-level Escape levels
+ *               (onEscapeActive/escapeToTree in the document chain), the
+ *               ↑-past-first-row region crossing (focusTop) and the Ctrl+F
+ *               search-view activation. Optional: a fallback mirrors the
+ *               pre-view wiring when absent (tests).
  *
  * The handlers keep their `this` semantics (the element the listener is
  * bound to), so they stay `function (e)` declarations; the returned
@@ -41,6 +48,20 @@ export function initKeyboard(ctx = {}) {
     const os = ctx.os;
     const rtl = ctx.rtl;
     const palette = ctx.palette; // ESC layering: close palette before popup
+    // v4 task-2: the list containers and the view-level Escape behavior come
+    // from the view manager. The fallback mirrors the pre-view wiring so
+    // minimal test setups keep working; neat.js always injects it.
+    const views = ctx.views || {
+        lists: () => [
+            { id: 'tree', el: ctx.tree, typeAhead: true },
+            { id: 'search', el: ctx.search.results, typeAhead: true }
+        ],
+        listOf: () => null,
+        onEscapeActive: () => false,
+        escapeToTree: () => false,
+        focusTop: () => { ctx.search.input.focus(); },
+        activate: () => {}
+    };
 
     // neatools' String.prototype.escapeRegExp, kept as a pure function
     const escapeRegExp = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -115,7 +136,10 @@ export function initKeyboard(ctx = {}) {
                     if (parentPrevLi && parentPrevLi.tagName === 'LI') {
                         parentPrevLi.querySelector('a, span').focus();
                     } else {
-                        search.input.focus();
+                        // v4task-2-list §2.1: ↑ past the first row crosses
+                        // into the tab strip (or the search box when the
+                        // strip is hidden).
+                        views.focusTop();
                     }
                 }
             }
@@ -281,6 +305,12 @@ export function initKeyboard(ctx = {}) {
             default: {
                 if (keyValue.length > 1)
                     return;
+                // Type-ahead lives on tree/search only (docs/v4task-2.md
+                // §3.4): other list views consume letter keys through their
+                // own view hooks (M/R/K) instead.
+                const listView = views.listOf(this);
+                if (listView && listView.typeAhead === false)
+                    return;
                 const key = keyValue;
                 if (key !== keyBuffer)
                     keyBuffer += key;
@@ -326,8 +356,12 @@ export function initKeyboard(ctx = {}) {
             }
         }
     };
-    $tree.addEventListener('keydown', treeKeyDown);
-    search.results.addEventListener('keydown', treeKeyDown);
+    // v4 task-2 §3.4: the list containers come from the view registry
+    // (tree/search today, feature views as they land); the handlers keep
+    // their `this` = the bound list element semantics.
+    views.lists().forEach(list => {
+        list.el.addEventListener('keydown', treeKeyDown);
+    });
 
     const treeKeyUp = e => {
         let item = document.activeElement;
@@ -351,8 +385,9 @@ export function initKeyboard(ctx = {}) {
                 break;
         }
     };
-    $tree.addEventListener('keyup', treeKeyUp);
-    search.results.addEventListener('keyup', treeKeyUp);
+    views.lists().forEach(list => {
+        list.el.addEventListener('keyup', treeKeyUp);
+    });
 
     //use keyboardEvent.key (>= Chrome 51)
     const contextKeyDown = function (e) {
@@ -474,11 +509,21 @@ export function initKeyboard(ctx = {}) {
             palette.close();
             return;
         }
+        // v4 task-2 §3.4 Esc layering: the active view's own consumer first
+        // (e.g. aborting a dead-link scan), then the search query clear,
+        // then the browser-style "back to tree", then window.close.
+        if (views.onEscapeActive()) {
+            return;
+        }
         if (search.isActive() || search.input.value) {
             if (search.isActive())
                 search.quit();
             else
                 search.input.value = '';
+            return;
+        }
+        // Non-tree view: Esc returns to the tree (new browser-style back).
+        if (views.escapeToTree()) {
             return;
         }
         // Nothing left to dismiss — close the popup.
@@ -498,6 +543,8 @@ export function initKeyboard(ctx = {}) {
 
     document.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
+            // §4.2: Ctrl/Cmd+F enters the search view and focuses the box
+            views.activate('search');
             search.input.focus();
             search.input.select();
             e.preventDefault();

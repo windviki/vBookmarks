@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "डिफ़ॉल्ट रूप से हाल ही में जोड़े गए अनुभाग को संक्षिप्त करें"
   },
+  "optionsGroupViews": {
+    "message": "[TODO:optionsGroupViews]"
+  },
+  "optionShowViewTabs": {
+    "message": "[TODO:optionShowViewTabs]"
+  },
+  "optionShowItemPath": {
+    "message": "[TODO:optionShowItemPath]"
+  },
+  "viewTree": {
+    "message": "[TODO:viewTree]"
+  },
+  "viewSearch": {
+    "message": "[TODO:viewSearch]"
+  },
+  "viewSwitchAnnounce": {
+    "message": "[TODO:viewSwitchAnnounce]",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "$groups$ समूहों में $count$ अतिरिक्त प्रतियाँ हटाएँ? सबसे पुरानी प्रविष्टियाँ रखी जाएँगी।",
     "placeholders": {
@@ -371,6 +394,9 @@
   },
   "searchNoResults": {
     "message": "कोई मिलान बुकमार्क नहीं"
+  },
+  "searchViewHint": {
+    "message": "[TODO:searchViewHint]"
   },
   "sessionFolderName": {
     "message": "सत्र $date$",

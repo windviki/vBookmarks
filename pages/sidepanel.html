@@ -23,8 +23,12 @@
             </div>
         </div>
     </div>
-    <div id="tree" tabindex="-1"></div>
-    <div id="results" tabindex="-1"></div>
+    <div id="view-tabs" role="tablist"></div>
+    <div id="views">
+        <section id="view-tree" class="view" role="tabpanel" aria-labelledby="view-tab-tree"><div id="tree" tabindex="-1"></div></section>
+        <section id="view-search" class="view" role="tabpanel" aria-labelledby="view-tab-search" hidden><div id="results" tabindex="-1"></div></section>
+    </div>
+    <div id="view-announce" class="visually-hidden" aria-live="polite"></div>
 </div>
 <div id="drop-overlay"></div>
 <div id="bookmark-clone"></div>

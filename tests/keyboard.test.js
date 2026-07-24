@@ -149,7 +149,8 @@ const setup = (opts = {}) => {
         }
     };
     globalThis.document = doc;
-    globalThis.window = {};
+    const windowCloseCalls = [];
+    globalThis.window = { close: () => windowCloseCalls.push('close') };
     const chromeStub = {
         bookmarks: {
             childNodes: {},
@@ -311,7 +312,12 @@ const setup = (opts = {}) => {
         dialogs,
         body,
         os: opts.os || 'linux',
-        rtl: !!opts.rtl
+        rtl: !!opts.rtl,
+        // v4 task-2: absent → the pre-view fallback wiring; a function gets
+        // the internal elements first so the registry can reference them
+        views: typeof opts.views === 'function'
+            ? opts.views({ tree, results, searchInput, el })
+            : opts.views
     });
 
     const fireDoc = (type, ev) => {
@@ -364,7 +370,7 @@ const setup = (opts = {}) => {
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
         chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls,
-        closeDialogsCalls, flags
+        closeDialogsCalls, flags, windowCloseCalls
     };
 };
 
@@ -1030,5 +1036,113 @@ describe('document Escape / Ctrl+F', () => {
         expect(ev.defaultPrevented).toBe(true);
         expect(searchInput.focused).toBe(true);
         expect(searchInput.selected).toBe(true);
+    });
+});
+
+// v4 task-2: with a view manager injected, the list bindings, the Escape
+// chain levels, the ↑-region crossing and Ctrl+F all route through it.
+describe('view-manager integration (v4 task-2)', () => {
+    const makeViews = (overrides = {}) => {
+        const calls = { activate: [], focusTop: 0 };
+        const views = {
+            lists: () => [],
+            listOf: () => null,
+            onEscapeActive: () => false,
+            escapeToTree: () => false,
+            focusTop: () => { calls.focusTop++; },
+            activate: (...args) => calls.activate.push(args),
+            ...overrides
+        };
+        return { views, calls };
+    };
+
+    it('binds the nav handlers to the registry lists instead of tree/results', () => {
+        let listEl;
+        const ctx = setup({
+            views: ({ el }) => {
+                listEl = el('DIV', 'view-recent-list');
+                return makeViews({
+                    lists: () => [{ id: 'recent', el: listEl, typeAhead: true }]
+                }).views;
+            }
+        });
+        expect(listEl._listeners.keydown).toHaveLength(1);
+        expect(listEl._listeners.keyup).toHaveLength(1);
+        // the hardcoded pair is no longer bound by keyboard.js itself
+        expect(ctx.tree._listeners.keydown).toBeUndefined();
+        expect(ctx.results._listeners.keydown).toBeUndefined();
+    });
+
+    it('Escape runs the view consumer before the search clear', () => {
+        const { views } = makeViews({ onEscapeActive: () => true });
+        const { fireDoc, searchInput, searchCalls } = setup({ views, searchActive: true });
+        searchInput.value = 'query';
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(searchCalls).toEqual([]); // consumed by the view
+        expect(searchInput.value).toBe('query');
+    });
+
+    it('Escape after the search clear falls through to escapeToTree, then window.close', () => {
+        const order = [];
+        const { views } = makeViews({
+            onEscapeActive: () => { order.push('view'); return false; },
+            escapeToTree: () => { order.push('tree'); return true; }
+        });
+        const { fireDoc, windowCloseCalls } = setup({ views });
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(order).toEqual(['view', 'tree']);
+        expect(windowCloseCalls).toEqual([]); // escapeToTree consumed it
+
+        const none = makeViews(); // everything declines → popup closes
+        const ctx2 = setup({ views: none.views });
+        ctx2.fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(ctx2.windowCloseCalls).toEqual(['close']);
+    });
+
+    it('Ctrl+F activates the search view before focusing the input', () => {
+        const { views, calls } = makeViews();
+        const { fireDoc, searchInput } = setup({ views });
+        fireDoc('keydown', makeEvent({ key: 'f', ctrlKey: true }));
+        expect(calls.activate).toEqual([['search']]);
+        expect(searchInput.focused).toBe(true);
+        expect(searchInput.selected).toBe(true);
+    });
+
+    it('ArrowUp past the first row crosses out through views.focusTop', () => {
+        const { views, calls } = makeViews();
+        const ctx = setup({
+            views: ({ tree, results }) => {
+                views.lists = () => [
+                    { id: 'tree', el: tree, typeAhead: true },
+                    { id: 'search', el: results, typeAhead: true }
+                ];
+                return views;
+            }
+        });
+        ctx.doc.activeElement = ctx.f1.link;
+        fire(ctx.tree, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(calls.focusTop).toBe(1);
+    });
+
+    it('type-ahead stays off for lists registered with typeAhead: false', () => {
+        const mk = flag => ({ tree }) => {
+            const entry = { id: 'dead', el: tree, typeAhead: flag };
+            return makeViews({
+                lists: () => [entry],
+                listOf: el => (el === tree ? entry : null)
+            }).views;
+        };
+        const ctx = setup({ views: mk(false) });
+        const rows = ctx.buildTypeRows();
+        ctx.doc.activeElement = rows.alpha.a;
+        fire(ctx.tree, 'keydown', makeEvent({ key: 'b' }));
+        expect(rows.beta.a.focused).toBe(false);
+        expect(timeouts).toEqual([]); // not even the keyBuffer timer
+        // a typeAhead list on the same key behaves normally
+        const ctx2 = setup({ views: mk(true) });
+        const rows2 = ctx2.buildTypeRows();
+        ctx2.doc.activeElement = rows2.alpha.a;
+        fire(ctx2.tree, 'keydown', makeEvent({ key: 'b' }));
+        expect(rows2.beta.a.focused).toBe(true);
     });
 });

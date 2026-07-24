@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
-import { initTreeRender } from '../src/tree-render.js';
+import { initTreeRender, buildPathMap } from '../src/tree-render.js';
 import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 
 // tree-render.js touches page globals (chrome.i18n/runtime/bookmarks,
@@ -227,6 +227,77 @@ describe('generateBookmarkHTML', () => {
         };
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', undefined))
             .not.toContain('sync-indicator');
+    });
+
+    // v4 task-2 §3.6: meta.path unifies the tooltip to 标题+URL+路径 and
+    // adds the row path labels when showItemPath is on.
+    it('meta.path unifies the tooltip and adds row path labels (showItemPath on)', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' });
+        expect(html).toContain('title="T\nhttp://e.com/\nFolder A"');
+        expect(html).toContain(
+            '<span class="row-main"><i>T</i><span class="row-sub" dir="auto">Folder A</span></span>');
+        expect(html).toContain('<span class="row-path" dir="auto">Folder A</span>');
+    });
+
+    it('meta.path escapes all three tooltip segments', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('<b>', 'http://e.com/?q="1"', '', '1', null, { path: 'A<B' });
+        expect(html).toContain('title="&lt;b&gt;\nhttp://e.com/?q=&quot;1&quot;\nA&lt;B"');
+        expect(html).toContain('<span class="row-sub" dir="auto">A&lt;B</span>');
+    });
+
+    it('meta.path only sets the tooltip when showItemPath is off', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' });
+        expect(html).toContain('title="T\nhttp://e.com/\nFolder A"');
+        expect(html).toContain('<i>T</i>'); // plain name slot
+        expect(html).not.toContain('row-path');
+    });
+
+    it('empty/missing meta.path keeps the legacy URL-only tooltip', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: '' }))
+            .toContain('title="http://e.com/"');
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {}))
+            .not.toContain('row-path');
+    });
+});
+
+describe('buildPathMap (v4 task-2 §3.6)', () => {
+    it('maps each node to its ancestor folder path, skipping the invisible root and untitled folders', () => {
+        const map = buildPathMap([{
+            id: '0', title: '', children: [
+                {
+                    id: '1', parentId: '0', title: 'Folder A', children: [
+                        { id: '11', parentId: '1', title: 'GitHub', url: 'https://x.com/' },
+                        {
+                            id: '2', parentId: '1', title: '  ', children: [
+                                { id: '21', parentId: '2', title: 'Deep', url: 'https://y.com/' }
+                            ]
+                        },
+                        {
+                            id: '3', parentId: '1', title: 'Sub B', children: [
+                                { id: '31', parentId: '3', title: 'Deeper', url: 'https://z.com/' }
+                            ]
+                        }
+                    ]
+                },
+                { id: '4', parentId: '0', title: 'Top', url: 'https://t.com/' }
+            ]
+        }]);
+        expect(map['0']).toBeUndefined(); // invisible root contributes nothing
+        expect(map['1']).toBe(''); // sits at the root
+        expect(map['11']).toBe('Folder A');
+        expect(map['21']).toBe('Folder A'); // untitled folder adds no segment
+        expect(map['31']).toBe('Folder A / Sub B');
+        expect(map['4']).toBe('');
+    });
+
+    it('handles empty input', () => {
+        expect(buildPathMap(null)).toEqual({});
+        expect(buildPathMap([])).toEqual({});
+        expect(buildPathMap([{ id: '0', title: '' }])).toEqual({});
     });
 });
 

@@ -23,6 +23,29 @@
   "optionRecentCollapsed": {
     "message": "默认收起\"最近添加\"分区"
   },
+  "optionsGroupViews": {
+    "message": "视图"
+  },
+  "optionShowViewTabs": {
+    "message": "在搜索框下方显示视图标签栏"
+  },
+  "optionShowItemPath": {
+    "message": "在列表行上显示所在文件夹路径"
+  },
+  "viewTree": {
+    "message": "书签树"
+  },
+  "viewSearch": {
+    "message": "搜索"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$视图",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "dupesConfirmAll": {
     "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留最早添加项。",
     "placeholders": {
@@ -365,6 +388,9 @@
   },
   "searchNoResults": {
     "message": "未找到匹配的书签"
+  },
+  "searchViewHint": {
+    "message": "在上方输入框中输入关键字搜索书签"
   },
   "sessionFolderName": {
     "message": "会话 $date$",

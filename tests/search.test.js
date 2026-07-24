@@ -173,21 +173,36 @@ const setup = (opts = {}) => {
     globalThis.chrome = chromeStub;
     const store = makeStore(opts.storeData || {});
     const calls = { switchBookmarkMenu: [], generateBookmarkHTML: [], highlightTitlePositions: [] };
+    // v4 task-2: the display swap is replaced by the view layer. The double
+    // records activate() calls and captures the hooks search.js attaches to
+    // the structural 'search' view.
+    const viewCalls = [];
+    const viewHooks = {};
+    const views = {
+        activate: (id, o) => viewCalls.push([id, o]),
+        activeId: () => opts.activeView || 'tree',
+        isActive: id => (opts.activeView || 'tree') === id,
+        attach: (id, hooks) => {
+            viewHooks[id] = hooks;
+        },
+        pathOf: opts.pathOf || (() => '')
+    };
     const s = initSearch({
         store,
         separatorManager: { isSeparator: (title, url) => url.includes('separatethis') },
         switchBookmarkMenu: disable => calls.switchBookmarkMenu.push(disable),
-        generateBookmarkHTML: (title, url, extras, id, positions) => {
-            calls.generateBookmarkHTML.push({ title, url, extras, id, positions });
+        generateBookmarkHTML: (title, url, extras, id, positions, meta) => {
+            calls.generateBookmarkHTML.push({ title, url, extras, id, positions, meta });
             return `<a href="${url}" data-id="${id}">${title}</a>`;
         },
         highlightTitlePositions: (title, positions) => {
             calls.highlightTitlePositions.push({ title, positions });
             return positions && positions.length ? `<mark>${title}</mark>` : title;
         },
-        rememberState: !!opts.rememberState
+        rememberState: !!opts.rememberState,
+        views
     });
-    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses };
+    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks };
 };
 
 const type = (els, value) => {
@@ -197,7 +212,7 @@ const type = (els, value) => {
 
 describe('search execution + rendering', () => {
     it('ranks the flat index and renders bookmark + folder rows', () => {
-        const { s, els, fuzzy, calls, store } = setup({
+        const { s, els, fuzzy, calls, store, viewCalls } = setup({
             fuzzyResults: [
                 { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [0, 1] },
                 { id: '1', parentId: '0', title: 'Folder A', isFolder: true, positions: [] }
@@ -216,15 +231,18 @@ describe('search execution + rendering', () => {
         const html = els.results.innerHTML;
         expect(html).toContain('<ul role="list">');
         expect(html).toContain('id="results-item-11"');
+        expect(html).toContain('<li class="vbm-row"'); // §3 row anatomy
         expect(html).toContain('href="https://github.com/"');
         expect(calls.generateBookmarkHTML[0]).toEqual({
-            title: 'GitHub', url: 'https://github.com/', extras: '', id: '11', positions: [0, 1]
+            title: 'GitHub', url: 'https://github.com/', extras: '', id: '11',
+            positions: [0, 1], meta: { path: '' }
         });
         expect(html).toContain('class="link-folder tree-item-link"');
         expect(html).toContain('id="results-item-1"');
         expect(calls.highlightTitlePositions).toEqual([{ title: 'Folder A', positions: [] }]);
-        expect(els.tree.style.display).toBe('none');
-        expect(els.results.style.display).toBe('block');
+        // v4 task-2: typing drives the search view active (keepFocus — the
+        // keystroke owns the input); the old #tree/#results display swap is gone
+        expect(viewCalls).toEqual([['search', { keepFocus: true }]]);
         expect(calls.switchBookmarkMenu).toEqual([true]);
         expect(store.get('searchQuery')).toBe('git');
     });
@@ -263,22 +281,41 @@ describe('search execution + rendering', () => {
         expect(els.results.innerHTML).toContain('sync-tooltip');
     });
 
-    it('adds the parent folder name to result link tooltips', () => {
-        const { els, chrome } = setup({
+    it('feeds row path labels + unified tooltips from views.pathOf (§3.6)', () => {
+        const { els, calls, chrome } = setup({
+            pathOf: id => `path-of-${id}`,
             fuzzyResults: [
-                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] }
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] },
+                { id: '1', parentId: '0', title: 'Folder A', isFolder: true, positions: [] }
             ]
         });
-        const a = makeEl();
-        a.title = 'old-tip';
-        const li = makeEl();
-        li.dataset.parentid = '1';
-        li._qs.a = a;
-        const emptyRow = makeEl(); // no data-parentid: skipped
-        els.results._qsa.li = [li, emptyRow];
         type(els, 'git');
-        expect(chrome.bookmarks.getCalls).toEqual(['1']);
-        expect(a.title).toBe('parentFolder[parent-of-1]\nold-tip');
+        // bookmark rows: the path flows into the row meta (tooltip + label
+        // are rendered inside tree-render's generateBookmarkHTML)
+        expect(calls.generateBookmarkHTML[0].meta).toEqual({ path: 'path-of-11' });
+        // folder rows: tooltip unifies to 标题 + 路径
+        expect(els.results.innerHTML).toContain('title="Folder A\npath-of-1"');
+        // the async per-row parent-folder tooltip fetch is retired — the
+        // path map covers it in one tree walk
+        expect(chrome.bookmarks.getCalls).toEqual([]);
+    });
+
+    it('renders the empty-query hint when the search view activates without a query', () => {
+        const { els, viewHooks } = setup({});
+        viewHooks.search.activate();
+        expect(els.results.innerHTML).toContain(
+            '<li class="empty-state" role="listitem"><i>searchViewHint</i></li>');
+        // a filled input keeps its current results instead
+        els.results.innerHTML = 'x';
+        els['search-input'].value = 'git';
+        viewHooks.search.activate();
+        expect(els.results.innerHTML).toBe('x');
+    });
+
+    it('the search view focus hook focuses the input', () => {
+        const { els, viewHooks } = setup({});
+        viewHooks.search.focus();
+        expect(els['search-input'].focused).toBe(true);
     });
 });
 
@@ -320,63 +357,57 @@ describe('flat index lifecycle', () => {
 });
 
 describe('quit / reset semantics', () => {
-    it('quit() clears input + persisted query, restores panes/menu and fixes focus', () => {
-        const { s, els, store, calls } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('quit() clears input + persisted query, restores the menu and returns to the source view', () => {
+        const { s, els, store, calls, viewCalls } = setup({});
         type(els, 'git');
         s.quit();
         expect(s.isActive()).toBe(false);
         expect(els['search-input'].value).toBe('');
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
-        expect(focusTarget.focused).toBe(true);
+        // the focus restore itself lives in view-manager's focusDefault
+        expect(viewCalls).toEqual([
+            ['search', { keepFocus: true }],
+            ['tree', { keepFocus: false }]
+        ]);
     });
 
-    it('quit() falls back to the first tree row when nothing has .focus', () => {
-        const { s, els } = setup({});
-        const rootItem = makeEl();
-        els.tree._qs['li:first-child>span'] = rootItem;
-        type(els, 'x');
+    it('quit() returns to the view the search was started from', () => {
+        const { s, els, viewCalls } = setup({ activeView: 'recent' });
+        type(els, 'git');
+        expect(viewCalls).toEqual([['search', { keepFocus: true }]]);
         s.quit();
-        expect(rootItem.focused).toBe(true);
+        expect(viewCalls[1]).toEqual(['recent', { keepFocus: false }]);
     });
 
-    it('quit(true) skips the focus fix', () => {
-        const { s, els } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('quit(true) returns with keepFocus (the input keeps the focus)', () => {
+        const { s, els, viewCalls } = setup({});
         type(els, 'x');
         s.quit(true);
         expect(s.isActive()).toBe(false);
-        expect(focusTarget.focused).toBe(false);
+        expect(viewCalls[1]).toEqual(['tree', { keepFocus: true }]);
     });
 
     it('quit() while inactive is a no-op', () => {
-        const { s, els, store, calls } = setup({});
+        const { s, els, store, calls, viewCalls } = setup({});
         els['search-input'].value = 'draft';
         s.quit();
         expect(els['search-input'].value).toBe('draft');
         expect(store.get('searchQuery')).toBeUndefined();
         expect(calls.switchBookmarkMenu).toEqual([]);
+        expect(viewCalls).toEqual([]);
     });
 
-    it('reset() drops query state without touching panes or focus', () => {
-        const { s, els, store, calls, fuzzy } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('reset() drops query state without leaving the search view', () => {
+        const { s, els, store, calls, fuzzy, viewCalls } = setup({});
         type(els, 'git');
         s.reset();
         expect(s.isActive()).toBe(false);
         expect(els['search-input'].value).toBe('');
         expect(store.get('searchQuery')).toBe('');
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
-        // unlike quit(): tree stays hidden, results stay visible, no focus fix
-        expect(els.tree.style.display).toBe('none');
-        expect(els.results.style.display).toBe('block');
-        expect(focusTarget.focused).toBe(false);
+        // unlike quit(): no return activation, the popup stays where it is
+        expect(viewCalls).toEqual([['search', { keepFocus: true }]]);
         // prevValue was cleared, so the same query runs again
         type(els, 'git');
         expect(fuzzy.calls).toHaveLength(2);
@@ -394,23 +425,22 @@ describe('quit / reset semantics', () => {
 });
 
 describe('input listeners', () => {
-    it('clearing the input exits search mode without restoring focus', () => {
-        const { s, els, store, calls } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('clearing the input exits search mode keeping the focus on the input', () => {
+        const { s, els, store, calls, viewCalls } = setup({});
         type(els, 'git');
         expect(s.isActive()).toBe(true);
         type(els, '');
         expect(s.isActive()).toBe(false);
         expect(store.get('searchQuery')).toBe('');
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
-        expect(focusTarget.focused).toBe(false); // quit(true): keep focus on input
+        expect(viewCalls).toEqual([
+            ['search', { keepFocus: true }],
+            ['tree', { keepFocus: true }] // quit(true): keep focus on input
+        ]);
         expect(calls.switchBookmarkMenu).toEqual([true, false]);
     });
 
     it('clear button wipes the query, exits search mode and refocuses the input', () => {
-        const { s, els, store } = setup({});
+        const { s, els, store, viewCalls } = setup({});
         type(els, 'git');
         expect(s.isActive()).toBe(true);
         expect(els.search.classList.contains('has-query')).toBe(true);
@@ -419,21 +449,21 @@ describe('input listeners', () => {
         expect(store.get('searchQuery')).toBe('');
         expect(s.isActive()).toBe(false);
         expect(els.search.classList.contains('has-query')).toBe(false);
-        expect(els.tree.style.display).toBe('block');
-        expect(els.results.style.display).toBe('none');
+        expect(viewCalls).toEqual([
+            ['search', { keepFocus: true }],
+            ['tree', { keepFocus: true }]
+        ]);
         expect(els['search-input'].focused).toBe(true);
     });
 
-    it('a whitespace-only input persists an empty query and quits with the focus fix', () => {
-        const { s, els, store, fuzzy } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('a whitespace-only input persists an empty query and quits with the focus restore', () => {
+        const { s, els, store, fuzzy, viewCalls } = setup({});
         type(els, 'git');
         type(els, '   ');
         expect(s.isActive()).toBe(false);
         expect(store.get('searchQuery')).toBe('');
         expect(fuzzy.calls).toHaveLength(1); // no second ranking run
-        expect(focusTarget.focused).toBe(true); // search() path: plain quit()
+        expect(viewCalls[1]).toEqual(['tree', { keepFocus: false }]); // search() path: plain quit()
     });
 
     it('searchAfterEnter defers ranking until Enter is pressed', () => {
@@ -447,16 +477,14 @@ describe('input listeners', () => {
         expect(s.isActive()).toBe(true);
     });
 
-    it('Escape with a query quits without focus fix; with empty input it is a no-op', () => {
-        const { s, els } = setup({});
-        const focusTarget = makeEl();
-        els.tree._qs['.focus'] = focusTarget;
+    it('Escape with a query quits keeping the focus; with empty input it is a no-op', () => {
+        const { s, els, viewCalls } = setup({});
         type(els, 'git');
         let prevented = 0;
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
         expect(prevented).toBe(1);
         expect(s.isActive()).toBe(false);
-        expect(focusTarget.focused).toBe(false); // quit(true)
+        expect(viewCalls[1]).toEqual(['tree', { keepFocus: true }]); // quit(true)
         els['search-input'].trigger('keydown', { key: 'Escape', preventDefault: () => prevented++ });
         expect(prevented).toBe(1); // input empty: popup is allowed to close
     });

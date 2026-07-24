@@ -40,6 +40,35 @@ const htmlspecialchars = s =>
 // this module-local one.
 const httpsPattern = /^https?:\/\//i;
 
+// v4 task-2 (docs/v4task-2.md §3.6): build the id → containing-folder path
+// map every list view shares for its row path labels. For each node the map
+// holds the titles of its ancestor folders (top-down, untitled folders
+// skipped) joined by ' / ' — for a bookmark that reads as "where it lives",
+// for a folder as "where it sits". Pure: no chrome/DOM access, so vitest
+// exercises it directly.
+export const buildPathMap = tree => {
+    const paths = {};
+    const walk = (nodes, ancestors) => {
+        if (!nodes)
+            return;
+        for (let i = 0, l = nodes.length; i < l; i++) {
+            const node = nodes[i];
+            // the invisible root has no parentId and contributes no title
+            if (typeof node.parentId !== 'undefined')
+                paths[node.id] = ancestors.join(' / ');
+            if (node.children) {
+                const title = (node.title || '').trim();
+                const next = (typeof node.parentId !== 'undefined' && title)
+                    ? ancestors.concat(title)
+                    : ancestors;
+                walk(node.children, next);
+            }
+        }
+    };
+    walk(tree || [], []);
+    return paths;
+};
+
 export function initTreeRender(ctx = {}) {
     const store = ctx.store;
     const separatorManager = ctx.separatorManager;
@@ -79,7 +108,7 @@ export function initTreeRender(ctx = {}) {
         return html;
     };
 
-    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions) => {
+    const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions, meta) => {
         if (!extras)
             extras = '';
         const u = htmlspecialchars(url);
@@ -97,6 +126,23 @@ export function initTreeRender(ctx = {}) {
             ? highlightTitlePositions(title, titlePositions)
             : (htmlspecialchars(title) || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')));
 
+        // v4 task-2 §3.6: list views (search/recent/…) pass meta.path — the
+        // bookmark's containing-folder path from buildPathMap. The tooltip
+        // unifies to `标题 + URL + 路径` (absorbing the old async
+        // parent-folder tooltip), and the row gains path labels when the
+        // showItemPath setting is on: inline `.row-path` in the narrow popup,
+        // a second muted line `.row-sub` at ≥480px / in panel mode (CSS
+        // container query picks the form).
+        const path = (meta && meta.path) ? String(meta.path) : '';
+        const tooltip = path
+            ? `${htmlspecialchars(title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')))}\n${tooltipURL}\n${htmlspecialchars(path)}`
+            : tooltipURL;
+        const showPath = path && !!store.get('showItemPath', '1');
+        const nameHtml = showPath
+            ? `<span class="row-main"><i>${name}</i><span class="row-sub" dir="auto">${htmlspecialchars(path)}</span></span>` +
+              `<span class="row-path" dir="auto">${htmlspecialchars(path)}</span>`
+            : `<i>${name}</i>`;
+
         // Add sync status indicator if enabled
         let syncIndicator = '';
         if (store.getSyncSetting('showSyncStatus', 'true') === 'true' && window.syncManager && bookmarkId) {
@@ -109,12 +155,12 @@ export function initTreeRender(ctx = {}) {
             }
         }
 
-        return `<a href="${u}" title="${tooltipURL}" tabindex="0" ${extras} class="tree-item-link">
+        return `<a href="${u}" title="${tooltip}" tabindex="0" ${extras} class="tree-item-link">
                 <div class="favicon-container">
                     ${faviconHtml}
                     ${syncIndicator}
                 </div>
-                <i>${name}</i>
+                ${nameHtml}
                 </a>`;
     };
 

@@ -47,6 +47,8 @@
         'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',
         'autoResizePopup',
+        // v4 task-2: view layer (slice A)
+        'activeView', 'viewState', 'showViewTabs', 'showItemPath',
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme',
