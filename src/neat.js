@@ -16,6 +16,7 @@ import { initViewDupes } from './view-dupes.js';
 import { initViewDead } from './view-dead.js';
 import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
+import { markPopupOpen } from './visit-stats-sw.js';
 
 (window => {
     const store = window.store;
@@ -474,8 +475,13 @@ import { initViewStats } from './view-stats.js';
             visitStats.prune(ids);
         },
         // slice D: page-side visit collection — bookmarkHandler funnels
-        // every bookmark open (tree/search/recent/stats/dead/dupes rows)
-        onOpenBookmark: id => visitStats.record(id)
+        // every bookmark open (tree/search/recent/stats/dead/dupes rows);
+        // slice E: the marker keeps the SW-side collector from counting
+        // the same navigation a second time
+        onOpenBookmark: (id, url) => {
+            visitStats.record(id);
+            markPopupOpen(url);
+        }
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes

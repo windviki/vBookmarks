@@ -1,11 +1,17 @@
 import { rankBookmarks, xmlEncode, matcher } from './search-core.js';
 import { createSyncEngine } from './sync-engine.js';
+import { createVisitStatsCollector } from './visit-stats-sw.js';
 
 // --- Sync status engine (P3.6) ---------------------------------------------
 // Computes bookmark sync status in the service worker and publishes it via
 // chrome.storage.session; pages mirror it through src/sync-manager.js.
 // Top-level start() so every SW cold start re-hooks the listeners (MV3).
 createSyncEngine().start();
+
+// --- Visit-stats SW collector (v4 task-2 slice E) --------------------------
+// Counts bookmark opens that never touch the popup (address bar, omnibox,
+// external links) into the same visitStats dataset the page side writes.
+createVisitStatsCollector().start();
 
 (() => {
     if (chrome.omnibox) {

@@ -64,6 +64,7 @@ JS_FILES = [
     'src/view-dupes.js',
     'src/view-dead.js',
     'src/visit-stats.js',
+    'src/visit-stats-sw.js',
     'src/view-stats.js',
     'vendor/codemirror.js',
 ]
