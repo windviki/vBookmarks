@@ -1,6 +1,6 @@
 # v4 任务包 2：视图化（Tabs/Views）重构设计方案
 
-> **状态：设计待评审 v3**（2026-07-21；v2：tab 视觉规范、搜索历史、死链缓存/代理/标记、去重策略、路径标签；v3：删除非空文件夹确认回归、选项开关与自定义入口全集、options"视图"分组、明确不纳入清单）。
+> **状态：实施中——切片 A/A2/B/C 已落地并全绿提交**（2026-07-21；v2：tab 视觉规范、搜索历史、死链缓存/代理/标记、去重策略、路径标签；v3：删除非空文件夹确认回归、选项开关与自定义入口全集、options"视图"分组、明确不纳入清单）。
 > 本文只做设计，不含实施；实施时按 §9 分切片执行。
 > 前置阅读：`AGENTS.md`、`docs/v4task-1.md`（协作约定与硬约定）、《现代化演进总方案.md》§7.1（侧栏策略）、§2（品味三原则）。
 > 需求来源：维护者提出的"最近添加"功能重构——引入 tab/视图概念，为未来逐步向 side panel 迁移做准备。
@@ -346,11 +346,11 @@ search / recent / stats / dead / dupes 五个列表型视图的结果行，统�
 en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i18n.py missing` 验证：
 
 - tab/视图：`viewTree`/`viewSearch`/`viewRecent`/`viewStats`/`viewDead`/`viewDupes`；分组 `optionsGroupViews`
-- palette：六个跳转命令（`paletteCmdGo*` 或复用 view*，实施时二选一回写本文）、`paletteCmdSearchInView`、`paletteCmdOptions`
+- palette：六个跳转命令——**实施已定（切片 C 回写）：采用 `paletteCmdGoTree`/`paletteCmdGoSearch`/`paletteCmdGoRecent`/`paletteCmdGoDead`/`paletteCmdGoDupes`（stats 待切片 D 补 `paletteCmdGoStats`）**、`paletteCmdSearchInView`(`$query$`)、`paletteCmdOptions`
 - 搜索历史：`searchHistoryTitle`/`searchHistoryClear`/`searchHistoryRemove`/`optionSearchHistory`；实施补充（切片 B 回写）：`searchHistoryResultCount`(`$n$`)/`optionSearchHistoryHint`
 - recent：`recentRevealInTree`；实施补充（切片 B 回写）：`recentEmpty`/`optionRecentCount` + 相对时间桶 `timeJustNow`/`timeMinutesAgo`(`$n$`)/`timeHoursAgo`(`$n$`)/`timeYesterday`/`timeDaysAgo`(`$n$`)（搜索历史时间戳共用）
-- dead：`deadLastScanAt`(`$time$`)/`deadRescan`/`deadStartHint`/`deadMark`/`deadUnmark`/`deadMarked`/`deadMarkAll`/`deadUnmarkAll`/`deadFilterAll`/`deadFilterDead`/`deadFilterBlocked`/`deadStatusBlocked`/`optionDeadProxy`/`deadProxyHint`/`optionDeadScanConcurrency`/`optionDeadScanTimeout`
-- dupes：`dupesStrategyOldest`/`Newest`/`BookmarkBar`/`ShortestTitle`/`Shallowest`/`MostVisited`/`dupesApplyAll`(`$count$`)/`dupesKeepThis`/`dupesRemoveRow`/`dupesGroupCleanRest`/`dupesPreviewSummary`(`$groups$`,`$count$`)/`dupesScopeAll`/`dupesScopeBar`/`dupesIgnoreScheme`
+- dead：`deadLastScanAt`(`$time$`)/`deadRescan`/`deadStartHint`——**实施补充（切片 C 回写）：`deadStartHint` 带 `$n$` 参数（书签总数）**/`deadMark`/`deadUnmark`/`deadMarked`/`deadMarkAll`/`deadUnmarkAll`（三者均无参数）/`deadFilterAll`/`deadFilterDead`/`deadFilterBlocked`/`deadStatusBlocked`/`optionDeadProxy`/`deadProxyHint`/`optionDeadScanConcurrency`/`optionDeadScanTimeout`
+- dupes：`dupesStrategyOldest`/`Newest`/`BookmarkBar`/`ShortestTitle`/`Shallowest`/`MostVisited`/`dupesApplyAll`(`$count$`)/`dupesKeepThis`/`dupesRemoveRow`/`dupesGroupCleanRest`——**实施补充（切片 C 回写）：命名为 `dupesGroupCleanRest`，不用草案名 `dupesClearRest`**/`dupesPreviewSummary`(`$groups$`,`$count$`)/`dupesScopeAll`/`dupesScopeBar`/`dupesIgnoreScheme`；行内按钮 `rowActionReveal`/`rowActionMark`/`rowActionUnmark`/`rowActionDelete` + `dupesKeeperSet` toast
 - stats：`optionStatsEnabled`/`statsSortByCount`/`statsSortByRecent`/`statsEmpty`/`statsVisitCount`(`$count$`)/`statsClearData`
 - 路径标签：`optionShowItemPath`；tab 开关 `optionShowViewTabs`
 - 删除确认：**复活 `confirmDeleteFolder`/`confirmDeleteFolderButton` 死 key**（文案按"删除后可撤销"微调 + `$count$`）+ `optionConfirmDeleteFolder`

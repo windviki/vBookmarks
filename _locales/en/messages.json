@@ -734,5 +734,205 @@
   "contextMenuAddBookmark": {
     "message": "Bookmark this page with vBookmarks",
     "description": "Page context menu item that saves the current page as a bookmark."
+  },
+  "deadFilterAll": {
+    "message": "All",
+    "description": "Dead-link view filter segment: show the whole result set."
+  },
+  "deadFilterBlocked": {
+    "message": "Blocked only",
+    "description": "Dead-link view filter segment: show only rows unreachable directly but reachable through the proxy."
+  },
+  "deadFilterDead": {
+    "message": "Dead only",
+    "description": "Dead-link view filter segment: show only rows dead on every channel."
+  },
+  "deadLastScanAt": {
+    "message": "Last scan: $time$",
+    "description": "Info row on top of the dead-link view when cached scan results exist; $time$ is the localized scan timestamp.",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "Mark as dead",
+    "description": "Row button / context menu item that marks a bookmark as dead (red × overlay everywhere)."
+  },
+  "deadMarkAll": {
+    "message": "Mark all",
+    "description": "Batch button in the dead-link view: mark every dead/blocked row of the current result set."
+  },
+  "deadMarked": {
+    "message": "Dead rows marked",
+    "description": "Toast shown after the \"mark all\" batch action finished."
+  },
+  "deadProxyHint": {
+    "message": "Bookmark URLs are sent to this third-party service. Leave empty to probe directly only.",
+    "description": "Privacy hint under the dead-link proxy template setting."
+  },
+  "deadStartHint": {
+    "message": "Start scanning $n$ bookmarks",
+    "description": "Executable empty state of the dead-link view before the first scan; $n$ is the scannable bookmark count.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "blocked",
+    "description": "Amber status pill of a blocked row (direct fetch failed, proxy channel reached the target)."
+  },
+  "deadUnmark": {
+    "message": "Remove dead mark",
+    "description": "Row button / context menu item that removes the dead mark from a bookmark."
+  },
+  "deadUnmarkAll": {
+    "message": "Clear all marks",
+    "description": "Batch button in the dead-link view: remove every dead mark."
+  },
+  "dupesApplyAll": {
+    "message": "Apply all ($count$)",
+    "description": "Primary button of the duplicates view: delete every non-keeper row across all groups; $count$ is the total doomed row count.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCleanRest": {
+    "message": "Clean the rest",
+    "description": "Row button on a duplicate group header: delete every non-keeper member of that group."
+  },
+  "dupesIgnoreScheme": {
+    "message": "Ignore http/https differences",
+    "description": "Duplicates view checkbox: treat http and https variants of an address as duplicates."
+  },
+  "dupesKeepThis": {
+    "message": "Keep this one",
+    "description": "aria-label of the keeper radio on a duplicate member row."
+  },
+  "dupesKeeperSet": {
+    "message": "Set as keeper",
+    "description": "Context menu item on a duplicate member row: make it the keeper of its group."
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ groups · $count$ to be freed",
+    "description": "Summary text in the duplicates view toolbar; $groups$ duplicate groups, $count$ rows doomed by the current keeper choices.",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "Delete this copy",
+    "description": "aria-label of the delete button on a duplicate member row."
+  },
+  "dupesScopeAll": {
+    "message": "All bookmarks",
+    "description": "Duplicates view scope selector: scan the whole bookmark tree."
+  },
+  "dupesScopeBar": {
+    "message": "Bookmarks bar only",
+    "description": "Duplicates view scope selector: scan only the bookmarks-bar subtree."
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "Keep the one in the bookmarks bar",
+    "description": "Keeper strategy: prefer the copy inside the bookmarks-bar subtree (oldest wins there)."
+  },
+  "dupesStrategyMostVisited": {
+    "message": "Keep the most visited",
+    "description": "Keeper strategy: keep the copy with the highest recorded visit count."
+  },
+  "dupesStrategyNewest": {
+    "message": "Keep newest",
+    "description": "Keeper strategy: keep the bookmark added most recently."
+  },
+  "dupesStrategyOldest": {
+    "message": "Keep oldest",
+    "description": "Keeper strategy: keep the bookmark added earliest."
+  },
+  "dupesStrategyShallowest": {
+    "message": "Keep the shallowest",
+    "description": "Keeper strategy: keep the copy closest to the root folder."
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "Keep the shortest title",
+    "description": "Keeper strategy: keep the copy with the shortest title."
+  },
+  "optionDeadProxy": {
+    "message": "Dead-link proxy template",
+    "description": "Options label for the dead-link probe relay URL template (empty = direct probing only)."
+  },
+  "optionDeadScanConcurrency": {
+    "message": "Dead-link scan concurrency (1-16)",
+    "description": "Advanced options label for the dead-link scan concurrency pool size."
+  },
+  "optionDeadScanTimeout": {
+    "message": "Dead-link scan timeout in seconds (2-30)",
+    "description": "Advanced options label for the per-request dead-link probe timeout."
+  },
+  "paletteCmdGoDead": {
+    "message": "Go to Dead links view",
+    "description": "Command palette entry (slash command /dead) that switches to the dead-link scan view."
+  },
+  "paletteCmdGoDupes": {
+    "message": "Go to Duplicates view",
+    "description": "Command palette entry (slash command /dupes) that switches to the duplicate cleanup view."
+  },
+  "paletteCmdGoRecent": {
+    "message": "Go to Recent view",
+    "description": "Command palette entry (slash command /recent) that switches to the recent bookmarks view."
+  },
+  "paletteCmdGoSearch": {
+    "message": "Go to Search view",
+    "description": "Command palette entry (slash command /search) that switches to the search view."
+  },
+  "paletteCmdGoTree": {
+    "message": "Go to Tree view",
+    "description": "Command palette entry (slash command /tree) that switches to the bookmark tree view."
+  },
+  "paletteCmdOptions": {
+    "message": "Open options page",
+    "description": "Command palette entry (slash command /options) that opens the extension options page."
+  },
+  "paletteCmdSearchInView": {
+    "message": "Search '$query$' in Search view",
+    "description": "Bridge row appended to the command palette results for a non-empty plain query; jumps into the search view with that query.",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "Delete",
+    "description": "aria-label of the row button that deletes the bookmark."
+  },
+  "rowActionMark": {
+    "message": "Mark as dead",
+    "description": "aria-label of the row button that marks the bookmark as dead."
+  },
+  "rowActionReveal": {
+    "message": "Reveal in tree",
+    "description": "aria-label of the row button that reveals the bookmark in the tree view."
+  },
+  "rowActionUnmark": {
+    "message": "Remove dead mark",
+    "description": "aria-label of the row button that removes the dead mark."
+  },
+  "viewDead": {
+    "message": "Dead links",
+    "description": "View tab title for the dead-link scan view."
+  },
+  "viewDupes": {
+    "message": "Duplicates",
+    "description": "View tab title for the duplicate-bookmark cleanup view."
   }
 }

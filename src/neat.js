@@ -12,6 +12,8 @@ import { initPalette } from './palette.js';
 import { initUndo } from './undo.js';
 import { initViewManager } from './view-manager.js';
 import { initViewRecent } from './view-recent.js';
+import { initViewDupes } from './view-dupes.js';
+import { initViewDead } from './view-dead.js';
 
 (window => {
     const store = window.store;
@@ -70,6 +72,8 @@ import { initViewRecent } from './view-recent.js';
     $('quick-add-btn').title = _m('quickAddBookmark');
     Object.entries({
         'reveal-in-tree': 'recentRevealInTree',
+        'dead-mark-toggle': 'deadMark',
+        'dupes-set-keeper': 'dupesKeeperSet',
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
         'bookmark-new-incognito-window': 'openIncognitoWindow',
@@ -242,7 +246,16 @@ import { initViewRecent } from './view-recent.js';
         get dialogs() { return dialogs; },
         // v4 task-2: "Reveal in tree" menu dispatch — treeView inits far
         // below, but menu handlers only run on user events (TDZ-safe).
-        get revealInTree() { return id => treeView.revealInTree(id); }
+        get revealInTree() { return id => treeView.revealInTree(id); },
+        // v4 task-2 slice C: dead/dupes view-row menu entries — same lazy
+        // getter pattern (the view modules init below the menus).
+        get deadMenu() {
+            return {
+                isMarked: id => viewDead.isMarked(id),
+                toggle: id => viewDead.toggleMark(id)
+            };
+        },
+        get dupesMenu() { return { setKeeper: id => viewDupes.setKeeper(id) }; }
     });
 
     // View manager (v4 task-2): the tab strip + view switching layer. Must
@@ -366,6 +379,11 @@ import { initViewRecent } from './view-recent.js';
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
 
+    // v4 task-2 slice C: the dead view's × overlay re-lays itself after
+    // every tree rebuild (onTreeGenerated above), but initViewDead runs
+    // below initTreeView — this indirection keeps the first rebuilds safe.
+    let deadOverlayRefresh = () => {};
+
     // Actions live in src/actions.js (P1): the whole bookmark action layer —
     // open/add/edit/delete/copy plus addSeparator/deleteSeparator. The
     // menu/keyboard handlers and the tree-view module reach them through this
@@ -429,8 +447,13 @@ import { initViewRecent } from './view-recent.js';
         leftClickNewTab,
         // v4 task-2: view switching (revealInTree activates the tree view)
         views,
-        // v4 task-2 §3.6: every tree rebuild refreshes the shared path map
-        onTreeGenerated: t => views.buildPathMap(t)
+        // v4 task-2 §3.6: every tree rebuild refreshes the shared path map;
+        // slice C §5.5c: and re-lays the dead-mark × overlays (the view
+        // inits below — the indirection stays a no-op until then)
+        onTreeGenerated: t => {
+            views.buildPathMap(t);
+            deadOverlayRefresh();
+        }
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
@@ -444,6 +467,33 @@ import { initViewRecent } from './view-recent.js';
         separatorManager,
         treeView
     });
+
+    // Dupes/dead views (v4 task-2 切片 C): the palette's old dupes/dead
+    // modes become their own tabs — group/keeper cleanup and the cached
+    // dual-channel link scan. Same init point as recent (treeView/actions/
+    // dialogs/undo all ready above); the menus reach them through the lazy
+    // deadMenu/dupesMenu getters on initContextMenu's ctx.
+    const viewDupes = initViewDupes({
+        store,
+        views,
+        treeRender,
+        separatorManager,
+        treeView,
+        actions,
+        dialogs,
+        undo
+    });
+    const viewDead = initViewDead({
+        store,
+        views,
+        treeRender,
+        separatorManager,
+        treeView,
+        actions,
+        dialogs,
+        undo
+    });
+    deadOverlayRefresh = viewDead.refreshOverlays;
 
     // donation: three explicit answers to the ask (see the v4 model above)
     const donationSnooze = step => {
@@ -555,22 +605,22 @@ import { initViewRecent } from './view-recent.js';
 
     // Command palette (P2): Ctrl/Cmd+K overlay unifying bookmark/folder
     // search, folder jump and a small command set — see src/palette.js.
+    // v4 task-2 §3.5: the dupes/dead modes are retired in favor of the view
+    // Go commands (views.activate) and the /search bridge (search.run).
     // actions/treeView/quickAddCurrentTab are all defined above, so plain
     // values; rootFolderId mirrors the quick-add target folder.
     const palette = initPalette({
         store,
         actions,
         treeView,
+        views,
+        search,
         quickAdd: quickAddCurrentTab,
         rootFolderId: store.get('quickAddFolderId', '1') || '1',
-        // P3.1: the /dupes mode confirms batch deletions through the dialogs
-        // and repaints the tree (same call the sort flow uses) afterwards.
         dialogs,
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
-        // P3.5: /dead filters separators out of the scan through the manager.
-        separatorManager,
         // Palette Escape: dismiss context menu first if one is open over the
-        // panel (e.g. right-clicked a dead-link row), only then close the panel.
+        // panel (e.g. right-clicked a result row), only then close the panel.
         clearMenu: menus.clearMenu,
         // P4: follow the tree-view click setting for bookmark opens
         leftClickNewTab

@@ -1,0 +1,596 @@
+import { describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from 'vitest';
+
+// view-dead.js touches page globals (document/window/chrome/fetch/setTimeout)
+// only inside initViewDead and its handlers, so the real module imports
+// cleanly in node once the globals are stubbed. store/views/treeRender/
+// separatorManager/treeView/actions/dialogs/undo are injected recording
+// doubles; the registered ViewDef is captured and driven by hand
+// (activate/onKey/onEscape/badge). globalThis.fetch is doubled per case for
+// the scan flow (the dual-channel checker included); setTimeout is a
+// record-only stub advanced by hand (tick) for the 300ms repaint debounce;
+// the scan's promise chain flushes through the saved real setTimeout.
+// All assertions go through the doubles' records and the list's innerHTML —
+// nothing is copied from the module body.
+
+let initViewDead;
+let timeouts;
+let clearedTimeouts;
+let timerSeq = 1;
+const realSetTimeout = globalThis.setTimeout;
+const realClearTimeout = globalThis.clearTimeout;
+
+beforeAll(async () => {
+    globalThis.setTimeout = (fn, ms) => {
+        const id = timerSeq++;
+        timeouts.push([fn, ms, id]);
+        return id;
+    };
+    globalThis.clearTimeout = id => {
+        clearedTimeouts.push(id);
+        timeouts = timeouts.filter(t => t[2] !== id);
+    };
+    ({ initViewDead } = await import('../src/view-dead.js'));
+});
+
+beforeEach(() => {
+    timeouts = [];
+    clearedTimeouts = [];
+    timerSeq = 1;
+});
+
+afterAll(() => {
+    globalThis.setTimeout = realSetTimeout;
+    globalThis.clearTimeout = realClearTimeout;
+    delete globalThis.chrome;
+    delete globalThis.document;
+    delete globalThis.window;
+});
+
+const realFetch = globalThis.fetch;
+afterEach(() => {
+    globalThis.fetch = realFetch;
+});
+
+const tick = ms => {
+    const due = timeouts.filter(t => t[1] === ms);
+    timeouts = timeouts.filter(t => t[1] !== ms);
+    due.forEach(t => t[0]());
+};
+
+const flush = () => new Promise(resolve => realSetTimeout(resolve, 0));
+
+// One fine bookmark, one dead, one only reachable through the relay, one
+// separator (never probed). deadMarks presets land via opts.storeData.
+const makeTree = () => [{
+    id: '0', title: '', children: [
+        {
+            id: '1', title: 'Bar', children: [
+                { id: '11', parentId: '1', title: 'Fine', url: 'https://fine.example/', dateAdded: 100 },
+                { id: '12', parentId: '1', title: 'Gone', url: 'https://gone.example/page', dateAdded: 200 },
+                { id: '13', parentId: '1', title: 'Blocked', url: 'https://blocked.example/', dateAdded: 300 },
+                { id: '14', parentId: '1', title: 'Sep', url: 'http://separatethis.com/#1', dateAdded: 400 }
+            ]
+        }
+    ]
+}];
+
+const PROXY = 'https://relay.example/fetch?target={url}';
+
+// fetch double: fine → 200; gone → 404 everywhere; blocked → 404 direct but
+// 200 through the relay; separators must never appear.
+const dualFetch = () => {
+    const calls = [];
+    globalThis.fetch = (url, opts) => {
+        calls.push(url);
+        if (url.startsWith('https://relay.example/'))
+            return Promise.resolve({ status: 200 });
+        if (url.includes('fine'))
+            return Promise.resolve({ status: 200 });
+        return Promise.resolve({ status: 404 });
+    };
+    return calls;
+};
+
+// li stub for the overlay assertions: dataset/id + a favicon-container that
+// accepts and removes the .dead-indicator span.
+const makeLi = (id, nodeId) => {
+    const fav = {
+        children: [],
+        querySelector(sel) {
+            return this.children.filter(c => c.className === sel.slice(1))[0] || null;
+        },
+        appendChild(c) {
+            this.children.push(c);
+            c.parentNode = this;
+        },
+        removeChild(c) {
+            this.children = this.children.filter(x => x !== c);
+            c.parentNode = null;
+        }
+    };
+    return {
+        id,
+        dataset: nodeId ? { nodeId } : {},
+        querySelector(sel) {
+            return sel === '.favicon-container' ? fav : null;
+        },
+        _fav: fav
+    };
+};
+
+const setup = (opts = {}) => {
+    const byId = {};
+    const makeEl = id => {
+        const el = {
+            id,
+            innerHTML: '',
+            _listeners: {},
+            _lis: null, // overlay lists: fixed li set
+            addEventListener(type, fn) {
+                (this._listeners[type] = this._listeners[type] || []).push(fn);
+            },
+            querySelectorAll(sel) {
+                return sel === 'li' && this._lis ? this._lis : [];
+            }
+        };
+        byId[id] = el;
+        return el;
+    };
+    const $list = makeEl('dead-list');
+    const $container = makeEl('view-dead');
+    const $tree = makeEl('tree');
+    const $results = makeEl('results');
+    const $recent = makeEl('recent-list');
+    if (opts.treeLis)
+        $tree._lis = opts.treeLis;
+
+    const doc = {
+        getElementById: id => byId[id] || null,
+        activeElement: null,
+        createElement: tag => ({ tagName: tag.toUpperCase(), className: '', textContent: '', parentNode: null })
+    };
+    globalThis.document = doc;
+    const winListeners = {};
+    globalThis.window = {
+        addEventListener(type, fn) {
+            (winListeners[type] = winListeners[type] || []).push(fn);
+        }
+    };
+
+    const treeData = opts.tree || makeTree();
+    const chromeStub = {
+        i18n: {
+            getMessage: (key, subs) =>
+                subs ? `${key}[${[].concat(subs).join('|')}]` : key
+        },
+        bookmarks: {
+            getTreeCalls: 0,
+            getTree(cb) {
+                this.getTreeCalls++;
+                cb(treeData);
+            },
+            onRemoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
+            onChanged: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
+            onMoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
+            fire(name, ...args) {
+                (this[name].fns || []).forEach(fn => fn(...args));
+            }
+        }
+    };
+    globalThis.chrome = chromeStub;
+
+    const store = {
+        _data: { ...(opts.storeData || {}) },
+        get(key, dflt) {
+            return key in this._data ? this._data[key] : dflt;
+        },
+        set(key, v) {
+            this._data[key] = v;
+        }
+    };
+
+    const views = {
+        def: null,
+        active: 'active' in opts ? opts.active : true,
+        register(def) { this.def = def; },
+        isActive(id) { return id === 'dead' && this.active; },
+        pathOf: opts.pathOf || (() => ''),
+        showItemPath: () => true
+    };
+
+    const treeRender = {
+        calls: [],
+        generateBookmarkHTML(title, url, extras, id, positions, meta) {
+            this.calls.push({ title, url, extras, id, positions, meta });
+            return `<a data-id="${id}">${title}</a>`;
+        }
+    };
+    const separatorManager = {
+        isSeparator: (title, url) => url.indexOf('separatethis') !== -1
+    };
+    const treeView = {
+        revealCalls: [],
+        revealInTree(id) { this.revealCalls.push(id); },
+        handlerCalls: 0,
+        bookmarkHandler: () => { treeView.handlerCalls++; }
+    };
+    const actions = {
+        deleteCalls: [],
+        deleteBookmark(id) { this.deleteCalls.push(id); }
+    };
+    const dialogs = {
+        ConfirmDialog: {
+            openCalls: [],
+            open(opts) { this.openCalls.push(opts); }
+        }
+    };
+    const undo = {
+        toastCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); }
+    };
+
+    const viewDead = initViewDead({
+        store, views, treeRender, separatorManager, treeView, actions, dialogs, undo
+    });
+
+    const fire = (type, ev) => {
+        for (const fn of ($list._listeners[type] || []))
+            fn(ev);
+        return ev;
+    };
+    const clickOn = target => fire('click', {
+        target,
+        preventDefault() { this.prevented = (this.prevented || 0) + 1; },
+        stopPropagation() { this.stopped = (this.stopped || 0) + 1; }
+    });
+
+    return {
+        viewDead, $list, $container, $tree, $results, $recent, doc, chrome: chromeStub,
+        store, views, treeRender, separatorManager, treeView, actions, dialogs, undo,
+        treeData, winListeners, def: () => views.def, fire, clickOn
+    };
+};
+
+describe('view registration (§5.5)', () => {
+    it('registers the dead view with tab metadata, badge and escape hook', () => {
+        const { def, $list, $container } = setup({});
+        expect(def().id).toBe('dead');
+        expect(def().titleKey).toBe('viewDead');
+        expect(def().icon).toContain('<svg');
+        expect(def().container).toBe($container);
+        expect(def().listEl).toBe($list);
+        expect(def().typeAhead).toBe(false);
+        expect(def().badge()).toBe(0);
+        expect(def().onEscape()).toBe(false); // no scan running
+        expect(typeof def().onKey).toBe('function');
+    });
+
+    it('badge() tracks the persisted deadMarks size', () => {
+        const { def } = setup({ storeData: { deadMarks: '["11","12"]' } });
+        expect(def().badge()).toBe(2);
+    });
+
+    it('exposes refresh/refreshOverlays/isMarked/toggleMark on the module API', () => {
+        const { viewDead } = setup({});
+        expect(Object.keys(viewDead).sort())
+            .toEqual(['isMarked', 'refresh', 'refreshOverlays', 'toggleMark']);
+    });
+});
+
+describe('empty state + cached results (§5.5a)', () => {
+    it('renders the executable start hint with the scannable count (separators excluded)', () => {
+        const { $list, def } = setup({});
+        def().activate();
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).toContain('deadStartHint[3]'); // 3 scannable, sep out
+    });
+
+    it('the start row runs the scan on click and on Enter', async () => {
+        dualFetch();
+        const ctx = setup({});
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        expect(ctx.store.get('deadLastScan')).toBeTruthy();
+        // Enter path on a fresh view
+        globalThis.fetch = () => Promise.resolve({ status: 200 });
+        const ctx2 = setup({});
+        ctx2.def().activate();
+        ctx2.fire('keydown', {
+            key: 'Enter',
+            target: { classList: { contains: c => c === 'dead-start' } },
+            preventDefault() {}, stopPropagation() {}
+        });
+        await flush();
+        expect(JSON.parse(ctx2.store.get('deadLastScan')).scannedCount).toBe(3);
+    });
+
+    it('a cached scan renders the info row and skips auto-scanning', () => {
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const calls = [];
+        globalThis.fetch = url => { calls.push(url); return Promise.resolve({ status: 200 }); };
+        const { $list, treeRender, def } = setup({ storeData: { deadLastScan: cache } });
+        def().activate();
+        expect(calls).toEqual([]); // no rescan on entry
+        const html = $list.innerHTML;
+        expect(html).toContain(`deadLastScanAt[${new Date(1700000000000).toLocaleString()}]`);
+        expect(html).toContain('deadRescan');
+        expect(html).toContain('id="dead-item-12"');
+        // the badge rides the meta slot (the treeRender double renders no pills)
+        expect(treeRender.calls.find(c => c.id === '12').meta.badge)
+            .toEqual({ text: '404', cls: 'dead' });
+    });
+});
+
+describe('scan flow (§5.5b/§5.5d)', () => {
+    it('scans with the dual checker, persists the cache and renders badged rows', async () => {
+        const calls = dualFetch();
+        const ctx = setup({ storeData: { deadProxyTemplate: PROXY } });
+        const { $list, store, treeRender, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        // the separator never went near fetch; the relay saw only the failures
+        expect(calls.filter(u => u.includes('separatethis'))).toEqual([]);
+        expect(calls).toContain('https://relay.example/fetch?target=' +
+            encodeURIComponent('https://gone.example/page'));
+        const cache = JSON.parse(store.get('deadLastScan'));
+        expect(cache.scannedCount).toBe(3);
+        expect(cache.results['11'].status).toBe('ok');
+        // the relay answers 200 for everything here, so both failures read
+        // blocked (dual-channel: direct fail + proxy ok)
+        expect(cache.results['12'].status).toBe('blocked');
+        expect(cache.results['13'].status).toBe('blocked');
+        const html = $list.innerHTML;
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).not.toContain('id="dead-item-11"'); // healthy rows stay out
+        expect(treeRender.calls.find(c => c.id === '13').meta.badge)
+            .toEqual({ text: 'deadStatusBlocked', cls: 'blocked' });
+    });
+
+    it('gone.example fails on both channels and renders the dead badge', async () => {
+        // direct fails everywhere; the relay reaches everything but gone
+        globalThis.fetch = url => {
+            if (url.includes('fine'))
+                return Promise.resolve({ status: 200 });
+            if (url.startsWith('https://relay.example/'))
+                return Promise.resolve({ status: url.includes('gone') ? 404 : 200 });
+            return Promise.resolve({ status: 404 });
+        };
+        const ctx = setup({ storeData: { deadProxyTemplate: PROXY } });
+        const { treeRender } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        expect(treeRender.calls.find(c => c.id === '12').meta.badge)
+            .toEqual({ text: '404', cls: 'dead' }); // both channels agree: dead
+        expect(treeRender.calls.find(c => c.id === '13').meta.badge)
+            .toEqual({ text: 'deadStatusBlocked', cls: 'blocked' });
+    });
+
+    it('shows the progress line while scanning and never aborts on view switch', async () => {
+        const gates = {};
+        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
+        const ctx = setup({});
+        const { $list, views, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect($list.innerHTML).toContain('deadChecking[0|3]');
+        expect($list.innerHTML).toContain('<progress');
+        // switch away mid-scan: no abort, the closure keeps the progress
+        views.active = false;
+        gates['https://fine.example/']({ status: 200 });
+        await flush();
+        views.active = true;
+        def().activate(); // back again: progress row, not the start hint
+        expect($list.innerHTML).toContain('deadChecking');
+        gates['https://gone.example/page']({ status: 404 });
+        gates['https://blocked.example/']({ status: 404 });
+        await flush();
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+    });
+
+    it('Escape aborts the in-flight scan (consumed); pagehide aborts too', async () => {
+        const signals = [];
+        globalThis.fetch = (url, opts) => {
+            signals.push(opts.signal);
+            return new Promise(() => {});
+        };
+        const ctx = setup({});
+        const { def, winListeners } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect(def().onEscape()).toBe(true); // consumed
+        expect(signals.every(s => s.aborted)).toBe(true);
+        expect(def().onEscape()).toBe(false); // scan over: not consumed anymore
+        // pagehide path
+        globalThis.fetch = (url, opts) => {
+            signals.push(opts.signal);
+            return new Promise(() => {});
+        };
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect(winListeners.pagehide).toHaveLength(1);
+        winListeners.pagehide[0]();
+        expect(signals[signals.length - 1].aborted).toBe(true);
+    });
+});
+
+describe('filter + batch marks (§5.5c)', () => {
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 3,
+        results: {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+
+    it('the three-state filter switches the rendered rows, defaulting to all', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, def } = ctx;
+        def().activate();
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('deadFilterAll');
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'blocked' } } : null) });
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"');
+    });
+
+    it('mark-all marks every dead+blocked row after confirmation and toasts', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { store, dialogs, undo, viewDead } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-mark-all' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(JSON.parse(store.get('deadMarks', '[]'))).toEqual([]); // still gated
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['12', '13']);
+        expect(undo.toastCalls).toEqual(['deadMarked']);
+        expect(viewDead.isMarked('12')).toBe(true);
+    });
+
+    it('clear-all-marks empties the set after confirmation', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12","13"]' } });
+        const { store, dialogs, viewDead } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+        expect(viewDead.isMarked('12')).toBe(false);
+        expect(ctx.def().badge()).toBe(0);
+    });
+
+    it('cancelling the batch dialog leaves the marks untouched', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        const { store, dialogs } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+    });
+});
+
+describe('marks + overlay (§5.5c)', () => {
+    it('toggleMark flips membership, persists and repaints the row button', () => {
+        const cache = JSON.stringify({
+            ts: 1, scannedCount: 1, results: { '12': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const { store, $list, viewDead, def } = ctx;
+        def().activate();
+        expect(viewDead.isMarked('12')).toBe(false);
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-mark-btn'
+                ? { closest: () => ({ dataset: { nodeId: '12' } }) }
+                : null)
+        });
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        expect($list.innerHTML).toContain('aria-label="deadUnmark"');
+        expect(def().badge()).toBe(1);
+        viewDead.toggleMark('12');
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+    });
+
+    it('refreshOverlays adds and removes the × on every list, idempotently', () => {
+        const liMarked = makeLi('neat-tree-item-12', '12');
+        const liPlain = makeLi('neat-tree-item-11', '11');
+        const liLegacy = makeLi('results-item-13', ''); // prefix-strip fallback
+        const ctx = setup({ treeLis: [liMarked, liPlain], storeData: { deadMarks: '["12","13"]' } });
+        ctx.$results._lis = [liLegacy];
+        ctx.viewDead.refreshOverlays();
+        expect(liMarked._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+        expect(liPlain._fav.children).toEqual([]);
+        expect(liLegacy._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+        // second run: no duplicates
+        ctx.viewDead.refreshOverlays();
+        expect(liMarked._fav.children).toHaveLength(1);
+        // unmark → the span disappears again
+        ctx.viewDead.toggleMark('12');
+        expect(liMarked._fav.children).toEqual([]);
+    });
+
+    it('a healthy rescan prunes the mark automatically', async () => {
+        globalThis.fetch = () => Promise.resolve({ status: 200 }); // all healthy now
+        const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
+        const { store, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+        expect(def().badge()).toBe(0);
+    });
+
+    it('removing a bookmark prunes its mark', () => {
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        const { chrome, store } = ctx;
+        chrome.bookmarks.fire('onRemoved', '12');
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['13']);
+    });
+});
+
+describe('row interactions (§3.5)', () => {
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 1,
+        results: { '12': { status: 'dead', code: 404 } }
+    });
+
+    it('the delete button rides actions.deleteBookmark (the undo chain)', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { actions } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-del-btn'
+                ? { closest: () => ({ dataset: { nodeId: '12' } }) }
+                : null)
+        });
+        expect(actions.deleteCalls).toEqual(['12']);
+    });
+
+    it('plain row clicks fall through to treeView.bookmarkHandler', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { treeView } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: () => null });
+        expect(treeView.handlerCalls).toBe(1);
+    });
+
+    it('M toggles the focused row mark; R reveals it in the tree', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { def, doc, treeView, store } = ctx;
+        def().activate();
+        doc.activeElement = {
+            closest: sel => (sel === '[data-node-id]' ? { dataset: { nodeId: '12' } } : null)
+        };
+        let prevented = 0;
+        expect(def().onKey({ key: 'm', preventDefault: () => prevented++ })).toBe(true);
+        expect(prevented).toBe(1);
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        expect(def().onKey({ key: 'M', preventDefault: () => {} })).toBe(true);
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+        expect(def().onKey({ key: 'r', preventDefault: () => {} })).toBe(true);
+        expect(treeView.revealCalls).toEqual(['12']);
+        expect(def().onKey({ key: 'x', preventDefault: () => {} })).toBe(false);
+        doc.activeElement = null;
+        expect(def().onKey({ key: 'm', preventDefault: () => {} })).toBe(false);
+    });
+
+    it('rescan restarts the scan from the info row', async () => {
+        const calls = [];
+        globalThis.fetch = url => { calls.push(url); return Promise.resolve({ status: 200 }); };
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        await flush();
+        expect(calls).toHaveLength(3); // the three scannable bookmarks
+        expect($list.innerHTML).toContain('deadNone'); // all healthy now
+    });
+});

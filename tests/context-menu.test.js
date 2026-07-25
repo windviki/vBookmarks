@@ -100,6 +100,9 @@ const setup = (opts = {}) => {
     // rows, shown on recent/results rows)
     el('DIV', 'reveal-in-tree');
     el('HR', 'reveal-in-tree-sep');
+    // v4 task-2 slice C: dead-view mark toggle + dupes-view keeper pin
+    el('DIV', 'dead-mark-toggle');
+    el('DIV', 'dupes-set-keeper');
     const tree = el('DIV', 'tree');
     const body = el('BODY', 'body');
     body.offsetWidth = opts.bodyWidth === undefined ? 500 : opts.bodyWidth;
@@ -155,7 +158,10 @@ const setup = (opts = {}) => {
         rtl: !!opts.rtl,
         get actions() { return actions; },
         get dialogs() { return dialogs; },
-        revealInTree: id => revealCalls.push(id)
+        revealInTree: id => revealCalls.push(id),
+        // Slice C view menus are read lazily, exactly like in neat.js
+        get deadMenu() { return opts.deadMenu; },
+        get dupesMenu() { return opts.dupesMenu; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href></a></li>
@@ -791,5 +797,71 @@ describe('reveal-in-tree menu item (v4 task-2 §2.4)', () => {
         const { menuItem, bookmarkMenu, revealCalls } = setup({});
         fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('reveal-in-tree') }));
         expect(revealCalls).toEqual([]);
+    });
+});
+
+describe('dead/dupes view menu items (v4 task-2 slice C)', () => {
+    const deadMenuStub = (marked = false) => {
+        const calls = [];
+        return {
+            calls,
+            isMarked: () => marked,
+            toggle: id => calls.push(['toggle', id])
+        };
+    };
+    const dupesMenuStub = () => {
+        const calls = [];
+        return { calls, setKeeper: id => calls.push(['setKeeper', id]) };
+    };
+    const makeViewRow = (s, prefix, id) => {
+        const row = s.makeBookmarkRow(id);
+        row.li.id = `${prefix}-item-${id}`;
+        row.li.dataset.nodeId = id;
+        return row;
+    };
+
+    it('hides both entries on plain tree rows', () => {
+        const s = setup({ deadMenu: deadMenuStub(), dupesMenu: dupesMenuStub() });
+        const row = s.makeBookmarkRow('42');
+        s.openOn(row.a);
+        expect(s.byId['dead-mark-toggle'].style.display).toBe('none');
+        expect(s.byId['dupes-set-keeper'].style.display).toBe('none');
+    });
+
+    it('shows the mark toggle only on dead rows, label follows mark state', () => {
+        const unmarked = setup({ deadMenu: deadMenuStub(false) });
+        unmarked.openOn(makeViewRow(unmarked, 'dead', '9').a);
+        expect(unmarked.byId['dead-mark-toggle'].style.display).toBe('block');
+        expect(unmarked.byId['dead-mark-toggle'].textContent).toBe('deadMark');
+        expect(unmarked.byId['dupes-set-keeper'].style.display).toBe('none');
+        const marked = setup({ deadMenu: deadMenuStub(true) });
+        marked.openOn(makeViewRow(marked, 'dead', '9').a);
+        expect(marked.byId['dead-mark-toggle'].textContent).toBe('deadUnmark');
+    });
+
+    it('hides the mark toggle on dead rows when the view API is absent', () => {
+        const s = setup({});
+        s.openOn(makeViewRow(s, 'dead', '9').a);
+        expect(s.byId['dead-mark-toggle'].style.display).toBe('none');
+    });
+
+    it('dispatches deadMenu.toggle with the row id', () => {
+        const deadMenu = deadMenuStub();
+        const s = setup({ deadMenu });
+        s.openOn(makeViewRow(s, 'dead', '9').a);
+        fire(s.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: s.menuItem('dead-mark-toggle') }));
+        expect(deadMenu.calls).toEqual([['toggle', '9']]);
+    });
+
+    it('shows the keeper pin only on dupes rows and dispatches setKeeper', () => {
+        const dupesMenu = dupesMenuStub();
+        const s = setup({ dupesMenu });
+        s.openOn(makeViewRow(s, 'dupes', '5').a);
+        expect(s.byId['dupes-set-keeper'].style.display).toBe('block');
+        expect(s.byId['dead-mark-toggle'].style.display).toBe('none');
+        fire(s.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: s.menuItem('dupes-set-keeper') }));
+        expect(dupesMenu.calls).toEqual([['setKeeper', '5']]);
     });
 });

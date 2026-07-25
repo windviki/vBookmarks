@@ -13,6 +13,9 @@
  *     or { status: 'error', ok: false, error: err.name } on network failure
  *     (TypeError) or timeout (AbortError).
  *
+ * checkUrlDual (v4 task-2 §5.5b) wraps checkUrl with the two-channel
+ * direct/proxy decision matrix (ok / dead / blocked / skipped).
+ *
  * scanBookmarks runs checkUrl over a flat [{ id, title, url }] list through
  * a concurrency pool (default 4 in flight), reports onProgress(done, total)
  * after every settled check, and resolves a Map(id → result). An external
@@ -54,8 +57,40 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
         .finally(() => clearTimeout(timer));
 };
 
-export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, signal } = {}) =>
+// v4 task-2 §5.5b: two-channel probing. The direct fetch runs first; when
+// it fails and a `deadProxyTemplate` is configured, the proxy channel gets
+// its say — a relay service that fetches the target server-side (the
+// template's `{url}` placeholder receives the encoded bookmark URL; the
+// relay's own 2xx/3xx means "target reachable through the relay"). The
+// decision matrix:
+//   direct ok                      → ok
+//   direct fail, no proxy          → dead
+//   direct fail, proxy reachable   → blocked (region/ISP-limited, not dead)
+//   direct fail, proxy fail        → dead (both channels agree)
+//   non-http(s)                    → skipped
+// `blocked` rows carry ok:false — they surface in the dead view (the user
+// decides) but get the amber badge, not the dead ×.
+export const checkUrlDual = (url, { proxyTemplate = '', timeoutMs = 8000, signal } = {}) => {
+    if (!HTTP_URL.test(url || ''))
+        return Promise.resolve({ status: 'skipped', ok: true });
+    return checkUrl(url, { timeoutMs, signal }).then(direct => {
+        if (direct.ok)
+            return { status: 'ok', ok: true, code: direct.status, direct };
+        if (!proxyTemplate)
+            return { status: 'dead', ok: false, code: direct.status, error: direct.error, direct };
+        const proxied = proxyTemplate.replace('{url}', encodeURIComponent(url));
+        return checkUrl(proxied, { timeoutMs, signal }).then(proxy =>
+            proxy.ok
+                ? { status: 'blocked', ok: false, code: direct.status, error: direct.error, direct, proxy }
+                : { status: 'dead', ok: false, code: direct.status, error: direct.error, direct, proxy });
+    });
+};
+
+export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, signal, checker } = {}) =>
     new Promise(resolve => {
+        // checker: per-URL probe, defaults to the plain direct check; the
+        // dead view injects checkUrlDual with the configured proxy template.
+        const probe = checker || checkUrl;
         const results = new Map();
         const total = items.length;
         let done = 0;
@@ -78,7 +113,7 @@ export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProg
             while (!settled && running < concurrency && next < total) {
                 const item = items[next++];
                 running++;
-                checkUrl(item.url, { timeoutMs, signal }).then(result => {
+                probe(item.url, { timeoutMs, signal }).then(result => {
                     running--;
                     if (settled) // cancelled while this check was in flight
                         return;

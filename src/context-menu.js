@@ -8,6 +8,9 @@
  * and focus moves, hiding the add-* entries while search is active
  * (switchBookmarkMenu) and dispatching every menu-item click to the action
  * layer. currentContext (the row the menu was opened on) stays private.
+ * v4 task-2 adds the view-row entries: "reveal in tree" on out-of-tree
+ * rows, and slice C's dead-mark toggle / dupes keeper pin on dead/dupes
+ * view rows (their labels/APIs resolve at open/dispatch time).
  *
  * initContextMenu(ctx) is called once by neat.js BEFORE initSearch: search
  * needs menus.switchBookmarkMenu at init time (a restored query calls it
@@ -20,6 +23,9 @@
  * ctx.rtl                        — true when the popup is right-to-left
  * ctx.actions                    — initActions API (read lazily, see above)
  * ctx.dialogs                    — initDialogs API (SortDialog, read lazily)
+ * ctx.revealInTree               — view-row → tree jump (read lazily)
+ * ctx.deadMenu                   — { isMarked, toggle } of the dead view (lazily)
+ * ctx.dupesMenu                  — { setKeeper } of the dupes view (lazily)
  *
  * The #results element is looked up here directly (the same static node
  * search.js wraps and returns as search.results) — injecting the search API
@@ -30,6 +36,7 @@
  */
 export function initContextMenu(ctx = {}) {
     const $ = id => document.getElementById(id);
+    const _m = chrome.i18n.getMessage;
     const body = document.body;
     const $tree = ctx.tree;
     const os = ctx.os;
@@ -137,6 +144,25 @@ export function initContextMenu(ctx = {}) {
                     const revealSep = $('reveal-in-tree-sep');
                     if (revealSep)
                         revealSep.style.display = inTree ? 'none' : 'block';
+                }
+                // v4 task-2 slice C: dead/dupes view rows get their view-
+                // specific entries — the mark toggle (label follows the
+                // row's current mark state) and the dupes keeper pin. Both
+                // APIs are injected lazily (view modules init after menus).
+                const liId = el.parentNode.id || '';
+                const markItem = $('dead-mark-toggle');
+                if (markItem) {
+                    const onDeadRow = liId.startsWith('dead-item-') && ctx.deadMenu;
+                    markItem.style.display = onDeadRow ? 'block' : 'none';
+                    if (onDeadRow) {
+                        const marked = ctx.deadMenu.isMarked(rowId(el.parentNode));
+                        markItem.textContent = _m(marked ? 'deadUnmark' : 'deadMark');
+                    }
+                }
+                const keeperItem = $('dupes-set-keeper');
+                if (keeperItem) {
+                    const onDupesRow = liId.startsWith('dupes-item-') && ctx.dupesMenu;
+                    keeperItem.style.display = onDupesRow ? 'block' : 'none';
                 }
             }
         } else if (el.tagName === 'SPAN') {
@@ -259,6 +285,14 @@ export function initContextMenu(ctx = {}) {
                 // v4 task-2: jump from a recent-list / search-results row to
                 // the same bookmark inside the tree view.
                 ctx.revealInTree(rowId(li));
+                break;
+            case 'dead-mark-toggle':
+                // v4 task-2 slice C: dead-view row — flip its dead mark.
+                ctx.deadMenu.toggle(rowId(li));
+                break;
+            case 'dupes-set-keeper':
+                // v4 task-2 slice C: dupes-view row — pin it as the keeper.
+                ctx.dupesMenu.setKeeper(rowId(li));
                 break;
             case 'bookmark-edit': {
                 actions.editBookmarkFolder(rowId(li));

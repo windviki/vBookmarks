@@ -294,6 +294,45 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('<i>T</i>'); // plain name slot
         expect(html).not.toContain('row-path');
     });
+
+    // v4 task-2 slice C (docs/v4task-2-list.md §3.5): meta.badge renders a
+    // status pill (dead/blocked) between the main slot and the right slot.
+    it('meta.badge renders the pill between row-main and row-path', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A',
+            rightText: 'Folder A',
+            badge: { text: '404', cls: 'dead' }
+        });
+        expect(html).toContain(
+            '</span><span class="row-badge dead">404</span><span class="row-path" dir="auto">');
+    });
+
+    it('meta.badge alone (no label slots) still switches to the rich layout', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: { text: 'timeout', cls: 'blocked' }
+        });
+        expect(html).toContain(
+            '<span class="row-main"><i>T</i></span><span class="row-badge blocked">timeout</span>');
+        expect(html).not.toContain('row-path');
+    });
+
+    it('meta.badge escapes text and class', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: { text: '<b>', cls: 'x" onmouseover="' }
+        });
+        expect(html).toContain('<span class="row-badge x&quot; onmouseover=&quot;">&lt;b&gt;</span>');
+    });
+
+    it('a missing/empty badge keeps the legacy markup', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { badge: { text: '', cls: 'dead' } }))
+            .not.toContain('row-badge');
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {}))
+            .not.toContain('row-badge');
+    });
 });
 
 describe('relativeTimeBucket (v4 task-2 slice B)', () => {

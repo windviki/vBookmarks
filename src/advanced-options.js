@@ -113,6 +113,25 @@ const $ = id => document.getElementById(id);
             }
         });
 
+        // v4 task-2 (§5.5b/§7): dead-link scan tuning. Kept on the advanced
+        // page so the general options list stays small; both values are
+        // clamped to the ranges the scanner supports (view-dead re-clamps
+        // defensively when reading them).
+        const bindClampedNumber = (id, key, def, min, max) => {
+            const input = $(id);
+            const raw = parseInt(store.get(key, String(def)), 10);
+            input.value = Math.min(max, Math.max(min, isNaN(raw) ? def : raw));
+            input.addEventListener('change', () => {
+                let val = parseInt(input.value, 10);
+                if (isNaN(val)) val = def;
+                val = Math.min(max, Math.max(min, val));
+                input.value = val;
+                store.set(key, String(val));
+            });
+        };
+        bindClampedNumber('dead-scan-concurrency', 'deadScanConcurrency', 4, 1, 16);
+        bindClampedNumber('dead-scan-timeout', 'deadScanTimeout', 8, 2, 30);
+
         $('reset-button').addEventListener('click', () => {
             store.clearAll().then(() => {
                 alert('vBookmarks has been reset.');
@@ -134,6 +153,9 @@ const $ = id => document.getElementById(id);
         document.getElementById('custom-separator-string-description').innerText = __m('customSeparatorStringDescription');
         document.getElementById('custom-styles-description').innerText = __m('customStylesDescription');
         document.getElementById('reset-settings').innerText = __m('resetSettings');
+        document.getElementById('dead-scan-options').innerText = __m('viewDead');
+        document.getElementById('option-dead-scan-concurrency').innerText = __m('optionDeadScanConcurrency');
+        document.getElementById('option-dead-scan-timeout').innerText = __m('optionDeadScanTimeout');
         document.getElementById('reset-settings-description').innerText = __m('resetSettingsDescription');
         document.getElementById('reset-button').innerText = __m('resetButton');
         document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';

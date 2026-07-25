@@ -697,6 +697,52 @@
   "contextMenuAddBookmark": {
     "message": "Добавить страницу в закладки с vBookmarks"
   },
+  "deadFilterAll": {
+    "message": "[TODO:deadFilterAll]"
+  },
+  "deadFilterBlocked": {
+    "message": "[TODO:deadFilterBlocked]"
+  },
+  "deadFilterDead": {
+    "message": "[TODO:deadFilterDead]"
+  },
+  "deadLastScanAt": {
+    "message": "[TODO:deadLastScanAt]",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "[TODO:deadMark]"
+  },
+  "deadMarkAll": {
+    "message": "[TODO:deadMarkAll]"
+  },
+  "deadMarked": {
+    "message": "[TODO:deadMarked]"
+  },
+  "deadProxyHint": {
+    "message": "[TODO:deadProxyHint]"
+  },
+  "deadStartHint": {
+    "message": "[TODO:deadStartHint]",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "[TODO:deadStatusBlocked]"
+  },
+  "deadUnmark": {
+    "message": "[TODO:deadUnmark]"
+  },
+  "deadUnmarkAll": {
+    "message": "[TODO:deadUnmarkAll]"
+  },
   "donationGo": {
     "message": "Пожертвовать"
   },
@@ -705,5 +751,116 @@
   },
   "donationNever": {
     "message": "Больше не показывать"
+  },
+  "dupesApplyAll": {
+    "message": "[TODO:dupesApplyAll]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCleanRest": {
+    "message": "[TODO:dupesGroupCleanRest]"
+  },
+  "dupesIgnoreScheme": {
+    "message": "[TODO:dupesIgnoreScheme]"
+  },
+  "dupesKeepThis": {
+    "message": "[TODO:dupesKeepThis]"
+  },
+  "dupesKeeperSet": {
+    "message": "[TODO:dupesKeeperSet]"
+  },
+  "dupesPreviewSummary": {
+    "message": "[TODO:dupesPreviewSummary]",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "[TODO:dupesRemoveRow]"
+  },
+  "dupesScopeAll": {
+    "message": "[TODO:dupesScopeAll]"
+  },
+  "dupesScopeBar": {
+    "message": "[TODO:dupesScopeBar]"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "[TODO:dupesStrategyBookmarkBar]"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "[TODO:dupesStrategyMostVisited]"
+  },
+  "dupesStrategyNewest": {
+    "message": "[TODO:dupesStrategyNewest]"
+  },
+  "dupesStrategyOldest": {
+    "message": "[TODO:dupesStrategyOldest]"
+  },
+  "dupesStrategyShallowest": {
+    "message": "[TODO:dupesStrategyShallowest]"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "[TODO:dupesStrategyShortestTitle]"
+  },
+  "optionDeadProxy": {
+    "message": "[TODO:optionDeadProxy]"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "[TODO:optionDeadScanConcurrency]"
+  },
+  "optionDeadScanTimeout": {
+    "message": "[TODO:optionDeadScanTimeout]"
+  },
+  "paletteCmdGoDead": {
+    "message": "[TODO:paletteCmdGoDead]"
+  },
+  "paletteCmdGoDupes": {
+    "message": "[TODO:paletteCmdGoDupes]"
+  },
+  "paletteCmdGoRecent": {
+    "message": "[TODO:paletteCmdGoRecent]"
+  },
+  "paletteCmdGoSearch": {
+    "message": "[TODO:paletteCmdGoSearch]"
+  },
+  "paletteCmdGoTree": {
+    "message": "[TODO:paletteCmdGoTree]"
+  },
+  "paletteCmdOptions": {
+    "message": "[TODO:paletteCmdOptions]"
+  },
+  "paletteCmdSearchInView": {
+    "message": "[TODO:paletteCmdSearchInView]",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "[TODO:rowActionDelete]"
+  },
+  "rowActionMark": {
+    "message": "[TODO:rowActionMark]"
+  },
+  "rowActionReveal": {
+    "message": "[TODO:rowActionReveal]"
+  },
+  "rowActionUnmark": {
+    "message": "[TODO:rowActionUnmark]"
+  },
+  "viewDead": {
+    "message": "[TODO:viewDead]"
+  },
+  "viewDupes": {
+    "message": "[TODO:viewDupes]"
   }
 }

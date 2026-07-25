@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeUrl, findDupes, planDeletion } from '../src/dupes.js';
+import { normalizeUrl, findDupes, pickKeeper, planDeletion } from '../src/dupes.js';
 
 // dupes.js is pure logic (no chrome.*/DOM), so these run straight in node.
 
@@ -178,6 +178,138 @@ describe('findDupes', () => {
             bm('2', 'https://a.com/a', 2)
         ]);
         expect(groups).toEqual([]);
+    });
+});
+
+// v4 task-2 §5.6c: dupesIgnoreScheme folds http/https variants into one
+// group (off by default).
+describe('findDupes ignoreScheme (v4 task-2 §5.6c)', () => {
+    const bm = (id, url, dateAdded) => ({ id, url, dateAdded, title: '', parentId: '1' });
+
+    it('merges http and https variants of the same address', () => {
+        const groups = findDupes([
+            bm('1', 'http://a.com/page', 1),
+            bm('2', 'https://a.com/page', 2),
+            bm('3', 'https://b.com/', 3)
+        ], { ignoreScheme: true });
+        expect(groups).toHaveLength(1);
+        expect(groups[0].key).toBe('//a.com/page');
+        expect(groups[0].items.map(i => i.id)).toEqual(['1', '2']);
+    });
+
+    it('keeps the schemes apart by default', () => {
+        const groups = findDupes([
+            bm('1', 'http://a.com/page', 1),
+            bm('2', 'https://a.com/page', 2)
+        ]);
+        expect(groups).toEqual([]);
+    });
+
+    it('still applies the normal normalization before folding the scheme', () => {
+        const groups = findDupes([
+            bm('1', 'HTTP://A.com/page?utm_source=t#x', 1),
+            bm('2', 'https://a.com/page', 2)
+        ], { ignoreScheme: true });
+        expect(groups).toHaveLength(1);
+    });
+
+    it('leaves non-http URLs untouched (exact-match grouping)', () => {
+        const groups = findDupes([
+            bm('1', 'javascript:alert(1)', 1),
+            bm('2', 'javascript:alert(1)', 2)
+        ], { ignoreScheme: true });
+        expect(groups).toHaveLength(1);
+        expect(groups[0].key).toBe('javascript:alert(1)');
+    });
+});
+
+// v4 task-2 §5.6b: the six keeper strategies. group.items arrive
+// oldest-first, so "oldest" fallbacks resolve to items[0].
+describe('pickKeeper (v4 task-2 §5.6b)', () => {
+    const item = (id, extra = {}) => ({ id, title: '', dateAdded: 1, ...extra });
+    const groupOf = (...items) => ({ key: 'k', items });
+
+    it('returns null for an empty group', () => {
+        expect(pickKeeper({ items: [] }, 'keep-oldest')).toBeNull();
+        expect(pickKeeper(null, 'keep-newest')).toBeNull();
+    });
+
+    it('keep-oldest (and an unknown strategy) keeps the first item', () => {
+        const group = groupOf(item('1'), item('2'), item('3'));
+        expect(pickKeeper(group, 'keep-oldest').id).toBe('1');
+        expect(pickKeeper(group, 'bogus').id).toBe('1');
+        expect(pickKeeper(group).id).toBe('1'); // strategy omitted
+    });
+
+    it('keep-newest keeps the last item', () => {
+        const group = groupOf(item('1'), item('2'), item('3'));
+        expect(pickKeeper(group, 'keep-newest').id).toBe('3');
+    });
+
+    it('keep-bookmark-bar keeps the first in-bar item', () => {
+        const group = groupOf(item('1'), item('2'), item('3'));
+        const inBar = id => id !== '1';
+        expect(pickKeeper(group, 'keep-bookmark-bar', { inBar }).id).toBe('2');
+    });
+
+    it('keep-bookmark-bar falls back to oldest when no item sits in the bar', () => {
+        const group = groupOf(item('1'), item('2'));
+        expect(pickKeeper(group, 'keep-bookmark-bar', { inBar: () => false }).id).toBe('1');
+        expect(pickKeeper(group, 'keep-bookmark-bar').id).toBe('1'); // no ctx
+    });
+
+    it('keep-shortest-title keeps the shortest title, ties resolved oldest-first', () => {
+        const group = groupOf(
+            item('1', { title: 'bbbb' }),
+            item('2', { title: 'aa' }),
+            item('3', { title: 'cc' }),
+            item('4') // empty title wins
+        );
+        expect(pickKeeper(group, 'keep-shortest-title').id).toBe('4');
+        const tied = groupOf(item('1', { title: 'aa' }), item('2', { title: 'bb' }));
+        expect(pickKeeper(tied, 'keep-shortest-title').id).toBe('1');
+    });
+
+    it('keep-shallowest keeps the smallest ctx.depthOf, ties resolved oldest-first', () => {
+        const group = groupOf(item('1'), item('2'), item('3'));
+        const depthOf = id => ({ 1: 5, 2: 2, 3: 3 })[id];
+        expect(pickKeeper(group, 'keep-shallowest', { depthOf }).id).toBe('2');
+        // missing ctx: every depth reads 0 → the oldest item stands
+        expect(pickKeeper(group, 'keep-shallowest').id).toBe('1');
+    });
+
+    it('keep-most-visited keeps the highest ctx.visitCountOf', () => {
+        const group = groupOf(item('1'), item('2'), item('3'));
+        const visitCountOf = id => ({ 1: 3, 2: 9, 3: 4 })[id];
+        expect(pickKeeper(group, 'keep-most-visited', { visitCountOf }).id).toBe('2');
+    });
+
+    it('keep-most-visited falls back to oldest on ties and on missing data', () => {
+        const group = groupOf(item('1'), item('2'));
+        const tied = () => 5;
+        expect(pickKeeper(group, 'keep-most-visited', { visitCountOf: tied }).id).toBe('1');
+        expect(pickKeeper(group, 'keep-most-visited').id).toBe('1'); // no ctx
+        const zeros = () => 0;
+        expect(pickKeeper(group, 'keep-most-visited', { visitCountOf: zeros }).id).toBe('1');
+    });
+});
+
+describe('planDeletion with an explicit keeper (v4 task-2 §5.6b)', () => {
+    it('dooms everything but the keeper, preserving group order', () => {
+        const items = [{ id: '1' }, { id: '2' }, { id: '3' }];
+        expect(planDeletion({ items }, items[1]).map(i => i.id)).toEqual(['1', '3']);
+    });
+
+    it('dooms nothing when the group is just the keeper', () => {
+        const items = [{ id: '1' }];
+        expect(planDeletion({ items }, items[0])).toEqual([]);
+    });
+
+    it('returns a copy, not a view into the group', () => {
+        const group = { items: [{ id: '1' }, { id: '2' }] };
+        const doomed = planDeletion(group, group.items[0]);
+        doomed.push({ id: 'x' });
+        expect(group.items).toHaveLength(2);
     });
 });
 

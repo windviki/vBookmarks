@@ -13,8 +13,11 @@
  *
  * findDupes groups a flat bookmark list by normalized URL and returns only
  * the colliding groups, oldest-first inside (the keep candidate) and
- * largest-first outside. planDeletion(group) is the keep-oldest policy:
- * everything but the first item.
+ * largest-first outside. opts.ignoreScheme (v4 task-2 §5.6c) folds http/
+ * https variants into one group. pickKeeper(group, strategy, ctx) applies
+ * the six keeper strategies of §5.6b; planDeletion(group, keeper) is the
+ * deletion candidate set — everything but the keeper (no keeper = the
+ * legacy keep-oldest slice).
  */
 
 const TRACKING_PARAM = /^(utm_.*|fbclid|gclid)$/i;
@@ -42,12 +45,18 @@ export const normalizeUrl = url => {
     return u.href.replace(/^([a-z]+:\/\/[^/?#]+)\/(?=\?|$)/, '$1');
 };
 
-export const findDupes = bookmarks => {
+export const findDupes = (bookmarks, opts = {}) => {
     const byKey = new Map();
     for (const b of bookmarks) {
         if (!b || !b.url)
             continue;
-        const key = normalizeUrl(b.url);
+        let key = normalizeUrl(b.url);
+        // v4 task-2 §5.6c: dupesIgnoreScheme treats http/https variants of
+        // the same address as one group (scheme upgrades are a real dupe
+        // source; off by default — a few sites serve different content per
+        // scheme, so merging is the user's explicit choice).
+        if (opts.ignoreScheme)
+            key = key.replace(/^https?:\/\//i, '//');
         if (!byKey.has(key))
             byKey.set(key, []);
         byKey.get(key).push(b);
@@ -64,4 +73,50 @@ export const findDupes = bookmarks => {
     return groups;
 };
 
-export const planDeletion = group => group.items.slice(1);
+// v4 task-2 §5.6b: the keeper strategies. group.items arrive oldest-first
+// (findDupes sorts them), so "oldest" fallbacks are simply the first item.
+// pickKeeper returns the one item to KEEP; everything else is the deletion
+// candidate set. ctx supplies the view-side data the strategies need:
+//   ctx.inBar(id)        — the bookmark sits in the bookmarks-bar subtree
+//   ctx.depthOf(id)      — parent-folder depth (shallowest strategy)
+//   ctx.visitCountOf(id) — recorded visit count (most-visited; absent data
+//                          reads as 0, which falls back to oldest)
+export const pickKeeper = (group, strategy, ctx = {}) => {
+    const items = (group && group.items) || [];
+    if (!items.length)
+        return null;
+    const oldest = items[0];
+    switch (strategy) {
+        case 'keep-newest':
+            return items[items.length - 1];
+        case 'keep-bookmark-bar': {
+            const inBar = ctx.inBar || (() => false);
+            return items.find(item => inBar(item.id)) || oldest; // first = oldest
+        }
+        case 'keep-shortest-title':
+            return items.reduce((best, item) =>
+                (item.title || '').length < (best.title || '').length ? item : best, oldest);
+        case 'keep-shallowest': {
+            const depthOf = ctx.depthOf || (() => 0);
+            return items.reduce((best, item) =>
+                depthOf(item.id) < depthOf(best.id) ? item : best, oldest);
+        }
+        case 'keep-most-visited': {
+            const visitCountOf = ctx.visitCountOf || (() => 0);
+            return items.reduce((best, item) =>
+                (visitCountOf(item.id) | 0) > (visitCountOf(best.id) | 0) ? item : best, oldest);
+        }
+        case 'keep-oldest':
+        default:
+            return oldest;
+    }
+};
+
+// The deletion plan for one group: everything but the keeper. Called
+// without a keeper it keeps the historical keep-oldest behavior (the first
+// item), which is what the pre-view palette cleanup did.
+export const planDeletion = (group, keeper) => {
+    if (!keeper)
+        return group.items.slice(1);
+    return group.items.filter(item => item !== keeper);
+};

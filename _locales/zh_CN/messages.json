@@ -689,6 +689,52 @@
   "contextMenuAddBookmark": {
     "message": "用 vBookmarks 收藏此页面"
   },
+  "deadFilterAll": {
+    "message": "全部"
+  },
+  "deadFilterBlocked": {
+    "message": "仅受限"
+  },
+  "deadFilterDead": {
+    "message": "仅死链"
+  },
+  "deadLastScanAt": {
+    "message": "上次扫描：$time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadMark": {
+    "message": "标记为死链"
+  },
+  "deadMarkAll": {
+    "message": "全部标记"
+  },
+  "deadMarked": {
+    "message": "死链行已全部标记"
+  },
+  "deadProxyHint": {
+    "message": "书签 URL 会发送给该第三方服务。留空则仅直连探测。"
+  },
+  "deadStartHint": {
+    "message": "开始扫描 $n$ 个书签",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadStatusBlocked": {
+    "message": "直连×"
+  },
+  "deadUnmark": {
+    "message": "取消死链标记"
+  },
+  "deadUnmarkAll": {
+    "message": "清除所有标记"
+  },
   "donationGo": {
     "message": "支持一下"
   },
@@ -697,5 +743,116 @@
   },
   "donationNever": {
     "message": "不再显示"
+  },
+  "dupesApplyAll": {
+    "message": "全部应用（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "dupesGroupCleanRest": {
+    "message": "清除其余"
+  },
+  "dupesIgnoreScheme": {
+    "message": "忽略 http/https 差异"
+  },
+  "dupesKeepThis": {
+    "message": "保留此条"
+  },
+  "dupesKeeperSet": {
+    "message": "设为保留项"
+  },
+  "dupesPreviewSummary": {
+    "message": "$groups$ 组 · 将释放 $count$ 条",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "dupesRemoveRow": {
+    "message": "删除此条"
+  },
+  "dupesScopeAll": {
+    "message": "全部书签"
+  },
+  "dupesScopeBar": {
+    "message": "仅书签栏"
+  },
+  "dupesStrategyBookmarkBar": {
+    "message": "保留书签栏中的"
+  },
+  "dupesStrategyMostVisited": {
+    "message": "保留最常访问"
+  },
+  "dupesStrategyNewest": {
+    "message": "保留最新"
+  },
+  "dupesStrategyOldest": {
+    "message": "保留最早"
+  },
+  "dupesStrategyShallowest": {
+    "message": "保留最浅层级"
+  },
+  "dupesStrategyShortestTitle": {
+    "message": "保留最短标题"
+  },
+  "optionDeadProxy": {
+    "message": "死链探测中转模板"
+  },
+  "optionDeadScanConcurrency": {
+    "message": "死链扫描并发数（1-16）"
+  },
+  "optionDeadScanTimeout": {
+    "message": "死链扫描超时秒数（2-30）"
+  },
+  "paletteCmdGoDead": {
+    "message": "切换到死链视图"
+  },
+  "paletteCmdGoDupes": {
+    "message": "切换到重复书签视图"
+  },
+  "paletteCmdGoRecent": {
+    "message": "切换到最近书签视图"
+  },
+  "paletteCmdGoSearch": {
+    "message": "切换到搜索视图"
+  },
+  "paletteCmdGoTree": {
+    "message": "切换到书签树视图"
+  },
+  "paletteCmdOptions": {
+    "message": "打开选项页"
+  },
+  "paletteCmdSearchInView": {
+    "message": "在搜索视图中搜索“$query$”",
+    "placeholders": {
+      "query": {
+        "content": "$1"
+      }
+    }
+  },
+  "rowActionDelete": {
+    "message": "删除"
+  },
+  "rowActionMark": {
+    "message": "标记为死链"
+  },
+  "rowActionReveal": {
+    "message": "在树中定位"
+  },
+  "rowActionUnmark": {
+    "message": "取消死链标记"
+  },
+  "viewDead": {
+    "message": "死链"
+  },
+  "viewDupes": {
+    "message": "重复书签"
   }
 }

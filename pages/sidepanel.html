@@ -28,6 +28,8 @@
         <section id="view-tree" class="view" role="tabpanel" aria-labelledby="view-tab-tree"><div id="tree" tabindex="-1"></div></section>
         <section id="view-search" class="view" role="tabpanel" aria-labelledby="view-tab-search" hidden><div id="search-history-area"></div><div id="results" tabindex="-1"></div></section>
         <section id="view-recent" class="view" role="tabpanel" aria-labelledby="view-tab-recent" hidden><div id="recent-list" tabindex="-1"></div></section>
+        <section id="view-dupes" class="view" role="tabpanel" aria-labelledby="view-tab-dupes" hidden><div id="dupes-list" tabindex="-1"></div></section>
+        <section id="view-dead" class="view" role="tabpanel" aria-labelledby="view-tab-dead" hidden><div id="dead-list" tabindex="-1"></div></section>
     </div>
     <div id="view-announce" class="visually-hidden" aria-live="polite"></div>
 </div>
@@ -36,6 +38,8 @@
 <menu id="bookmark-context-menu" type="context" tabindex="-1">
     <div id="reveal-in-tree" class="menu-item" tabindex="-1" style="display:none"></div>
     <hr id="reveal-in-tree-sep" style="display:none">
+    <div id="dead-mark-toggle" class="menu-item" tabindex="-1" style="display:none"></div>
+    <div id="dupes-set-keeper" class="menu-item" tabindex="-1" style="display:none"></div>
     <div id="bookmark-new-tab" class="menu-item" tabindex="-1"></div>
     <div id="bookmark-new-window" class="menu-item" tabindex="-1"></div>
     <div id="bookmark-new-incognito-window" class="menu-item" tabindex="-1"></div>

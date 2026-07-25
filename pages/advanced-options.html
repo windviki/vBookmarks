@@ -33,6 +33,12 @@
     <textarea id="userstyle"></textarea>
 </fieldset>
 <fieldset>
+    <legend><span id="dead-scan-options"></span></legend>
+    <div><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></div>
+    <p></p>
+    <div><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></div>
+</fieldset>
+<fieldset>
     <legend><span id="reset-settings"></span></legend>
     <div><span id="reset-settings-description"></span><button id="reset-button"></button></div>
 </fieldset>

@@ -6,7 +6,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 // fetch by rejecting with an AbortError-named error when the signal fires.
 
 import {
-    checkUrl, scanBookmarks, filterScannable, collectDead, statusLabel, startDeadScan
+    checkUrl, checkUrlDual, scanBookmarks, filterScannable, collectDead, statusLabel, startDeadScan
 } from '../src/dead-links.js';
 
 const realFetch = globalThis.fetch;
@@ -129,6 +129,77 @@ describe('checkUrl', () => {
     });
 });
 
+// v4 task-2 §5.5b: the two-channel decision matrix. The direct probe runs
+// first; only a direct failure lets the configured proxy channel vote.
+describe('checkUrlDual (v4 task-2 §5.5b)', () => {
+    const PROXY = 'https://relay.example/fetch?target={url}';
+
+    it('skips non-http(s) URLs without calling fetch', async () => {
+        const calls = stubFetch(respond(200));
+        expect(await checkUrlDual('javascript:1', { proxyTemplate: PROXY }))
+            .toEqual({ status: 'skipped', ok: true });
+        expect(calls).toHaveLength(0);
+    });
+
+    it('direct ok → ok, with the proxy left alone', async () => {
+        const calls = stubFetch(respond(200));
+        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        expect(result).toEqual({
+            status: 'ok', ok: true, code: 200,
+            direct: { status: 200, ok: true }
+        });
+        expect(calls).toHaveLength(1);
+        expect(calls[0].url).toBe('https://a.com/');
+    });
+
+    it('direct fail without a proxy template → dead', async () => {
+        const calls = stubFetch(respond(404));
+        const result = await checkUrlDual('https://a.com/');
+        expect(result.status).toBe('dead');
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe(404);
+        expect(result.direct).toEqual({ status: 404, ok: false });
+        expect(calls).toHaveLength(1);
+    });
+
+    it('direct fail + proxy reachable → blocked (ok:false so collectDead picks it up)', async () => {
+        const calls = stubFetch(url =>
+            Promise.resolve({ status: url.startsWith(PROXY.split('{')[0]) ? 200 : 404 }));
+        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        expect(result.status).toBe('blocked');
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe(404); // the direct channel's verdict
+        expect(result.proxy).toEqual({ status: 200, ok: true });
+        expect(calls).toHaveLength(2);
+        expect(calls[1].url).toBe(
+            'https://relay.example/fetch?target=' + encodeURIComponent('https://a.com/'));
+    });
+
+    it('direct fail + proxy fail → dead (both channels agree)', async () => {
+        const calls = stubFetch(url =>
+            url.startsWith(PROXY.split('{')[0])
+                ? Promise.reject(new TypeError('Failed to fetch'))
+                : Promise.resolve({ status: 500 }));
+        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        expect(result.status).toBe('dead');
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe(500);
+        expect(result.proxy).toEqual({ status: 'error', ok: false, error: 'TypeError' });
+        expect(calls).toHaveLength(2);
+    });
+
+    it('a direct network error (not just a dead status) also consults the proxy', async () => {
+        const calls = stubFetch(url =>
+            url.startsWith(PROXY.split('{')[0])
+                ? Promise.resolve({ status: 200 })
+                : Promise.reject(new TypeError('Failed to fetch')));
+        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        expect(result.status).toBe('blocked');
+        expect(result.error).toBe('TypeError');
+        expect(calls).toHaveLength(2);
+    });
+});
+
 describe('scanBookmarks', () => {
     const items = ids => ids.map(id => ({ id, title: id, url: `https://${id}.com/` }));
 
@@ -231,6 +302,26 @@ describe('scanBookmarks', () => {
         await tick();
         expect(results.size).toBe(1);
         expect(progressed).toEqual([[1, 3]]);
+    });
+
+    // v4 task-2 §5.5b: the dead view injects its dual-channel probe through
+    // the `checker` option instead of the default direct checkUrl.
+    it('routes every URL through the injected checker instead of fetch', async () => {
+        const calls = stubFetch(respond(200)); // must stay untouched
+        const probed = [];
+        const results = await scanBookmarks(items(['a', 'b']), {
+            checker: (url, opts) => {
+                probed.push({ url, timeoutMs: opts.timeoutMs, hasSignal: !!opts.signal });
+                return Promise.resolve({ status: 'dead', ok: false, code: 404 });
+            },
+            timeoutMs: 1234
+        });
+        expect(probed).toEqual([
+            { url: 'https://a.com/', timeoutMs: 1234, hasSignal: false }, // no external signal
+            { url: 'https://b.com/', timeoutMs: 1234, hasSignal: false }
+        ]);
+        expect(results.get('a')).toEqual({ status: 'dead', ok: false, code: 404 });
+        expect(calls).toHaveLength(0);
     });
 });
 

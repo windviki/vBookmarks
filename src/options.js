@@ -91,6 +91,13 @@ const $ = id => document.getElementById(id);
         recentCount.value = await getSetting('recentCount', '20');
         recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
 
+        // v4 task-2 (§5.5b/§7): dead-link scan proxy template — empty means
+        // direct probing only. Free-text input, stored verbatim; view-dead
+        // validates the {url} placeholder when a scan starts.
+        const deadProxy = $('dead-proxy-template');
+        deadProxy.value = await getSetting('deadProxyTemplate', '');
+        deadProxy.addEventListener('change', () => setSetting('deadProxyTemplate', deadProxy.value.trim()));
+
         // Initialize sync settings. One write per change is enough: the
         // service worker (src/sync-engine.js) observes chrome.storage.sync
         // and reschedules its refresh alarm itself, and the popup mirrors
@@ -171,6 +178,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
+        document.getElementById('option-dead-proxy').innerText = __m('optionDeadProxy');
+        document.getElementById('dead-proxy-hint').innerText = __m('deadProxyHint');
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

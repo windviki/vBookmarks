@@ -159,7 +159,9 @@ export function initTreeRender(ctx = {}) {
         // (recent: relative time on the right, `path · absolute time` as the
         // second line — docs/v4task-2-list.md §3.3) override the two label
         // slots wholesale via meta.rightText / meta.subText; both slots are
-        // escaped here, so callers compose them from raw text.
+        // escaped here, so callers compose them from raw text. A view badge
+        // (dead/blocked status pill, docs/v4task-2-list.md §3.5) comes via
+        // meta.badge = { text, cls } and sits left of the right slot.
         const path = (meta && meta.path) ? String(meta.path) : '';
         const tooltip = path
             ? `${htmlspecialchars(title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')))}\n${tooltipURL}\n${htmlspecialchars(path)}`
@@ -169,10 +171,13 @@ export function initTreeRender(ctx = {}) {
             ? meta.rightText : (showPath ? path : '');
         const subText = meta && typeof meta.subText === 'string'
             ? meta.subText : (showPath ? path : '');
-        const nameHtml = (rightText || subText)
+        const badge = meta && meta.badge && meta.badge.text
+            ? `<span class="row-badge ${htmlspecialchars(meta.badge.cls || '')}">${htmlspecialchars(meta.badge.text)}</span>`
+            : '';
+        const nameHtml = (rightText || subText || badge)
             ? `<span class="row-main"><i>${name}</i>` +
               (subText ? `<span class="row-sub" dir="auto">${htmlspecialchars(subText)}</span>` : '') +
-              `</span>` +
+              `</span>` + badge +
               (rightText ? `<span class="row-path" dir="auto">${htmlspecialchars(rightText)}</span>` : '')
             : `<i>${name}</i>`;
 

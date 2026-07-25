@@ -537,6 +537,9 @@ export function initSearch(ctx = {}) {
         quit: quitSearchMode,
         reset: resetSearchState,
         escape: escapeSearch,
+        // v4 task-2 §4.4: the palette bridge row jumps into the search view
+        // with its query — the same refill+rerun path the history rows use.
+        run: runHistoryQuery,
         updateIndex: buildSearchIndex
     };
 }

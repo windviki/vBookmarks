@@ -833,3 +833,26 @@ describe('last-query restore (§4.3)', () => {
         expect(fuzzy.calls).toHaveLength(2); // no silent rerun
     });
 });
+
+// v4 task-2 §4.4: the palette bridge row calls s.run(q) to jump into the
+// search view with its query — the same refill+rerun path history rows use.
+describe('palette bridge run() (§4.4)', () => {
+    it('refills the box, reruns immediately (even in searchAfterEnter mode) and focuses', () => {
+        const { s, els, fuzzy, store } = setup({ storeData: { searchAfterEnter: '1' } });
+        s.run('palette query');
+        expect(els['search-input'].value).toBe('palette query');
+        expect(fuzzy.calls).toHaveLength(1);
+        expect(fuzzy.calls[0].query).toBe('palette query');
+        expect(els['search-input'].focused).toBe(true);
+        expect(store.get('searchQuery')).toBe('palette query');
+    });
+
+    it('replaces an in-progress query wholesale', () => {
+        const { s, els, fuzzy } = setup({});
+        type(els, 'old');
+        s.run('new');
+        expect(els['search-input'].value).toBe('new');
+        expect(fuzzy.calls).toHaveLength(2);
+        expect(fuzzy.calls[1].query).toBe('new');
+    });
+});

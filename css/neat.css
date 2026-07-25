@@ -1022,9 +1022,11 @@ body.panel-mode #resizer-y {
 
 /* no-results row: text only, no focusable element inside, so keyboard
    navigation and clicks ignore it. v4 task-2: the same empty state serves
-   the recent list and the search-history area. */
+   the list views and the search-history area. */
 #results ul li.empty-state,
 #recent-list ul li.empty-state,
+#dupes-list ul li.empty-state,
+#dead-list ul li.empty-state,
 #search-history-area ul li.empty-state {
     color: var(--vbm-muted);
     text-align: center;
@@ -1676,11 +1678,14 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 /* === v4 task-2 slice B: recent view + search history area ===
-   #recent-list mirrors the #results/#tree pane chrome; its rows reuse the
-   unscoped .tree-item-link rules, so only the container and the row states
-   the scoped #tree/#results rules provided are re-declared here. */
+   The list-view containers mirror the #results/#tree pane chrome; their
+   rows reuse the unscoped .tree-item-link rules, so only the container and
+   the row states the scoped #tree/#results rules provided are re-declared
+   here. Slice C: dupes/dead lists share the same chrome. */
 
-#recent-list {
+#recent-list,
+#dupes-list,
+#dead-list {
     background-color: var(--vbm-bg);
     overflow: auto;
     outline: 0;
@@ -1692,7 +1697,11 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 #recent-list ul,
-#recent-list ul li {
+#recent-list ul li,
+#dupes-list ul,
+#dupes-list ul li,
+#dead-list ul,
+#dead-list ul li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1701,33 +1710,49 @@ body.panel-mode .vbm-row .row-sub {
 
 /* Bookmark rows only — the same 16px twisty placeholder slot the tree and
    results panes give bookmark rows, keeping titles aligned across views. */
-#recent-list ul li a::before {
+#recent-list ul li a::before,
+#dupes-list ul li a::before,
+#dead-list ul li a::before {
     content: '';
     flex: none;
     width: 16px;
 }
 
-#recent-list ul li a * {
+#recent-list ul li a *,
+#dupes-list ul li a *,
+#dead-list ul li a * {
     pointer-events: none;
 }
 
-#recent-list ul li a:hover {
+#recent-list ul li a:hover,
+#dupes-list ul li a:hover,
+#dead-list ul li a:hover {
     background-color: var(--vbm-bg-hover);
 }
 
-#recent-list ul li a:hover i {
+#recent-list ul li a:hover i,
+#dupes-list ul li a:hover i,
+#dead-list ul li a:hover i {
     text-decoration: underline;
 }
 
 #recent-list ul li a:active,
 #recent-list ul li a.active,
-#recent-list ul li a:focus {
+#recent-list ul li a:focus,
+#dupes-list ul li a:active,
+#dupes-list ul li a.active,
+#dupes-list ul li a:focus,
+#dead-list ul li a:active,
+#dead-list ul li a.active,
+#dead-list ul li a:focus {
     color: var(--vbm-fg-selected);
     background-color: var(--vbm-bg-selected);
     outline: 0;
 }
 
-#recent-list ul li a:focus {
+#recent-list ul li a:focus,
+#dupes-list ul li a:focus,
+#dead-list ul li a:focus {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }
@@ -1873,4 +1898,304 @@ body.panel-mode .vbm-row .row-sub {
 .row-btn:hover {
     background: var(--vbm-bg-hover);
     color: var(--vbm-fg);
+}
+
+
+/* === v4 task-2 slice C: dupes/dead views (docs/v4task-2-list.md §3.5/§3.6) === */
+
+/* Toolbar (row 0 of both views): compact controls + summary + primary button. */
+.dupes-toolbar,
+.dead-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+    color: var(--vbm-muted);
+    flex-wrap: wrap;
+}
+
+.dupes-toolbar:empty,
+.dead-toolbar:empty {
+    display: none;
+}
+
+.dupes-toolbar select {
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    font-size: 11px;
+    padding: 1px 2px;
+}
+
+.dupes-toolbar .dupes-scheme {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dupes-toolbar .dupes-summary {
+    margin-inline-start: auto;
+    white-space: nowrap;
+}
+
+.dupes-toolbar .dupes-apply-all {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-accent);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.dupes-toolbar .dupes-apply-all:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+/* Group head (§3.6): chevron + normalized URL (muted, monospace, middle
+   ellipsis) + count pill + clean-rest row button. It is a row of the focus
+   model itself, so it gets the same hover/focus chrome as list anchors. */
+.dupes-group .group-head {
+    display: flex;
+    align-items: center;
+    height: var(--vbm-row-h);
+    cursor: pointer;
+    outline: 0;
+}
+
+.dupes-group .group-head:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
+.dupes-group .group-head:focus {
+    color: var(--vbm-fg-selected);
+    background-color: var(--vbm-bg-selected);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+.dupes-group .chevron {
+    flex: none;
+    width: 16px;
+    text-align: center;
+    color: var(--vbm-muted);
+}
+
+.dupes-group .chevron::before {
+    content: '▾';
+}
+
+.dupes-group .chevron.collapsed::before {
+    content: '▸';
+}
+
+.rtl .dupes-group .chevron.collapsed::before {
+    content: '◂';
+}
+
+.dupes-group .dupes-key {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    direction: ltr; /* URLs stay LTR even in RTL locales */
+    font-family: monospace;
+    color: var(--vbm-muted);
+}
+
+.dupes-group .count-pill,
+.vbm-row .row-badge {
+    flex: none;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    font-size: 9px;
+    line-height: 14px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.dupes-group .count-pill {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+    margin-inline-end: 4px;
+}
+
+/* the clean-rest button follows the §1.5 row-button reveal on group heads */
+.dupes-group:hover .row-btn,
+.dupes-group:focus-within .row-btn {
+    visibility: visible;
+}
+
+/* Member rows: the 16px keeper slot takes the chevron column's place, so
+   the generic ::before placeholder collapses — icon columns stay aligned. */
+#dupes-list ul li.dupes-member a::before {
+    width: 0;
+}
+
+#dupes-list ul li.dupes-member {
+    display: flex;
+    align-items: center;
+}
+
+#dupes-list ul li.dupes-member a {
+    flex: 1;
+    min-width: 0;
+}
+
+.keeper-radio {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.keeper-radio::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border: 1.5px solid var(--vbm-muted);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.keeper-radio.checked::before {
+    border-color: var(--vbm-accent);
+    background: var(--vbm-accent);
+    box-shadow: inset 0 0 0 2px var(--vbm-bg);
+}
+
+/* will-delete preview (§1.3/§3.6): danger tint + strikethrough title */
+#dupes-list ul li.will-delete a i {
+    color: var(--vbm-danger);
+    text-decoration: line-through;
+}
+
+/* Status pill (§3.5): dead = danger, blocked = the amber --vbm-warning.
+   Text + color, never color alone (a11y double encoding). */
+.vbm-row .row-badge {
+    margin-inline-end: 4px;
+    align-self: center;
+}
+
+.vbm-row .row-badge.dead {
+    background: var(--vbm-danger);
+    color: #fff;
+}
+
+.vbm-row .row-badge.blocked {
+    background: var(--vbm-warning);
+    color: #000;
+}
+
+/* dead toolbar pieces: determinate progress (2px, token colors), the
+   three-state filter segment and the batch text buttons. */
+.dead-toolbar progress.dead-progress {
+    flex: 1;
+    min-width: 60px;
+    height: 2px;
+    appearance: none;
+    border: 0;
+}
+
+.dead-toolbar progress.dead-progress::-webkit-progress-bar {
+    background: var(--vbm-border);
+}
+
+.dead-toolbar progress.dead-progress::-webkit-progress-value {
+    background: var(--vbm-accent);
+}
+
+.dead-toolbar .dead-progress-label {
+    white-space: nowrap;
+}
+
+.dead-toolbar .dead-last {
+    white-space: nowrap;
+}
+
+.dead-toolbar button {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 1px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dead-toolbar button:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.dead-toolbar .dead-filter {
+    display: inline-flex;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    overflow: hidden;
+}
+
+.dead-toolbar .dead-filter-btn {
+    color: var(--vbm-muted);
+    border-radius: 0;
+}
+
+.dead-toolbar .dead-filter-btn.active {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
+/* Executable empty state (§3.5): the start row is clickable/focusable. */
+#dead-list ul li.dead-start {
+    cursor: pointer;
+}
+
+#dead-list ul li.dead-start:hover,
+#dead-list ul li.dead-start:focus {
+    color: var(--vbm-accent);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Marked rows: the dead-mark button stays lit (not hover-only) so the
+   marked state reads from the row itself too. */
+#dead-list .row-btn.dead-mark-btn.marked {
+    visibility: visible;
+    color: var(--vbm-danger);
+}
+
+/* §5.5c overlay: red × on the favicon's top-right corner in every list
+   (the sync dot owns the bottom-right, so they never collide). */
+.favicon-container {
+    position: relative; /* positioning context for sync dot / dead × overlays */
+}
+
+.favicon-container .dead-indicator {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--vbm-danger);
+    color: #fff;
+    font-size: 8px;
+    line-height: 10px;
+    text-align: center;
+    pointer-events: none;
 }
