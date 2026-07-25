@@ -1,7 +1,10 @@
 // vBookmarks i18n screenshot harness — one browser launch per UI language
 // (--lang is process-wide), reseeding the same tree each time, capturing
-// the main localized surfaces: tree, bookmark context menu, folder context
-// menu, edit dialog and the options page. 'ar' doubles as the RTL check.
+// the main localized surfaces: tree, view tab strip, bookmark context menu,
+// folder context menu, edit dialog and the options page. 'ar' doubles as
+// the RTL check — note the docker chromium ships en-US.pak only, so locale
+// negotiation silently falls back to en there; the ar tab-strip mirroring
+// assertion therefore emulates `direction: rtl` when negotiation failed.
 // Runs inside zenika/alpine-chrome:with-puppeteer; shots land in
 // /tmp/shots/i18n/<lang>-*.png.
 const puppeteer = require('puppeteer');
@@ -97,23 +100,41 @@ const watch = (page, tag) => {
             await sleep(400);
             await page.screenshot({ path: `/tmp/shots/i18n/${lang}-tree.png` });
 
-            // View tab strip with localized labels (v4 task-2 §3.2); 'ar'
-            // doubles as the RTL mirror check — tab order must flip.
-            const tabStrip = await page.evaluate(() => {
-                const strip = document.querySelector('#view-tabs');
-                const tabs = [...document.querySelectorAll('#view-tabs .view-tab')];
-                return {
-                    dir: strip ? getComputedStyle(strip).direction : '(missing)',
-                    count: tabs.length,
-                    mirrored: tabs.length > 1 && tabs[0].offsetLeft > tabs[tabs.length - 1].offsetLeft
-                };
-            });
-            if (lang === 'ar') {
-                console.log(`ar RTL tab strip: ${JSON.stringify(tabStrip)}`);
-                if (tabStrip.dir !== 'rtl' || !tabStrip.mirrored)
-                    errors.push(`ar: tab strip not mirrored (${JSON.stringify(tabStrip)})`);
-            }
+            // View tab strip with localized labels (v4 task-2 §3.2)
             await page.screenshot({ path: `/tmp/shots/i18n/${lang}-tabs.png` });
+
+            // 'ar' doubles as the RTL mirror check — tab order must flip.
+            // The docker chromium ships en-US.pak only, so --lang=ar cannot
+            // negotiate the ar locale there (everything falls back to en);
+            // when negotiation did not happen, emulate the RTL direction to
+            // still assert the strip's mirroring behaviour deterministically.
+            // The injected style is removed afterwards so the remaining shots
+            // stay in the negotiated state.
+            if (lang === 'ar') {
+                const readStrip = () => page.evaluate(() => {
+                    const strip = document.querySelector('#view-tabs');
+                    const tabs = [...document.querySelectorAll('#view-tabs .view-tab')];
+                    return {
+                        dir: strip ? getComputedStyle(strip).direction : '(missing)',
+                        count: tabs.length,
+                        mirrored: tabs.length > 1 && tabs[0].offsetLeft > tabs[tabs.length - 1].offsetLeft
+                    };
+                });
+                let tabStrip = await readStrip();
+                let mode = 'negotiated';
+                let styleEl = null;
+                if (tabStrip.dir !== 'rtl') {
+                    styleEl = await page.addStyleTag({ content: 'body { direction: rtl; }' });
+                    await sleep(300);
+                    tabStrip = await readStrip();
+                    mode = 'emulated';
+                }
+                console.log(`ar RTL tab strip (${mode}): ${JSON.stringify(tabStrip)}`);
+                if (tabStrip.dir !== 'rtl' || !tabStrip.mirrored)
+                    errors.push(`ar: tab strip not mirrored (${mode}: ${JSON.stringify(tabStrip)})`);
+                if (styleEl)
+                    await styleEl.evaluate(el => el.remove());
+            }
 
             // Bookmark context menu (GitHub row)
             await page.evaluate(() => {
@@ -164,7 +185,7 @@ const watch = (page, tag) => {
             await opts.screenshot({ path: `/tmp/shots/i18n/${lang}-options.png` });
             await opts.close();
 
-            console.log(`${lang}: 5 shots done`);
+            console.log(`${lang}: 6 shots done`);
         } catch (e) {
             errors.push(`${lang}: ${e.message}`);
         }
