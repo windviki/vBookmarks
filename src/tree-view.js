@@ -36,6 +36,8 @@
  * ctx.setRememberState(b)   — set the remember-state flag (neat.js state)
  * ctx.middleClickBgTab      — middle-click opens a background tab when true
  * ctx.leftClickNewTab       — left-click opens a new tab when true
+ * ctx.onOpenBookmark(id)    — v4 task-2 slice D: optional hook fired on every
+ *                             bookmark open (the visit-stats collection point)
  *
  * Returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree,
  * bookmarkHandler }: neat.js's sortFolderContents rebuilds via
@@ -318,6 +320,16 @@ export function initTreeView(ctx = {}) {
                 revealInTree(id);
             } else {
                 const url = el.href;
+                // v4 task-2 slice D (§5.4): every bookmark open — mouse,
+                // middle-click or the keyboard's synthetic click — funnels
+                // through here, so this single hook is the page-side visit
+                // collector. data-node-id is the unified row id; the legacy
+                // prefix strip covers rows that predate it.
+                if (ctx.onOpenBookmark) {
+                    const openId = el.parentNode.dataset.nodeId
+                        || el.parentNode.id.replace(/(neat-tree|neat-recent|results|recent|dead|dupes|stats)-item-/, '');
+                    ctx.onOpenBookmark(openId);
+                }
                 if (ctrlMeta) { // ctrl/meta click
                     actions.openBookmarkNewTab(url, middleClickBgTab ? shift : !shift);
                 } else { // click

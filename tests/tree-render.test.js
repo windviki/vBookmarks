@@ -326,6 +326,26 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('<span class="row-badge x&quot; onmouseover=&quot;">&lt;b&gt;</span>');
     });
 
+    // v4 task-2 slice D: meta.badge.aria adds an aria-label (the stats ×N
+    // count pill is not self-explanatory to screen readers).
+    it('meta.badge.aria renders an escaped aria-label', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: { text: '×42', cls: 'count', aria: 'Visited "42" times' }
+        });
+        expect(html).toContain(
+            '<span class="row-badge count" aria-label="Visited &quot;42&quot; times">×42</span>');
+    });
+
+    it('meta.badge without aria keeps the bare pill markup', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: { text: '404', cls: 'dead' }
+        });
+        expect(html).toContain('<span class="row-badge dead">404</span>');
+        expect(html).not.toContain('aria-label');
+    });
+
     it('a missing/empty badge keeps the legacy markup', () => {
         const tr = setup({ store: makeStore({ showItemPath: '' }) });
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { badge: { text: '', cls: 'dead' } }))

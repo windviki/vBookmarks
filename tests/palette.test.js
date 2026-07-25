@@ -66,6 +66,7 @@ const MSGS = {
     paletteCmdGoTree: 'Go to Tree view',
     paletteCmdGoSearch: 'Go to Search view',
     paletteCmdGoRecent: 'Go to Recent view',
+    paletteCmdGoStats: 'Go to Stats view',
     paletteCmdGoDead: 'Go to Dead links view',
     paletteCmdGoDupes: 'Go to Duplicates view',
     paletteCmdOptions: 'Open options page',
@@ -82,8 +83,8 @@ const MSGS = {
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdNewSeparator, MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
-    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoDead,
-    MSGS.paletteCmdGoDupes, MSGS.paletteCmdOptions
+    MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
+    MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes, MSGS.paletteCmdOptions
 ];
 
 // chrome.i18n.getMessage double: $1/$2 substitution on top of the table.
@@ -726,6 +727,7 @@ describe('view Go commands (v4 task-2 §3.5)', () => {
         ['tree', MSGS.paletteCmdGoTree],
         ['search', MSGS.paletteCmdGoSearch],
         ['recent', MSGS.paletteCmdGoRecent],
+        ['stats', MSGS.paletteCmdGoStats],
         ['dead', MSGS.paletteCmdGoDead],
         ['dupes', MSGS.paletteCmdGoDupes]
     ];

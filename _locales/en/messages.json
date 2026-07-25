@@ -934,5 +934,55 @@
   "viewDupes": {
     "message": "Duplicates",
     "description": "View tab title for the duplicate-bookmark cleanup view."
+  },
+  "viewStats": {
+    "message": "Stats",
+    "description": "View tab title for the visit-statistics view."
+  },
+  "paletteCmdGoStats": {
+    "message": "Go to Stats view",
+    "description": "Command palette entry: switch to the visit-statistics view (slash alias /stats)."
+  },
+  "optionStatsEnabled": {
+    "message": "Enable visit statistics",
+    "description": "Options checkbox (Views group): master switch for visit-statistics collection."
+  },
+  "statsSortByCount": {
+    "message": "By count",
+    "description": "Stats view sort segment: order rows by visit count, highest first."
+  },
+  "statsSortByRecent": {
+    "message": "By recent",
+    "description": "Stats view sort segment: order rows by most recent visit first."
+  },
+  "statsEmpty": {
+    "message": "Statistics build up as you open bookmarks",
+    "description": "Empty state of the stats view when no visit data has been collected yet."
+  },
+  "statsDisabledHint": {
+    "message": "Visit statistics are off — enable them in Options → Views",
+    "description": "Stats view empty state shown instead of data when the statsEnabled switch is off."
+  },
+  "statsVisitCount": {
+    "message": "Visited $count$ times",
+    "description": "Aria label of the stats row count pill; $count$ is the visit count.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "Clear statistics",
+    "description": "Button (stats view toolbar and options page) that wipes all collected visit statistics."
+  },
+  "statsClearConfirm": {
+    "message": "Clear visit statistics for $count$ bookmarks? This cannot be undone.",
+    "description": "Confirmation dialog text before wiping visit statistics; $count$ is the number of bookmark entries.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

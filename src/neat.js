@@ -14,6 +14,8 @@ import { initViewManager } from './view-manager.js';
 import { initViewRecent } from './view-recent.js';
 import { initViewDupes } from './view-dupes.js';
 import { initViewDead } from './view-dead.js';
+import { initVisitStats } from './visit-stats.js';
+import { initViewStats } from './view-stats.js';
 
 (window => {
     const store = window.store;
@@ -384,6 +386,11 @@ import { initViewDead } from './view-dead.js';
     // below initTreeView — this indirection keeps the first rebuilds safe.
     let deadOverlayRefresh = () => {};
 
+    // v4 task-2 slice D (§5.4): visit statistics — created before the tree
+    // view so bookmarkHandler's open hook and the tree-rebuild prune both
+    // reach it; the stats view itself inits below with the other views.
+    const visitStats = initVisitStats({ store });
+
     // Actions live in src/actions.js (P1): the whole bookmark action layer —
     // open/add/edit/delete/copy plus addSeparator/deleteSeparator. The
     // menu/keyboard handlers and the tree-view module reach them through this
@@ -449,11 +456,26 @@ import { initViewDead } from './view-dead.js';
         views,
         // v4 task-2 §3.6: every tree rebuild refreshes the shared path map;
         // slice C §5.5c: and re-lays the dead-mark × overlays (the view
-        // inits below — the indirection stays a no-op until then)
+        // inits below — the indirection stays a no-op until then);
+        // slice D §5.4: and prunes visit stats of deleted bookmarks
         onTreeGenerated: t => {
             views.buildPathMap(t);
             deadOverlayRefresh();
-        }
+            const ids = new Set();
+            const collect = nodes => {
+                for (let i = 0, l = (nodes || []).length; i < l; i++) {
+                    if (!nodes[i].url)
+                        collect(nodes[i].children);
+                    else
+                        ids.add(nodes[i].id);
+                }
+            };
+            collect(t);
+            visitStats.prune(ids);
+        },
+        // slice D: page-side visit collection — bookmarkHandler funnels
+        // every bookmark open (tree/search/recent/stats/dead/dupes rows)
+        onOpenBookmark: id => visitStats.record(id)
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
@@ -468,21 +490,24 @@ import { initViewDead } from './view-dead.js';
         treeView
     });
 
-    // Dupes/dead views (v4 task-2 切片 C): the palette's old dupes/dead
-    // modes become their own tabs — group/keeper cleanup and the cached
-    // dual-channel link scan. Same init point as recent (treeView/actions/
-    // dialogs/undo all ready above); the menus reach them through the lazy
-    // deadMenu/dupesMenu getters on initContextMenu's ctx.
-    const viewDupes = initViewDupes({
+    // Stats view (v4 task-2 切片 D): visit counters as their own tab.
+    // Registration order fixes the tab order (§2: tree/search/recent/
+    // stats/dead/dupes).
+    initViewStats({
         store,
         views,
         treeRender,
         separatorManager,
         treeView,
-        actions,
         dialogs,
-        undo
+        visitStats
     });
+
+    // Dead/dupes views (v4 task-2 切片 C): the palette's old dupes/dead
+    // modes become their own tabs — group/keeper cleanup and the cached
+    // dual-channel link scan. Same init point as recent (treeView/actions/
+    // dialogs/undo all ready above); the menus reach them through the lazy
+    // deadMenu/dupesMenu getters on initContextMenu's ctx.
     const viewDead = initViewDead({
         store,
         views,
@@ -492,6 +517,19 @@ import { initViewDead } from './view-dead.js';
         actions,
         dialogs,
         undo
+    });
+    const viewDupes = initViewDupes({
+        store,
+        views,
+        treeRender,
+        separatorManager,
+        treeView,
+        actions,
+        dialogs,
+        undo,
+        // slice D: the keep-most-visited strategy reads real counts now
+        // (zeros + disabled option while statsEnabled is off)
+        visitStats
     });
     deadOverlayRefresh = viewDead.refreshOverlays;
 

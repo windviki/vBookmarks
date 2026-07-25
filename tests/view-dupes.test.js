@@ -176,7 +176,13 @@ const setup = (opts = {}) => {
     };
 
     const viewDupes = initViewDupes({
-        store, views, treeRender, separatorManager, treeView, dialogs, undo
+        store, views, treeRender, separatorManager, treeView, dialogs, undo,
+        // Slice D: counts come from the visit-stats store; statsOff doubles
+        // as the statsEnabled-off switch (most-visited greys out).
+        visitStats: opts.visitStats || {
+            countOf: id => (opts.visitCounts || {})[id] || 0,
+            enabled: () => !opts.statsOff
+        }
     });
 
     // Event helpers over the list's recorded listeners.
@@ -301,6 +307,32 @@ describe('keeper strategies (§5.6b)', () => {
         const html = $list.innerHTML;
         const rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
         expect(rowOfChecked[1]).toBe('11'); // oldest in-bar wins
+    });
+
+    // Slice D (§5.4 联动): keep-most-visited reads the real visit-stats store.
+    it('keep-most-visited keeps the copy with the highest visit count', () => {
+        const { $list, def } = setup({
+            storeData: { dupesStrategy: 'keep-most-visited' },
+            visitCounts: { '15': 9, '11': 3 }
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        const rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
+        expect(rowOfChecked[1]).toBe('15');
+    });
+
+    it('keep-most-visited falls back to oldest when no counts exist', () => {
+        const { $list, def } = setup({ storeData: { dupesStrategy: 'keep-most-visited' } });
+        def().activate();
+        const html = $list.innerHTML;
+        const rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
+        expect(rowOfChecked[1]).toBe('11');
+    });
+
+    it('greys out keep-most-visited while statsEnabled is off', () => {
+        const { $list, def } = setup({ statsOff: true });
+        def().activate();
+        expect($list.innerHTML).toContain('<option value="keep-most-visited" disabled>');
     });
 
     it('a manual radio pick overrides the strategy and survives a strategy switch', () => {

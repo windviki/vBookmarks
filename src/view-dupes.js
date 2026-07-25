@@ -46,6 +46,8 @@
  * ctx.actions          — (unused directly; Delete rides keyboard.js)
  * ctx.dialogs          — ConfirmDialog for the batch deletions
  * ctx.undo             — capture/showToast for the serial deletion chain
+ * ctx.visitStats       — slice D: initVisitStats API (countOf/enabled); the
+ *                        keep-most-visited strategy reads it (absent = zeros)
  *
  * chrome.bookmarks.*, chrome.i18n.getMessage, document and setTimeout
  * remain page globals.
@@ -77,6 +79,9 @@ export function initViewDupes(ctx = {}) {
     const treeView = ctx.treeView;
     const dialogs = ctx.dialogs;
     const undo = ctx.undo;
+    // Slice D: real visit counts for keep-most-visited; the zero-filled
+    // fallback doubles as the "stats off" behavior (oldest wins the tie).
+    const visitStats = ctx.visitStats || { countOf: () => 0, enabled: () => false };
 
     const $list = $('dupes-list');
 
@@ -119,8 +124,8 @@ export function initViewDupes(ctx = {}) {
     };
 
     // ctx for pickKeeper: bar membership comes from the flatten pass, folder
-    // depth from the shared path map; visit counts arrive in slice D, so the
-    // most-visited strategy reads zeros and falls back to oldest for now.
+    // depth from the shared path map, visit counts from slice D's stats
+    // store (zeros when stats is off → the strategy falls back to oldest).
     const keeperCtx = () => ({
         inBar: id => {
             const item = itemIndex.get(id);
@@ -130,7 +135,7 @@ export function initViewDupes(ctx = {}) {
             const path = views.pathOf(id);
             return path ? path.split(' / ').length : 0;
         },
-        visitCountOf: () => 0
+        visitCountOf: id => visitStats.countOf(id)
     });
 
     const keeperOf = group => {
@@ -151,11 +156,16 @@ export function initViewDupes(ctx = {}) {
     // --- Rendering --------------------------------------------------------------
     const renderToolbar = () => {
         const doomed = doomedCount();
+        const statsOn = visitStats.enabled();
         let html = '<div class="dupes-toolbar">';
         html += `<select class="dupes-strategy" aria-label="${_m('dupesStrategyOldest')}">`;
         for (let i = 0; i < STRATEGIES.length; i++) {
             const [value, key] = STRATEGIES[i];
-            html += `<option value="${value}"${value === strategy() ? ' selected' : ''}>${_m(key)}</option>`;
+            // §5.4 联动: no visit data exists while statsEnabled is off —
+            // grey out keep-most-visited instead of silently picking oldest.
+            const greyed = value === 'keep-most-visited' && !statsOn;
+            html += `<option value="${value}"${value === strategy() ? ' selected' : ''}` +
+                `${greyed ? ' disabled' : ''}>${_m(key)}</option>`;
         }
         html += '</select>';
         html += `<select class="dupes-scope" aria-label="${_m('dupesScopeAll')}">` +

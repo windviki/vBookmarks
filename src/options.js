@@ -69,7 +69,10 @@ const $ = id => document.getElementById(id);
             { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
             { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
             { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
-            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
+            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
+            // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
+            // off means zero writes (collection stops immediately)
+            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false }
         ];
         for (const setting of viewSettings) {
             const element = $(setting.id);
@@ -97,6 +100,21 @@ const $ = id => document.getElementById(id);
         const deadProxy = $('dead-proxy-template');
         deadProxy.value = await getSetting('deadProxyTemplate', '');
         deadProxy.addEventListener('change', () => setSetting('deadProxyTemplate', deadProxy.value.trim()));
+
+        // v4 task-2 slice D (§5.4): the options-page twin of the stats
+        // view's clear button — local behavior data needs a one-click
+        // erasure exit paired with the statsEnabled switch. The popup's
+        // ConfirmDialog doesn't exist here, so a native confirm() gates.
+        $('stats-clear').addEventListener('click', async () => {
+            let count = 0;
+            try {
+                count = Object.keys(JSON.parse(await getSetting('visitStats', '{}') || '{}')).length;
+            } catch (e) { /* a corrupted blob reads as empty */ }
+            if (!count)
+                return;
+            if (confirm(_m('statsClearConfirm', `${count}`)))
+                await setSetting('visitStats', '{}');
+        });
 
         // Initialize sync settings. One write per change is enough: the
         // service worker (src/sync-engine.js) observes chrome.storage.sync
@@ -178,6 +196,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
+        document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');
+        document.getElementById('stats-clear').innerText = __m('statsClearData');
         document.getElementById('option-dead-proxy').innerText = __m('optionDeadProxy');
         document.getElementById('dead-proxy-hint').innerText = __m('deadProxyHint');
         document.getElementById('option-theme').innerText = __m('optionTheme');

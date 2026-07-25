@@ -2199,3 +2199,71 @@ body.panel-mode .vbm-row .row-sub {
     text-align: center;
     pointer-events: none;
 }
+
+/* === v4 task-2 slice D: stats view (docs/v4task-2-list.md §3.4) === */
+
+/* Toolbar (row 0): sort segmented switch + the danger-colored clear button
+   pinned to the far end. */
+.stats-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+    color: var(--vbm-muted);
+}
+
+.stats-toolbar .seg {
+    display: inline-flex;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    overflow: hidden;
+}
+
+.stats-toolbar .seg-btn {
+    border: 0;
+    background: var(--vbm-bg);
+    color: var(--vbm-muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.stats-toolbar .seg-btn.active {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
+.stats-toolbar .stats-clear {
+    margin-inline-start: auto;
+    border: 0;
+    background: none;
+    color: var(--vbm-danger);
+    font-size: 11px;
+    padding: 2px 4px;
+    cursor: pointer;
+    border-radius: var(--vbm-radius);
+}
+
+.stats-toolbar .stats-clear:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.stats-toolbar .stats-clear:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+/* §3.4: the count pill reuses the shared pill look with the selected-token
+   colors and tabular numbers; the time badge (recent sort's primary key)
+   stays plain muted text — only the count is a true pill. */
+.vbm-row .row-badge.count {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
+.vbm-row .row-badge.time {
+    color: var(--vbm-muted);
+    padding: 0 2px;
+}

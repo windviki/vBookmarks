@@ -200,6 +200,7 @@ export function initPalette(ctx = {}) {
             }
         },
         { slash: 'recent', name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
+        { slash: 'stats', name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
         { slash: 'dead', name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
         { slash: 'dupes', name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
         { slash: 'options', name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }

@@ -854,5 +854,55 @@
   },
   "viewDupes": {
     "message": "重复书签"
+  },
+  "viewStats": {
+    "message": "统计",
+    "description": "访问统计视图的标签页标题。"
+  },
+  "paletteCmdGoStats": {
+    "message": "切换到统计视图",
+    "description": "命令面板条目：切换到访问统计视图（slash 别名 /stats）。"
+  },
+  "optionStatsEnabled": {
+    "message": "启用访问统计",
+    "description": "选项页复选框（视图分组）：访问统计采集的总开关。"
+  },
+  "statsSortByCount": {
+    "message": "按次数",
+    "description": "统计视图排序段：按访问次数降序。"
+  },
+  "statsSortByRecent": {
+    "message": "按最近",
+    "description": "统计视图排序段：按最近访问时间降序。"
+  },
+  "statsEmpty": {
+    "message": "统计会随着你打开书签而积累",
+    "description": "统计视图尚无数据时的空态文案。"
+  },
+  "statsDisabledHint": {
+    "message": "访问统计已关闭——可在选项页\"视图\"分组开启",
+    "description": "statsEnabled 关闭时统计视图显示的引导文案。"
+  },
+  "statsVisitCount": {
+    "message": "访问 $count$ 次",
+    "description": "统计行次数 pill 的 aria 标签；$count$ 为访问次数。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "statsClearData": {
+    "message": "清空统计",
+    "description": "清空全部访问统计数据的按钮（统计视图工具行与选项页）。"
+  },
+  "statsClearConfirm": {
+    "message": "确定清空 $count$ 个书签的访问统计？此操作不可撤销。",
+    "description": "清空访问统计前的确认对话框文案；$count$ 为书签条目数。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

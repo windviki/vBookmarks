@@ -861,5 +861,35 @@
   },
   "viewDupes": {
     "message": "[TODO:viewDupes]"
+  },
+  "viewStats": {
+    "message": "[TODO:viewStats]"
+  },
+  "paletteCmdGoStats": {
+    "message": "[TODO:paletteCmdGoStats]"
+  },
+  "optionStatsEnabled": {
+    "message": "[TODO:optionStatsEnabled]"
+  },
+  "statsSortByCount": {
+    "message": "[TODO:statsSortByCount]"
+  },
+  "statsSortByRecent": {
+    "message": "[TODO:statsSortByRecent]"
+  },
+  "statsEmpty": {
+    "message": "[TODO:statsEmpty]"
+  },
+  "statsDisabledHint": {
+    "message": "[TODO:statsDisabledHint]"
+  },
+  "statsVisitCount": {
+    "message": "[TODO:statsVisitCount]"
+  },
+  "statsClearData": {
+    "message": "[TODO:statsClearData]"
+  },
+  "statsClearConfirm": {
+    "message": "[TODO:statsClearConfirm]"
   }
 }
