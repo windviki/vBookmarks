@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Кількість нещодавно доданих закладок для відображення"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Записувати історію пошуку"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Вимкнення цього також очищає наявну історію."
   },
   "optionShowSyncStatus": {
     "message": "Показувати індикатори стану синхронізації"
@@ -33,28 +33,28 @@
     "message": "Згортати розділ нещодавно доданих за замовчуванням"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Види"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Показувати вкладки видів під рядком пошуку"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Показувати шлях до батьківської папки в рядках списку"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Немає нещодавніх закладок. Натисніть Ctrl+D, щоб додати поточну сторінку до закладок."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Показати в дереві"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Очистити все"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Видалити цей пошук"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ результат(ів)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Нещодавні пошуки"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ дн. тому",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ год тому",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "щойно"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ хв тому",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "вчора"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Нещодавні"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Дерево"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Пошук"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Вид $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Показувати підтвердження при відкритті багатьох закладок з папки."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Підтверджувати перед видаленням непустих папок"
   },
   "addSeparator": {
     "message": "Додати розділювач"
@@ -464,7 +464,7 @@
     "message": "Немає відповідних закладок"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Введіть текст у полі вище, щоб знайти закладки"
   },
   "sessionFolderName": {
     "message": "Сесія $date$",
@@ -522,7 +522,7 @@
     "message": "Сортувати вміст папки"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Ця папка містить $count$ елемент(ів). Ви можете скасувати видалення.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Видалити"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ви впевнені, що хочете видалити папку $folderName$ та $bookmarkCount$ закладку(и) в ній?",
@@ -698,16 +698,16 @@
     "message": "Додати сторінку до закладок через vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Усі"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Лише заблоковані"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Лише мертві"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Останнє сканування: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Позначити як мертву"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Позначити всі"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Позначено мертві рядки"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-адреси закладок надсилаються цій сторонній службі. Залиште порожнім, щоб перевіряти лише безпосередньо."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Почати сканування $n$ закладок",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "заблоковано"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Видалити позначку 'мертва'"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Очистити всі позначки"
   },
   "donationGo": {
     "message": "Пожертвувати"
@@ -753,7 +753,7 @@
     "message": "Не показувати знову"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Застосувати всі ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Очистити решту"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ігнорувати відмінності http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Залишити цю"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Зробити зберігачем"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ груп · $count$ звільнити",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Видалити цю копію"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Всі закладки"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Тільки панель закладок"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Зберегти той, що на панелі закладок"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Залишити найвідвідуваніший"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Залишити найновіший"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Залишити найстаріший"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Залишити найменш глибокий"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Залишити найкоротшу назву"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Шаблон проксі для мертвих посилань"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Паралельність сканування мертвих посилань (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Час очікування сканування мертвих посилань (сек., 2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Перейти до мертвих посилань"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Перейти до дублікатів"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Перейти до недавніх"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Перейти до пошуку"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Перейти до дерева"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Відкрити налаштування"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Шукати '$query$' в режимі пошуку",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Видалити"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Позначити як мертве"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Показати в дереві"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Зняти позначку мертвого"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Мертві посилання"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Дублікати"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Статистика"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Перейти до статистики"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Увімкнути статистику відвідувань"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "За кількістю"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "За недавністю"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Статистика накопичується під час відкривання закладок"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Статистику відвідувань вимкнено — увімкніть у Налаштуваннях → Види"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Відвідано $count$ разів",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Очистити статистику"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Очистити статистику відвідувань для $count$ закладок? Цю дію не можна скасувати.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

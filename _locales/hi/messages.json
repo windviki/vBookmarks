@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "हाल ही में जोड़े गए बुकमार्क की संख्या दिखाएं"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "खोज इतिहास रिकॉर्ड करें"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "इसे बंद करने से मौजूदा इतिहास भी साफ़ हो जाता है।"
   },
   "optionShowSyncStatus": {
     "message": "सिंक स्थिति संकेतक दिखाएं"
@@ -33,28 +33,28 @@
     "message": "डिफ़ॉल्ट रूप से हाल ही में जोड़े गए अनुभाग को संक्षिप्त करें"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "दृश्य"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "खोज बॉक्स के नीचे दृश्य टैब दिखाएं"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "सूची पंक्तियों पर पैरेंट फ़ोल्डर पथ दिखाएं"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "कोई हाल के बुकमार्क नहीं। वर्तमान पृष्ठ को बुकमार्क करने के लिए Ctrl+D दबाएं।"
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "पेड़ में दिखाएं"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "सभी साफ़ करें"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "यह खोज हटाएं"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ परिणाम",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "हाल की खोजें"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ दिन पहले",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ घंटे पहले",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "अभी"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ मिनट पहले",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "कल"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "हाल के"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "पेड़"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "खोज"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ दृश्य",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "गैर-खाली फ़ोल्डर हटाने से पहले पुष्टि करें"
   },
   "addSeparator": {
     "message": "सेपरेटर जोड़ें"
@@ -464,7 +464,7 @@
     "message": "कोई मिलान बुकमार्क नहीं"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "अपने बुकमार्क खोजने के लिए ऊपर दिए गए बॉक्स में टाइप करें"
   },
   "sessionFolderName": {
     "message": "सत्र $date$",
@@ -522,7 +522,7 @@
     "message": "फ़ोल्डर सामग्री क्रमबद्ध करें"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "इस फ़ोल्डर में $count$ आइटम हैं। आप हटाने को पूर्ववत कर सकते हैं।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "हटाएं"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "क्या आप वाकई $folderName$ फोल्डर और उसमें $bookmarkCount$ बुकमार्क हटाना चाहते हैं?",
@@ -698,16 +698,16 @@
     "message": "vBookmarks के साथ इस पृष्ठ को बुकमार्क करें"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "सभी"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "केवल अवरुद्ध"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "केवल मृत"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "अंतिम स्कैन: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "मृत चिह्नित करें"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "सभी चिह्नित करें"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "मृत पंक्तियाँ चिह्नित"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "बुकमार्क URL इस तृतीय-पक्ष सेवा को भेजे जाते हैं। केवल सीधे जांच करने के लिए खाली छोड़ें।"
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$ बुकमार्क स्कैन करना शुरू करें",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "अवरुद्ध"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "मृत चिह्न हटाएं"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "सभी चिह्न साफ़ करें"
   },
   "donationGo": {
     "message": "दान करें"
@@ -753,7 +753,7 @@
     "message": "फिर न दिखाएं"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "सभी लागू करें ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "बाकी साफ़ करें"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https अंतरों को अनदेखा करें"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "इसे रखें"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "रखवाला सेट करें"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ समूह · $count$ हटाए जाने वाले",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "यह प्रति हटाएं"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "सभी बुकमार्क"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "केवल बुकमार्क बार"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "बुकमार्क बार वाला रखें"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "सबसे अधिक देखा गया रखें"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "नवीनतम रखें"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "सबसे पुराना रखें"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "सबसे उथला रखें"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "सबसे छोटा शीर्षक रखें"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "मृत-लिंक प्रॉक्सी टेम्पलेट"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "मृत-लिंक स्कैन समवर्तीता (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "मृत-लिंक स्कैन टाइमआउट सेकंड में (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "मृत लिंक दृश्य पर जाएँ"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "डुप्लिकेट दृश्य पर जाएँ"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "हालिया दृश्य पर जाएँ"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "खोज दृश्य पर जाएँ"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "ट्री दृश्य पर जाएँ"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "विकल्प पृष्ठ खोलें"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "खोज दृश्य में '$query$' खोजें",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "हटाएँ"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "मृत चिह्नित करें"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "ट्री में दिखाएँ"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "मृत चिह्न हटाएँ"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "मृत लिंक"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "डुप्लिकेट"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "आँकड़े"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "आँकड़े दृश्य पर जाएँ"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "विज़िट आँकड़े सक्षम करें"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "गणना द्वारा"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "हालिया द्वारा"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "जब आप बुकमार्क खोलते हैं तो आँकड़े बनते हैं"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "विज़िट आँकड़े बंद हैं — उन्हें विकल्प → दृश्य में सक्षम करें"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ बार देखा गया",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "आँकड़े साफ़ करें"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "$count$ बुकमार्क के विज़िट आँकड़े साफ़ करें? इसे पूर्ववत नहीं किया जा सकता।",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

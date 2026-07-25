@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Počet nedávno pridaných záložiek na zobrazenie"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Zaznamenávať históriu vyhľadávania"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Vypnutím sa tiež vymaže existujúca história."
   },
   "optionShowSyncStatus": {
     "message": "Zobraziť indikátory stavu synchronizácie"
@@ -33,28 +33,28 @@
     "message": "Štandardne zbaliť sekciu nedávno pridaných"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Zobrazenia"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Zobraziť karty zobrazenia pod vyhľadávacím poľom"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Zobraziť cestu nadradeného priečinka v riadkoch zoznamu"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Žiadne nedávne záložky. Stlačte Ctrl+D na pridanie aktuálnej stránky do záložiek."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Zobraziť v strome"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Vymazať všetky"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Odstrániť toto vyhľadávanie"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ výsledkov",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Nedávne vyhľadávania"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "pred $n$ dňami",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "pred $n$ hod.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "práve teraz"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "pred $n$ min.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "včera"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nedávne"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Strom"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Vyhľadávanie"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Zobrazenie $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Zobraziť potvrdenie pri otváraní veľa záložiek z priečinka."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potvrdiť pred odstránením neprázdnych priečinkov"
   },
   "addSeparator": {
     "message": "Pridať oddeľovač"
@@ -464,7 +464,7 @@
     "message": "Žiadne zodpovedajúce záložky"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Napíšte do poľa vyššie na vyhľadanie záložiek"
   },
   "sessionFolderName": {
     "message": "Relácia $date$",
@@ -522,7 +522,7 @@
     "message": "Zoradiť obsah priečinka"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Odstrániť"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ste si istí, že chcete odstrániť priečinok $folderName$ a $bookmarkCount$ záložku(y) v ňom?",
@@ -698,16 +698,16 @@
     "message": "Pridať túto stránku do záložiek pomocou vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Všetky"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Iba blokované"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Iba mŕtve"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Posledná kontrola: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Označiť ako mŕtve"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Označiť všetky"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Označené mŕtve riadky"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Adresy URL záložiek sú odosielané tejto tretej strane. Ponechajte prázdne pre priame testovanie."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Spustiť kontrolu $n$ záložiek",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "blokované"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Odstrániť označenie mŕtveho"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Vymazať všetky označenia"
   },
   "donationGo": {
     "message": "Prispieť"
@@ -753,7 +753,7 @@
     "message": "Nezobrazovať znova"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Použiť všetky ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Vyčistiť zvyšok"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorovať rozdiely http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Ponechať tento"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Určiť ako uchovávač"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ skupín · $count$ na uvoľnenie",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Odstrániť túto kópiu"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Všetky záložky"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Iba lišta záložiek"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Ponechať ten na lište záložiek"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Ponechať najnavštevovanejšie"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Ponechať najnovšie"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Ponechať najstaršie"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Ponechať najplytšie"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Ponechať najkratší názov"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Šablóna proxy pre mŕtve odkazy"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Súbežnosť skenovania mŕtvych odkazov (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Časový limit skenovania mŕtvych odkazov v sekundách (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Prejsť na zobrazenie mŕtvych odkazov"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Prejsť na zobrazenie duplikátov"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Prejsť na zobrazenie nedávnych"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Prejsť na zobrazenie vyhľadávania"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Prejsť na zobrazenie stromu"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Otvoriť stránku možností"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Hľadať '$query$' v zobrazení vyhľadávania",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Odstrániť"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Označiť ako mŕtvy"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Zobraziť v strome"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Odstrániť označenie mŕtveho"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Mŕtve odkazy"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikáty"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Štatistiky"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Prejsť na zobrazenie štatistík"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Povoliť štatistiky návštev"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Podľa počtu"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Podľa nedávnych"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Štatistiky sa postupne vytvárajú pri otváraní záložiek"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Štatistiky návštev sú vypnuté — povoľte ich v Možnosti → Zobrazenia"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Navštívené $count$ krát",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Vymazať štatistiky"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Vymazať štatistiky návštev pre $count$ záložiek? Tento krok sa nedá vrátiť.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

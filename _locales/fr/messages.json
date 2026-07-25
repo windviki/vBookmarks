@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Nombre de marque-pages récents à afficher"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Enregistrer l'historique des recherches"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Désactiver cette option efface également l'historique existant."
   },
   "optionShowSyncStatus": {
     "message": "Afficher les indicateurs de synchronisation"
@@ -33,28 +33,28 @@
     "message": "Réduire la section des ajouts récents par défaut"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vues"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Afficher les onglets de vue sous la boîte de recherche"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Afficher le chemin du dossier parent dans les lignes de liste"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Aucun marque-page récent. Appuyez sur Ctrl+D pour ajouter la page actuelle."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Afficher dans l'arborescence"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Tout effacer"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Supprimer cette recherche"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ résultat(s)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Recherches récentes"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "il y a $n$ jours",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "il y a $n$ h",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "à l'instant"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "il y a $n$ min",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "hier"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Récents"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Arborescence"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Recherche"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Vue $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Confirmer avant de supprimer les dossiers non vides"
   },
   "addSeparator": {
     "message": "Ajouter un séparateur"
@@ -464,7 +464,7 @@
     "message": "Aucun signet correspondant"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Saisissez dans la case ci-dessus pour rechercher vos marque-pages"
   },
   "sessionFolderName": {
     "message": "Session $date$",
@@ -522,7 +522,7 @@
     "message": "Trier le contenu du dossier"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Ce dossier contient $count$ élément(s). Vous pouvez annuler la suppression.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Supprimer"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Etes-vous sûr que vous voulez supprimer $folderName$ et $bookmarkCount$ favoris ?",
@@ -698,16 +698,16 @@
     "message": "Ajouter cette page aux signets avec vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tous"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Bloqués uniquement"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Morts uniquement"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Dernière analyse : $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Marquer comme mort"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Tout marquer"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Lignes mortes marquées"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Les URL des marque-pages sont envoyées à ce service tiers. Laissez vide pour sonder uniquement directement."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Commencer l'analyse de $n$ marque-pages",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "bloqué"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Supprimer la marque de mort"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Effacer toutes les marques"
   },
   "donationGo": {
     "message": "Faire un don"
@@ -753,7 +753,7 @@
     "message": "Ne plus afficher"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Tout appliquer ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Nettoyer le reste"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorer les différences http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Garder celui-ci"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Garder celui-ci"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ groupes · $count$ à libérer",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Supprimer cette copie"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tous les signets"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Barre de favoris uniquement"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Garder celui de la barre de favoris"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Garder le plus visité"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Garder le plus récent"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Garder le plus ancien"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Garder le moins profond"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Garder le titre le plus court"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Modèle de proxy pour liens morts"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Concurrence d'analyse des liens morts (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Délai d'analyse des liens morts en secondes (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Aller à la vue Liens morts"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Aller à la vue Doublons"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Aller à la vue Récents"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Aller à la vue Recherche"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Aller à la vue Arborescence"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Ouvrir la page des options"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Rechercher '$query$' dans la vue Recherche",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Supprimer"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Marquer comme mort"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Révéler dans l'arborescence"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Supprimer la marque de mort"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Liens morts"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Doublons"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistiques"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Aller à la vue Statistiques"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Activer les statistiques de visites"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Par nombre"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Par récent"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Les statistiques se construisent à mesure que vous ouvrez des signets"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Les statistiques de visites sont désactivées — activez-les dans Options → Vues"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Visité $count$ fois",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Effacer les statistiques"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Effacer les statistiques de visites pour $count$ signets ? Cette action est irréversible.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

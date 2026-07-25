@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Neseniai pridėtų žymių rodymo skaičius"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Įrašyti paieškos istoriją"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Išjungus tai taip pat išvaloma esama istorija."
   },
   "optionShowSyncStatus": {
     "message": "Rodyti sinchronizavimo būklės indikatorius"
@@ -33,28 +33,28 @@
     "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Rodiniai"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Rodyti rodinių skirtukus po paieškos lauku"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Rodyti medyje"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Išvalyti viską"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Pašalinti šią paiešką"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ rezultatas(-ai)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Neseniai atliktos paieškos"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "Prieš $n$ dienas",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "Prieš $n$ val.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "ką tik"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "Prieš $n$ min.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "vakar"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Neseniai"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Medis"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Paieška"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ rodinys",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Patvirtinti prieš ištrinant netuščius aplankus"
   },
   "addSeparator": {
     "message": "Pridėti skirtuką"
@@ -464,7 +464,7 @@
     "message": "Atitinkančių žymių nerasta"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
   },
   "sessionFolderName": {
     "message": "Sesija $date$",
@@ -522,7 +522,7 @@
     "message": "Rūšiuoti aplanko turinį"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Ištrinti"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
@@ -698,16 +698,16 @@
     "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Visi"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Tik užblokuoti"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Tik negyvi"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Paskutinis nuskaitymas: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Pažymėti negyvu"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Pažymėti visus"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Negyvos eilutės pažymėtos"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Žymių URL siunčiami šiai trečiosios šalies paslaugai. Palikite tuščią, kad tikrintų tiesiogiai."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Pradėti $n$ žymių nuskaitymą",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "užblokuota"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Pašalinti negyvos žymą"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Išvalyti visus žymėjimus"
   },
   "donationGo": {
     "message": "Paaukoti"
@@ -753,7 +753,7 @@
     "message": "Nerodyti daugiau"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Taikyti visus ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Išvalyti likusius"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Nepaisyti http/https skirtumų"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Palikti šį"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Nustatyti kaip išlaikomą"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ grupės · $count$ bus atlaisvinta",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Ištrinti šią kopiją"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Visos žymės"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Tik žymių juosta"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Palikti esančią žymių juostoje"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Palikti dažniausiai lankomą"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Palikti naujausią"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Palikti seniausią"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Palikti paviršutiniškiausią"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Palikti trumpiausią pavadinimą"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Neveikiančių nuorodų proxy šablonas"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Neveikiančių nuorodų nuskaitymo gretinimas (1–16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Eiti į neveikiančias nuorodas"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Eiti į dublikatus"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Eiti į naujausius"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Eiti į paiešką"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Eiti į medį"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Atidaryti nustatymus"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Ieškoti '$query$' paieškos rodinyje",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Ištrinti"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Pažymėti kaip neveikiančią"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Rodyti medyje"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Pašalinti neveikiančios žymę"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Neveikiančios nuorodos"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dublikatai"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Eiti į statistiką"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Įjungti lankomumo statistiką"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Pagal skaičių"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Pagal naujumą"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistika kaupiasi atidarant žymes"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Lankomumo statistika išjungta – įjunkite Nustatymai → Rodiniai"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Lankyta $count$ kartų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Išvalyti statistiką"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Išvalyti $count$ žymių lankomumo statistiką? Šis veiksmas negrįžtamas.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

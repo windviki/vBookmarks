@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Jumlah bookmark yang baru ditambahkan untuk ditampilkan"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Rekam riwayat pencarian"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Menonaktifkan ini juga akan menghapus riwayat yang ada."
   },
   "optionShowSyncStatus": {
     "message": "Tampilkan indikator status sinkronisasi"
@@ -33,28 +33,28 @@
     "message": "Ciutkan bagian yang baru ditambahkan secara default"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Tampilan"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Tampilkan tab tampilan di bawah kotak pencarian"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Tampilkan jalur folder induk pada baris daftar"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Tidak ada bookmark terbaru. Tekan Ctrl+D untuk menandai halaman ini."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Tampilkan di Pohon"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Hapus semua"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Hapus pencarian ini"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ hasil",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Pencarian terbaru"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ hari yang lalu",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ jam yang lalu",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "baru saja"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ menit yang lalu",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "kemarin"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Terbaru"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Pohon"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Cari"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ tampilan",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Konfirmasi sebelum menghapus folder yang tidak kosong"
   },
   "addSeparator": {
     "message": "Tambah Pemisah"
@@ -464,7 +464,7 @@
     "message": "Tidak ada bookmark yang cocok"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Ketik di kotak di atas untuk mencari bookmark Anda"
   },
   "sessionFolderName": {
     "message": "Sesi $date$",
@@ -522,7 +522,7 @@
     "message": "Urutkan Isi Folder"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Folder ini berisi $count$ item. Anda dapat membatalkan penghapusan.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Hapus"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Apakah Anda yakin ingin menghapus folder $folderName$ dan $bookmarkCount$ markah di dalamnya?",
@@ -698,16 +698,16 @@
     "message": "Bookmark halaman ini dengan vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Semua"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Hanya yang diblokir"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Hanya yang mati"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Pemindaian terakhir: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Tandai mati"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Tandai semua"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Baris yang ditandai mati"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL bookmark dikirim ke layanan pihak ketiga ini. Biarkan kosong untuk hanya memeriksa langsung."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Mulai memindai $n$ bookmark",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "diblokir"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Hapus tanda mati"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Hapus semua tanda"
   },
   "donationGo": {
     "message": "Donasi"
@@ -753,7 +753,7 @@
     "message": "Jangan tampilkan lagi"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Terapkan semua ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Bersihkan sisanya"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Abaikan perbedaan http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Simpan yang ini"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Tetapkan sebagai penyimpan"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ grup · $count$ akan dibebaskan",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Hapus salinan ini"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Semua bookmark"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Hanya bilah bookmark"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Simpan yang ada di bilah bookmark"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Simpan yang paling sering dikunjungi"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Simpan terbaru"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Simpan terlama"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Simpan yang paling dangkal"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Simpan judul terpendek"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Template proksi tautan mati"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Konkurensi pemindaian tautan mati (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Batas waktu pemindaian tautan mati dalam detik (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Buka tampilan Tautan Mati"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Buka tampilan Duplikat"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Buka tampilan Terbaru"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Buka tampilan Pencarian"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Buka tampilan Pohon"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Buka halaman opsi"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Cari '$query$' di tampilan Pencarian",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Hapus"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Tandai sebagai mati"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Tampilkan di pohon"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Hapus tanda mati"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Tautan mati"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikat"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistik"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Buka tampilan Statistik"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Aktifkan statistik kunjungan"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Berdasarkan jumlah"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Berdasarkan terbaru"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistik terbangun saat Anda membuka bookmark"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Statistik kunjungan mati — aktifkan di Opsi → Tampilan"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Dikunjungi $count$ kali",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Hapus statistik"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Hapus statistik kunjungan untuk $count$ bookmark? Tindakan ini tidak bisa dibatalkan.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

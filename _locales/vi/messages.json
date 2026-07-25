@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Số lượng bookmark mới thêm vào để hiển thị"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Ghi lại lịch sử tìm kiếm"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Tắt tùy chọn này cũng sẽ xóa lịch sử hiện tại."
   },
   "optionShowSyncStatus": {
     "message": "Hiển thị chỉ báo trạng thái đồng bộ"
@@ -33,28 +33,28 @@
     "message": "Thu gọn phần thêm gần đây theo mặc định"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Chế độ xem"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Hiển thị các tab chế độ xem bên dưới ô tìm kiếm"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Hiển thị đường dẫn thư mục cha trên các hàng danh sách"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Không có bookmark gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Hiện trong cây"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Xóa tất cả"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Xóa tìm kiếm này"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ kết quả",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Tìm kiếm gần đây"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ ngày trước",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ giờ trước",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "vừa xong"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ phút trước",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "hôm qua"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Gần đây"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Cây"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Tìm kiếm"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Chế độ xem $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Xác nhận trước khi xóa thư mục không rỗng"
   },
   "addSeparator": {
     "message": "Thêm Dòng Kẻ"
@@ -464,7 +464,7 @@
     "message": "Không có dấu trang phù hợp"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Nhập vào ô bên trên để tìm kiếm bookmark của bạn"
   },
   "sessionFolderName": {
     "message": "Phiên $date$",
@@ -522,7 +522,7 @@
     "message": "Sắp xếp nội dung thư mục"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Thư mục này chứa $count$ (mục). Bạn có thể hoàn tác việc xóa.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Xóa"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Bạn có chắc chắn muốn xóa thư mục $folderName$ và $bookmarkCount$ dấu trang trong đó?",
@@ -698,16 +698,16 @@
     "message": "Đánh dấu trang này bằng vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tất cả"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Chỉ bị chặn"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Chỉ hỏng"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Lần quét cuối: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Đánh dấu hỏng"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Đánh dấu tất cả"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Các hàng hỏng đã được đánh dấu"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL bookmark được gửi đến dịch vụ bên thứ ba này. Để trống để chỉ thăm dò trực tiếp."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Bắt đầu quét $n$ bookmark",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "bị chặn"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Xóa dấu hỏng"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Xóa tất cả dấu"
   },
   "donationGo": {
     "message": "Quyên góp"
@@ -753,7 +753,7 @@
     "message": "Không hiển thị lại"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Áp dụng tất cả ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Xóa phần còn lại"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Bỏ qua khác biệt http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Giữ cái này"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Đặt làm giữ"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ nhóm · $count$ sẽ được giải phóng",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Xóa bản sao này"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tất cả dấu trang"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Chỉ thanh dấu trang"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Giữ cái trong thanh dấu trang"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Giữ cái truy cập nhiều nhất"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Giữ mới nhất"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Giữ cũ nhất"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Giữ cái nông nhất"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Giữ tiêu đề ngắn nhất"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Mẫu proxy liên kết chết"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Độ đồng thời quét liên kết chết (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Thời gian chờ quét liên kết chết (giây) (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Đi tới chế độ xem Liên kết chết"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Đi tới chế độ xem Trùng lặp"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Đi tới chế độ xem Gần đây"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Đi tới chế độ xem Tìm kiếm"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Đi tới chế độ xem Cây"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Mở trang tùy chọn"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Tìm kiếm '$query$' trong chế độ xem Tìm kiếm",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Xóa"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Đánh dấu chết"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Hiển thị trong cây"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Xóa dấu chết"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Liên kết chết"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Trùng lặp"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Thống kê"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Đi tới chế độ xem Thống kê"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Bật thống kê lượt truy cập"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Theo số lượng"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Theo gần đây"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Thống kê được tích lũy khi bạn mở dấu trang"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Thống kê lượt truy cập đã tắt — bật trong Tùy chọn → Chế độ xem"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Đã truy cập $count$ lần",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Xóa thống kê"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Xóa thống kê lượt truy cập cho $count$ dấu trang? Hành động này không thể hoàn tác.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

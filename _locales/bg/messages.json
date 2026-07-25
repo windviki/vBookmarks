@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Брой наскоро добавени отметки за показване"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Записване на история на търсенията"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Изключването на това също изчиства съществуващата история."
   },
   "optionShowSyncStatus": {
     "message": "Показване на индикатори за статус на синхронизация"
@@ -33,28 +33,28 @@
     "message": "Свиване на секцията с наскоро добавени по подразбиране"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Изгледи"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Покажи разделите за изглед под полето за търсене"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Покажи пътя на родителската папка в редовете на списъка"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Няма скорошни отметки. Натиснете Ctrl+D, за да отметнете текущата страница."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Покажи в дървото"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Изчисти всички"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Премахни това търсене"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ резултат(а)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Скорошни търсения"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "преди $n$ дни",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "преди $n$ ч",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "току-що"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "преди $n$ мин",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "вчера"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Скорошни"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Дърво"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Търсене"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Изглед $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Показване на потвърждение при отваряне на много отметки от папка."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Потвърждаване преди изтриване на непразни папки"
   },
   "addSeparator": {
     "message": "Добавяне на разделител"
@@ -464,7 +464,7 @@
     "message": "Няма съвпадащи отметки"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Въведете в полето по-горе, за да търсите отметките си"
   },
   "sessionFolderName": {
     "message": "Сесия $date$",
@@ -522,7 +522,7 @@
     "message": "Сортиране на съдържанието на папка"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Тази папка съдържа $count$ елемент(а). Можете да отмените изтриването.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Изтриване"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Сигурни ли сте, че искате да изтриете папка $folderName$ и $bookmarkCount$ отметка(и) в нея?",
@@ -698,16 +698,16 @@
     "message": "Отметка на тази страница с vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Всички"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Само блокирани"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Само мъртви"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Последно сканиране: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Отбележи като мъртва"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Отбележи всички"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Отбелязани мъртви редове"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL адресите на отметките се изпращат до тази трета страна. Оставете празно, за да проверявате директно само."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Стартиране на сканиране на $n$ отметки",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "блокиран"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Премахни маркировката за мъртва"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Изчисти всички маркировки"
   },
   "donationGo": {
     "message": "Дарете"
@@ -753,7 +753,7 @@
     "message": "Не показвай отново"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Приложи всички ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Изчисти останалите"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Игнорирай разликите http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Запази този"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Задай като пазител"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ групи · $count$ ще бъдат освободени",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Изтрий това копие"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Всички отметки"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Само лентата с отметки"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Запази този в лентата с отметки"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Запази най-посещавания"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Запази най-новия"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Запази най-стария"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Запази най-плиткия"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Запази най-краткото заглавие"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Шаблон на прокси за мъртви връзки"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Едновременност на сканиране за мъртви връзки (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Таймаут на сканиране за мъртви връзки в секунди (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Отиди на изглед Мъртви връзки"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Отиди на изглед Дубликати"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Отиди на изглед Последни"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Отиди на изглед Търсене"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Отиди на изглед Дърво"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Отвори страница с опции"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Търси '$query$' в изглед Търсене",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Изтрий"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Отбележи като мъртва"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Покажи в дървото"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Премахни маркировка за мъртва"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Мъртви връзки"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Дубликати"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Статистики"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Отиди на изглед Статистики"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Активирай статистика на посещенията"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "По брой"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "По скорошни"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Статистиката се натрупва, докато отваряте отметки"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Статистиката на посещенията е изключена — активирайте я в Опции → Изгледи"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Посетено $count$ пъти",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Изчисти статистиката"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Изчистване на статистика за посещения за $count$ отметки? Това действие не може да бъде отменено.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

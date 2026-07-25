@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Gösterilecek yeni eklenen yer imi sayısı"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Arama geçmişini kaydet"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Bunu kapatmak mevcut geçmişi de temizler."
   },
   "optionShowSyncStatus": {
     "message": "Senkronizasyon durumu göstergelerini göster"
@@ -33,28 +33,28 @@
     "message": "Son eklenen bölümünü varsayılan olarak daralt"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Görünümler"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Arama kutusunun altında görünüm sekmelerini göster"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Liste satırlarında üst klasör yolunu göster"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Son eklenen yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Ağaçta Göster"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Tümünü Temizle"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Bu Aramayı Kaldır"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ sonuç",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Son Aramalar"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ gün önce",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ saat önce",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "az önce"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ dakika önce",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "dün"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Son"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Ağaç"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Arama"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ görünümü",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Bir klasörden birçok yer imi açarken onay göster."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Boş olmayan klasörleri silmeden önce onayla"
   },
   "addSeparator": {
     "message": "Ayırıcı ekle"
@@ -464,7 +464,7 @@
     "message": "Eşleşen yer imi yok"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Yer imlerinizi aramak için yukarıdaki kutuya yazın"
   },
   "sessionFolderName": {
     "message": "Oturum $date$",
@@ -522,7 +522,7 @@
     "message": "Klasör İçeriğini Sırala"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Bu klasörde $count$ öğe bulunuyor. Silme işlemini geri alabilirsiniz.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Sil"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ klasörünü ve içindeki $bookmarkCount$ yer imini silmek istediğinizden emin misiniz?",
@@ -698,16 +698,16 @@
     "message": "Bu sayfayı vBookmarks ile yer imlerine ekle"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Tümü"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Yalnızca Engellenenler"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Yalnızca Ölü"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Son tarama: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Ölü Olarak İşaretle"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Tümünü İşaretle"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Ölü satırlar işaretlendi"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Yer imi URL'leri bu üçüncü taraf hizmetine gönderilir. Yalnızca doğrudan yoklama yapmak için boş bırakın."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$ yer imini taramaya başla",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "engellendi"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Ölü işaretini kaldır"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Tüm işaretleri temizle"
   },
   "donationGo": {
     "message": "Bağış Yap"
@@ -753,7 +753,7 @@
     "message": "Tekrar Gösterme"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Tümünü uygula ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Kalanları temizle"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https farklarını yoksay"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Bunu sakla"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Koruyucu yap"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ grup · $count$ serbest bırakılacak",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Bu kopyayı sil"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Tüm yer imleri"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Yalnızca yer imi çubuğu"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Yer imi çubuğundakini sakla"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "En çok ziyaret edileni sakla"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "En yenisini sakla"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "En eskisini sakla"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "En sığ olanı sakla"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "En kısa başlığı sakla"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Ölü bağlantı proxy şablonu"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Ölü bağlantı tarama eşzamanlılığı (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Ölü bağlantı tarama zaman aşımı (saniye) (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Ölü bağlantılar görünümüne git"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Yinelenenler görünümüne git"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Son görünümüne git"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Arama görünümüne git"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Ağaç görünümüne git"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Seçenekler sayfasını aç"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Arama görünümünde '$query$' ara",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Sil"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Ölü olarak işaretle"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Ağaçta göster"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Ölü işaretini kaldır"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Ölü bağlantılar"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Yinelenenler"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "İstatistikler"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "İstatistikler görünümüne git"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Ziyaret istatistiklerini etkinleştir"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Sayıya göre"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Güncelliğe göre"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "İstatistikler, yer imlerini açtıkça oluşur"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Ziyaret istatistikleri kapalı — Seçenekler → Görünümler'den etkinleştirin"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ kez ziyaret edildi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "İstatistikleri temizle"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "$count$ yer imi için ziyaret istatistikleri temizlensin mi? Bu işlem geri alınamaz.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

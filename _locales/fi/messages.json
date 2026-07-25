@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Äskettäin lisättyjen kirjanmerkkien määrä"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Tallenna hakuhistoria"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Tämän poistaminen käytöstä tyhjentää myös olemassa olevan historian."
   },
   "optionShowSyncStatus": {
     "message": "Näytä synkronointitilan ilmaisimet"
@@ -33,28 +33,28 @@
     "message": "Tiivistä äskettäin lisätyt -osio oletuksena"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Näkymät"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Näytä näkymävälilehdet hakukentän alla"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Näytä yläkansion polku listariveillä"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Ei äskettäisiä kirjanmerkkejä. Paina Ctrl+D lisätäksesi nykyisen sivun kirjanmerkkeihin."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Näytä puussa"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Tyhjennä kaikki"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Poista tämä haku"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ tulosta",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Äskettäiset haut"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ päivää sitten",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ t sitten",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "juuri nyt"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ min sitten",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "eilen"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Äskettäiset"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Puu"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Haku"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$-näkymä",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Vahvista ennen ei-tyhjien kansioiden poistamista"
   },
   "addSeparator": {
     "message": "Lisää Erotin"
@@ -464,7 +464,7 @@
     "message": "Ei vastaavia kirjanmerkkejä"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Kirjoita yllä olevaan kenttään hakeaksesi kirjanmerkkejäsi"
   },
   "sessionFolderName": {
     "message": "Istunto $date$",
@@ -522,7 +522,7 @@
     "message": "Järjestä kansion sisältö"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Tämä kansio sisältää $count$ kohdetta. Voit peruuttaa poiston.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Poista"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Haluatko varmasti poistaa $folderName$-kansion ja sen sisällä olevat $bookmarkCount$ kirjanmerkkiä?",
@@ -698,16 +698,16 @@
     "message": "Lisää tämä sivu kirjanmerkkeihin vBookmarksilla"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Kaikki"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Vain estetyt"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Vain kuolleet"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Viimeisin skannaus: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Merkitse kuolleeksi"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Merkitse kaikki"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Kuolleet rivit merkitty"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Kirjanmerkkien URL-osoitteet lähetetään tälle kolmannen osapuolen palvelulle. Jätä tyhjäksi, jotta tarkistetaan vain suoraan."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Aloitetaan $n$ kirjanmerkin skannaus",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "estetty"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Poista kuollut-merkintä"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Tyhjennä kaikki merkinnät"
   },
   "donationGo": {
     "message": "Lahjoita"
@@ -753,7 +753,7 @@
     "message": "Älä näytä uudelleen"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Käytä kaikkia ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Puhdista loput"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ohita http/https-eroavaisuudet"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Pidä tämä"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Aseta säilyttäjäksi"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ ryhmää · $count$ vapautetaan",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Poista tämä kopio"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Kaikki kirjanmerkit"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Vain kirjanmerkkipalkki"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Säilytä kirjanmerkkipalkissa oleva"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Säilytä eniten vieraillut"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Säilytä uusin"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Säilytä vanhin"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Säilytä matalin"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Säilytä lyhyin otsikko"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Kuolleen linkin välityspalvelinmalli"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Kuolleen linkin skannauksen rinnakkaisuus (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Kuolleen linkin skannauksen aikakatkaisu sekunteina (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Siirry kuolleiden linkkien näkymään"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Siirry kopioiden näkymään"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Siirry viimeaikaisten näkymään"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Siirry hakunäkymään"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Siirry puunäkymään"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Avaa asetussivu"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Hae '$query$' hakunäkymässä",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Poista"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Merkitse kuolleeksi"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Näytä puussa"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Poista kuolleen merkintä"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Kuolleet linkit"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Kopiot"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Tilastot"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Siirry tilastonäkymään"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Ota käyttöön vierailutilastot"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Määrän mukaan"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Viimeaikaisuuden mukaan"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Tilastot kertyvät, kun avaat kirjanmerkkejä"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Vierailutilastot ovat pois päältä — ota ne käyttöön kohdassa Asetukset → Näkymät"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Vierailtu $count$ kertaa",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Tyhjennä tilastot"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Tyhjennä vierailutilastot $count$ kirjanmerkille? Tätä ei voi peruuttaa.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

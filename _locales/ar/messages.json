@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "عدد الإشارات المرجعية المضافة حديثًا للعرض"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "تسجيل سجل البحث"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "إيقاف هذا سيؤدي أيضًا إلى مسح السجل الحالي."
   },
   "optionShowSyncStatus": {
     "message": "إظهار مؤشرات حالة المزامنة"
@@ -33,28 +33,28 @@
     "message": "طي قسم المضافة حديثًا افتراضيًا"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "العروض"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "إظهار مسار المجلد الأصلي في صفوف القائمة"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "إظهار في الشجرة"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "مسح الكل"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "إزالة هذا البحث"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ نتيجة",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "عمليات البحث الأخيرة"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "قبل $n$ يومًا",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "قبل $n$ ساعة",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "الآن"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "قبل $n$ دقيقة",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "أمس"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "الأخيرة"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "الشجرة"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "بحث"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "عرض $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
   },
   "addSeparator": {
     "message": "إضافة فاصل"
@@ -464,7 +464,7 @@
     "message": "لا توجد إشارات مرجعية مطابقة"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
   },
   "sessionFolderName": {
     "message": "جلسة $date$",
@@ -522,7 +522,7 @@
     "message": "فرز محتويات المجلد"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "حذف"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
@@ -698,16 +698,16 @@
     "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "الكل"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "محظور فقط"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "معطلة فقط"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "آخر فحص: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "وضع علامة كمعطلة"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "وضع علامة على الكل"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "تم وضع علامة على الصفوف المعطلة"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "يتم إرسال عناوين URL للإشارات المرجعية إلى هذه الخدمة الخارجية. اتركه فارغًا للفحص المباشر فقط."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "بدء فحص $n$ إشارة مرجعية",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "محظور"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "إزالة علامة المعطلة"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "مسح جميع العلامات"
   },
   "donationGo": {
     "message": "تبرع"
@@ -753,7 +753,7 @@
     "message": "لا تظهر مرة أخرى"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "تطبيق الكل ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "تنظيف الباقي"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "تجاهل اختلافات http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "احتفظ بهذا"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "تعيين كحافظ"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ مجموعات · $count$ سيتم تحريرها",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "حذف هذه النسخة"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "جميع الإشارات المرجعية"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "شريط الإشارات فقط"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "احتفظ بالذي في شريط الإشارات"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "احتفظ بالأكثر زيارة"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "احتفظ بالأحدث"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "احتفظ بالأقدم"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "احتفظ بالأقل عمقًا"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "احتفظ بأقصر عنوان"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "قالب وكيل الروابط المعطلة"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "توازي فحص الروابط المعطلة (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "الانتقال إلى عرض الروابط المعطلة"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "الانتقال إلى عرض المكررات"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "الانتقال إلى عرض الأخيرة"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "الانتقال إلى عرض البحث"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "الانتقال إلى عرض الشجرة"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "فتح صفحة الخيارات"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "البحث عن '$query$' في عرض البحث",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "حذف"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "وضع علامة كمعطل"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "إظهار في الشجرة"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "إزالة علامة التعطل"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "الروابط المعطلة"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "المكررات"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "الإحصائيات"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "الانتقال إلى عرض الإحصائيات"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "تمكين إحصائيات الزيارة"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "حسب العدد"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "حسب الأحدث"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "إحصائيات الزيارة معطلة — قم بتمكينها في الخيارات → طرق العرض"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "تمت الزيارة $count$ مرة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "مسح الإحصائيات"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "مسح إحصائيات الزيارة لـ $count$ إشارة مرجعية؟ لا يمكن التراجع عن ذلك.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

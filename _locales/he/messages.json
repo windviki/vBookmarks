@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "מספר הסימניות שנוספו לאחרונה להצגה"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "תיעוד היסטוריית חיפוש"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "כיבוי זה ינקה גם את ההיסטוריה הקיימת."
   },
   "optionShowSyncStatus": {
     "message": "הצג מחווני מצב סנכרון"
@@ -33,28 +33,28 @@
     "message": "כווץ את הקטע 'נוספו לאחרונה' כברירת מחדל"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "תצוגות"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "הצג נתיב תיקיית אב בשורות הרשימה"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "אין סימניות אחרונות. לחץ על Ctrl+D כדי לסמן את הדף הנוכחי."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "חשוף בעץ"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "נקה הכל"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "הסר חיפוש זה"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ תוצאה(ות)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "חיפושים אחרונים"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "לפני $n$ ימים",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "לפני $n$ שעות",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "זה עתה"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "לפני $n$ דקות",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "אתמול"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "אחרונים"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "עץ"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "חיפוש"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "תצוגת $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "אשר לפני מחיקת תיקיות שאינן ריקות"
   },
   "addSeparator": {
     "message": "הוסף מפריד"
@@ -464,7 +464,7 @@
     "message": "אין סימניות תואמות"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "הקלד בתיבה למעלה כדי לחפש בסימניות שלך"
   },
   "sessionFolderName": {
     "message": "סשן $date$",
@@ -522,7 +522,7 @@
     "message": "מיין תוכן תיקייה"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "תיקייה זו מכילה $count$ פריט(ים). ניתן לבטל את המחיקה.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "מחק"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "האם אתה בטוח שברצונך למחוק את תיקיית $folderName$ ו-$bookmarkCount$ סימניות בה?",
@@ -698,16 +698,16 @@
     "message": "הוסף סימניה לדף זה באמצעות vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "הכל"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "רק חסומים"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "רק מתים"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "סריקה אחרונה: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "סמן כמת"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "סמן הכל"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "שורות מתות מסומנות"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "כתובות האתרים של הסימניות נשלחות לשירות צד שלישי זה. השאר ריק כדי לבדוק ישירות בלבד."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "התחל לסרוק $n$ סימניות",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "חסום"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "הסר סימון מת"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "נקה את כל הסימונים"
   },
   "donationGo": {
     "message": "תרום"
@@ -753,7 +753,7 @@
     "message": "אל תציג שוב"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "החל הכל ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "נקה את השאר"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "התעלם מהבדלי http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "שמור את זה"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "הגדר כשומר"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "קבוצות $groups$ · $count$ ישוחררו",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "מחק עותק זה"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "כל הסימניות"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "רק סרגל הסימניות"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "שמור את זה שבסרגל הסימניות"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "שמור את הנצפה ביותר"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "שמור את החדש ביותר"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "שמור את הישן ביותר"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "שמור את הרדוד ביותר"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "שמור את הכותרת הקצרה ביותר"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "תבנית פרוקסי לקישורים מתים"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "מקביליות סריקת קישורים מתים (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "זמן קצוב לסריקת קישורים מתים בשניות (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "עבור לתצוגת קישורים מתים"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "עבור לתצוגת כפילויות"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "עבור לתצוגת אחרונים"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "עבור לתצוגת חיפוש"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "עבור לתצוגת עץ"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "פתח דף הגדרות"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "חפש '$query$' בתצוגת חיפוש",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "מחק"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "סמן כמת"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "הצג בעץ"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "הסר סימון מת"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "קישורים מתים"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "כפילויות"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "סטטיסטיקות"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "עבור לתצוגת סטטיסטיקות"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "הפעל סטטיסטיקות ביקור"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "לפי כמות"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "לפי אחרונים"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "סטטיסטיקות מצטברות כשפותחים סימניות"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "סטטיסטיקות הביקור כבויות — הפעל אותן באפשרויות → תצוגות"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "בוקר $count$ פעמים",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "נקה סטטיסטיקות"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "לנקות סטטיסטיקות ביקור עבור $count$ סימניות? לא ניתן לבטל פעולה זו.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

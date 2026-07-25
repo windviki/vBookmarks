@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "จำนวนบุ๊กมาร์กที่เพิ่มล่าสุดที่จะแสดง"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "บันทึกประวัติการค้นหา"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "การปิดตัวเลือกนี้จะลบประวัติที่มีอยู่ด้วย"
   },
   "optionShowSyncStatus": {
     "message": "แสดงตัวบ่งชี้สถานะการซิงค์"
@@ -33,28 +33,28 @@
     "message": "ยุบส่วนที่เพิ่มล่าสุดโดยค่าเริ่มต้น"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "มุมมอง"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "แสดงแท็บมุมมองใต้ช่องค้นหา"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "แสดงเส้นทางโฟลเดอร์แม่ในแถวรายการ"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "ไม่มีบุ๊กมาร์กล่าสุด กด Ctrl+D เพื่อบุ๊กมาร์กหน้านี้"
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "แสดงในต้นไม้"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "ล้างทั้งหมด"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "ลบการค้นหานี้"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ ผลลัพธ์",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "การค้นหาล่าสุด"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ วันที่แล้ว",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ ชม. ที่แล้ว",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "เมื่อสักครู่"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ นาทีที่แล้ว",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "เมื่อวาน"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "ล่าสุด"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "ต้นไม้"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "ค้นหา"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "มุมมอง $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "ยืนยันก่อนลบโฟลเดอร์ที่ไม่ว่าง"
   },
   "addSeparator": {
     "message": "เพิ่มเส้นแบ่ง"
@@ -464,7 +464,7 @@
     "message": "ไม่พบบุ๊กมาร์กที่ตรงกัน"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "พิมพ์ในช่องด้านบนเพื่อค้นหาบุ๊กมาร์กของคุณ"
   },
   "sessionFolderName": {
     "message": "เซสชัน $date$",
@@ -522,7 +522,7 @@
     "message": "จัดเรียงเนื้อหาโฟลเดอร์"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "โฟลเดอร์นี้มี $count$ รายการ คุณสามารถยกเลิกการลบได้",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "ลบ"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ $folderName$ และที่คั่นหน้า $bookmarkCount$ รายการที่อยู่ภายใน?",
@@ -698,16 +698,16 @@
     "message": "บุ๊กมาร์กหน้านี้ด้วย vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "ทั้งหมด"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "ถูกบล็อกเท่านั้น"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "ตายเท่านั้น"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "สแกนล่าสุด: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "ทำเครื่องหมายว่าตาย"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "ทำเครื่องหมายทั้งหมด"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "ทำเครื่องหมายแถวตายแล้ว"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL ของบุ๊กมาร์กจะถูกส่งไปยังบริการบุคคลที่สามนี้ เว้นว่างไว้เพื่อเจาะจงโดยตรงเท่านั้น"
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "เริ่มสแกน $n$ บุ๊กมาร์ก",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "ถูกบล็อก"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "ลบเครื่องหมายตาย"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "ล้างเครื่องหมายทั้งหมด"
   },
   "donationGo": {
     "message": "บริจาค"
@@ -753,7 +753,7 @@
     "message": "ไม่ต้องแสดงอีก"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "ใช้ทั้งหมด ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "ล้างส่วนที่เหลือ"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "ไม่สนใจความแตกต่าง http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "เก็บอันนี้ไว้"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "ตั้งเป็นผู้เก็บ"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ กลุ่ม · $count$ รายการที่จะปล่อย",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "ลบสำเนานี้"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "บุ๊กมาร์กทั้งหมด"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "เฉพาะแถบบุ๊กมาร์ก"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "เก็บอันที่อยู่ในแถบบุ๊กมาร์ก"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "เก็บที่เข้าชมบ่อยที่สุด"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "เก็บล่าสุด"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "เก็บเก่าสุด"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "เก็บที่ตื้นที่สุด"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "เก็บชื่อที่สั้นที่สุด"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "เทมเพลตพร็อกซีลิงก์เสีย"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "การสแกนลิงก์เสียพร้อมกัน (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "หมดเวลาสแกนลิงก์เสียเป็นวินาที (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "ไปยังมุมมองลิงก์เสีย"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "ไปยังมุมมองรายการซ้ำ"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "ไปยังมุมมองล่าสุด"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "ไปยังมุมมองค้นหา"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "ไปยังมุมมองต้นไม้"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "เปิดหน้าการตั้งค่า"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "ค้นหา '$query$' ในมุมมองค้นหา",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "ลบ"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "ทำเครื่องหมายว่าเสีย"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "เปิดในต้นไม้"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "ลบเครื่องหมายเสีย"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "ลิงก์เสีย"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "รายการซ้ำ"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "สถิติ"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "ไปยังมุมมองสถิติ"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "เปิดใช้งานสถิติการเข้าชม"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "ตามจำนวน"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "ตามล่าสุด"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "สถิติจะถูกสะสมเมื่อคุณเปิดบุ๊กมาร์ก"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "ปิดสถิติการเข้าชม — เปิดใน การตั้งค่า → มุมมอง"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "เข้าชม $count$ ครั้ง",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "ล้างสถิติ"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "ล้างสถิติการเข้าชมสำหรับ $count$ บุ๊กมาร์ก? การดำเนินการนี้ไม่สามารถยกเลิกได้",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

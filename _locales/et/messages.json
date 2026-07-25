@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Salvesta otsinguajalugu"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Selle väljalülitamine kustutab ka olemasoleva ajaloo."
   },
   "optionShowSyncStatus": {
     "message": "Näita sünkroniseerimise oleku indikaatoreid"
@@ -33,28 +33,28 @@
     "message": "Ahenda hiljuti lisatud jaotis vaikimisi"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vaated"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Näita vaatekaarte otsingukasti all"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Näita loendiridades ülemkausta teed"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Hiljutisi järjehoidjaid pole. Vajuta Ctrl+D, et järjehoidjatesse lisada praegune leht."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Näita puus"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Kustuta kõik"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Eemalda see otsing"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ tulemus(t)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Hiljutised otsingud"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ päeva tagasi",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ tundi tagasi",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "just nüüd"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ minutit tagasi",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "eile"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Hiljutised"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Puu"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Otsing"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ vaade",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Kinnita enne mittetühjade kaustade kustutamist"
   },
   "addSeparator": {
     "message": "Lisa eraldaja"
@@ -464,7 +464,7 @@
     "message": "Sobivaid järjehoidjaid pole"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Tipi ülalolevasse kasti oma järjehoidjate otsimiseks"
   },
   "sessionFolderName": {
     "message": "Seanss $date$",
@@ -522,7 +522,7 @@
     "message": "Sorteeri kausta sisu"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "See kaust sisaldab $count$ kirje(t). Saate kustutamise tagasi võtta.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Kustuta"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Kas olete kindel, et soovite kustutada kausta $folderName$ ja $bookmarkCount$ järjehoidja(-d) selles?",
@@ -698,16 +698,16 @@
     "message": "Lisa see leht vBookmarksiga järjehoidjasse"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Kõik"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Ainult blokeeritud"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Ainult surnud"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Viimane skänn: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Märgi surnuks"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Märgi kõik"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Surnud read märgitud"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Järjehoidjate URL-id saadetakse sellele kolmanda osapoole teenusele. Jäta tühjaks, et otse kontrollida."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Alusta $n$ järjehoidja skännimist",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "blokeeritud"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Eemalda surnud märge"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Kustuta kõik märked"
   },
   "donationGo": {
     "message": "Anneta"
@@ -753,7 +753,7 @@
     "message": "Ära näita enam"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Rakenda kõik ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Puhasta ülejäänud"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignoreeri http/https erinevusi"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Hoia seda"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Määra hoidjaks"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ gruppi · $count$ vabastamiseks",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Kustuta see koopia"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Kõik järjehoidjad"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Ainult järjehoidjate riba"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Hoia järjehoidjate ribal olevat"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Hoia kõige külastatumat"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Hoia uusimat"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Hoia vanimat"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Hoia kõige madalamat"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Hoia lühimat pealkirja"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Surnud linkide proksi mall"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Surnud linkide skannimise kaasvõimsus (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Surnud linkide skannimise ajalõpp sekundites (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Mine surnud linkide vaatesse"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Mine dublikaatide vaatesse"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Mine hiljutiste vaatesse"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Mine otsinguvaatesse"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Mine puuvaatesse"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Ava seadete leht"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Otsi '$query$' otsinguvaates",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Kustuta"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Märgi surnuks"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Näita puus"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Eemalda surmamärge"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Surnud lingid"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dublikaadid"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Mine statistika vaatesse"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Luba külastusstatistika"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Arvu järgi"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Hiljutise järgi"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistika koguneb, kui järjehoidjaid avate"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Külastusstatistika on välja lülitatud — lubage see valikus Seaded → Vaatemood"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Külastatud $count$ korda",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Tühjenda statistika"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Kas tühjendada külastusstatistika $count$ järjehoidja jaoks? Seda ei saa tagasi võtta.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

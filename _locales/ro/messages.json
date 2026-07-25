@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Numărul de marcaje recent adăugate de afișat"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Înregistrează istoricul căutărilor"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Dacă dezactivați aceasta, se va șterge și istoricul existent."
   },
   "optionShowSyncStatus": {
     "message": "Afișați indicatorii de stare a sincronizării"
@@ -33,28 +33,28 @@
     "message": "Restrânge secțiunea adăugate recent în mod implicit"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Vizualizări"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Afișează filele de vizualizare sub caseta de căutare"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Afișează calea dosarului părinte pe rândurile listei"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Niciun marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Arată în arbore"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Curăță tot"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Elimină această căutare"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ rezultat(e)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Căutări recente"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "acum $n$ zile",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "acum $n$ ore",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "chiar acum"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "acum $n$ min",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "ieri"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Recent"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Arbore"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Căutare"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Vizualizare $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Confirmă înainte de a șterge dosarele negoale"
   },
   "addSeparator": {
     "message": "Adaugă Separator"
@@ -464,7 +464,7 @@
     "message": "Nicio marcaj potrivit"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Tastați în caseta de mai sus pentru a căuta marcajele"
   },
   "sessionFolderName": {
     "message": "Sesiune $date$",
@@ -522,7 +522,7 @@
     "message": "Sortează conținutul folderului"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Acest dosar conține $count$ element(e). Puteți anula ștergerea.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Șterge"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Sunteți sigur că doriți să ștergeți dosarul $folderName$ și $bookmarkCount$ semn(e) de carte din el?",
@@ -698,16 +698,16 @@
     "message": "Marchează această pagină cu vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Toate"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Doar blocate"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Doar moarte"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Ultima scanare: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Marchează ca mort"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Marchează toate"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Rânduri moarte marcate"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-urile marcajelor sunt trimise către acest serviciu terț. Lăsați gol pentru a sonda doar direct."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Se începe scanarea a $n$ marcaje",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "blocat"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Elimină marcajul de mort"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Curăță toate marcajele"
   },
   "donationGo": {
     "message": "Donează"
@@ -753,7 +753,7 @@
     "message": "Nu mai afișa"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Aplică toate ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Curăță restul"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignoră diferențele http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Păstrează aceasta"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Set ca păstrător"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ grupuri · $count$ de eliberat",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Șterge această copie"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Toate marcajele"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Doar bara de marcaje"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Păstrează cel din bara de marcaje"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Păstrează cel mai vizitat"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Păstrează cel mai nou"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Păstrează cel mai vechi"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Păstrează cel mai superficial"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Păstrează titlul cel mai scurt"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Șablon proxy pentru linkuri moarte"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Concurență scanare linkuri moarte (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Timeout scanare linkuri moarte în secunde (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Mergi la vizualizarea Linkuri moarte"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Mergi la vizualizarea Duplicate"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Mergi la vizualizarea Recente"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Mergi la vizualizarea Căutare"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Mergi la vizualizarea Arbore"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Deschide pagina de opțiuni"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Caută '$query$' în vizualizarea Căutare",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Șterge"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Marchează ca mort"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Arată în arbore"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Elimină marcajul de mort"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Linkuri moarte"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicate"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistici"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Mergi la vizualizarea Statistici"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Activează statisticile de vizită"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "După număr"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "După recent"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statisticile se acumulează pe măsură ce deschideți marcajele"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Statisticile de vizită sunt dezactivate — activați-le în Opțiuni → Vizualizări"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Vizitat de $count$ ori",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Șterge statisticile"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Ștergeți statisticile de vizită pentru $count$ marcaje? Această acțiune nu poate fi anulată.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

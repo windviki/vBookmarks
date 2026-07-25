@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Megjelenítendő legutóbb hozzáadott könyvjelzők száma"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Keresési előzmények rögzítése"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Ennek kikapcsolása törli a meglévő előzményeket is."
   },
   "optionShowSyncStatus": {
     "message": "Szinkronizálási állapotjelzők megjelenítése"
@@ -33,28 +33,28 @@
     "message": "Legutóbb hozzáadott szakasz összecsukása alapértelmezés szerint"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Nézetek"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Nézetfülek megjelenítése a keresőmező alatt"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Szülőmappa elérési útjának megjelenítése a listasorokban"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nincsenek legutóbbi könyvjelzők. Nyomja meg a Ctrl+D billentyűt az aktuális oldal könyvjelzőkhöz adásához."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Megjelenítés a fában"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Összes törlése"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Keresés eltávolítása"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ találat",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Legutóbbi keresések"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ napja",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ órája",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "éppen most"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ perce",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "tegnap"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Legutóbbi"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Fa"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Keresés"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ nézet",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Nem üres mappák törlésének megerősítése"
   },
   "addSeparator": {
     "message": "Elválasztó Hozzáadása"
@@ -464,7 +464,7 @@
     "message": "Nincs megfelelő könyvjelző"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Írjon a fenti mezőbe a könyvjelzők kereséséhez"
   },
   "sessionFolderName": {
     "message": "Munkamenet $date$",
@@ -522,7 +522,7 @@
     "message": "Mappa tartalmának rendezése"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Ez a mappa $count$ elemet tartalmaz. A törlés visszavonható.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Törlés"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Biztosan törli a(z) $folderName$ mappát és a benne lévő $bookmarkCount$ könyvjelzőt?",
@@ -698,16 +698,16 @@
     "message": "Oldal könyvjelzőzése a vBookmarks segítségével"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Összes"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Csak tiltott"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Csak halott"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Utolsó vizsgálat: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Megjelölés halottként"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Összes megjelölése"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Halott sorok megjelölve"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "A könyvjelző URL-ek elküldésre kerülnek erre a harmadik fél által üzemeltetett szolgáltatásra. Hagyja üresen, ha csak közvetlenül szeretne vizsgálni."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$ könyvjelző vizsgálatának elindítása",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "tiltott"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Halott jelölés eltávolítása"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Összes jelölés törlése"
   },
   "donationGo": {
     "message": "Adományozás"
@@ -753,7 +753,7 @@
     "message": "Ne jelenjen meg többet"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Összes alkalmazása ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Többi eltávolítása"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https különbségek figyelmen kívül hagyása"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Tartsd meg ezt"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Megtartónak jelöl"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ csoport · $count$ felszabadítandó",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "E másolat törlése"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Összes könyvjelző"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Csak a könyvjelzősáv"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Tartsd meg a könyvjelzősávban lévőt"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Tartsd meg a leglátogatottabbat"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Tartsd meg a legújabbat"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Tartsd meg a legrégebbit"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Tartsd meg a legsekélyebbet"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Tartsd meg a legrövidebb címet"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Holt hivatkozás proxy sablon"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Holt hivatkozás vizsgálat párhuzamossága (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Holt hivatkozás vizsgálat időtúllépés másodpercben (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Ugrás a holt hivatkozások nézethez"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Ugrás a duplikátumok nézethez"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Ugrás a legutóbbi nézethez"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Ugrás a kereső nézethez"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Ugrás a fa nézethez"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Beállítások oldal megnyitása"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Keresés '$query$' a kereső nézetben",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Törlés"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Jelöld meg holtnak"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Megjelenítés a fában"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Holt jelölés eltávolítása"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Holt hivatkozások"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplikátumok"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statisztikák"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Ugrás a statisztikák nézethez"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Látogatási statisztikák engedélyezése"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Darabszám szerint"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Legutóbbi szerint"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "A statisztikák a könyvjelzők megnyitásával épülnek fel"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "A látogatási statisztikák ki vannak kapcsolva — engedélyezd a Beállítások → Nézetek alatt"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Látogatva $count$ alkalommal",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Statisztikák törlése"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Törli $count$ könyvjelző látogatási statisztikáit? Ez nem vonható vissza.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

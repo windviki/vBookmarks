@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Število nedavno dodanih zaznamkov za prikaz"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Beleži zgodovino iskanja"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Izklapljanje te možnosti tudi počisti obstoječo zgodovino."
   },
   "optionShowSyncStatus": {
     "message": "Pokaži indikatorje stanja sinhronizacije"
@@ -33,28 +33,28 @@
     "message": "Privzeto strni razdelek z nedavno dodanimi"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Pogledi"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Pokaži zavihke pogleda pod iskalnim poljem"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Pokaži pot nadrejene mape v vrsticah seznama"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Ni nedavnih zaznamkov. Pritisnite Ctrl+D, da dodate trenutno stran med zaznamke."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Pokaži v drevesu"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Počisti vse"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Odstrani to iskanje"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ rezultat(-i)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Nedavna iskanja"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "pred $n$ dnevi",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "pred $n$ urami",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "pravkar"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "pred $n$ minutami",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "včeraj"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nedavno"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Drevo"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Iskanje"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "pogled $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Prikaži potrditev pri odpiranju veliko zaznamkov iz mape."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Potrdi pred brisanjem nepraznih map"
   },
   "addSeparator": {
     "message": "Dodaj ločilo"
@@ -464,7 +464,7 @@
     "message": "Ni ujemajočih se zaznamkov"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Vnesite v zgornje polje za iskanje svojih zaznamkov"
   },
   "sessionFolderName": {
     "message": "Seja $date$",
@@ -522,7 +522,7 @@
     "message": "Razvrsti vsebino mape"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Ta mapa vsebuje $count$ element(-e). Brisanje lahko razveljavite.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Izbriši"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Ali ste prepričani, da želite izbrisati mapo $folderName$ in $bookmarkCount$ zaznamek(-e) v njej?",
@@ -698,16 +698,16 @@
     "message": "Zaznamuj to stran z vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Vsi"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Samo blokirani"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Samo mrtvi"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Zadnje skeniranje: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Označi kot mrtvo"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Označi vse"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Označene mrtve vrstice"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-ji zaznamkov se pošljejo tej storitvi tretje osebe. Pustite prazno za neposredno preverjanje."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Začni skeniranje $n$ zaznamkov",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "blokirano"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Odstrani oznako mrtvega"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Počisti vse oznake"
   },
   "donationGo": {
     "message": "Doniraj"
@@ -753,7 +753,7 @@
     "message": "Ne prikaži več"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Uporabi vse ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Počisti ostale"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Prezri razlike http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Obdrži to"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Nastavi ohranjevalca"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ skupin · $count$ za sprostitev",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Izbriši to kopijo"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Vsi zaznamki"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Samo vrstica zaznamkov"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Obdrži tistega v vrstici zaznamkov"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Obdrži najpogosteje obiskanega"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Obdrži najnovejšega"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Obdrži najstarejšega"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Obdrži najplitvejšega"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Obdrži najkrajši naslov"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Predloga proxyja mrtvih povezav"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Sočasnost pregleda mrtvih povezav (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Časovna omejitev pregleda mrtvih povezav (s) (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Pojdi na pogled mrtvih povezav"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Pojdi na pogled dvojnikov"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Pojdi na pogled nedavnih"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Pojdi na pogled iskanja"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Pojdi na drevesni pogled"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Odpri stran z možnostmi"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Išči '$query$' v pogledu iskanja",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Izbriši"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Označi kot mrtvo povezavo"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Pokaži v drevesu"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Odstrani oznako mrtve povezave"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Mrtve povezave"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dvojniki"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Pojdi na pogled statistike"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Omogoči statistiko obiskov"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Po številu"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Po nedavnih"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistika se nabira, ko odpirate zaznamke."
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Statistika obiskov je izklopljena — omogočite jo v Možnosti → Pogledi"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Obiskano $count$ krat",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Počisti statistiko"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Počisti statistiko obiskov za $count$ zaznamkov? Tega ni mogoče razveljaviti.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

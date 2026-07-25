@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "최근 추가된 북마크 표시 개수"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "검색 기록 저장"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "이 기능을 끄면 기존 기록도 삭제됩니다."
   },
   "optionShowSyncStatus": {
     "message": "동기화 상태 표시기 표시"
@@ -33,28 +33,28 @@
     "message": "최근 추가 섹션을 기본적으로 접기"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "보기"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "검색 상자 아래에 보기 탭 표시"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "목록 행에 상위 폴더 경로 표시"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "최근 북마크가 없습니다. Ctrl+D를 눌러 현재 페이지를 북마크에 추가하세요."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "트리에서 보기"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "모두 지우기"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "이 검색 제거"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$개 결과",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "최근 검색"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$일 전",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$시간 전",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "방금 전"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$분 전",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "어제"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "최근"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "트리"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "검색"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ 보기",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "비어 있지 않은 폴더 삭제 시 확인"
   },
   "addSeparator": {
     "message": "구분자 추가"
@@ -464,7 +464,7 @@
     "message": "일치하는 북마크 없음"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "위 상자에 입력하여 북마크를 검색하세요."
   },
   "sessionFolderName": {
     "message": "$date$ 세션",
@@ -522,7 +522,7 @@
     "message": "폴더 정렬"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "이 폴더에는 $count$개의 항목이 있습니다. 삭제를 취소할 수 있습니다.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "삭제"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ 폴더와 그 안의 $bookmarkCount$개 북마크를 삭제하시겠습니까?",
@@ -698,16 +698,16 @@
     "message": "vBookmarks로 이 페이지 북마크"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "모두"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "차단됨만"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "깨짐만"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "마지막 검사: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "깨짐 표시"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "모두 표시"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "깨진 행이 표시됨"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "북마크 URL이 이 타사 서비스로 전송됩니다. 비워두면 직접 확인만 수행합니다."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$개 북마크 검사 시작",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "차단됨"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "깨짐 표시 제거"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "모든 표시 지우기"
   },
   "donationGo": {
     "message": "기부하기"
@@ -753,7 +753,7 @@
     "message": "다시 표시 안 함"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "모두 적용($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "나머지 정리"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https 차이 무시"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "이 항목 유지"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "유지로 설정"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ 그룹 · $count$개 해제 예정",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "이 복사본 삭제"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "모든 북마크"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "북마크바만"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "북마크바에 있는 항목 유지"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "가장 많이 방문한 항목 유지"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "최신 항목 유지"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "가장 오래된 항목 유지"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "가장 얕은 항목 유지"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "가장 짧은 제목 유지"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "데드 링크 프록시 템플릿"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "데드 링크 스캔 동시 실행 수 (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "데드 링크 스캔 타임아웃 (초) (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "데드 링크 보기로 이동"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "중복 보기로 이동"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "최근 보기로 이동"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "검색 보기로 이동"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "트리 보기로 이동"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "옵션 페이지 열기"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "검색 보기에서 '$query$' 검색",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "삭제"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "데드로 표시"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "트리에서 보기"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "데드 표시 제거"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "데드 링크"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "중복"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "통계"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "통계 보기로 이동"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "방문 통계 활성화"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "횟수순"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "최근순"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "북마크를 열면 통계가 쌓입니다"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "방문 통계가 꺼져 있습니다 — 옵션 → 보기에서 활성화하세요"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$회 방문",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "통계 지우기"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "$count$개 북마크의 방문 통계를 지우시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Saglabāt meklēšanas vēsturi"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Izslēdzot šo, tiks dzēsta arī esošā vēsture."
   },
   "optionShowSyncStatus": {
     "message": "Rādīt sinhronizācijas statusa indikatorus"
@@ -33,28 +33,28 @@
     "message": "Sakļaut nesen pievienoto sadaļu pēc noklusējuma"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Skati"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Rādīt vecākmapes ceļu saraksta rindās"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Nav nesenas grāmatzīmes. Nospiediet Ctrl+D, lai pievienotu pašreizējo lapu grāmatzīmēm."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Rādīt kokā"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Notīrīt visu"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Noņemt šo meklēšanu"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ rezultāts(-i)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Nesenās meklēšanas"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "Pirms $n$ dienām",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "Pirms $n$ st.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "tikko"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "Pirms $n$ min.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "vakar"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Nesenie"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Koks"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Meklēt"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ skats",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Apstiprināt pirms netukšu mapju dzēšanas"
   },
   "addSeparator": {
     "message": "Pievienot atdalītāju"
@@ -464,7 +464,7 @@
     "message": "Nav atbilstošu grāmatzīmju"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Ierakstiet lodziņā augšpusē, lai meklētu grāmatzīmes"
   },
   "sessionFolderName": {
     "message": "Sesija $date$",
@@ -522,7 +522,7 @@
     "message": "Kārtot mapes saturu"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Šajā mapē ir $count$ vienums(-i). Dzēšanu var atsaukt.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Dzēst"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Vai tiešām vēlaties dzēst mapi $folderName$ un $bookmarkCount$ grāmatzīmi(-es) tajā?",
@@ -698,16 +698,16 @@
     "message": "Pievienot šo lapu grāmatzīmēm ar vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Visi"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Tikai bloķētie"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Tikai mirušie"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Pēdējā skenēšana: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Atzīmēt kā mirušu"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Atzīmēt visus"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Mirušās rindas atzīmētas"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Grāmatzīmju URL tiek nosūtīti šim trešās puses pakalpojumam. Atstājiet tukšu, lai aptaujātu tikai tieši."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Sākt skenēt $n$ grāmatzīmes",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "bloķēts"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Noņemt mirušā atzīmi"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Notīrīt visas atzīmes"
   },
   "donationGo": {
     "message": "Ziedot"
@@ -753,7 +753,7 @@
     "message": "Nerādīt vairs"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Lietot visus ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Notīrīt pārējos"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Ignorēt http/https atšķirības"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Saglabāt šo"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Iestatīt kā saglabāto"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ grupas · $count$ atbrīvojami",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Dzēst šo kopiju"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Visas grāmatzīmes"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Tikai grāmatzīmju josla"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Saglabāt grāmatzīmju joslā esošo"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Saglabāt visbiežāk apmeklēto"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Saglabāt jaunāko"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Saglabāt vecāko"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Saglabāt seklāko"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Saglabāt ar īsāko nosaukumu"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Nedarbojošos saišu starpniekservera veidne"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Nedarbojošos saišu skenēšanas vienlaicīgums (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Nedarbojošos saišu skenēšanas taimauts sekundēs (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Doties uz nedarbojošos saišu skatu"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Doties uz dublikātu skatu"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Doties uz nesen skatīto skatu"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Doties uz meklēšanas skatu"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Doties uz koka skatu"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Atvērt iestatījumu lapu"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Meklēt '$query$' meklēšanas skatā",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Dzēst"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Atzīmēt kā nedarbojošos"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Parādīt kokā"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Noņemt nedarbojošās atzīmi"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Nedarbojošās saites"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Dublikāti"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistika"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Doties uz statistikas skatu"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Iespējot apmeklējumu statistiku"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Pēc skaita"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Pēc nesenuma"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistika uzkrājas, atverot grāmatzīmes"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Apmeklējumu statistika ir izslēgta — iespējojiet to Iestatījumi → Skati"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Apmeklēts $count$ reizes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Notīrīt statistiku"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Notīrīt apmeklējumu statistiku $count$ grāmatzīmēm? Šo darbību nevar atcelt.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

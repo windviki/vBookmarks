@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Количество недавно добавленных закладок для отображения"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Записывать историю поиска"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Отключение этой опции также очищает существующую историю."
   },
   "optionShowSyncStatus": {
     "message": "Показывать индикаторы синхронизации"
@@ -33,28 +33,28 @@
     "message": "Сворачивать раздел недавно добавленных по умолчанию"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Вид"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Показывать вкладки видов под строкой поиска"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Показывать путь родительской папки в строках списка"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Нет недавних закладок. Нажмите Ctrl+D, чтобы добавить текущую страницу."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Показать в дереве"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Очистить всё"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Удалить этот поиск"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ результат(ов)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Недавние поиски"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ дн. назад",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ ч. назад",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "только что"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ мин. назад",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "вчера"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Недавние"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Дерево"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Поиск"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ вид",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Подтверждать удаление непустых папок"
   },
   "addSeparator": {
     "message": "Добавить разделитель"
@@ -464,7 +464,7 @@
     "message": "Нет подходящих закладок"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Введите запрос в поле выше для поиска закладок"
   },
   "sessionFolderName": {
     "message": "Сессия $date$",
@@ -522,7 +522,7 @@
     "message": "Сортировать содержимое папки"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Эта папка содержит $count$ элемент(ов). Вы можете отменить удаление.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Удалить"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Вы уверены, что хотите удалить папку $folderName$ с $bookmarkCount$ вложенными закладками?",
@@ -698,16 +698,16 @@
     "message": "Добавить страницу в закладки с vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Все"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Только заблокированные"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Только неработающие"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Последняя проверка: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Пометить битой"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Отметить все"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Неработающие строки отмечены"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "URL-адреса закладок отправляются этой сторонней службе. Оставьте пустым, чтобы проверять только напрямую."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Начать проверку $n$ закладок",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "заблокировано"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Удалить пометку о неработоспособности"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Очистить все пометки"
   },
   "donationGo": {
     "message": "Пожертвовать"
@@ -753,7 +753,7 @@
     "message": "Больше не показывать"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Применить все ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Очистить остальные"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Игнорировать различия http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Оставить эту"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Сделать хранителем"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ групп · $count$ будет освобождено",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Удалить эту копию"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Все закладки"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Только панель закладок"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Оставить на панели закладок"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Оставить наиболее посещаемую"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Оставить новейшую"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Оставить старейшую"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Оставить самую поверхностную"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Оставить с самым коротким названием"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Шаблон прокси для битых ссылок"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Параллельность сканирования битых ссылок (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Тайм-аут сканирования битых ссылок в секундах (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Перейти к битым ссылкам"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Перейти к дубликатам"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Перейти к недавним"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Перейти к поиску"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Перейти к дереву"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Открыть настройки"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Искать '$query$' в поиске",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Удалить"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Пометить как битую"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Показать в дереве"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Снять пометку"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Битые ссылки"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Дубликаты"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Статистика"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Перейти к статистике"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Включить статистику посещений"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "По количеству"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "По дате"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Статистика накапливается по мере открытия закладок"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Статистика посещений отключена — включите в Настройки → Виды"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Посещено $count$ раз",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Очистить статистику"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Очистить статистику посещений для $count$ закладок? Это действие нельзя отменить.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

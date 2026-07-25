@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "表示する最近追加したブックマークの数"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "検索履歴を記録する"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "オフにすると既存の履歴も消去されます。"
   },
   "optionShowSyncStatus": {
     "message": "同期ステータスインジケーターを表示"
@@ -33,28 +33,28 @@
     "message": "最近追加したセクションをデフォルトで折りたたむ"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "ビュー"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "検索ボックスの下にビュータブを表示"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "リスト行に親フォルダのパスを表示"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "最近のブックマークはありません。Ctrl+Dを押して現在のページをブックマークしてください。"
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "ツリーで表示"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "すべて消去"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "この検索を削除"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$件の結果",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "最近の検索"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$日前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$時間前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "たった今"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$分前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "昨日"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "最近"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "ツリー"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "検索"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ビュー",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "フォルダから多くのブックマークを開くとき、警告する"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "空でないフォルダを削除する前に確認する"
   },
   "addSeparator": {
     "message": "区切りを追加"
@@ -464,7 +464,7 @@
     "message": "一致するブックマークはありません"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "上のボックスに入力してブックマークを検索"
   },
   "sessionFolderName": {
     "message": "セッション $date$",
@@ -522,7 +522,7 @@
     "message": "フォルダを並べ替え"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "このフォルダには$count$個のアイテムが含まれています。削除は元に戻せます。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "削除"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "$folderName$ フォルダと $bookmarkCount$ 個のブックマークを削除します。よろしいですか。",
@@ -698,16 +698,16 @@
     "message": "vBookmarksでこのページをブックマーク"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "すべて"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "ブロックのみ"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "デッドのみ"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "最終スキャン: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "デッドとしてマーク"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "すべてマーク"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "マークされたデッド行"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "ブックマークURLはこのサードパーティサービスに送信されます。空欄の場合は直接プローブのみ行います。"
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$個のブックマークのスキャンを開始",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "ブロック済み"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "デッドマークを解除"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "すべてのマークを消去"
   },
   "donationGo": {
     "message": "寄付する"
@@ -753,7 +753,7 @@
     "message": "再表示しない"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "すべて適用（$count$）",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "残りをクリーン"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/httpsの違いを無視"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "これを保持"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "キーパーに設定"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ グループ · $count$ 件解放予定",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "このコピーを削除"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "すべてのブックマーク"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "ブックマークバーのみ"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "ブックマークバー内のものを保持"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "最多訪問を保持"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "最新を保持"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "最古を保持"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "最も浅いものを保持"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "最も短いタイトルを保持"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "デッドリンクプロキシテンプレート"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "デッドリンクスキャンの同時実行数 (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "デッドリンクスキャンのタイムアウト秒数 (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "デッドリンクビューに移動"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "重複ビューに移動"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "最近ビューに移動"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "検索ビューに移動"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "ツリービューに移動"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "オプションページを開く"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "検索ビューで '$query$' を検索",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "削除"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "デッドとしてマーク"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "ツリー内で表示"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "デッドマークを解除"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "デッドリンク"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "重複"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "統計"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "統計ビューに移動"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "訪問統計を有効にする"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "回数順"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "最近順"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "ブックマークを開くと統計が蓄積されます"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "訪問統計がオフです — オプション → ビューで有効にしてください"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ 回訪問",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "統計をクリア"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "$count$ 件のブックマークの訪問統計をクリアしますか？この操作は元に戻せません。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

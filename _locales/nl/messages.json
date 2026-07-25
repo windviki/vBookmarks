@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Aantal recent toegevoegde bladwijzers om weer te geven"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Zoekgeschiedenis opslaan"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Dit uitschakelen wist ook de bestaande geschiedenis."
   },
   "optionShowSyncStatus": {
     "message": "Synchronisatiestatusindicatoren tonen"
@@ -33,28 +33,28 @@
     "message": "Het gedeelte 'Recent toegevoegd' standaard samenvouwen"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Weergaven"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Weergavetabbladen onder het zoekvak tonen"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Het pad van de bovenliggende map weergeven op lijstrijen"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Geen recente bladwijzers. Druk op Ctrl+D om de huidige pagina als bladwijzer toe te voegen."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Toon in boom"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Alles wissen"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Deze zoekopdracht verwijderen"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ resultaat(en)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Recente zoekopdrachten"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ dagen geleden",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ uur geleden",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "zojuist"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ min geleden",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "gisteren"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Recent"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Boom"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Zoeken"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ weergave",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Bevestigen voordat niet-lege mappen worden verwijderd"
   },
   "addSeparator": {
     "message": "Scheidingsteken toevoegen"
@@ -464,7 +464,7 @@
     "message": "Geen overeenkomende bladwijzers"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Typ in het vak hierboven om uw bladwijzers te doorzoeken"
   },
   "sessionFolderName": {
     "message": "Sessie $date$",
@@ -522,7 +522,7 @@
     "message": "Mapinhoud sorteren"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Deze map bevat $count$ item(s). U kunt het verwijderen ongedaan maken.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Verwijderen"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Weet u zeker dat u map $folderName$ en $bookmarkCount$ bladwijzer(s) daarin wilt verwijderen?",
@@ -698,16 +698,16 @@
     "message": "Deze pagina bladwijzeren met vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Alle"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Alleen geblokkeerd"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Alleen dode"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Laatste scan: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Markeren als dood"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Alles markeren"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Dode rijen gemarkeerd"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Bladwijzer-URL's worden naar deze externe service gestuurd. Leeg laten om alleen direct te controleren."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Start met scannen van $n$ bladwijzers",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "geblokkeerd"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Dode markering verwijderen"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Alle markeringen wissen"
   },
   "donationGo": {
     "message": "Doneren"
@@ -753,7 +753,7 @@
     "message": "Niet meer tonen"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Alles toepassen ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "De rest opschonen"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Http/https-verschillen negeren"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Houd deze"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Als bewaarder instellen"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ groepen · $count$ vrij te maken",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Verwijder deze kopie"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Alle bladwijzers"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Alleen bladwijzerbalk"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Houd die in de bladwijzerbalk"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Houd de meest bezochte"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Houd nieuwste"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Houd oudste"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Houd de ondiepste"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Houd de kortste titel"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Dode-link proxy-sjabloon"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Dode-link scan gelijktijdigheid (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Dode-link scan time-out in seconden (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Ga naar dode links weergave"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Ga naar duplicaten weergave"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Ga naar recente weergave"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Ga naar zoekweergave"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Ga naar boomweergave"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Open opties pagina"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Zoek '$query$' in zoekweergave",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Verwijderen"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Markeren als dood"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Tonen in boom"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Dode markering verwijderen"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Dode links"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Duplicaten"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Statistieken"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Ga naar statistiekenweergave"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Bezoekstatistieken inschakelen"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Op aantal"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Op recent"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Statistieken worden opgebouwd terwijl u bladwijzers opent"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Bezoekstatistieken zijn uitgeschakeld — schakel ze in bij Opties → Weergaven"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ keer bezocht",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Statistieken wissen"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Bezoekstatistieken voor $count$ bladwijzers wissen? Dit kan niet ongedaan worden gemaakt.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "Αριθμός πρόσφατων σελιδοδεικτών προς εμφάνιση"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "Καταγραφή ιστορικού αναζήτησης"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "Απενεργοποιώντας αυτό, διαγράφεται επίσης το υπάρχον ιστορικό."
   },
   "optionShowSyncStatus": {
     "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"
@@ -33,28 +33,28 @@
     "message": "Σύμπτυξη της ενότητας πρόσφατων από προεπιλογή"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "Προβολές"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "Εμφάνιση καρτελών προβολής κάτω από το πλαίσιο αναζήτησης"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "Εμφάνιση διαδρομής γονικού φακέλου στις γραμμές λίστας"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "Δεν υπάρχουν πρόσφατοι σελιδοδείκτες. Πατήστε Ctrl+D για σελιδοδείκτη στην τρέχουσα σελίδα."
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "Εμφάνιση στο Δέντρο"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "Εκκαθάριση όλων"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "Αφαίρεση αυτής της αναζήτησης"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ αποτέλεσμα(τα)",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "Πρόσφατες αναζητήσεις"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "πριν $n$ ημέρες",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "πριν $n$ ώρες",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "μόλις τώρα"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "πριν $n$ λεπτά",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "χθες"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "Πρόσφατα"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "Δέντρο"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "Αναζήτηση"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "Προβολή $name$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "Επιβεβαίωση πριν από διαγραφή μη κενών φακέλων"
   },
   "addSeparator": {
     "message": "Προσθήκη διαχωριστικού"
@@ -464,7 +464,7 @@
     "message": "Δεν βρέθηκαν αντίστοιχοι σελιδοδείκτες"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "Πληκτρολογήστε στο παραπάνω πλαίσιο για αναζήτηση των σελιδοδεικτών σας"
   },
   "sessionFolderName": {
     "message": "Συνεδρία $date$",
@@ -522,7 +522,7 @@
     "message": "Ταξινόμηση περιεχομένων φακέλου"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "Αυτός ο φάκελος περιέχει $count$ στοιχείο(α). Μπορείτε να αναιρέσετε τη διαγραφή.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "Διαγραφή"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "Είστε σίγουροι ότι θέλετε να διαγράψετε το φάκελο $folderName$ και $bookmarkCount$ σελιδοδείκτες σε αυτόν;",
@@ -698,16 +698,16 @@
     "message": "Προσθήκη σελιδοδείκτη με vBookmarks"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "Όλα"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "Μόνο αποκλεισμένα"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "Μόνο νεκρά"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "Τελευταία σάρωση: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "Σήμανση ως νεκρού"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "Σήμανση όλων"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "Νεκρές γραμμές επισημάνθηκαν"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "Οι διευθύνσεις URL των σελιδοδεικτών αποστέλλονται σε αυτήν την υπηρεσία τρίτου μέρους. Αφήστε κενό για απευθείας έλεγχο μόνο."
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "Έναρξη σάρωσης $n$ σελιδοδεικτών",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "αποκλεισμένο"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "Αφαίρεση σήμανσης νεκρού"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "Εκκαθάριση όλων των σημάνσεων"
   },
   "donationGo": {
     "message": "Δωρεά"
@@ -753,7 +753,7 @@
     "message": "Να μην εμφανιστεί ξανά"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "Εφαρμογή όλων ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "Καθαρισμός των υπολοίπων"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "Αγνόηση διαφορών http/https"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "Κρατήστε αυτό"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "Ορισμός ως φύλακας"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ ομάδες · $count$ προς απελευθέρωση",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "Διαγραφή αυτού του αντιγράφου"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "Όλοι οι σελιδοδείκτες"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "Μόνο η γραμμή σελιδοδεικτών"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "Κρατήστε αυτό στη γραμμή σελιδοδεικτών"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "Κρατήστε το πιο επισκέψιμο"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "Κρατήστε το νεότερο"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "Κρατήστε το παλαιότερο"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "Κρατήστε το πιο ρηχό"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "Κρατήστε τον συντομότερο τίτλο"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "Πρότυπο διακομιστή μεσολάβησης νεκρών συνδέσμων"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "Ταυτόχρονη σάρωση νεκρών συνδέσμων (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "Χρονικό όριο σάρωσης νεκρών συνδέσμων σε δευτερόλεπτα (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "Μετάβαση στην προβολή νεκρών συνδέσμων"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "Μετάβαση στην προβολή διπλοτύπων"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "Μετάβαση στην προβολή πρόσφατων"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "Μετάβαση στην προβολή αναζήτησης"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "Μετάβαση στην προβολή δέντρου"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "Άνοιγμα σελίδας επιλογών"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "Αναζήτηση '$query$' στην προβολή αναζήτησης",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "Διαγραφή"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "Σήμανση ως νεκρού"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "Εμφάνιση στο δέντρο"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "Αφαίρεση σήμανσης νεκρού"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "Νεκροί σύνδεσμοι"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "Διπλότυπα"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "Στατιστικά"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "Μετάβαση στην προβολή στατιστικών"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "Ενεργοποίηση στατιστικών επισκέψεων"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "Ανά αριθμό"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "Ανά πρόσφατο"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "Τα στατιστικά συσσωρεύονται καθώς ανοίγετε σελιδοδείκτες"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "Τα στατιστικά επισκέψεων είναι απενεργοποιημένα — ενεργοποιήστε τα στις Επιλογές → Προβολές"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "Επισκέφθηκε $count$ φορές",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "Εκκαθάριση στατιστικών"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "Εκκαθάριση στατιστικών επισκέψεων για $count$ σελιδοδείκτες; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

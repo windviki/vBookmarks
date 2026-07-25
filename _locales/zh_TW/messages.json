@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "顯示最近新增書籤的數量"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "記錄搜尋記錄"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "關閉此選項也會清除現有記錄。"
   },
   "optionShowSyncStatus": {
     "message": "顯示同步狀態指示器"
@@ -33,28 +33,28 @@
     "message": "預設收起最近新增區塊"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "檢視"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "在搜尋框下方顯示檢視標籤"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "在清單列顯示父資料夾路徑"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "尚無最近書籤。按 Ctrl+D 可將目前頁面加入書籤。"
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "在樹狀圖中顯示"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "全部清除"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "移除此搜尋"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$ 個結果",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "最近搜尋"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ 天前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ 小時前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "剛剛"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ 分鐘前",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "昨天"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "最近"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "樹狀圖"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "搜尋"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ 檢視",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "開啟多個書籤前需確認"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "刪除非空資料夾前先確認"
   },
   "addSeparator": {
     "message": "添加分隔符"
@@ -464,7 +464,7 @@
     "message": "無相符書籤"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "在上方輸入框輸入以搜尋您的書籤"
   },
   "sessionFolderName": {
     "message": "工作階段 $date$",
@@ -522,7 +522,7 @@
     "message": "排序資料夾內容"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "此資料夾包含 $count$ 個項目。您可以復原刪除。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "刪除"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "您確定要刪除資料夾[$folderName$]（包含 $bookmarkCount$ 個書籤）？",
@@ -698,16 +698,16 @@
     "message": "使用 vBookmarks 將此頁加入書籤"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "全部"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "僅被封鎖"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "僅失效"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "上次掃描：$time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "標示為失效"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "全部標示"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "已標示失效的列"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "書籤 URL 會傳送至這個第三方服務。留空則僅直接探測。"
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "開始掃描 $n$ 個書籤",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "被封鎖"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "移除失效標記"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "清除所有標記"
   },
   "donationGo": {
     "message": "贊助"
@@ -753,7 +753,7 @@
     "message": "不再顯示"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "全部套用 ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "清理其餘"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "忽略 http/https 差異"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "保留这一个"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "设为保留"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ 组 · $count$ 个将被释放",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "删除此副本"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "所有书签"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "仅书签栏"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "保留书签栏中的那个"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "保留最常访问的"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "保留最新的"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "保留最旧的"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "保留层次最浅的"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "保留标题最短的"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "失效链接代理模板"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "失效链接扫描并发数 (1-16)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "失效链接扫描超时秒数 (2-30)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "前往失效链接视图"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "前往重复项视图"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "前往最近视图"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "前往搜索视图"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "前往树形视图"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "开启选项页面"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "在搜索视图中搜寻 '$query$'",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "删除"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "标记为失效"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "在树中显示"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "移除失效标记"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "失效链接"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "重复项"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "统计"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "前往统计视图"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "启用访问统计"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "依次数"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "依最近"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "统计数据会在您开启书签时逐步累积"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "访问统计已关闭——可在选项→视图中启用"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "已访问 $count$ 次",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "清除统计资料"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "清除 $count$ 个书签的访问统计资料？此动作无法还原。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

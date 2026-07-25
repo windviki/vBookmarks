@@ -1,12 +1,12 @@
 {
   "optionRecentCount": {
-    "message": "[TODO:optionRecentCount]"
+    "message": "প্রদর্শনের জন্য সম্প্রতি যোগ করা বুকমার্কের সংখ্যা"
   },
   "optionSearchHistory": {
-    "message": "[TODO:optionSearchHistory]"
+    "message": "অনুসন্ধানের ইতিহাস সংরক্ষণ করুন"
   },
   "optionSearchHistoryHint": {
-    "message": "[TODO:optionSearchHistoryHint]"
+    "message": "এটি বন্ধ করলে বিদ্যমান ইতিহাসও মুছে যাবে।"
   },
   "optionShowSyncStatus": {
     "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
@@ -33,28 +33,28 @@
     "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
   },
   "optionsGroupViews": {
-    "message": "[TODO:optionsGroupViews]"
+    "message": "দৃশ্যসমূহ"
   },
   "optionShowViewTabs": {
-    "message": "[TODO:optionShowViewTabs]"
+    "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
   },
   "optionShowItemPath": {
-    "message": "[TODO:optionShowItemPath]"
+    "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
   },
   "recentEmpty": {
-    "message": "[TODO:recentEmpty]"
+    "message": "কোনও সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D টিপুন।"
   },
   "recentRevealInTree": {
-    "message": "[TODO:recentRevealInTree]"
+    "message": "ট্রিতে দেখান"
   },
   "searchHistoryClear": {
-    "message": "[TODO:searchHistoryClear]"
+    "message": "সব মুছুন"
   },
   "searchHistoryRemove": {
-    "message": "[TODO:searchHistoryRemove]"
+    "message": "এই অনুসন্ধান সরান"
   },
   "searchHistoryResultCount": {
-    "message": "[TODO:searchHistoryResultCount]",
+    "message": "$n$টি ফলাফল",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -62,10 +62,10 @@
     }
   },
   "searchHistoryTitle": {
-    "message": "[TODO:searchHistoryTitle]"
+    "message": "সাম্প্রতিক অনুসন্ধান"
   },
   "timeDaysAgo": {
-    "message": "[TODO:timeDaysAgo]",
+    "message": "$n$ দিন আগে",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -73,7 +73,7 @@
     }
   },
   "timeHoursAgo": {
-    "message": "[TODO:timeHoursAgo]",
+    "message": "$n$ ঘণ্টা আগে",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -81,10 +81,10 @@
     }
   },
   "timeJustNow": {
-    "message": "[TODO:timeJustNow]"
+    "message": "এইমাত্র"
   },
   "timeMinutesAgo": {
-    "message": "[TODO:timeMinutesAgo]",
+    "message": "$n$ মিনিট আগে",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -92,19 +92,19 @@
     }
   },
   "timeYesterday": {
-    "message": "[TODO:timeYesterday]"
+    "message": "গতকাল"
   },
   "viewRecent": {
-    "message": "[TODO:viewRecent]"
+    "message": "সাম্প্রতিক"
   },
   "viewTree": {
-    "message": "[TODO:viewTree]"
+    "message": "ট্রি"
   },
   "viewSearch": {
-    "message": "[TODO:viewSearch]"
+    "message": "অনুসন্ধান"
   },
   "viewSwitchAnnounce": {
-    "message": "[TODO:viewSwitchAnnounce]",
+    "message": "$name$ দৃশ্য",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -352,7 +352,7 @@
     "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
   },
   "optionConfirmDeleteFolder": {
-    "message": "[TODO:optionConfirmDeleteFolder]"
+    "message": "অ-খালি ফোল্ডার মুছার আগে নিশ্চিতকরণ"
   },
   "addSeparator": {
     "message": "সেপারেটর যোগ করুন"
@@ -464,7 +464,7 @@
     "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
   },
   "searchViewHint": {
-    "message": "[TODO:searchViewHint]"
+    "message": "আপনার বুকমার্ক অনুসন্ধান করতে উপরের বক্সে টাইপ করুন"
   },
   "sessionFolderName": {
     "message": "সেশন $date$",
@@ -522,7 +522,7 @@
     "message": "ফোল্ডার সাজান"
   },
   "confirmDeleteFolder": {
-    "message": "[TODO:confirmDeleteFolder]",
+    "message": "এই ফোল্ডারে $count$টি আইটেম রয়েছে। আপনি মুছে ফেলা পূর্বাবস্থায় ফিরিয়ে আনতে পারেন।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -530,7 +530,7 @@
     }
   },
   "confirmDeleteFolderButton": {
-    "message": "[TODO:confirmDeleteFolderButton]"
+    "message": "মুছুন"
   },
   "confirmDeleteFolderBookmarks": {
     "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
@@ -698,16 +698,16 @@
     "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
   },
   "deadFilterAll": {
-    "message": "[TODO:deadFilterAll]"
+    "message": "সব"
   },
   "deadFilterBlocked": {
-    "message": "[TODO:deadFilterBlocked]"
+    "message": "শুধু ব্লক করা"
   },
   "deadFilterDead": {
-    "message": "[TODO:deadFilterDead]"
+    "message": "শুধু মৃত"
   },
   "deadLastScanAt": {
-    "message": "[TODO:deadLastScanAt]",
+    "message": "শেষ স্ক্যান: $time$",
     "placeholders": {
       "time": {
         "content": "$1"
@@ -715,19 +715,19 @@
     }
   },
   "deadMark": {
-    "message": "[TODO:deadMark]"
+    "message": "মৃত হিসাবে চিহ্নিত করুন"
   },
   "deadMarkAll": {
-    "message": "[TODO:deadMarkAll]"
+    "message": "সব চিহ্নিত করুন"
   },
   "deadMarked": {
-    "message": "[TODO:deadMarked]"
+    "message": "মৃত সারি চিহ্নিত করা হয়েছে"
   },
   "deadProxyHint": {
-    "message": "[TODO:deadProxyHint]"
+    "message": "বুকমার্ক URL এই তৃতীয়-পক্ষ পরিষেবায় পাঠানো হয়। খালি রাখলে সরাসরি প্রোব করা হবে।"
   },
   "deadStartHint": {
-    "message": "[TODO:deadStartHint]",
+    "message": "$n$টি বুকমার্ক স্ক্যান করা শুরু করুন",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -735,13 +735,13 @@
     }
   },
   "deadStatusBlocked": {
-    "message": "[TODO:deadStatusBlocked]"
+    "message": "ব্লক করা"
   },
   "deadUnmark": {
-    "message": "[TODO:deadUnmark]"
+    "message": "মৃত চিহ্ন সরান"
   },
   "deadUnmarkAll": {
-    "message": "[TODO:deadUnmarkAll]"
+    "message": "সব চিহ্ন মুছুন"
   },
   "donationGo": {
     "message": "দান করুন"
@@ -753,7 +753,7 @@
     "message": "আবার দেখাবেন না"
   },
   "dupesApplyAll": {
-    "message": "[TODO:dupesApplyAll]",
+    "message": "সব প্রয়োগ করুন ($count$)",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -761,19 +761,19 @@
     }
   },
   "dupesGroupCleanRest": {
-    "message": "[TODO:dupesGroupCleanRest]"
+    "message": "বাকিগুলো পরিষ্কার করুন"
   },
   "dupesIgnoreScheme": {
-    "message": "[TODO:dupesIgnoreScheme]"
+    "message": "http/https পার্থক্য উপেক্ষা করুন"
   },
   "dupesKeepThis": {
-    "message": "[TODO:dupesKeepThis]"
+    "message": "এটি রাখুন"
   },
   "dupesKeeperSet": {
-    "message": "[TODO:dupesKeeperSet]"
+    "message": "রক্ষক সেট করুন"
   },
   "dupesPreviewSummary": {
-    "message": "[TODO:dupesPreviewSummary]",
+    "message": "$groups$ গোষ্ঠী · $count$ মুক্ত হবে",
     "placeholders": {
       "groups": {
         "content": "$1"
@@ -784,61 +784,61 @@
     }
   },
   "dupesRemoveRow": {
-    "message": "[TODO:dupesRemoveRow]"
+    "message": "এই কপি মুছুন"
   },
   "dupesScopeAll": {
-    "message": "[TODO:dupesScopeAll]"
+    "message": "সব বুকমার্ক"
   },
   "dupesScopeBar": {
-    "message": "[TODO:dupesScopeBar]"
+    "message": "শুধু বুকমার্ক বার"
   },
   "dupesStrategyBookmarkBar": {
-    "message": "[TODO:dupesStrategyBookmarkBar]"
+    "message": "বুকমার্ক বারে থাকাটি রাখুন"
   },
   "dupesStrategyMostVisited": {
-    "message": "[TODO:dupesStrategyMostVisited]"
+    "message": "সর্বাধিক দেখা রাখুন"
   },
   "dupesStrategyNewest": {
-    "message": "[TODO:dupesStrategyNewest]"
+    "message": "নতুনতম রাখুন"
   },
   "dupesStrategyOldest": {
-    "message": "[TODO:dupesStrategyOldest]"
+    "message": "পুরাতনতম রাখুন"
   },
   "dupesStrategyShallowest": {
-    "message": "[TODO:dupesStrategyShallowest]"
+    "message": "সর্বনিম্ন গভীর রাখুন"
   },
   "dupesStrategyShortestTitle": {
-    "message": "[TODO:dupesStrategyShortestTitle]"
+    "message": "সংক্ষিপ্ত শিরোনাম রাখুন"
   },
   "optionDeadProxy": {
-    "message": "[TODO:optionDeadProxy]"
+    "message": "মৃত লিঙ্ক প্রক্সি টেমপ্লেট"
   },
   "optionDeadScanConcurrency": {
-    "message": "[TODO:optionDeadScanConcurrency]"
+    "message": "মৃত লিঙ্ক স্ক্যান সমবর্তিতা (১-১৬)"
   },
   "optionDeadScanTimeout": {
-    "message": "[TODO:optionDeadScanTimeout]"
+    "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
   },
   "paletteCmdGoDead": {
-    "message": "[TODO:paletteCmdGoDead]"
+    "message": "মৃত লিঙ্ক ভিউতে যান"
   },
   "paletteCmdGoDupes": {
-    "message": "[TODO:paletteCmdGoDupes]"
+    "message": "ডুপ্লিকেট ভিউতে যান"
   },
   "paletteCmdGoRecent": {
-    "message": "[TODO:paletteCmdGoRecent]"
+    "message": "সাম্প্রতিক ভিউতে যান"
   },
   "paletteCmdGoSearch": {
-    "message": "[TODO:paletteCmdGoSearch]"
+    "message": "অনুসন্ধান ভিউতে যান"
   },
   "paletteCmdGoTree": {
-    "message": "[TODO:paletteCmdGoTree]"
+    "message": "ট্রি ভিউতে যান"
   },
   "paletteCmdOptions": {
-    "message": "[TODO:paletteCmdOptions]"
+    "message": "বিকল্প পাতা খুলুন"
   },
   "paletteCmdSearchInView": {
-    "message": "[TODO:paletteCmdSearchInView]",
+    "message": "অনুসন্ধান ভিউতে '$query$' অনুসন্ধান করুন",
     "placeholders": {
       "query": {
         "content": "$1"
@@ -846,51 +846,61 @@
     }
   },
   "rowActionDelete": {
-    "message": "[TODO:rowActionDelete]"
+    "message": "মুছুন"
   },
   "rowActionMark": {
-    "message": "[TODO:rowActionMark]"
+    "message": "মৃত হিসেবে চিহ্নিত করুন"
   },
   "rowActionReveal": {
-    "message": "[TODO:rowActionReveal]"
+    "message": "ট্রিতে প্রকাশ করুন"
   },
   "rowActionUnmark": {
-    "message": "[TODO:rowActionUnmark]"
+    "message": "মৃত চিহ্ন সরান"
   },
   "viewDead": {
-    "message": "[TODO:viewDead]"
+    "message": "মৃত লিঙ্ক"
   },
   "viewDupes": {
-    "message": "[TODO:viewDupes]"
+    "message": "ডুপ্লিকেট"
   },
   "viewStats": {
-    "message": "[TODO:viewStats]"
+    "message": "পরিসংখ্যান"
   },
   "paletteCmdGoStats": {
-    "message": "[TODO:paletteCmdGoStats]"
+    "message": "পরিসংখ্যান ভিউতে যান"
   },
   "optionStatsEnabled": {
-    "message": "[TODO:optionStatsEnabled]"
+    "message": "ভিজিট পরিসংখ্যান সক্রিয় করুন"
   },
   "statsSortByCount": {
-    "message": "[TODO:statsSortByCount]"
+    "message": "গণনা অনুসারে"
   },
   "statsSortByRecent": {
-    "message": "[TODO:statsSortByRecent]"
+    "message": "সাম্প্রতিক অনুসারে"
   },
   "statsEmpty": {
-    "message": "[TODO:statsEmpty]"
+    "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
   },
   "statsDisabledHint": {
-    "message": "[TODO:statsDisabledHint]"
+    "message": "ভিজিট পরিসংখ্যান বন্ধ — বিকল্প → ভিউতে এটি সক্রিয় করুন"
   },
   "statsVisitCount": {
-    "message": "[TODO:statsVisitCount]"
+    "message": "$count$ বার দেখা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "statsClearData": {
-    "message": "[TODO:statsClearData]"
+    "message": "পরিসংখ্যান মুছুন"
   },
   "statsClearConfirm": {
-    "message": "[TODO:statsClearConfirm]"
+    "message": "$count$ বুকমার্কের জন্য ভিজিট পরিসংখ্যান মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }
