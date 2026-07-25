@@ -214,7 +214,8 @@ const setup = (opts = {}) => {
             return positions && positions.length ? `<mark>${title}</mark>` : title;
         },
         rememberState: !!opts.rememberState,
-        views
+        views,
+        revealInTree: opts.revealInTree
     });
     return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, winListeners };
 };
@@ -334,6 +335,29 @@ describe('search execution + rendering', () => {
         const { els, viewHooks } = setup({});
         viewHooks.search.focus();
         expect(els['search-input'].focused).toBe(true);
+    });
+
+    // §2.3: R on a focused result row reveals it in the tree.
+    it('R reveals the focused result row in the tree; other keys and id-less rows decline', () => {
+        const revealCalls = [];
+        const { viewHooks } = setup({ revealInTree: id => revealCalls.push(id) });
+        // data-node-id path (both bookmark and folder rows carry it)
+        globalThis.document.activeElement = { parentNode: { dataset: { nodeId: '11' }, id: 'results-item-11' } };
+        let prevented = false;
+        expect(viewHooks.search.onKey({ key: 'r', preventDefault: () => { prevented = true; } })).toBe(true);
+        expect(prevented).toBe(true);
+        expect(revealCalls).toEqual(['11']);
+        // id-prefix fallback path
+        globalThis.document.activeElement = { parentNode: { dataset: {}, id: 'results-item-7' } };
+        expect(viewHooks.search.onKey({ key: 'R', preventDefault: () => {} })).toBe(true);
+        expect(revealCalls).toEqual(['11', '7']);
+        // non-R keys and rows without an id stay out of the way
+        expect(viewHooks.search.onKey({ key: 'x', preventDefault: () => {} })).toBe(false);
+        globalThis.document.activeElement = { parentNode: { dataset: {}, id: '' } };
+        expect(viewHooks.search.onKey({ key: 'r', preventDefault: () => {} })).toBe(false);
+        globalThis.document.activeElement = null;
+        expect(viewHooks.search.onKey({ key: 'r', preventDefault: () => {} })).toBe(false);
+        expect(revealCalls).toEqual(['11', '7']);
     });
 });
 

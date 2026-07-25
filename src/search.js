@@ -37,6 +37,9 @@
  * ctx.highlightTitlePositions(title, positions) — escaped, <mark>-wrapped title
  * ctx.rememberState            — restore the persisted query on startup when true
  * ctx.views                    — view-manager API (activate/attach/pathOf/isActive)
+ * ctx.revealInTree(id)         — treeView.revealInTree via a lazy closure
+ *                                (tree-view inits after search; called only
+ *                                on the R keypress, docs/v4task-2-list.md §2.3)
  *
  * window.VBMFuzzy is loaded by fuzzy.js (classic script) before neat.js.
  * document/window/chrome remain page globals, as in the rest of the popup.
@@ -85,6 +88,8 @@ export function initSearch(ctx = {}) {
         activate: () => {}, activeId: () => 'tree', isActive: () => false,
         attach: () => {}, pathOf: () => ''
     };
+    // Lazy closure over treeView (init order); only the R keypress calls it.
+    const revealInTree = ctx.revealInTree || (() => {});
     let returnView = 'tree';
 
     // --- Search history + last-query restore (§4.3) --------------------------
@@ -334,7 +339,24 @@ export function initSearch(ctx = {}) {
         },
         // §4.3 record timing ③: leaving the view with a live query.
         deactivate: () => recordHistory(searchInput.value),
-        focus: () => searchInput.focus()
+        focus: () => searchInput.focus(),
+        // §2.3: R reveals the focused result row in the tree (bookmark and
+        // folder rows alike — the folder rows' old click-jump unified here).
+        // Consumed before the type-ahead gate, like the other views' letter
+        // keys; the search input itself never reaches this hook (it is not
+        // a list row), so typing 'r' in the box is unaffected.
+        onKey: e => {
+            if (e.key !== 'r' && e.key !== 'R')
+                return false;
+            const item = document.activeElement;
+            const li = item && item.parentNode;
+            const id = li && (li.dataset.nodeId || li.id.replace(/^results-item-/, ''));
+            if (!id)
+                return false;
+            e.preventDefault();
+            revealInTree(id);
+            return true;
+        }
     });
     if (typeof window.addEventListener === 'function')
         window.addEventListener('pagehide', () => recordHistory(searchInput.value));

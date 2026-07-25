@@ -284,7 +284,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
         // 与上方 rememberState 初值相同的确定性推导（search 只读取启动初值）
         rememberState: !store.get('dontRememberState'),
         // v4 task-2: search mode rides the view state machine
-        views
+        views,
+        // §2.3 R 键在树中定位：treeView 在下方才初始化，惰性闭包求值
+        revealInTree: (...args) => treeView.revealInTree(...args)
     });
 
     // Popup auto-height — only grow, never shrink on user interaction.
