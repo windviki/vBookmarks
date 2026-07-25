@@ -97,6 +97,24 @@ const watch = (page, tag) => {
             await sleep(400);
             await page.screenshot({ path: `/tmp/shots/i18n/${lang}-tree.png` });
 
+            // View tab strip with localized labels (v4 task-2 §3.2); 'ar'
+            // doubles as the RTL mirror check — tab order must flip.
+            const tabStrip = await page.evaluate(() => {
+                const strip = document.querySelector('#view-tabs');
+                const tabs = [...document.querySelectorAll('#view-tabs .view-tab')];
+                return {
+                    dir: strip ? getComputedStyle(strip).direction : '(missing)',
+                    count: tabs.length,
+                    mirrored: tabs.length > 1 && tabs[0].offsetLeft > tabs[tabs.length - 1].offsetLeft
+                };
+            });
+            if (lang === 'ar') {
+                console.log(`ar RTL tab strip: ${JSON.stringify(tabStrip)}`);
+                if (tabStrip.dir !== 'rtl' || !tabStrip.mirrored)
+                    errors.push(`ar: tab strip not mirrored (${JSON.stringify(tabStrip)})`);
+            }
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-tabs.png` });
+
             // Bookmark context menu (GitHub row)
             await page.evaluate(() => {
                 const link = [...document.querySelectorAll('#tree a.tree-item-link')]

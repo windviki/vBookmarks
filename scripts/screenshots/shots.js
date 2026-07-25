@@ -193,16 +193,18 @@ const SEED = `
     console.log('donation card visible:', donationShown);
     await page.screenshot({ path: '/tmp/shots/12-donation-light.png' });
 
-    // Recent-bookmarks section, collapsed via its header (light)
+    // Recent view (light): the in-tree recent section became its own tab in
+    // v4 task-2 slice B — state 13 now captures the view.
     await page.evaluate(() => chrome.storage.local.set({ donationFactor: 1 }));
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(1200);
     await page.evaluate(() => {
-        const header = document.querySelector('#recent-header');
-        if (header) header.click();
+        const tab = document.querySelector('#view-tab-recent');
+        if (!tab) throw new Error('recent view tab not found');
+        tab.click();
     });
-    await sleep(400);
-    await page.screenshot({ path: '/tmp/shots/13-recent-collapsed-light.png' });
+    await sleep(500);
+    await page.screenshot({ path: '/tmp/shots/13-recent-view-light.png' });
     await page.close();
 
     // --- options page ------------------------------------------------------

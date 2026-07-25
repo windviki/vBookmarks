@@ -1,5 +1,9 @@
-// vBookmarks theme screenshot harness — captures the explicit fable-taste
-// themes (ink = dark, paper = light) on the popup tree and the options page.
+// vBookmarks theme screenshot harness — v4 task-2 acceptance (docs/
+// v4task-2.md §3.2, docs/v4task-2-list.md §5): the view tab strip on all
+// five themes plus one full-state shot per view (tree with the dead-mark
+// overlay, dupes keeper/will-delete rows, dead status badges, stats count
+// pills). Options/advanced shots stay for the two explicit fable themes
+// (ink = dark, paper = light).
 // Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots.
 const puppeteer = require('puppeteer');
 require('fs').mkdirSync('/tmp/shots', { recursive: true });
@@ -10,24 +14,42 @@ const SEED = `
 (async () => {
     const create = p => new Promise(r => chrome.bookmarks.create(p, r));
     const work = await create({ parentId: '1', title: '工作区' });
-    await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
+    const gh = await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
     await create({ parentId: work.id, title: 'Linear — Issues', url: 'https://linear.app/team/issues' });
     await create({ parentId: work.id, title: 'Figma — Design System', url: 'https://www.figma.com/files/design-system' });
-    await create({ parentId: work.id, title: 'Vercel Dashboard', url: 'https://vercel.com/dashboard' });
     const dev = await create({ parentId: work.id, title: '开发参考' });
-    await create({ parentId: dev.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
+    const mdn = await create({ parentId: dev.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
     await create({ parentId: dev.id, title: 'Chrome Extensions Docs', url: 'https://developer.chrome.com/docs/extensions' });
     await create({ parentId: dev.id, title: 'Can I Use', url: 'https://caniuse.com/esmodules' });
-    await create({ parentId: work.id, title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/google-chrome-extension' });
     const read = await create({ parentId: '1', title: '稍后读' });
     await create({ parentId: read.id, title: 'The Grumpy Designer on Calm UI', url: 'https://example.com/calm-ui' });
     await create({ parentId: read.id, title: '少数派：效率工具年度盘点', url: 'https://sspai.com/post/annual-tools' });
-    await create({ parentId: read.id, title: 'A List Apart — Typography', url: 'https://alistapart.com/topic/typography' });
-    await create({ parentId: '1', title: 'Hacker News', url: 'https://news.ycombinator.com' });
-    await create({ parentId: '1', title: 'Planet Mozilla', url: 'https://planet.mozilla.org' });
-    const misc = await create({ parentId: '2', title: '灵感' });
-    await create({ parentId: misc.id, title: 'Awwwards', url: 'https://www.awwwards.com' });
-    await create({ parentId: misc.id, title: 'Dribbble', url: 'https://dribbble.com/shots' });
+    const so = await create({ parentId: '1', title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/google-chrome-extension' });
+    // dupes group (keeper + two will-delete rows) and dead candidates
+    await create({ parentId: '1', title: 'GitHub (old)', url: 'https://github.com/vBookmarks' });
+    await create({ parentId: read.id, title: 'GitHub Mirror', url: 'https://github.com/vBookmarks' });
+    const dead1 = await create({ parentId: '1', title: 'Dead Link (example)', url: 'https://example.invalid/dead-page' });
+    const dead2 = await create({ parentId: '1', title: 'Bogus host', url: 'https://thishost.does.not.exist.example/' });
+    const dead3 = await create({ parentId: read.id, title: 'Rotting link', url: 'https://another.dead.example.com/link' });
+
+    const now = Date.now();
+    await new Promise(r => chrome.storage.local.set({
+        visitStats: JSON.stringify({
+            [so.id]: { c: 128, t: now - 60e3 },
+            [gh.id]: { c: 42, t: now - 3600e3 },
+            [mdn.id]: { c: 7, t: now - 2 * 864e5 }
+        }),
+        deadMarks: JSON.stringify([dead1.id]),
+        deadLastScan: JSON.stringify({
+            ts: now - 3600e3,
+            scannedCount: 14,
+            results: {
+                [dead1.id]: { status: 'dead', code: 404 },
+                [dead2.id]: { status: 'dead', code: 0, error: 'ERR_NAME_NOT_RESOLVED' },
+                [dead3.id]: { status: 'blocked' }
+            }
+        })
+    }, r));
 })()`;
 
 (async () => {
@@ -76,11 +98,16 @@ const SEED = `
         if (!span.parentNode.classList.contains('open')) span.click();
     }, name);
 
-    for (const theme of ['ink', 'paper']) {
-        // Popup tree in this theme. chrome.storage.local overrides the
-        // localStorage prefill once loaded (options page does the same),
-        // so seed BOTH stores and reload — otherwise a previous theme
-        // iteration's chrome.storage value leaks into this shot.
+    const activateView = (page, id) => page.evaluate(viewId => {
+        const tab = document.querySelector(`#view-tab-${viewId}`);
+        if (!tab) throw new Error('view tab not found: ' + viewId);
+        tab.click();
+    }, id);
+
+    for (const theme of ['auto', 'light', 'dark', 'ink', 'paper']) {
+        // Popup in this theme. chrome.storage.local overrides the
+        // localStorage prefill once loaded, so seed BOTH stores and reload —
+        // otherwise a previous iteration's value leaks into this shot.
         const page = await browser.newPage();
         watch(page, `popup-${theme}`);
         await page.setViewport({ width: 400, height: 640 });
@@ -96,18 +123,31 @@ const SEED = `
         }), theme);
         await page.reload({ waitUntil: 'networkidle0' });
         await sleep(1200);
+        // §3.2 acceptance: tab strip (all six views) + the tree carrying a
+        // dead-mark × overlay row (the marked GitHub (old) sits at the bar
+        // root — expanding the bar root is enough).
         await clickFolder(page, 'Bookmarks bar').catch(() => clickFolder(page, '书签栏'));
         await sleep(400);
         await clickFolder(page, '工作区');
         await sleep(400);
-        await clickFolder(page, '开发参考');
-        await sleep(400);
-        await page.screenshot({ path: `/tmp/shots/theme-${theme}-tree.png` });
+        await page.screenshot({ path: `/tmp/shots/theme-${theme}-tabs.png` });
+
+        // Full-state rows of the remaining list views (§5 五主题验收截图).
+        await activateView(page, 'dupes');
+        await sleep(500);
+        await page.screenshot({ path: `/tmp/shots/theme-${theme}-dupes.png` });
+        await activateView(page, 'dead');
+        await sleep(500);
+        await page.screenshot({ path: `/tmp/shots/theme-${theme}-dead.png` });
+        await activateView(page, 'stats');
+        await sleep(500);
+        await page.screenshot({ path: `/tmp/shots/theme-${theme}-stats.png` });
         await page.close();
 
-        // Options page in this theme. chrome.storage.local is the options
-        // page's source of truth (it overrides the localStorage prefill),
-        // so seed both stores, then reload for a clean read.
+        // Options + advanced options keep their ink/paper coverage.
+        if (theme !== 'ink' && theme !== 'paper')
+            continue;
+
         const opts = await browser.newPage();
         watch(opts, `options-${theme}`);
         await opts.setViewport({ width: 760, height: 640 });
@@ -121,7 +161,6 @@ const SEED = `
         await opts.screenshot({ path: `/tmp/shots/theme-${theme}-options.png` });
         await opts.close();
 
-        // Advanced options (CodeMirror editor) in this theme
         const adv = await browser.newPage();
         watch(adv, `adv-${theme}`);
         await adv.setViewport({ width: 760, height: 640 });

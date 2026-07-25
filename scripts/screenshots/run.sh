@@ -6,8 +6,11 @@
 # runs the zero-console-error smoke check (smoke.js, the image CMD), then
 # captures the two screenshot suites:
 #   shots.js         — 11 interaction states, light + dark themes
-#   shots-themes.js  — popup/options/advanced in the ink + paper themes
-#   shots-i18n.js    — tree/menus/edit-dialog/options per UI language (8x5)
+#   shots-themes.js  — view tab strip + full-state view rows on all 5 themes
+#                      (options/advanced keep ink + paper)
+#   shots-i18n.js    — tree/tabs/menus/edit-dialog/options per UI language (8x6)
+#   shots-palette.js — the v4 view system: palette table + recent/stats/
+#                      dupes/dead views + live dead rescan
 # Screenshots land in tmp/shots/ (git-ignored).
 #
 # Usage: scripts/screenshots/run.sh [--smoke-only]
