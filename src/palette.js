@@ -458,6 +458,11 @@ export function initPalette(ctx = {}) {
     const open = () => {
         if (openState || anyDialogOpen())
             return;
+        // A context menu must not float over the panel (menus sit one layer
+        // above the palette) — pointer paths clear it via the body click,
+        // the Ctrl/Cmd+K path needs this.
+        if (clearMenu)
+            clearMenu();
         openState = true;
         $palette.hidden = false;
         $input.value = '';

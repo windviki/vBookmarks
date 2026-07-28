@@ -95,6 +95,16 @@ export function initContextMenu(ctx = {}) {
         $paletteResults.addEventListener('scroll', clearMenu);
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
+    // Round-3 item 3: the feature-view lists follow the same contract —
+    // scrolling the content or moving focus into the list dismisses an open
+    // menu (previously only the tree/results/palette panes did).
+    for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
+        const listEl = $(id);
+        if (listEl) {
+            listEl.addEventListener('scroll', clearMenu);
+            listEl.addEventListener('focus', clearMenu, true);
+        }
+    }
 
     let macCloseContextMenu = false;
     body.addEventListener('contextmenu', e => {

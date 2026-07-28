@@ -354,6 +354,14 @@ describe('module API + open/close state machine', () => {
         expect(input.placeholder).toBe(MSGS.palettePlaceholder);
     });
 
+    it('open dismisses an open context menu first (round-3 item 3)', () => {
+        const clearMenuCalls = [];
+        const { palette } = setup({ clearMenu: () => clearMenuCalls.push(1) });
+        palette.open();
+        expect(clearMenuCalls).toEqual([1]);
+        expect(palette.isOpen()).toBe(true);
+    });
+
     it('close hides the panel and flips isOpen back', () => {
         const { palette, paletteEl } = setup({});
         palette.open();
@@ -465,6 +473,7 @@ describe('focusout dismissal (round-3 item 1)', () => {
         const clearMenuCalls = [];
         const { palette, paletteEl, el } = setup({ clearMenu: () => clearMenuCalls.push(1) });
         palette.open();
+        clearMenuCalls.length = 0; // open() itself clears menus first
         const menuRow = el('A');
         menuRow.classList.add('active'); // the menu-open signal
         fireFocusout(paletteEl, menuRow);

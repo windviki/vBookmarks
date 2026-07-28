@@ -45,7 +45,8 @@
  *
  * initViewManager(ctx) is called once by neat.js right after the context
  * menus init (search.js needs it at init): ctx.store, ctx.isPanel,
- * ctx.rtl. document/chrome remain page globals.
+ * ctx.rtl, ctx.clearMenu (view switches dismiss open menus). document/
+ * chrome remain page globals.
  */
 
 import { VIEW_ICONS } from './icons.js';
@@ -58,6 +59,9 @@ export function initViewManager(ctx = {}) {
     const isPanel = !!ctx.isPanel;
     const rtl = !!ctx.rtl;
     const body = document.body;
+    // context-menu.js's clearMenu (optional; neat.js injects it): switching
+    // views must not leave a menu floating over the outgoing view's rows.
+    const clearMenu = ctx.clearMenu || (() => {});
 
     const $tabs = $('view-tabs');
     const $announce = $('view-announce');
@@ -242,6 +246,10 @@ export function initViewManager(ctx = {}) {
             return false;
         if (activeId === id)
             return true;
+        // Round-3 consistency: an open context menu points at a row of the
+        // outgoing view — never let it float over the incoming one (pointer
+        // paths already clear it through the body-click binding).
+        clearMenu();
         const prev = byId[activeId];
         if (prev) {
             if (prev.deactivate)

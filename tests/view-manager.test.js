@@ -178,10 +178,12 @@ const setup = (opts = {}) => {
         }
     };
 
+    const clearMenuCalls = [];
     const views = initViewManager({
         store,
         isPanel: !!opts.isPanel,
-        rtl: !!opts.rtl
+        rtl: !!opts.rtl,
+        clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1)
     });
 
     const fireDoc = (type, ev) => {
@@ -196,7 +198,7 @@ const setup = (opts = {}) => {
         container: makeEl(), listEl: makeEl(), ...extra
     });
 
-    return { views, doc, store, byId, makeEl, fireDoc, tabs, indicator, addRecent };
+    return { views, doc, store, byId, makeEl, fireDoc, tabs, indicator, addRecent, clearMenuCalls };
 };
 
 describe('startup + tab rendering', () => {
@@ -389,6 +391,31 @@ describe('Escape levels (§3.4)', () => {
         views.activate('search', { keepFocus: true });
         expect(views.escapeToTree()).toBe(true);
         expect(views.activeId()).toBe('tree');
+    });
+});
+
+describe('menu dismissal on view switches (round-3 item 3)', () => {
+    it('activate clears any open context menu before switching', () => {
+        const { views, clearMenuCalls } = setup({});
+        clearMenuCalls.length = 0; // startup activation already ran
+        views.activate('search', { keepFocus: true });
+        expect(clearMenuCalls).toEqual([1]);
+        // re-activating the same view is a no-op (no extra clear)
+        views.activate('search', { keepFocus: true });
+        expect(clearMenuCalls).toEqual([1]);
+    });
+
+    it('the Ctrl/Cmd+number jump clears menus through the same path', () => {
+        const ctx = setup({});
+        ctx.clearMenuCalls.length = 0;
+        const ev = {
+            key: '2', ctrlKey: true, altKey: false, shiftKey: false,
+            defaultPrevented: false,
+            preventDefault() { this.defaultPrevented = true; }
+        };
+        ctx.fireDoc('keydown', ev);
+        expect(ctx.views.activeId()).toBe('search');
+        expect(ctx.clearMenuCalls).toEqual([1]);
     });
 });
 

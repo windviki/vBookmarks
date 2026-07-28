@@ -104,6 +104,11 @@ const setup = (opts = {}) => {
     el('DIV', 'dead-mark-toggle');
     el('DIV', 'dupes-set-keeper');
     const tree = el('DIV', 'tree');
+    // round-3 item 3: the feature-view lists get the same scroll/focus
+    // menu-dismissal wiring as the tree/results panes
+    const viewLists = {};
+    for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area'])
+        viewLists[id] = el('DIV', id);
     const body = el('BODY', 'body');
     body.offsetWidth = opts.bodyWidth === undefined ? 500 : opts.bodyWidth;
     body.querySelector = sel =>
@@ -200,7 +205,7 @@ const setup = (opts = {}) => {
         fire(body, 'contextmenu', makeEvent({ target, pageX: 50, pageY: 60, clientY: 60, ...evProps }));
 
     return {
-        menus, byId, el, body, tree, results,
+        menus, byId, el, body, tree, results, viewLists,
         bookmarkMenu, folderMenu, separatorMenu,
         chrome: chromeStub, actionCalls, sortCalls, revealCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, menuItem, openOn,
@@ -300,6 +305,19 @@ describe('clearMenu', () => {
             trigger();
             expect(bookmarkMenu.style.opacity, name).toBe('0');
             expect(bookmarkMenu.style.left, name).toBe('-999px');
+        }
+    });
+
+    it('every feature-view list dismisses the menu on scroll and focus (round-3 item 3)', () => {
+        const { viewLists, bookmarkMenu } = setup({});
+        for (const [id, listEl] of Object.entries(viewLists)) {
+            for (const type of ['scroll', 'focus']) {
+                bookmarkMenu.style.left = '10px';
+                bookmarkMenu.style.opacity = '1';
+                fire(listEl, type, makeEvent({ target: listEl }));
+                expect(bookmarkMenu.style.opacity, `${id} ${type}`).toBe('0');
+                expect(bookmarkMenu.style.left, `${id} ${type}`).toBe('-999px');
+            }
         }
     });
 });

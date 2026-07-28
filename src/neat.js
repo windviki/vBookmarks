@@ -267,7 +267,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
     const views = initViewManager({
         store,
         isPanel: IS_PANEL,
-        rtl
+        rtl,
+        clearMenu: menus.clearMenu
     });
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
