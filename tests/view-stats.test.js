@@ -3,10 +3,14 @@ import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 // view-stats.js touches page globals (document/chrome/setTimeout) only
 // inside initViewStats and its handlers, so the real module imports cleanly
 // in node once the globals are stubbed. store/views/treeRender/
-// separatorManager/treeView/dialogs/visitStats are injected recording
-// doubles; the registered ViewDef is captured and driven by hand.
+// separatorManager/treeView/dialogs/visitStats/undo/onChanged are injected
+// recording doubles; the registered ViewDef is captured and driven by hand.
 // Assertions go through the doubles' records and the list's innerHTML —
 // nothing is copied from the module body.
+// 第四轮项9: the chrome stub grows permissions/history and
+// bookmarks.create/get for the recent-history section; permission defaults
+// to MISSING so the pre-existing suites see the guide row (which none of
+// their toContain/calls assertions notice).
 
 let initViewStats;
 let timeouts;
@@ -87,7 +91,36 @@ const setup = (opts = {}) => {
         bookmarks: {
             getTreeCalls: 0,
             getTree(cb) { this.getTreeCalls++; cb(opts.tree || TREE); },
+            createCalls: [],
+            create(bm, cb) {
+                this.createCalls.push(bm);
+                cb('createResult' in opts ? opts.createResult : { id: '99', title: bm.title, url: bm.url });
+            },
+            getCalls: [],
+            get(id, cb) {
+                this.getCalls.push(id);
+                cb(opts.folderNodes || [{ title: 'Bookmarks bar' }]);
+            },
             onRemoved: { addListener(fn) { this.fn = fn; } }
+        },
+        permissions: {
+            containsCalls: [],
+            contains(p, cb) {
+                this.containsCalls.push(p);
+                cb(!!opts.hasHistoryPermission);
+            },
+            requestCalls: [],
+            request(p, cb) {
+                this.requestCalls.push(p);
+                cb('requestGranted' in opts ? opts.requestGranted : true);
+            }
+        },
+        history: {
+            searchCalls: [],
+            search(q, cb) {
+                this.searchCalls.push(q);
+                cb(opts.historyItems || []);
+            }
         }
     };
     globalThis.chrome = chromeStub;
@@ -138,15 +171,25 @@ const setup = (opts = {}) => {
         clear() { this.cleared++; this.data = {}; },
         enabled() { return this.enabledValue; }
     };
+    const undo = {
+        toasts: [],
+        showToast(msg) { this.toasts.push(msg); }
+    };
+    const onChanged = {
+        calls: 0,
+        fn() { onChanged.calls++; }
+    };
 
     const viewStats = initViewStats({
-        store, views, treeRender, separatorManager, treeView, dialogs, visitStats
+        store, views, treeRender, separatorManager, treeView, dialogs, visitStats,
+        undo, onChanged: onChanged.fn
     });
     return {
         viewStats, $list, $container, chrome: chromeStub, store, views,
-        treeRender, treeView, dialogs, visitStats,
+        treeRender, treeView, dialogs, visitStats, undo, onChanged,
         def: () => views.def,
-        click: ev => $list._listeners.click[0](ev)
+        click: ev => $list._listeners.click[0](ev),
+        contextmenu: ev => $list._listeners.contextmenu[0](ev)
     };
 };
 
@@ -349,5 +392,215 @@ describe('row clicks', () => {
         const ev = { preventDefault() {}, target: { closest: () => null } };
         s.click(ev);
         expect(s.treeView.handlerCalls).toEqual([ev]);
+    });
+});
+
+
+// === 第四轮项9: recent-history section, one-click star, permission guide ===
+
+const HISTORY = [
+    { url: 'http://a/', title: 'Alpha visited', visitCount: 3, lastVisitTime: NOW - 1000 }, // bookmarked (id 7)
+    { url: 'http://elsewhere/', title: 'Elsewhere', visitCount: 1, lastVisitTime: NOW - 2000 } // not in the tree
+];
+
+describe('recent-history section (第四轮项9)', () => {
+    it('renders bookmarked and unbookmarked history rows above the stats section', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        expect(s.chrome.history.searchCalls).toEqual([{ text: '', startTime: 0, maxResults: 200 }]);
+        // both section heads, recent first
+        const html = s.$list.innerHTML;
+        const recentAt = html.indexOf('statsSectionRecent');
+        const statsAt = html.indexOf('statsSectionBookmarks');
+        expect(recentAt).toBeGreaterThan(-1);
+        expect(statsAt).toBeGreaterThan(recentAt);
+        // bookmarked row: real row id + ★ badge meta, no ☆ button on it
+        expect(html).toContain('id="stats-hist-7"');
+        expect(html).toContain('data-node-id="7"');
+        const bookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        expect(bookmarkedCall.id).toBe('7');
+        expect(bookmarkedCall.meta.rightText).toBe('timeJustNow');
+        expect(bookmarkedCall.meta.badge)
+            .toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+        // unbookmarked row: ☆ row button, no bookmark id
+        const unbookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
+        expect(unbookmarkedCall.id).toBe(null);
+        expect(html).toContain('class="row-btn stats-add-btn" data-hist-idx="1"');
+        expect(html).toContain('statsHistoryAdd');
+    });
+
+    it('renders newest first, dedupes slash-folded URLs and skips unbookmarkable schemes', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: [
+                { url: 'http://new/', title: 'n', lastVisitTime: NOW - 100 },
+                { url: 'http://old/', title: 'o', lastVisitTime: NOW - 200 },
+                { url: 'http://new', title: 'n2', lastVisitTime: NOW - 300 }, // slash-fold dup
+                { url: 'chrome://extensions/', title: 'c', lastVisitTime: NOW - 400 },
+                { url: 'javascript:alert(1)', title: 'j', lastVisitTime: NOW - 500 }
+            ]
+        });
+        s.def().activate();
+        expect(s.treeRender.calls.map(c => c.url)).toEqual(['http://new/', 'http://old/']);
+    });
+
+    it('omits the section entirely when granted but history is empty', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: [] });
+        s.def().activate();
+        expect(s.$list.innerHTML).not.toContain('statsSectionRecent');
+        expect(s.$list.innerHTML).not.toContain('stats-history-guide');
+        expect(s.$list.innerHTML).toContain('statsSectionBookmarks'); // stats section intact
+        expect(s.$list.innerHTML).toContain('<i>statsEmpty</i>');
+    });
+
+    it('keeps the head as the carrier row LAST child (anchor stays firstElementChild for Enter)', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        const m = s.$list.innerHTML.match(/<li class="vbm-row stats-hist-row has-head"[^>]*>([\s\S]*?)<\/li>/);
+        expect(m).not.toBe(null);
+        expect(m[1].indexOf('<a ')).toBe(0); // anchor first (keyboard.js Enter contract)
+        expect(m[1]).toContain('stats-section-head" role="presentation">statsSectionRecent</div>');
+        expect(m[1].indexOf('stats-section-head')).toBeGreaterThan(m[1].indexOf('</a>'));
+    });
+
+    it('refetches history on every activation (data is only pulled on activate)', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        s.def().activate();
+        expect(s.chrome.history.searchCalls).toHaveLength(2);
+        expect(s.chrome.bookmarks.getTreeCalls).toBe(1); // stats rows stay cached
+    });
+});
+
+describe('history-permission guide row', () => {
+    it('shows the compact guide (sentence + Enable) instead of the section while permission is missing', () => {
+        const s = setup({}); // hasHistoryPermission defaults to false
+        s.def().activate();
+        expect(s.chrome.permissions.containsCalls).toEqual([{ permissions: ['history'] }]);
+        expect(s.chrome.history.searchCalls).toEqual([]); // no fetch without a grant
+        const html = s.$list.innerHTML;
+        expect(html).toContain('stats-history-guide');
+        expect(html).toContain('statsHistoryGuide');
+        expect(html).toContain('statsSectionRecent'); // the guide carries the section head
+        // the enable link is the row's firstElementChild (keyboard Enter contract)
+        expect(html).toContain(
+            '<li class="stats-history-guide has-head" role="listitem"><a href="" class="stats-history-enable"');
+    });
+
+    it('granting from the guide row fetches history immediately and swaps in the rows', () => {
+        const s = setup({ hasHistoryPermission: false, requestGranted: true, historyItems: HISTORY });
+        s.def().activate();
+        expect(s.$list.innerHTML).toContain('stats-history-guide');
+        s.click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.stats-history-enable' ? {} : null) }
+        });
+        expect(s.chrome.permissions.requestCalls).toEqual([{ permissions: ['history'] }]);
+        expect(s.chrome.history.searchCalls).toHaveLength(1);
+        expect(s.$list.innerHTML).not.toContain('stats-history-guide');
+        expect(s.$list.innerHTML).toContain('stats-add-btn');
+    });
+
+    it('a denied request keeps the guide row and fetches nothing', () => {
+        const s = setup({ hasHistoryPermission: false, requestGranted: false });
+        s.def().activate();
+        s.click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.stats-history-enable' ? {} : null) }
+        });
+        expect(s.chrome.permissions.requestCalls).toEqual([{ permissions: ['history'] }]);
+        expect(s.chrome.history.searchCalls).toEqual([]);
+        expect(s.$list.innerHTML).toContain('stats-history-guide');
+    });
+});
+
+describe('one-click bookmark from a history row (☆)', () => {
+    const starClick = (s, idx) => s.click({
+        preventDefault() {},
+        target: {
+            closest: sel => (sel === '.stats-add-btn' ? { dataset: { histIdx: `${idx}` } } : null)
+        }
+    });
+
+    it('creates under quickAddFolderId, flips the row, invalidates the tree and toasts', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: HISTORY,
+            storeData: { quickAddFolderId: '5' },
+            folderNodes: [{ title: 'Work' }]
+        });
+        s.def().activate();
+        starClick(s, 1); // the unbookmarked row
+        expect(s.chrome.bookmarks.createCalls).toEqual([
+            { title: 'Elsewhere', url: 'http://elsewhere/', parentId: '5' }
+        ]);
+        expect(s.chrome.bookmarks.getCalls).toEqual(['5']);
+        expect(s.undo.toasts).toEqual(['quickAddedTo[Work]']); // quick-add wording, reused
+        expect(s.onChanged.calls).toBe(1);
+        // flipped: ★ badge + real id, the ☆ button is gone
+        expect(s.$list.innerHTML).not.toContain('stats-add-btn');
+        expect(s.$list.innerHTML).toContain('id="stats-hist-99"');
+        expect(s.$list.innerHTML).toContain('data-node-id="99"');
+        const flipped = s.treeRender.calls[s.treeRender.calls.length - 1];
+        expect(flipped.id).toBe('99');
+        expect(flipped.meta.badge)
+            .toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+    });
+
+    it('lands in the bookmarks bar (id 1) when quickAddFolderId is unset', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        starClick(s, 1);
+        expect(s.chrome.bookmarks.createCalls[0].parentId).toBe('1');
+    });
+
+    it('falls back to the URL as title and ignores repeat adds on a flipped row', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: [{ url: 'http://untitled/', title: '', lastVisitTime: NOW - 100 }]
+        });
+        s.def().activate();
+        starClick(s, 0);
+        expect(s.chrome.bookmarks.createCalls[0].title).toBe('http://untitled/');
+        starClick(s, 0); // already bookmarked — the guard makes it a no-op
+        expect(s.chrome.bookmarks.createCalls).toHaveLength(1);
+    });
+
+    it('a failed create leaves the row unbookmarked (no flip, no toast, no invalidation)', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY, createResult: undefined });
+        s.def().activate();
+        starClick(s, 1);
+        expect(s.chrome.bookmarks.createCalls).toHaveLength(1);
+        expect(s.undo.toasts).toEqual([]);
+        expect(s.onChanged.calls).toBe(0);
+        expect(s.$list.innerHTML).toContain('stats-add-btn'); // still unbookmarked
+    });
+});
+
+describe('contextmenu on rows without a bookmark id', () => {
+    it('is swallowed on unbookmarked rows but bubbles through on bookmarked ones', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        const calls = { prevent: 0, stop: 0 };
+        const ev = li => ({
+            target: { closest: sel => (sel === 'li' ? li : null) },
+            preventDefault() { calls.prevent++; },
+            stopPropagation() { calls.stop++; }
+        });
+        s.contextmenu(ev({ dataset: {} })); // unbookmarked history row / guide row
+        expect(calls).toEqual({ prevent: 1, stop: 1 });
+        s.contextmenu(ev({ dataset: { nodeId: '7' } })); // bookmarked row → menu chain intact
+        expect(calls).toEqual({ prevent: 1, stop: 1 });
+    });
+});
+
+describe('statsEnabled off (第四轮项9 regression)', () => {
+    it('probes nothing and fetches nothing while the master switch is off', () => {
+        const s = setup({ enabled: false, hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        expect(s.chrome.permissions.containsCalls).toEqual([]);
+        expect(s.chrome.history.searchCalls).toEqual([]);
+        expect(s.$list.innerHTML).toContain('<i>statsDisabledHint</i>');
+        expect(s.$list.innerHTML).not.toContain('statsSectionRecent');
     });
 });

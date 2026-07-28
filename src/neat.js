@@ -504,7 +504,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
 
     // Stats view (v4 task-2 切片 D): visit counters as their own tab.
     // Registration order fixes the tab order (§2: tree/search/recent/
-    // stats/dead/dupes).
+    // stats/dead/dupes). 第四轮项9: undo serves the star-add toast and
+    // onChanged is the minimal tree-invalidation hook after a one-click
+    // bookmark from the recent-history section (same chain undo/palette use).
     const viewStats = initViewStats({
         store,
         views,
@@ -512,7 +514,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
         separatorManager,
         treeView,
         dialogs,
-        visitStats
+        visitStats,
+        undo,
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
 
     // Dead/dupes views (v4 task-2 切片 C): the palette's old dupes/dead

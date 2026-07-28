@@ -2416,3 +2416,102 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-muted);
     padding: 0 2px;
 }
+
+
+/* === 第四轮项9: stats view — recent-history section + one-click star === */
+
+/* Both sections share one flat <ul>. Rows carrying a section head or an
+   inline action button go flex (the dupes-member recipe) so the ☆ row
+   button sits on the row line instead of wrapping below the anchor. The
+   head div is the row's LAST DOM child — `order:-1` on a full-basis flex
+   item wraps it above the row while li.firstElementChild stays the anchor
+   (keyboard.js Enter dispatches its synthetic click there). */
+#stats-list ul li.stats-hist-row,
+#stats-list ul li.has-head {
+    display: flex;
+    align-items: center;
+}
+
+#stats-list ul li.has-head {
+    flex-wrap: wrap;
+}
+
+#stats-list ul li.stats-hist-row > a.tree-item-link,
+#stats-list ul li.has-head > a.tree-item-link {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Section heads: muted small type (recent-group-head semantics), pulled
+   above their carrier row; the list's first row needs no extra top air. */
+#stats-list .stats-section-head {
+    order: -1;
+    flex: 0 0 100%;
+    padding: 6px 8px 2px;
+    font-size: 11px;
+    color: var(--vbm-muted);
+    user-select: none;
+}
+
+#stats-list ul li:first-child .stats-section-head {
+    padding-top: 2px;
+}
+
+/* Bookmarked history rows carry a ★ in the badge slot (symbol + aria
+   label, never color alone); unbookmarked rows get the hover-revealed ☆
+   .row-btn instead. */
+.vbm-row .row-badge.starred {
+    background: transparent;
+    color: var(--vbm-accent);
+    padding: 0 2px;
+}
+
+/* Permission guide row: one muted sentence + the accent Enable link. DOM
+   order is link-first (Enter contract) — flex order flips the visual to
+   text-then-link. The shared `li a` row chrome (16px slot, hover/selected
+   backgrounds) is peeled back off the link. */
+#stats-list ul li.stats-history-guide {
+    padding: 2px 8px 6px;
+}
+
+#stats-list ul li.stats-history-guide i {
+    order: 1;
+    flex: 1;
+    min-width: 0;
+    font-style: normal;
+    color: var(--vbm-muted);
+    font-size: 12px;
+}
+
+#stats-list ul li.stats-history-guide a.stats-history-enable {
+    order: 2;
+    flex: none;
+    color: var(--vbm-accent);
+    font-size: 12px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#stats-list ul li.stats-history-guide a.stats-history-enable::before {
+    content: none;
+}
+
+#stats-list ul li.stats-history-guide a.stats-history-enable:hover {
+    background: none;
+    text-decoration: underline;
+}
+
+#stats-list ul li.stats-history-guide a.stats-history-enable:active,
+#stats-list ul li.stats-history-guide a.stats-history-enable:focus {
+    color: var(--vbm-accent);
+    background: none;
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
+/* The stats section's empty state carries its head too: drop the big top
+   padding the headless variant needs and keep the hint centered. */
+#stats-list ul li.empty-state.has-head {
+    justify-content: center;
+    padding-top: 8px;
+}
