@@ -20,14 +20,17 @@
  *   pushSearchHistory below is vitest-covered). Recorded on Enter in
  *   searchAfterEnter mode, on result open (reset), on view leave / popup
  *   close, and on the two-level Esc clear; gated by `searchHistoryEnabled`.
- * - `searchLastQuery` — refilled + rerun on the first search-view entry with
- *   an empty box; cross-session restore follows dontRememberState; an
- *   explicit clear stops the refill for the session.
  * - Two-level Esc (§2.3/§3.2): first Esc records + clears the box but keeps
  *   the results and stays in the search view; the second falls through to
  *   the view layer (back to the tree).
  * - The view is split into an upper `#search-history-area` (history rows or
  *   the hint) and the lower results list (kept between searches).
+ *
+ * Re-entry contract (2026-07-25 spec, replacing the slice-B `searchLastQuery`
+ * refill): entering the search view never refills the box — the input stays
+ * empty, the upper area renders the recorded history (the live query only
+ * joins it at a record timing), and the lower results list simply survives,
+ * so the last search's rows stay visible between view switches.
  *
  * initSearch(ctx) is called once by neat.js after DOM parse.
  * ctx.store                    — chrome.storage mirror (searchQuery, focusID, settings)
@@ -119,12 +122,6 @@ export function initSearch(ctx = {}) {
             return new Date(ts).toLocaleDateString();
         return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
     };
-    // Refill source for the first empty-box entry into the search view. The
-    // persisted previous-session value only counts when rememberState is on
-    // (§4.3: cross-session restore follows dontRememberState); searches in
-    // this session update it live.
-    let sessionLastQuery = ctx.rememberState ? (store.get('searchLastQuery') || '') : '';
-    let lastQueryCleared = false; // explicit clear stops the session refill
 
     const searchAfterEnter = !!store.get('searchAfterEnter');
     const $results = $('results');
@@ -191,10 +188,7 @@ export function initSearch(ctx = {}) {
     const quitSearchMode = (ignoreFocus) => {
         if (searchMode) {
             prevValue = '';
-            if (searchInput.value) {
-                searchInput.value = '';
-                lastQueryCleared = true; // explicit clear: no session refill
-            }
+            searchInput.value = '';
             updateClearBtn();
             store.set('searchQuery', '');
             searchMode = false;
@@ -311,7 +305,6 @@ export function initSearch(ctx = {}) {
         if (!searchInput.value)
             return false;
         recordHistory(searchInput.value);
-        lastQueryCleared = true;
         prevValue = '';
         searchInput.value = '';
         updateClearBtn();
@@ -325,18 +318,10 @@ export function initSearch(ctx = {}) {
     };
 
     views.attach('search', {
-        activate: () => {
-            // §4.3: first empty-box entry refills + reruns the last query
-            // (recompute, never a snapshot — the data is always fresh).
-            if (!searchInput.value && sessionLastQuery && !lastQueryCleared) {
-                searchInput.value = sessionLastQuery;
-                updateClearBtn();
-                search(true);
-                searchInput.select();
-                return;
-            }
-            renderHistoryArea();
-        },
+        // Re-entry contract: the box stays as it is (empty after the
+        // two-level Esc / a fresh switch), the history area re-renders and
+        // the results list simply survives — no last-query refill.
+        activate: () => renderHistoryArea(),
         // §4.3 record timing ③: leaving the view with a live query.
         deactivate: () => recordHistory(searchInput.value),
         focus: () => searchInput.focus(),
@@ -383,8 +368,6 @@ export function initSearch(ctx = {}) {
         if (value === prevValue)
             return;
         prevValue = value;
-        sessionLastQuery = value;
-        store.set('searchLastQuery', value);
 
         const renderResults = results => {
             lastResultCount = results.length;

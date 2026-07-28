@@ -819,22 +819,29 @@ describe('search history record timings (§4.3)', () => {
     });
 });
 
-describe('last-query restore (§4.3)', () => {
-    it('refills + reruns the persisted searchLastQuery on the first empty-box view entry (rememberState on)', () => {
-        const { els, viewHooks, fuzzy } = setup({
-            rememberState: true,
-            storeData: { searchLastQuery: 'git' }
-        });
+describe('search-view re-entry contract (2026-07-25 spec)', () => {
+    it('activate never refills or reruns: box and results survive view switches as they are', () => {
+        const { els, viewHooks, fuzzy } = setup({});
+        type(els, 'git'); // live search: results rendered, not yet in history
+        expect(fuzzy.calls).toHaveLength(1);
+        const resultsHtml = els.results.innerHTML;
+        // leave with a live query (record timing ③) and come back: nothing moves
+        viewHooks.search.deactivate();
         viewHooks.search.activate();
         expect(els['search-input'].value).toBe('git');
         expect(fuzzy.calls).toHaveLength(1);
-        expect(fuzzy.calls[0].query).toBe('git');
-        expect(els['search-input'].selected).toBe(true);
+        expect(els.results.innerHTML).toBe(resultsHtml);
+        // after an explicit clear, re-entry keeps the box empty + renders history
+        els['search-input'].value = '';
+        viewHooks.search.activate();
+        expect(els['search-input'].value).toBe('');
+        expect(els['search-history-area'].innerHTML).toContain('data-q="git"');
+        expect(els.results.innerHTML).toBe(resultsHtml);
     });
 
-    it('ignores the persisted searchLastQuery when rememberState is off', () => {
+    it('ignores a leftover persisted searchLastQuery (the refill is retired)', () => {
         const { els, viewHooks, fuzzy } = setup({
-            rememberState: false,
+            rememberState: true,
             storeData: { searchLastQuery: 'git' }
         });
         viewHooks.search.activate();
@@ -842,19 +849,20 @@ describe('last-query restore (§4.3)', () => {
         expect(fuzzy.calls).toHaveLength(0);
     });
 
-    it('tracks the session query live: reset (result opened) keeps the refill, quit/Esc clear stops it', () => {
-        const { s, els, viewHooks, fuzzy } = setup({});
-        type(els, 'git'); // sessionLastQuery := 'git' (and persisted)
-        s.reset(); // opening a result clears the box without touching the refill flag
+    it('two-level Esc then re-entry: cleared box, recorded history, kept results', () => {
+        const { s, els, viewHooks } = setup({});
+        type(els, 'git');
+        const resultsHtml = els.results.innerHTML;
+        expect(s.escape()).toBe(true); // first Esc: clear + record + stay
         expect(els['search-input'].value).toBe('');
-        viewHooks.search.activate();
-        expect(els['search-input'].value).toBe('git');
-        expect(fuzzy.calls).toHaveLength(2);
-        // explicit clear (quit / two-level Esc) stops the refill for the session
-        s.quit();
+        expect(els['search-history-area'].innerHTML).toContain('data-q="git"');
+        expect(els.results.innerHTML).toBe(resultsHtml);
+        expect(s.escape()).toBe(false); // second Esc: falls through to the view layer
+        // back in the search view: empty box, history above, same results below
         viewHooks.search.activate();
         expect(els['search-input'].value).toBe('');
-        expect(fuzzy.calls).toHaveLength(2); // no silent rerun
+        expect(els['search-history-area'].innerHTML).toContain('data-q="git"');
+        expect(els.results.innerHTML).toBe(resultsHtml);
     });
 });
 

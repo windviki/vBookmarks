@@ -171,7 +171,7 @@ search / recent / stats / dead / dupes 五个列表型视图的结果行，统�
 
 ### 4.3 搜索历史与上次结果恢复（v2 新增 + v3 开关）
 
-- **上次结果恢复**：独立 key `searchLastQuery`（不复用受 `dontRememberState` 控制的 `searchQuery`；跨会话恢复仍遵循 `dontRememberState`）。规则：本次打开后**首次**进入 search 视图时，header 框为空且 `searchLastQuery` 非空 → 回填并立即重算（索引重建 <10ms，重算而非快照，数据永远新鲜）；用户显式清空后本会话不再自动回填（内存 flag）。
+- **上次结果恢复**：~~独立 key `searchLastQuery`~~ **已退役（2026-07-25 新规范）**：重进 search 视图不再回填搜索框——框维持现状（显式清空后为空）、上区渲染历史、下区结果列表原样留存（会话内 DOM 保持，重算只发生在用户输入时）。跨会话恢复仍由 `searchQuery` + `dontRememberState` 的既有启动恢复覆盖。
 - **搜索历史**：key `searchHistory`，MRU 数组上限 10，trim 去重，空串不入。
   - **记录时机**（避免增量前缀 spam）：① `searchAfterEnter` 模式按 Enter；② 打开/点击任意结果；③ 离开 search 视图或页面关闭时记入当前非空查询。
   - **呈现**：search 视图空查询态 = "最近搜索"区块（时钟图标 + 查询词 + 单条 × 移除 + 清空全部）；点击 = 回填并搜索。无历史时只显示空态文案。
@@ -320,7 +320,7 @@ search / recent / stats / dead / dupes 五个列表型视图的结果行，统�
 | `viewState` | 新增 | JSON，各视图 scrollTop | — |
 | `showViewTabs` | 新增 | tab 条显隐，默认 on（§3.2） | options·视图组 |
 | `showItemPath` | 新增 | 列表行路径标签，默认 on（§3.6） | options·视图组 |
-| `searchLastQuery` | 新增 | 上次搜索词（§4.3） | — |
+| ~~`searchLastQuery`~~ | 已退役（2026-07-25 新规范，§4.3） | 存量值残留无害 | — |
 | `searchHistory` | 新增 | MRU 上限 10（§4.3） | — |
 | `searchHistoryEnabled` | 新增 | 历史开关，默认 on（§4.3） | options·视图组 |
 | `recentCount` | 新增 | recent 条数，默认 20 | options·视图组 |
