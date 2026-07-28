@@ -743,6 +743,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
     menus.bookmarkMenu.addEventListener('mousemove', contextMouseMove);
     menus.folderMenu.addEventListener('mousemove', contextMouseMove);
     menus.separatorMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.searchHistoryMenu)
+        menus.searchHistoryMenu.addEventListener('mousemove', contextMouseMove);
 
     const contextMouseOut = function () {
         if (parseInt(this.style.opacity, 10))
@@ -751,6 +753,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
     menus.bookmarkMenu.addEventListener('mouseout', contextMouseOut);
     menus.folderMenu.addEventListener('mouseout', contextMouseOut);
     menus.separatorMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.searchHistoryMenu)
+        menus.searchHistoryMenu.addEventListener('mouseout', contextMouseOut);
 
     // Resizer
     const $resizerx = $('resizer-x');

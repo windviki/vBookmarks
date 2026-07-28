@@ -522,6 +522,9 @@ export function initKeyboard(ctx = {}) {
     menus.bookmarkMenu.addEventListener('keydown', contextKeyDown);
     menus.folderMenu.addEventListener('keydown', contextKeyDown);
     //menus.separatorMenu.addEventListener('keydown', contextKeyDown);
+    // fourth-round item 7: search-history menu gets full ↑↓/Enter/Esc support
+    if (menus.searchHistoryMenu)
+        menus.searchHistoryMenu.addEventListener('keydown', contextKeyDown);
 
     // Closing dialogs / context menus on escape.
     // Capture phase so we run before any child handler and before Chrome's

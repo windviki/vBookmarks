@@ -569,6 +569,9 @@ export function initContextMenu(ctx = {}) {
         // these element references.
         bookmarkMenu: $bookmarkContextMenu,
         folderMenu: $folderContextMenu,
-        separatorMenu: $separatorContextMenu
+        separatorMenu: $separatorContextMenu,
+        // fourth-round item 7: dedicated menu for search-history rows; may be
+        // absent in minimal test setups, so consumers must null-check
+        searchHistoryMenu: $searchHistoryContextMenu || null
     };
 }

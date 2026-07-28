@@ -277,6 +277,25 @@ const setup = (opts = {}) => {
     bookmarkMenu.firstElementChild = item1;
     bookmarkMenu.lastElementChild = item2;
 
+    // fourth-round item 7: the search-history menu gets the same contextKeyDown
+    // binding; omitted entirely when opts.noSearchHistoryMenu (guard coverage)
+    let searchHistoryMenu = null;
+    let shmItem1 = null;
+    let shmItem2 = null;
+    if (!opts.noSearchHistoryMenu) {
+        searchHistoryMenu = el('MENU', 'search-history-context-menu');
+        shmItem1 = el('DIV', 'shm-1');
+        shmItem1.classList.add('menu-item');
+        shmItem2 = el('DIV', 'shm-2');
+        shmItem2.classList.add('menu-item');
+        shmItem1.nextElementSibling = shmItem2;
+        shmItem2.previousElementSibling = shmItem1;
+        for (const n of [shmItem1, shmItem2])
+            n.parentNode = searchHistoryMenu;
+        searchHistoryMenu.firstElementChild = shmItem1;
+        searchHistoryMenu.lastElementChild = shmItem2;
+    }
+
     const actionCalls = [];
     const actions = {};
     for (const name of ['editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks'])
@@ -310,6 +329,8 @@ const setup = (opts = {}) => {
         folderMenu,
         separatorMenu
     };
+    if (searchHistoryMenu)
+        menus.searchHistoryMenu = searchHistoryMenu;
     const closeDialogsCalls = [];
     const dialogs = {
         anyOpen: () => flags.dialogOpen,
@@ -380,6 +401,7 @@ const setup = (opts = {}) => {
         keyboard, doc, fireDoc, el, row, buildTypeRows, pageRow,
         tree, results, body, searchInput, search,
         bookmarkMenu, folderMenu, separatorMenu, menus,
+        searchHistoryMenu, shmItem1, shmItem2,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
         chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls,
@@ -870,6 +892,21 @@ describe('treeKeyUp — Delete', () => {
 });
 
 describe('contextKeyDown', () => {
+    it('binds ArrowDown navigation on the search-history menu too', () => {
+        const { searchHistoryMenu, shmItem1, shmItem2, doc } = setup({});
+        expect(searchHistoryMenu._listeners.keydown).toHaveLength(1);
+        doc.activeElement = shmItem1;
+        fire(searchHistoryMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(shmItem2.focused).toBe(true);
+    });
+
+    it('init does not throw when the search-history menu is absent', () => {
+        const { bookmarkMenu, item1, item2, doc } = setup({ noSearchHistoryMenu: true });
+        doc.activeElement = item1;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(item2.focused).toBe(true);
+    });
+
     it('ArrowDown moves to the next menu item, skipping <hr> separators', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({});
         doc.activeElement = item1;

@@ -1842,6 +1842,21 @@ body.panel-mode .vbm-row .row-sub {
     outline-offset: -2px;
 }
 
+/* Recent-view coarse time group heads (fourth-round item 8): non-interactive
+   section labels (Today/This week/This month/Older), muted small type so
+   they organize without competing with the rows. */
+#recent-list .recent-group-head {
+    padding: 6px 8px 2px;
+    font-size: 11px;
+    color: var(--vbm-muted);
+    user-select: none;
+}
+
+/* the first group's head needs no top padding (list top already breathes) */
+#recent-list .vbm-row:first-child .recent-group-head {
+    padding-top: 2px;
+}
+
 /* Search-history area (top half of #view-search): a muted head row with a
    "clear all" text button, then one row per past query. */
 #search-history-area {

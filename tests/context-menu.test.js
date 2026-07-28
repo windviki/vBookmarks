@@ -231,15 +231,16 @@ const setup = (opts = {}) => {
 };
 
 describe('module API', () => {
-    it('returns clearMenu/switchBookmarkMenu plus the three menu elements', () => {
-        const { menus, bookmarkMenu, folderMenu, separatorMenu } = setup({});
+    it('returns clearMenu/switchBookmarkMenu plus the four menu elements', () => {
+        const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu } = setup({});
         expect(typeof menus.clearMenu).toBe('function');
         expect(typeof menus.switchBookmarkMenu).toBe('function');
         expect(menus.bookmarkMenu).toBe(bookmarkMenu);
         expect(menus.folderMenu).toBe(folderMenu);
         expect(menus.separatorMenu).toBe(separatorMenu);
+        expect(menus.searchHistoryMenu).toBe(searchHistoryMenu);
         expect(Object.keys(menus).sort()).toEqual(
-            ['bookmarkMenu', 'clearMenu', 'folderMenu', 'separatorMenu', 'switchBookmarkMenu']);
+            ['bookmarkMenu', 'clearMenu', 'folderMenu', 'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
     });
 });
 
