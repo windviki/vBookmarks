@@ -760,8 +760,16 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "Puhdista loput"
+  "dupesCleanRestHint": {
+    "message": "[TODO:dupesCleanRestHint]",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "Ohita http/https-eroavaisuudet"

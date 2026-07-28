@@ -756,8 +756,16 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "Limpar o resto"
+  "dupesCleanRestHint": {
+    "message": "[TODO:dupesCleanRestHint]",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "Ignorar diferenças http/https"

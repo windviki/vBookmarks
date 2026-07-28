@@ -760,8 +760,16 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "Išvalyti likusius"
+  "dupesCleanRestHint": {
+    "message": "[TODO:dupesCleanRestHint]",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "Nepaisyti http/https skirtumų"

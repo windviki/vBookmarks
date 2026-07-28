@@ -760,8 +760,16 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "Rensa resten"
+  "dupesCleanRestHint": {
+    "message": "[TODO:dupesCleanRestHint]",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "Ignorera http/https-skillnader"

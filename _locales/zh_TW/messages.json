@@ -760,8 +760,16 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "清理其餘"
+  "dupesCleanRestHint": {
+    "message": "[TODO:dupesCleanRestHint]",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "忽略 http/https 差異"

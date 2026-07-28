@@ -184,12 +184,18 @@ export function initViewDupes(ctx = {}) {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
         const isCollapsed = collapsed.has(group.key);
+        // The per-group quick action names its strategy pick up front
+        // ("keep 〈title〉, remove the other N") — one click applies the
+        // configured strategy to this group alone.
+        const doomed = planDeletion(group, keeper).length;
+        const hint = htmlspecialchars(_m('dupesCleanRestHint',
+            [keeper.title || _m('noTitle'), `${doomed}`]));
         let html = `<li class="dupes-group" data-key="${key}">` +
             `<span class="group-head" tabindex="0" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${key}</span>` +
             `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
-            `<button class="row-btn dupes-clean-rest" aria-label="${_m('dupesGroupCleanRest')}" title="${_m('dupesGroupCleanRest')}">×</button>` +
+            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">×</button>` +
             '</span></li>';
         if (isCollapsed)
             return html;

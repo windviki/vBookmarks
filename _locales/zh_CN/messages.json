@@ -752,8 +752,17 @@
       }
     }
   },
-  "dupesGroupCleanRest": {
-    "message": "清除其余"
+  "dupesCleanRestHint": {
+    "message": "保留「$title$」，删除其余 $count$ 项",
+    "description": "Tooltip/aria-label of the quick action on a duplicate group header: apply the configured keeper strategy to this group alone — keep $title$, delete the other $count$ rows.",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
   },
   "dupesIgnoreScheme": {
     "message": "忽略 http/https 差异"

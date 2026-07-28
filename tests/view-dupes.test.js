@@ -246,6 +246,9 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         expect(html.match(/<span class="dupes-key"/g)).toHaveLength(1);
         expect(html).toContain('class="dupes-key"');
         expect(html).toContain('<span class="count-pill" aria-label="dupesGroupCount[3]">3</span>');
+        // the per-group quick action names the strategy's keeper pick and
+        // the doomed count up front (item 4: one click keeps one per setting)
+        expect(html).toContain('aria-label="dupesCleanRestHint[A oldest|2]"');
         // member rows: keeper oldest first; the other two will-delete
         expect(html).toContain('id="dupes-item-11"');
         expect(html).toContain('id="dupes-item-15"');
