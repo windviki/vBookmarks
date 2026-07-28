@@ -158,6 +158,13 @@ const SEED = `
         await opts.evaluate(t => chrome.storage.local.set({ theme: t }), theme);
         await opts.reload({ waitUntil: 'networkidle0' });
         await sleep(1000);
+        // the Views group (with the per-view show/hide switches) sits below
+        // the fold — scroll it into view like the advanced page's CodeMirror
+        await opts.evaluate(() => {
+            const el = document.getElementById('views-options');
+            if (el) el.scrollIntoView({ block: 'start' });
+        });
+        await sleep(300);
         await opts.screenshot({ path: `/tmp/shots/theme-${theme}-options.png` });
         await opts.close();
 
