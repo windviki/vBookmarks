@@ -40,6 +40,10 @@
     --vbm-row-h: 28px;
     --vbm-indent: 12px;
     --vbm-warning: #f9ab00;
+    /* on-colors for danger/warning fills (badges) — white on light danger,
+       dark maroon on the pale dark-theme dangers (see theme blocks) */
+    --vbm-danger-fg: #ffffff;
+    --vbm-warning-fg: #000000;
 }
 
 body[data-theme="dark"] {
@@ -61,6 +65,8 @@ body[data-theme="dark"] {
     --vbm-scrollbar: rgba(154, 160, 166, 0.5);
     --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
     --vbm-warning: #fdd663;
+    --vbm-danger-fg: #3b0a06; /* white on #f28b82 fails AA (2.4:1) */
+    --vbm-warning-fg: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,6 +89,8 @@ body[data-theme="dark"] {
         --vbm-scrollbar: rgba(154, 160, 166, 0.5);
         --vbm-scrollbar-hover: rgba(154, 160, 166, 0.8);
         --vbm-warning: #fdd663;
+        --vbm-danger-fg: #3b0a06;
+        --vbm-warning-fg: #000000;
     }
 }
 
@@ -109,6 +117,8 @@ body[data-theme="ink"] {
     --vbm-scrollbar: rgba(139, 147, 169, 0.5);
     --vbm-scrollbar-hover: rgba(139, 147, 169, 0.8);
     --vbm-warning: #e6c35c;
+    --vbm-danger-fg: #3b0a06; /* white on #f2a196 fails AA (2.0:1) */
+    --vbm-warning-fg: #000000;
 }
 
 /* --- Paper: warm instrument-dial light --------------------------------
@@ -133,6 +143,8 @@ body[data-theme="paper"] {
     --vbm-scrollbar: rgba(130, 121, 106, 0.5);
     --vbm-scrollbar-hover: rgba(130, 121, 106, 0.8);
     --vbm-warning: #a87b00;
+    --vbm-danger-fg: #fff8f0; /* matches --vbm-accent-fg */
+    --vbm-warning-fg: #000000; /* 5.5:1 on #a87b00, beats white (3.6:1) */
 }
 
 body {
@@ -1589,7 +1601,7 @@ body.panel-mode .view-tab .tab-label {
     }
 }
 
-/* Badge dot (dead marks / dupe groups): danger token, white count */
+/* Badge dot (dead marks / dupe groups): danger token + on-danger count */
 .view-tab .tab-badge {
     flex: none;
     min-width: 14px;
@@ -1598,7 +1610,7 @@ body.panel-mode .view-tab .tab-label {
     box-sizing: border-box;
     border-radius: 7px;
     background: var(--vbm-danger);
-    color: #fff;
+    color: var(--vbm-danger-fg);
     font-size: 9px;
     line-height: 14px;
     text-align: center;
@@ -2046,7 +2058,7 @@ body.panel-mode .vbm-row .row-sub {
     border: 0;
     border-radius: var(--vbm-radius);
     background: var(--vbm-accent);
-    color: #fff;
+    color: var(--vbm-accent-fg);
     font-size: 11px;
     padding: 2px 8px;
     cursor: pointer;
@@ -2193,12 +2205,12 @@ body.panel-mode .vbm-row .row-sub {
 
 .vbm-row .row-badge.dead {
     background: var(--vbm-danger);
-    color: #fff;
+    color: var(--vbm-danger-fg);
 }
 
 .vbm-row .row-badge.blocked {
     background: var(--vbm-warning);
-    color: #000;
+    color: var(--vbm-warning-fg);
 }
 
 /* dead toolbar pieces: determinate progress (2px, token colors), the
@@ -2292,7 +2304,7 @@ body.panel-mode .vbm-row .row-sub {
     height: 10px;
     border-radius: 50%;
     background: var(--vbm-danger);
-    color: #fff;
+    color: var(--vbm-danger-fg);
     font-size: 8px;
     line-height: 10px;
     text-align: center;
