@@ -38,7 +38,7 @@
  *
  * initViewDead(ctx) is called once by neat.js after treeView init.
  * ctx.store            — settings mirror (deadMarks/deadLastScan/deadProxyTemplate/
- *                        deadScanConcurrency/deadScanTimeout)
+ *                        deadScanConcurrency/deadScanTimeout/showDeadView)
  * ctx.views            — view-manager API (register/isActive/pathOf)
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering (separators are http(s),
@@ -496,6 +496,7 @@ export function initViewDead(ctx = {}) {
         icon: VIEW_ICONS.dead,
         container: $('view-dead'),
         listEl: $list,
+        hidden: !store.get('showDeadView', '1'), // showDeadView → tab visibility
         typeAhead: false,
         badge: () => deadMarks.size,
         activate: () => {

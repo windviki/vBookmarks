@@ -1,136 +1,98 @@
 {
-  "optionRecentCount": {
-    "message": "Počet nedávno přidaných záložek k zobrazení"
+  "accessibility": {
+    "message": "Přístupnost"
   },
-  "optionSearchHistory": {
-    "message": "Ukládat historii vyhledávání"
+  "addBookmarkAfter": {
+    "message": "Záložku za tímto"
   },
-  "optionSearchHistoryHint": {
-    "message": "Vypnutím této možnosti také smažete stávající historii."
+  "addBookmarkBefore": {
+    "message": "Záložku před tímto"
   },
-  "optionShowSyncStatus": {
-    "message": "Zobrazit indikátory stavu synchronizace"
-  },
-  "dupesDone": {
-    "message": "Odstraněno $count$ duplicitních záložek",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkBottom": {
+    "message": "Záložku na konec"
   },
   "addBookmarkTop": {
     "message": "Záložku na začátek"
   },
-  "errorOccured": {
-    "message": "Jejda, došlo k chybě."
+  "addNewFolder": {
+    "message": "Přidat Podsložku"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Zobrazit nedávno přidané záložky nahoře ve vyskakovacím okně"
+  "addNewFolderAfter": {
+    "message": "Přidat Složku Za Toto"
   },
-  "optionRecentCollapsed": {
-    "message": "Ve výchozím nastavení sbalit sekci nedávno přidaných"
+  "addNewFolderBefore": {
+    "message": "Přidat Složku Před Toto"
   },
-  "optionsGroupViews": {
-    "message": "Zobrazení"
+  "addSeparator": {
+    "message": "Přidat Oddělovač"
   },
-  "optionShowViewTabs": {
-    "message": "Zobrazit karty zobrazení pod vyhledávacím polem"
+  "advancedOptions": {
+    "message": "Pokročilé Možnosti"
   },
-  "optionShowItemPath": {
-    "message": "Zobrazit cestu nadřazené složky na řádcích seznamu"
-  },
-  "recentEmpty": {
-    "message": "Žádné nedávné záložky. Stiskněte Ctrl+D pro přidání aktuální stránky."
-  },
-  "recentRevealInTree": {
-    "message": "Zobrazit ve stromu"
-  },
-  "searchHistoryClear": {
-    "message": "Smazat vše"
-  },
-  "searchHistoryRemove": {
-    "message": "Odstranit toto hledání"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ výsledků",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Nedávná hledání"
-  },
-  "timeDaysAgo": {
-    "message": "před $n$ dny",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "před $n$ hod",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "právě teď"
-  },
-  "timeMinutesAgo": {
-    "message": "před $n$ min",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "včera"
-  },
-  "viewRecent": {
-    "message": "Nedávné"
-  },
-  "viewTree": {
-    "message": "Strom"
-  },
-  "viewSearch": {
-    "message": "Hledání"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ zobrazení",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Odstranit $count$ kopií napříč $groups$ skupinami? Nejstarší položky zůstanou.",
+  "confirmDeleteFolder": {
+    "message": "Tato složka obsahuje $count$ položek. Smazání můžete vrátit.",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Opravdu chcete smazat složku $folderName$ a $bookmarkCount$ záložek v ní?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
       },
-      "groups": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Smazat"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Opravdu chcete smazat složku $folderName$ a $subFolderCount$ podsložek v ní?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
         "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Přístupnost"
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Opravdu chcete smazat složku $folderName$, $subFolderCount$ podsložek a $bookmarkCount$ záložek v ní?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "paletteCmdNewBookmark": {
-    "message": "Nová záložka…"
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "optionTheme": {
-    "message": "Motiv"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Opravdu chcete otevřít všech $count$ záložek v novém anonymním okně?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -141,27 +103,42 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Resetovat"
+  "contextMenuAddBookmark": {
+    "message": "Přidat stránku do záložek pomocí vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "Záložku před tímto"
+  "copyAllTitlesAndUrls": {
+    "message": "Zkopírovat všechny názvy a URL do schránky"
   },
-  "syncOptions": {
-    "message": "Možnosti synchronizace"
+  "copyTitleAndUrl": {
+    "message": "Zkopírovat název a URL do schránky"
   },
-  "deletedFolder": {
-    "message": "Smazána složka $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "Přidat stránku do záložek (Ctrl+D)"
+  "customIcon": {
+    "message": "Vlastní ikona"
+  },
+  "customIconDescription": {
+    "message": "Ikona musí mít rozměry 19x19 pixelů. Jinak bude změněna na tento rozměr."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Přizpůsobit Barvu Oddělovače"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Pokud URL záložky obsahuje tento řetězec, bude zobrazena jako oddělovač"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Skutečný název záložky, který je zobrazen jako oddělovač"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Skutečná URL záložky, která je zobrazena jako oddělovač"
+  },
+  "customStyles": {
+    "message": "Vlastní Styly"
+  },
+  "customStylesDescription": {
+    "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
   },
   "deadChecking": {
     "message": "Kontroluji $done$ / $total$…",
@@ -198,505 +175,6 @@
       }
     }
   },
-  "deadNone": {
-    "message": "Nenalezeny žádné nefunkční odkazy"
-  },
-  "deadRescan": {
-    "message": "Znovu prohledat"
-  },
-  "paletteCmdDead": {
-    "message": "Najít nefunkční odkazy"
-  },
-  "dupesCleanAll": {
-    "message": "Vyčistit vše: $groups$ skupin, $count$ kopií navíc",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "openSidePanelCommand": {
-    "message": "Otevřít postranní panel vBookmarks"
-  },
-  "optionThemeAuto": {
-    "message": "Podle systému"
-  },
-  "edit": {
-    "message": "Upravit..."
-  },
-  "customIconDescription": {
-    "message": "Ikona musí mít rozměry 19x19 pixelů. Jinak bude změněna na tento rozměr."
-  },
-  "resetSettingsDescription": {
-    "message": "Resetovat vBookmarks na výchozí nastavení."
-  },
-  "defaultIconButtonOr": {
-    "message": "nebo"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekund"
-  },
-  "syncStatusSynced": {
-    "message": "Synchronizováno s účtem Google"
-  },
-  "syncStatusLocal": {
-    "message": "Pouze lokálně – nenahráno"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Nelze synchronizovat"
-  },
-  "syncSuffixSynced": {
-    "message": "(Synchronizováno)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Lokální)"
-  },
-  "advancedOptions": {
-    "message": "Pokročilé Možnosti"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "Odstranit Oddělovač"
-  },
-  "resetSettings": {
-    "message": "Resetovat nastavení"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Skutečný název záložky, který je zobrazen jako oddělovač"
-  },
-  "donationMessage": {
-    "message": "Pokud se vám to líbí, možná můžete přispět na jeho budoucí vývoj. Jakákoliv částka je vítána."
-  },
-  "optionClickNewTab": {
-    "message": "Levý klik otevře záložku v novém panelu."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Opravdu chcete otevřít všech $count$ záložek v novém anonymním okně?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "Ne"
-  },
-  "openIncognitoWindow": {
-    "message": "Otevřít v Anonymním Okně"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Přidat aktuální kartu"
-  },
-  "sessionEmpty": {
-    "message": "Žádné karty k uložení"
-  },
-  "sortByDateAdded": {
-    "message": "Podle data přidání (nejnovější první)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Nový oddělovač"
-  },
-  "recentBookmarks": {
-    "message": "Nedávno přidané"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Zkopírovat všechny názvy a URL do schránky"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder text for search field.",
-    "message": "Hledat Záložky"
-  },
-  "searchClear": {
-    "message": "Vymazat hledání"
-  },
-  "reportError": {
-    "message": "Nahlásit Chybu"
-  },
-  "addNewFolderAfter": {
-    "message": "Přidat Složku Za Toto"
-  },
-  "editBookmark": {
-    "message": "Upravit záložku"
-  },
-  "editFolder": {
-    "message": "Upravit složku"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Nadřazená složka: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Interval obnovení"
-  },
-  "openBookmarks": {
-    "message": "Otevřít Všechny Záložky"
-  },
-  "openBookmarksInGroup": {
-    "message": "Otevřít vše ve skupině karet"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Potvrdit před smazáním neprázdných složek"
-  },
-  "addSeparator": {
-    "message": "Přidat Oddělovač"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "Opravdu chcete smazat složku $folderName$, $subFolderCount$ podsložek a $bookmarkCount$ záložek v ní?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Uložit karty okna jako složku"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Nová složka…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Pokud URL záložky obsahuje tento řetězec, bude zobrazena jako oddělovač"
-  },
-  "customStylesDescription": {
-    "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Zavřít nepoužívané složky při otevření složky."
-  },
-  "optionPopupStays": {
-    "message": "Popup zůstává otevřený při otevírání (levý klik) záložek."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Opravdu chcete otevřít všech $count$ záložek?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "Hledat záložky, složky, příkazy…"
-  },
-  "addNewFolderBefore": {
-    "message": "Přidat Složku Před Toto"
-  },
-  "customIcon": {
-    "message": "Vlastní ikona"
-  },
-  "folderEmpty": {
-    "message": "(Prázdná)"
-  },
-  "save": {
-    "message": "Uložit"
-  },
-  "undoAction": {
-    "message": "Zpět"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Zobrazit pouze záložky v Liště Záložek"
-  },
-  "sortRecursive": {
-    "message": "Seřadit i podsložky (rekurzivně)"
-  },
-  "noTitle": {
-    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
-    "message": "(bez názvu)"
-  },
-  "sortByTitle": {
-    "message": "Podle názvu"
-  },
-  "defaultIconButton": {
-    "message": "Použít výchozí"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Přizpůsobit Barvu Oddělovače"
-  },
-  "sessionSaved": {
-    "message": "Uloženo $count$ karet do nové složky",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Složky nahoře"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
-  },
-  "paletteNoResults": {
-    "message": "Žádné odpovídající výsledky"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Otevřít paletu příkazů"
-  },
-  "searchNoResults": {
-    "message": "Žádné odpovídající záložky"
-  },
-  "searchViewHint": {
-    "message": "Zadejte text do pole výše pro hledání záložek"
-  },
-  "sessionFolderName": {
-    "message": "Relace $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Toto přeuspořádá záložky ve všech podsložkách a nelze to vrátit zpět."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Vytvořil $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Záložka přidána"
-  },
-  "quickAddedTo": {
-    "message": "Záložka přidána do $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Záložka odstraněna"
-  },
-  "quickRemoveBookmark": {
-    "message": "Odstranit tuto záložku (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Nástroje (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Tmavý"
-  },
-  "optionThemeInk": {
-    "message": "Ink (tmavý)"
-  },
-  "optionThemePaper": {
-    "message": "Paper (světlý)"
-  },
-  "sortFolderContents": {
-    "message": "Seřadit obsah složky"
-  },
-  "confirmDeleteFolder": {
-    "message": "Tato složka obsahuje $count$ položek. Smazání můžete vrátit.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Smazat"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Opravdu chcete smazat složku $folderName$ a $bookmarkCount$ záložek v ní?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ duplicit",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Otevřít v Novém Panelu"
-  },
-  "addBookmarkAfter": {
-    "message": "Záložku za tímto"
-  },
-  "ignore": {
-    "message": "Ignorovat"
-  },
-  "open": {
-    "description": "Action to open bookmarks.",
-    "message": "Otevřít"
-  },
-  "optionOpenNewTab": {
-    "message": "Prostřední klik nebo control-klik otevře záložku v novém panelu na pozadí (místo na popředí)."
-  },
-  "options": {
-    "message": "Možnosti"
-  },
-  "replaceUrl": {
-    "message": "Nahradit toto aktuální URL"
-  },
-  "name": {
-    "description": "Name of bookmark or folder.",
-    "message": "Název"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Zvýraznit nesynchronizované záložky"
-  },
-  "donationDismiss": {
-    "message": "Zavřít"
-  },
-  "paletteCmdDupes": {
-    "message": "Vyčistit duplicitní záložky"
-  },
-  "general": {
-    "message": "Obecné"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Skutečná URL záložky, která je zobrazena jako oddělovač"
-  },
-  "openNewWindow": {
-    "message": "Otevřít v Novém Okně"
-  },
-  "dupesNone": {
-    "message": "Nenalezeny žádné duplicity"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Otevřít v postranním panelu místo vyskakovacího okna"
-  },
-  "extDesc": {
-    "description": "The extension description.",
-    "message": "Popup správce záložek. Vylepšené Neat Bookmarks. Přehlednější než Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Nelze přesouvat záložky mezi synchronizovaným a místním úložištěm. Použijte kopírování/vkládání.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "Smazáno $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Pamatovat si předchozí stav (pozice posunu a otevřené složky)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automaticky obnovovat stav synchronizace"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Otevřít v novém okně"
-  },
-  "addNewFolder": {
-    "message": "Přidat Podsložku"
-  },
-  "copyTitleAndUrl": {
-    "message": "Zkopírovat název a URL do schránky"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Otevřít v anonymním okně"
-  },
-  "optionThemeLight": {
-    "message": "Světlý"
-  },
-  "optionZoom": {
-    "message": "Přiblížení"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Opravdu chcete smazat složku $folderName$ a $subFolderCount$ podsložek v ní?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Ponechat nejstarší a odstranit $count$ kopií?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "reportedToDeveloper": {
-    "description": "A message for an error occured in the extension, has been reported to the developer.",
-    "message": "To bylo nahlášeno vývojáři."
-  },
-  "delete": {
-    "message": "Smazat"
-  },
-  "customStyles": {
-    "message": "Vlastní Styly"
-  },
-  "deleteEllipsis": {
-    "message": "Smazat..."
-  },
-  "versionMessage": {
-    "message": "Toto je nové VBM $versionNumber$! Seznam změn je zde: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Záložku na konec"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Přidat stránku do záložek pomocí vBookmarks"
-  },
   "deadFilterAll": {
     "message": "Vše"
   },
@@ -723,8 +201,14 @@
   "deadMarked": {
     "message": "Mrtvé řádky označeny"
   },
+  "deadNone": {
+    "message": "Nenalezeny žádné nefunkční odkazy"
+  },
   "deadProxyHint": {
     "message": "URL záložek jsou odesílány této třetí straně. Ponechte prázdné pro přímé testování."
+  },
+  "deadRescan": {
+    "message": "Znovu prohledat"
   },
   "deadStartHint": {
     "message": "Spouštím skenování $n$ záložek",
@@ -743,11 +227,49 @@
   "deadUnmarkAll": {
     "message": "Vymazat všechna označení"
   },
+  "defaultIconButton": {
+    "message": "Použít výchozí"
+  },
+  "defaultIconButtonOr": {
+    "message": "nebo"
+  },
+  "delete": {
+    "message": "Smazat"
+  },
+  "deleteEllipsis": {
+    "message": "Smazat..."
+  },
+  "deletedBookmark": {
+    "message": "Smazáno $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Smazána složka $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "Zavřít"
+  },
   "donationGo": {
     "message": "Přispět"
   },
   "donationLater": {
     "message": "Později"
+  },
+  "donationMessage": {
+    "message": "Pokud se vám to líbí, možná můžete přispět na jeho budoucí vývoj. Jakákoliv částka je vítána."
   },
   "donationNever": {
     "message": "Již nezobrazovat"
@@ -760,6 +282,18 @@
       }
     }
   },
+  "dupesCleanAll": {
+    "message": "Vyčistit vše: $groups$ skupin, $count$ kopií navíc",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
   "dupesCleanRestHint": {
     "message": "Ponechat „$title$“ a odstranit ostatní $count$",
     "placeholders": {
@@ -771,6 +305,45 @@
       }
     }
   },
+  "dupesConfirmAll": {
+    "message": "Odstranit $count$ kopií napříč $groups$ skupinami? Nejstarší položky zůstanou.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmGroup": {
+    "message": "Ponechat nejstarší a odstranit $count$ kopií?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Odstraněno $count$ duplicitních záložek",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ duplicit",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
   "dupesIgnoreScheme": {
     "message": "Ignorovat rozdíly http/https"
   },
@@ -779,6 +352,9 @@
   },
   "dupesKeeperSet": {
     "message": "Uchovat"
+  },
+  "dupesNone": {
+    "message": "Nenalezeny žádné duplicity"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ skupin · $count$ k uvolnění",
@@ -818,6 +394,95 @@
   "dupesStrategyShortestTitle": {
     "message": "Ponechat nejkratší název"
   },
+  "edit": {
+    "message": "Upravit..."
+  },
+  "editBookmark": {
+    "message": "Upravit záložku"
+  },
+  "editFolder": {
+    "message": "Upravit složku"
+  },
+  "errorOccured": {
+    "message": "Jejda, došlo k chybě."
+  },
+  "extDesc": {
+    "description": "The extension description.",
+    "message": "Popup správce záložek. Vylepšené Neat Bookmarks. Přehlednější než Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Prázdná)"
+  },
+  "general": {
+    "message": "Obecné"
+  },
+  "ignore": {
+    "message": "Ignorovat"
+  },
+  "name": {
+    "description": "Name of bookmark or folder.",
+    "message": "Název"
+  },
+  "noTitle": {
+    "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",
+    "message": "(bez názvu)"
+  },
+  "nope": {
+    "message": "Ne"
+  },
+  "open": {
+    "description": "Action to open bookmarks.",
+    "message": "Otevřít"
+  },
+  "openBookmarks": {
+    "message": "Otevřít Všechny Záložky"
+  },
+  "openBookmarksInGroup": {
+    "message": "Otevřít vše ve skupině karet"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Otevřít v anonymním okně"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Otevřít v novém okně"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Otevřít paletu příkazů"
+  },
+  "openIncognitoWindow": {
+    "message": "Otevřít v Anonymním Okně"
+  },
+  "openNewTab": {
+    "message": "Otevřít v Novém Panelu"
+  },
+  "openNewWindow": {
+    "message": "Otevřít v Novém Okně"
+  },
+  "openSidePanelCommand": {
+    "message": "Otevřít postranní panel vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automaticky obnovovat stav synchronizace"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automaticky změnit velikost vyskakovacího okna podle obsahu"
+  },
+  "optionClickNewTab": {
+    "message": "Levý klik otevře záložku v novém panelu."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Zavřít nepoužívané složky při otevření složky."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Potvrdit před smazáním neprázdných složek"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
+  },
   "optionDeadProxy": {
     "message": "Šablona proxy pro mrtvé odkazy"
   },
@@ -826,6 +491,111 @@
   },
   "optionDeadScanTimeout": {
     "message": "Časový limit skenování mrtvých odkazů v sekundách (2-30)"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Zvýraznit nesynchronizované záložky"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Zobrazit pouze záložky v Liště Záložek"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Otevřít v postranním panelu místo vyskakovacího okna"
+  },
+  "optionOpenNewTab": {
+    "message": "Prostřední klik nebo control-klik otevře záložku v novém panelu na pozadí (místo na popředí)."
+  },
+  "optionPopupStays": {
+    "message": "Popup zůstává otevřený při otevírání (levý klik) záložek."
+  },
+  "optionRecentCollapsed": {
+    "message": "Ve výchozím nastavení sbalit sekci nedávno přidaných"
+  },
+  "optionRecentCount": {
+    "message": "Počet nedávno přidaných záložek k zobrazení"
+  },
+  "optionRememberPrevState": {
+    "message": "Pamatovat si předchozí stav (pozice posunu a otevřené složky)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Hledat záložky pouze při stisknutí ENTER (místo okamžitého hledání)"
+  },
+  "optionSearchHistory": {
+    "message": "Ukládat historii vyhledávání"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Vypnutím této možnosti také smažete stávající historii."
+  },
+  "optionShowDeadView": {
+    "message": "[TODO:optionShowDeadView]"
+  },
+  "optionShowDupesView": {
+    "message": "[TODO:optionShowDupesView]"
+  },
+  "optionShowItemPath": {
+    "message": "Zobrazit cestu nadřazené složky na řádcích seznamu"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Zobrazit nedávno přidané záložky nahoře ve vyskakovacím okně"
+  },
+  "optionShowStatsView": {
+    "message": "[TODO:optionShowStatsView]"
+  },
+  "optionShowSyncStatus": {
+    "message": "Zobrazit indikátory stavu synchronizace"
+  },
+  "optionShowViewTabs": {
+    "message": "Zobrazit karty zobrazení pod vyhledávacím polem"
+  },
+  "optionStatsEnabled": {
+    "message": "Povolit statistiky návštěv"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Interval obnovení"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekund"
+  },
+  "optionTheme": {
+    "message": "Motiv"
+  },
+  "optionThemeAuto": {
+    "message": "Podle systému"
+  },
+  "optionThemeDark": {
+    "message": "Tmavý"
+  },
+  "optionThemeInk": {
+    "message": "Ink (tmavý)"
+  },
+  "optionThemeLight": {
+    "message": "Světlý"
+  },
+  "optionThemePaper": {
+    "message": "Paper (světlý)"
+  },
+  "optionZoom": {
+    "message": "Přiblížení"
+  },
+  "options": {
+    "message": "Možnosti"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Vytvořil $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGroupViews": {
+    "message": "Zobrazení"
+  },
+  "paletteCmdDead": {
+    "message": "Najít nefunkční odkazy"
+  },
+  "paletteCmdDupes": {
+    "message": "Vyčistit duplicitní záložky"
   },
   "paletteCmdGoDead": {
     "message": "Přejít na zobrazení mrtvých odkazů"
@@ -839,11 +609,29 @@
   "paletteCmdGoSearch": {
     "message": "Přejít na zobrazení hledání"
   },
+  "paletteCmdGoStats": {
+    "message": "Přejít na zobrazení statistik"
+  },
   "paletteCmdGoTree": {
     "message": "Přejít na zobrazení stromu"
   },
+  "paletteCmdNewBookmark": {
+    "message": "Nová záložka…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Nová složka…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Nový oddělovač"
+  },
   "paletteCmdOptions": {
     "message": "Otevřít stránku možností"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Přidat aktuální kartu"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Uložit karty okna jako složku"
   },
   "paletteCmdSearchInView": {
     "message": "Hledat '$query$' v zobrazení hledání",
@@ -852,6 +640,74 @@
         "content": "$1"
       }
     }
+  },
+  "paletteNoResults": {
+    "message": "Žádné odpovídající výsledky"
+  },
+  "palettePlaceholder": {
+    "message": "Hledat záložky, složky, příkazy…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Nadřazená složka: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Přidat stránku do záložek (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Záložka přidána"
+  },
+  "quickAddedTo": {
+    "message": "Záložka přidána do $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Odstranit tuto záložku (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Záložka odstraněna"
+  },
+  "recentBookmarks": {
+    "message": "Nedávno přidané"
+  },
+  "recentEmpty": {
+    "message": "Žádné nedávné záložky. Stiskněte Ctrl+D pro přidání aktuální stránky."
+  },
+  "recentRevealInTree": {
+    "message": "Zobrazit ve stromu"
+  },
+  "removeSeparator": {
+    "message": "Odstranit Oddělovač"
+  },
+  "replaceUrl": {
+    "message": "Nahradit toto aktuální URL"
+  },
+  "reportError": {
+    "message": "Nahlásit Chybu"
+  },
+  "reportedToDeveloper": {
+    "description": "A message for an error occured in the extension, has been reported to the developer.",
+    "message": "To bylo nahlášeno vývojáři."
+  },
+  "resetButton": {
+    "message": "Resetovat"
+  },
+  "resetSettings": {
+    "message": "Resetovat nastavení"
+  },
+  "resetSettingsDescription": {
+    "message": "Resetovat vBookmarks na výchozí nastavení."
   },
   "rowActionDelete": {
     "message": "Smazat"
@@ -865,43 +721,79 @@
   "rowActionUnmark": {
     "message": "Odebrat označení mrtvého"
   },
-  "viewDead": {
-    "message": "Mrtvé odkazy"
+  "save": {
+    "message": "Uložit"
   },
-  "viewDupes": {
-    "message": "Duplicity"
+  "searchBookmarks": {
+    "description": "Placeholder text for search field.",
+    "message": "Hledat Záložky"
   },
-  "viewStats": {
-    "message": "Statistiky"
+  "searchClear": {
+    "message": "Vymazat hledání"
   },
-  "paletteCmdGoStats": {
-    "message": "Přejít na zobrazení statistik"
+  "searchHistoryClear": {
+    "message": "Smazat vše"
   },
-  "optionStatsEnabled": {
-    "message": "Povolit statistiky návštěv"
+  "searchHistoryRemove": {
+    "message": "Odstranit toto hledání"
   },
-  "statsSortByCount": {
-    "message": "Podle počtu"
-  },
-  "statsSortByRecent": {
-    "message": "Podle nedávných"
-  },
-  "statsEmpty": {
-    "message": "Statistiky se vytvářejí při otevírání záložek"
-  },
-  "statsDisabledHint": {
-    "message": "Statistiky návštěv jsou vypnuté — povolte je v Možnosti → Zobrazení"
-  },
-  "statsVisitCount": {
-    "message": "Navštíveno $count$ krát",
+  "searchHistoryResultCount": {
+    "message": "$n$ výsledků",
     "placeholders": {
-      "count": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "Vymazat statistiky"
+  "searchHistoryTitle": {
+    "message": "Nedávná hledání"
+  },
+  "searchNoResults": {
+    "message": "Žádné odpovídající záložky"
+  },
+  "searchViewHint": {
+    "message": "Zadejte text do pole výše pro hledání záložek"
+  },
+  "sessionEmpty": {
+    "message": "Žádné karty k uložení"
+  },
+  "sessionFolderName": {
+    "message": "Relace $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Uloženo $count$ karet do nové složky",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "Podle data přidání (nejnovější první)"
+  },
+  "sortByTitle": {
+    "message": "Podle názvu"
+  },
+  "sortFolderContents": {
+    "message": "Seřadit obsah složky"
+  },
+  "sortFoldersFirst": {
+    "message": "Složky nahoře"
+  },
+  "sortRecursive": {
+    "message": "Seřadit i podsložky (rekurzivně)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Toto přeuspořádá záložky ve všech podsložkách a nelze to vrátit zpět."
   },
   "statsClearConfirm": {
     "message": "Vymazat statistiky návštěv pro $count$ záložek? Tuto akci nelze vrátit zpět.",
@@ -911,14 +803,23 @@
       }
     }
   },
+  "statsClearData": {
+    "message": "Vymazat statistiky"
+  },
+  "statsDisabledHint": {
+    "message": "Statistiky návštěv jsou vypnuté — povolte je v Možnosti → Zobrazení"
+  },
+  "statsEmpty": {
+    "message": "Statistiky se vytvářejí při otevírání záložek"
+  },
   "statsHistoryBanner": {
     "message": "Udělte přístup k historii pro vytvoření statistik návštěv z minulých návštěv."
   },
-  "statsHistoryEnable": {
-    "message": "Povolit"
-  },
   "statsHistoryDismiss": {
     "message": "Nezobrazovat znovu"
+  },
+  "statsHistoryEnable": {
+    "message": "Povolit"
   },
   "statsHistoryImported": {
     "message": "Importovány minulé návštěvy pro $count$ záložek",
@@ -927,5 +828,113 @@
         "content": "$1"
       }
     }
+  },
+  "statsSortByCount": {
+    "message": "Podle počtu"
+  },
+  "statsSortByRecent": {
+    "message": "Podle nedávných"
+  },
+  "statsVisitCount": {
+    "message": "Navštíveno $count$ krát",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Možnosti synchronizace"
+  },
+  "syncStatusLocal": {
+    "message": "Pouze lokálně – nenahráno"
+  },
+  "syncStatusSynced": {
+    "message": "Synchronizováno s účtem Google"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Nelze synchronizovat"
+  },
+  "syncSuffixLocal": {
+    "message": "(Lokální)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Synchronizováno)"
+  },
+  "timeDaysAgo": {
+    "message": "před $n$ dny",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "před $n$ hod",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "právě teď"
+  },
+  "timeMinutesAgo": {
+    "message": "před $n$ min",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "včera"
+  },
+  "toolButtonTitle": {
+    "message": "Nástroje (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Zpět"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "Toto je nové VBM $versionNumber$! Seznam změn je zde: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Mrtvé odkazy"
+  },
+  "viewDupes": {
+    "message": "Duplicity"
+  },
+  "viewRecent": {
+    "message": "Nedávné"
+  },
+  "viewSearch": {
+    "message": "Hledání"
+  },
+  "viewStats": {
+    "message": "Statistiky"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ zobrazení",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Strom"
   }
 }

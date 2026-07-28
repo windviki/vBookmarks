@@ -26,7 +26,7 @@
  * lingering row from outliving its bookmark.
  *
  * initViewStats(ctx) is called once by neat.js after initViewDead.
- * ctx.store            — settings mirror (statsSort/statsEnabled/showItemPath)
+ * ctx.store            — settings mirror (statsSort/statsEnabled/showItemPath/showStatsView)
  * ctx.views            — view-manager API (register/isActive/pathOf/showItemPath)
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering
@@ -230,6 +230,7 @@ export function initViewStats(ctx = {}) {
         icon: VIEW_ICONS.stats,
         container: $('view-stats'),
         listEl: $list,
+        hidden: !store.get('showStatsView', '1'), // showStatsView → tab visibility
         typeAhead: false,
         badge: () => rows.length,
         activate: () => {

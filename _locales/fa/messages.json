@@ -1,136 +1,98 @@
 {
-  "optionRecentCount": {
-    "message": "تعداد بوکمارک‌های اخیر برای نمایش"
+  "accessibility": {
+    "message": "دسترسی‌پذیری"
   },
-  "optionSearchHistory": {
-    "message": "ذخیره تاریخچه جستجو"
+  "addBookmarkAfter": {
+    "message": "اضافه کردن تب فعلی بعد از این"
   },
-  "optionSearchHistoryHint": {
-    "message": "خاموش کردن این گزینه همچنین تاریخچه موجود را پاک می‌کند."
+  "addBookmarkBefore": {
+    "message": "اضافه کردن تب فعلی قبل از این"
   },
-  "optionShowSyncStatus": {
-    "message": "نمایش شاخص‌های وضعیت همگام‌سازی"
-  },
-  "dupesDone": {
-    "message": "$count$ نشانک تکراری حذف شد",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkBottom": {
+    "message": "اضافه کردن تب فعلی به پایین این"
   },
   "addBookmarkTop": {
     "message": "اضافه کردن تب فعلی به بالای این"
   },
-  "errorOccured": {
-    "message": "اوپس، خطایی رخ داد."
+  "addNewFolder": {
+    "message": "اضافه کردن زیرپوشه"
   },
-  "optionShowRecentBookmarks": {
-    "message": "نمایش نشانک‌های اخیراً اضافه شده در بالای پنجره بازشو"
+  "addNewFolderAfter": {
+    "message": "اضافه کردن پوشه بعد از این"
   },
-  "optionRecentCollapsed": {
-    "message": "بخش اخیراً اضافه شده به طور پیش‌فرض جمع شود"
+  "addNewFolderBefore": {
+    "message": "اضافه کردن پوشه قبل از این"
   },
-  "optionsGroupViews": {
-    "message": "نماها"
+  "addSeparator": {
+    "message": "اضافه کردن جداکننده"
   },
-  "optionShowViewTabs": {
-    "message": "نمایش تب‌های نما در زیر کادر جستجو"
+  "advancedOptions": {
+    "message": "گزینه‌های پیشرفته"
   },
-  "optionShowItemPath": {
-    "message": "نمایش مسیر پوشه والد در ردیف‌های لیست"
-  },
-  "recentEmpty": {
-    "message": "هیچ بوکمارک اخیری وجود ندارد. Ctrl+D را برای نشانه‌گذاری صفحه فعلی فشار دهید."
-  },
-  "recentRevealInTree": {
-    "message": "نمایش در درخت"
-  },
-  "searchHistoryClear": {
-    "message": "پاک کردن همه"
-  },
-  "searchHistoryRemove": {
-    "message": "حذف این جستجو"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ نتیجه",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "جستجوهای اخیر"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ روز پیش",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ ساعت پیش",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "همین الان"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ دقیقه پیش",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "دیروز"
-  },
-  "viewRecent": {
-    "message": "اخیر"
-  },
-  "viewTree": {
-    "message": "درخت"
-  },
-  "viewSearch": {
-    "message": "جستجو"
-  },
-  "viewSwitchAnnounce": {
-    "message": "نمای $name$",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "$count$ نسخه اضافی در $groups$ گروه حذف شود؟ قدیمی‌ترین‌ها نگه داشته می‌شوند.",
+  "confirmDeleteFolder": {
+    "message": "این پوشه شامل $count$ آیتم است. می‌توانید حذف را لغو کنید.",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
       },
-      "groups": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "حذف"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $subFolderCount$ زیرپوشه(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
         "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "دسترسی‌پذیری"
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$، $subFolderCount$ زیرپوشه(ها) و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "paletteCmdNewBookmark": {
-    "message": "نشانک جدید…"
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را باز کنید؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "optionTheme": {
-    "message": "پوسته"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را در پنجره ناشناس جدید باز کنید؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -141,27 +103,42 @@
       }
     }
   },
-  "resetButton": {
-    "message": "بازنشانی"
+  "contextMenuAddBookmark": {
+    "message": "نشانک این صفحه با vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "اضافه کردن تب فعلی قبل از این"
+  "copyAllTitlesAndUrls": {
+    "message": "کپی همه عناوین و URLها در کلیپ‌بورد"
   },
-  "syncOptions": {
-    "message": "گزینه‌های همگام‌سازی"
+  "copyTitleAndUrl": {
+    "message": "کپی عنوان و URL در کلیپ‌بورد"
   },
-  "deletedFolder": {
-    "message": "پوشه $title$ حذف شد",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "نمی‌توان نشانک‌ها را بین حافظه همگام‌سازی شده و محلی جابجا کرد. از کپی/چسباندن استفاده کنید.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "نشانک این صفحه (Ctrl+D)"
+  "customIcon": {
+    "message": "آیکون سفارشی"
+  },
+  "customIconDescription": {
+    "message": "آیکون باید ابعاد 19*19 پیکسل داشته باشد. در غیر این صورت به این اندازه تغییر اندازه داده خواهد شد."
+  },
+  "customSeparatorColorDescription": {
+    "message": "شخصی‌سازی رنگ جداکننده"
+  },
+  "customSeparatorStringDescription": {
+    "message": "اگر URL یک نشانک شامل این رشته باشد، به عنوان جداکننده نمایش داده خواهد شد"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "عنوان واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "URL واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
+  },
+  "customStyles": {
+    "message": "استایل‌های سفارشی"
+  },
+  "customStylesDescription": {
+    "message": "این به برخی مهارت‌های CSS نیاز دارد. به عهده خودتان هک کنید. اشتراک‌گذاری کد از طریق هوشمندانه خواهد بود"
   },
   "deadChecking": {
     "message": "در حال بررسی $done$ / $total$…",
@@ -198,505 +175,6 @@
       }
     }
   },
-  "deadNone": {
-    "message": "پیوند مرده‌ای یافت نشد"
-  },
-  "deadRescan": {
-    "message": "بازرسی مجدد"
-  },
-  "paletteCmdDead": {
-    "message": "یافتن پیوندهای مرده"
-  },
-  "dupesCleanAll": {
-    "message": "پاکسازی همه: $groups$ گروه، $count$ نسخه اضافی",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "openSidePanelCommand": {
-    "message": "باز کردن پنل کناری vBookmarks"
-  },
-  "optionThemeAuto": {
-    "message": "همراه با سیستم"
-  },
-  "edit": {
-    "message": "ویرایش..."
-  },
-  "customIconDescription": {
-    "message": "آیکون باید ابعاد 19*19 پیکسل داشته باشد. در غیر این صورت به این اندازه تغییر اندازه داده خواهد شد."
-  },
-  "resetSettingsDescription": {
-    "message": "بازنشانی vBookmarks به تنظیمات پیش‌فرض."
-  },
-  "defaultIconButtonOr": {
-    "message": "یا"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "ثانیه"
-  },
-  "syncStatusSynced": {
-    "message": "همگام‌سازی شده با حساب Google شما"
-  },
-  "syncStatusLocal": {
-    "message": "فقط محلی — آپلود نشده"
-  },
-  "syncStatusUnsyncable": {
-    "message": "قابل همگام‌سازی نیست"
-  },
-  "syncSuffixSynced": {
-    "message": "(همگام‌سازی شده)"
-  },
-  "syncSuffixLocal": {
-    "message": "(محلی)"
-  },
-  "advancedOptions": {
-    "message": "گزینه‌های پیشرفته"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "حذف جداکننده"
-  },
-  "resetSettings": {
-    "message": "بازنشانی تنظیمات"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "عنوان واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
-  },
-  "donationMessage": {
-    "message": "اگر خوشتان آمد، شاید بتوانید برای توسعه آینده آن کمک مالی کنید. هر مبلغی خوشآمدگویی است."
-  },
-  "optionClickNewTab": {
-    "message": "کلیک چپ نشانک را در تب جدید باز می‌کند."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را در پنجره ناشناس جدید باز کنید؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "نه"
-  },
-  "openIncognitoWindow": {
-    "message": "باز کردن در پنجره ناشناس"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "نشانک‌گذاری زبانه فعلی"
-  },
-  "sessionEmpty": {
-    "message": "زبانه‌ای برای ذخیره وجود ندارد"
-  },
-  "sortByDateAdded": {
-    "message": "بر اساس تاریخ افزودن (جدیدترین اول)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "جداکننده جدید"
-  },
-  "recentBookmarks": {
-    "message": "اخیراً اضافه شده"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "کپی همه عناوین و URLها در کلیپ‌بورد"
-  },
-  "searchBookmarks": {
-    "description": "متن نگهدارنده برای فیلد جستجو.",
-    "message": "جستجوی نشانک‌ها"
-  },
-  "searchClear": {
-    "message": "پاک کردن جستجو"
-  },
-  "reportError": {
-    "message": "گزارش خطا"
-  },
-  "addNewFolderAfter": {
-    "message": "اضافه کردن پوشه بعد از این"
-  },
-  "editBookmark": {
-    "message": "ویرایش نشانک"
-  },
-  "editFolder": {
-    "message": "ویرایش پوشه"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "پوشه والد: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "فاصله به‌روزرسانی"
-  },
-  "openBookmarks": {
-    "message": "باز کردن همه نشانک‌ها"
-  },
-  "openBookmarksInGroup": {
-    "message": "باز کردن همه در گروه زبانه جدید"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "تأیید قبل از حذف پوشه‌های غیرخالی"
-  },
-  "addSeparator": {
-    "message": "اضافه کردن جداکننده"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$، $subFolderCount$ زیرپوشه(ها) و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "ذخیره زبانه‌های پنجره به عنوان پوشه"
-  },
-  "paletteCmdNewFolder": {
-    "message": "پوشه جدید…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "اگر URL یک نشانک شامل این رشته باشد، به عنوان جداکننده نمایش داده خواهد شد"
-  },
-  "customStylesDescription": {
-    "message": "این به برخی مهارت‌های CSS نیاز دارد. به عهده خودتان هک کنید. اشتراک‌گذاری کد از طریق هوشمندانه خواهد بود"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "بستن پوشه‌های استفاده نشده هنگام باز کردن پوشه."
-  },
-  "optionPopupStays": {
-    "message": "پاپ‌آپ هنگام باز کردن (کلیک چپ) نشانک‌ها باز می‌ماند."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "آیا مطمئن هستید که می‌خواهید همه $count$ نشانک را باز کنید؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "جستجوی نشانک‌ها، پوشه‌ها، فرمان‌ها…"
-  },
-  "addNewFolderBefore": {
-    "message": "اضافه کردن پوشه قبل از این"
-  },
-  "customIcon": {
-    "message": "آیکون سفارشی"
-  },
-  "folderEmpty": {
-    "message": "(خالی)"
-  },
-  "save": {
-    "message": "ذخیره"
-  },
-  "undoAction": {
-    "message": "بازگردانی"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "فقط نشانک‌های نوار نشانک‌ها را نشان بده"
-  },
-  "sortRecursive": {
-    "message": "مرتب‌سازی زیرپوشه‌ها نیز (بازگشتی)"
-  },
-  "noTitle": {
-    "description": "عنوان برای نشانک‌های بدون عنوان بدون URL http(s) یا پوشه‌های بدون عنوان.",
-    "message": "(بدون عنوان)"
-  },
-  "sortByTitle": {
-    "message": "بر اساس عنوان"
-  },
-  "defaultIconButton": {
-    "message": "استفاده از پیش‌فرض"
-  },
-  "customSeparatorColorDescription": {
-    "message": "شخصی‌سازی رنگ جداکننده"
-  },
-  "sessionSaved": {
-    "message": "$count$ زبانه در یک پوشه جدید ذخیره شد",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "نگه‌داشتن پوشه‌ها در بالا"
-  },
-  "optionSearchAfterEnter": {
-    "message": "جستجوی نشانک‌ها فقط زمانی که ENTER فشار داده می‌شود (به جای جستجوی فوری)"
-  },
-  "paletteNoResults": {
-    "message": "نتیجه‌ای یافت نشد"
-  },
-  "openCommandPaletteCommand": {
-    "message": "باز کردن پالت فرمان"
-  },
-  "searchNoResults": {
-    "message": "نشانکی یافت نشد"
-  },
-  "searchViewHint": {
-    "message": "در کادر بالا تایپ کنید تا بوکمارک‌های خود را جستجو کنید"
-  },
-  "sessionFolderName": {
-    "message": "جلسه $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "این کار نشانک‌ها را در هر زیرپوشه مرتب می‌کند و قابل بازگشت نیست."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "ساخته شده توسط $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "نشانک اضافه شد"
-  },
-  "quickAddedTo": {
-    "message": "نشانک به $folderName$ اضافه شد",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "نشانک حذف شد"
-  },
-  "quickRemoveBookmark": {
-    "message": "حذف این نشانک (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "ابزارها (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "تاریک"
-  },
-  "optionThemeInk": {
-    "message": "جوهر (تاریک)"
-  },
-  "optionThemePaper": {
-    "message": "کاغذ (روشن)"
-  },
-  "sortFolderContents": {
-    "message": "مرتب‌سازی محتویات پوشه"
-  },
-  "confirmDeleteFolder": {
-    "message": "این پوشه شامل $count$ آیتم است. می‌توانید حذف را لغو کنید.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "حذف"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $bookmarkCount$ نشانک(ها) در آن را حذف کنید؟",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ تکراری",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "باز کردن در تب جدید"
-  },
-  "addBookmarkAfter": {
-    "message": "اضافه کردن تب فعلی بعد از این"
-  },
-  "ignore": {
-    "message": "نادیده گرفتن"
-  },
-  "open": {
-    "description": "عملکرد برای باز کردن نشانک‌ها.",
-    "message": "باز کردن"
-  },
-  "optionOpenNewTab": {
-    "message": "کلیک وسط یا کنترل-کلیک نشانک را در تب پس‌زمینه جدید باز می‌کند (به جای پیش‌زمینه)."
-  },
-  "options": {
-    "message": "گزینه‌ها"
-  },
-  "replaceUrl": {
-    "message": "جایگزینی این با URL فعلی"
-  },
-  "name": {
-    "description": "نام نشانک یا پوشه.",
-    "message": "نام"
-  },
-  "optionHighlightUnsynced": {
-    "message": "برجسته کردن نشانک‌های همگام‌سازی نشده"
-  },
-  "donationDismiss": {
-    "message": "رد کردن"
-  },
-  "paletteCmdDupes": {
-    "message": "پاکسازی نشانک‌های تکراری"
-  },
-  "general": {
-    "message": "عمومی"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "URL واقعی نشانکی که به عنوان جداکننده نمایش داده می‌شود"
-  },
-  "openNewWindow": {
-    "message": "باز کردن در پنجره جدید"
-  },
-  "dupesNone": {
-    "message": "مورد تکراری یافت نشد"
-  },
-  "optionOpenInSidePanel": {
-    "message": "باز کردن در پنل کناری به جای پنجره بازشو"
-  },
-  "extDesc": {
-    "description": "توضیحات افزونه.",
-    "message": "مدیر نشانک پاپ‌آپ. Neat Bookmarks بهبود یافته. مرتب‌تر از Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "تغییر اندازه خودکار پنجره پاپ‌آپ مطابق با محتوا"
-  },
-  "crossStorageMoveWarning": {
-    "message": "نمی‌توان نشانک‌ها را بین حافظه همگام‌سازی شده و محلی جابجا کرد. از کپی/چسباندن استفاده کنید.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "$title$ حذف شد",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "به خاطر سپردن وضعیت قبلی (موقعیت اسکرول و پوشه‌های باز)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "به‌روزرسانی خودکار وضعیت همگام‌سازی"
-  },
-  "openBookmarksNewWindow": {
-    "message": "باز کردن همه نشانک‌ها در پنجره جدید"
-  },
-  "addNewFolder": {
-    "message": "اضافه کردن زیرپوشه"
-  },
-  "copyTitleAndUrl": {
-    "message": "کپی عنوان و URL در کلیپ‌بورد"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
-  },
-  "optionThemeLight": {
-    "message": "روشن"
-  },
-  "optionZoom": {
-    "message": "بزرگنمایی"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "آیا مطمئن هستید که می‌خواهید پوشه $folderName$ و $subFolderCount$ زیرپوشه(ها) در آن را حذف کنید؟",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "قدیمی‌ترین نگه داشته و $count$ نسخه دیگر حذف شود؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "reportedToDeveloper": {
-    "description": "پیامی برای خطایی رخ داده در افزونه، به توسعه‌دهنده گزارش شده است.",
-    "message": "این به توسعه‌دهنده گزارش شده است."
-  },
-  "delete": {
-    "message": "حذف"
-  },
-  "customStyles": {
-    "message": "استایل‌های سفارشی"
-  },
-  "deleteEllipsis": {
-    "message": "حذف..."
-  },
-  "versionMessage": {
-    "message": "این VBM جدید $versionNumber$ است! لیست تغییرات اینجاست: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "اضافه کردن تب فعلی به پایین این"
-  },
-  "contextMenuAddBookmark": {
-    "message": "نشانک این صفحه با vBookmarks"
-  },
   "deadFilterAll": {
     "message": "همه"
   },
@@ -723,8 +201,14 @@
   "deadMarked": {
     "message": "ردیف‌های خراب علامت‌گذاری شدند"
   },
+  "deadNone": {
+    "message": "پیوند مرده‌ای یافت نشد"
+  },
   "deadProxyHint": {
     "message": "URLهای بوکمارک به این سرویس شخص ثالث ارسال می‌شوند. برای بررسی مستقیم فقط خالی بگذارید."
+  },
+  "deadRescan": {
+    "message": "بازرسی مجدد"
   },
   "deadStartHint": {
     "message": "شروع اسکن $n$ بوکمارک",
@@ -743,11 +227,49 @@
   "deadUnmarkAll": {
     "message": "پاک کردن همه علامت‌ها"
   },
+  "defaultIconButton": {
+    "message": "استفاده از پیش‌فرض"
+  },
+  "defaultIconButtonOr": {
+    "message": "یا"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "deleteEllipsis": {
+    "message": "حذف..."
+  },
+  "deletedBookmark": {
+    "message": "$title$ حذف شد",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "پوشه $title$ حذف شد",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "رد کردن"
+  },
   "donationGo": {
     "message": "کمک مالی"
   },
   "donationLater": {
     "message": "بعداً"
+  },
+  "donationMessage": {
+    "message": "اگر خوشتان آمد، شاید بتوانید برای توسعه آینده آن کمک مالی کنید. هر مبلغی خوشآمدگویی است."
   },
   "donationNever": {
     "message": "دیگر نشان نده"
@@ -760,6 +282,18 @@
       }
     }
   },
+  "dupesCleanAll": {
+    "message": "پاکسازی همه: $groups$ گروه، $count$ نسخه اضافی",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
   "dupesCleanRestHint": {
     "message": "\"$title$\" را نگه دار و $count$ تای دیگر را حذف کن",
     "placeholders": {
@@ -771,6 +305,45 @@
       }
     }
   },
+  "dupesConfirmAll": {
+    "message": "$count$ نسخه اضافی در $groups$ گروه حذف شود؟ قدیمی‌ترین‌ها نگه داشته می‌شوند.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmGroup": {
+    "message": "قدیمی‌ترین نگه داشته و $count$ نسخه دیگر حذف شود؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "$count$ نشانک تکراری حذف شد",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ تکراری",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
   "dupesIgnoreScheme": {
     "message": "نادیده گرفتن تفاوت http/https"
   },
@@ -779,6 +352,9 @@
   },
   "dupesKeeperSet": {
     "message": "نگهدار کن"
+  },
+  "dupesNone": {
+    "message": "مورد تکراری یافت نشد"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ گروه · $count$ مورد برای آزادسازی",
@@ -818,6 +394,95 @@
   "dupesStrategyShortestTitle": {
     "message": "کوتاه‌ترین عنوان را نگه دار"
   },
+  "edit": {
+    "message": "ویرایش..."
+  },
+  "editBookmark": {
+    "message": "ویرایش نشانک"
+  },
+  "editFolder": {
+    "message": "ویرایش پوشه"
+  },
+  "errorOccured": {
+    "message": "اوپس، خطایی رخ داد."
+  },
+  "extDesc": {
+    "description": "توضیحات افزونه.",
+    "message": "مدیر نشانک پاپ‌آپ. Neat Bookmarks بهبود یافته. مرتب‌تر از Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(خالی)"
+  },
+  "general": {
+    "message": "عمومی"
+  },
+  "ignore": {
+    "message": "نادیده گرفتن"
+  },
+  "name": {
+    "description": "نام نشانک یا پوشه.",
+    "message": "نام"
+  },
+  "noTitle": {
+    "description": "عنوان برای نشانک‌های بدون عنوان بدون URL http(s) یا پوشه‌های بدون عنوان.",
+    "message": "(بدون عنوان)"
+  },
+  "nope": {
+    "message": "نه"
+  },
+  "open": {
+    "description": "عملکرد برای باز کردن نشانک‌ها.",
+    "message": "باز کردن"
+  },
+  "openBookmarks": {
+    "message": "باز کردن همه نشانک‌ها"
+  },
+  "openBookmarksInGroup": {
+    "message": "باز کردن همه در گروه زبانه جدید"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
+  },
+  "openBookmarksNewWindow": {
+    "message": "باز کردن همه نشانک‌ها در پنجره جدید"
+  },
+  "openCommandPaletteCommand": {
+    "message": "باز کردن پالت فرمان"
+  },
+  "openIncognitoWindow": {
+    "message": "باز کردن در پنجره ناشناس"
+  },
+  "openNewTab": {
+    "message": "باز کردن در تب جدید"
+  },
+  "openNewWindow": {
+    "message": "باز کردن در پنجره جدید"
+  },
+  "openSidePanelCommand": {
+    "message": "باز کردن پنل کناری vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "به‌روزرسانی خودکار وضعیت همگام‌سازی"
+  },
+  "optionAutoResizePopup": {
+    "message": "تغییر اندازه خودکار پنجره پاپ‌آپ مطابق با محتوا"
+  },
+  "optionClickNewTab": {
+    "message": "کلیک چپ نشانک را در تب جدید باز می‌کند."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "بستن پوشه‌های استفاده نشده هنگام باز کردن پوشه."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "تأیید قبل از حذف پوشه‌های غیرخالی"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
+  },
   "optionDeadProxy": {
     "message": "قالب پروکسی لینک‌های مرده"
   },
@@ -826,6 +491,111 @@
   },
   "optionDeadScanTimeout": {
     "message": "مهلت اسکن لینک مرده بر حسب ثانیه (۲-۳۰)"
+  },
+  "optionHighlightUnsynced": {
+    "message": "برجسته کردن نشانک‌های همگام‌سازی نشده"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "فقط نشانک‌های نوار نشانک‌ها را نشان بده"
+  },
+  "optionOpenInSidePanel": {
+    "message": "باز کردن در پنل کناری به جای پنجره بازشو"
+  },
+  "optionOpenNewTab": {
+    "message": "کلیک وسط یا کنترل-کلیک نشانک را در تب پس‌زمینه جدید باز می‌کند (به جای پیش‌زمینه)."
+  },
+  "optionPopupStays": {
+    "message": "پاپ‌آپ هنگام باز کردن (کلیک چپ) نشانک‌ها باز می‌ماند."
+  },
+  "optionRecentCollapsed": {
+    "message": "بخش اخیراً اضافه شده به طور پیش‌فرض جمع شود"
+  },
+  "optionRecentCount": {
+    "message": "تعداد بوکمارک‌های اخیر برای نمایش"
+  },
+  "optionRememberPrevState": {
+    "message": "به خاطر سپردن وضعیت قبلی (موقعیت اسکرول و پوشه‌های باز)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "جستجوی نشانک‌ها فقط زمانی که ENTER فشار داده می‌شود (به جای جستجوی فوری)"
+  },
+  "optionSearchHistory": {
+    "message": "ذخیره تاریخچه جستجو"
+  },
+  "optionSearchHistoryHint": {
+    "message": "خاموش کردن این گزینه همچنین تاریخچه موجود را پاک می‌کند."
+  },
+  "optionShowDeadView": {
+    "message": "[TODO:optionShowDeadView]"
+  },
+  "optionShowDupesView": {
+    "message": "[TODO:optionShowDupesView]"
+  },
+  "optionShowItemPath": {
+    "message": "نمایش مسیر پوشه والد در ردیف‌های لیست"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "نمایش نشانک‌های اخیراً اضافه شده در بالای پنجره بازشو"
+  },
+  "optionShowStatsView": {
+    "message": "[TODO:optionShowStatsView]"
+  },
+  "optionShowSyncStatus": {
+    "message": "نمایش شاخص‌های وضعیت همگام‌سازی"
+  },
+  "optionShowViewTabs": {
+    "message": "نمایش تب‌های نما در زیر کادر جستجو"
+  },
+  "optionStatsEnabled": {
+    "message": "فعال‌سازی آمار بازدید"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "فاصله به‌روزرسانی"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "ثانیه"
+  },
+  "optionTheme": {
+    "message": "پوسته"
+  },
+  "optionThemeAuto": {
+    "message": "همراه با سیستم"
+  },
+  "optionThemeDark": {
+    "message": "تاریک"
+  },
+  "optionThemeInk": {
+    "message": "جوهر (تاریک)"
+  },
+  "optionThemeLight": {
+    "message": "روشن"
+  },
+  "optionThemePaper": {
+    "message": "کاغذ (روشن)"
+  },
+  "optionZoom": {
+    "message": "بزرگنمایی"
+  },
+  "options": {
+    "message": "گزینه‌ها"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "ساخته شده توسط $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGroupViews": {
+    "message": "نماها"
+  },
+  "paletteCmdDead": {
+    "message": "یافتن پیوندهای مرده"
+  },
+  "paletteCmdDupes": {
+    "message": "پاکسازی نشانک‌های تکراری"
   },
   "paletteCmdGoDead": {
     "message": "رفتن به نمای لینک‌های مرده"
@@ -839,11 +609,29 @@
   "paletteCmdGoSearch": {
     "message": "رفتن به نمای جستجو"
   },
+  "paletteCmdGoStats": {
+    "message": "رفتن به نمای آمار"
+  },
   "paletteCmdGoTree": {
     "message": "رفتن به نمای درختی"
   },
+  "paletteCmdNewBookmark": {
+    "message": "نشانک جدید…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "پوشه جدید…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "جداکننده جدید"
+  },
   "paletteCmdOptions": {
     "message": "باز کردن صفحه تنظیمات"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "نشانک‌گذاری زبانه فعلی"
+  },
+  "paletteCmdSaveSession": {
+    "message": "ذخیره زبانه‌های پنجره به عنوان پوشه"
   },
   "paletteCmdSearchInView": {
     "message": "جستجوی '$query$' در نمای جستجو",
@@ -852,6 +640,74 @@
         "content": "$1"
       }
     }
+  },
+  "paletteNoResults": {
+    "message": "نتیجه‌ای یافت نشد"
+  },
+  "palettePlaceholder": {
+    "message": "جستجوی نشانک‌ها، پوشه‌ها، فرمان‌ها…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "پوشه والد: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "نشانک این صفحه (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "نشانک اضافه شد"
+  },
+  "quickAddedTo": {
+    "message": "نشانک به $folderName$ اضافه شد",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "حذف این نشانک (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "نشانک حذف شد"
+  },
+  "recentBookmarks": {
+    "message": "اخیراً اضافه شده"
+  },
+  "recentEmpty": {
+    "message": "هیچ بوکمارک اخیری وجود ندارد. Ctrl+D را برای نشانه‌گذاری صفحه فعلی فشار دهید."
+  },
+  "recentRevealInTree": {
+    "message": "نمایش در درخت"
+  },
+  "removeSeparator": {
+    "message": "حذف جداکننده"
+  },
+  "replaceUrl": {
+    "message": "جایگزینی این با URL فعلی"
+  },
+  "reportError": {
+    "message": "گزارش خطا"
+  },
+  "reportedToDeveloper": {
+    "description": "پیامی برای خطایی رخ داده در افزونه، به توسعه‌دهنده گزارش شده است.",
+    "message": "این به توسعه‌دهنده گزارش شده است."
+  },
+  "resetButton": {
+    "message": "بازنشانی"
+  },
+  "resetSettings": {
+    "message": "بازنشانی تنظیمات"
+  },
+  "resetSettingsDescription": {
+    "message": "بازنشانی vBookmarks به تنظیمات پیش‌فرض."
   },
   "rowActionDelete": {
     "message": "حذف"
@@ -865,43 +721,79 @@
   "rowActionUnmark": {
     "message": "حذف علامت مرده"
   },
-  "viewDead": {
-    "message": "لینک‌های مرده"
+  "save": {
+    "message": "ذخیره"
   },
-  "viewDupes": {
-    "message": "تکراری‌ها"
+  "searchBookmarks": {
+    "description": "متن نگهدارنده برای فیلد جستجو.",
+    "message": "جستجوی نشانک‌ها"
   },
-  "viewStats": {
-    "message": "آمار"
+  "searchClear": {
+    "message": "پاک کردن جستجو"
   },
-  "paletteCmdGoStats": {
-    "message": "رفتن به نمای آمار"
+  "searchHistoryClear": {
+    "message": "پاک کردن همه"
   },
-  "optionStatsEnabled": {
-    "message": "فعال‌سازی آمار بازدید"
+  "searchHistoryRemove": {
+    "message": "حذف این جستجو"
   },
-  "statsSortByCount": {
-    "message": "بر اساس تعداد"
-  },
-  "statsSortByRecent": {
-    "message": "بر اساس اخیر"
-  },
-  "statsEmpty": {
-    "message": "آمار با باز کردن نشانک‌ها جمع‌آوری می‌شود"
-  },
-  "statsDisabledHint": {
-    "message": "آمار بازدید غیرفعال است — در تنظیمات → نماها فعال کنید"
-  },
-  "statsVisitCount": {
-    "message": "$count$ بار بازدید شده",
+  "searchHistoryResultCount": {
+    "message": "$n$ نتیجه",
     "placeholders": {
-      "count": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "پاک کردن آمار"
+  "searchHistoryTitle": {
+    "message": "جستجوهای اخیر"
+  },
+  "searchNoResults": {
+    "message": "نشانکی یافت نشد"
+  },
+  "searchViewHint": {
+    "message": "در کادر بالا تایپ کنید تا بوکمارک‌های خود را جستجو کنید"
+  },
+  "sessionEmpty": {
+    "message": "زبانه‌ای برای ذخیره وجود ندارد"
+  },
+  "sessionFolderName": {
+    "message": "جلسه $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "$count$ زبانه در یک پوشه جدید ذخیره شد",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "بر اساس تاریخ افزودن (جدیدترین اول)"
+  },
+  "sortByTitle": {
+    "message": "بر اساس عنوان"
+  },
+  "sortFolderContents": {
+    "message": "مرتب‌سازی محتویات پوشه"
+  },
+  "sortFoldersFirst": {
+    "message": "نگه‌داشتن پوشه‌ها در بالا"
+  },
+  "sortRecursive": {
+    "message": "مرتب‌سازی زیرپوشه‌ها نیز (بازگشتی)"
+  },
+  "sortRecursiveWarning": {
+    "message": "این کار نشانک‌ها را در هر زیرپوشه مرتب می‌کند و قابل بازگشت نیست."
   },
   "statsClearConfirm": {
     "message": "آمار بازدید $count$ نشانک پاک شود؟ این عمل قابل بازگشت نیست.",
@@ -911,14 +803,23 @@
       }
     }
   },
+  "statsClearData": {
+    "message": "پاک کردن آمار"
+  },
+  "statsDisabledHint": {
+    "message": "آمار بازدید غیرفعال است — در تنظیمات → نماها فعال کنید"
+  },
+  "statsEmpty": {
+    "message": "آمار با باز کردن نشانک‌ها جمع‌آوری می‌شود"
+  },
   "statsHistoryBanner": {
     "message": "برای پر کردن آمار بازدید با بازدیدهای گذشته، دسترسی به تاریخچه را اعطا کنید"
   },
-  "statsHistoryEnable": {
-    "message": "فعال"
-  },
   "statsHistoryDismiss": {
     "message": "دیگر نشان نده"
+  },
+  "statsHistoryEnable": {
+    "message": "فعال"
   },
   "statsHistoryImported": {
     "message": "بازدیدهای گذشته برای $count$ نشانک وارد شد",
@@ -927,5 +828,113 @@
         "content": "$1"
       }
     }
+  },
+  "statsSortByCount": {
+    "message": "بر اساس تعداد"
+  },
+  "statsSortByRecent": {
+    "message": "بر اساس اخیر"
+  },
+  "statsVisitCount": {
+    "message": "$count$ بار بازدید شده",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "گزینه‌های همگام‌سازی"
+  },
+  "syncStatusLocal": {
+    "message": "فقط محلی — آپلود نشده"
+  },
+  "syncStatusSynced": {
+    "message": "همگام‌سازی شده با حساب Google شما"
+  },
+  "syncStatusUnsyncable": {
+    "message": "قابل همگام‌سازی نیست"
+  },
+  "syncSuffixLocal": {
+    "message": "(محلی)"
+  },
+  "syncSuffixSynced": {
+    "message": "(همگام‌سازی شده)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ روز پیش",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ ساعت پیش",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "همین الان"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ دقیقه پیش",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "دیروز"
+  },
+  "toolButtonTitle": {
+    "message": "ابزارها (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "بازگردانی"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "این VBM جدید $versionNumber$ است! لیست تغییرات اینجاست: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "لینک‌های مرده"
+  },
+  "viewDupes": {
+    "message": "تکراری‌ها"
+  },
+  "viewRecent": {
+    "message": "اخیر"
+  },
+  "viewSearch": {
+    "message": "جستجو"
+  },
+  "viewStats": {
+    "message": "آمار"
+  },
+  "viewSwitchAnnounce": {
+    "message": "نمای $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "درخت"
   }
 }

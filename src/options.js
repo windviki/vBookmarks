@@ -69,6 +69,12 @@ const $ = id => document.getElementById(id);
             { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
             { id: 'show-item-path', key: 'showItemPath', defaultValue: '1', inverted: false },
             { id: 'show-recent-bookmarks', key: 'showRecentBookmarks', defaultValue: '1', inverted: false },
+            // third-round: the other list views get the same per-view
+            // visibility switch recent already had — a hidden view drops its
+            // tab and every entry point (Ctrl+number, palette) until re-enabled
+            { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
+            { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
+            { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
             // off means zero writes (collection stops immediately)
@@ -193,6 +199,9 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-show-view-tabs').innerText = __m('optionShowViewTabs');
         document.getElementById('option-show-item-path').innerText = __m('optionShowItemPath');
         document.getElementById('option-show-recent-bookmarks').innerText = __m('optionShowRecentBookmarks');
+        document.getElementById('option-show-stats-view').innerText = __m('optionShowStatsView');
+        document.getElementById('option-show-dead-view').innerText = __m('optionShowDeadView');
+        document.getElementById('option-show-dupes-view').innerText = __m('optionShowDupesView');
         document.getElementById('option-recent-count').innerText = __m('optionRecentCount');
         document.getElementById('option-search-history').innerText = __m('optionSearchHistory');
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');

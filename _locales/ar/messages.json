@@ -1,136 +1,98 @@
 {
-  "optionRecentCount": {
-    "message": "عدد الإشارات المرجعية المضافة حديثًا للعرض"
+  "accessibility": {
+    "message": "إمكانية الوصول"
   },
-  "optionSearchHistory": {
-    "message": "تسجيل سجل البحث"
+  "addBookmarkAfter": {
+    "message": "إضافة علامة التبويب الحالية بعد هذا"
   },
-  "optionSearchHistoryHint": {
-    "message": "إيقاف هذا سيؤدي أيضًا إلى مسح السجل الحالي."
+  "addBookmarkBefore": {
+    "message": "إضافة علامة التبويب الحالية قبل هذا"
   },
-  "optionShowSyncStatus": {
-    "message": "إظهار مؤشرات حالة المزامنة"
-  },
-  "dupesDone": {
-    "message": "تمت إزالة $count$ إشارات مرجعية مكررة",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkBottom": {
+    "message": "إضافة التبويب الحالي أسفل هذا"
   },
   "addBookmarkTop": {
     "message": "إضافة التبويب الحالي أعلى هذا"
   },
-  "errorOccured": {
-    "message": "عفواً، حدث خطأ."
+  "addNewFolder": {
+    "message": "إضافة مجلد فرعي"
   },
-  "optionShowRecentBookmarks": {
-    "message": "عرض الإشارات المرجعية المضافة حديثًا في أعلى النافذة المنبثقة"
+  "addNewFolderAfter": {
+    "message": "إضافة مجلد بعد هذا"
   },
-  "optionRecentCollapsed": {
-    "message": "طي قسم المضافة حديثًا افتراضيًا"
+  "addNewFolderBefore": {
+    "message": "إضافة مجلد قبل هذا"
   },
-  "optionsGroupViews": {
-    "message": "العروض"
+  "addSeparator": {
+    "message": "إضافة فاصل"
   },
-  "optionShowViewTabs": {
-    "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
+  "advancedOptions": {
+    "message": "خيارات متقدمة"
   },
-  "optionShowItemPath": {
-    "message": "إظهار مسار المجلد الأصلي في صفوف القائمة"
-  },
-  "recentEmpty": {
-    "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
-  },
-  "recentRevealInTree": {
-    "message": "إظهار في الشجرة"
-  },
-  "searchHistoryClear": {
-    "message": "مسح الكل"
-  },
-  "searchHistoryRemove": {
-    "message": "إزالة هذا البحث"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ نتيجة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "عمليات البحث الأخيرة"
-  },
-  "timeDaysAgo": {
-    "message": "قبل $n$ يومًا",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "قبل $n$ ساعة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "الآن"
-  },
-  "timeMinutesAgo": {
-    "message": "قبل $n$ دقيقة",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "أمس"
-  },
-  "viewRecent": {
-    "message": "الأخيرة"
-  },
-  "viewTree": {
-    "message": "الشجرة"
-  },
-  "viewSearch": {
-    "message": "بحث"
-  },
-  "viewSwitchAnnounce": {
-    "message": "عرض $name$",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ يتم الاحتفاظ بأقدم الإدخالات.",
+  "confirmDeleteFolder": {
+    "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
       },
-      "groups": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "حذف"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
         "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "إمكانية الوصول"
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي و $bookmarkCount$ علامة مرجعية فيه؟",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "paletteCmdNewBookmark": {
-    "message": "إشارة مرجعية جديدة…"
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "optionTheme": {
-    "message": "المظهر"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة متخفية جديدة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -141,27 +103,42 @@
       }
     }
   },
-  "resetButton": {
-    "message": "إعادة تعيين"
+  "contextMenuAddBookmark": {
+    "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "إضافة علامة التبويب الحالية قبل هذا"
+  "copyAllTitlesAndUrls": {
+    "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
   },
-  "syncOptions": {
-    "message": "خيارات المزامنة"
+  "copyTitleAndUrl": {
+    "message": "نسخ العنوان وعنوان URL إلى الحافظة"
   },
-  "deletedFolder": {
-    "message": "تم حذف المجلد $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك.",
+    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين"
   },
-  "quickAddBookmark": {
-    "message": "إضافة إشارة مرجعية لهذه الصفحة (Ctrl+D)"
+  "customIcon": {
+    "message": "أيقونة مخصصة"
+  },
+  "customIconDescription": {
+    "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
+  },
+  "customSeparatorColorDescription": {
+    "message": "تخصيص لون الفاصل"
+  },
+  "customSeparatorStringDescription": {
+    "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
+  },
+  "customStyles": {
+    "message": "أنماط مخصصة"
+  },
+  "customStylesDescription": {
+    "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
   },
   "deadChecking": {
     "message": "جارٍ التحقق $done$ / $total$…",
@@ -198,505 +175,6 @@
       }
     }
   },
-  "deadNone": {
-    "message": "لم يتم العثور على روابط معطلة"
-  },
-  "deadRescan": {
-    "message": "إعادة المسح"
-  },
-  "paletteCmdDead": {
-    "message": "البحث عن الروابط المعطلة"
-  },
-  "dupesCleanAll": {
-    "message": "تنظيف الكل: $groups$ مجموعات، $count$ نسخ إضافية",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "openSidePanelCommand": {
-    "message": "فتح اللوحة الجانبية لـ vBookmarks"
-  },
-  "optionThemeAuto": {
-    "message": "اتباع النظام"
-  },
-  "edit": {
-    "message": "تحرير..."
-  },
-  "customIconDescription": {
-    "message": "يجب أن تكون الأيقونة بقياس 19*19 بكسل. وإلا سيتم تغيير حجمها إلى هذا القياس."
-  },
-  "resetSettingsDescription": {
-    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
-  },
-  "defaultIconButtonOr": {
-    "message": "أو"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "ثواني"
-  },
-  "syncStatusSynced": {
-    "message": "متزامن مع حساب Google الخاص بك"
-  },
-  "syncStatusLocal": {
-    "message": "محلي فقط — لم يتم الرفع"
-  },
-  "syncStatusUnsyncable": {
-    "message": "لا يمكن المزامنة"
-  },
-  "syncSuffixSynced": {
-    "message": "(متزامن)"
-  },
-  "syncSuffixLocal": {
-    "message": "(محلي)"
-  },
-  "advancedOptions": {
-    "message": "خيارات متقدمة"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "إزالة الفاصل"
-  },
-  "resetSettings": {
-    "message": "إعادة تعيين الإعدادات"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "العنوان الحقيقي للعلامة المرجعية التي تظهر كفاصل"
-  },
-  "donationMessage": {
-    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
-  },
-  "optionClickNewTab": {
-    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية في نافذة متخفية جديدة؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "لا"
-  },
-  "openIncognitoWindow": {
-    "message": "فتح في نافذة متخفية"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "إشارة مرجعية للتبويب الحالي"
-  },
-  "sessionEmpty": {
-    "message": "لا توجد تبويبات للحفظ"
-  },
-  "sortByDateAdded": {
-    "message": "حسب تاريخ الإضافة (الأحدث أولاً)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "فاصل جديد"
-  },
-  "recentBookmarks": {
-    "message": "المضافة حديثًا"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "نسخ جميع العناوين وعناوين URL إلى الحافظة"
-  },
-  "searchBookmarks": {
-    "description": "نص عنصر نائب لحقل البحث.",
-    "message": "بحث في العلامات المرجعية"
-  },
-  "searchClear": {
-    "message": "مسح البحث"
-  },
-  "reportError": {
-    "message": "الإبلاغ عن خطأ"
-  },
-  "addNewFolderAfter": {
-    "message": "إضافة مجلد بعد هذا"
-  },
-  "editBookmark": {
-    "message": "تحرير علامة مرجعية"
-  },
-  "editFolder": {
-    "message": "تحرير مجلد"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "المجلد الأصلي: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "فترة التحديث"
-  },
-  "openBookmarks": {
-    "message": "فتح جميع العلامات المرجعية"
-  },
-  "openBookmarksInGroup": {
-    "message": "فتح الكل في مجموعة تبويب جديدة"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
-  },
-  "addSeparator": {
-    "message": "إضافة فاصل"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي و $bookmarkCount$ علامة مرجعية فيه؟",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "حفظ تبويبات النافذة كمجلد"
-  },
-  "paletteCmdNewFolder": {
-    "message": "مجلد جديد…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "إذا احتوى عنوان URL للعلامة المرجعية على هذه السلسلة، سيتم عرضها كفاصل"
-  },
-  "customStylesDescription": {
-    "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
-  },
-  "optionPopupStays": {
-    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "هل أنت متأكد من أنك تريد فتح جميع $count$ علامات مرجعية؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "ابحث عن إشارات مرجعية، مجلدات، أوامر…"
-  },
-  "addNewFolderBefore": {
-    "message": "إضافة مجلد قبل هذا"
-  },
-  "customIcon": {
-    "message": "أيقونة مخصصة"
-  },
-  "folderEmpty": {
-    "message": "(فارغ)"
-  },
-  "save": {
-    "message": "حفظ"
-  },
-  "undoAction": {
-    "message": "تراجع"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
-  },
-  "sortRecursive": {
-    "message": "فرز المجلدات الفرعية أيضًا (تكراري)"
-  },
-  "noTitle": {
-    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
-    "message": "(بلا عنوان)"
-  },
-  "sortByTitle": {
-    "message": "حسب العنوان"
-  },
-  "defaultIconButton": {
-    "message": "استخدام الافتراضي"
-  },
-  "customSeparatorColorDescription": {
-    "message": "تخصيص لون الفاصل"
-  },
-  "sessionSaved": {
-    "message": "تم حفظ $count$ تبويبًا في مجلد جديد",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "إبقاء المجلدات في الأعلى"
-  },
-  "optionSearchAfterEnter": {
-    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
-  },
-  "paletteNoResults": {
-    "message": "لا توجد نتائج مطابقة"
-  },
-  "openCommandPaletteCommand": {
-    "message": "فتح لوحة الأوامر"
-  },
-  "searchNoResults": {
-    "message": "لا توجد إشارات مرجعية مطابقة"
-  },
-  "searchViewHint": {
-    "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
-  },
-  "sessionFolderName": {
-    "message": "جلسة $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي ولا يمكن التراجع عنه."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "تم إنشاؤه بواسطة $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "تمت إضافة الإشارة المرجعية"
-  },
-  "quickAddedTo": {
-    "message": "تمت إضافة الإشارة المرجعية إلى $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "تمت إزالة الإشارة المرجعية"
-  },
-  "quickRemoveBookmark": {
-    "message": "إزالة هذه الإشارة المرجعية (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "أدوات (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "داكن"
-  },
-  "optionThemeInk": {
-    "message": "حبر (داكن)"
-  },
-  "optionThemePaper": {
-    "message": "ورق (فاتح)"
-  },
-  "sortFolderContents": {
-    "message": "فرز محتويات المجلد"
-  },
-  "confirmDeleteFolder": {
-    "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "حذف"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $bookmarkCount$ علامة مرجعية فيه؟",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ مكررات",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "فتح في علامة تبويب جديدة"
-  },
-  "addBookmarkAfter": {
-    "message": "إضافة علامة التبويب الحالية بعد هذا"
-  },
-  "ignore": {
-    "message": "تجاهل"
-  },
-  "open": {
-    "description": "إجراء لفتح العلامات المرجعية.",
-    "message": "فتح"
-  },
-  "optionOpenNewTab": {
-    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
-  },
-  "options": {
-    "message": "خيارات"
-  },
-  "replaceUrl": {
-    "message": "استبدال هذا بعنوان URL الحالي"
-  },
-  "name": {
-    "description": "اسم العلامة المرجعية أو المجلد.",
-    "message": "الاسم"
-  },
-  "optionHighlightUnsynced": {
-    "message": "إبراز العلامات المرجعية غير المتزامنة"
-  },
-  "donationDismiss": {
-    "message": "تجاهل"
-  },
-  "paletteCmdDupes": {
-    "message": "تنظيف الإشارات المرجعية المكررة"
-  },
-  "general": {
-    "message": "عام"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "عنوان URL الحقيقي للعلامة المرجعية التي تظهر كفاصل"
-  },
-  "openNewWindow": {
-    "message": "فتح في نافذة جديدة"
-  },
-  "dupesNone": {
-    "message": "لم يتم العثور على مكررات"
-  },
-  "optionOpenInSidePanel": {
-    "message": "الفتح في اللوحة الجانبية بدلاً من النافذة المنبثقة"
-  },
-  "extDesc": {
-    "description": "وصف الامتداد.",
-    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
-  },
-  "crossStorageMoveWarning": {
-    "message": "لا يمكن نقل الإشارات المرجعية بين التخزين المتزامن والتخزين المحلي. استخدم النسخ/اللصق بدلاً من ذلك.",
-    "description": "تحذير عند محاولة نقل الإشارات المرجعية عبر أنواع التخزين"
-  },
-  "deletedBookmark": {
-    "message": "تم حذف $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "تذكر الحالة السابقة (موضع التمرير والمجلدات المفتوحة)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "تحديث حالة المزامنة تلقائياً"
-  },
-  "openBookmarksNewWindow": {
-    "message": "فتح العلامات في نافذة جديدة"
-  },
-  "addNewFolder": {
-    "message": "إضافة مجلد فرعي"
-  },
-  "copyTitleAndUrl": {
-    "message": "نسخ العنوان وعنوان URL إلى الحافظة"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "فتح العلامات في نافذة متخفية"
-  },
-  "optionThemeLight": {
-    "message": "فاتح"
-  },
-  "optionZoom": {
-    "message": "تكبير"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "هل أنت متأكد من أنك تريد حذف مجلد $folderName$ و $subFolderCount$ مجلد فرعي فيه؟",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "الاحتفاظ بالأقدم وإزالة $count$ نسخ الأخرى؟",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "reportedToDeveloper": {
-    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
-    "message": "تم الإبلاغ عن هذا إلى المطور."
-  },
-  "delete": {
-    "message": "حذف"
-  },
-  "customStyles": {
-    "message": "أنماط مخصصة"
-  },
-  "deleteEllipsis": {
-    "message": "حذف..."
-  },
-  "versionMessage": {
-    "message": "هذا هو VBM الجديد $versionNumber$! سجل التغييرات هنا: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "إضافة التبويب الحالي أسفل هذا"
-  },
-  "contextMenuAddBookmark": {
-    "message": "إضافة إشارة مرجعية لهذه الصفحة باستخدام vBookmarks"
-  },
   "deadFilterAll": {
     "message": "الكل"
   },
@@ -723,8 +201,14 @@
   "deadMarked": {
     "message": "تم وضع علامة على الصفوف المعطلة"
   },
+  "deadNone": {
+    "message": "لم يتم العثور على روابط معطلة"
+  },
   "deadProxyHint": {
     "message": "يتم إرسال عناوين URL للإشارات المرجعية إلى هذه الخدمة الخارجية. اتركه فارغًا للفحص المباشر فقط."
+  },
+  "deadRescan": {
+    "message": "إعادة المسح"
   },
   "deadStartHint": {
     "message": "بدء فحص $n$ إشارة مرجعية",
@@ -743,11 +227,49 @@
   "deadUnmarkAll": {
     "message": "مسح جميع العلامات"
   },
+  "defaultIconButton": {
+    "message": "استخدام الافتراضي"
+  },
+  "defaultIconButtonOr": {
+    "message": "أو"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "deleteEllipsis": {
+    "message": "حذف..."
+  },
+  "deletedBookmark": {
+    "message": "تم حذف $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "تم حذف المجلد $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "تجاهل"
+  },
   "donationGo": {
     "message": "تبرع"
   },
   "donationLater": {
     "message": "لاحقًا"
+  },
+  "donationMessage": {
+    "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
   },
   "donationNever": {
     "message": "لا تظهر مرة أخرى"
@@ -760,6 +282,18 @@
       }
     }
   },
+  "dupesCleanAll": {
+    "message": "تنظيف الكل: $groups$ مجموعات، $count$ نسخ إضافية",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
   "dupesCleanRestHint": {
     "message": "احتفظ بـ \"$title$\" وأزل $count$ الأخرى",
     "placeholders": {
@@ -771,6 +305,45 @@
       }
     }
   },
+  "dupesConfirmAll": {
+    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ يتم الاحتفاظ بأقدم الإدخالات.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmGroup": {
+    "message": "الاحتفاظ بالأقدم وإزالة $count$ نسخ الأخرى؟",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "تمت إزالة $count$ إشارات مرجعية مكررة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ مكررات",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
   "dupesIgnoreScheme": {
     "message": "تجاهل اختلافات http/https"
   },
@@ -779,6 +352,9 @@
   },
   "dupesKeeperSet": {
     "message": "تعيين كحافظ"
+  },
+  "dupesNone": {
+    "message": "لم يتم العثور على مكررات"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ مجموعات · $count$ سيتم تحريرها",
@@ -818,6 +394,95 @@
   "dupesStrategyShortestTitle": {
     "message": "احتفظ بأقصر عنوان"
   },
+  "edit": {
+    "message": "تحرير..."
+  },
+  "editBookmark": {
+    "message": "تحرير علامة مرجعية"
+  },
+  "editFolder": {
+    "message": "تحرير مجلد"
+  },
+  "errorOccured": {
+    "message": "عفواً، حدث خطأ."
+  },
+  "extDesc": {
+    "description": "وصف الامتداد.",
+    "message": "مدير علامات مرجعية منبثق. Neat Bookmarks محسّن. أنظم من Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(فارغ)"
+  },
+  "general": {
+    "message": "عام"
+  },
+  "ignore": {
+    "message": "تجاهل"
+  },
+  "name": {
+    "description": "اسم العلامة المرجعية أو المجلد.",
+    "message": "الاسم"
+  },
+  "noTitle": {
+    "description": "العنوان للعلامات المرجعية بدون عنوان بدون URL http(s) أو المجلدات بدون عنوان.",
+    "message": "(بلا عنوان)"
+  },
+  "nope": {
+    "message": "لا"
+  },
+  "open": {
+    "description": "إجراء لفتح العلامات المرجعية.",
+    "message": "فتح"
+  },
+  "openBookmarks": {
+    "message": "فتح جميع العلامات المرجعية"
+  },
+  "openBookmarksInGroup": {
+    "message": "فتح الكل في مجموعة تبويب جديدة"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "فتح العلامات في نافذة متخفية"
+  },
+  "openBookmarksNewWindow": {
+    "message": "فتح العلامات في نافذة جديدة"
+  },
+  "openCommandPaletteCommand": {
+    "message": "فتح لوحة الأوامر"
+  },
+  "openIncognitoWindow": {
+    "message": "فتح في نافذة متخفية"
+  },
+  "openNewTab": {
+    "message": "فتح في علامة تبويب جديدة"
+  },
+  "openNewWindow": {
+    "message": "فتح في نافذة جديدة"
+  },
+  "openSidePanelCommand": {
+    "message": "فتح اللوحة الجانبية لـ vBookmarks"
+  },
+  "optionAutoRefreshSync": {
+    "message": "تحديث حالة المزامنة تلقائياً"
+  },
+  "optionAutoResizePopup": {
+    "message": "ضبط حجم النافذة المنبثقة تلقائيًا لتناسب المحتوى"
+  },
+  "optionClickNewTab": {
+    "message": "النقر الأيسر يفتح العلامة المرجعية في علامة تبويب جديدة."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "إغلاق المجلدات غير المستخدمة عند فتح مجلد."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "تأكيد قبل حذف المجلدات غير الفارغة"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
+  },
   "optionDeadProxy": {
     "message": "قالب وكيل الروابط المعطلة"
   },
@@ -826,6 +491,111 @@
   },
   "optionDeadScanTimeout": {
     "message": "مهلة فحص الروابط المعطلة بالثواني (2-30)"
+  },
+  "optionHighlightUnsynced": {
+    "message": "إبراز العلامات المرجعية غير المتزامنة"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "إظهار العلامات المرجعية في شريط العلامات المرجعية فقط"
+  },
+  "optionOpenInSidePanel": {
+    "message": "الفتح في اللوحة الجانبية بدلاً من النافذة المنبثقة"
+  },
+  "optionOpenNewTab": {
+    "message": "النقر الأوسط أو التحكم+النقر يفتح العلامة المرجعية في علامة تبويب خلفية جديدة (بدلاً من المقدمة)."
+  },
+  "optionPopupStays": {
+    "message": "النافذة المنبثقة تظل مفتوحة عند فتح (النقر الأيسر) العلامات المرجعية."
+  },
+  "optionRecentCollapsed": {
+    "message": "طي قسم المضافة حديثًا افتراضيًا"
+  },
+  "optionRecentCount": {
+    "message": "عدد الإشارات المرجعية المضافة حديثًا للعرض"
+  },
+  "optionRememberPrevState": {
+    "message": "تذكر الحالة السابقة (موضع التمرير والمجلدات المفتوحة)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "البحث عن العلامات المرجعية فقط عند الضغط على ENTER (بدلاً من البحث الفوري)"
+  },
+  "optionSearchHistory": {
+    "message": "تسجيل سجل البحث"
+  },
+  "optionSearchHistoryHint": {
+    "message": "إيقاف هذا سيؤدي أيضًا إلى مسح السجل الحالي."
+  },
+  "optionShowDeadView": {
+    "message": "[TODO:optionShowDeadView]"
+  },
+  "optionShowDupesView": {
+    "message": "[TODO:optionShowDupesView]"
+  },
+  "optionShowItemPath": {
+    "message": "إظهار مسار المجلد الأصلي في صفوف القائمة"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "عرض الإشارات المرجعية المضافة حديثًا في أعلى النافذة المنبثقة"
+  },
+  "optionShowStatsView": {
+    "message": "[TODO:optionShowStatsView]"
+  },
+  "optionShowSyncStatus": {
+    "message": "إظهار مؤشرات حالة المزامنة"
+  },
+  "optionShowViewTabs": {
+    "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
+  },
+  "optionStatsEnabled": {
+    "message": "تمكين إحصائيات الزيارة"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "فترة التحديث"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "ثواني"
+  },
+  "optionTheme": {
+    "message": "المظهر"
+  },
+  "optionThemeAuto": {
+    "message": "اتباع النظام"
+  },
+  "optionThemeDark": {
+    "message": "داكن"
+  },
+  "optionThemeInk": {
+    "message": "حبر (داكن)"
+  },
+  "optionThemeLight": {
+    "message": "فاتح"
+  },
+  "optionThemePaper": {
+    "message": "ورق (فاتح)"
+  },
+  "optionZoom": {
+    "message": "تكبير"
+  },
+  "options": {
+    "message": "خيارات"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "تم إنشاؤه بواسطة $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGroupViews": {
+    "message": "العروض"
+  },
+  "paletteCmdDead": {
+    "message": "البحث عن الروابط المعطلة"
+  },
+  "paletteCmdDupes": {
+    "message": "تنظيف الإشارات المرجعية المكررة"
   },
   "paletteCmdGoDead": {
     "message": "الانتقال إلى عرض الروابط المعطلة"
@@ -839,11 +609,29 @@
   "paletteCmdGoSearch": {
     "message": "الانتقال إلى عرض البحث"
   },
+  "paletteCmdGoStats": {
+    "message": "الانتقال إلى عرض الإحصائيات"
+  },
   "paletteCmdGoTree": {
     "message": "الانتقال إلى عرض الشجرة"
   },
+  "paletteCmdNewBookmark": {
+    "message": "إشارة مرجعية جديدة…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "مجلد جديد…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "فاصل جديد"
+  },
   "paletteCmdOptions": {
     "message": "فتح صفحة الخيارات"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "إشارة مرجعية للتبويب الحالي"
+  },
+  "paletteCmdSaveSession": {
+    "message": "حفظ تبويبات النافذة كمجلد"
   },
   "paletteCmdSearchInView": {
     "message": "البحث عن '$query$' في عرض البحث",
@@ -852,6 +640,74 @@
         "content": "$1"
       }
     }
+  },
+  "paletteNoResults": {
+    "message": "لا توجد نتائج مطابقة"
+  },
+  "palettePlaceholder": {
+    "message": "ابحث عن إشارات مرجعية، مجلدات، أوامر…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "المجلد الأصلي: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "إضافة إشارة مرجعية لهذه الصفحة (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "تمت إضافة الإشارة المرجعية"
+  },
+  "quickAddedTo": {
+    "message": "تمت إضافة الإشارة المرجعية إلى $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "إزالة هذه الإشارة المرجعية (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "تمت إزالة الإشارة المرجعية"
+  },
+  "recentBookmarks": {
+    "message": "المضافة حديثًا"
+  },
+  "recentEmpty": {
+    "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
+  },
+  "recentRevealInTree": {
+    "message": "إظهار في الشجرة"
+  },
+  "removeSeparator": {
+    "message": "إزالة الفاصل"
+  },
+  "replaceUrl": {
+    "message": "استبدال هذا بعنوان URL الحالي"
+  },
+  "reportError": {
+    "message": "الإبلاغ عن خطأ"
+  },
+  "reportedToDeveloper": {
+    "description": "تم الإبلاغ عن رسالة لخطأ حدث في الامتداد إلى المطور.",
+    "message": "تم الإبلاغ عن هذا إلى المطور."
+  },
+  "resetButton": {
+    "message": "إعادة تعيين"
+  },
+  "resetSettings": {
+    "message": "إعادة تعيين الإعدادات"
+  },
+  "resetSettingsDescription": {
+    "message": "إعادة تعيين vBookmarks إلى الإعدادات الافتراضية."
   },
   "rowActionDelete": {
     "message": "حذف"
@@ -865,43 +721,79 @@
   "rowActionUnmark": {
     "message": "إزالة علامة التعطل"
   },
-  "viewDead": {
-    "message": "الروابط المعطلة"
+  "save": {
+    "message": "حفظ"
   },
-  "viewDupes": {
-    "message": "المكررات"
+  "searchBookmarks": {
+    "description": "نص عنصر نائب لحقل البحث.",
+    "message": "بحث في العلامات المرجعية"
   },
-  "viewStats": {
-    "message": "الإحصائيات"
+  "searchClear": {
+    "message": "مسح البحث"
   },
-  "paletteCmdGoStats": {
-    "message": "الانتقال إلى عرض الإحصائيات"
+  "searchHistoryClear": {
+    "message": "مسح الكل"
   },
-  "optionStatsEnabled": {
-    "message": "تمكين إحصائيات الزيارة"
+  "searchHistoryRemove": {
+    "message": "إزالة هذا البحث"
   },
-  "statsSortByCount": {
-    "message": "حسب العدد"
-  },
-  "statsSortByRecent": {
-    "message": "حسب الأحدث"
-  },
-  "statsEmpty": {
-    "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
-  },
-  "statsDisabledHint": {
-    "message": "إحصائيات الزيارة معطلة — قم بتمكينها في الخيارات → طرق العرض"
-  },
-  "statsVisitCount": {
-    "message": "تمت الزيارة $count$ مرة",
+  "searchHistoryResultCount": {
+    "message": "$n$ نتيجة",
     "placeholders": {
-      "count": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "مسح الإحصائيات"
+  "searchHistoryTitle": {
+    "message": "عمليات البحث الأخيرة"
+  },
+  "searchNoResults": {
+    "message": "لا توجد إشارات مرجعية مطابقة"
+  },
+  "searchViewHint": {
+    "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
+  },
+  "sessionEmpty": {
+    "message": "لا توجد تبويبات للحفظ"
+  },
+  "sessionFolderName": {
+    "message": "جلسة $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "تم حفظ $count$ تبويبًا في مجلد جديد",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "حسب تاريخ الإضافة (الأحدث أولاً)"
+  },
+  "sortByTitle": {
+    "message": "حسب العنوان"
+  },
+  "sortFolderContents": {
+    "message": "فرز محتويات المجلد"
+  },
+  "sortFoldersFirst": {
+    "message": "إبقاء المجلدات في الأعلى"
+  },
+  "sortRecursive": {
+    "message": "فرز المجلدات الفرعية أيضًا (تكراري)"
+  },
+  "sortRecursiveWarning": {
+    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي ولا يمكن التراجع عنه."
   },
   "statsClearConfirm": {
     "message": "مسح إحصائيات الزيارة لـ $count$ إشارة مرجعية؟ لا يمكن التراجع عن ذلك.",
@@ -911,14 +803,23 @@
       }
     }
   },
+  "statsClearData": {
+    "message": "مسح الإحصائيات"
+  },
+  "statsDisabledHint": {
+    "message": "إحصائيات الزيارة معطلة — قم بتمكينها في الخيارات → طرق العرض"
+  },
+  "statsEmpty": {
+    "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
+  },
   "statsHistoryBanner": {
     "message": "امنح الإذن بالوصول إلى السجل لملء إحصائيات الزيارات بزياراتك السابقة."
   },
-  "statsHistoryEnable": {
-    "message": "تمكين"
-  },
   "statsHistoryDismiss": {
     "message": "لا تظهر مرة أخرى"
+  },
+  "statsHistoryEnable": {
+    "message": "تمكين"
   },
   "statsHistoryImported": {
     "message": "تم استيراد الزيارات السابقة لـ $count$ إشارة مرجعية",
@@ -927,5 +828,113 @@
         "content": "$1"
       }
     }
+  },
+  "statsSortByCount": {
+    "message": "حسب العدد"
+  },
+  "statsSortByRecent": {
+    "message": "حسب الأحدث"
+  },
+  "statsVisitCount": {
+    "message": "تمت الزيارة $count$ مرة",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "خيارات المزامنة"
+  },
+  "syncStatusLocal": {
+    "message": "محلي فقط — لم يتم الرفع"
+  },
+  "syncStatusSynced": {
+    "message": "متزامن مع حساب Google الخاص بك"
+  },
+  "syncStatusUnsyncable": {
+    "message": "لا يمكن المزامنة"
+  },
+  "syncSuffixLocal": {
+    "message": "(محلي)"
+  },
+  "syncSuffixSynced": {
+    "message": "(متزامن)"
+  },
+  "timeDaysAgo": {
+    "message": "قبل $n$ يومًا",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "قبل $n$ ساعة",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "الآن"
+  },
+  "timeMinutesAgo": {
+    "message": "قبل $n$ دقيقة",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "أمس"
+  },
+  "toolButtonTitle": {
+    "message": "أدوات (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "تراجع"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "هذا هو VBM الجديد $versionNumber$! سجل التغييرات هنا: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "الروابط المعطلة"
+  },
+  "viewDupes": {
+    "message": "المكررات"
+  },
+  "viewRecent": {
+    "message": "الأخيرة"
+  },
+  "viewSearch": {
+    "message": "بحث"
+  },
+  "viewStats": {
+    "message": "الإحصائيات"
+  },
+  "viewSwitchAnnounce": {
+    "message": "عرض $name$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "الشجرة"
   }
 }

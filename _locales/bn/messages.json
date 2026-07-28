@@ -1,136 +1,98 @@
 {
-  "optionRecentCount": {
-    "message": "প্রদর্শনের জন্য সম্প্রতি যোগ করা বুকমার্কের সংখ্যা"
+  "accessibility": {
+    "message": "অ্যাক্সেসিবিলিটি"
   },
-  "optionSearchHistory": {
-    "message": "অনুসন্ধানের ইতিহাস সংরক্ষণ করুন"
+  "addBookmarkAfter": {
+    "message": "বর্তমান ট্যাব এর পরে যোগ করুন"
   },
-  "optionSearchHistoryHint": {
-    "message": "এটি বন্ধ করলে বিদ্যমান ইতিহাসও মুছে যাবে।"
+  "addBookmarkBefore": {
+    "message": "বর্তমান ট্যাব এর আগে যোগ করুন"
   },
-  "optionShowSyncStatus": {
-    "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
-  },
-  "dupesDone": {
-    "message": "$count$টি ডুপ্লিকেট বুকমার্ক সরানো হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkBottom": {
+    "message": "বর্তমান ট্যাব এর নিচে যোগ করুন"
   },
   "addBookmarkTop": {
     "message": "বর্তমান ট্যাব এর উপরে যোগ করুন"
   },
-  "errorOccured": {
-    "message": "ওহো, একটি ত্রুটি ঘটেছে।"
+  "addNewFolder": {
+    "message": "সাবফোল্ডার যোগ করুন"
   },
-  "optionShowRecentBookmarks": {
-    "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
+  "addNewFolderAfter": {
+    "message": "এর পরে ফোল্ডার যোগ করুন"
   },
-  "optionRecentCollapsed": {
-    "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
+  "addNewFolderBefore": {
+    "message": "এর আগে ফোল্ডার যোগ করুন"
   },
-  "optionsGroupViews": {
-    "message": "দৃশ্যসমূহ"
+  "addSeparator": {
+    "message": "সেপারেটর যোগ করুন"
   },
-  "optionShowViewTabs": {
-    "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
+  "advancedOptions": {
+    "message": "উন্নত অপশন"
   },
-  "optionShowItemPath": {
-    "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
-  },
-  "recentEmpty": {
-    "message": "কোনও সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D টিপুন।"
-  },
-  "recentRevealInTree": {
-    "message": "ট্রিতে দেখান"
-  },
-  "searchHistoryClear": {
-    "message": "সব মুছুন"
-  },
-  "searchHistoryRemove": {
-    "message": "এই অনুসন্ধান সরান"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$টি ফলাফল",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "সাম্প্রতিক অনুসন্ধান"
-  },
-  "timeDaysAgo": {
-    "message": "$n$ দিন আগে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "$n$ ঘণ্টা আগে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "এইমাত্র"
-  },
-  "timeMinutesAgo": {
-    "message": "$n$ মিনিট আগে",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "গতকাল"
-  },
-  "viewRecent": {
-    "message": "সাম্প্রতিক"
-  },
-  "viewTree": {
-    "message": "ট্রি"
-  },
-  "viewSearch": {
-    "message": "অনুসন্ধান"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ দৃশ্য",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "$groups$ গ্রুপ জুড়ে $count$ অতিরিক্ত কপি সরিয়ে ফেলবেন? পুরনো এন্ট্রিগুলো রাখা হবে।",
+  "confirmDeleteFolder": {
+    "message": "এই ফোল্ডারে $count$টি আইটেম রয়েছে। আপনি মুছে ফেলা পূর্বাবস্থায় ফিরিয়ে আনতে পারেন।",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
       },
-      "groups": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "মুছুন"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $subFolderCount$ সাবফোল্ডার মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
         "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "অ্যাক্সেসিবিলিটি"
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "আপনি কি $folderName$ ফোল্ডার, $subFolderCount$ সাবফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "paletteCmdNewBookmark": {
-    "message": "নতুন বুকমার্ক…"
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "আপনি কি সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "optionTheme": {
-    "message": "থিম"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "আপনি কি নতুন ইনকগনিটো উইন্ডোতে সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -141,27 +103,42 @@
       }
     }
   },
-  "resetButton": {
-    "message": "রিসেট করুন"
+  "contextMenuAddBookmark": {
+    "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
   },
-  "addBookmarkBefore": {
-    "message": "বর্তমান ট্যাব এর আগে যোগ করুন"
+  "copyAllTitlesAndUrls": {
+    "message": "সব শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
   },
-  "syncOptions": {
-    "message": "সিঙ্ক অপশন"
+  "copyTitleAndUrl": {
+    "message": "শিরোনাম ও URL ক্লিপবোর্ডে কপি"
   },
-  "deletedFolder": {
-    "message": "$title$ ফোল্ডার মুছে ফেলা হয়েছে",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "সিঙ্ক করা এবং লোকাল স্টোরেজের মধ্যে বুকমার্ক সরানো যাবে না। অনুলিপি/পেস্ট ব্যবহার করুন।",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "এই পৃষ্ঠা বুকমার্ক করুন (Ctrl+D)"
+  "customIcon": {
+    "message": "কাস্টম আইকন"
+  },
+  "customIconDescription": {
+    "message": "আইকনটি 19*19 পিক্সেল ডাইমেনশনের হতে হবে। অন্যথায় এটি এই ডাইমেনশনে রিসাইজ করা হবে।"
+  },
+  "customSeparatorColorDescription": {
+    "message": "সেপারেটর কাস্টমাইজ করুন"
+  },
+  "customSeparatorStringDescription": {
+    "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল শিরোনাম"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল URL"
+  },
+  "customStyles": {
+    "message": "কাস্টম স্টাইল"
+  },
+  "customStylesDescription": {
+    "message": "এর জন্য কিছু CSS দক্ষতা প্রয়োজন। নিজের ঝুঁকিতে হ্যাক করুন। কোড শেয়ারিং করা বুদ্ধিমানের কাজ হবে"
   },
   "deadChecking": {
     "message": "$done$ / $total$ চেক করা হচ্ছে…",
@@ -198,505 +175,6 @@
       }
     }
   },
-  "deadNone": {
-    "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"
-  },
-  "deadRescan": {
-    "message": "পুনরায় স্ক্যান"
-  },
-  "paletteCmdDead": {
-    "message": "মৃত লিঙ্ক খুঁজুন"
-  },
-  "dupesCleanAll": {
-    "message": "সব পরিষ্কার করুন: $groups$ গ্রুপ, $count$ অতিরিক্ত কপি",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "openSidePanelCommand": {
-    "message": "vBookmarks সাইড প্যানেল খুলুন"
-  },
-  "optionThemeAuto": {
-    "message": "সিস্টেম অনুসরণ করুন"
-  },
-  "edit": {
-    "message": "সম্পাদনা..."
-  },
-  "customIconDescription": {
-    "message": "আইকনটি 19*19 পিক্সেল ডাইমেনশনের হতে হবে। অন্যথায় এটি এই ডাইমেনশনে রিসাইজ করা হবে।"
-  },
-  "resetSettingsDescription": {
-    "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
-  },
-  "defaultIconButtonOr": {
-    "message": "অথবা"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "সেকেন্ড"
-  },
-  "syncStatusSynced": {
-    "message": "আপনার Google অ্যাকাউন্টে সিঙ্ক হয়েছে"
-  },
-  "syncStatusLocal": {
-    "message": "শুধুমাত্র স্থানীয় — আপলোড করা হয়নি"
-  },
-  "syncStatusUnsyncable": {
-    "message": "সিঙ্ক করা যাবে না"
-  },
-  "syncSuffixSynced": {
-    "message": "(সিঙ্ক হয়েছে)"
-  },
-  "syncSuffixLocal": {
-    "message": "(স্থানীয়)"
-  },
-  "advancedOptions": {
-    "message": "উন্নত অপশন"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "সেপারেটর সরান"
-  },
-  "resetSettings": {
-    "message": "সেটিংস রিসেট করুন"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল শিরোনাম"
-  },
-  "donationMessage": {
-    "message": "আপনি যদি এটি পছন্দ করেন, তবে হয়তো আপনি এর ভবিষ্যত উন্নয়নের জন্য দান করতে পারেন। যেকোনো পরিমাণ স্বাগত।"
-  },
-  "optionClickNewTab": {
-    "message": "বাম ক্লিক বুকমার্ক নতুন ট্যাবে খোলে।"
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "আপনি কি নতুন ইনকগনিটো উইন্ডোতে সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "না"
-  },
-  "openIncognitoWindow": {
-    "message": "ইনকগনিটো উইন্ডোতে খুলুন"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "বর্তমান ট্যাব বুকমার্ক করুন"
-  },
-  "sessionEmpty": {
-    "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"
-  },
-  "sortByDateAdded": {
-    "message": "তারিখ অনুসারে (নতুন প্রথম)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "নতুন বিভাজক"
-  },
-  "recentBookmarks": {
-    "message": "সম্প্রতি যোগ করা হয়েছে"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "সব শিরোনাম এবং URL ক্লিপবোর্ডে কপি করুন"
-  },
-  "searchBookmarks": {
-    "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
-    "message": "বুকমার্ক খুঁজুন"
-  },
-  "searchClear": {
-    "message": "অনুসন্ধান মুছুন"
-  },
-  "reportError": {
-    "message": "ত্রুটি রিপোর্ট করুন"
-  },
-  "addNewFolderAfter": {
-    "message": "এর পরে ফোল্ডার যোগ করুন"
-  },
-  "editBookmark": {
-    "message": "বুকমার্ক সম্পাদনা করুন"
-  },
-  "editFolder": {
-    "message": "ফোল্ডার সম্পাদনা করুন"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "প্যারেন্ট ফোল্ডার: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "রিফ্রেশ ইন্টারভাল"
-  },
-  "openBookmarks": {
-    "message": "সব বুকমার্ক খুলুন"
-  },
-  "openBookmarksInGroup": {
-    "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "অ-খালি ফোল্ডার মুছার আগে নিশ্চিতকরণ"
-  },
-  "addSeparator": {
-    "message": "সেপারেটর যোগ করুন"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "আপনি কি $folderName$ ফোল্ডার, $subFolderCount$ সাবফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "উইন্ডো ট্যাবগুলো ফোল্ডার হিসেবে সংরক্ষণ করুন"
-  },
-  "paletteCmdNewFolder": {
-    "message": "নতুন ফোল্ডার…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "যদি কোনো বুকমার্কের URL এই স্ট্রিং ধারণ করে, তবে এটি সেপারেটর হিসাবে দেখানো হবে"
-  },
-  "customStylesDescription": {
-    "message": "এর জন্য কিছু CSS দক্ষতা প্রয়োজন। নিজের ঝুঁকিতে হ্যাক করুন। কোড শেয়ারিং করা বুদ্ধিমানের কাজ হবে"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "ফোল্ডার খোলার সময় অব্যবহৃত ফোল্ডার বন্ধ করুন।"
-  },
-  "optionPopupStays": {
-    "message": "বুকমার্ক খোলার সময় (বাম ক্লিক) পপআপ খোলা থাকে।"
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "আপনি কি সব $count$ বুকমার্ক খুলতে নিশ্চিত?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "বুকমার্ক, ফোল্ডার, কমান্ড অনুসন্ধান করুন…"
-  },
-  "addNewFolderBefore": {
-    "message": "এর আগে ফোল্ডার যোগ করুন"
-  },
-  "customIcon": {
-    "message": "কাস্টম আইকন"
-  },
-  "folderEmpty": {
-    "message": "(খালি)"
-  },
-  "save": {
-    "message": "সংরক্ষণ করুন"
-  },
-  "undoAction": {
-    "message": "পূর্বাবস্থায় ফিরুন"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
-  },
-  "sortRecursive": {
-    "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
-  },
-  "noTitle": {
-    "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
-    "message": "(কোনো শিরোনাম নেই)"
-  },
-  "sortByTitle": {
-    "message": "শিরোনাম অনুসারে"
-  },
-  "defaultIconButton": {
-    "message": "ডিফল্ট ব্যবহার করুন"
-  },
-  "customSeparatorColorDescription": {
-    "message": "সেপারেটর কাস্টমাইজ করুন"
-  },
-  "sessionSaved": {
-    "message": "$count$টি ট্যাব একটি নতুন ফোল্ডারে সংরক্ষিত হয়েছে",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "ফোল্ডার উপরে রাখুন"
-  },
-  "optionSearchAfterEnter": {
-    "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
-  },
-  "paletteNoResults": {
-    "message": "কোনো মিল পাওয়া যায়নি"
-  },
-  "openCommandPaletteCommand": {
-    "message": "কমান্ড প্যালেট খুলুন"
-  },
-  "searchNoResults": {
-    "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
-  },
-  "searchViewHint": {
-    "message": "আপনার বুকমার্ক অনুসন্ধান করতে উপরের বক্সে টাইপ করুন"
-  },
-  "sessionFolderName": {
-    "message": "সেশন $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্ক পুনর্বিন্যাস করবে এবং পূর্বাবস্থায় ফেরানো যাবে না।"
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "$authorName$ দ্বারা তৈরি।",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "বুকমার্ক যোগ করা হয়েছে"
-  },
-  "quickAddedTo": {
-    "message": "$folderName$-এ বুকমার্ক যোগ করা হয়েছে",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "বুকমার্ক সরানো হয়েছে"
-  },
-  "quickRemoveBookmark": {
-    "message": "এই বুকমার্ক সরান (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "সরঞ্জাম (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "গাঢ়"
-  },
-  "optionThemeInk": {
-    "message": "কালি (গাঢ়)"
-  },
-  "optionThemePaper": {
-    "message": "কাগজ (হালকা)"
-  },
-  "sortFolderContents": {
-    "message": "ফোল্ডার সাজান"
-  },
-  "confirmDeleteFolder": {
-    "message": "এই ফোল্ডারে $count$টি আইটেম রয়েছে। আপনি মুছে ফেলা পূর্বাবস্থায় ফিরিয়ে আনতে পারেন।",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "মুছুন"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $bookmarkCount$ বুকমার্ক মুছে ফেলতে নিশ্চিত?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$টি ডুপ্লিকেট",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "নতুন ট্যাবে খুলুন"
-  },
-  "addBookmarkAfter": {
-    "message": "বর্তমান ট্যাব এর পরে যোগ করুন"
-  },
-  "ignore": {
-    "message": "উপেক্ষা করুন"
-  },
-  "open": {
-    "description": "বুকমার্ক খোলার ক্রিয়া।",
-    "message": "খুলুন"
-  },
-  "optionOpenNewTab": {
-    "message": "মিডল ক্লিক বা কন্ট্রোল-ক্লিক বুকমার্ক নতুন ব্যাকগ্রাউন্ড ট্যাবে খোলে (ফোরগ্রাউন্ডের পরিবর্তে)।"
-  },
-  "options": {
-    "message": "অপশন"
-  },
-  "replaceUrl": {
-    "message": "বর্তমান URL দিয়ে প্রতিস্থাপন"
-  },
-  "name": {
-    "description": "বুকমার্ক বা ফোল্ডারের নাম।",
-    "message": "নাম"
-  },
-  "optionHighlightUnsynced": {
-    "message": "আনসিন্ক বুকমার্ক হাইলাইট করুন"
-  },
-  "donationDismiss": {
-    "message": "বাতিল করুন"
-  },
-  "paletteCmdDupes": {
-    "message": "ডুপ্লিকেট বুকমার্ক পরিষ্কার করুন"
-  },
-  "general": {
-    "message": "সাধারণ"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "সেপারেটর হিসাবে দেখানো বুকমার্কের আসল URL"
-  },
-  "openNewWindow": {
-    "message": "নতুন উইন্ডোতে খুলুন"
-  },
-  "dupesNone": {
-    "message": "কোনো ডুপ্লিকেট পাওয়া যায়নি"
-  },
-  "optionOpenInSidePanel": {
-    "message": "পপআপের পরিবর্তে সাইড প্যানেলে খুলুন"
-  },
-  "extDesc": {
-    "description": "এক্সটেনশনের বর্ণনা।",
-    "message": "একটি পপআপ বুকমার্ক ম্যানেজার। উন্নত Neat Bookmarks। Neater Bookmarks থেকে আরও পরিষ্কার।"
-  },
-  "optionAutoResizePopup": {
-    "message": "বিষয়বস্তু অনুযায়ী পপআপ উইন্ডো স্বয়ংক্রিয়ভাবে আকার পরিবর্তন করুন"
-  },
-  "crossStorageMoveWarning": {
-    "message": "সিঙ্ক করা এবং লোকাল স্টোরেজের মধ্যে বুকমার্ক সরানো যাবে না। অনুলিপি/পেস্ট ব্যবহার করুন।",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "$title$ মুছে ফেলা হয়েছে",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "আগের অবস্থা মনে রাখুন (স্ক্রল অবস্থান এবং খোলা ফোল্ডার)।"
-  },
-  "optionAutoRefreshSync": {
-    "message": "সিঙ্ক স্ট্যাটাস অটো-রিফ্রেশ করুন"
-  },
-  "openBookmarksNewWindow": {
-    "message": "নতুন উইন্ডোতে সব বুকমার্ক খুলুন"
-  },
-  "addNewFolder": {
-    "message": "সাবফোল্ডার যোগ করুন"
-  },
-  "copyTitleAndUrl": {
-    "message": "শিরোনাম ও URL ক্লিপবোর্ডে কপি"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
-  },
-  "optionThemeLight": {
-    "message": "হালকা"
-  },
-  "optionZoom": {
-    "message": "জুম"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "আপনি কি $folderName$ ফোল্ডার এবং এর মধ্যে $subFolderCount$ সাবফোল্ডার মুছে ফেলতে নিশ্চিত?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "সবচেয়ে পুরনোটি রেখে বাকি $count$ কপি সরিয়ে ফেলবেন?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "reportedToDeveloper": {
-    "description": "এক্সটেনশনে ঘটা একটি ত্রুটির জন্য বার্তা, ডেভেলপারকে রিপোর্ট করা হয়েছে।",
-    "message": "এটি ডেভেলপারকে রিপোর্ট করা হয়েছে।"
-  },
-  "delete": {
-    "message": "মুছে ফেলুন"
-  },
-  "customStyles": {
-    "message": "কাস্টম স্টাইল"
-  },
-  "deleteEllipsis": {
-    "message": "মুছে ফেলুন..."
-  },
-  "versionMessage": {
-    "message": "এটি নতুন VBM $versionNumber$! পরিবর্তন লগ এখানে: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "বর্তমান ট্যাব এর নিচে যোগ করুন"
-  },
-  "contextMenuAddBookmark": {
-    "message": "vBookmarks দিয়ে এই পৃষ্ঠা বুকমার্ক করুন"
-  },
   "deadFilterAll": {
     "message": "সব"
   },
@@ -723,8 +201,14 @@
   "deadMarked": {
     "message": "মৃত সারি চিহ্নিত করা হয়েছে"
   },
+  "deadNone": {
+    "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"
+  },
   "deadProxyHint": {
     "message": "বুকমার্ক URL এই তৃতীয়-পক্ষ পরিষেবায় পাঠানো হয়। খালি রাখলে সরাসরি প্রোব করা হবে।"
+  },
+  "deadRescan": {
+    "message": "পুনরায় স্ক্যান"
   },
   "deadStartHint": {
     "message": "$n$টি বুকমার্ক স্ক্যান করা শুরু করুন",
@@ -743,11 +227,49 @@
   "deadUnmarkAll": {
     "message": "সব চিহ্ন মুছুন"
   },
+  "defaultIconButton": {
+    "message": "ডিফল্ট ব্যবহার করুন"
+  },
+  "defaultIconButtonOr": {
+    "message": "অথবা"
+  },
+  "delete": {
+    "message": "মুছে ফেলুন"
+  },
+  "deleteEllipsis": {
+    "message": "মুছে ফেলুন..."
+  },
+  "deletedBookmark": {
+    "message": "$title$ মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "$title$ ফোল্ডার মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "বাতিল করুন"
+  },
   "donationGo": {
     "message": "দান করুন"
   },
   "donationLater": {
     "message": "পরে"
+  },
+  "donationMessage": {
+    "message": "আপনি যদি এটি পছন্দ করেন, তবে হয়তো আপনি এর ভবিষ্যত উন্নয়নের জন্য দান করতে পারেন। যেকোনো পরিমাণ স্বাগত।"
   },
   "donationNever": {
     "message": "আবার দেখাবেন না"
@@ -760,6 +282,18 @@
       }
     }
   },
+  "dupesCleanAll": {
+    "message": "সব পরিষ্কার করুন: $groups$ গ্রুপ, $count$ অতিরিক্ত কপি",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
   "dupesCleanRestHint": {
     "message": "\"$title$\" রেখে বাকি $count$ টি সরান",
     "placeholders": {
@@ -771,6 +305,45 @@
       }
     }
   },
+  "dupesConfirmAll": {
+    "message": "$groups$ গ্রুপ জুড়ে $count$ অতিরিক্ত কপি সরিয়ে ফেলবেন? পুরনো এন্ট্রিগুলো রাখা হবে।",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmGroup": {
+    "message": "সবচেয়ে পুরনোটি রেখে বাকি $count$ কপি সরিয়ে ফেলবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "$count$টি ডুপ্লিকেট বুকমার্ক সরানো হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$টি ডুপ্লিকেট",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
   "dupesIgnoreScheme": {
     "message": "http/https পার্থক্য উপেক্ষা করুন"
   },
@@ -779,6 +352,9 @@
   },
   "dupesKeeperSet": {
     "message": "রক্ষক সেট করুন"
+  },
+  "dupesNone": {
+    "message": "কোনো ডুপ্লিকেট পাওয়া যায়নি"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ গোষ্ঠী · $count$ মুক্ত হবে",
@@ -818,6 +394,95 @@
   "dupesStrategyShortestTitle": {
     "message": "সংক্ষিপ্ত শিরোনাম রাখুন"
   },
+  "edit": {
+    "message": "সম্পাদনা..."
+  },
+  "editBookmark": {
+    "message": "বুকমার্ক সম্পাদনা করুন"
+  },
+  "editFolder": {
+    "message": "ফোল্ডার সম্পাদনা করুন"
+  },
+  "errorOccured": {
+    "message": "ওহো, একটি ত্রুটি ঘটেছে।"
+  },
+  "extDesc": {
+    "description": "এক্সটেনশনের বর্ণনা।",
+    "message": "একটি পপআপ বুকমার্ক ম্যানেজার। উন্নত Neat Bookmarks। Neater Bookmarks থেকে আরও পরিষ্কার।"
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(খালি)"
+  },
+  "general": {
+    "message": "সাধারণ"
+  },
+  "ignore": {
+    "message": "উপেক্ষা করুন"
+  },
+  "name": {
+    "description": "বুকমার্ক বা ফোল্ডারের নাম।",
+    "message": "নাম"
+  },
+  "noTitle": {
+    "description": "http(s) URL ছাড়া অনামী বুকমার্ক বা অনামী ফোল্ডারের জন্য শিরোনাম।",
+    "message": "(কোনো শিরোনাম নেই)"
+  },
+  "nope": {
+    "message": "না"
+  },
+  "open": {
+    "description": "বুকমার্ক খোলার ক্রিয়া।",
+    "message": "খুলুন"
+  },
+  "openBookmarks": {
+    "message": "সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksInGroup": {
+    "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openBookmarksNewWindow": {
+    "message": "নতুন উইন্ডোতে সব বুকমার্ক খুলুন"
+  },
+  "openCommandPaletteCommand": {
+    "message": "কমান্ড প্যালেট খুলুন"
+  },
+  "openIncognitoWindow": {
+    "message": "ইনকগনিটো উইন্ডোতে খুলুন"
+  },
+  "openNewTab": {
+    "message": "নতুন ট্যাবে খুলুন"
+  },
+  "openNewWindow": {
+    "message": "নতুন উইন্ডোতে খুলুন"
+  },
+  "openSidePanelCommand": {
+    "message": "vBookmarks সাইড প্যানেল খুলুন"
+  },
+  "optionAutoRefreshSync": {
+    "message": "সিঙ্ক স্ট্যাটাস অটো-রিফ্রেশ করুন"
+  },
+  "optionAutoResizePopup": {
+    "message": "বিষয়বস্তু অনুযায়ী পপআপ উইন্ডো স্বয়ংক্রিয়ভাবে আকার পরিবর্তন করুন"
+  },
+  "optionClickNewTab": {
+    "message": "বাম ক্লিক বুকমার্ক নতুন ট্যাবে খোলে।"
+  },
+  "optionCloseUnusedFolders": {
+    "message": "ফোল্ডার খোলার সময় অব্যবহৃত ফোল্ডার বন্ধ করুন।"
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "অ-খালি ফোল্ডার মুছার আগে নিশ্চিতকরণ"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
+  },
   "optionDeadProxy": {
     "message": "মৃত লিঙ্ক প্রক্সি টেমপ্লেট"
   },
@@ -826,6 +491,111 @@
   },
   "optionDeadScanTimeout": {
     "message": "মৃত লিঙ্ক স্ক্যান টাইমআউট সেকেন্ডে (২-৩০)"
+  },
+  "optionHighlightUnsynced": {
+    "message": "আনসিন্ক বুকমার্ক হাইলাইট করুন"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "শুধু বুকমার্ক বারে বুকমার্ক দেখান"
+  },
+  "optionOpenInSidePanel": {
+    "message": "পপআপের পরিবর্তে সাইড প্যানেলে খুলুন"
+  },
+  "optionOpenNewTab": {
+    "message": "মিডল ক্লিক বা কন্ট্রোল-ক্লিক বুকমার্ক নতুন ব্যাকগ্রাউন্ড ট্যাবে খোলে (ফোরগ্রাউন্ডের পরিবর্তে)।"
+  },
+  "optionPopupStays": {
+    "message": "বুকমার্ক খোলার সময় (বাম ক্লিক) পপআপ খোলা থাকে।"
+  },
+  "optionRecentCollapsed": {
+    "message": "ডিফল্টভাবে সম্প্রতি যোগ করা বিভাগটি সংকুচিত করুন"
+  },
+  "optionRecentCount": {
+    "message": "প্রদর্শনের জন্য সম্প্রতি যোগ করা বুকমার্কের সংখ্যা"
+  },
+  "optionRememberPrevState": {
+    "message": "আগের অবস্থা মনে রাখুন (স্ক্রল অবস্থান এবং খোলা ফোল্ডার)।"
+  },
+  "optionSearchAfterEnter": {
+    "message": "শুধু ENTER চাপলে বুকমার্ক খোঁজুন (তাত্ক্ষণিক অনুসন্ধানের পরিবর্তে)"
+  },
+  "optionSearchHistory": {
+    "message": "অনুসন্ধানের ইতিহাস সংরক্ষণ করুন"
+  },
+  "optionSearchHistoryHint": {
+    "message": "এটি বন্ধ করলে বিদ্যমান ইতিহাসও মুছে যাবে।"
+  },
+  "optionShowDeadView": {
+    "message": "[TODO:optionShowDeadView]"
+  },
+  "optionShowDupesView": {
+    "message": "[TODO:optionShowDupesView]"
+  },
+  "optionShowItemPath": {
+    "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
+  },
+  "optionShowStatsView": {
+    "message": "[TODO:optionShowStatsView]"
+  },
+  "optionShowSyncStatus": {
+    "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"
+  },
+  "optionShowViewTabs": {
+    "message": "অনুসন্ধান বক্সের নীচে দৃশ্য ট্যাব দেখান"
+  },
+  "optionStatsEnabled": {
+    "message": "ভিজিট পরিসংখ্যান সক্রিয় করুন"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "রিফ্রেশ ইন্টারভাল"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "সেকেন্ড"
+  },
+  "optionTheme": {
+    "message": "থিম"
+  },
+  "optionThemeAuto": {
+    "message": "সিস্টেম অনুসরণ করুন"
+  },
+  "optionThemeDark": {
+    "message": "গাঢ়"
+  },
+  "optionThemeInk": {
+    "message": "কালি (গাঢ়)"
+  },
+  "optionThemeLight": {
+    "message": "হালকা"
+  },
+  "optionThemePaper": {
+    "message": "কাগজ (হালকা)"
+  },
+  "optionZoom": {
+    "message": "জুম"
+  },
+  "options": {
+    "message": "অপশন"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "$authorName$ দ্বারা তৈরি।",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGroupViews": {
+    "message": "দৃশ্যসমূহ"
+  },
+  "paletteCmdDead": {
+    "message": "মৃত লিঙ্ক খুঁজুন"
+  },
+  "paletteCmdDupes": {
+    "message": "ডুপ্লিকেট বুকমার্ক পরিষ্কার করুন"
   },
   "paletteCmdGoDead": {
     "message": "মৃত লিঙ্ক ভিউতে যান"
@@ -839,11 +609,29 @@
   "paletteCmdGoSearch": {
     "message": "অনুসন্ধান ভিউতে যান"
   },
+  "paletteCmdGoStats": {
+    "message": "পরিসংখ্যান ভিউতে যান"
+  },
   "paletteCmdGoTree": {
     "message": "ট্রি ভিউতে যান"
   },
+  "paletteCmdNewBookmark": {
+    "message": "নতুন বুকমার্ক…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "নতুন ফোল্ডার…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "নতুন বিভাজক"
+  },
   "paletteCmdOptions": {
     "message": "বিকল্প পাতা খুলুন"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "বর্তমান ট্যাব বুকমার্ক করুন"
+  },
+  "paletteCmdSaveSession": {
+    "message": "উইন্ডো ট্যাবগুলো ফোল্ডার হিসেবে সংরক্ষণ করুন"
   },
   "paletteCmdSearchInView": {
     "message": "অনুসন্ধান ভিউতে '$query$' অনুসন্ধান করুন",
@@ -852,6 +640,74 @@
         "content": "$1"
       }
     }
+  },
+  "paletteNoResults": {
+    "message": "কোনো মিল পাওয়া যায়নি"
+  },
+  "palettePlaceholder": {
+    "message": "বুকমার্ক, ফোল্ডার, কমান্ড অনুসন্ধান করুন…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "প্যারেন্ট ফোল্ডার: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "এই পৃষ্ঠা বুকমার্ক করুন (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "বুকমার্ক যোগ করা হয়েছে"
+  },
+  "quickAddedTo": {
+    "message": "$folderName$-এ বুকমার্ক যোগ করা হয়েছে",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "এই বুকমার্ক সরান (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "বুকমার্ক সরানো হয়েছে"
+  },
+  "recentBookmarks": {
+    "message": "সম্প্রতি যোগ করা হয়েছে"
+  },
+  "recentEmpty": {
+    "message": "কোনও সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D টিপুন।"
+  },
+  "recentRevealInTree": {
+    "message": "ট্রিতে দেখান"
+  },
+  "removeSeparator": {
+    "message": "সেপারেটর সরান"
+  },
+  "replaceUrl": {
+    "message": "বর্তমান URL দিয়ে প্রতিস্থাপন"
+  },
+  "reportError": {
+    "message": "ত্রুটি রিপোর্ট করুন"
+  },
+  "reportedToDeveloper": {
+    "description": "এক্সটেনশনে ঘটা একটি ত্রুটির জন্য বার্তা, ডেভেলপারকে রিপোর্ট করা হয়েছে।",
+    "message": "এটি ডেভেলপারকে রিপোর্ট করা হয়েছে।"
+  },
+  "resetButton": {
+    "message": "রিসেট করুন"
+  },
+  "resetSettings": {
+    "message": "সেটিংস রিসেট করুন"
+  },
+  "resetSettingsDescription": {
+    "message": "vBookmarks ডিফল্ট সেটিংসে রিসেট করুন।"
   },
   "rowActionDelete": {
     "message": "মুছুন"
@@ -865,43 +721,79 @@
   "rowActionUnmark": {
     "message": "মৃত চিহ্ন সরান"
   },
-  "viewDead": {
-    "message": "মৃত লিঙ্ক"
+  "save": {
+    "message": "সংরক্ষণ করুন"
   },
-  "viewDupes": {
-    "message": "ডুপ্লিকেট"
+  "searchBookmarks": {
+    "description": "সার্চ ফিল্ডের জন্য প্লেসহোল্ডার টেক্সট।",
+    "message": "বুকমার্ক খুঁজুন"
   },
-  "viewStats": {
-    "message": "পরিসংখ্যান"
+  "searchClear": {
+    "message": "অনুসন্ধান মুছুন"
   },
-  "paletteCmdGoStats": {
-    "message": "পরিসংখ্যান ভিউতে যান"
+  "searchHistoryClear": {
+    "message": "সব মুছুন"
   },
-  "optionStatsEnabled": {
-    "message": "ভিজিট পরিসংখ্যান সক্রিয় করুন"
+  "searchHistoryRemove": {
+    "message": "এই অনুসন্ধান সরান"
   },
-  "statsSortByCount": {
-    "message": "গণনা অনুসারে"
-  },
-  "statsSortByRecent": {
-    "message": "সাম্প্রতিক অনুসারে"
-  },
-  "statsEmpty": {
-    "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
-  },
-  "statsDisabledHint": {
-    "message": "ভিজিট পরিসংখ্যান বন্ধ — বিকল্প → ভিউতে এটি সক্রিয় করুন"
-  },
-  "statsVisitCount": {
-    "message": "$count$ বার দেখা হয়েছে",
+  "searchHistoryResultCount": {
+    "message": "$n$টি ফলাফল",
     "placeholders": {
-      "count": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "পরিসংখ্যান মুছুন"
+  "searchHistoryTitle": {
+    "message": "সাম্প্রতিক অনুসন্ধান"
+  },
+  "searchNoResults": {
+    "message": "কোনো মিলে যাওয়া বুকমার্ক নেই"
+  },
+  "searchViewHint": {
+    "message": "আপনার বুকমার্ক অনুসন্ধান করতে উপরের বক্সে টাইপ করুন"
+  },
+  "sessionEmpty": {
+    "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"
+  },
+  "sessionFolderName": {
+    "message": "সেশন $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "$count$টি ট্যাব একটি নতুন ফোল্ডারে সংরক্ষিত হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "তারিখ অনুসারে (নতুন প্রথম)"
+  },
+  "sortByTitle": {
+    "message": "শিরোনাম অনুসারে"
+  },
+  "sortFolderContents": {
+    "message": "ফোল্ডার সাজান"
+  },
+  "sortFoldersFirst": {
+    "message": "ফোল্ডার উপরে রাখুন"
+  },
+  "sortRecursive": {
+    "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
+  },
+  "sortRecursiveWarning": {
+    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্ক পুনর্বিন্যাস করবে এবং পূর্বাবস্থায় ফেরানো যাবে না।"
   },
   "statsClearConfirm": {
     "message": "$count$ বুকমার্কের জন্য ভিজিট পরিসংখ্যান মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
@@ -911,14 +803,23 @@
       }
     }
   },
+  "statsClearData": {
+    "message": "পরিসংখ্যান মুছুন"
+  },
+  "statsDisabledHint": {
+    "message": "ভিজিট পরিসংখ্যান বন্ধ — বিকল্প → ভিউতে এটি সক্রিয় করুন"
+  },
+  "statsEmpty": {
+    "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
+  },
   "statsHistoryBanner": {
     "message": "আপনার পূর্ববর্তী ভিজিটের ভিত্তিতে ভিজিট পরিসংখ্যান তৈরি করতে ইতিহাস অ্যাক্সেস দিন।"
   },
-  "statsHistoryEnable": {
-    "message": "সক্ষম করুন"
-  },
   "statsHistoryDismiss": {
     "message": "আর দেখাবেন না"
+  },
+  "statsHistoryEnable": {
+    "message": "সক্ষম করুন"
   },
   "statsHistoryImported": {
     "message": "$count$ টি বুকমার্কের জন্য পূর্ববর্তী ভিজিট ইম্পোর্ট করা হয়েছে",
@@ -927,5 +828,113 @@
         "content": "$1"
       }
     }
+  },
+  "statsSortByCount": {
+    "message": "গণনা অনুসারে"
+  },
+  "statsSortByRecent": {
+    "message": "সাম্প্রতিক অনুসারে"
+  },
+  "statsVisitCount": {
+    "message": "$count$ বার দেখা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "সিঙ্ক অপশন"
+  },
+  "syncStatusLocal": {
+    "message": "শুধুমাত্র স্থানীয় — আপলোড করা হয়নি"
+  },
+  "syncStatusSynced": {
+    "message": "আপনার Google অ্যাকাউন্টে সিঙ্ক হয়েছে"
+  },
+  "syncStatusUnsyncable": {
+    "message": "সিঙ্ক করা যাবে না"
+  },
+  "syncSuffixLocal": {
+    "message": "(স্থানীয়)"
+  },
+  "syncSuffixSynced": {
+    "message": "(সিঙ্ক হয়েছে)"
+  },
+  "timeDaysAgo": {
+    "message": "$n$ দিন আগে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$n$ ঘণ্টা আগে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "এইমাত্র"
+  },
+  "timeMinutesAgo": {
+    "message": "$n$ মিনিট আগে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "গতকাল"
+  },
+  "toolButtonTitle": {
+    "message": "সরঞ্জাম (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "পূর্বাবস্থায় ফিরুন"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "এটি নতুন VBM $versionNumber$! পরিবর্তন লগ এখানে: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "মৃত লিঙ্ক"
+  },
+  "viewDupes": {
+    "message": "ডুপ্লিকেট"
+  },
+  "viewRecent": {
+    "message": "সাম্প্রতিক"
+  },
+  "viewSearch": {
+    "message": "অনুসন্ধান"
+  },
+  "viewStats": {
+    "message": "পরিসংখ্যান"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ দৃশ্য",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "ট্রি"
   }
 }

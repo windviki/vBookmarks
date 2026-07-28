@@ -534,6 +534,11 @@ describe('marks + overlay (§5.5c)', () => {
         expect(def().badge()).toBe(0);
     });
 
+    it('maps the showDeadView setting onto tab visibility', () => {
+        expect(setup({}).def().hidden).toBe(false); // default: visible
+        expect(setup({ storeData: { showDeadView: '' } }).def().hidden).toBe(true);
+    });
+
     it('removing a bookmark prunes its mark', () => {
         const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
         const { chrome, store } = ctx;

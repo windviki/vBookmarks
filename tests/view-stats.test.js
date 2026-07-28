@@ -162,6 +162,11 @@ describe('registration', () => {
         expect(def().listEl).toBe($list);
         expect(typeof def().icon).toBe('string');
     });
+
+    it('maps the showStatsView setting onto tab visibility', () => {
+        expect(setup({}).def().hidden).toBe(false); // default: visible
+        expect(setup({ storeData: { showStatsView: '' } }).def().hidden).toBe(true);
+    });
 });
 
 describe('rendering (sort by count, the default)', () => {

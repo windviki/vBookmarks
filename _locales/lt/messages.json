@@ -1,136 +1,98 @@
 {
-  "optionRecentCount": {
-    "message": "Neseniai pridėtų žymių rodymo skaičius"
+  "accessibility": {
+    "message": "Prieinamumas"
   },
-  "optionSearchHistory": {
-    "message": "Įrašyti paieškos istoriją"
+  "addBookmarkAfter": {
+    "message": "Pridėti dabartinį skirtuką po šio"
   },
-  "optionSearchHistoryHint": {
-    "message": "Išjungus tai taip pat išvaloma esama istorija."
+  "addBookmarkBefore": {
+    "message": "Pridėti dabartinį skirtuką prieš šį"
   },
-  "optionShowSyncStatus": {
-    "message": "Rodyti sinchronizavimo būklės indikatorius"
-  },
-  "dupesDone": {
-    "message": "Pašalinta $count$ dublikatų žymių",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Alert shown after the duplicate cleanup finished."
+  "addBookmarkBottom": {
+    "message": "Pridėti skirtuką į šio apačią"
   },
   "addBookmarkTop": {
     "message": "Pridėti skirtuką į šio viršų"
   },
-  "errorOccured": {
-    "message": "Oi, įvyko klaida."
+  "addNewFolder": {
+    "message": "Pridėti pakatalogį"
   },
-  "optionShowRecentBookmarks": {
-    "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
+  "addNewFolderAfter": {
+    "message": "Pridėti aplanką po šio"
   },
-  "optionRecentCollapsed": {
-    "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
+  "addNewFolderBefore": {
+    "message": "Pridėti aplanką prieš šį"
   },
-  "optionsGroupViews": {
-    "message": "Rodiniai"
+  "addSeparator": {
+    "message": "Pridėti skirtuką"
   },
-  "optionShowViewTabs": {
-    "message": "Rodyti rodinių skirtukus po paieškos lauku"
+  "advancedOptions": {
+    "message": "Išplėstiniai parametrai"
   },
-  "optionShowItemPath": {
-    "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
-  },
-  "recentEmpty": {
-    "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."
-  },
-  "recentRevealInTree": {
-    "message": "Rodyti medyje"
-  },
-  "searchHistoryClear": {
-    "message": "Išvalyti viską"
-  },
-  "searchHistoryRemove": {
-    "message": "Pašalinti šią paiešką"
-  },
-  "searchHistoryResultCount": {
-    "message": "$n$ rezultatas(-ai)",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "searchHistoryTitle": {
-    "message": "Neseniai atliktos paieškos"
-  },
-  "timeDaysAgo": {
-    "message": "Prieš $n$ dienas",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeHoursAgo": {
-    "message": "Prieš $n$ val.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeJustNow": {
-    "message": "ką tik"
-  },
-  "timeMinutesAgo": {
-    "message": "Prieš $n$ min.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      }
-    }
-  },
-  "timeYesterday": {
-    "message": "vakar"
-  },
-  "viewRecent": {
-    "message": "Neseniai"
-  },
-  "viewTree": {
-    "message": "Medis"
-  },
-  "viewSearch": {
-    "message": "Paieška"
-  },
-  "viewSwitchAnnounce": {
-    "message": "$name$ rodinys",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesConfirmAll": {
-    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Išsaugomi seniausi įrašai.",
+  "confirmDeleteFolder": {
+    "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderBookmarks": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$2"
       },
-      "groups": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "confirmDeleteFolderButton": {
+    "message": "Ištrinti"
+  },
+  "confirmDeleteFolderSubfolders": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $subFolderCount$ pakatalogį(-ius) jame?",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
         "content": "$2"
       }
-    },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    }
   },
-  "accessibility": {
-    "message": "Prieinamumas"
+  "confirmDeleteFolderSubfoldersBookmarks": {
+    "message": "Ar tikrai norite ištrinti aplanką $folderName$, $subFolderCount$ pakatalogį(-ius) ir $bookmarkCount$ žymelę(-es) jame?",
+    "placeholders": {
+      "bookmarkCount": {
+        "content": "$3"
+      },
+      "folderName": {
+        "content": "$1"
+      },
+      "subFolderCount": {
+        "content": "$2"
+      }
+    }
   },
-  "paletteCmdNewBookmark": {
-    "message": "Nauja žymė…"
+  "confirmOpenBookmarks": {
+    "description": "Confirmation message for opening all bookmarks.",
+    "message": "Ar tikrai norite atidaryti visas $count$ žymeles?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-  "optionTheme": {
-    "message": "Tema"
+  "confirmOpenBookmarksNewIncognitoWindow": {
+    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
+    "message": "Ar tikrai norite atidaryti visas $count$ žymeles naujame incognito lange?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "confirmOpenBookmarksNewWindow": {
     "description": "Confirmation message for opening all bookmarks in a new window.",
@@ -141,27 +103,42 @@
       }
     }
   },
-  "resetButton": {
-    "message": "Atstatyti"
+  "contextMenuAddBookmark": {
+    "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
   },
-  "addBookmarkBefore": {
-    "message": "Pridėti dabartinį skirtuką prieš šį"
+  "copyAllTitlesAndUrls": {
+    "message": "Kopijuoti visus pavadinimus ir URL į iškarpinę"
   },
-  "syncOptions": {
-    "message": "Sinchronizavimo parinktys"
+  "copyTitleAndUrl": {
+    "message": "Kopijuoti pavadinimą ir URL"
   },
-  "deletedFolder": {
-    "message": "Pašalintas aplankas $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks"
-      }
-    },
-    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  "crossStorageMoveWarning": {
+    "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą.",
+    "description": "Warning when trying to move bookmarks across storage types"
   },
-  "quickAddBookmark": {
-    "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
+  "customIcon": {
+    "message": "Tinkinta piktograma"
+  },
+  "customIconDescription": {
+    "message": "Piktograma turi būti 19*19 pikselių dydžio. Kitaip ji bus pakeista į šį dydį."
+  },
+  "customSeparatorColorDescription": {
+    "message": "Tinkinti skirtuko spalvą"
+  },
+  "customSeparatorStringDescription": {
+    "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
+  },
+  "customSeparatorTitleDescription": {
+    "message": "Tikrasis žymelės pavadinimas, rodomas kaip skirtukas"
+  },
+  "customSeparatorUrlDescription": {
+    "message": "Tikrasis žymelės URL, rodomas kaip skirtukas"
+  },
+  "customStyles": {
+    "message": "Tinkinti stiliai"
+  },
+  "customStylesDescription": {
+    "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
   },
   "deadChecking": {
     "message": "Tikrinama $done$ / $total$…",
@@ -198,505 +175,6 @@
       }
     }
   },
-  "deadNone": {
-    "message": "Nerasta neveikiančių nuorodų"
-  },
-  "deadRescan": {
-    "message": "Nuskaityti iš naujo"
-  },
-  "paletteCmdDead": {
-    "message": "Rasti neveikiančias nuorodas"
-  },
-  "dupesCleanAll": {
-    "message": "Išvalyti visus: $groups$ grupės, $count$ papildomų kopijų",
-    "placeholders": {
-      "groups": {
-        "content": "$1"
-      },
-      "count": {
-        "content": "$2"
-      }
-    },
-    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
-  },
-  "openSidePanelCommand": {
-    "message": "Atidaryti vBookmarks šoninį skydelį"
-  },
-  "optionThemeAuto": {
-    "message": "Sekti sistemą"
-  },
-  "edit": {
-    "message": "Redaguoti..."
-  },
-  "customIconDescription": {
-    "message": "Piktograma turi būti 19*19 pikselių dydžio. Kitaip ji bus pakeista į šį dydį."
-  },
-  "resetSettingsDescription": {
-    "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
-  },
-  "defaultIconButtonOr": {
-    "message": "arba"
-  },
-  "optionSyncRefreshIntervalSeconds": {
-    "message": "sekundžių"
-  },
-  "syncStatusSynced": {
-    "message": "Sinchronizuota su jūsų Google paskyra"
-  },
-  "syncStatusLocal": {
-    "message": "Tik vietinis – neįkelta"
-  },
-  "syncStatusUnsyncable": {
-    "message": "Negalima sinchronizuoti"
-  },
-  "syncSuffixSynced": {
-    "message": "(Sinchronizuota)"
-  },
-  "syncSuffixLocal": {
-    "message": "(Vietinis)"
-  },
-  "advancedOptions": {
-    "message": "Išplėstiniai parametrai"
-  },
-  "extName": {
-    "description": "vBookmarks",
-    "message": "vBookmarks"
-  },
-  "removeSeparator": {
-    "message": "Pašalinti skirtuką"
-  },
-  "resetSettings": {
-    "message": "Atstatyti nustatymus"
-  },
-  "customSeparatorTitleDescription": {
-    "message": "Tikrasis žymelės pavadinimas, rodomas kaip skirtukas"
-  },
-  "donationMessage": {
-    "message": "Jei jums patinka, galbūt galite paremti jo ateities plėtrą. Bet kokia suma yra sveikinama."
-  },
-  "optionClickNewTab": {
-    "message": "Kairysis paspaudimas atidaro žymelę naujame skirtuke."
-  },
-  "confirmOpenBookmarksNewIncognitoWindow": {
-    "description": "Confirmation message for opening all bookmarks in a new incognito window.",
-    "message": "Ar tikrai norite atidaryti visas $count$ žymeles naujame incognito lange?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "nope": {
-    "message": "Ne"
-  },
-  "openIncognitoWindow": {
-    "message": "Atidaryti incognito lange"
-  },
-  "paletteCmdQuickAdd": {
-    "message": "Pridėti dabartinį skirtuką prie žymių"
-  },
-  "sessionEmpty": {
-    "message": "Nėra skirtukų išsaugoti"
-  },
-  "sortByDateAdded": {
-    "message": "Pagal pridėjimo datą (naujausi pirmi)"
-  },
-  "paletteCmdNewSeparator": {
-    "message": "Naujas skyriklis"
-  },
-  "recentBookmarks": {
-    "message": "Neseniai pridėta"
-  },
-  "copyAllTitlesAndUrls": {
-    "message": "Kopijuoti visus pavadinimus ir URL į iškarpinę"
-  },
-  "searchBookmarks": {
-    "description": "Placeholder tekstas paieškos laukui.",
-    "message": "Ieškoti žymelių"
-  },
-  "searchClear": {
-    "message": "Išvalyti paiešką"
-  },
-  "reportError": {
-    "message": "Pranešti apie klaidą"
-  },
-  "addNewFolderAfter": {
-    "message": "Pridėti aplanką po šio"
-  },
-  "editBookmark": {
-    "message": "Redaguoti žymelę"
-  },
-  "editFolder": {
-    "message": "Redaguoti aplanką"
-  },
-  "parentFolder": {
-    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
-    "message": "Tėvinis aplankas: \"$folderName$\"",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarksbar"
-      }
-    }
-  },
-  "optionSyncRefreshInterval": {
-    "message": "Atnaujinimo intervalas"
-  },
-  "openBookmarks": {
-    "message": "Atidaryti visas žymeles"
-  },
-  "openBookmarksInGroup": {
-    "message": "Atidaryti visus naujoje grupėje"
-  },
-  "optionConfirmOpenFolder": {
-    "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
-  },
-  "optionConfirmDeleteFolder": {
-    "message": "Patvirtinti prieš ištrinant netuščius aplankus"
-  },
-  "addSeparator": {
-    "message": "Pridėti skirtuką"
-  },
-  "confirmDeleteFolderSubfoldersBookmarks": {
-    "message": "Ar tikrai norite ištrinti aplanką $folderName$, $subFolderCount$ pakatalogį(-ius) ir $bookmarkCount$ žymelę(-es) jame?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$3"
-      },
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "paletteCmdSaveSession": {
-    "message": "Išsaugoti lango skirtukus kaip aplanką"
-  },
-  "paletteCmdNewFolder": {
-    "message": "Naujas aplankas…"
-  },
-  "customSeparatorStringDescription": {
-    "message": "Jei žymelės URL turi šį eilutę, ji bus rodoma kaip skirtukas"
-  },
-  "customStylesDescription": {
-    "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
-  },
-  "optionCloseUnusedFolders": {
-    "message": "Užverti nenaudojamus aplankus atidarant aplanką."
-  },
-  "optionPopupStays": {
-    "message": "Iškylantis langas lieka atidarytas atidarant (kairysis paspaudimas) žymeles."
-  },
-  "confirmOpenBookmarks": {
-    "description": "Confirmation message for opening all bookmarks.",
-    "message": "Ar tikrai norite atidaryti visas $count$ žymeles?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "url": {
-    "message": "URL"
-  },
-  "palettePlaceholder": {
-    "message": "Ieškoti žymių, aplankų, komandų…"
-  },
-  "addNewFolderBefore": {
-    "message": "Pridėti aplanką prieš šį"
-  },
-  "customIcon": {
-    "message": "Tinkinta piktograma"
-  },
-  "folderEmpty": {
-    "message": "(Tuščia)"
-  },
-  "save": {
-    "message": "Išsaugoti"
-  },
-  "undoAction": {
-    "message": "Atšaukti"
-  },
-  "optionOnlyShowBookmarkBar": {
-    "message": "Rodyti tik žymeles žymelių juostoje"
-  },
-  "sortRecursive": {
-    "message": "Rūšiuoti ir poaplankius (rekursyviai)"
-  },
-  "noTitle": {
-    "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
-    "message": "(be pavadinimo)"
-  },
-  "sortByTitle": {
-    "message": "Pagal pavadinimą"
-  },
-  "defaultIconButton": {
-    "message": "Naudoti numatytąjį"
-  },
-  "customSeparatorColorDescription": {
-    "message": "Tinkinti skirtuko spalvą"
-  },
-  "sessionSaved": {
-    "message": "Išsaugota $count$ skirtukų naujame aplanke",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "12"
-      }
-    },
-    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
-  },
-  "sortFoldersFirst": {
-    "message": "Aplankus viršuje"
-  },
-  "optionSearchAfterEnter": {
-    "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
-  },
-  "paletteNoResults": {
-    "message": "Atitikmenų nerasta"
-  },
-  "openCommandPaletteCommand": {
-    "message": "Atidaryti komandų paletę"
-  },
-  "searchNoResults": {
-    "message": "Atitinkančių žymių nerasta"
-  },
-  "searchViewHint": {
-    "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
-  },
-  "sessionFolderName": {
-    "message": "Sesija $date$",
-    "placeholders": {
-      "date": {
-        "content": "$1",
-        "example": "2026-07-18 15:04"
-      }
-    },
-    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
-  },
-  "sortRecursiveWarning": {
-    "message": "Tai perrikiuoja žymes kiekviename poaplankyje ir negali būti atšaukta."
-  },
-  "optionsFooterText": {
-    "description": "Footer text for the Options page",
-    "message": "Sukūrė $authorName$.",
-    "placeholders": {
-      "authorName": {
-        "content": "$1"
-      }
-    }
-  },
-  "quickAdded": {
-    "message": "Žymė pridėta"
-  },
-  "quickAddedTo": {
-    "message": "Žymelė pridėta į $folderName$",
-    "placeholders": {
-      "folderName": {
-        "content": "$1",
-        "example": "Bookmarks bar"
-      }
-    }
-  },
-  "quickRemoved": {
-    "message": "Žymelė pašalinta"
-  },
-  "quickRemoveBookmark": {
-    "message": "Pašalinti šią žymelę (Ctrl+D)"
-  },
-  "toolButtonTitle": {
-    "message": "Įrankiai (Ctrl+K)"
-  },
-  "optionThemeDark": {
-    "message": "Tamsi"
-  },
-  "optionThemeInk": {
-    "message": "Rašalas (tamsi)"
-  },
-  "optionThemePaper": {
-    "message": "Popierius (šviesi)"
-  },
-  "sortFolderContents": {
-    "message": "Rūšiuoti aplanko turinį"
-  },
-  "confirmDeleteFolder": {
-    "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
-  "confirmDeleteFolderButton": {
-    "message": "Ištrinti"
-  },
-  "confirmDeleteFolderBookmarks": {
-    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $bookmarkCount$ žymelę(-es) jame?",
-    "placeholders": {
-      "bookmarkCount": {
-        "content": "$2"
-      },
-      "folderName": {
-        "content": "$1"
-      }
-    }
-  },
-  "dupesGroupCount": {
-    "message": "$count$ dublikatai",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
-  },
-  "openNewTab": {
-    "message": "Atidaryti naujame skirtuke"
-  },
-  "addBookmarkAfter": {
-    "message": "Pridėti dabartinį skirtuką po šio"
-  },
-  "ignore": {
-    "message": "Ignoruoti"
-  },
-  "open": {
-    "description": "Veiksmas žymelių atidarymui.",
-    "message": "Atidaryti"
-  },
-  "optionOpenNewTab": {
-    "message": "Vidurinis paspaudimas arba control-paspaudimas atidaro žymelę naujame fono skirtuke (vietoj priekinio plano)."
-  },
-  "options": {
-    "message": "Parametrai"
-  },
-  "replaceUrl": {
-    "message": "Pakeisti dabartiniu URL"
-  },
-  "name": {
-    "description": "Žymelės ar aplanko pavadinimas.",
-    "message": "Pavadinimas"
-  },
-  "optionHighlightUnsynced": {
-    "message": "Paryškinti nesinchronizuotas žymeles"
-  },
-  "donationDismiss": {
-    "message": "Atmesti"
-  },
-  "paletteCmdDupes": {
-    "message": "Išvalyti dublikatus žymes"
-  },
-  "general": {
-    "message": "Bendri"
-  },
-  "customSeparatorUrlDescription": {
-    "message": "Tikrasis žymelės URL, rodomas kaip skirtukas"
-  },
-  "openNewWindow": {
-    "message": "Atidaryti naujame lange"
-  },
-  "dupesNone": {
-    "message": "Dublikatų nerasta"
-  },
-  "optionOpenInSidePanel": {
-    "message": "Atidaryti šoniniame skydelyje vietoj iššokančio lango"
-  },
-  "extDesc": {
-    "description": "Plėtinio aprašymas.",
-    "message": "Iškylantis žymelių tvarkyklė. Patobulintas Neat Bookmarks. Tvarkingesnis už Neater Bookmarks."
-  },
-  "optionAutoResizePopup": {
-    "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
-  },
-  "crossStorageMoveWarning": {
-    "message": "Žymelių perkelti iš sinchronizuotos į vietinę saugyklą negalima. Vietoj to naudokite kopijavimą/įkėlimą.",
-    "description": "Warning when trying to move bookmarks across storage types"
-  },
-  "deletedBookmark": {
-    "message": "Pašalinta $title$",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Example"
-      }
-    },
-    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
-  },
-  "optionRememberPrevState": {
-    "message": "Prisiminti ankstesnę būseną (slinkties poziciją ir atidarytus aplankus)."
-  },
-  "optionAutoRefreshSync": {
-    "message": "Automatiškai atnaujinti sinchronizavimo būklę"
-  },
-  "openBookmarksNewWindow": {
-    "message": "Atidaryti žymeles naujame lange"
-  },
-  "addNewFolder": {
-    "message": "Pridėti pakatalogį"
-  },
-  "copyTitleAndUrl": {
-    "message": "Kopijuoti pavadinimą ir URL"
-  },
-  "openBookmarksIncognitoWindow": {
-    "message": "Atidaryti žymeles inkognito lange"
-  },
-  "optionThemeLight": {
-    "message": "Šviesi"
-  },
-  "optionZoom": {
-    "message": "Mastelis"
-  },
-  "confirmDeleteFolderSubfolders": {
-    "message": "Ar tikrai norite ištrinti aplanką $folderName$ ir $subFolderCount$ pakatalogį(-ius) jame?",
-    "placeholders": {
-      "folderName": {
-        "content": "$1"
-      },
-      "subFolderCount": {
-        "content": "$2"
-      }
-    }
-  },
-  "dupesConfirmGroup": {
-    "message": "Išlaikyti seniausią ir pašalinti kitas $count$ kopijas?",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
-  },
-  "reportedToDeveloper": {
-    "description": "Pranešimas apie klaidą plėtinyje, pranešta kūrėjui.",
-    "message": "Tai pranešta kūrėjui."
-  },
-  "delete": {
-    "message": "Ištrinti"
-  },
-  "customStyles": {
-    "message": "Tinkinti stiliai"
-  },
-  "deleteEllipsis": {
-    "message": "Ištrinti..."
-  },
-  "versionMessage": {
-    "message": "Tai naujas VBM $versionNumber$! Pakeitimų žurnalas čia: $versionTips$",
-    "placeholders": {
-      "versionNumber": {
-        "content": "$1"
-      },
-      "versionTips": {
-        "content": "$2"
-      }
-    }
-  },
-  "addBookmarkBottom": {
-    "message": "Pridėti skirtuką į šio apačią"
-  },
-  "contextMenuAddBookmark": {
-    "message": "Pridėti šį puslapį prie žymių naudojant vBookmarks"
-  },
   "deadFilterAll": {
     "message": "Visi"
   },
@@ -723,8 +201,14 @@
   "deadMarked": {
     "message": "Negyvos eilutės pažymėtos"
   },
+  "deadNone": {
+    "message": "Nerasta neveikiančių nuorodų"
+  },
   "deadProxyHint": {
     "message": "Žymių URL siunčiami šiai trečiosios šalies paslaugai. Palikite tuščią, kad tikrintų tiesiogiai."
+  },
+  "deadRescan": {
+    "message": "Nuskaityti iš naujo"
   },
   "deadStartHint": {
     "message": "Pradėti $n$ žymių nuskaitymą",
@@ -743,11 +227,49 @@
   "deadUnmarkAll": {
     "message": "Išvalyti visus žymėjimus"
   },
+  "defaultIconButton": {
+    "message": "Naudoti numatytąjį"
+  },
+  "defaultIconButtonOr": {
+    "message": "arba"
+  },
+  "delete": {
+    "message": "Ištrinti"
+  },
+  "deleteEllipsis": {
+    "message": "Ištrinti..."
+  },
+  "deletedBookmark": {
+    "message": "Pašalinta $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example"
+      }
+    },
+    "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
+  },
+  "deletedFolder": {
+    "message": "Pašalintas aplankas $title$",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks"
+      }
+    },
+    "description": "Toast shown after a bookmark folder (with its whole subtree) was deleted; the toast offers an undo button. $title$ is the folder name."
+  },
+  "donationDismiss": {
+    "message": "Atmesti"
+  },
   "donationGo": {
     "message": "Paaukoti"
   },
   "donationLater": {
     "message": "Vėliau"
+  },
+  "donationMessage": {
+    "message": "Jei jums patinka, galbūt galite paremti jo ateities plėtrą. Bet kokia suma yra sveikinama."
   },
   "donationNever": {
     "message": "Nerodyti daugiau"
@@ -760,6 +282,18 @@
       }
     }
   },
+  "dupesCleanAll": {
+    "message": "Išvalyti visus: $groups$ grupės, $count$ papildomų kopijų",
+    "placeholders": {
+      "groups": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    },
+    "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go."
+  },
   "dupesCleanRestHint": {
     "message": "Palikti \"$title$\" ir pašalinti kitus $count$",
     "placeholders": {
@@ -771,6 +305,45 @@
       }
     }
   },
+  "dupesConfirmAll": {
+    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Išsaugomi seniausi įrašai.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "groups": {
+        "content": "$2"
+      }
+    },
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+  },
+  "dupesConfirmGroup": {
+    "message": "Išlaikyti seniausią ir pašalinti kitas $count$ kopijas?",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+  },
+  "dupesDone": {
+    "message": "Pašalinta $count$ dublikatų žymių",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Alert shown after the duplicate cleanup finished."
+  },
+  "dupesGroupCount": {
+    "message": "$count$ dublikatai",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    },
+    "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
   "dupesIgnoreScheme": {
     "message": "Nepaisyti http/https skirtumų"
   },
@@ -779,6 +352,9 @@
   },
   "dupesKeeperSet": {
     "message": "Nustatyti kaip išlaikomą"
+  },
+  "dupesNone": {
+    "message": "Dublikatų nerasta"
   },
   "dupesPreviewSummary": {
     "message": "$groups$ grupės · $count$ bus atlaisvinta",
@@ -818,6 +394,95 @@
   "dupesStrategyShortestTitle": {
     "message": "Palikti trumpiausią pavadinimą"
   },
+  "edit": {
+    "message": "Redaguoti..."
+  },
+  "editBookmark": {
+    "message": "Redaguoti žymelę"
+  },
+  "editFolder": {
+    "message": "Redaguoti aplanką"
+  },
+  "errorOccured": {
+    "message": "Oi, įvyko klaida."
+  },
+  "extDesc": {
+    "description": "Plėtinio aprašymas.",
+    "message": "Iškylantis žymelių tvarkyklė. Patobulintas Neat Bookmarks. Tvarkingesnis už Neater Bookmarks."
+  },
+  "extName": {
+    "description": "vBookmarks",
+    "message": "vBookmarks"
+  },
+  "folderEmpty": {
+    "message": "(Tuščia)"
+  },
+  "general": {
+    "message": "Bendri"
+  },
+  "ignore": {
+    "message": "Ignoruoti"
+  },
+  "name": {
+    "description": "Žymelės ar aplanko pavadinimas.",
+    "message": "Pavadinimas"
+  },
+  "noTitle": {
+    "description": "Pavadinimas bevardėms žymelėms be http(s) URL arba bevardžiems aplankams.",
+    "message": "(be pavadinimo)"
+  },
+  "nope": {
+    "message": "Ne"
+  },
+  "open": {
+    "description": "Veiksmas žymelių atidarymui.",
+    "message": "Atidaryti"
+  },
+  "openBookmarks": {
+    "message": "Atidaryti visas žymeles"
+  },
+  "openBookmarksInGroup": {
+    "message": "Atidaryti visus naujoje grupėje"
+  },
+  "openBookmarksIncognitoWindow": {
+    "message": "Atidaryti žymeles inkognito lange"
+  },
+  "openBookmarksNewWindow": {
+    "message": "Atidaryti žymeles naujame lange"
+  },
+  "openCommandPaletteCommand": {
+    "message": "Atidaryti komandų paletę"
+  },
+  "openIncognitoWindow": {
+    "message": "Atidaryti incognito lange"
+  },
+  "openNewTab": {
+    "message": "Atidaryti naujame skirtuke"
+  },
+  "openNewWindow": {
+    "message": "Atidaryti naujame lange"
+  },
+  "openSidePanelCommand": {
+    "message": "Atidaryti vBookmarks šoninį skydelį"
+  },
+  "optionAutoRefreshSync": {
+    "message": "Automatiškai atnaujinti sinchronizavimo būklę"
+  },
+  "optionAutoResizePopup": {
+    "message": "Automatiškai keisti iškylančio lango dydį pagal turinį"
+  },
+  "optionClickNewTab": {
+    "message": "Kairysis paspaudimas atidaro žymelę naujame skirtuke."
+  },
+  "optionCloseUnusedFolders": {
+    "message": "Užverti nenaudojamus aplankus atidarant aplanką."
+  },
+  "optionConfirmDeleteFolder": {
+    "message": "Patvirtinti prieš ištrinant netuščius aplankus"
+  },
+  "optionConfirmOpenFolder": {
+    "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
+  },
   "optionDeadProxy": {
     "message": "Neveikiančių nuorodų proxy šablonas"
   },
@@ -826,6 +491,111 @@
   },
   "optionDeadScanTimeout": {
     "message": "Neveikiančių nuorodų nuskaitymo skirtasis laikas sekundėmis (2–30)"
+  },
+  "optionHighlightUnsynced": {
+    "message": "Paryškinti nesinchronizuotas žymeles"
+  },
+  "optionOnlyShowBookmarkBar": {
+    "message": "Rodyti tik žymeles žymelių juostoje"
+  },
+  "optionOpenInSidePanel": {
+    "message": "Atidaryti šoniniame skydelyje vietoj iššokančio lango"
+  },
+  "optionOpenNewTab": {
+    "message": "Vidurinis paspaudimas arba control-paspaudimas atidaro žymelę naujame fono skirtuke (vietoj priekinio plano)."
+  },
+  "optionPopupStays": {
+    "message": "Iškylantis langas lieka atidarytas atidarant (kairysis paspaudimas) žymeles."
+  },
+  "optionRecentCollapsed": {
+    "message": "Sutraukti neseniai pridėtų elementų skyrių pagal numatymą"
+  },
+  "optionRecentCount": {
+    "message": "Neseniai pridėtų žymių rodymo skaičius"
+  },
+  "optionRememberPrevState": {
+    "message": "Prisiminti ankstesnę būseną (slinkties poziciją ir atidarytus aplankus)."
+  },
+  "optionSearchAfterEnter": {
+    "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"
+  },
+  "optionSearchHistory": {
+    "message": "Įrašyti paieškos istoriją"
+  },
+  "optionSearchHistoryHint": {
+    "message": "Išjungus tai taip pat išvaloma esama istorija."
+  },
+  "optionShowDeadView": {
+    "message": "[TODO:optionShowDeadView]"
+  },
+  "optionShowDupesView": {
+    "message": "[TODO:optionShowDupesView]"
+  },
+  "optionShowItemPath": {
+    "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
+  },
+  "optionShowRecentBookmarks": {
+    "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
+  },
+  "optionShowStatsView": {
+    "message": "[TODO:optionShowStatsView]"
+  },
+  "optionShowSyncStatus": {
+    "message": "Rodyti sinchronizavimo būklės indikatorius"
+  },
+  "optionShowViewTabs": {
+    "message": "Rodyti rodinių skirtukus po paieškos lauku"
+  },
+  "optionStatsEnabled": {
+    "message": "Įjungti lankomumo statistiką"
+  },
+  "optionSyncRefreshInterval": {
+    "message": "Atnaujinimo intervalas"
+  },
+  "optionSyncRefreshIntervalSeconds": {
+    "message": "sekundžių"
+  },
+  "optionTheme": {
+    "message": "Tema"
+  },
+  "optionThemeAuto": {
+    "message": "Sekti sistemą"
+  },
+  "optionThemeDark": {
+    "message": "Tamsi"
+  },
+  "optionThemeInk": {
+    "message": "Rašalas (tamsi)"
+  },
+  "optionThemeLight": {
+    "message": "Šviesi"
+  },
+  "optionThemePaper": {
+    "message": "Popierius (šviesi)"
+  },
+  "optionZoom": {
+    "message": "Mastelis"
+  },
+  "options": {
+    "message": "Parametrai"
+  },
+  "optionsFooterText": {
+    "description": "Footer text for the Options page",
+    "message": "Sukūrė $authorName$.",
+    "placeholders": {
+      "authorName": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsGroupViews": {
+    "message": "Rodiniai"
+  },
+  "paletteCmdDead": {
+    "message": "Rasti neveikiančias nuorodas"
+  },
+  "paletteCmdDupes": {
+    "message": "Išvalyti dublikatus žymes"
   },
   "paletteCmdGoDead": {
     "message": "Eiti į neveikiančias nuorodas"
@@ -839,11 +609,29 @@
   "paletteCmdGoSearch": {
     "message": "Eiti į paiešką"
   },
+  "paletteCmdGoStats": {
+    "message": "Eiti į statistiką"
+  },
   "paletteCmdGoTree": {
     "message": "Eiti į medį"
   },
+  "paletteCmdNewBookmark": {
+    "message": "Nauja žymė…"
+  },
+  "paletteCmdNewFolder": {
+    "message": "Naujas aplankas…"
+  },
+  "paletteCmdNewSeparator": {
+    "message": "Naujas skyriklis"
+  },
   "paletteCmdOptions": {
     "message": "Atidaryti nustatymus"
+  },
+  "paletteCmdQuickAdd": {
+    "message": "Pridėti dabartinį skirtuką prie žymių"
+  },
+  "paletteCmdSaveSession": {
+    "message": "Išsaugoti lango skirtukus kaip aplanką"
   },
   "paletteCmdSearchInView": {
     "message": "Ieškoti '$query$' paieškos rodinyje",
@@ -852,6 +640,74 @@
         "content": "$1"
       }
     }
+  },
+  "paletteNoResults": {
+    "message": "Atitikmenų nerasta"
+  },
+  "palettePlaceholder": {
+    "message": "Ieškoti žymių, aplankų, komandų…"
+  },
+  "parentFolder": {
+    "description": "Parent folder in formation displayed in the tooltip of bookmarks in search results list.",
+    "message": "Tėvinis aplankas: \"$folderName$\"",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarksbar"
+      }
+    }
+  },
+  "quickAddBookmark": {
+    "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
+  },
+  "quickAdded": {
+    "message": "Žymė pridėta"
+  },
+  "quickAddedTo": {
+    "message": "Žymelė pridėta į $folderName$",
+    "placeholders": {
+      "folderName": {
+        "content": "$1",
+        "example": "Bookmarks bar"
+      }
+    }
+  },
+  "quickRemoveBookmark": {
+    "message": "Pašalinti šią žymelę (Ctrl+D)"
+  },
+  "quickRemoved": {
+    "message": "Žymelė pašalinta"
+  },
+  "recentBookmarks": {
+    "message": "Neseniai pridėta"
+  },
+  "recentEmpty": {
+    "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."
+  },
+  "recentRevealInTree": {
+    "message": "Rodyti medyje"
+  },
+  "removeSeparator": {
+    "message": "Pašalinti skirtuką"
+  },
+  "replaceUrl": {
+    "message": "Pakeisti dabartiniu URL"
+  },
+  "reportError": {
+    "message": "Pranešti apie klaidą"
+  },
+  "reportedToDeveloper": {
+    "description": "Pranešimas apie klaidą plėtinyje, pranešta kūrėjui.",
+    "message": "Tai pranešta kūrėjui."
+  },
+  "resetButton": {
+    "message": "Atstatyti"
+  },
+  "resetSettings": {
+    "message": "Atstatyti nustatymus"
+  },
+  "resetSettingsDescription": {
+    "message": "Atstatyti vBookmarks į numatytuosius nustatymus."
   },
   "rowActionDelete": {
     "message": "Ištrinti"
@@ -865,43 +721,79 @@
   "rowActionUnmark": {
     "message": "Pašalinti neveikiančios žymę"
   },
-  "viewDead": {
-    "message": "Neveikiančios nuorodos"
+  "save": {
+    "message": "Išsaugoti"
   },
-  "viewDupes": {
-    "message": "Dublikatai"
+  "searchBookmarks": {
+    "description": "Placeholder tekstas paieškos laukui.",
+    "message": "Ieškoti žymelių"
   },
-  "viewStats": {
-    "message": "Statistika"
+  "searchClear": {
+    "message": "Išvalyti paiešką"
   },
-  "paletteCmdGoStats": {
-    "message": "Eiti į statistiką"
+  "searchHistoryClear": {
+    "message": "Išvalyti viską"
   },
-  "optionStatsEnabled": {
-    "message": "Įjungti lankomumo statistiką"
+  "searchHistoryRemove": {
+    "message": "Pašalinti šią paiešką"
   },
-  "statsSortByCount": {
-    "message": "Pagal skaičių"
-  },
-  "statsSortByRecent": {
-    "message": "Pagal naujumą"
-  },
-  "statsEmpty": {
-    "message": "Statistika kaupiasi atidarant žymes"
-  },
-  "statsDisabledHint": {
-    "message": "Lankomumo statistika išjungta – įjunkite Nustatymai → Rodiniai"
-  },
-  "statsVisitCount": {
-    "message": "Lankyta $count$ kartų",
+  "searchHistoryResultCount": {
+    "message": "$n$ rezultatas(-ai)",
     "placeholders": {
-      "count": {
+      "n": {
         "content": "$1"
       }
     }
   },
-  "statsClearData": {
-    "message": "Išvalyti statistiką"
+  "searchHistoryTitle": {
+    "message": "Neseniai atliktos paieškos"
+  },
+  "searchNoResults": {
+    "message": "Atitinkančių žymių nerasta"
+  },
+  "searchViewHint": {
+    "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
+  },
+  "sessionEmpty": {
+    "message": "Nėra skirtukų išsaugoti"
+  },
+  "sessionFolderName": {
+    "message": "Sesija $date$",
+    "placeholders": {
+      "date": {
+        "content": "$1",
+        "example": "2026-07-18 15:04"
+      }
+    },
+    "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
+  },
+  "sessionSaved": {
+    "message": "Išsaugota $count$ skirtukų naujame aplanke",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    },
+    "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
+  },
+  "sortByDateAdded": {
+    "message": "Pagal pridėjimo datą (naujausi pirmi)"
+  },
+  "sortByTitle": {
+    "message": "Pagal pavadinimą"
+  },
+  "sortFolderContents": {
+    "message": "Rūšiuoti aplanko turinį"
+  },
+  "sortFoldersFirst": {
+    "message": "Aplankus viršuje"
+  },
+  "sortRecursive": {
+    "message": "Rūšiuoti ir poaplankius (rekursyviai)"
+  },
+  "sortRecursiveWarning": {
+    "message": "Tai perrikiuoja žymes kiekviename poaplankyje ir negali būti atšaukta."
   },
   "statsClearConfirm": {
     "message": "Išvalyti $count$ žymių lankomumo statistiką? Šis veiksmas negrįžtamas.",
@@ -911,14 +803,23 @@
       }
     }
   },
+  "statsClearData": {
+    "message": "Išvalyti statistiką"
+  },
+  "statsDisabledHint": {
+    "message": "Lankomumo statistika išjungta – įjunkite Nustatymai → Rodiniai"
+  },
+  "statsEmpty": {
+    "message": "Statistika kaupiasi atidarant žymes"
+  },
   "statsHistoryBanner": {
     "message": "Suteikti prieigą prie naršymo istorijos, kad apsilankymų statistika būtų užpildyta jūsų ankstesniais apsilankymais."
   },
-  "statsHistoryEnable": {
-    "message": "Įgalinti"
-  },
   "statsHistoryDismiss": {
     "message": "Nerodyti daugiau"
+  },
+  "statsHistoryEnable": {
+    "message": "Įgalinti"
   },
   "statsHistoryImported": {
     "message": "Importuoti ankstesni apsilankymai $count$ žymelėms",
@@ -927,5 +828,113 @@
         "content": "$1"
       }
     }
+  },
+  "statsSortByCount": {
+    "message": "Pagal skaičių"
+  },
+  "statsSortByRecent": {
+    "message": "Pagal naujumą"
+  },
+  "statsVisitCount": {
+    "message": "Lankyta $count$ kartų",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncOptions": {
+    "message": "Sinchronizavimo parinktys"
+  },
+  "syncStatusLocal": {
+    "message": "Tik vietinis – neįkelta"
+  },
+  "syncStatusSynced": {
+    "message": "Sinchronizuota su jūsų Google paskyra"
+  },
+  "syncStatusUnsyncable": {
+    "message": "Negalima sinchronizuoti"
+  },
+  "syncSuffixLocal": {
+    "message": "(Vietinis)"
+  },
+  "syncSuffixSynced": {
+    "message": "(Sinchronizuota)"
+  },
+  "timeDaysAgo": {
+    "message": "Prieš $n$ dienas",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "Prieš $n$ val.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeJustNow": {
+    "message": "ką tik"
+  },
+  "timeMinutesAgo": {
+    "message": "Prieš $n$ min.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeYesterday": {
+    "message": "vakar"
+  },
+  "toolButtonTitle": {
+    "message": "Įrankiai (Ctrl+K)"
+  },
+  "undoAction": {
+    "message": "Atšaukti"
+  },
+  "url": {
+    "message": "URL"
+  },
+  "versionMessage": {
+    "message": "Tai naujas VBM $versionNumber$! Pakeitimų žurnalas čia: $versionTips$",
+    "placeholders": {
+      "versionNumber": {
+        "content": "$1"
+      },
+      "versionTips": {
+        "content": "$2"
+      }
+    }
+  },
+  "viewDead": {
+    "message": "Neveikiančios nuorodos"
+  },
+  "viewDupes": {
+    "message": "Dublikatai"
+  },
+  "viewRecent": {
+    "message": "Neseniai"
+  },
+  "viewSearch": {
+    "message": "Paieška"
+  },
+  "viewStats": {
+    "message": "Statistika"
+  },
+  "viewSwitchAnnounce": {
+    "message": "$name$ rodinys",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "viewTree": {
+    "message": "Medis"
   }
 }

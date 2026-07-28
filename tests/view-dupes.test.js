@@ -220,6 +220,11 @@ describe('view registration (§5.6)', () => {
         expect(typeof def().onKey).toBe('function');
     });
 
+    it('maps the showDupesView setting onto tab visibility', () => {
+        expect(setup({}).def().hidden).toBe(false); // default: visible
+        expect(setup({ storeData: { showDupesView: '' } }).def().hidden).toBe(true);
+    });
+
     it('exposes refresh + setKeeper on the module API', () => {
         const { viewDupes } = setup({});
         expect(Object.keys(viewDupes).sort()).toEqual(['refresh', 'setKeeper']);

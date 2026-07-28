@@ -38,7 +38,8 @@
  * treeKeyUp → actions.deleteBookmark (the undo chain) untouched.
  *
  * initViewDupes(ctx) is called once by neat.js after treeView init.
- * ctx.store            — settings mirror (dupesStrategy/dupesScope/dupesIgnoreScheme)
+ * ctx.store            — settings mirror (dupesStrategy/dupesScope/dupesIgnoreScheme/
+ *                        showDupesView)
  * ctx.views            — view-manager API (register/isActive/pathOf/activate)
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering
@@ -432,6 +433,7 @@ export function initViewDupes(ctx = {}) {
         icon: VIEW_ICONS.dupes,
         container: $('view-dupes'),
         listEl: $list,
+        hidden: !store.get('showDupesView', '1'), // showDupesView → tab visibility
         typeAhead: false,
         badge: () => groups.length,
         activate: () => {
