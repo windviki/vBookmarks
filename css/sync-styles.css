@@ -64,7 +64,10 @@
     border-radius: var(--vbm-radius);
     font-size: 11px;
     white-space: nowrap;
-    z-index: 1000;
+    /* Global stacking is governed by the parent .sync-indicator (z-index: 10
+       stacking context, Layer 2b in neat.css), so the tooltip only needs a
+       local value here — it stays below palette/dialogs/menus/toasts. */
+    z-index: 1;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;

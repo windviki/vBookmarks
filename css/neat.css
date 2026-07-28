@@ -7,6 +7,9 @@
    Layer 0  auto         base content (#container, #tree, #results)
    Layer 1  z-index: 1   #donation banner
    Layer 2  z-index: 2   #search bar
+   Layer 2b z-index: 10  .sync-indicator (row overlay: sync dot; also the
+                           stacking context for .sync-tooltip, so tooltips
+                           stay below the palette globally)
    Layer 3  z-index: 100 #command-palette (Ctrl+K overlay)
    Layer 4  z-index: 200 #cover + .dialog (modal backdrop & dialogs)
                            → dialog must cover palette when a confirm/alert
