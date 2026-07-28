@@ -6,7 +6,8 @@ import { describe, it, expect, afterEach } from 'vitest';
 // fetch by rejecting with an AbortError-named error when the signal fires.
 
 import {
-    checkUrl, checkUrlDual, scanBookmarks, filterScannable, collectDead, statusLabel, startDeadScan
+    checkUrl, checkUrlDual, scanBookmarks, filterScannable, collectDead, statusLabel,
+    startDeadScan, startPausableScan
 } from '../src/dead-links.js';
 
 const realFetch = globalThis.fetch;
@@ -376,5 +377,88 @@ describe('helpers', () => {
         const scan = startDeadScan([{ id: 'a', url: 'https://a.com/' }]);
         const results = await scan.promise;
         expect(results.get('a')).toEqual({ status: 503, ok: false });
+    });
+});
+
+// Fourth-round item 10: the pause gate on the same pool — pause() holds new
+// dispatches (in-flight probes still record), resume() re-enters the pump at
+// the breakpoint, cancel() is the old abort semantics.
+describe('startPausableScan (item 10)', () => {
+    const items = ids => ids.map(id => ({ id, title: id, url: `https://${id}.com/` }));
+
+    it('pause holds new dispatches, in-flight settle, resume continues at the breakpoint', async () => {
+        const calls = [];
+        const gates = new Map();
+        globalThis.fetch = url => {
+            calls.push(url);
+            return new Promise(resolve => gates.set(url, resolve));
+        };
+        const scan = startPausableScan(items(['a', 'b', 'c']), { concurrency: 1 });
+        expect(calls).toEqual(['https://a.com/']); // concurrency 1: one dispatch
+        scan.pause();
+        expect(scan.isPaused()).toBe(true);
+        gates.get('https://a.com/')({ status: 200 });
+        await tick();
+        expect(calls).toHaveLength(1); // paused: nothing new dispatched
+        scan.resume();
+        expect(scan.isPaused()).toBe(false);
+        expect(calls).toEqual(['https://a.com/', 'https://b.com/']); // no re-probe
+        gates.get('https://b.com/')({ status: 404 });
+        await tick();
+        expect(calls).toHaveLength(3);
+        gates.get('https://c.com/')({ status: 200 });
+        const results = await scan.promise;
+        expect(results.size).toBe(3);
+        expect(results.get('b')).toEqual({ status: 404, ok: false });
+    });
+
+    it('double resume is a no-op (no extra dispatches)', async () => {
+        const calls = [];
+        const gates = new Map();
+        globalThis.fetch = url => {
+            calls.push(url);
+            return new Promise(resolve => gates.set(url, resolve));
+        };
+        const scan = startPausableScan(items(['a', 'b']), { concurrency: 1 });
+        scan.pause();
+        scan.resume();
+        expect(calls).toEqual(['https://a.com/']); // still capped by concurrency
+        gates.get('https://a.com/')({ status: 200 });
+        await tick();
+        scan.resume(); // not paused anymore: no re-pump, no re-probe
+        expect(calls).toEqual(['https://a.com/', 'https://b.com/']);
+        gates.get('https://b.com/')({ status: 200 });
+        await scan.promise;
+    });
+
+    it('cancel aborts in-flight probes and resolves the partial Map', async () => {
+        const calls = [];
+        const signals = [];
+        globalThis.fetch = (url, opts) => {
+            calls.push(url);
+            signals.push(opts.signal);
+            return new Promise(() => {});
+        };
+        const scan = startPausableScan(items(['a', 'b']), { concurrency: 1 });
+        scan.pause();
+        scan.cancel();
+        const results = await scan.promise;
+        expect(results.size).toBe(0);
+        expect(signals[0].aborted).toBe(true);
+        scan.resume(); // settled already: resume stays a no-op
+        expect(calls).toEqual(['https://a.com/']);
+    });
+
+    it('onResult fires per settled check, ahead of onProgress', async () => {
+        stubFetch(respond(200));
+        const events = [];
+        await scanBookmarks(items(['a', 'b']), {
+            onResult: (id, result, done, total) => events.push(['result', id, done, total]),
+            onProgress: (done, total) => events.push(['progress', done, total])
+        });
+        expect(events).toEqual([
+            ['result', 'a', 1, 2], ['progress', 1, 2],
+            ['result', 'b', 2, 2], ['progress', 2, 2]
+        ]);
     });
 });

@@ -2289,6 +2289,13 @@ body.panel-mode .vbm-row .row-sub {
     white-space: nowrap;
 }
 
+/* item 10: the paused tag of the scan toolbar (amber, double-encoded with
+   the Resume button state — never color alone). */
+.dead-toolbar .dead-paused-tag {
+    color: var(--vbm-warning);
+    white-space: nowrap;
+}
+
 .dead-toolbar .dead-last {
     white-space: nowrap;
 }
@@ -2335,6 +2342,20 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-accent);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
+}
+
+/* 第四轮项10: result rows carry inline .row-btn actions (mark ⚑ / delete ×);
+   without flex the buttons wrapped onto a line below the anchor. Same recipe
+   as .dupes-member / .stats-hist-row: the li goes flex, the anchor flexes
+   and the buttons pin to the row's inline end. */
+#dead-list ul li.vbm-row {
+    display: flex;
+    align-items: center;
+}
+
+#dead-list ul li.vbm-row > a {
+    flex: 1;
+    min-width: 0;
 }
 
 /* Marked rows: the dead-mark button stays lit (not hover-only) so the

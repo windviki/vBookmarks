@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from 'vitest';
+import fs from 'node:fs';
 
 // view-dead.js touches page globals (document/window/chrome/fetch/setTimeout)
 // only inside initViewDead and its handlers, so the real module imports
@@ -396,19 +397,25 @@ describe('scan flow (§5.5b/§5.5d)', () => {
         expect($list.innerHTML).toContain('id="dead-item-12"');
     });
 
-    it('Escape aborts the in-flight scan (consumed); pagehide aborts too', async () => {
+    it('Escape toggles pause ⇄ resume (consumed both ways); pagehide cancels', async () => {
         const signals = [];
         globalThis.fetch = (url, opts) => {
             signals.push(opts.signal);
             return new Promise(() => {});
         };
         const ctx = setup({});
-        const { def, winListeners } = ctx;
+        const { def, winListeners, $list } = ctx;
         def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect(def().onEscape()).toBe(true); // consumed
+        expect(def().onEscape()).toBe(true); // first Esc: pause (consumed)
+        expect(signals.every(s => s.aborted)).toBe(false); // pause keeps in-flight probes
+        expect($list.innerHTML).toContain('deadResume');
+        expect(def().onEscape()).toBe(true); // second Esc: resume (consumed)
+        expect($list.innerHTML).toContain('deadPause');
+        // the explicit Cancel is what aborts; then Esc falls through again
+        ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
         expect(signals.every(s => s.aborted)).toBe(true);
-        expect(def().onEscape()).toBe(false); // scan over: not consumed anymore
+        expect(def().onEscape()).toBe(false);
         // pagehide path
         globalThis.fetch = (url, opts) => {
             signals.push(opts.signal);
@@ -418,6 +425,156 @@ describe('scan flow (§5.5b/§5.5d)', () => {
         expect(winListeners.pagehide).toHaveLength(1);
         winListeners.pagehide[0]();
         expect(signals[signals.length - 1].aborted).toBe(true);
+        expect(def().onEscape()).toBe(false); // session gone: not consumed
+    });
+});
+
+describe('item 10: progressive render + pause/resume/cancel', () => {
+    it('renders dead rows incrementally as checks settle, healthy rows never listed', async () => {
+        const gates = {};
+        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
+        const ctx = setup({});
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect($list.innerHTML).not.toContain('dead-item-');
+        gates['https://gone.example/page']({ status: 404 });
+        await flush();
+        // mid-scan: the settled dead row is already a row, scan still runs
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('deadChecking[1|3]');
+        expect($list.innerHTML).toContain('deadPause');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"'); // unsettled stays out
+        gates['https://fine.example/']({ status: 200 });
+        await flush();
+        expect($list.innerHTML).not.toContain('id="dead-item-11"'); // healthy never listed
+        gates['https://blocked.example/']({ status: 404 });
+        await flush();
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect(ctx.store.get('deadLastScan')).toBeTruthy(); // finished → persisted
+    });
+
+    it('pause holds new dispatches, in-flight checks still record, resume continues at the breakpoint', async () => {
+        const calls = [];
+        const gates = {};
+        globalThis.fetch = url => {
+            calls.push(url);
+            return new Promise(resolve => { gates[url] = resolve; });
+        };
+        const ctx = setup({ storeData: { deadScanConcurrency: '1' } });
+        const { $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect(calls).toEqual(['https://fine.example/']); // concurrency 1
+        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) });
+        expect($list.innerHTML).toContain('deadResume'); // button flipped
+        expect($list.innerHTML).toContain('deadPaused'); // state tag
+        gates['https://fine.example/']({ status: 200 });
+        await flush();
+        expect(calls).toHaveLength(1); // paused: no new dispatch
+        expect($list.innerHTML).toContain('deadChecking[1|3]'); // in-flight recorded
+        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) }); // resume
+        expect(calls).toEqual(['https://fine.example/', 'https://gone.example/page']); // no re-probe
+        gates['https://gone.example/page']({ status: 404 });
+        await flush();
+        expect(calls).toHaveLength(3);
+        gates['https://blocked.example/']({ status: 404 });
+        await flush();
+        expect(JSON.parse(ctx.store.get('deadLastScan')).results['12'].status).toBe('dead');
+    });
+
+    it('cancel stops the scheduler, aborts in-flight probes and discards the run', async () => {
+        const signals = [];
+        const gates = {};
+        globalThis.fetch = (url, opts) => {
+            signals.push(opts.signal);
+            return new Promise(resolve => { gates[url] = resolve; });
+        };
+        const ctx = setup({ storeData: { deadScanConcurrency: '1' } });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        gates['https://fine.example/']({ status: 200 });
+        await flush();
+        expect($list.innerHTML).toContain('deadChecking[1|3]');
+        ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
+        expect(signals.every(s => s.aborted)).toBe(true); // in-flight probe aborted
+        // state reset: back to the executable start hint, no cache written
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect(store.get('deadLastScan', '')).toBe('');
+        // the late completion of the aborted probe changes nothing
+        gates['https://gone.example/page']({ status: 404 });
+        await flush();
+        expect(store.get('deadLastScan', '')).toBe('');
+        expect($list.innerHTML).toContain('dead-start');
+    });
+
+    it('cancel with a previous cache restores the cached view (the run never happened)', async () => {
+        const CACHE = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        globalThis.fetch = () => new Promise(() => {});
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        expect($list.innerHTML).toContain('deadPause');
+        ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
+        expect($list.innerHTML).toContain('deadLastScanAt');
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect(store.get('deadLastScan')).toBe(CACHE); // untouched
+    });
+
+    it('re-entering the view mid-scan (even paused) renders the live session state', async () => {
+        const gates = {};
+        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
+        const ctx = setup({});
+        const { $list, views, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) }); // pause
+        views.active = false; // switch away mid-scan
+        gates['https://gone.example/page']({ status: 404 });
+        await flush();
+        views.active = true;
+        def().activate(); // back: live paused state, not a fake idle
+        const html = $list.innerHTML;
+        expect(html).toContain('deadResume');
+        expect(html).toContain('deadChecking[1|3]');
+        expect(html).toContain('id="dead-item-12"'); // progressive row survived the switch
+        expect(html).not.toContain('dead-start');
+        // and the paused session is still resumable afterwards
+        def().onEscape(); // Esc = resume
+        gates['https://fine.example/']({ status: 200 });
+        gates['https://blocked.example/']({ status: 404 });
+        await flush();
+        expect(ctx.store.get('deadLastScan')).toBeTruthy();
+    });
+});
+
+describe('item 10: row layout CSS contract', () => {
+    // jsdom has no layout engine — pin the flex recipe in the CSS text
+    // (same ruleBody pattern as tests/tree-alignment.test.js).
+    const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+    const ruleBody = (css, selector) => {
+        const i = css.indexOf(selector);
+        expect(i, `rule for ${selector} exists`).toBeGreaterThanOrEqual(0);
+        const open = css.indexOf('{', i);
+        const close = css.indexOf('}', open);
+        return css.slice(open + 1, close);
+    };
+
+    it('dead result rows go flex so the row buttons stay on the row line', () => {
+        const body = ruleBody(neatCss, '#dead-list ul li.vbm-row {');
+        expect(body).toContain('display: flex');
+        expect(body).toContain('align-items: center');
+    });
+
+    it('the row anchor flexes with min-width:0, buttons pin to the inline end', () => {
+        const body = ruleBody(neatCss, '#dead-list ul li.vbm-row > a {');
+        expect(body).toContain('flex: 1');
+        expect(body).toContain('min-width: 0');
     });
 });
 

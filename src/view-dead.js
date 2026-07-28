@@ -28,10 +28,28 @@
  * Batch "mark all" (every dead+blocked row of the result set) and "clear
  * all marks" are ConfirmDialog-gated. badge() = deadMarks.length.
  *
- * §5.5d lifecycle: switching views mid-scan never aborts (the closure owns
- * the scan; coming back replays the progress); Esc aborts while scanning
- * (onEscape); pagehide aborts — the cache is already on disk. Row deletion
- * rides actions.deleteBookmark (the undo chain).
+ * §5.5d lifecycle (+ fourth-round item 10): switching views mid-scan never
+ * aborts (the closure owns the session; coming back re-renders the live
+ * progress/pause state); Esc toggles pause ⇄ resume while a session lives
+ * (item 10 — the old Esc-abort moved to an explicit toolbar Cancel);
+ * pagehide cancels — the cache is already on disk. Row deletion rides
+ * actions.deleteBookmark (the undo chain).
+ *
+ * Item 10 scan state machine (see "Scan" section):
+ *   idle       — no live session; toolbar = last-scan info / empty, list =
+ *                cached results or the executable start hint.
+ *   scanning   — the pool dispatches probes; the list GROWS INCREMENTALLY:
+ *                every settled dead/blocked check joins the rows at once
+ *                (tree order among settled rows — a row never jumps once
+ *                shown); toolbar = progress + count + Pause + Cancel.
+ *   paused     — pause(): no NEW probes are dispatched, in-flight ones
+ *                still land in the partial results; toolbar swaps Pause for
+ *                Resume and tags the progress label; Esc resumes.
+ *   cancelling — Cancel: in-flight probes abort, the promise settles with
+ *                the partial Map which is DISCARDED (the run never happened)
+ *                and the view falls back to the previous persisted cache
+ *                (or the start hint) — the last finished scan is the only
+ *                checkpoint. Rescan from idle starts a fresh session.
  *
  * The filter (all / dead only / blocked only) is an in-memory view control,
  * deliberately not persisted (§5.5c).
@@ -52,7 +70,7 @@
  * document, window and setTimeout remain page globals.
  */
 
-import { checkUrlDual, startDeadScan, filterScannable, collectDead, statusLabel } from './dead-links.js';
+import { checkUrlDual, startPausableScan, filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { VIEW_ICONS } from './icons.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -82,9 +100,14 @@ export function initViewDead(ctx = {}) {
         }
     };
     let deadMarks = loadMarks();
-    let scan = null;        // { promise, abort() } while a scan runs
+    // Item 10 state machine (idle/scanning/paused/cancelling, header docs):
+    // `scan` non-null covers scanning+paused (scan.isPaused() splits them);
+    // cancelling is scan→null inside cancelScan before the promise settles.
+    let scan = null;        // live startPausableScan session
     let scanProgress = 0;   // settled checks of the running scan
     let scanTotal = 0;      // item count of the running scan
+    let scanItems = [];     // scan order (= tree order) for progressive rows
+    let scanResults = null; // Map(id → result) settled so far (progressive)
     let lastScan = null;    // { ts, scannedCount, results: {id:{status,code}} }
     let treeItems = new Map(); // id → { id, title, url } of the last render
     let filter = 'all';     // 'all' | 'dead' | 'blocked' — in-memory (§5.5c)
@@ -163,13 +186,34 @@ export function initViewDead(ctx = {}) {
         return rows.filter(row => row.result.status === filter);
     };
 
+    // Item 10 progressive rows: the live session's settled checks, in scan
+    // order (= tree order), so a row's position is stable once it appears.
+    // The filter segment is a finished-result control and is NOT applied
+    // here — mid-scan every discovered dead/blocked row shows up at once.
+    const liveRows = () => {
+        const rows = [];
+        for (let i = 0, l = scanItems.length; i < l; i++) {
+            const item = scanItems[i];
+            const result = scanResults && scanResults.get(item.id);
+            if (result && !result.ok)
+                rows.push({ item, result });
+        }
+        return rows;
+    };
+
     // --- Rendering --------------------------------------------------------------
     const renderToolbar = () => {
         let html = '<div class="dead-toolbar">';
         if (scan) {
+            // scanning/paused share the toolbar; the toggle button and the
+            // paused tag split them. Real <button>s: Tab-reachable and
+            // Enter/Space-fireable like the other dead-toolbar controls.
+            const paused = scan.isPaused();
             html += `<progress class="dead-progress" value="${scanProgress}" max="${Math.max(scanTotal, 1)}"></progress>` +
+                (paused ? `<span class="dead-paused-tag">${_m('deadPaused')}</span>` : '') +
                 `<span class="dead-progress-label">${_m('deadChecking', [`${scanProgress}`, `${scanTotal}`])}</span>` +
-                `<button class="dead-cancel">${_m('nope')}</button>`;
+                `<button class="dead-pause">${_m(paused ? 'deadResume' : 'deadPause')}</button>` +
+                `<button class="dead-cancel">${_m('deadCancel')}</button>`;
         } else {
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
@@ -191,48 +235,54 @@ export function initViewDead(ctx = {}) {
         return html;
     };
 
+    // One <ul> of result rows — shared by the cached result set and the
+    // progressive mid-scan list (same row markup, same buttons).
+    const renderRows = rows => {
+        let html = '<ul role="list">';
+        for (let i = 0, l = rows.length; i < l; i++) {
+            const { item, result } = rows[i];
+            const blocked = result.status === 'blocked';
+            const path = views.pathOf(item.id);
+            const marked = deadMarks.has(item.id);
+            html += `<li class="vbm-row" id="dead-item-${item.id}" role="listitem" ` +
+                `data-node-id="${item.id}">` +
+                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
+                    path,
+                    rightText: path,
+                    subText: path,
+                    badge: {
+                        // statusLabel expects the direct channel's
+                        // raw verdict (numeric / 'error'+name)
+                        text: blocked ? _m('deadStatusBlocked')
+                            : statusLabel({ status: result.code, ok: false, error: result.error }),
+                        cls: blocked ? 'blocked' : 'dead'
+                    }
+                }) +
+                `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
+                `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
+                `title="${marked ? _m('deadUnmark') : _m('deadMark')}">⚑</button>` +
+                `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
+                `title="${_m('rowActionDelete')}">×</button>` +
+                '</li>';
+        }
+        return html + '</ul>';
+    };
+
     const render = () => {
         let html = renderToolbar();
-        if (!scan) {
-            if (!lastScan) {
-                // §3.5: the empty state itself is the executable start row.
-                html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="0">` +
-                    `<i>${_m('deadStartHint', `${scanTotal || treeItems.size}`)}</i></li></ul>`;
-            } else {
-                const rows = resultRows();
-                if (!rows.length) {
-                    html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNone')}</i></li></ul>`;
-                } else {
-                    html += '<ul role="list">';
-                    for (let i = 0, l = rows.length; i < l; i++) {
-                        const { item, result } = rows[i];
-                        const blocked = result.status === 'blocked';
-                        const path = views.pathOf(item.id);
-                        const marked = deadMarks.has(item.id);
-                        html += `<li class="vbm-row" id="dead-item-${item.id}" role="listitem" ` +
-                            `data-node-id="${item.id}">` +
-                            treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
-                                path,
-                                rightText: path,
-                                subText: path,
-                                badge: {
-                                    // statusLabel expects the direct channel's
-                                    // raw verdict (numeric / 'error'+name)
-                                    text: blocked ? _m('deadStatusBlocked')
-                                        : statusLabel({ status: result.code, ok: false, error: result.error }),
-                                    cls: blocked ? 'blocked' : 'dead'
-                                }
-                            }) +
-                            `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
-                            `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
-                            `title="${marked ? _m('deadUnmark') : _m('deadMark')}">⚑</button>` +
-                            `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                            `title="${_m('rowActionDelete')}">×</button>` +
-                            '</li>';
-                    }
-                    html += '</ul>';
-                }
-            }
+        if (scan) {
+            // Item 10: progressive rendering — settled dead/blocked checks
+            // are already rows while the scan keeps running.
+            html += renderRows(liveRows());
+        } else if (!lastScan) {
+            // §3.5: the empty state itself is the executable start row.
+            html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="0">` +
+                `<i>${_m('deadStartHint', `${scanTotal || treeItems.size}`)}</i></li></ul>`;
+        } else {
+            const rows = resultRows();
+            html += rows.length
+                ? renderRows(rows)
+                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNone')}</i></li></ul>`;
         }
         $list.innerHTML = html;
     };
@@ -324,7 +374,7 @@ export function initViewDead(ctx = {}) {
         });
     };
 
-    // --- Scan (§5.5b/§5.5d) ---------------------------------------------------------
+    // --- Scan (§5.5b/§5.5d + item 10 state machine) -----------------------------
     const startScan = () => {
         if (scan)
             return;
@@ -334,22 +384,36 @@ export function initViewDead(ctx = {}) {
             treeItems = new Map(items.map(item => [item.id, item]));
             scanProgress = 0;
             scanTotal = items.length;
-            scan = startDeadScan(items, {
+            scanItems = items;
+            scanResults = new Map();
+            const session = startPausableScan(items, {
                 concurrency: settings.concurrency,
                 timeoutMs: settings.timeoutMs,
                 checker: (url, o) => checkUrlDual(url, { ...o, proxyTemplate: settings.proxyTemplate }),
-                onProgress: done => {
+                onResult: (id, result, done) => {
+                    // Progressive rendering: every settled check lands in the
+                    // partial Map and repaints at once (inactive view: the
+                    // closure keeps the state, activate() re-renders it).
+                    scanResults.set(id, result);
                     scanProgress = done;
                     if (views.isActive('dead'))
-                        render(); // progress line repaint (inactive: closure keeps it)
+                        render();
                 }
             });
+            scan = session;
             // render only after `scan` is set — the toolbar's progress row
             // keys off it
             if (views.isActive('dead'))
                 render();
-            scan.promise.then(results => {
+            session.promise.then(results => {
+                // Settled after cancelScan dropped the session (or a newer
+                // scan replaced it): the partial Map is discarded — cancel
+                // means "the run never happened" (item 10 semantics).
+                if (scan !== session)
+                    return;
                 scan = null;
+                scanItems = [];
+                scanResults = null;
                 const plain = {};
                 results.forEach((r, id) => {
                     plain[id] = { status: r.status, code: r.code, error: r.error };
@@ -371,10 +435,25 @@ export function initViewDead(ctx = {}) {
         });
     };
 
-    // Popup close aborts the in-flight scan; the persisted cache survives.
+    // Cancel (item 10): abort in-flight probes, drop the session and its
+    // partial results, fall back to the previous persisted cache (or the
+    // start hint). The settle handler sees scan!==session and stays out.
+    const cancelScan = () => {
+        if (!scan)
+            return;
+        const session = scan;
+        scan = null;
+        scanItems = [];
+        scanResults = null;
+        session.cancel();
+        if (views.isActive('dead'))
+            render();
+    };
+
+    // Popup close cancels the in-flight scan; the persisted cache survives.
     window.addEventListener('pagehide', () => {
         if (scan)
-            scan.abort();
+            cancelScan();
     });
 
     // --- Events ------------------------------------------------------------------
@@ -409,13 +488,22 @@ export function initViewDead(ctx = {}) {
             startScan();
             return;
         }
-        if (closest('.dead-cancel')) {
+        const pauseBtn = closest('.dead-pause');
+        if (pauseBtn) {
             e.preventDefault();
             if (scan) {
-                scan.abort();
-                scan = null;
+                // Pause ⇄ Resume toggle (same semantics as Esc, item 10).
+                if (scan.isPaused())
+                    scan.resume();
+                else
+                    scan.pause();
                 render();
             }
+            return;
+        }
+        if (closest('.dead-cancel')) {
+            e.preventDefault();
+            cancelScan();
             return;
         }
         const filterBtn = closest('.dead-filter-btn');
@@ -507,17 +595,20 @@ export function initViewDead(ctx = {}) {
                 render();
             });
         },
-        // §5.5d: Escape aborts the scan (and is consumed then); otherwise the
-        // view-manager's own layering (back to tree) applies.
+        // §5.5d + item 10: Escape toggles pause ⇄ resume while a scan
+        // session lives (consumed both ways) — non-destructive, matching the
+        // layered Esc contract (the view consumes Esc only while it holds
+        // transient state). Cancelling is the explicit toolbar Cancel.
         onEscape: () => {
-            if (scan) {
-                scan.abort();
-                scan = null;
-                if (views.isActive('dead'))
-                    render();
-                return true;
-            }
-            return false;
+            if (!scan)
+                return false;
+            if (scan.isPaused())
+                scan.resume();
+            else
+                scan.pause();
+            if (views.isActive('dead'))
+                render();
+            return true;
         },
         onKey
     });

@@ -28,6 +28,14 @@
  * a result Map, statusLabel renders one result as a row badge ('404',
  * 'timeout', 'error'), and startDeadScan wraps scanBookmarks in an owned
  * AbortController so the caller gets { promise, abort }.
+ *
+ * Fourth-round item 10: startPausableScan adds pause/resume to the same
+ * pool — pause() stops the pump from dispatching NEW probes (in-flight
+ * probes still settle and record, so resume() continues exactly at the
+ * breakpoint with no re-probing), cancel() is the old abort semantics.
+ * scanBookmarks also gained an onResult(id, result, done, total) hook —
+ * fired per settled check, before onProgress — so the view can render
+ * dead/blocked rows incrementally instead of waiting for the full Map.
  */
 
 const HTTP_URL = /^https?:\/\//i;
@@ -86,10 +94,13 @@ export const checkUrlDual = (url, { proxyTemplate = '', timeoutMs = 8000, signal
     });
 };
 
-export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, signal, checker } = {}) =>
+export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, onResult, signal, checker, pauser } = {}) =>
     new Promise(resolve => {
         // checker: per-URL probe, defaults to the plain direct check; the
         // dead view injects checkUrlDual with the configured proxy template.
+        // pauser (item 10): optional { paused } gate — while paused the pump
+        // dispatches nothing new; pauser.pump is wired back so resume() can
+        // re-enter the pump (see startPausableScan).
         const probe = checker || checkUrl;
         const results = new Map();
         const total = items.length;
@@ -110,7 +121,7 @@ export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProg
             return;
         }
         const pump = () => {
-            while (!settled && running < concurrency && next < total) {
+            while (!settled && !(pauser && pauser.paused) && running < concurrency && next < total) {
                 const item = items[next++];
                 running++;
                 probe(item.url, { timeoutMs, signal }).then(result => {
@@ -119,6 +130,8 @@ export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProg
                         return;
                     results.set(item.id, result);
                     done++;
+                    if (onResult)
+                        onResult(item.id, result, done, total);
                     if (onProgress)
                         onProgress(done, total);
                     if (done >= total)
@@ -128,6 +141,8 @@ export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProg
                 });
             }
         };
+        if (pauser)
+            pauser.pump = pump;
         pump();
     });
 
@@ -162,4 +177,43 @@ export const startDeadScan = (items, opts = {}) => {
     }
     const promise = scanBookmarks(items, { ...opts, signal: controller.signal });
     return { promise, abort: () => controller.abort() };
+};
+
+// Fourth-round item 10: the dead view's scan session — startDeadScan plus a
+// pause gate. Returns { promise, pause, resume, cancel, isPaused }:
+//   pause()  — flips the gate; the pump stops dispatching NEW probes while
+//              in-flight probes still settle and record their results, so
+//              nothing already paid for is lost;
+//   resume() — clears the gate and re-enters the pump at the breakpoint
+//              (the next un-dispatched item), never re-probing;
+//   cancel() — the old abort(): in-flight fetches are aborted, dispatch
+//              stops for good and the promise settles with the partial Map
+//              (the caller decides whether to keep or discard it);
+// the promise ALWAYS resolves — pause/resume never settle it.
+export const startPausableScan = (items, opts = {}) => {
+    const controller = new AbortController();
+    const external = opts.signal;
+    if (external) {
+        if (external.aborted)
+            controller.abort();
+        else
+            external.addEventListener('abort', () => controller.abort(), { once: true });
+    }
+    // The gate object scanBookmarks reads on every pump pass; `pump` is
+    // wired back by the engine so resume() can restart dispatching.
+    const pauser = { paused: false, pump: null };
+    const promise = scanBookmarks(items, { ...opts, signal: controller.signal, pauser });
+    return {
+        promise,
+        pause: () => { pauser.paused = true; },
+        resume: () => {
+            if (!pauser.paused)
+                return;
+            pauser.paused = false;
+            if (pauser.pump)
+                pauser.pump();
+        },
+        cancel: () => controller.abort(),
+        isPaused: () => pauser.paused
+    };
 };
