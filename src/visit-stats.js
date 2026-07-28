@@ -1,12 +1,13 @@
 /**
  * Visit statistics store (v4 task-2, slice D — docs/v4task-2.md §5.4).
  *
- * The extension's own lightweight visit counter — deliberately NOT
- * chrome.history (the history permission's install warning is a trust
- * disaster, §5.4). Shape: `{ [bookmarkId]: { c, t } }` with c = open count
- * and t = last-open timestamp, persisted under the single `visitStats`
- * storage key with debounced writes (a popup session can open dozens of
- * bookmarks; one write per open would hammer chrome.storage).
+ * The extension's own lightweight visit counter — chrome.history stays an
+ * OPTIONAL permission (the install warning is a trust disaster, §5.4);
+ * users who grant it from the recent-view banner get their past visits
+ * seeded in one merge() pass. Shape: `{ [bookmarkId]: { c, t } }` with
+ * c = open count and t = last-open timestamp, persisted under the single
+ * `visitStats` storage key with debounced writes (a popup session can open
+ * dozens of bookmarks; one write per open would hammer chrome.storage).
  *
  * Privacy contract (§5.4/§7):
  * - `statsEnabled` (default on) is the master switch — record() is a no-op
@@ -82,6 +83,31 @@ export function initVisitStats(ctx = {}) {
 
     const get = id => load()[`${id}`] || null;
 
+    // Bulk additive merge — the chrome.history import (optional permission,
+    // recent-view banner) seeds past visits as {id, c, t} entries: c adds to
+    // the counter, t max-merges. Same zero-write contract as record() (no-op
+    // while the switch is off). Returns the number of ids touched.
+    const merge = entries => {
+        if (!enabled() || !Array.isArray(entries))
+            return 0;
+        const d = load();
+        let touched = 0;
+        for (let i = 0, l = entries.length; i < l; i++) {
+            const e = entries[i];
+            if (!e || e.id === undefined || e.id === null || e.id === '')
+                continue;
+            const key = `${e.id}`;
+            const cur = d[key] || { c: 0, t: 0 };
+            cur.c += e.c | 0;
+            cur.t = Math.max(cur.t, e.t || 0);
+            d[key] = cur;
+            touched++;
+        }
+        if (touched)
+            schedule();
+        return touched;
+    };
+
     const countOf = id => {
         const entry = load()[`${id}`];
         return entry ? (entry.c || 0) : 0;
@@ -126,5 +152,5 @@ export function initVisitStats(ctx = {}) {
         store.set('visitStats', '{}');
     };
 
-    return { record, get, countOf, all, prune, clear, flush, enabled };
+    return { record, get, countOf, all, merge, prune, clear, flush, enabled };
 }

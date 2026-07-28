@@ -159,6 +159,46 @@ describe('all snapshot', () => {
     });
 });
 
+describe('merge (history import)', () => {
+    it('adds counts and max-merges timestamps per id', () => {
+        stats.record('7', 1000);
+        const n = stats.merge([
+            { id: '7', c: 4, t: 500 },  // older t keeps 1000
+            { id: '8', c: 3, t: 2000 }, // fresh entry
+            { id: '7', c: 1, t: 3000 }  // second merge of the same id adds up
+        ]);
+        expect(n).toBe(3);
+        expect(stats.get('7')).toEqual({ c: 6, t: 3000 });
+        expect(stats.get('8')).toEqual({ c: 3, t: 2000 });
+        stats.flush();
+        expect(JSON.parse(store.get('visitStats'))).toEqual({
+            '7': { c: 6, t: 3000 },
+            '8': { c: 3, t: 2000 }
+        });
+    });
+
+    it('skips malformed entries and reports only real touches', () => {
+        const n = stats.merge([null, {}, { id: '' }, { id: '9', c: 2, t: 5 }]);
+        expect(n).toBe(1);
+        expect(stats.all()).toEqual({ '9': { c: 2, t: 5 } });
+    });
+
+    it('is a no-op while the master switch is off — zero writes', () => {
+        store.set('statsEnabled', '');
+        expect(stats.merge([{ id: '7', c: 9, t: 9 }])).toBe(0);
+        stats.flush();
+        expect(stats.all()).toEqual({});
+        expect(store.map.has('visitStats')).toBe(false);
+    });
+
+    it('writes nothing for an empty or non-array input', () => {
+        expect(stats.merge([])).toBe(0);
+        expect(stats.merge(null)).toBe(0);
+        stats.flush();
+        expect(store.map.has('visitStats')).toBe(false);
+    });
+});
+
 describe('clear', () => {
     it('wipes data and persists the empty object immediately', () => {
         stats.record('7', 1000);

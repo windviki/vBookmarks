@@ -72,6 +72,9 @@
     "host_permissions": [
 		"<all_urls>"
     ],
+    "optional_permissions": [
+        "history"
+    ],
     "content_security_policy": {
         "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;"
     },

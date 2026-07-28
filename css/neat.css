@@ -1808,6 +1808,43 @@ body.panel-mode .vbm-row .row-sub {
     text-decoration: underline;
 }
 
+/* History-permission banner (recent view): one-line ask with an enable
+   link and a dismiss ×; token-driven, zero per-theme rules. */
+.stats-history-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 6px;
+    padding: 6px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 6px;
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-muted);
+    font-size: 12px;
+}
+
+.stats-history-banner i {
+    flex: 1;
+    min-width: 0;
+    font-style: normal;
+}
+
+.stats-history-banner .stats-history-enable {
+    flex: none;
+    color: var(--vbm-accent);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.stats-history-banner .stats-history-enable:hover {
+    text-decoration: underline;
+}
+
+.stats-history-banner .stats-history-dismiss {
+    flex: none;
+    opacity: 1; /* banners have no hover-to-reveal */
+}
+
 /* Row: anchor (clock + query + count + time) plus a hover-revealed × */
 .search-history-row {
     display: flex;

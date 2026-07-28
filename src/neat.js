@@ -489,13 +489,16 @@ import { markPopupOpen } from './visit-stats-sw.js';
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
     // its own tab. Refresh is event-driven (onCreated/onRemoved + debounce)
     // and only runs while the tab is active; treeView is already initialized
-    // above, so direct injection is safe.
+    // above, so direct injection is safe. visitStats/undo serve the
+    // history-permission banner (grant → one-shot import → toast).
     initViewRecent({
         store,
         views,
         treeRender,
         separatorManager,
-        treeView
+        treeView,
+        visitStats,
+        undo
     });
 
     // Stats view (v4 task-2 切片 D): visit counters as their own tab.

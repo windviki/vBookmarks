@@ -913,5 +913,26 @@
         "content": "$1"
       }
     }
+  },
+  "statsHistoryBanner": {
+    "message": "开启历史记录权限，把过往访问导入访问统计。",
+    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits."
+  },
+  "statsHistoryEnable": {
+    "message": "开启",
+    "description": "Link inside the recent view's history-permission banner: requests the optional history permission."
+  },
+  "statsHistoryDismiss": {
+    "message": "不再提示",
+    "description": "aria-label of the dismiss button on the recent view's history-permission banner."
+  },
+  "statsHistoryImported": {
+    "message": "已导入 $count$ 个书签的历史访问",
+    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

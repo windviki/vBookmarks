@@ -910,5 +910,22 @@
         "content": "$1"
       }
     }
+  },
+  "statsHistoryBanner": {
+    "message": "[TODO:statsHistoryBanner]"
+  },
+  "statsHistoryEnable": {
+    "message": "[TODO:statsHistoryEnable]"
+  },
+  "statsHistoryDismiss": {
+    "message": "[TODO:statsHistoryDismiss]"
+  },
+  "statsHistoryImported": {
+    "message": "[TODO:statsHistoryImported]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }

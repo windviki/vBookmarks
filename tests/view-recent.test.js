@@ -79,8 +79,32 @@ const setup = (opts = {}) => {
                 this.getRecentCalls.push(n);
                 cb(recentItems);
             },
+            getTreeCalls: 0,
+            getTree(cb) {
+                this.getTreeCalls++;
+                cb(opts.tree || []);
+            },
             onCreated: { addListener(fn) { this.fn = fn; } },
             onRemoved: { addListener(fn) { this.fn = fn; } }
+        },
+        permissions: {
+            containsCalls: [],
+            contains(p, cb) {
+                this.containsCalls.push(p);
+                cb(!!opts.hasHistoryPermission);
+            },
+            requestCalls: [],
+            request(p, cb) {
+                this.requestCalls.push(p);
+                cb('requestGranted' in opts ? opts.requestGranted : true);
+            }
+        },
+        history: {
+            searchCalls: [],
+            search(q, cb) {
+                this.searchCalls.push(q);
+                cb(opts.historyItems || []);
+            }
         }
     };
     globalThis.chrome = chromeStub;
@@ -89,6 +113,9 @@ const setup = (opts = {}) => {
         _data: { showRecentBookmarks: '1', ...(opts.storeData || {}) },
         get(key, dflt) {
             return key in this._data ? this._data[key] : dflt;
+        },
+        set(key, v) {
+            this._data[key] = v;
         }
     };
 
@@ -100,7 +127,9 @@ const setup = (opts = {}) => {
         pathOf: opts.pathOf || (() => ''),
         showItemPath: opts.showItemPath || (() => true),
         activateCalls: [],
-        activate(...args) { this.activateCalls.push(args); }
+        activate(...args) { this.activateCalls.push(args); },
+        badgeCalls: 0,
+        updateBadges() { this.badgeCalls++; }
     };
 
     const treeRender = {
@@ -120,14 +149,22 @@ const setup = (opts = {}) => {
     const treeView = {
         revealCalls: [],
         revealInTree(id) { this.revealCalls.push(id); },
-        bookmarkHandler: () => {}
+        handlerCalls: 0,
+        bookmarkHandler: () => { treeView.handlerCalls++; }
     };
+    const visitStats = opts.visitStats || null;
+    const undo = opts.undo || null;
 
-    const viewRecent = initViewRecent({ store, views, treeRender, separatorManager, treeView });
+    const viewRecent = initViewRecent({
+        store, views, treeRender, separatorManager, treeView,
+        ...(visitStats ? { visitStats } : {}),
+        ...(undo ? { undo } : {})
+    });
     return {
         viewRecent, $list, $container, doc, chrome: chromeStub, store, views,
-        treeRender, separatorManager, treeView,
-        def: () => views.def
+        treeRender, separatorManager, treeView, visitStats, undo,
+        def: () => views.def,
+        click: ev => $list._listeners.click[0](ev)
     };
 };
 
@@ -278,10 +315,12 @@ describe('refresh lifecycle', () => {
 });
 
 describe('open + reveal interactions (§2.3)', () => {
-    it('binds click + auxclick on the list to treeView.bookmarkHandler', () => {
-        const { $list, treeView } = setup({});
-        expect($list._listeners.click).toEqual([treeView.bookmarkHandler]);
+    it('plain row clicks pass through to treeView.bookmarkHandler; auxclick binds directly', () => {
+        const { $list, treeView, click } = setup({});
         expect($list._listeners.auxclick).toEqual([treeView.bookmarkHandler]);
+        const ev = { preventDefault() {}, target: { closest: () => null } };
+        click(ev);
+        expect(treeView.handlerCalls).toBe(1);
     });
 
     it('R on a focused row reveals it in the tree and consumes the key', () => {
@@ -314,5 +353,126 @@ describe('open + reveal interactions (§2.3)', () => {
         doc.activeElement = null;
         expect(def().onKey({ key: 'r', preventDefault: () => {} })).toBe(false);
         expect(treeView.revealCalls).toEqual([]);
+    });
+});
+
+
+describe('history-permission banner (item 7a)', () => {
+    const statsOn = () => ({
+        enabled: () => true,
+        mergeCalls: [],
+        merge(entries) { this.mergeCalls.push(entries); return entries.length; }
+    });
+    const undoOn = () => ({
+        toastCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); }
+    });
+    const IMPORT_TREE = [{
+        id: '0', title: '', children: [
+            {
+                id: '1', parentId: '0', title: 'bar', children: [
+                    { id: '11', parentId: '1', title: 'A', url: 'http://a/' },
+                    { id: '12', parentId: '1', title: 'A dup', url: 'http://a/' },
+                    { id: '13', parentId: '1', title: 'B', url: 'http://b/' }
+                ]
+            }
+        ]
+    }];
+    const HISTORY = [
+        { url: 'http://a/', visitCount: 5, lastVisitTime: 1000 },
+        { url: 'http://elsewhere/', visitCount: 9, lastVisitTime: 9 } // no bookmark
+    ];
+
+    it('shows the banner while stats is on, the permission is missing and not dismissed', () => {
+        const { $list, def } = setup({ visitStats: statsOn() });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('class="stats-history-banner"');
+        expect(html).toContain('statsHistoryBanner');
+        expect(html).toContain('class="stats-history-enable"');
+        expect(html).toContain('stats-history-dismiss');
+    });
+
+    it('stays hidden when the permission is granted, the banner is dismissed, or stats is off', () => {
+        const granted = setup({
+            visitStats: statsOn(),
+            hasHistoryPermission: true,
+            storeData: { statsHistoryImportedAt: '1' }
+        });
+        granted.def().activate();
+        expect(granted.$list.innerHTML).not.toContain('stats-history-banner');
+        expect(granted.chrome.history.searchCalls).toEqual([]); // already imported
+
+        const dismissed = setup({
+            visitStats: statsOn(),
+            storeData: { statsHistoryBannerDismissed: '1' }
+        });
+        dismissed.def().activate();
+        expect(dismissed.$list.innerHTML).not.toContain('stats-history-banner');
+
+        const off = setup({ visitStats: { enabled: () => false, merge: () => 0 } });
+        off.def().activate();
+        expect(off.$list.innerHTML).not.toContain('stats-history-banner');
+    });
+
+    it('auto-imports when the grant landed while the popup was closed (one-shot via statsHistoryImportedAt)', () => {
+        const visitStats = statsOn();
+        const undo = undoOn();
+        const { chrome, store, views, def } = setup({
+            visitStats, undo,
+            hasHistoryPermission: true,
+            tree: IMPORT_TREE,
+            historyItems: HISTORY
+        });
+        def().activate();
+        // both copies of the duplicated URL earn the baseline; non-bookmarks skip
+        expect(visitStats.mergeCalls).toEqual([[
+            { id: '11', c: 5, t: 1000 },
+            { id: '12', c: 5, t: 1000 }
+        ]]);
+        expect(undo.toastCalls).toEqual(['statsHistoryImported[2]']);
+        expect(store.get('statsHistoryImportedAt')).toBeTruthy();
+        expect(views.badgeCalls).toBeGreaterThan(0);
+    });
+
+    it('the enable link requests the permission and imports on grant; denial keeps the banner', () => {
+        const visitStats = statsOn();
+        const undo = undoOn();
+        const granted = setup({
+            visitStats, undo,
+            hasHistoryPermission: false,
+            requestGranted: true,
+            tree: IMPORT_TREE,
+            historyItems: HISTORY
+        });
+        granted.def().activate();
+        expect(granted.$list.innerHTML).toContain('stats-history-banner');
+        granted.click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.stats-history-enable' ? {} : null) }
+        });
+        expect(granted.chrome.permissions.requestCalls).toEqual([{ permissions: ['history'] }]);
+        expect(visitStats.mergeCalls).toHaveLength(1);
+        expect(granted.$list.innerHTML).not.toContain('stats-history-banner');
+
+        const denied = setup({ visitStats: statsOn(), requestGranted: false });
+        denied.def().activate();
+        denied.click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.stats-history-enable' ? {} : null) }
+        });
+        expect(denied.$list.innerHTML).toContain('stats-history-banner'); // stays
+    });
+
+    it('the dismiss × persists and hides the banner', () => {
+        const { $list, store, def, click } = setup({ visitStats: statsOn() });
+        def().activate();
+        expect($list.innerHTML).toContain('stats-history-banner');
+        click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.stats-history-dismiss' ? {} : null) }
+        });
+        expect(store.get('statsHistoryBannerDismissed')).toBe('1');
+        expect($list.innerHTML).not.toContain('stats-history-banner');
     });
 });

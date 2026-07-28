@@ -992,5 +992,26 @@
         "content": "$1"
       }
     }
+  },
+  "statsHistoryBanner": {
+    "message": "Grant history access to seed visit statistics with your past visits.",
+    "description": "Banner text on top of the recent view: invites granting the optional history permission so visit statistics can be seeded with past visits."
+  },
+  "statsHistoryEnable": {
+    "message": "Enable",
+    "description": "Link inside the recent view's history-permission banner: requests the optional history permission."
+  },
+  "statsHistoryDismiss": {
+    "message": "Don't show again",
+    "description": "aria-label of the dismiss button on the recent view's history-permission banner."
+  },
+  "statsHistoryImported": {
+    "message": "Imported past visits for $count$ bookmarks",
+    "description": "Toast after the history import finished; $count$ is how many bookmarks received a seeded visit count.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   }
 }
