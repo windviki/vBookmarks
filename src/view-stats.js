@@ -163,13 +163,16 @@ export function initViewStats(ctx = {}) {
     };
 
     const refresh = () => {
-        if (!views.isActive('stats')) {
-            dirty = true;
-            return;
-        }
-        dirty = false;
         chrome.bookmarks.getTree(tree => {
             rows = collectRows(flattenTree(tree));
+            // The tab badge tracks the row count even while the view is
+            // hidden — recompute always, repaint only when active.
+            views.updateBadges();
+            if (!views.isActive('stats')) {
+                dirty = true;
+                return;
+            }
+            dirty = false;
             render();
         });
     };

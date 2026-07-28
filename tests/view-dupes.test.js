@@ -141,7 +141,9 @@ const setup = (opts = {}) => {
         pathOf: opts.pathOf || (() => ''),
         showItemPath: opts.showItemPath || (() => true),
         activateCalls: [],
-        activate(id) { this.activateCalls.push(id); }
+        activate(id) { this.activateCalls.push(id); },
+        badgeCalls: 0,
+        updateBadges() { this.badgeCalls++; }
     };
 
     const treeRender = {
@@ -567,12 +569,19 @@ describe('interactions (§3.6)', () => {
 });
 
 describe('refresh lifecycle', () => {
-    it('skips the fetch while inactive, flagging dirty; activate replays it', () => {
-        const { views, chrome, def } = setup({ active: false });
+    it('recomputes in the background while inactive (tab badge stays fresh) and repaints on activation', () => {
+        const { views, chrome, def, $list } = setup({ active: false });
         expect(chrome.bookmarks.getTreeCalls).toBe(0);
-        views.active = true;
-        def().activate();
+        // background recompute: groups rebuild + badge bump, no paint
+        chrome.bookmarks.onCreated.fn();
+        tick(300);
         expect(chrome.bookmarks.getTreeCalls).toBe(1);
+        expect(views.badgeCalls).toBe(1);
+        expect($list.innerHTML).toBe('');
+        views.active = true;
+        def().activate(); // dirty → replay + paint
+        expect(chrome.bookmarks.getTreeCalls).toBe(2);
+        expect($list.innerHTML).toContain('dupes-group');
     });
 
     it('debounces a burst of bookmark events into one 300ms regroup', () => {

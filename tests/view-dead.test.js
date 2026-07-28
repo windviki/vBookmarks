@@ -195,7 +195,9 @@ const setup = (opts = {}) => {
         register(def) { this.def = def; },
         isActive(id) { return id === 'dead' && this.active; },
         pathOf: opts.pathOf || (() => ''),
-        showItemPath: () => true
+        showItemPath: () => true,
+        badgeCalls: 0,
+        updateBadges() { this.badgeCalls++; }
     };
 
     const treeRender = {
@@ -484,7 +486,7 @@ describe('marks + overlay (§5.5c)', () => {
             ts: 1, scannedCount: 1, results: { '12': { status: 'dead', code: 404 } }
         });
         const ctx = setup({ storeData: { deadLastScan: cache } });
-        const { store, $list, viewDead, def } = ctx;
+        const { store, $list, viewDead, def, views } = ctx;
         def().activate();
         expect(viewDead.isMarked('12')).toBe(false);
         ctx.clickOn({
@@ -495,8 +497,12 @@ describe('marks + overlay (§5.5c)', () => {
         expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
         expect($list.innerHTML).toContain('aria-label="deadUnmark"');
         expect(def().badge()).toBe(1);
+        // every marks mutation keeps the tab badge in sync (item 3 fix)
+        expect(views.badgeCalls).toBeGreaterThan(0);
+        const bumps = views.badgeCalls;
         viewDead.toggleMark('12');
         expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+        expect(views.badgeCalls).toBe(bumps + 1);
     });
 
     it('refreshOverlays adds and removes the × on every list, idempotently', () => {

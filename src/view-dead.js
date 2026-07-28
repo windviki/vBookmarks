@@ -89,8 +89,12 @@ export function initViewDead(ctx = {}) {
     let treeItems = new Map(); // id → { id, title, url } of the last render
     let filter = 'all';     // 'all' | 'dead' | 'blocked' — in-memory (§5.5c)
 
-    const persistMarks = () =>
+    const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
+        // The tab badge is the marks count — keep it in sync on every
+        // mutation (toggle/mark-all/clear/scan prune/onRemoved prune).
+        views.updateBadges();
+    };
 
     const loadCache = () => {
         try {

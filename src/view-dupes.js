@@ -229,17 +229,20 @@ export function initViewDupes(ctx = {}) {
     };
 
     const refresh = () => {
-        if (!views.isActive('dupes')) {
-            dirty = true;
-            return;
-        }
-        dirty = false;
         chrome.bookmarks.getTree(tree => {
             let items = flattenTree(tree);
             if (scope() === 'bar')
                 items = items.filter(item => item.inBar);
             itemIndex = new Map(items.map(item => [item.id, item]));
             groups = findDupes(items, { ignoreScheme: ignoreScheme() });
+            // The tab badge tracks the group count even while the view is
+            // hidden — recompute always, repaint only when active.
+            views.updateBadges();
+            if (!views.isActive('dupes')) {
+                dirty = true;
+                return;
+            }
+            dirty = false;
             render();
         });
     };

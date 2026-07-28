@@ -501,7 +501,7 @@ import { markPopupOpen } from './visit-stats-sw.js';
     // Stats view (v4 task-2 切片 D): visit counters as their own tab.
     // Registration order fixes the tab order (§2: tree/search/recent/
     // stats/dead/dupes).
-    initViewStats({
+    const viewStats = initViewStats({
         store,
         views,
         treeRender,
@@ -540,6 +540,13 @@ import { markPopupOpen } from './visit-stats-sw.js';
         visitStats
     });
     deadOverlayRefresh = viewDead.refreshOverlays;
+
+    // Tab-badge freshness: recompute the stats/dupes counts once at startup
+    // so the tab strip reflects reality before the first visit to those
+    // tabs (both refresh()es recompute in the background when inactive and
+    // push the count through views.updateBadges).
+    viewStats.refresh();
+    viewDupes.refresh();
 
     // donation: three explicit answers to the ask (see the v4 model above)
     const donationSnooze = step => {

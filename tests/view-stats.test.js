@@ -105,7 +105,9 @@ const setup = (opts = {}) => {
         register(def) { this.def = def; },
         isActive(id) { return id === 'stats' && this.active; },
         pathOf: opts.pathOf || (id => (id === '7' ? 'bar' : '')),
-        showItemPath: () => true
+        showItemPath: () => true,
+        badgeCalls: 0,
+        updateBadges() { this.badgeCalls++; }
     };
 
     const treeRender = {
@@ -312,13 +314,17 @@ describe('clear statistics', () => {
 });
 
 describe('refresh lifecycle', () => {
-    it('skips the fetch while inactive and replays it on activation', () => {
+    it('recomputes in the background while inactive (tab badge stays fresh) and repaints on activation', () => {
         const s = setup({ active: false, statsData: { '7': { c: 1, t: NOW } } });
         s.viewStats.refresh();
-        expect(s.chrome.bookmarks.getTreeCalls).toBe(0);
-        s.views.active = true;
-        s.def().activate();
+        // the dataset is recomputed (badge bump) but nothing is painted
         expect(s.chrome.bookmarks.getTreeCalls).toBe(1);
+        expect(s.views.badgeCalls).toBe(1);
+        expect(s.$list.innerHTML).toBe('');
+        s.views.active = true;
+        s.def().activate(); // dirty → replay + repaint
+        expect(s.chrome.bookmarks.getTreeCalls).toBe(2);
+        expect(s.$list.innerHTML).toContain('stats-item-7');
     });
 
     it('re-renders (debounced) when a bookmark is removed', () => {

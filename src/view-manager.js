@@ -282,6 +282,10 @@ export function initViewManager(ctx = {}) {
         }
         placeIndicator();
         announce(def);
+        // Tab badges re-evaluate on every switch — activation hooks are the
+        // moment views (re)compute their counts (dupes groups, stats rows),
+        // and immediate counts (dead marks) stay fresh across views.
+        updateBadges();
         if (opts.focusTab) {
             if (def.tabEl)
                 def.tabEl.focus();

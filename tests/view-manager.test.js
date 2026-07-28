@@ -542,6 +542,20 @@ describe('tab badges', () => {
         ctx.views.updateBadges();
         expect(badge().hidden).toBe(true);
     });
+
+    it('re-evaluates every badge on each activation (counts computed in activate hooks surface immediately)', () => {
+        const ctx = setup({});
+        let n = 0;
+        const recent = ctx.addRecent({ badge: () => n });
+        const badge = () => recent.tabEl.querySelector('.tab-badge');
+        n = 5;
+        ctx.views.activate('recent');
+        expect(badge().hidden).toBe(false);
+        expect(badge().textContent).toBe('5');
+        n = 0;
+        ctx.views.activate('tree');
+        expect(badge().hidden).toBe(true);
+    });
 });
 
 describe('shared parent-path map (§3.6)', () => {
