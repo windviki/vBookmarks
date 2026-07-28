@@ -526,10 +526,10 @@
     "message": "การปิดตัวเลือกนี้จะลบประวัติที่มีอยู่ด้วย"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "แสดงแท็บมุมมองลิงก์เสีย"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "แสดงแท็บมุมมองรายการซ้ำ"
   },
   "optionShowItemPath": {
     "message": "แสดงเส้นทางโฟลเดอร์แม่ในแถวรายการ"
@@ -538,7 +538,7 @@
     "message": "แสดงบุ๊กมาร์กที่เพิ่มล่าสุดที่ด้านบนของป๊อปอัป"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "แสดงแท็บมุมมองสถิติ"
   },
   "optionShowSyncStatus": {
     "message": "แสดงตัวบ่งชี้สถานะการซิงค์"

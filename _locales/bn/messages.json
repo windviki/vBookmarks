@@ -526,10 +526,10 @@
     "message": "এটি বন্ধ করলে বিদ্যমান ইতিহাসও মুছে যাবে।"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "মৃত-লিঙ্ক ভিউ ট্যাব দেখান"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "ডুপ্লিকেট ভিউ ট্যাব দেখান"
   },
   "optionShowItemPath": {
     "message": "তালিকার সারিতে প্যারেন্ট ফোল্ডার পথ দেখান"
@@ -538,7 +538,7 @@
     "message": "পপআপের শীর্ষে সম্প্রতি যোগ করা বুকমার্ক দেখান"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "পরিসংখ্যান ভিউ ট্যাব দেখান"
   },
   "optionShowSyncStatus": {
     "message": "সিঙ্ক স্ট্যাটাস ইনডিকেটর দেখান"

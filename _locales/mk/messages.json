@@ -525,10 +525,10 @@
     "message": "Исклучувањето на ова исто така ја брише постоечката историја."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Прикажи го табот за приказ на мртви врски"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Прикажи го табот за приказ на дупликати"
   },
   "optionShowItemPath": {
     "message": "Прикажи ја патеката на родителската папка во редовите на списокот"
@@ -537,7 +537,7 @@
     "message": "Прикажи неодамна додадени обележувачи на врвот на скокачкиот прозорец"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Прикажи го табот за приказ на статистики"
   },
   "optionShowSyncStatus": {
     "message": "Прикажи индикатори за статус на синхронизација"

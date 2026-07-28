@@ -526,10 +526,10 @@
     "message": "Deaktivering af denne fjerner også den eksisterende historik."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Vis fanen til døde links"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Vis fanen til dubletter"
   },
   "optionShowItemPath": {
     "message": "Vis stien til overordnet mappe på listelinjer"
@@ -538,7 +538,7 @@
     "message": "Vis senest tilføjede bogmærker øverst i popuppen"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Vis fanen til statistik"
   },
   "optionShowSyncStatus": {
     "message": "Vis synkroniseringsstatusindikatorer"

@@ -526,10 +526,10 @@
     "message": "Išjungus tai taip pat išvaloma esama istorija."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Rodyti negyvų nuorodų rodinio skirtuką"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Rodyti dublikatų rodinio skirtuką"
   },
   "optionShowItemPath": {
     "message": "Rodyti pagrindinio aplanko kelią sąrašo eilutėse"
@@ -538,7 +538,7 @@
     "message": "Rodyti neseniai pridėtas žymes iššokančio lango viršuje"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Rodyti statistikos rodinio skirtuką"
   },
   "optionShowSyncStatus": {
     "message": "Rodyti sinchronizavimo būklės indikatorius"

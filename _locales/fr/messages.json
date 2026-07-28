@@ -526,10 +526,10 @@
     "message": "Désactiver cette option efface également l'historique existant."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Afficher l'onglet des liens morts"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Afficher l'onglet des doublons"
   },
   "optionShowItemPath": {
     "message": "Afficher le chemin du dossier parent dans les lignes de liste"
@@ -538,7 +538,7 @@
     "message": "Afficher les signets récemment ajoutés en haut de la popup"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Afficher l'onglet des statistiques"
   },
   "optionShowSyncStatus": {
     "message": "Afficher les indicateurs de synchronisation"

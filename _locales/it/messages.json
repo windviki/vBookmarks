@@ -526,10 +526,10 @@
     "message": "Disattivando questa opzione si cancella anche la cronologia esistente."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Mostra la scheda dei collegamenti morti"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Mostra la scheda dei duplicati"
   },
   "optionShowItemPath": {
     "message": "Mostra il percorso della cartella principale nelle righe dell'elenco"
@@ -538,7 +538,7 @@
     "message": "Mostra segnalibri aggiunti di recente in cima al popup"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Mostra la scheda delle statistiche"
   },
   "optionShowSyncStatus": {
     "message": "Mostra indicatori di sincronizzazione"

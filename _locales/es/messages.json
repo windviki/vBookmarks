@@ -526,10 +526,10 @@
     "message": "Al desactivar esto también se borra el historial existente."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Mostrar la pestaña de vista de enlaces muertos"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Mostrar la pestaña de vista de duplicados"
   },
   "optionShowItemPath": {
     "message": "Mostrar la ruta de la carpeta principal en las filas de la lista"
@@ -538,7 +538,7 @@
     "message": "Mostrar marcadores agregados recientemente al inicio de la ventana emergente"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Mostrar la pestaña de vista de estadísticas"
   },
   "optionShowSyncStatus": {
     "message": "Mostrar indicadores de sincronización"

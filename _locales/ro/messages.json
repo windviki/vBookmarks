@@ -526,10 +526,10 @@
     "message": "Dacă dezactivați aceasta, se va șterge și istoricul existent."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Afișează fila de linkuri moarte"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Afișează fila de duplicate"
   },
   "optionShowItemPath": {
     "message": "Afișează calea dosarului părinte pe rândurile listei"
@@ -538,7 +538,7 @@
     "message": "Afișează marcajele adăugate recent în partea de sus a popup-ului"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Afișează fila de statistici"
   },
   "optionShowSyncStatus": {
     "message": "Afișați indicatorii de stare a sincronizării"

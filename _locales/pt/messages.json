@@ -526,10 +526,10 @@
     "message": "Desativar isso também limpa o histórico existente."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Mostrar guia de links mortos"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Mostrar guia de duplicatas"
   },
   "optionShowItemPath": {
     "message": "Mostrar o caminho da pasta pai nas linhas da lista"
@@ -538,7 +538,7 @@
     "message": "Mostrar marcadores adicionados recentemente no topo do pop-up"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Mostrar guia de estatísticas"
   },
   "optionShowSyncStatus": {
     "message": "Mostrar indicadores de sincronização"

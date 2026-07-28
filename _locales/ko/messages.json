@@ -526,10 +526,10 @@
     "message": "이 기능을 끄면 기존 기록도 삭제됩니다."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "끊긴 링크 보기 탭 표시"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "중복 항목 보기 탭 표시"
   },
   "optionShowItemPath": {
     "message": "목록 행에 상위 폴더 경로 표시"
@@ -538,7 +538,7 @@
     "message": "팝업 상단에 최근 추가된 북마크 표시"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "통계 보기 탭 표시"
   },
   "optionShowSyncStatus": {
     "message": "동기화 상태 표시기 표시"

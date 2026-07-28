@@ -523,10 +523,10 @@
     "message": "Desativar também apaga o histórico existente."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Mostrar o separador de links mortos"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Mostrar o separador de duplicados"
   },
   "optionShowItemPath": {
     "message": "Mostrar o caminho da pasta principal nas linhas da lista"
@@ -535,7 +535,7 @@
     "message": "Mostrar marcadores adicionados recentemente no topo do pop-up"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Mostrar o separador de estatísticas"
   },
   "optionShowSyncStatus": {
     "message": "Mostrar indicadores de estado de sincronização"

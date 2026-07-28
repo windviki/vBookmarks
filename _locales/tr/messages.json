@@ -526,10 +526,10 @@
     "message": "Bunu kapatmak mevcut geçmişi de temizler."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Ölü bağlantılar görünümü sekmesini göster"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Yinelenenler görünümü sekmesini göster"
   },
   "optionShowItemPath": {
     "message": "Liste satırlarında üst klasör yolunu göster"
@@ -538,7 +538,7 @@
     "message": "Açılır pencerenin üstünde son eklenen yer imlerini göster"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "İstatistik görünümü sekmesini göster"
   },
   "optionShowSyncStatus": {
     "message": "Senkronizasyon durumu göstergelerini göster"

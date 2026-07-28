@@ -526,10 +526,10 @@
     "message": "Izklapljanje te možnosti tudi počisti obstoječo zgodovino."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Prikaži zavihek mrtvih povezav"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Prikaži zavihek dvojnikov"
   },
   "optionShowItemPath": {
     "message": "Pokaži pot nadrejene mape v vrsticah seznama"
@@ -538,7 +538,7 @@
     "message": "Pokaži nedavno dodane zaznamke na vrhu pojavnega okna"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Prikaži zavihek statističnega pogleda"
   },
   "optionShowSyncStatus": {
     "message": "Pokaži indikatorje stanja sinhronizacije"

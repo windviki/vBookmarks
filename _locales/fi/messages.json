@@ -526,10 +526,10 @@
     "message": "Tämän poistaminen käytöstä tyhjentää myös olemassa olevan historian."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Näytä kuolleet linkit -välilehti"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Näytä kaksoiskappaleet -välilehti"
   },
   "optionShowItemPath": {
     "message": "Näytä yläkansion polku listariveillä"
@@ -538,7 +538,7 @@
     "message": "Näytä äskettäin lisätyt kirjanmerkit ponnahdusikkunan yläosassa"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Näytä tilastot-välilehti"
   },
   "optionShowSyncStatus": {
     "message": "Näytä synkronointitilan ilmaisimet"

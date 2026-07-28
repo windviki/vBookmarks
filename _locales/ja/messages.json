@@ -526,10 +526,10 @@
     "message": "オフにすると既存の履歴も消去されます。"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "デッドリンクビュータブを表示"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "重複ビュータブを表示"
   },
   "optionShowItemPath": {
     "message": "リスト行に親フォルダのパスを表示"
@@ -538,7 +538,7 @@
     "message": "ポップアップの上部に最近追加したブックマークを表示"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "統計ビュータブを表示"
   },
   "optionShowSyncStatus": {
     "message": "同期ステータスインジケーターを表示"

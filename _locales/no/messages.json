@@ -526,10 +526,10 @@
     "message": "Å slå av dette sletter også eksisterende historikk."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Vis døde-lenker-fanen"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Vis duplikater-fanen"
   },
   "optionShowItemPath": {
     "message": "Vis overordnet mappe-sti på listelinjer"
@@ -538,7 +538,7 @@
     "message": "Vis nylig lagt til bokmerker øverst i popupen"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Vis statistikk-fanen"
   },
   "optionShowSyncStatus": {
     "message": "Vis synkroniseringsstatusindikatorer"

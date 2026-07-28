@@ -526,10 +526,10 @@
     "message": "Izslēdzot šo, tiks dzēsta arī esošā vēsture."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Rādīt mirušo saišu skata cilni"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Rādīt dublikātu skata cilni"
   },
   "optionShowItemPath": {
     "message": "Rādīt vecākmapes ceļu saraksta rindās"
@@ -538,7 +538,7 @@
     "message": "Rādīt nesen pievienotās grāmatzīmes uznirstošā loga augšdaļā"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Rādīt statistikas skata cilni"
   },
   "optionShowSyncStatus": {
     "message": "Rādīt sinhronizācijas statusa indikatorus"

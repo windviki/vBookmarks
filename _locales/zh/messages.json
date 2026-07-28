@@ -526,10 +526,10 @@
     "message": "关闭此选项也会清除现有历史记录。"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "显示无效链接视图标签"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "显示重复项视图标签"
   },
   "optionShowItemPath": {
     "message": "在列表行中显示父文件夹路径"
@@ -538,7 +538,7 @@
     "message": "在弹出窗口顶部显示最近添加的书签"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "显示统计视图标签"
   },
   "optionShowSyncStatus": {
     "message": "显示同步状态指示器"

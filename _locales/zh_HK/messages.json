@@ -526,10 +526,10 @@
     "message": "關閉此選項亦會清除現有記錄。"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "顯示失效連結檢視標籤"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "顯示重複項檢視標籤"
   },
   "optionShowItemPath": {
     "message": "在清單列上顯示上層資料夾路徑"
@@ -538,7 +538,7 @@
     "message": "在彈出視窗頂部顯示最近新增的書籤"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "顯示統計檢視標籤"
   },
   "optionShowSyncStatus": {
     "message": "顯示同步狀態指示器"

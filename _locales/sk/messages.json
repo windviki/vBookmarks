@@ -526,10 +526,10 @@
     "message": "Vypnutím sa tiež vymaže existujúca história."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Zobraziť kartu zobrazenia mŕtvych odkazov"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Zobraziť kartu zobrazenia duplikátov"
   },
   "optionShowItemPath": {
     "message": "Zobraziť cestu nadradeného priečinka v riadkoch zoznamu"
@@ -538,7 +538,7 @@
     "message": "Zobraziť nedávno pridané záložky v hornej časti vyskakovacieho okna"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Zobraziť kartu zobrazenia štatistík"
   },
   "optionShowSyncStatus": {
     "message": "Zobraziť indikátory stavu synchronizácie"

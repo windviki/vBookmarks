@@ -526,10 +526,10 @@
     "message": "Απενεργοποιώντας αυτό, διαγράφεται επίσης το υπάρχον ιστορικό."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Εμφάνιση καρτέλας προβολής νεκρών συνδέσμων"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Εμφάνιση καρτέλας προβολής διπλοτύπων"
   },
   "optionShowItemPath": {
     "message": "Εμφάνιση διαδρομής γονικού φακέλου στις γραμμές λίστας"
@@ -538,7 +538,7 @@
     "message": "Εμφάνιση πρόσφατα προστεθέντων σελιδοδεικτών στην κορυφή του αναδυόμενου παραθύρου"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Εμφάνιση καρτέλας προβολής στατιστικών"
   },
   "optionShowSyncStatus": {
     "message": "Εμφάνιση δεικτών κατάστασης συγχρονισμού"

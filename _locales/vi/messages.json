@@ -526,10 +526,10 @@
     "message": "Tắt tùy chọn này cũng sẽ xóa lịch sử hiện tại."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Hiển thị tab xem liên kết chết"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Hiển thị tab xem trùng lặp"
   },
   "optionShowItemPath": {
     "message": "Hiển thị đường dẫn thư mục cha trên các hàng danh sách"
@@ -538,7 +538,7 @@
     "message": "Hiển thị dấu trang thêm gần đây ở đầu cửa sổ bật lên"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Hiển thị tab xem thống kê"
   },
   "optionShowSyncStatus": {
     "message": "Hiển thị chỉ báo trạng thái đồng bộ"

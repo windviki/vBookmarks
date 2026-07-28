@@ -526,10 +526,10 @@
     "message": "Att stänga av detta rensar även befintlig historik."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Visa fliken för döda länkar"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Visa fliken för dubbletter"
   },
   "optionShowItemPath": {
     "message": "Visa sökvägen till överordnad mapp i listraderna"
@@ -538,7 +538,7 @@
     "message": "Visa nyligen tillagda bokmärken överst i popupen"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Visa statistikfliken"
   },
   "optionShowSyncStatus": {
     "message": "Visa synkroniseringsstatusindikatorer"

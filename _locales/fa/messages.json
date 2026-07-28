@@ -526,10 +526,10 @@
     "message": "خاموش کردن این گزینه همچنین تاریخچه موجود را پاک می‌کند."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "نمایش تب نمای پیوندهای مرده"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "نمایش تب نمای موارد تکراری"
   },
   "optionShowItemPath": {
     "message": "نمایش مسیر پوشه والد در ردیف‌های لیست"
@@ -538,7 +538,7 @@
     "message": "نمایش نشانک‌های اخیراً اضافه شده در بالای پنجره بازشو"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "نمایش تب نمای آمار"
   },
   "optionShowSyncStatus": {
     "message": "نمایش شاخص‌های وضعیت همگام‌سازی"

@@ -526,10 +526,10 @@
     "message": "Dit uitschakelen wist ook de bestaande geschiedenis."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Toon het tabblad voor dode links"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Toon het tabblad voor duplicaten"
   },
   "optionShowItemPath": {
     "message": "Het pad van de bovenliggende map weergeven op lijstrijen"
@@ -538,7 +538,7 @@
     "message": "Recent toegevoegde bladwijzers bovenaan de pop-up tonen"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Toon het tabblad voor statistieken"
   },
   "optionShowSyncStatus": {
     "message": "Synchronisatiestatusindicatoren tonen"

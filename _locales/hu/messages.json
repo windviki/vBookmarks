@@ -526,10 +526,10 @@
     "message": "Ennek kikapcsolása törli a meglévő előzményeket is."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Hibás hivatkozások nézet fül megjelenítése"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Ismétlődések nézet fül megjelenítése"
   },
   "optionShowItemPath": {
     "message": "Szülőmappa elérési útjának megjelenítése a listasorokban"
@@ -538,7 +538,7 @@
     "message": "Legutóbb hozzáadott könyvjelzők megjelenítése a felugró ablak tetején"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Statisztika nézet fül megjelenítése"
   },
   "optionShowSyncStatus": {
     "message": "Szinkronizálási állapotjelzők megjelenítése"

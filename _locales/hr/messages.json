@@ -526,10 +526,10 @@
     "message": "Isključivanjem se također briše postojeća povijest."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Prikaži karticu prikaza mrtvih veza"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Prikaži karticu prikaza duplikata"
   },
   "optionShowItemPath": {
     "message": "Prikaži putanju roditeljske mape u redovima popisa"
@@ -538,7 +538,7 @@
     "message": "Prikaži nedavno dodane oznake na vrhu skočnog prozora"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Prikaži karticu prikaza statistike"
   },
   "optionShowSyncStatus": {
     "message": "Prikaži indikatore statusa sinkronizacije"

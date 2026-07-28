@@ -526,10 +526,10 @@
     "message": "כיבוי זה ינקה גם את ההיסטוריה הקיימת."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "הצג לשונית תצוגת קישורים מתים"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "הצג לשונית תצוגת כפילויות"
   },
   "optionShowItemPath": {
     "message": "הצג נתיב תיקיית אב בשורות הרשימה"
@@ -538,7 +538,7 @@
     "message": "הצג סימניות שנוספו לאחרונה בראש החלון הקופץ"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "הצג לשונית תצוגת סטטיסטיקות"
   },
   "optionShowSyncStatus": {
     "message": "הצג מחווני מצב סנכרון"

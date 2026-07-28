@@ -526,10 +526,10 @@
     "message": "Menonaktifkan ini juga akan menghapus riwayat yang ada."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Tampilkan tab tautan mati"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Tampilkan tab duplikat"
   },
   "optionShowItemPath": {
     "message": "Tampilkan jalur folder induk pada baris daftar"
@@ -538,7 +538,7 @@
     "message": "Tampilkan bookmark yang baru ditambahkan di bagian atas popup"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Tampilkan tab statistik"
   },
   "optionShowSyncStatus": {
     "message": "Tampilkan indikator status sinkronisasi"

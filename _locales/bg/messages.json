@@ -526,10 +526,10 @@
     "message": "Изключването на това също изчиства съществуващата история."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Показване на раздела за преглед на мъртви връзки"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Показване на раздела за преглед на дубликати"
   },
   "optionShowItemPath": {
     "message": "Покажи пътя на родителската папка в редовете на списъка"
@@ -538,7 +538,7 @@
     "message": "Показване на наскоро добавените отметки в горната част на изскачащия прозорец"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Показване на раздела за преглед на статистики"
   },
   "optionShowSyncStatus": {
     "message": "Показване на индикатори за статус на синхронизация"

@@ -526,10 +526,10 @@
     "message": "इसे बंद करने से मौजूदा इतिहास भी साफ़ हो जाता है।"
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "मृत लिंक दृश्य टैब दिखाएँ"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "डुप्लिकेट दृश्य टैब दिखाएँ"
   },
   "optionShowItemPath": {
     "message": "सूची पंक्तियों पर पैरेंट फ़ोल्डर पथ दिखाएं"
@@ -538,7 +538,7 @@
     "message": "पॉपअप के शीर्ष पर हाल ही में जोड़े गए बुकमार्क दिखाएँ"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "सांख्यिकी दृश्य टैब दिखाएँ"
   },
   "optionShowSyncStatus": {
     "message": "सिंक स्थिति संकेतक दिखाएं"

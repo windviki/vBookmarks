@@ -526,10 +526,10 @@
     "message": "Отключение этой опции также очищает существующую историю."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Показать вкладку просмотра битых ссылок"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Показать вкладку просмотра дубликатов"
   },
   "optionShowItemPath": {
     "message": "Показывать путь родительской папки в строках списка"
@@ -538,7 +538,7 @@
     "message": "Показывать недавно добавленные закладки вверху всплывающего окна"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Показать вкладку просмотра статистики"
   },
   "optionShowSyncStatus": {
     "message": "Показывать индикаторы синхронизации"

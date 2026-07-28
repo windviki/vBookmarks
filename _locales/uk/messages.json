@@ -526,10 +526,10 @@
     "message": "Вимкнення цього також очищає наявну історію."
   },
   "optionShowDeadView": {
-    "message": "[TODO:optionShowDeadView]"
+    "message": "Показати вкладку перегляду мертвих посилань"
   },
   "optionShowDupesView": {
-    "message": "[TODO:optionShowDupesView]"
+    "message": "Показати вкладку перегляду дублікатів"
   },
   "optionShowItemPath": {
     "message": "Показувати шлях до батьківської папки в рядках списку"
@@ -538,7 +538,7 @@
     "message": "Показувати нещодавно додані закладки у верхній частині спливаючого вікна"
   },
   "optionShowStatsView": {
-    "message": "[TODO:optionShowStatsView]"
+    "message": "Показати вкладку перегляду статистики"
   },
   "optionShowSyncStatus": {
     "message": "Показувати індикатори стану синхронізації"
