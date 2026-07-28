@@ -71,16 +71,43 @@ export function initKeyboard(ctx = {}) {
     let keyBufferTimer = null;
     const treeKeyDown = function (e) {
         let item = document.activeElement;
-        if (!/^(a|span)$/i.test(item.tagName)) {
-            item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
-        }
-        let li = item.parentNode;
         let keyValue = e.key;
         const metaKey = e.metaKey;
         if (keyValue === 'ArrowDown' && metaKey)
             keyValue = 'End'; // cmd + down (Mac)
         if (keyValue === 'ArrowUp' && metaKey)
             keyValue = 'Home'; // cmd + up (Mac)
+        if (!/^(a|span)$/i.test(item.tagName)) {
+            // Focus is on the list container itself or on an in-list toolbar
+            // control (stats seg buttons, dead/dupes toolbar buttons/selects).
+            // Action keys (Enter/Delete/F2/letters) stay with the control,
+            // which has its own semantics for them; navigation keys walk THIS
+            // list's rows — never a row of another (possibly hidden) list.
+            if (!/^(ArrowDown|ArrowUp|Home|End|PageDown|PageUp)$/.test(keyValue))
+                return;
+            if (item !== this) {
+                // A toolbar control: Arrow keys jump straight into the list
+                // (Down → first row, Up → last row, listbox-style). Home/End/
+                // Page fall through — their cases work off the container
+                // itself and never touch the fallback row.
+                if (keyValue === 'ArrowDown' || keyValue === 'ArrowUp') {
+                    const target = keyValue === 'ArrowDown'
+                        ? this.querySelector('li a, li span')
+                        : (this.querySelector('li:last-child a, li:last-child span') ||
+                           this.querySelector('li a, li span'));
+                    if (!target)
+                        return;
+                    e.preventDefault();
+                    target.focus();
+                    return;
+                }
+            } else {
+                item = this.querySelector('.focus') || this.querySelector('li a, li span');
+                if (!item)
+                    return; // empty list / empty state only
+            }
+        }
+        let li = item.parentNode;
         switch (keyValue) {
             case 'ArrowDown': // down
                 e.preventDefault();
@@ -371,8 +398,16 @@ export function initKeyboard(ctx = {}) {
 
     const treeKeyUp = e => {
         let item = document.activeElement;
-        if (!/^(a|span)$/i.test(item.tagName))
-            item = $tree.querySelector('.focus') || $tree.querySelector('li:first-child>span');
+        if (!/^(a|span)$/i.test(item.tagName)) {
+            // Delete on an in-list toolbar control must never reach a row —
+            // only the list container itself falls back to its .focus row
+            // (never to a row of another, possibly hidden, list).
+            if (item !== e.currentTarget)
+                return;
+            item = e.currentTarget.querySelector('.focus') || e.currentTarget.querySelector('li a, li span');
+            if (!item)
+                return;
+        }
         const li = item.parentNode;
         switch (e.key) {
             case "Delete": // delete

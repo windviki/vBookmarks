@@ -101,7 +101,7 @@ describe('alignment CSS contract (item 6)', () => {
     it('list views keep the same 16px placeholder rhythm as the tree', () => {
         const body = ruleBody(
             neatCss,
-            '#recent-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before');
+            '#recent-list ul li a::before,\n#dupes-list ul li a::before,\n#dead-list ul li a::before,\n#stats-list ul li a::before');
         expect(body).toContain("content: ''");
         expect(body).toContain('width: 16px');
     });

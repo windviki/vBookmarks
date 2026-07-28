@@ -1714,11 +1714,14 @@ body.panel-mode .vbm-row .row-sub {
    The list-view containers mirror the #results/#tree pane chrome; their
    rows reuse the unscoped .tree-item-link rules, so only the container and
    the row states the scoped #tree/#results rules provided are re-declared
-   here. Slice C: dupes/dead lists share the same chrome. */
+   here. Slice C: dupes/dead lists share the same chrome. Item 7b: the stats
+   list joins the same row contract — hover, selected (active/focus) and the
+   focus ring are identical across every list view and the tree. */
 
 #recent-list,
 #dupes-list,
-#dead-list {
+#dead-list,
+#stats-list {
     background-color: var(--vbm-bg);
     overflow: auto;
     outline: 0;
@@ -1734,7 +1737,9 @@ body.panel-mode .vbm-row .row-sub {
 #dupes-list ul,
 #dupes-list ul li,
 #dead-list ul,
-#dead-list ul li {
+#dead-list ul li,
+#stats-list ul,
+#stats-list ul li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1745,7 +1750,8 @@ body.panel-mode .vbm-row .row-sub {
    results panes give bookmark rows, keeping titles aligned across views. */
 #recent-list ul li a::before,
 #dupes-list ul li a::before,
-#dead-list ul li a::before {
+#dead-list ul li a::before,
+#stats-list ul li a::before {
     content: '';
     flex: none;
     width: 16px;
@@ -1753,19 +1759,22 @@ body.panel-mode .vbm-row .row-sub {
 
 #recent-list ul li a *,
 #dupes-list ul li a *,
-#dead-list ul li a * {
+#dead-list ul li a *,
+#stats-list ul li a * {
     pointer-events: none;
 }
 
 #recent-list ul li a:hover,
 #dupes-list ul li a:hover,
-#dead-list ul li a:hover {
+#dead-list ul li a:hover,
+#stats-list ul li a:hover {
     background-color: var(--vbm-bg-hover);
 }
 
 #recent-list ul li a:hover i,
 #dupes-list ul li a:hover i,
-#dead-list ul li a:hover i {
+#dead-list ul li a:hover i,
+#stats-list ul li a:hover i {
     text-decoration: underline;
 }
 
@@ -1777,7 +1786,10 @@ body.panel-mode .vbm-row .row-sub {
 #dupes-list ul li a:focus,
 #dead-list ul li a:active,
 #dead-list ul li a.active,
-#dead-list ul li a:focus {
+#dead-list ul li a:focus,
+#stats-list ul li a:active,
+#stats-list ul li a.active,
+#stats-list ul li a:focus {
     color: var(--vbm-fg-selected);
     background-color: var(--vbm-bg-selected);
     outline: 0;
@@ -1785,7 +1797,8 @@ body.panel-mode .vbm-row .row-sub {
 
 #recent-list ul li a:focus,
 #dupes-list ul li a:focus,
-#dead-list ul li a:focus {
+#dead-list ul li a:focus,
+#stats-list ul li a:focus {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }
@@ -1968,6 +1981,19 @@ body.panel-mode .vbm-row .row-sub {
 .row-btn:hover {
     background: var(--vbm-bg-hover);
     color: var(--vbm-fg);
+}
+
+/* Item 7b full-keyboard contract: every clickable control of the list views
+   shows the same focus ring the focused rows get, so keyboard focus is
+   visible everywhere — row action buttons, view toolbars, search history. */
+.row-btn:focus-visible,
+.dupes-toolbar button:focus-visible,
+.dupes-toolbar select:focus-visible,
+.dead-toolbar button:focus-visible,
+.stats-toolbar button:focus-visible,
+#search-history-clear:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
 }
 
 

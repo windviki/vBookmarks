@@ -31,8 +31,10 @@ const makeEvent = (props = {}) => {
 };
 
 const fire = (el, type, ev) => {
-    for (const fn of (el._listeners[type] || []))
+    for (const fn of (el._listeners[type] || [])) {
+        ev.currentTarget = el; // mirrors a real dispatch on the bound element
         fn.call(el, ev); // a listener's `this` is the element it is bound to
+    }
 };
 
 let initKeyboard;
@@ -1215,5 +1217,130 @@ describe('view-manager integration (v4 task-2)', () => {
         ctx2.doc.activeElement = rows2.alpha.a;
         fire(ctx2.tree, 'keydown', makeEvent({ key: 'b' }));
         expect(rows2.beta.a.focused).toBe(true);
+    });
+});
+
+// --- Item 7b: in-list toolbar controls --------------------------------------
+// The stats/dead/dupes toolbars render INSIDE their list containers, so a
+// keydown on a toolbar button bubbles to treeKeyDown/treeKeyUp. Before the
+// item-7b guard, the not-a-row fallback walked the (hidden) TREE: Enter on a
+// stats seg button dispatched a synthetic click to a tree row and Delete
+// deleted one. The guard: action keys stay with the control, navigation keys
+// walk this list only, the container itself keeps the .focus-row fallback.
+describe('in-list toolbar controls (item 7b)', () => {
+    // A stats-like view: #stats-list containing a toolbar BUTTON and two
+    // bookmark rows, registered next to the tree in the view registry.
+    const setupStatsList = () => {
+        const bag = {};
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'stats-list');
+                const btn = el('BUTTON', 'seg-btn');
+                btn.parentNode = listEl;
+                const mkRow = id => {
+                    const li = el('LI', `stats-item-${id}`);
+                    li.dataset.nodeId = id;
+                    const a = el('A');
+                    a.parentNode = li;
+                    a.parentElement = li;
+                    li.firstElementChild = a;
+                    li._qs['a, span'] = a;
+                    li._qs['span, a'] = a;
+                    li.parentNode = listEl;
+                    return { li, a };
+                };
+                const r1 = mkRow('s1');
+                const r2 = mkRow('s2');
+                r1.li.nextElementSibling = r2.li;
+                r2.li.previousElementSibling = r1.li;
+                listEl._qs['li a, li span'] = r1.a;
+                listEl._qs['li:last-child a, li:last-child span'] = r2.a;
+                listEl._qs['.focus'] = r1.a;
+                listEl._qs['ul>li:first-child'] = r1.li;
+                Object.assign(bag, { listEl, btn, r1, r2 });
+                const statsEntry = { id: 'stats', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [
+                        { id: 'tree', el: tree, typeAhead: true },
+                        statsEntry
+                    ],
+                    listOf: el2 => (el2 === listEl ? statsEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ctx, ...bag };
+    };
+
+    it('Enter on a toolbar button stays with the button — no row click, no preventDefault', () => {
+        const { ctx, listEl, btn, r1 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        const ev = makeEvent({ key: 'Enter' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(false); // the button keeps its native activation
+        expect(r1.a._dispatched).toEqual([]);
+        expect(ctx.f1.link._dispatched).toEqual([]); // the hidden tree is never touched
+        expect(ctx.actionCalls).toEqual([]);
+    });
+
+    it('Delete (keyup) on a toolbar button deletes nothing', () => {
+        const { ctx, listEl, btn } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        fire(listEl, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(ctx.actionCalls).toEqual([]);
+    });
+
+    it('F2 and letter keys on a toolbar control are left alone (no type-ahead timer)', () => {
+        const { ctx, listEl, btn, r1 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        fire(listEl, 'keydown', makeEvent({ key: 'F2' }));
+        expect(ctx.actionCalls).toEqual([]);
+        fire(listEl, 'keydown', makeEvent({ key: 'x' }));
+        expect(timeouts).toEqual([]); // no keyBuffer timer
+        expect(r1.a.focused).toBe(false);
+    });
+
+    it('ArrowDown on a toolbar button jumps into THIS list\'s first row, never the tree\'s', () => {
+        const { ctx, listEl, btn, r1 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        const ev = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(r1.a.focused).toBe(true);
+        expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('ArrowUp on a toolbar button jumps to this list\'s last row', () => {
+        const { ctx, listEl, btn, r2 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(r2.a.focused).toBe(true);
+        expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('Home on a toolbar button falls through to the container case (first row)', () => {
+        const { ctx, listEl, btn, r1 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        fire(listEl, 'keydown', makeEvent({ key: 'Home' }));
+        expect(r1.a.focused).toBe(true);
+        expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('focus on the list container itself keeps the .focus-row walk (ArrowDown)', () => {
+        const { ctx, listEl, r2 } = setupStatsList();
+        ctx.doc.activeElement = listEl;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(r2.a.focused).toBe(true); // walked from the .focus row (r1)
+        expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('Delete (keyup) on the list container falls back to its .focus row', () => {
+        const { ctx, listEl } = setupStatsList();
+        ctx.doc.activeElement = listEl;
+        fire(listEl, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(ctx.actionCalls).toEqual([['deleteBookmark', 's1']]);
     });
 });
