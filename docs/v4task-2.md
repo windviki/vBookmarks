@@ -442,3 +442,17 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 | 8 | 命令面板全命令别名：命令表增 `aliases` 字段（`/dupes` 应答 `/dups` `/dedup` `/clear` 等），全部前缀匹配，命令行渲染 muted 后缀列出所有斜杠形式 | `src/palette.js`、`css/neat.css` |
 
 第二轮验收：i18n verify 0 错误、单测全绿、docker 冒烟 + 截图套件通过（i18n 截图 8×11）、打包 v4.0。
+
+## 附录 C：第三轮修订（2026-07-28 新规范，5 项）
+
+第二轮验收后用户提出 5 项改进，全部落地。对齐点如下：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | 命令面板失焦自动关闭：`focusout` 时若落点不在面板内、且无对话框/菜单打开（`.active` 守卫），即关闭面板；mousedown 守卫管指针、focusout 管键盘，职责不重叠 | `src/palette.js`、`tests/palette.test.js` |
+| 2 | 老用户/自定义选项补全：统计/死链/重复三视图获得与 recent 相同的独立显隐开关 `showStatsView`/`showDeadView`/`showDupesView`（默认开）；隐藏即该视图完全不可达（无 tab/无数字键/无面板入口），配合既有 `showViewTabs` 关 = 纯树视图+搜索的老用户体验 | `src/options.js`、`pages/options.html`、三个视图模块的 `hidden` 注册、`_locales/*`（3 新键） |
+| 3 | 右键菜单一致性：五个视图列表（recent/stats/dead/dupes/搜索历史上区）补 `scroll`/`focus(capture)` 消除——此前仅树/结果/面板结果有；`view-manager.activate()` 开头必清菜单（Ctrl+数字/任意切换不留悬挂）；`palette.open()` 开头清菜单（菜单 z300 > 面板 z100，必须消除否则浮于面板） | `src/context-menu.js`、`src/view-manager.js`、`src/palette.js` |
+| 4 | 层级唯一标准落地：neat.css 头部层级表（L0 基础 → L6 toast z400）为唯一权威；审计发现 `sync-styles.css .sync-tooltip` 的 `z-index: 1000` 数值越表——实际受父 `.sync-indicator`（z10 stacking context）约束无行为问题，但数值误导，改为 z1 并在表中补 Layer 2b 条目；层级值与表的一致性纳入契约测试 | `css/sync-styles.css`、`css/neat.css`、`tests/layering.test.js` |
+| 5 | 四主题细节补全：审计确认 root/dark/auto/ink/paper 五块颜色 token 全集一致（结构 token radius/row-h/indent 仅 :root 属设计）；发现 dark/ink 主题 danger 浅底色上白字徽标对比度仅 2.4/2.0:1（不达 AA）——新增 `--vbm-danger-fg`/`--vbm-warning-fg` on-color token（dark/ink 深栗色 7.1–8.4:1，paper 暖白 6.2:1），tab-badge/row-badge/dead-indicator/dupes-apply-all 四处硬编码 `#fff`/`#000` 全部 token 化；token 全集一致性 + 5 主题 × 3 组徽标对比度 ≥4.5:1 纳入契约测试 | `css/neat.css`、`tests/theme.test.js` |
+
+第三轮验收：i18n verify 0 错误（3 新键 41 locale 全量翻译）、单测全绿（970）、docker 截图套件通过、打包完成。
