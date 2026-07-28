@@ -325,6 +325,7 @@ const setup = (opts = {}) => {
         body,
         os: opts.os || 'linux',
         rtl: !!opts.rtl,
+        palette: opts.palette, // ESC layering: closes before the view rungs
         // v4 task-2: absent → the pre-view fallback wiring; a function gets
         // the internal elements first so the registry can reference them
         views: typeof opts.views === 'function'
@@ -1342,5 +1343,138 @@ describe('in-list toolbar controls (item 7b)', () => {
         ctx.doc.activeElement = listEl;
         fire(listEl, 'keyup', makeEvent({ key: 'Delete' }));
         expect(ctx.actionCalls).toEqual([['deleteBookmark', 's1']]);
+    });
+});
+
+// --- Item 2: Esc layering — the full document chain -------------------------
+// The contract order (keyboard.js document capture): dialogs → context menu
+// (a row marked .active) → palette → the active view's own consumer → the
+// search two-level clear → back-to-tree → window.close. The menu rung is
+// exercised through its own contextKeyDown elsewhere; here the whole chain is
+// peeled one Esc press at a time, plus the always-on keyup safety net.
+describe('Esc layering — full document chain (item 2)', () => {
+    it('the menu rung dismisses at document level before any lower rung', () => {
+        const ctx = setup({ searchActive: true });
+        const active = ctx.row('A', 'neat-tree-item-42');
+        active.link.classList.add('active');
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(active.link.classList.contains('active')).toBe(false);
+        expect(active.link.focused).toBe(true);
+        expect(ctx.clearMenuCalls).toEqual(['clear']);
+        expect(ctx.searchCalls).toEqual([]); // the search clear is not reached
+        expect(ctx.searchInput.value).toBe('query');
+        expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('the palette rung closes the panel before the view/search rungs', () => {
+        const calls = [];
+        const palette = { isOpen: () => true, close: () => calls.push('close') };
+        const ctx = setup({ palette, searchActive: true });
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(calls).toEqual(['close']);
+        expect(ctx.searchCalls).toEqual([]);
+        expect(ctx.searchInput.value).toBe('query');
+        expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('a fully-armed popup peels one layer per press in the contract order', () => {
+        const order = [];
+        let paletteOpen = true;
+        let viewConsumes = true;
+        let toTreeConsumes = true;
+        let viewRuns = 0;
+        const palette = {
+            isOpen: () => paletteOpen,
+            close: () => { paletteOpen = false; order.push('palette'); }
+        };
+        const views = {
+            lists: () => [],
+            listOf: () => null,
+            onEscapeActive: () => {
+                viewRuns++;
+                if (viewConsumes) {
+                    order.push('view');
+                    return true;
+                }
+                return false;
+            },
+            escapeToTree: () => {
+                if (toTreeConsumes) {
+                    order.push('toTree');
+                    return true;
+                }
+                return false;
+            },
+            focusTop: () => {},
+            activate: () => {}
+        };
+        const ctx = setup({ dialogOpen: true, palette, views, searchActive: true });
+        const active = ctx.row('A', 'neat-tree-item-42');
+        active.link.classList.add('active');
+        ctx.searchInput.value = 'query';
+        const esc = () => {
+            const ev = makeEvent({ key: 'Escape' });
+            ctx.fireDoc('keydown', ev);
+            expect(ev.defaultPrevented).toBe(true); // Chrome never sees a raw Esc
+            expect(ev.immediatePropagationStopped).toBe(true);
+        };
+
+        esc(); // 1 — the dialog layer
+        expect(ctx.closeDialogsCalls).toEqual(['close']);
+        expect(order).toEqual([]);
+        ctx.flags.dialogOpen = false;
+
+        esc(); // 2 — the context-menu layer
+        expect(ctx.clearMenuCalls).toEqual(['clear']);
+        expect(order).toEqual([]);
+
+        esc(); // 3 — the palette layer
+        expect(order).toEqual(['palette']);
+
+        esc(); // 4 — the active view's own consumer (e.g. aborting a scan)
+        expect(order).toEqual(['palette', 'view']);
+        expect(ctx.searchCalls).toEqual([]);
+        viewConsumes = false;
+
+        esc(); // 5 — the search two-level clear (records + empties the box)
+        expect(ctx.searchCalls).toEqual(['escape']);
+        expect(ctx.searchInput.value).toBe('');
+        expect(order).toEqual(['palette', 'view']);
+        expect(viewRuns).toBe(2); // the view is consulted on every press
+
+        esc(); // 6 — back to the tree
+        expect(order).toEqual(['palette', 'view', 'toTree']);
+        expect(ctx.windowCloseCalls).toEqual([]);
+        toTreeConsumes = false;
+
+        esc(); // 7 — nothing left: the popup closes
+        expect(ctx.windowCloseCalls).toEqual(['close']);
+    });
+
+    it('the keyup safety net always swallows Escape without running the chain', () => {
+        const ctx = setup({ searchActive: true });
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keyup', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ev.immediatePropagationStopped).toBe(true);
+        expect(ctx.searchCalls).toEqual([]); // the chain is keydown-only
+        expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('non-Escape keys pass through both capture handlers untouched', () => {
+        const ctx = setup({});
+        const kd = makeEvent({ key: 'a' });
+        ctx.fireDoc('keydown', kd);
+        expect(kd.defaultPrevented).toBe(false);
+        expect(kd.propagationStopped).toBe(false);
+        const ku = makeEvent({ key: 'a' });
+        ctx.fireDoc('keyup', ku);
+        expect(ku.defaultPrevented).toBe(false);
+        expect(ku.propagationStopped).toBe(false);
     });
 });
