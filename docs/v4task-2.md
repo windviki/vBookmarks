@@ -424,3 +424,21 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 | `scripts/package.py` | JS_FILES 登记 |
 | `scripts/screenshots/` | shots-themes 补 tab；shots-palette 改视图截图 |
 | `tests/` | view-manager/view-recent/view-stats/visit-stats 新 suite；actions 删除确认用例；dupes/dead-links 扩展用例；palette/keyboard/search/tree-view suite 适配 |
+
+## 附录 B：第二轮修订（2026-07-25 新规范，9 项）
+
+第一轮验收后用户提出 9 项改进，全部落地。行为变更如下（测试/截图类改动不重复正文，仅列与本文档设计细节的对齐点）：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | i18n 截图扩展为 8 语言 × 11 面：seed 补重复书签对 + `visitStats`/`searchHistory`/`deadLastScan` 三份数据，每语言新增 search/recent/dupes/dead/stats 五张视图截图 | `scripts/screenshots/shots-i18n.js` |
+| 2 | Esc 分层链测试补齐：document 级菜单层、palette 层、七层全副武装逐层剥离（dialog→menu→palette→view→search→tree→close）、keyup 安全网 | `tests/keyboard.test.js` |
+| 3 | 修复死链/去重角标有时不显示：根因是 `updateBadges()` 仅在 renderTabs 时调用——view 激活末尾补调；dupes/stats 的 refresh 改为"总是重算 + updateBadges，仅活跃时 render"；dead persistMarks 挂钩 | `src/view-manager.js`、`src/view-dupes.js`、`src/view-stats.js`、`src/view-dead.js` |
+| 4 | 去重组 URL 组头一次（§3.6 本已如此）+ 组头 × 按钮提示动态化：`dupesCleanRestHint($title$,$count$)`（"保留 X，删其余 N"）替换死键 `dupesGroupCleanRest` | `src/view-dupes.js`、`_locales/*` |
+| 5 | 搜索/树切换新规范（已回写 §4.3/§8）：重进搜索视图不回填——框空、上区历史、下区结果留存；`searchLastQuery` 退役 | `src/search.js`、`src/store.js` |
+| 6 | 树行三轴对齐契约：twisty 槽 16px 箭头居中、图标槽 20px 图标居中（`justify-content: center`）、文本轴 = 16px×层级 + 36px；sync/dead overlay 一律 `position:absolute` 不进 flex 流（neat.css 侧再钉防线）；empty-folder 行补齐 36px 槽宽 | `css/neat.css`、`src/tree-render.js`、`tests/tree-alignment.test.js` |
+| 7a | `history` 改为 optional_permissions；recent 视图顶部条幅引导开启（`statsEnabled` 开 + 未授权 + 未 dismiss 时显示），同意即一次性导入 `chrome.history` 全量（URL→各副本同记），写 `statsHistoryImportedAt`；activate 时"已授权未导入"自愈补导入 | `manifest.json`、`src/view-recent.js`、`src/visit-stats.js`（`merge`） |
+| 7b | `#stats-list` 并入列表视图行契约（此前整套行样式缺失）；修复列表内工具栏控件键盘隐患——焦点在按钮/下拉时 Enter 曾向隐藏树行派发合成点击、Delete 曾误删树书签；现动作键留在控件本身，导航键只走本列表（ArrowDown/Up 跳入首/尾行）；工具栏控件统一 `focus-visible` 聚焦环 | `css/neat.css`、`src/keyboard.js`、`tests/list-view-parity.test.js` |
+| 8 | 命令面板全命令别名：命令表增 `aliases` 字段（`/dupes` 应答 `/dups` `/dedup` `/clear` 等），全部前缀匹配，命令行渲染 muted 后缀列出所有斜杠形式 | `src/palette.js`、`css/neat.css` |
+
+第二轮验收：i18n verify 0 错误、单测全绿、docker 冒烟 + 截图套件通过（i18n 截图 8×11）、打包 v4.0。
