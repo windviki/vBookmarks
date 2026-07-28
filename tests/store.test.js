@@ -241,6 +241,14 @@ describe('store.js', () => {
     });
 
     describe('sync mirror', () => {
+        it('exposes the sync-area key list for the options-page settings backup', async () => {
+            const sb = createSandbox();
+            await sb.window.store.ready;
+            expect(sb.window.store.syncKeys).toEqual([
+                'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval'
+            ]);
+        });
+
         it('getSyncSetting reads the sync area with defaults', async () => {
             const sb = createSandbox({
                 chromeSyncData: { showSyncStatus: 'false' }

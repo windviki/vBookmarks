@@ -172,6 +172,62 @@ const $ = id => document.getElementById(id);
             }
         });
 
+        // Settings backup (fourth-round item 12). Export packs the full
+        // chrome.storage.local area plus the sync-area preference keys
+        // (store.syncKeys, defined in store.js) into one JSON file stamped
+        // with app/version for import validation.
+        const importFile = $('import-settings-file');
+        $('export-settings').addEventListener('click', async () => {
+            const [localData, syncData] = await Promise.all([
+                chrome.storage.local.get(null),
+                chrome.storage.sync.get(store.syncKeys)
+            ]);
+            const backup = {
+                app: 'vBookmarks',
+                version: chrome.runtime.getManifest().version,
+                exportedAt: new Date().toISOString(),
+                local: localData,
+                sync: syncData
+            };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `vbookmarks-settings-${backup.exportedAt.slice(0, 10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+        // The real file picker stays hidden; the visible button forwards to it
+        $('import-settings').addEventListener('click', () => importFile.click());
+        importFile.addEventListener('change', async () => {
+            const file = importFile.files && importFile.files[0];
+            // reset so picking the same file again re-fires 'change'
+            importFile.value = '';
+            if (!file)
+                return;
+            let backup = null;
+            try {
+                backup = JSON.parse(await file.text());
+            } catch (e) { /* falls through to the invalid-file alert */ }
+            const isObject = v => !!v && typeof v === 'object' && !Array.isArray(v);
+            if (!isObject(backup) || backup.app !== 'vBookmarks' || !isObject(backup.local)
+                || (backup.sync !== undefined && !isObject(backup.sync))) {
+                alert(_m('settingsImportInvalid'));
+                return;
+            }
+            if (!confirm(_m('settingsImportConfirm')))
+                return;
+            // Import semantics: merge, don't wipe — keys present in the
+            // backup overwrite the current values, keys it doesn't mention
+            // are left untouched, so restoring an older/partial backup never
+            // silently deletes settings added since. No storage clear.
+            await chrome.storage.local.set(backup.local);
+            if (backup.sync)
+                await chrome.storage.sync.set(backup.sync);
+            alert(_m('settingsImportDone'));
+            location.reload();
+        });
+
         window.onerror = function () {
             chrome.runtime.sendMessage({
                 error: [].slice.call(arguments)
@@ -217,6 +273,11 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-theme-paper').innerText = __m('optionThemePaper');
         document.getElementById('accessibility').innerText = __m('accessibility');
         document.getElementById('option-zoom').innerText = __m('optionZoom');
+        // Backup group (settings export/import)
+        document.getElementById('backup-options').innerText = __m('optionsGroupBackup');
+        document.getElementById('export-settings').innerText = __m('settingsExport');
+        document.getElementById('import-settings').innerText = __m('settingsImport');
+        document.getElementById('backup-hint').innerText = __m('settingsBackupHint');
 
         // Sync settings labels
         document.getElementById('sync-options').innerText = __m('syncOptions');

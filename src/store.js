@@ -167,6 +167,9 @@
             syncMirror[key] = value;
             scheduleSyncPersist(key, value);
         },
+        // The sync-area key list, exposed so the options page's settings
+        // backup exports exactly these keys from chrome.storage.sync
+        syncKeys: SYNC_KEYS,
         // Wipe everything (mirror, chrome.storage.local/sync, localStorage);
         // used by the "reset" button on the advanced options page
         clearAll() {

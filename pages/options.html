@@ -51,6 +51,15 @@
 <ul class="options-list">
     <li><label><span id="option-zoom"></span> <input type="number" min="90" max="150" step="10" value="100" id="zoom-input" aria-labelledby="option-zoom">%</label></li>
 </ul>
+<h2 id="backup-options"></h2>
+<ul class="options-list">
+    <li>
+        <button id="export-settings" type="button"></button>
+        <button id="import-settings" type="button"></button>
+        <input type="file" id="import-settings-file" accept=".json,application/json" hidden>
+        <br><small id="backup-hint"></small>
+    </li>
+</ul>
 <div id="footer">
     <p id="options-footer-1"></p>
     <p id="options-footer-2"></p>
