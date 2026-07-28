@@ -17,7 +17,7 @@
  * src/view-dead.js) and the palette goes back to a single flat command list.
  * Every view is a Go command whose slash alias is the view id (execution =
  * close + views.activate(id)); every clickable command carries a slash name
- * plus alternate aliases (/add /new /folder /sep /session /options — e.g.
+ * plus alternate aliases (/add /new /folder /session /options — e.g.
  * the dupes view answers to /dupes /dups /dedup /clear). All forms match by
  * prefix and show as the row's muted suffix. The dupes/dead cleanup flows
  * (ConfirmDialog-guarded batch deletion, the in-popup scan) moved out with
@@ -25,6 +25,16 @@
  * mode switch had. A plain (non-slash) query appends a bridge row —
  * paletteCmdSearchInView — that jumps into the search view with the query;
  * the slash form `/search foo` carries the words along the same way.
+ *
+ * Round-4 (item 2): the /sep command is retired — a position-dependent
+ * creation read as "added nowhere sensible" from an overlay panel; adding
+ * separators stays in the tree's context menu (src/separators.js). In its
+ * place the palette gains direct settings switches: five theme commands
+ * whose canonical slash names share the '/theme' prefix ('/theme' lists all
+ * five) with the bare theme name as alias ('/dark' executes directly), plus
+ * two toggles ('/tabs' = showViewTabs, '/path' = showItemPath). The theme
+ * commands mirror the options page's theme <select> exactly: write the
+ * 'theme' setting and apply body[data-theme] at once.
  *
  * P3.2's session-save command (slash name /session) stays: it snapshots
  * the current window's tabs into a new bookmark folder under
@@ -34,10 +44,11 @@
  * sessionEmpty alert and the panel stays open.
  *
  * initPalette(ctx) is called once by neat.js after treeView/actions init.
- * ctx.store        — settings store (reserved; the palette reads nothing yet)
+ * ctx.store        — settings store: the theme commands write 'theme', the
+ *                    toggle commands flip 'showViewTabs'/'showItemPath'
  * ctx.actions      — actions.js API (openBookmark/openBookmarkNewTab/
- *                    addNewBookmarkNode/addSeparator/deleteBookmark/
- *                    deleteBookmarks/editBookmarkFolder)
+ *                    addNewBookmarkNode/deleteBookmark/deleteBookmarks/
+ *                    editBookmarkFolder)
  * ctx.treeView     — tree-view.js API (revealFolder)
  * ctx.views        — view-manager.js API (activate) for the Go commands
  * ctx.search       — search.js API (run) for the /search words + bridge row
@@ -46,8 +57,9 @@
  *                    (neat.js passes store.get('quickAddFolderId', '1'))
  * ctx.dialogs      — dialogs.js API (AlertDialog), used by the session-save
  *                    alerts
- * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
- *                    session save added a folder
+ * ctx.onChanged    — re-pulls the bookmark tree into the tree view: after a
+ *                    session save added a folder, and after the /path toggle
+ *                    so rows repaint with the new showItemPath value
  *
  * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
  * (URL ?palette=1 / storage.session flag) on top of open().
@@ -69,6 +81,7 @@ const htmlspecialchars = s =>
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
+    const store = ctx.store;
     const actions = ctx.actions;
     const treeView = ctx.treeView;
     const views = ctx.views;
@@ -187,11 +200,34 @@ export function initPalette(ctx = {}) {
         });
     };
     const goView = id => () => views.activate(id);
+    // Round-4 (item 2) direct switches. setTheme mirrors the options page's
+    // theme <select>: store.set persists through the mirror, the localStorage
+    // copy keeps store.js's synchronous pre-fill correct on the next popup
+    // open (the same reason options.js writes it), and body[data-theme]
+    // applies the new theme immediately — the same path popup.js reads on
+    // load, not a second mechanism.
+    const setTheme = name => () => {
+        store.set('theme', name);
+        localStorage.setItem('theme', name);
+        document.body.dataset.theme = name;
+    };
+    // Both toggles flip a '1'/'' setting (default on). showViewTabs is
+    // applied the way view-manager.js applies it — the no-view-tabs body
+    // class; showItemPath is read at list-render time, so onChanged()
+    // repaints the tree with the new value.
+    const toggleViewTabs = () => {
+        const on = !store.get('showViewTabs', '1');
+        store.set('showViewTabs', on ? '1' : '');
+        document.body.classList.toggle('no-view-tabs', !on);
+    };
+    const toggleItemPath = () => {
+        store.set('showItemPath', store.get('showItemPath', '1') ? '' : '1');
+        onChanged();
+    };
     const commands = [
         { slash: 'add', aliases: ['quickadd', 'star'], name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
         { slash: 'new', aliases: ['bookmark', 'bm'], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
         { slash: 'folder', aliases: ['newfolder', 'mkdir'], name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
-        { slash: 'sep', aliases: ['separator', 'divider'], name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
         { slash: 'session', aliases: ['save', 'snapshot'], keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
         { slash: 'tree', aliases: ['home', 'main'], name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
         {
@@ -208,6 +244,13 @@ export function initPalette(ctx = {}) {
         { slash: 'stats', aliases: ['visits', 'statistics'], name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
         { slash: 'dead', aliases: ['broken', 'scan'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
         { slash: 'dupes', aliases: ['dups', 'dedup', 'clear'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
+        { slash: 'themeauto', aliases: ['auto'], name: () => _m('paletteCmdThemeAuto'), fn: setTheme('auto') },
+        { slash: 'themelight', aliases: ['light'], name: () => _m('paletteCmdThemeLight'), fn: setTheme('light') },
+        { slash: 'themedark', aliases: ['dark'], name: () => _m('paletteCmdThemeDark'), fn: setTheme('dark') },
+        { slash: 'themeink', aliases: ['ink'], name: () => _m('paletteCmdThemeInk'), fn: setTheme('ink') },
+        { slash: 'themepaper', aliases: ['paper'], name: () => _m('paletteCmdThemePaper'), fn: setTheme('paper') },
+        { slash: 'tabs', aliases: ['viewtabs'], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
+        { slash: 'path', aliases: ['itempath'], name: () => _m('paletteCmdToggleItemPath'), fn: toggleItemPath },
         { slash: 'options', aliases: ['settings', 'prefs'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
     // All slash forms of a command — the canonical name plus its aliases.

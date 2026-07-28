@@ -54,6 +54,7 @@ afterAll(() => {
     delete globalThis.window;
     delete globalThis.document;
     delete globalThis.chrome;
+    delete globalThis.localStorage;
     delete globalThis.VBMFuzzy;
 });
 
@@ -69,6 +70,13 @@ const MSGS = {
     paletteCmdGoStats: 'Go to Stats view',
     paletteCmdGoDead: 'Go to Dead links view',
     paletteCmdGoDupes: 'Go to Duplicates view',
+    paletteCmdThemeAuto: 'Theme: Follow system',
+    paletteCmdThemeLight: 'Theme: Light',
+    paletteCmdThemeDark: 'Theme: Dark',
+    paletteCmdThemeInk: 'Theme: Ink (dark)',
+    paletteCmdThemePaper: 'Theme: Paper (light)',
+    paletteCmdToggleViewTabs: 'Toggle view tabs',
+    paletteCmdToggleItemPath: 'Toggle parent path labels',
     paletteCmdOptions: 'Open options page',
     paletteCmdSearchInView: "Search '$1' in Search view",
     sessionFolderName: 'Session $date$',
@@ -78,13 +86,20 @@ const MSGS = {
     paletteNoResults: 'No matching results'
 };
 
-// The full command table in order (v4 task-2 §3.5): create-style commands,
-// session, one Go command per registered view, /options last.
+// The full command table in order (v4 task-2 §3.5 + round-4 item 2):
+// create-style commands, session, one Go command per registered view, the
+// five theme commands and the two settings toggles, /options last. The
+// retired /sep command is gone from the table (round-4 item 2) but its
+// message stays in MSGS so the absence test can assert against it.
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
-    MSGS.paletteCmdNewSeparator, MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
+    MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
     MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
-    MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes, MSGS.paletteCmdOptions
+    MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
+    MSGS.paletteCmdThemeAuto, MSGS.paletteCmdThemeLight, MSGS.paletteCmdThemeDark,
+    MSGS.paletteCmdThemeInk, MSGS.paletteCmdThemePaper,
+    MSGS.paletteCmdToggleViewTabs, MSGS.paletteCmdToggleItemPath,
+    MSGS.paletteCmdOptions
 ];
 
 // chrome.i18n.getMessage double: $1/$2 substitution on top of the table.
@@ -144,7 +159,12 @@ const setup = (opts = {}) => {
             classList: {
                 add: c => classes.add(c),
                 remove: c => classes.delete(c),
-                contains: c => classes.has(c)
+                contains: c => classes.has(c),
+                toggle: (c, force) => {
+                    const want = force === undefined ? !classes.has(c) : !!force;
+                    if (want) classes.add(c); else classes.delete(c);
+                    return want;
+                }
             },
             addEventListener(type, fn) {
                 (this._listeners[type] = this._listeners[type] || []).push(fn);
@@ -249,6 +269,26 @@ const setup = (opts = {}) => {
     };
     globalThis.chrome = chromeStub;
 
+    // Round-4: the theme commands write localStorage (options-page parity)
+    // and read/flip settings through ctx.store — both get in-memory doubles.
+    const storageData = { ...(opts.localStorageSeed || {}) };
+    globalThis.localStorage = {
+        getItem: k => (k in storageData ? storageData[k] : null),
+        setItem: (k, v) => { storageData[k] = String(v); },
+        removeItem: k => { delete storageData[k]; }
+    };
+    const storeData = { ...(opts.storeSeed || {}) };
+    const store = {
+        setCalls: [],
+        get(key, defaultValue) {
+            return key in storeData ? storeData[key] : defaultValue;
+        },
+        set(key, value) {
+            storeData[key] = value;
+            this.setCalls.push([key, value]);
+        }
+    };
+
     const actions = {
         openBookmarkCalls: [],
         openBookmarkNewTabCalls: [],
@@ -304,7 +344,7 @@ const setup = (opts = {}) => {
     };
     const onChangedCalls = [];
     const palette = initPalette({
-        store: {},
+        store,
         actions,
         treeView,
         views,
@@ -331,7 +371,7 @@ const setup = (opts = {}) => {
     return {
         palette, doc, body, chrome: chromeStub, actions, treeView, views, search,
         quickAddCalls, paletteEl, input, results, tree, el, treeData, dialogs,
-        onChangedCalls, keydown, type, rowClasses, selectedIndex
+        onChangedCalls, keydown, type, rowClasses, selectedIndex, store, storageData
     };
 };
 
@@ -510,11 +550,12 @@ describe('result composition', () => {
         palette.open();
         type('new');
         const classes = results._appended.map(li => li.className);
-        // the three New-* commands first, the "New bookmark ideas" bookmark
-        // hit, then the §4.4 bridge row — every fuzzy command hit (if any)
-        // still lands ahead of the bookmark rows.
+        // the two New-* commands first (round-4 retired the New separator
+        // one), the "New bookmark ideas" bookmark hit, then the §4.4 bridge
+        // row — every fuzzy command hit (if any) still lands ahead of the
+        // bookmark rows.
         const firstBookmark = classes.indexOf('palette-row palette-bookmark');
-        expect(firstBookmark).toBeGreaterThanOrEqual(3);
+        expect(firstBookmark).toBeGreaterThanOrEqual(2);
         expect(results._appended[firstBookmark]._innerHTML).toContain('New bookmark ideas');
         const last = results._appended[results._appended.length - 1]._innerHTML;
         expect(last).toContain("Search 'new' in Search view");
@@ -524,9 +565,12 @@ describe('result composition', () => {
         const { palette, results, rowClasses, type } = setup({});
         palette.open();
         type('/new');
-        // commands only — the three New-* rows via name/score, never the
-        // "New bookmark ideas" bookmark hit
-        expect(rowClasses().length).toBeGreaterThanOrEqual(3);
+        // commands only — the two New-* rows first (round-4 retired the New
+        // separator one), plus the fuzzy name hits on "Go to Recent/Dead
+        // links view" (…view); never the "New bookmark ideas" bookmark hit
+        expect(rowClasses().length).toBeGreaterThanOrEqual(2);
+        expect(results._appended[0]._innerHTML).toContain(MSGS.paletteCmdNewBookmark);
+        expect(results._appended[1]._innerHTML).toContain(MSGS.paletteCmdNewFolder);
         expect(rowClasses().every(c => c === 'palette-row palette-command')).toBe(true);
         expect(results._appended.every(li => !li._innerHTML.includes('New bookmark ideas'))).toBe(true);
     });
@@ -770,10 +814,17 @@ describe('command set (v4 task-2 §3.5)', () => {
         expect(ctx.actions.addNewBookmarkNodeCalls).toEqual([['42', 'bottom', '', '']]);
     });
 
-    it('"New separator" adds one at the bottom of the root folder', () => {
-        const ctx = setup({});
-        runCommand(ctx, 3);
-        expect(ctx.actions.addSeparatorCalls).toEqual([['1', 'bottom']]);
+    // Round-4 item 2: the position-dependent separator command is retired
+    // from the panel; adding separators stays in the tree's context menu.
+    it('the retired separator command no longer appears, in any slash form', () => {
+        const { palette, results, type } = setup({});
+        palette.open(); // the full table on an empty query
+        expect(results._appended.every(li => !li._innerHTML.includes(MSGS.paletteCmdNewSeparator))).toBe(true);
+        for (const slash of ['/sep', '/separator', '/divider']) {
+            type(slash);
+            expect(results._appended.every(li => !li._innerHTML.includes(MSGS.paletteCmdNewSeparator)),
+                `${slash} surfaces no separator command`).toBe(true);
+        }
     });
 
     it('every create-style command carries its slash alias', () => {
@@ -781,8 +832,7 @@ describe('command set (v4 task-2 §3.5)', () => {
         const cases = [
             ['/add', MSGS.paletteCmdQuickAdd],
             ['/new', MSGS.paletteCmdNewBookmark],
-            ['/folder', MSGS.paletteCmdNewFolder],
-            ['/sep', MSGS.paletteCmdNewSeparator]
+            ['/folder', MSGS.paletteCmdNewFolder]
         ];
         for (const [slash, msg] of cases) {
             palette.open();
@@ -891,7 +941,6 @@ describe('command aliases (item 8)', () => {
             ['/quickadd', MSGS.paletteCmdQuickAdd],
             ['/bm', MSGS.paletteCmdNewBookmark],
             ['/mkdir', MSGS.paletteCmdNewFolder],
-            ['/divider', MSGS.paletteCmdNewSeparator],
             ['/snapshot', MSGS.paletteCmdSaveSession],
             ['/home', MSGS.paletteCmdGoTree],
             ['/find', MSGS.paletteCmdGoSearch],
@@ -970,10 +1019,10 @@ describe('search-view bridge row (v4 task-2 §4.4)', () => {
 });
 
 // --- P3.2: save window tabs as folder --------------------------------------
-// The command sits at index 4 in the command table (after the four
-// create-style commands). The chrome double's tabs.query fires synchronously
-// but saveSession resolves through a promise chain, so the assertions after
-// a run await flush().
+// The command sits at index 3 in the command table (after the three
+// create-style commands; round-4 item 2 retired the fourth, /sep). The
+// chrome double's tabs.query fires synchronously but saveSession resolves
+// through a promise chain, so the assertions after a run await flush().
 const flush = () => new Promise(resolve => setTimeout(resolve, 0));
 
 const makeSessionTabs = () => [
@@ -985,8 +1034,8 @@ const makeSessionTabs = () => [
 
 const runSessionCommand = ctx => {
     ctx.palette.open();
-    // first ArrowDown selects row 0; the session command is row 4
-    for (let n = 0; n < 5; n++)
+    // first ArrowDown selects row 0; the session command is row 3
+    for (let n = 0; n < 4; n++)
         ctx.keydown(ctx.input, { key: 'ArrowDown' });
     ctx.keydown(ctx.input, { key: 'Enter' });
 };
@@ -995,8 +1044,8 @@ describe('session save command (P3.2)', () => {
     it('lists the save-session command after the create-style commands, named via i18n', () => {
         const { palette, results, rowClasses } = setup({});
         palette.open();
-        expect(rowClasses()[4]).toBe('palette-row palette-command');
-        expect(results._appended[4]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
+        expect(rowClasses()[3]).toBe('palette-row palette-command');
+        expect(results._appended[3]._innerHTML).toContain(MSGS.paletteCmdSaveSession);
     });
 
     it("the slash alias matches by prefix: '/sess' already lists it", () => {
@@ -1070,5 +1119,154 @@ describe('session save command (P3.2)', () => {
         expect(ctx.dialogs.AlertDialog.openCalls).toEqual(['No tabs to save']);
         expect(ctx.palette.isOpen()).toBe(true);
         expect(ctx.chrome.bookmarks.createCalls).toEqual([]);
+    });
+});
+
+// --- Round-4 item 2: theme commands + settings toggles ----------------------
+// The theme commands mirror the options page's theme <select>: store.set +
+// the localStorage pre-fill copy + an immediate body[data-theme] apply. The
+// toggles flip a '1'/'' setting and re-apply it (body class / tree repaint).
+// Command rows are clicked by their i18n name rather than Entered — other
+// command names fuzzy-match these queries too ('/tabs' also scores "Save
+// window tabs as folder"), and table order decides the Enter row.
+const clickCommandRow = (ctx, msg) => {
+    const row = ctx.results._appended.find(li => li._innerHTML.includes(msg));
+    expect(row, `a row containing "${msg}"`).toBeTruthy();
+    fire(row, 'click', makeEvent({}));
+};
+
+describe('theme commands (round-4 item 2)', () => {
+    const THEME_MSGS = [
+        MSGS.paletteCmdThemeAuto, MSGS.paletteCmdThemeLight, MSGS.paletteCmdThemeDark,
+        MSGS.paletteCmdThemeInk, MSGS.paletteCmdThemePaper
+    ];
+
+    it("'/theme' prefix-lists all five theme rows in command-table order", () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/theme');
+        expect(results._appended).toHaveLength(5);
+        THEME_MSGS.forEach((msg, i) =>
+            expect(results._appended[i]._innerHTML).toContain(msg));
+    });
+
+    it('executing a theme command writes the store, the localStorage copy and body[data-theme]', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/themedark');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
+        expect(ctx.storageData.theme).toBe('dark');
+        expect(ctx.body.dataset.theme).toBe('dark');
+        expect(ctx.palette.isOpen()).toBe(false); // direct commands close
+    });
+
+    it('every theme command applies its own value', () => {
+        const cases = [
+            ['auto', MSGS.paletteCmdThemeAuto],
+            ['light', MSGS.paletteCmdThemeLight],
+            ['dark', MSGS.paletteCmdThemeDark],
+            ['ink', MSGS.paletteCmdThemeInk],
+            ['paper', MSGS.paletteCmdThemePaper]
+        ];
+        for (const [theme, msg] of cases) {
+            const ctx = setup({});
+            ctx.palette.open();
+            ctx.type('/theme');
+            clickCommandRow(ctx, msg);
+            expect(ctx.store.setCalls, msg).toEqual([['theme', theme]]);
+            expect(ctx.body.dataset.theme, msg).toBe(theme);
+        }
+    });
+
+    it('the bare theme name is the alias: /dark surfaces and runs the dark command', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/dark');
+        const hits = ctx.results._appended.filter(li => li._innerHTML.includes(MSGS.paletteCmdThemeDark));
+        expect(hits).toHaveLength(1);
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
+        expect(ctx.body.dataset.theme).toBe('dark');
+    });
+
+    it('aliases match by prefix too (/pap already hits /paper)', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/pap');
+        const hits = results._appended.filter(li => li._innerHTML.includes(MSGS.paletteCmdThemePaper));
+        expect(hits).toHaveLength(1);
+    });
+
+    it('a theme row renders both slash forms as the muted suffix', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/themedark');
+        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdThemeDark));
+        expect(row._innerHTML).toContain('class="palette-slash"');
+        expect(row._innerHTML).toContain('/themedark /dark');
+    });
+});
+
+describe('settings toggle commands (round-4 item 2)', () => {
+    it('/tabs flips showViewTabs off and mirrors view-manager\'s no-view-tabs class', () => {
+        const ctx = setup({ storeSeed: { showViewTabs: '1' } });
+        ctx.palette.open();
+        ctx.type('/tabs');
+        clickCommandRow(ctx, MSGS.paletteCmdToggleViewTabs);
+        expect(ctx.store.setCalls).toEqual([['showViewTabs', '']]);
+        expect(ctx.body.classList.contains('no-view-tabs')).toBe(true);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('/tabs toggles back on and drops the class', () => {
+        const ctx = setup({ storeSeed: { showViewTabs: '' } });
+        ctx.palette.open();
+        ctx.type('/tabs');
+        clickCommandRow(ctx, MSGS.paletteCmdToggleViewTabs);
+        expect(ctx.store.setCalls).toEqual([['showViewTabs', '1']]);
+        expect(ctx.body.classList.contains('no-view-tabs')).toBe(false);
+    });
+
+    it('/tabs defaults to on when the setting was never written', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/tabs');
+        clickCommandRow(ctx, MSGS.paletteCmdToggleViewTabs);
+        expect(ctx.store.setCalls).toEqual([['showViewTabs', '']]);
+        expect(ctx.body.classList.contains('no-view-tabs')).toBe(true);
+    });
+
+    it('/path flips showItemPath (default on) and repaints the tree through onChanged', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/path');
+        clickCommandRow(ctx, MSGS.paletteCmdToggleItemPath);
+        expect(ctx.store.setCalls).toEqual([['showItemPath', '']]);
+        expect(ctx.onChangedCalls).toHaveLength(1);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('/path toggles back on', () => {
+        const ctx = setup({ storeSeed: { showItemPath: '' } });
+        ctx.palette.open();
+        ctx.type('/path');
+        clickCommandRow(ctx, MSGS.paletteCmdToggleItemPath);
+        expect(ctx.store.setCalls).toEqual([['showItemPath', '1']]);
+        expect(ctx.onChangedCalls).toHaveLength(1);
+    });
+
+    it('both toggles answer to their alternate slash names', () => {
+        const cases = [
+            ['/viewtabs', MSGS.paletteCmdToggleViewTabs],
+            ['/itempath', MSGS.paletteCmdToggleItemPath]
+        ];
+        for (const [alias, msg] of cases) {
+            const { palette, results, type } = setup({});
+            palette.open();
+            type(alias);
+            const hits = results._appended.filter(li => li._innerHTML.includes(msg));
+            expect(hits.length, `${alias} surfaces ${msg}`).toBe(1);
+        }
     });
 });
