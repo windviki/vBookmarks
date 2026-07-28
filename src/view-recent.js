@@ -227,22 +227,25 @@ export function initViewRecent(ctx = {}) {
             const absTime = new Date(d.dateAdded || 0).toLocaleString();
             const subText = (showPath && path) ? `${path} · ${absTime}` : absTime;
             // Non-interactive section header (iOS-style): a plain div tucked
-            // into the group's first row — no a/span, so row clicks, the
-            // context menu and arrow-key navigation all ignore it. Empty
-            // groups never appear (a header only precedes a rendered row).
+            // into the group's first row as its LAST DOM child — CSS order
+            // pulls it above the row visually while li.firstElementChild
+            // stays the anchor, so keyboard.js Enter (synthetic click on the
+            // first child) still opens the bookmark. No a/span/tabindex on
+            // the head: row clicks, the context menu and arrow-key
+            // navigation all ignore it. Empty groups never appear.
             const g = groupIndex(d.dateAdded || 0, now);
             const groupHead = (g !== lastGroup)
                 ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}</div>`
                 : '';
             lastGroup = g;
-            html += `<li class="vbm-row" id="recent-item-${d.id}" role="listitem" ` +
+            html += `<li class="vbm-row${groupHead ? ' has-head' : ''}" id="recent-item-${d.id}" role="listitem" ` +
                 `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
-                groupHead +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
                     rightText: relTimeLabel(d.dateAdded || 0),
                     subText
                 }) +
+                groupHead +
                 '</li>';
         }
         if (!count)

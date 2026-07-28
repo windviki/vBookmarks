@@ -1843,17 +1843,33 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 /* Recent-view coarse time group heads (fourth-round item 8): non-interactive
-   section labels (Today/This week/This month/Older), muted small type so
-   they organize without competing with the rows. */
+   section labels (Today/This week/This month/Older), muted small type.
+   The head div is the carrier row's LAST DOM child — order:-1 on a
+   full-basis flex item wraps it above the row while li.firstElementChild
+   stays the anchor (keyboard.js Enter dispatches its synthetic click there).
+   Same pattern as #stats-list .stats-section-head. */
+#recent-list ul li.has-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#recent-list ul li.has-head > a.tree-item-link {
+    flex: 1;
+    min-width: 0;
+}
+
 #recent-list .recent-group-head {
+    order: -1;
+    flex: 0 0 100%;
     padding: 6px 8px 2px;
     font-size: 11px;
     color: var(--vbm-muted);
     user-select: none;
 }
 
-/* the first group's head needs no top padding (list top already breathes) */
-#recent-list .vbm-row:first-child .recent-group-head {
+/* the first row's head needs no top padding (list top already breathes) */
+#recent-list ul li:first-child .recent-group-head {
     padding-top: 2px;
 }
 

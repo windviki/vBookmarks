@@ -630,16 +630,20 @@ describe('coarse time sections (第四轮项8)', () => {
         expect(heads(html)).toEqual([
             'recentGroupToday', 'recentGroupWeek', 'recentGroupMonth', 'recentGroupOlder'
         ]);
-        // a header is tucked into its group's first row (before the anchor)
+        // a header is tucked into its group's first row, AFTER the anchor:
+        // CSS order pulls it above the row visually, li.firstElementChild
+        // stays the anchor so Enter opens the bookmark (keyboard.js)
         const at = s => html.indexOf(s);
-        expect(at('id="recent-item-1"')).toBeLessThan(at('recentGroupToday'));
-        expect(at('recentGroupToday')).toBeLessThan(at('<a href="http://h1/"'));
-        expect(at('id="recent-item-3"')).toBeLessThan(at('recentGroupWeek'));
-        expect(at('recentGroupWeek')).toBeLessThan(at('<a href="http://h3/"'));
-        expect(at('id="recent-item-5"')).toBeLessThan(at('recentGroupMonth'));
-        expect(at('recentGroupMonth')).toBeLessThan(at('<a href="http://h5/"'));
-        expect(at('id="recent-item-7"')).toBeLessThan(at('recentGroupOlder'));
-        expect(at('recentGroupOlder')).toBeLessThan(at('<a href="http://h7/"'));
+        expect(at('id="recent-item-1"')).toBeLessThan(at('<a href="http://h1/"'));
+        expect(at('<a href="http://h1/"')).toBeLessThan(at('recentGroupToday'));
+        expect(at('id="recent-item-3"')).toBeLessThan(at('<a href="http://h3/"'));
+        expect(at('<a href="http://h3/"')).toBeLessThan(at('recentGroupWeek'));
+        expect(at('id="recent-item-5"')).toBeLessThan(at('<a href="http://h5/"'));
+        expect(at('<a href="http://h5/"')).toBeLessThan(at('recentGroupMonth'));
+        expect(at('id="recent-item-7"')).toBeLessThan(at('<a href="http://h7/"'));
+        expect(at('<a href="http://h7/"')).toBeLessThan(at('recentGroupOlder'));
+        // head-carrying rows are marked for the flex/order styling
+        expect(html).toContain('class="vbm-row has-head" id="recent-item-1"');
     });
 
     it('pins 今天 to the local calendar day: midnight is today, 1ms before is 本周', () => {
