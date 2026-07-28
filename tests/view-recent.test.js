@@ -10,6 +10,7 @@ import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 // nothing is copied from the module body.
 
 let initViewRecent;
+let initVisitStats;
 let timeouts;        // [[fn, ms, id], ...] in scheduling order
 let clearedTimeouts; // ids passed to clearTimeout
 let timerSeq = 1;
@@ -27,6 +28,9 @@ beforeAll(async () => {
         timeouts = timeouts.filter(t => t[2] !== id);
     };
     ({ initViewRecent } = await import('../src/view-recent.js'));
+    // the real store module backs the import-persistence tests (项5) — the
+    // recording double can't prove the dataset lands before the gate
+    ({ initVisitStats } = await import('../src/visit-stats.js'));
 });
 
 beforeEach(() => {
@@ -101,9 +105,13 @@ const setup = (opts = {}) => {
         },
         history: {
             searchCalls: [],
+            pending: [], // deferred callbacks (opts.deferHistory)
             search(q, cb) {
                 this.searchCalls.push(q);
-                cb(opts.historyItems || []);
+                if (opts.deferHistory)
+                    this.pending.push(cb);
+                else
+                    cb(opts.historyItems || []);
             }
         }
     };
@@ -152,7 +160,11 @@ const setup = (opts = {}) => {
         handlerCalls: 0,
         bookmarkHandler: () => { treeView.handlerCalls++; }
     };
-    const visitStats = opts.visitStats || null;
+    // opts.realVisitStats swaps the recording double for the real module so
+    // the import tests can assert the actual persisted dataset (项5)
+    const visitStats = opts.realVisitStats
+        ? initVisitStats({ store, debounceMs: 0 })
+        : (opts.visitStats || null);
     const undo = opts.undo || null;
 
     const viewRecent = initViewRecent({
@@ -474,5 +486,205 @@ describe('history-permission banner (item 7a)', () => {
         });
         expect(store.get('statsHistoryBannerDismissed')).toBe('1');
         expect($list.innerHTML).not.toContain('stats-history-banner');
+    });
+});
+
+describe('history import chain (第四轮项5)', () => {
+    const statsOn = () => ({
+        enabled: () => true,
+        mergeCalls: [],
+        merge(entries) { this.mergeCalls.push(entries); return entries.length; }
+    });
+    const undoOn = () => ({
+        toastCalls: [],
+        showToast(msg) { this.toastCalls.push(msg); }
+    });
+    const enableClick = {
+        preventDefault() {},
+        target: { closest: sel => (sel === '.stats-history-enable' ? {} : null) }
+    };
+    const TREE = [{
+        id: '0', title: '', children: [
+            {
+                id: '1', parentId: '0', title: 'bar', children: [
+                    { id: '11', parentId: '1', title: 'A', url: 'http://a/' },
+                    { id: '12', parentId: '1', title: 'A bare host', url: 'http://bare' }, // no trailing slash
+                    { id: '13', parentId: '1', title: 'B', url: 'http://b/' }
+                ]
+            }
+        ]
+    }];
+    const HISTORY = [
+        { url: 'http://a/', visitCount: 5, lastVisitTime: 1000 },
+        { url: 'http://bare/', visitCount: 3, lastVisitTime: 900 }, // history normalizes the bare host
+        { url: 'http://elsewhere/', visitCount: 9, lastVisitTime: 9 } // no bookmark
+    ];
+
+    it('searches the full history range, not just the 2000 most recent URLs', () => {
+        const { chrome, def } = setup({
+            visitStats: statsOn(),
+            hasHistoryPermission: true,
+            tree: TREE,
+            historyItems: HISTORY
+        });
+        def().activate();
+        expect(chrome.history.searchCalls).toEqual([{ text: '', startTime: 0, maxResults: 100000 }]);
+    });
+
+    it('pairs history URLs with bookmarks across the trailing-slash fold; non-bookmarks stay dropped', () => {
+        const visitStats = statsOn();
+        const { def } = setup({
+            visitStats,
+            hasHistoryPermission: true,
+            tree: TREE,
+            historyItems: HISTORY
+        });
+        def().activate();
+        // the bookmark saved without a slash still matches history's folded URL
+        expect(visitStats.mergeCalls).toEqual([[
+            { id: '11', c: 5, t: 1000 },
+            { id: '12', c: 3, t: 900 }
+        ]]);
+    });
+
+    it('grant → import lands the dataset synchronously, gate stamped after it (real visit-stats)', () => {
+        const undo = undoOn();
+        const { store, visitStats, def, click } = setup({
+            realVisitStats: true,
+            undo,
+            hasHistoryPermission: false,
+            requestGranted: true,
+            tree: TREE,
+            historyItems: HISTORY
+        });
+        const sets = [];
+        const origSet = store.set.bind(store);
+        store.set = (k, v) => { sets.push(k); origSet(k, v); };
+        def().activate();
+        click(enableClick);
+        // acceptance: every bookmarked URL present in history now has a count
+        // in the very dataset the stats view renders (visitStats.all)
+        expect(visitStats.all()).toEqual({
+            '11': { c: 5, t: 1000 },
+            '12': { c: 3, t: 900 }
+        });
+        // …and it is already in the store mirror — no debounced write can
+        // die with the popup leaving the stamped gate behind
+        expect(JSON.parse(store.get('visitStats'))).toEqual(visitStats.all());
+        expect(store.get('statsHistoryImportedAt')).toBeTruthy();
+        expect(sets.indexOf('visitStats')).toBeGreaterThanOrEqual(0);
+        expect(sets.indexOf('visitStats')).toBeLessThan(sets.indexOf('statsHistoryImportedAt'));
+        expect(undo.toastCalls).toEqual(['statsHistoryImported[2]']);
+    });
+
+    it('a second probe while the search is in flight does not double-import', () => {
+        const visitStats = statsOn();
+        const { chrome, store, def } = setup({
+            visitStats,
+            undo: undoOn(),
+            hasHistoryPermission: true,
+            deferHistory: true,
+            tree: TREE,
+            historyItems: HISTORY
+        });
+        // the startup probe already kicked an import off (search pending)
+        expect(chrome.history.searchCalls).toHaveLength(1);
+        def().activate(); // probe: granted + gate unstamped, but import in flight
+        expect(chrome.history.searchCalls).toHaveLength(1); // no second search
+        chrome.history.pending[0](HISTORY); // the async callback lands
+        expect(visitStats.mergeCalls).toHaveLength(1); // additive merge ran once
+        expect(store.get('statsHistoryImportedAt')).toBeTruthy();
+        def().activate(); // gate now stamped — still no re-import
+        expect(chrome.history.searchCalls).toHaveLength(1);
+        expect(visitStats.mergeCalls).toHaveLength(1);
+    });
+});
+
+describe('coarse time sections (第四轮项8)', () => {
+    const DAY = 86400000;
+    const HOUR = 3600000;
+    const midnight = new Date();
+    midnight.setHours(0, 0, 0, 0);
+    const SOD = midnight.getTime(); // start of the local calendar day
+    const mk = (id, ts) => ({
+        id: `${id}`, parentId: '1', title: `t${id}`, url: `http://h${id}/`, dateAdded: ts
+    });
+    const heads = html =>
+        [...html.matchAll(/<div class="recent-group-head" role="presentation">(\w+)<\/div>/g)]
+            .map(m => m[1]);
+
+    it('segments the desc list into 今天/本周/本月/更早, one header per group', () => {
+        const { $list, def } = setup({
+            recentItems: [
+                mk(1, NOW),            // today
+                mk(2, SOD),            // today (exactly local midnight)
+                mk(3, SOD - 1),        // 1ms before midnight → this week
+                mk(4, NOW - 6 * DAY),  // this week
+                mk(5, NOW - 8 * DAY),  // this month
+                mk(6, NOW - 29 * DAY), // this month
+                mk(7, NOW - 31 * DAY)  // older
+            ]
+        });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(heads(html)).toEqual([
+            'recentGroupToday', 'recentGroupWeek', 'recentGroupMonth', 'recentGroupOlder'
+        ]);
+        // a header is tucked into its group's first row (before the anchor)
+        const at = s => html.indexOf(s);
+        expect(at('id="recent-item-1"')).toBeLessThan(at('recentGroupToday'));
+        expect(at('recentGroupToday')).toBeLessThan(at('<a href="http://h1/"'));
+        expect(at('id="recent-item-3"')).toBeLessThan(at('recentGroupWeek'));
+        expect(at('recentGroupWeek')).toBeLessThan(at('<a href="http://h3/"'));
+        expect(at('id="recent-item-5"')).toBeLessThan(at('recentGroupMonth'));
+        expect(at('recentGroupMonth')).toBeLessThan(at('<a href="http://h5/"'));
+        expect(at('id="recent-item-7"')).toBeLessThan(at('recentGroupOlder'));
+        expect(at('recentGroupOlder')).toBeLessThan(at('<a href="http://h7/"'));
+    });
+
+    it('pins 今天 to the local calendar day: midnight is today, 1ms before is 本周', () => {
+        const { $list, def } = setup({ recentItems: [mk(1, SOD), mk(2, SOD - 1)] });
+        def().activate();
+        expect(heads($list.innerHTML)).toEqual(['recentGroupToday', 'recentGroupWeek']);
+    });
+
+    it('pins 本周 to a rolling 7×24h (not the calendar week)', () => {
+        const { $list, def } = setup({
+            recentItems: [mk(1, NOW - 7 * DAY + HOUR), mk(2, NOW - 7 * DAY - HOUR)]
+        });
+        def().activate();
+        expect(heads($list.innerHTML)).toEqual(['recentGroupWeek', 'recentGroupMonth']);
+    });
+
+    it('pins 本月 to a rolling 30×24h (not the calendar month)', () => {
+        const { $list, def } = setup({
+            recentItems: [mk(1, NOW - 30 * DAY + HOUR), mk(2, NOW - 30 * DAY - HOUR)]
+        });
+        def().activate();
+        expect(heads($list.innerHTML)).toEqual(['recentGroupMonth', 'recentGroupOlder']);
+    });
+
+    it('repeats no header within a group and hides empty groups', () => {
+        const { $list, def } = setup({
+            recentItems: [mk(1, NOW), mk(2, SOD), mk(3, NOW - 40 * DAY)]
+        });
+        def().activate();
+        expect(heads($list.innerHTML)).toEqual(['recentGroupToday', 'recentGroupOlder']);
+    });
+
+    it('renders no headers in the empty state', () => {
+        const { $list, def } = setup({ recentItems: [] });
+        def().activate();
+        expect($list.innerHTML).not.toContain('recent-group-head');
+    });
+
+    it('headers are non-interactive: presentational, no focusable/clickable markup', () => {
+        const { $list, def } = setup({ recentItems: [mk(1, NOW)] });
+        def().activate();
+        const m = $list.innerHTML.match(/<div class="recent-group-head"[^>]*>[^<]*<\/div>/);
+        expect(m).not.toBe(null);
+        expect(m[0]).toContain('role="presentation"');
+        expect(m[0]).not.toContain('tabindex');
+        expect(m[0]).not.toMatch(/<[as][\s>]/); // no a/span: keys & clicks skip it
     });
 });

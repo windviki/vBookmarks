@@ -197,6 +197,23 @@ describe('merge (history import)', () => {
         stats.flush();
         expect(store.map.has('visitStats')).toBe(false);
     });
+
+    it('persists synchronously — no debounced write can die with the popup (第四轮项5)', () => {
+        // the import caller stamps statsHistoryImportedAt right after merge();
+        // the dataset must already be in the store mirror at that point
+        const n = stats.merge([{ id: '7', c: 5, t: 1000 }]);
+        expect(n).toBe(1);
+        expect(JSON.parse(store.get('visitStats'))).toEqual({ '7': { c: 5, t: 1000 } });
+    });
+
+    it('leaves no pending write behind — a follow-up flush is a no-op', () => {
+        const sets = [];
+        const origSet = store.set;
+        store.set = (k, v) => { sets.push(k); origSet(k, v); };
+        stats.merge([{ id: '7', c: 5, t: 1000 }]);
+        stats.flush();
+        expect(sets).toEqual(['visitStats']); // exactly one write
+    });
 });
 
 describe('clear', () => {

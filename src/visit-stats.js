@@ -8,6 +8,8 @@
  * c = open count and t = last-open timestamp, persisted under the single
  * `visitStats` storage key with debounced writes (a popup session can open
  * dozens of bookmarks; one write per open would hammer chrome.storage).
+ * The one-shot history import (merge) is the exception: it flushes
+ * synchronously so its completion marker never outlives the dataset.
  *
  * Privacy contract (§5.4/§7):
  * - `statsEnabled` (default on) is the master switch — record() is a no-op
@@ -87,6 +89,10 @@ export function initVisitStats(ctx = {}) {
     // recent-view banner) seeds past visits as {id, c, t} entries: c adds to
     // the counter, t max-merges. Same zero-write contract as record() (no-op
     // while the switch is off). Returns the number of ids touched.
+    // Unlike record(), a non-empty merge flushes SYNCHRONOUSLY: the import is
+    // a one-shot the caller marks done right after (statsHistoryImportedAt),
+    // and a debounced write can die with the popup while the marker survives
+    // — the gate would then skip the import forever with an empty dataset.
     const merge = entries => {
         if (!enabled() || !Array.isArray(entries))
             return 0;
@@ -103,8 +109,10 @@ export function initVisitStats(ctx = {}) {
             d[key] = cur;
             touched++;
         }
-        if (touched)
+        if (touched) {
             schedule();
+            flush();
+        }
         return touched;
     };
 

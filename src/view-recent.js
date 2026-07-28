@@ -20,6 +20,11 @@
  * view and locates the node through treeView.revealInTree — the same chain
  * the search folder rows use.
  *
+ * Coarse time sections (第四轮项8): non-interactive headers — 今天 / 本周
+ * (rolling 7 days) / 本月 (rolling 30 days) / 更早 — segment the otherwise
+ * flat dateAdded-desc list; group membership never reorders rows and empty
+ * groups are not rendered.
+ *
  * History-permission banner (2026-07-25 spec): while stats is enabled, the
  * optional `history` permission is missing and the user hasn't dismissed
  * the ask, a banner on top of the list offers a one-click grant. The link
@@ -90,9 +95,28 @@ export function initViewRecent(ctx = {}) {
             `</div>`;
     };
 
+    // chrome.history.search returns one item per URL (visitCount already
+    // aggregated), so the cap only bounds memory: 100000 distinct URLs is
+    // 全量 (附录 B 项 7a) for any realistic profile — the old 2000 silently
+    // dropped every older bookmark's visits.
+    const HISTORY_IMPORT_MAX = 100000;
+
+    // History normalizes bare hosts to a trailing slash while bookmarks keep
+    // whatever was saved; matching on the slash-folded key pairs those up
+    // (exact matches are unaffected). A scheme-relative '//' is never folded.
+    const matchUrl = u =>
+        (u.length > 1 && u.endsWith('/') && !u.endsWith('//')) ? u.slice(0, -1) : u;
+
+    // Probes run at startup AND on every activate while the gate is unstamped,
+    // and the search callback is async — without the guard two overlapping
+    // probes would import twice, and merge is additive (every count doubles).
+    let importPending = false;
     const importHistory = () => {
         if (!statsOn() || !chrome.history || !chrome.history.search)
             return;
+        if (importPending)
+            return;
+        importPending = true;
         chrome.bookmarks.getTree(tree => {
             // URL → bookmark ids (duplicates share a URL; every copy earns
             // the same baseline so their relative order stays fair)
@@ -103,25 +127,30 @@ export function initViewRecent(ctx = {}) {
                     if (node.children)
                         walk(node.children);
                     else if (node.url) {
-                        const ids = urlToIds.get(node.url);
+                        const key = matchUrl(node.url);
+                        const ids = urlToIds.get(key);
                         if (ids)
                             ids.push(node.id);
                         else
-                            urlToIds.set(node.url, [node.id]);
+                            urlToIds.set(key, [node.id]);
                     }
                 }
             };
             walk(tree || []);
-            chrome.history.search({ text: '', startTime: 0, maxResults: 2000 }, items => {
+            chrome.history.search({ text: '', startTime: 0, maxResults: HISTORY_IMPORT_MAX }, items => {
+                importPending = false;
                 const entries = [];
                 for (let i = 0, l = (items || []).length; i < l; i++) {
                     const h = items[i];
-                    const ids = h.url && urlToIds.get(h.url);
+                    const ids = h.url && urlToIds.get(matchUrl(h.url));
                     if (!ids)
                         continue;
                     for (let j = 0; j < ids.length; j++)
                         entries.push({ id: ids[j], c: h.visitCount || 1, t: h.lastVisitTime || 0 });
                 }
+                // merge persists synchronously, so the gate stamped below can
+                // never outlive the dataset (a debounced write dies with the
+                // popup and the import would be skipped forever).
                 const n = visitStats.merge(entries);
                 store.set('statsHistoryImportedAt', `${Date.now()}`);
                 undo.showToast(_m('statsHistoryImported', `${n}`));
@@ -156,11 +185,36 @@ export function initViewRecent(ctx = {}) {
         return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
     };
 
+    // --- Coarse time sections (第四轮项8) -----------------------------------
+    // The list stays a flat dateAdded-desc sequence; section headers only
+    // segment it visually. Bucket boundaries, all relative to render time:
+    //   today — same local calendar day (ts >= local midnight)
+    //   week  — the last 7×24h, rolling (NOT the ISO calendar week)
+    //   month — the last 30×24h, rolling
+    //   older — everything before
+    // Rolling thresholds are strictly descending, so the desc-sorted list can
+    // never emit out-of-order headers — calendar weeks/months don't nest (a
+    // month can start mid-week) and could.
+    const GROUP_KEYS = ['recentGroupToday', 'recentGroupWeek', 'recentGroupMonth', 'recentGroupOlder'];
+    const groupIndex = (ts, now) => {
+        const midnight = new Date(now);
+        midnight.setHours(0, 0, 0, 0);
+        if (ts >= midnight.getTime())
+            return 0;
+        if (ts >= now - 7 * 86400000)
+            return 1;
+        if (ts >= now - 30 * 86400000)
+            return 2;
+        return 3;
+    };
+
     let dirty = false;
     const render = items => {
         let html = bannerHtml();
         html += '<ul role="list">';
         let count = 0;
+        let lastGroup = -1;
+        const now = Date.now();
         const showPath = views.showItemPath();
         for (let i = 0, l = items.length; i < l; i++) {
             const d = items[i];
@@ -172,8 +226,18 @@ export function initViewRecent(ctx = {}) {
             // `路径 · 绝对时间` (the path half follows showItemPath).
             const absTime = new Date(d.dateAdded || 0).toLocaleString();
             const subText = (showPath && path) ? `${path} · ${absTime}` : absTime;
+            // Non-interactive section header (iOS-style): a plain div tucked
+            // into the group's first row — no a/span, so row clicks, the
+            // context menu and arrow-key navigation all ignore it. Empty
+            // groups never appear (a header only precedes a rendered row).
+            const g = groupIndex(d.dateAdded || 0, now);
+            const groupHead = (g !== lastGroup)
+                ? `<div class="recent-group-head" role="presentation">${_m(GROUP_KEYS[g])}</div>`
+                : '';
+            lastGroup = g;
             html += `<li class="vbm-row" id="recent-item-${d.id}" role="listitem" ` +
                 `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
+                groupHead +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
                     rightText: relTimeLabel(d.dateAdded || 0),
