@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Simpan \"$title$\" dan hapus $count$ lainnya",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Berikan akses riwayat untuk mengisi statistik kunjungan dengan kunjungan masa lalu Anda"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Aktifkan"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Jangan tampilkan lagi"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Kunjungan masa lalu diimpor untuk $count$ bookmark",
     "placeholders": {
       "count": {
         "content": "$1"

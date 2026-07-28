@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "احتفظ بـ \"$title$\" وأزل $count$ الأخرى",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "امنح الإذن بالوصول إلى السجل لملء إحصائيات الزيارات بزياراتك السابقة."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "تمكين"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "لا تظهر مرة أخرى"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "تم استيراد الزيارات السابقة لـ $count$ إشارة مرجعية",
     "placeholders": {
       "count": {
         "content": "$1"

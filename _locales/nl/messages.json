@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Houd \"$title$\" en verwijder de andere $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Verleen toegang tot de geschiedenis om bezoekstatistieken te vullen met uw eerdere bezoeken."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Inschakelen"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Niet meer tonen"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Eerdere bezoeken geïmporteerd voor $count$ bladwijzers",
     "placeholders": {
       "count": {
         "content": "$1"

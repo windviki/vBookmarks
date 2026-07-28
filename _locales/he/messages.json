@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "שמור על \"$title$\" והסר את $count$ האחרים",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "הענק גישה להיסטוריה כדי לאכלס סטטיסטיקות ביקורים עם ביקוריך הקודמים."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "הפעל"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "אל תציג שוב"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "יובאו ביקורים קודמים עבור $count$ סימניות",
     "placeholders": {
       "count": {
         "content": "$1"

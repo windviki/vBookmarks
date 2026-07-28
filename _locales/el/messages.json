@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Κρατήστε το \"$title$\" και αφαιρέστε τα άλλα $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Χορηγήστε πρόσβαση στο ιστορικό για να τροφοδοτήσετε στατιστικά επισκέψεων με τις προηγούμενες επισκέψεις σας."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Ενεργοποίηση"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Να μην εμφανίζεται ξανά"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Εισαγωγή προηγούμενων επισκέψεων για $count$ σελιδοδείκτες",
     "placeholders": {
       "count": {
         "content": "$1"

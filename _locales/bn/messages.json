@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "\"$title$\" রেখে বাকি $count$ টি সরান",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "আপনার পূর্ববর্তী ভিজিটের ভিত্তিতে ভিজিট পরিসংখ্যান তৈরি করতে ইতিহাস অ্যাক্সেস দিন।"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "সক্ষম করুন"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "আর দেখাবেন না"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "$count$ টি বুকমার্কের জন্য পূর্ববর্তী ভিজিট ইম্পোর্ট করা হয়েছে",
     "placeholders": {
       "count": {
         "content": "$1"

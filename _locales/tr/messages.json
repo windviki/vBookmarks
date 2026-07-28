@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "\"$title$\" tut, diğer $count$ öğeyi kaldır",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Geçmiş ziyaretlerinizle ziyaret istatistiklerini beslemek için geçmiş erişimi verin."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Etkinleştir"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Tekrar gösterme"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "$count$ yer imi için geçmiş ziyaretler içe aktarıldı",
     "placeholders": {
       "count": {
         "content": "$1"

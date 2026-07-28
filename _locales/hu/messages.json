@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Tartsd meg a \"$title$\"-t, és távolítsd el a többi $count$ darabot.",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Engedélyezze az előzmények elérését a múltbeli látogatások statisztikáinak feltöltéséhez."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Engedélyez"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Ne mutassa többé"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "$count$ könyvjelző múltbeli látogatásai importálva.",
     "placeholders": {
       "count": {
         "content": "$1"

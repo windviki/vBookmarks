@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Palikti \"$title$\" ir pašalinti kitus $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Suteikti prieigą prie naršymo istorijos, kad apsilankymų statistika būtų užpildyta jūsų ankstesniais apsilankymais."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Įgalinti"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Nerodyti daugiau"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Importuoti ankstesni apsilankymai $count$ žymelėms",
     "placeholders": {
       "count": {
         "content": "$1"

@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Saglabāt \"$title$\" un noņemt pārējos $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Piešķirt vēstures piekļuvi, lai apmeklējumu statistiku papildinātu ar jūsu iepriekšējiem apmeklējumiem."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Iespējot"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Nerādīt vēlreiz"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Importēti iepriekšējie apmeklējumi $count$ grāmatzīmēm",
     "placeholders": {
       "count": {
         "content": "$1"

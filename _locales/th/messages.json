@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "เก็บ \"$title$\" และลบอีก $count$ รายการ",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "ให้สิทธิ์เข้าถึงประวัติเพื่อป้อนสถิติการเข้าชมจากประวัติการเข้าชมที่ผ่านมาของคุณ"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "เปิดใช้งาน"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "ไม่ต้องแสดงอีก"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "นำเข้าประวัติการเข้าชมที่ผ่านมาสำหรับ $count$ บุ๊กมาร์ก",
     "placeholders": {
       "count": {
         "content": "$1"

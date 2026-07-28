@@ -760,7 +760,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Задржи го \"$title$\" и отстрани ги другите $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -911,16 +911,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Овозможи пристап до историјата за да се земат статистики за посети од твоите минати посети."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Овозможи"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Не прикажувај повторно"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Увезени минати посети за $count$ обележувачи",
     "placeholders": {
       "count": {
         "content": "$1"

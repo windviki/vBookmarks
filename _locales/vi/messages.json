@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Giữ \"$title$\" và xóa $count$ cái còn lại",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Cấp quyền truy cập lịch sử để gieo số liệu thống kê truy cập từ các lần truy cập trước đây của bạn."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Bật"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Không hiển thị lại"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Đã nhập các lần truy cập trước đây cho $count$ dấu trang",
     "placeholders": {
       "count": {
         "content": "$1"

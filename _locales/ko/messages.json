@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "\"$title$\"을 유지하고 나머지 $count$개를 제거합니다",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "과거 방문 기록을 사용하여 방문 통계를 초기화하려면 기록 액세스 권한을 부여하세요"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "활성화"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "다시 표시하지 않음"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "$count$개의 북마크에 대한 과거 방문 기록을 가져왔습니다",
     "placeholders": {
       "count": {
         "content": "$1"

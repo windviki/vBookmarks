@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "\"$title$\" را نگه دار و $count$ تای دیگر را حذف کن",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "برای پر کردن آمار بازدید با بازدیدهای گذشته، دسترسی به تاریخچه را اعطا کنید"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "فعال"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "دیگر نشان نده"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "بازدیدهای گذشته برای $count$ نشانک وارد شد",
     "placeholders": {
       "count": {
         "content": "$1"

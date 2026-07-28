@@ -757,7 +757,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "Manter \"$title$\" e remover os outros $count$",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -908,16 +908,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "Conceda acesso ao histórico para gerar estatísticas de visitas com suas visitas passadas."
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "Ativar"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "Não mostrar novamente"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "Importadas visitas passadas para $count$ favoritos",
     "placeholders": {
       "count": {
         "content": "$1"

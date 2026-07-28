@@ -761,7 +761,7 @@
     }
   },
   "dupesCleanRestHint": {
-    "message": "[TODO:dupesCleanRestHint]",
+    "message": "\"$title$\" को रखें और बाकी $count$ हटाएँ",
     "placeholders": {
       "title": {
         "content": "$1"
@@ -912,16 +912,16 @@
     }
   },
   "statsHistoryBanner": {
-    "message": "[TODO:statsHistoryBanner]"
+    "message": "अपने पिछले विज़िट के आधार पर विज़िट आँकड़े तैयार करने हेतु इतिहास पहुँच दें"
   },
   "statsHistoryEnable": {
-    "message": "[TODO:statsHistoryEnable]"
+    "message": "सक्षम करें"
   },
   "statsHistoryDismiss": {
-    "message": "[TODO:statsHistoryDismiss]"
+    "message": "फिर से न दिखाएँ"
   },
   "statsHistoryImported": {
-    "message": "[TODO:statsHistoryImported]",
+    "message": "$count$ बुकमार्क के पिछले विज़िट आयात किए गए",
     "placeholders": {
       "count": {
         "content": "$1"
