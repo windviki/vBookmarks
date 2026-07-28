@@ -468,9 +468,9 @@ describe('generateSeparatorHTML', () => {
     it('uses CSS-driven separator-row with theme tokens (no inline color/width)', () => {
         const tr = setup();
         const html = tr.generateSeparatorHTML(16);
-        // Separator is now CSS-driven: the <a> gets the separator-row class and
-        // the <hr> uses absolute positioning (left:0 / right:8px) to auto-fill
-        // the row. Colors come from --vbm-border, no more inline styles.
+        // Separator is CSS-driven: the <a> gets the separator-row class and
+        // the <hr> fills the flex row (flex: 1). Colors come from
+        // --vbm-border, no more inline styles.
         expect(html).toContain('style="-webkit-padding-start: 16px"');
         expect(html).toContain('class="tree-item-link separator-row"');
         expect(html).toContain('<hr class="separator-line" role="separator">');
@@ -492,18 +492,18 @@ describe('generateSeparatorHTML', () => {
 });
 
 describe('generateHTML', () => {
-    it('renders the muted empty-folder row for empty data', () => {
+    it('renders the muted empty-folder row for empty data, padded onto the text axis', () => {
         const tr = setup();
         expect(tr.generateHTML([])).toBe(
             '<ul role="tree" data-level="0"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 0px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 36px"><i>(Empty)</i></li></ul>');
     });
 
     it('uses role=group and scaled padding at deeper levels', () => {
         const tr = setup();
         expect(tr.generateHTML([], 2)).toBe(
             '<ul role="group" data-level="2"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 32px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 68px"><i>(Empty)</i></li></ul>');
     });
 
     it('marks local-only rows (syncing === false) with unsynced-subtree', () => {

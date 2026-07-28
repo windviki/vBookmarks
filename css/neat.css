@@ -452,6 +452,19 @@ body.linux input {
     pointer-events: none;
 }
 
+/* === Row alignment contract (item 6) ======================================
+   Every tree/results row is a flex line with three fixed slots on three
+   stable axes, indented by `-webkit-padding-start: 16px × level`:
+     1. twisty slot  — 16px, arrow centered (folder rows only; bookmark rows
+        get a 16px ::before placeholder so the axis rhythm never breaks)
+     2. icon slot    — 20px favicon-container, the 16px icon centered inside
+        (justify-content: center), so icon centers line up across rows
+     3. text axis    — the title's left edge starts right after the icon slot
+        (16px × level + 36px), identical for folders, bookmarks and the
+        "(Empty)" row (which pads the same 36px in tree-render.js)
+   Overlays that decorate a row (sync dot, dead ×) are position: absolute
+   inside the icon slot and must never enter the flex flow — see the
+   sync-indicator guard below. */
 #tree ul li span .twisty {
     flex: none;
     display: inline-flex;
@@ -503,13 +516,15 @@ body.linux input {
     transform: scaleX(-1) rotate(90deg);
 }
 
-/* 图标槽：favicon / folder SVG 定宽 20px（16 图标 + 4 标题间距），flex 居中 */
+/* 图标槽：favicon / folder SVG 定宽 20px，16px 图标居中（justify-content:
+   center）——图标中心是跨行对齐轴，图标两侧各留 2px。 */
 #tree ul li a .favicon-container,
 #tree ul li span .favicon-container,
 #results ul li a .favicon-container {
     flex: none;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 20px;
 }
 
@@ -523,9 +538,14 @@ body.linux input {
     flex: none;
 }
 
-/* sync-indicator 叠加在图标槽内，不挤压标题 */
+/* sync-indicator 叠加在图标槽内，不挤压标题。sync-styles.css 已把它定位到
+   图标的右下角，这里在 neat.css 侧再钉一次绝对定位作为防线：即使
+   sync-styles.css 未加载或规则被覆盖，圆点也绝不进入 flex 流撑开三槽节奏。 */
 #tree ul li .favicon-container .sync-indicator,
 #results ul li .favicon-container .sync-indicator {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
     flex: none;
 }
 
@@ -554,6 +574,7 @@ body.linux input {
     flex: none;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 20px;
 }
 

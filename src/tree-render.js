@@ -244,10 +244,9 @@ export function initTreeRender(ctx = {}) {
     };
 
     const generateSeparatorHTML = paddingStart => {
-        // CSS-driven: separator-line uses absolute positioning with left:0 /
-        // right:8px inside the relative a.separator-row — it stretches from
-        // the icon left edge to the right margin automatically, using the
-        // theme border token. No more inline color or manual width calc.
+        // CSS-driven: the <a> is a flex row and the <hr> fills it (flex: 1),
+        // stretching from the row's indented start edge to the right margin
+        // using the theme border token. No inline color or manual width calc.
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
         return `<a href="" tabindex="0" ${aStyle} class="tree-item-link separator-row">
                 <hr class="separator-line" role="separator">
@@ -264,8 +263,13 @@ export function initTreeRender(ctx = {}) {
         // navigation and the click handlers ignore it. This covers both child
         // loading paths (pre-rendered open folders and lazy expand), which
         // both funnel through generateHTML.
+        // Item 6 alignment contract: the row has no twisty/icon slots of its
+        // own, so the padding compensates with the full slot width (16px
+        // twisty + 20px icon = 36px) to land the label on the same text-left
+        // axis as sibling folder/bookmark titles.
+        const SLOT_WIDTH = 36; // keep in sync with neat.css (16px twisty + 20px favicon-container)
         if (!data.length) {
-            return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart}px"><i>${_m('folderEmpty')}</i></li></ul>`;
+            return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart + SLOT_WIDTH}px"><i>${_m('folderEmpty')}</i></li></ul>`;
         }
         let html = `<ul role="${group}" data-level="${level}">`;
 
