@@ -793,6 +793,71 @@ describe('view Go commands (v4 task-2 §3.5)', () => {
     });
 });
 
+describe('command aliases (item 8)', () => {
+    it('/dups, /dedup and /clear all land on the duplicates view', () => {
+        for (const alias of ['/dups', '/dedup', '/clear']) {
+            const ctx = setup({});
+            ctx.palette.open();
+            ctx.type(alias);
+            ctx.keydown(ctx.input, { key: 'Enter' });
+            expect(ctx.views.activateCalls, `${alias} activates dupes`).toEqual(['dupes']);
+            expect(ctx.palette.isOpen()).toBe(false);
+        }
+    });
+
+    it('aliases match by prefix too (/ded already hits /dedup)', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/ded');
+        const hits = results._appended.filter(li => li._innerHTML.includes(MSGS.paletteCmdGoDupes));
+        expect(hits).toHaveLength(1);
+        palette.close();
+    });
+
+    it('create-style and view commands both answer to their alternates', () => {
+        const cases = [
+            ['/quickadd', MSGS.paletteCmdQuickAdd],
+            ['/bm', MSGS.paletteCmdNewBookmark],
+            ['/mkdir', MSGS.paletteCmdNewFolder],
+            ['/divider', MSGS.paletteCmdNewSeparator],
+            ['/snapshot', MSGS.paletteCmdSaveSession],
+            ['/home', MSGS.paletteCmdGoTree],
+            ['/find', MSGS.paletteCmdGoSearch],
+            ['/latest', MSGS.paletteCmdGoRecent],
+            ['/statistics', MSGS.paletteCmdGoStats],
+            ['/broken', MSGS.paletteCmdGoDead],
+            ['/settings', MSGS.paletteCmdOptions]
+        ];
+        for (const [alias, msg] of cases) {
+            const { palette, results, type } = setup({});
+            palette.open();
+            type(alias);
+            const hits = results._appended.filter(li => li._innerHTML.includes(msg));
+            expect(hits.length, `${alias} surfaces ${msg}`).toBe(1);
+            palette.close();
+        }
+    });
+
+    it('a command row renders every slash form as the muted suffix', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/dupes');
+        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdGoDupes));
+        expect(row._innerHTML).toContain('class="palette-slash"');
+        expect(row._innerHTML).toContain('/dupes /dups /dedup /clear');
+        palette.close();
+    });
+
+    it('an alias query still shows the canonical form first in the suffix', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/dedup');
+        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdGoDupes));
+        expect(row._innerHTML).toContain('/dupes /dups /dedup /clear');
+        palette.close();
+    });
+});
+
 describe('search-view bridge row (v4 task-2 §4.4)', () => {
     it('a plain query appends the bridge row after the bookmark hits', () => {
         const { palette, results, type } = setup({});

@@ -16,8 +16,10 @@
  * that cleanup UI now lives in the dupes/dead views (src/view-dupes.js /
  * src/view-dead.js) and the palette goes back to a single flat command list.
  * Every view is a Go command whose slash alias is the view id (execution =
- * close + views.activate(id)); every clickable command carries a slash alias
- * (/add /new /folder /sep /session /options). The dupes/dead cleanup flows
+ * close + views.activate(id)); every clickable command carries a slash name
+ * plus alternate aliases (/add /new /folder /sep /session /options — e.g.
+ * the dupes view answers to /dupes /dups /dedup /clear). All forms match by
+ * prefix and show as the row's muted suffix. The dupes/dead cleanup flows
  * (ConfirmDialog-guarded batch deletion, the in-popup scan) moved out with
  * the modes, which removes the "Escape has no nested back" wart the old
  * mode switch had. A plain (non-slash) query appends a bridge row —
@@ -170,6 +172,9 @@ export function initPalette(ctx = {}) {
     // views.activate). The search command and the bridge row close the panel
     // themselves before running — search.run() focuses the header input and
     // close()'s focus-handback would steal it afterwards.
+    // Every command also carries alternate slash names (`aliases`, item 8):
+    // '/dups', '/dedup' and '/clear' all land on the duplicates view, etc.
+    // All forms match by prefix and render as the row's muted suffix.
     const newBookmarkFromTab = () => {
         chrome.tabs.query({
             'active': true,
@@ -183,14 +188,14 @@ export function initPalette(ctx = {}) {
     };
     const goView = id => () => views.activate(id);
     const commands = [
-        { slash: 'add', name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
-        { slash: 'new', name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
-        { slash: 'folder', name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
-        { slash: 'sep', name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
-        { slash: 'session', keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
-        { slash: 'tree', name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
+        { slash: 'add', aliases: ['quickadd', 'star'], name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
+        { slash: 'new', aliases: ['bookmark', 'bm'], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
+        { slash: 'folder', aliases: ['newfolder', 'mkdir'], name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
+        { slash: 'sep', aliases: ['separator', 'divider'], name: () => _m('paletteCmdNewSeparator'), fn: () => actions.addSeparator(rootFolderId, 'bottom') },
+        { slash: 'session', aliases: ['save', 'snapshot'], keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
+        { slash: 'tree', aliases: ['home', 'main'], name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
         {
-            slash: 'search', keepOpen: true, name: () => _m('paletteCmdGoSearch'),
+            slash: 'search', aliases: ['find', 'query'], keepOpen: true, name: () => _m('paletteCmdGoSearch'),
             fn: rest => {
                 close();
                 if (rest)
@@ -199,12 +204,14 @@ export function initPalette(ctx = {}) {
                     views.activate('search');
             }
         },
-        { slash: 'recent', name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
-        { slash: 'stats', name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
-        { slash: 'dead', name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
-        { slash: 'dupes', name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
-        { slash: 'options', name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
+        { slash: 'recent', aliases: ['latest', 'newest'], name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
+        { slash: 'stats', aliases: ['visits', 'statistics'], name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
+        { slash: 'dead', aliases: ['broken', 'scan'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
+        { slash: 'dupes', aliases: ['dups', 'dedup', 'clear'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
+        { slash: 'options', aliases: ['settings', 'prefs'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
+    // All slash forms of a command — the canonical name plus its aliases.
+    const slashNames = cmd => [cmd.slash].concat(cmd.aliases || []);
 
     // --- Rendering ------------------------------------------------------------
     const faviconUrl = url =>
@@ -218,7 +225,8 @@ export function initPalette(ctx = {}) {
         // strips the results-item- prefix) can open bookmark/folder context menus
         // on palette rows — no special-casing needed.
         if (row.kind === 'command') {
-            li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>`;
+            li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>` +
+                (row.slash ? `<span class="palette-slash">${row.slash}</span>` : '');
         } else if (row.kind === 'folder') {
             li.id = row.id ? `results-item-${row.id}` : '';
             li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${htmlspecialchars(row.title)}</i></a>`;
@@ -254,9 +262,10 @@ export function initPalette(ctx = {}) {
         const query = $input.value.trim();
         const slashMode = query.charAt(0) === '/';
         const q = slashMode ? query.slice(1) : query;
-        // A slash query's first word matches each command's slash alias by
-        // prefix ('/d' surfaces /dead and /dupes); the rest rides along to
-        // the command's fn ('/search foo' → 'foo', §4.4).
+        // A slash query's first word matches every command's slash name AND
+        // its aliases by prefix ('/d' surfaces /dead and /dupes, '/ded' hits
+        // the /dedup alias); the rest rides along to the command's fn
+        // ('/search foo' → 'foo', §4.4).
         const slashWord = slashMode ? q.split(/\s+/)[0] : '';
         const slashRest = slashMode ? q.slice(slashWord.length).trim() : '';
         // Commands: all on an empty query, fuzzy-filtered otherwise. A '/'
@@ -265,9 +274,10 @@ export function initPalette(ctx = {}) {
             const cmd = commands[i];
             const name = cmd.name();
             if (!q || window.VBMFuzzy.score(q, name) ||
-                (slashMode && cmd.slash && cmd.slash.indexOf(slashWord) === 0))
+                (slashMode && slashNames(cmd).some(s => s.indexOf(slashWord) === 0)))
                 addRow({
                     kind: 'command', name,
+                    slash: slashNames(cmd).map(s => `/${s}`).join(' '),
                     fn: () => cmd.fn(slashRest),
                     keepOpen: !!cmd.keepOpen
                 });

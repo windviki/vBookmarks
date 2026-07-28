@@ -1409,6 +1409,18 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     text-overflow: ellipsis;
 }
 
+/* Command rows: the muted right-aligned list of slash forms (/cmd + aliases) */
+.palette-row .palette-slash {
+    margin-left: auto;
+    flex: none;
+    color: var(--vbm-muted);
+    font-size: 85%;
+}
+
+.palette-row.selected .palette-slash {
+    color: var(--vbm-fg-selected);
+}
+
 .palette-row .palette-url {
     flex: 1;
     overflow: hidden;
