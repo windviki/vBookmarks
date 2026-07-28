@@ -494,6 +494,19 @@ export function initPalette(ctx = {}) {
         close();
     });
 
+    // Losing keyboard focus dismisses the panel too (round-3): the mousedown
+    // guard covers pointer users, this covers Tab / arrow-key navigation
+    // away from the input. Focus moving INTO the panel, a context menu open
+    // over a palette row, or a dialog owning the modal layer all keep it
+    // open — the same guards the mousedown path and the Escape rung use.
+    $palette.addEventListener('focusout', e => {
+        if (!openState) return;
+        if (e.relatedTarget && $palette.contains(e.relatedTarget)) return;
+        if (anyDialogOpen()) return;
+        if (clearMenu && document.body.querySelector('.active')) return;
+        close();
+    });
+
     // Ctrl/Cmd+K toggles the palette. Capture phase so the tree's type-ahead
     // never sees the 'k'; no-op while a dialog owns the modal layer. Distinct
     // from keyboard.js's Ctrl/Cmd+F and neat.js's Ctrl/Cmd+D.

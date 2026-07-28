@@ -122,6 +122,7 @@ const makeTree = () => [{
 
 const setup = (opts = {}) => {
     const byId = {};
+    const allEls = [];
     const el = (tagName = 'DIV', id = '') => {
         const classes = new Set();
         const node = {
@@ -152,6 +153,11 @@ const setup = (opts = {}) => {
                 this._appended.push(child);
                 child.parentNode = this;
             },
+            contains(node2) {
+                for (let n = node2; n; n = n.parentNode)
+                    if (n === this) return true;
+                return false;
+            },
             focus() {
                 this.focused = true;
             },
@@ -178,12 +184,16 @@ const setup = (opts = {}) => {
         });
         if (id)
             byId[id] = node;
+        allEls.push(node);
         return node;
     };
 
     const body = el('BODY', 'body');
     for (const cls of (opts.bodyClasses || []))
         body.classList.add(cls);
+    // the .active-row lookup the menu-open guards (Escape/focusout) rely on
+    body.querySelector = sel =>
+        sel === '.active' ? (allEls.find(n => n.classList.contains('active')) || null) : null;
     const paletteEl = el('DIV', 'command-palette');
     paletteEl.hidden = true;
     const input = el('INPUT', 'palette-input');
@@ -302,6 +312,7 @@ const setup = (opts = {}) => {
         quickAdd: () => quickAddCalls.push(1),
         rootFolderId: opts.rootFolderId || '1',
         dialogs,
+        clearMenu: opts.clearMenu,
         onChanged: () => onChangedCalls.push(1)
     });
 
@@ -420,6 +431,58 @@ describe('Ctrl/Cmd+K toggle', () => {
         body.classList.add('needEdit');
         const ev = keydown(doc, { ctrlKey: true, key: 'k' });
         expect(ev.defaultPrevented).toBe(false);
+        expect(palette.isOpen()).toBe(false);
+    });
+});
+
+// Round-3: the panel dismisses when keyboard focus leaves it (the pointer
+// path is the outside-mousedown guard; this is the Tab/arrow path).
+describe('focusout dismissal (round-3 item 1)', () => {
+    const fireFocusout = (paletteEl, relatedTarget) => {
+        for (const fn of (paletteEl._listeners.focusout || []))
+            fn.call(paletteEl, { relatedTarget });
+    };
+
+    it('focus moving outside the panel closes it', () => {
+        const { palette, paletteEl, input, el } = setup({});
+        palette.open();
+        const outside = el('DIV', 'view-tabs');
+        fireFocusout(paletteEl, outside);
+        expect(palette.isOpen()).toBe(false);
+        expect(input.blurred).toBe(true); // no tree row in the stub: blur fallback
+    });
+
+    it('focus moving into a palette row keeps the panel open', () => {
+        const { palette, paletteEl, el } = setup({});
+        palette.open();
+        const row = el('LI');
+        paletteEl.appendChild(row); // inside the panel
+        fireFocusout(paletteEl, row);
+        expect(palette.isOpen()).toBe(true);
+    });
+
+    it('a context menu open over the panel holds it (focus went to the menu)', () => {
+        const clearMenuCalls = [];
+        const { palette, paletteEl, el } = setup({ clearMenu: () => clearMenuCalls.push(1) });
+        palette.open();
+        const menuRow = el('A');
+        menuRow.classList.add('active'); // the menu-open signal
+        fireFocusout(paletteEl, menuRow);
+        expect(palette.isOpen()).toBe(true);
+        expect(clearMenuCalls).toEqual([]); // the menu is left alone
+    });
+
+    it('a dialog owning the modal layer holds the panel', () => {
+        const { palette, paletteEl, body, el } = setup({});
+        palette.open();
+        body.classList.add('needConfirm');
+        fireFocusout(paletteEl, el('BUTTON'));
+        expect(palette.isOpen()).toBe(true);
+    });
+
+    it('focusout while closed is a no-op', () => {
+        const { palette, paletteEl, el } = setup({});
+        fireFocusout(paletteEl, el('DIV'));
         expect(palette.isOpen()).toBe(false);
     });
 });
