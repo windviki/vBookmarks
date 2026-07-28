@@ -1,8 +1,9 @@
 /**
  * Popup context menus (P1 module extracted from neat.js).
  *
- * Owns the three right-click menus (bookmark / folder / separator): opening
- * them from the tree or results pane (active-row tracking, the hide-editables
+ * Owns the four right-click menus (bookmark / folder / separator /
+ * search-history): opening them from the tree or results pane (active-row
+ * tracking, the hide-editables
  * / hide-sort toggles on root folders, rtl-aware position math, the Mac
  * right-click-hold-to-close quirk), clearing them on outside clicks, scrolls
  * and focus moves, hiding the add-* entries while search is active
@@ -11,6 +12,9 @@
  * v4 task-2 adds the view-row entries: "reveal in tree" on out-of-tree
  * rows, and slice C's dead-mark toggle / dupes keeper pin on dead/dupes
  * view rows (their labels/APIs resolve at open/dispatch time).
+ * Round-4 item 7 adds the search-history menu: rows of the upper search
+ * pane are recorded queries, not bookmarks, so they get a dedicated minimal
+ * menu (rerun / remove / clear-all) instead of the bookmark one.
  *
  * initContextMenu(ctx) is called once by neat.js BEFORE initSearch: search
  * needs menus.switchBookmarkMenu at init time (a restored query calls it
@@ -45,6 +49,7 @@ export function initContextMenu(ctx = {}) {
     const $bookmarkContextMenu = $('bookmark-context-menu');
     const $folderContextMenu = $('folder-context-menu');
     const $separatorContextMenu = $('separator-context-menu');
+    const $searchHistoryContextMenu = $('search-history-context-menu');
     const $results = $('results');
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
@@ -79,6 +84,11 @@ export function initContextMenu(ctx = {}) {
         $separatorContextMenu.style.left = '-999px';
         $separatorContextMenu.style.opacity = '0';
         $separatorContextMenu.style.transform = 'scale(.98)';
+        if ($searchHistoryContextMenu) {
+            $searchHistoryContextMenu.style.left = '-999px';
+            $searchHistoryContextMenu.style.opacity = '0';
+            $searchHistoryContextMenu.style.transform = 'scale(.98)';
+        }
     };
 
     body.addEventListener('click', clearMenu);
@@ -128,7 +138,17 @@ export function initContextMenu(ctx = {}) {
             if (nearest) el = nearest;
         }
         let menu;
-        if (el.tagName === 'A') {
+        // Round-4 item 7: a search-history row (the recorded-query rows of
+        // the upper search pane) is not a bookmark — its li carries no
+        // bookmark id, so the bookmark menu's open/edit/delete entries would
+        // act on a bogus id. Give the row its own minimal menu instead.
+        const onHistoryRow = el.tagName === 'A'
+            && el.dataset && typeof el.dataset.q !== 'undefined'
+            && el.parentNode && el.parentNode.classList
+            && el.parentNode.classList.contains('search-history-row');
+        if (onHistoryRow && $searchHistoryContextMenu) {
+            menu = $searchHistoryContextMenu;
+        } else if (el.tagName === 'A') {
             if (el.classList.contains('link-folder')) {
                 // Folder link (search results / palette folder rows) — show
                 // folder context menu. Root-level folder detection (hide-sort)
@@ -471,6 +491,53 @@ export function initContextMenu(ctx = {}) {
             separatorContextHandler(e);
     });
     $separatorContextMenu.addEventListener('contextmenu', separatorContextHandler);
+
+    // Round-4 item 7: the search-history menu. Dispatch reuses the history
+    // area's own click affordances — search.js's delegated handlers own the
+    // rerun / removal / clear-all logic, so this module needs no search API
+    // (the same decoupling as the #results lookup described in the header).
+    if ($searchHistoryContextMenu) {
+        // neat.js's id→message map predates this menu, so the labels are
+        // assigned here (same _m helper; searchHistoryRerun is a new key,
+        // with a fallback while the locale files catch up).
+        $('search-history-menu-rerun').textContent = _m('searchHistoryRerun') || 'Search again';
+        $('search-history-menu-remove').textContent = _m('searchHistoryRemove');
+        $('search-history-menu-clear').textContent = _m('searchHistoryClear');
+    }
+    const searchHistoryContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        switch (el.id) {
+            case 'search-history-menu-rerun':
+                // Activating the row anchor reruns its query.
+                currentContext.click();
+                break;
+            case 'search-history-menu-remove': {
+                const removeBtn = currentContext.parentNode.querySelector('.search-history-remove');
+                if (removeBtn)
+                    removeBtn.click();
+                break;
+            }
+            case 'search-history-menu-clear': {
+                const clearBtn = $('search-history-clear');
+                if (clearBtn)
+                    clearBtn.click();
+                break;
+            }
+        }
+        clearMenu();
+    };
+    if ($searchHistoryContextMenu) {
+        $searchHistoryContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                searchHistoryContextHandler(e);
+        });
+        $searchHistoryContextMenu.addEventListener('contextmenu', searchHistoryContextHandler);
+    }
 
     const switchBookmarkMenu = disable => {
         if (disable) {

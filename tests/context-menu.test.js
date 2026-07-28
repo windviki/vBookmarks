@@ -90,6 +90,7 @@ const setup = (opts = {}) => {
     const bookmarkMenu = el('MENU', 'bookmark-context-menu');
     const folderMenu = el('MENU', 'folder-context-menu');
     const separatorMenu = el('MENU', 'separator-context-menu');
+    const searchHistoryMenu = el('MENU', 'search-history-context-menu');
     const results = el('DIV', 'results');
     for (const id of ['add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
         'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
@@ -103,6 +104,10 @@ const setup = (opts = {}) => {
     // v4 task-2 slice C: dead-view mark toggle + dupes-view keeper pin
     el('DIV', 'dead-mark-toggle');
     el('DIV', 'dupes-set-keeper');
+    // round-4 item 7: the search-history menu items (labels assigned at init)
+    el('DIV', 'search-history-menu-rerun');
+    el('DIV', 'search-history-menu-remove');
+    el('DIV', 'search-history-menu-clear');
     const tree = el('DIV', 'tree');
     // round-3 item 3: the feature-view lists get the same scroll/focus
     // menu-dismissal wiring as the tree/results panes
@@ -196,6 +201,15 @@ const setup = (opts = {}) => {
         row.a._qs.hr = el('HR');
         return row;
     };
+    // A search-history row: <li class="search-history-row"><a href data-q="q">…</a></li>
+    const makeHistoryRow = (q = 'git') => {
+        const li = el('LI');
+        li.classList.add('search-history-row');
+        const a = el('A');
+        a.dataset.q = q;
+        a.parentNode = li;
+        return { li, a };
+    };
     const menuItem = id => {
         const item = el('DIV', id);
         item.classList.add('menu-item');
@@ -206,9 +220,9 @@ const setup = (opts = {}) => {
 
     return {
         menus, byId, el, body, tree, results, viewLists,
-        bookmarkMenu, folderMenu, separatorMenu,
+        bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
         chrome: chromeStub, actionCalls, sortCalls, revealCalls,
-        makeBookmarkRow, makeFolderRow, makeSeparatorRow, menuItem, openOn,
+        makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow, menuItem, openOn,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -881,5 +895,118 @@ describe('dead/dupes view menu items (v4 task-2 slice C)', () => {
         fire(s.bookmarkMenu, 'mouseup',
             makeEvent({ button: 0, target: s.menuItem('dupes-set-keeper') }));
         expect(dupesMenu.calls).toEqual([['setKeeper', '5']]);
+    });
+});
+
+describe('search-history context menu (round-4 item 7)', () => {
+    it('opens the dedicated minimal menu on a history row, not the bookmark menu', () => {
+        const { openOn, makeHistoryRow, searchHistoryMenu, bookmarkMenu, folderMenu, separatorMenu } = setup({});
+        const { a } = makeHistoryRow('git');
+        openOn(a);
+        expect(a.classList.contains('active')).toBe(true);
+        expect(searchHistoryMenu.style.opacity).toBe('1');
+        for (const menu of [bookmarkMenu, folderMenu, separatorMenu])
+            expect(menu.style.opacity).not.toBe('1');
+    });
+
+    it('assigns the item labels at init from the i18n messages', () => {
+        const { byId } = setup({});
+        expect(byId['search-history-menu-rerun'].textContent).toBe('searchHistoryRerun');
+        expect(byId['search-history-menu-remove'].textContent).toBe('searchHistoryRemove');
+        expect(byId['search-history-menu-clear'].textContent).toBe('searchHistoryClear');
+    });
+
+    it('opens nothing on the history area head / clear button', () => {
+        const { openOn, el, searchHistoryMenu, bookmarkMenu } = setup({});
+        openOn(el('BUTTON', 'search-history-clear'));
+        expect(searchHistoryMenu.style.opacity).not.toBe('1');
+        expect(bookmarkMenu.style.opacity).not.toBe('1');
+    });
+
+    it('search-history-menu-rerun reruns the query by activating the row anchor', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeHistoryRow('git');
+        let clicks = 0;
+        a.click = () => clicks++;
+        ctx.openOn(a);
+        fire(ctx.searchHistoryMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('search-history-menu-rerun') }));
+        expect(clicks).toBe(1);
+        expect(ctx.searchHistoryMenu.style.opacity).toBe('0'); // closed after dispatch
+    });
+
+    it('search-history-menu-remove clicks the row remove button', () => {
+        const ctx = setup({});
+        const { li, a } = ctx.makeHistoryRow('git');
+        let clicks = 0;
+        const btn = ctx.el('BUTTON');
+        btn.click = () => clicks++;
+        li._qs['.search-history-remove'] = btn;
+        ctx.openOn(a);
+        fire(ctx.searchHistoryMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('search-history-menu-remove') }));
+        expect(clicks).toBe(1);
+        expect(ctx.searchHistoryMenu.style.opacity).toBe('0');
+    });
+
+    it('search-history-menu-clear clicks the history area clear-all button', () => {
+        const ctx = setup({});
+        let clicks = 0;
+        const clearBtn = ctx.el('BUTTON', 'search-history-clear');
+        clearBtn.click = () => clicks++;
+        const { a } = ctx.makeHistoryRow('git');
+        ctx.openOn(a);
+        fire(ctx.searchHistoryMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('search-history-menu-clear') }));
+        expect(clicks).toBe(1);
+        expect(ctx.searchHistoryMenu.style.opacity).toBe('0');
+    });
+
+    it('ignores clicks outside menu-items and keeps the menu open', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeHistoryRow('git');
+        ctx.openOn(a);
+        fire(ctx.searchHistoryMenu, 'mouseup', makeEvent({ button: 0, target: ctx.el('DIV') }));
+        expect(ctx.searchHistoryMenu.style.opacity).toBe('1');
+    });
+
+    it('does nothing when no menu is open (no context row)', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeHistoryRow('git');
+        let clicks = 0;
+        a.click = () => clicks++;
+        fire(ctx.searchHistoryMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('search-history-menu-rerun') }));
+        expect(clicks).toBe(0);
+    });
+
+    it('is dismissed by the same history-area scroll/focus clearMenu path', () => {
+        const { openOn, makeHistoryRow, searchHistoryMenu, viewLists } = setup({});
+        const { a } = makeHistoryRow('git');
+        openOn(a);
+        expect(searchHistoryMenu.style.opacity).toBe('1');
+        fire(viewLists['search-history-area'], 'scroll', makeEvent({ target: viewLists['search-history-area'] }));
+        expect(searchHistoryMenu.style.opacity).toBe('0');
+        expect(searchHistoryMenu.style.left).toBe('-999px');
+    });
+
+    it('plain bookmark rows still open the bookmark menu (regression)', () => {
+        const { openOn, makeBookmarkRow, searchHistoryMenu, bookmarkMenu } = setup({});
+        const { a } = makeBookmarkRow('42');
+        openOn(a);
+        expect(bookmarkMenu.style.opacity).toBe('1');
+        expect(searchHistoryMenu.style.opacity).not.toBe('1');
+    });
+
+    // Wiring contract: the menu lives in both pages (parity), right after
+    // the separator menu, with the three item ids the module assigns labels to.
+    it('exists in popup.html and sidepanel.html right after the separator menu', () => {
+        const anchor = '</menu>\n<menu id="search-history-context-menu" type="context" tabindex="-1">';
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            expect(html.includes(anchor), page).toBe(true);
+            for (const id of ['search-history-menu-rerun', 'search-history-menu-remove', 'search-history-menu-clear'])
+                expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
+        }
     });
 });

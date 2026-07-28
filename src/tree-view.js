@@ -85,6 +85,24 @@ export function initTreeView(ctx = {}) {
     const nodeTrees = {};
     const onlyShowBMBar = !!store.get('onlyShowBMBar');
 
+    // Round-4 item 4: generateNodeTrees maps folders only, so a bookmark id
+    // never resolved an ancestor chain in revealFolder — "在树中定位" opened
+    // nothing and the target row was never rendered. generateTree therefore
+    // adds the bookmark parents to the same map and records the bookmark
+    // ids, so revealFolder can resolve (and trim) a bookmark's path too.
+    const bookmarkIds = new Set();
+    const addBookmarkParents = nodes => {
+        for (let i = 0, l = nodes.length; i < l; i++) {
+            const d = nodes[i];
+            if (d.url) {
+                nodeTrees[d.id] = d.parentId;
+                bookmarkIds.add(`${d.id}`);
+            }
+            if (d.children)
+                addBookmarkParents(d.children);
+        }
+    };
+
     // Adaptive bookmark tooltips
     const adaptBookmarkTooltips = () => {
         const bookmarks = document.querySelectorAll('li.child a');
@@ -127,6 +145,7 @@ export function initTreeView(ctx = {}) {
         }
         const html = treeRender.generateHTML(subTree);
         treeRender.generateNodeTrees(subTree, nodeTrees);
+        addBookmarkParents(subTree);
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
         // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
@@ -280,7 +299,12 @@ export function initTreeView(ctx = {}) {
         search.quit();
         // all parent folder ids
         // set them as opened folders
-        const newOpens = treeRender.getParentPath(id, nodeTrees);
+        let newOpens = treeRender.getParentPath(id, nodeTrees);
+        // A bookmark's path ends with the bookmark itself — drop it: the
+        // opens list may only hold folders (a bookmark row has no children
+        // to expand, and li.open rows get persisted back into opens).
+        if (bookmarkIds.has(`${id}`))
+            newOpens = newOpens.slice(0, -1);
         setOpens(newOpens);
         store.set('opens', JSON.stringify(newOpens));
         // force to recover from remember state (opened folders)

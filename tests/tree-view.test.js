@@ -271,7 +271,17 @@ const setup = (opts = {}) => {
         },
         getParentPath(id, list) {
             this.calls.getParentPath.push([id, list]);
-            return opts.parentPath || [id];
+            if (opts.parentPath)
+                return opts.parentPath;
+            // Same walk as tree-render.js's real getParentPath: follow the
+            // id→parent map up to the root, target id last.
+            const path = [id];
+            let cur = id;
+            while (cur in list && list[cur] !== cur) {
+                path.push(list[cur]);
+                cur = list[cur];
+            }
+            return path.reverse();
         }
     };
 
@@ -808,6 +818,44 @@ describe('revealInTree (v4 task-2 §2.3)', () => {
         li.dataset.nodeId = '7';
         fire(ctx.tree, 'click', makeEvent({ button: 0, target: a }));
         expect(ctx.treeRender.calls.getParentPath[0][0]).toBe('7');
+    });
+
+    // Round-4 item 4: "在树中定位" on a bookmark row did nothing visible —
+    // nodeTrees maps folders only, so a bookmark id resolved to a path of
+    // just itself, no ancestor folder opened and the target row was never
+    // rendered into the collapsed tree (no focus, no scroll).
+    it('a bookmark id opens its ancestor folders so the row renders and scrolls into view', () => {
+        const ctx = setup({
+            // what the real generateNodeTrees records: folders only
+            parentMap: { '7': '1' },
+            effectiveSubTree: [
+                { id: '7', parentId: '1', children: [{ id: '42', parentId: '7', url: 'http://bm-42/' }] }
+            ]
+        });
+        ctx.treeView.generateTree(['ROOT']);
+        ctx.treeView.revealInTree('42');
+        // the opens list holds the ancestor folders, never the bookmark itself
+        expect(ctx.state.opens).toEqual(['1', '7']);
+        expect(ctx.store.sets).toContainEqual(['opens', '["1","7"]']);
+        expect(ctx.store.sets).toContainEqual(['focusID', '42']);
+        // …so generateTreeForTarget finds the rendered row and reveals it
+        const target = ctx.el('LI');
+        ctx.tree._qs['#neat-tree-item-42'] = target;
+        ctx.chrome.bookmarks.getTreeCalls[1](['ROOT2']);
+        expect(target._scrolledIntoView).toBe(1);
+    });
+
+    it('a folder id still opens the folder itself along with its ancestors', () => {
+        const ctx = setup({
+            parentMap: { '7': '1' },
+            effectiveSubTree: [
+                { id: '7', parentId: '1', children: [{ id: '42', parentId: '7', url: 'http://bm-42/' }] }
+            ]
+        });
+        ctx.treeView.generateTree(['ROOT']);
+        ctx.treeView.revealInTree('7');
+        expect(ctx.state.opens).toEqual(['1', '7']);
+        expect(ctx.store.sets).toContainEqual(['focusID', '7']);
     });
 });
 
