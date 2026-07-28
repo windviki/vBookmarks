@@ -1,10 +1,13 @@
 // vBookmarks i18n screenshot harness — one browser launch per UI language
 // (--lang is process-wide), reseeding the same tree each time, capturing
 // the main localized surfaces: tree, view tab strip, bookmark context menu,
-// folder context menu, edit dialog and the options page. 'ar' doubles as
-// the RTL check — note the docker chromium ships en-US.pak only, so locale
-// negotiation silently falls back to en there; the ar tab-strip mirroring
-// assertion therefore emulates `direction: rtl` when negotiation failed.
+// folder context menu, edit dialog, the options page and — seeded with
+// visit counts, a search-history MRU, a dead-scan cache and a duplicate
+// pair — the search/recent/dupes/dead/stats feature views (item 1). 'ar'
+// doubles as the RTL check — note the docker chromium ships en-US.pak
+// only, so locale negotiation silently falls back to en there; the ar
+// tab-strip mirroring assertion therefore emulates `direction: rtl` when
+// negotiation failed.
 // Runs inside zenika/alpine-chrome:with-puppeteer; shots land in
 // /tmp/shots/i18n/<lang>-*.png.
 const puppeteer = require('puppeteer');
@@ -17,16 +20,41 @@ const LANGS = (process.env.SHOT_LANGS || 'en,zh-CN,ja,ko,fr,de,es,ar').split(','
 const SEED = `
 (async () => {
     const create = p => new Promise(r => chrome.bookmarks.create(p, r));
+    const set = o => new Promise(r => chrome.storage.local.set(o, r));
     const work = await create({ parentId: '1', title: '工作区' });
-    await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
+    const gh = await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
     await create({ parentId: work.id, title: 'Linear — Issues', url: 'https://linear.app/team/issues' });
     await create({ parentId: work.id, title: 'Figma — Design System', url: 'https://www.figma.com/files/design-system' });
     const dev = await create({ parentId: work.id, title: '开发参考' });
-    await create({ parentId: dev.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
-    await create({ parentId: dev.id, title: 'Can I Use', url: 'https://caniuse.com/esmodules' });
+    const mdn = await create({ parentId: dev.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
+    const caniuse = await create({ parentId: dev.id, title: 'Can I Use', url: 'https://caniuse.com/esmodules' });
     const read = await create({ parentId: '1', title: '稍后读' });
-    await create({ parentId: read.id, title: 'A List Apart — Typography', url: 'https://alistapart.com/topic/typography' });
-    await create({ parentId: '1', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+    const ala = await create({ parentId: read.id, title: 'A List Apart — Typography', url: 'https://alistapart.com/topic/typography' });
+    const hn = await create({ parentId: '1', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+    // A duplicate pair for the dupes view (same URL as MDN, other folder).
+    await create({ parentId: read.id, title: 'MDN Web Docs (mirror)', url: 'https://developer.mozilla.org/docs/Web' });
+    // Feature-view data (item 1): visit counts, a search-history MRU and a
+    // finished dead-scan cache so every view tab renders a real state.
+    const now = Date.now();
+    await set({
+        visitStats: JSON.stringify({
+            [gh.id]: { c: 12, t: now - 3600e3 },
+            [mdn.id]: { c: 5, t: now - 7200e3 },
+            [hn.id]: { c: 2, t: now - 86400e3 }
+        }),
+        searchHistory: JSON.stringify([
+            { q: 'design', n: 3, ts: now - 1800e3 },
+            { q: 'mozilla', n: 1, ts: now - 5400e3 }
+        ]),
+        deadLastScan: JSON.stringify({
+            ts: now - 3600e3,
+            scannedCount: 10,
+            results: {
+                [caniuse.id]: { status: 'dead', code: 404 },
+                [ala.id]: { status: 'blocked', error: 'proxy timeout' }
+            }
+        })
+    });
 })()`;
 
 const errors = [];
@@ -174,6 +202,35 @@ const watch = (page, tag) => {
             await page.screenshot({ path: `/tmp/shots/i18n/${lang}-edit.png` });
             await page.keyboard.press('Escape');
             await sleep(300);
+
+            // --- Feature views (item 1): one shot per important view --------
+            // Search view: empty box, history MRU up top (item 5 layout).
+            const openView = async id => {
+                await page.evaluate(v => {
+                    const tab = document.querySelector(`#view-tab-${v}`);
+                    if (!tab) throw new Error('view tab not found: ' + v);
+                    tab.click();
+                }, id);
+                await sleep(600);
+            };
+            await openView('search');
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-search.png` });
+
+            // Recent view: seeded opens + the history-permission banner (7a).
+            await openView('recent');
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-recent.png` });
+
+            // Dupes view: one seeded duplicate group (URL shown once, item 4).
+            await openView('dupes');
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-dupes.png` });
+
+            // Dead view: the seeded scan cache renders a dead + a blocked row.
+            await openView('dead');
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-dead.png` });
+
+            // Stats view: seeded visit counts.
+            await openView('stats');
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-stats.png` });
             await page.close();
 
             // Options page
@@ -185,7 +242,7 @@ const watch = (page, tag) => {
             await opts.screenshot({ path: `/tmp/shots/i18n/${lang}-options.png` });
             await opts.close();
 
-            console.log(`${lang}: 6 shots done`);
+            console.log(`${lang}: 11 shots done`);
         } catch (e) {
             errors.push(`${lang}: ${e.message}`);
         }
