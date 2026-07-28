@@ -265,9 +265,9 @@ export function initTreeRender(ctx = {}) {
         // both funnel through generateHTML.
         // Item 6 alignment contract: the row has no twisty/icon slots of its
         // own, so the padding compensates with the full slot width (16px
-        // twisty + 20px icon = 36px) to land the label on the same text-left
-        // axis as sibling folder/bookmark titles.
-        const SLOT_WIDTH = 36; // keep in sync with neat.css (16px twisty + 20px favicon-container)
+        // twisty + 20px icon + 4px icon-text gap = 40px) to land the label
+        // on the same text-left axis as sibling folder/bookmark titles.
+        const SLOT_WIDTH = 40; // keep in sync with neat.css (16px twisty + 20px favicon-container + 4px gap)
         if (!data.length) {
             return `<ul role="${group}" data-level="${level}"><li class="empty-folder" style="-webkit-padding-start: ${paddingStart + SLOT_WIDTH}px"><i>${_m('folderEmpty')}</i></li></ul>`;
         }

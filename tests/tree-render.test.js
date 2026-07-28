@@ -496,14 +496,14 @@ describe('generateHTML', () => {
         const tr = setup();
         expect(tr.generateHTML([])).toBe(
             '<ul role="tree" data-level="0"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 36px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 40px"><i>(Empty)</i></li></ul>');
     });
 
     it('uses role=group and scaled padding at deeper levels', () => {
         const tr = setup();
         expect(tr.generateHTML([], 2)).toBe(
             '<ul role="group" data-level="2"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 68px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 72px"><i>(Empty)</i></li></ul>');
     });
 
     it('marks local-only rows (syncing === false) with unsynced-subtree', () => {

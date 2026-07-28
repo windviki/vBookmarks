@@ -7,7 +7,7 @@ import { initTreeRender } from '../src/tree-render.js';
 //   1. twisty slot  16px, arrow centered (folders); bookmark rows get a 16px
 //      ::before placeholder so the rhythm never breaks
 //   2. icon slot    20px favicon-container, 16px icon centered inside
-//   3. text axis    title left edge at 16px × level + 36px — identical for
+//   3. text axis    title left edge at 16px × level + 40px — identical for
 //      folders, bookmarks and the "(Empty)" row
 // Overlay decorations (sync dot, dead ×) are position:absolute inside the
 // icon slot and must never enter the flex flow.
@@ -54,6 +54,15 @@ describe('alignment CSS contract (item 6)', () => {
         const body = ruleBody(neatCss, '.tree-item-link .favicon-container {');
         expect(body).toContain('width: 20px');
         expect(body).toContain('justify-content: center');
+    });
+
+    it('the icon slot keeps a 4px gap before the title in both scopes', () => {
+        const scoped = ruleBody(
+            neatCss,
+            '#tree ul li a .favicon-container,\n#tree ul li span .favicon-container,');
+        expect(scoped).toContain('margin-inline-end: 4px');
+        const unscoped = ruleBody(neatCss, '.tree-item-link .favicon-container {');
+        expect(unscoped).toContain('margin-inline-end: 4px');
     });
 
     it('icons inside the slot are pinned to 16px in both scopes', () => {
@@ -164,10 +173,10 @@ describe('row slot structure (item 6)', () => {
         expect(iTitle).toBeGreaterThan(iIcon);
     });
 
-    it('the "(Empty)" row pads 16px × level + the 36px slot width', () => {
+    it('the "(Empty)" row pads 16px × level + the 40px slot width', () => {
         const tr = setup();
-        expect(tr.generateHTML([])).toContain('-webkit-padding-start: 36px');
-        expect(tr.generateHTML([], 3)).toContain('-webkit-padding-start: 84px');
+        expect(tr.generateHTML([])).toContain('-webkit-padding-start: 40px');
+        expect(tr.generateHTML([], 3)).toContain('-webkit-padding-start: 88px');
     });
 
     it('the sync indicator markup stays inside the favicon container', () => {

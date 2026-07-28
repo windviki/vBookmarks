@@ -250,6 +250,7 @@ body.linux input {
     width: 100%;
     padding: 6px 8px;
     padding-inline-start: 27px; /* room for the leading magnifier glyph */
+    padding-inline-end: 26px; /* room for the overlaid clear button */
     margin: 0;
     background: var(--vbm-bg-elev);
     color: var(--vbm-fg);
@@ -292,17 +293,31 @@ body.linux input {
     appearance: none;
 }
 
-/* Custom clear button: lives in the flex row between input and quick-add.
-   visibility (not display) keeps its slot so showing/hiding never shifts
-   the input width. */
+/* #search-field wraps magnifier + input + clear button so the clear button
+   lives INSIDE the field (absolute, trailing edge) instead of taking a flex
+   slot between input and quick-add — no dead gap in the search row. */
+#search-field {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Custom clear button: overlaid on the field's trailing edge. visibility
+   (not display) keeps hit-testing predictable; the input's extra trailing
+   padding (26px) keeps typed text from running under the glyph. */
 #search-clear {
-    flex: none;
+    position: absolute;
+    inset-inline-end: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    margin-inline-start: 2px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     border: 0;
     border-radius: 50%;
@@ -473,10 +488,11 @@ body.linux input {
      1. twisty slot  — 16px, arrow centered (folder rows only; bookmark rows
         get a 16px ::before placeholder so the axis rhythm never breaks)
      2. icon slot    — 20px favicon-container, the 16px icon centered inside
-        (justify-content: center), so icon centers line up across rows
-     3. text axis    — the title's left edge starts right after the icon slot
-        (16px × level + 36px), identical for folders, bookmarks and the
-        "(Empty)" row (which pads the same 36px in tree-render.js)
+        (justify-content: center), so icon centers line up across rows;
+        a 4px margin-inline-end opens the breathing room before the title
+     3. text axis    — the title's left edge starts after the icon slot + gap
+        (16px × level + 40px), identical for folders, bookmarks and the
+        "(Empty)" row (which pads the same 40px in tree-render.js)
    Overlays that decorate a row (sync dot, dead ×) are position: absolute
    inside the icon slot and must never enter the flex flow — see the
    sync-indicator guard below. */
@@ -532,7 +548,8 @@ body.linux input {
 }
 
 /* 图标槽：favicon / folder SVG 定宽 20px，16px 图标居中（justify-content:
-   center）——图标中心是跨行对齐轴，图标两侧各留 2px。 */
+   center）——图标中心是跨行对齐轴，图标两侧各留 2px；槽后 4px 间距让图标与
+   标题之间不拥挤（文本轴 = 16px×层级 + 40px）。 */
 #tree ul li a .favicon-container,
 #tree ul li span .favicon-container,
 #results ul li a .favicon-container {
@@ -541,6 +558,7 @@ body.linux input {
     align-items: center;
     justify-content: center;
     width: 20px;
+    margin-inline-end: 4px;
 }
 
 #tree ul li a .favicon-container img,
@@ -591,6 +609,7 @@ body.linux input {
     align-items: center;
     justify-content: center;
     width: 20px;
+    margin-inline-end: 4px;
 }
 
 .tree-item-link .favicon-container img,
@@ -1530,9 +1549,12 @@ menu[type=context] .menu-item,
 }
 
 /* === v4 task-2: view tabs, view container & list-row path labels (slice A) ===
-   #view-tabs sits between the search bar and #views; tabs are icon-only in
-   the narrow popup, icon+label at ≥480px (container query) and always in
-   panel mode. Everything runs on --vbm-* tokens — zero per-theme rules. */
+   #view-tabs sits between the search bar and #views. Each tab is its own
+   inline-size container: the label appears only when THAT tab is wide enough
+   to hold icon + full label (~112px) — narrower tabs fall back to icon-only
+   instead of wrapping to two lines or clipping the text mid-word. Works the
+   same in the popup and a shrinking side panel. Everything runs on --vbm-*
+   tokens — zero per-theme rules. */
 
 #container {
     container-type: inline-size;
@@ -1554,6 +1576,7 @@ body.no-view-tabs #view-tabs {
     flex: 1 1 0;
     min-width: 0;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     gap: 5px;
@@ -1562,7 +1585,10 @@ body.no-view-tabs #view-tabs {
     background: transparent;
     color: var(--vbm-muted);
     font: menu;
+    white-space: nowrap;
+    overflow: hidden;
     cursor: pointer;
+    container-type: inline-size;
 }
 
 .view-tab:hover {
@@ -1583,19 +1609,17 @@ body.no-view-tabs #view-tabs {
     display: inline-flex;
 }
 
-/* Narrow popup: icon-only tabs (label survives via aria-label/title) */
+/* Icon-only is the safe default; the label (full text survives via
+   aria-label/title) joins only when the tab itself is wide enough. */
 .view-tab .tab-label {
     display: none;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-body.panel-mode .view-tab .tab-label {
-    display: inline;
-}
-
-@container (min-width: 480px) {
+@container (min-width: 112px) {
     .view-tab .tab-label {
         display: inline;
     }
@@ -2117,7 +2141,6 @@ body.panel-mode .vbm-row .row-sub {
     text-overflow: ellipsis;
     white-space: nowrap;
     direction: ltr; /* URLs stay LTR even in RTL locales */
-    font-family: monospace;
     color: var(--vbm-muted);
 }
 
