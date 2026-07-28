@@ -342,14 +342,23 @@ export function initViewStats(ctx = {}) {
                 return;
             }
             dirty = false;
+            renderedRevision = statsRevision();
             render();
         });
     };
 
     // --- Recent-history section (第四轮项9) --------------------------------
+    // Dataset mutations that bypass this view's own render pass (the
+    // recent-view history import seeds visitStats from there) bump
+    // visitStats.revision() — treat a revision mismatch as dirty so the
+    // next activate never shows stale counts. The optional call keeps
+    // legacy test doubles (no revision) on the old dirty-only path.
+    const statsRevision = () => (visitStats.revision ? visitStats.revision() : 0);
+    let renderedRevision = statsRevision();
+
     // The slice-D activate body, shared by every probe path below.
     const refreshIfNeeded = () => {
-        if (dirty || !$list.innerHTML)
+        if (dirty || !$list.innerHTML || statsRevision() !== renderedRevision)
             refresh();
     };
 

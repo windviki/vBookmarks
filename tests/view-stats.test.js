@@ -167,9 +167,11 @@ const setup = (opts = {}) => {
         data: opts.statsData || {},
         cleared: 0,
         enabledValue: 'enabled' in opts ? opts.enabled : true,
+        rev: opts.revision || 0,
         all() { return this.data; },
-        clear() { this.cleared++; this.data = {}; },
-        enabled() { return this.enabledValue; }
+        clear() { this.cleared++; this.data = {}; this.rev++; },
+        enabled() { return this.enabledValue; },
+        revision() { return this.rev; }
     };
     const undo = {
         toasts: [],
@@ -602,5 +604,22 @@ describe('statsEnabled off (第四轮项9 regression)', () => {
         expect(s.chrome.history.searchCalls).toEqual([]);
         expect(s.$list.innerHTML).toContain('<i>statsDisabledHint</i>');
         expect(s.$list.innerHTML).not.toContain('statsSectionRecent');
+    });
+});
+
+describe('dataset revision dirty-check (第四轮缝合)', () => {
+    it('refreshes on activate when visitStats.revision moved (external import)', () => {
+        const s = setup({
+            statsData: { '7': { c: 2, t: 1 } },
+            revision: 1,
+            hasHistoryPermission: false
+        });
+        s.def().activate(); // first render records revision 1
+        expect(s.chrome.bookmarks.getTreeCalls).toBe(1);
+        s.def().activate(); // same revision + rendered list → no refresh
+        expect(s.chrome.bookmarks.getTreeCalls).toBe(1);
+        s.visitStats.rev = 2; // the recent view's history import landed
+        s.def().activate();
+        expect(s.chrome.bookmarks.getTreeCalls).toBe(2);
     });
 });

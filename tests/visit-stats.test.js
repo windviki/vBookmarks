@@ -232,3 +232,27 @@ describe('clear', () => {
         expect(store.get('visitStats')).toBe('{}');
     });
 });
+
+describe('revision (第四轮缝合)', () => {
+    it('starts at 0 and bumps on every mutation (record/merge/prune/clear)', () => {
+        expect(stats.revision()).toBe(0);
+        stats.record('7', 1000);
+        expect(stats.revision()).toBe(1);
+        stats.merge([{ id: '8', c: 3, t: 2000 }]);
+        expect(stats.revision()).toBe(2);
+        stats.prune(new Set(['7'])); // drops 8 → a real change
+        expect(stats.revision()).toBe(3);
+        stats.prune(new Set(['7'])); // no change → no bump
+        expect(stats.revision()).toBe(3);
+        stats.clear();
+        expect(stats.revision()).toBe(4);
+    });
+
+    it('no-op writes (disabled switch) do not bump the revision', () => {
+        const off = initVisitStats({ store: makeStore({ statsEnabled: '' }), debounceMs: 0 });
+        expect(off.revision()).toBe(0);
+        off.record('7', 1000);
+        off.merge([{ id: '8', c: 1, t: 1 }]);
+        expect(off.revision()).toBe(0);
+    });
+});

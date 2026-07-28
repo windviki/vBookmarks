@@ -37,6 +37,10 @@ export function initVisitStats(ctx = {}) {
     let data = null; // lazy-parsed mirror of the visitStats key
     let dirty = false;
     let timer = null;
+    // Monotonic mutation counter — lets the stats view notice dataset changes
+    // that happened outside its own render pass (e.g. the recent-view history
+    // import) without a cross-view dirty hook.
+    let revision = 0;
 
     const enabled = () => !!store.get('statsEnabled', '1');
 
@@ -63,6 +67,7 @@ export function initVisitStats(ctx = {}) {
 
     const schedule = () => {
         dirty = true;
+        revision++;
         clearTimeout(timer);
         timer = setTimeout(flush, debounceMs);
     };
@@ -157,8 +162,9 @@ export function initVisitStats(ctx = {}) {
         timer = null;
         data = {};
         dirty = false;
+        revision++;
         store.set('visitStats', '{}');
     };
 
-    return { record, get, countOf, all, merge, prune, clear, flush, enabled };
+    return { record, get, countOf, all, merge, prune, clear, flush, enabled, revision: () => revision };
 }
