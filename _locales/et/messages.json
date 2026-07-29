@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Surnud linke ei leitud"
   },
+  "deadNoneFiltered": {
+    "message": "Selle filtri all pole surnud linke — proovi mõnda teist jaotist ülal."
+  },
   "deadPause": {
     "message": "Peata"
   },

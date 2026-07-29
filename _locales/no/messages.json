@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Ingen døde lenker funnet"
   },
+  "deadNoneFiltered": {
+    "message": "Ingen døde lenker under dette filteret — prøv et annet segment over."
+  },
   "deadPause": {
     "message": "Pause"
   },

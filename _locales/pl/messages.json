@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nie znaleziono martwych linków"
   },
+  "deadNoneFiltered": {
+    "message": "Brak martwych linków w tym filtrze — wypróbuj inny segment powyżej"
+  },
   "deadPause": {
     "message": "Wstrzymaj"
   },

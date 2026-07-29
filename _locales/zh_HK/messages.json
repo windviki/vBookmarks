@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "找不到失效連結"
   },
+  "deadNoneFiltered": {
+    "message": "此篩選條件下沒有失效連結 — 請嘗試上方的其他區段"
+  },
   "deadPause": {
     "message": "暫停"
   },

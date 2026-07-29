@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nerasta neveikiančių nuorodų"
   },
+  "deadNoneFiltered": {
+    "message": "Po šiuo filtru nėra negyvų nuorodų — pabandykite kitą segmentą aukščiau"
+  },
   "deadPause": {
     "message": "Pristabdyti"
   },

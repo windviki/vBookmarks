@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nema pronađenih mrtvih poveznica"
   },
+  "deadNoneFiltered": {
+    "message": "Nema mrtvih veza pod ovim filtrom — probaj drugi segment iznad."
+  },
   "deadPause": {
     "message": "Pauza"
   },

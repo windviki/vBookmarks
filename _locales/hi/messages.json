@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "कोई मृत लिंक नहीं मिला"
   },
+  "deadNoneFiltered": {
+    "message": "इस फ़िल्टर में कोई मृत लिंक नहीं — ऊपर कोई दूसरा खंड आज़माएँ"
+  },
   "deadPause": {
     "message": "रोकें"
   },

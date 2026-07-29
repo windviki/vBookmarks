@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"
   },
+  "deadNoneFiltered": {
+    "message": "Không có liên kết chết trong bộ lọc này — hãy thử một đoạn khác phía trên."
+  },
   "deadPause": {
     "message": "Tạm dừng"
   },

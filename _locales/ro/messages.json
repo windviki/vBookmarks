@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nicio legătură moartă găsită"
   },
+  "deadNoneFiltered": {
+    "message": "Nu există link-uri moarte sub acest filtru — încercați un alt segment de mai sus"
+  },
   "deadPause": {
     "message": "Pauză"
   },

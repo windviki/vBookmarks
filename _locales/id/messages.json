@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Tidak ada tautan mati ditemukan"
   },
+  "deadNoneFiltered": {
+    "message": "Tidak ada tautan mati di bawah filter ini — coba segmen lain di atas"
+  },
   "deadPause": {
     "message": "Jeda"
   },

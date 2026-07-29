@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"
   },
+  "deadNoneFiltered": {
+    "message": "Tällä suodattimella ei ole kuolleita linkkejä — kokeile toista segmenttiä yllä"
+  },
   "deadPause": {
     "message": "Keskeytä"
   },

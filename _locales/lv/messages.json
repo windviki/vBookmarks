@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nav atrastas bojātas saites"
   },
+  "deadNoneFiltered": {
+    "message": "Šajā filtrā nav mirušu saišu — mēģiniet citu segmentu augstāk"
+  },
   "deadPause": {
     "message": "Apturēt"
   },

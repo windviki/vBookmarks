@@ -206,6 +206,9 @@
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"
   },
+  "deadNoneFiltered": {
+    "message": "Nenhum link morto sob este filtro — tente outro segmento acima"
+  },
   "deadPause": {
     "message": "Pausa"
   },

@@ -479,3 +479,16 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 缝合修复（项间交互）：最近视图组头行 Enter 失效（项8 head-first 模式）改为项9 同款行尾 DOM+order 模式；搜索历史菜单补键盘绑定（项7 遗留）；`paletteCmdNewSeparator` 死键清理（项2 遗留）。
 
 第四轮验收：i18n verify 0 错误（28 新键 41 locale 全量翻译 + 1 死键清理）、单测全绿（1060+）、docker 截图套件通过（options 补备份组、recent seed 补时间跨度）、打包完成。
+
+## 附录 E：第五轮修订（2026-07-28 新规范，4 项）
+
+第四轮验收后用户提出 4 项死链相关改进，全部落地。对齐点如下：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | 死链行按钮/徽章双行布局对齐：宽布局/panel 下锚点两行高（标题 + `.row-sub` 路径），`align-items:center` 把 ⚑/× 按钮与错误码徽章停在两行接缝上——视觉即"书签下面新一行"。li 与锚点改 `flex-start`，按钮/徽章/图标钉在标题行（前 20px = 窄布局单行）；favicon-container 补 `min-height:1.67em` 跟踪标题行高，图标中心对齐标题行；docker 窄/宽双布局探针实证（按钮 top 10.03→0） | `css/neat.css`、`tests/view-dead.test.js`、`scripts/screenshots/diag-dead.js` |
+| 2 | 死链 × 椭圆根因修复 + dead/sync 标记统一重设计：`#tree ul li span` 通用行规则（display:flex + 1.67em 行高 + padding-inline-end:4px，特异性 1,0,3）渗漏进 overlay span，10px 圆被撑成 14×10 椭圆、× 被行高甩出中心（仅树视图命中，与用户报告一致）。双选择器 `#tree ul li span.dead-indicator`（1,1,3）压过通用规则，全部盒属性钉死（inline-flex 居中/padding:0/line-height:1/min-width）；统一光环语言：dead × 与 sync 点同戴 1.5px `var(--vbm-bg)` 光环（sync local 的 accent 发光退役，unsyncable 同步加环）——位置（右上/右下）+ 形状（徽章/圆点）+ 颜色三重区分，四主题 docker 3x 截图逐一人工复核 | `css/neat.css`、`css/sync-styles.css`、`tests/tree-alignment.test.js` |
+| 3 | 死链标记跨视图同步（首帧 + 全部列表）：根因链——① tree-view generateTree 在 innerHTML 替换【前】触发 onTreeGenerated，overlay 画在旧 DOM 上即被清空（预置标记首帧从不显示）；② 文件夹懒展开（getChildren+appendChild）完全绕过 onTreeGenerated；③ 搜索及各列表视图渲染无刷新钩子。修法：onTreeGenerated 移到 innerHTML 之后；新增统一 `onRowsRendered` ctx 钩子，tree-view 懒展开 / search renderResults / recent / dupes / stats 五个渲染出口全部调用，neat.js 统一接线到 deadOverlayRefresh（声明上移至 initSearch 前避 TDZ）；view-dead LISTS 扩展 dupes-list/stats-list | `src/tree-view.js`、`src/search.js`、`src/view-recent.js`、`src/view-dupes.js`、`src/view-stats.js`、`src/view-dead.js`、`src/neat.js`、六个测试文件 |
+| 4 | 死链"仅受限"过滤卡死修复：renderToolbar 以**过滤后**行数决定是否渲染过滤段——filter=blocked 且无 blocked 结果时过滤段消失，用户无法切回（除非重开 popup）。拆出 `allResultRows()` 未过滤集合供工具栏判定；过滤条件下无结果时空态文案区分 `deadNoneFiltered`（指引切回其他分段）与原 `deadNone` | `src/view-dead.js`、`tests/view-dead.test.js`、`_locales/*`（1 新键） |
+
+第五轮验收：i18n verify 0 错误（1 新键 41 locale 全量翻译）、单测全绿（1070+）、docker 截图套件通过（diag-dead.js 诊断脚本纳入套件：hover 态/宽窄布局探针/四主题指示器 zoom）、打包完成。

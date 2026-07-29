@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "끊긴 링크 없음"
   },
+  "deadNoneFiltered": {
+    "message": "이 필터 아래에 끊긴 링크가 없습니다. 위의 다른 구간을 시도해 보세요."
+  },
   "deadPause": {
     "message": "일시 중지"
   },

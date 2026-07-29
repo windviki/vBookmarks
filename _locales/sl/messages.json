@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Ni najdenih mrtvih povezav"
   },
+  "deadNoneFiltered": {
+    "message": "Pod tem filtrom ni mrtvih povezav — poskusite drug segment zgoraj"
+  },
   "deadPause": {
     "message": "Premor"
   },

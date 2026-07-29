@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
   },
+  "deadNoneFiltered": {
+    "message": "Bu filtre altında ölü bağlantı yok — yukarıdaki başka bir bölümü deneyin."
+  },
   "deadPause": {
     "message": "Duraklat"
   },

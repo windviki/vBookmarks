@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "לא נמצאו קישורים מתים"
   },
+  "deadNoneFiltered": {
+    "message": "אין קישורים מתים תחת מסנן זה — נסה קטע אחר למעלה"
+  },
   "deadPause": {
     "message": "השהה"
   },

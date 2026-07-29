@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nincs hibás hivatkozás"
   },
+  "deadNoneFiltered": {
+    "message": "Nincs holt link ebben a szűrőben — próbálkozz egy másik szegmenssel fent."
+  },
   "deadPause": {
     "message": "Szünet"
   },

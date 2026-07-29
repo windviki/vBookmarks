@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Inga döda länkar hittades"
   },
+  "deadNoneFiltered": {
+    "message": "Inga döda länkar under detta filter — prova ett annat segment ovan"
+  },
   "deadPause": {
     "message": "Pausa"
   },

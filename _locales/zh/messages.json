@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "未发现失效链接"
   },
+  "deadNoneFiltered": {
+    "message": "此筛选下没有失效链接 — 请尝试上方其他分段"
+  },
   "deadPause": {
     "message": "暂停"
   },

@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "Nenašli sa žiadne nefunkčné odkazy"
   },
+  "deadNoneFiltered": {
+    "message": "Pod týmto filtrom nie sú žiadne mŕtve odkazy — skúste iný segment vyššie"
+  },
   "deadPause": {
     "message": "Pauza"
   },

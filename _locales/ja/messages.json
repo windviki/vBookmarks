@@ -207,6 +207,9 @@
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"
   },
+  "deadNoneFiltered": {
+    "message": "このフィルターにデッドリンクはありません — 上の別のセグメントをお試しください"
+  },
   "deadPause": {
     "message": "一時停止"
   },
