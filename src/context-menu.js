@@ -137,6 +137,12 @@ export function initContextMenu(ctx = {}) {
             const nearest = el.closest('a, span');
             if (nearest) el = nearest;
         }
+        // Round-6 item: menus belong to list ROWS. The walk-up above happily
+        // lands on spans outside any row — the view-tab strip (right-clicking
+        // a tab opened the FOLDER menu on the tab-icon span) and the view
+        // toolbars. No row → no menu (default already suppressed above).
+        if (!el.closest || !el.closest('li'))
+            return;
         let menu;
         // Round-4 item 7: a search-history row (the recorded-query rows of
         // the upper search pane) is not a bookmark — its li carries no

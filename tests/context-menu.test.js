@@ -77,6 +77,24 @@ const setup = (opts = {}) => {
             querySelector(sel) {
                 return sel in this._qs ? this._qs[sel] : null;
             },
+            // Minimal Element.closest: walks parentNode, matches tag names,
+            // .classes and comma lists thereof ('li', 'a, span', '.active').
+            closest(sel) {
+                const sels = sel.split(',').map(s => s.trim());
+                let n = this;
+                while (n) {
+                    for (const s of sels) {
+                        if (s.startsWith('.')) {
+                            if (n.classList && n.classList.contains(s.slice(1)))
+                                return n;
+                        } else if (n.tagName && n.tagName.toLowerCase() === s) {
+                            return n;
+                        }
+                    }
+                    n = n.parentNode;
+                }
+                return null;
+            },
             focus() {
                 this.focused = true;
             }
@@ -435,6 +453,24 @@ describe('contextmenu handler (opening a menu)', () => {
         // no context was set: dispatching does nothing
         fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('bookmark-new-tab') }));
         expect(actionCalls).toEqual([]);
+    });
+
+    it('opens nothing on the view-tab strip (round-6 regression: span walk-up without a row)', () => {
+        const { body, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
+            el } = setup({});
+        // <button class="view-tab"><span class="tab-icon"></span></button> — the
+        // icon span matches the 'a, span' walk-up but has no <li> ancestor.
+        const tab = el('BUTTON');
+        tab.classList.add('view-tab');
+        const icon = el('SPAN');
+        icon.classList.add('tab-icon');
+        icon.parentNode = tab;
+        const ev = makeEvent({ target: icon, pageX: 50, pageY: 60, clientY: 60 });
+        fire(body, 'contextmenu', ev);
+        expect(ev.defaultPrevented).toBe(true); // default menu still suppressed
+        for (const menu of [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu])
+            expect(menu.style.opacity).not.toBe('1');
+        expect(icon.classList.contains('active')).toBe(false);
     });
 });
 
