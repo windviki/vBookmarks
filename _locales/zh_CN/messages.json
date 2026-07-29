@@ -222,6 +222,9 @@
   "deadNone": {
     "message": "没有发现死链"
   },
+  "deadNoneFiltered": {
+    "message": "当前过滤条件下没有死链，试试上方其他分段"
+  },
   "deadRescan": {
     "message": "重新检测"
   },

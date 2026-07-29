@@ -181,6 +181,10 @@
     "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",
     "message": "No dead links found"
   },
+  "deadNoneFiltered": {
+    "description": "Empty-state line of the dead-link view when the active filter segment (dead only / blocked only) matches nothing but other segments have rows.",
+    "message": "No dead links under this filter — try another segment above"
+  },
   "deadRescan": {
     "description": "Top row of the palette's dead-link scan results; starts the scan over.",
     "message": "Rescan"

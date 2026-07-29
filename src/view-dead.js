@@ -154,10 +154,12 @@ export function initViewDead(ctx = {}) {
     };
 
     // Rows of the result set: cached verdicts joined against the live tree
-    // (a bookmark deleted after the scan simply drops out), filtered by the
-    // three-state segment. `blocked` rows carry ok:false, so collectDead's
-    // semantics cover them.
-    const resultRows = () => {
+    // (a bookmark deleted after the scan simply drops out). `blocked` rows
+    // carry ok:false, so collectDead's semantics cover them. This is the
+    // UNFILTERED set — the toolbar keys off it so the filter segment stays
+    // reachable even when the active filter matches nothing (otherwise
+    // "blocked only" with zero blocked rows would hide the way back).
+    const allResultRows = () => {
         if (!lastScan || !lastScan.results)
             return [];
         const items = [];
@@ -177,10 +179,15 @@ export function initViewDead(ctx = {}) {
                 results.set(id, result);
             }
         }
-        const rows = collectDead(items, results).map(item => ({
+        return collectDead(items, results).map(item => ({
             item,
             result: results.get(item.id)
         }));
+    };
+
+    // …and the three-state segment on top of it.
+    const resultRows = () => {
+        const rows = allResultRows();
         if (filter === 'all')
             return rows;
         return rows.filter(row => row.result.status === filter);
@@ -220,7 +227,7 @@ export function initViewDead(ctx = {}) {
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>` +
                     `<button class="dead-rescan">${_m('deadRescan')}</button>`;
             }
-            const rows = resultRows();
+            const rows = allResultRows();
             if (lastScan && rows.length) {
                 html += '<span class="dead-filter" role="group">';
                 for (const [value, key] of [['all', 'deadFilterAll'], ['dead', 'deadFilterDead'], ['blocked', 'deadFilterBlocked']])
@@ -280,9 +287,12 @@ export function initViewDead(ctx = {}) {
                 `<i>${_m('deadStartHint', `${scanTotal || treeItems.size}`)}</i></li></ul>`;
         } else {
             const rows = resultRows();
+            // Distinguish "the scan found nothing" from "the active filter
+            // matches nothing" — the latter tells the user the other
+            // segments (still visible above) are where the rows went.
             html += rows.length
                 ? renderRows(rows)
-                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNone')}</i></li></ul>`;
+                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
         }
         $list.innerHTML = html;
     };

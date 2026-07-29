@@ -603,6 +603,32 @@ describe('filter + batch marks (§5.5c)', () => {
         expect($list.innerHTML).not.toContain('id="dead-item-13"');
     });
 
+    it('a filter matching nothing keeps the segment bar reachable (item: filter lock-up)', () => {
+        // Only a dead row in the cache — "blocked only" matches nothing.
+        // The segment buttons must stay rendered off the UNFILTERED count,
+        // otherwise there is no way back short of reopening the popup.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 2,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'dead', code: 404 }
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'blocked' } } : null) });
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('deadFilterAll');
+        expect($list.innerHTML).toContain('deadFilterBlocked');
+        // the empty line names the filter, not the plain "no dead links"
+        expect($list.innerHTML).toContain('deadNoneFiltered');
+        expect($list.innerHTML).not.toContain('deadNone"');
+        // …and switching back to all brings the rows back
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'all' } } : null) });
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+    });
+
     it('mark-all marks every dead+blocked row after confirmation and toasts', () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE } });
         const { store, dialogs, undo, viewDead } = ctx;
