@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
   },
+  "deadCancel": {
+    "message": "İptal"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ kontrol ediliyor…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
   },
+  "deadPause": {
+    "message": "Duraklat"
+  },
+  "deadPaused": {
+    "message": "Duraklatıldı"
+  },
   "deadProxyHint": {
     "message": "Yer imi URL'leri bu üçüncü taraf hizmetine gönderilir. Yalnızca doğrudan yoklama yapmak için boş bırakın."
   },
   "deadRescan": {
     "message": "Yeniden Tara"
+  },
+  "deadResume": {
+    "message": "Devam et"
   },
   "deadStartHint": {
     "message": "$n$ yer imini taramaya başla",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Yedekle"
+  },
   "optionsGroupViews": {
     "message": "Görünümler"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Yeni klasör…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Yeni ayraç"
-  },
   "paletteCmdOptions": {
     "message": "Seçenekler sayfasını aç"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Sistemi takip et"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Koyu"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Mürekkep (koyu)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Açık"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Kağıt (açık)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Üst yol etiketlerini aç/kapa"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Sekme görünümünü değiştir"
   },
   "paletteNoResults": {
     "message": "Eşleşen sonuç yok"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Son eklenen yer imi yok. Geçerli sayfayı yer imlerine eklemek için Ctrl+D tuşlarına basın."
+  },
+  "recentGroupMonth": {
+    "message": "Bu ay"
+  },
+  "recentGroupOlder": {
+    "message": "Daha eski"
+  },
+  "recentGroupToday": {
+    "message": "Bugün"
+  },
+  "recentGroupWeek": {
+    "message": "Bu hafta"
   },
   "recentRevealInTree": {
     "message": "Ağaçta Göster"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Bu Aramayı Kaldır"
   },
+  "searchHistoryRerun": {
+    "message": "Tekrar ara"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ sonuç",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Dışa aktarma tüm ayarları (eşitleme tercihleri dahil) bir JSON dosyasına kaydeder. İçe aktarma bir yedekle birleştirir: dosyadaki ayarlar mevcut olanların üzerine yazılır, diğer her şey korunur."
+  },
+  "settingsExport": {
+    "message": "Ayarları dışa aktar"
+  },
+  "settingsImport": {
+    "message": "Ayarları içe aktar"
+  },
+  "settingsImportConfirm": {
+    "message": "İçe aktarma, yedekleme dosyasındaki tüm ayarların üzerine yazacaktır (dosyada olmayan ayarlar korunur) ve bu sayfayı yeniden yükleyecektir. Devam edilsin mi?"
+  },
+  "settingsImportDone": {
+    "message": "Ayarlar içe aktarıldı. Sayfa şimdi yeniden yüklenecek."
+  },
+  "settingsImportInvalid": {
+    "message": "Geçersiz ayar dosyası: bir vBookmarks ayar yedeklemesi değil."
+  },
   "sortByDateAdded": {
     "message": "Eklenme tarihine göre (önce en yeni)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "İstatistikler, yer imlerini açtıkça oluşur"
   },
+  "statsHistoryAdd": {
+    "message": "Yer imlerine ekle"
+  },
   "statsHistoryBanner": {
     "message": "Geçmiş ziyaretlerinizle ziyaret istatistiklerini beslemek için geçmiş erişimi verin."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Yer imlerine eklendi"
   },
   "statsHistoryDismiss": {
     "message": "Tekrar gösterme"
   },
   "statsHistoryEnable": {
     "message": "Etkinleştir"
+  },
+  "statsHistoryGuide": {
+    "message": "Burada son ziyaretlerinizi listelemek için geçmiş erişimine izin verin."
   },
   "statsHistoryImported": {
     "message": "$count$ yer imi için geçmiş ziyaretler içe aktarıldı",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Yer imi istatistikleri"
+  },
+  "statsSectionRecent": {
+    "message": "Son ziyaretler"
   },
   "statsSortByCount": {
     "message": "Sayıya göre"

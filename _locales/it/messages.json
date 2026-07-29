@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Ciò richiede alcune abilità CSS. Hack a proprio rischio."
   },
+  "deadCancel": {
+    "message": "Annulla"
+  },
   "deadChecking": {
     "message": "Verifica $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nessun collegamento interrotto trovato"
   },
+  "deadPause": {
+    "message": "Pausa"
+  },
+  "deadPaused": {
+    "message": "In pausa"
+  },
   "deadProxyHint": {
     "message": "Gli URL dei segnalibri vengono inviati a questo servizio di terze parti. Lascia vuoto per eseguire solo sondaggi diretti."
   },
   "deadRescan": {
     "message": "Riscansiona"
+  },
+  "deadResume": {
+    "message": "Riprendi"
   },
   "deadStartHint": {
     "message": "Avvia scansione di $n$ segnalibri",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Backup"
+  },
   "optionsGroupViews": {
     "message": "Viste"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Nuova cartella…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Nuovo separatore"
-  },
   "paletteCmdOptions": {
     "message": "Apri pagina opzioni"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Segui sistema"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Scuro"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Inchiostro (scuro)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Chiaro"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Carta (chiaro)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Attiva/disattiva etichette percorso"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Attiva/disattiva schede"
   },
   "paletteNoResults": {
     "message": "Nessun risultato corrispondente"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Nessun segnalibro recente. Premi Ctrl+D per aggiungere la pagina corrente ai segnalibri."
+  },
+  "recentGroupMonth": {
+    "message": "Questo mese"
+  },
+  "recentGroupOlder": {
+    "message": "Precedenti"
+  },
+  "recentGroupToday": {
+    "message": "Oggi"
+  },
+  "recentGroupWeek": {
+    "message": "Questa settimana"
   },
   "recentRevealInTree": {
     "message": "Mostra nell'albero"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Rimuovi questa ricerca"
   },
+  "searchHistoryRerun": {
+    "message": "Cerca di nuovo"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ risultato(i)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "L'esportazione salva tutte le impostazioni (incluse le preferenze di sincronizzazione) in un file JSON. L'importazione unisce un backup: le impostazioni nel file sovrascrivono quelle attuali, tutto il resto viene mantenuto."
+  },
+  "settingsExport": {
+    "message": "Esporta impostazioni"
+  },
+  "settingsImport": {
+    "message": "Importa impostazioni"
+  },
+  "settingsImportConfirm": {
+    "message": "L'importazione sovrascriverà ogni impostazione contenuta nel file di backup (le impostazioni non presenti nel file vengono mantenute) e ricaricherà questa pagina. Continuare?"
+  },
+  "settingsImportDone": {
+    "message": "Impostazioni importate. La pagina verrà ora ricaricata."
+  },
+  "settingsImportInvalid": {
+    "message": "File impostazioni non valido: non è un backup delle impostazioni di vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Per data aggiunta (più recenti prima)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Le statistiche si accumulano quando apri i segnalibri"
   },
+  "statsHistoryAdd": {
+    "message": "Aggiungi ai segnalibri"
+  },
   "statsHistoryBanner": {
     "message": "Concedi l'accesso alla cronologia per popolare le statistiche di visita con le tue visite passate."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Aggiunto ai segnalibri"
   },
   "statsHistoryDismiss": {
     "message": "Non mostrare più"
   },
   "statsHistoryEnable": {
     "message": "Abilita"
+  },
+  "statsHistoryGuide": {
+    "message": "Concedi l'accesso alla cronologia per elencare qui le tue visite recenti."
   },
   "statsHistoryImported": {
     "message": "Importate visite passate per $count$ segnalibri",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistiche segnalibri"
+  },
+  "statsSectionRecent": {
+    "message": "Visite recenti"
   },
   "statsSortByCount": {
     "message": "Per conteggio"

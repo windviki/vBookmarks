@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Ovo zahtijeva neke CSS vještine. Izmjenjujte na vlastiti rizik. Dijeljenje koda bi bilo pametno"
   },
+  "deadCancel": {
+    "message": "Otkaži"
+  },
   "deadChecking": {
     "message": "Provjera $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nema pronađenih mrtvih poveznica"
   },
+  "deadPause": {
+    "message": "Pauza"
+  },
+  "deadPaused": {
+    "message": "Pauzirano"
+  },
   "deadProxyHint": {
     "message": "URL-ovi oznaka šalju se ovoj usluzi treće strane. Ostavite prazno za izravno ispitivanje."
   },
   "deadRescan": {
     "message": "Ponovno skeniraj"
+  },
+  "deadResume": {
+    "message": "Nastavi"
   },
   "deadStartHint": {
     "message": "Pokreni skeniranje $n$ oznaka",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Sigurnosna kopija"
+  },
   "optionsGroupViews": {
     "message": "Prikazi"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Nova mapa…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Novi razdjelnik"
-  },
   "paletteCmdOptions": {
     "message": "Otvori stranicu postavki"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Prati sustav"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Tamna"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Tinta (tamna)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Svijetla"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Papir (svijetla)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Preklopi oznake roditeljske putanje"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Preklopi kartice prikaza"
   },
   "paletteNoResults": {
     "message": "Nema odgovarajućih rezultata"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Nema nedavnih oznaka. Pritisnite Ctrl+D za označavanje trenutne stranice."
+  },
+  "recentGroupMonth": {
+    "message": "Ovaj mjesec"
+  },
+  "recentGroupOlder": {
+    "message": "Starije"
+  },
+  "recentGroupToday": {
+    "message": "Danas"
+  },
+  "recentGroupWeek": {
+    "message": "Ovaj tjedan"
   },
   "recentRevealInTree": {
     "message": "Pokaži u stablu"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Ukloni ovo pretraživanje"
   },
+  "searchHistoryRerun": {
+    "message": "Pretraži ponovno"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ rezultat(a)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Izvoz sprema sve postavke (uključujući postavke sinkronizacije) u JSON datoteku. Uvoz spaja sigurnosnu kopiju: postavke u datoteci zamjenjuju trenutne, a sve ostalo ostaje sačuvano."
+  },
+  "settingsExport": {
+    "message": "Izvezi postavke"
+  },
+  "settingsImport": {
+    "message": "Uvezi postavke"
+  },
+  "settingsImportConfirm": {
+    "message": "Uvoz će prepisati svaku postavku sadržanu u sigurnosnoj datoteci (postavke koje nisu u datoteci ostaju) i ponovno učitati ovu stranicu. Nastaviti?"
+  },
+  "settingsImportDone": {
+    "message": "Postavke uvezene. Stranica će se sada ponovno učitati."
+  },
+  "settingsImportInvalid": {
+    "message": "Nevažeća datoteka postavki: nije sigurnosna kopija vBookmarks postavki."
+  },
   "sortByDateAdded": {
     "message": "Po datumu dodavanja (najnovije prvo)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistika se prikuplja dok otvarate oznake"
   },
+  "statsHistoryAdd": {
+    "message": "Dodaj u oznake"
+  },
   "statsHistoryBanner": {
     "message": "Dodijeli pristup povijesti za pokretanje statistike posjeta s tvojim prošlim posjetima."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Označeno"
   },
   "statsHistoryDismiss": {
     "message": "Ne prikazuj više"
   },
   "statsHistoryEnable": {
     "message": "Omogući"
+  },
+  "statsHistoryGuide": {
+    "message": "Dodijelite pristup povijesti za prikaz nedavnih posjeta ovdje."
   },
   "statsHistoryImported": {
     "message": "Uvezeni prošli posjeti za $count$ oznaka",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistika oznaka"
+  },
+  "statsSectionRecent": {
+    "message": "Nedavni posjeti"
   },
   "statsSortByCount": {
     "message": "Po broju"

@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Αυτό απαιτεί κάποιες γνώσεις CSS. Τροποποιήστε με δική σας ευθύνη. Η κοινή χρήση κώδικα θα ήταν σοφή μέσω"
   },
+  "deadCancel": {
+    "message": "Ακύρωση"
+  },
   "deadChecking": {
     "message": "Έλεγχος $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"
   },
+  "deadPause": {
+    "message": "Παύση"
+  },
+  "deadPaused": {
+    "message": "Σε παύση"
+  },
   "deadProxyHint": {
     "message": "Οι διευθύνσεις URL των σελιδοδεικτών αποστέλλονται σε αυτήν την υπηρεσία τρίτου μέρους. Αφήστε κενό για απευθείας έλεγχο μόνο."
   },
   "deadRescan": {
     "message": "Επανάληψη σάρωσης"
+  },
+  "deadResume": {
+    "message": "Συνέχιση"
   },
   "deadStartHint": {
     "message": "Έναρξη σάρωσης $n$ σελιδοδεικτών",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Αντίγραφο ασφαλείας"
+  },
   "optionsGroupViews": {
     "message": "Προβολές"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Νέος φάκελος…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Νέος διαχωριστής"
-  },
   "paletteCmdOptions": {
     "message": "Άνοιγμα σελίδας επιλογών"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Θέμα: Αυτόματο"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Θέμα: Σκοτεινό"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Θέμα: Μελάνι (σκοτεινό)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Θέμα: Ανοιχτό"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Θέμα: Χαρτί (ανοιχτό)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Εναλλαγή ετικετών γονικής διαδρομής"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Εναλλαγή προβολής καρτελών"
   },
   "paletteNoResults": {
     "message": "Δεν υπάρχουν αντίστοιχα αποτελέσματα"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Δεν υπάρχουν πρόσφατοι σελιδοδείκτες. Πατήστε Ctrl+D για σελιδοδείκτη στην τρέχουσα σελίδα."
+  },
+  "recentGroupMonth": {
+    "message": "Αυτόν τον μήνα"
+  },
+  "recentGroupOlder": {
+    "message": "Παλαιότερα"
+  },
+  "recentGroupToday": {
+    "message": "Σήμερα"
+  },
+  "recentGroupWeek": {
+    "message": "Αυτή την εβδομάδα"
   },
   "recentRevealInTree": {
     "message": "Εμφάνιση στο Δέντρο"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Αφαίρεση αυτής της αναζήτησης"
   },
+  "searchHistoryRerun": {
+    "message": "Επαναζήτηση"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ αποτέλεσμα(τα)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Η εξαγωγή αποθηκεύει όλες τις ρυθμίσεις (συμπεριλαμβανομένων των προτιμήσεων συγχρονισμού) σε ένα αρχείο JSON. Η εισαγωγή συγχωνεύει ένα αντίγραφο ασφαλείας: οι ρυθμίσεις στο αρχείο αντικαθιστούν τις τρέχουσες, όλα τα υπόλοιπα διατηρούνται."
+  },
+  "settingsExport": {
+    "message": "Εξαγωγή ρυθμίσεων"
+  },
+  "settingsImport": {
+    "message": "Εισαγωγή ρυθμίσεων"
+  },
+  "settingsImportConfirm": {
+    "message": "Η εισαγωγή θα αντικαταστήσει κάθε ρύθμιση που περιέχεται στο αρχείο αντιγράφου ασφαλείας (οι ρυθμίσεις που δεν βρίσκονται στο αρχείο διατηρούνται) και θα επαναφορτώσει αυτήν τη σελίδα. Συνέχεια;"
+  },
+  "settingsImportDone": {
+    "message": "Οι ρυθμίσεις εισήχθησαν. Η σελίδα θα επαναφορτωθεί τώρα."
+  },
+  "settingsImportInvalid": {
+    "message": "Μη έγκυρο αρχείο ρυθμίσεων: δεν είναι αντίγραφο ασφαλείας ρυθμίσεων του vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Κατά ημερομηνία προσθήκης (νεότερα πρώτα)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Τα στατιστικά συσσωρεύονται καθώς ανοίγετε σελιδοδείκτες"
   },
+  "statsHistoryAdd": {
+    "message": "Προσθήκη σε σελιδοδείκτες"
+  },
   "statsHistoryBanner": {
     "message": "Χορηγήστε πρόσβαση στο ιστορικό για να τροφοδοτήσετε στατιστικά επισκέψεων με τις προηγούμενες επισκέψεις σας."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Προστέθηκε στους σελιδοδείκτες"
   },
   "statsHistoryDismiss": {
     "message": "Να μην εμφανίζεται ξανά"
   },
   "statsHistoryEnable": {
     "message": "Ενεργοποίηση"
+  },
+  "statsHistoryGuide": {
+    "message": "Παραχωρήστε πρόσβαση στο ιστορικό για να εμφανίζονται οι πρόσφατες επισκέψεις σας εδώ."
   },
   "statsHistoryImported": {
     "message": "Εισαγωγή προηγούμενων επισκέψεων για $count$ σελιδοδείκτες",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Στατιστικά σελιδοδεικτών"
+  },
+  "statsSectionRecent": {
+    "message": "Πρόσφατες επισκέψεις"
   },
   "statsSortByCount": {
     "message": "Ανά αριθμό"

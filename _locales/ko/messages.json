@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "일부 CSS 기술이 필요합니다. 자신의 책임하에 수정하십시오. 코드 공유는 통해 하는 것이 현명할 것입니다"
   },
+  "deadCancel": {
+    "message": "취소"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ 확인 중…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "끊긴 링크 없음"
   },
+  "deadPause": {
+    "message": "일시 중지"
+  },
+  "deadPaused": {
+    "message": "일시 중지됨"
+  },
   "deadProxyHint": {
     "message": "북마크 URL이 이 타사 서비스로 전송됩니다. 비워두면 직접 확인만 수행합니다."
   },
   "deadRescan": {
     "message": "다시 검색"
+  },
+  "deadResume": {
+    "message": "재개"
   },
   "deadStartHint": {
     "message": "$n$개 북마크 검사 시작",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "백업"
+  },
   "optionsGroupViews": {
     "message": "보기"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "새 폴더…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "새 구분선"
-  },
   "paletteCmdOptions": {
     "message": "옵션 페이지 열기"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "테마: 시스템 설정 따름"
+  },
+  "paletteCmdThemeDark": {
+    "message": "테마: 어둡게"
+  },
+  "paletteCmdThemeInk": {
+    "message": "테마: 잉크(어둡게)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "테마: 밝음"
+  },
+  "paletteCmdThemePaper": {
+    "message": "테마: 종이(밝게)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "상위 경로 레이블 전환"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "탭 보기 전환"
   },
   "paletteNoResults": {
     "message": "일치하는 결과 없음"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "최근 북마크가 없습니다. Ctrl+D를 눌러 현재 페이지를 북마크에 추가하세요."
+  },
+  "recentGroupMonth": {
+    "message": "이번 달"
+  },
+  "recentGroupOlder": {
+    "message": "이전"
+  },
+  "recentGroupToday": {
+    "message": "오늘"
+  },
+  "recentGroupWeek": {
+    "message": "이번 주"
   },
   "recentRevealInTree": {
     "message": "트리에서 보기"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "이 검색 제거"
   },
+  "searchHistoryRerun": {
+    "message": "다시 검색"
+  },
   "searchHistoryResultCount": {
     "message": "$n$개 결과",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "내보내기는 모든 설정(동기화 기본 설정 포함)을 JSON 파일에 저장합니다. 가져오기는 백업을 병합합니다: 파일의 설정이 현재 설정을 덮어쓰고, 나머지는 유지됩니다."
+  },
+  "settingsExport": {
+    "message": "설정 내보내기"
+  },
+  "settingsImport": {
+    "message": "설정 가져오기"
+  },
+  "settingsImportConfirm": {
+    "message": "가져오기는 백업 파일에 포함된 모든 설정을 덮어씁니다(파일에 없는 설정은 유지됨) 그리고 이 페이지를 다시 로드합니다. 계속하시겠습니까?"
+  },
+  "settingsImportDone": {
+    "message": "설정을 가져왔습니다. 페이지가 곧 다시 로드됩니다."
+  },
+  "settingsImportInvalid": {
+    "message": "유효하지 않은 설정 파일: vBookmarks 설정 백업이 아닙니다."
+  },
   "sortByDateAdded": {
     "message": "추가 날짜별 (최신순)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "북마크를 열면 통계가 쌓입니다"
   },
+  "statsHistoryAdd": {
+    "message": "북마크에 추가"
+  },
   "statsHistoryBanner": {
     "message": "과거 방문 기록을 사용하여 방문 통계를 초기화하려면 기록 액세스 권한을 부여하세요"
+  },
+  "statsHistoryBookmarked": {
+    "message": "북마크됨"
   },
   "statsHistoryDismiss": {
     "message": "다시 표시하지 않음"
   },
   "statsHistoryEnable": {
     "message": "활성화"
+  },
+  "statsHistoryGuide": {
+    "message": "방문 기록 접근 권한을 부여하여 최근 방문을 여기에 표시하세요."
   },
   "statsHistoryImported": {
     "message": "$count$개의 북마크에 대한 과거 방문 기록을 가져왔습니다",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "북마크 통계"
+  },
+  "statsSectionRecent": {
+    "message": "최근 방문"
   },
   "statsSortByCount": {
     "message": "횟수순"

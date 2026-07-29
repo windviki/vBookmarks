@@ -139,6 +139,9 @@
   "customStylesDescription": {
     "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
   },
+  "deadCancel": {
+    "message": "Откажи"
+  },
   "deadChecking": {
     "message": "Проверка $done$ / $total$…",
     "placeholders": {
@@ -203,11 +206,20 @@
   "deadNone": {
     "message": "Нема пронајдени мртви врски"
   },
+  "deadPause": {
+    "message": "Паузирај"
+  },
+  "deadPaused": {
+    "message": "Паузирано"
+  },
   "deadProxyHint": {
     "message": "URL-адресите на обележувачите се испраќаат до оваа услуга од трета страна. Оставете празно за да испитувате директно само."
   },
   "deadRescan": {
     "message": "Повторно скенирај"
+  },
+  "deadResume": {
+    "message": "Продолжи"
   },
   "deadStartHint": {
     "message": "Започни скенирање на $n$ обележувачи",
@@ -587,6 +599,9 @@
     },
     "description": "Footer text for the Options page"
   },
+  "optionsGroupBackup": {
+    "message": "Резервна копија"
+  },
   "optionsGroupViews": {
     "message": "Прикази"
   },
@@ -620,9 +635,6 @@
   "paletteCmdNewFolder": {
     "message": "Нова папка…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Нов разделувач"
-  },
   "paletteCmdOptions": {
     "message": "Отвори страница за опции"
   },
@@ -639,6 +651,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Тема: Следи го системот"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Тема: Темна"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Тема: Мастило (темна)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Тема: Светла"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Тема: Хартија (светла)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Префрли ознаки за родителска патека"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Префрли приказ на јазичиња"
   },
   "paletteNoResults": {
     "message": "Нема совпаѓачки резултати"
@@ -682,6 +715,18 @@
   },
   "recentEmpty": {
     "message": "Нема неодамнешни обележувачи. Притиснете Ctrl+D за да ја обележите тековната страница."
+  },
+  "recentGroupMonth": {
+    "message": "Овој месец"
+  },
+  "recentGroupOlder": {
+    "message": "Постари"
+  },
+  "recentGroupToday": {
+    "message": "Денес"
+  },
+  "recentGroupWeek": {
+    "message": "Оваа недела"
   },
   "recentRevealInTree": {
     "message": "Прикажи во дрво"
@@ -736,6 +781,9 @@
   "searchHistoryRemove": {
     "message": "Отстрани го ова пребарување"
   },
+  "searchHistoryRerun": {
+    "message": "Повторно пребарај"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ резултат(и)",
     "placeholders": {
@@ -776,6 +824,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Извозот ги зачувува сите поставки (вклучувајќи ги преференциите за синхронизација) во JSON датотека. Увозот спојува резервна копија: поставките во датотеката ги препишуваат тековните, а сè друго останува."
+  },
+  "settingsExport": {
+    "message": "Извези поставки"
+  },
+  "settingsImport": {
+    "message": "Увези поставки"
+  },
+  "settingsImportConfirm": {
+    "message": "Увозот ќе ги препише сите поставки содржани во резервната датотека (поставките што не се во датотеката се задржуваат) и ќе ја превчита оваа страница. Продолжи?"
+  },
+  "settingsImportDone": {
+    "message": "Поставките се увезени. Страницата сега ќе се превчита."
+  },
+  "settingsImportInvalid": {
+    "message": "Невалидна датотека со поставки: не е резервна копија на vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "По датум на додавање (најнови први)"
   },
@@ -811,14 +877,23 @@
   "statsEmpty": {
     "message": "Статистиките се градат додека отворате обележувачи"
   },
+  "statsHistoryAdd": {
+    "message": "Додај во обележувачи"
+  },
   "statsHistoryBanner": {
     "message": "Овозможи пристап до историјата за да се земат статистики за посети од твоите минати посети."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Обележано"
   },
   "statsHistoryDismiss": {
     "message": "Не прикажувај повторно"
   },
   "statsHistoryEnable": {
     "message": "Овозможи"
+  },
+  "statsHistoryGuide": {
+    "message": "Дозволи пристап до историјата за да ги наведеш твоите неодамнешни посети овде."
   },
   "statsHistoryImported": {
     "message": "Увезени минати посети за $count$ обележувачи",
@@ -827,6 +902,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика за обележувачи"
+  },
+  "statsSectionRecent": {
+    "message": "Неодамнешни посети"
   },
   "statsSortByCount": {
     "message": "По број"

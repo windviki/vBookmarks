@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
   },
+  "deadCancel": {
+    "message": "Atšaukti"
+  },
   "deadChecking": {
     "message": "Tikrinama $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nerasta neveikiančių nuorodų"
   },
+  "deadPause": {
+    "message": "Pristabdyti"
+  },
+  "deadPaused": {
+    "message": "Pristabdyta"
+  },
   "deadProxyHint": {
     "message": "Žymių URL siunčiami šiai trečiosios šalies paslaugai. Palikite tuščią, kad tikrintų tiesiogiai."
   },
   "deadRescan": {
     "message": "Nuskaityti iš naujo"
+  },
+  "deadResume": {
+    "message": "Tęsti"
   },
   "deadStartHint": {
     "message": "Pradėti $n$ žymių nuskaitymą",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Atsarginė kopija"
+  },
   "optionsGroupViews": {
     "message": "Rodiniai"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Naujas aplankas…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Naujas skyriklis"
-  },
   "paletteCmdOptions": {
     "message": "Atidaryti nustatymus"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Sekti sistemą"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Tamsi"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Rašalas (tamsi)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Šviesi"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Popierius (šviesi)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Perjungti tėvinių kelių etiketes"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Perjungti rodymo skirtukus"
   },
   "paletteNoResults": {
     "message": "Atitikmenų nerasta"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Nėra neseniai pridėtų žymių. Paspauskite Ctrl+D, kad pridėtumėte dabartinį puslapį."
+  },
+  "recentGroupMonth": {
+    "message": "Šis mėnuo"
+  },
+  "recentGroupOlder": {
+    "message": "Senesni"
+  },
+  "recentGroupToday": {
+    "message": "Šiandien"
+  },
+  "recentGroupWeek": {
+    "message": "Ši savaitė"
   },
   "recentRevealInTree": {
     "message": "Rodyti medyje"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Pašalinti šią paiešką"
   },
+  "searchHistoryRerun": {
+    "message": "Ieškoti dar kartą"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ rezultatas(-ai)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Eksportavimas išsaugo visus nustatymus (įskaitant sinchronizavimo nuostatas) į JSON failą. Importavimas sujungia atsarginę kopiją: failo nustatymai perrašo esamus, o visa kita išlieka."
+  },
+  "settingsExport": {
+    "message": "Eksportuoti nustatymus"
+  },
+  "settingsImport": {
+    "message": "Importuoti nustatymus"
+  },
+  "settingsImportConfirm": {
+    "message": "Importuojant bus perrašyti visi atsarginėje kopijoje esantys nustatymai (faile nesantys nustatymai išlieka) ir šis puslapis bus perkrautas. Tęsti?"
+  },
+  "settingsImportDone": {
+    "message": "Nustatymai importuoti. Puslapis bus perkrautas."
+  },
+  "settingsImportInvalid": {
+    "message": "Netinkamas nustatymų failas: tai nėra vBookmarks nustatymų atsarginė kopija."
+  },
   "sortByDateAdded": {
     "message": "Pagal pridėjimo datą (naujausi pirmi)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistika kaupiasi atidarant žymes"
   },
+  "statsHistoryAdd": {
+    "message": "Pridėti prie adresyno"
+  },
   "statsHistoryBanner": {
     "message": "Suteikti prieigą prie naršymo istorijos, kad apsilankymų statistika būtų užpildyta jūsų ankstesniais apsilankymais."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pažymėta"
   },
   "statsHistoryDismiss": {
     "message": "Nerodyti daugiau"
   },
   "statsHistoryEnable": {
     "message": "Įgalinti"
+  },
+  "statsHistoryGuide": {
+    "message": "Suteikite istorijos prieigą, kad čia būtų rodomi jūsų naujausi apsilankymai."
   },
   "statsHistoryImported": {
     "message": "Importuoti ankstesni apsilankymai $count$ žymelėms",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Adresyno statistika"
+  },
+  "statsSectionRecent": {
+    "message": "Naujausi apsilankymai"
   },
   "statsSortByCount": {
     "message": "Pagal skaičių"

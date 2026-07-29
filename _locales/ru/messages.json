@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Для этого требуется некоторый навык CSS. Кодируйте на свой страх и риск. Обмен кодом был бы разумным "
   },
+  "deadCancel": {
+    "message": "Отмена"
+  },
   "deadChecking": {
     "message": "Проверка $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Неработающих ссылок не найдено"
   },
+  "deadPause": {
+    "message": "Пауза"
+  },
+  "deadPaused": {
+    "message": "Приостановлено"
+  },
   "deadProxyHint": {
     "message": "URL-адреса закладок отправляются этой сторонней службе. Оставьте пустым, чтобы проверять только напрямую."
   },
   "deadRescan": {
     "message": "Пересканировать"
+  },
+  "deadResume": {
+    "message": "Возобновить"
   },
   "deadStartHint": {
     "message": "Начать проверку $n$ закладок",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Резервное копирование"
+  },
   "optionsGroupViews": {
     "message": "Вид"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Новая папка…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Новый разделитель"
-  },
   "paletteCmdOptions": {
     "message": "Открыть настройки"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Тема: По системе"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Тема: Тёмная"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Тема: Чернила (тёмная)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Тема: Светлая"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Тема: Бумага (светлая)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Переключить метки пути"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Переключить вкладки"
   },
   "paletteNoResults": {
     "message": "Нет совпадений"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Нет недавних закладок. Нажмите Ctrl+D, чтобы добавить текущую страницу."
+  },
+  "recentGroupMonth": {
+    "message": "В этом месяце"
+  },
+  "recentGroupOlder": {
+    "message": "Ранее"
+  },
+  "recentGroupToday": {
+    "message": "Сегодня"
+  },
+  "recentGroupWeek": {
+    "message": "На этой неделе"
   },
   "recentRevealInTree": {
     "message": "Показать в дереве"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Удалить этот поиск"
   },
+  "searchHistoryRerun": {
+    "message": "Искать снова"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ результат(ов)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Экспорт сохраняет все настройки (включая параметры синхронизации) в JSON-файл. Импорт объединяет резервную копию: настройки из файла перезаписывают текущие, всё остальное сохраняется."
+  },
+  "settingsExport": {
+    "message": "Экспорт настроек"
+  },
+  "settingsImport": {
+    "message": "Импорт настроек"
+  },
+  "settingsImportConfirm": {
+    "message": "Импорт перезапишет все настройки, содержащиеся в файле резервной копии (настройки, отсутствующие в файле, будут сохранены), и перезагрузит эту страницу. Продолжить?"
+  },
+  "settingsImportDone": {
+    "message": "Настройки импортированы. Страница будет перезагружена."
+  },
+  "settingsImportInvalid": {
+    "message": "Недействительный файл настроек: это не резервная копия настроек vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "По дате добавления (сначала новые)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Статистика накапливается по мере открытия закладок"
   },
+  "statsHistoryAdd": {
+    "message": "Добавить в закладки"
+  },
   "statsHistoryBanner": {
     "message": "Предоставьте доступ к истории, чтобы сформировать статистику посещений на основе ваших прошлых визитов."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Добавлено в закладки"
   },
   "statsHistoryDismiss": {
     "message": "Больше не показывать"
   },
   "statsHistoryEnable": {
     "message": "Включить"
+  },
+  "statsHistoryGuide": {
+    "message": "Предоставьте доступ к истории, чтобы увидеть здесь недавние посещения."
   },
   "statsHistoryImported": {
     "message": "Импортированы прошлые посещения для $count$ закладок",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика закладок"
+  },
+  "statsSectionRecent": {
+    "message": "Недавние посещения"
   },
   "statsSortByCount": {
     "message": "По количеству"

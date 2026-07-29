@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
   },
+  "deadCancel": {
+    "message": "キャンセル"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ を確認中…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"
   },
+  "deadPause": {
+    "message": "一時停止"
+  },
+  "deadPaused": {
+    "message": "一時停止中"
+  },
   "deadProxyHint": {
     "message": "ブックマークURLはこのサードパーティサービスに送信されます。空欄の場合は直接プローブのみ行います。"
   },
   "deadRescan": {
     "message": "再スキャン"
+  },
+  "deadResume": {
+    "message": "再開"
   },
   "deadStartHint": {
     "message": "$n$個のブックマークのスキャンを開始",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "バックアップ"
+  },
   "optionsGroupViews": {
     "message": "ビュー"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "新しいフォルダ…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "新しい区切り"
-  },
   "paletteCmdOptions": {
     "message": "オプションページを開く"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "テーマ: システムに従う"
+  },
+  "paletteCmdThemeDark": {
+    "message": "テーマ: ダーク"
+  },
+  "paletteCmdThemeInk": {
+    "message": "テーマ: インク(ダーク)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "テーマ: ライト"
+  },
+  "paletteCmdThemePaper": {
+    "message": "テーマ: ペーパー(ライト)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "親パスラベルの表示切替"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "ビュータブの切り替え"
   },
   "paletteNoResults": {
     "message": "一致する結果はありません"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "最近のブックマークはありません。Ctrl+Dを押して現在のページをブックマークしてください。"
+  },
+  "recentGroupMonth": {
+    "message": "今月"
+  },
+  "recentGroupOlder": {
+    "message": "過去"
+  },
+  "recentGroupToday": {
+    "message": "今日"
+  },
+  "recentGroupWeek": {
+    "message": "今週"
   },
   "recentRevealInTree": {
     "message": "ツリーで表示"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "この検索を削除"
   },
+  "searchHistoryRerun": {
+    "message": "再検索"
+  },
   "searchHistoryResultCount": {
     "message": "$n$件の結果",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "エクスポートはすべての設定（同期設定を含む）をJSONファイルに保存します。インポートはバックアップを結合します。ファイル内の設定が現在の設定を上書きし、その他は保持されます。"
+  },
+  "settingsExport": {
+    "message": "設定をエクスポート"
+  },
+  "settingsImport": {
+    "message": "設定をインポート"
+  },
+  "settingsImportConfirm": {
+    "message": "インポートを実行すると、バックアップファイルに含まれるすべての設定が上書きされ（ファイルにない設定は保持されます）、このページがリロードされます。続行しますか？"
+  },
+  "settingsImportDone": {
+    "message": "設定がインポートされました。ページをリロードします。"
+  },
+  "settingsImportInvalid": {
+    "message": "無効な設定ファイルです。vBookmarksの設定バックアップではありません。"
+  },
   "sortByDateAdded": {
     "message": "追加日順（新しい順）"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "ブックマークを開くと統計が蓄積されます"
   },
+  "statsHistoryAdd": {
+    "message": "ブックマークに追加"
+  },
   "statsHistoryBanner": {
     "message": "過去の訪問データで訪問統計を生成するために履歴アクセスを許可してください。"
+  },
+  "statsHistoryBookmarked": {
+    "message": "ブックマーク済み"
   },
   "statsHistoryDismiss": {
     "message": "今後表示しない"
   },
   "statsHistoryEnable": {
     "message": "有効にする"
+  },
+  "statsHistoryGuide": {
+    "message": "ここに最近の訪問を表示するには、履歴へのアクセスを許可してください。"
   },
   "statsHistoryImported": {
     "message": "$count$ 個のブックマークの過去の訪問データをインポートしました",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "ブックマーク統計"
+  },
+  "statsSectionRecent": {
+    "message": "最近の訪問"
   },
   "statsSortByCount": {
     "message": "回数順"

@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "注意：无CSS知識請勿冒險修改。推薦將代碼共享到 "
   },
+  "deadCancel": {
+    "message": "取消"
+  },
   "deadChecking": {
     "message": "正在檢查 $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "找不到失效連結"
   },
+  "deadPause": {
+    "message": "暫停"
+  },
+  "deadPaused": {
+    "message": "已暫停"
+  },
   "deadProxyHint": {
     "message": "書籤 URL 會傳送至這個第三方服務。留空則僅直接探測。"
   },
   "deadRescan": {
     "message": "重新掃描"
+  },
+  "deadResume": {
+    "message": "繼續"
   },
   "deadStartHint": {
     "message": "開始掃描 $n$ 個書籤",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "備份"
+  },
   "optionsGroupViews": {
     "message": "檢視"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "新增資料夾…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "新增分隔線"
-  },
   "paletteCmdOptions": {
     "message": "开启选项页面"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "主題：跟隨系統"
+  },
+  "paletteCmdThemeDark": {
+    "message": "主題：深色"
+  },
+  "paletteCmdThemeInk": {
+    "message": "主題：墨色（深色）"
+  },
+  "paletteCmdThemeLight": {
+    "message": "主題：淺色"
+  },
+  "paletteCmdThemePaper": {
+    "message": "主題：紙色（淺色）"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "切換父路徑標籤"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "切換檢視分頁"
   },
   "paletteNoResults": {
     "message": "無相符結果"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "尚無最近書籤。按 Ctrl+D 可將目前頁面加入書籤。"
+  },
+  "recentGroupMonth": {
+    "message": "本月"
+  },
+  "recentGroupOlder": {
+    "message": "較早"
+  },
+  "recentGroupToday": {
+    "message": "今天"
+  },
+  "recentGroupWeek": {
+    "message": "本週"
   },
   "recentRevealInTree": {
     "message": "在樹狀圖中顯示"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "移除此搜尋"
   },
+  "searchHistoryRerun": {
+    "message": "重新搜尋"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ 個結果",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "匯出功能會將所有設定（包括同步偏好）儲存為 JSON 檔案。匯入則會合併備份：檔案中的設定會覆蓋目前的設定，其餘部分則保留。"
+  },
+  "settingsExport": {
+    "message": "匯出設定"
+  },
+  "settingsImport": {
+    "message": "匯入設定"
+  },
+  "settingsImportConfirm": {
+    "message": "匯入將覆蓋備份檔案中包含的所有設定（不在檔案中的設定會保留），並重新載入此頁面。是否繼續？"
+  },
+  "settingsImportDone": {
+    "message": "設定已匯入。頁面即將重新載入。"
+  },
+  "settingsImportInvalid": {
+    "message": "無效的設定檔案：並非 vBookmarks 的設定備份。"
+  },
   "sortByDateAdded": {
     "message": "依新增日期（最新優先）"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "统计数据会在您开启书签时逐步累积"
   },
+  "statsHistoryAdd": {
+    "message": "加入書籤"
+  },
   "statsHistoryBanner": {
     "message": "允許存取歷史記錄，以使用過往訪問紀錄填充瀏覽統計"
+  },
+  "statsHistoryBookmarked": {
+    "message": "已加入書籤"
   },
   "statsHistoryDismiss": {
     "message": "不再顯示"
   },
   "statsHistoryEnable": {
     "message": "啟用"
+  },
+  "statsHistoryGuide": {
+    "message": "授予瀏覽記錄權限，即可在此列出您最近的瀏覽紀錄。"
   },
   "statsHistoryImported": {
     "message": "已為 $count$ 個書籤匯入過往訪問記錄",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "書籤統計"
+  },
+  "statsSectionRecent": {
+    "message": "最近瀏覽"
   },
   "statsSortByCount": {
     "message": "依次数"

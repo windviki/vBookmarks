@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Това изисква някои CSS умения. Променяйте на свой риск. Би било разумно да споделяте код чрез"
   },
+  "deadCancel": {
+    "message": "Отказ"
+  },
   "deadChecking": {
     "message": "Проверка $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Няма открити мъртви връзки"
   },
+  "deadPause": {
+    "message": "Пауза"
+  },
+  "deadPaused": {
+    "message": "Паузирано"
+  },
   "deadProxyHint": {
     "message": "URL адресите на отметките се изпращат до тази трета страна. Оставете празно, за да проверявате директно само."
   },
   "deadRescan": {
     "message": "Повторно сканиране"
+  },
+  "deadResume": {
+    "message": "Възобновяване"
   },
   "deadStartHint": {
     "message": "Стартиране на сканиране на $n$ отметки",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Резервно копие"
+  },
   "optionsGroupViews": {
     "message": "Изгледи"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Нова папка…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Нов разделител"
-  },
   "paletteCmdOptions": {
     "message": "Отвори страница с опции"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Тема: Следвай системата"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Тема: Тъмна"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Тема: Мастило (тъмна)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Тема: Светла"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Тема: Хартия (светла)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Превключване на етикетите на родителския път"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Превключване на разделите"
   },
   "paletteNoResults": {
     "message": "Няма съвпадащи резултати"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Няма скорошни отметки. Натиснете Ctrl+D, за да отметнете текущата страница."
+  },
+  "recentGroupMonth": {
+    "message": "Този месец"
+  },
+  "recentGroupOlder": {
+    "message": "По-стари"
+  },
+  "recentGroupToday": {
+    "message": "Днес"
+  },
+  "recentGroupWeek": {
+    "message": "Тази седмица"
   },
   "recentRevealInTree": {
     "message": "Покажи в дървото"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Премахни това търсене"
   },
+  "searchHistoryRerun": {
+    "message": "Търсене отново"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ резултат(а)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Експортирането записва всички настройки (включително синхронизиращите предпочитания) в JSON файл. Импортирането обединява резервно копие: настройките във файла заместват текущите, всичко останало се запазва."
+  },
+  "settingsExport": {
+    "message": "Експортиране на настройки"
+  },
+  "settingsImport": {
+    "message": "Импортиране на настройки"
+  },
+  "settingsImportConfirm": {
+    "message": "Импортирането ще замени всяка настройка, съдържаща се в резервния файл (настройките, които не са във файла, се запазват) и ще презареди тази страница. Продължи?"
+  },
+  "settingsImportDone": {
+    "message": "Настройките са импортирани. Страницата ще се презареди сега."
+  },
+  "settingsImportInvalid": {
+    "message": "Невалиден файл с настройки: не е резервно копие на настройки на vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "По дата на добавяне (най-новите първи)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Статистиката се натрупва, докато отваряте отметки"
   },
+  "statsHistoryAdd": {
+    "message": "Добавяне в отметки"
+  },
   "statsHistoryBanner": {
     "message": "Разрешете достъп до историята, за да обогатите статистиките за посещения с миналите ви посещения."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Отметнато"
   },
   "statsHistoryDismiss": {
     "message": "Не показвай отново"
   },
   "statsHistoryEnable": {
     "message": "Активиране"
+  },
+  "statsHistoryGuide": {
+    "message": "Предоставете достъп до историята, за да видите последните си посещения тук."
   },
   "statsHistoryImported": {
     "message": "Импортирани минали посещения за $count$ отметки",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика за отметки"
+  },
+  "statsSectionRecent": {
+    "message": "Последни посещения"
   },
   "statsSortByCount": {
     "message": "По брой"

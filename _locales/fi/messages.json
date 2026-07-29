@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Tämä vaatii CSS-taitoja. Muokkaa omalla vastuullasi. Koodin jakaminen olisi viisasta tehdä kautta"
   },
+  "deadCancel": {
+    "message": "Peruuta"
+  },
   "deadChecking": {
     "message": "Tarkistetaan $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"
   },
+  "deadPause": {
+    "message": "Keskeytä"
+  },
+  "deadPaused": {
+    "message": "Keskeytetty"
+  },
   "deadProxyHint": {
     "message": "Kirjanmerkkien URL-osoitteet lähetetään tälle kolmannen osapuolen palvelulle. Jätä tyhjäksi, jotta tarkistetaan vain suoraan."
   },
   "deadRescan": {
     "message": "Uudelleenskannaa"
+  },
+  "deadResume": {
+    "message": "Jatka"
   },
   "deadStartHint": {
     "message": "Aloitetaan $n$ kirjanmerkin skannaus",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Varmuuskopio"
+  },
   "optionsGroupViews": {
     "message": "Näkymät"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Uusi kansio…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Uusi erotin"
-  },
   "paletteCmdOptions": {
     "message": "Avaa asetussivu"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Teema: Järjestelmän mukaan"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Teema: Tumma"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Teema: Muste (tumma)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Teema: Vaalea"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Teema: Paperi (vaalea)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Vaihda ylätason polun näyttö"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Vaihda välilehtien näyttö"
   },
   "paletteNoResults": {
     "message": "Ei vastaavia tuloksia"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Ei äskettäisiä kirjanmerkkejä. Paina Ctrl+D lisätäksesi nykyisen sivun kirjanmerkkeihin."
+  },
+  "recentGroupMonth": {
+    "message": "Tässä kuussa"
+  },
+  "recentGroupOlder": {
+    "message": "Vanhemmat"
+  },
+  "recentGroupToday": {
+    "message": "Tänään"
+  },
+  "recentGroupWeek": {
+    "message": "Tällä viikolla"
   },
   "recentRevealInTree": {
     "message": "Näytä puussa"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Poista tämä haku"
   },
+  "searchHistoryRerun": {
+    "message": "Hae uudelleen"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ tulosta",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Vienti tallentaa kaikki asetukset (mukaan lukien synkronointiasetukset) JSON-tiedostoon. Tuonti yhdistää varmuuskopion takaisin: tiedoston asetukset korvaavat nykyiset, muut säilyvät."
+  },
+  "settingsExport": {
+    "message": "Vie asetukset"
+  },
+  "settingsImport": {
+    "message": "Tuo asetukset"
+  },
+  "settingsImportConfirm": {
+    "message": "Tuominen korvaa kaikki varmuuskopiotiedostossa olevat asetukset (tiedostossa olemattomat asetukset säilyvät) ja lataa tämän sivun uudelleen. Jatketaanko?"
+  },
+  "settingsImportDone": {
+    "message": "Asetukset tuotu. Sivu ladataan nyt uudelleen."
+  },
+  "settingsImportInvalid": {
+    "message": "Virheellinen asetustiedosto: ei ole vBookmarks-asetusten varmuuskopio."
+  },
   "sortByDateAdded": {
     "message": "Lisäyspäivän mukaan (uusin ensin)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Tilastot kertyvät, kun avaat kirjanmerkkejä"
   },
+  "statsHistoryAdd": {
+    "message": "Lisää kirjanmerkkeihin"
+  },
   "statsHistoryBanner": {
     "message": "Myönnä historiatietojen käyttöoikeus, jotta tilastot saavat alkutiedot aiemmista vierailuistasi."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Kirjanmerkitty"
   },
   "statsHistoryDismiss": {
     "message": "Älä näytä uudelleen"
   },
   "statsHistoryEnable": {
     "message": "Ota käyttöön"
+  },
+  "statsHistoryGuide": {
+    "message": "Myönnä historian käyttöoikeus listataksesi viimeisimmät vierailusi tähän."
   },
   "statsHistoryImported": {
     "message": "Tuotiin aiemmat vierailut $count$ kirjanmerkille",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Kirjanmerkkitilastot"
+  },
+  "statsSectionRecent": {
+    "message": "Viimeisimmät vierailut"
   },
   "statsSortByCount": {
     "message": "Määrän mukaan"

@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
   },
+  "deadCancel": {
+    "message": "בטל"
+  },
   "deadChecking": {
     "message": "בודק $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "לא נמצאו קישורים מתים"
   },
+  "deadPause": {
+    "message": "השהה"
+  },
+  "deadPaused": {
+    "message": "מושהה"
+  },
   "deadProxyHint": {
     "message": "כתובות האתרים של הסימניות נשלחות לשירות צד שלישי זה. השאר ריק כדי לבדוק ישירות בלבד."
   },
   "deadRescan": {
     "message": "סריקה מחדש"
+  },
+  "deadResume": {
+    "message": "המשך"
   },
   "deadStartHint": {
     "message": "התחל לסרוק $n$ סימניות",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "גיבוי"
+  },
   "optionsGroupViews": {
     "message": "תצוגות"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "תיקייה חדשה…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "מפריד חדש"
-  },
   "paletteCmdOptions": {
     "message": "פתח דף הגדרות"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "ערכת נושא: התאם למערכת"
+  },
+  "paletteCmdThemeDark": {
+    "message": "ערכת נושא: כהה"
+  },
+  "paletteCmdThemeInk": {
+    "message": "ערכת נושא: דיו (כהה)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "ערכת נושא: בהיר"
+  },
+  "paletteCmdThemePaper": {
+    "message": "ערכת נושא: נייר (בהיר)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "הצג/הסתר תוויות נתיב"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "הצג/הסתר לשוניות"
   },
   "paletteNoResults": {
     "message": "אין תוצאות תואמות"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "אין סימניות אחרונות. לחץ על Ctrl+D כדי לסמן את הדף הנוכחי."
+  },
+  "recentGroupMonth": {
+    "message": "החודש"
+  },
+  "recentGroupOlder": {
+    "message": "ישן יותר"
+  },
+  "recentGroupToday": {
+    "message": "היום"
+  },
+  "recentGroupWeek": {
+    "message": "השבוע"
   },
   "recentRevealInTree": {
     "message": "חשוף בעץ"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "הסר חיפוש זה"
   },
+  "searchHistoryRerun": {
+    "message": "חפש שוב"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ תוצאה(ות)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "ייצוא שומר את כל ההגדרות (כולל העדפות סנכרון) לקובץ JSON. ייבוא ממזג גיבוי בחזרה: הגדרות בקובץ יחליפו את ההגדרות הנוכחיות, כל השאר נשמר."
+  },
+  "settingsExport": {
+    "message": "ייצוא הגדרות"
+  },
+  "settingsImport": {
+    "message": "ייבוא הגדרות"
+  },
+  "settingsImportConfirm": {
+    "message": "הייבוא יחליף כל הגדרה שנמצאת בקובץ הגיבוי (הגדרות שאינן בקובץ יישמרו) ויטען מחדש דף זה. להמשיך?"
+  },
+  "settingsImportDone": {
+    "message": "הגדרות יובאו. הדף ייטען מחדש כעת."
+  },
+  "settingsImportInvalid": {
+    "message": "קובץ הגדרות לא תקין: אינו גיבוי הגדרות של vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "לפי תאריך הוספה (חדש ראשון)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "סטטיסטיקות מצטברות כשפותחים סימניות"
   },
+  "statsHistoryAdd": {
+    "message": "הוסף לסימניות"
+  },
   "statsHistoryBanner": {
     "message": "הענק גישה להיסטוריה כדי לאכלס סטטיסטיקות ביקורים עם ביקוריך הקודמים."
+  },
+  "statsHistoryBookmarked": {
+    "message": "סומן"
   },
   "statsHistoryDismiss": {
     "message": "אל תציג שוב"
   },
   "statsHistoryEnable": {
     "message": "הפעל"
+  },
+  "statsHistoryGuide": {
+    "message": "הענק גישה להיסטוריה כדי להציג את הביקורים האחרונים שלך כאן."
   },
   "statsHistoryImported": {
     "message": "יובאו ביקורים קודמים עבור $count$ סימניות",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "סטטיסטיקות סימניות"
+  },
+  "statsSectionRecent": {
+    "message": "ביקורים אחרונים"
   },
   "statsSortByCount": {
     "message": "לפי כמות"

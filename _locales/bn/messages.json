@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "এর জন্য কিছু CSS দক্ষতা প্রয়োজন। নিজের ঝুঁকিতে হ্যাক করুন। কোড শেয়ারিং করা বুদ্ধিমানের কাজ হবে"
   },
+  "deadCancel": {
+    "message": "বাতিল"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ চেক করা হচ্ছে…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "কোনো মৃত লিঙ্ক পাওয়া যায়নি"
   },
+  "deadPause": {
+    "message": "বিরতি"
+  },
+  "deadPaused": {
+    "message": "বিরতিতে"
+  },
   "deadProxyHint": {
     "message": "বুকমার্ক URL এই তৃতীয়-পক্ষ পরিষেবায় পাঠানো হয়। খালি রাখলে সরাসরি প্রোব করা হবে।"
   },
   "deadRescan": {
     "message": "পুনরায় স্ক্যান"
+  },
+  "deadResume": {
+    "message": "পুনরায় শুরু"
   },
   "deadStartHint": {
     "message": "$n$টি বুকমার্ক স্ক্যান করা শুরু করুন",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "ব্যাকআপ"
+  },
   "optionsGroupViews": {
     "message": "দৃশ্যসমূহ"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "নতুন ফোল্ডার…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "নতুন বিভাজক"
-  },
   "paletteCmdOptions": {
     "message": "বিকল্প পাতা খুলুন"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "থিম: সিস্টেম অনুসরণ করুন"
+  },
+  "paletteCmdThemeDark": {
+    "message": "থিম: গাঢ়"
+  },
+  "paletteCmdThemeInk": {
+    "message": "থিম: কালি (গাঢ়)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "থিম: হালকা"
+  },
+  "paletteCmdThemePaper": {
+    "message": "থিম: কাগজ (হালকা)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "প্যারেন্ট পাথ লেবেল টগল করুন"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "ট্যাব দৃশ্য টগল করুন"
   },
   "paletteNoResults": {
     "message": "কোনো মিল পাওয়া যায়নি"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "কোনও সাম্প্রতিক বুকমার্ক নেই। বর্তমান পৃষ্ঠা বুকমার্ক করতে Ctrl+D টিপুন।"
+  },
+  "recentGroupMonth": {
+    "message": "এই মাস"
+  },
+  "recentGroupOlder": {
+    "message": "পুরাতন"
+  },
+  "recentGroupToday": {
+    "message": "আজ"
+  },
+  "recentGroupWeek": {
+    "message": "এই সপ্তাহ"
   },
   "recentRevealInTree": {
     "message": "ট্রিতে দেখান"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "এই অনুসন্ধান সরান"
   },
+  "searchHistoryRerun": {
+    "message": "আবার অনুসন্ধান করুন"
+  },
   "searchHistoryResultCount": {
     "message": "$n$টি ফলাফল",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "রপ্তানি সমস্ত সেটিংস (সিঙ্ক পছন্দ সহ) একটি JSON ফাইলে সংরক্ষণ করে। আমদানি একটি ব্যাকআপ মার্জ করে: ফাইলের সেটিংস বর্তমানগুলিকে ওভাররাইট করে, বাকি সবকিছু রক্ষিত থাকে।"
+  },
+  "settingsExport": {
+    "message": "সেটিংস রপ্তানি"
+  },
+  "settingsImport": {
+    "message": "সেটিংস আমদানি"
+  },
+  "settingsImportConfirm": {
+    "message": "আমদানি ব্যাকআপ ফাইলে থাকা প্রতিটি সেটিং ওভাররাইট করবে (ফাইলে না থাকা সেটিংস রক্ষিত থাকে) এবং এই পৃষ্ঠাটি পুনরায় লোড করবে। চালিয়ে যান?"
+  },
+  "settingsImportDone": {
+    "message": "সেটিংস আমদানি করা হয়েছে। পৃষ্ঠাটি এখন পুনরায় লোড হবে।"
+  },
+  "settingsImportInvalid": {
+    "message": "অবৈধ সেটিংস ফাইল: এটি একটি vBookmarks সেটিংস ব্যাকআপ নয়।"
+  },
   "sortByDateAdded": {
     "message": "তারিখ অনুসারে (নতুন প্রথম)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "বুকমার্ক খোলার সাথে সাথে পরিসংখ্যান তৈরি হয়"
   },
+  "statsHistoryAdd": {
+    "message": "বুকমার্কে যোগ করুন"
+  },
   "statsHistoryBanner": {
     "message": "আপনার পূর্ববর্তী ভিজিটের ভিত্তিতে ভিজিট পরিসংখ্যান তৈরি করতে ইতিহাস অ্যাক্সেস দিন।"
+  },
+  "statsHistoryBookmarked": {
+    "message": "বুকমার্ক করা হয়েছে"
   },
   "statsHistoryDismiss": {
     "message": "আর দেখাবেন না"
   },
   "statsHistoryEnable": {
     "message": "সক্ষম করুন"
+  },
+  "statsHistoryGuide": {
+    "message": "আপনার সাম্প্রতিক ভিজিট তালিকাভুক্ত করতে ইতিহাস অ্যাক্সেস মঞ্জুর করুন।"
   },
   "statsHistoryImported": {
     "message": "$count$ টি বুকমার্কের জন্য পূর্ববর্তী ভিজিট ইম্পোর্ট করা হয়েছে",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "বুকমার্ক পরিসংখ্যান"
+  },
+  "statsSectionRecent": {
+    "message": "সাম্প্রতিক ভিজিট"
   },
   "statsSortByCount": {
     "message": "গণনা অনুসারে"

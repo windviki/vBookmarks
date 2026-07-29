@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "इसके लिए कुछ CSS कौशल की आवश्यकता है। अपने जोखिम पर हैक करें। कोड शेयरिंग के लिए के माध्यम से करना बुद्धिमानी होगी"
   },
+  "deadCancel": {
+    "message": "रद्द करें"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ की जाँच हो रही है…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "कोई मृत लिंक नहीं मिला"
   },
+  "deadPause": {
+    "message": "रोकें"
+  },
+  "deadPaused": {
+    "message": "रुका हुआ"
+  },
   "deadProxyHint": {
     "message": "बुकमार्क URL इस तृतीय-पक्ष सेवा को भेजे जाते हैं। केवल सीधे जांच करने के लिए खाली छोड़ें।"
   },
   "deadRescan": {
     "message": "पुनः स्कैन करें"
+  },
+  "deadResume": {
+    "message": "जारी रखें"
   },
   "deadStartHint": {
     "message": "$n$ बुकमार्क स्कैन करना शुरू करें",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "बैकअप"
+  },
   "optionsGroupViews": {
     "message": "दृश्य"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "नया फ़ोल्डर…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "नया विभाजक"
-  },
   "paletteCmdOptions": {
     "message": "विकल्प पृष्ठ खोलें"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "थीम: सिस्टम का अनुसरण करें"
+  },
+  "paletteCmdThemeDark": {
+    "message": "थीम: गहरा"
+  },
+  "paletteCmdThemeInk": {
+    "message": "थीम: स्याही (गहरा)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "थीम: हल्का"
+  },
+  "paletteCmdThemePaper": {
+    "message": "थीम: कागज़ (हल्का)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "पैरेंट पथ लेबल टॉगल करें"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "दृश्य टैब टॉगल करें"
   },
   "paletteNoResults": {
     "message": "कोई मिलान परिणाम नहीं"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "कोई हाल के बुकमार्क नहीं। वर्तमान पृष्ठ को बुकमार्क करने के लिए Ctrl+D दबाएं।"
+  },
+  "recentGroupMonth": {
+    "message": "इस महीने"
+  },
+  "recentGroupOlder": {
+    "message": "पुराने"
+  },
+  "recentGroupToday": {
+    "message": "आज"
+  },
+  "recentGroupWeek": {
+    "message": "इस सप्ताह"
   },
   "recentRevealInTree": {
     "message": "पेड़ में दिखाएं"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "यह खोज हटाएं"
   },
+  "searchHistoryRerun": {
+    "message": "फिर से खोजें"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ परिणाम",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "निर्यात सभी सेटिंग्स (सिंक प्राथमिकताएँ सहित) को एक JSON फ़ाइल में सहेजता है। आयात एक बैकअप को वापस मर्ज करता है: फ़ाइल में मौजूद सेटिंग्स वर्तमान सेटिंग्स को ओवरराइट कर देती हैं, बाकी सब कुछ संरक्षित रहता है।"
+  },
+  "settingsExport": {
+    "message": "सेटिंग्स निर्यात करें"
+  },
+  "settingsImport": {
+    "message": "सेटिंग्स आयात करें"
+  },
+  "settingsImportConfirm": {
+    "message": "आयात करने से बैकअप फ़ाइल में शामिल प्रत्येक सेटिंग ओवरराइट हो जाएगी (फ़ाइल में नहीं मौजूद सेटिंग्स संरक्षित रहती हैं) और यह पृष्ठ पुनः लोड होगा। जारी रखें?"
+  },
+  "settingsImportDone": {
+    "message": "सेटिंग्स आयात की गईं। पृष्ठ अब पुनः लोड होगा।"
+  },
+  "settingsImportInvalid": {
+    "message": "अमान्य सेटिंग्स फ़ाइल: यह vBookmarks सेटिंग्स बैकअप नहीं है।"
+  },
   "sortByDateAdded": {
     "message": "जोड़ने की तिथि से (नया पहले)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "जब आप बुकमार्क खोलते हैं तो आँकड़े बनते हैं"
   },
+  "statsHistoryAdd": {
+    "message": "बुकमार्क में जोड़ें"
+  },
   "statsHistoryBanner": {
     "message": "अपने पिछले विज़िट के आधार पर विज़िट आँकड़े तैयार करने हेतु इतिहास पहुँच दें"
+  },
+  "statsHistoryBookmarked": {
+    "message": "बुकमार्क किया गया"
   },
   "statsHistoryDismiss": {
     "message": "फिर से न दिखाएँ"
   },
   "statsHistoryEnable": {
     "message": "सक्षम करें"
+  },
+  "statsHistoryGuide": {
+    "message": "अपनी हाल की विज़िट यहाँ सूचीबद्ध करने के लिए इतिहास एक्सेस दें।"
   },
   "statsHistoryImported": {
     "message": "$count$ बुकमार्क के पिछले विज़िट आयात किए गए",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "बुकमार्क आँकड़े"
+  },
+  "statsSectionRecent": {
+    "message": "हाल की विज़िट"
   },
   "statsSortByCount": {
     "message": "गणना द्वारा"

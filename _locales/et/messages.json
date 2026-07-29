@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
   },
+  "deadCancel": {
+    "message": "Tühista"
+  },
   "deadChecking": {
     "message": "Kontrollin $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Surnud linke ei leitud"
   },
+  "deadPause": {
+    "message": "Peata"
+  },
+  "deadPaused": {
+    "message": "Peatatud"
+  },
   "deadProxyHint": {
     "message": "Järjehoidjate URL-id saadetakse sellele kolmanda osapoole teenusele. Jäta tühjaks, et otse kontrollida."
   },
   "deadRescan": {
     "message": "Uuesti skännimine"
+  },
+  "deadResume": {
+    "message": "Jätka"
   },
   "deadStartHint": {
     "message": "Alusta $n$ järjehoidja skännimist",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Varundus"
+  },
   "optionsGroupViews": {
     "message": "Vaated"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Uus kaust…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Uus eraldaja"
-  },
   "paletteCmdOptions": {
     "message": "Ava seadete leht"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Teema: järgi süsteemi"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Teema: tume"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Teema: tindine (tume)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Teema: hele"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Teema: paber (hele)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Lülita ematee sildid"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Lülita vahelehtede vaade"
   },
   "paletteNoResults": {
     "message": "Sobivaid tulemusi pole"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Hiljutisi järjehoidjaid pole. Vajuta Ctrl+D, et järjehoidjatesse lisada praegune leht."
+  },
+  "recentGroupMonth": {
+    "message": "Sel kuul"
+  },
+  "recentGroupOlder": {
+    "message": "Vanemad"
+  },
+  "recentGroupToday": {
+    "message": "Täna"
+  },
+  "recentGroupWeek": {
+    "message": "Sel nädalal"
   },
   "recentRevealInTree": {
     "message": "Näita puus"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Eemalda see otsing"
   },
+  "searchHistoryRerun": {
+    "message": "Otsi uuesti"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ tulemus(t)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Eksport salvestab kõik sätted (sh sünkroonimiseelistused) JSON-faili. Import liidab varunduse tagasi: failis olevad sätted kirjutavad praegused üle, kõik muu jääb alles."
+  },
+  "settingsExport": {
+    "message": "Ekspordi sätted"
+  },
+  "settingsImport": {
+    "message": "Impordi sätted"
+  },
+  "settingsImportConfirm": {
+    "message": "Importimine kirjutab üle kõik varundusfailis sisalduvad sätted (failis mitteolevad sätted jäävad alles) ja laadib selle lehe uuesti. Jätkame?"
+  },
+  "settingsImportDone": {
+    "message": "Sätted imporditud. Leht laaditakse nüüd uuesti."
+  },
+  "settingsImportInvalid": {
+    "message": "Vigane sätete fail: see pole vBookmarksi sätete varundus."
+  },
   "sortByDateAdded": {
     "message": "Lisamiskuupäeva järgi (uusimad ees)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistika koguneb, kui järjehoidjaid avate"
   },
+  "statsHistoryAdd": {
+    "message": "Lisa järjehoidjatesse"
+  },
   "statsHistoryBanner": {
     "message": "Andke ajaloo juurdepääs, et täita külastusstatistikat teie varasemate külastustega."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Järjehoidjatesse lisatud"
   },
   "statsHistoryDismiss": {
     "message": "Ära näita uuesti"
   },
   "statsHistoryEnable": {
     "message": "Luba"
+  },
+  "statsHistoryGuide": {
+    "message": "Andke ajaloo juurdepääs, et siin oma hiljutisi külastusi kuvada."
   },
   "statsHistoryImported": {
     "message": "Imporditi $count$ järjehoidja varasemad külastused",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Järjehoidjate statistika"
+  },
+  "statsSectionRecent": {
+    "message": "Hiljutised külastused"
   },
   "statsSortByCount": {
     "message": "Arvu järgi"

@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "این به برخی مهارت‌های CSS نیاز دارد. به عهده خودتان هک کنید. اشتراک‌گذاری کد از طریق هوشمندانه خواهد بود"
   },
+  "deadCancel": {
+    "message": "لغو"
+  },
   "deadChecking": {
     "message": "در حال بررسی $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "پیوند مرده‌ای یافت نشد"
   },
+  "deadPause": {
+    "message": "مکث"
+  },
+  "deadPaused": {
+    "message": "متوقف شده"
+  },
   "deadProxyHint": {
     "message": "URLهای بوکمارک به این سرویس شخص ثالث ارسال می‌شوند. برای بررسی مستقیم فقط خالی بگذارید."
   },
   "deadRescan": {
     "message": "بازرسی مجدد"
+  },
+  "deadResume": {
+    "message": "ادامه"
   },
   "deadStartHint": {
     "message": "شروع اسکن $n$ بوکمارک",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "پشتیبان‌گیری"
+  },
   "optionsGroupViews": {
     "message": "نماها"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "پوشه جدید…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "جداکننده جدید"
-  },
   "paletteCmdOptions": {
     "message": "باز کردن صفحه تنظیمات"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "پوسته: پیروی از سیستم"
+  },
+  "paletteCmdThemeDark": {
+    "message": "پوسته: تاریک"
+  },
+  "paletteCmdThemeInk": {
+    "message": "پوسته: جوهر (تاریک)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "پوسته: روشن"
+  },
+  "paletteCmdThemePaper": {
+    "message": "پوسته: کاغذ (روشن)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "تغییر نمایش مسیر والد"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "تغییر نمایش تب‌ها"
   },
   "paletteNoResults": {
     "message": "نتیجه‌ای یافت نشد"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "هیچ بوکمارک اخیری وجود ندارد. Ctrl+D را برای نشانه‌گذاری صفحه فعلی فشار دهید."
+  },
+  "recentGroupMonth": {
+    "message": "این ماه"
+  },
+  "recentGroupOlder": {
+    "message": "قدیمی‌تر"
+  },
+  "recentGroupToday": {
+    "message": "امروز"
+  },
+  "recentGroupWeek": {
+    "message": "این هفته"
   },
   "recentRevealInTree": {
     "message": "نمایش در درخت"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "حذف این جستجو"
   },
+  "searchHistoryRerun": {
+    "message": "جستجوی دوباره"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ نتیجه",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "خروجی همه تنظیمات (شامل اولویت‌های همگام‌سازی) را در یک فایل JSON ذخیره می‌کند. ورودی، پشتیبان را ادغام می‌کند: تنظیمات موجود در فایل، تنظیمات فعلی را بازنویسی می‌کنند و بقیه موارد حفظ می‌شوند."
+  },
+  "settingsExport": {
+    "message": "خروجی تنظیمات"
+  },
+  "settingsImport": {
+    "message": "ورودی تنظیمات"
+  },
+  "settingsImportConfirm": {
+    "message": "ورودی، هر تنظیم موجود در فایل پشتیبان را بازنویسی می‌کند (تنظیماتی که در فایل نیستند حفظ می‌شوند) و این صفحه را دوباره بارگیری می‌کند. ادامه می‌دهید؟"
+  },
+  "settingsImportDone": {
+    "message": "تنظیمات وارد شدند. صفحه اکنون دوباره بارگیری می‌شود."
+  },
+  "settingsImportInvalid": {
+    "message": "فایل تنظیمات نامعتبر: این یک پشتیبان تنظیمات vBookmarks نیست."
+  },
   "sortByDateAdded": {
     "message": "بر اساس تاریخ افزودن (جدیدترین اول)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "آمار با باز کردن نشانک‌ها جمع‌آوری می‌شود"
   },
+  "statsHistoryAdd": {
+    "message": "افزودن به نشانک‌ها"
+  },
   "statsHistoryBanner": {
     "message": "برای پر کردن آمار بازدید با بازدیدهای گذشته، دسترسی به تاریخچه را اعطا کنید"
+  },
+  "statsHistoryBookmarked": {
+    "message": "نشانک شده"
   },
   "statsHistoryDismiss": {
     "message": "دیگر نشان نده"
   },
   "statsHistoryEnable": {
     "message": "فعال"
+  },
+  "statsHistoryGuide": {
+    "message": "برای فهرست کردن بازدیدهای اخیر خود در اینجا، دسترسی به تاریخچه را اعطا کنید."
   },
   "statsHistoryImported": {
     "message": "بازدیدهای گذشته برای $count$ نشانک وارد شد",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "آمار نشانک‌ها"
+  },
+  "statsSectionRecent": {
+    "message": "بازدیدهای اخیر"
   },
   "statsSortByCount": {
     "message": "بر اساس تعداد"

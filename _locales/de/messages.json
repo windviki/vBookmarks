@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Dies erfordert einige CSS-Kenntnisse. Ändern Sie auf eigenes Risiko. Es wäre klug, Code über"
   },
+  "deadCancel": {
+    "message": "Abbrechen"
+  },
   "deadChecking": {
     "message": "Prüfe $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Keine defekten Links gefunden"
   },
+  "deadPause": {
+    "message": "Pause"
+  },
+  "deadPaused": {
+    "message": "Pausiert"
+  },
   "deadProxyHint": {
     "message": "Lesezeichen-URLs werden an diesen Drittanbieterdienst gesendet. Leer lassen, um nur direkt zu überprüfen."
   },
   "deadRescan": {
     "message": "Erneut scannen"
+  },
+  "deadResume": {
+    "message": "Fortsetzen"
   },
   "deadStartHint": {
     "message": "Scannen von $n$ Lesezeichen starten",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Sicherung"
+  },
   "optionsGroupViews": {
     "message": "Ansichten"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Neuer Ordner…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Neuer Trenner"
-  },
   "paletteCmdOptions": {
     "message": "Optionsseite öffnen"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Thema: System folgen"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Thema: Dunkel"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Thema: Tinte (dunkel)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Thema: Hell"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Thema: Papier (hell)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Pfadlabels umschalten"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Registerkarten umschalten"
   },
   "paletteNoResults": {
     "message": "Keine passenden Ergebnisse"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Keine kürzlichen Lesezeichen. Drücken Sie Strg+D, um die aktuelle Seite als Lesezeichen zu speichern."
+  },
+  "recentGroupMonth": {
+    "message": "Dieser Monat"
+  },
+  "recentGroupOlder": {
+    "message": "Älter"
+  },
+  "recentGroupToday": {
+    "message": "Heute"
+  },
+  "recentGroupWeek": {
+    "message": "Diese Woche"
   },
   "recentRevealInTree": {
     "message": "Im Baum anzeigen"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Diese Suche entfernen"
   },
+  "searchHistoryRerun": {
+    "message": "Erneut suchen"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ Ergebnis(se)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Export speichert alle Einstellungen (einschließlich Sync-Einstellungen) in eine JSON-Datei. Import führt ein Backup wieder zusammen: Einstellungen aus der Datei überschreiben die aktuellen, alles andere bleibt erhalten."
+  },
+  "settingsExport": {
+    "message": "Einstellungen exportieren"
+  },
+  "settingsImport": {
+    "message": "Einstellungen importieren"
+  },
+  "settingsImportConfirm": {
+    "message": "Beim Import werden alle in der Sicherungsdatei enthaltenen Einstellungen überschrieben (nicht in der Datei enthaltene Einstellungen bleiben erhalten) und diese Seite wird neu geladen. Fortfahren?"
+  },
+  "settingsImportDone": {
+    "message": "Einstellungen importiert. Die Seite wird nun neu geladen."
+  },
+  "settingsImportInvalid": {
+    "message": "Ungültige Einstellungsdatei: Kein vBookmarks-Einstellungs-Backup."
+  },
   "sortByDateAdded": {
     "message": "Nach Datum (neueste zuerst)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistiken werden beim Öffnen von Lesezeichen aufgebaut"
   },
+  "statsHistoryAdd": {
+    "message": "Zu Lesezeichen hinzufügen"
+  },
   "statsHistoryBanner": {
     "message": "Gewähre Zugriff auf den Verlauf, um Besuchsstatistiken mit Ihren vergangenen Besuchen zu füllen."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Lesezeichen gesetzt"
   },
   "statsHistoryDismiss": {
     "message": "Nicht mehr anzeigen"
   },
   "statsHistoryEnable": {
     "message": "Aktivieren"
+  },
+  "statsHistoryGuide": {
+    "message": "Zugriff auf den Verlauf gewähren, um Ihre letzten Besuche hier aufzulisten."
   },
   "statsHistoryImported": {
     "message": "Importierte vergangene Besuche für $count$ Lesezeichen",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Lesezeichen-Statistiken"
+  },
+  "statsSectionRecent": {
+    "message": "Letzte Besuche"
   },
   "statsSortByCount": {
     "message": "Nach Anzahl"

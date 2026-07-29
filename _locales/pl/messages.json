@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Wymaga to pewnych umiejętności CSS. Modyfikuj na własne ryzyko. Mądre byłoby udostępnianie kodu poprzez"
   },
+  "deadCancel": {
+    "message": "Anuluj"
+  },
   "deadChecking": {
     "message": "Sprawdzanie $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nie znaleziono martwych linków"
   },
+  "deadPause": {
+    "message": "Wstrzymaj"
+  },
+  "deadPaused": {
+    "message": "Wstrzymane"
+  },
   "deadProxyHint": {
     "message": "Adresy URL zakładek są wysyłane do tej usługi zewnętrznej. Pozostaw puste, aby sondować tylko bezpośrednio."
   },
   "deadRescan": {
     "message": "Skanuj ponownie"
+  },
+  "deadResume": {
+    "message": "Wznów"
   },
   "deadStartHint": {
     "message": "Rozpocznij skanowanie $n$ zakładek",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Kopia zapasowa"
+  },
   "optionsGroupViews": {
     "message": "Widoki"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Nowy folder…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Nowy separator"
-  },
   "paletteCmdOptions": {
     "message": "Otwórz stronę opcji"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Motyw: Systemowy"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Motyw: Ciemny"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Motyw: Atrament (ciemny)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Motyw: Jasny"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Motyw: Papier (jasny)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Przełącz etykiety ścieżki nadrzędnej"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Przełącz widok kart"
   },
   "paletteNoResults": {
     "message": "Brak pasujących wyników"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Brak ostatnich zakładek. Naciśnij Ctrl+D, aby dodać bieżącą stronę."
+  },
+  "recentGroupMonth": {
+    "message": "Ten miesiąc"
+  },
+  "recentGroupOlder": {
+    "message": "Starsze"
+  },
+  "recentGroupToday": {
+    "message": "Dzisiaj"
+  },
+  "recentGroupWeek": {
+    "message": "Ten tydzień"
   },
   "recentRevealInTree": {
     "message": "Pokaż w drzewie"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Usuń to wyszukiwanie"
   },
+  "searchHistoryRerun": {
+    "message": "Szukaj ponownie"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ wynik(i)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Eksport zapisuje wszystkie ustawienia (w tym preferencje synchronizacji) do pliku JSON. Import przywraca kopię zapasową: ustawienia z pliku nadpisują bieżące, a wszystko inne pozostaje bez zmian."
+  },
+  "settingsExport": {
+    "message": "Eksportuj ustawienia"
+  },
+  "settingsImport": {
+    "message": "Importuj ustawienia"
+  },
+  "settingsImportConfirm": {
+    "message": "Importowanie nadpisze każde ustawienie zawarte w pliku kopii zapasowej (ustawienia nieobecne w pliku zostaną zachowane) i przeładuje tę stronę. Kontynuować?"
+  },
+  "settingsImportDone": {
+    "message": "Ustawienia zaimportowane. Strona zostanie przeładowana."
+  },
+  "settingsImportInvalid": {
+    "message": "Nieprawidłowy plik ustawień: to nie jest kopia zapasowa ustawień vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Według daty dodania (najnowsze najpierw)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statystyki gromadzą się w miarę otwierania zakładek"
   },
+  "statsHistoryAdd": {
+    "message": "Dodaj do zakładek"
+  },
   "statsHistoryBanner": {
     "message": "Udziel dostępu do historii, aby wypełnić statystyki wizyt swoimi poprzednimi wizytami."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Zakładka"
   },
   "statsHistoryDismiss": {
     "message": "Nie pokazuj więcej"
   },
   "statsHistoryEnable": {
     "message": "Włącz"
+  },
+  "statsHistoryGuide": {
+    "message": "Przyznaj dostęp do historii, aby wyświetlić tutaj swoje ostatnie wizyty."
   },
   "statsHistoryImported": {
     "message": "Zaimportowano poprzednie wizyty dla $count$ zakładek",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statystyki zakładek"
+  },
+  "statsSectionRecent": {
+    "message": "Ostatnie wizyty"
   },
   "statsSortByCount": {
     "message": "Według liczby"

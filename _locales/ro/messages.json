@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
   },
+  "deadCancel": {
+    "message": "Anulare"
+  },
   "deadChecking": {
     "message": "Se verifică $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nicio legătură moartă găsită"
   },
+  "deadPause": {
+    "message": "Pauză"
+  },
+  "deadPaused": {
+    "message": "În pauză"
+  },
   "deadProxyHint": {
     "message": "URL-urile marcajelor sunt trimise către acest serviciu terț. Lăsați gol pentru a sonda doar direct."
   },
   "deadRescan": {
     "message": "Re-verificare"
+  },
+  "deadResume": {
+    "message": "Reluare"
   },
   "deadStartHint": {
     "message": "Se începe scanarea a $n$ marcaje",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Copie de rezervă"
+  },
   "optionsGroupViews": {
     "message": "Vizualizări"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Dosar nou…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Separator nou"
-  },
   "paletteCmdOptions": {
     "message": "Deschide pagina de opțiuni"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Temă: Urmărește sistemul"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Temă: Întunecată"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Temă: Cerneală (întunecată)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Temă: Lumină"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Temă: Hârtie (lumină)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Comută etichetele căii părinte"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Comută filele de vizualizare"
   },
   "paletteNoResults": {
     "message": "Niciun rezultat potrivit"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Niciun marcaj recent. Apăsați Ctrl+D pentru a marca pagina curentă."
+  },
+  "recentGroupMonth": {
+    "message": "Luna aceasta"
+  },
+  "recentGroupOlder": {
+    "message": "Mai vechi"
+  },
+  "recentGroupToday": {
+    "message": "Astăzi"
+  },
+  "recentGroupWeek": {
+    "message": "Săptămâna aceasta"
   },
   "recentRevealInTree": {
     "message": "Arată în arbore"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Elimină această căutare"
   },
+  "searchHistoryRerun": {
+    "message": "Caută din nou"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ rezultat(e)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Exportul salvează toate setările (inclusiv preferințele de sincronizare) într-un fișier JSON. Importul îmbină o copie de rezervă: setările din fișier suprascriu cele curente, restul se păstrează."
+  },
+  "settingsExport": {
+    "message": "Exportă setări"
+  },
+  "settingsImport": {
+    "message": "Importă setări"
+  },
+  "settingsImportConfirm": {
+    "message": "Importul va suprascrie fiecare setare conținută în fișierul de rezervă (setările care nu sunt în fișier se păstrează) și va reîncărca această pagină. Continuați?"
+  },
+  "settingsImportDone": {
+    "message": "Setări importate. Pagina se va reîncărca acum."
+  },
+  "settingsImportInvalid": {
+    "message": "Fișier de setări invalid: nu este o copie de rezervă a setărilor vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "După data adăugării (cele mai noi primele)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statisticile se acumulează pe măsură ce deschideți marcajele"
   },
+  "statsHistoryAdd": {
+    "message": "Adaugă la marcaje"
+  },
   "statsHistoryBanner": {
     "message": "Acordați acces la istoric pentru a popula statisticile de vizitare cu vizitele dvs. anterioare."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Marcat"
   },
   "statsHistoryDismiss": {
     "message": "Nu mai afișa"
   },
   "statsHistoryEnable": {
     "message": "Activați"
+  },
+  "statsHistoryGuide": {
+    "message": "Acordați acces la istoric pentru a lista vizitele recente aici."
   },
   "statsHistoryImported": {
     "message": "Vizite anterioare importate pentru $count$ marcaje",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistici marcaje"
+  },
+  "statsSectionRecent": {
+    "message": "Vizite recente"
   },
   "statsSortByCount": {
     "message": "După număr"

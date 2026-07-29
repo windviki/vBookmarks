@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
   },
+  "deadCancel": {
+    "message": "Mégse"
+  },
   "deadChecking": {
     "message": "Ellenőrzés: $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nincs hibás hivatkozás"
   },
+  "deadPause": {
+    "message": "Szünet"
+  },
+  "deadPaused": {
+    "message": "Szüneteltetve"
+  },
   "deadProxyHint": {
     "message": "A könyvjelző URL-ek elküldésre kerülnek erre a harmadik fél által üzemeltetett szolgáltatásra. Hagyja üresen, ha csak közvetlenül szeretne vizsgálni."
   },
   "deadRescan": {
     "message": "Újravizsgálás"
+  },
+  "deadResume": {
+    "message": "Folytatás"
   },
   "deadStartHint": {
     "message": "$n$ könyvjelző vizsgálatának elindítása",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Biztonsági mentés"
+  },
   "optionsGroupViews": {
     "message": "Nézetek"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Új mappa…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Új elválasztó"
-  },
   "paletteCmdOptions": {
     "message": "Beállítások oldal megnyitása"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Téma: Rendszer követése"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Téma: Sötét"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Téma: Tinta (sötét)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Téma: Világos"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Téma: Papír (világos)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Szülőútvonal címkék váltása"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Lapok nézetének váltása"
   },
   "paletteNoResults": {
     "message": "Nincs találat"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Nincsenek legutóbbi könyvjelzők. Nyomja meg a Ctrl+D billentyűt az aktuális oldal könyvjelzőkhöz adásához."
+  },
+  "recentGroupMonth": {
+    "message": "Ebben a hónapban"
+  },
+  "recentGroupOlder": {
+    "message": "Régebbi"
+  },
+  "recentGroupToday": {
+    "message": "Ma"
+  },
+  "recentGroupWeek": {
+    "message": "Ezen a héten"
   },
   "recentRevealInTree": {
     "message": "Megjelenítés a fában"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Keresés eltávolítása"
   },
+  "searchHistoryRerun": {
+    "message": "Új keresés"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ találat",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Exportálás: minden beállítás (beleértve a szinkronizálási beállításokat is) JSON-fájlba mentése. Importálás: a biztonsági mentés visszaolvasztása: a fájlban lévő beállítások felülírják a jelenlegieket, a többi megmarad."
+  },
+  "settingsExport": {
+    "message": "Beállítások exportálása"
+  },
+  "settingsImport": {
+    "message": "Beállítások importálása"
+  },
+  "settingsImportConfirm": {
+    "message": "Az importálás felülírja a biztonsági mentési fájlban található összes beállítást (a fájlban nem szereplő beállítások megmaradnak), és újratölti ezt az oldalt. Folytatja?"
+  },
+  "settingsImportDone": {
+    "message": "Beállítások importálva. Az oldal most újratöltődik."
+  },
+  "settingsImportInvalid": {
+    "message": "Érvénytelen beállításfájl: nem vBookmarks beállítások biztonsági mentése."
+  },
   "sortByDateAdded": {
     "message": "Hozzáadás dátuma szerint (újabbak elöl)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "A statisztikák a könyvjelzők megnyitásával épülnek fel"
   },
+  "statsHistoryAdd": {
+    "message": "Hozzáadás a könyvjelzőkhöz"
+  },
   "statsHistoryBanner": {
     "message": "Engedélyezze az előzmények elérését a múltbeli látogatások statisztikáinak feltöltéséhez."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Könyvjelzőzve"
   },
   "statsHistoryDismiss": {
     "message": "Ne mutassa többé"
   },
   "statsHistoryEnable": {
     "message": "Engedélyez"
+  },
+  "statsHistoryGuide": {
+    "message": "A legutóbbi látogatások listázásához adjon hozzáférési engedélyt az előzményekhez."
   },
   "statsHistoryImported": {
     "message": "$count$ könyvjelző múltbeli látogatásai importálva.",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Könyvjelző statisztikák"
+  },
+  "statsSectionRecent": {
+    "message": "Legutóbbi látogatások"
   },
   "statsSortByCount": {
     "message": "Darabszám szerint"

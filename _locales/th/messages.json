@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
   },
+  "deadCancel": {
+    "message": "ยกเลิก"
+  },
   "deadChecking": {
     "message": "กำลังตรวจสอบ $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "ไม่พบลิงก์เสีย"
   },
+  "deadPause": {
+    "message": "หยุดชั่วคราว"
+  },
+  "deadPaused": {
+    "message": "หยุดชั่วคราว"
+  },
   "deadProxyHint": {
     "message": "URL ของบุ๊กมาร์กจะถูกส่งไปยังบริการบุคคลที่สามนี้ เว้นว่างไว้เพื่อเจาะจงโดยตรงเท่านั้น"
   },
   "deadRescan": {
     "message": "สแกนใหม่"
+  },
+  "deadResume": {
+    "message": "ดำเนินการต่อ"
   },
   "deadStartHint": {
     "message": "เริ่มสแกน $n$ บุ๊กมาร์ก",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "สำรองข้อมูล"
+  },
   "optionsGroupViews": {
     "message": "มุมมอง"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "โฟลเดอร์ใหม่…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "ตัวคั่นใหม่"
-  },
   "paletteCmdOptions": {
     "message": "เปิดหน้าการตั้งค่า"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "ธีม: ตามระบบ"
+  },
+  "paletteCmdThemeDark": {
+    "message": "ธีม: มืด"
+  },
+  "paletteCmdThemeInk": {
+    "message": "ธีม: หมึก (มืด)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "ธีม: สว่าง"
+  },
+  "paletteCmdThemePaper": {
+    "message": "ธีม: กระดาษ (สว่าง)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "สลับป้ายเส้นทางหลัก"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "สลับแท็บแสดงผล"
   },
   "paletteNoResults": {
     "message": "ไม่พบผลลัพธ์ที่ตรงกัน"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "ไม่มีบุ๊กมาร์กล่าสุด กด Ctrl+D เพื่อบุ๊กมาร์กหน้านี้"
+  },
+  "recentGroupMonth": {
+    "message": "เดือนนี้"
+  },
+  "recentGroupOlder": {
+    "message": "เก่ากว่า"
+  },
+  "recentGroupToday": {
+    "message": "วันนี้"
+  },
+  "recentGroupWeek": {
+    "message": "สัปดาห์นี้"
   },
   "recentRevealInTree": {
     "message": "แสดงในต้นไม้"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "ลบการค้นหานี้"
   },
+  "searchHistoryRerun": {
+    "message": "ค้นหาอีกครั้ง"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ ผลลัพธ์",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "การส่งออกจะบันทึกการตั้งค่าทั้งหมด (รวมถึงการตั้งค่าการซิงค์) ไปยังไฟล์ JSON การนำเข้าจะรวมข้อมูลสำรองกลับเข้าไป: การตั้งค่าในไฟล์จะเขียนทับการตั้งค่าปัจจุบัน ส่วนที่เหลือจะถูกเก็บไว้"
+  },
+  "settingsExport": {
+    "message": "ส่งออกการตั้งค่า"
+  },
+  "settingsImport": {
+    "message": "นำเข้าการตั้งค่า"
+  },
+  "settingsImportConfirm": {
+    "message": "การนำเข้าจะเขียนทับการตั้งค่าทุกอย่างที่อยู่ในไฟล์สำรอง (การตั้งค่าที่ไม่อยู่ในไฟล์จะถูกเก็บไว้) และโหลดหน้านี้ใหม่ ดำเนินการต่อ?"
+  },
+  "settingsImportDone": {
+    "message": "นำเข้าการตั้งค่าแล้ว หน้านี้จะโหลดใหม่"
+  },
+  "settingsImportInvalid": {
+    "message": "ไฟล์การตั้งค่าไม่ถูกต้อง: ไม่ใช่ไฟล์สำรองการตั้งค่าของ vBookmarks"
+  },
   "sortByDateAdded": {
     "message": "ตามวันที่เพิ่ม (ใหม่สุดก่อน)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "สถิติจะถูกสะสมเมื่อคุณเปิดบุ๊กมาร์ก"
   },
+  "statsHistoryAdd": {
+    "message": "เพิ่มในบุ๊กมาร์ก"
+  },
   "statsHistoryBanner": {
     "message": "ให้สิทธิ์เข้าถึงประวัติเพื่อป้อนสถิติการเข้าชมจากประวัติการเข้าชมที่ผ่านมาของคุณ"
+  },
+  "statsHistoryBookmarked": {
+    "message": "บุ๊กมาร์กแล้ว"
   },
   "statsHistoryDismiss": {
     "message": "ไม่ต้องแสดงอีก"
   },
   "statsHistoryEnable": {
     "message": "เปิดใช้งาน"
+  },
+  "statsHistoryGuide": {
+    "message": "อนุญาตการเข้าถึงประวัติเพื่อแสดงรายการเข้าชมล่าสุดที่นี่"
   },
   "statsHistoryImported": {
     "message": "นำเข้าประวัติการเข้าชมที่ผ่านมาสำหรับ $count$ บุ๊กมาร์ก",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "สถิติบุ๊กมาร์ก"
+  },
+  "statsSectionRecent": {
+    "message": "การเข้าชมล่าสุด"
   },
   "statsSortByCount": {
     "message": "ตามจำนวน"

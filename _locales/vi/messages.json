@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
   },
+  "deadCancel": {
+    "message": "Hủy"
+  },
   "deadChecking": {
     "message": "Đang kiểm tra $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"
   },
+  "deadPause": {
+    "message": "Tạm dừng"
+  },
+  "deadPaused": {
+    "message": "Đã tạm dừng"
+  },
   "deadProxyHint": {
     "message": "URL bookmark được gửi đến dịch vụ bên thứ ba này. Để trống để chỉ thăm dò trực tiếp."
   },
   "deadRescan": {
     "message": "Quét lại"
+  },
+  "deadResume": {
+    "message": "Tiếp tục"
   },
   "deadStartHint": {
     "message": "Bắt đầu quét $n$ bookmark",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Sao lưu"
+  },
   "optionsGroupViews": {
     "message": "Chế độ xem"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Thư mục mới…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Dấu phân cách mới"
-  },
   "paletteCmdOptions": {
     "message": "Mở trang tùy chọn"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Chủ đề: Theo hệ thống"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Chủ đề: Tối"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Chủ đề: Mực (tối)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Chủ đề: Sáng"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Chủ đề: Giấy (sáng)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Bật/tắt nhãn đường dẫn cha"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Bật/tắt tab xem"
   },
   "paletteNoResults": {
     "message": "Không có kết quả phù hợp"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Không có bookmark gần đây. Nhấn Ctrl+D để đánh dấu trang hiện tại."
+  },
+  "recentGroupMonth": {
+    "message": "Tháng này"
+  },
+  "recentGroupOlder": {
+    "message": "Cũ hơn"
+  },
+  "recentGroupToday": {
+    "message": "Hôm nay"
+  },
+  "recentGroupWeek": {
+    "message": "Tuần này"
   },
   "recentRevealInTree": {
     "message": "Hiện trong cây"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Xóa tìm kiếm này"
   },
+  "searchHistoryRerun": {
+    "message": "Tìm lại"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ kết quả",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Xuất lưu tất cả cài đặt (bao gồm tùy chọn đồng bộ) vào một tệp JSON. Nhập sẽ hợp nhất bản sao lưu: cài đặt trong tệp ghi đè lên cài đặt hiện tại, mọi thứ khác được giữ nguyên."
+  },
+  "settingsExport": {
+    "message": "Xuất cài đặt"
+  },
+  "settingsImport": {
+    "message": "Nhập cài đặt"
+  },
+  "settingsImportConfirm": {
+    "message": "Việc nhập sẽ ghi đè mọi cài đặt có trong tệp sao lưu (cài đặt không có trong tệp được giữ lại) và tải lại trang này. Tiếp tục?"
+  },
+  "settingsImportDone": {
+    "message": "Đã nhập cài đặt. Trang sẽ tải lại ngay bây giờ."
+  },
+  "settingsImportInvalid": {
+    "message": "Tệp cài đặt không hợp lệ: không phải bản sao lưu cài đặt vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Theo ngày thêm (mới nhất trước)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Thống kê được tích lũy khi bạn mở dấu trang"
   },
+  "statsHistoryAdd": {
+    "message": "Thêm vào dấu trang"
+  },
   "statsHistoryBanner": {
     "message": "Cấp quyền truy cập lịch sử để gieo số liệu thống kê truy cập từ các lần truy cập trước đây của bạn."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Đã đánh dấu"
   },
   "statsHistoryDismiss": {
     "message": "Không hiển thị lại"
   },
   "statsHistoryEnable": {
     "message": "Bật"
+  },
+  "statsHistoryGuide": {
+    "message": "Cấp quyền truy cập lịch sử để liệt kê các lượt truy cập gần đây của bạn tại đây."
   },
   "statsHistoryImported": {
     "message": "Đã nhập các lần truy cập trước đây cho $count$ dấu trang",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Thống kê dấu trang"
+  },
+  "statsSectionRecent": {
+    "message": "Lượt truy cập gần đây"
   },
   "statsSortByCount": {
     "message": "Theo số lượng"

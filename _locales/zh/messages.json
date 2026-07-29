@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "注意：无CSS知识请勿冒险修改。推荐将代码共享到 "
   },
+  "deadCancel": {
+    "message": "取消"
+  },
   "deadChecking": {
     "message": "正在检查 $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "未发现失效链接"
   },
+  "deadPause": {
+    "message": "暂停"
+  },
+  "deadPaused": {
+    "message": "已暂停"
+  },
   "deadProxyHint": {
     "message": "书签URL将发送至第三方服务。留空则仅直接探测。"
   },
   "deadRescan": {
     "message": "重新扫描"
+  },
+  "deadResume": {
+    "message": "恢复"
   },
   "deadStartHint": {
     "message": "开始扫描$n$个书签",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "备份"
+  },
   "optionsGroupViews": {
     "message": "视图"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "新建文件夹…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "新建分隔线"
-  },
   "paletteCmdOptions": {
     "message": "打开设置页面"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "主题：跟随系统"
+  },
+  "paletteCmdThemeDark": {
+    "message": "主题：深色"
+  },
+  "paletteCmdThemeInk": {
+    "message": "主题：墨色（深色）"
+  },
+  "paletteCmdThemeLight": {
+    "message": "主题：浅色"
+  },
+  "paletteCmdThemePaper": {
+    "message": "主题：纸质（浅色）"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "切换父路径标签"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "切换标签视图"
   },
   "paletteNoResults": {
     "message": "无匹配结果"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "没有最近书签。按Ctrl+D将当前页加入书签。"
+  },
+  "recentGroupMonth": {
+    "message": "本月"
+  },
+  "recentGroupOlder": {
+    "message": "更早"
+  },
+  "recentGroupToday": {
+    "message": "今天"
+  },
+  "recentGroupWeek": {
+    "message": "本周"
   },
   "recentRevealInTree": {
     "message": "在树中显示"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "移除此搜索"
   },
+  "searchHistoryRerun": {
+    "message": "重新搜索"
+  },
   "searchHistoryResultCount": {
     "message": "$n$个结果",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "导出将所有设置（包括同步偏好）保存为JSON文件。导入会合并备份：文件中的设置覆盖当前设置，其他保持不变。"
+  },
+  "settingsExport": {
+    "message": "导出设置"
+  },
+  "settingsImport": {
+    "message": "导入设置"
+  },
+  "settingsImportConfirm": {
+    "message": "导入将覆盖备份文件中的所有设置（文件中未包含的设置将保留），并重新加载此页面。是否继续？"
+  },
+  "settingsImportDone": {
+    "message": "设置已导入。页面即将重新加载。"
+  },
+  "settingsImportInvalid": {
+    "message": "无效的设置文件：不是vBookmarks设置备份。"
+  },
   "sortByDateAdded": {
     "message": "按添加日期（最新在前）"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "统计信息会在您打开书签时累积"
   },
+  "statsHistoryAdd": {
+    "message": "添加到书签"
+  },
   "statsHistoryBanner": {
     "message": "授予历史记录访问权限，以利用您的过往访问生成统计数据。"
+  },
+  "statsHistoryBookmarked": {
+    "message": "已添加书签"
   },
   "statsHistoryDismiss": {
     "message": "不再显示"
   },
   "statsHistoryEnable": {
     "message": "启用"
+  },
+  "statsHistoryGuide": {
+    "message": "授予历史记录访问权限，以在此列出您的最近访问。"
   },
   "statsHistoryImported": {
     "message": "已导入$count$个书签的过往访问记录",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "书签统计"
+  },
+  "statsSectionRecent": {
+    "message": "最近访问"
   },
   "statsSortByCount": {
     "message": "按次数"

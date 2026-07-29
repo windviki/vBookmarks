@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
   },
+  "deadCancel": {
+    "message": "إلغاء"
+  },
   "deadChecking": {
     "message": "جارٍ التحقق $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "لم يتم العثور على روابط معطلة"
   },
+  "deadPause": {
+    "message": "إيقاف مؤقت"
+  },
+  "deadPaused": {
+    "message": "متوقف مؤقتًا"
+  },
   "deadProxyHint": {
     "message": "يتم إرسال عناوين URL للإشارات المرجعية إلى هذه الخدمة الخارجية. اتركه فارغًا للفحص المباشر فقط."
   },
   "deadRescan": {
     "message": "إعادة المسح"
+  },
+  "deadResume": {
+    "message": "استئناف"
   },
   "deadStartHint": {
     "message": "بدء فحص $n$ إشارة مرجعية",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "نسخ احتياطي"
+  },
   "optionsGroupViews": {
     "message": "العروض"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "مجلد جديد…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "فاصل جديد"
-  },
   "paletteCmdOptions": {
     "message": "فتح صفحة الخيارات"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "المظهر: متابعة النظام"
+  },
+  "paletteCmdThemeDark": {
+    "message": "المظهر: داكن"
+  },
+  "paletteCmdThemeInk": {
+    "message": "المظهر: حبر (داكن)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "المظهر: فاتح"
+  },
+  "paletteCmdThemePaper": {
+    "message": "المظهر: ورق (فاتح)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "تبديل تسميات المسار الأصلي"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "تبديل علامات التبويب"
   },
   "paletteNoResults": {
     "message": "لا توجد نتائج مطابقة"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "لا توجد إشارات مرجعية حديثة. اضغط Ctrl+D لوضع إشارة مرجعية للصفحة الحالية."
+  },
+  "recentGroupMonth": {
+    "message": "هذا الشهر"
+  },
+  "recentGroupOlder": {
+    "message": "أقدم"
+  },
+  "recentGroupToday": {
+    "message": "اليوم"
+  },
+  "recentGroupWeek": {
+    "message": "هذا الأسبوع"
   },
   "recentRevealInTree": {
     "message": "إظهار في الشجرة"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "إزالة هذا البحث"
   },
+  "searchHistoryRerun": {
+    "message": "أعد البحث"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ نتيجة",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "يقوم التصدير بحفظ جميع الإعدادات (بما في ذلك تفضيلات المزامنة) في ملف JSON. الاستيراد يدمج النسخة الاحتياطية: الإعدادات في الملف تحل محل الإعدادات الحالية، ويتم الاحتفاظ بكل شيء آخر."
+  },
+  "settingsExport": {
+    "message": "تصدير الإعدادات"
+  },
+  "settingsImport": {
+    "message": "استيراد الإعدادات"
+  },
+  "settingsImportConfirm": {
+    "message": "سيؤدي الاستيراد إلى استبدال كل إعداد موجود في ملف النسخ الاحتياطي (يتم الاحتفاظ بالإعدادات غير الموجودة في الملف) وإعادة تحميل هذه الصفحة. هل تريد المتابعة؟"
+  },
+  "settingsImportDone": {
+    "message": "تم استيراد الإعدادات. سيتم الآن إعادة تحميل الصفحة."
+  },
+  "settingsImportInvalid": {
+    "message": "ملف إعدادات غير صالح: ليس نسخة احتياطية لإعدادات vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "حسب تاريخ الإضافة (الأحدث أولاً)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "تتراكم الإحصائيات عند فتح الإشارات المرجعية"
   },
+  "statsHistoryAdd": {
+    "message": "إضافة إلى الإشارات المرجعية"
+  },
   "statsHistoryBanner": {
     "message": "امنح الإذن بالوصول إلى السجل لملء إحصائيات الزيارات بزياراتك السابقة."
+  },
+  "statsHistoryBookmarked": {
+    "message": "تمت الإشارة"
   },
   "statsHistoryDismiss": {
     "message": "لا تظهر مرة أخرى"
   },
   "statsHistoryEnable": {
     "message": "تمكين"
+  },
+  "statsHistoryGuide": {
+    "message": "امنح الوصول إلى سجل التصفح لعرض زياراتك الأخيرة هنا."
   },
   "statsHistoryImported": {
     "message": "تم استيراد الزيارات السابقة لـ $count$ إشارة مرجعية",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "إحصائيات الإشارات المرجعية"
+  },
+  "statsSectionRecent": {
+    "message": "الزيارات الأخيرة"
   },
   "statsSortByCount": {
     "message": "حسب العدد"

@@ -306,9 +306,6 @@
   "sortByDateAdded": {
     "message": "按添加时间（新的在前）"
   },
-  "paletteCmdNewSeparator": {
-    "message": "新建分隔符"
-  },
   "recentBookmarks": {
     "message": "最近添加"
   },
@@ -943,5 +940,89 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "主题：跟随系统"
+  },
+  "paletteCmdThemeLight": {
+    "message": "主题：浅色"
+  },
+  "paletteCmdThemeDark": {
+    "message": "主题：深色"
+  },
+  "paletteCmdThemeInk": {
+    "message": "主题：Ink（深色）"
+  },
+  "paletteCmdThemePaper": {
+    "message": "主题：Paper（浅色）"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "切换视图标签栏显隐"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "切换列表行路径标签显隐"
+  },
+  "recentGroupToday": {
+    "message": "今天"
+  },
+  "recentGroupWeek": {
+    "message": "本周"
+  },
+  "recentGroupMonth": {
+    "message": "本月"
+  },
+  "recentGroupOlder": {
+    "message": "更早"
+  },
+  "searchHistoryRerun": {
+    "message": "重新搜索"
+  },
+  "optionsGroupBackup": {
+    "message": "备份"
+  },
+  "settingsExport": {
+    "message": "导出设置"
+  },
+  "settingsImport": {
+    "message": "导入设置"
+  },
+  "settingsBackupHint": {
+    "message": "导出会将所有设置（含同步偏好）保存为 JSON 文件；导入为合并写回：文件中的设置覆盖当前值，未涉及的设置保持不变。"
+  },
+  "settingsImportConfirm": {
+    "message": "导入将覆盖备份文件中包含的所有设置（文件未涉及的设置保留），并重新加载本页面。确定继续吗？"
+  },
+  "settingsImportInvalid": {
+    "message": "无效的设置文件：这不是 vBookmarks 的设置备份。"
+  },
+  "settingsImportDone": {
+    "message": "设置已导入，页面即将重新加载。"
+  },
+  "statsSectionRecent": {
+    "message": "最近访问"
+  },
+  "statsSectionBookmarks": {
+    "message": "书签统计"
+  },
+  "statsHistoryGuide": {
+    "message": "开启历史记录权限后，此处显示你的最近访问"
+  },
+  "statsHistoryAdd": {
+    "message": "加入收藏"
+  },
+  "statsHistoryBookmarked": {
+    "message": "已收藏"
+  },
+  "deadPause": {
+    "message": "暂停"
+  },
+  "deadResume": {
+    "message": "继续"
+  },
+  "deadCancel": {
+    "message": "取消"
+  },
+  "deadPaused": {
+    "message": "已暂停"
   }
 }

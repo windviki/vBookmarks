@@ -139,6 +139,9 @@
   "customStylesDescription": {
     "message": "Requer conhecimento de CSS. Modifique por sua conta e risco."
   },
+  "deadCancel": {
+    "message": "Cancelar"
+  },
   "deadChecking": {
     "message": "Verificando $done$ / $total$…",
     "placeholders": {
@@ -203,11 +206,20 @@
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"
   },
+  "deadPause": {
+    "message": "Pausar"
+  },
+  "deadPaused": {
+    "message": "Pausado"
+  },
   "deadProxyHint": {
     "message": "As URLs dos favoritos são enviadas a este serviço terceiro. Deixe vazio para testar apenas diretamente."
   },
   "deadRescan": {
     "message": "Reexaminar"
+  },
+  "deadResume": {
+    "message": "Retomar"
   },
   "deadStartHint": {
     "message": "Iniciar verificação de $n$ favoritos",
@@ -585,6 +597,9 @@
     },
     "description": "Footer text for the Options page"
   },
+  "optionsGroupBackup": {
+    "message": "Backup"
+  },
   "optionsGroupViews": {
     "message": "Visualizações"
   },
@@ -618,9 +633,6 @@
   "paletteCmdNewFolder": {
     "message": "Nova pasta…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Novo separador"
-  },
   "paletteCmdOptions": {
     "message": "Abrir página de opções"
   },
@@ -637,6 +649,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Seguir sistema"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Escuro"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Tinta (escuro)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Claro"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Papel (claro)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Alternar rótulos do caminho pai"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Alternar abas de visualização"
   },
   "paletteNoResults": {
     "message": "Nenhum resultado correspondente"
@@ -680,6 +713,18 @@
   },
   "recentEmpty": {
     "message": "Nenhum favorito recente. Pressione Ctrl+D para favoritar a página atual."
+  },
+  "recentGroupMonth": {
+    "message": "Este mês"
+  },
+  "recentGroupOlder": {
+    "message": "Mais antigos"
+  },
+  "recentGroupToday": {
+    "message": "Hoje"
+  },
+  "recentGroupWeek": {
+    "message": "Esta semana"
   },
   "recentRevealInTree": {
     "message": "Revelar na árvore"
@@ -733,6 +778,9 @@
   "searchHistoryRemove": {
     "message": "Remover esta pesquisa"
   },
+  "searchHistoryRerun": {
+    "message": "Pesquisar novamente"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ resultado(s)",
     "placeholders": {
@@ -773,6 +821,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "A exportação salva todas as configurações (incluindo preferências de sincronização) em um arquivo JSON. A importação mescla um backup de volta: as configurações no arquivo substituem as atuais, todo o resto é mantido."
+  },
+  "settingsExport": {
+    "message": "Exportar configurações"
+  },
+  "settingsImport": {
+    "message": "Importar configurações"
+  },
+  "settingsImportConfirm": {
+    "message": "A importação substituirá todas as configurações contidas no arquivo de backup (configurações não presentes no arquivo são mantidas) e recarregará esta página. Continuar?"
+  },
+  "settingsImportDone": {
+    "message": "Configurações importadas. A página será recarregada agora."
+  },
+  "settingsImportInvalid": {
+    "message": "Arquivo de configurações inválido: não é um backup de configurações do vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Por data de adição (mais recente primeiro)"
   },
@@ -808,14 +874,23 @@
   "statsEmpty": {
     "message": "Estatísticas são acumuladas ao abrir favoritos"
   },
+  "statsHistoryAdd": {
+    "message": "Adicionar aos favoritos"
+  },
   "statsHistoryBanner": {
     "message": "Conceda acesso ao histórico para gerar estatísticas de visitas com suas visitas passadas."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Favoritado"
   },
   "statsHistoryDismiss": {
     "message": "Não mostrar novamente"
   },
   "statsHistoryEnable": {
     "message": "Ativar"
+  },
+  "statsHistoryGuide": {
+    "message": "Conceda acesso ao histórico para listar suas visitas recentes aqui."
   },
   "statsHistoryImported": {
     "message": "Importadas visitas passadas para $count$ favoritos",
@@ -824,6 +899,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Estatísticas de favoritos"
+  },
+  "statsSectionRecent": {
+    "message": "Visitas recentes"
   },
   "statsSortByCount": {
     "message": "Por contagem"

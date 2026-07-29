@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Dit vereist enige CSS-vaardigheden. Wijzig op eigen risico. Code delen zou verstandig zijn via"
   },
+  "deadCancel": {
+    "message": "Annuleren"
+  },
   "deadChecking": {
     "message": "$done$ / $total$ controleren…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Geen dode links gevonden"
   },
+  "deadPause": {
+    "message": "Pauzeren"
+  },
+  "deadPaused": {
+    "message": "Gepauzeerd"
+  },
   "deadProxyHint": {
     "message": "Bladwijzer-URL's worden naar deze externe service gestuurd. Leeg laten om alleen direct te controleren."
   },
   "deadRescan": {
     "message": "Opnieuw scannen"
+  },
+  "deadResume": {
+    "message": "Hervatten"
   },
   "deadStartHint": {
     "message": "Start met scannen van $n$ bladwijzers",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Back-up"
+  },
   "optionsGroupViews": {
     "message": "Weergaven"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Nieuwe map…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Nieuw scheidingsteken"
-  },
   "paletteCmdOptions": {
     "message": "Open opties pagina"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Thema: Systeem volgen"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Thema: Donker"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Thema: Inkt (donker)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Thema: Licht"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Thema: Papier (licht)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Bovenliggende padlabels omschakelen"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Tabbladen weergeven omschakelen"
   },
   "paletteNoResults": {
     "message": "Geen overeenkomende resultaten"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Geen recente bladwijzers. Druk op Ctrl+D om de huidige pagina als bladwijzer toe te voegen."
+  },
+  "recentGroupMonth": {
+    "message": "Deze maand"
+  },
+  "recentGroupOlder": {
+    "message": "Ouder"
+  },
+  "recentGroupToday": {
+    "message": "Vandaag"
+  },
+  "recentGroupWeek": {
+    "message": "Deze week"
   },
   "recentRevealInTree": {
     "message": "Toon in boom"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Deze zoekopdracht verwijderen"
   },
+  "searchHistoryRerun": {
+    "message": "Opnieuw zoeken"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ resultaat(en)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Exporteren slaat alle instellingen (inclusief synchronisatievoorkeuren) op in een JSON-bestand. Importeren voegt een back-up samen: instellingen in het bestand overschrijven de huidige, alles andere blijft behouden."
+  },
+  "settingsExport": {
+    "message": "Instellingen exporteren"
+  },
+  "settingsImport": {
+    "message": "Instellingen importeren"
+  },
+  "settingsImportConfirm": {
+    "message": "Importeren overschrijft elke instelling in het back-upbestand (instellingen niet in het bestand blijven behouden) en herlaadt deze pagina. Doorgaan?"
+  },
+  "settingsImportDone": {
+    "message": "Instellingen geïmporteerd. De pagina wordt nu herladen."
+  },
+  "settingsImportInvalid": {
+    "message": "Ongeldig instellingenbestand: dit is geen vBookmarks back-up van instellingen."
+  },
   "sortByDateAdded": {
     "message": "Op datum toegevoegd (nieuwste eerst)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistieken worden opgebouwd terwijl u bladwijzers opent"
   },
+  "statsHistoryAdd": {
+    "message": "Toevoegen aan bladwijzers"
+  },
   "statsHistoryBanner": {
     "message": "Verleen toegang tot de geschiedenis om bezoekstatistieken te vullen met uw eerdere bezoeken."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bladwijzer"
   },
   "statsHistoryDismiss": {
     "message": "Niet meer tonen"
   },
   "statsHistoryEnable": {
     "message": "Inschakelen"
+  },
+  "statsHistoryGuide": {
+    "message": "Geef toegang tot de geschiedenis om uw recente bezoeken hier weer te geven."
   },
   "statsHistoryImported": {
     "message": "Eerdere bezoeken geïmporteerd voor $count$ bladwijzers",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Bladwijzerstatistieken"
+  },
+  "statsSectionRecent": {
+    "message": "Recente bezoeken"
   },
   "statsSortByCount": {
     "message": "Op aantal"

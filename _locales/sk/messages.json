@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Toto vyžaduje nejaké CSS znalosti. Upravujte na vlastné riziko. Zdieľanie kódu by b múdre"
   },
+  "deadCancel": {
+    "message": "Zrušiť"
+  },
   "deadChecking": {
     "message": "Kontrolujem $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nenašli sa žiadne nefunkčné odkazy"
   },
+  "deadPause": {
+    "message": "Pauza"
+  },
+  "deadPaused": {
+    "message": "Pozastavené"
+  },
   "deadProxyHint": {
     "message": "Adresy URL záložiek sú odosielané tejto tretej strane. Ponechajte prázdne pre priame testovanie."
   },
   "deadRescan": {
     "message": "Opätovné skenovanie"
+  },
+  "deadResume": {
+    "message": "Pokračovať"
   },
   "deadStartHint": {
     "message": "Spustiť kontrolu $n$ záložiek",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Záloha"
+  },
   "optionsGroupViews": {
     "message": "Zobrazenia"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Nový priečinok…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Nový oddeľovač"
-  },
   "paletteCmdOptions": {
     "message": "Otvoriť stránku možností"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Motív: Sledovať systém"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Motív: Tmavý"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Motív: Atrament (tmavý)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Motív: Svetlý"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Motív: Papier (svetlý)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Prepínať štítky nadradenej cesty"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Prepínať zobrazenie kariet"
   },
   "paletteNoResults": {
     "message": "Žiadne zodpovedajúce výsledky"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Žiadne nedávne záložky. Stlačte Ctrl+D na pridanie aktuálnej stránky do záložiek."
+  },
+  "recentGroupMonth": {
+    "message": "Tento mesiac"
+  },
+  "recentGroupOlder": {
+    "message": "Staršie"
+  },
+  "recentGroupToday": {
+    "message": "Dnes"
+  },
+  "recentGroupWeek": {
+    "message": "Tento týždeň"
   },
   "recentRevealInTree": {
     "message": "Zobraziť v strome"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Odstrániť toto vyhľadávanie"
   },
+  "searchHistoryRerun": {
+    "message": "Hľadať znova"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ výsledkov",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Export uloží všetky nastavenia (vrátane preferencií synchronizácie) do súboru JSON. Import zlúči zálohu späť: nastavenia v súbore prepíšu aktuálne, ostatné zostávajú zachované."
+  },
+  "settingsExport": {
+    "message": "Exportovať nastavenia"
+  },
+  "settingsImport": {
+    "message": "Importovať nastavenia"
+  },
+  "settingsImportConfirm": {
+    "message": "Import prepíše všetky nastavenia obsiahnuté v záložnom súbore (nastavenia, ktoré nie sú v súbore, zostanú zachované) a znova načíta túto stránku. Pokračovať?"
+  },
+  "settingsImportDone": {
+    "message": "Nastavenia importované. Stránka sa teraz znova načíta."
+  },
+  "settingsImportInvalid": {
+    "message": "Neplatný súbor nastavení: nejde o zálohu nastavení vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Podľa dátumu pridania (najnovšie prvé)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Štatistiky sa postupne vytvárajú pri otváraní záložiek"
   },
+  "statsHistoryAdd": {
+    "message": "Pridať do záložiek"
+  },
   "statsHistoryBanner": {
     "message": "Udeľte prístup k histórii na naplnenie štatistík návštev z vašich minulých návštev."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pridané do záložiek"
   },
   "statsHistoryDismiss": {
     "message": "Už nezobrazovať"
   },
   "statsHistoryEnable": {
     "message": "Povoliť"
+  },
+  "statsHistoryGuide": {
+    "message": "Udeľte prístup k histórii, aby ste tu mohli zobraziť svoje nedávne návštevy."
   },
   "statsHistoryImported": {
     "message": "Importované minulé návštevy pre $count$ záložiek",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Štatistiky záložiek"
+  },
+  "statsSectionRecent": {
+    "message": "Nedávne návštevy"
   },
   "statsSortByCount": {
     "message": "Podľa počtu"

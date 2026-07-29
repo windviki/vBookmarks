@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
   },
+  "deadCancel": {
+    "message": "Batal"
+  },
   "deadChecking": {
     "message": "Memeriksa $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Tidak ada tautan mati ditemukan"
   },
+  "deadPause": {
+    "message": "Jeda"
+  },
+  "deadPaused": {
+    "message": "Dijeda"
+  },
   "deadProxyHint": {
     "message": "URL bookmark dikirim ke layanan pihak ketiga ini. Biarkan kosong untuk hanya memeriksa langsung."
   },
   "deadRescan": {
     "message": "Pindai ulang"
+  },
+  "deadResume": {
+    "message": "Lanjutkan"
   },
   "deadStartHint": {
     "message": "Mulai memindai $n$ bookmark",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Cadangan"
+  },
   "optionsGroupViews": {
     "message": "Tampilan"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Folder baru…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Pemisah baru"
-  },
   "paletteCmdOptions": {
     "message": "Buka halaman opsi"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Ikuti sistem"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Gelap"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Tinta (gelap)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Terang"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Kertas (terang)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Alihkan label jalur induk"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Alihkan tab tampilan"
   },
   "paletteNoResults": {
     "message": "Tidak ada hasil yang cocok"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Tidak ada bookmark terbaru. Tekan Ctrl+D untuk menandai halaman ini."
+  },
+  "recentGroupMonth": {
+    "message": "Bulan ini"
+  },
+  "recentGroupOlder": {
+    "message": "Lebih lama"
+  },
+  "recentGroupToday": {
+    "message": "Hari ini"
+  },
+  "recentGroupWeek": {
+    "message": "Minggu ini"
   },
   "recentRevealInTree": {
     "message": "Tampilkan di Pohon"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Hapus pencarian ini"
   },
+  "searchHistoryRerun": {
+    "message": "Cari lagi"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ hasil",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Ekspor menyimpan semua pengaturan (termasuk preferensi sinkronisasi) ke file JSON. Impor menggabungkan kembali cadangan: pengaturan di file menimpa yang saat ini, sisanya dipertahankan."
+  },
+  "settingsExport": {
+    "message": "Ekspor pengaturan"
+  },
+  "settingsImport": {
+    "message": "Impor pengaturan"
+  },
+  "settingsImportConfirm": {
+    "message": "Pengimporan akan menimpa setiap pengaturan yang ada di file cadangan (pengaturan yang tidak ada di file tetap dipertahankan) dan memuat ulang halaman ini. Lanjutkan?"
+  },
+  "settingsImportDone": {
+    "message": "Pengaturan diimpor. Halaman akan dimuat ulang sekarang."
+  },
+  "settingsImportInvalid": {
+    "message": "File pengaturan tidak valid: bukan cadangan pengaturan vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Berdasarkan tanggal ditambahkan (terbaru dulu)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistik terbangun saat Anda membuka bookmark"
   },
+  "statsHistoryAdd": {
+    "message": "Tambahkan ke bookmark"
+  },
   "statsHistoryBanner": {
     "message": "Berikan akses riwayat untuk mengisi statistik kunjungan dengan kunjungan masa lalu Anda"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Telah dibookmark"
   },
   "statsHistoryDismiss": {
     "message": "Jangan tampilkan lagi"
   },
   "statsHistoryEnable": {
     "message": "Aktifkan"
+  },
+  "statsHistoryGuide": {
+    "message": "Berikan akses riwayat untuk menampilkan kunjungan terbaru Anda di sini."
   },
   "statsHistoryImported": {
     "message": "Kunjungan masa lalu diimpor untuk $count$ bookmark",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Statistik bookmark"
+  },
+  "statsSectionRecent": {
+    "message": "Kunjungan terbaru"
   },
   "statsSortByCount": {
     "message": "Berdasarkan jumlah"

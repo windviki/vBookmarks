@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Це вимагає деяких навичок CSS. Змінюйте на свій страх і ризик. Було б розумно ділитися кодом через"
   },
+  "deadCancel": {
+    "message": "Скасувати"
+  },
   "deadChecking": {
     "message": "Перевірка $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Мертвих посилань не знайдено"
   },
+  "deadPause": {
+    "message": "Пауза"
+  },
+  "deadPaused": {
+    "message": "Призупинено"
+  },
   "deadProxyHint": {
     "message": "URL-адреси закладок надсилаються цій сторонній службі. Залиште порожнім, щоб перевіряти лише безпосередньо."
   },
   "deadRescan": {
     "message": "Пересканувати"
+  },
+  "deadResume": {
+    "message": "Продовжити"
   },
   "deadStartHint": {
     "message": "Почати сканування $n$ закладок",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Резервне копіювання"
+  },
   "optionsGroupViews": {
     "message": "Види"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Нова тека…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Новий роздільник"
-  },
   "paletteCmdOptions": {
     "message": "Відкрити налаштування"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Тема: За системою"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Тема: Темна"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Тема: Чорнило (темна)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Тема: Світла"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Тема: Папір (світла)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Перемкнути мітки шляху батьків"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Перемкнути вкладки перегляду"
   },
   "paletteNoResults": {
     "message": "Немає відповідних результатів"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Немає нещодавніх закладок. Натисніть Ctrl+D, щоб додати поточну сторінку до закладок."
+  },
+  "recentGroupMonth": {
+    "message": "Цього місяця"
+  },
+  "recentGroupOlder": {
+    "message": "Старіші"
+  },
+  "recentGroupToday": {
+    "message": "Сьогодні"
+  },
+  "recentGroupWeek": {
+    "message": "Цього тижня"
   },
   "recentRevealInTree": {
     "message": "Показати в дереві"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Видалити цей пошук"
   },
+  "searchHistoryRerun": {
+    "message": "Пошукати знову"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ результат(ів)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Експорт зберігає всі налаштування (включно з налаштуваннями синхронізації) у файл JSON. Імпорт об'єднує резервну копію: налаштування у файлі замінюють поточні, все інше зберігається."
+  },
+  "settingsExport": {
+    "message": "Експортувати налаштування"
+  },
+  "settingsImport": {
+    "message": "Імпортувати налаштування"
+  },
+  "settingsImportConfirm": {
+    "message": "Імпорт перезапише всі налаштування, що містяться у файлі резервної копії (налаштування, яких немає у файлі, зберігаються) та перезавантажить цю сторінку. Продовжити?"
+  },
+  "settingsImportDone": {
+    "message": "Налаштування імпортовано. Сторінка перезавантажиться."
+  },
+  "settingsImportInvalid": {
+    "message": "Недійсний файл налаштувань: це не резервна копія налаштувань vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "За датою додавання (спочатку нові)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Статистика накопичується під час відкривання закладок"
   },
+  "statsHistoryAdd": {
+    "message": "Додати до закладок"
+  },
   "statsHistoryBanner": {
     "message": "Надайте доступ до історії для заповнення статистики відвідувань на основі ваших минулих візитів."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Додано до закладок"
   },
   "statsHistoryDismiss": {
     "message": "Більше не показувати"
   },
   "statsHistoryEnable": {
     "message": "Увімкнути"
+  },
+  "statsHistoryGuide": {
+    "message": "Надайте доступ до історії, щоб відображати ваші нещодавні відвідування тут."
   },
   "statsHistoryImported": {
     "message": "Імпортовано минулі візити для $count$ закладок",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Статистика закладок"
+  },
+  "statsSectionRecent": {
+    "message": "Нещодавні відвідування"
   },
   "statsSortByCount": {
     "message": "За кількістю"

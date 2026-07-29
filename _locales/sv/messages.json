@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
   },
+  "deadCancel": {
+    "message": "Avbryt"
+  },
   "deadChecking": {
     "message": "Kontrollerar $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Inga döda länkar hittades"
   },
+  "deadPause": {
+    "message": "Pausa"
+  },
+  "deadPaused": {
+    "message": "Pausad"
+  },
   "deadProxyHint": {
     "message": "Bokmärkes-URL:er skickas till denna tredjepartstjänst. Lämna tomt för att endast testa direkt."
   },
   "deadRescan": {
     "message": "Skanna om"
+  },
+  "deadResume": {
+    "message": "Återuppta"
   },
   "deadStartHint": {
     "message": "Börja skanna $n$ bokmärken",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Säkerhetskopiering"
+  },
   "optionsGroupViews": {
     "message": "Vyer"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Ny mapp…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Ny avskiljare"
-  },
   "paletteCmdOptions": {
     "message": "Öppna inställningssidan"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Följ systemet"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Mörkt"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Bläck (mörkt)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Ljust"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Papper (ljust)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Växla sökvägsetiketter"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Växla flikvy"
   },
   "paletteNoResults": {
     "message": "Inga matchande resultat"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Inga nyligen bokmärken. Tryck Ctrl+D för att bokmärka aktuell sida."
+  },
+  "recentGroupMonth": {
+    "message": "Denna månad"
+  },
+  "recentGroupOlder": {
+    "message": "Äldre"
+  },
+  "recentGroupToday": {
+    "message": "Idag"
+  },
+  "recentGroupWeek": {
+    "message": "Denna vecka"
   },
   "recentRevealInTree": {
     "message": "Visa i träd"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Ta bort denna sökning"
   },
+  "searchHistoryRerun": {
+    "message": "Sök igen"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ resultat",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Export sparar alla inställningar (inklusive synkroniseringspreferenser) till en JSON-fil. Import sammanfogar en säkerhetskopia: inställningarna i filen skriver över de nuvarande, allt annat behålls."
+  },
+  "settingsExport": {
+    "message": "Exportera inställningar"
+  },
+  "settingsImport": {
+    "message": "Importera inställningar"
+  },
+  "settingsImportConfirm": {
+    "message": "Import kommer att skriva över alla inställningar som finns i säkerhetskopian (inställningar som inte finns i filen behålls) och ladda om denna sida. Fortsätta?"
+  },
+  "settingsImportDone": {
+    "message": "Inställningar importerade. Sidan kommer nu att laddas om."
+  },
+  "settingsImportInvalid": {
+    "message": "Ogiltig inställningsfil: inte en säkerhetskopia av vBookmarks-inställningar."
+  },
   "sortByDateAdded": {
     "message": "Efter datum (nyast först)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistik byggs upp när du öppnar bokmärken"
   },
+  "statsHistoryAdd": {
+    "message": "Lägg till i bokmärken"
+  },
   "statsHistoryBanner": {
     "message": "Ge historikåtkomst för att fylla besöksstatistik med dina tidigare besök."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bokmärkt"
   },
   "statsHistoryDismiss": {
     "message": "Visa inte igen"
   },
   "statsHistoryEnable": {
     "message": "Aktivera"
+  },
+  "statsHistoryGuide": {
+    "message": "Ge åtkomst till historik för att lista dina senaste besök här."
   },
   "statsHistoryImported": {
     "message": "Importerade tidigare besök för $count$ bokmärken",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Bokmärkesstatistik"
+  },
+  "statsSectionRecent": {
+    "message": "Senaste besök"
   },
   "statsSortByCount": {
     "message": "Efter antal"

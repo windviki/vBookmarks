@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Dette kræver nogle CSS færdigheder. Rediger på egen risiko. Kodedeling ville være klogt via"
   },
+  "deadCancel": {
+    "message": "Annuller"
+  },
   "deadChecking": {
     "message": "Kontrollerer $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Ingen døde links fundet"
   },
+  "deadPause": {
+    "message": "Pause"
+  },
+  "deadPaused": {
+    "message": "Pauseret"
+  },
   "deadProxyHint": {
     "message": "Bogmærke-URL'er sendes til denne tredjepartstjeneste. Lad feltet være tomt for kun at probe direkte."
   },
   "deadRescan": {
     "message": "Genscan"
+  },
+  "deadResume": {
+    "message": "Genoptag"
   },
   "deadStartHint": {
     "message": "Start scanning af $n$ bogmærker",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Sikkerhedskopi"
+  },
   "optionsGroupViews": {
     "message": "Visninger"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Ny mappe…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Ny separator"
-  },
   "paletteCmdOptions": {
     "message": "Åbn indstillingsside"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Følg system"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Mørk"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Blæk (mørk)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Lys"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Papir (lys)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Vis/skjul overordnet sti"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Skift faner"
   },
   "paletteNoResults": {
     "message": "Ingen matchende resultater"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Ingen nylige bogmærker. Tryk Ctrl+D for at bogmærke den aktuelle side."
+  },
+  "recentGroupMonth": {
+    "message": "Denne måned"
+  },
+  "recentGroupOlder": {
+    "message": "Ældre"
+  },
+  "recentGroupToday": {
+    "message": "I dag"
+  },
+  "recentGroupWeek": {
+    "message": "Denne uge"
   },
   "recentRevealInTree": {
     "message": "Vis i træ"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Fjern denne søgning"
   },
+  "searchHistoryRerun": {
+    "message": "Søg igen"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ resultat(er)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Eksport gemmer alle indstillinger (inkl. synkroniseringspræferencer) til en JSON-fil. Import fusionerer en sikkerhedskopi tilbage: indstillinger i filen overskriver de nuværende, alt andet bevares."
+  },
+  "settingsExport": {
+    "message": "Eksporter indstillinger"
+  },
+  "settingsImport": {
+    "message": "Importer indstillinger"
+  },
+  "settingsImportConfirm": {
+    "message": "Import vil overskrive alle indstillinger i sikkerhedskopifilen (indstillinger, der ikke er i filen, bevares) og genindlæse denne side. Fortsæt?"
+  },
+  "settingsImportDone": {
+    "message": "Indstillinger importeret. Siden genindlæses nu."
+  },
+  "settingsImportInvalid": {
+    "message": "Ugyldig indstillingsfil: ikke en sikkerhedskopi af vBookmarks-indstillinger."
+  },
   "sortByDateAdded": {
     "message": "Efter tilføjelsesdato (nyeste først)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistik opbygges, når du åbner bogmærker"
   },
+  "statsHistoryAdd": {
+    "message": "Tilføj til bogmærker"
+  },
   "statsHistoryBanner": {
     "message": "Giv historieadgang for at så besøgsstatistik med dine tidligere besøg."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bogmærket"
   },
   "statsHistoryDismiss": {
     "message": "Vis ikke igen"
   },
   "statsHistoryEnable": {
     "message": "Aktivér"
+  },
+  "statsHistoryGuide": {
+    "message": "Giv adgang til historik for at liste dine seneste besøg her."
   },
   "statsHistoryImported": {
     "message": "Importerede tidligere besøg for $count$ bogmærker",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Bogmærkestatistik"
+  },
+  "statsSectionRecent": {
+    "message": "Seneste besøg"
   },
   "statsSortByCount": {
     "message": "Efter antal"

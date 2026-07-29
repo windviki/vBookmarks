@@ -512,10 +512,6 @@
     "description": "Command palette entry that creates a folder at the bottom of the quick-add folder.",
     "message": "New folder…"
   },
-  "paletteCmdNewSeparator": {
-    "description": "Command palette entry that adds a separator at the bottom of the quick-add folder.",
-    "message": "New separator"
-  },
   "paletteCmdQuickAdd": {
     "description": "Command palette entry that bookmarks the current tab (same as the star button).",
     "message": "Bookmark current tab"
@@ -1022,5 +1018,89 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Theme: Follow system"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Theme: Light"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Theme: Dark"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Theme: Ink (dark)"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Theme: Paper (light)"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Toggle view tabs"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Toggle parent path labels"
+  },
+  "recentGroupToday": {
+    "message": "Today"
+  },
+  "recentGroupWeek": {
+    "message": "This week"
+  },
+  "recentGroupMonth": {
+    "message": "This month"
+  },
+  "recentGroupOlder": {
+    "message": "Older"
+  },
+  "searchHistoryRerun": {
+    "message": "Search again"
+  },
+  "optionsGroupBackup": {
+    "message": "Backup"
+  },
+  "settingsExport": {
+    "message": "Export settings"
+  },
+  "settingsImport": {
+    "message": "Import settings"
+  },
+  "settingsBackupHint": {
+    "message": "Export saves all settings (including sync preferences) to a JSON file. Import merges a backup back: settings in the file overwrite the current ones, everything else is kept."
+  },
+  "settingsImportConfirm": {
+    "message": "Importing will overwrite every setting contained in the backup file (settings not in the file are kept) and reload this page. Continue?"
+  },
+  "settingsImportInvalid": {
+    "message": "Invalid settings file: not a vBookmarks settings backup."
+  },
+  "settingsImportDone": {
+    "message": "Settings imported. The page will now reload."
+  },
+  "statsSectionRecent": {
+    "message": "Recent visits"
+  },
+  "statsSectionBookmarks": {
+    "message": "Bookmark statistics"
+  },
+  "statsHistoryGuide": {
+    "message": "Grant history access to list your recent visits here."
+  },
+  "statsHistoryAdd": {
+    "message": "Add to bookmarks"
+  },
+  "statsHistoryBookmarked": {
+    "message": "Bookmarked"
+  },
+  "deadPause": {
+    "message": "Pause"
+  },
+  "deadResume": {
+    "message": "Resume"
+  },
+  "deadCancel": {
+    "message": "Cancel"
+  },
+  "deadPaused": {
+    "message": "Paused"
   }
 }

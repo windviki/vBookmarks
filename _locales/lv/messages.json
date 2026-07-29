@@ -140,6 +140,9 @@
   "customStylesDescription": {
     "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
   },
+  "deadCancel": {
+    "message": "Atcelt"
+  },
   "deadChecking": {
     "message": "Pārbauda $done$ / $total$…",
     "placeholders": {
@@ -204,11 +207,20 @@
   "deadNone": {
     "message": "Nav atrastas bojātas saites"
   },
+  "deadPause": {
+    "message": "Apturēt"
+  },
+  "deadPaused": {
+    "message": "Apturēts"
+  },
   "deadProxyHint": {
     "message": "Grāmatzīmju URL tiek nosūtīti šim trešās puses pakalpojumam. Atstājiet tukšu, lai aptaujātu tikai tieši."
   },
   "deadRescan": {
     "message": "Pārskenēt"
+  },
+  "deadResume": {
+    "message": "Turpināt"
   },
   "deadStartHint": {
     "message": "Sākt skenēt $n$ grāmatzīmes",
@@ -588,6 +600,9 @@
       }
     }
   },
+  "optionsGroupBackup": {
+    "message": "Dublējums"
+  },
   "optionsGroupViews": {
     "message": "Skati"
   },
@@ -621,9 +636,6 @@
   "paletteCmdNewFolder": {
     "message": "Jauna mape…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Jauns atdalītājs"
-  },
   "paletteCmdOptions": {
     "message": "Atvērt iestatījumu lapu"
   },
@@ -640,6 +652,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tēma: Sekot sistēmai"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tēma: Tumša"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tēma: Tinte (tumša)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tēma: Gaiša"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tēma: Papīrs (gaišs)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Pārslēgt vecākceļa etiķetes"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Pārslēgt skata cilnes"
   },
   "paletteNoResults": {
     "message": "Nav atbilstošu rezultātu"
@@ -683,6 +716,18 @@
   },
   "recentEmpty": {
     "message": "Nav nesenas grāmatzīmes. Nospiediet Ctrl+D, lai pievienotu pašreizējo lapu grāmatzīmēm."
+  },
+  "recentGroupMonth": {
+    "message": "Šomēnes"
+  },
+  "recentGroupOlder": {
+    "message": "Vecāki"
+  },
+  "recentGroupToday": {
+    "message": "Šodien"
+  },
+  "recentGroupWeek": {
+    "message": "Šonedēļ"
   },
   "recentRevealInTree": {
     "message": "Rādīt kokā"
@@ -737,6 +782,9 @@
   "searchHistoryRemove": {
     "message": "Noņemt šo meklēšanu"
   },
+  "searchHistoryRerun": {
+    "message": "Meklēt vēlreiz"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ rezultāts(-i)",
     "placeholders": {
@@ -777,6 +825,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "Eksportēšana saglabā visus iestatījumus (ieskaitot sinhronizācijas preferences) JSON failā. Importēšana apvieno dublējumu: faila iestatījumi pārraksta esošos, pārējie tiek saglabāti."
+  },
+  "settingsExport": {
+    "message": "Eksportēt iestatījumus"
+  },
+  "settingsImport": {
+    "message": "Importēt iestatījumus"
+  },
+  "settingsImportConfirm": {
+    "message": "Importēšana pārrakstīs visus iestatījumus, kas ir dublējuma failā (failā neesošie iestatījumi tiek saglabāti) un pārlādēs šo lapu. Turpināt?"
+  },
+  "settingsImportDone": {
+    "message": "Iestatījumi importēti. Lapa tiks pārlādēta."
+  },
+  "settingsImportInvalid": {
+    "message": "Nederīgs iestatījumu fails: tas nav vBookmarks iestatījumu dublējums."
+  },
   "sortByDateAdded": {
     "message": "Pēc pievienošanas datuma (jaunākie pirmie)"
   },
@@ -812,14 +878,23 @@
   "statsEmpty": {
     "message": "Statistika uzkrājas, atverot grāmatzīmes"
   },
+  "statsHistoryAdd": {
+    "message": "Pievienot grāmatzīmēm"
+  },
   "statsHistoryBanner": {
     "message": "Piešķirt vēstures piekļuvi, lai apmeklējumu statistiku papildinātu ar jūsu iepriekšējiem apmeklējumiem."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Pievienots grāmatzīmēm"
   },
   "statsHistoryDismiss": {
     "message": "Nerādīt vēlreiz"
   },
   "statsHistoryEnable": {
     "message": "Iespējot"
+  },
+  "statsHistoryGuide": {
+    "message": "Piešķiriet vēstures piekļuvi, lai šeit parādītu jūsu nesenos apmeklējumus."
   },
   "statsHistoryImported": {
     "message": "Importēti iepriekšējie apmeklējumi $count$ grāmatzīmēm",
@@ -828,6 +903,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Grāmatzīmju statistika"
+  },
+  "statsSectionRecent": {
+    "message": "Nesenie apmeklējumi"
   },
   "statsSortByCount": {
     "message": "Pēc skaita"

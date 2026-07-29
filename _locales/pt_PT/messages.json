@@ -139,6 +139,9 @@
   "customStylesDescription": {
     "message": "Requer conhecimento de CSS. Modifique por sua conta e risco."
   },
+  "deadCancel": {
+    "message": "Cancelar"
+  },
   "deadChecking": {
     "message": "A verificar $done$ / $total$…",
     "placeholders": {
@@ -203,11 +206,20 @@
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"
   },
+  "deadPause": {
+    "message": "Pausa"
+  },
+  "deadPaused": {
+    "message": "Em pausa"
+  },
   "deadProxyHint": {
     "message": "Os URLs dos marcadores são enviados a este serviço de terceiros. Deixe vazio para sondar apenas diretamente."
   },
   "deadRescan": {
     "message": "Revarrir"
+  },
+  "deadResume": {
+    "message": "Retomar"
   },
   "deadStartHint": {
     "message": "A começar a verificar $n$ marcadores",
@@ -585,6 +597,9 @@
     },
     "description": "Footer text for the Options page"
   },
+  "optionsGroupBackup": {
+    "message": "Cópia de segurança"
+  },
   "optionsGroupViews": {
     "message": "Vistas"
   },
@@ -618,9 +633,6 @@
   "paletteCmdNewFolder": {
     "message": "Nova pasta…"
   },
-  "paletteCmdNewSeparator": {
-    "message": "Novo separador"
-  },
   "paletteCmdOptions": {
     "message": "Abrir página de opções"
   },
@@ -637,6 +649,27 @@
         "content": "$1"
       }
     }
+  },
+  "paletteCmdThemeAuto": {
+    "message": "Tema: Seguir sistema"
+  },
+  "paletteCmdThemeDark": {
+    "message": "Tema: Escuro"
+  },
+  "paletteCmdThemeInk": {
+    "message": "Tema: Tinta (escuro)"
+  },
+  "paletteCmdThemeLight": {
+    "message": "Tema: Claro"
+  },
+  "paletteCmdThemePaper": {
+    "message": "Tema: Papel (claro)"
+  },
+  "paletteCmdToggleItemPath": {
+    "message": "Alternar etiquetas de caminho pai"
+  },
+  "paletteCmdToggleViewTabs": {
+    "message": "Alternar separadores de vista"
   },
   "paletteNoResults": {
     "message": "Nenhum resultado correspondente"
@@ -680,6 +713,18 @@
   },
   "recentEmpty": {
     "message": "Sem marcadores recentes. Prima Ctrl+D para marcar a página atual."
+  },
+  "recentGroupMonth": {
+    "message": "Este mês"
+  },
+  "recentGroupOlder": {
+    "message": "Mais antigos"
+  },
+  "recentGroupToday": {
+    "message": "Hoje"
+  },
+  "recentGroupWeek": {
+    "message": "Esta semana"
   },
   "recentRevealInTree": {
     "message": "Mostrar na árvore"
@@ -733,6 +778,9 @@
   "searchHistoryRemove": {
     "message": "Remover esta pesquisa"
   },
+  "searchHistoryRerun": {
+    "message": "Pesquisar novamente"
+  },
   "searchHistoryResultCount": {
     "message": "$n$ resultado(s)",
     "placeholders": {
@@ -773,6 +821,24 @@
     },
     "description": "Alert shown after the current window's tabs were saved into a new bookmark folder."
   },
+  "settingsBackupHint": {
+    "message": "A exportação guarda todas as definições (incluindo preferências de sincronização) num ficheiro JSON. A importação funde uma cópia de segurança: as definições do ficheiro substituem as atuais, tudo o resto é mantido."
+  },
+  "settingsExport": {
+    "message": "Exportar definições"
+  },
+  "settingsImport": {
+    "message": "Importar definições"
+  },
+  "settingsImportConfirm": {
+    "message": "Importar irá substituir todas as definições contidas no ficheiro de cópia de segurança (as definições não presentes no ficheiro são mantidas) e recarregar esta página. Continuar?"
+  },
+  "settingsImportDone": {
+    "message": "Definições importadas. A página será agora recarregada."
+  },
+  "settingsImportInvalid": {
+    "message": "Ficheiro de definições inválido: não é uma cópia de segurança das definições do vBookmarks."
+  },
   "sortByDateAdded": {
     "message": "Por data de adição (mais recentes primeiro)"
   },
@@ -808,14 +874,23 @@
   "statsEmpty": {
     "message": "As estatísticas são acumuladas à medida que abre marcadores"
   },
+  "statsHistoryAdd": {
+    "message": "Adicionar aos marcadores"
+  },
   "statsHistoryBanner": {
     "message": "Conceder acesso ao histórico para preencher as estatísticas de visitas com as suas visitas passadas."
+  },
+  "statsHistoryBookmarked": {
+    "message": "Adicionado aos marcadores"
   },
   "statsHistoryDismiss": {
     "message": "Não mostrar novamente"
   },
   "statsHistoryEnable": {
     "message": "Ativar"
+  },
+  "statsHistoryGuide": {
+    "message": "Conceda acesso ao histórico para listar as suas visitas recentes aqui."
   },
   "statsHistoryImported": {
     "message": "Visitas passadas importadas para $count$ marcadores",
@@ -824,6 +899,12 @@
         "content": "$1"
       }
     }
+  },
+  "statsSectionBookmarks": {
+    "message": "Estatísticas de marcadores"
+  },
+  "statsSectionRecent": {
+    "message": "Visitas recentes"
   },
   "statsSortByCount": {
     "message": "Por contagem"
