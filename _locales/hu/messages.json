@@ -447,7 +447,7 @@
     "message": "(nincs cím)"
   },
   "nope": {
-    "message": "Nem"
+    "message": "Mégse"
   },
   "open": {
     "description": "Action to open bookmarks.",

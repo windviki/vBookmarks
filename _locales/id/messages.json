@@ -447,7 +447,7 @@
     "message": "(tanpa judul)"
   },
   "nope": {
-    "message": "Tidak"
+    "message": "Batal"
   },
   "open": {
     "description": "Action to open bookmarks.",

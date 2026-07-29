@@ -447,7 +447,7 @@
     "message": "(χωρίς τίτλο)"
   },
   "nope": {
-    "message": "Όχι"
+    "message": "Ακύρωση"
   },
   "open": {
     "description": "Action to open bookmarks.",

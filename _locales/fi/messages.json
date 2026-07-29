@@ -447,7 +447,7 @@
     "message": "(ei otsikkoa)"
   },
   "nope": {
-    "message": "Ei"
+    "message": "Peruuta"
   },
   "open": {
     "description": "Action to open bookmarks.",

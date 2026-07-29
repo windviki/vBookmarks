@@ -446,7 +446,7 @@
     "message": "(Нема наслов)"
   },
   "nope": {
-    "message": "Не бе"
+    "message": "Откажи"
   },
   "open": {
     "description": "Action to open bookmarks.",

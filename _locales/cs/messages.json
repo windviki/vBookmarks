@@ -447,7 +447,7 @@
     "message": "(bez názvu)"
   },
   "nope": {
-    "message": "Ne"
+    "message": "Zrušit"
   },
   "open": {
     "description": "Action to open bookmarks.",

@@ -447,7 +447,7 @@
     "message": "(không tiêu đề)"
   },
   "nope": {
-    "message": "Không"
+    "message": "Hủy"
   },
   "open": {
     "description": "Action to open bookmarks.",

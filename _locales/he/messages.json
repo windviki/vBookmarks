@@ -447,7 +447,7 @@
     "message": "(ללא כותרת)"
   },
   "nope": {
-    "message": "לא"
+    "message": "ביטול"
   },
   "open": {
     "description": "Action to open bookmarks.",

@@ -128,7 +128,7 @@
     "message": "If URL of a bookmark contains this string, it will be shown as a separator"
   },
   "customStyles": {
-    "message": "Customstyles"
+    "message": "Custom Styles"
   },
   "customStylesDescription": {
     "message": "This requires some CSS skills. Hack at your own risk. Code sharing would be wise done via"
@@ -372,7 +372,7 @@
     "message": "Edit folder"
   },
   "errorOccured": {
-    "message": "Oops, an error occured."
+    "message": "Oops, an error occurred."
   },
   "extDesc": {
     "description": "The extension description.",
@@ -397,7 +397,7 @@
     "message": "Name"
   },
   "nope": {
-    "message": "Nope"
+    "message": "Cancel"
   },
   "noTitle": {
     "description": "The title for untitled bookmarks with no http(s) URL or untitled folders.",

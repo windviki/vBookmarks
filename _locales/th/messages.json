@@ -447,7 +447,7 @@
     "message": "(ไม่มีชื่อ)"
   },
   "nope": {
-    "message": "ไม่"
+    "message": "ยกเลิก"
   },
   "open": {
     "description": "Action to open bookmarks.",

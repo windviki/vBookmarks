@@ -447,7 +447,7 @@
     "message": "(ingen titel)"
   },
   "nope": {
-    "message": "Nej"
+    "message": "Annuller"
   },
   "open": {
     "description": "Action to open bookmarks.",

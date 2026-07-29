@@ -447,7 +447,7 @@
     "message": "(sin título)"
   },
   "nope": {
-    "message": "No"
+    "message": "Cancelar"
   },
   "open": {
     "description": "Acción para abrir marcadores.",
