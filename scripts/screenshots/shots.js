@@ -218,9 +218,11 @@ const SEED = `
     await page.close();
 
     // --- options page ------------------------------------------------------
+    // 1280 wide: exercises the round-6 multi-column group layout (the
+    // single-column fallback below ~820px is what 760 used to pin).
     const opts = await browser.newPage();
     watch(opts, 'options');
-    await opts.setViewport({ width: 760, height: 700 });
+    await opts.setViewport({ width: 1280, height: 800 });
     await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
     await sleep(800);
     await light(opts);
@@ -234,7 +236,7 @@ const SEED = `
     // --- advanced options (dark, CodeMirror) -------------------------------
     const adv = await browser.newPage();
     watch(adv, 'advanced');
-    await adv.setViewport({ width: 760, height: 700 });
+    await adv.setViewport({ width: 1280, height: 800 });
     await adv.goto(`chrome-extension://${extId}/pages/advanced-options.html`, { waitUntil: 'networkidle0' });
     await sleep(800);
     await dark(adv);

@@ -275,7 +275,7 @@ fieldset p{
 	background: #fff;
 	display: inline-block;
 	border-radius: 3px;
-	width: 40em;
+	width: min(40em, 100%); /* round-6: fit the column when the grid narrows */
 	cursor: text;
 	text-shadow: none;
 }
@@ -382,6 +382,30 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	body[data-theme="auto"] .cm-s-default span.cm-bracket { color: var(--vbm-fg); }
 	body[data-theme="auto"] .cm-s-default span.cm-tag { color: #e06c75; }
 	body[data-theme="auto"] .cm-s-default span.cm-attribute { color: #d19a66; }
+}
+/* --- Responsive page layout (round-6 item 5) -------------------------------
+   The page is capped and centered; groups flow into as many ~380px CSS
+   columns as the width affords (1 below ~820px, 2 on laptops, 3 on wide
+   monitors). Multicol — not grid — because the groups have very uneven
+   heights: column balancing packs them without holes. */
+.options-page{
+	max-width: 1280px;
+	margin: 0 auto;
+}
+.options-grid{
+	columns: 380px;
+	column-gap: 2.5em;
+}
+.options-group,
+.options-grid>fieldset{
+	break-inside: avoid;
+	margin: 0 0 1.5em;
+}
+.options-group>h2{
+	margin: 0 0 .4em;
+}
+.options-group .options-list{
+	margin-top: 0;
 }
 #footer{
 	color: var(--vbm-muted);
