@@ -44,13 +44,6 @@ const SEED = `
     // --- A separator so the dead view's filtering is visible ---
     await create({ parentId: '1', title: '|', url: 'http://separatethis.com/sep-1' });
 
-    // --- Spread dateAdded so the recent view's coarse groups all render ---
-    const DAY = 86400e3;
-    const now0 = Date.now();
-    await create({ parentId: '1', title: 'Week-old find', url: 'https://example.com/week', dateAdded: now0 - 5 * DAY });
-    await create({ parentId: '1', title: 'Month-old find', url: 'https://example.com/month', dateAdded: now0 - 20 * DAY });
-    await create({ parentId: '1', title: 'Ancient find', url: 'https://example.com/ancient', dateAdded: now0 - 45 * DAY });
-
     // --- View datasets ---
     const now = Date.now();
     await new Promise(r => chrome.storage.local.set({
@@ -129,6 +122,17 @@ const SEED = `
     const page = await browser.newPage();
     watch(page, 'popup-views');
     await page.setViewport({ width: 400, height: 640 });
+    // 第四轮项8: bookmarks.create rejects dateAdded, so fudge the read side —
+    // age whole index ranges (keeping the desc order monotonic) and the
+    // recent view's coarse groups (Today/Week/Month/Older) all render.
+    await page.evaluateOnNewDocument(() => {
+        const DAY = 86400e3;
+        const orig = chrome.bookmarks.getRecent.bind(chrome.bookmarks);
+        chrome.bookmarks.getRecent = (n, cb) => orig(n, items => {
+            const age = i => (i >= 9 ? 45 * DAY : i >= 6 ? 20 * DAY : i >= 3 ? 5 * DAY : 0);
+            cb(items.map((it, i) => (age(i) ? { ...it, dateAdded: Date.now() - age(i) } : it)));
+        });
+    });
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
     await sleep(1600);
 

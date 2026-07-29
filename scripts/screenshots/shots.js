@@ -78,6 +78,16 @@ const SEED = `
     const page = await browser.newPage();
     watch(page, 'popup');
     await page.setViewport({ width: 400, height: 640 });
+    // 第四轮项8: fudge getRecent dateAdded by index range (monotonic desc)
+    // so the recent view's coarse time groups all render in state 13.
+    await page.evaluateOnNewDocument(() => {
+        const DAY = 86400e3;
+        const orig = chrome.bookmarks.getRecent.bind(chrome.bookmarks);
+        chrome.bookmarks.getRecent = (n, cb) => orig(n, items => {
+            const age = i => (i >= 9 ? 45 * DAY : i >= 6 ? 20 * DAY : i >= 3 ? 5 * DAY : 0);
+            cb(items.map((it, i) => (age(i) ? { ...it, dateAdded: Date.now() - age(i) } : it)));
+        });
+    });
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
     // Silence the donation ask until state 12 explicitly enables it (the
     // seed page's storage writes race this first open, so newOrUpgrade is
