@@ -27,7 +27,7 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,diag-dead.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js} "$CTX/"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 docker run --rm "$IMAGE"

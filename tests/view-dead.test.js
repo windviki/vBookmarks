@@ -568,13 +568,22 @@ describe('item 10: row layout CSS contract', () => {
     it('dead result rows go flex so the row buttons stay on the row line', () => {
         const body = ruleBody(neatCss, '#dead-list ul li.vbm-row {');
         expect(body).toContain('display: flex');
-        expect(body).toContain('align-items: center');
+        // 第五轮项1: two-line (wide/panel) rows pin the buttons to the TITLE
+        // line — center alignment parked them on the seam between the lines.
+        expect(body).toContain('align-items: flex-start');
     });
 
     it('the row anchor flexes with min-width:0, buttons pin to the inline end', () => {
         const body = ruleBody(neatCss, '#dead-list ul li.vbm-row > a {');
         expect(body).toContain('flex: 1');
         expect(body).toContain('min-width: 0');
+        // badge + favicon inside the anchor join the buttons on the title line
+        expect(body).toContain('align-items: flex-start');
+    });
+
+    it('the icon slot tracks the title-line height so the icon stays centered on it', () => {
+        const body = ruleBody(neatCss, '#dead-list ul li.vbm-row > a .favicon-container {');
+        expect(body).toContain('min-height: 1.67em');
     });
 });
 

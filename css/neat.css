@@ -2347,15 +2347,29 @@ body.panel-mode .vbm-row .row-sub {
 /* 第四轮项10: result rows carry inline .row-btn actions (mark ⚑ / delete ×);
    without flex the buttons wrapped onto a line below the anchor. Same recipe
    as .dupes-member / .stats-hist-row: the li goes flex, the anchor flexes
-   and the buttons pin to the row's inline end. */
+   and the buttons pin to the row's inline end.
+   第五轮项1: wide/panel rows are two lines tall (title + .row-sub path), and
+   align-items:center parked the badge and the row buttons on the seam between
+   the lines — reading as "a new line below the bookmark". flex-start pins the
+   favicon, the error badge and the buttons to the TITLE line (the first 20px,
+   identical to the single-line narrow case); the path line owns the second
+   line alone. */
 #dead-list ul li.vbm-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 #dead-list ul li.vbm-row > a {
     flex: 1;
     min-width: 0;
+    align-items: flex-start;
+}
+
+/* …and the icon slot tracks the title line's height (1.67em, the anchor's
+   line-height) so the icon center stays on the title-line center instead of
+   shrinking to the 16px bitmap and riding high. */
+#dead-list ul li.vbm-row > a .favicon-container {
+    min-height: 1.67em;
 }
 
 /* Marked rows: the dead-mark button stays lit (not hover-only) so the
