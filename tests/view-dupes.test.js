@@ -616,3 +616,99 @@ describe('refresh lifecycle', () => {
         expect(chrome.bookmarks.getTreeCalls).toBe(2);
     });
 });
+
+
+describe('snapshot persistence (round-6 item 6)', () => {
+    // A previous regroup: the a.com group with two of its three copies
+    // (the live makeTree() has three — revalidation must discover 15).
+    const SNAPSHOT = JSON.stringify({
+        ts: 1234567890,
+        scope: 'all',
+        ignoreScheme: false,
+        groups: [
+            { key: 'https://a.com', items: [
+                { id: '11', title: 'A oldest', url: 'https://a.com/', dateAdded: 100, parentId: '1', inBar: true },
+                { id: '21', title: 'A newest', url: 'https://a.com/?utm_source=t', dateAdded: 300, parentId: '2', inBar: false }
+            ] }
+        ]
+    });
+
+    it('persists every regroup into dupesLastResult', () => {
+        const { def, store } = setup({});
+        def().activate();
+        const snap = JSON.parse(store.get('dupesLastResult', ''));
+        expect(snap.scope).toBe('all');
+        expect(snap.ignoreScheme).toBe(false);
+        expect(snap.ts).toEqual(expect.any(Number));
+        expect(snap.groups).toHaveLength(1);
+        expect(snap.groups[0].key).toBe('https://a.com');
+        expect(snap.groups[0].items.map(i => i.id)).toEqual(['11', '15', '21']);
+    });
+
+    it('hydrates at init — activate paints the snapshot without getTree', () => {
+        const { def, $list, chrome } = setup({ storeData: { dupesLastResult: SNAPSHOT } });
+        expect(def().badge()).toBe(1); // badge reflects the snapshot at once
+        expect(chrome.bookmarks.getTreeCalls).toBe(0);
+        def().activate();
+        expect(chrome.bookmarks.getTreeCalls).toBe(0); // instant paint, no recompute
+        expect($list.innerHTML).toContain('dupes-item-11');
+        expect($list.innerHTML).toContain('dupes-item-21');
+    });
+
+    it('revalidates the hydrated snapshot against the live tree (300ms debounce)', () => {
+        const { def, $list, chrome } = setup({ storeData: { dupesLastResult: SNAPSHOT } });
+        def().activate();
+        expect($list.innerHTML).not.toContain('dupes-item-15'); // not in the snapshot
+        tick(300); // the scheduled revalidation
+        expect(chrome.bookmarks.getTreeCalls).toBe(1);
+        expect($list.innerHTML).toContain('dupes-item-15'); // live tree has 3 copies
+    });
+
+    it('drops stale rows after revalidation when the dupe vanished while closed', () => {
+        const tree = [{ id: '0', title: '', children: [
+            { id: '2', title: 'Other', children: [
+                { id: '22', parentId: '2', title: 'B only', url: 'https://b.com/', dateAdded: 150 }
+            ] }
+        ] }];
+        const { def, $list } = setup({ tree, storeData: { dupesLastResult: SNAPSHOT } });
+        def().activate();
+        expect($list.innerHTML).toContain('dupes-item-11'); // stale paint first
+        tick(300);
+        expect($list.innerHTML).toContain('dupesNone'); // corrected by the live tree
+    });
+
+    it('skips the snapshot when the scope changed since it was taken', () => {
+        const { def, chrome } = setup({
+            storeData: { dupesLastResult: SNAPSHOT, dupesScope: 'bar' }
+        });
+        def().activate();
+        expect(chrome.bookmarks.getTreeCalls).toBe(1); // recomputed, not hydrated
+    });
+
+    it('skips the snapshot when ignoreScheme changed since it was taken', () => {
+        const { def, chrome } = setup({
+            storeData: { dupesLastResult: SNAPSHOT, dupesIgnoreScheme: '1' }
+        });
+        def().activate();
+        expect(chrome.bookmarks.getTreeCalls).toBe(1);
+    });
+
+    it('skips a corrupt snapshot blob and recomputes', () => {
+        const { def, chrome, $list } = setup({ storeData: { dupesLastResult: '{oops' } });
+        def().activate();
+        expect(chrome.bookmarks.getTreeCalls).toBe(1);
+        expect($list.innerHTML).toContain('dupes-group');
+    });
+
+    it('skips a snapshot whose groups no longer hold a real group', () => {
+        const thin = JSON.stringify({
+            ts: 1, scope: 'all', ignoreScheme: false,
+            groups: [{ key: 'https://a.com', items: [
+                { id: '11', title: 'A oldest', url: 'https://a.com/', dateAdded: 100, parentId: '1', inBar: true }
+            ] }]
+        });
+        const { def, chrome } = setup({ storeData: { dupesLastResult: thin } });
+        def().activate();
+        expect(chrome.bookmarks.getTreeCalls).toBe(1); // single-member groups are no groups
+    });
+});

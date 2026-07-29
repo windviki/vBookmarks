@@ -30,6 +30,15 @@
  * would fire one toast per row. The onRemoved listener replays the regroup
  * (300ms debounce), so the list rebuilds itself after the chain lands.
  *
+ * Snapshot persistence (round-6 item 6): every regroup lands in the settings
+ * mirror (`dupesLastResult`, JSON — same recipe as the dead view's
+ * deadLastScan). init hydrates groups/itemIndex from it synchronously, so
+ * reopening the popup paints the previous result set instantly; activate()
+ * then re-runs the regroup against the live tree (300ms debounce) to
+ * correct any drift that happened while the popup was closed. The snapshot
+ * is scoped: a scope/ignoreScheme mismatch discards it (the controls
+ * regrouped since).
+ *
  * Keyboard: ↑↓ walk group headers and members as one sequence (both are
  * plain focusable rows); ←/→/Space/Enter on a group header collapse/expand
  * it (handled capture-phase on the list so keyboard.js never treats the
@@ -99,6 +108,54 @@ export function initViewDupes(ctx = {}) {
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
     const ignoreScheme = () => !!store.get('dupesIgnoreScheme', '');
+
+    // --- Snapshot persistence (round-6 item 6) --------------------------------
+    // JSON in the settings mirror (chrome.storage.local via store) — the
+    // dead view's deadLastScan recipe. Items serialize as plain data (they
+    // already are: flattenTree's { id, title, url, dateAdded, parentId,
+    // inBar }); the keeper strategy is NOT snapshotted — keeper picking
+    // re-runs over the restored groups at render time.
+    const CACHE_KEY = 'dupesLastResult';
+
+    const saveCache = () => {
+        try {
+            store.set(CACHE_KEY, JSON.stringify({
+                ts: Date.now(),
+                scope: scope(),
+                ignoreScheme: ignoreScheme(),
+                groups: groups.map(g => ({ key: g.key, items: g.items }))
+            }));
+        } catch (e) { /* best-effort cache — a storage hiccup must not break the view */ }
+    };
+
+    // Synchronous restore at init (before the first activate). Returns true
+    // when usable groups came back; a scope/ignoreScheme mismatch or a
+    // corrupt blob simply skips (the normal refresh path recomputes).
+    const hydrate = () => {
+        let snap = null;
+        try {
+            snap = JSON.parse(store.get(CACHE_KEY, '') || 'null');
+        } catch (e) {
+            snap = null;
+        }
+        if (!snap || !Array.isArray(snap.groups))
+            return false;
+        if (snap.scope !== scope() || !!snap.ignoreScheme !== ignoreScheme())
+            return false;
+        const restored = snap.groups
+            .map(g => ({ key: g.key, items: (g.items || []).filter(it => it && it.id && it.url) }))
+            .filter(g => g.items.length > 1);
+        if (!restored.length)
+            return false;
+        groups = restored;
+        itemIndex = new Map();
+        for (const g of groups)
+            for (const item of g.items)
+                itemIndex.set(item.id, item);
+        return true;
+    };
+    const hydrated = hydrate();
+
 
     // Flatten the tree to bookmark items; inBar marks the bookmarks-bar
     // subtree ('1') — the keep-bookmark-bar strategy and the scope selector
@@ -246,6 +303,7 @@ export function initViewDupes(ctx = {}) {
                 items = items.filter(item => item.inBar);
             itemIndex = new Map(items.map(item => [item.id, item]));
             groups = findDupes(items, { ignoreScheme: ignoreScheme() });
+            saveCache(); // round-6: persist every regroup for the next popup open
             // The tab badge tracks the group count even while the view is
             // hidden — recompute always, repaint only when active.
             views.updateBadges();
@@ -441,11 +499,20 @@ export function initViewDupes(ctx = {}) {
         typeAhead: false,
         badge: () => groups.length,
         activate: () => {
-            if (dirty || !$list.innerHTML)
+            if (dirty || !groups.length) {
+                // nothing hydrated (or bookmark events fired): compute now
                 refresh();
+            } else if (!$list.innerHTML) {
+                // Hydrated snapshot: paint instantly, then revalidate against
+                // the live tree (drift while the popup was closed).
+                render();
+                scheduleRefresh();
+            }
         },
         onKey
     });
+    if (hydrated)
+        views.updateBadges(); // dupes was unregistered during hydrate()
 
     return { refresh, setKeeper };
 }
