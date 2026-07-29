@@ -76,6 +76,10 @@ export function initTreeView(ctx = {}) {
     // v4 task-2 §3.6: optional hook receiving the full bookmark tree on every
     // generateTree — neat.js feeds it to view-manager.buildPathMap.
     const onTreeGenerated = ctx.onTreeGenerated;
+    // 第五轮项3: the lazy folder-expand below renders NEW rows (getChildren +
+    // appendChild) outside generateTree — neat.js re-lays the dead-mark ×
+    // overlays on them through this hook (default no-op for minimal setups).
+    const onRowsRendered = ctx.onRowsRendered || (() => {});
     // v4 task-2: view-manager API — revealInTree activates the tree view
     // (optional so minimal test setups keep working).
     const views = ctx.views;
@@ -148,12 +152,15 @@ export function initTreeView(ctx = {}) {
         addBookmarkParents(subTree);
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
-        // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
-        // map from the same full tree (list-row path labels).
-        if (onTreeGenerated)
-            onTreeGenerated(tree);
 
         $tree.innerHTML = html;
+
+        // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
+        // map from the same full tree (list-row path labels). AFTER the
+        // innerHTML swap — the hook also re-lays DOM overlays (slice C's
+        // dead-mark ×, 第五轮项3), which the swap itself just wiped.
+        if (onTreeGenerated)
+            onTreeGenerated(tree);
 
         // Refresh sync indicators after tree is generated
         if (store.getSyncSetting('showSyncStatus', 'true') === 'true') {
@@ -245,6 +252,7 @@ export function initTreeView(ctx = {}) {
                 const ul = div.querySelector('ul');
                 parent.appendChild(ul);
                 div.remove();
+                onRowsRendered(); // 第五轮项3: overlays for the fresh rows
                 setTimeout(adaptBookmarkTooltips, 100);
             });
         }

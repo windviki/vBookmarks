@@ -142,6 +142,8 @@ const setup = (opts = {}) => {
     const $tree = makeEl('tree');
     const $results = makeEl('results');
     const $recent = makeEl('recent-list');
+    const $dupes = makeEl('dupes-list');
+    const $stats = makeEl('stats-list');
     if (opts.treeLis)
         $tree._lis = opts.treeLis;
 
@@ -248,7 +250,7 @@ const setup = (opts = {}) => {
     });
 
     return {
-        viewDead, $list, $container, $tree, $results, $recent, doc, chrome: chromeStub,
+        viewDead, $list, $container, $tree, $results, $recent, $dupes, $stats, doc, chrome: chromeStub,
         store, views, treeRender, separatorManager, treeView, actions, dialogs, undo,
         treeData, winListeners, def: () => views.def, fire, clickOn
     };
@@ -703,16 +705,24 @@ describe('marks + overlay (§5.5c)', () => {
         const liLegacy = makeLi('results-item-13', ''); // prefix-strip fallback
         const ctx = setup({ treeLis: [liMarked, liPlain], storeData: { deadMarks: '["12","13"]' } });
         ctx.$results._lis = [liLegacy];
+        // 第五轮项3: dupes/stats lists joined the overlay set
+        const liDupes = makeLi('dupes-item-12', '12');
+        const liStats = makeLi('stats-item-13', '13');
+        ctx.$dupes._lis = [liDupes];
+        ctx.$stats._lis = [liStats];
         ctx.viewDead.refreshOverlays();
         expect(liMarked._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
         expect(liPlain._fav.children).toEqual([]);
         expect(liLegacy._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+        expect(liDupes._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+        expect(liStats._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
         // second run: no duplicates
         ctx.viewDead.refreshOverlays();
         expect(liMarked._fav.children).toHaveLength(1);
         // unmark → the span disappears again
         ctx.viewDead.toggleMark('12');
         expect(liMarked._fav.children).toEqual([]);
+        expect(liDupes._fav.children).toEqual([]);
     });
 
     it('a healthy rescan prunes the mark automatically', async () => {

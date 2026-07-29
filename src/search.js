@@ -93,6 +93,10 @@ export function initSearch(ctx = {}) {
     };
     // Lazy closure over treeView (init order); only the R keypress calls it.
     const revealInTree = ctx.revealInTree || (() => {});
+    // 第五轮项3: after every results render, neat.js re-lays the dead-mark
+    // × overlays (the innerHTML swap just wiped them). Optional — the
+    // recording doubles in tests simply omit it.
+    const onRowsRendered = ctx.onRowsRendered || (() => {});
     let returnView = 'tree';
 
     // --- Search history + last-query restore (§4.3) --------------------------
@@ -416,6 +420,7 @@ export function initSearch(ctx = {}) {
             }
             html += '</ul>';
             $results.innerHTML = html;
+            onRowsRendered();
         };
 
         // Fuzzy-rank the flat index; rebuild it lazily when bookmarks changed

@@ -170,7 +170,8 @@ const setup = (opts = {}) => {
     const viewRecent = initViewRecent({
         store, views, treeRender, separatorManager, treeView,
         ...(visitStats ? { visitStats } : {}),
-        ...(undo ? { undo } : {})
+        ...(undo ? { undo } : {}),
+        ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
     return {
         viewRecent, $list, $container, doc, chrome: chromeStub, store, views,
@@ -187,6 +188,19 @@ const ITEMS = [
     { id: '103', parentId: '1', title: 'no url yet', dateAdded: NOW },
     { id: '104', parentId: '2', title: 'B', url: 'http://b/', dateAdded: NOW - 3 * 86400000 }
 ];
+
+describe('render hooks (fifth round, item: dead-mark overlays)', () => {
+    it('calls onRowsRendered after every render with the rows in the DOM', () => {
+        const seen = [];
+        const { def, $list } = setup({
+            recentItems: ITEMS,
+            onRowsRendered: () => seen.push($list.innerHTML)
+        });
+        def().activate();
+        expect(seen).toHaveLength(1);
+        expect(seen[0]).toContain('recent-item-101');
+    });
+});
 
 describe('view registration (§5.3)', () => {
     it('registers the recent view with tab metadata and type-ahead off', () => {

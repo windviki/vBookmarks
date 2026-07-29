@@ -112,6 +112,9 @@ export function initViewStats(ctx = {}) {
     // working; neat.js always injects them).
     const undo = ctx.undo || { showToast: () => {} };
     const onChanged = ctx.onChanged || (() => {});
+    // 第五轮项3: after every render, neat.js re-lays the dead-mark ×
+    // overlays (the innerHTML swap just wiped them).
+    const onRowsRendered = ctx.onRowsRendered || (() => {});
 
     const $list = $('stats-list');
 
@@ -327,6 +330,7 @@ export function initViewStats(ctx = {}) {
             html += '<ul role="list">' + renderHistorySection() + renderStatsSection() + '</ul>';
         }
         $list.innerHTML = html;
+        onRowsRendered();
     };
 
     const refresh = () => {

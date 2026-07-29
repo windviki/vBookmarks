@@ -261,6 +261,14 @@ import { markPopupOpen } from './visit-stats-sw.js';
         get dupesMenu() { return { setKeeper: id => viewDupes.setKeeper(id) }; }
     });
 
+    // v4 task-2 slice C: the dead view's × overlay re-lays itself after
+    // every list render (tree rebuild, search results, recent/stats/dupes
+    // rows — the onRowsRendered hooks below), but initViewDead runs later in
+    // this function — this indirection keeps the first renders safe.
+    // Declared above initSearch: the saved-query restore can render results
+    // during init, and the hook closures must never hit the TDZ.
+    let deadOverlayRefresh = () => {};
+
     // View manager (v4 task-2): the tab strip + view switching layer. Must
     // init before initSearch — the search module maps its mode onto the view
     // state machine at init (saved-query restore activates the search view).
@@ -287,7 +295,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
         // v4 task-2: search mode rides the view state machine
         views,
         // §2.3 R 键在树中定位：treeView 在下方才初始化，惰性闭包求值
-        revealInTree: (...args) => treeView.revealInTree(...args)
+        revealInTree: (...args) => treeView.revealInTree(...args),
+        // 第五轮项3: results re-render wipes the dead-mark × overlays —
+        // re-lay them after every render (no-op until viewDead inits).
+        onRowsRendered: () => deadOverlayRefresh()
     });
 
     // Popup auto-height — only grow, never shrink on user interaction.
@@ -385,11 +396,6 @@ import { markPopupOpen } from './visit-stats-sw.js';
         onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
     });
 
-    // v4 task-2 slice C: the dead view's × overlay re-lays itself after
-    // every tree rebuild (onTreeGenerated above), but initViewDead runs
-    // below initTreeView — this indirection keeps the first rebuilds safe.
-    let deadOverlayRefresh = () => {};
-
     // v4 task-2 slice D (§5.4): visit statistics — created before the tree
     // view so bookmarkHandler's open hook and the tree-rebuild prune both
     // reach it; the stats view itself inits below with the other views.
@@ -484,7 +490,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
         onOpenBookmark: (id, url) => {
             visitStats.record(id);
             markPopupOpen(url);
-        }
+        },
+        // 第五轮项3: the lazy folder-expand renders rows outside
+        // generateTree — re-lay the dead-mark × overlays on them too.
+        onRowsRendered: () => deadOverlayRefresh()
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
@@ -499,7 +508,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
         separatorManager,
         treeView,
         visitStats,
-        undo
+        undo,
+        // 第五轮项3: re-lay the dead-mark × overlays after every re-render
+        // (activate + the onCreated/onRemoved debounced refresh).
+        onRowsRendered: () => deadOverlayRefresh()
     });
 
     // Stats view (v4 task-2 切片 D): visit counters as their own tab.
@@ -516,7 +528,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
         dialogs,
         visitStats,
         undo,
-        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree)
+        onChanged: () => chrome.bookmarks.getTree(treeView.generateTree),
+        // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
+        onRowsRendered: () => deadOverlayRefresh()
     });
 
     // Dead/dupes views (v4 task-2 切片 C): the palette's old dupes/dead
@@ -545,7 +559,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
         undo,
         // slice D: the keep-most-visited strategy reads real counts now
         // (zeros + disabled option while statsEnabled is off)
-        visitStats
+        visitStats,
+        // 第五轮项3: re-lay the dead-mark × overlays after every re-render.
+        onRowsRendered: () => deadOverlayRefresh()
     });
     deadOverlayRefresh = viewDead.refreshOverlays;
 

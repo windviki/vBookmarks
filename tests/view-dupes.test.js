@@ -184,7 +184,8 @@ const setup = (opts = {}) => {
         visitStats: opts.visitStats || {
             countOf: id => (opts.visitCounts || {})[id] || 0,
             enabled: () => !opts.statsOff
-        }
+        },
+        ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
 
     // Event helpers over the list's recorded listeners.
@@ -242,6 +243,16 @@ describe('view registration (§5.6)', () => {
 });
 
 describe('render (docs/v4task-2-list.md §3.6)', () => {
+    it('calls onRowsRendered after every render with the rows in the DOM (item: dead-mark overlays)', () => {
+        const seen = [];
+        const { def, $list } = setup({
+            onRowsRendered: () => seen.push($list.innerHTML)
+        });
+        def().activate();
+        expect(seen).toHaveLength(1);
+        expect(seen[0]).toContain('dupes-item-11');
+    });
+
     it('renders the group header once and member rows without any visible URL', () => {
         const { $list, treeRender, def } = setup({ pathOf: id => `path-of-${id}` });
         def().activate();

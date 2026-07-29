@@ -66,6 +66,9 @@ export function initViewRecent(ctx = {}) {
     // test setups keep working; neat.js always injects them).
     const visitStats = ctx.visitStats || { enabled: () => false, merge: () => 0 };
     const undo = ctx.undo || { showToast: () => {} };
+    // 第五轮项3: after every render, neat.js re-lays the dead-mark ×
+    // overlays (the innerHTML swap just wiped them).
+    const onRowsRendered = ctx.onRowsRendered || (() => {});
 
     const $list = $('recent-list');
 
@@ -252,6 +255,7 @@ export function initViewRecent(ctx = {}) {
             html += `<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`;
         html += '</ul>';
         $list.innerHTML = html;
+        onRowsRendered();
     };
 
     const refresh = () => {

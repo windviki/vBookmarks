@@ -184,7 +184,8 @@ const setup = (opts = {}) => {
 
     const viewStats = initViewStats({
         store, views, treeRender, separatorManager, treeView, dialogs, visitStats,
-        undo, onChanged: onChanged.fn
+        undo, onChanged: onChanged.fn,
+        ...(opts.onRowsRendered ? { onRowsRendered: opts.onRowsRendered } : {})
     });
     return {
         viewStats, $list, $container, chrome: chromeStub, store, views,
@@ -211,6 +212,19 @@ describe('registration', () => {
     it('maps the showStatsView setting onto tab visibility', () => {
         expect(setup({}).def().hidden).toBe(false); // default: visible
         expect(setup({ storeData: { showStatsView: '' } }).def().hidden).toBe(true);
+    });
+});
+
+describe('render hooks (fifth round, item: dead-mark overlays)', () => {
+    it('calls onRowsRendered after every render with the rows in the DOM', () => {
+        const seen = [];
+        const s = setup({
+            statsData: { '7': { c: 2, t: NOW - 1000 } },
+            onRowsRendered: () => seen.push(document.getElementById('stats-list').innerHTML)
+        });
+        s.def().activate();
+        expect(seen.length).toBeGreaterThan(0);
+        expect(seen[seen.length - 1]).toContain('stats-item-7');
     });
 });
 

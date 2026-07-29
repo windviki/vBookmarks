@@ -83,6 +83,9 @@ export function initViewDupes(ctx = {}) {
     // Slice D: real visit counts for keep-most-visited; the zero-filled
     // fallback doubles as the "stats off" behavior (oldest wins the tie).
     const visitStats = ctx.visitStats || { countOf: () => 0, enabled: () => false };
+    // 第五轮项3: after every render, neat.js re-lays the dead-mark ×
+    // overlays (the innerHTML swap just wiped them).
+    const onRowsRendered = ctx.onRowsRendered || (() => {});
 
     const $list = $('dupes-list');
 
@@ -233,6 +236,7 @@ export function initViewDupes(ctx = {}) {
             html += '</ul>';
         }
         $list.innerHTML = html;
+        onRowsRendered();
     };
 
     const refresh = () => {

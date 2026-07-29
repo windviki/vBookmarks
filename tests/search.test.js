@@ -215,7 +215,8 @@ const setup = (opts = {}) => {
         },
         rememberState: !!opts.rememberState,
         views,
-        revealInTree: opts.revealInTree
+        revealInTree: opts.revealInTree,
+        onRowsRendered: opts.onRowsRendered
     });
     return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, winListeners };
 };
@@ -226,6 +227,23 @@ const type = (els, value) => {
 };
 
 describe('search execution + rendering', () => {
+    it('calls onRowsRendered after every results render (item: dead-mark overlays)', () => {
+        // neat.js wires this to the dead view's overlay refresh — the
+        // innerHTML swap just wiped the × marks off the previous rows.
+        const rendered = [];
+        const { els } = setup({
+            fuzzyResults: [
+                { id: '11', parentId: '1', title: 'GitHub', url: 'https://github.com/', isFolder: false, positions: [] }
+            ],
+            onRowsRendered: () => rendered.push(els.results.innerHTML)
+        });
+        type(els, 'git');
+        expect(rendered).toHaveLength(1);
+        expect(rendered[0]).toContain('results-item-11'); // rows already in the DOM
+        type(els, 'github');
+        expect(rendered).toHaveLength(2);
+    });
+
     it('ranks the flat index and renders bookmark + folder rows', () => {
         const { s, els, fuzzy, calls, store, viewCalls } = setup({
             fuzzyResults: [

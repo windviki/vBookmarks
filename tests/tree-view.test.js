@@ -340,7 +340,9 @@ const setup = (opts = {}) => {
         setRememberState: v => { state.rememberState = v; },
         middleClickBgTab: !!opts.middleClickBgTab,
         leftClickNewTab: !!opts.leftClickNewTab,
-        views: opts.views
+        views: opts.views,
+        onTreeGenerated: opts.onTreeGenerated,
+        onRowsRendered: opts.onRowsRendered
     });
 
     // A folder row <li id="neat-tree-item-N" class="parent"><span></span></li>
@@ -433,6 +435,21 @@ describe('generateTree', () => {
         expect(tree.innerHTML).toBe('HTML');
         expect(tree.innerHTML).not.toContain('recent-section');
         expect(chrome.bookmarks.getRecentCalls).toEqual([]); // tree-view no longer fetches recents
+    });
+
+    it('fires onTreeGenerated AFTER the innerHTML swap (item: overlay first paint)', () => {
+        // The dead-mark × overlays re-lay from this hook; firing before the
+        // swap meant the fresh rows never got them until the next rebuild.
+        const seen = [];
+        const { treeView } = setup({
+            onTreeGenerated(t) {
+                seen.push({ tree: t, html: document.getElementById('tree').innerHTML });
+            }
+        });
+        treeView.generateTree(['ROOT']);
+        expect(seen).toHaveLength(1);
+        expect(seen[0].tree).toEqual(['ROOT']);
+        expect(seen[0].html).toBe('HTML'); // rows already in the DOM
     });
 
     it('restores the persisted scrollTop when rememberState is on', () => {
@@ -587,6 +604,19 @@ describe('tree events', () => {
         expect(wrapUl.dataset.level).toBe('1');
         tick(100);
         expect(bm.classList.contains('titled')).toBe(true); // adaptBookmarkTooltips ran
+    });
+
+    it('lazy expand fires onRowsRendered after the fresh rows land (item: dead-mark overlays)', () => {
+        // The expand path renders outside generateTree — without the hook,
+        // marked bookmarks inside a collapsed folder never got their ×.
+        const calls = [];
+        const ctx = setup({
+            childrenMap: { 9: [{ id: '91', url: 'http://a/' }] },
+            onRowsRendered: () => calls.push(1)
+        });
+        const { span } = ctx.makeFolder('9', { level: 1 });
+        fire(ctx.tree, 'click', makeEvent({ button: 0, target: span }));
+        expect(calls).toEqual([1]);
     });
 
     it('collapses open sibling folders when closeUnusedFolders is on and the folder expands', () => {

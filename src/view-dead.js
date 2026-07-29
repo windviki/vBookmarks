@@ -21,12 +21,15 @@
  * the pool.
  *
  * §5.5c marks: `deadMarks` (id array) toggle per row (⚑ button / M key);
- * every list (tree / search results / recent) overlays a red × on the
- * favicon's top-right corner via refreshOverlays() (sync dots sit on the
- * bottom-right, so they never collide). Marks prune on bookmark removal,
- * and ids that came back ok/skipped after a rescan drop out automatically.
- * Batch "mark all" (every dead+blocked row of the result set) and "clear
- * all marks" are ConfirmDialog-gated. badge() = deadMarks.length.
+ * every list (tree / search results / recent / stats / dupes) overlays a
+ * red × on the favicon's top-right corner via refreshOverlays() (sync dots
+ * sit on the bottom-right, so they never collide). Each list module calls
+ * its onRowsRendered ctx hook after rendering (tree: onTreeGenerated,
+ * fired after the innerHTML swap) — neat.js wires them all here (第五轮
+ * 项3). Marks prune on bookmark removal, and ids that came back
+ * ok/skipped after a rescan drop out automatically. Batch "mark all"
+ * (every dead+blocked row of the result set) and "clear all marks" are
+ * ConfirmDialog-gated. badge() = deadMarks.length.
  *
  * §5.5d lifecycle (+ fourth-round item 10): switching views mid-scan never
  * aborts (the closure owns the session; coming back re-renders the live
@@ -297,11 +300,15 @@ export function initViewDead(ctx = {}) {
         $list.innerHTML = html;
     };
 
-    // --- Overlay (§5.5c) -----------------------------------------------------------
+    // --- Overlay (§5.5c + 第五轮项3) ------------------------------------------
     // Every list view's rows: dead-marked ids get a red × on the favicon's
     // top-right corner (sync dots own the bottom-right). Idempotent — safe
-    // to call after every tree rebuild / mark change.
-    const LISTS = ['tree', 'results', 'recent-list'];
+    // to call after every tree rebuild / mark change. Each list module
+    // re-lays the overlays after its own render through the onRowsRendered
+    // ctx hook (neat.js wires them all to this function); the tree goes
+    // through onTreeGenerated, which tree-view fires AFTER the innerHTML
+    // swap (item 3's first-paint fix).
+    const LISTS = ['tree', 'results', 'recent-list', 'dupes-list', 'stats-list'];
     const rowIdOf = li =>
         (li.dataset && li.dataset.nodeId) ||
         li.id.replace(/^(neat-tree|neat-recent|results|recent|dead|dupes)-item-/, '');
