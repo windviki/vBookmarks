@@ -456,3 +456,26 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 | 5 | 四主题细节补全：审计确认 root/dark/auto/ink/paper 五块颜色 token 全集一致（结构 token radius/row-h/indent 仅 :root 属设计）；发现 dark/ink 主题 danger 浅底色上白字徽标对比度仅 2.4/2.0:1（不达 AA）——新增 `--vbm-danger-fg`/`--vbm-warning-fg` on-color token（dark/ink 深栗色 7.1–8.4:1，paper 暖白 6.2:1），tab-badge/row-badge/dead-indicator/dupes-apply-all 四处硬编码 `#fff`/`#000` 全部 token 化；token 全集一致性 + 5 主题 × 3 组徽标对比度 ≥4.5:1 纳入契约测试 | `css/neat.css`、`tests/theme.test.js` |
 
 第三轮验收：i18n verify 0 错误（3 新键 41 locale 全量翻译）、单测全绿（970）、docker 截图套件通过、打包完成。
+
+## 附录 D：第四轮修订（2026-07-28 新规范，12 项）
+
+第三轮验收后用户提出 12 项改进，全部落地。对齐点如下：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | tab 条响应式重做：每个 tab 是独立 inline-size 容器，仅当**该 tab 自身 ≥112px** 才显示文本（icon+label），否则退回纯图标——逐 tab 精准判定，不再出现双行 wrap 或文本截断；`body.panel-mode` 无条件显示规则与全局 480px 查询退役 | `css/neat.css`、`tests/popup-layout.test.js` |
+| 2 | 命令面板新增 7 个直接命令：主题五连 `/themeauto|light|dark|ink|paper`（裸名 `/dark` 等为别名，store+localStorage+body[data-theme] 三同步）、`/tabs`（视图标签显隐）、`/path`（路径标签显隐）；`/sep` 添加分隔线命令退役（强位置相关不直观），树内右键分隔线功能不受影响；`paletteCmdNewSeparator` 键已从 43 locale 清理 | `src/palette.js`、`tests/palette.test.js`、`_locales/*` |
+| 3 | 清除按钮并入搜索框内部（新增 `#search-field` 包裹 magnifier+input+clear，按钮绝对定位于框内尾端，input 补 26px 尾 padding）——搜索框与星标按钮之间不再留 28px 空白槽；popup/sidepanel 双页同步 | `pages/popup.html`、`pages/sidepanel.html`、`css/neat.css` |
+| 4 | "在树中定位"根因修复：`nodeTrees` 只收录文件夹 id，书签目标的 `getParentPath` 拿不到祖先链 → 树全折叠渲染、目标行从未进 DOM，高亮/滚动全部空转。修法：generateTree 时把书签 `id→parentId` 补入 nodeTrees，revealFolder 对书签目标从 opens 切掉自身（opens 只许文件夹） | `src/tree-view.js`、`tests/tree-view.test.js` |
+| 5 | 历史导入统计链路 4 个真实 bug 修复：①门控比数据活得久（merge 防抖 500ms vs 门控 200ms，窗口内关 popup 则数据丢门控存→永远跳过）——merge 非空即同步 flush；②`maxResults:2000` 截断 → `HISTORY_IMPORT_MAX=100000`；③startup/activate 双 probe 重入重复导入 → 在飞守卫；④URL 尾斜杠不匹配静默丢弃 → 双侧 matchUrl 折叠。另：`visitStats.revision()` 单调计数，stats 视图 activate 时对账防陈旧（跨视图导入无 dirty 通道） | `src/visit-stats.js`、`src/view-recent.js`、`src/view-stats.js` |
+| 6 | 去重组 URL 组头 `font-family: monospace` 移除，继承 UI 字体 | `css/neat.css` |
+| 7 | 搜索历史上区右键不再弹书签全量菜单（对空 id 执行编辑/删除是危险误操作）：新增专用精简菜单（重新搜索/删除此条/清空全部），contextmenu 按行类型分发；菜单纳入同一 clearMenu 消除路径，并补全 ↑↓/Enter/Esc 键盘导航与 hover/out 焦点绑定（neat.js/keyboard.js 与另三个菜单同等待遇） | `src/context-menu.js`、`pages/popup.html`、`pages/sidepanel.html`、`src/neat.js`、`src/keyboard.js` |
+| 8 | 最近视图时间粗分组：今天（本地自然日）/本周（滚动 7×24h）/本月（滚动 30×24h）/更早——滚动窗口保证组头单调；组头为非交互 div，作为组首行**行尾 DOM 子元素**渲染 + CSS `order:-1` 视觉提前，保住 li.firstElementChild=锚点的 Enter 契约（head-first 模式会让 Enter 落空） | `src/view-recent.js`、`css/neat.css`、`tests/view-recent.test.js` |
+| 9 | 统计视图升级为"历史+统计"综合视图：新增最近访问分区（history.search 200 条、URL 去重、协议过滤），未收藏行 hover 显现 ☆ 一键加收藏（落位 quickAddFolderId 默认书签栏，成功后状态翻转+树失效+toast），已收藏行带 ★ 徽标+真实 data-node-id（右键/定位全适用）；无权限时分区折叠为单行引导（一句话+开启链接，授权即加载）；分区小节头同项8 的行尾 DOM+order 模式；badge 语义不变 | `src/view-stats.js`、`src/neat.js`、`css/neat.css`、`tests/view-stats.test.js` |
+| 10 | 死链扫描体验：渐进呈现（每个 check 落定即入列，按树序插入不跳动）；状态机 idle/scanning/paused/cancelling——暂停不 abort 在飞（恢复零重探）、取消丢弃本次回退缓存（`scan!==session` 守卫）；Esc=暂停⇄恢复切换（可逆优先，keyboard.js 零改动）；切走回来按模块级会话状态重现；顺手修复 `.row-btn` 换行 bug（li 补 display:flex，dupes-member 配方） | `src/view-dead.js`、`src/dead-links.js`、`css/neat.css` |
+| 11 | 图标槽后新增 4px `margin-inline-end`：文本轴 36px→40px（16 twisty+20 icon+4 gap），scoped+unscoped+palette 全部行契约同步；"(Empty)" 行 SLOT_WIDTH 同步 40px；对齐契约测试更新 | `css/neat.css`、`src/tree-render.js`、`tests/tree-alignment.test.js` |
+| 12 | 设置导入/导出：options 页新增"备份"分组——导出 chrome.storage.local 全量+sync 区 4 键为打戳 JSON（app/version/exportedAt 校验标识，文件名带日期）；导入校验结构+确认门控后**合并写入**（备份内键覆盖、未涉及键保留）并 reload；`store.syncKeys` 只读暴露避免清单漂移 | `src/options.js`、`pages/options.html`、`src/store.js`、`tests/options.test.js` |
+
+缝合修复（项间交互）：最近视图组头行 Enter 失效（项8 head-first 模式）改为项9 同款行尾 DOM+order 模式；搜索历史菜单补键盘绑定（项7 遗留）；`paletteCmdNewSeparator` 死键清理（项2 遗留）。
+
+第四轮验收：i18n verify 0 错误（28 新键 41 locale 全量翻译 + 1 死键清理）、单测全绿（1060+）、docker 截图套件通过（options 补备份组、recent seed 补时间跨度）、打包完成。

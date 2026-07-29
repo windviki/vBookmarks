@@ -31,6 +31,13 @@ const SEED = `
     const read = await create({ parentId: '1', title: '稍后读' });
     const ala = await create({ parentId: read.id, title: 'A List Apart — Typography', url: 'https://alistapart.com/topic/typography' });
     const hn = await create({ parentId: '1', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+    // Spread a few dateAdded values so the recent view's coarse time groups
+    // (Today / This week / This month / Older) all appear (第四轮项8).
+    const DAY = 86400e3;
+    const now0 = Date.now();
+    await create({ parentId: read.id, title: 'Week-old read', url: 'https://example.com/week', dateAdded: now0 - 5 * DAY });
+    await create({ parentId: read.id, title: 'Month-old read', url: 'https://example.com/month', dateAdded: now0 - 20 * DAY });
+    await create({ parentId: read.id, title: 'Ancient read', url: 'https://example.com/ancient', dateAdded: now0 - 45 * DAY });
     // A duplicate pair for the dupes view (same URL as MDN, other folder).
     await create({ parentId: read.id, title: 'MDN Web Docs (mirror)', url: 'https://developer.mozilla.org/docs/Web' });
     // Feature-view data (item 1): visit counts, a search-history MRU and a

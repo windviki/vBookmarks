@@ -44,6 +44,13 @@ const SEED = `
     // --- A separator so the dead view's filtering is visible ---
     await create({ parentId: '1', title: '|', url: 'http://separatethis.com/sep-1' });
 
+    // --- Spread dateAdded so the recent view's coarse groups all render ---
+    const DAY = 86400e3;
+    const now0 = Date.now();
+    await create({ parentId: '1', title: 'Week-old find', url: 'https://example.com/week', dateAdded: now0 - 5 * DAY });
+    await create({ parentId: '1', title: 'Month-old find', url: 'https://example.com/month', dateAdded: now0 - 20 * DAY });
+    await create({ parentId: '1', title: 'Ancient find', url: 'https://example.com/ancient', dateAdded: now0 - 45 * DAY });
+
     // --- View datasets ---
     const now = Date.now();
     await new Promise(r => chrome.storage.local.set({

@@ -166,6 +166,13 @@ const SEED = `
         });
         await sleep(300);
         await opts.screenshot({ path: `/tmp/shots/theme-${theme}-options.png` });
+        // fourth-round: the Backup group (import/export) lives at the bottom
+        await opts.evaluate(() => {
+            const el = document.getElementById('backup-options');
+            if (el) el.scrollIntoView({ block: 'start' });
+        });
+        await sleep(300);
+        await opts.screenshot({ path: `/tmp/shots/theme-${theme}-options-backup.png` });
         await opts.close();
 
         const adv = await browser.newPage();
