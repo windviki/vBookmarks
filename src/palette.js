@@ -280,6 +280,12 @@ export function initPalette(ctx = {}) {
             li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt=""></div><i>${htmlspecialchars(title)}</i></a>`;
         }
         const i = rows.length;
+        // Keep the input focused through the click: preventing the mousedown
+        // default stops the blur that the round-3 focusout guard would read
+        // as "focus lost → close the palette", which ate the following click
+        // (mouse users got nothing; Enter worked all along). The click event
+        // itself still fires normally.
+        li.addEventListener('mousedown', e => e.preventDefault());
         li.addEventListener('click', e => {
             e.preventDefault(); // prevent <a> navigation, let execute() drive
             execute(i, false);

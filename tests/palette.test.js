@@ -765,6 +765,18 @@ describe('execution', () => {
         expect(palette.isOpen()).toBe(false);
     });
 
+    it('mousedown on a row is default-prevented so the input never blurs (mouse-click fix)', () => {
+        // The round-3 focusout guard reads an input blur as "focus lost →
+        // close"; preventing the mousedown default keeps focus on the input
+        // and the following click lands (Enter always worked).
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('gmail');
+        const ev = makeEvent({});
+        fire(results._appended[1], 'mousedown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+    });
+
     it('Enter on a slash query with no matching command does nothing', () => {
         const { palette, input, actions, keydown, type } = setup({});
         palette.open();
