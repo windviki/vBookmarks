@@ -1,6 +1,7 @@
 import { rankBookmarks, xmlEncode, matcher } from './search-core.js';
 import { createSyncEngine } from './sync-engine.js';
 import { createVisitStatsCollector } from './visit-stats-sw.js';
+import { initPanelBehavior } from './panel-behavior.js';
 
 // --- Sync status engine (P3.6) ---------------------------------------------
 // Computes bookmark sync status in the service worker and publishes it via
@@ -118,43 +119,10 @@ createVisitStatsCollector().start();
 })();
 
 // --- Side panel (Phase 2b) ----------------------------------------------
-// popup.html doubles as the side panel page (manifest.side_panel). The panel
-// is an opt-in enhancement (setting `openInSidePanel`, off by default):
-// when enabled, clicking the action opens the panel instead of the popup.
-const applyPanelBehavior = open => {
-    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: open }).catch(() => {});
-};
-
-// Apply the persisted setting at service worker startup
-chrome.storage.local.get('openInSidePanel', data => {
-    applyPanelBehavior(!!data.openInSidePanel);
-});
-
-// React to setting changes immediately (options page writes chrome.storage.local)
-chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === 'local' && 'openInSidePanel' in changes) {
-        const newValue = !!changes.openInSidePanel.newValue;
-        if (newValue) {
-            // 用户开启了边栏选项：始终使用面板切换模式
-            applyPanelBehavior(true);
-        } else {
-            // 用户关闭了边栏选项：检查当前面板是否打开
-            // 若面板打开中，保持 toggle 模式以便下次点击关闭面板
-            chrome.storage.session.get('sidePanelIsOpen', session => {
-                applyPanelBehavior(!!session.sidePanelIsOpen);
-            });
-        }
-    }
-    // 侧边栏打开/关闭状态变化（由 popup.js 在 IS_PANEL 模式下写入）
-    // 仅在用户未开启边栏选项时动态切换 action 行为
-    if (areaName === 'session' && 'sidePanelIsOpen' in changes) {
-        chrome.storage.local.get('openInSidePanel', data => {
-            if (!data.openInSidePanel) {
-                applyPanelBehavior(!!changes.sidePanelIsOpen.newValue);
-            }
-        });
-    }
-});
+// Behavior application (option vs live panel state) lives in
+// src/panel-behavior.js — extracted round-6 so the cold-start fix is
+// unit-testable without booting the whole worker.
+initPanelBehavior();
 
 // Keyboard shortcut to open the panel on demand (works regardless of the setting)
 chrome.commands.onCommand.addListener(async command => {
