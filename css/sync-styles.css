@@ -41,15 +41,19 @@
     display: none;
 }
 
+/* 第五轮项2 — unified marker language: both favicon overlays (the sync dot
+   here, the dead × in neat.css) wear the same bg-colored halo ring instead
+   of the old accent glow, so they read on any favicon in every theme and
+   the two markers are unmistakably siblings. */
 .sync-indicator.local {
     background: var(--vbm-accent); /* local-only: the state worth noticing */
-    box-shadow: 0 0 3px var(--vbm-accent);
+    box-shadow: 0 0 0 1.5px var(--vbm-bg);
 }
 
 .sync-indicator.unsyncable {
     background: var(--vbm-muted);
     border: 1px solid var(--vbm-border);
-    box-shadow: none;
+    box-shadow: 0 0 0 1.5px var(--vbm-bg);
 }
 
 /* Sync Tooltips — themed like the rest of the popup chrome (elevated bg,

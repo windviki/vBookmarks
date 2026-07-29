@@ -102,6 +102,29 @@ describe('alignment CSS contract (item 6)', () => {
         expect(body).toContain('position: absolute');
     });
 
+    it('the dead × beats the generic #tree row-span rule (the ellipse regression)', () => {
+        // 第五轮项2: `#tree ul li span` (display:flex + 1.67em line-height +
+        // 4px end padding, specificity 1,0,3) leaked into the overlay span and
+        // stretched the 10px disc into a 14×10 ellipse. The doubled selector
+        // out-specifies it and every box property is pinned.
+        expect(neatCss).toContain('#tree ul li span.dead-indicator');
+        const body = ruleBody(neatCss, '.favicon-container .dead-indicator,\n#tree ul li span.dead-indicator');
+        expect(body).toContain('display: inline-flex');
+        expect(body).toContain('padding: 0');
+        expect(body).toContain('line-height: 1');
+        expect(body).toContain('min-width: 10px');
+        // the halo ring: a bg-colored separation from the favicon bitmap
+        expect(body).toContain('box-shadow: 0 0 0 1.5px var(--vbm-bg)');
+    });
+
+    it('the sync dot wears the same halo ring (unified marker language)', () => {
+        const local = ruleBody(syncCss, '.sync-indicator.local');
+        expect(local).toContain('box-shadow: 0 0 0 1.5px var(--vbm-bg)');
+        expect(local).not.toContain('0 0 3px'); // the old accent glow is gone
+        const unsyncable = ruleBody(syncCss, '.sync-indicator.unsyncable');
+        expect(unsyncable).toContain('box-shadow: 0 0 0 1.5px var(--vbm-bg)');
+    });
+
     it('separator rows drop the ::before placeholder (the line owns the row)', () => {
         const body = ruleBody(neatCss, '#tree ul li a.separator-row::before');
         expect(body).toContain('content: none');

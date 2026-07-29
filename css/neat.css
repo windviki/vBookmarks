@@ -2380,23 +2380,42 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 /* §5.5c overlay: red × on the favicon's top-right corner in every list
-   (the sync dot owns the bottom-right, so they never collide). */
+   (the sync dot owns the bottom-right, so they never collide).
+   第五轮项2 — the generic `#tree ul li span` row rule (display/line-height/
+   padding-inline-end, specificity 1,0,3) used to leak into this span: the
+   4px end padding stretched the 10px circle into a 14×10 ellipse and the
+   1.67em line-height threw the × off center. The doubled selector beats
+   that rule inside the tree and every box property is pinned explicitly.
+   Design language: danger disc + bg-colored halo (reads on any favicon in
+   any theme), the × rigorously centered via inline-flex + line-height:1 —
+   the sync dot wears the same halo ring (sync-styles.css). */
 .favicon-container {
     position: relative; /* positioning context for sync dot / dead × overlays */
 }
 
-.favicon-container .dead-indicator {
+.favicon-container .dead-indicator,
+#tree ul li span.dead-indicator {
     position: absolute;
     top: -3px;
     right: -3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    box-sizing: border-box;
     width: 10px;
     height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    margin: 0;
+    padding: 0;
     border-radius: 50%;
     background: var(--vbm-danger);
     color: var(--vbm-danger-fg);
     font-size: 8px;
-    line-height: 10px;
+    line-height: 1;
     text-align: center;
+    box-shadow: 0 0 0 1.5px var(--vbm-bg);
     pointer-events: none;
 }
 

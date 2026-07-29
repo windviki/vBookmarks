@@ -59,13 +59,58 @@ const SEED = `
     await sleep(1600);
 
     // --- tree view: dead indicators on marked rows (item 2 shape check) ---
-    const treeClip = await page.evaluate(() => {
-        const li = document.querySelector('#tree li[data-node-id], #tree li[id^="neat-tree-item-"]');
-        if (!li) return null;
-        const r = li.getBoundingClientRect();
-        return { x: Math.max(0, r.x - 4), y: Math.max(0, r.y - 4), width: r.width + 8, height: r.height * 3 + 8 };
+    // Expand the bar root so the seeded (marked) bookmarks are visible…
+    await page.evaluate(() => {
+        const span = [...document.querySelectorAll('#tree span.tree-item-span')][0];
+        if (span && !span.parentNode.classList.contains('open')) span.click();
     });
+    await sleep(600);
+    const dbg = await page.evaluate(async () => {
+        const marks = await new Promise(r => chrome.storage.local.get('deadMarks', r));
+        const inds = document.querySelectorAll('#tree .dead-indicator').length;
+        const lis = [...document.querySelectorAll('#tree li')].slice(0, 8).map(li => li.id || '(no id)');
+        return { marks, inds, lis };
+    });
+    console.log('DBG:', JSON.stringify(dbg));
+    const indProbe = await page.evaluate(() => {
+        const ind = document.querySelector('#tree .dead-indicator');
+        if (!ind) return null;
+        const cs = getComputedStyle(ind);
+        const r = ind.getBoundingClientRect();
+        return {
+            display: cs.display, position: cs.position,
+            width: cs.width, height: cs.height,
+            top: cs.top, right: cs.right,
+            borderRadius: cs.borderRadius, fontSize: cs.fontSize,
+            lineHeight: cs.lineHeight, boxSizing: cs.boxSizing,
+            rect: { w: r.width, h: r.height }
+        };
+    });
+    console.log('IND:', JSON.stringify(indProbe));
+    // …and inject sync dots on two unmarked rows for a side-by-side shape
+    // comparison (the real sync mirror needs the background sync backend;
+    // the CSS classes are what we're inspecting).
+    await page.evaluate(() => {
+        const rows = [...document.querySelectorAll('#tree li a .favicon-container')];
+        let n = 0;
+        for (const fav of rows) {
+            if (fav.querySelector('.dead-indicator')) continue;
+            const cls = n === 0 ? 'local' : 'unsyncable';
+            const s = document.createElement('span');
+            s.className = `sync-indicator ${cls}`;
+            fav.appendChild(s);
+            if (++n === 2) break;
+        }
+    });
+    await sleep(200);
     await page.screenshot({ path: '/tmp/shots/diag-tree-indicators.png' });
+    const treeClip = await page.evaluate(() => {
+        const ind = document.querySelector('#tree .dead-indicator');
+        if (!ind) return null;
+        const li = ind.closest('li');
+        const r = li.getBoundingClientRect();
+        return { x: 0, y: Math.max(0, r.y - 26), width: 260, height: r.height * 4 + 32 };
+    });
     if (treeClip)
         await page.screenshot({ path: '/tmp/shots/diag-tree-dead-row-zoom.png', clip: treeClip });
 
@@ -134,6 +179,45 @@ const SEED = `
         };
     }, rowSel);
     console.log('PROBE wide:', JSON.stringify(probeWide));
+
+    // --- four themes: tree dead × + sync dot zoom ---------------------------
+    const shootTheme = async theme => {
+        const tp = await browser.newPage();
+        await tp.setViewport({ width: 400, height: 640, deviceScaleFactor: 3 });
+        await tp.evaluateOnNewDocument(t => {
+            try { localStorage.setItem('theme', t); } catch (e) {}
+        }, theme);
+        await tp.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
+        await sleep(1200);
+        await tp.evaluate(() => {
+            const span = [...document.querySelectorAll('#tree span.tree-item-span')][0];
+            if (span && !span.parentNode.classList.contains('open')) span.click();
+        });
+        await sleep(500);
+        // sync dot on one unmarked row for the side-by-side
+        await tp.evaluate(() => {
+            for (const fav of document.querySelectorAll('#tree li a .favicon-container')) {
+                if (fav.querySelector('.dead-indicator')) continue;
+                const s = document.createElement('span');
+                s.className = 'sync-indicator local';
+                fav.appendChild(s);
+                break;
+            }
+        });
+        await sleep(150);
+        const clip = await tp.evaluate(() => {
+            const ind = document.querySelector('#tree .dead-indicator');
+            if (!ind) return null;
+            const li = ind.closest('li');
+            const r = li.getBoundingClientRect();
+            return { x: 0, y: Math.max(0, r.y - 26), width: 300, height: r.height * 4 + 32 };
+        });
+        if (clip)
+            await tp.screenshot({ path: `/tmp/shots/diag-tree-ind-${theme}.png`, clip });
+        await tp.close();
+    };
+    for (const theme of ['dark', 'ink', 'paper'])
+        await shootTheme(theme);
 
     await browser.close();
 })().catch(e => { console.error('DIAG FAIL:', e.message); process.exit(2); });
