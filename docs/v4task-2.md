@@ -1,6 +1,6 @@
 # v4 任务包 2：视图化（Tabs/Views）重构设计方案
 
-> **状态：已完成——切片 A/A2/B/C/D/E 全部落地，最终验收通过**（2026-07-25：i18n verify 0 错误（223 键 × 43 locale 对齐，78 个新键全量翻译）、892 单测全绿（30 文件）、docker 冒烟+截图套件全通过（smoke 零控制台错误、视图/主题/i18n 截图含 ar RTL 镜像断言）、打包 95 文件 v4.0；v2：tab 视觉规范、搜索历史、死链缓存/代理/标记、去重策略、路径标签；v3：删除非空文件夹确认回归、选项开关与自定义入口全集、options"视图"分组、明确不纳入清单）。
+> **状态：已完成——切片 A/A2/B/C/D/E 全部落地，七轮修订收官**（初验 2026-07-25：i18n verify 0 错误、892 单测全绿、docker 冒烟+截图套件全通过、打包 95 文件 v4.0；v2：tab 视觉规范、搜索历史、死链缓存/代理/标记、去重策略、路径标签；v3：删除非空文件夹确认回归、选项开关与自定义入口全集、options"视图"分组、明确不纳入清单。附录 B–E = 第二~五轮；附录 F = 第六轮 6 项；附录 G = 第七轮 view-system 分支合并评估，2026-07-29：1103 单测全绿（37 文件）、258 键 × 43 locale verify 0 错误、docker 冒烟+键盘验证 32 断言+五截图套件全过、打包 96 文件）。
 > 本文只做设计，不含实施；实施时按 §9 分切片执行。
 > 前置阅读：`AGENTS.md`、`docs/v4task-1.md`（协作约定与硬约定）、《现代化演进总方案.md》§7.1（侧栏策略）、§2（品味三原则）。
 > 需求来源：维护者提出的"最近添加"功能重构——引入 tab/视图概念，为未来逐步向 side panel 迁移做准备。
@@ -492,3 +492,37 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 | 4 | 死链"仅受限"过滤卡死修复：renderToolbar 以**过滤后**行数决定是否渲染过滤段——filter=blocked 且无 blocked 结果时过滤段消失，用户无法切回（除非重开 popup）。拆出 `allResultRows()` 未过滤集合供工具栏判定；过滤条件下无结果时空态文案区分 `deadNoneFiltered`（指引切回其他分段）与原 `deadNone` | `src/view-dead.js`、`tests/view-dead.test.js`、`_locales/*`（1 新键） |
 
 第五轮验收：i18n verify 0 错误（1 新键 41 locale 全量翻译）、单测全绿（1070+）、docker 截图套件通过（diag-dead.js 诊断脚本纳入套件：hover 态/宽窄布局探针/四主题指示器 zoom）、打包完成。
+
+## 附录 F：第六轮修订（2026-07-28 新规范，6 项）
+
+第五轮验收后用户提出 6 项改进，全部落地。对齐点如下：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | 命令面板鼠标点击失效修复：第三轮项1 的 focusout 失焦关闭与行点击竞争——mousedown 未拦时 blur 先关面板、click 落空。行 mousedown `preventDefault()` 阻止 blur（不拦 click 本身），指针路径与键盘路径行为一致 | `src/palette.js`、`tests/palette.test.js` |
+| 2 | tab 条右键误弹书签菜单修复：右键 walk-up 在 tab 条空白处命中 span（图标/标签）时按"书签行"弹了菜单——命中 span 时要求存在 `li` 祖先才继续行菜单判定 | `src/context-menu.js`、`tests/context-menu.test.js` |
+| 3 | i18n 实译审查修正：en 的 "nope" 系否定回答改 "Cancel" 并与 zh_CN 对齐，修复拼写与引号/括号风格；37 个 locale 全量重翻受影响键 | `_locales/*` |
+| 4 | 侧栏行为抽取 `src/panel-behavior.js`：SW 冷启动时合并 openInSidePanel 选项与面板存活状态再 `setPanelBehavior`，修复"选项偶发失效"（冷启动竞态：存储镜像未就绪即应用）；纯逻辑可测 | `src/background.js`、`src/panel-behavior.js`、`tests/panel-behavior.test.js` |
+| 5 | 选项/高级选项响应式多列卡片布局：分组卡片经 CSS multicol 按可用宽度填充列数、页面限宽居中——窄窗单列、宽屏多列，长列表不再单侧拉满 | `css/options.css`、`pages/options.html`、`pages/advanced-options.html`、`tests/options-layout.test.js` |
+| 6 | 重复组结果快照持久化 `dupesLastResult`：每次重算落盘（同 deadLastScan 配方）；重开弹窗即时绘制上次结果，activate 后台对活树重算校验漂移；scope/ignoreScheme 不匹配即作废快照 | `src/view-dupes.js`、`tests/view-dupes.test.js` |
+
+第六轮验收：i18n verify 0 错误、单测全绿（1103，37 文件）、docker 截图套件通过、打包完成（95 文件——项4 新模块的清单缺口在第七轮评估中方被发现并修复，见附录 G 项9）。
+
+## 附录 G：第七轮——view-system 分支合并评估（2026-07-29，9 项吸收 + 2 项自查修复）
+
+view-system 分支（他人实现，与 master 同源 `5edc546`，28 提交）与 master（57 提交）各自独立实现了本文与 v4task-2-list。本轮按"对方独有判有用性、双方共有择优、master 独有保持"的原则完成全面对比，结论：**master 全部面对比领先，无架构级吸收项**；对方的 10 个实锤 bug（list-keyboard 三视图导航空转、← 误发合成 Esc、Esc 链序与自家 §3.4 相反、搜索历史四处缺陷、dead blocked 语义反、dupes 批量删无 undo、三视图右键菜单空 id 等）存档为不吸收证据。完整证据链与逐项裁定见 `docs/view-system-合并评估报告.md`。吸收与修复对齐点：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | CDP Esc 限制分析文档吸收：CDP `Input.dispatchKeyEvent` 不达 document capture 阶段（上游未修 bug）——"为什么 Docker 层没有 Esc 测试"的定论；测试分层：Esc 归 vitest 真 handler，Docker 只测 bubble 可达键 | `docs/cdp-escape-limitation.md` |
+| 2 | Docker 键盘/视图硬断言验证移植（对方 verify-keyboard.js 适配 master DOM：hidden 属性语义、`#results` 直挂、class 选择器；新增 ↓ 入列表、历史落账、dupes 完整渲染断言）：tab 条 bubble 键盘流/roving tabindex、焦点区域拓扑、搜索双区重进留存、逐视图渲染共 32 断言；接入 run.sh 阻塞步骤 + Dockerfile | `scripts/screenshots/verify-keyboard.js`、`run.sh`、`Dockerfile` |
+| 3 | 搜索历史上区高度上限：`max-height:40% + overflow-y:auto`——10 条历史在矮 popup 不再挤压结果区 | `css/neat.css` |
+| 4 | 行级整行 hover 底色 `.vbm-row:hover`：行尾路径/按钮区此前无 hover 反馈；锚点选中态仍优先（对方 bb7b62e 项3） | `css/neat.css` |
+| 5 | dupes 组头 URL 中段省略 `midTruncate`：组 key 区分度常在尾部路径，CSS 尾截恰好截掉它——去 scheme + head 55% + … + tail，完整 key 留 tooltip（对方唯一呈现亮点） | `src/view-dupes.js`、`tests/view-dupes.test.js`（2 新例） |
+| 6 | sync 圆点 6px 契约 + 负向守卫：sync-styles 钉 6px/50%，neat.css 守卫规则禁尺寸/圆角（对方 sync-indicator.test.js 核心断言，并入既有对齐契约而非另起文件） | `tests/tree-alignment.test.js` |
+| 7 | 相对时间 label 去重（吸收对方 format-utils 证明的重复问题，不收模块本体——master 的 relativeTimeBucket 等价且测试更强）：新增导出 `relTimeLabel(ts,_m)`，顺手吸收 falsy-ts→'' 语义修掉 1970 边界；search/view-recent/view-stats 三处 4 行复制品消除 | `src/tree-render.js`、`src/search.js`、`src/view-recent.js`、`src/view-stats.js`、`tests/tree-render.test.js`（3 新例） |
+| 8 | **自查修复（高优先级）**：`scripts/package.py` JS_FILES 漏登记 `src/panel-behavior.js`（第六轮项4 新模块，SW 顶层 import）——打包后 SW 起不来；补登记后 96 文件 | `scripts/package.py` |
+| 9 | **自查修正**：`optionShowRecentBookmarks` 文案陈旧（"at the top of the popup" 为树内分区时代残留，实际语义早已是最近视图标签显隐）——en/zh_CN 实译改为与其余三视图开关同句式；其余 41 locale 待下一次 `i18n.py translate` 跟进 | `_locales/en/messages.json`、`_locales/zh_CN/messages.json` |
+| 10 | 文档矩阵落地：双语 README 按 4.0 全景重写（开篇可直接用于 webstore 介绍页）；新增双语 v4 功能指南（视图总览/全键盘手册/逐视图用法/经典外观配方/设置备份/隐私 + 8 张 docker 实拍截图）；新增 `shots-guide.js` 截图套件（搜索双区重进态、选项页视图分组卡片）纳入 run.sh | `docs/README.md`、`docs/README.zh.md`、`docs/guide-v4.md`、`docs/guide-v4.zh.md`、`docs/images/guide/`、`scripts/screenshots/shots-guide.js` |
+
+第七轮验收：i18n verify 0 错误（258 键 × 43 locale）、单测全绿（1103，37 文件）、docker 全量 harness 通过（smoke 零控制台错误 + verify-keyboard 32/32 + shots/shots-themes/shots-i18n/shots-palette/shots-guide 五套件无错误）、打包 96 文件校验通过。

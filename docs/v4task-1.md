@@ -1,6 +1,6 @@
 # v4 任务包 1：vBookmarks 现代化续作（接力文档）
 
-> **状态：P1–P4 全部完成**（2026-07-18，见 §3 完成状态与偏差清单；剩余仅 P5 评估项，不承诺排期）。
+> **状态：P1–P4 全部完成**（2026-07-18，见 §3 完成状态与偏差清单；剩余仅 P5 评估项，不承诺排期）。**v4.0 已收官**（2026-07-29，见 §6 收官回写）。
 
 > 用途：新 session 的工作入口。读完本文件 + 方案总文档即可开工，无需重新调研。
 > 维护者：windviki。协作约定：每个独立改进完成后本地 git 提交（conventional commits，中英文混用）；不要动本仓库以外的文件；docker 可用但不得影响已有镜像/容器。
@@ -119,3 +119,20 @@ AI 自动打标（优先 Chrome 内置 Prompt API，默认关闭）、封面缩�
 - 分析类产出放 docs/ 下独立文档；改动了约定就同步更新 AGENTS.md。
 - 大改动前先看《现代化演进总方案》对应章节，方案与现实冲突时以代码为准并回写方案。
 - 对数万存量用户的影响是一等公民：默认行为不变、设置可回退、迁移幂等可重入。
+
+## 6. 收官回写（2026-07-29）
+
+v4.0 全部落成，本任务包与任务包 2 合并收尾：
+
+- **任务包 1（P1–P4 地基）**：状态见 §3，收官前无新增变更。
+- **任务包 2（视图系统）**：切片 A–E + 七轮修订全部完成，逐轮细节在 `docs/v4task-2.md`（附录 B–G）；附录 G 即 view-system 分支合并评估的吸收记录。
+- **view-system 分支合并评估**（2026-07-28/29）：对他人实现的同名分支（与 master 同源 `5edc546`）逐项对比——master 全面领先，吸收 8 小项 + 2 项自查修复（共享 relTimeLabel、dupes 中段截断、搜索历史区限高、行 hover 底色、package.py 漏登记 panel-behavior.js 等），对方 10 个实锤 bug 存档不吸收。完整回执表见 `docs/view-system-合并评估报告.md`。
+
+**最终验收状态**：
+
+- `npm run test:run`：1103 例全绿（37 个测试文件）。
+- `python3 scripts/i18n.py verify`：258 键 × 43 locale，0 错误（4 个既有警告）。
+- `python3 scripts/package.py`：96 文件，无 strays。
+- Docker harness 全绿（`scripts/screenshots/run.sh` 一把梭）：smoke 零 console 错误 → `verify-keyboard.js` 32 断言（焦点区域 / TabStrip 键盘 / 搜索双区重进 / 视图渲染）→ 五套截图（shots / shots-themes / shots-i18n / shots-palette / shots-guide）全部 NO ERRORS。
+
+**配套文档**：`docs/README.md` / `docs/README.zh.md` 已按 4.0 重写，开篇说明可直接用于商店介绍页；新特性上手指南 `docs/guide-v4.md` / `docs/guide-v4.zh.md`（全键盘操作、逐视图说明、命令面板、经典外观配方、备份与隐私），配 `docs/images/guide/` 下 8 张实拍截图。
