@@ -9,82 +9,141 @@ vBookmarks
 
 [Available on WebStore](https://chrome.google.com/webstore/detail/vbookmarks/odhjcodnoebmndcihdedenkmdmklpihb) · [HomePage](http://windviki.github.com/vBookmarks/)
 
-**vBookmarks** is a fast, keyboard-first bookmark manager for Chrome, living in the toolbar popup and — if you like — in Chrome's side panel. It grew out of the excellent [Neat Bookmarks](https://github.com/cheeaun/neat-bookmarks) and has been refined for over a decade: hierarchical tree, instant fuzzy search, context menus, drag & drop, separators, and a modern, themeable UI.
+**vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a six-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
 
-Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php). Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ).
+- **Six views, one popup** — Tree / Search / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Ctrl/Cmd+1…6`.
+- **A maintenance crew for your library** — scan for dead links with pause & resume, deduplicate with six keep-strategies and undoable batch cleaning, save a whole window of tabs as a session folder.
+- **Keyboard-first for real** — every view is fully operable without a mouse: arrows, `Enter`, `F2` rename, `Delete`, view shortcuts, and a `Ctrl/Cmd+K` command palette.
+- **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
+- **Make it yours** — five crafted themes, custom CSS, custom toolbar icon, per-view visibility toggles — or hide the tab strip entirely for the classic one-pane look.
+- **Private by design** — local-only data, 43 languages, MIT licensed.
+
+Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php). Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ). New in 4.0? Read the [v4 feature guide](guide-v4.md).
 
 
 # Why vBookmarks
 
 - **Modern, calm UI** — a full design-token system with five looks: follow-system, light, dark, plus two crafted "fable" themes: **Ink** (deep dark) and **Paper** (warm light).
-- **Find anything instantly** — fzf-style fuzzy search with match highlighting (CJK-friendly), and a **command palette** (`Ctrl/Cmd+K`) unifying bookmark search, folder jumps and power commands.
-- **Power tools built in** — duplicate cleaner (`/dupes`), dead-link scanner (`/dead`), session saver (`/session`), one-click undo for every delete.
+- **Find anything instantly** — fzf-style fuzzy search with match highlighting (CJK-friendly), persistent search history, and a **command palette** (`Ctrl/Cmd+K`) unifying bookmark search, folder jumps, view jumps and power commands.
+- **Power tools built in** — a dead-link scanner with dual-channel checks and pause/resume, a duplicate cleaner with six keeper strategies and undo-safe batch deletion, a session saver, and one-click undo for every delete.
 - **Quick add everywhere** — star button in the popup, `Ctrl/Cmd+D`, or "Bookmark this page" from the page context menu.
 - **Sync-aware** — on Chrome 138+ it understands Chrome's dual local/synced bookmark storage: local-only subtrees are gently dimmed, roots are labeled `(Local)` / `(Synced)`, and cross-storage drags are blocked with a polite toast instead of a hard failure.
 - **43 languages**, all aligned to the English baseline and kept in sync by an LLM-assisted translation pipeline.
-- **Private by design** — plain ES6+ JavaScript, no framework, no build step, no telemetry; the source you inspect is the code you run.
+- **Private by design** — plain ES6+ JavaScript, no framework, no build step, no telemetry; the source you inspect is the code you run. Visit statistics are stored locally, can be paused with one switch and erased with one button.
+
+
+# What's new in 4.0
+
+4.0 is the largest release in the project's history. It rebuilds the popup around a **view system** — six specialized views behind an icon tab strip — while keeping the classic tree experience one setting away.
+
+## The view system
+
+- **Six views**: **Tree** (the classic), **Search**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
+- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Ctrl/Cmd+1…6` jumps straight to a view.
+- **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
+- **Popup vs panel** — the popup always boots on the tree; the side panel restores the view you left, ready to become your always-on bookmark workspace.
+
+## Search view — dual zone
+
+- The popup search is now a proper view: **history on top, results below**. Both stay on screen together.
+- **Search history** (MRU 10) records what you actually used — pressing `Enter`, opening a result, or leaving the view — with result counts and relative timestamps. Click or press `Enter` to re-run, `Delete` or right-click to remove one or clear all. A setting turns history off (and wipes it) instantly.
+- Leaving and coming back keeps everything: the box, the results, the scroll — no reflow, no re-query.
+
+## Recent view
+
+- The old in-tree "recently added" strip grew up into its own tab: your newest bookmarks grouped into **Today / This week / This month / Older**, each row with a relative-time badge and a `path · exact time` second line.
+- `R` (or right-click) reveals any row in the tree; an optional one-time import from Chrome history (off by default, permission requested only if you opt in) back-fills older visits.
+
+## Stats view — your actual usage
+
+- **Visit statistics, 100% local**: rows you open from the popup are counted, and a background collector notices when you navigate to bookmarked URLs from anywhere else (deduplicated, so one open never counts twice).
+- Sort by **count** or **recency** (persisted), clear everything with one ConfirmDialog-gated button, or flip `statsEnabled` off — recording stops completely, and the erase exit stays reachable.
+- A **Recently visited** section lists what Chrome says you actually visit; bookmarked rows show a ★, everything else has a one-click ☆ to file it away.
+
+## Dead-link view
+
+- **Dual-channel checking**: a direct fetch first; on failure, your own proxy template (e.g. a corporate gateway) gets the final say — so "down for everyone" and "just blocked here" read as different badges.
+- **Progressive, pausable scans**: results stream in row by row; `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot.
+- Tunable concurrency (1–16) and timeout (2–30 s), a dead/blocked/all filter, and **dead marks** — flag a link once and the red ✕ follows it across the tree, search, recent and stats views.
+
+## Duplicates view
+
+- Finds real duplicates, not just string matches: URLs are normalized (tracking parameters like `utm_*`/`fbclid`/`gclid` stripped, hash dropped, optional http/https folding) before grouping.
+- **Six keeper strategies** — oldest, newest, bookmark-bar, shortest title, shallowest, most-visited (live data from the Stats view) — plus per-group manual pinning with `K` or the radio button.
+- **Preview first, execute after**: doomed rows render struck-through until you commit; batch cleaning runs through the undo chain with a single summary toast, and the last result set is snapshotted so reopening the popup paints instantly while it re-validates in the background.
+
+## Command palette, upgraded
+
+- `Ctrl/Cmd+K` in the popup, `Ctrl/Cmd+Shift+K` anywhere: fuzzy bookmark search, folder jumps, and a slash-command table — one **Go** command per view, `/session`, `/options`, theme switching, `/tabs` and `/path` toggles, with aliases for every command.
+- A plain query that isn't a command offers a bridge row to run it in the full search view; the palette closes itself when it loses focus.
+
+## Settings, backup & the classic look
+
+- A new **Views** group in options: tab-strip visibility, per-view visibility, path labels, recent count, search history, visit statistics (+ erase), dead-link proxy.
+- **Backup & restore**: export every setting to a stamped JSON file, import it back with merge semantics — moving machines no longer means re-clicking forty toggles.
+- Options and advanced options now use a responsive multi-column card layout that stays readable from 320 px to 4K.
+- **Classic-mode friendly**: hide the view tabs, pick the light or dark theme, and 4.0 behaves like the vBookmarks you know — every new surface is opt-out.
+
+## The v4 foundation
+
+- Search field fixed and modernized: click-through dead zone removed, a proper clear button that always appears when text is present.
+- Adding a bookmark/folder/separator into a collapsed folder now works visibly: the folder expands and shows the new node immediately.
+- "Copy title and URL" moved to the async Clipboard API (`clipboardWrite` permission) — it works again.
+- Sync presentation reworked: synced rows stay quiet (no green-dot noise), tooltips localized, dual-storage roots labeled `(Local)`/`(Synced)`, blocked drags show a toast, and "highlight unsynced" finally dims local-only subtrees.
+- Inline SVG icons throughout (folders, bookmarklets, twisties, view tabs); bitmap icons retired.
+
+## Engineering
+
+- **1103 unit tests** across 37 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, search dual-zone, per-view rendering — 32 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **258 keys**, all 43 locales aligned.
+- Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
 
 # Feature highlights
 
-1. Bookmark current tab before/after a selected bookmark or folder, or to the top/bottom of a folder.
-2. Add sub-folders, update a bookmark's URL with the current tab, copy title + URL to the clipboard.
-3. Recently-added section: the 20 newest bookmarks on top of the tree, collapsible and can be disabled.
-4. Folder content sorting: by title or date, folders-first option, optional recursion.
-5. Synchronizable bookmark separators with customizable style.
-6. Dark theme done right: light / dark / follow-system / ink / paper on shared design tokens.
-7. Optional side-panel mode (opt-in setting; popup stays the default), with an `Alt+Shift+B` shortcut.
-8. Command palette (`Ctrl/Cmd+K`, or `Ctrl/Cmd+Shift+K` globally) and omnibox search: type `*` + Space in the address bar.
-9. Full keyboard support and drag & drop rearranging.
-10. Sync-status awareness with quiet visuals (no green-dot noise): only local-only and unsyncable rows are marked.
+1. Six views in one popup: tree, search, recent, stats, dead-link scan, duplicate cleaner.
+2. Bookmark current tab before/after a selected bookmark or folder, or to the top/bottom of a folder.
+3. Add sub-folders, update a bookmark's URL with the current tab, copy title + URL to the clipboard.
+4. Search history with re-run, per-item remove and clear-all — can be disabled (and wiped) in settings.
+5. Visit statistics with a pause switch, one-click erase, and a recently-visited section powered by optional Chrome-history access.
+6. Folder content sorting: by title or date, folders-first option, optional recursion.
+7. Synchronizable bookmark separators with customizable style.
+8. Dark theme done right: light / dark / follow-system / ink / paper on shared design tokens.
+9. Optional side-panel mode (opt-in setting; popup stays the default), with an `Alt+Shift+B` shortcut.
+10. Command palette (`Ctrl/Cmd+K`, or `Ctrl/Cmd+Shift+K` globally) and omnibox search: type `*` + Space in the address bar.
+11. Full keyboard support in every view, and drag & drop rearranging in the tree.
+12. Sync-status awareness with quiet visuals: only local-only and unsyncable rows are marked.
 
 
 ![Image of vBookmarks features](../assets/store/vbookmarks-menu.png)
 
 
-# What's new in 4.0
-
-**Experience**
-
-- Search field fixed and modernized: click-through dead zone removed, a proper clear button that always appears when text is present.
-- Adding a bookmark/folder/separator into a collapsed folder now works visibly: the folder expands and shows the new node immediately (previously it silently appeared only after reopening the popup).
-- "Copy title and URL" works again — moved to the async Clipboard API (`clipboardWrite` permission) since `execCommand('copy')` was silently rejected outside user-gesture context.
-- Sync presentation reworked: green-dot noise inverted (synced rows stay quiet), tooltips localized, dual-storage roots labeled `(Local)`/`(Synced)`, cross-storage drag blocking now shows a toast instead of a popup-killing `alert()`, and the long-dormant "highlight unsynced" option finally works (dims local-only subtrees).
-
-**Platform & code**
-
-- Repository reorganized for the v4 era: first-party JS in `src/`, pages in `pages/`, styles in `css/`, images split into `assets/icons` (shipped) vs `assets/store` + `assets/design` (not shipped); obsolete artifacts (old `release/*.crx`, MV2 leftovers) were dropped — they live on in git history.
-- Inline SVG icons throughout (folder, bookmarklet, twisties, search, star); bitmap tree icons retired.
-- 661 unit tests (Vitest) covering every module; headless Docker smoke + screenshot harness with multi-language captures.
-- Unified locale tooling (`scripts/i18n.py`): audit key usage, diff locales against the English baseline, batch LLM translation, and a verify gate with menu-length warnings. Baseline grew from 75 to 139 keys, all 43 locales aligned.
-
-
 # Notes for advanced features
 
 1. **Omnibox search** — type `*` in the address bar, press Space, then enter your keywords.
-2. **Full keyboard support** in both the tree view and the command palette (`Ctrl/Cmd+K`):
-   - **↑↓** move selection, **←→** open / close the right-click context menu on the selected item
-   - **Enter** / **Space** to open the selected bookmark; **Ctrl/Cmd+Enter** to open in a new tab
-   - **Home** / **End** to jump to the first / last item
-   - **PageUp** / **PageDown** to scroll by one screen
-   - **Delete** to delete the selected bookmark or folder
-   - Type-ahead filtering: start typing to find items by name (auto‑focus in the palette)
-3. Press `F2` on a selected bookmark/folder to rename it.
-4. Middle-click a folder to open all its bookmarks (as a color-coded tab group).
-5. `Ctrl+F` focuses the search field; `Esc` clears the search, dismisses the context menu, or closes the palette — layered from inner to outer.
-6. **Command palette** (`Ctrl/Cmd+K` inside the popup, `Ctrl/Cmd+Shift+K` globally):
-   - Fuzzy‑search bookmarks and folders, jump to a folder in the tree, or run slash‑commands
-   - Slash‑commands: `/dupes` find duplicates, `/dead` scan for dead links, `/session` save current window tabs
-   - Full keyboard navigation mirrors the tree view (↑↓←→, Enter, Home/End, Delete, F2)
-7. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
-8. Decide whether the popup closes after opening a bookmark (option in settings).
-9. Show only the Bookmark Bar (option in settings).
-10. Open bookmarks in background tabs (option in settings).
-11. Control the popup zoom level in settings.
-12. **Advanced settings** (entry at the top right of the settings page): customize separator title/URL/style.
-13. **Advanced settings**: custom CSS for the whole popup (CodeMirror editor), e.g. `* { font-family: Consolas; }`.
-14. **Advanced settings**: replace the toolbar icon with your own.
-15. Disable popup auto-resize to keep a fixed height.
+2. **Full keyboard support**, identical across all six views (details in the [v4 feature guide](guide-v4.md)):
+   - **↑↓** move selection; **↑** past the first row steps up to the tab strip, then the search box
+   - **←→** on the tab strip switch views; **→** on a row opens its context menu, **←** closes it
+   - **Enter** / **Space** to open; **Ctrl/Cmd+Enter** to open in a new tab
+   - **Home** / **End**, **PageUp** / **PageDown**; **Ctrl/Cmd+1…6** jump to a view directly
+   - **Delete** to delete (undoable), **F2** to rename, **R** to reveal in tree; **K** pins a keeper in Duplicates, **M** toggles a dead mark
+   - Type-ahead filtering in the tree and search views: start typing to find items by name
+3. Middle-click a folder to open all its bookmarks (as a color-coded tab group).
+4. `Ctrl+F` focuses the search field; `Esc` clears the search, dismisses the context menu, pauses a scan, or closes the palette — layered from inner to outer.
+5. **Command palette** (`Ctrl/Cmd+K` inside the popup, `Ctrl/Cmd+Shift+K` globally):
+   - Fuzzy-search bookmarks and folders, jump to a folder in the tree, or run slash-commands
+   - Slash-commands: `/recent` `/stats` `/dead` `/dupes` jump to views, `/session` saves the window's tabs, `/options` opens settings, theme commands switch themes, `/tabs` and `/path` toggle the strip and path labels
+6. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
+7. Decide whether the popup closes after opening a bookmark (option in settings).
+8. Show only the Bookmark Bar (option in settings).
+9. Open bookmarks in background tabs (option in settings).
+10. Control the popup zoom level in settings.
+11. **Advanced settings** (entry at the top right of the settings page): customize separator title/URL/style, tune dead-link scan concurrency/timeout.
+12. **Advanced settings**: custom CSS for the whole popup (CodeMirror editor), e.g. `* { font-family: Consolas; }`.
+13. **Advanced settings**: replace the toolbar icon with your own.
+14. Disable popup auto-resize to keep a fixed height.
+15. Export/import all settings as JSON from the Backup group at the bottom of the options page.
 
 
 # For developers
@@ -92,16 +151,20 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 677 cases across 23 suites)
+# Unit tests (Vitest, 1103 cases across 37 suites)
 npm install
 npm run test:run
 
-# Headless smoke + screenshot harness (Docker; shots land in tmp/shots/)
-scripts/screenshots/run.sh                # smoke + all suites
-scripts/screenshots/run.sh --smoke-only   # zero-console-error check only
-#   shots.js         interaction states (light/dark)
-#   shots-themes.js  ink + paper themes
-#   shots-i18n.js    tree/menus/edit-dialog/options × 8 UI languages
+# Headless harness (Docker; shots land in tmp/shots/)
+scripts/screenshots/run.sh                # smoke + keyboard verification + all suites
+scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard/view checks only
+#   smoke.js           popup/panel/options raise zero console errors
+#   verify-keyboard.js tab-strip keyboard model, focus zones, view rendering
+#   shots.js           interaction states (light/dark)
+#   shots-themes.js    view rows on all 5 themes
+#   shots-i18n.js      tree/tabs/menus/dialog/options × 8 UI languages
+#   shots-palette.js   palette + the four feature views
+#   shots-guide.js     guide screenshots (search dual zone, options Views group)
 
 # Locale pipeline (scripts/i18n.py, stdlib only)
 python3 scripts/i18n.py audit      # keys used in code vs en baseline
@@ -128,13 +191,13 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
-**ver4.0 2026/07/18**
+**ver4.0 2026/07**
 
-New: Ink & Paper "fable" themes; command palette (`Ctrl/Cmd+K`); quick-add star button; collapsible recently-added section; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
+New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Ctrl/Cmd+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Command palette upgrades: Go commands per view, theme switching, `/session`, `/options`, aliases, search bridge row, auto-close on blur. Options: Views group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
 
-Fixed: search field click-through and unreliable native clear button (custom clear button now); adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added).
+Fixed: search field click-through and unreliable native clear button; adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added); non-empty folder deletion is confirm-gated again (with undo).
 
-Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 139 keys with all 43 locales re-aligned through the new `scripts/i18n.py` LLM pipeline; test suite grew to 661 cases; Docker smoke + screenshot harness extended with multi-language captures.
+Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 258 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1103 cases across 37 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
 
 
 **ver3.7 2026/05/10**
@@ -348,7 +411,7 @@ Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks
 
 **ver1.3 2012/05/25**
 
-Fixed: Scrollbar glitch. https://github.com/windviki/vBookmarks/issues/1
+Fixed: Scrollbar glitch in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/1
 
 
 **ver1.2 2011/11/30**
