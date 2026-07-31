@@ -49,7 +49,7 @@
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
 import { FOLDER_ICON, VIEW_ICONS } from './icons.js';
-import { relativeTimeBucket } from './tree-render.js';
+import { relTimeLabel } from './tree-render.js';
 
 // Same escape recipe as tree-render.js's module-private copy (modules stay
 // self-contained): escape >, then <, then ".
@@ -117,15 +117,8 @@ export function initSearch(ctx = {}) {
         store.set('searchHistory', JSON.stringify(
             pushSearchHistory(readHistory(), { q, ts: Date.now(), n: lastResultCount })));
     };
-    // The relTime label renderer shared with the recent view (bucket logic
-    // lives in tree-render.js): a bucket key + n, or the absolute date past
-    // 7 days.
-    const relTimeLabel = ts => {
-        const b = relativeTimeBucket(ts, Date.now());
-        if (b.key === null)
-            return new Date(ts).toLocaleDateString();
-        return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
-    };
+    // Bucket → label helper lives in tree-render.js (shared with the recent
+    // and stats views) — imported as relTimeLabel above.
 
     const searchAfterEnter = !!store.get('searchAfterEnter');
     const $results = $('results');
@@ -245,7 +238,7 @@ export function initSearch(ctx = {}) {
                 `<span class="history-clock">${VIEW_ICONS.recent}</span>` +
                 `<i>${htmlspecialchars(q)}</i>` +
                 `<span class="history-meta">${_m('searchHistoryResultCount', `${entry.n | 0}`)}</span>` +
-                `<span class="history-time">${relTimeLabel(entry.ts)}</span>` +
+                `<span class="history-time">${relTimeLabel(entry.ts, _m)}</span>` +
                 `</a>` +
                 `<button type="button" class="row-btn search-history-remove" tabindex="-1" data-q="${htmlspecialchars(q)}" aria-label="${_m('searchHistoryRemove')}">×</button>` +
                 `</li>`;

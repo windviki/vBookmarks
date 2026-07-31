@@ -92,6 +92,19 @@ export const relativeTimeBucket = (ts, now) => {
     return { key: null }; // absolute date
 };
 
+// Bucket → localized label, shared by the recent/stats views and the
+// search-history rows (one recipe, previously copied into three files).
+// Falsy ts renders empty rather than a 1970 date. `_m` is injected so the
+// helper stays pure (chrome.i18n.getMessage at the call sites).
+export const relTimeLabel = (ts, _m) => {
+    if (!ts)
+        return '';
+    const b = relativeTimeBucket(ts, Date.now());
+    if (b.key === null)
+        return new Date(ts).toLocaleDateString();
+    return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
+};
+
 export function initTreeRender(ctx = {}) {
     const store = ctx.store;
     const separatorManager = ctx.separatorManager;

@@ -27,7 +27,7 @@
     "message": "哎呀，出错了。"
   },
   "optionShowRecentBookmarks": {
-    "message": "在弹窗顶部显示最近添加的书签"
+    "message": "显示最近添加视图标签"
   },
   "optionShowStatsView": {
     "message": "显示统计视图标签"

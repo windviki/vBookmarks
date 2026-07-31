@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
-import { initTreeRender, buildPathMap, relativeTimeBucket } from '../src/tree-render.js';
+import { initTreeRender, buildPathMap, relativeTimeBucket, relTimeLabel } from '../src/tree-render.js';
 import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from '../src/icons.js';
 
 // tree-render.js touches page globals (chrome.i18n/runtime/bookmarks,
@@ -376,6 +376,44 @@ describe('relativeTimeBucket (v4 task-2 slice B)', () => {
 
     it('clamps future timestamps to just-now', () => {
         expect(relativeTimeBucket(NOW + HOUR, NOW)).toEqual({ key: 'timeJustNow' });
+    });
+});
+
+describe('relTimeLabel (shared bucket → label helper)', () => {
+    const NOW = Date.now();
+    const MIN = 60000, HOUR = 60 * MIN, DAY = 24 * HOUR;
+    // _m double recording the substitution arguments it is called with.
+    const makeM = () => {
+        const calls = [];
+        const m = (key, subs) => { calls.push([key, subs]); return `[${key}]`; };
+        m.calls = calls;
+        return m;
+    };
+
+    it('renders empty for falsy timestamps instead of a 1970 date', () => {
+        const m = makeM();
+        expect(relTimeLabel(0, m)).toBe('');
+        expect(relTimeLabel(null, m)).toBe('');
+        expect(relTimeLabel(undefined, m)).toBe('');
+        expect(m.calls).toEqual([]);
+    });
+
+    it('passes the bucket n through as the _m substitution', () => {
+        const m = makeM();
+        expect(relTimeLabel(NOW - 3 * MIN, m)).toBe('[timeMinutesAgo]');
+        expect(m.calls).toEqual([['timeMinutesAgo', '3']]);
+        expect(relTimeLabel(NOW - 5 * HOUR, m)).toBe('[timeHoursAgo]');
+        expect(m.calls).toEqual([['timeMinutesAgo', '3'], ['timeHoursAgo', '5']]);
+        expect(relTimeLabel(NOW - 2 * DAY, m)).toBe('[timeDaysAgo]');
+        expect(relTimeLabel(NOW - 30 * 1000, m)).toBe('[timeJustNow]');
+        expect(relTimeLabel(NOW - DAY, m)).toBe('[timeYesterday]');
+    });
+
+    it('falls back to the absolute locale date past 7 days', () => {
+        const m = makeM();
+        const ts = NOW - 8 * DAY;
+        expect(relTimeLabel(ts, m)).toBe(new Date(ts).toLocaleDateString());
+        expect(m.calls).toEqual([]);
     });
 });
 

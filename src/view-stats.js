@@ -91,7 +91,7 @@
  * document and setTimeout remain page globals.
  */
 
-import { relativeTimeBucket } from './tree-render.js';
+import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS } from './icons.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -121,13 +121,7 @@ export function initViewStats(ctx = {}) {
     const enabled = () => visitStats.enabled();
     const sort = () => store.get('statsSort', 'count') === 'recent' ? 'recent' : 'count';
 
-    // Same bucket → label recipe as view-recent (docs/v4task-2-list.md §3.3).
-    const relTimeLabel = ts => {
-        const b = relativeTimeBucket(ts, Date.now());
-        if (b.key === null)
-            return new Date(ts).toLocaleDateString();
-        return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
-    };
+    // Bucket → label recipe imported from tree-render.js (docs/v4task-2-list.md §3.3).
 
     // History normalizes bare hosts to a trailing slash while bookmarks keep
     // whatever was saved; matching on the slash-folded key pairs those up
@@ -267,7 +261,7 @@ export function initViewStats(ctx = {}) {
                 html += `<li class="${cls}" id="stats-hist-${r.bookmarkId}" role="listitem" ` +
                     `data-node-id="${r.bookmarkId}">` +
                     treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', r.bookmarkId, null, {
-                        rightText: relTimeLabel(r.t),
+                        rightText: relTimeLabel(r.t, _m),
                         badge: { text: '★', cls: 'starred', aria: _m('statsHistoryBookmarked') }
                     }) +
                     head +
@@ -277,7 +271,7 @@ export function initViewStats(ctx = {}) {
                 // hover-revealed ☆ row button for the one-click add.
                 html += `<li class="${cls}" role="listitem">` +
                     treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', null, null, {
-                        rightText: relTimeLabel(r.t)
+                        rightText: relTimeLabel(r.t, _m)
                     }) +
                     `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${i}" ` +
                     `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
@@ -300,7 +294,7 @@ export function initViewStats(ctx = {}) {
             const { item, stat } = rows[i];
             const path = views.pathOf(item.id);
             const countText = `×${stat.c}`;
-            const timeText = relTimeLabel(stat.t);
+            const timeText = relTimeLabel(stat.t, _m);
             // §3.4: the active sort key sticks to the title column — the
             // badge slot renders it (pill style for counts, plain for
             // time), the right slot takes the secondary key.

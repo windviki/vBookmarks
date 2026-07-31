@@ -1810,6 +1810,15 @@ body.panel-mode .vbm-row .row-sub {
     background-color: var(--vbm-bg-hover);
 }
 
+/* Row-wide hover: the anchor only covers the title stretch, so the tail
+   (path label / row buttons) painted no hover feedback. Same hover token on
+   the li closes the gap — the anchor keeps its own rule on top, and a
+   keyboard-focused anchor stays selected-colored (selected paints over it).
+   (view-system bb7b62e item 3, absorbed.) */
+.vbm-row:hover {
+    background-color: var(--vbm-bg-hover);
+}
+
 #recent-list ul li a:hover i,
 #dupes-list ul li a:hover i,
 #dead-list ul li a:hover i,
@@ -1874,9 +1883,13 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 /* Search-history area (top half of #view-search): a muted head row with a
-   "clear all" text button, then one row per past query. */
+   "clear all" text button, then one row per past query. The area caps at
+   40% of the view height and scrolls on its own so a full 10-entry history
+   cannot squeeze the results pane in a short popup (view-system polish). */
 #search-history-area {
     flex: none;
+    max-height: 40%;
+    overflow-y: auto;
     border-bottom: 1px solid var(--vbm-border);
     padding: 3px 0;
 }

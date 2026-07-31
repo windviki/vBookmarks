@@ -11,6 +11,7 @@ import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
 // and the list's innerHTML — nothing is copied from the module body.
 
 let initViewDupes;
+let midTruncate;
 let timeouts;
 let clearedTimeouts;
 let timerSeq = 1;
@@ -27,7 +28,27 @@ beforeAll(async () => {
         clearedTimeouts.push(id);
         timeouts = timeouts.filter(t => t[2] !== id);
     };
-    ({ initViewDupes } = await import('../src/view-dupes.js'));
+    ({ initViewDupes, midTruncate } = await import('../src/view-dupes.js'));
+});
+
+describe('midTruncate (group-head URL display)', () => {
+    it('returns empty for falsy input and short URLs unchanged (scheme stripped)', () => {
+        expect(midTruncate('')).toBe('');
+        expect(midTruncate(null)).toBe('');
+        expect(midTruncate('https://a.com')).toBe('a.com');
+        expect(midTruncate('http://example.com/short')).toBe('example.com/short');
+        // non-http(s) keys pass through untouched
+        expect(midTruncate('javascript:alert(1)')).toBe('javascript:alert(1)');
+    });
+
+    it('mid-truncates long URLs: head 55%, ellipsis, discriminating tail kept', () => {
+        const url = 'https://example.com/a/very/long/path/that/goes/on/final-page';
+        const out = midTruncate(url);
+        expect(out.length).toBe(48);
+        expect(out).toMatch(/^example\.com\/a\/very\/long\/pa…/);
+        expect(out.endsWith('on/final-page')).toBe(true);
+        expect(out).not.toContain('https://');
+    });
 });
 
 beforeEach(() => {

@@ -47,7 +47,7 @@
  * document and setTimeout remain page globals.
  */
 
-import { relativeTimeBucket } from './tree-render.js';
+import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS } from './icons.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -179,14 +179,8 @@ export function initViewRecent(ctx = {}) {
         });
     };
 
-    // docs/v4task-2-list.md §3.3 bucket → label: relative up to 7 days,
-    // absolute date beyond. Same recipe as search.js's history timestamps.
-    const relTimeLabel = ts => {
-        const b = relativeTimeBucket(ts, Date.now());
-        if (b.key === null)
-            return new Date(ts).toLocaleDateString();
-        return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
-    };
+    // docs/v4task-2-list.md §3.3 bucket → label: imported from tree-render.js
+    // (shared with search.js's history timestamps and view-stats).
 
     // --- Coarse time sections (第四轮项8) -----------------------------------
     // The list stays a flat dateAdded-desc sequence; section headers only
@@ -245,7 +239,7 @@ export function initViewRecent(ctx = {}) {
                 `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
-                    rightText: relTimeLabel(d.dateAdded || 0),
+                    rightText: relTimeLabel(d.dateAdded, _m),
                     subText
                 }) +
                 groupHead +

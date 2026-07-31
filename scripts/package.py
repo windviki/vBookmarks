@@ -33,6 +33,7 @@ HTML_PAGES = [
 # JavaScript files referenced by HTML pages (or imported by other modules)
 JS_FILES = [
     'src/background.js',
+    'src/panel-behavior.js',
     'src/fuzzy.js',
     'src/sort-utils.js',
     'src/neat.js',

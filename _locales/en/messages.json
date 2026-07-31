@@ -653,7 +653,7 @@
     "description": "Header of the virtual recent bookmarks section at the top of the popup tree."
   },
   "optionShowRecentBookmarks": {
-    "message": "Show recently added bookmarks at the top of the popup"
+    "message": "Show the recently added view tab"
   },
   "optionShowStatsView": {
     "message": "Show the stats view tab"

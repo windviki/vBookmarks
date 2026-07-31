@@ -125,6 +125,20 @@ describe('alignment CSS contract (item 6)', () => {
         expect(unsyncable).toContain('box-shadow: 0 0 0 1.5px var(--vbm-bg)');
     });
 
+    it('the sync dot is pinned to a 6px circle, sized by sync-styles.css alone', () => {
+        // view-system absorption (its sync-indicator.test.js core): the dot's
+        // size/roundness contract, plus the negative guard that neat.css
+        // overrides geometry (position/offset) only — never the box.
+        const base = ruleBody(syncCss, '.sync-indicator {');
+        expect(base).toContain('width: 6px');
+        expect(base).toContain('height: 6px');
+        expect(base).toContain('border-radius: 50%');
+        const guard = ruleBody(
+            neatCss,
+            '#tree ul li .favicon-container .sync-indicator,\n#results ul li .favicon-container .sync-indicator');
+        expect(guard).not.toMatch(/width|height|border-radius/);
+    });
+
     it('separator rows drop the ::before placeholder (the line owns the row)', () => {
         const body = ruleBody(neatCss, '#tree ul li a.separator-row::before');
         expect(body).toContain('content: none');

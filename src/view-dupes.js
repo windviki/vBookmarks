@@ -70,6 +70,21 @@ import { VIEW_ICONS } from './icons.js';
 const htmlspecialchars = s =>
     s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
+// Group-head URL display (view-system absorption): the normalized key's
+// discriminating part usually sits in the tail path, where CSS
+// text-overflow would clip exactly that. Strip the scheme for display and
+// mid-truncate instead — head 55% + … + tail; the full key stays in title.
+export const midTruncate = (url, maxLen = 48) => {
+    if (!url)
+        return '';
+    const display = url.replace(/^https?:\/\//, '');
+    if (display.length <= maxLen)
+        return display;
+    const headLen = Math.floor(maxLen * 0.55);
+    const tailLen = maxLen - headLen - 1; // -1 for the ellipsis char
+    return display.slice(0, headLen) + '…' + display.slice(-tailLen);
+};
+
 const STRATEGIES = [
     ['keep-oldest', 'dupesStrategyOldest'],
     ['keep-newest', 'dupesStrategyNewest'],
@@ -254,7 +269,7 @@ export function initViewDupes(ctx = {}) {
         let html = `<li class="dupes-group" data-key="${key}">` +
             `<span class="group-head" tabindex="0" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
-            `<span class="dupes-key" dir="auto" title="${key}">${key}</span>` +
+            `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
             `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">×</button>` +
             '</span></li>';
