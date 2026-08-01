@@ -388,7 +388,7 @@
     "message": "নির্বাচিত ডিডুপ করুন ($count$)",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -431,10 +431,10 @@
     "message": "$groups$ নির্বাচিত গ্রুপ থেকে $count$টি সদৃশ বুকমার্ক মুছবেন?",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     }
   },
@@ -806,26 +806,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "থিম: সিস্টেম অনুসরণ করুন"
-  },
-  "paletteCmdThemeDark": {
-    "message": "থিম: গাঢ়"
-  },
-  "paletteCmdThemeInk": {
-    "message": "থিম: কালি (গাঢ়)"
-  },
-  "paletteCmdThemeLight": {
-    "message": "থিম: হালকা"
-  },
-  "paletteCmdThemePaper": {
-    "message": "থিম: কাগজ (হালকা)"
-  },
-  "paletteCmdToggleItemPath": {
-    "message": "প্যারেন্ট পাথ লেবেল টগল করুন"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "ট্যাব দৃশ্য টগল করুন"
+  },
+  "paletteCmdTheme": {
+    "message": "[TODO:paletteCmdTheme]"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "[TODO:paletteCmdThemeUsage]"
+  },
+  "paletteCustomTag": {
+    "message": "[TODO:paletteCustomTag]"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "[TODO:paletteCustomDeleteConfirm]"
+  },
+  "paletteCustomBroken": {
+    "message": "[TODO:paletteCustomBroken]"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "[TODO:paletteCmdSaveAsCommand]"
+  },
+  "paletteActionOpenUrl": {
+    "message": "[TODO:paletteActionOpenUrl]"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "[TODO:paletteActionOpenUrlGroup]"
+  },
+  "paletteActionViewPreset": {
+    "message": "[TODO:paletteActionViewPreset]"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "[TODO:paletteActionUrlTemplate]"
+  },
+  "optionsGroupPalette": {
+    "message": "[TODO:optionsGroupPalette]"
+  },
+  "paletteCustomHint": {
+    "message": "[TODO:paletteCustomHint]"
+  },
+  "paletteCustomAdd": {
+    "message": "[TODO:paletteCustomAdd]"
+  },
+  "paletteCustomUsage": {
+    "message": "[TODO:paletteCustomUsage]"
+  },
+  "paletteCustomSlash": {
+    "message": "[TODO:paletteCustomSlash]"
+  },
+  "paletteCustomAliases": {
+    "message": "[TODO:paletteCustomAliases]"
+  },
+  "paletteCustomAction": {
+    "message": "[TODO:paletteCustomAction]"
+  },
+  "paletteCustomUrl": {
+    "message": "[TODO:paletteCustomUrl]"
+  },
+  "paletteCustomTemplate": {
+    "message": "[TODO:paletteCustomTemplate]"
+  },
+  "paletteCustomWhere": {
+    "message": "[TODO:paletteCustomWhere]"
+  },
+  "paletteCustomFolder": {
+    "message": "[TODO:paletteCustomFolder]"
+  },
+  "paletteCustomView": {
+    "message": "[TODO:paletteCustomView]"
+  },
+  "paletteCustomStrategy": {
+    "message": "[TODO:paletteCustomStrategy]"
+  },
+  "paletteCustomScope": {
+    "message": "[TODO:paletteCustomScope]"
+  },
+  "paletteCustomScan": {
+    "message": "[TODO:paletteCustomScan]"
+  },
+  "paletteWhereCurrent": {
+    "message": "[TODO:paletteWhereCurrent]"
+  },
+  "paletteWhereTab": {
+    "message": "[TODO:paletteWhereTab]"
+  },
+  "paletteWhereWindow": {
+    "message": "[TODO:paletteWhereWindow]"
+  },
+  "paletteWhereBackground": {
+    "message": "[TODO:paletteWhereBackground]"
+  },
+  "paletteCustomSave": {
+    "message": "[TODO:paletteCustomSave]"
+  },
+  "paletteCustomErrSlash": {
+    "message": "[TODO:paletteCustomErrSlash]"
+  },
+  "paletteCustomErrAlias": {
+    "message": "[TODO:paletteCustomErrAlias]"
+  },
+  "paletteCustomErrTaken": {
+    "message": "[TODO:paletteCustomErrTaken]"
+  },
+  "paletteCustomErrUrl": {
+    "message": "[TODO:paletteCustomErrUrl]"
+  },
+  "paletteCustomErrFolder": {
+    "message": "[TODO:paletteCustomErrFolder]"
+  },
+  "paletteCustomErrView": {
+    "message": "[TODO:paletteCustomErrView]"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "[TODO:paletteCustomErrTemplate]"
+  },
+  "paletteCustomErrAction": {
+    "message": "[TODO:paletteCustomErrAction]"
+  },
+  "paletteCustomErrLimit": {
+    "message": "[TODO:paletteCustomErrLimit]"
+  },
+  "paletteCustomEmpty": {
+    "message": "[TODO:paletteCustomEmpty]"
   },
   "paletteNoResults": {
     "message": "কোনো মিল পাওয়া যায়নি"
@@ -968,7 +1070,7 @@
     "message": "$count$টি নির্বাচিত",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -980,6 +1082,21 @@
   },
   "selectModeExit": {
     "message": "নির্বাচন বন্ধ করুন"
+  },
+  "deadRiskBanner": {
+    "message": "[TODO:deadRiskBanner]"
+  },
+  "dupesRiskBanner": {
+    "message": "[TODO:dupesRiskBanner]"
+  },
+  "riskBannerHelp": {
+    "message": "[TODO:riskBannerHelp]"
+  },
+  "riskBannerNever": {
+    "message": "[TODO:riskBannerNever]"
+  },
+  "riskBannerDismiss": {
+    "message": "[TODO:riskBannerDismiss]"
   },
   "sessionEmpty": {
     "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"

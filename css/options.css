@@ -422,6 +422,7 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 .options-grid{
 	columns: 340px;
 	column-gap: 2em;
+	margin-top: 40px;
 }
 .options-group,
 .options-grid>fieldset{

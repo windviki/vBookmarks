@@ -208,7 +208,9 @@ export const startPausableScan = (items, opts = {}) => {
     }
     // The gate object scanBookmarks reads on every pump pass; `pump` is
     // wired back by the engine so resume() can restart dispatching.
-    const pauser = { paused: false, pump: null };
+    // opts.startPaused arms the gate BEFORE the first pump pass, so a
+    // paused-at-birth scan (SW cold-start resume) dispatches nothing.
+    const pauser = { paused: !!opts.startPaused, pump: null };
     const promise = scanBookmarks(items, { ...opts, signal: controller.signal, pauser });
     return {
         promise,

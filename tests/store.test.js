@@ -245,7 +245,8 @@ describe('store.js', () => {
             const sb = createSandbox();
             await sb.window.store.ready;
             expect(sb.window.store.syncKeys).toEqual([
-                'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval'
+                'showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
+                'paletteCustomCommands' // v4 task-4 #6: the palette's custom commands sync
             ]);
         });
 

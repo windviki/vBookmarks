@@ -227,10 +227,14 @@ export function initViewStats(ctx = {}) {
         // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
         // stops between the tab strip and the list rows (final polish).
         let html = '<div class="stats-toolbar vbm-toolbar">';
+        // v4 task-4 #1: the pressed state rides aria-pressed ONLY — a class
+        // named 'active' collides with context-menu.js's menu-open row marker
+        // (clearMenu strips body-wide .active on every click/focus, which ate
+        // the highlight right after the re-render).
         html += '<span class="seg" role="group">' +
-            `<button class="seg-btn${s === 'count' ? ' active' : ''}" data-sort="count" ` +
+            `<button class="seg-btn" data-sort="count" ` +
             `aria-pressed="${s === 'count'}">${_m('statsSortByCount')}</button>` +
-            `<button class="seg-btn${s === 'recent' ? ' active' : ''}" data-sort="recent" ` +
+            `<button class="seg-btn" data-sort="recent" ` +
             `aria-pressed="${s === 'recent'}">${_m('statsSortByRecent')}</button>` +
             '</span>';
         html += `<button class="stats-clear"${rows.length ? '' : ' disabled'}>${_m('statsClearData')}</button>`;

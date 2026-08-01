@@ -104,7 +104,34 @@ export function initKeyboard(ctx = {}) {
                         if (item.tagName === 'SELECT')
                             return;
                         e.preventDefault();
+                        // v4 task-4 #13: a view may stack several
+                        // .vbm-toolbar rows (the dead view's proxy strip
+                        // above its scan toolbar) — each is its own rung.
+                        // ↓/↑ enters the next/previous rung that has an
+                        // enabled control; past the ends, ↓ crosses into
+                        // the rows and ↑ out to the strip/box.
+                        const bars = this.querySelectorAll('.vbm-toolbar');
+                        let barIdx = -1;
+                        for (let i = 0, l = bars.length; i < l; i++)
+                            if (bars[i] === toolbar) {
+                                barIdx = i;
+                                break;
+                            }
+                        const firstEnabled = bar => {
+                            const cs = bar.querySelectorAll('button, select, input');
+                            for (let i = 0, l = cs.length; i < l; i++)
+                                if (!cs[i].disabled)
+                                    return cs[i];
+                            return null;
+                        };
                         if (keyValue === 'ArrowDown') {
+                            for (let i = barIdx + 1; i < bars.length; i++) {
+                                const c = firstEnabled(bars[i]);
+                                if (c) {
+                                    c.focus();
+                                    return;
+                                }
+                            }
                             // ↓ into the rows: the remembered row first (the
                             // same landing the strip's ↓ makes).
                             const target = this.querySelector('.focus')
@@ -112,7 +139,14 @@ export function initKeyboard(ctx = {}) {
                             if (target)
                                 target.focus();
                         } else {
-                            // ↑ out of the rung: the strip, else the box.
+                            for (let i = barIdx - 1; i >= 0; i--) {
+                                const c = firstEnabled(bars[i]);
+                                if (c) {
+                                    c.focus();
+                                    return;
+                                }
+                            }
+                            // ↑ out of the top rung: the strip, else the box.
                             views.focusTop();
                         }
                         return;
@@ -679,6 +713,18 @@ export function initKeyboard(ctx = {}) {
                 return;
             }
         }
+        // v4 task-4 #14: a visible risk banner (dead/dupes) sits at the same
+        // layer — dismissed with the session × semantics through its button.
+        const activeDef = views.activeDef ? views.activeDef() : null;
+        const riskBanner = activeDef && activeDef.container && activeDef.container.querySelector
+            ? activeDef.container.querySelector('.risk-banner') : null;
+        if (riskBanner) {
+            const dismiss = riskBanner.querySelector('.risk-banner-dismiss');
+            if (dismiss && dismiss.click) {
+                dismiss.click();
+                return;
+            }
+        }
         if (palette && palette.isOpen()) {
             palette.close();
             return;
@@ -827,6 +873,18 @@ export function initKeyboard(ctx = {}) {
         // cycle between the tab strip and the list rows — previously no
         // keyboard path reached them at all.
         const container = def && def.container;
+        // v4 task-4 #14: the risk banner (dead/dupes pre-use warning) joins
+        // at its visual spot — top of the view, right below the strip and
+        // before the toolbar rungs. A Tab stop, never an arrow rung (§7).
+        if (container && container.querySelectorAll) {
+            const bannerControls = container.querySelectorAll(
+                '.risk-banner button, .risk-banner a[href]');
+            for (let i = 0, l = bannerControls.length; i < l; i++) {
+                const c = bannerControls[i];
+                if (!c.disabled && tabVisible(c))
+                    stops.push(c);
+            }
+        }
         if (container && container.querySelectorAll) {
             const controls = container.querySelectorAll(
                 '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input');

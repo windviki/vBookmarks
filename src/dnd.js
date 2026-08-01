@@ -32,6 +32,8 @@
  * inject → insertAdjacentElement/appendChild, destroy → remove,
  * String.toInt → parseInt/parseFloat with a 0 fallback).
  */
+import { TREE_INDENT } from './tree-render.js';
+
 export function initDnd(ctx = {}) {
     const $tree = ctx.tree;
     const store = ctx.store;
@@ -386,7 +388,7 @@ export function initDnd(ctx = {}) {
                     }, () => {
                     const ul = elParent.querySelector('ul');
                     const level = parseInt(elParent.parentNode.dataset.level) + 1;
-                    draggedBookmark.style.webkitPaddingStart = `${16 * level}px`;
+                    draggedBookmark.style.webkitPaddingStart = `${TREE_INDENT * level}px`;
                     if (ul) {
                         // a stale "(Empty)" marker must not survive a real drop
                         const emptyRow = ul.querySelector(':scope > li.empty-folder');

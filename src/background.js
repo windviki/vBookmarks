@@ -2,6 +2,7 @@ import { rankBookmarks, xmlEncode, matcher } from './search-core.js';
 import { createSyncEngine } from './sync-engine.js';
 import { createVisitStatsCollector } from './visit-stats-sw.js';
 import { initPanelBehavior } from './panel-behavior.js';
+import { createDeadScanRunner } from './dead-scan-sw.js';
 
 // --- Sync status engine (P3.6) ---------------------------------------------
 // Computes bookmark sync status in the service worker and publishes it via
@@ -13,6 +14,11 @@ createSyncEngine().start();
 // Counts bookmark opens that never touch the popup (address bar, omnibox,
 // external links) into the same visitStats dataset the page side writes.
 createVisitStatsCollector().start();
+
+// --- Dead-scan SW runner (v4 task-4 #16) -----------------------------------
+// The scan outlives the popup here: pages send vbm-dead-scan-* messages and
+// mirror the published vbmDeadScan blob; a cold start resumes a live run.
+createDeadScanRunner().start();
 
 // --- Dead-scan proxy sweep (dead-proxy.js) ----------------------------------
 // The popup tears down its marker-PAC on every scan exit (settle/cancel/
@@ -110,24 +116,44 @@ if (chrome.proxy && chrome.proxy.settings && chrome.storage && chrome.storage.se
         }, 250));
 
         chrome.omnibox.onInputEntered.addListener((text, disposition) => {
-            if (!text || !firstResult) {
+            if (!text) {
                 resetSuggest();
                 return;
             }
-            const url = (text === omniboxValue) ? firstResult.url : text;
-            if (disposition === 'newForegroundTab' || disposition === 'newBackgroundTab') {
-                chrome.tabs.create({
-                    url: url,
-                    active: disposition === 'newForegroundTab'
+            const open = url => {
+                if (disposition === 'newForegroundTab' || disposition === 'newBackgroundTab') {
+                    chrome.tabs.create({
+                        url: url,
+                        active: disposition === 'newForegroundTab'
+                    });
+                    return;
+                }
+                chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+                    if (tabs[0]) {
+                        chrome.tabs.update(tabs[0].id, {
+                            url: url
+                        });
+                    }
                 });
+            };
+            // v4 task-4 #11: Enter on the typed text opens the top hit — but
+            // only while firstResult still belongs to THIS text. The suggest
+            // callback is debounced 250ms, so a fast typist can beat it;
+            // without the search fallback below the raw query went into
+            // tabs.update as if it were a URL and died silently.
+            if (text === omniboxValue && firstResult) {
+                open(firstResult.url);
                 return;
             }
-            chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-                if (tabs[0]) {
-                    chrome.tabs.update(tabs[0].id, {
-                        url: url
-                    });
-                }
+            // A picked suggestion row carries the bookmark URL as its text.
+            if (/^https?:\/\//i.test(text)) {
+                open(text);
+                return;
+            }
+            chrome.bookmarks.search(text, results => {
+                if (!results || !results.length)
+                    return;
+                open(rankBookmarks(text, results)[0].url);
             });
         });
     }

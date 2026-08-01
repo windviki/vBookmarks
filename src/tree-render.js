@@ -40,6 +40,14 @@ const htmlspecialchars = s =>
 // this module-local one.
 const httpsPattern = /^https?:\/\//i;
 
+// v4 task-4 #2: per-level tree indent, shared by every place that computes a
+// row's -webkit-padding-start (generateHTML here, actions.js add-node,
+// dnd.js drop fixup). 24px is the exact step that lands a child row's icon
+// left edge on its parent folder's TITLE left edge (icon starts after the
+// 16px twisty slot; text starts after twisty+icon+gap = 40px — 24 = 40-16).
+// Measured in the real popup by scripts/screenshots/diag/diag-v4t4.js.
+export const TREE_INDENT = 24;
+
 // v4 task-2 (docs/v4task-2.md §3.6): build the id → containing-folder path
 // map every list view shares for its row path labels. For each node the map
 // holds the titles of its ancestor folders (top-down, untitled folders
@@ -269,7 +277,7 @@ export function initTreeRender(ctx = {}) {
     const generateHTML = (data, level) => {
         if (!level)
             level = 0;
-        const paddingStart = 16 * level;
+        const paddingStart = TREE_INDENT * level;
         const group = (level === 0) ? 'tree' : 'group';
         // Phase 2b: an expanded folder with no children renders a muted
         // "(Empty)" row. It contains no focusable a/span element, so keyboard

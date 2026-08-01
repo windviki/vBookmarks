@@ -157,10 +157,10 @@
     "message": "从所选的 $groups$ 个重复组中删除 $count$ 条重复书签？",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     },
     "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups."
@@ -529,7 +529,7 @@
     "message": "已选 $count$ 项",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     },
     "description": "Selection mode (dead/dupes views): label with the current selection size."
@@ -545,6 +545,21 @@
   "selectModeExit": {
     "message": "退出选择",
     "description": "Selection mode (dead/dupes views): leave the mode."
+  },
+  "deadRiskBanner": {
+    "message": "死链清理会批量删除书签，首次清理前请先备份书签。"
+  },
+  "dupesRiskBanner": {
+    "message": "去重会批量删除重复书签，应用去重前请先备份书签。"
+  },
+  "riskBannerHelp": {
+    "message": "备份与恢复帮助"
+  },
+  "riskBannerNever": {
+    "message": "不再提示"
+  },
+  "riskBannerDismiss": {
+    "message": "关闭"
   },
   "sessionFolderName": {
     "message": "会话 $date$",
@@ -936,7 +951,7 @@
     "message": "去重所选（$count$）",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     },
     "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count."
@@ -1136,26 +1151,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "主题：跟随系统"
-  },
-  "paletteCmdThemeLight": {
-    "message": "主题：浅色"
-  },
-  "paletteCmdThemeDark": {
-    "message": "主题：深色"
-  },
-  "paletteCmdThemeInk": {
-    "message": "主题：Ink（深色）"
-  },
-  "paletteCmdThemePaper": {
-    "message": "主题：Paper（浅色）"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "切换视图标签栏显隐"
   },
-  "paletteCmdToggleItemPath": {
-    "message": "切换列表行路径标签显隐"
+  "paletteCmdTheme": {
+    "message": "切换主题…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "用法：/theme 加主题名——auto、light、dark、ink 或 paper（唯一前缀即可，如 /theme d）。"
+  },
+  "paletteCustomTag": {
+    "message": "自定义"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "删除指令「$1」？该改动会同步到你的所有设备。"
+  },
+  "paletteCustomBroken": {
+    "message": "指令「$1」指向的文件夹已不存在。是否删除该指令？"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "把「$1」存为指令…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "打开 URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "打开书签文件夹分组"
+  },
+  "paletteActionViewPreset": {
+    "message": "带预设打开视图"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "打开 URL 模板"
+  },
+  "optionsGroupPalette": {
+    "message": "命令面板"
+  },
+  "paletteCustomHint": {
+    "message": "命令面板（Ctrl/Cmd+K）的自定义 slash 指令。随设置跨设备同步，上限 100 条。"
+  },
+  "paletteCustomAdd": {
+    "message": "新增指令…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash 名（/ 之后的词）"
+  },
+  "paletteCustomAliases": {
+    "message": "别名（逗号分隔）"
+  },
+  "paletteCustomAction": {
+    "message": "动作"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL 模板——%s 会被替换为指令后输入的词"
+  },
+  "paletteCustomWhere": {
+    "message": "打开位置"
+  },
+  "paletteCustomFolder": {
+    "message": "书签文件夹"
+  },
+  "paletteCustomView": {
+    "message": "视图"
+  },
+  "paletteCustomStrategy": {
+    "message": "去重策略预设"
+  },
+  "paletteCustomScope": {
+    "message": "去重范围预设"
+  },
+  "paletteCustomScan": {
+    "message": "进入后立即开始扫描"
+  },
+  "paletteWhereCurrent": {
+    "message": "当前标签页"
+  },
+  "paletteWhereTab": {
+    "message": "新标签页"
+  },
+  "paletteWhereWindow": {
+    "message": "新窗口"
+  },
+  "paletteWhereBackground": {
+    "message": "后台标签页"
+  },
+  "paletteCustomSave": {
+    "message": "保存指令"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash 名：1–24 位小写字母、数字或连字符，且以字母或数字开头。"
+  },
+  "paletteCustomErrAlias": {
+    "message": "别名规则同 Slash 名（1–24 位小写字母、数字或连字符）。"
+  },
+  "paletteCustomErrTaken": {
+    "message": "该 Slash 名或别名已被占用。"
+  },
+  "paletteCustomErrUrl": {
+    "message": "只允许 http:// 或 https:// 的 URL。"
+  },
+  "paletteCustomErrFolder": {
+    "message": "请选择一个书签文件夹。"
+  },
+  "paletteCustomErrView": {
+    "message": "请选择视图。"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "模板必须且只能包含一个 %s。"
+  },
+  "paletteCustomErrAction": {
+    "message": "请选择动作类型。"
+  },
+  "paletteCustomErrLimit": {
+    "message": "指令已达上限（100 条）——请先删除一条。"
+  },
+  "paletteCustomEmpty": {
+    "message": "还没有自定义指令。"
   },
   "recentGroupToday": {
     "message": "今天"

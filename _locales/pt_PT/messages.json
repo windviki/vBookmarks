@@ -387,7 +387,7 @@
     "message": "Remover duplicados selecionados ($count$)",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -430,10 +430,10 @@
     "message": "Remover $count$ marcadores duplicados dos $groups$ grupos selecionados?",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     }
   },
@@ -803,26 +803,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "Tema: Seguir sistema"
-  },
-  "paletteCmdThemeDark": {
-    "message": "Tema: Escuro"
-  },
-  "paletteCmdThemeInk": {
-    "message": "Tema: Tinta (escuro)"
-  },
-  "paletteCmdThemeLight": {
-    "message": "Tema: Claro"
-  },
-  "paletteCmdThemePaper": {
-    "message": "Tema: Papel (claro)"
-  },
-  "paletteCmdToggleItemPath": {
-    "message": "Alternar etiquetas de caminho pai"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "Alternar separadores de vista"
+  },
+  "paletteCmdTheme": {
+    "message": "[TODO:paletteCmdTheme]"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "[TODO:paletteCmdThemeUsage]"
+  },
+  "paletteCustomTag": {
+    "message": "[TODO:paletteCustomTag]"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "[TODO:paletteCustomDeleteConfirm]"
+  },
+  "paletteCustomBroken": {
+    "message": "[TODO:paletteCustomBroken]"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "[TODO:paletteCmdSaveAsCommand]"
+  },
+  "paletteActionOpenUrl": {
+    "message": "[TODO:paletteActionOpenUrl]"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "[TODO:paletteActionOpenUrlGroup]"
+  },
+  "paletteActionViewPreset": {
+    "message": "[TODO:paletteActionViewPreset]"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "[TODO:paletteActionUrlTemplate]"
+  },
+  "optionsGroupPalette": {
+    "message": "[TODO:optionsGroupPalette]"
+  },
+  "paletteCustomHint": {
+    "message": "[TODO:paletteCustomHint]"
+  },
+  "paletteCustomAdd": {
+    "message": "[TODO:paletteCustomAdd]"
+  },
+  "paletteCustomUsage": {
+    "message": "[TODO:paletteCustomUsage]"
+  },
+  "paletteCustomSlash": {
+    "message": "[TODO:paletteCustomSlash]"
+  },
+  "paletteCustomAliases": {
+    "message": "[TODO:paletteCustomAliases]"
+  },
+  "paletteCustomAction": {
+    "message": "[TODO:paletteCustomAction]"
+  },
+  "paletteCustomUrl": {
+    "message": "[TODO:paletteCustomUrl]"
+  },
+  "paletteCustomTemplate": {
+    "message": "[TODO:paletteCustomTemplate]"
+  },
+  "paletteCustomWhere": {
+    "message": "[TODO:paletteCustomWhere]"
+  },
+  "paletteCustomFolder": {
+    "message": "[TODO:paletteCustomFolder]"
+  },
+  "paletteCustomView": {
+    "message": "[TODO:paletteCustomView]"
+  },
+  "paletteCustomStrategy": {
+    "message": "[TODO:paletteCustomStrategy]"
+  },
+  "paletteCustomScope": {
+    "message": "[TODO:paletteCustomScope]"
+  },
+  "paletteCustomScan": {
+    "message": "[TODO:paletteCustomScan]"
+  },
+  "paletteWhereCurrent": {
+    "message": "[TODO:paletteWhereCurrent]"
+  },
+  "paletteWhereTab": {
+    "message": "[TODO:paletteWhereTab]"
+  },
+  "paletteWhereWindow": {
+    "message": "[TODO:paletteWhereWindow]"
+  },
+  "paletteWhereBackground": {
+    "message": "[TODO:paletteWhereBackground]"
+  },
+  "paletteCustomSave": {
+    "message": "[TODO:paletteCustomSave]"
+  },
+  "paletteCustomErrSlash": {
+    "message": "[TODO:paletteCustomErrSlash]"
+  },
+  "paletteCustomErrAlias": {
+    "message": "[TODO:paletteCustomErrAlias]"
+  },
+  "paletteCustomErrTaken": {
+    "message": "[TODO:paletteCustomErrTaken]"
+  },
+  "paletteCustomErrUrl": {
+    "message": "[TODO:paletteCustomErrUrl]"
+  },
+  "paletteCustomErrFolder": {
+    "message": "[TODO:paletteCustomErrFolder]"
+  },
+  "paletteCustomErrView": {
+    "message": "[TODO:paletteCustomErrView]"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "[TODO:paletteCustomErrTemplate]"
+  },
+  "paletteCustomErrAction": {
+    "message": "[TODO:paletteCustomErrAction]"
+  },
+  "paletteCustomErrLimit": {
+    "message": "[TODO:paletteCustomErrLimit]"
+  },
+  "paletteCustomEmpty": {
+    "message": "[TODO:paletteCustomEmpty]"
   },
   "paletteNoResults": {
     "message": "Nenhum resultado correspondente"
@@ -964,7 +1066,7 @@
     "message": "$count$ selecionados",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -976,6 +1078,21 @@
   },
   "selectModeExit": {
     "message": "Sair da seleção"
+  },
+  "deadRiskBanner": {
+    "message": "[TODO:deadRiskBanner]"
+  },
+  "dupesRiskBanner": {
+    "message": "[TODO:dupesRiskBanner]"
+  },
+  "riskBannerHelp": {
+    "message": "[TODO:riskBannerHelp]"
+  },
+  "riskBannerNever": {
+    "message": "[TODO:riskBannerNever]"
+  },
+  "riskBannerDismiss": {
+    "message": "[TODO:riskBannerDismiss]"
   },
   "sessionEmpty": {
     "message": "Nenhum separador para guardar"

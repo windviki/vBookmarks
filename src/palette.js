@@ -15,11 +15,11 @@
  * v4 task-2 §3.5/§4.4 ("视图即命令"): the dupes/dead sub-modes are retired —
  * that cleanup UI now lives in the dupes/dead views (src/view-dupes.js /
  * src/view-dead.js) and the palette goes back to a single flat command list.
- * Every view is a Go command whose slash alias is the view id (execution =
- * close + views.activate(id)); every clickable command carries a slash name
- * plus alternate aliases (/add /new /folder /session /options — e.g.
- * the dupes view answers to /dupes /dups /dedup /clear). All forms match by
- * prefix and show as the row's muted suffix. The dupes/dead cleanup flows
+ * Every view is a Go command whose slash name is the view id (execution =
+ * close + views.activate(id)); every command carries a slash name plus at
+ * most one memorable alias (/add /new /folder /session /options — e.g. the
+ * dupes view answers to /dupes /dedup). All forms match by prefix and show
+ * as the row's muted suffix. The dupes/dead cleanup flows
  * (ConfirmDialog-guarded batch deletion, the in-popup scan) moved out with
  * the modes, which removes the "Escape has no nested back" wart the old
  * mode switch had. A plain (non-slash) query appends a bridge row —
@@ -28,13 +28,17 @@
  *
  * Round-4 (item 2): the /sep command is retired — a position-dependent
  * creation read as "added nowhere sensible" from an overlay panel; adding
- * separators stays in the tree's context menu (src/separators.js). In its
- * place the palette gains direct settings switches: five theme commands
- * whose canonical slash names share the '/theme' prefix ('/theme' lists all
- * five) with the bare theme name as alias ('/dark' executes directly), plus
- * two toggles ('/tabs' = showViewTabs, '/path' = showItemPath). The theme
- * commands mirror the options page's theme <select> exactly: write the
- * 'theme' setting and apply body[data-theme] at once.
+ * separators stays in the tree's context menu (src/separators.js).
+ *
+ * v4 task-4 #5 (alias cleanup): the command table converged on 13 entries —
+ * one slash name plus at most one memorable alias each (semantic, short).
+ * The themeauto…themepaper five-pack collapsed into a single parameterized
+ * '/theme <name>' (any unique prefix: '/theme d' = dark; a bare or ambiguous
+ * rest shows the usage alert). '/path' (itempath) confused more than it
+ * helped — the toggle lives on the options page only. The full reserved
+ * word list (every built-in slash + alias) is exported from
+ * src/palette-commands.js as PALETTE_RESERVED for the custom-command
+ * validation (v4 task-4 #6); palette.test.js pins the two in sync.
  *
  * P3.2's session-save command (slash name /session) stays: it snapshots
  * the current window's tabs into a new bookmark folder under
@@ -44,25 +48,30 @@
  * sessionEmpty alert and the panel stays open.
  *
  * initPalette(ctx) is called once by neat.js after treeView/actions init.
- * ctx.store        — settings store: the theme commands write 'theme', the
- *                    toggle commands flip 'showViewTabs'/'showItemPath'
+ * ctx.store        — settings store: the /theme command writes 'theme', the
+ *                    /tabs toggle flips 'showViewTabs'; the sync mirror holds
+ *                    the custom commands (paletteCustomCommands)
  * ctx.actions      — actions.js API (openBookmark/openBookmarkNewTab/
  *                    addNewBookmarkNode/deleteBookmark/deleteBookmarks/
  *                    editBookmarkFolder)
  * ctx.treeView     — tree-view.js API (revealFolder)
  * ctx.views        — view-manager.js API (activate) for the Go commands
- * ctx.search       — search.js API (run) for the /search words + bridge row
+ * ctx.search       — search.js API (run) for the /search words + bridge row;
+ *                    its record(q, n) logs palette-driven plain-query bookmark
+ *                    opens into the search history (v4 task-4 #3)
  * ctx.quickAdd     — neat.js's quickAddCurrentTab
  * ctx.rootFolderId — folder the create-style commands drop new nodes into
  *                    (neat.js passes store.get('quickAddFolderId', '1'))
- * ctx.dialogs      — dialogs.js API (AlertDialog), used by the session-save
- *                    alerts
- * ctx.onChanged    — re-pulls the bookmark tree into the tree view: after a
- *                    session save added a folder, and after the /path toggle
- *                    so rows repaint with the new showItemPath value
+ * ctx.dialogs      — dialogs.js API (AlertDialog/ConfirmDialog): the
+ *                    session-save alerts, the /theme usage alert and the
+ *                    custom-command delete confirm
+ * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
+ *                    session save added a folder
  *
- * Returns { open, close, isOpen }. neat.js wires the global-wake auto-open
- * (URL ?palette=1 / storage.session flag) on top of open().
+ * Returns { open, close, isOpen, customMenu }. neat.js wires the global-wake
+ * auto-open (URL ?palette=1 / storage.session flag) on top of open(); the
+ * customMenu pair (edit/remove) is context-menu.js's dispatch target for
+ * custom-command rows.
  *
  * chrome.bookmarks/tabs/runtime, chrome.i18n.getMessage, document and
  * window.VBMFuzzy remain page globals. No neatools helpers: getElementById/
@@ -72,6 +81,7 @@
 
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
 import { FOLDER_ICON } from './icons.js';
+import { loadCustomCommands, saveCustomCommands, sortCustoms, matchCustom, executeCustom, SLASH_RE } from './palette-commands.js';
 
 // neatools' String.prototype.htmlspecialchars as a pure function: escape
 // >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
@@ -91,6 +101,11 @@ export function initPalette(ctx = {}) {
     const onChanged = ctx.onChanged || (() => {});
     const rootFolderId = ctx.rootFolderId || '1';
     const clearMenu = ctx.clearMenu; // context-menu.js's clearMenu (Escape layering)
+    // v4 task-4 #3: a plain-query palette search that ends in a bookmark open
+    // is recorded into the search view's history (search.record) — it used to
+    // vanish with the panel, which read as "palette searches never reach the
+    // history". Optional so minimal test doubles keep working.
+    const recordSearch = (search && search.record) ? (q, n) => search.record(q, n) : () => {};
 
     const $palette = $('command-palette');
     const $input = $('palette-input');
@@ -113,6 +128,9 @@ export function initPalette(ctx = {}) {
     let index = [];          // flattened { id, title, url, dateAdded, isFolder }
     let rows = [];           // rendered rows: { kind, el, id, url, name, fn }
     let selected = -1;       // index into rows, -1 = nothing highlighted
+    let plainQuery = '';     // last rendered plain (non-slash) query
+    let plainHitCount = 0;   // bookmark+folder hit rows of that query
+    let customs = [];        // v4 task-4 #6: paletteCustomCommands, loaded per open
 
     // Flatten a bookmark tree: a node with children is a folder, everything
     // else a bookmark; the synthetic root ('0') is skipped.
@@ -191,8 +209,8 @@ export function initPalette(ctx = {}) {
     // views.activate). The search command and the bridge row close the panel
     // themselves before running — search.run() focuses the header input and
     // close()'s focus-handback would steal it afterwards.
-    // Every command also carries alternate slash names (`aliases`, item 8):
-    // '/dups', '/dedup' and '/clear' all land on the duplicates view, etc.
+    // Aliases follow v4 task-4 #5's cleanup: at most one memorable alias per
+    // command ('/dedup' lands on the duplicates view, '/home' on the tree).
     // All forms match by prefix and render as the row's muted suffix.
     const newBookmarkFromTab = () => {
         chrome.tabs.query({
@@ -217,27 +235,40 @@ export function initPalette(ctx = {}) {
         localStorage.setItem('theme', name);
         document.body.dataset.theme = name;
     };
-    // Both toggles flip a '1'/'' setting (default on). showViewTabs is
-    // applied the way view-manager.js applies it — the no-view-tabs body
-    // class; showItemPath is read at list-render time, so onChanged()
-    // repaints the tree with the new value.
+    // v4 task-4 #5: one parameterized /theme command replaced the
+    // themeauto…themepaper five-pack — '/theme dark' (any unique prefix)
+    // sets it; a bare, ambiguous or unknown rest shows the usage alert
+    // (keepOpen, so the panel survives the alert like /search does).
+    const THEMES = ['auto', 'light', 'dark', 'ink', 'paper'];
+    const themeFromRest = rest => {
+        const word = (rest || '').toLowerCase();
+        const hits = word ? THEMES.filter(t => t.indexOf(word) === 0) : [];
+        if (hits.length !== 1) {
+            dialogs.AlertDialog.open(_m('paletteCmdThemeUsage'));
+            return;
+        }
+        setTheme(hits[0])();
+        close();
+    };
+    // showViewTabs flips a '1'/'' setting (default on) and is applied the
+    // way view-manager.js applies it — the no-view-tabs body class.
     const toggleViewTabs = () => {
         const on = !store.get('showViewTabs', '1');
         store.set('showViewTabs', on ? '1' : '');
         document.body.classList.toggle('no-view-tabs', !on);
     };
-    const toggleItemPath = () => {
-        store.set('showItemPath', store.get('showItemPath', '1') ? '' : '1');
-        onChanged();
-    };
+    // v4 task-4 #5: the cleaned table — 13 commands, one slash name plus at
+    // most one memorable alias each. PALETTE_RESERVED (palette-commands.js)
+    // carries every slash + alias as custom-command reserved words; the two
+    // are pinned in sync by palette.test.js.
     const commands = [
-        { slash: 'add', aliases: ['quickadd', 'star'], name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
-        { slash: 'new', aliases: ['bookmark', 'bm'], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
-        { slash: 'folder', aliases: ['newfolder', 'mkdir'], name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
-        { slash: 'session', aliases: ['save', 'snapshot'], keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
-        { slash: 'tree', aliases: ['home', 'main'], name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
+        { slash: 'add', aliases: ['star'], name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
+        { slash: 'new', aliases: [], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
+        { slash: 'folder', aliases: ['mkdir'], name: () => _m('paletteCmdNewFolder'), fn: () => actions.addNewBookmarkNode(rootFolderId, 'bottom', '', '') },
+        { slash: 'session', aliases: ['save'], keepOpen: true, name: () => _m('paletteCmdSaveSession'), fn: saveWindowSession },
+        { slash: 'tree', aliases: ['home'], name: () => _m('paletteCmdGoTree'), fn: goView('tree') },
         {
-            slash: 'search', aliases: ['find', 'query'], keepOpen: true, name: () => _m('paletteCmdGoSearch'),
+            slash: 'search', aliases: ['find'], keepOpen: true, name: () => _m('paletteCmdGoSearch'),
             fn: rest => {
                 close();
                 if (rest)
@@ -246,21 +277,51 @@ export function initPalette(ctx = {}) {
                     views.activate('search');
             }
         },
-        { slash: 'recent', aliases: ['latest', 'newest'], name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
-        { slash: 'stats', aliases: ['visits', 'statistics'], name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
-        { slash: 'dead', aliases: ['broken', 'scan'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
-        { slash: 'dupes', aliases: ['dups', 'dedup', 'clear'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
-        { slash: 'themeauto', aliases: ['auto'], name: () => _m('paletteCmdThemeAuto'), fn: setTheme('auto') },
-        { slash: 'themelight', aliases: ['light'], name: () => _m('paletteCmdThemeLight'), fn: setTheme('light') },
-        { slash: 'themedark', aliases: ['dark'], name: () => _m('paletteCmdThemeDark'), fn: setTheme('dark') },
-        { slash: 'themeink', aliases: ['ink'], name: () => _m('paletteCmdThemeInk'), fn: setTheme('ink') },
-        { slash: 'themepaper', aliases: ['paper'], name: () => _m('paletteCmdThemePaper'), fn: setTheme('paper') },
-        { slash: 'tabs', aliases: ['viewtabs'], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
-        { slash: 'path', aliases: ['itempath'], name: () => _m('paletteCmdToggleItemPath'), fn: toggleItemPath },
-        { slash: 'options', aliases: ['settings', 'prefs'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
+        { slash: 'recent', aliases: ['latest'], name: () => _m('paletteCmdGoRecent'), fn: goView('recent') },
+        { slash: 'stats', aliases: ['visits'], name: () => _m('paletteCmdGoStats'), fn: goView('stats') },
+        { slash: 'dead', aliases: ['broken'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
+        { slash: 'dupes', aliases: ['dedup'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
+        { slash: 'theme', aliases: [], keepOpen: true, name: () => _m('paletteCmdTheme'), fn: themeFromRest },
+        { slash: 'tabs', aliases: [], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
+        { slash: 'options', aliases: ['settings'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
     // All slash forms of a command — the canonical name plus its aliases.
     const slashNames = cmd => [cmd.slash].concat(cmd.aliases || []);
+
+    // --- Custom commands (v4 task-4 #6, docs/palette-commands-design.md) -----
+    // User-defined entries of paletteCustomCommands merge into the command
+    // area. The management UI lives on the options page; the palette hands
+    // over through the options URL hash (create prefill / edit by id).
+    const openCustomEditor = prefill => {
+        const hash = `#palette-cmd=${encodeURIComponent(JSON.stringify(prefill))}`;
+        chrome.tabs.create({ url: chrome.runtime.getURL('pages/options.html') + hash });
+    };
+    const customDeps = {
+        store, actions, views, dialogs, _m,
+        onChanged: () => {
+            customs = loadCustomCommands(store);
+        }
+    };
+    // Context-menu entries (→ or right-click on a custom row): edit rides
+    // the options-page editor, delete asks once (it syncs to every device).
+    const editCustom = id => openCustomEditor({ edit: id });
+    const removeCustom = id => {
+        const list = loadCustomCommands(store);
+        const cmd = list.find(c => c.id === id);
+        if (!cmd)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('paletteCustomDeleteConfirm', cmd.name),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                saveCustomCommands(store, list.filter(c => c.id !== id));
+                customs = loadCustomCommands(store);
+                if (openState)
+                    render();
+            }
+        });
+    };
 
     // --- Rendering ------------------------------------------------------------
     const faviconUrl = url =>
@@ -268,7 +329,7 @@ export function initPalette(ctx = {}) {
 
     const addRow = row => {
         const li = document.createElement('li');
-        li.className = `palette-row palette-${row.kind}`;
+        li.className = `palette-row palette-${row.kind}${row.custom ? ' palette-command-custom' : ''}`;
         // Bookmark/folder rows carry <a> tags and results-item-${id} IDs so the
         // existing context-menu.js handler (which walks up to nearest a/span and
         // strips the results-item- prefix) can open bookmark/folder context menus
@@ -276,6 +337,12 @@ export function initPalette(ctx = {}) {
         if (row.kind === 'command') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>` +
                 (row.slash ? `<span class="palette-slash">${row.slash}</span>` : '');
+            // v4 task-4 #6: custom commands carry the "custom" tag and their
+            // id (the → / right-click context menu's edit/delete act on it).
+            if (row.custom) {
+                li.dataset.ccId = row.custom.id;
+                li.innerHTML += `<span class="palette-custom-tag">${_m('paletteCustomTag')}</span>`;
+            }
         } else if (row.kind === 'folder') {
             li.id = row.id ? `results-item-${row.id}` : '';
             li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${htmlspecialchars(row.title)}</i></a>`;
@@ -328,6 +395,10 @@ export function initPalette(ctx = {}) {
         // ('/search foo' → 'foo', §4.4).
         const slashWord = slashMode ? q.split(/\s+/)[0] : '';
         const slashRest = slashMode ? q.slice(slashWord.length).trim() : '';
+        // v4 task-4 #3: remember the plain query + its hit count so executing
+        // a bookmark row can record the search (slash/command rows never do).
+        plainQuery = slashMode ? '' : q;
+        plainHitCount = 0;
         // Commands: all on an empty query, fuzzy-filtered otherwise. A '/'
         // prefix restricts the panel to commands (omni-style slash frame).
         for (let i = 0, l = commands.length; i < l; i++) {
@@ -342,8 +413,26 @@ export function initPalette(ctx = {}) {
                     keepOpen: !!cmd.keepOpen
                 });
         }
+        // v4 task-4 #6: custom commands merge into the command area right
+        // after the built-ins (those keep their table order — muscle memory);
+        // customs order among themselves by usage (sortCustoms). Slash mode
+        // prefix-matches their slash/aliases, plain mode fuzzy-matches the
+        // display name, and the slash rest rides along as the parameter.
+        for (const cmd of sortCustoms(customs)) {
+            const hit = slashMode
+                ? matchCustom(cmd, slashWord)
+                : (!q || window.VBMFuzzy.score(q, cmd.name));
+            if (!hit)
+                continue;
+            addRow({
+                kind: 'command', name: cmd.name, custom: cmd,
+                slash: slashNames(cmd).map(s => `/${s}`).join(' '),
+                fn: () => executeCustom(cmd, slashRest, customDeps)
+            });
+        }
         if (!slashMode && q) {
             const hits = window.VBMFuzzy.rank(q, index).slice(0, 50);
+            plainHitCount = hits.length;
             for (let i = 0, l = hits.length; i < l; i++) {
                 const hit = hits[i];
                 addRow(hit.isFolder ?
@@ -363,7 +452,28 @@ export function initPalette(ctx = {}) {
                 },
                 keepOpen: true
             });
+            // v4 task-4 #6: a hitless plain query also offers to become a
+            // custom command — the "查不到" → "可定义" closure (design §6).
+            // A slash-conformant query prefills the slash field, anything
+            // else just carries the name.
+            if (!plainHitCount)
+                addRow({
+                    kind: 'command',
+                    name: _m('paletteCmdSaveAsCommand', q),
+                    fn: () => openCustomEditor({
+                        name: q,
+                        slash: SLASH_RE.test(q.toLowerCase()) ? q.toLowerCase() : ''
+                    })
+                });
         }
+        // Slash mode with zero matching commands offers the same closure —
+        // here the word is the future slash by construction.
+        if (slashMode && slashWord && !rows.length && SLASH_RE.test(slashWord))
+            addRow({
+                kind: 'command',
+                name: _m('paletteCmdSaveAsCommand', `/${slashWord}`),
+                fn: () => openCustomEditor({ slash: slashWord })
+            });
         if (!rows.length) {
             const li = document.createElement('li');
             li.className = 'palette-empty';
@@ -389,13 +499,19 @@ export function initPalette(ctx = {}) {
                 return;
         } else if (row.kind === 'folder') {
             treeView.revealFolder(row.id);
-        } else if (newTab) {
-            actions.openBookmarkNewTab(row.url, true);
-        } else if (leftClickNewTab) {
-            // 遵从 options 里 tree 视图的单击设置：新标签页后台打开
-            actions.openBookmarkNewTab(row.url, true, true);
         } else {
-            actions.openBookmark(row.url);
+            // v4 task-4 #3: opening a bookmark off a plain query = a finished
+            // search — record it (the search view's own folder-jump contract
+            // stays: folder rows above never record).
+            recordSearch(plainQuery, plainHitCount);
+            if (newTab) {
+                actions.openBookmarkNewTab(row.url, true);
+            } else if (leftClickNewTab) {
+                // 遵从 options 里 tree 视图的单击设置：新标签页后台打开
+                actions.openBookmarkNewTab(row.url, true, true);
+            } else {
+                actions.openBookmark(row.url);
+            }
         }
         close();
     };
@@ -561,6 +677,7 @@ export function initPalette(ctx = {}) {
         $palette.classList.remove('has-query'); // fresh panel: no query, no ×
         $input.value = '';
         $input.placeholder = _m('palettePlaceholder');
+        customs = loadCustomCommands(store); // v4 task-4 #6: sync-mirror read
         rebuildIndex(); // async; re-renders when the fresh index lands
         render();       // paint the command rows immediately
         $input.focus();
@@ -621,5 +738,10 @@ export function initPalette(ctx = {}) {
             open();
     }, true);
 
-    return { open, close, isOpen };
+    return {
+        open, close, isOpen,
+        // v4 task-4 #6: context-menu.js dispatches the custom-command row
+        // menu (edit / delete) through here (lazy getter on its ctx).
+        customMenu: { edit: editCustom, remove: removeCustom }
+    };
 }

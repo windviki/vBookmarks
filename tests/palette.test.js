@@ -42,12 +42,14 @@ const fire = (el, type, ev) => {
 
 let initPalette;
 let VBMFuzzy;
+let PALETTE_RESERVED;
 
 beforeAll(async () => {
     globalThis.window = globalThis; // fuzzy.js is a classic script: window = page global
     await import('../src/fuzzy.js');
     VBMFuzzy = globalThis.VBMFuzzy;
     ({ initPalette } = await import('../src/palette.js'));
+    ({ PALETTE_RESERVED } = await import('../src/palette-commands.js'));
 });
 
 afterAll(() => {
@@ -70,15 +72,17 @@ const MSGS = {
     paletteCmdGoStats: 'Go to Stats view',
     paletteCmdGoDead: 'Go to Dead links view',
     paletteCmdGoDupes: 'Go to Duplicates view',
-    paletteCmdThemeAuto: 'Theme: Follow system',
-    paletteCmdThemeLight: 'Theme: Light',
-    paletteCmdThemeDark: 'Theme: Dark',
-    paletteCmdThemeInk: 'Theme: Ink (dark)',
-    paletteCmdThemePaper: 'Theme: Paper (light)',
+    paletteCmdTheme: 'Set theme…',
+    paletteCmdThemeUsage: 'Usage: /theme auto|light|dark|ink|paper',
     paletteCmdToggleViewTabs: 'Toggle view tabs',
-    paletteCmdToggleItemPath: 'Toggle parent path labels',
     paletteCmdOptions: 'Open options page',
     paletteCmdSearchInView: "Search '$1' in Search view",
+    paletteCmdSaveAsCommand: "Save '$1' as a custom command",
+    paletteCustomTag: 'custom',
+    paletteCustomDeleteConfirm: "Delete the custom command '$1'? It syncs to every device.",
+    paletteCustomBroken: "The bookmark folder of '$1' no longer exists. Delete the command?",
+    delete: 'Delete',
+    nope: 'Nope',
     sessionFolderName: 'Session $date$',
     sessionSaved: 'Saved $1 tabs to a new folder',
     sessionEmpty: 'No tabs to save',
@@ -86,19 +90,18 @@ const MSGS = {
     paletteNoResults: 'No matching results'
 };
 
-// The full command table in order (v4 task-2 §3.5 + round-4 item 2):
-// create-style commands, session, one Go command per registered view, the
-// five theme commands and the two settings toggles, /options last. The
-// retired /sep command is gone from the table (round-4 item 2) but its
-// message stays in MSGS so the absence test can assert against it.
+// The full command table in order (v4 task-4 #5's cleanup — 13 entries, one
+// slash name plus at most one alias each): create-style commands, session,
+// one Go command per registered view, the parameterized /theme, the /tabs
+// toggle, /options last. The retired /sep (round-4 item 2) and the retired
+// five theme commands + /path (v4 task-4 #5) are gone from the table; the
+// /sep message stays in MSGS so the absence test can assert against it.
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
     MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
     MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
-    MSGS.paletteCmdThemeAuto, MSGS.paletteCmdThemeLight, MSGS.paletteCmdThemeDark,
-    MSGS.paletteCmdThemeInk, MSGS.paletteCmdThemePaper,
-    MSGS.paletteCmdToggleViewTabs, MSGS.paletteCmdToggleItemPath,
+    MSGS.paletteCmdTheme, MSGS.paletteCmdToggleViewTabs,
     MSGS.paletteCmdOptions
 ];
 
@@ -249,6 +252,7 @@ const setup = (opts = {}) => {
         bookmarks: {
             getTreeCalls: 0,
             createCalls: [],
+            getChildrenCalls: [],
             getTree(cb) {
                 this.getTreeCalls++;
                 cb(treeData);
@@ -256,19 +260,40 @@ const setup = (opts = {}) => {
             create(props, cb) {
                 this.createCalls.push(props);
                 cb({ id: `n${this.createCalls.length}`, ...props });
+            },
+            // v4 task-4 #6: open-url-group custom commands list a folder's
+            // children; an id missing from opts.children reports lastError
+            // (the gone-folder path, design §8).
+            getChildren(id, cb) {
+                this.getChildrenCalls.push(id);
+                const kids = (opts.children || {})[id];
+                if (!kids) {
+                    chromeStub.runtime.lastError = { message: "Can't find folder" };
+                    cb(undefined);
+                } else {
+                    chromeStub.runtime.lastError = null;
+                    cb(kids);
+                }
             }
         },
         tabs: {
             queryCalls: [],
+            createCalls: [],
             query(q, cb) {
                 this.queryCalls.push(q);
                 // opts.tabs (array) serves the multi-tab session flow;
                 // opts.tab keeps the single-active-tab command working.
                 cb('tabs' in opts ? opts.tabs : (tab ? [tab] : []));
+            },
+            // v4 task-4 #6: the custom-command hand-off opens the options
+            // page in a new tab (create prefill / edit by id via the hash).
+            create(props) {
+                this.createCalls.push(props);
             }
         },
         windows: { WINDOW_ID_CURRENT: -1 },
         runtime: {
+            lastError: null,
             getURL: p => `chrome-extension://test${p}`,
             openOptionsPageCalls: 0,
             openOptionsPage() {
@@ -289,18 +314,30 @@ const setup = (opts = {}) => {
     const storeData = { ...(opts.storeSeed || {}) };
     const store = {
         setCalls: [],
+        syncSetCalls: [],
         get(key, defaultValue) {
             return key in storeData ? storeData[key] : defaultValue;
         },
         set(key, value) {
             storeData[key] = value;
             this.setCalls.push([key, value]);
+        },
+        // v4 task-4 #6: paletteCustomCommands lives in the sync mirror.
+        getSyncSetting(key, defaultValue) {
+            return key in storeData ? storeData[key] : defaultValue;
+        },
+        setSyncSetting(key, value) {
+            storeData[key] = String(value);
+            this.syncSetCalls.push([key, value]);
         }
     };
 
     const actions = {
         openBookmarkCalls: [],
         openBookmarkNewTabCalls: [],
+        openBookmarkNewWindowCalls: [],
+        openBookmarksCalls: [],
+        openBookmarksNewWindowCalls: [],
         addNewBookmarkNodeCalls: [],
         addSeparatorCalls: [],
         deleteBookmarkCalls: [],
@@ -309,6 +346,15 @@ const setup = (opts = {}) => {
         },
         openBookmarkNewTab(url, selected) {
             this.openBookmarkNewTabCalls.push([url, selected]);
+        },
+        openBookmarkNewWindow(url) {
+            this.openBookmarkNewWindowCalls.push(url);
+        },
+        openBookmarks(urls, selected) {
+            this.openBookmarksCalls.push([urls, selected]);
+        },
+        openBookmarksNewWindow(urls) {
+            this.openBookmarksNewWindowCalls.push(urls);
         },
         addNewBookmarkNode(nodeId, where, url, title) {
             this.addNewBookmarkNodeCalls.push([nodeId, where, url, title]);
@@ -338,8 +384,13 @@ const setup = (opts = {}) => {
     };
     const search = {
         runCalls: [],
+        recordCalls: [],
         run(q) {
             this.runCalls.push(q);
+        },
+        // v4 task-4 #3: palette-driven plain-query bookmark opens record here
+        record(q, n) {
+            this.recordCalls.push([q, n]);
         }
     };
     const quickAddCalls = [];
@@ -348,6 +399,14 @@ const setup = (opts = {}) => {
             openCalls: [],
             open(msg) {
                 this.openCalls.push(msg);
+            }
+        },
+        // v4 task-4 #6: the custom-command delete confirm + the gone-folder
+        // prompt record their config; tests invoke cfg.fn1() to confirm.
+        ConfirmDialog: {
+            openCalls: [],
+            open(cfg) {
+                this.openCalls.push(cfg);
             }
         }
     };
@@ -385,9 +444,9 @@ const setup = (opts = {}) => {
 };
 
 describe('module API + open/close state machine', () => {
-    it('returns { open, close, isOpen } and starts closed', () => {
+    it('returns { open, close, isOpen, customMenu } and starts closed', () => {
         const { palette, paletteEl } = setup({});
-        expect(Object.keys(palette).sort()).toEqual(['close', 'isOpen', 'open']);
+        expect(Object.keys(palette).sort()).toEqual(['close', 'customMenu', 'isOpen', 'open']);
         expect(palette.isOpen()).toBe(false);
         expect(paletteEl.hidden).toBe(true);
     });
@@ -637,19 +696,30 @@ describe('result composition', () => {
         expect(folderRow._innerHTML).not.toContain('Other bookmarks');
     });
 
-    it('a plain query never renders the no-results row: the bridge row is the fallback', () => {
+    it('a hitless plain query ends with the bridge row + the save-as-command closure (v4 task-4 #6)', () => {
         const { palette, results, type } = setup({});
         palette.open();
         type('zzzz');
-        expect(results._appended).toHaveLength(1);
+        expect(results._appended).toHaveLength(2);
         expect(results._appended[0].className).toBe('palette-row palette-command');
         expect(results._appended[0]._innerHTML).toContain("Search 'zzzz' in Search view");
+        expect(results._appended[1].className).toBe('palette-row palette-command');
+        expect(results._appended[1]._innerHTML).toContain("Save 'zzzz' as a custom command");
     });
 
-    it('a slash query with no matching command renders the no-results row', () => {
+    it('a slash query with no matching command offers the save-as-command closure', () => {
         const { palette, results, type } = setup({});
         palette.open();
         type('/zzzz');
+        expect(results._appended).toHaveLength(1);
+        expect(results._appended[0].className).toBe('palette-row palette-command');
+        expect(results._appended[0]._innerHTML).toContain("Save '/zzzz' as a custom command");
+    });
+
+    it('a slash word that cannot be a command name still renders the no-results row', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/?'); // '?' fails the slash-name pattern — nothing to save
         expect(results._appended).toHaveLength(1);
         expect(results._appended[0].className).toBe('palette-empty');
         expect(results._appended[0].textContent).toBe(MSGS.paletteNoResults);
@@ -849,13 +919,16 @@ describe('execution', () => {
         expect(ev.defaultPrevented).toBe(true);
     });
 
-    it('Enter on a slash query with no matching command does nothing', () => {
-        const { palette, input, actions, keydown, type } = setup({});
+    it('Enter on the save-as-command row hands over to the options editor with the slash prefilled', () => {
+        const { palette, input, chrome, keydown, type } = setup({});
         palette.open();
         type('/zzzz');
         keydown(input, { key: 'Enter' });
-        expect(actions.openBookmarkCalls).toEqual([]);
-        expect(palette.isOpen()).toBe(true); // still open
+        expect(chrome.tabs.createCalls).toHaveLength(1);
+        const url = chrome.tabs.createCalls[0].url;
+        expect(url).toContain('pages/options.html#palette-cmd=');
+        expect(JSON.parse(decodeURIComponent(url.split('#palette-cmd=')[1]))).toEqual({ slash: 'zzzz' });
+        expect(palette.isOpen()).toBe(false); // the panel closes behind the hand-off
     });
 
     it('Escape closes the palette, eating and stopping the event', () => {
@@ -999,16 +1072,25 @@ describe('view Go commands (v4 task-2 §3.5)', () => {
     });
 });
 
-describe('command aliases (item 8)', () => {
-    it('/dups, /dedup and /clear all land on the duplicates view', () => {
-        for (const alias of ['/dups', '/dedup', '/clear']) {
-            const ctx = setup({});
-            ctx.palette.open();
-            ctx.type(alias);
-            ctx.keydown(ctx.input, { key: 'Enter' });
-            expect(ctx.views.activateCalls, `${alias} activates dupes`).toEqual(['dupes']);
-            expect(ctx.palette.isOpen()).toBe(false);
-        }
+describe('command aliases (v4 task-4 #5 cleanup)', () => {
+    it('/dedup lands on the duplicates view (the surviving alias)', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/dedup');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.views.activateCalls).toEqual(['dupes']);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('the retired /clear alias matches nothing — the save-as closure appears instead', () => {
+        // ('/dups' still resolves, but only because "dups" is a prefix of the
+        // canonical "dupes" — no alias carries it anymore.)
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/clear');
+        expect(results._appended).toHaveLength(1);
+        expect(results._appended[0]._innerHTML).toContain("Save '/clear' as a custom command");
+        palette.close();
     });
 
     it('aliases match by prefix too (/ded already hits /dedup)', () => {
@@ -1022,15 +1104,15 @@ describe('command aliases (item 8)', () => {
 
     it('create-style and view commands both answer to their alternates', () => {
         const cases = [
-            ['/quickadd', MSGS.paletteCmdQuickAdd],
-            ['/bm', MSGS.paletteCmdNewBookmark],
+            ['/star', MSGS.paletteCmdQuickAdd],
             ['/mkdir', MSGS.paletteCmdNewFolder],
-            ['/snapshot', MSGS.paletteCmdSaveSession],
+            ['/save', MSGS.paletteCmdSaveSession],
             ['/home', MSGS.paletteCmdGoTree],
             ['/find', MSGS.paletteCmdGoSearch],
             ['/latest', MSGS.paletteCmdGoRecent],
-            ['/statistics', MSGS.paletteCmdGoStats],
+            ['/visits', MSGS.paletteCmdGoStats],
             ['/broken', MSGS.paletteCmdGoDead],
+            ['/dedup', MSGS.paletteCmdGoDupes],
             ['/settings', MSGS.paletteCmdOptions]
         ];
         for (const [alias, msg] of cases) {
@@ -1049,7 +1131,7 @@ describe('command aliases (item 8)', () => {
         type('/dupes');
         const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdGoDupes));
         expect(row._innerHTML).toContain('class="palette-slash"');
-        expect(row._innerHTML).toContain('/dupes /dups /dedup /clear');
+        expect(row._innerHTML).toContain('/dupes /dedup');
         palette.close();
     });
 
@@ -1058,7 +1140,7 @@ describe('command aliases (item 8)', () => {
         palette.open();
         type('/dedup');
         const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdGoDupes));
-        expect(row._innerHTML).toContain('/dupes /dups /dedup /clear');
+        expect(row._innerHTML).toContain('/dupes /dedup');
         palette.close();
     });
 });
@@ -1077,9 +1159,10 @@ describe('search-view bridge row (v4 task-2 §4.4)', () => {
         const { palette, results, type } = setup({});
         palette.open();
         type('<b>');
-        const last = results._appended[results._appended.length - 1];
-        expect(last._innerHTML).toContain('&lt;b&gt;');
-        expect(last._innerHTML).not.toContain('<b>');
+        // row 0 = the bridge row (a hitless query appends save-as after it)
+        const bridge = results._appended[0];
+        expect(bridge._innerHTML).toContain('&lt;b&gt;');
+        expect(bridge._innerHTML).not.toContain('<b>');
     });
 
     it('executing the bridge row closes the panel and runs the search view query', () => {
@@ -1099,6 +1182,62 @@ describe('search-view bridge row (v4 task-2 §4.4)', () => {
         expect(results._appended.every(li => !li._innerHTML.includes('Search \''))).toBe(true);
         type('/gmail');
         expect(results._appended.every(li => !li._innerHTML.includes('Search \''))).toBe(true);
+    });
+});
+
+// v4 task-4 #3: a plain-query palette search that opens a bookmark records
+// the query into the search history (search.record) — it used to vanish with
+// the panel. Folder jumps and command runs mirror the search view's own
+// timings and never record from the palette.
+describe('plain-query search recording (v4 task-4 #3)', () => {
+    it('opening a bookmark hit records the query with its hit count', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('gmail'); // two bookmark hits + bridge row
+        ctx.keydown(ctx.input, { key: 'ArrowDown' }); // select the first hit
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.actions.openBookmarkCalls).toEqual(['https://mail.google.com/']);
+        expect(ctx.search.recordCalls).toEqual([['gmail', 2]]);
+        expect(ctx.palette.isOpen()).toBe(false);
+    });
+
+    it('Ctrl+Enter on a hit records too (new-tab open is still a finished search)', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('gmail');
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'Enter', ctrlKey: true });
+        expect(ctx.search.recordCalls).toEqual([['gmail', 2]]);
+    });
+
+    it('folder jumps never record (the search view quits without recording too)', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('bookmarks bar');
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.treeView.revealFolderCalls).toHaveLength(1);
+        expect(ctx.search.recordCalls).toEqual([]);
+    });
+
+    it('command rows and the bridge row never record from the palette', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('gmail');
+        ctx.keydown(ctx.input, { key: 'ArrowUp' }); // bridge row
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.search.runCalls).toEqual(['gmail']);
+        expect(ctx.search.recordCalls).toEqual([]);
+    });
+
+    it('slash-mode executions have no plain query to record', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/dead');
+        ctx.keydown(ctx.input, { key: 'ArrowDown' });
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.views.activateCalls).toEqual(['dead']);
+        expect(ctx.search.recordCalls).toEqual([]);
     });
 });
 
@@ -1206,91 +1345,87 @@ describe('session save command (P3.2)', () => {
     });
 });
 
-// --- Round-4 item 2: theme commands + settings toggles ----------------------
-// The theme commands mirror the options page's theme <select>: store.set +
-// the localStorage pre-fill copy + an immediate body[data-theme] apply. The
-// toggles flip a '1'/'' setting and re-apply it (body class / tree repaint).
-// Command rows are clicked by their i18n name rather than Entered — other
-// command names fuzzy-match these queries too ('/tabs' also scores "Save
-// window tabs as folder"), and table order decides the Enter row.
+// --- v4 task-4 #5: the parameterized /theme command -------------------------
+// One '/theme <name>' command replaced the round-4 themeauto…themepaper
+// five-pack: the rest words pick the theme by unique prefix ('/theme d' =
+// dark); a bare or unknown rest shows the usage alert (keepOpen, so the
+// panel survives it like /search does). A resolved theme mirrors the options
+// page's theme <select>: store.set + the localStorage pre-fill copy + an
+// immediate body[data-theme] apply, then closes the panel itself.
+describe('the parameterized /theme command (v4 task-4 #5)', () => {
+    it("'/theme dark' writes the store, the localStorage copy and body[data-theme]", () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/theme dark');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
+        expect(ctx.storageData.theme).toBe('dark');
+        expect(ctx.body.dataset.theme).toBe('dark');
+        expect(ctx.palette.isOpen()).toBe(false); // a resolved theme closes the panel
+    });
+
+    it('every theme resolves from any unique prefix of its name', () => {
+        const cases = [
+            ['auto', 'a'], ['light', 'l'], ['dark', 'd'], ['ink', 'i'], ['paper', 'p']
+        ];
+        for (const [theme, prefix] of cases) {
+            const ctx = setup({});
+            ctx.palette.open();
+            ctx.type(`/theme ${prefix}`);
+            ctx.keydown(ctx.input, { key: 'Enter' });
+            expect(ctx.store.setCalls, theme).toEqual([['theme', theme]]);
+            expect(ctx.body.dataset.theme, theme).toBe(theme);
+        }
+    });
+
+    it('a bare /theme shows the usage alert and keeps the panel open', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/theme');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual([MSGS.paletteCmdThemeUsage]);
+        expect(ctx.store.setCalls).toEqual([]);
+        expect(ctx.palette.isOpen()).toBe(true); // keepOpen across the alert
+    });
+
+    it('an unknown theme rest shows the usage alert too', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/theme neon');
+        ctx.keydown(ctx.input, { key: 'Enter' });
+        expect(ctx.dialogs.AlertDialog.openCalls).toEqual([MSGS.paletteCmdThemeUsage]);
+        expect(ctx.store.setCalls).toEqual([]);
+    });
+
+    it('the retired five-pack (/themedark & co.) no longer matches any command', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('/themedark');
+        expect(ctx.results._appended).toHaveLength(1);
+        expect(ctx.results._appended[0]._innerHTML).toContain("Save '/themedark' as a custom command");
+        expect(ctx.store.setCalls).toEqual([]);
+    });
+
+    it('the /theme row renders its single slash form', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/theme');
+        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdTheme));
+        expect(row._innerHTML).toContain('<span class="palette-slash">/theme</span>');
+    });
+});
+
+// --- Settings toggle commands ------------------------------------------------
+// The one surviving toggle, /tabs (round-4 item 2), flips a '1'/'' setting
+// and re-applies it the way view-manager.js does — the no-view-tabs body
+// class. Command rows are clicked by their i18n name rather than Entered —
+// other command names fuzzy-match '/tabs' too ("Save window tabs as
+// folder"), and table order decides the Enter row.
 const clickCommandRow = (ctx, msg) => {
     const row = ctx.results._appended.find(li => li._innerHTML.includes(msg));
     expect(row, `a row containing "${msg}"`).toBeTruthy();
     fire(row, 'click', makeEvent({}));
 };
-
-describe('theme commands (round-4 item 2)', () => {
-    const THEME_MSGS = [
-        MSGS.paletteCmdThemeAuto, MSGS.paletteCmdThemeLight, MSGS.paletteCmdThemeDark,
-        MSGS.paletteCmdThemeInk, MSGS.paletteCmdThemePaper
-    ];
-
-    it("'/theme' prefix-lists all five theme rows in command-table order", () => {
-        const { palette, results, type } = setup({});
-        palette.open();
-        type('/theme');
-        expect(results._appended).toHaveLength(5);
-        THEME_MSGS.forEach((msg, i) =>
-            expect(results._appended[i]._innerHTML).toContain(msg));
-    });
-
-    it('executing a theme command writes the store, the localStorage copy and body[data-theme]', () => {
-        const ctx = setup({});
-        ctx.palette.open();
-        ctx.type('/themedark');
-        ctx.keydown(ctx.input, { key: 'Enter' });
-        expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
-        expect(ctx.storageData.theme).toBe('dark');
-        expect(ctx.body.dataset.theme).toBe('dark');
-        expect(ctx.palette.isOpen()).toBe(false); // direct commands close
-    });
-
-    it('every theme command applies its own value', () => {
-        const cases = [
-            ['auto', MSGS.paletteCmdThemeAuto],
-            ['light', MSGS.paletteCmdThemeLight],
-            ['dark', MSGS.paletteCmdThemeDark],
-            ['ink', MSGS.paletteCmdThemeInk],
-            ['paper', MSGS.paletteCmdThemePaper]
-        ];
-        for (const [theme, msg] of cases) {
-            const ctx = setup({});
-            ctx.palette.open();
-            ctx.type('/theme');
-            clickCommandRow(ctx, msg);
-            expect(ctx.store.setCalls, msg).toEqual([['theme', theme]]);
-            expect(ctx.body.dataset.theme, msg).toBe(theme);
-        }
-    });
-
-    it('the bare theme name is the alias: /dark surfaces and runs the dark command', () => {
-        const ctx = setup({});
-        ctx.palette.open();
-        ctx.type('/dark');
-        const hits = ctx.results._appended.filter(li => li._innerHTML.includes(MSGS.paletteCmdThemeDark));
-        expect(hits).toHaveLength(1);
-        ctx.keydown(ctx.input, { key: 'Enter' });
-        expect(ctx.store.setCalls).toEqual([['theme', 'dark']]);
-        expect(ctx.body.dataset.theme).toBe('dark');
-    });
-
-    it('aliases match by prefix too (/pap already hits /paper)', () => {
-        const { palette, results, type } = setup({});
-        palette.open();
-        type('/pap');
-        const hits = results._appended.filter(li => li._innerHTML.includes(MSGS.paletteCmdThemePaper));
-        expect(hits).toHaveLength(1);
-    });
-
-    it('a theme row renders both slash forms as the muted suffix', () => {
-        const { palette, results, type } = setup({});
-        palette.open();
-        type('/themedark');
-        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdThemeDark));
-        expect(row._innerHTML).toContain('class="palette-slash"');
-        expect(row._innerHTML).toContain('/themedark /dark');
-    });
-});
 
 describe('settings toggle commands (round-4 item 2)', () => {
     it('/tabs flips showViewTabs off and mirrors view-manager\'s no-view-tabs class', () => {
@@ -1321,36 +1456,198 @@ describe('settings toggle commands (round-4 item 2)', () => {
         expect(ctx.body.classList.contains('no-view-tabs')).toBe(true);
     });
 
-    it('/path flips showItemPath (default on) and repaints the tree through onChanged', () => {
-        const ctx = setup({});
+    it('the retired /path toggle matches nothing — the save-as closure appears instead', () => {
+        // v4 task-4 #5: showItemPath confused more than it helped; the toggle
+        // lives on the options page only. Same for the /itempath alias.
+        for (const q of ['/path', '/itempath']) {
+            const { palette, results, type } = setup({});
+            palette.open();
+            type(q);
+            expect(results._appended, q).toHaveLength(1);
+            expect(results._appended[0]._innerHTML, q).toContain(`Save '${q}' as a custom command`);
+            palette.close();
+        }
+    });
+
+    it('/tabs lost its /viewtabs alias — the row renders the single slash form', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/tabs');
+        const row = results._appended.find(li => li._innerHTML.includes(MSGS.paletteCmdToggleViewTabs));
+        expect(row._innerHTML).toContain('<span class="palette-slash">/tabs</span>');
+    });
+});
+
+// --- v4 task-4 #6: custom commands (docs/palette-commands-design.md) --------
+// User-defined entries of paletteCustomCommands merge into the command area
+// after the built-ins. The palette tests here cover the integration (render,
+// execute, save-as closure, gone-folder prompt, customMenu hand-off); the
+// pure logic (validation, storage, matching, execution dispatch) has its own
+// suite in palette-commands.test.js.
+describe('custom commands (v4 task-4 #6)', () => {
+    const CUSTOMS = [
+        {
+            id: 'cc_1', name: 'Work apps', slash: 'work', aliases: ['wo'],
+            action: { type: 'open-url-group', folderId: '50', where: 'tab' },
+            useCount: 3, lastUsedAt: 100
+        },
+        {
+            id: 'cc_2', name: 'Kimi search', slash: 'g', aliases: [],
+            action: { type: 'url-template', template: 'https://kimi.com/search?q=%s', where: 'tab' },
+            useCount: 1, lastUsedAt: 200
+        }
+    ];
+    const setupCustoms = (opts = {}) => setup({
+        storeSeed: { paletteCustomCommands: JSON.stringify(CUSTOMS) },
+        ...opts
+    });
+
+    it('PALETTE_RESERVED lists exactly the built-in slash names + aliases', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/'); // every command row
+        const forms = results._appended
+            .map(li => (li._innerHTML.match(/palette-slash">([^<]+)</) || [])[1])
+            .filter(Boolean)
+            .flatMap(s => s.split(' ').map(w => w.slice(1)))
+            .sort();
+        expect(forms).toEqual([...PALETTE_RESERVED].sort());
+    });
+
+    it('custom rows render after the built-ins, tagged, ordered by usage', () => {
+        const { palette, results, type } = setupCustoms({});
+        palette.open();
+        type('/'); // built-ins + customs, no bookmarks in slash mode
+        const customs = results._appended.filter(li => li.className.includes('palette-command-custom'));
+        expect(customs).toHaveLength(2);
+        expect(results._appended.indexOf(customs[0])).toBe(COMMAND_MSGS.length);
+        // useCount 3 > 1: Work apps first among the customs
+        expect(customs[0]._innerHTML).toContain('Work apps');
+        expect(customs[0]._innerHTML).toContain('palette-custom-tag');
+        expect(customs[0]._innerHTML).toContain(MSGS.paletteCustomTag);
+        expect(customs[0].dataset.ccId).toBe('cc_1');
+        expect(customs[1]._innerHTML).toContain('Kimi search');
+        expect(customs[1]._innerHTML).toContain('/g');
+    });
+
+    it('slash mode prefix-matches a custom slash name and its aliases', () => {
+        const { palette, results, type } = setupCustoms({});
+        palette.open();
+        type('/wo');
+        const customs = results._appended.filter(li => li.className.includes('palette-command-custom'));
+        expect(customs).toHaveLength(1);
+        expect(customs[0]._innerHTML).toContain('Work apps');
+        palette.close();
+    });
+
+    it('executing an open-url-group command opens the folder children and bumps useCount', () => {
+        const ctx = setupCustoms({
+            children: {
+                '50': [
+                    { id: '51', url: 'https://a.example/' },
+                    { id: '52', url: 'https://b.example/' },
+                    { id: '53', title: 'sub folder', children: [] } // folders are skipped
+                ]
+            }
+        });
         ctx.palette.open();
-        ctx.type('/path');
-        clickCommandRow(ctx, MSGS.paletteCmdToggleItemPath);
-        expect(ctx.store.setCalls).toEqual([['showItemPath', '']]);
-        expect(ctx.onChangedCalls).toHaveLength(1);
+        ctx.type('/work apps'); // rest words ride along; the group ignores them
+        clickCommandRow(ctx, 'Work apps');
+        expect(ctx.chrome.bookmarks.getChildrenCalls).toEqual(['50']);
+        // where 'tab' → foreground tabs
+        expect(ctx.actions.openBookmarksCalls).toEqual([[['https://a.example/', 'https://b.example/'], true]]);
+        expect(ctx.palette.isOpen()).toBe(false);
+        // useCount 3 → 4, persisted through the sync mirror
+        const lastSave = ctx.store.syncSetCalls[ctx.store.syncSetCalls.length - 1];
+        expect(lastSave[0]).toBe('paletteCustomCommands');
+        const saved = JSON.parse(lastSave[1]);
+        expect(saved.find(c => c.id === 'cc_1').useCount).toBe(4);
+        expect(saved.find(c => c.id === 'cc_1').lastUsedAt).toBeGreaterThan(0);
+    });
+
+    it('a gone folder prompts the delete confirm; confirming removes the command', () => {
+        const ctx = setupCustoms({}); // no children seeded for folder 50 → lastError
+        ctx.palette.open();
+        ctx.type('/work');
+        clickCommandRow(ctx, 'Work apps');
+        expect(ctx.actions.openBookmarksCalls).toEqual([]);
+        expect(ctx.dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        const cfg = ctx.dialogs.ConfirmDialog.openCalls[0];
+        expect(cfg.dialog).toBe("The bookmark folder of 'Work apps' no longer exists. Delete the command?");
+        cfg.fn1(); // user confirms the delete
+        const lastSave = ctx.store.syncSetCalls[ctx.store.syncSetCalls.length - 1];
+        expect(JSON.parse(lastSave[1]).map(c => c.id)).toEqual(['cc_2']);
+    });
+
+    it('a url-template command fills %s with the slash rest words', () => {
+        const ctx = setupCustoms({});
+        ctx.palette.open();
+        ctx.type('/g kimi code');
+        ctx.keydown(ctx.input, { key: 'Enter' }); // the only row: the template
+        expect(ctx.actions.openBookmarkNewTabCalls).toEqual([['https://kimi.com/search?q=kimi%20code', true]]);
         expect(ctx.palette.isOpen()).toBe(false);
     });
 
-    it('/path toggles back on', () => {
-        const ctx = setup({ storeSeed: { showItemPath: '' } });
+    it('a url-template without rest words opens the template origin', () => {
+        const ctx = setupCustoms({});
         ctx.palette.open();
-        ctx.type('/path');
-        clickCommandRow(ctx, MSGS.paletteCmdToggleItemPath);
-        expect(ctx.store.setCalls).toEqual([['showItemPath', '1']]);
-        expect(ctx.onChangedCalls).toHaveLength(1);
+        ctx.type('/g');
+        clickCommandRow(ctx, 'Kimi search'); // fuzzy 'g' also hits the Go rows
+        expect(ctx.actions.openBookmarkNewTabCalls).toEqual([['https://kimi.com', true]]);
     });
 
-    it('both toggles answer to their alternate slash names', () => {
-        const cases = [
-            ['/viewtabs', MSGS.paletteCmdToggleViewTabs],
-            ['/itempath', MSGS.paletteCmdToggleItemPath]
-        ];
-        for (const [alias, msg] of cases) {
-            const { palette, results, type } = setup({});
-            palette.open();
-            type(alias);
-            const hits = results._appended.filter(li => li._innerHTML.includes(msg));
-            expect(hits.length, `${alias} surfaces ${msg}`).toBe(1);
-        }
+    it('plain mode fuzzy-matches a custom command by its display name', () => {
+        const ctx = setupCustoms({});
+        ctx.palette.open();
+        ctx.type('kimi');
+        const customs = ctx.results._appended.filter(li => li.className.includes('palette-command-custom'));
+        expect(customs).toHaveLength(1);
+        expect(customs[0]._innerHTML).toContain('Kimi search');
+    });
+
+    it('the save-as row on a hitless plain query prefills name and slash', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('workless');
+        const row = ctx.results._appended[ctx.results._appended.length - 1];
+        expect(row._innerHTML).toContain("Save 'workless' as a custom command");
+        fire(row, 'click', makeEvent({}));
+        expect(ctx.chrome.tabs.createCalls).toHaveLength(1);
+        const hash = decodeURIComponent(ctx.chrome.tabs.createCalls[0].url.split('#palette-cmd=')[1]);
+        expect(JSON.parse(hash)).toEqual({ name: 'workless', slash: 'workless' });
+    });
+
+    it('a query that cannot be a slash name prefills the name only', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.type('hello world');
+        const row = ctx.results._appended[ctx.results._appended.length - 1];
+        fire(row, 'click', makeEvent({}));
+        const hash = decodeURIComponent(ctx.chrome.tabs.createCalls[0].url.split('#palette-cmd=')[1]);
+        expect(JSON.parse(hash)).toEqual({ name: 'hello world', slash: '' });
+    });
+
+    it('customMenu.edit opens the options editor addressed at the command id', () => {
+        const ctx = setupCustoms({});
+        ctx.palette.customMenu.edit('cc_2');
+        expect(ctx.chrome.tabs.createCalls).toHaveLength(1);
+        const hash = decodeURIComponent(ctx.chrome.tabs.createCalls[0].url.split('#palette-cmd=')[1]);
+        expect(JSON.parse(hash)).toEqual({ edit: 'cc_2' });
+    });
+
+    it('customMenu.remove asks once, then deletes and re-renders the open panel', () => {
+        const ctx = setupCustoms({});
+        ctx.palette.open();
+        ctx.palette.customMenu.remove('cc_1');
+        expect(ctx.dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        const cfg = ctx.dialogs.ConfirmDialog.openCalls[0];
+        expect(cfg.dialog).toBe("Delete the custom command 'Work apps'? It syncs to every device.");
+        cfg.fn1();
+        const lastSave = ctx.store.syncSetCalls[ctx.store.syncSetCalls.length - 1];
+        expect(JSON.parse(lastSave[1]).map(c => c.id)).toEqual(['cc_2']);
+        // the open panel re-rendered without the deleted row
+        const customs = ctx.results._appended.filter(li => li.className.includes('palette-command-custom'));
+        expect(customs).toHaveLength(1);
+        expect(customs[0]._innerHTML).toContain('Kimi search');
     });
 });

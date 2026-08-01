@@ -1,4 +1,5 @@
 import { uuidFast } from './separators.js';
+import { TREE_INDENT } from './tree-render.js';
 
 /**
  * Popup action layer (P1 module extracted from neat.js).
@@ -178,7 +179,7 @@ export function initActions(ctx = {}) {
             } else {
                 lv = parseInt(pNode.parentNode.dataset.level) + 1;
             }
-            const paddingStart = 16 * lv;
+            const paddingStart = TREE_INDENT * lv;
             const idHTML = resultBm.id ? `id="neat-tree-item-${resultBm.id}"` : '';
             const stylePad = `style="-webkit-padding-start: ${paddingStart}px"`;
             const classStr = `class="${addBm ? "child" : "parent"}"`;

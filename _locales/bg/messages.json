@@ -388,7 +388,7 @@
     "message": "Премахване на дубликати от избраните ($count$)",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -431,10 +431,10 @@
     "message": "Премахване на $count$ дублиращи се отметки от $groups$ избрани групи?",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     }
   },
@@ -806,26 +806,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "Тема: Следвай системата"
-  },
-  "paletteCmdThemeDark": {
-    "message": "Тема: Тъмна"
-  },
-  "paletteCmdThemeInk": {
-    "message": "Тема: Мастило (тъмна)"
-  },
-  "paletteCmdThemeLight": {
-    "message": "Тема: Светла"
-  },
-  "paletteCmdThemePaper": {
-    "message": "Тема: Хартия (светла)"
-  },
-  "paletteCmdToggleItemPath": {
-    "message": "Превключване на етикетите на родителския път"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "Превключване на разделите"
+  },
+  "paletteCmdTheme": {
+    "message": "[TODO:paletteCmdTheme]"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "[TODO:paletteCmdThemeUsage]"
+  },
+  "paletteCustomTag": {
+    "message": "[TODO:paletteCustomTag]"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "[TODO:paletteCustomDeleteConfirm]"
+  },
+  "paletteCustomBroken": {
+    "message": "[TODO:paletteCustomBroken]"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "[TODO:paletteCmdSaveAsCommand]"
+  },
+  "paletteActionOpenUrl": {
+    "message": "[TODO:paletteActionOpenUrl]"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "[TODO:paletteActionOpenUrlGroup]"
+  },
+  "paletteActionViewPreset": {
+    "message": "[TODO:paletteActionViewPreset]"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "[TODO:paletteActionUrlTemplate]"
+  },
+  "optionsGroupPalette": {
+    "message": "[TODO:optionsGroupPalette]"
+  },
+  "paletteCustomHint": {
+    "message": "[TODO:paletteCustomHint]"
+  },
+  "paletteCustomAdd": {
+    "message": "[TODO:paletteCustomAdd]"
+  },
+  "paletteCustomUsage": {
+    "message": "[TODO:paletteCustomUsage]"
+  },
+  "paletteCustomSlash": {
+    "message": "[TODO:paletteCustomSlash]"
+  },
+  "paletteCustomAliases": {
+    "message": "[TODO:paletteCustomAliases]"
+  },
+  "paletteCustomAction": {
+    "message": "[TODO:paletteCustomAction]"
+  },
+  "paletteCustomUrl": {
+    "message": "[TODO:paletteCustomUrl]"
+  },
+  "paletteCustomTemplate": {
+    "message": "[TODO:paletteCustomTemplate]"
+  },
+  "paletteCustomWhere": {
+    "message": "[TODO:paletteCustomWhere]"
+  },
+  "paletteCustomFolder": {
+    "message": "[TODO:paletteCustomFolder]"
+  },
+  "paletteCustomView": {
+    "message": "[TODO:paletteCustomView]"
+  },
+  "paletteCustomStrategy": {
+    "message": "[TODO:paletteCustomStrategy]"
+  },
+  "paletteCustomScope": {
+    "message": "[TODO:paletteCustomScope]"
+  },
+  "paletteCustomScan": {
+    "message": "[TODO:paletteCustomScan]"
+  },
+  "paletteWhereCurrent": {
+    "message": "[TODO:paletteWhereCurrent]"
+  },
+  "paletteWhereTab": {
+    "message": "[TODO:paletteWhereTab]"
+  },
+  "paletteWhereWindow": {
+    "message": "[TODO:paletteWhereWindow]"
+  },
+  "paletteWhereBackground": {
+    "message": "[TODO:paletteWhereBackground]"
+  },
+  "paletteCustomSave": {
+    "message": "[TODO:paletteCustomSave]"
+  },
+  "paletteCustomErrSlash": {
+    "message": "[TODO:paletteCustomErrSlash]"
+  },
+  "paletteCustomErrAlias": {
+    "message": "[TODO:paletteCustomErrAlias]"
+  },
+  "paletteCustomErrTaken": {
+    "message": "[TODO:paletteCustomErrTaken]"
+  },
+  "paletteCustomErrUrl": {
+    "message": "[TODO:paletteCustomErrUrl]"
+  },
+  "paletteCustomErrFolder": {
+    "message": "[TODO:paletteCustomErrFolder]"
+  },
+  "paletteCustomErrView": {
+    "message": "[TODO:paletteCustomErrView]"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "[TODO:paletteCustomErrTemplate]"
+  },
+  "paletteCustomErrAction": {
+    "message": "[TODO:paletteCustomErrAction]"
+  },
+  "paletteCustomErrLimit": {
+    "message": "[TODO:paletteCustomErrLimit]"
+  },
+  "paletteCustomEmpty": {
+    "message": "[TODO:paletteCustomEmpty]"
   },
   "paletteNoResults": {
     "message": "Няма съвпадащи резултати"
@@ -968,7 +1070,7 @@
     "message": "Избрани: $count$",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -980,6 +1082,21 @@
   },
   "selectModeExit": {
     "message": "Изход от избора"
+  },
+  "deadRiskBanner": {
+    "message": "[TODO:deadRiskBanner]"
+  },
+  "dupesRiskBanner": {
+    "message": "[TODO:dupesRiskBanner]"
+  },
+  "riskBannerHelp": {
+    "message": "[TODO:riskBannerHelp]"
+  },
+  "riskBannerNever": {
+    "message": "[TODO:riskBannerNever]"
+  },
+  "riskBannerDismiss": {
+    "message": "[TODO:riskBannerDismiss]"
   },
   "sessionEmpty": {
     "message": "Няма раздели за запазване"

@@ -74,6 +74,7 @@
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
 import { VIEW_ICONS } from './icons.js';
+import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
 const htmlspecialchars = s =>
@@ -111,6 +112,7 @@ export function initViewDupes(ctx = {}) {
     const treeRender = ctx.treeRender;
     const separatorManager = ctx.separatorManager;
     const treeView = ctx.treeView;
+    const actions = ctx.actions;
     const dialogs = ctx.dialogs;
     const undo = ctx.undo;
     // Slice D: real visit counts for keep-most-visited; the zero-filled
@@ -121,6 +123,10 @@ export function initViewDupes(ctx = {}) {
     const onRowsRendered = ctx.onRowsRendered || (() => {});
 
     const $list = $('dupes-list');
+
+    // v4 task-4 #14: pre-use risk banner (bulk deletion warning +
+    // backup help link); acked per major version, session × dismiss.
+    const riskBanner = makeRiskBanner({ store, ackKey: 'dupesRiskAck', textKey: 'dupesRiskBanner' });
 
     // --- State ----------------------------------------------------------------
     let groups = [];                 // findDupes() result backing the rows
@@ -139,6 +145,9 @@ export function initViewDupes(ctx = {}) {
     // <body> and the ←/→ key walk dies after one fold. render() restores
     // focus to the new head element for the same group key.
     let pendingHeadFocus = null;
+    // v4 task-4 #8: same park-and-restore for a select-mode Space toggle
+    // fired from a member row (the toggle re-renders, replacing the row).
+    let pendingMemberFocus = null;
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -304,7 +313,9 @@ export function initViewDupes(ctx = {}) {
         const isCollapsed = collapsed.has(group.key);
         // The per-group quick action names its strategy pick up front
         // ("keep 〈title〉, remove the other N") — one click applies the
-        // configured strategy to this group alone.
+        // configured strategy to this group alone. v4 task-4 #9: the glyph
+        // is a ✓ ("apply this group's dedup"), not a × (which read as a
+        // plain delete and went unnoticed).
         const doomed = planDeletion(group, keeper).length;
         const hint = htmlspecialchars(_m('dupesCleanRestHint',
             [keeper.title || _m('noTitle'), `${doomed}`]));
@@ -313,7 +324,7 @@ export function initViewDupes(ctx = {}) {
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
-            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">×</button>` +
+            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">✓</button>` +
             '</span></li>';
         if (isCollapsed)
             return html;
@@ -345,7 +356,8 @@ export function initViewDupes(ctx = {}) {
     // keyboard user holding focus on a control loses it to <body> on every
     // repaint. The controls are positionally stable across re-renders, so an
     // index suffices.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    // v4 task-4 #14: the risk banner's controls join the park/restore.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input, .risk-banner button, .risk-banner a[href]';
     const toolbarFocusIndex = () => {
         if (typeof $list.querySelectorAll !== 'function')
             return -1;
@@ -372,7 +384,7 @@ export function initViewDupes(ctx = {}) {
                 if (!alive.has(key))
                     selected.delete(key);
         }
-        let html = renderToolbar();
+        let html = riskBanner.html() + renderToolbar();
         if (!groups.length) {
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
@@ -401,6 +413,16 @@ export function initViewDupes(ctx = {}) {
             }
             if (headEl)
                 headEl.focus();
+        }
+        // v4 task-4 #8: select-mode Space toggle fired from a member row —
+        // restore focus to that row's anchor after the swap.
+        if (pendingMemberFocus) {
+            const id = pendingMemberFocus;
+            pendingMemberFocus = null;
+            const row = document.getElementById(`dupes-item-${id}`);
+            const a = row && row.querySelector('a');
+            if (a)
+                a.focus();
         }
     };
 
@@ -555,6 +577,26 @@ export function initViewDupes(ctx = {}) {
 
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // v4 task-4 #14 risk banner: ack (per major version), session
+        // dismiss, and the backup-help link (popup-respecting open).
+        if (closest('.risk-banner-never')) {
+            e.preventDefault();
+            riskBanner.ack();
+            render();
+            return;
+        }
+        if (closest('.risk-banner-dismiss')) {
+            e.preventDefault();
+            riskBanner.dismiss();
+            render();
+            return;
+        }
+        if (closest('.risk-banner-help')) {
+            e.preventDefault();
+            if (actions && actions.openBookmarkNewTab)
+                actions.openBookmarkNewTab(RISK_HELP_URL, true, true);
+            return;
+        }
         if (closest('.dupes-apply-all')) {
             e.preventDefault();
             cleanAll();
@@ -662,7 +704,8 @@ export function initViewDupes(ctx = {}) {
 
     // Group-header keys, capture phase: ←/→/Space/Enter collapse/expand the
     // group and must never reach keyboard.js (a span row would otherwise
-    // trigger the folder-toggle / context-menu paths).
+    // trigger the folder-toggle / context-menu paths). In select mode Space
+    // instead toggles the group's membership (v4 task-4 #8).
     $list.addEventListener('keydown', e => {
         const head = (e.target && e.target.classList && e.target.classList.contains('group-head'))
             ? e.target
@@ -674,6 +717,20 @@ export function initViewDupes(ctx = {}) {
                 return;
             const isCollapsed = collapsed.has(key);
             const k = e.key;
+            // v4 task-4 #8: in select mode Space toggles the group's
+            // membership (click parity); Enter/←/→ keep their fold
+            // semantics. Outside select mode Space folds, as before.
+            if (selecting && k === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (selected.has(key))
+                    selected.delete(key);
+                else
+                    selected.add(key);
+                pendingHeadFocus = key;
+                render();
+                return;
+            }
             const expand = (k === ' ' || k === 'Enter' || k === 'ArrowRight') && isCollapsed;
             const collapse = (k === ' ' || k === 'Enter' || k === 'ArrowLeft') && !isCollapsed;
             if (expand || collapse) {
@@ -703,6 +760,22 @@ export function initViewDupes(ctx = {}) {
         if (e.target.classList && e.target.classList.contains('keeper-radio'))
             return; // focus on the radio itself: native button toggles keeper
         const k = e.key;
+        // v4 task-4 #8: in select mode Space toggles the owning group's
+        // membership (click parity) instead of opening the bookmark.
+        if (selecting && k === ' ') {
+            const key = memberLi.dataset.key;
+            if (!key)
+                return;
+            e.preventDefault();
+            e.stopPropagation();
+            if (selected.has(key))
+                selected.delete(key);
+            else
+                selected.add(key);
+            pendingMemberFocus = memberLi.dataset.nodeId;
+            render();
+            return;
+        }
         if (k === 'Enter' || k === ' ') {
             const a = memberLi.querySelector('a');
             if (!a)
@@ -767,7 +840,24 @@ export function initViewDupes(ctx = {}) {
         hidden: !store.get('showDupesView', '1'), // showDupesView → tab visibility
         typeAhead: false,
         badge: () => groups.length,
-        activate: () => {
+        activate: ({ preset } = {}) => {
+            // v4 task-4 #6: the palette custom-command view-preset channel —
+            // '/clean' lands here with e.g. { strategy:'keep-newest',
+            // scope:'all' }. Unknown values fall off (the selects own the
+            // value lists); an applied preset forces a regroup.
+            if (preset) {
+                let applied = false;
+                if (preset.strategy && STRATEGIES.some(s => s[0] === preset.strategy)) {
+                    store.set('dupesStrategy', preset.strategy);
+                    applied = true;
+                }
+                if (preset.scope === 'all' || preset.scope === 'bar') {
+                    store.set('dupesScope', preset.scope);
+                    applied = true;
+                }
+                if (applied)
+                    dirty = true;
+            }
             if (dirty || !groups.length) {
                 // nothing hydrated (or bookmark events fired): compute now
                 refresh();

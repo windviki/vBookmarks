@@ -1,18 +1,24 @@
 # 命令面板自定义指令设计方案（palette custom commands）
 
-> 状态：**设计稿，未实现**。本文档回答"如何榨干命令面板的价值"——把命令面板从
-> 内置启动器升级为**用户可编程的快速入口**。配套文档：
+> 状态：**阶段 1 全部 + 阶段 2 大部已实现**（v4 task-4 #5/#6）。已落地：数据模型
+> （`paletteCustomCommands` 入 sync）、选项页管理组（CRUD + 哈希接力）、Tier 0
+> 三种 action + `url-template`（Tier 1 首项）、面板执行与 custom 标记、useCount
+> 排序、"存为指令"闭环、失效指令处理（ConfirmDialog 提议删除）。未实现：
+> `bookmark-batch` / `tab-batch` / macro / 导入导出 / alarms 定时、emoji 图标前缀、
+> 选项页 sync 用量条。配套文档：
 > [keyboard-model.md](keyboard-model.md)（键盘模型）、guide-v4 §2.3（现有命令清单）。
-> 实现排期见 §9 路线图；落地时以本文为准回写 guide-v4 与 keyboard-model。
+> 实现细节以 `src/palette-commands.js` 头注释为准；单测：tests/palette-commands.test.js
+> + tests/palette.test.js 的 custom-commands 套件。
 
 ## 1. 背景与现状
 
 v4 命令面板（`src/palette.js`）当前形态：
 
-- **18 条内置命令**，统一结构 `{ slash, aliases, name, fn, keepOpen }`：
+- **13 条内置命令**（v4 task-4 #5 收敛后），统一结构 `{ slash, aliases, name, fn, keepOpen }`：
   快速操作（`/add` `/new` `/folder` `/session`）、视图直达（`/tree` `/search` …
-  slash 别名即视图 id）、主题五连（`/themeauto`…`/themepaper`）、开关
-  （`/tabs` `/path`）、`/options`。
+  slash 名即视图 id，每条至多一个语义别名）、参数化 `/theme <名>`、开关
+  （`/tabs`）、`/options`。保留字全集导出为 `PALETTE_RESERVED`
+  （`src/palette-commands.js`），自定义指令不得撞车。
 - **两种查询模式**：`/` 前缀 = 指令模式（首词匹配 slash 名，余词作为
   `slashRest` 传给 `fn`——参数通道已经存在，`/search foo` 即在用）；
   普通查询 = 模糊匹配书签/文件夹 + 桥接行进搜索视图。
@@ -22,7 +28,7 @@ v4 命令面板（`src/palette.js`）当前形态：
   （`src/session.js`），这恰好是"URL 组"的天然载体。
 
 结论：面板的**分发与参数通道已经完备**，缺的是让用户往 `commands` 数组里
-注册自己的条目。自定义指令 = 数据驱动的第 20+ 条命令，不是新子系统。
+注册自己的条目。自定义指令 = 数据驱动的第 14+ 条命令，不是新子系统。
 
 ## 2. 目标与价值定位
 
@@ -146,12 +152,16 @@ v4 命令面板（`src/palette.js`）当前形态：
 
 ## 9. 路线图
 
-- **阶段 1（MVP）**：数据模型 + 选项页管理组 + Tier 0 三种 action + 面板执行
-  与 custom 标记 + useCount 排序。验收：`/work` 打开组、`/ops` 别名直达、
-  `/clean` 带预设进重复视图；选项页 CRUD 全套；sync 生效。
-- **阶段 2**：Tier 1（url-template 参数化、bookmark-batch、tab-batch）+
-  面板内"存为指令"闭环 + 失效指令处理。
-- **阶段 3**：macro、导入导出、（可选）alarms 定时。
+- **阶段 1（MVP）**——✅ 已实现（v4 task-4 #6）：数据模型 + 选项页管理组 +
+  Tier 0 三种 action + 面板执行与 custom 标记 + useCount 排序。验收已过：
+  `/work` 打开组、别名直达、`/clean` 带预设进重复视图（view-preset）、
+  选项页 CRUD 全套、sync 生效（`paletteCustomCommands` ∈ SYNC_KEYS）。
+- **阶段 2**——大部已实现：`url-template` 参数化（✅，含无参数开 origin
+  的回退）、面板内"存为指令"闭环（✅，无命中时桥接行后出现，slash 合规
+  则预填）、失效指令处理（✅，执行时文件夹不存在 → ConfirmDialog 提议
+  删除）。未做：`bookmark-batch`、`tab-batch`。
+- **阶段 3**：macro、导入导出、（可选）alarms 定时——未做。emoji 图标前缀
+  （§10 问答 2）与选项页 sync 用量条（§8）同步推迟。
 
 每阶段都需补：vitest 单测（数据校验、排序、冲突裁决）、verify-keyboard 断言
 （自定义命令行的 ↑↓/→ 行为）、guide-v4 §2.3 回写、选项页实拍图。

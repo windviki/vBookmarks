@@ -67,7 +67,10 @@
     // Value model: toggles as 'true'/'false' strings (written by options.js),
     // syncRefreshInterval as a number of seconds. 'showSyncStatus' historically
     // lived in localStorage and is migrated into the sync area.
-    const SYNC_KEYS = ['showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval'];
+    // v4 task-4 #6: paletteCustomCommands (JSON array string, ≤100 entries)
+    // syncs so a user's palette commands follow them across devices.
+    const SYNC_KEYS = ['showSyncStatus', 'highlightUnsynced', 'autoRefreshSync', 'syncRefreshInterval',
+        'paletteCustomCommands'];
 
     const mirror = {};
     const syncMirror = {};

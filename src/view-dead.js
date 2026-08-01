@@ -33,14 +33,13 @@
  * with a request fallback that never prompts when already granted),
  * refuses servers another extension controls, probes reachability and
  * persists ONLY a reachable one (`deadProxyServer`, the same key the
- * options page displays/clears). Scan start installs the PAC session
- * through the permission/controllability gate (failures degrade to
- * direct+template and are remembered on the chip); settle/cancel/pagehide
- * all tear it down, and a `vbmProxySession` storage.session marker lets
- * the service worker sweep crash residue. The strip's controls disable
- * mid-scan so the test never clobbers a live session; Esc closes the panel
- * before the selection/scan layers. The idle toolbar also quantifies the
- * result set (dead N · blocked M) ahead of the filter segments.
+ * options page displays/clears). The PAC session itself is installed by
+ * the service worker at scan start (v4 task-4 #16 moved the scan there —
+ * see below); its gate failures come back on the live blob's proxy.gate
+ * and surface on the chip. The strip's controls disable mid-scan so the
+ * test never clobbers a live session; Esc closes the panel before the
+ * selection/scan layers. The idle toolbar also quantifies the result set
+ * (dead N · blocked M) ahead of the filter segments.
  *
  * §5.5c marks: `deadMarks` (id array) toggle per row (⚑ button / M key);
  * every list (tree / search results / recent / stats / dupes) overlays a
@@ -53,31 +52,37 @@
  * (every dead+blocked row of the result set) and "clear all marks" are
  * ConfirmDialog-gated. badge() = deadMarks.length.
  *
- * §5.5d lifecycle (+ fourth-round item 10): switching views mid-scan never
- * aborts (the closure owns the session; coming back re-renders the live
- * progress/pause state); Esc toggles pause ⇄ resume while a session lives
- * (item 10 — the old Esc-abort moved to an explicit toolbar Cancel);
- * pagehide cancels — the cache is already on disk. Row deletion rides
- * actions.deleteBookmark (the undo chain).
+ * §5.5d lifecycle (v4 task-4 #16 — the scan runs in the service worker):
+ * the scan engine lives in src/dead-scan-sw.js so a popup close NEVER
+ * interrupts a run. Pages send fire-and-forget messages
+ * (vbm-dead-scan-start/pause/resume/cancel); the runner publishes a live
+ * blob to chrome.storage.local `vbmDeadScan` ({ state, done, total, ts,
+ * items, results, proxy }) and writes the finished run to `deadLastScan`.
+ * This view is a pure MIRROR of those two keys: storage.onChanged drives
+ * every mid-session repaint (progress ticks, pause transitions, the
+ * settle), activate() re-syncs from storage directly, and pause/resume
+ * clicks flip the mirror optimistically before the SW's publication
+ * confirms them. Esc toggles pause ⇄ resume while a run lives (item 10 —
+ * cancelling is the explicit toolbar Cancel). A SW cold start resumes a
+ * live run from the blob's journal; a paused run stays paused.
  *
- * Item 10 scan state machine (see "Scan" section):
- *   idle       — no live session; toolbar = last-scan info / empty, list =
+ * Scan state machine (see "Scan" section):
+ *   idle       — no live blob; toolbar = last-scan info / empty, list =
  *                cached results or the executable start hint.
- *   scanning   — the pool dispatches probes; the list GROWS INCREMENTALLY:
- *                every settled dead/blocked check joins the rows at once
- *                (tree order among settled rows — a row never jumps once
- *                shown); toolbar = progress + count + Pause + Cancel.
- *   paused     — pause(): no NEW probes are dispatched, in-flight ones
- *                still land in the partial results; toolbar swaps Pause for
- *                Resume and tags the progress label; Esc resumes.
- *   cancelling — Cancel: in-flight probes abort, the promise settles with
- *                the partial Map which is DISCARDED (the run never happened)
- *                and the view falls back to the previous persisted cache
- *                (or the start hint) — the last finished scan is the only
- *                checkpoint. Rescan from idle starts a fresh session.
+ *   scanning   — blob.state 'scanning'; the list GROWS INCREMENTALLY as
+ *                the blob's journal fills (tree order among settled rows —
+ *                a row never jumps once shown); toolbar = progress + count
+ *                + Pause + Cancel.
+ *   paused     — blob.state 'paused'; toolbar swaps Pause for Resume and
+ *                tags the progress label; Esc resumes.
+ *   cancel     — the SW discards the partial run and deletes the blob
+ *                (the run never happened); the view falls back to the
+ *                previous persisted cache (or the start hint) — the last
+ *                finished scan is the only checkpoint.
  *
- * The filter (all / dead only / blocked only) is an in-memory view control,
- * deliberately not persisted (§5.5c).
+ * The filter (all / dead only / blocked only) persists as `deadFilter`
+ * (v4 task-4 #1 — reopening the view keeps the active segment highlighted,
+ * superseding the in-memory choice of §5.5c).
  *
  * Selection mode (v4 task-3 #4): the idle toolbar's 选择 button swaps every
  * idle control for a batch bar — select all / invert / clear (over the
@@ -103,9 +108,11 @@
  * document, window and setTimeout remain page globals.
  */
 
-import { checkUrlDual, startPausableScan, filterScannable, collectDead, statusLabel } from './dead-links.js';
-import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, startProxySession, endProxySession, testProxyReachable } from './dead-proxy.js';
+import { filterScannable, collectDead, statusLabel } from './dead-links.js';
+import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
+import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS } from './icons.js';
+import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
 const htmlspecialchars = s =>
@@ -125,6 +132,10 @@ export function initViewDead(ctx = {}) {
 
     const $list = $('dead-list');
 
+    // v4 task-4 #14: pre-use risk banner (bulk deletion warning +
+    // backup help link); acked per major version, session × dismiss.
+    const riskBanner = makeRiskBanner({ store, ackKey: 'deadRiskAck', textKey: 'deadRiskBanner' });
+
     // --- State ----------------------------------------------------------------
     const loadMarks = () => {
         try {
@@ -134,41 +145,45 @@ export function initViewDead(ctx = {}) {
         }
     };
     let deadMarks = loadMarks();
-    // Item 10 state machine (idle/scanning/paused/cancelling, header docs):
-    // `scan` non-null covers scanning+paused (scan.isPaused() splits them);
-    // cancelling is scan→null inside cancelScan before the promise settles.
-    let scan = null;        // live startPausableScan session
-    let scanStarting = false; // getTree + proxy-gate window before `scan` exists
-    let scanProgress = 0;   // settled checks of the running scan
-    let scanTotal = 0;      // item count of the running scan
-    let scanItems = [];     // scan order (= tree order) for progressive rows
-    let scanResults = null; // Map(id → result) settled so far (progressive)
+    // v4 task-4 #16 scan mirror (idle/scanning/paused, header docs): the SW
+    // owns the run; `live` mirrors the published vbmDeadScan blob while one
+    // exists (live.state splits scanning/paused). scanStarting guards the
+    // window between the start message and the blob's first publication.
+    let live = null;        // { state, done, total, order:[id…], results:Map }
+    let scanStarting = false;
     let lastScan = null;    // { ts, scannedCount, results: {id:{status,code}} }
     let treeItems = new Map(); // id → { id, title, url } of the last render
-    let filter = 'all';     // 'all' | 'dead' | 'blocked' — in-memory (§5.5c)
+    // v4 task-4 #1: the filter persists (deadFilter) — reopening the view
+    // restores the active segment, same contract as the stats view's
+    // statsSort (supersedes the in-memory choice of §5.5c).
+    let filter = ['all', 'dead', 'blocked'].indexOf(store.get('deadFilter', 'all')) !== -1
+        ? store.get('deadFilter', 'all') : 'all';
     // v4 task-3 #4 selection mode: the toolbar's 选择 button swaps the idle
     // controls for a batch bar (all/invert/clear + mark/unmark selected);
     // row clicks toggle membership instead of opening, Esc exits. Members
     // are bookmark ids, pruned at render against rows that still exist.
     let selecting = false;
     const selected = new Set();
+    // v4 task-4 #8: select-mode Space toggles the focused row and render()
+    // swaps the list — park the row id so focus returns to it afterwards.
+    let pendingRowFocus = null;
 
     // Real-proxy support (dead-proxy.js): the quick add/manage strip above
     // the scan toolbar. proxyPanelOpen toggles the inline add panel;
     // proxyInput/proxyTestUrl mirror the panel's fields across re-renders
     // (the innerHTML swap would otherwise eat them); proxyBusy locks the
     // panel while the permission/test chain runs; proxyError is the panel's
-    // failure line; proxyGateError records WHY the last scan could not use
-    // the configured server (permission denied / another extension owns the
-    // proxy settings) so the chip can surface it.
+    // failure line; proxyGateError mirrors WHY the running/last scan could
+    // not use the configured server (the SW blob's proxy.gate: permission
+    // denied / another extension owns the proxy settings) so the chip can
+    // surface it.
     let proxyPanelOpen = false;
     let proxyInput = '';
     let proxyTestUrl = DEFAULT_PROXY_TEST_URL;
     let proxyBusy = false;
     let proxyError = '';
-    let proxyGateError = '';     // '' | i18n key
+    let proxyGateError = '';     // '' | i18n key (mirrors blob.proxy.gate)
     let proxyTestGen = 0;        // stale-test guard: bumped on open/close
-    let proxySessionActive = false; // this popup installed the marker-PAC
 
     const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
@@ -177,25 +192,14 @@ export function initViewDead(ctx = {}) {
         views.updateBadges();
     };
 
-    const loadCache = () => {
-        try {
-            lastScan = JSON.parse(store.get('deadLastScan', '') || 'null');
-        } catch (e) {
-            lastScan = null;
-        }
-        return lastScan;
-    };
-
     const scannableItems = tree =>
         filterScannable(flattenTree(tree),
             (title, url) => separatorManager.isSeparator(title, url));
 
-    const scanSettings = () => ({
-        proxyTemplate: store.get('deadProxyTemplate', '') || '',
-        proxyServer: proxyServerSetting(),
-        concurrency: Math.min(16, Math.max(1, parseInt(store.get('deadScanConcurrency', '4'), 10) || 4)),
-        timeoutMs: Math.min(30, Math.max(2, parseInt(store.get('deadScanTimeout', '8'), 10) || 8)) * 1000
-    });
+    // The scan tuning settings are read by the SW (dead-scan-sw.js) — the
+    // view only needs the timeout for the proxy panel's reachability test.
+    const scanTimeoutMs = () =>
+        Math.min(30, Math.max(2, parseInt(store.get('deadScanTimeout', '8'), 10) || 8)) * 1000;
 
     // The configured real proxy server (dead-proxy.js), canonical
     // 'scheme://host:port' in storage; null when unset/invalid.
@@ -256,16 +260,22 @@ export function initViewDead(ctx = {}) {
         return rows.filter(row => row.result.status === filter);
     };
 
-    // Item 10 progressive rows: the live session's settled checks, in scan
-    // order (= tree order), so a row's position is stable once it appears.
-    // The filter segment is a finished-result control and is NOT applied
-    // here — mid-scan every discovered dead/blocked row shows up at once.
+    // v4 task-4 #16: progressive rows come from the SW blob's journal —
+    // settled dead/blocked checks in scan order (= tree order, so a row's
+    // position is stable once it appears), joined against the tree map like
+    // the cached rows. The filter segment is a finished-result control and
+    // is NOT applied here — mid-scan every discovered row shows up at once.
     const liveRows = () => {
         const rows = [];
-        for (let i = 0, l = scanItems.length; i < l; i++) {
-            const item = scanItems[i];
-            const result = scanResults && scanResults.get(item.id);
-            if (result && !result.ok)
+        if (!live)
+            return rows;
+        for (let i = 0, l = live.order.length; i < l; i++) {
+            const id = live.order[i];
+            const result = live.results.get(id);
+            if (!result || result.status === 'ok' || result.status === 'skipped')
+                continue;
+            const item = treeItems.get(id);
+            if (item)
                 rows.push({ item, result });
         }
         return rows;
@@ -292,15 +302,15 @@ export function initViewDead(ctx = {}) {
         } else if (server) {
             html += `<span class="dead-proxy-chip">${_m('deadProxyLabel', htmlspecialchars(formatProxyServer(server)))}</span>` +
                 (proxyGateError ? `<span class="dead-proxy-error">${_m(proxyGateError)}</span>` : '') +
-                `<button class="dead-proxy-change"${scan ? ' disabled' : ''}>${_m('deadProxyChange')}</button>` +
-                `<button class="dead-proxy-remove"${scan ? ' disabled' : ''}>${_m('deadProxyRemove')}</button>`;
+                `<button class="dead-proxy-change"${live ? ' disabled' : ''}>${_m('deadProxyChange')}</button>` +
+                `<button class="dead-proxy-remove"${live ? ' disabled' : ''}>${_m('deadProxyRemove')}</button>`;
         } else {
             if (template)
                 html += `<span class="dead-proxy-chip template">${_m('deadProxyTemplateChip')}</span>`;
-            html += `<button class="dead-proxy-add"${scan ? ' disabled' : ''}>${_m('deadProxyAdd')}</button>`;
+            html += `<button class="dead-proxy-add"${live ? ' disabled' : ''}>${_m('deadProxyAdd')}</button>`;
             // The nudge ties the original dual-channel design to the quick
             // button: direct-failing rows may be region-blocks, not dead.
-            const deadN = !scan && !template && lastScan
+            const deadN = !live && !template && lastScan
                 ? allResultRows().filter(r => r.result.status === 'dead').length
                 : 0;
             if (deadN)
@@ -314,14 +324,18 @@ export function initViewDead(ctx = {}) {
         // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
         // stops between the tab strip and the list rows (final polish).
         let html = '<div class="dead-toolbar vbm-toolbar">';
-        if (scan) {
+        if (live) {
             // scanning/paused share the toolbar; the toggle button and the
             // paused tag split them. Real <button>s: Tab-reachable and
             // Enter/Space-fireable like the other dead-toolbar controls.
-            const paused = scan.isPaused();
-            html += `<progress class="dead-progress" value="${scanProgress}" max="${Math.max(scanTotal, 1)}"></progress>` +
+            const paused = live.state === 'paused';
+            // v4 task-4 #17: the label is the bare done/total counter (the
+            // full sentence moves to title/aria-label) so a progress tick
+            // never truncates it — the bar carries the visual ratio.
+            const full = _m('deadChecking', [`${live.done}`, `${live.total}`]);
+            html += `<progress class="dead-progress" value="${live.done}" max="${Math.max(live.total, 1)}"></progress>` +
                 (paused ? `<span class="dead-paused-tag">${_m('deadPaused')}</span>` : '') +
-                `<span class="dead-progress-label">${_m('deadChecking', [`${scanProgress}`, `${scanTotal}`])}</span>` +
+                `<span class="dead-progress-label" title="${htmlspecialchars(full)}" aria-label="${htmlspecialchars(full)}">${live.done}/${live.total}</span>` +
                 `<button class="dead-pause">${_m(paused ? 'deadResume' : 'deadPause')}</button>` +
                 `<button class="dead-cancel">${_m('deadCancel')}</button>`;
         } else {
@@ -352,8 +366,11 @@ export function initViewDead(ctx = {}) {
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
                 html += `<span class="dead-summary">${_m('deadSummary', [`${deadN}`, `${rows.length - deadN}`])}</span>`;
                 html += '<span class="dead-filter" role="group">';
+                // v4 task-4 #1: pressed state = aria-pressed only (the
+                // 'active' class is context-menu.js's menu-open marker —
+                // clearMenu strips it body-wide on click/focus).
                 for (const [value, key] of [['all', 'deadFilterAll'], ['dead', 'deadFilterDead'], ['blocked', 'deadFilterBlocked']])
-                    html += `<button class="dead-filter-btn${filter === value ? ' active' : ''}" data-filter="${value}">${_m(key)}</button>`;
+                    html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)}</button>`;
                 html += '</span>';
                 html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
             }
@@ -407,7 +424,9 @@ export function initViewDead(ctx = {}) {
     // holding focus on a control loses it to <body> on every repaint. The
     // controls are positionally stable across re-renders, so an index
     // suffices.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    // v4 task-4 #14: the risk banner's controls join the park/restore so
+    // a scan tick can't drop focus off a banner button either.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input, .risk-banner button, .risk-banner a[href]';
     const toolbarFocusIndex = () => {
         if (typeof $list.querySelectorAll !== 'function')
             return -1;
@@ -434,15 +453,16 @@ export function initViewDead(ctx = {}) {
                 if (!alive.has(id))
                     selected.delete(id);
         }
-        let html = renderProxyStrip() + renderToolbar();
-        if (scan) {
-            // Item 10: progressive rendering — settled dead/blocked checks
-            // are already rows while the scan keeps running.
+        let html = riskBanner.html() + renderProxyStrip() + renderToolbar();
+        if (live) {
+            // Progressive rendering (v4 task-4 #16): the blob journal's
+            // settled dead/blocked checks are already rows while the SW's
+            // scan keeps running.
             html += renderRows(liveRows());
         } else if (!lastScan) {
             // §3.5: the empty state itself is the executable start row.
             html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
-                `<i>${_m('deadStartHint', `${scanTotal || treeItems.size}`)}</i></li></ul>`;
+                `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
         } else {
             const rows = resultRows();
             // Distinguish "the scan found nothing" from "the active filter
@@ -454,8 +474,23 @@ export function initViewDead(ctx = {}) {
         }
         // keep a focused toolbar control focused across the swap (see above)
         const tbIdx = toolbarFocusIndex();
+        // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
+        // position survives the innerHTML swap (idle interactions keep the
+        // old reset-to-top behavior).
+        const scroll = live ? $list.scrollTop : 0;
         $list.innerHTML = html;
+        if (live && scroll)
+            $list.scrollTop = scroll;
         restoreToolbarFocus(tbIdx);
+        // v4 task-4 #8: select-mode Space toggle — restore the row's anchor.
+        if (pendingRowFocus) {
+            const id = pendingRowFocus;
+            pendingRowFocus = null;
+            const row = document.getElementById(`dead-item-${id}`);
+            const a = row && row.querySelector('a');
+            if (a)
+                a.focus();
+        }
     };
 
     // --- Overlay (§5.5c + 第五轮项3) ------------------------------------------
@@ -647,7 +682,7 @@ export function initViewDead(ctx = {}) {
                 if (control !== 'ok')
                     return fail(control === 'other-extension' ? 'deadProxyControlled' : 'deadProxyUnavailable');
                 const testUrl = (proxyTestUrl || '').trim() || DEFAULT_PROXY_TEST_URL;
-                return testProxyReachable(server, { testUrl, timeoutMs: scanSettings().timeoutMs }).then(reachable => {
+                return testProxyReachable(server, { testUrl, timeoutMs: scanTimeoutMs() }).then(reachable => {
                     if (gen !== proxyTestGen)
                         return;
                     if (!reachable)
@@ -663,145 +698,116 @@ export function initViewDead(ctx = {}) {
         });
     };
 
-    // Marker-PAC session for a scan: permission → controllability → install.
-    // Resolves true only with the PAC live; a failure is remembered in
-    // proxyGateError (the chip shows it) and the scan degrades to
-    // direct(+template)-only instead of failing.
-    const startScanProxy = server =>
-        proxyPermission().then(have => {
-            if (!have) {
-                proxyGateError = 'deadProxyDenied';
-                return false;
+    // --- Scan (v4 task-4 #16: the SW owns the run, the view mirrors it) -------
+    // The scan engine lives in src/dead-scan-sw.js so it survives popup close:
+    // pages send fire-and-forget DEAD_SCAN_MSG messages; the runner publishes
+    // a live blob to chrome.storage.local[DEAD_SCAN_KEY] and the finished run
+    // to deadLastScan (same shape the view always rendered). Everything below
+    // is a mirror of those two keys.
+    const sendScan = type => {
+        try {
+            chrome.runtime.sendMessage({ type });
+        } catch (e) { /* no listener (unit tests) — the mirror stays put */ }
+    };
+
+    // A published blob replaces the mirror wholesale; raw === undefined (key
+    // removed) means the run ended — the deadLastScan change that accompanies
+    // a finish renders the fresh cache, a cancel leaves the previous one.
+    const applyBlob = raw => {
+        scanStarting = false;
+        if (!raw) {
+            live = null;
+        } else {
+            try {
+                const blob = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                live = {
+                    state: blob.state === 'paused' ? 'paused' : 'scanning',
+                    done: blob.done || 0,
+                    total: blob.total || 0,
+                    order: blob.items || [],
+                    results: new Map(Object.entries(blob.results || {}))
+                };
+                // The proxy chip surfaces why the scan's second channel is
+                // off (permission denied / another extension owns proxy).
+                proxyGateError = (blob.proxy && blob.proxy.gate) || '';
+            } catch (e) {
+                live = null; // a corrupt blob renders as "no run"
             }
-            return proxyControllable().then(control => {
-                if (control !== 'ok') {
-                    proxyGateError = control === 'other-extension' ? 'deadProxyControlled' : 'deadProxyUnavailable';
-                    return false;
-                }
-                return startProxySession(server).then(started => {
-                    if (!started) {
-                        proxyGateError = 'deadProxyControlled';
-                        return false;
-                    }
-                    proxyGateError = '';
-                    proxySessionActive = true;
-                    // Crash-residue marker: the SW sweeps a leftover PAC when
-                    // no live session marker exists (src/background.js).
-                    if (chrome.storage && chrome.storage.session)
-                        chrome.storage.session.set({ vbmProxySession: Date.now() });
-                    return true;
-                });
-            });
-        });
-
-    // Every scan exit path (settle / cancel / pagehide) funnels here — the
-    // PAC must not outlive its scan (clear() removes only OUR settings, so
-    // this is also safe when something else took control in between).
-    const stopProxySession = () => {
-        if (!proxySessionActive)
-            return;
-        proxySessionActive = false;
-        endProxySession();
-        if (chrome.storage && chrome.storage.session)
-            chrome.storage.session.remove('vbmProxySession');
-    };
-
-    // --- Scan (§5.5b/§5.5d + item 10 state machine) -----------------------------
-    const startScan = () => {
-        if (scan || scanStarting)
-            return;
-        scanStarting = true;
-        // A scan installs its own PAC session — an open add panel's test
-        // would clobber it, so the panel goes first.
-        closeProxyPanel();
-        const settings = scanSettings();
-        chrome.bookmarks.getTree(tree => {
-            const items = scannableItems(tree);
-            treeItems = new Map(items.map(item => [item.id, item]));
-            scanProgress = 0;
-            scanTotal = items.length;
-            scanItems = items;
-            scanResults = new Map();
-            const launch = proxyActive => {
-                scanStarting = false;
-                const session = startPausableScan(items, {
-                    concurrency: settings.concurrency,
-                    timeoutMs: settings.timeoutMs,
-                    checker: (url, o) => checkUrlDual(url, { ...o, proxyTemplate: settings.proxyTemplate, proxyServer: proxyActive }),
-                    onResult: (id, result, done) => {
-                        // Progressive rendering: every settled check lands in the
-                        // partial Map and repaints at once (inactive view: the
-                        // closure keeps the state, activate() re-renders it).
-                        scanResults.set(id, result);
-                        scanProgress = done;
-                        if (views.isActive('dead'))
-                            render();
-                    }
-                });
-                scan = session;
-                // render only after `scan` is set — the toolbar's progress row
-                // keys off it
-                if (views.isActive('dead'))
-                    render();
-                session.promise.then(results => {
-                    // Settled after cancelScan dropped the session (or a newer
-                    // scan replaced it): the partial Map is discarded — cancel
-                    // means "the run never happened" (item 10 semantics).
-                    if (scan !== session)
-                        return;
-                    scan = null;
-                    scanItems = [];
-                    scanResults = null;
-                    stopProxySession();
-                    const plain = {};
-                    results.forEach((r, id) => {
-                        plain[id] = { status: r.status, code: r.code, error: r.error };
-                    });
-                    lastScan = { ts: Date.now(), scannedCount: items.length, results: plain };
-                    store.set('deadLastScan', JSON.stringify(lastScan));
-                    // §5.5c: ids that came back healthy lose their mark
-                    let pruned = false;
-                    results.forEach((r, id) => {
-                        if ((r.status === 'ok' || r.status === 'skipped') && deadMarks.delete(id))
-                            pruned = true;
-                    });
-                    if (pruned)
-                        persistMarks();
-                    refreshOverlays();
-                    if (views.isActive('dead'))
-                        render();
-                });
-            };
-            // The real proxy server wins over the legacy relay template when
-            // both are configured (dead-links.js applies the same priority).
-            if (settings.proxyServer)
-                startScanProxy(settings.proxyServer).then(launch);
-            else
-                launch(false);
-        });
-    };
-
-    // Cancel (item 10): abort in-flight probes, drop the session and its
-    // partial results, fall back to the previous persisted cache (or the
-    // start hint). The settle handler sees scan!==session and stays out.
-    const cancelScan = () => {
-        if (!scan)
-            return;
-        const session = scan;
-        scan = null;
-        scanItems = [];
-        scanResults = null;
-        session.cancel();
-        stopProxySession();
+        }
         if (views.isActive('dead'))
             render();
     };
 
-    // Popup close cancels the in-flight scan; the persisted cache survives.
-    window.addEventListener('pagehide', () => {
-        if (scan)
-            cancelScan();
-    });
+    // deadLastScan changed — only the SW writes it, so this means a run
+    // finished: fold in the fresh cache, prune the marks of ids that came
+    // back healthy (§5.5c) and repaint every overlay. Runs even when the
+    // view is not active (the prune must not wait for a revisit).
+    const onCacheWritten = raw => {
+        try {
+            lastScan = raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            lastScan = null;
+        }
+        if (lastScan && lastScan.results) {
+            let pruned = false;
+            for (const [id, r] of Object.entries(lastScan.results))
+                if ((r.status === 'ok' || r.status === 'skipped') && deadMarks.delete(id))
+                    pruned = true;
+            if (pruned)
+                persistMarks();
+            refreshOverlays();
+        }
+        if (views.isActive('dead'))
+            render();
+    };
+
+    if (chrome.storage && chrome.storage.onChanged)
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area !== 'local')
+                return;
+            if (DEAD_SCAN_KEY in changes)
+                applyBlob(changes[DEAD_SCAN_KEY].newValue);
+            if (DEAD_LAST_KEY in changes)
+                onCacheWritten(changes[DEAD_LAST_KEY].newValue);
+        });
+
+    // Start: one fire-and-forget message; scanStarting guards the window
+    // until the first blob lands (applyBlob clears it). The SW gates and
+    // installs the marker-PAC session itself (a gate failure comes back as
+    // blob.proxy.gate); an open add panel's test would clobber that session,
+    // so the panel goes first.
+    const startScan = () => {
+        if (live || scanStarting)
+            return;
+        scanStarting = true;
+        closeProxyPanel();
+        sendScan(DEAD_SCAN_MSG.start);
+    };
+
+    // Pause ⇄ Resume (same semantics as Esc, item 10): flip the mirror
+    // optimistically, then let the SW's published transition confirm it.
+    const togglePause = () => {
+        if (!live)
+            return;
+        const resume = live.state === 'paused';
+        live.state = resume ? 'scanning' : 'paused';
+        sendScan(resume ? DEAD_SCAN_MSG.resume : DEAD_SCAN_MSG.pause);
+        if (views.isActive('dead'))
+            render();
+    };
+
+    // Cancel (item 10): the run never happened — the mirror drops, the SW
+    // discards the partial results and the view falls back to the previous
+    // persisted cache (or the start hint).
+    const cancelScan = () => {
+        if (!live && !scanStarting)
+            return;
+        live = null;
+        scanStarting = false;
+        sendScan(DEAD_SCAN_MSG.cancel);
+        if (views.isActive('dead'))
+            render();
+    };
 
     // --- Events ------------------------------------------------------------------
     // Prune marks of removed bookmarks; path changes may reshuffle rows.
@@ -815,7 +821,7 @@ export function initViewDead(ctx = {}) {
     const scheduleRender = () => {
         clearTimeout(refreshTimer);
         refreshTimer = setTimeout(() => {
-            if (views.isActive('dead') && lastScan && !scan) {
+            if (views.isActive('dead') && lastScan && !live) {
                 // re-join against the live tree, then repaint
                 chrome.bookmarks.getTree(t => {
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
@@ -830,6 +836,26 @@ export function initViewDead(ctx = {}) {
 
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // v4 task-4 #14 risk banner: ack (per major version), session
+        // dismiss, and the backup-help link (popup-respecting open).
+        if (closest('.risk-banner-never')) {
+            e.preventDefault();
+            riskBanner.ack();
+            render();
+            return;
+        }
+        if (closest('.risk-banner-dismiss')) {
+            e.preventDefault();
+            riskBanner.dismiss();
+            render();
+            return;
+        }
+        if (closest('.risk-banner-help')) {
+            e.preventDefault();
+            if (actions && actions.openBookmarkNewTab)
+                actions.openBookmarkNewTab(RISK_HELP_URL, true, true);
+            return;
+        }
         if (closest('.dead-start') || closest('.dead-rescan')) {
             e.preventDefault();
             startScan();
@@ -838,14 +864,7 @@ export function initViewDead(ctx = {}) {
         const pauseBtn = closest('.dead-pause');
         if (pauseBtn) {
             e.preventDefault();
-            if (scan) {
-                // Pause ⇄ Resume toggle (same semantics as Esc, item 10).
-                if (scan.isPaused())
-                    scan.resume();
-                else
-                    scan.pause();
-                render();
-            }
+            togglePause();
             return;
         }
         if (closest('.dead-cancel')) {
@@ -885,6 +904,7 @@ export function initViewDead(ctx = {}) {
         if (filterBtn) {
             e.preventDefault();
             filter = filterBtn.dataset.filter || 'all';
+            store.set('deadFilter', filter); // v4 task-4 #1: persist the mode
             render();
             return;
         }
@@ -994,6 +1014,28 @@ export function initViewDead(ctx = {}) {
             proxyTestUrl = t.value;
     });
 
+    // v4 task-4 #8: in select mode Space toggles the focused row's
+    // membership (click parity). Capture phase, so keyboard.js never turns
+    // it into a synthetic click that opens the bookmark — and so a focus
+    // parked on a row button still toggles the row instead of paging the
+    // list. Focus is restored by render() via pendingRowFocus.
+    $list.addEventListener('keydown', e => {
+        if (!selecting || e.key !== ' ')
+            return;
+        const li = e.target && e.target.closest ? e.target.closest('li.vbm-row') : null;
+        const id = li && li.dataset && li.dataset.nodeId;
+        if (!id)
+            return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (selected.has(id))
+            selected.delete(id);
+        else
+            selected.add(id);
+        pendingRowFocus = id;
+        render();
+    }, true);
+
     // The executable empty state runs on Enter/Space too.
     $list.addEventListener('keydown', e => {
         if (e.key !== 'Enter' && e.key !== ' ')
@@ -1047,12 +1089,37 @@ export function initViewDead(ctx = {}) {
         hidden: !store.get('showDeadView', '1'), // showDeadView → tab visibility
         typeAhead: false,
         badge: () => deadMarks.size,
-        activate: () => {
-            loadCache();
-            // the first entry builds the tree-item map the rows join against
-            chrome.bookmarks.getTree(t => {
-                treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
-                render();
+        activate: ({ preset } = {}) => {
+            // v4 task-4 #16: sync straight from chrome.storage.local — the
+            // store mirror only overlays at page init, but a scan may have
+            // finished (or be running) while the popup sat open elsewhere.
+            // v4 task-4 #6: preset { scan:true } (palette custom command)
+            // kicks the scan off once the mirror is in sync — startScan
+            // itself guards against a live run.
+            const kick = () => {
+                if (preset && preset.scan)
+                    startScan();
+            };
+            const local = chrome.storage && chrome.storage.local;
+            const treeAndRender = () =>
+                chrome.bookmarks.getTree(t => {
+                    // the first entry builds the tree-item map the rows join against
+                    treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
+                    render();
+                    kick();
+                });
+            if (!local || !local.get) // unit doubles without storage
+                return treeAndRender();
+            local.get([DEAD_SCAN_KEY, DEAD_LAST_KEY], data => {
+                // Fold the cache in without the mark prune — that side
+                // effect belongs to the finish event (onCacheWritten).
+                try {
+                    lastScan = data[DEAD_LAST_KEY] ? JSON.parse(data[DEAD_LAST_KEY]) : null;
+                } catch (e) {
+                    lastScan = null;
+                }
+                applyBlob(data[DEAD_SCAN_KEY]);
+                treeAndRender();
             });
         },
         // §5.5d + item 10: Escape toggles pause ⇄ resume while a scan
@@ -1072,14 +1139,9 @@ export function initViewDead(ctx = {}) {
                 setSelecting(false);
                 return true;
             }
-            if (!scan)
+            if (!live)
                 return false;
-            if (scan.isPaused())
-                scan.resume();
-            else
-                scan.pause();
-            if (views.isActive('dead'))
-                render();
+            togglePause();
             return true;
         },
         onKey

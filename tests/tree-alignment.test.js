@@ -3,7 +3,9 @@ import fs from 'node:fs';
 import { initTreeRender } from '../src/tree-render.js';
 
 // Item 6 — tree row alignment contract.
-// Three stable axes, indented by `-webkit-padding-start: 16px × level`:
+// Three stable axes, indented by `-webkit-padding-start: 24px × level`
+// (TREE_INDENT; v4 task-4 #2 — the 24px step lands a child row's icon left
+// edge exactly on its parent folder's text left edge):
 //   1. twisty slot  16px, arrow centered (folders); bookmark rows get a 16px
 //      ::before placeholder so the rhythm never breaks
 //   2. icon slot    20px favicon-container, 16px icon centered inside
@@ -210,10 +212,10 @@ describe('row slot structure (item 6)', () => {
         expect(iTitle).toBeGreaterThan(iIcon);
     });
 
-    it('the "(Empty)" row pads 16px × level + the 40px slot width', () => {
+    it('the "(Empty)" row pads 24px × level + the 40px slot width', () => {
         const tr = setup();
         expect(tr.generateHTML([])).toContain('-webkit-padding-start: 40px');
-        expect(tr.generateHTML([], 3)).toContain('-webkit-padding-start: 88px');
+        expect(tr.generateHTML([], 3)).toContain('-webkit-padding-start: 112px');
     });
 
     it('the sync indicator markup stays inside the favicon container', () => {
@@ -240,6 +242,6 @@ describe('row slot structure (item 6)', () => {
         const pads = html.match(/-webkit-padding-start: (\d+)px/g) || [];
         expect(pads.length).toBeGreaterThanOrEqual(2);
         expect(new Set(pads).size).toBe(1);
-        expect(pads[0]).toBe('-webkit-padding-start: 32px');
+        expect(pads[0]).toBe('-webkit-padding-start: 48px');
     });
 });

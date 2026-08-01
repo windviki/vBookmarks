@@ -21,7 +21,9 @@
  *                 (dead/dupes) set false so letter keys stay view-local
  *   persistScroll — optional; scrollTop saved into the `viewState` JSON key
  *   badge()     — optional tab badge count (0/undefined hides the dot)
- *   activate({ keepFocus }) — optional enter hook (render/refresh)
+ *   activate({ keepFocus, preset }) — optional enter hook (render/refresh);
+ *                   preset is the palette custom-command view-preset channel
+ *                   (v4 task-4 #6), views that don't know it ignore it
  *   deactivate()            — optional leave hook
  *   onEscape()    — optional view-local Escape consumer; return true when
  *                   the key was consumed (dead scan abort, …)
@@ -266,35 +268,45 @@ export function initViewManager(ctx = {}) {
     // strip ↓ lands on the first enabled control, ↑ past the first row lands
     // here too, and the rung's own ↑/↓/←/→ live in keyboard.js. Views
     // without a toolbar (tree/search/recent) skip the rung transparently.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
-    const toolbarControls = def => {
+    // v4 task-4 #13: a view may stack MULTIPLE toolbars (the dead view's
+    // proxy strip above its scan toolbar) — each is its own rung in DOM
+    // order, and rungs without an enabled control are skipped.
+    const toolbarRungs = def => {
         if (!def || !def.container || !def.container.querySelectorAll)
             return [];
-        const out = [];
-        const controls = def.container.querySelectorAll(TOOLBAR_SEL);
-        for (let i = 0, l = controls.length; i < l; i++) {
-            const c = controls[i];
-            if (c.disabled)
-                continue;
-            // keyboard.js tabCycle's visibility contract: doubles without
-            // layout APIs count as visible (tests).
-            if (typeof c.getClientRects === 'function' && c.getClientRects().length === 0)
-                continue;
-            out.push(c);
+        const rungs = [];
+        const bars = def.container.querySelectorAll('.vbm-toolbar');
+        for (let b = 0, bl = bars.length; b < bl; b++) {
+            const controls = [];
+            const all = bars[b].querySelectorAll('button, select, input');
+            for (let i = 0, l = all.length; i < l; i++) {
+                const c = all[i];
+                if (c.disabled)
+                    continue;
+                // keyboard.js tabCycle's visibility contract: doubles without
+                // layout APIs count as visible (tests).
+                if (typeof c.getClientRects === 'function' && c.getClientRects().length === 0)
+                    continue;
+                controls.push(c);
+            }
+            if (controls.length)
+                rungs.push(controls);
         }
-        return out;
+        return rungs;
     };
-    const focusToolbar = () => {
-        const controls = toolbarControls(byId[activeId]);
-        if (!controls.length)
+    // last=false → the topmost rung (the strip's ↓ landing); last=true →
+    // the lowest rung (visually nearest the rows, the ↑-from-rows landing).
+    const focusToolbar = last => {
+        const rungs = toolbarRungs(byId[activeId]);
+        if (!rungs.length)
             return false;
-        controls[0].focus();
+        rungs[last ? rungs.length - 1 : 0][0].focus();
         return true;
     };
-    // ↑ past a list's first row: the toolbar rung when the active view has
-    // one, else the strip/box crossing (focusTop).
+    // ↑ past a list's first row: the lowest toolbar rung when the active
+    // view has one, else the strip/box crossing (focusTop).
     const focusListExit = () => {
-        if (!focusToolbar())
+        if (!focusToolbar(true))
             focusTop();
     };
 
@@ -462,7 +474,10 @@ export function initViewManager(ctx = {}) {
                 def.listEl.scrollTop = scroll;
         }
         if (def.activate)
-            def.activate({ keepFocus: !!opts.keepFocus });
+            // v4 task-4 #6: opts.preset is the palette custom-command
+            // view-preset channel (e.g. dupes strategy/scope, dead scan) —
+            // views that don't know it simply ignore the field.
+            def.activate({ keepFocus: !!opts.keepFocus, preset: opts.preset });
         // §2.1: after the view's own activate hook (which may re-render the
         // rows), re-mark the remembered row so focus lands where it was left.
         restoreFocusRow(def);
@@ -564,10 +579,17 @@ export function initViewManager(ctx = {}) {
         }
     });
 
-    // Ctrl/Cmd+1…6 jumps straight to a view (docs/v4task-2.md §3.4). Capture
-    // phase, and never while an input owns the keystroke.
+    // Ctrl/Cmd+1…9 jumps straight to a view (docs/v4task-2.md §3.4), with
+    // Alt+1…9 as the portable twin (v4 task-4 #10): Edge reserves Ctrl+1…8
+    // for browser-tab switching so the page never sees the keystroke there
+    // (Chrome lets it through inside the popup/side panel). Alt+digit is
+    // unbound in Chrome/Edge/Firefox. The Ctrl+Alt combo is excluded — on
+    // several layouts that is AltGr and types characters. Capture phase,
+    // and never while an input owns the keystroke.
     document.addEventListener('keydown', e => {
-        if (!(e.metaKey || e.ctrlKey) || e.altKey || e.shiftKey)
+        if (!(e.metaKey || e.ctrlKey || e.altKey) || e.shiftKey)
+            return;
+        if (e.altKey && (e.ctrlKey || e.metaKey))
             return;
         if (!/^[1-9]$/.test(e.key))
             return;

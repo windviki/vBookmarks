@@ -4,13 +4,17 @@ Package vBookmarks extension into a zip file for Chrome Web Store submission
 or offline distribution.
 
 Reads manifest.json for the version number and produces:
-    tmp/vBookmarks_[ver].zip  (tmp/ is git-ignored)
+    tmp/vBookmarks_[ver].zip        (--target chrome, the default)
+    tmp/vBookmarks_edge_[ver].zip   (--target edge; same content, see
+                                     docs/browser-compat.md — Edge is
+                                     Chromium MV3 and runs the same package)
 
 Only files needed at runtime or for store listing are included.
 Dev tools, IDE config, screenshots, and source design files are excluded.
 
 Usage:
     python3 scripts/package.py
+    python3 scripts/package.py --target edge
     python3 scripts/package.py --output my-build.zip
 """
 
@@ -55,9 +59,12 @@ JS_FILES = [
     'src/tree-view.js',
     'src/sync-ui.js',
     'src/palette.js',
+    'src/palette-commands.js',
+    'src/options-palette-commands.js',
     'src/dupes.js',
     'src/dead-links.js',
     'src/dead-proxy.js',
+    'src/dead-scan-sw.js',
     'src/session.js',
     'src/undo.js',
     'src/icons.js',
@@ -65,6 +72,7 @@ JS_FILES = [
     'src/view-recent.js',
     'src/view-dupes.js',
     'src/view-dead.js',
+    'src/risk-banner.js',
     'src/visit-stats.js',
     'src/visit-stats-sw.js',
     'src/view-stats.js',
@@ -255,7 +263,25 @@ def main():
         '--output', '-o',
         help='Output zip path (default: tmp/vBookmarks_[ver].zip)'
     )
+    parser.add_argument(
+        '--target', '-t',
+        choices=['chrome', 'edge', 'firefox'],
+        default='chrome',
+        help='Target browser (default: chrome). See docs/browser-compat.md.'
+    )
     args = parser.parse_args()
+
+    if args.target == 'firefox':
+        # Not packageable without a build step — see docs/browser-compat.md
+        # for the full evaluation (module service worker, sidePanel,
+        # tabGroups, /_favicon/, chrome.proxy PAC all lack Firefox MV3
+        # equivalents as-is).
+        print('Firefox is not supported by this package: the extension uses a')
+        print('module service worker, chrome.sidePanel, tab groups, the')
+        print('/_favicon/ endpoint and a chrome.proxy PAC hook, none of which a')
+        print('Firefox MV3 build can run without a bundling + feature-degrade')
+        print('pass. See docs/browser-compat.md for the full evaluation.')
+        sys.exit(1)
 
     root = get_repo_root()
     manifest = load_manifest(root)
@@ -266,11 +292,13 @@ def main():
     else:
         out_dir = os.path.join(root, 'tmp')
         os.makedirs(out_dir, exist_ok=True)
-        output_path = os.path.join(out_dir, f'vBookmarks_{version}.zip')
+        name = f'vBookmarks_{version}.zip' if args.target == 'chrome' \
+            else f'vBookmarks_{args.target}_{version}.zip'
+        output_path = os.path.join(out_dir, name)
 
     included = collect_files(root, manifest)
 
-    print(f'Packaging vBookmarks v{version}')
+    print(f'Packaging vBookmarks v{version} (target: {args.target})')
     print(f'Files to include: {len(included)}')
     print(f'Output: {output_path}')
 

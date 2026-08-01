@@ -112,6 +112,10 @@ const setup = (opts = {}) => {
     // v4 task-3 #10/#16: the two new dedicated menus
     const histRowMenu = el('MENU', 'hist-row-context-menu');
     const dupesGroupMenu = el('MENU', 'dupes-group-context-menu');
+    // v4 task-4 #6: the palette custom-command row menu + its items (init labels)
+    const paletteCmdMenu = el('MENU', 'palette-cmd-context-menu');
+    el('DIV', 'palette-cmd-edit');
+    el('DIV', 'palette-cmd-delete');
     const results = el('DIV', 'results');
     for (const id of ['add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
         'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
@@ -280,6 +284,7 @@ const setup = (opts = {}) => {
     return {
         menus, byId, el, body, tree, results, viewLists,
         bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
+        paletteCmdMenu,
         chrome: chromeStub, actionCalls, sortCalls, revealCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, menuItem, openOn,
@@ -291,9 +296,9 @@ const setup = (opts = {}) => {
 };
 
 describe('module API', () => {
-    it('returns clearMenu/switchBookmarkMenu plus the six menu elements', () => {
+    it('returns clearMenu/switchBookmarkMenu plus the seven menu elements', () => {
         const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
-            histRowMenu, dupesGroupMenu } = setup({});
+            histRowMenu, dupesGroupMenu, paletteCmdMenu } = setup({});
         expect(typeof menus.clearMenu).toBe('function');
         expect(typeof menus.switchBookmarkMenu).toBe('function');
         expect(menus.bookmarkMenu).toBe(bookmarkMenu);
@@ -302,9 +307,11 @@ describe('module API', () => {
         expect(menus.searchHistoryMenu).toBe(searchHistoryMenu);
         expect(menus.histRowMenu).toBe(histRowMenu);
         expect(menus.dupesGroupMenu).toBe(dupesGroupMenu);
+        // v4 task-4 #6: the palette custom-command row menu (edit/delete)
+        expect(menus.paletteCmdMenu).toBe(paletteCmdMenu);
         expect(Object.keys(menus).sort()).toEqual(
             ['bookmarkMenu', 'clearMenu', 'dupesGroupMenu', 'folderMenu', 'histRowMenu',
-                'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
+                'paletteCmdMenu', 'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
     });
 });
 

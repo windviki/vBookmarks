@@ -388,7 +388,7 @@
     "message": "Hapus duplikat yang dipilih ($count$)",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -431,10 +431,10 @@
     "message": "Hapus $count$ bookmark duplikat dari $groups$ grup yang dipilih?",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     }
   },
@@ -806,26 +806,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "Tema: Ikuti sistem"
-  },
-  "paletteCmdThemeDark": {
-    "message": "Tema: Gelap"
-  },
-  "paletteCmdThemeInk": {
-    "message": "Tema: Tinta (gelap)"
-  },
-  "paletteCmdThemeLight": {
-    "message": "Tema: Terang"
-  },
-  "paletteCmdThemePaper": {
-    "message": "Tema: Kertas (terang)"
-  },
-  "paletteCmdToggleItemPath": {
-    "message": "Alihkan label jalur induk"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "Alihkan tab tampilan"
+  },
+  "paletteCmdTheme": {
+    "message": "[TODO:paletteCmdTheme]"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "[TODO:paletteCmdThemeUsage]"
+  },
+  "paletteCustomTag": {
+    "message": "[TODO:paletteCustomTag]"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "[TODO:paletteCustomDeleteConfirm]"
+  },
+  "paletteCustomBroken": {
+    "message": "[TODO:paletteCustomBroken]"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "[TODO:paletteCmdSaveAsCommand]"
+  },
+  "paletteActionOpenUrl": {
+    "message": "[TODO:paletteActionOpenUrl]"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "[TODO:paletteActionOpenUrlGroup]"
+  },
+  "paletteActionViewPreset": {
+    "message": "[TODO:paletteActionViewPreset]"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "[TODO:paletteActionUrlTemplate]"
+  },
+  "optionsGroupPalette": {
+    "message": "[TODO:optionsGroupPalette]"
+  },
+  "paletteCustomHint": {
+    "message": "[TODO:paletteCustomHint]"
+  },
+  "paletteCustomAdd": {
+    "message": "[TODO:paletteCustomAdd]"
+  },
+  "paletteCustomUsage": {
+    "message": "[TODO:paletteCustomUsage]"
+  },
+  "paletteCustomSlash": {
+    "message": "[TODO:paletteCustomSlash]"
+  },
+  "paletteCustomAliases": {
+    "message": "[TODO:paletteCustomAliases]"
+  },
+  "paletteCustomAction": {
+    "message": "[TODO:paletteCustomAction]"
+  },
+  "paletteCustomUrl": {
+    "message": "[TODO:paletteCustomUrl]"
+  },
+  "paletteCustomTemplate": {
+    "message": "[TODO:paletteCustomTemplate]"
+  },
+  "paletteCustomWhere": {
+    "message": "[TODO:paletteCustomWhere]"
+  },
+  "paletteCustomFolder": {
+    "message": "[TODO:paletteCustomFolder]"
+  },
+  "paletteCustomView": {
+    "message": "[TODO:paletteCustomView]"
+  },
+  "paletteCustomStrategy": {
+    "message": "[TODO:paletteCustomStrategy]"
+  },
+  "paletteCustomScope": {
+    "message": "[TODO:paletteCustomScope]"
+  },
+  "paletteCustomScan": {
+    "message": "[TODO:paletteCustomScan]"
+  },
+  "paletteWhereCurrent": {
+    "message": "[TODO:paletteWhereCurrent]"
+  },
+  "paletteWhereTab": {
+    "message": "[TODO:paletteWhereTab]"
+  },
+  "paletteWhereWindow": {
+    "message": "[TODO:paletteWhereWindow]"
+  },
+  "paletteWhereBackground": {
+    "message": "[TODO:paletteWhereBackground]"
+  },
+  "paletteCustomSave": {
+    "message": "[TODO:paletteCustomSave]"
+  },
+  "paletteCustomErrSlash": {
+    "message": "[TODO:paletteCustomErrSlash]"
+  },
+  "paletteCustomErrAlias": {
+    "message": "[TODO:paletteCustomErrAlias]"
+  },
+  "paletteCustomErrTaken": {
+    "message": "[TODO:paletteCustomErrTaken]"
+  },
+  "paletteCustomErrUrl": {
+    "message": "[TODO:paletteCustomErrUrl]"
+  },
+  "paletteCustomErrFolder": {
+    "message": "[TODO:paletteCustomErrFolder]"
+  },
+  "paletteCustomErrView": {
+    "message": "[TODO:paletteCustomErrView]"
+  },
+  "paletteCustomErrTemplate": {
+    "message": "[TODO:paletteCustomErrTemplate]"
+  },
+  "paletteCustomErrAction": {
+    "message": "[TODO:paletteCustomErrAction]"
+  },
+  "paletteCustomErrLimit": {
+    "message": "[TODO:paletteCustomErrLimit]"
+  },
+  "paletteCustomEmpty": {
+    "message": "[TODO:paletteCustomEmpty]"
   },
   "paletteNoResults": {
     "message": "Tidak ada hasil yang cocok"
@@ -968,7 +1070,7 @@
     "message": "$count$ dipilih",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -980,6 +1082,21 @@
   },
   "selectModeExit": {
     "message": "Keluar dari mode pilih"
+  },
+  "deadRiskBanner": {
+    "message": "[TODO:deadRiskBanner]"
+  },
+  "dupesRiskBanner": {
+    "message": "[TODO:dupesRiskBanner]"
+  },
+  "riskBannerHelp": {
+    "message": "[TODO:riskBannerHelp]"
+  },
+  "riskBannerNever": {
+    "message": "[TODO:riskBannerNever]"
+  },
+  "riskBannerDismiss": {
+    "message": "[TODO:riskBannerDismiss]"
   },
   "sessionEmpty": {
     "message": "Tidak ada tab untuk disimpan"

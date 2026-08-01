@@ -499,17 +499,21 @@ body.linux input {
     pointer-events: none;
 }
 
-/* === Row alignment contract (item 6) ======================================
+/* === Row alignment contract (item 6; indent step revised in v4 task-4 #2) ==
    Every tree/results row is a flex line with three fixed slots on three
-   stable axes, indented by `-webkit-padding-start: 16px × level`:
+   stable axes, indented by `-webkit-padding-start: 24px × level`
+   (TREE_INDENT in tree-render.js):
      1. twisty slot  — 16px, arrow centered (folder rows only; bookmark rows
         get a 16px ::before placeholder so the axis rhythm never breaks)
      2. icon slot    — 20px favicon-container, the 16px icon centered inside
         (justify-content: center), so icon centers line up across rows;
         a 4px margin-inline-end opens the breathing room before the title
      3. text axis    — the title's left edge starts after the icon slot + gap
-        (16px × level + 40px), identical for folders, bookmarks and the
+        (24px × level + 40px), identical for folders, bookmarks and the
         "(Empty)" row (which pads the same 40px in tree-render.js)
+   The 24px step makes a child row's icon left edge land exactly on its
+   parent folder's text left edge (24 = 40 - 16): expanded children read as
+   one clean vertical line under the parent's title.
    Overlays that decorate a row (sync dot, dead ×) are position: absolute
    inside the icon slot and must never enter the flex flow — see the
    sync-indicator guard below. */
@@ -2080,6 +2084,80 @@ body.panel-mode .vbm-row .row-sub {
     opacity: 1; /* banners have no hover-to-reveal */
 }
 
+/* v4 task-4 #14 risk banner (dead/dupes pre-use warning): same one-line
+   token-driven pattern as the history-permission banner — text, help link,
+   "don't show again" and a session-dismiss ×. Never an arrow rung. */
+.risk-banner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    margin: 4px 6px;
+    padding: 6px 8px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 6px;
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-muted);
+    font-size: 12px;
+}
+
+.risk-banner i {
+    flex: 1 1 100%; /* the warning text takes the whole first row */
+    min-width: 0;
+    font-style: normal;
+}
+
+.risk-banner .risk-banner-help {
+    flex: none;
+    color: var(--vbm-accent);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.risk-banner .risk-banner-help:hover {
+    text-decoration: underline;
+}
+
+.risk-banner .risk-banner-never {
+    flex: none;
+    border: 1px solid var(--vbm-border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-fg);
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 1px 6px;
+}
+
+.risk-banner .risk-banner-never:hover {
+    background: var(--vbm-bg-selected);
+}
+
+.risk-banner .risk-banner-dismiss {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-inline-start: auto; /* the × trails the second row */
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.risk-banner .risk-banner-dismiss:hover {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg);
+}
+
+.risk-banner button:focus-visible,
+.risk-banner a:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
 /* Row: anchor (clock + query + count + time) plus a hover-revealed × */
 .search-history-row {
     display: flex;
@@ -2397,13 +2475,20 @@ body.panel-mode .vbm-row .row-sub {
     margin-inline-end: 4px;
 }
 
-/* Final polish: the group head's quick apply (clean-rest ×) is ALWAYS
+/* Final polish: the group head's quick apply (clean-rest ✓) is ALWAYS
    visible — it is the group's primary action (one click dedups the group
    with the current keeper pick, the toolbar summary/tab badge update via
    the regroup), and the §1.5 hover reveal left it undiscoverable. Member
-   rows keep the hover/focus reveal (.vbm-row rules above). */
+   rows keep the hover/focus reveal (.vbm-row rules above). v4 task-4 #9:
+   the glyph is a ✓ in the accent color so it reads as "apply this group's
+   dedup" rather than a plain delete ×. */
 .dupes-group .group-head .row-btn {
     visibility: visible;
+}
+
+.dupes-clean-rest {
+    color: var(--vbm-accent);
+    font-weight: 700;
 }
 
 /* Member rows: the 16px keeper slot takes the chevron column's place, so
@@ -2491,7 +2576,11 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 .dead-toolbar .dead-progress-label {
+    /* v4 task-4 #17: the bare done/total counter never shrinks or wraps —
+       the progress bar (flex:1) absorbs the squeeze instead. */
+    flex: 0 0 auto;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
 /* item 10: the paused tag of the scan toolbar (amber, double-encoded with
@@ -2532,7 +2621,10 @@ body.panel-mode .vbm-row .row-sub {
     border-radius: 0;
 }
 
-.dead-toolbar .dead-filter-btn.active {
+/* v4 task-4 #1: pressed state keyed off aria-pressed, not an 'active' class
+   (that class is context-menu.js's menu-open row marker; clearMenu strips it
+   body-wide and ate the highlight). */
+.dead-toolbar .dead-filter-btn[aria-pressed="true"] {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
 }
@@ -2731,7 +2823,7 @@ body.panel-mode .vbm-row .row-sub {
     cursor: pointer;
 }
 
-.stats-toolbar .seg-btn.active {
+.stats-toolbar .seg-btn[aria-pressed="true"] {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
 }

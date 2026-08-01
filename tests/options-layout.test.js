@@ -23,13 +23,14 @@ const ruleBody = (css, selector) => {
 const count = (haystack, needle) => haystack.split(needle).length - 1;
 
 describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', () => {
-    it('flows the nine merged card sections through .options-grid', () => {
-        // general / views / sync / accessibility / custom icon / separators
-        // (final polish: split out of custom styles) / custom styles /
-        // dead scan / backup+reset — advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(9);
+    it('flows the ten merged card sections through .options-grid', () => {
+        // general / views / palette custom commands (v4 task-4 #6) / sync /
+        // accessibility / custom icon / separators (final polish: split out
+        // of custom styles) / custom styles / dead scan / backup+reset —
+        // advanced-options merged in.
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(10);
         expect(optionsHtml).toContain('<main class="options-grid">');
-        for (const id of ['general', 'views-options', 'sync-options', 'accessibility',
+        for (const id of ['general', 'views-options', 'palette-cmd-options', 'sync-options', 'accessibility',
                 'custom-icon', 'separator-options', 'custom-styles', 'dead-scan-options', 'backup-options'])
             expect(optionsHtml).toContain(`<h2 id="${id}">`);
     });

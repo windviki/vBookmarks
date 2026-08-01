@@ -23,12 +23,14 @@
 
 | View | What it does | Jump key |
 |---|---|---|
-| Tree | The classic hierarchical bookmark tree (startup view) | `Ctrl/Cmd+1` |
-| Search | Dual-zone search: history on top, results below | `Ctrl/Cmd+2` |
-| Recent | Newest bookmarks, grouped Today / This week / This month / Older | `Ctrl/Cmd+3` |
-| Stats | Local visit statistics + a recently-visited section | `Ctrl/Cmd+4` |
-| Dead links | Dual-channel dead-link scanner with pause/resume | `Ctrl/Cmd+5` |
-| Duplicates | Duplicate cleaner with six keeper strategies | `Ctrl/Cmd+6` |
+| Tree | The classic hierarchical bookmark tree (startup view) | `Alt+1` |
+| Search | Dual-zone search: history on top, results below | `Alt+2` |
+| Recent | Newest bookmarks, grouped Today / This week / This month / Older | `Alt+3` |
+| Stats | Local visit statistics + a recently-visited section | `Alt+4` |
+| Dead links | Dual-channel dead-link scanner with pause/resume | `Alt+5` |
+| Duplicates | Duplicate cleaner with six keeper strategies | `Alt+6` |
+
+(Jump keys are `Alt+1…6` over the visible views. `Ctrl/Cmd+1…6` is the legacy twin and still works where the browser lets it through — Chrome's popup/side panel — but Edge reserves `Ctrl+1…8` for its own tab switching, so `Alt` is the portable form.)
 
 (Tabs carry one 16px line icon per view plus a localized label; on narrow widths the label hides and the icon stays.)
 
@@ -85,7 +87,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 | `R` | Search/Recent/Dead/Duplicates | **Reveal in tree** |
 | `K` | Duplicates | Pin the focused row as the group's **keeper** |
 | `M` | Dead links | Toggle a **dead mark** (the red ✕ syncs across all views) |
-| `Ctrl/Cmd+1…6` | Anywhere | Jump to the view |
+| `Alt+1…6` | Anywhere | Jump to the Nth visible view (`Ctrl/Cmd+1…6` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
 | `Ctrl/Cmd+K` | In the popup | Command palette |
 | `Ctrl/Cmd+Shift+K` | Global (any page) | Raise the popup with the palette open |
 | `Ctrl/Cmd+D` | In the popup | Quick-add the current page (opens the edit dialog if already bookmarked) |
@@ -109,7 +111,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 ### 2.5 Palette keyboard
 
-`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows; keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically.
+`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows (on a custom command row it opens the command's own edit/delete menu); keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically.
 
 ## 3. The views, one by one
 
@@ -147,7 +149,10 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 ![Dead-link view](images/guide/view-dead.png)
 
 - **Start**: the empty state tells you how many bookmarks will be scanned. Results **stream in row by row**.
-- **Control**: `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot; reopening the popup paints the previous results instantly.
+- **Runs in the background**: the scan lives in the service worker, not the page — close the popup or side panel mid-scan and it keeps going; reopen to a live mirror of the progress (an interrupted run even resumes itself after a browser restart). Canceling restores the last completed snapshot, and a finished scan paints instantly on the next open.
+- **Control**: `Esc` pauses/resumes without losing progress.
+- **Live but quiet**: progress ticks repaint the list **without touching your scroll position or focus** — scrolling deep into the results mid-scan no longer snaps back to the top.
+- **Backup first**: the first visit shows a risk banner (bulk changes ahead) with a link to Chrome's own backup & restore guide; *Don't show again* silences it until the next major version, the × for the session.
 - **Dual channel**: direct fetch first; on failure your own **proxy template** (options page → *Dead scan* group; empty = direct only) gets the final say. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
 - **Filter**: All / Dead only / Blocked only.
 - **Marks**: `M` or the row button flags a link; the red ✕ follows it into the tree, search, recent and stats views. Bulk mark/unmark lives in the toolbar (confirm-gated).
@@ -161,13 +166,14 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 ![Duplicates view](images/guide/view-dupes.png)
 
 - **What counts as a duplicate**: URLs are normalized before grouping — tracking parameters (`utm_*`/`fbclid`/`gclid`) stripped, `#hash` dropped, root trailing slash folded; the toolbar's *Ignore http/https differences* checkbox merges scheme variants.
+- **Backup first**: the same risk banner as the dead-link view shows before your first cleanup — *Don't show again* silences it until the next major version.
 - **Keeper strategies** (toolbar select, six): oldest / newest / bookmark-bar / shortest title / shallowest / most-visited (live counts from the Stats view; greyed out while stats are off).
 - **Manual pinning**: the row radio or `K` — manual picks survive strategy changes.
 - **Inside an expanded group**: `Enter`/`Space` opens that copy, `←` jumps back to the group head. The group head's own context menu (right-click or `→`) offers *Clean this group* and expand/collapse.
 - **Selection mode**: the toolbar's *Select* switches to a batch bar over whole groups (*All / Invert / Clear*); *Dedup selected* cleans every chosen group after a single confirmation. `Esc` exits the mode.
 
 ![Duplicates selection mode](images/guide/dupes-select.png)
-- **Preview first, execute after**: everything but the keeper renders struck-through; the group `×` (clean this group) or *Apply all* commits. Batch deletion runs through the **undo chain** and ends in a single summary toast.
+- **Preview first, execute after**: everything but the keeper renders struck-through; the group head's `✓` (*apply this group's dedup* — its tooltip names the keeper and the doomed count) or *Apply all* commits. Batch deletion runs through the **undo chain** and ends in a single summary toast.
 - Scope can be limited to the bookmarks bar; the last result set is snapshotted — reopening paints instantly and re-validates in the background.
 - Long group URLs are **mid-truncated** (both ends stay visible); the full URL lives in the tooltip.
 
@@ -177,7 +183,8 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - **Open**: `Ctrl/Cmd+K` in the popup; `Ctrl/Cmd+Shift+K` from any page (raises the popup with the palette pre-opened).
 - **Three modes in one box**: plain text fuzzy-searches bookmarks *and* folders (Enter on a bookmark opens it, Enter on a folder **jumps to it in the tree**); a leading `/` lists slash commands (prefix-matched — `/d` shows `/dead` and `/dupes`); an empty query shows the full command table.
-- **Command table** (every command has aliases): `/tree` `/search` `/recent` `/stats` `/dead` `/dupes` (view jumps), `/session` (save the window's tabs as a folder), `/options`, theme switches (e.g. `/dark`, or `/theme` to list all five), `/tabs` (tab-strip visibility), `/path` (row path labels).
+- **Command table** (aliases in parentheses): `/add` (`/star`) quick-add the current page · `/new` bookmark the current tab · `/folder` (`/mkdir`) new folder · `/session` (`/save`) save the window's tabs as a folder · `/tree` (`/home`) · `/search` (`/find`) · `/recent` (`/latest`) · `/stats` (`/visits`) · `/dead` (`/broken`) · `/dupes` (`/dedup`) — one Go command per view · `/theme` + a theme name (`/theme dark`; a unique prefix like `/theme d` works; bare `/theme` shows the usage) · `/tabs` toggles the tab strip · `/options` (`/settings`).
+- **Custom commands**: define your own in the options page's *Commands* group — open a URL, fill a **URL template** from the rest words (`/g kimi code` → `…q=kimi%20code`), open a whole bookmark **folder as tabs**, or jump to a **view with a preset** (e.g. Duplicates pinned to keep-newest, or a dead-link scan started on entry). The fastest way to start one: type a fresh `/name` the table doesn't know and use the *Save as a command* row — the editor opens with the slash prefilled. Custom rows join slash matching (most-used first, aliases included), wear a *custom* tag, sync across devices, and `→` on one opens its edit/delete menu.
 - **Bridge row**: a plain query offers "Search in the search view for …" at the bottom — Enter runs it in the full search view.
 - **Chrome around the box**: a × button inside the field clears the query (mouse-only, like the search box); a full-width close bar sits at the bottom center for mouse users — the keyboard way out is `Esc`.
 - The palette closes itself when it loses focus; `Esc` peels layers as usual.
@@ -189,7 +196,7 @@ Every new surface in 4.0 can be switched off. **The fastest route**: the *Restor
 | You want | Setting (options page → *Views* group, unless noted) |
 |---|---|
 | No tab strip — one tree + `Ctrl+F` search (the 3.x layout) | Turn off **Show view tabs** (`showViewTabs`). Tree and search remain the only views, shortcuts unchanged |
-| An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab, its `Ctrl+number` jump and its palette command all disappear |
+| An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab, its `Alt+number` jump and its palette command all disappear |
 | No command palette | Turn off **Enable the command palette** (`paletteEnabled`) — `Ctrl/Cmd+K` and the global wake-up both stand down |
 | No quick-add star or tool button | Turn off `quickAddEnabled` / `showToolButton` in the Views group |
 | Always open on the tree | Turn off **Remember the last active view** (`rememberView`) |
@@ -210,7 +217,7 @@ Want it even closer? The options page's **Custom Styles** group gives you full C
 
 The **Backup** group at the bottom of the options page:
 
-- **Export**: downloads every setting (including the sync-area sync preferences) as a date-stamped JSON file.
+- **Export**: downloads every setting (including the sync-area sync preferences and your custom palette commands) as a date-stamped JSON file.
 - **Import**: pick a previously exported file; after confirmation it merges — keys present in the file are overwritten, everything else is kept. Export once before switching machines or reinstalling the browser.
 
 ## 7. Privacy notes

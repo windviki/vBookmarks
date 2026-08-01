@@ -4,6 +4,7 @@
 <script src="/vendor/codemirror.js"></script>
 <script src="/src/store.js"></script>
 <script src="/src/options.js"></script>
+<script type="module" src="/src/options-palette-commands.js"></script>
 <div class="options-page">
 <h1>
     <img src="/assets/icons/icon.svg" width="32" height="32" alt="">
@@ -47,6 +48,32 @@
     <li><label><input type="checkbox" id="search-history-enabled" aria-labelledby="option-search-history"><span id="option-search-history"></span></label><br><small id="option-search-history-hint"></small></li>
     <li><label><input type="checkbox" id="stats-enabled" aria-labelledby="option-stats-enabled"><span id="option-stats-enabled"></span></label> <button id="stats-clear" type="button"></button></li>
 </ul>
+</section>
+<section class="options-group">
+<h2 id="palette-cmd-options"></h2>
+<ul class="options-list">
+    <li><small id="palette-cmd-hint"></small></li>
+    <li><span id="palette-cmd-usage"></span> <button id="palette-cmd-add" type="button"></button></li>
+</ul>
+<ul class="options-list" id="palette-cmd-list"></ul>
+<form id="palette-cmd-form" hidden>
+<ul class="options-list">
+    <li><label><span id="pc-name-label"></span> <input type="text" id="pc-name" maxlength="60"></label></li>
+    <li><label><span id="pc-slash-label"></span> <input type="text" id="pc-slash" spellcheck="false" maxlength="24"></label></li>
+    <li><label><span id="pc-aliases-label"></span> <input type="text" id="pc-aliases" spellcheck="false"></label></li>
+    <li><label><span id="pc-action-label"></span> <select id="pc-action"></select></label></li>
+    <li class="pc-for" data-types="open-url"><label><span id="pc-url-label"></span> <input type="text" id="pc-url" spellcheck="false"></label></li>
+    <li class="pc-for" data-types="url-template"><label><span id="pc-template-label"></span> <input type="text" id="pc-template" spellcheck="false"></label></li>
+    <li class="pc-for" data-types="open-url url-template open-url-group"><label><span id="pc-where-label"></span> <select id="pc-where"></select></label></li>
+    <li class="pc-for" data-types="open-url-group"><label><span id="pc-folder-label"></span> <select id="pc-folder"></select></label></li>
+    <li class="pc-for" data-types="view-preset"><label><span id="pc-view-label"></span> <select id="pc-view"></select></label></li>
+    <li class="pc-for pc-for-dupes" data-types="view-preset"><label><span id="pc-strategy-label"></span> <select id="pc-strategy"></select></label></li>
+    <li class="pc-for pc-for-dupes" data-types="view-preset"><label><span id="pc-scope-label"></span> <select id="pc-scope"></select></label></li>
+    <li class="pc-for pc-for-dead" data-types="view-preset"><label><input type="checkbox" id="pc-scan"> <span id="pc-scan-label"></span></label></li>
+    <li><span id="pc-error" role="alert"></span></li>
+    <li><button type="submit" id="pc-save"></button> <button type="button" id="pc-cancel"></button></li>
+</ul>
+</form>
 </section>
 <section class="options-group">
 <h2 id="sync-options"></h2>

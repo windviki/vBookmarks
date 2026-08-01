@@ -100,14 +100,15 @@
         'fav-MR': r.faviconMR,
     })));
 
-    // Expected values based on neat.css flexbox three-slot model:
-    // │← -webkit-padding-start(16*level) →│← twisty/::before 16px →│← icon-slot 20px →│← i flex:1 →│
+    // Expected values based on neat.css flexbox three-slot model (v4 task-4
+    // #2: 24px/level — child icon left lands on the parent's text left):
+    // │← -webkit-padding-start(24*level) →│← twisty/::before 16px →│← icon-slot 20px →│← 4px gap →│← i flex:1 →│
     // Expected at level N from popup left edge:
-    //   twisty/::before center = 16*N + 8
-    //   icon center            = 16*N + 16 + 10 = 16*N + 26
-    //   text left              = 16*N + 16 + 20 = 16*N + 36
+    //   twisty/::before center = 24*N + 8
+    //   icon center            = 24*N + 16 + 10 = 24*N + 26
+    //   text left              = 24*N + 16 + 20 + 4 = 24*N + 40
     console.log('\n=== ALIGNMENT ANALYSIS ===');
-    console.log('Expected model: twisty-c = 16L+8, icon-c = 16L+26, text-L = 16L+36\n');
+    console.log('Expected model: twisty-c = 24L+8, icon-c = 24L+26, text-L = 24L+40\n');
 
     // Group by level
     const byLevel = {};
@@ -119,7 +120,7 @@
     let allAligned = true;
     for (const [lv, rows] of Object.entries(byLevel)) {
         const lvNum = parseInt(lv);
-        console.log(`--- Level ${lv} (expected: twisty-c=${16*lvNum+8}, icon-c=${16*lvNum+26}, text-L=${16*lvNum+36}) ---`);
+        console.log(`--- Level ${lv} (expected: twisty-c=${24*lvNum+8}, icon-c=${24*lvNum+26}, text-L=${24*lvNum+40}) ---`);
         const folders = rows.filter(r => r.type === 'FOLDER');
         const bookmarks = rows.filter(r => r.type === 'BOOKMARK');
 
@@ -153,5 +154,21 @@
     }
 
     console.log(`\n=== ${allAligned ? '✓ ALL ALIGNED' : '✗ MISALIGNMENT DETECTED'} ===`);
+
+    // v4 task-4 #2: the cross-level contract — a child row's icon LEFT edge
+    // lands exactly on its parent folder's TEXT left edge (24px indent step).
+    console.log('\n=== CROSS-LEVEL (parent text-left vs child icon-left) ===');
+    const sorted = results.slice().sort((a, b) => a.index - b.index);
+    for (let i = 0; i < sorted.length - 1; i++) {
+        const cur = sorted[i], nxt = sorted[i + 1];
+        if (cur.type === 'FOLDER' && parseInt(nxt.level) === parseInt(cur.level) + 1
+            && cur.textLeft != null && nxt.iconLeft != null) {
+            const delta = parseFloat(nxt.iconLeft) - parseFloat(cur.textLeft);
+            const ok = Math.abs(delta) < 0.5;
+            if (!ok) allAligned = false;
+            console.log(`  ${cur.title} (lv${cur.level}) -> ${nxt.title} (lv${nxt.level}): delta=${delta.toFixed(1)}px ${ok ? '✓' : '✗ MISALIGNED'}`);
+        }
+    }
+    console.log(`\n=== ${allAligned ? '✓ ALL ALIGNED' : '✗ MISALIGNMENT DETECTED'} (final) ===`);
     return results;
 })();

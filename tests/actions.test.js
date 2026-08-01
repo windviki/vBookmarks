@@ -979,7 +979,7 @@ describe('addNewBookmarkNode (addNewNode/addNodeTo)', () => {
         expect(chrome.bookmarks.createCalls).toEqual([
             { parentId: '1', index: 3, title: 'New', url: 'http://new/' }
         ]);
-        expect(calls.bmHTML).toEqual([['New', 'http://new/', 'style="-webkit-padding-start: 16px"', '100']]);
+        expect(calls.bmHTML).toEqual([['New', 'http://new/', 'style="-webkit-padding-start: 24px"', '100']]);
         const li = created[0]._qs.li;
         expect(ul.inserted).toEqual([[li, rNode]]);
         expect(created[0].innerHTML).toContain('id="neat-tree-item-100"');
@@ -1144,7 +1144,7 @@ describe('separator actions', () => {
         // (36 chars, version nibble 4, variant nibble 8/9/A/B)
         expect(createCall.url).toMatch(
             /^http:\/\/separatethis\.com\/#[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-4[0-9A-Za-z]{3}-[89AB][0-9A-Za-z]{3}-[0-9A-Za-z]{12}$/);
-        expect(calls.sepHTML).toEqual([16]); // paddingStart = 16 * (level 0 + 1)
+        expect(calls.sepHTML).toEqual([24]); // paddingStart = TREE_INDENT * (level 0 + 1)
         expect(calls.sepAdd).toEqual(['100']);
     });
 

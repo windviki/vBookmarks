@@ -62,6 +62,7 @@ const SEED = `
     const browser = await puppeteer.launch({
         executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
         headless: 'new',
+        protocolTimeout: 300000,
         args: [
             '--no-sandbox',
             '--disable-dev-shm-usage',
@@ -94,6 +95,10 @@ const SEED = `
 
     const page = await browser.newPage();
     watch(page);
+    // popup.html runs here as a regular tab: the actions layer's
+    // post-open window.close (openBookmarkNewTab & friends) would close that
+    // tab for real and detach the CDP frame. Stub it out for the harness.
+    await page.evaluateOnNewDocument(() => { window.close = () => {}; });
     await page.setViewport({ width: 400, height: 620 });
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
     await sleep(1500);
@@ -321,10 +326,17 @@ const SEED = `
     check('stats toolbar ↑: tab strip',
         await focusedTab() === 'view-tab-stats', await activeDesc());
 
-    // --- dead (cached scan renders two result rows + the toolbar rung) ---
+    // --- dead (cached scan renders two result rows + TWO toolbar rungs) ---
+    // v4 task-4 #13: the proxy strip sits above the scan toolbar and each
+    // toolbar is its own arrow rung in visual order (keyboard-model §2.5):
+    // strip ↓ → proxy strip → scan toolbar → rows, and back up in reverse.
     await page.click('#view-tab-dead'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead ↓ from strip: the toolbar rung (rescan)', await $(() =>
+    check('dead ↓ from strip: the proxy strip rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dead proxy strip ↓: the scan toolbar rung (rescan)', await $(() =>
         document.activeElement && document.activeElement.classList.contains('dead-rescan')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
@@ -335,11 +347,15 @@ const SEED = `
     check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead ↑ past top: the toolbar rung', await $(() =>
+    check('dead ↑ past top: the lowest toolbar rung', await $(() =>
         document.activeElement && !!document.activeElement.closest('.dead-toolbar')),
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead toolbar ↑: tab strip',
+    check('dead toolbar ↑: the proxy strip rung', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.dead-proxy-strip')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead proxy strip ↑: tab strip',
         await focusedTab() === 'view-tab-dead', await activeDesc());
 
     // --- dupes: the toolbar rung (a select keeps its native ↑/↓ — leave it
@@ -561,6 +577,141 @@ const SEED = `
     check('Dupes: count pill', dupes.pill);
     check('Dupes: strategy + scope controls', dupes.strategy && dupes.scope);
     check('Dupes: exactly one keeper checked', dupes.keeper === 1, String(dupes.keeper));
+
+    // ====================================================================
+    // v4 task-4 #6: palette custom commands — the slash dispatch into a
+    // seeded pair (open-url-group on the 工作区 folder + a url-template),
+    // the ↑↓/Home/End walk over custom rows, the → edit/delete menu and
+    // the save-as hand-off into the options editor. The palette is opened
+    // through the tool button: its Ctrl/Cmd+K binding is a capture-phase
+    // listener, which CDP never reaches (docs/cdp-escape-limitation.md).
+    // ====================================================================
+    console.log('═══ 面板自定义指令（v4 task-4 #6）═══');
+    // Loopback URLs: 127.0.0.1:9 refuses fast — external URLs would hang the
+    // navigationless DinD network and wedge the CDP session.
+    const ccSeed = await $(async () => {
+        const create = p => new Promise(res => chrome.bookmarks.create(p, res));
+        const folder = await create({ parentId: '1', title: '面板组' });
+        await create({ parentId: folder.id, title: 'One', url: 'http://127.0.0.1:9/one' });
+        await create({ parentId: folder.id, title: 'Two', url: 'http://127.0.0.1:9/two' });
+        await create({ parentId: folder.id, title: 'Three', url: 'http://127.0.0.1:9/three' });
+        const cmds = [
+            { id: 'cc_work', name: 'Work apps', slash: 'work', aliases: ['wo'],
+              action: { type: 'open-url-group', folderId: folder.id, where: 'tab' },
+              createdAt: 1, useCount: 0, lastUsedAt: 0 },
+            { id: 'cc_kimi', name: 'Kimi search', slash: 'g', aliases: [],
+              action: { type: 'url-template', template: 'http://127.0.0.1:9/search?q=%s', where: 'tab' },
+              createdAt: 2, useCount: 0, lastUsedAt: 0 }
+        ];
+        await new Promise(r => chrome.storage.sync.set({ paletteCustomCommands: JSON.stringify(cmds) }, r));
+        return folder.id;
+    });
+    check('custom commands seeded into the sync area', !!ccSeed);
+    await page.reload({ waitUntil: 'networkidle0' }); await sleep(1500);
+
+    // '/wo': builtin fuzzy hits first, the custom group row last.
+    await page.click('#tool-btn'); await sleep(400);
+    check('tool button opens the palette', await $(() => {
+        const p = document.getElementById('command-palette');
+        return !!p && !p.hidden;
+    }));
+    await page.type('#palette-input', '/wo', { delay: 30 }); await sleep(400);
+    let cc = await $(() => {
+        const rows = [...document.querySelectorAll('#palette-results li')];
+        const last = rows[rows.length - 1];
+        return {
+            total: rows.length,
+            lastIsCustom: !!last && last.classList.contains('palette-command-custom'),
+            ccId: last && last.dataset.ccId,
+            tagged: !!last && !!last.querySelector('.palette-custom-tag'),
+            slash: !!last && (last.querySelector('.palette-slash') || {}).textContent
+        };
+    });
+    check('/wo: the custom group row lands last (builtins keep table order)',
+        cc.total >= 2 && cc.lastIsCustom && cc.ccId === 'cc_work', JSON.stringify(cc));
+    check('custom row: tag + every slash form as the suffix',
+        cc.tagged && cc.slash === '/work /wo', cc.slash);
+
+    // The ↑↓/End walk treats custom rows like any other row.
+    await page.keyboard.press('End'); await sleep(200);
+    const selAfterEnd = await $(() =>
+        [...document.querySelectorAll('#palette-results li')]
+            .findIndex(li => li.classList.contains('selected')));
+    check('End: selects the custom row', selAfterEnd === cc.total - 1, `idx:${selAfterEnd}`);
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    const selAfterUp = await $(() =>
+        [...document.querySelectorAll('#palette-results li')]
+            .findIndex(li => li.classList.contains('selected')));
+    check('↑: moves off the custom row', selAfterUp === cc.total - 2, `idx:${selAfterUp}`);
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+
+    // → on a custom row opens its own edit/delete menu (not the bookmark one).
+    await page.keyboard.press('ArrowRight'); await sleep(300);
+    check('→ on the custom row opens the edit/delete menu', await $(() => {
+        const m = document.getElementById('palette-cmd-context-menu');
+        const item = id => (document.getElementById(id) || {}).textContent || '';
+        return !!m && m.style.opacity === '1' && !!item('palette-cmd-edit') && !!item('palette-cmd-delete');
+    }), await $(() => {
+        const m = document.getElementById('palette-cmd-context-menu');
+        return m ? `opacity:${m.style.opacity}` : '(missing)';
+    }));
+
+    // Executing the group opens the folder's bookmarks as tabs.
+    await page.click('#tool-btn'); await sleep(400); // menu+panel cycle closed/open
+    await page.type('#palette-input', '/wo', { delay: 30 }); await sleep(300);
+    await page.keyboard.press('End'); await sleep(150);
+    await page.keyboard.press('Enter'); await sleep(800);
+    const groupTabs = await $(async () => {
+        const tabs = await new Promise(r => chrome.tabs.query({}, r));
+        return tabs.map(t => t.url).filter(u =>
+            /127\.0\.0\.1:9\/(one|two|three)/.test(u));
+    });
+    check('/wo Enter: the folder opens as a URL group', groupTabs.length === 3, `tabs:${groupTabs.length}`);
+    check('the panel closed behind the execution', await $(() =>
+        document.getElementById('command-palette').hidden));
+
+    // The url-template fills %s from the slash rest words. The group run
+    // foregrounded one of its new tabs; a backgrounded page still answers
+    // Runtime.evaluate but a page.click (needs layout) wedges until
+    // protocolTimeout — reclaim the foreground before clicking again.
+    await page.bringToFront(); await sleep(300);
+    await page.click('#tool-btn'); await sleep(400);
+    await page.type('#palette-input', '/g kimi code', { delay: 30 }); await sleep(300);
+    await page.keyboard.press('Enter'); await sleep(800);
+    const tplTabs = await $(async () => {
+        const tabs = await new Promise(r => chrome.tabs.query({}, r));
+        return tabs.map(t => t.url).filter(u => /127\.0\.0\.1:9\/search/.test(u));
+    });
+    check('/g kimi code: %s filled, opened in a new tab',
+        tplTabs.some(u => u.includes('q=kimi%20code')), tplTabs.join(','));
+
+    // A hitless slash query offers the save-as closure; Enter hands over to
+    // the options editor with the slash prefilled. (Foreground again: the
+    // template run opened its tab active.)
+    await page.bringToFront(); await sleep(300);
+    await page.click('#tool-btn'); await sleep(400);
+    await page.type('#palette-input', '/nosuchcmd', { delay: 30 }); await sleep(300);
+    check('hitless slash query: the save-as-command row', await $(() => {
+        const rows = [...document.querySelectorAll('#palette-results li')];
+        return rows.length === 1 && /as a command/i.test(rows[0].textContent);
+    }), await $(() => (document.querySelector('#palette-results li') || {}).textContent));
+    await page.keyboard.press('Enter'); await sleep(1200);
+    const optPage = (await browser.pages()).find(p => p.url().includes('pages/options.html'));
+    check('save-as row opens the options editor in a tab', !!optPage);
+    if (optPage) {
+        await sleep(800);
+        const pre = await optPage.evaluate(() => ({
+            formOpen: !!document.getElementById('palette-cmd-form') &&
+                !document.getElementById('palette-cmd-form').hidden,
+            slash: (document.getElementById('pc-slash') || {}).value
+        }));
+        check('editor open with the slash prefilled', pre.formOpen && pre.slash === 'nosuchcmd',
+            JSON.stringify(pre));
+        await optPage.close();
+    }
+    // Closing the options tab may leave the panel page backgrounded; reclaim
+    // the foreground before the reload + keyboard walk below.
+    await page.bringToFront(); await sleep(300);
 
     // ====================================================================
     // §7 banner keyboard reachability (keyboard-model §5/§7): the donation

@@ -6,12 +6,14 @@ import fs from 'node:fs';
 // cleanly in node once the globals are stubbed. store/views/treeRender/
 // separatorManager/treeView/actions/dialogs/undo are injected recording
 // doubles; the registered ViewDef is captured and driven by hand
-// (activate/onKey/onEscape/badge). globalThis.fetch is doubled per case for
-// the scan flow (the dual-channel checker included); setTimeout is a
-// record-only stub advanced by hand (tick) for the 300ms repaint debounce;
-// the scan's promise chain flushes through the saved real setTimeout.
-// All assertions go through the doubles' records and the list's innerHTML —
-// nothing is copied from the module body.
+// (activate/onKey/onEscape/badge). The scan itself runs in the service
+// worker (v4 task-4 #16 — engine coverage lives in dead-scan-sw.test.js /
+// dead-links.test.js): this suite drives the view as a MIRROR — the chrome
+// double records runtime.sendMessage and fires storage.onChanged with the
+// vbmDeadScan blob / deadLastScan cache exactly like the SW publishes them.
+// setTimeout is a record-only stub advanced by hand (tick) for the 300ms
+// repaint debounce. All assertions go through the doubles' records and the
+// list's innerHTML — nothing is copied from the module body.
 
 let initViewDead;
 let timeouts;
@@ -77,21 +79,6 @@ const makeTree = () => [{
 
 const PROXY = 'https://relay.example/fetch?target={url}';
 
-// fetch double: fine → 200; gone → 404 everywhere; blocked → 404 direct but
-// 200 through the relay; separators must never appear.
-const dualFetch = () => {
-    const calls = [];
-    globalThis.fetch = (url, opts) => {
-        calls.push(url);
-        if (url.startsWith('https://relay.example/'))
-            return Promise.resolve({ status: 200 });
-        if (url.includes('fine'))
-            return Promise.resolve({ status: 200 });
-        return Promise.resolve({ status: 404 });
-    };
-    return calls;
-};
-
 // li stub for the overlay assertions: dataset/id + a favicon-container that
 // accepts and removes the .dead-indicator span.
 const makeLi = (id, nodeId) => {
@@ -124,7 +111,12 @@ const setup = (opts = {}) => {
     const makeEl = id => {
         const el = {
             id,
-            innerHTML: '',
+            _innerHTML: '',
+            // a real innerHTML swap resets the scroll position — model it so
+            // the #17 scroll-preservation path has something to prove against
+            get innerHTML() { return this._innerHTML; },
+            set innerHTML(v) { this._innerHTML = v; this.scrollTop = 0; },
+            scrollTop: 0,
             _listeners: {},
             _lis: null, // overlay lists: fixed li set
             addEventListener(type, fn) {
@@ -166,6 +158,12 @@ const setup = (opts = {}) => {
             getMessage: (key, subs) =>
                 subs ? `${key}[${[].concat(subs).join('|')}]` : key
         },
+        // v4 task-4 #16: the view talks to the SW scan runner — sendMessage
+        // records, storage.onChanged carries the runner's publications back.
+        runtime: {
+            sent: [],
+            sendMessage(msg) { this.sent.push(msg); }
+        },
         bookmarks: {
             getTreeCalls: 0,
             getTree(cb) {
@@ -177,6 +175,25 @@ const setup = (opts = {}) => {
             onMoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
             fire(name, ...args) {
                 (this[name].fns || []).forEach(fn => fn(...args));
+            }
+        },
+        storage: {
+            local: {
+                // seeded like the store double — the SW's deadLastScan and a
+                // live vbmDeadScan blob (opts.scanStorage) land here
+                _data: { ...(opts.storeData || {}), ...(opts.scanStorage || {}) },
+                get(keys, cb) {
+                    const out = {};
+                    for (const k of [].concat(keys))
+                        if (k in this._data)
+                            out[k] = this._data[k];
+                    cb(out);
+                }
+            },
+            onChanged: {
+                fns: [],
+                addListener(fn) { this.fns.push(fn); },
+                fire(changes, area) { (this.fns || []).forEach(fn => fn(changes, area)); }
             }
         }
     };
@@ -259,6 +276,27 @@ const setup = (opts = {}) => {
     };
 };
 
+// --- SW scan-runner simulators (v4 task-4 #16) ------------------------------
+// The view is a mirror of chrome.storage.local: these fire the exact
+// storage.onChanged payloads the SW runner publishes (src/dead-scan-sw.js —
+// the engine itself is covered by dead-scan-sw.test.js / dead-links.test.js).
+const publishBlob = (ctx, blob) =>
+    ctx.chrome.storage.onChanged.fire(
+        { vbmDeadScan: { newValue: blob ? JSON.stringify(blob) : undefined } }, 'local');
+const finishScan = (ctx, results) => {
+    ctx.chrome.storage.onChanged.fire({
+        deadLastScan: {
+            newValue: JSON.stringify({ ts: 1700000000000, scannedCount: Object.keys(results).length, results })
+        }
+    }, 'local');
+    publishBlob(ctx, null); // the runner deletes the live blob at finish
+};
+const blobOf = (over = {}) => ({
+    state: 'scanning', done: 0, total: 3, ts: 1700000000000,
+    items: ['11', '12', '13'], results: {}, proxy: { active: false, gate: '' },
+    ...over
+});
+
 describe('view registration (§5.5)', () => {
     it('registers the dead view with tab metadata, badge and escape hook', () => {
         const { def, $list, $container } = setup({});
@@ -293,15 +331,12 @@ describe('empty state + cached results (§5.5a)', () => {
         expect($list.innerHTML).toContain('deadStartHint[3]'); // 3 scannable, sep out
     });
 
-    it('the start row runs the scan on click and on Enter', async () => {
-        dualFetch();
+    it('the start row sends the start message on click and on Enter', () => {
         const ctx = setup({});
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
-        expect(ctx.store.get('deadLastScan')).toBeTruthy();
+        expect(ctx.chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
         // Enter path on a fresh view
-        globalThis.fetch = () => Promise.resolve({ status: 200 });
         const ctx2 = setup({});
         ctx2.def().activate();
         ctx2.fire('keydown', {
@@ -309,8 +344,7 @@ describe('empty state + cached results (§5.5a)', () => {
             target: { classList: { contains: c => c === 'dead-start' } },
             preventDefault() {}, stopPropagation() {}
         });
-        await flush();
-        expect(JSON.parse(ctx2.store.get('deadLastScan')).scannedCount).toBe(3);
+        expect(ctx2.chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
     });
 
     it('a cached scan renders the info row and skips auto-scanning', () => {
@@ -318,11 +352,9 @@ describe('empty state + cached results (§5.5a)', () => {
             ts: 1700000000000, scannedCount: 3,
             results: { '12': { status: 'dead', code: 404 } }
         });
-        const calls = [];
-        globalThis.fetch = url => { calls.push(url); return Promise.resolve({ status: 200 }); };
-        const { $list, treeRender, def } = setup({ storeData: { deadLastScan: cache } });
+        const { $list, treeRender, def, chrome } = setup({ storeData: { deadLastScan: cache } });
         def().activate();
-        expect(calls).toEqual([]); // no rescan on entry
+        expect(chrome.runtime.sent).toEqual([]); // no rescan on entry
         const html = $list.innerHTML;
         expect(html).toContain(`deadLastScanAt[${new Date(1700000000000).toLocaleString()}]`);
         expect(html).toContain('deadRescan');
@@ -331,230 +363,156 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(treeRender.calls.find(c => c.id === '12').meta.badge)
             .toEqual({ text: '404', cls: 'dead' });
     });
-});
 
-describe('scan flow (§5.5b/§5.5d)', () => {
-    it('scans with the dual checker, persists the cache and renders badged rows', async () => {
-        const calls = dualFetch();
-        const ctx = setup({ storeData: { deadProxyTemplate: PROXY } });
-        const { $list, store, treeRender, def } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
-        // the separator never went near fetch; the relay saw only the failures
-        expect(calls.filter(u => u.includes('separatethis'))).toEqual([]);
-        expect(calls).toContain('https://relay.example/fetch?target=' +
-            encodeURIComponent('https://gone.example/page'));
-        const cache = JSON.parse(store.get('deadLastScan'));
-        expect(cache.scannedCount).toBe(3);
-        expect(cache.results['11'].status).toBe('ok');
-        // the relay answers 200 for everything here, so both failures read
-        // blocked (dual-channel: direct fail + proxy ok)
-        expect(cache.results['12'].status).toBe('blocked');
-        expect(cache.results['13'].status).toBe('blocked');
-        const html = $list.innerHTML;
-        expect(html).toContain('id="dead-item-12"');
-        expect(html).toContain('id="dead-item-13"');
-        expect(html).not.toContain('id="dead-item-11"'); // healthy rows stay out
-        expect(treeRender.calls.find(c => c.id === '13').meta.badge)
-            .toEqual({ text: 'deadStatusBlocked', cls: 'blocked' });
-    });
-
-    it('gone.example fails on both channels and renders the dead badge', async () => {
-        // direct fails everywhere; the relay reaches everything but gone
-        globalThis.fetch = url => {
-            if (url.includes('fine'))
-                return Promise.resolve({ status: 200 });
-            if (url.startsWith('https://relay.example/'))
-                return Promise.resolve({ status: url.includes('gone') ? 404 : 200 });
-            return Promise.resolve({ status: 404 });
-        };
-        const ctx = setup({ storeData: { deadProxyTemplate: PROXY } });
-        const { treeRender } = ctx;
-        ctx.def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
-        expect(treeRender.calls.find(c => c.id === '12').meta.badge)
-            .toEqual({ text: '404', cls: 'dead' }); // both channels agree: dead
-        expect(treeRender.calls.find(c => c.id === '13').meta.badge)
-            .toEqual({ text: 'deadStatusBlocked', cls: 'blocked' });
-    });
-
-    it('shows the progress line while scanning and never aborts on view switch', async () => {
-        const gates = {};
-        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
+    it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {
         const ctx = setup({});
-        const { $list, views, def } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect($list.innerHTML).toContain('deadChecking[0|3]');
-        expect($list.innerHTML).toContain('<progress');
-        // switch away mid-scan: no abort, the closure keeps the progress
-        views.active = false;
-        gates['https://fine.example/']({ status: 200 });
-        await flush();
-        views.active = true;
-        def().activate(); // back again: progress row, not the start hint
-        expect($list.innerHTML).toContain('deadChecking');
-        gates['https://gone.example/page']({ status: 404 });
-        gates['https://blocked.example/']({ status: 404 });
-        await flush();
-        expect($list.innerHTML).toContain('id="dead-item-12"');
+        ctx.def().activate({ preset: { scan: true } });
+        expect(ctx.chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
     });
 
-    it('Escape toggles pause ⇄ resume (consumed both ways); pagehide cancels', async () => {
-        const signals = [];
-        globalThis.fetch = (url, opts) => {
-            signals.push(opts.signal);
-            return new Promise(() => {});
-        };
-        const ctx = setup({});
-        const { def, winListeners, $list } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect(def().onEscape()).toBe(true); // first Esc: pause (consumed)
-        expect(signals.every(s => s.aborted)).toBe(false); // pause keeps in-flight probes
-        expect($list.innerHTML).toContain('deadResume');
-        expect(def().onEscape()).toBe(true); // second Esc: resume (consumed)
-        expect($list.innerHTML).toContain('deadPause');
-        // the explicit Cancel is what aborts; then Esc falls through again
-        ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
-        expect(signals.every(s => s.aborted)).toBe(true);
-        expect(def().onEscape()).toBe(false);
-        // pagehide path
-        globalThis.fetch = (url, opts) => {
-            signals.push(opts.signal);
-            return new Promise(() => {});
-        };
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect(winListeners.pagehide).toHaveLength(1);
-        winListeners.pagehide[0]();
-        expect(signals[signals.length - 1].aborted).toBe(true);
-        expect(def().onEscape()).toBe(false); // session gone: not consumed
+    it('the scan preset does not restart a live scan (the stored blob guards re-entry)', () => {
+        // Mid-scan, the SW's live blob sits in chrome.storage.local — the
+        // activate-time sync folds it in and startScan's guard holds.
+        const ctx = setup({ scanStorage: { vbmDeadScan: JSON.stringify(blobOf({ done: 1 })) } });
+        ctx.def().activate({ preset: { scan: true } });
+        expect(ctx.chrome.runtime.sent).toEqual([]); // a live run: no second start
     });
 });
 
-describe('item 10: progressive render + pause/resume/cancel', () => {
-    it('renders dead rows incrementally as checks settle, healthy rows never listed', async () => {
-        const gates = {};
-        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
+describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
+    it('a published blob renders the progress toolbar and the settled rows', () => {
         const ctx = setup({});
-        const { $list } = ctx;
-        ctx.def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect($list.innerHTML).not.toContain('dead-item-');
-        gates['https://gone.example/page']({ status: 404 });
-        await flush();
-        // mid-scan: the settled dead row is already a row, scan still runs
-        expect($list.innerHTML).toContain('id="dead-item-12"');
-        expect($list.innerHTML).toContain('deadChecking[1|3]');
-        expect($list.innerHTML).toContain('deadPause');
-        expect($list.innerHTML).not.toContain('id="dead-item-13"'); // unsettled stays out
-        gates['https://fine.example/']({ status: 200 });
-        await flush();
-        expect($list.innerHTML).not.toContain('id="dead-item-11"'); // healthy never listed
-        gates['https://blocked.example/']({ status: 404 });
-        await flush();
-        expect($list.innerHTML).toContain('id="dead-item-13"');
-        expect(ctx.store.get('deadLastScan')).toBeTruthy(); // finished → persisted
-    });
-
-    it('pause holds new dispatches, in-flight checks still record, resume continues at the breakpoint', async () => {
-        const calls = [];
-        const gates = {};
-        globalThis.fetch = url => {
-            calls.push(url);
-            return new Promise(resolve => { gates[url] = resolve; });
-        };
-        const ctx = setup({ storeData: { deadScanConcurrency: '1' } });
         const { $list, def } = ctx;
         def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        expect(calls).toEqual(['https://fine.example/']); // concurrency 1
-        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) });
-        expect($list.innerHTML).toContain('deadResume'); // button flipped
-        expect($list.innerHTML).toContain('deadPaused'); // state tag
-        gates['https://fine.example/']({ status: 200 });
-        await flush();
-        expect(calls).toHaveLength(1); // paused: no new dispatch
-        expect($list.innerHTML).toContain('deadChecking[1|3]'); // in-flight recorded
-        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) }); // resume
-        expect(calls).toEqual(['https://fine.example/', 'https://gone.example/page']); // no re-probe
-        gates['https://gone.example/page']({ status: 404 });
-        await flush();
-        expect(calls).toHaveLength(3);
-        gates['https://blocked.example/']({ status: 404 });
-        await flush();
-        expect(JSON.parse(ctx.store.get('deadLastScan')).results['12'].status).toBe('dead');
+        expect(ctx.chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
+        publishBlob(ctx, blobOf({
+            done: 1, results: { '12': { status: 'dead', code: 404 } }
+        }));
+        const html = $list.innerHTML;
+        expect(html).toContain('<progress');
+        // #17: the label is the bare counter; the full sentence moved to
+        // the title/aria-label
+        expect(html).toContain('>1/3<');
+        expect(html).toContain('title="deadChecking[1|3]"');
+        expect(html).toContain('deadPause');
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).not.toContain('id="dead-item-11"'); // healthy stays out
+        expect(html).not.toContain('id="dead-item-13"'); // unsettled stays out
+        // a second start click while the blob lives sends nothing
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        expect(ctx.chrome.runtime.sent).toHaveLength(1);
     });
 
-    it('cancel stops the scheduler, aborts in-flight probes and discards the run', async () => {
-        const signals = [];
-        const gates = {};
-        globalThis.fetch = (url, opts) => {
-            signals.push(opts.signal);
-            return new Promise(resolve => { gates[url] = resolve; });
-        };
-        const ctx = setup({ storeData: { deadScanConcurrency: '1' } });
-        const { $list, store } = ctx;
-        ctx.def().activate();
+    it('pause/resume send messages and flip the toolbar optimistically; Esc toggles too', () => {
+        const ctx = setup({});
+        const { $list, def, chrome } = ctx;
+        def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        gates['https://fine.example/']({ status: 200 });
-        await flush();
-        expect($list.innerHTML).toContain('deadChecking[1|3]');
+        publishBlob(ctx, blobOf({ done: 1 }));
+        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) });
+        expect(chrome.runtime.sent.map(m => m.type)).toEqual(
+            ['vbm-dead-scan-start', 'vbm-dead-scan-pause']);
+        expect($list.innerHTML).toContain('deadResume'); // optimistic flip
+        expect($list.innerHTML).toContain('deadPaused'); // state tag
+        expect(def().onEscape()).toBe(true); // Esc while paused: resume
+        expect(chrome.runtime.sent.map(m => m.type)[2]).toBe('vbm-dead-scan-resume');
+        expect($list.innerHTML).toContain('deadPause');
+        expect(def().onEscape()).toBe(true); // and back to paused
+        expect(chrome.runtime.sent.map(m => m.type)[3]).toBe('vbm-dead-scan-pause');
+        // the SW's published transition re-syncs the optimistic mirror
+        publishBlob(ctx, blobOf({ state: 'paused', done: 1 }));
+        expect($list.innerHTML).toContain('deadResume');
+    });
+
+    it('cancel sends the message and drops the mirror (the run never happened)', () => {
+        const ctx = setup({});
+        const { $list, def, chrome } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        publishBlob(ctx, blobOf({ done: 1, results: { '12': { status: 'dead', code: 404 } } }));
         ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
-        expect(signals.every(s => s.aborted)).toBe(true); // in-flight probe aborted
+        expect(chrome.runtime.sent.map(m => m.type)[1]).toBe('vbm-dead-scan-cancel');
         // state reset: back to the executable start hint, no cache written
         expect($list.innerHTML).toContain('class="empty-state dead-start"');
-        expect(store.get('deadLastScan', '')).toBe('');
-        // the late completion of the aborted probe changes nothing
-        gates['https://gone.example/page']({ status: 404 });
-        await flush();
-        expect(store.get('deadLastScan', '')).toBe('');
+        expect(def().onEscape()).toBe(false); // no live run: Esc falls through
+        publishBlob(ctx, null); // the SW's blob deletion changes nothing more
         expect($list.innerHTML).toContain('dead-start');
     });
 
-    it('cancel with a previous cache restores the cached view (the run never happened)', async () => {
+    it('a finish (cache write + blob removal) renders the cache and prunes healthy marks', () => {
+        const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
+        const { $list, store, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        publishBlob(ctx, blobOf({
+            done: 2, results: { '12': { status: 'dead', code: 404 } }
+        }));
+        expect($list.innerHTML).toContain('deadChecking'); // mid-scan render
+        finishScan(ctx, {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        });
+        const html = $list.innerHTML;
+        expect(html).toContain('deadLastScanAt');
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).not.toContain('id="dead-item-11"');
+        // §5.5c: ids that came back healthy lose their mark
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        expect(def().badge()).toBe(1);
+    });
+
+    it('cancel with a previous cache restores the cached view', () => {
         const CACHE = JSON.stringify({
             ts: 1700000000000, scannedCount: 3,
             results: { '12': { status: 'dead', code: 404 } }
         });
-        globalThis.fetch = () => new Promise(() => {});
         const ctx = setup({ storeData: { deadLastScan: CACHE } });
-        const { $list, store } = ctx;
+        const { $list, chrome } = ctx;
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        publishBlob(ctx, blobOf({ done: 1 }));
         expect($list.innerHTML).toContain('deadPause');
         ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
+        expect(chrome.runtime.sent.map(m => m.type)).toEqual(
+            ['vbm-dead-scan-start', 'vbm-dead-scan-cancel']);
         expect($list.innerHTML).toContain('deadLastScanAt');
         expect($list.innerHTML).toContain('id="dead-item-12"');
-        expect(store.get('deadLastScan')).toBe(CACHE); // untouched
     });
 
-    it('re-entering the view mid-scan (even paused) renders the live session state', async () => {
-        const gates = {};
-        globalThis.fetch = url => new Promise(resolve => { gates[url] = resolve; });
-        const ctx = setup({});
-        const { $list, views, def } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        ctx.clickOn({ closest: sel => (sel === '.dead-pause' ? {} : null) }); // pause
-        views.active = false; // switch away mid-scan
-        gates['https://gone.example/page']({ status: 404 });
-        await flush();
-        views.active = true;
-        def().activate(); // back: live paused state, not a fake idle
+    it('re-entering the view mid-scan renders the blob from storage (even paused)', () => {
+        const ctx = setup({
+            scanStorage: {
+                vbmDeadScan: JSON.stringify(blobOf({
+                    state: 'paused', done: 1,
+                    results: { '12': { status: 'dead', code: 404 } }
+                }))
+            }
+        });
+        const { $list, chrome } = ctx;
+        ctx.def().activate(); // the blob is read straight from storage
         const html = $list.innerHTML;
         expect(html).toContain('deadResume');
-        expect(html).toContain('deadChecking[1|3]');
-        expect(html).toContain('id="dead-item-12"'); // progressive row survived the switch
+        expect(html).toContain('>1/3<');
+        expect(html).toContain('id="dead-item-12"');
         expect(html).not.toContain('dead-start');
-        // and the paused session is still resumable afterwards
-        def().onEscape(); // Esc = resume
-        gates['https://fine.example/']({ status: 200 });
-        gates['https://blocked.example/']({ status: 404 });
-        await flush();
-        expect(ctx.store.get('deadLastScan')).toBeTruthy();
+        expect(chrome.runtime.sent).toEqual([]); // a re-entry never restarts
+    });
+
+    it('mid-scan ticks keep the list scroll position (#17)', () => {
+        const ctx = setup({});
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        publishBlob(ctx, blobOf({ done: 1, results: { '12': { status: 'dead', code: 404 } } }));
+        $list.scrollTop = 42; // the user scrolled the progressive list
+        publishBlob(ctx, blobOf({
+            done: 2,
+            results: { '12': { status: 'dead', code: 404 }, '13': { status: 'blocked', code: 404 } }
+        }));
+        expect($list.scrollTop).toBe(42); // the double resets it on swap — the view restored it
     });
 });
 
@@ -728,13 +686,16 @@ describe('marks + overlay (§5.5c)', () => {
         expect(liDupes._fav.children).toEqual([]);
     });
 
-    it('a healthy rescan prunes the mark automatically', async () => {
-        globalThis.fetch = () => Promise.resolve({ status: 200 }); // all healthy now
+    it('a healthy rescan prunes the mark automatically', () => {
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
         const { store, def } = ctx;
         def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
+        finishScan(ctx, { // the SW comes back with an all-healthy verdict
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'ok', code: 200 },
+            '13': { status: 'ok', code: 200 }
+        });
         expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
         expect(def().badge()).toBe(0);
     });
@@ -798,16 +759,12 @@ describe('row interactions (§3.5)', () => {
         expect(def().onKey({ key: 'm', preventDefault: () => {} })).toBe(false);
     });
 
-    it('rescan restarts the scan from the info row', async () => {
-        const calls = [];
-        globalThis.fetch = url => { calls.push(url); return Promise.resolve({ status: 200 }); };
+    it('rescan sends a fresh start message from the info row', () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE } });
-        const { $list } = ctx;
+        const { chrome } = ctx;
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
-        await flush();
-        expect(calls).toHaveLength(3); // the three scannable bookmarks
-        expect($list.innerHTML).toContain('deadNone'); // all healthy now
+        expect(chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
     });
 });
 
@@ -859,6 +816,31 @@ describe('selection mode (v4 task-3 #4)', () => {
         rowClick(ctx, '12'); // toggle off
         expect($list.innerHTML).toContain('selectCount[0]');
         expect($list.innerHTML).not.toContain('class="vbm-row sel" id="dead-item-12"');
+        expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
+    });
+
+    it('Space on a row toggles membership instead of paging (v4 task-4 #8)', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, fire, treeView } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        const target = {
+            classList: { contains: () => false },
+            closest: sel => (sel === 'li.vbm-row' ? { dataset: { nodeId: '12' } } : null)
+        };
+        const keyEv = key => ({
+            key, target,
+            preventDefault() { this.prevented = true; },
+            stopPropagation() { this.stopped = true; }
+        });
+        const handlerCalls = treeView.handlerCalls;
+        const ev = keyEv(' ');
+        fire('keydown', ev);
+        expect(ev.stopped).toBe(true); // keyboard.js never turns it into a click
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-12"');
+        expect($list.innerHTML).toContain('selectCount[1]');
+        fire('keydown', keyEv(' ')); // toggle off
+        expect($list.innerHTML).toContain('selectCount[0]');
         expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
     });
 
@@ -1149,47 +1131,63 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
     });
 });
 
-describe('proxy-gated scan (dead-proxy.js)', () => {
-    it('installs the PAC before probing and tears it down on settle', async () => {
+describe('proxy-gated scan (v4 task-4 #16: the SW owns the PAC)', () => {
+    // The PAC install/teardown and the permission/controllability gate moved
+    // to the service worker with the scan engine (covered by
+    // dead-scan-sw.test.js). What stays here is the view's mirror of the
+    // gate outcome: the blob's proxy.gate surfaces on the proxy chip.
+    it("a blob's proxy.gate renders on the chip as the gate error", () => {
         const ctx = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
-        const calls = addProxyChrome(ctx);
-        // direct: fine 200, the rest 404; marked channel: gone 404, rest 200
-        globalThis.fetch = url => {
-            if (url.includes('__vbm_px=1'))
-                return Promise.resolve({ status: url.includes('gone') ? 404 : 200 });
-            return Promise.resolve({ status: url.includes('fine') ? 200 : 404 });
-        };
-        const { def, store } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
-        await flush();
-        const cache = JSON.parse(store.get('deadLastScan'));
-        expect(cache.results['11'].status).toBe('ok');
-        expect(cache.results['12'].status).toBe('dead');    // both channels 404
-        expect(cache.results['13'].status).toBe('blocked'); // direct 404, proxy 200
-        const verbs = calls.map(c => c[0]);
-        expect(verbs.indexOf('set')).toBeGreaterThan(-1);
-        expect(verbs.indexOf('set')).toBeLessThan(verbs.indexOf('clear'));
-        expect(verbs).toContain('sessionSet');
-        expect(verbs).toContain('sessionRemove');
-        expect(calls.find(c => c[0] === 'set')[1].value.pacScript.data)
-            .toContain('"PROXY 127.0.0.1:7890"');
-        expect(ctx.chrome.storage.session.data.vbmProxySession).toBeUndefined();
+        const { $list } = ctx;
+        ctx.def().activate();
+        publishBlob(ctx, blobOf({ proxy: { active: false, gate: 'deadProxyDenied' } }));
+        expect($list.innerHTML).toContain('deadProxyDenied');
+        // …and a later blob without a gate clears it again
+        publishBlob(ctx, blobOf({ done: 1 }));
+        expect($list.innerHTML).not.toContain('deadProxyDenied');
     });
 
-    it('degrades to direct-only with the gate error when the permission is gone', async () => {
+    it('the strip controls disable while a run lives', () => {
         const ctx = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
-        addProxyChrome(ctx, { contains: false });
-        const seen = [];
-        globalThis.fetch = url => { seen.push(url); return Promise.resolve({ status: 404 }); };
-        const { $list, def, store } = ctx;
-        def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
-        await flush();
-        await flush();
-        expect(seen.filter(u => u.includes('__vbm_px=1'))).toEqual([]); // no proxy channel
-        expect(JSON.parse(store.get('deadLastScan')).results['13'].status).toBe('dead');
-        expect($list.innerHTML).toContain('deadProxyDenied'); // the chip explains
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-proxy-change');
+        expect($list.innerHTML).not.toContain('dead-proxy-change" disabled');
+        publishBlob(ctx, blobOf({ done: 1 }));
+        expect($list.innerHTML).toContain('dead-proxy-change" disabled');
+        expect($list.innerHTML).toContain('dead-proxy-remove" disabled');
+    });
+});
+
+describe('risk banner (v4 task-4 #14)', () => {
+    it('shows until acked; ack records the current version', () => {
+        const ctx = setup({});
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('class="risk-banner"');
+        expect($list.innerHTML).toContain('deadRiskBanner');
+        expect($list.innerHTML).toContain('risk-banner-help');
+        ctx.chrome.runtime = { getManifest: () => ({ version: '4.2.0' }) };
+        ctx.clickOn({ closest: sel => (sel === '.risk-banner-never' ? {} : null) });
+        expect(store.get('deadRiskAck')).toBe('4.2.0');
+        expect($list.innerHTML).not.toContain('class="risk-banner"');
+    });
+
+    it('the × dismisses for the session without writing storage', () => {
+        const ctx = setup({});
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.risk-banner-dismiss' ? {} : null) });
+        expect($list.innerHTML).not.toContain('class="risk-banner"');
+        expect(store.get('deadRiskAck')).toBeUndefined();
+    });
+
+    it('the help link rides actions.openBookmarkNewTab (popup-respecting open)', () => {
+        const ctx = setup({});
+        const opened = [];
+        ctx.actions.openBookmarkNewTab = (url, active, closePopup) => opened.push([url, active, closePopup]);
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.risk-banner-help' ? {} : null) });
+        expect(opened).toEqual([['https://support.google.com/chrome/answer/96816', true, true]]);
     });
 });

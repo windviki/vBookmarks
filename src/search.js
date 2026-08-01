@@ -24,7 +24,9 @@
  *   the results and stays in the search view; the second falls through to
  *   the view layer (back to the tree).
  * - The view is split into an upper `#search-history-area` (history rows or
- *   the hint) and the lower results list (kept between searches).
+ *   the hint) and the lower results list (kept between searches). The area
+ *   caps at 40% of the view height; v4 task-4 #4 trims tail rows at render
+ *   so it never grows a scrollbar (the stored MRU still keeps 10).
  *
  * Re-entry contract (2026-07-25 spec, replacing the slice-B `searchLastQuery`
  * refill): entering the search view never refills the box — the input stays
@@ -112,12 +114,16 @@ export function initSearch(ctx = {}) {
         }
     };
     let lastResultCount = 0;
-    const recordHistory = q => {
+    // Records a query into the MRU history. `n` = the result count shown to
+    // the user; callers outside this module (the palette, v4 task-4 #3) pass
+    // their own hit count, the in-view timings default to lastResultCount.
+    const recordHistory = (q, n) => {
         q = (q || '').trim();
         if (!q || !historyEnabled())
             return;
         store.set('searchHistory', JSON.stringify(
-            pushSearchHistory(readHistory(), { q, ts: Date.now(), n: lastResultCount })));
+            pushSearchHistory(readHistory(),
+                { q, ts: Date.now(), n: n == null ? lastResultCount : n })));
     };
     // Bucket → label helper lives in tree-render.js (shared with the recent
     // and stats views) — imported as relTimeLabel above.
@@ -251,6 +257,21 @@ export function initSearch(ctx = {}) {
         }
         html += '</ul>';
         $historyArea.innerHTML = html;
+        // v4 task-4 #4: never let the upper area grow a scrollbar — the area
+        // caps at 40% of the view height (CSS), so drop tail rows until the
+        // remainder fits. The stored MRU keeps all 10 entries; this is a
+        // pure view concern (jsdom/no-layout doubles report 0 ≥ 0 → no-op).
+        trimHistoryToFit();
+    };
+    const trimHistoryToFit = () => {
+        if (!$historyArea)
+            return;
+        const ul = $historyArea.querySelector('ul');
+        if (!ul || !ul.children)
+            return;
+        while (ul.children.length > 1
+            && $historyArea.scrollHeight > $historyArea.clientHeight)
+            ul.removeChild(ul.lastElementChild);
     };
     const removeHistoryEntry = q => {
         store.set('searchHistory', JSON.stringify(readHistory().filter(e => e.q !== q)));
@@ -394,8 +415,23 @@ export function initSearch(ctx = {}) {
             return true;
         }
     });
+    // Boot-order gap (v4 task-4 #4): when rememberView/panel mode restores the
+    // search view at startup, view-manager activates it BEFORE this attach
+    // lands (the structural 'search' view registers inside initViewManager),
+    // so the activate hook above never fires and the history area would stay
+    // empty until the next leave/re-enter. Paint once if already active.
+    if (views.isActive('search'))
+        renderHistoryArea();
     if (typeof window.addEventListener === 'function')
         window.addEventListener('pagehide', () => recordHistory(searchInput.value));
+    // v4 task-4 #4: a popup resize (edge drag) changes how many history rows
+    // fit under the 40% cap — re-render so the area re-fills instead of
+    // keeping stale trimmed rows. Cheap; renders only in the search view.
+    if (typeof window.addEventListener === 'function')
+        window.addEventListener('resize', () => {
+            if (views.isActive('search'))
+                renderHistoryArea();
+        });
 
     const search = (e) => {
         const value = searchInput.value.trim();
@@ -604,6 +640,10 @@ export function initSearch(ctx = {}) {
         // v4 task-2 §4.4: the palette bridge row jumps into the search view
         // with its query — the same refill+rerun path the history rows use.
         run: runHistoryQuery,
+        // v4 task-4 #3: a plain-query palette search that opens a bookmark
+        // records its query here — the same "open a result" timing the
+        // search view itself uses (resetSearchState).
+        record: recordHistory,
         updateIndex: buildSearchIndex
     };
 }

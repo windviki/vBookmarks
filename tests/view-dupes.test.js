@@ -265,6 +265,21 @@ describe('view registration (§5.6)', () => {
         ctx2.def().activate();
         expect(ctx2.def().badge()).toBe(0);
     });
+
+    it('activate({ preset }) applies strategy/scope and forces a regroup (v4 task-4 #6)', () => {
+        const { def, store } = setup({});
+        def().activate({ preset: { strategy: 'keep-newest', scope: 'all' } });
+        expect(store._data.dupesStrategy).toBe('keep-newest');
+        expect(store._data.dupesScope).toBe('all');
+        expect(def().badge()).toBe(1); // the regroup happened
+    });
+
+    it('activate({ preset }) drops unknown values — the selects own the value lists', () => {
+        const { def, store } = setup({ storeData: { dupesStrategy: 'keep-oldest' } });
+        def().activate({ preset: { strategy: 'keep-everything', scope: 'universe' } });
+        expect(store._data.dupesStrategy).toBe('keep-oldest'); // untouched
+        expect(store._data.dupesScope).toBeUndefined();
+    });
 });
 
 describe('render (docs/v4task-2-list.md §3.6)', () => {
@@ -290,6 +305,10 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         // the per-group quick action names the strategy's keeper pick and
         // the doomed count up front (item 4: one click keeps one per setting)
         expect(html).toContain('aria-label="dupesCleanRestHint[A oldest|2]"');
+        // v4 task-4 #9: the quick apply is a ✓ glyph ("apply this group's
+        // dedup"), always visible via .dupes-group .group-head .row-btn
+        expect(html).toContain('class="row-btn dupes-clean-rest"');
+        expect(html).toMatch(/dupes-clean-rest"[^>]*>✓</);
         // member rows: keeper oldest first; the other two will-delete
         expect(html).toContain('id="dupes-item-11"');
         expect(html).toContain('id="dupes-item-15"');
@@ -957,6 +976,56 @@ describe('selection mode (v4 task-3 #5)', () => {
         expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
     });
 
+    it('Space on a head toggles membership instead of folding; Enter still folds (v4 task-4 #8)', () => {
+        const ctx = setup({});
+        const { $list, def, fire } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        const head = {
+            classList: { contains: c => c === 'group-head' },
+            closest: sel => (sel === 'li' ? { dataset: { key: 'https://a.com' } } : null)
+        };
+        const keyEv = key => ({
+            key, target: head,
+            preventDefault() { this.prevented = true; },
+            stopPropagation() { this.stopped = true; }
+        });
+        const ev = keyEv(' ');
+        fire('keydown', ev);
+        expect(ev.stopped).toBe(true); // keyboard.js never sees it
+        expect($list.innerHTML).toContain('class="dupes-group sel" data-key="https://a.com"');
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).toContain('id="dupes-item-11"'); // NOT folded
+        fire('keydown', keyEv(' ')); // off again
+        expect($list.innerHTML).toContain('selectCount[0]');
+        fire('keydown', keyEv('Enter')); // Enter keeps its fold semantics
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"');
+    });
+
+    it('Space on a member row toggles its group instead of opening (v4 task-4 #8)', () => {
+        const ctx = setup({});
+        const { $list, def, fire, treeView } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        const target = {
+            classList: { contains: () => false },
+            closest: sel => (sel === 'li.dupes-member'
+                ? { dataset: { key: 'https://a.com', nodeId: '11' } }
+                : null)
+        };
+        const ev = {
+            key: ' ', target,
+            preventDefault() { this.prevented = true; },
+            stopPropagation() { this.stopped = true; }
+        };
+        const handlerCalls = treeView.handlerCalls;
+        fire('keydown', ev);
+        expect(ev.stopped).toBe(true);
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).toContain('class="dupes-group sel" data-key="https://a.com"');
+        expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
+    });
+
     it('all / invert / clear operate on the group set', () => {
         const ctx = setup({ storeData: { dupesIgnoreScheme: '1' } });
         const { $list, def } = ctx;
@@ -1033,5 +1102,28 @@ describe('selection mode (v4 task-3 #5)', () => {
         expect(neatCss).toContain('#dupes-list ul.selecting li.dupes-group .group-head::before');
         expect(neatCss).toContain('#dupes-list ul.selecting li.dupes-group.sel .group-head::before');
         expect(neatCss).toContain('#dupes-list ul.selecting .keeper-radio');
+    });
+});
+
+describe('risk banner (v4 task-4 #14)', () => {
+    it('shows until acked; ack records the current version', () => {
+        const ctx = setup({});
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('class="risk-banner"');
+        expect($list.innerHTML).toContain('dupesRiskBanner');
+        ctx.chrome.runtime = { getManifest: () => ({ version: '4.2.0' }) };
+        ctx.clickOn({ closest: sel => (sel === '.risk-banner-never' ? {} : null) });
+        expect(store.get('dupesRiskAck')).toBe('4.2.0');
+        expect($list.innerHTML).not.toContain('class="risk-banner"');
+    });
+
+    it('the × dismisses for the session without writing storage', () => {
+        const ctx = setup({});
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.risk-banner-dismiss' ? {} : null) });
+        expect($list.innerHTML).not.toContain('class="risk-banner"');
+        expect(store.get('dupesRiskAck')).toBeUndefined();
     });
 });

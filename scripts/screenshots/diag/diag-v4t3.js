@@ -102,19 +102,19 @@ const SEED = `
     console.log('═══ #2 stats 排序切换 ═══');
     await page.click('#view-tab-stats'); await sleep(900);
     const before = await $(() => ({
-        active: (document.querySelector('.stats-toolbar .seg-btn.active') || {}).dataset && document.querySelector('.stats-toolbar .seg-btn.active').dataset.sort,
+        active: (document.querySelector('.stats-toolbar .seg-btn[aria-pressed="true"]') || {}).dataset && document.querySelector('.stats-toolbar .seg-btn[aria-pressed="true"]').dataset.sort,
         heads: [...document.querySelectorAll('#stats-list .stats-section-head')].map(h => h.textContent),
         firstRow: (document.querySelector('#stats-list li.vbm-row i') || {}).textContent
     }));
     console.log('  before:', JSON.stringify(before));
     await page.click('.stats-toolbar .seg-btn[data-sort="recent"]'); await sleep(900);
     const after = await $(() => ({
-        active: document.querySelector('.stats-toolbar .seg-btn.active') && document.querySelector('.stats-toolbar .seg-btn.active').dataset.sort,
+        active: document.querySelector('.stats-toolbar .seg-btn[aria-pressed="true"]') && document.querySelector('.stats-toolbar .seg-btn[aria-pressed="true"]').dataset.sort,
         ariaPressed: document.querySelector('.stats-toolbar .seg-btn[data-sort="recent"]').getAttribute('aria-pressed'),
         stored: null,
         firstRow: (document.querySelector('#stats-list li.vbm-row i') || {}).textContent,
         activeStyles: (() => {
-            const b = document.querySelector('.stats-toolbar .seg-btn.active');
+            const b = document.querySelector('.stats-toolbar .seg-btn[aria-pressed="true"]');
             if (!b) return null;
             const cs = getComputedStyle(b);
             return { bg: cs.backgroundColor, color: cs.color };

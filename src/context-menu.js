@@ -62,6 +62,8 @@ export function initContextMenu(ctx = {}) {
     // heads get their own menus (absent in minimal test setups → null-check).
     const $histRowContextMenu = $('hist-row-context-menu');
     const $dupesGroupContextMenu = $('dupes-group-context-menu');
+    // v4 task-4 #6: the palette custom-command row menu (edit / delete)
+    const $paletteCmdContextMenu = $('palette-cmd-context-menu');
     const $results = $('results');
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
@@ -110,6 +112,11 @@ export function initContextMenu(ctx = {}) {
             $dupesGroupContextMenu.style.left = '-999px';
             $dupesGroupContextMenu.style.opacity = '0';
             $dupesGroupContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($paletteCmdContextMenu) {
+            $paletteCmdContextMenu.style.left = '-999px';
+            $paletteCmdContextMenu.style.opacity = '0';
+            $paletteCmdContextMenu.style.transform = 'scale(.98)';
         }
     };
 
@@ -181,7 +188,14 @@ export function initContextMenu(ctx = {}) {
         // dedup (label names keeper + doomed count, resolved live) and
         // expand/collapse (label follows the current state).
         const groupHead = el.closest('.group-head');
-        if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
+        // v4 task-4 #6: a palette CUSTOM command row is no bookmark/folder —
+        // its slim menu (edit/delete) dispatches through ctx.paletteMenu
+        // with the row's data-cc-id.
+        if (row.classList && row.classList.contains('palette-command-custom')
+            && $paletteCmdContextMenu && ctx.paletteMenu) {
+            el = row;
+            menu = $paletteCmdContextMenu;
+        } else if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
             && groupHead.parentNode.classList.contains('dupes-group')
             && $dupesGroupContextMenu && ctx.dupesMenu) {
             el = groupHead;
@@ -682,6 +696,41 @@ export function initContextMenu(ctx = {}) {
         $dupesGroupContextMenu.addEventListener('contextmenu', dupesGroupContextHandler);
     }
 
+    // v4 task-4 #6: the palette custom-command row menu. currentContext is
+    // the row li (it carries data-cc-id); the dispatch rides palette.js's
+    // customMenu (lazy getter on neat.js's ctx — palette inits after menus).
+    if ($paletteCmdContextMenu) {
+        $('palette-cmd-edit').textContent = _m('edit');
+        $('palette-cmd-delete').textContent = _m('delete');
+    }
+    const paletteCmdContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const id = currentContext.dataset && currentContext.dataset.ccId;
+        if (!id || !ctx.paletteMenu)
+            return;
+        switch (el.id) {
+            case 'palette-cmd-edit':
+                ctx.paletteMenu.edit(id);
+                break;
+            case 'palette-cmd-delete':
+                ctx.paletteMenu.remove(id);
+                break;
+        }
+        clearMenu();
+    };
+    if ($paletteCmdContextMenu) {
+        $paletteCmdContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                paletteCmdContextHandler(e);
+        });
+        $paletteCmdContextMenu.addEventListener('contextmenu', paletteCmdContextHandler);
+    }
+
     // v4 task-3 #11: the positional add-* entries + their separators, as one
     // set — hidden for every row outside the tree view (open-time flat rule)
     // and by switchBookmarkMenu (search.js's search-active toggle, kept for
@@ -716,6 +765,8 @@ export function initContextMenu(ctx = {}) {
         searchHistoryMenu: $searchHistoryContextMenu || null,
         // v4 task-3 #10/#16: same null-check contract as searchHistoryMenu
         histRowMenu: $histRowContextMenu || null,
-        dupesGroupMenu: $dupesGroupContextMenu || null
+        dupesGroupMenu: $dupesGroupContextMenu || null,
+        // v4 task-4 #6: palette custom-command row menu
+        paletteCmdMenu: $paletteCmdContextMenu || null
     };
 }

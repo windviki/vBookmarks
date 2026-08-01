@@ -357,6 +357,18 @@ describe('activate', () => {
         ]);
     });
 
+    it('passes opts.preset through to the view activate hook (v4 task-4 #6)', () => {
+        const { views, addRecent } = setup({});
+        const calls = [];
+        addRecent({ activate: o => calls.push(o) });
+        views.activate('recent', { preset: { scan: true } });
+        expect(calls).toEqual([{ keepFocus: false, preset: { scan: true } }]);
+        calls.length = 0;
+        views.activate('tree');
+        views.activate('recent'); // no preset: the hook still gets the shape
+        expect(calls).toEqual([{ keepFocus: false, preset: undefined }]);
+    });
+
     it('moves focus to the view focus hook by default', () => {
         const { views, addRecent } = setup({});
         const calls = [];
@@ -752,6 +764,35 @@ describe('in-list toolbar rung (§2.5, final-polish revision)', () => {
         ctx.views.focusListExit();
         expect(ctx.tabs()[0].focused).toBe(true); // focusTop: the active tab
     });
+
+    it('two stacked toolbars: strip ↓ takes the top rung, ↑ from rows the lowest (v4 task-4 #13)', () => {
+        const ctx = setup({});
+        const { container, toolbar, b1, b2 } = addStats(ctx);
+        // a second rung BELOW the first (dead view: proxy strip over scan bar)
+        const bar2 = ctx.makeEl('div');
+        bar2.classList.add('vbm-toolbar');
+        const c1 = ctx.makeEl('button');
+        const c2 = ctx.makeEl('button');
+        bar2.appendChild(c1);
+        bar2.appendChild(c2);
+        container.appendChild(bar2);
+        ctx.views.activate('stats');
+        ctx.views.focusToolbar(); // strip-↓ landing: the TOPMOST rung
+        expect(b1.focused).toBe(true);
+        expect(c1.focused).toBe(false);
+        ctx.views.focusListExit(); // ↑-from-rows landing: the LOWEST rung
+        expect(c1.focused).toBe(true);
+        // a disabled-only rung is skipped on both landings
+        c1.disabled = true;
+        c2.disabled = true;
+        ctx.views.focusListExit();
+        expect(b1.focused).toBe(true);
+        // disable the top rung too → no rung at all
+        b1.disabled = true;
+        b2.disabled = true;
+        expect(ctx.views.focusToolbar()).toBe(false);
+        expect(ctx.views.focusToolbar(true)).toBe(false);
+    });
 });
 
 describe('tab strip keyboard model (§2.2)', () => {
@@ -809,7 +850,7 @@ describe('tab strip keyboard model (§2.2)', () => {
     });
 });
 
-describe('Ctrl/Cmd+number direct jump (§3.4)', () => {
+describe('Ctrl/Cmd/Alt+number direct jump (§3.4, v4 task-4 #10)', () => {
     const key = (ctx, k, mods = {}) => {
         const ev = {
             key: k, ctrlKey: !!mods.ctrl, metaKey: !!mods.meta,
@@ -829,10 +870,22 @@ describe('Ctrl/Cmd+number direct jump (§3.4)', () => {
         expect(ctx.views.activeId()).toBe('tree');
     });
 
-    it('ignores out-of-range digits, other modifiers and plain digits', () => {
+    it('Alt+digit is the portable twin (Edge reserves Ctrl+1…8 for browser tabs)', () => {
+        const ctx = setup({});
+        const ev = key(ctx, '2', { alt: true });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.views.activeId()).toBe('search');
+        key(ctx, '1', { alt: true });
+        expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('ignores out-of-range digits, modifier combos and plain digits', () => {
         const ctx = setup({});
         expect(key(ctx, '9', { ctrl: true }).defaultPrevented).toBe(false);
+        expect(key(ctx, '9', { alt: true }).defaultPrevented).toBe(false);
         expect(key(ctx, '1', { ctrl: true, shift: true }).defaultPrevented).toBe(false);
+        expect(key(ctx, '1', { alt: true, shift: true }).defaultPrevented).toBe(false);
+        // Ctrl+Alt = AltGr on several layouts (types characters): never a jump
         expect(key(ctx, '1', { ctrl: true, alt: true }).defaultPrevented).toBe(false);
         expect(key(ctx, '1').defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
@@ -843,6 +896,7 @@ describe('Ctrl/Cmd+number direct jump (§3.4)', () => {
         ctx.doc.activeElement = ctx.byId['search-input']; // tagName INPUT
         const ev = key(ctx, '2', { ctrl: true });
         expect(ev.defaultPrevented).toBe(false);
+        expect(key(ctx, '2', { alt: true }).defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
     });
 });

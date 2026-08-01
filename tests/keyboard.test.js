@@ -1836,6 +1836,88 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         fire(listEl, 'keyup', makeEvent({ key: 'Delete' }));
         expect(ctx.actionCalls).toEqual([['deleteBookmark', 's1']]);
     });
+
+    // v4 task-4 #13: the dead view stacks two toolbars (proxy strip above
+    // the scan toolbar) — each is its own rung of the vertical chain.
+    const setupTwoRungs = () => {
+        const bag = { rec: { focusTopCalls: 0 } };
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'dead-list');
+                const bar1 = el('DIV');
+                bar1.classList.add('vbm-toolbar');
+                const bar2 = el('DIV');
+                bar2.classList.add('vbm-toolbar');
+                const b1 = el('BUTTON', 'dead-proxy-add');
+                const b2 = el('BUTTON', 'dead-rescan');
+                const b3 = el('BUTTON', 'dead-filter-btn');
+                bar1._qsa['button, select, input'] = [b1];
+                bar2._qsa['button, select, input'] = [b2, b3];
+                b1.closest = sel => (sel === '.vbm-toolbar' ? bar1 : null);
+                b2.closest = b3.closest = sel => (sel === '.vbm-toolbar' ? bar2 : null);
+                listEl._qsa['.vbm-toolbar'] = [bar1, bar2];
+                const li = el('LI', 'dead-item-d1');
+                li.dataset.nodeId = 'd1';
+                const a = el('A');
+                a.parentNode = li;
+                a.parentElement = li;
+                li.firstElementChild = a;
+                li.parentNode = listEl;
+                listEl._qs['li a, li span'] = a;
+                listEl._qs['.focus'] = a;
+                Object.assign(bag, { listEl, bar1, bar2, b1, b2, b3, a });
+                const deadEntry = { id: 'dead', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, deadEntry],
+                    listOf: el2 => (el2 === listEl ? deadEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => { bag.rec.focusTopCalls++; },
+                    activate: () => {}
+                };
+            }
+        });
+        return { ctx, ...bag };
+    };
+
+    it('two stacked toolbars: ↓/↑ hop rungs, ends cross to rows / strip (v4 task-4 #13)', () => {
+        const { ctx, listEl, b1, b2, a, rec } = setupTwoRungs();
+        // ↓ from the TOP rung lands on the lower rung's first control —
+        // not straight into the rows.
+        ctx.doc.activeElement = b1;
+        const down1 = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', down1);
+        expect(down1.defaultPrevented).toBe(true);
+        expect(b2.focused).toBe(true);
+        expect(a.focused).toBe(false);
+        // ↓ from the LOWEST rung crosses into the rows.
+        ctx.doc.activeElement = b2;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(a.focused).toBe(true);
+        // ↑ from the lowest rung hops back to the top rung.
+        ctx.doc.activeElement = b2;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(b1.focused).toBe(true);
+        // ↑ from the TOP rung crosses out to the strip/box.
+        ctx.doc.activeElement = b1;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(rec.focusTopCalls).toBe(1);
+    });
+
+    it('a rung without an enabled control is skipped (scan-disabled proxy strip)', () => {
+        const { ctx, listEl, bar1, b1, b2, a } = setupTwoRungs();
+        b1.disabled = true; // the whole top rung is disabled mid-scan
+        ctx.doc.activeElement = b2;
+        // ↑ from the lowest rung skips the disabled rung → strip/box
+        // (focusTop is not recorded here — assert no rung landing instead)
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(a.focused).toBe(true); // ↓ still crosses into the rows
+        bar1._qsa['button, select, input'] = []; // empty rung
+        ctx.doc.activeElement = b2;
+        const up = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', up);
+        expect(b1.focused).toBe(false);
+    });
 });
 
 // --- Item 2: Esc layering — the full document chain -------------------------
@@ -1904,6 +1986,39 @@ describe('Esc layering — full document chain (item 2)', () => {
         ctx.fireDoc('keydown', ev);
         expect(clicks).toEqual([]);
         expect(ctx.searchCalls).toEqual(['escape']);
+    });
+
+    it('a visible risk banner dismisses via its × at the same layer (v4 task-4 #14)', () => {
+        const clicks = [];
+        const ctx = setup({
+            searchActive: true,
+            views: ({ tree, el }) => {
+                const container = el('DIV', 'view-dead');
+                const banner = el('DIV');
+                banner.classList.add('risk-banner');
+                const dismiss = el('BUTTON');
+                dismiss.classList.add('risk-banner-dismiss');
+                dismiss.click = () => clicks.push('dismiss');
+                banner._qs['.risk-banner-dismiss'] = dismiss;
+                container._qs['.risk-banner'] = banner;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    listOf: () => null,
+                    activeDef: () => ({ listEl: tree, container }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(clicks).toEqual(['dismiss']);
+        expect(ctx.searchCalls).toEqual([]); // lower rungs untouched
+        expect(ctx.searchInput.value).toBe('query');
+        expect(ctx.windowCloseCalls).toEqual([]);
     });
 
     it('a fully-armed popup peels one layer per press in the contract order', () => {

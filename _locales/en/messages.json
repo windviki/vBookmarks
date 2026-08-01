@@ -318,10 +318,10 @@
     "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups.",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       },
       "groups": {
-        "content": "$2$"
+        "content": "$2"
       }
     }
   },
@@ -635,7 +635,7 @@
     "description": "Selection mode (dead/dupes views): label with the current selection size.",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -650,6 +650,21 @@
   "selectModeExit": {
     "message": "Exit selection",
     "description": "Selection mode (dead/dupes views): leave the mode."
+  },
+  "deadRiskBanner": {
+    "message": "Dead-link cleanup deletes bookmarks in bulk. Back up your bookmarks before the first cleanup."
+  },
+  "dupesRiskBanner": {
+    "message": "Deduplication deletes duplicate bookmarks in bulk. Back up your bookmarks before applying it."
+  },
+  "riskBannerHelp": {
+    "message": "Backup & restore guide"
+  },
+  "riskBannerNever": {
+    "message": "Don't show again"
+  },
+  "riskBannerDismiss": {
+    "message": "Dismiss"
   },
   "sessionEmpty": {
     "description": "Alert shown when the current window has no tabs that can be bookmarked.",
@@ -1009,7 +1024,7 @@
     "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count.",
     "placeholders": {
       "count": {
-        "content": "$1$"
+        "content": "$1"
       }
     }
   },
@@ -1241,26 +1256,128 @@
       }
     }
   },
-  "paletteCmdThemeAuto": {
-    "message": "Theme: Follow system"
-  },
-  "paletteCmdThemeLight": {
-    "message": "Theme: Light"
-  },
-  "paletteCmdThemeDark": {
-    "message": "Theme: Dark"
-  },
-  "paletteCmdThemeInk": {
-    "message": "Theme: Ink (dark)"
-  },
-  "paletteCmdThemePaper": {
-    "message": "Theme: Paper (light)"
-  },
   "paletteCmdToggleViewTabs": {
     "message": "Toggle view tabs"
   },
-  "paletteCmdToggleItemPath": {
-    "message": "Toggle parent path labels"
+  "paletteCmdTheme": {
+    "message": "Set theme…"
+  },
+  "paletteCmdThemeUsage": {
+    "message": "Usage: /theme followed by a theme name — auto, light, dark, ink or paper (a unique prefix works, e.g. /theme d)."
+  },
+  "paletteCustomTag": {
+    "message": "custom"
+  },
+  "paletteCustomDeleteConfirm": {
+    "message": "Delete the command \"$1\"? The change syncs to all your devices."
+  },
+  "paletteCustomBroken": {
+    "message": "The folder of command \"$1\" no longer exists. Delete the command?"
+  },
+  "paletteCmdSaveAsCommand": {
+    "message": "Save \"$1\" as a command…"
+  },
+  "paletteActionOpenUrl": {
+    "message": "Open URL"
+  },
+  "paletteActionOpenUrlGroup": {
+    "message": "Open bookmark folder group"
+  },
+  "paletteActionViewPreset": {
+    "message": "Open view with preset"
+  },
+  "paletteActionUrlTemplate": {
+    "message": "Open URL template"
+  },
+  "optionsGroupPalette": {
+    "message": "Command palette"
+  },
+  "paletteCustomHint": {
+    "message": "Custom slash commands for the command palette (Ctrl/Cmd+K). They sync with your settings — 100 entries max."
+  },
+  "paletteCustomAdd": {
+    "message": "Add command…"
+  },
+  "paletteCustomUsage": {
+    "message": "$1 / $2"
+  },
+  "paletteCustomSlash": {
+    "message": "Slash (the word after /)"
+  },
+  "paletteCustomAliases": {
+    "message": "Aliases (comma-separated)"
+  },
+  "paletteCustomAction": {
+    "message": "Action"
+  },
+  "paletteCustomUrl": {
+    "message": "URL"
+  },
+  "paletteCustomTemplate": {
+    "message": "URL template — %s is replaced by the words after the command"
+  },
+  "paletteCustomWhere": {
+    "message": "Open in"
+  },
+  "paletteCustomFolder": {
+    "message": "Bookmark folder"
+  },
+  "paletteCustomView": {
+    "message": "View"
+  },
+  "paletteCustomStrategy": {
+    "message": "Dedup strategy preset"
+  },
+  "paletteCustomScope": {
+    "message": "Dedup scope preset"
+  },
+  "paletteCustomScan": {
+    "message": "Start the scan on entry"
+  },
+  "paletteWhereCurrent": {
+    "message": "Current tab"
+  },
+  "paletteWhereTab": {
+    "message": "New tab"
+  },
+  "paletteWhereWindow": {
+    "message": "New window"
+  },
+  "paletteWhereBackground": {
+    "message": "Background tabs"
+  },
+  "paletteCustomSave": {
+    "message": "Save command"
+  },
+  "paletteCustomErrSlash": {
+    "message": "Slash: 1–24 chars of lowercase letters, digits or hyphens, starting with a letter or digit."
+  },
+  "paletteCustomErrAlias": {
+    "message": "Aliases: same rules as the slash (1–24 chars of lowercase letters, digits or hyphens)."
+  },
+  "paletteCustomErrTaken": {
+    "message": "That slash or alias is already taken."
+  },
+  "paletteCustomErrUrl": {
+    "message": "Only http:// or https:// URLs are allowed."
+  },
+  "paletteCustomErrFolder": {
+    "message": "Pick a bookmark folder."
+  },
+  "paletteCustomErrView": {
+    "message": "Pick a view."
+  },
+  "paletteCustomErrTemplate": {
+    "message": "The template must contain exactly one %s."
+  },
+  "paletteCustomErrAction": {
+    "message": "Pick an action type."
+  },
+  "paletteCustomErrLimit": {
+    "message": "Command limit reached (100) — delete one first."
+  },
+  "paletteCustomEmpty": {
+    "message": "No custom commands yet."
   },
   "recentGroupToday": {
     "message": "Today"

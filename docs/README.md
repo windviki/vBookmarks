@@ -11,12 +11,13 @@ vBookmarks
 
 **vBookmarks turns your bookmark pile into a fast, keyboard-first workspace.** One click on the toolbar icon opens a six-view manager that lives in the popup (or Chrome's side panel — your choice): the familiar folder tree, instant fuzzy search, a Recently Added timeline, visit statistics, a dead-link scanner, and a duplicate cleaner. Everything is reachable from the keyboard, every delete is undoable, and nothing ever leaves your browser — no accounts, no telemetry, no build-step black box, just plain JavaScript you can read.
 
-- **Six views, one popup** — Tree / Search / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Ctrl/Cmd+1…6`.
+- **Six views, one popup** — Tree / Search / Recent / Stats / Dead links / Duplicates, switched from an icon tab strip or with `Alt+1…6`.
 - **A maintenance crew for your library** — scan for dead links with pause & resume, deduplicate with six keep-strategies and undoable batch cleaning, save a whole window of tabs as a session folder.
 - **Keyboard-first for real** — every view is fully operable without a mouse: arrows, `Enter`, `F2` rename, `Delete`, view shortcuts, and a `Ctrl/Cmd+K` command palette.
 - **Fast and quiet** — fzf-style fuzzy search with match highlighting (CJK-friendly), omnibox search (`*` + Space), and sync-status indicators that stay out of your way.
 - **Make it yours** — five crafted themes, custom CSS, custom toolbar icon, per-view visibility toggles — or hide the tab strip entirely for the classic one-pane look.
 - **Private by design** — local-only data, 43 languages, MIT licensed.
+- **Chrome and Edge** — one MV3 package installs on both (`scripts/package.py --target chrome|edge`; Firefox would need a build step — evaluation in [browser-compat.md](browser-compat.md)).
 
 Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php). Read the [FAQ](https://github.com/windviki/vBookmarks/wiki/FAQ). New in 4.0? Read the [v4 feature guide](guide-v4.md).
 
@@ -39,7 +40,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 ## The view system
 
 - **Six views**: **Tree** (the classic), **Search**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
-- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Ctrl/Cmd+1…6` jumps straight to a view.
+- **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Alt+1…6` jumps straight to a view (portable across Chrome and Edge, which reserves `Ctrl+1…8` for its own tabs).
 - **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
 - **Popup vs panel** — both reopen on the view you left (the popup via the default-on *remember the last view* switch — turn it off for the classic always-tree boot), and the side panel is ready to become your always-on bookmark workspace.
 
@@ -64,7 +65,8 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 - **Dual-channel checking**: a direct fetch first; on failure, a second channel gets the final say — so "down for everyone" and "just blocked here" read as different badges. The second channel is your **own proxy server** (http/https/socks5) added in one click from the strip above the list (reachability-tested before it is saved), or a legacy relay URL template from the options page.
 - **Proxy mechanics, honestly scoped**: checks through your proxy are routed by a temporary PAC script that matches only the scanner's own marker-tagged probe URLs — every other tab's traffic stays on its normal path, and the settings are restored the moment a scan settles, cancels or the popup closes. The `proxy` permission is declared at install time (Chrome does not allow it as an optional permission); it sits **completely unused** if you never configure a proxy server or never run a scan — no proxy code path executes otherwise.
-- **Progressive, pausable scans**: results stream in row by row; `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot.
+- **Progressive, pausable scans that outlive the popup**: the scan runs in the service worker, so closing the popup or side panel mid-scan loses nothing — reopen to a live mirror, and an interrupted run even resumes itself. Results stream in row by row; `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot. Progress ticks repaint silently, never moving your scroll position.
+- **A risk banner before the first cleanup** (dead links and dedup both rewrite bookmarks in bulk) links to Chrome's own backup & restore guide; *Don't show again* snoozes it until the next major version.
 - Tunable concurrency (1–16) and timeout (2–30 s), a dead/blocked/all filter with a dead·blocked summary line, and **dead marks** — flag a link once and the red ✕ follows it across the tree, search, recent and stats views.
 
 ## Duplicates view
@@ -75,7 +77,8 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Command palette, upgraded
 
-- `Ctrl/Cmd+K` in the popup, `Ctrl/Cmd+Shift+K` anywhere: fuzzy bookmark search, folder jumps, and a slash-command table — one **Go** command per view, `/session`, `/options`, theme switching, `/tabs` and `/path` toggles, with aliases for every command.
+- `Ctrl/Cmd+K` in the popup, `Ctrl/Cmd+Shift+K` anywhere: fuzzy bookmark search, folder jumps, and a curated slash-command table — one **Go** command per view, `/add` `/new` `/folder`, `/session`, `/theme <name>`, `/tabs` and `/options`, each with a short alias or two.
+- **Custom slash commands**: open a URL, fill a URL template from the rest words (`/g kimi code`), open a bookmark folder as a tab group, or jump to a view with a preset — managed in the options page's *Commands* group, saved straight from the palette's *Save as a command* row, synced across devices, and editable/deletable from the row's `→` menu.
 - A plain query that isn't a command offers a bridge row to run it in the full search view; the palette closes itself when it loses focus.
 
 ## Settings, backup & the classic look
@@ -95,9 +98,9 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1262 unit tests** across 39 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rung, banner keyboard reachability, search dual-zone, per-view rendering — 100 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **284 keys**, all 43 locales aligned.
+- **1386 unit tests** across 43 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 115 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys**, all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -128,14 +131,14 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
    - **↑↓** move selection; **↑** past the first row steps up to the tab strip, then the search box
    - **←→** on the tab strip switch views; **→** on a row opens its context menu, **←** closes it
    - **Enter** / **Space** to open; **Ctrl/Cmd+Enter** to open in a new tab
-   - **Home** / **End**, **PageUp** / **PageDown**; **Ctrl/Cmd+1…6** jump to a view directly
+   - **Home** / **End**, **PageUp** / **PageDown**; **Alt+1…6** jump to a view directly (`Ctrl/Cmd+1…6` is the legacy twin where the browser allows it)
    - **Delete** to delete (undoable), **F2** to rename, **R** to reveal in tree; **K** pins a keeper in Duplicates, **M** toggles a dead mark
    - Type-ahead filtering in the tree and search views: start typing to find items by name
 3. Middle-click a folder to open all its bookmarks (as a color-coded tab group).
 4. `Ctrl+F` focuses the search field; `Esc` clears the search, dismisses the context menu, pauses a scan, or closes the palette — layered from inner to outer.
 5. **Command palette** (`Ctrl/Cmd+K` inside the popup, `Ctrl/Cmd+Shift+K` globally):
    - Fuzzy-search bookmarks and folders, jump to a folder in the tree, or run slash-commands
-   - Slash-commands: `/recent` `/stats` `/dead` `/dupes` jump to views, `/session` saves the window's tabs, `/options` opens settings, theme commands switch themes, `/tabs` and `/path` toggle the strip and path labels
+   - Slash-commands: `/recent` `/stats` `/dead` `/dupes` jump to views, `/session` saves the window's tabs, `/options` opens settings, `/theme <name>` switches themes, `/tabs` toggles the strip — plus your own **custom commands** (options page → *Commands* group, or the palette's *Save as a command* row)
 6. Drag & drop to rearrange; dragging across synced/local storage is safely blocked with an explanation.
 7. Decide whether the popup closes after opening a bookmark (option in settings).
 8. Show only the Bookmark Bar (option in settings).
@@ -196,7 +199,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 **ver4.0 2026/07**
 
-New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Ctrl/Cmd+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks — its second channel now also supports **your own proxy server** (http/https/socks5): a one-click add button in the view's proxy strip validates the address and probes reachability (unreachable servers are rejected) before saving, change/remove live on the same strip and the options page shows/clears the saved server; routing uses a marker-matched temporary PAC, so only the scanner's own probe URLs go through the proxy (other tabs untouched, settings restored on settle/cancel/popup close, crash residue swept by the service worker); the toolbar adds a dead·blocked summary line and a configure-a-proxy nudge when direct-failing rows have no proxy. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Command palette upgrades: Go commands per view, theme switching, `/session`, `/options`, aliases, search bridge row, auto-close on blur. Options: Views group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
+New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Alt+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks — running **in the service worker**, so closing the popup mid-scan loses nothing — and its second channel now also supports **your own proxy server** (http/https/socks5): a one-click add button in the view's proxy strip validates the address and probes reachability (unreachable servers are rejected) before saving, change/remove live on the same strip and the options page shows/clears the saved server; routing uses a marker-matched temporary PAC, so only the scanner's own probe URLs go through the proxy (other tabs untouched, settings restored on settle/cancel/popup close, crash residue swept by the service worker); the toolbar adds a dead·blocked summary line and a configure-a-proxy nudge when direct-failing rows have no proxy. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Both bulk tools show a one-time backup-first risk banner. Command palette upgrades: Go commands per view, `/theme <name>`, `/session`, `/options`, aliases, custom slash commands (URL/template/folder-group/view-preset, synced), search bridge row, auto-close on blur. Options: Views group, custom-commands group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
 
 Polish: selection modes in Dead links (batch mark/unmark) and Duplicates (batch group cleaning) with `Esc` to exit; `Tab`/`Shift+Tab` region cycling including in-list toolbars, with per-region focus memory; duplicates member-row keys (`Enter` opens a copy, `←` returns to the group head) and group-head menus; remember-last-view restore (default on) and count-badge, palette, quick-add and tool-button switches, plus a one-click *Restore the classic header* button; options and advanced options merged into a single page (old URL redirects); global quick-add shortcut (`Alt+Shift+S`); ARIA roles on all context menus, `aria-modal` dialogs with a focus trap; lazy favicons; GitHub Actions CI.
 

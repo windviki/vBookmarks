@@ -30,11 +30,13 @@ const buildChrome = () => {
         contextMenusCreate: [],
         contextMenusRemove: [],
         tabsCreate: [],
+        tabsUpdate: [],
         windowsCreate: [],
         actionOpenPopup: 0,
         sidePanelOpen: 0,
         setPanelBehavior: [],
-        sessionRemove: []
+        sessionRemove: [],
+        omniboxDefault: []
     };
     localData = {};
     sessionData = {};
@@ -92,9 +94,10 @@ const buildChrome = () => {
         },
         i18n: { getMessage: key => key },
         bookmarks: {
+            _searchResult: [],
             getTree(cb) { cb([]); },
             get(id, cb) { cb([]); },
-            search(q, cb) { cb([]); },
+            search(q, cb) { cb(this._searchResult); },
             create(node, cb) {
                 calls.bookmarksCreate.push(node);
                 if (cb) {
@@ -123,7 +126,7 @@ const buildChrome = () => {
                 return Promise.resolve(this._queryResult);
             },
             create(props) { calls.tabsCreate.push(props); },
-            update() {},
+            update(id, props) { calls.tabsUpdate.push([id, props]); },
             onUpdated: noopListener
         },
         windows: {
@@ -165,9 +168,9 @@ const buildChrome = () => {
             onClicked: { addListener(fn) { listeners.contextMenuClicked = fn; } }
         },
         omnibox: {
-            setDefaultSuggestion: () => {},
-            onInputChanged: noopListener,
-            onInputEntered: noopListener
+            setDefaultSuggestion: s => { calls.omniboxDefault.push(s.description); },
+            onInputChanged: { addListener(fn) { listeners.omniboxChanged = fn; } },
+            onInputEntered: { addListener(fn) { listeners.omniboxEntered = fn; } }
         },
         alarms: {
             clear: () => {},
@@ -211,6 +214,16 @@ beforeEach(() => {
         else
             calls[key] = 0;
     chromeDouble.tabs._queryResult = [];
+    chromeDouble.bookmarks._searchResult = [];
+    // restored like action.openPopup below: one test swaps query for a
+    // rejecting stub
+    chromeDouble.tabs.query = function (info, cb) {
+        if (cb) {
+            cb(this._queryResult);
+            return undefined;
+        }
+        return Promise.resolve(this._queryResult);
+    };
     chromeDouble.sidePanel._openRejects = false;
     chromeDouble.action.openPopup = () => {
         calls.actionOpenPopup++;
@@ -331,5 +344,62 @@ describe('quick-add page context menu (Phase 3)', () => {
         listeners.contextMenuClicked({ menuItemId: 'something-else' }, { title: 'X', url: 'https://x/' });
         listeners.contextMenuClicked({ menuItemId: 'vbm-quick-add' }, null);
         expect(calls.bookmarksCreate).toEqual([]);
+    });
+});
+
+// v4 task-4 #11: the omnibox flow. The suggest path is debounced 250ms, so
+// the tests type then wait it out; the Enter path is synchronous except the
+// fallback search (microtask-flushed).
+describe('omnibox search (v4 task-4 #11)', () => {
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const HITS = [
+        { id: '11', title: 'Kimi', url: 'https://www.kimi.com/' },
+        { id: '12', title: 'Kimi docs', url: 'https://www.kimi.com/docs' }
+    ];
+
+    it('suggests ranked hits with the top one as the default suggestion', async () => {
+        chromeDouble.bookmarks._searchResult = HITS;
+        let suggested = null;
+        listeners.omniboxChanged('kimi', s => { suggested = s; });
+        await sleep(300);
+        await flushMicrotasks();
+        const dflt = calls.omniboxDefault[calls.omniboxDefault.length - 1];
+        expect(dflt).toContain('Kimi');
+        expect(dflt).toContain('https://www.kimi.com/');
+        expect(suggested).toHaveLength(1); // the runner-up
+        expect(suggested[0].content).toBe('https://www.kimi.com/docs');
+    });
+
+    it('Enter on the typed query opens the top hit in the current tab', async () => {
+        chromeDouble.bookmarks._searchResult = HITS;
+        chromeDouble.tabs._queryResult = [{ id: '55' }];
+        listeners.omniboxChanged('kimi', () => {});
+        await sleep(300);
+        await flushMicrotasks();
+        listeners.omniboxEntered('kimi', 'currentTab');
+        expect(calls.tabsUpdate).toEqual([['55', { url: 'https://www.kimi.com/' }]]);
+        expect(calls.tabsCreate).toEqual([]);
+    });
+
+    it('a picked suggestion row opens its URL (new foreground tab)', () => {
+        listeners.omniboxEntered('https://www.kimi.com/docs', 'newForegroundTab');
+        expect(calls.tabsCreate).toEqual([{ url: 'https://www.kimi.com/docs', active: true }]);
+    });
+
+    it('a fast Enter before the debounce still resolves the query (the #11 fix)', async () => {
+        chromeDouble.bookmarks._searchResult = HITS;
+        chromeDouble.tabs._queryResult = [{ id: '55' }];
+        listeners.omniboxEntered('kimi', 'currentTab'); // no onInputChanged at all
+        await flushMicrotasks();
+        expect(calls.tabsUpdate).toEqual([['55', { url: 'https://www.kimi.com/' }]]);
+    });
+
+    it('a fast Enter with no hits does nothing — the raw text is never used as a URL', async () => {
+        chromeDouble.bookmarks._searchResult = [];
+        chromeDouble.tabs._queryResult = [{ id: '55' }];
+        listeners.omniboxEntered('zzz nothing', 'currentTab');
+        await flushMicrotasks();
+        expect(calls.tabsUpdate).toEqual([]);
+        expect(calls.tabsCreate).toEqual([]);
     });
 });

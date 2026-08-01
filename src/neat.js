@@ -288,7 +288,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
                 cleanGroup: key => viewDupes.cleanGroup(key),
                 toggleGroup: key => viewDupes.toggleGroup(key)
             };
-        }
+        },
+        // v4 task-4 #6: the palette custom-command row menu (edit/delete)
+        // — palette inits below, same lazy getter pattern as the views.
+        get paletteMenu() { return palette.customMenu; }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after

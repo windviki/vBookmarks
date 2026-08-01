@@ -541,7 +541,7 @@ describe('generateHTML', () => {
         const tr = setup();
         expect(tr.generateHTML([], 2)).toBe(
             '<ul role="group" data-level="2"><li class="empty-folder" ' +
-            'style="-webkit-padding-start: 72px"><i>(Empty)</i></li></ul>');
+            'style="-webkit-padding-start: 88px"><i>(Empty)</i></li></ul>');
     });
 
     it('marks local-only rows (syncing === false) with unsynced-subtree', () => {
@@ -591,7 +591,7 @@ describe('generateHTML', () => {
         expect(html).toContain('aria-expanded="true"');
         expect(html).toContain('<ul role="group" data-level="1">');
         expect(html).toContain('level="1" role="treeitem"');
-        expect(html).toContain('style="-webkit-padding-start: 16px"');
+        expect(html).toContain('style="-webkit-padding-start: 24px"');
         expect(html).toContain('<i>Kid</i>');
     });
 

@@ -109,6 +109,13 @@ Structural overrides, additive only:
   head, `←`/`→`/`Enter`/`Space` **collapse/expand** the group (focus is
   re-parked on the replacement head element after the re-render). A member's
   `Enter`/`Space` dispatches to the row's anchor, never to the keeper radio.
+- **Selection mode** (dead + dupes, v4 task-4 #8): `Space` on the focused
+  element **toggles its selection** — a dead row's membership, or the whole
+  group from either a dupes head or a dupes member row (click parity; focus
+  is re-parked on the replacement row/head after the re-render). `Enter`
+  keeps its activation semantics (dupes head still folds, member rows still
+  open). Outside selection mode `Space` is unchanged: activate a dead row,
+  fold a dupes head.
 - **Search history rows** (§3): `↑`/`↓` walk, `Enter` reruns, `Delete`
   removes, `→` opens the row menu.
 - **Dead/Stats/Duplicates letter keys** stay view-local (`M` mark, `R`
@@ -119,13 +126,19 @@ Structural overrides, additive only:
 The stats/dead/dupes toolbars render between the strip and the rows, so the
 naive layout correspondence makes them a **rung** of the vertical chain
 (revised in the final polish — they used to be Tab-only territory, which
-left the arrow chain inconsistent with the Tab ring):
+left the arrow chain inconsistent with the Tab ring). A view may stack
+**several** toolbars (v4 task-4 #13: the dead view's proxy strip above its
+scan toolbar) — each is then its own rung in visual (DOM) order, and a rung
+without an enabled control is skipped transparently:
 
-- **Entering**: strip `↓` lands on the rung's **first enabled control**;
-  `↑` past the list's first row lands there too. Toolbar-less views
-  (tree/search/recent) skip the rung transparently.
-- **`↓`** from a control enters the rows (remembered row first); **`↑`**
-  crosses to the strip, or to the box when the strip is hidden.
+- **Entering**: strip `↓` lands on the **topmost** rung's first enabled
+  control; `↑` past the list's first row lands on the **lowest** rung's
+  first enabled control (the one visually nearest the rows). Toolbar-less
+  views (tree/search/recent) skip the rung transparently.
+- **`↓`** from a control enters the next rung below, or the rows from the
+  lowest rung (remembered row first); **`↑`** enters the previous rung
+  above, or crosses to the strip from the topmost rung (to the box when
+  the strip is hidden).
 - **`←`/`→`** walk the rung's enabled controls in reading order (RTL
   mirrors); the edges are dead ends — the header-chain contract. This
   supersedes the old view-local seg walkers (stats sort, dead filter),
@@ -182,8 +195,9 @@ per press:
 
 1. **Dialogs** open → close them.
 2. **Context menu** open → close it, focus returns to the owning row.
-3. **Banner** visible → dismiss it (the *Later* semantics — it snoozes,
-   never unsubscribes).
+3. **Banner** visible → dismiss it (the donation card uses the *Later*
+   semantics — it snoozes, never unsubscribes; a dead/dupes **risk banner**
+   (v4 task-4 #14) dismisses with its session × semantics).
 4. **Palette** open → close it.
 5. **View-local transient state**: Duplicates/Dead **selection mode** exits;
    a Dead **scan pauses** (next `Esc` resumes — non-destructive; cancelling
@@ -203,7 +217,8 @@ sequence.
 
 ```
 search box → quick-add → tools → [banner controls] → active tab
-→ [in-list toolbar controls] → remembered/first row → (wrap)
+→ [risk-banner controls] → [in-list toolbar controls] → remembered/first row
+→ (wrap)
 ```
 
 - A stop counts only when **actually rendered**: the `.hidden` class, an
@@ -223,7 +238,7 @@ search box → quick-add → tools → [banner controls] → active tab
 | Key | Action |
 |---|---|
 | `Ctrl/Cmd+F` | activate the search view, focus + select the box |
-| `Ctrl/Cmd+1…9` | jump to the Nth **visible** view (never fires inside inputs) |
+| `Alt+1…9` | jump to the Nth **visible** view (never fires inside inputs). `Ctrl/Cmd+1…9` is the legacy twin — kept where the browser lets it through (Chrome's popup/side panel), but Edge reserves `Ctrl+1…8` for browser-tab switching, so `Alt` is the portable form (v4 task-4 #10) |
 | `Ctrl/Cmd+K` | command palette |
 | `Ctrl/Cmd+D` | quick-add the current page (edit dialog if already bookmarked) |
 | Letters/digits | tree + search results: type-ahead (500 ms rolling buffer, wraps) |
@@ -237,8 +252,8 @@ endpoint moves to the next surviving rung.
 
 | Setting | Effect on the model |
 |---|---|
-| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Ctrl+1…9` and the palette still reach every view. |
-| One feature view disabled (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView`) | No tab, activation refused, `Ctrl+N` indexes the visible set. A remembered startup view that is now disabled falls back to the tree. |
+| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Alt+1…9` and the palette still reach every view. |
+| One feature view disabled (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView`) | No tab, activation refused, `Alt+N` indexes the visible set. A remembered startup view that is now disabled falls back to the tree. |
 | `quickAddEnabled` off | Header `→` chain: box → tools; `←` chain: tools → box. Tab cycle skips it. |
 | `showToolButton` off (or palette off, which hides it) | `→` from quick-add is a no-op; Tab cycle skips it. |
 | Classic experience (all three off at once) | Header is the bare box: `→` inert, `↓` straight into the list — the v3 chain, exactly what the option promises. |
@@ -246,6 +261,7 @@ endpoint moves to the next surviving rung.
 | Side panel mode | Identical model; startup always restores the last view. |
 | RTL locale | Every horizontal law mirrors (`←`/`→` swap) on the strip, the header chain, tree folders, menus, history rows. |
 | Banner visible | Joins the `Tab` ring between header and strip; `Esc` dismisses (Later). Never an arrow rung — the arrow chain stays stable whether or not the banner happens to be up. |
+| Risk banner visible (dead/dupes, v4 task-4 #14) | Same laws as the donation banner, at its own visual spot: `Tab` ring between the strip and the toolbar rungs; `Esc` dismisses (session ×); never an arrow rung, so the multi-toolbar chain of §2.5 is unaffected. |
 | Tree-only filter (`onlyShowBMBar`) | Content-level filter; the keyboard model is untouched. |
 | Dialog / menu / palette open | Overlay laws (§2.6, §5) replace the zone chain until closed. |
 

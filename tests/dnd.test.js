@@ -598,7 +598,7 @@ describe('mouseup (drop on a folder)', () => {
         expect(ctx.chrome.bookmarks.moveCalls).toEqual([['11', { parentId: '7' }]]);
         expect(emptyRow.removed).toBe(true); // stale "(Empty)" marker dropped
         expect(ul._appended).toEqual([dragged.li]);
-        expect(dragged.a.style.webkitPaddingStart).toBe('16px'); // 16 * (0 + 1)
+        expect(dragged.a.style.webkitPaddingStart).toBe('24px'); // TREE_INDENT * (0 + 1)
         expect(dragged.li._attrs.level).toBe(2); // folder level 1 + 1
         expect(dragged.li._attrs['data-parentid']).toBe('7');
         expect(folder.span.focused).toBe(true);
