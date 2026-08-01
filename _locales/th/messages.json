@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "สไตล์ที่กำหนดเอง"
   },
+  "separatorOptions": {
+    "message": "ตัวคั่น"
+  },
   "customStylesDescription": {
     "message": "ต้องใช้ทักษะ CSS บางอย่าง แก้ไขตามความเสี่ยงของคุณเอง การแชร์โค้ดจะเป็นประโยชน์ผ่าน"
   },

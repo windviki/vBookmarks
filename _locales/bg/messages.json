@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Персонализирани стилове"
   },
+  "separatorOptions": {
+    "message": "Разделители"
+  },
   "customStylesDescription": {
     "message": "Това изисква някои CSS умения. Променяйте на свой риск. Би било разумно да споделяте код чрез"
   },

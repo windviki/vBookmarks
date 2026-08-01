@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Gaya Kustom"
   },
+  "separatorOptions": {
+    "message": "Pemisah"
+  },
   "customStylesDescription": {
     "message": "Ini memerlukan beberapa keterampilan CSS. Ubah dengan risiko Anda sendiri. Berbagi kode akan bijaksana dilakukan melalui"
   },

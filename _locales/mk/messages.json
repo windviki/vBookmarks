@@ -136,6 +136,9 @@
   "customStyles": {
     "message": "Прилагодено Стилови"
   },
+  "separatorOptions": {
+    "message": "Сепаратори"
+  },
   "customStylesDescription": {
     "message": "Потребни се CSS вештини. Променувајте на сопствен ризик."
   },

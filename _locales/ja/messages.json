@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "カスタムスタイル"
   },
+  "separatorOptions": {
+    "message": "区切り線"
+  },
   "customStylesDescription": {
     "message": "これは、いくつかのCSSのスキルが必要です。ご自身の責任でハック。コードの共有は行わ経由してのが賢明だろう "
   },

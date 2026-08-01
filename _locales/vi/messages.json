@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Kiểu Tùy Chỉnh"
   },
+  "separatorOptions": {
+    "message": "Dấu phân cách"
+  },
   "customStylesDescription": {
     "message": "Điều này yêu cầu một số kỹ năng CSS. Sửa đổi theo rủi ro của bạn. Chia sẻ mã sẽ khôn ngoan thông qua"
   },

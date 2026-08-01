@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Stiluri Personalizate"
   },
+  "separatorOptions": {
+    "message": "Separatoare"
+  },
   "customStylesDescription": {
     "message": "Acest lucru necesită câteva cunoștințe CSS. Modificați pe propriul risc. Partajarea codului ar fi înțeleaptă prin"
   },

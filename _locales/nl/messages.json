@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Aangepaste stijlen"
   },
+  "separatorOptions": {
+    "message": "Scheidingslijnen"
+  },
   "customStylesDescription": {
     "message": "Dit vereist enige CSS-vaardigheden. Wijzig op eigen risico. Code delen zou verstandig zijn via"
   },

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Pielāgoti stili"
   },
+  "separatorOptions": {
+    "message": "Atdalītāji"
+  },
   "customStylesDescription": {
     "message": "Šim ir nepieciešamas dažas CSS prasmes. Modificējiet uz savu atbildību. Kodu kopīgošana būtu gudra"
   },

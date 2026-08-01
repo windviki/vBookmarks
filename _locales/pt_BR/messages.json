@@ -136,6 +136,9 @@
   "customStyles": {
     "message": "Estilos personalizados"
   },
+  "separatorOptions": {
+    "message": "Separadores"
+  },
   "customStylesDescription": {
     "message": "Requer conhecimento de CSS. Modifique por sua conta e risco."
   },

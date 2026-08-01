@@ -418,6 +418,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('default-icon-button').innerText = __m('defaultIconButton');
         document.getElementById('default-icon-button-or').innerText = __m('defaultIconButtonOr');
         document.getElementById('custom-styles').innerText = __m('customStyles');
+        document.getElementById('separator-options').innerText = __m('separatorOptions');
         document.getElementById('custom-separator-color-description').innerText = __m('customSeparatorColorDescription');
         document.getElementById('custom-separator-title-description').innerText = __m('customSeparatorTitleDescription');
         document.getElementById('custom-separator-url-description').innerText = __m('customSeparatorUrlDescription');

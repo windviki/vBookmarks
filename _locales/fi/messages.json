@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Mukautetut Tyylit"
   },
+  "separatorOptions": {
+    "message": "Erottimet"
+  },
   "customStylesDescription": {
     "message": "Tämä vaatii CSS-taitoja. Muokkaa omalla vastuullasi. Koodin jakaminen olisi viisasta tehdä kautta"
   },

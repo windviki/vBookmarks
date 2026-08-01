@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Користувацькі стилі"
   },
+  "separatorOptions": {
+    "message": "Розділювачі"
+  },
   "customStylesDescription": {
     "message": "Це вимагає деяких навичок CSS. Змінюйте на свій страх і ризик. Було б розумно ділитися кодом через"
   },

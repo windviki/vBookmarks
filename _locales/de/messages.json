@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Benutzerdefinierte Stile"
   },
+  "separatorOptions": {
+    "message": "Trennzeichen"
+  },
   "customStylesDescription": {
     "message": "Dies erfordert einige CSS-Kenntnisse. Ändern Sie auf eigenes Risiko. Es wäre klug, Code über"
   },

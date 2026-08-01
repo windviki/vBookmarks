@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Προσαρμοσμένα Στυλ"
   },
+  "separatorOptions": {
+    "message": "Διαχωριστικά"
+  },
   "customStylesDescription": {
     "message": "Αυτό απαιτεί κάποιες γνώσεις CSS. Τροποποιήστε με δική σας ευθύνη. Η κοινή χρήση κώδικα θα ήταν σοφή μέσω"
   },

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Brugerdefinerede Stile"
   },
+  "separatorOptions": {
+    "message": "Separeringslinjer"
+  },
   "customStylesDescription": {
     "message": "Dette kræver nogle CSS færdigheder. Rediger på egen risiko. Kodedeling ville være klogt via"
   },

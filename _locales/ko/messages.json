@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "사용자 지정 스타일"
   },
+  "separatorOptions": {
+    "message": "구분선"
+  },
   "customStylesDescription": {
     "message": "일부 CSS 기술이 필요합니다. 자신의 책임하에 수정하십시오. 코드 공유는 통해 하는 것이 현명할 것입니다"
   },

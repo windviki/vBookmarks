@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Tinkinti stiliai"
   },
+  "separatorOptions": {
+    "message": "Atskyrikliai"
+  },
   "customStylesDescription": {
     "message": "Tai reikalauja kai kurių CSS žinių. Keiskite savo rizika. Būtų protinga dalintis kodu per"
   },

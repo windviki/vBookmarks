@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "定制CSS"
   },
+  "separatorOptions": {
+    "message": "分隔符"
+  },
   "customStylesDescription": {
     "message": "注意：无CSS知识请勿冒险修改。推荐将代码共享到 "
   },

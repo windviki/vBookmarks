@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Prilagojeni slogi"
   },
+  "separatorOptions": {
+    "message": "Ločila"
+  },
   "customStylesDescription": {
     "message": "To zahteva neka CSS znanja. Spreminjajte na lastno tveganje. Skupna raba kode bi bila pametna"
   },

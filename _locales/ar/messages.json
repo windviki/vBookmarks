@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "أنماط مخصصة"
   },
+  "separatorOptions": {
+    "message": "الفواصل"
+  },
   "customStylesDescription": {
     "message": "يتطلب هذا بعض مهارات CSS. قم بالتعديل على مسؤوليتك الخاصة. سيكون من الحكمة مشاركة الكود عبر"
   },

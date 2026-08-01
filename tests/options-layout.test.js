@@ -23,13 +23,14 @@ const ruleBody = (css, selector) => {
 const count = (haystack, needle) => haystack.split(needle).length - 1;
 
 describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', () => {
-    it('flows the eight merged card sections through .options-grid', () => {
-        // general / views / sync / accessibility / custom icon / custom
-        // styles / dead scan / backup+reset — advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(8);
+    it('flows the nine merged card sections through .options-grid', () => {
+        // general / views / sync / accessibility / custom icon / separators
+        // (final polish: split out of custom styles) / custom styles /
+        // dead scan / backup+reset — advanced-options merged in.
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(9);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'sync-options', 'accessibility',
-                'custom-icon', 'custom-styles', 'dead-scan-options', 'backup-options'])
+                'custom-icon', 'separator-options', 'custom-styles', 'dead-scan-options', 'backup-options'])
             expect(optionsHtml).toContain(`<h2 id="${id}">`);
     });
 
@@ -40,6 +41,19 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
             expect(body).toContain('<h2 id="');
             expect(body).toContain('<ul class="options-list">');
         }
+    });
+
+    it('splits the separator settings out of custom styles into their own group', () => {
+        const sections = optionsHtml.split('<section class="options-group">').slice(1);
+        const sep = sections.find(s => s.includes('<h2 id="separator-options">'));
+        const styles = sections.find(s => s.includes('<h2 id="custom-styles">'));
+        expect(sep).toBeTruthy();
+        expect(styles).toBeTruthy();
+        for (const id of ['custom-separator-color', 'custom-separator-title',
+                'custom-separator-url', 'custom-separator-string'])
+            expect(sep).toContain(`id="${id}"`);
+        expect(styles).not.toContain('custom-separator');
+        expect(styles).toContain('id="userstyle"'); // userstyle stays behind
     });
 
     it('absorbed the advanced controls (icon, separators, userstyle, dead scan, reset)', () => {

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "استایل‌های سفارشی"
   },
+  "separatorOptions": {
+    "message": "جداکننده‌ها"
+  },
   "customStylesDescription": {
     "message": "این به برخی مهارت‌های CSS نیاز دارد. به عهده خودتان هک کنید. اشتراک‌گذاری کد از طریق هوشمندانه خواهد بود"
   },

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Vlastní Styly"
   },
+  "separatorOptions": {
+    "message": "Oddělovače"
+  },
   "customStylesDescription": {
     "message": "Toto vyžaduje nějaké CSS dovednosti. Upravujte na vlastní nebezpečí. Sdílení kódu by bylo moudré přes"
   },

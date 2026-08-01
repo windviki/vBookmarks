@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "कस्टम स्टाइल"
   },
+  "separatorOptions": {
+    "message": "विभाजक"
+  },
   "customStylesDescription": {
     "message": "इसके लिए कुछ CSS कौशल की आवश्यकता है। अपने जोखिम पर हैक करें। कोड शेयरिंग के लिए के माध्यम से करना बुद्धिमानी होगी"
   },

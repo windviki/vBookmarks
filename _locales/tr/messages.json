@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Özel stiller"
   },
+  "separatorOptions": {
+    "message": "Ayırıcılar"
+  },
   "customStylesDescription": {
     "message": "Bu bazı CSS becerileri gerektirir. Kendi sorumluluğunuzda düzenleyin. Kod paylaşımını üzerinden yapmak akıllıca olacaktır"
   },

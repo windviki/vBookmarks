@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Kohandatud stiilid"
   },
+  "separatorOptions": {
+    "message": "Eraldajad"
+  },
   "customStylesDescription": {
     "message": "See nõuab mõningaid CSS oskusi. Muutke oma riskil. Koodi jagamine oleks mõistlik"
   },

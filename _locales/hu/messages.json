@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Egyéni Stílusok"
   },
+  "separatorOptions": {
+    "message": "Elválasztók"
+  },
   "customStylesDescription": {
     "message": "Ehhez némi CSS ismeret szükséges. Módosítsa saját felelősségére. A kódmegosztás okos lenne a következőn keresztül"
   },

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Prilagođeni stilovi"
   },
+  "separatorOptions": {
+    "message": "Razdjelnici"
+  },
   "customStylesDescription": {
     "message": "Ovo zahtijeva neke CSS vještine. Izmjenjujte na vlastiti rizik. Dijeljenje koda bi bilo pametno"
   },

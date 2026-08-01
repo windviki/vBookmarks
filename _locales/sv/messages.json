@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Anpassade stilar"
   },
+  "separatorOptions": {
+    "message": "Avgränsare"
+  },
   "customStylesDescription": {
     "message": "Detta kräver vissa CSS-kunskaper. Ändra på egen risk. Det skulle vara klokt att dela kod via"
   },

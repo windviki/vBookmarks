@@ -763,6 +763,9 @@
   "customStyles": {
     "message": "自定义样式"
   },
+  "separatorOptions": {
+    "message": "分割线"
+  },
   "deleteEllipsis": {
     "message": "删除..."
   },

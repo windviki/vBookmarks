@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "Egendefinerte Stiler"
   },
+  "separatorOptions": {
+    "message": "Skilletegn"
+  },
   "customStylesDescription": {
     "message": "Dette krever noen CSS-kunnskaper. Endre på egen risiko. Kodedeling vil være lurt gjort via"
   },

@@ -137,6 +137,9 @@
   "customStyles": {
     "message": "סגנונות מותאמים אישית"
   },
+  "separatorOptions": {
+    "message": "מפרידים"
+  },
   "customStylesDescription": {
     "message": "דורש כמה ידע ב-CSS. שנה על אחריותך בלבד. שיתוף קוד יהיה חכם דרך"
   },
