@@ -226,10 +226,10 @@
     "message": "Bogmærke-URL'er sendes til denne tredjepartstjeneste. Lad feltet være tomt for kun at probe direkte."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Tilføj en proxyserver til død-link-tjek"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Skift"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Fjern"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxyserver fjernet"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Indtast en proxyserver, du allerede har (udvidelsen leverer ingen), f.eks. 127.0.0.1:7890 eller socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Test-URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Test og gem"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Tester…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy gemt – fremtidige scanninger genkontrollerer direkte fejl via den."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Ugyldig proxyadresse – brug host:port eller scheme://host:port (http/https/socks5, uden loginoplysninger)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy utilgængelig – ikke gemt"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Proxy-tilladelsen blev ikke givet"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Proxyindstillingerne styres af en anden udvidelse"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Proxy-API'et er ikke tilgængeligt i denne browser"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ bogmærker fejlede direkte tjek – en proxy-genkontrol adskiller reelle døde links fra regionalt blokerede.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Relay-skabelon (indstilles i indstillinger)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Døde: $dead$ · Blokerede: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Proxy-skabelon for døde links"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Proxyserver til døde links"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Tilføj og test proxyen fra visningen af døde links; den gemte server genkontrollerer direkte fejl ved hver scanning."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Ryd"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(ikke angivet)"
   },
   "optionDeadScanConcurrency": {
     "message": "Samtidighed for scanning af døde links (1-16)"
@@ -810,124 +810,124 @@
     "message": "Skift faner"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Indstil tema…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Brug: /theme efterfulgt af et temanavn – auto, light, dark, ink eller paper (et unikt præfiks virker, f.eks. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "tilpasset"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Slet kommandoen \"$1\"? Ændringen synkroniseres til alle dine enheder."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Mappen for kommandoen \"$1\" findes ikke længere. Slet kommandoen?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Gem \"$1\" som kommando…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Åbn URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Åbn bogmærkemappegruppe"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Åbn visning med præsæt"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Åbn URL-skabelon"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Kommandopalet"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Tilpassede skråstregskommandoer til kommandopaletten (Ctrl/Cmd+K). De synkroniseres med dine indstillinger – maks. 100 poster."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Tilføj kommando…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Skråstreg (ordet efter /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliaser (adskilt af komma)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Handling"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL-skabelon — %s erstattes af ordene efter kommandoen"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Åbn i"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Bogmærkemappe"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Visning"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Forudindstilling for dedup-strategi"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Forudindstilling for dedup-omfang"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Start scanningen ved indtastning"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Aktuel fane"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Ny fane"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Nyt vindue"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Baggrundsfaner"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Gem kommando"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Skråstreg: 1–24 tegn bestående af små bogstaver, tal eller bindestreger, der begynder med et bogstav eller tal."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliaser: samme regler som skråstregen (1–24 tegn bestående af små bogstaver, tal eller bindestreger)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Den skråstreg eller det alias er allerede optaget."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Kun http://- eller https://-URL'er er tilladt."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Vælg en bogmærkemappe."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Vælg en visning."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Skabelonen skal indeholde præcis én %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Vælg en handlingstype."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Kommandogrænsen er nået (100) — slet en først."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Ingen brugerdefinerede kommandoer endnu."
   },
   "paletteNoResults": {
     "message": "Ingen matchende resultater"
@@ -1084,19 +1084,19 @@
     "message": "Afslut valg"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Oprydning af døde links sletter bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du kører den første oprydning."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Deduplikering sletter duplikerede bogmærker i store mængder. Sikkerhedskopiér dine bogmærker, før du anvender den."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Vejledning til sikkerhedskopi og gendannelse"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Vis ikke igen"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Luk"
   },
   "sessionEmpty": {
     "message": "Ingen faner at gemme"

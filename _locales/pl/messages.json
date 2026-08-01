@@ -226,10 +226,10 @@
     "message": "Adresy URL zakładek są wysyłane do tej usługi zewnętrznej. Pozostaw puste, aby sondować tylko bezpośrednio."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Zmień"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Usuń"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Usunięto serwer proxy."
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Wprowadź serwer proxy, który już posiadasz (rozszerzenie nie zapewnia żadnego), np. 127.0.0.1:7890 lub socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testowy URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testuj i zapisz"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Testowanie…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Zapisano proxy — przyszłe skany będą przez nie ponownie sprawdzać bezpośrednie błędy."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Nieprawidłowy adres proxy — użyj host:port lub scheme://host:port (http/https/socks5, bez uwierzytelniania)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy nieosiągalne — nie zapisano."
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Odmówiono uprawnień do proxy."
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Ustawienia proxy są zarządzane przez inne rozszerzenie."
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "API proxy jest niedostępne w tej przeglądarce."
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ zakładek nie przeszło bezpośrednich testów — ponowne sprawdzenie przez proxy oddziela faktycznie martwe linki od zablokowanych regionalnie.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Szablon przekaźnika (ustawiany w opcjach)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Martwe: $dead$ · Zablokowane: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Szablon proxy dla martwych linków"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Serwer proxy dla martwych linków"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Dodaj i przetestuj proxy z widoku martwych linków; zapisany serwer ponownie sprawdza bezpośrednie błędy w każdym skanie."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Wyczyść"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nie ustawiono)"
   },
   "optionDeadScanConcurrency": {
     "message": "Współbieżność skanowania martwych linków (1-16)"
@@ -810,124 +810,124 @@
     "message": "Przełącz widok kart"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Ustaw motyw…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Użycie: /theme, po którym następuje nazwa motywu — auto, light, dark, ink lub paper (działa unikalny prefiks, np. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "własne"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Usunąć polecenie „$1”? Zmiana zsynchronizuje się ze wszystkimi urządzeniami."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Folder polecenia „$1” już nie istnieje. Usunąć polecenie?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Zapisz „$1” jako polecenie…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Otwórz URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Otwórz grupę folderów zakładek"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Otwórz widok z ustawieniem wstępnym"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Otwórz szablon URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Paleta poleceń"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Niestandardowe polecenia ukośnikowe dla palety poleceń (Ctrl/Cmd+K). Synchronizują się z ustawieniami — maksymalnie 100 wpisów."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Dodaj polecenie…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Komenda (słowo po /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasy (rozdzielone przecinkami)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Akcja"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Szablon URL — %s jest zastępowany słowami po komendzie"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Otwórz w"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Folder zakładek"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Widok"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Preset strategii deduplikacji"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Preset zakresu deduplikacji"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Uruchom skanowanie po wpisaniu"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Bieżąca karta"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Nowa karta"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Nowe okno"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Karty w tle"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Zapisz komendę"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Komenda: 1–24 znaków (małe litery, cyfry lub łączniki), zaczynająca się od litery lub cyfry."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasy: te same zasady co komenda (1–24 znaków: małe litery, cyfry lub łączniki)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Ta komenda lub ten alias są już zajęte."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Dozwolone są tylko adresy URL http:// lub https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Wybierz folder zakładek."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Wybierz widok."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Szablon musi zawierać dokładnie jeden %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Wybierz typ akcji."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Osiągnięto limit komend (100) — najpierw usuń jedną."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Brak jeszcze niestandardowych komend."
   },
   "paletteNoResults": {
     "message": "Brak pasujących wyników"
@@ -1084,19 +1084,19 @@
     "message": "Zakończ zaznaczanie"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Usuwanie martwych linków usuwa zakładki masowo. Wykonaj kopię zapasową zakładek przed pierwszym czyszczeniem."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Usuwanie duplikatów usuwa zduplikowane zakładki masowo. Wykonaj kopię zapasową zakładek przed użyciem."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Poradnik tworzenia kopii zapasowej i przywracania."
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Nie pokazuj ponownie"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Zamknij"
   },
   "sessionEmpty": {
     "message": "Brak kart do zapisania"

@@ -226,10 +226,10 @@
     "message": "书签URL将发送至第三方服务。留空则仅直接探测。"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "为死链检查添加代理"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "代理：$server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "更改"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "移除"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "代理服务器已移除"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "输入你已有的代理服务器（扩展不提供代理），例如 127.0.0.1:7890 或 socks5://127.0.0.1:1080。"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "测试 URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "测试并保存"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "测试中…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "代理已保存——后续扫描将通过它重新检查直接失败的链接"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "无效的代理地址——请使用 host:port 或 scheme://host:port（http/https/socks5，不含凭据）"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "代理无法访问——未保存"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "未授予代理权限"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "代理设置由其他扩展管理"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "此浏览器不支持代理 API"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ 个书签未通过直接检查——通过代理重新检查可区分真正的死链与受区域限制的链接",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "中继模板（在选项中设置）"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "失效：$dead$ · 被屏蔽：$blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "死链代理模板"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "死链代理服务器"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "在死链视图中添加并测试代理；保存的服务器将在每次扫描中重新检查直接失败的链接。"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "清除"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "（未设置）"
   },
   "optionDeadScanConcurrency": {
     "message": "死链扫描并发数 (1-16)"
@@ -810,124 +810,124 @@
     "message": "切换标签视图"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "设置主题…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "用法：/theme 后跟主题名——auto、light、dark、ink 或 paper（唯一前缀也可，如 /theme d）"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "自定义"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "删除命令“$1”？此更改将同步到你的所有设备。"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "命令“$1”的文件夹不存在了。删除该命令？"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "将“$1”保存为命令…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "打开 URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "打开书签文件夹组"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "使用预设打开视图"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "打开 URL 模板"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "命令面板"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "命令面板的自定义斜杠命令（Ctrl/Cmd+K）。它们随你的设置同步——最多 100 条。"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "添加命令…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "斜杠（/ 后的词）"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "别名（逗号分隔）"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "操作"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL 模板 — %s 会被命令后的文字替换"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "打开位置"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "书签文件夹"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "视图"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "去重策略预设"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "去重范围预设"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "输入时开始扫描"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "当前标签页"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "新标签页"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "新窗口"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "后台标签页"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "保存命令"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "斜杠：1–24 个小写字母、数字或连字符，且以字母或数字开头。"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "别名：规则与斜杠相同（1–24 个小写字母、数字或连字符）。"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "该斜杠或别名已被占用。"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "仅允许 http:// 或 https:// 的 URL。"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "请选择书签文件夹。"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "请选择视图。"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "模板必须恰好包含一个 %s。"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "请选择操作类型。"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "已达到命令上限（100）— 请先删除一个。"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "暂无自定义命令。"
   },
   "paletteNoResults": {
     "message": "无匹配结果"
@@ -1084,19 +1084,19 @@
     "message": "退出选择"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "死链清理会批量删除书签，首次清理前请备份。"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "去重会批量删除重复书签，应用前请备份。"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "备份与恢复指南"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "不再显示"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "关闭"
   },
   "sessionEmpty": {
     "message": "没有可保存的标签页"

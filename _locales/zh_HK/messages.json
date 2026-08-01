@@ -226,10 +226,10 @@
     "message": "書籤 URL 會傳送至此第三方服務。留空則僅直接探測。"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "新增代理伺服器以檢查失效連結"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "代理：$server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "變更"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "移除"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "代理伺服器已移除"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "輸入你已有的代理伺服器（擴充功能不會提供），例如 127.0.0.1:7890 或 socks5://127.0.0.1:1080。"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "測試網址"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "測試並儲存"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "測試中…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "代理已儲存——日後掃描將透過它重新檢查直接失敗的連結。"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "代理位址無效——請使用 host:port 或 scheme://host:port（http/https/socks5，不包含憑證）。"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "代理無法連線——未儲存。"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "未授予代理權限。"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "代理設定由另一個擴充功能管理。"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "此瀏覽器不提供代理 API。"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ 個書籤直接檢查失敗——透過代理重新檢查可區分真正失效連結與受地區限制的連結。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "中繼範本（在選項中設定）"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "失效：$dead$ · 被封鎖：$blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "失效連結代理範本"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "失效連結代理伺服器"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "在失效連結檢視中新增及測試代理；已儲存的伺服器會在每次掃描時重新檢查直接失敗的項目。"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "清除"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "（未設定）"
   },
   "optionDeadScanConcurrency": {
     "message": "失效連結掃描並行數（1-16）"
@@ -810,124 +810,124 @@
     "message": "切換檢視分頁"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "設定主題…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "用法：/theme 後面加上主題名稱——auto、light、dark、ink 或 paper（可用唯一前綴，例如 /theme d）。"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "自訂"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "刪除指令「$1」？此變更會同步到你的所有裝置。"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "指令「$1」的資料夾已不存在。要刪除該指令嗎？"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "將「$1」儲存為指令…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "開啟網址"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "開啟書籤資料夾群組"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "以預設集開啟檢視"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "開啟網址範本"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "指令面板"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "指令面板的自訂斜線指令（Ctrl/Cmd+K）。它們會與你的設定同步——最多 100 個項目。"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "新增指令…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "斜線（/ 後面的字詞）"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "別名（以逗號分隔）"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "動作"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL 範本 — %s 會被指令後面的字詞取代"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "開啟於"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "書籤資料夾"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "檢視"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "去重策略預設"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "去重範圍預設"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "輸入時開始掃描"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "目前分頁"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "新分頁"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "新視窗"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "背景分頁"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "儲存指令"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "斜線：1–24 個字元（小寫字母、數字或連字號），並以字母或數字開頭。"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "別名：規則與斜線相同（1–24 個字元，小寫字母、數字或連字號）。"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "該斜線或別名已被使用。"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "只允許 http:// 或 https:// 的 URL。"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "請選擇書籤資料夾。"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "請選擇檢視。"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "範本必須恰好包含一個 %s。"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "請選擇動作類型。"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "已達指令上限（100）— 請先刪除一個。"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "尚無自訂指令。"
   },
   "paletteNoResults": {
     "message": "無相符結果"
@@ -1084,19 +1084,19 @@
     "message": "結束選擇"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "失效連結清理會批次刪除書籤。首次清理前請先備份你的書籤。"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "去重會批次刪除重複書籤。套用前請先備份你的書籤。"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "備份及還原指南"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "不再顯示"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "關閉"
   },
   "sessionEmpty": {
     "message": "沒有可儲存的分頁"

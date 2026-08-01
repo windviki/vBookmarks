@@ -226,10 +226,10 @@
     "message": "As URLs dos favoritos são enviadas para este serviço terceirizado. Deixe em branco para apenas verificar diretamente."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Alterar"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Remover"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Servidor proxy removido"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Insira um servidor proxy que você já tenha (a extensão não fornece nenhum), ex.: 127.0.0.1:7890 ou socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "URL de teste"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testar e salvar"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Testando…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy salvo — verificações futuras reexaminam falhas diretas através dele"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Endereço de proxy inválido — use host:porta ou esquema://host:porta (http/https/socks5, sem credenciais)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy inacessível — não salvo"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Permissão de proxy não concedida"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "As configurações de proxy são gerenciadas por outra extensão"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "A API de proxy está indisponível neste navegador"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ favoritos falharam nas verificações diretas — uma re-verificação via proxy separa links realmente quebrados dos bloqueados por região",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Modelo de relay (definido nas opções)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Quebrados: $dead$ · Bloqueados: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Modelo de proxy para links mortos"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Servidor proxy para links quebrados"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Adicione e teste o proxy na visualização de links quebrados; o servidor salvo reexamina falhas diretas em cada verificação."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Limpar"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(não definido)"
   },
   "optionDeadScanConcurrency": {
     "message": "Concorrência de verificação de links mortos (1-16)"
@@ -810,124 +810,124 @@
     "message": "Alternar separadores de vista"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Definir tema…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Uso: /theme seguido de um nome de tema — auto, light, dark, ink ou paper (um prefixo único funciona, ex.: /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "personalizado"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Excluir o comando \"$1\"? A alteração será sincronizada em todos os seus dispositivos."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "A pasta do comando \"$1\" não existe mais. Excluir o comando?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Salvar \"$1\" como comando…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Abrir URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Abrir grupo de pastas de favoritos"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Abrir visualização com predefinição"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Abrir modelo de URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Paleta de comandos"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Comandos de barra personalizados para a paleta de comandos (Ctrl/Cmd+K). Eles são sincronizados com suas configurações — máximo de 100 entradas."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Adicionar comando…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Barra (a palavra após /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Apelidos (separados por vírgula)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Ação"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Modelo de URL — %s é substituído pelas palavras após o comando"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Abrir em"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Pasta de favoritos"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Visualização"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Predefinição de estratégia de deduplicação"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Predefinição de escopo de deduplicação"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Iniciar a verificação na entrada"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Guia atual"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Nova guia"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Nova janela"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Guias em segundo plano"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Salvar comando"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Barra: 1–24 caracteres, letras minúsculas, dígitos ou hífens, começando com letra ou dígito."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Apelidos: mesmas regras da barra (1–24 caracteres, letras minúsculas, dígitos ou hífens)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Essa barra ou esse apelido já está em uso."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Apenas URLs http:// ou https:// são permitidas."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Escolha uma pasta de favoritos."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Escolha uma visualização."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "O modelo deve conter exatamente um %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Escolha um tipo de ação."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Limite de comandos atingido (100) — exclua um primeiro."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Ainda não há comandos personalizados."
   },
   "paletteNoResults": {
     "message": "Nenhum resultado correspondente"
@@ -1084,19 +1084,19 @@
     "message": "Sair da seleção"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "A limpeza de links quebrados exclui favoritos em massa. Faça backup dos seus favoritos antes da primeira limpeza."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "A desduplicação exclui favoritos duplicados em massa. Faça backup dos seus favoritos antes de aplicá-la."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Guia de backup e restauração"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Não mostrar novamente"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Fechar"
   },
   "sessionEmpty": {
     "message": "Nenhuma aba para salvar"

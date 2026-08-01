@@ -226,10 +226,10 @@
     "message": "URL-адреса закладок отправляются этой сторонней службе. Оставьте пустым, чтобы проверять только напрямую."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Добавить прокси-сервер для проверки битых ссылок"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Прокси: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Изменить"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Удалить"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Прокси-сервер удалён"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Введите существующий прокси-сервер (расширение не предоставляет свой), например 127.0.0.1:7890 или socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Тестовый URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Проверить и сохранить"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Проверка…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Прокси сохранён — при будущих проверках прямые сбои будут перепроверяться через него"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Недопустимый адрес прокси — используйте host:port или scheme://host:port (http/https/socks5, без учётных данных)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Прокси недоступен — не сохранён"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Разрешение на использование прокси не предоставлено"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Настройки прокси управляются другим расширением"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "API прокси недоступен в этом браузере"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "Для $count$ закладок прямая проверка не удалась — повторная проверка через прокси отделит реально битые ссылки от заблокированных по региону",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Шаблон ретрансляции (задаётся в настройках)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Битые: $dead$ · Заблокированные: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Шаблон прокси для битых ссылок"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Прокси-сервер для битых ссылок"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Добавьте и проверьте прокси в представлении битых ссылок; сохранённый сервер будет перепроверять прямые сбои при каждом сканировании."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Очистить"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(не задано)"
   },
   "optionDeadScanConcurrency": {
     "message": "Параллельность сканирования битых ссылок (1-16)"
@@ -810,124 +810,124 @@
     "message": "Переключить вкладки"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Установить тему…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Использование: после /theme укажите имя темы — auto, light, dark, ink или paper (работает уникальный префикс, например /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "пользовательская"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Удалить команду \"$1\"? Изменение синхронизируется на всех ваших устройствах."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Папка команды \"$1\" больше не существует. Удалить команду?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Сохранить \"$1\" как команду…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Открыть URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Открыть группу папок закладок"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Открыть представление с пресетом"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Открыть шаблон URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Палитра команд"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Пользовательские слэш-команды для палитры команд (Ctrl/Cmd+K). Они синхронизируются с вашими настройками — максимум 100 записей."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Добавить команду…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Слэш (слово после /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Псевдонимы (через запятую)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Действие"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Шаблон URL — %s заменяется словами после команды"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Открыть в"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Папка закладок"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Вид"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Пресет стратегии дедупликации"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Пресет области дедупликации"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Начинать сканирование при вводе"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Текущая вкладка"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Новая вкладка"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Новое окно"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Фоновые вкладки"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Сохранить команду"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Слэш: 1–24 символа (строчные буквы, цифры или дефисы), начинается с буквы или цифры."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Псевдонимы: те же правила, что и для слэша (1–24 символа: строчные буквы, цифры или дефисы)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Этот слэш или псевдоним уже занят."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Разрешены только URL http:// или https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Выберите папку закладок."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Выберите вид."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Шаблон должен содержать ровно один %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Выберите тип действия."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Достигнут лимит команд (100) — сначала удалите одну."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Пользовательских команд пока нет."
   },
   "paletteNoResults": {
     "message": "Нет совпадений"
@@ -1084,19 +1084,19 @@
     "message": "Выйти из режима выбора"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Очистка битых ссылок удаляет закладки массово. Сделайте резервную копию закладок перед первой очисткой."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Дедупликация массово удаляет дубликаты закладок. Сделайте резервную копию перед её применением."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Руководство по резервному копированию и восстановлению"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Больше не показывать"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Закрыть"
   },
   "sessionEmpty": {
     "message": "Нет вкладок для сохранения"

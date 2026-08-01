@@ -226,10 +226,10 @@
     "message": "Adresy URL záložiek sú odosielané tejto tretej strane. Ponechajte prázdne pre priame testovanie."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Zmeniť"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Odstrániť"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxy server bol odstránený"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Zadajte proxy server, ktorý už máte (rozšírenie žiadny neposkytuje), napr. 127.0.0.1:7890 alebo socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testovacia URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testovať a uložiť"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Testuje sa…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy server uložený — budúce kontroly cez neho znova preveria priame zlyhania."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Neplatná adresa proxy servera — použite host:port alebo schéma://host:port (http/https/socks5, bez prihlasovacích údajov)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy server je nedostupný — neuložený"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Povolenie pre proxy server nebolo udelené"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Nastavenia proxy servera spravuje iné rozšírenie"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Proxy API nie je v tomto prehliadači k dispozícii"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ záložiek zlyhalo pri priamych kontrolách — kontrola cez proxy oddelí skutočne nefunkčné odkazy od regionálne blokovaných",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Šablóna relay (nastavená v možnostiach)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Nefunkčné: $dead$ · Blokované: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Šablóna proxy pre mŕtve odkazy"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Proxy server pre nefunkčné odkazy"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Pridať a otestovať proxy môžete v zobrazení nefunkčných odkazov; uložený server pri každej kontrole znova preverí priame zlyhania."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Vymazať"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nenastavené)"
   },
   "optionDeadScanConcurrency": {
     "message": "Súbežnosť skenovania mŕtvych odkazov (1-16)"
@@ -810,124 +810,124 @@
     "message": "Prepínať zobrazenie kariet"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Nastaviť tému…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Použitie: /theme a názov témy — auto, light, dark, ink alebo paper (funguje aj jednoznačná predpona, napr. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "vlastný"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Odstrániť príkaz „$1“? Zmena sa synchronizuje do všetkých vašich zariadení."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Priečinok príkazu „$1“ už neexistuje. Odstrániť príkaz?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Uložiť „$1“ ako príkaz…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Otvoriť URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Otvoriť skupinu priečinkov záložiek"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Otvoriť zobrazenie s predvoľbou"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Otvoriť šablónu URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Paleta príkazov"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Vlastné príkazy so šikmou lomkou pre paletu príkazov (Ctrl/Cmd+K). Synchronizujú sa s vašimi nastaveniami — maximálne 100 položiek."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Pridať príkaz…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Lomka (slovo za /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasy (oddelené čiarkami)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Akcia"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Šablóna URL – %s sa nahradí slovami za príkazom."
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Otvoriť v"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Priečinok so záložkami"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Zobrazenie"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Predvoľba stratégie deduplikácie"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Predvoľba rozsahu deduplikácie"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Spustiť skenovanie pri zadaní"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Aktuálna karta"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Nová karta"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Nové okno"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Karty na pozadí"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Uložiť príkaz"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Lomka: 1–24 znakov, malé písmená, číslice alebo pomlčky, začína písmenom alebo číslicou."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasy: rovnaké pravidlá ako lomka (1–24 znakov, malé písmená, číslice alebo pomlčky)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Táto lomka alebo alias sa už používa."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Povolené sú iba adresy URL http:// alebo https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Vyberte priečinok so záložkami."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Vyberte zobrazenie."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Šablóna musí obsahovať presne jeden výskyt %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Vyberte typ akcie."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Limit príkazov dosiahnutý (100) – najprv jeden odstráňte."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Zatiaľ žiadne vlastné príkazy."
   },
   "paletteNoResults": {
     "message": "Žiadne zodpovedajúce výsledky"
@@ -1084,19 +1084,19 @@
     "message": "Ukončiť výber"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Čistenie nefunkčných odkazov hromadne odstraňuje záložky. Pred prvým čistením si zálohujte záložky."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Deduplikácia hromadne odstraňuje duplicitné záložky. Pred použitím si zálohujte záložky."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Návod na zálohovanie a obnovenie"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Nezobrazovať znova"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Zavrieť"
   },
   "sessionEmpty": {
     "message": "Žiadne karty na uloženie"

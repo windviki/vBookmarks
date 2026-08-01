@@ -226,10 +226,10 @@
     "message": "URL-ovi oznaka šalju se ovoj usluzi treće strane. Ostavite prazno za izravno ispitivanje."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Promijeni"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Ukloni"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxy poslužitelj uklonjen"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Unesite proxy poslužitelj koji već imate (proširenje ne pruža nijedan), npr. 127.0.0.1:7890 ili socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testni URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testiraj i spremi"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Testiranje…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy spremljen — buduća skeniranja kroz njega ponovno provjeravaju izravne neuspjehe."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Neispravna proxy adresa — koristite host:port ili shema://host:port (http/https/socks5, bez vjerodajnica)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy nedostupan — nije spremljen."
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Nije odobreno dopuštenje za proxy."
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Postavkama proxyja upravlja drugo proširenje."
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Proxy API nije dostupan u ovom pregledniku."
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ zabilješki nije prošlo izravne provjere — ponovna provjera putem proxyja razdvaja stvarno mrtve veze od onih blokiranih za regiju.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Predložak releja (postavlja se u opcijama)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Mrtve: $dead$ · Blokirane: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Predložak proxyja za mrtve poveznice"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Proxy poslužitelj za mrtve veze"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Dodajte i testirajte proxy iz prikaza mrtvih veza; spremljeni poslužitelj pri svakom skeniranju ponovno provjerava neuspjele izravne provjere."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Očisti"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nije postavljeno)"
   },
   "optionDeadScanConcurrency": {
     "message": "Istovremenost skeniranja mrtvih poveznica (1-16)"
@@ -810,124 +810,124 @@
     "message": "Preklopi kartice prikaza"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Postavi temu…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Upotreba: /theme nakon čega slijedi naziv teme — auto, light, dark, ink ili paper (radi i jedinstveni prefiks, npr. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "prilagođeno"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Izbrisati naredbu \"$1\"? Promjena se sinkronizira na sve vaše uređaje."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Mapa naredbe \"$1\" više ne postoji. Izbrisati naredbu?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Spremi \"$1\" kao naredbu…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Otvori URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Otvori grupu mapa zabilješki"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Otvori prikaz s predloškom"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Otvori URL predložak"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Paleta naredbi"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Prilagođene slash naredbe za paletu naredbi (Ctrl/Cmd+K). Sinkroniziraju se s vašim postavkama — najviše 100 unosa."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Dodaj naredbu…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Kosa crta (riječ nakon /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasi (odvojeni zarezom)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Radnja"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL predložak — %s se zamjenjuje riječima nakon naredbe"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Otvori u"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Mapa oznaka"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Prikaz"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Predložak strategije deduplikacije"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Predložak opsega deduplikacije"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Pokreni skeniranje pri unosu"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Trenutna kartica"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Nova kartica"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Novi prozor"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Kartice u pozadini"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Spremi naredbu"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Kosa crta: 1–24 znaka – mala slova, znamenke ili crtice, počinje slovom ili znamenkom."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasi: ista pravila kao i za kosu crtu (1–24 znaka; mala slova, znamenke ili crtice)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Ta kosa crta ili taj alias već su zauzeti."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Dopušteni su samo http:// ili https:// URL-ovi."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Odaberite mapu oznaka."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Odaberite prikaz."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Predložak mora sadržavati točno jedan %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Odaberite vrstu radnje."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Dosegnuto je ograničenje naredbi (100) — prvo obrišite jednu."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Još nema prilagođenih naredbi."
   },
   "paletteNoResults": {
     "message": "Nema odgovarajućih rezultata"
@@ -1084,19 +1084,19 @@
     "message": "Izađi iz odabira"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Čišćenje mrtvih veza masovno briše zabilješke. Napravite sigurnosnu kopiju svojih zabilješki prije prvog čišćenja."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Uklanjanje duplikata masovno briše duplicirane zabilješke. Prije primjene napravite sigurnosnu kopiju svojih zabilješki."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Vodič za sigurnosno kopiranje i vraćanje"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Ne prikazuj ponovno"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Zatvori"
   },
   "sessionEmpty": {
     "message": "Nema kartica za spremanje"

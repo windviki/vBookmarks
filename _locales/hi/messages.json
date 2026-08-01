@@ -226,10 +226,10 @@
     "message": "बुकमार्क URL इस तृतीय-पक्ष सेवा को भेजे जाते हैं। केवल सीधे जांच करने के लिए खाली छोड़ें।"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "प्रॉक्सी: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "बदलें"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "हटाएँ"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "प्रॉक्सी सर्वर हटा दिया गया"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "अपना पहले से मौजूद प्रॉक्सी सर्वर दर्ज करें (एक्सटेंशन कोई प्रॉक्सी प्रदान नहीं करता), जैसे 127.0.0.1:7890 या socks5://127.0.0.1:1080।"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "परीक्षण URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "परीक्षण करें और सहेजें"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "परीक्षण हो रहा है…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "प्रॉक्सी सहेजा गया — भविष्य के स्कैन सीधी विफलताओं की उसके माध्यम से फिर जाँच करेंगे"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "अमान्य प्रॉक्सी पता — host:port या scheme://host:port उपयोग करें (http/https/socks5, बिना क्रेडेंशियल)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "प्रॉक्सी पहुंच योग्य नहीं — सहेजा नहीं गया"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "प्रॉक्सी अनुमति प्रदान नहीं की गई"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "प्रॉक्सी सेटिंग्स किसी अन्य एक्सटेंशन द्वारा प्रबंधित हैं"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "इस ब्राउज़र में प्रॉक्सी API उपलब्ध नहीं है"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ बुकमार्क सीधी जाँच में विफल रहे — प्रॉक्सी से दोबारा जाँच वास्तविक डेड लिंक्स को क्षेत्र-प्रतिबंधित लिंक्स से अलग करती है",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "रिले टेम्पलेट (विकल्पों में सेट है)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "डेड: $dead$ · अवरुद्ध: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "मृत-लिंक प्रॉक्सी टेम्पलेट"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "डेड-लिंक प्रॉक्सी सर्वर"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "डेड-लिंक्स दृश्य से प्रॉक्सी जोड़ें और परीक्षण करें; सहेजा गया सर्वर हर स्कैन में सीधी विफलताओं की फिर जाँच करता है।"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "साफ़ करें"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(सेट नहीं है)"
   },
   "optionDeadScanConcurrency": {
     "message": "मृत-लिंक स्कैन समवर्तीता (1-16)"
@@ -810,124 +810,124 @@
     "message": "दृश्य टैब टॉगल करें"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "थीम सेट करें…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "उपयोग: /theme के बाद थीम का नाम — auto, light, dark, ink या paper (एक अद्वितीय उपसर्ग भी काम करता है, जैसे /theme d)।"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "कस्टम"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "कमांड \"$1\" हटाएँ? परिवर्तन आपके सभी डिवाइसों पर सिंक होगा।"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "कमांड \"$1\" का फ़ोल्डर अब मौजूद नहीं है। कमांड हटाएँ?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "\"$1\" को एक कमांड के रूप में सहेजें…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL खोलें"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "बुकमार्क फ़ोल्डर समूह खोलें"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "प्रीसेट के साथ दृश्य खोलें"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL टेम्पलेट खोलें"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "कमांड पैलेट"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "कमांड पैलेट के लिए कस्टम स्लैश कमांड (Ctrl/Cmd+K). ये आपकी सेटिंग्स के साथ सिंक होते हैं — अधिकतम 100 प्रविष्टियाँ।"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "कमांड जोड़ें…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "स्लैश (/ के बाद वाला शब्द)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "उपनाम (अल्पविराम से अलग)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "कार्रवाई"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL टेम्पलेट — %s को कमांड के बाद के शब्दों से बदला जाता है"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "इसमें खोलें"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "बुकमार्क फ़ोल्डर"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "दृश्य"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "डीडुप रणनीति प्रीसेट"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "डीडुप दायरा प्रीसेट"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "प्रवेश पर स्कैन शुरू करें"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "वर्तमान टैब"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "नया टैब"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "नई विंडो"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "पृष्ठभूमि टैब"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "कमांड सहेजें"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "स्लैश: लोअरकेस अक्षरों, अंकों या हाइफ़न के 1–24 वर्ण, जो अक्षर या अंक से शुरू होने चाहिए।"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "उपनाम: स्लैश के समान नियम (लोअरकेस अक्षरों, अंकों या हाइफ़न के 1–24 वर्ण)।"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "वह स्लैश या उपनाम पहले से उपयोग में है।"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "केवल http:// या https:// URL की अनुमति है।"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "बुकमार्क फ़ोल्डर चुनें।"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "एक दृश्य चुनें।"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "टेम्पलेट में बिल्कुल एक %s होना चाहिए।"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "कार्रवाई प्रकार चुनें।"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "कमांड सीमा पूरी हो गई है (100) — पहले एक को हटाएँ।"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "अभी कोई कस्टम कमांड नहीं है।"
   },
   "paletteNoResults": {
     "message": "कोई मिलान परिणाम नहीं"
@@ -1084,19 +1084,19 @@
     "message": "चयन समाप्त करें"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "डेड-लिंक सफाई एक साथ कई बुकमार्क हटाती है। पहली सफाई से पहले अपने बुकमार्क का बैकअप लें।"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "डुप्लिकेट हटाने से एक साथ कई डुप्लिकेट बुकमार्क हट जाते हैं। इसे लागू करने से पहले अपने बुकमार्क का बैकअप लें।"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "बैकअप और पुनर्स्थापना गाइड"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "फिर से न दिखाएँ"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "खारिज करें"
   },
   "sessionEmpty": {
     "message": "सहेजने के लिए कोई टैब नहीं"

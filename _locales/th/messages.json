@@ -226,10 +226,10 @@
     "message": "URL ของบุ๊กมาร์กจะถูกส่งไปยังบริการบุคคลที่สามนี้ เว้นว่างไว้เพื่อเจาะจงโดยตรงเท่านั้น"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "พร็อกซี: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "เปลี่ยน"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "ลบ"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "ลบพร็อกซีเซิร์ฟเวอร์แล้ว"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "ป้อนพร็อกซีเซิร์ฟเวอร์ที่คุณมีอยู่แล้ว (ส่วนขยายไม่ได้จัดเตรียมไว้) เช่น 127.0.0.1:7890 หรือ socks5://127.0.0.1:1080"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "URL สำหรับทดสอบ"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "ทดสอบและบันทึก"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "กำลังทดสอบ…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "บันทึกพร็อกซีแล้ว — การสแกนครั้งต่อไปจะตรวจสอบรายการที่ล้มเหลวโดยตรงผ่านพร็อกซีนี้"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "ที่อยู่พร็อกซีไม่ถูกต้อง — ใช้ host:port หรือ scheme://host:port (http/https/socks5, ไม่ต้องมีข้อมูลรับรอง)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "พร็อกซีไม่สามารถเข้าถึงได้ — ไม่ได้บันทึก"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "ไม่ได้รับอนุญาตให้ใช้พร็อกซี"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "การตั้งค่าพร็อกซีถูกจัดการโดยส่วนขยายอื่น"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "เบราว์เซอร์นี้ไม่รองรับ API พร็อกซี"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ บุ๊กมาร์กล้มเหลวในการตรวจสอบโดยตรง — การตรวจสอบซ้ำด้วยพร็อกซีจะแยกแยะลิงก์เสียจริงจากลิงก์ที่ถูกบล็อกตามภูมิภาค",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "เทมเพลตรีเลย์ (ตั้งค่าในตัวเลือก)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "เสีย: $dead$ · ถูกบล็อก: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "เทมเพลตพร็อกซีลิงก์เสีย"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "พร็อกซีเซิร์ฟเวอร์สำหรับลิงก์เสีย"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "เพิ่มและทดสอบพร็อกซีได้จากมุมมองลิงก์เสีย เซิร์ฟเวอร์ที่บันทึกไว้จะตรวจสอบรายการที่ล้มเหลวโดยตรงซ้ำในทุกการสแกน"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "ล้าง"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(ยังไม่ได้ตั้งค่า)"
   },
   "optionDeadScanConcurrency": {
     "message": "การสแกนลิงก์เสียพร้อมกัน (1-16)"
@@ -810,124 +810,124 @@
     "message": "สลับแท็บแสดงผล"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "ตั้งค่าธีม…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "วิธีใช้: /theme ตามด้วยชื่อธีม — auto, light, dark, ink หรือ paper (ใช้คำนำหน้าที่ไม่กำกวมได้ เช่น /theme d)"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "กำหนดเอง"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "ลบคำสั่ง \"$1\" หรือไม่? การเปลี่ยนแปลงนี้จะซิงก์ไปยังอุปกรณ์ทั้งหมดของคุณ"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "โฟลเดอร์ของคำสั่ง \"$1\" ไม่มีอยู่อีกต่อไป ต้องการลบคำสั่งนี้หรือไม่?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "บันทึก \"$1\" เป็นคำสั่ง…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "เปิด URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "เปิดกลุ่มโฟลเดอร์บุ๊กมาร์ก"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "เปิดมุมมองด้วยค่าที่ตั้งไว้"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "เปิดเทมเพลต URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "พาเลตต์คำสั่ง"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "คำสั่งสแลชแบบกำหนดเองสำหรับพาเลตต์คำสั่ง (Ctrl/Cmd+K) คำสั่งเหล่านี้จะซิงก์กับการตั้งค่าของคุณ — สูงสุด 100 รายการ"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "เพิ่มคำสั่ง…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "สแลช (คำหลัง /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "นามแฝง (คั่นด้วยลูกน้ำ)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "การกระทำ"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "เทมเพลต URL — %s จะถูกแทนที่ด้วยคำที่อยู่หลังคำสั่ง"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "เปิดใน"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "โฟลเดอร์บุ๊กมาร์ก"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "มุมมอง"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "พรีเซตกลยุทธ์การขจัดรายการซ้ำ"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "พรีเซตขอบเขตการขจัดรายการซ้ำ"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "เริ่มสแกนเมื่อป้อนคำสั่ง"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "แท็บปัจจุบัน"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "แท็บใหม่"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "หน้าต่างใหม่"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "แท็บพื้นหลัง"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "บันทึกคำสั่ง"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "สแลช: 1–24 ตัวอักษร เป็นตัวพิมพ์เล็ก ตัวเลข หรือยัติภังค์ เริ่มต้นด้วยตัวอักษรหรือตัวเลข"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "นามแฝง: กฎเดียวกับสแลช (1–24 ตัวอักษร เป็นตัวพิมพ์เล็ก ตัวเลข หรือยัติภังค์)"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "สแลชหรือนามแฝงนี้ถูกใช้แล้ว"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "อนุญาตเฉพาะ URL ที่เป็น http:// หรือ https:// เท่านั้น"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "เลือกโฟลเดอร์บุ๊กมาร์ก"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "เลือกมุมมอง"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "เทมเพลตต้องมี %s เพียงหนึ่งตัว"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "เลือกประเภทการกระทำ"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "ถึงขีดจำกัดคำสั่งแล้ว (100) — ลบหนึ่งรายการก่อน"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "ยังไม่มีคำสั่งที่กำหนดเอง"
   },
   "paletteNoResults": {
     "message": "ไม่พบผลลัพธ์ที่ตรงกัน"
@@ -1084,19 +1084,19 @@
     "message": "ออกจากการเลือก"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "การล้างลิงก์เสียจะลบบุ๊กมาร์กเป็นจำนวนมาก โปรดสำรองบุ๊กมาร์กก่อนการล้างครั้งแรก"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "การกำจัดรายการซ้ำจะลบบุ๊กมาร์กที่ซ้ำกันเป็นจำนวนมาก โปรดสำรองบุ๊กมาร์กก่อนใช้งาน"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "คู่มือการสำรองและกู้คืน"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "ไม่แสดงอีก"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "ปิด"
   },
   "sessionEmpty": {
     "message": "ไม่มีแท็บให้บันทึก"

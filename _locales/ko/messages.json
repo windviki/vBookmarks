@@ -226,10 +226,10 @@
     "message": "북마크 URL이 이 타사 서비스로 전송됩니다. 비워두면 직접 확인만 수행합니다."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "죽은 링크 확인용 프록시 서버 추가"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "프록시: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "변경"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "제거"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "프록시 서버가 제거되었습니다"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "이미 보유한 프록시 서버를 입력하세요(확장 프로그램은 제공하지 않음). 예: 127.0.0.1:7890 또는 socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "테스트 URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "테스트 및 저장"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "테스트 중…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "프록시가 저장되었습니다 — 이후 검사에서 직접 연결 실패 항목을 이 프록시로 다시 확인합니다."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "잘못된 프록시 주소입니다 — host:port 또는 scheme://host:port 형식으로 입력하세요(http/https/socks5, 자격 증명 제외)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "프록시에 연결할 수 없습니다 — 저장되지 않음"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "프록시 권한이 허용되지 않았습니다"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "프록시 설정이 다른 확장 프로그램에 의해 관리되고 있습니다"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "이 브라우저에서는 프록시 API를 사용할 수 없습니다"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$개의 북마크가 직접 확인에 실패했습니다 — 프록시 재확인으로 실제 죽은 링크와 지역 차단 링크를 구분할 수 있습니다.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "릴레이 템플릿(옵션에서 설정)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "죽은 링크: $dead$ · 차단됨: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "데드 링크 프록시 템플릿"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "죽은 링크 프록시 서버"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "죽은 링크 보기에서 프록시를 추가하고 테스트하세요. 저장된 서버는 모든 검사에서 직접 연결 실패 항목을 다시 확인합니다."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "지우기"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(설정 안 됨)"
   },
   "optionDeadScanConcurrency": {
     "message": "데드 링크 스캔 동시 실행 수 (1-16)"
@@ -810,124 +810,124 @@
     "message": "탭 보기 전환"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "테마 설정…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "사용법: /theme 뒤에 테마 이름을 입력합니다 — auto, light, dark, ink 또는 paper (고유한 접두사도 동작합니다(예: /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "사용자 지정"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "\"$1\" 명령을 삭제할까요? 이 변경 사항은 모든 기기에 동기화됩니다."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "\"$1\" 명령의 폴더가 더 이상 존재하지 않습니다. 명령을 삭제할까요?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "\"$1\"을(를) 명령으로 저장…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL 열기"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "북마크 폴더 그룹 열기"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "사전 설정으로 보기 열기"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL 템플릿 열기"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "명령 팔레트"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "명령 팔레트(Ctrl/Cmd+K)용 사용자 지정 슬래시 명령입니다. 설정과 함께 동기화되며 최대 100개까지 저장할 수 있습니다."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "명령 추가…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "슬래시(/ 뒤 단어)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "별칭(쉼표로 구분)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "동작"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL 템플릿 — %s는 명령 뒤의 단어로 대체됩니다."
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "열 위치"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "북마크 폴더"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "보기"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "중복 제거 전략 사전 설정"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "중복 제거 범위 사전 설정"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "입력 시 스캔 시작"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "현재 탭"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "새 탭"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "새 창"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "백그라운드 탭"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "명령 저장"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "슬래시: 소문자, 숫자 또는 하이픈 1–24자이며 문자나 숫자로 시작해야 합니다."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "별칭: 슬래시와 동일한 규칙(소문자, 숫자 또는 하이픈 1–24자)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "해당 슬래시 또는 별칭은 이미 사용 중입니다."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "http:// 또는 https:// URL만 허용됩니다."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "북마크 폴더를 선택하세요."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "보기를 선택하세요."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "템플릿에는 %s가 정확히 하나 포함되어야 합니다."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "동작 유형을 선택하세요."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "명령 한도(100개)에 도달했습니다. 먼저 하나를 삭제하세요."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "아직 사용자 지정 명령이 없습니다."
   },
   "paletteNoResults": {
     "message": "일치하는 결과 없음"
@@ -1084,19 +1084,19 @@
     "message": "선택 종료"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "죽은 링크 정리는 북마크를 일괄 삭제합니다. 처음 정리하기 전에 북마크를 백업하세요."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "중복 제거는 중복 북마크를 일괄 삭제합니다. 적용하기 전에 북마크를 백업하세요."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "백업 및 복원 안내"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "다시 표시 안 함"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "닫기"
   },
   "sessionEmpty": {
     "message": "저장할 탭 없음"

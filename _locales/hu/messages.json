@@ -226,10 +226,10 @@
     "message": "A könyvjelző URL-ek elküldésre kerülnek erre a harmadik fél által üzemeltetett szolgáltatásra. Hagyja üresen, ha csak közvetlenül szeretne vizsgálni."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Módosítás"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Eltávolítás"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxykiszolgáló eltávolítva"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Adjon meg egy már meglévő proxykiszolgálót (a bővítmény nem biztosít sajátot), pl. 127.0.0.1:7890 vagy socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Teszt URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Tesztelés és mentés"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Tesztelés…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy mentve — a későbbi vizsgálatok ezen keresztül ellenőrzik újra a közvetlenül elérhetetlen linkeket."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Érvénytelen proxycím — használjon host:port vagy séma://host:port formátumot (http/https/socks5, hitelesítés nélkül)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy nem érhető el — nincs mentve."
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "A proxyengedély nem lett megadva."
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "A proxybeállításokat egy másik bővítmény kezeli."
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "A proxy API nem érhető el ebben a böngészőben."
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ könyvjelző nem ment át a közvetlen ellenőrzésen — a proxyval végzett újraellenőrzés elválasztja a valódi hibás linkeket a régióban blokkoltaktól.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Relé sablon (a beállításokban adható meg)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Hibás: $dead$ · Blokkolt: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Holt hivatkozás proxy sablon"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Hibás linkek proxykiszolgálója"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Adja hozzá és tesztelje a proxyt a hibás linkek nézetében; a mentett kiszolgáló minden vizsgálatkor újraellenőrzi a közvetlenül elérhetetlen linkeket."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Törlés"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nincs beállítva)"
   },
   "optionDeadScanConcurrency": {
     "message": "Holt hivatkozás vizsgálat párhuzamossága (1-16)"
@@ -810,124 +810,124 @@
     "message": "Lapok nézetének váltása"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Téma beállítása…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Használat: /theme után egy témnév — auto, light, dark, ink vagy paper (egyedi előtag is működik, pl. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "egyéni"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Törli a(z) \"$1\" parancsot? A módosítás szinkronizálódik az összes eszközére."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "A(z) \"$1\" parancs mappája már nem létezik. Törli a parancsot?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Mentés \"$1\" parancsként…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL megnyitása"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Könyvjelzőmappa-csoport megnyitása"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Nézet megnyitása előbeállítással"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL-sablon megnyitása"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Parancspaletta"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Egyéni perjeles parancsok a parancspalettához (Ctrl/Cmd+K). A beállításaival szinkronizálódnak — legfeljebb 100 bejegyzés."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Parancs hozzáadása…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Perjel (a / utáni szó)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasok (vesszővel elválasztva)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Művelet"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL-sablon — a %s helyére a parancs utáni szavak kerülnek"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Megnyitás itt"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Könyvjelzőmappa"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Nézet"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Dedup-stratégia előbeállítása"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Dedup-hatókör előbeállítása"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Vizsgálat indítása bevitelkor"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Aktuális lap"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Új lap"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Új ablak"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Háttérlapok"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Parancs mentése"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Perjel: 1–24 karakter (kisbetű, számjegy vagy kötőjel), betűvel vagy számjeggyel kezdve."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasok: ugyanazok a szabályok, mint a perjelnél (1–24 karakter: kisbetű, számjegy vagy kötőjel)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Ez a perjel vagy alias már foglalt."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Csak http:// vagy https:// URL-ek engedélyezettek."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Válasszon egy könyvjelzőmappát."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Válasszon egy nézetet."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "A sablonnak pontosan egy %s-t kell tartalmaznia."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Válasszon művelettípust."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Parancslimit elérve (100) — előbb töröljön egyet."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Még nincsenek egyéni parancsok."
   },
   "paletteNoResults": {
     "message": "Nincs találat"
@@ -1084,19 +1084,19 @@
     "message": "Kijelölés befejezése"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "A hibás linkek tisztítása tömegesen törli a könyvjelzőket. Az első tisztítás előtt készítsen biztonsági másolatot a könyvjelzőiről."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "A deduplikáció tömegesen törli az ismétlődő könyvjelzőket. Alkalmazás előtt készítsen biztonsági másolatot a könyvjelzőiről."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Biztonsági mentés és visszaállítás útmutató"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Ne jelenítse meg többé"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Bezárás"
   },
   "sessionEmpty": {
     "message": "Nincs menthető lap"

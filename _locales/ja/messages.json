@@ -226,10 +226,10 @@
     "message": "ブックマークURLはこのサードパーティサービスに送信されます。空欄の場合は直接プローブのみ行います。"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "リンク切れチェック用のプロキシサーバーを追加"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "プロキシ: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "変更"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "削除"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "プロキシサーバーを削除しました"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "既にお持ちのプロキシサーバーを入力してください（拡張機能はプロキシを提供しません）。例: 127.0.0.1:7890 または socks5://127.0.0.1:1080"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "テストURL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "テストして保存"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "テスト中…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "プロキシを保存しました。今後のスキャンでは直接失敗したリンクをこのプロキシ経由で再チェックします"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "無効なプロキシアドレスです — host:port または scheme://host:port を使用してください（http/https/socks5、認証情報なし）"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "プロキシに到達できません — 保存されていません"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "プロキシの権限が付与されていません"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "プロキシ設定は別の拡張機能によって管理されています"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "このブラウザではプロキシAPIを利用できません"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ 件のブックマークが直接チェックに失敗しました — プロキシでの再チェックで、実際のリンク切れと地域制限による失敗を区別できます",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "リレーテンプレート（オプションで設定）"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "リンク切れ: $dead$・ブロック済み: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "デッドリンクプロキシテンプレート"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "リンク切れプロキシサーバー"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "リンク切れビューからプロキシを追加・テストできます。保存したサーバーは毎回のスキャンで直接失敗したリンクを再チェックします。"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "クリア"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "（未設定）"
   },
   "optionDeadScanConcurrency": {
     "message": "デッドリンクスキャンの同時実行数 (1-16)"
@@ -810,124 +810,124 @@
     "message": "ビュータブの切り替え"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "テーマを設定…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "使い方: /theme の後にテーマ名を指定 — auto、light、dark、ink、paper（一意のプレフィックスも可。例: /theme d）"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "カスタム"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "コマンド「$1」を削除しますか？ この変更はすべてのデバイスに同期されます。"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "コマンド「$1」のフォルダーが存在しません。コマンドを削除しますか？"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "「$1」をコマンドとして保存…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URLを開く"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "ブックマークフォルダーグループを開く"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "プリセット付きビューを開く"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URLテンプレートを開く"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "コマンドパレット"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "コマンドパレット用のカスタムスラッシュコマンド（Ctrl/Cmd+K）。設定と同期されます — 最大100件。"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "コマンドを追加…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "スラッシュ（/ の後の語）"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "エイリアス（カンマ区切り）"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "アクション"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URLテンプレート — %s はコマンド後の語に置き換えられます"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "開く場所"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "ブックマークフォルダー"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "表示"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "重複排除戦略プリセット"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "重複排除スコーププリセット"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "入力時にスキャンを開始"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "現在のタブ"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "新しいタブ"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "新しいウィンドウ"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "バックグラウンドタブ"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "コマンドを保存"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "スラッシュ: 小文字・数字・ハイフンの1〜24文字。先頭は英字または数字。"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "エイリアス: スラッシュと同じ規則（小文字・数字・ハイフンの1〜24文字）。"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "そのスラッシュまたはエイリアスは既に使用されています。"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "許可されるのは http:// または https:// のURLのみです。"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "ブックマークフォルダーを選択してください。"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "表示を選択してください。"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "テンプレートには %s がちょうど1つ必要です。"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "アクションの種類を選択してください。"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "コマンド数の上限（100）に達しました。先に1つ削除してください。"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "カスタムコマンドはまだありません。"
   },
   "paletteNoResults": {
     "message": "一致する結果はありません"
@@ -1084,19 +1084,19 @@
     "message": "選択を終了"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "リンク切れ整理はブックマークを一括削除します。初回の整理前にバックアップしてください。"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "重複整理は重複ブックマークを一括削除します。実行前にバックアップしてください。"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "バックアップと復元のガイド"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "今後表示しない"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "閉じる"
   },
   "sessionEmpty": {
     "message": "保存するタブがありません"

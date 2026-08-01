@@ -226,10 +226,10 @@
     "message": "Οι διευθύνσεις URL των σελιδοδεικτών αποστέλλονται σε αυτήν την υπηρεσία τρίτου μέρους. Αφήστε κενό για απευθείας έλεγχο μόνο."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Μεσολάβηση: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Αλλαγή"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Κατάργηση"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Ο διακομιστής μεσολάβησης καταργήθηκε"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Εισάγετε έναν διακομιστή μεσολάβησης που ήδη έχετε (η επέκταση δεν παρέχει κανένα), π.χ. 127.0.0.1:7890 ή socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "URL δοκιμής"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Δοκιμή & αποθήκευση"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Δοκιμή…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Ο διακομιστής μεσολάβησης αποθηκεύτηκε — οι μελλοντικές σαρώσεις θα επανελέγχουν τις αποτυχίες άμεσης σύνδεσης μέσω αυτού."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Μη έγκυρη διεύθυνση μεσολάβησης — χρησιμοποιήστε host:port ή scheme://host:port (http/https/socks5, χωρίς διαπιστευτήρια)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Ο διακομιστής μεσολάβησης δεν είναι προσβάσιμος — δεν αποθηκεύτηκε"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Δεν παραχωρήθηκε άδεια για τον διακομιστή μεσολάβησης"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Οι ρυθμίσεις μεσολάβησης διαχειρίζονται από άλλη επέκταση"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Το API μεσολάβησης δεν είναι διαθέσιμο σε αυτό το πρόγραμμα περιήγησης"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ σελιδοδείκτες απέτυχαν στους άμεσους ελέγχους — ένας επανέλεγχος μέσω μεσολάβησης διαχωρίζει τους πραγματικά νεκρούς συνδέσμους από αυτούς που είναι αποκλεισμένοι ανά περιοχή.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Πρότυπο αναμετάδοσης (ορίζεται στις επιλογές)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Νεκροί: $dead$ · Αποκλεισμένοι: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Πρότυπο διακομιστή μεσολάβησης νεκρών συνδέσμων"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Διακομιστής μεσολάβησης για νεκρούς συνδέσμους"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Προσθέστε και δοκιμάστε τον διακομιστή μεσολάβησης από την προβολή νεκρών συνδέσμων· ο αποθηκευμένος διακομιστής επανελέγχει τις άμεσες αποτυχίες σε κάθε σάρωση."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Εκκαθάριση"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(δεν έχει οριστεί)"
   },
   "optionDeadScanConcurrency": {
     "message": "Ταυτόχρονη σάρωση νεκρών συνδέσμων (1-16)"
@@ -810,124 +810,124 @@
     "message": "Εναλλαγή προβολής καρτελών"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Ορισμός θέματος…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Χρήση: /theme ακολουθούμενο από όνομα θέματος — auto, light, dark, ink ή paper (λειτουργεί μοναδικό πρόθεμα, π.χ. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "προσαρμοσμένο"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Διαγραφή της εντολής \"$1\"; Η αλλαγή συγχρονίζεται σε όλες τις συσκευές σας."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Ο φάκελος της εντολής \"$1\" δεν υπάρχει πλέον. Διαγραφή της εντολής;"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Αποθήκευση \"$1\" ως εντολή…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Άνοιγμα URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Άνοιγμα ομάδας φακέλου σελιδοδεικτών"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Άνοιγμα προβολής με προεπιλογή"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Άνοιγμα προτύπου URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Παλέτα εντολών"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Προσαρμοσμένες εντολές με κάθετο για την παλέτα εντολών (Ctrl/Cmd+K). Συγχρονίζονται με τις ρυθμίσεις σας — έως 100 εγγραφές."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Προσθήκη εντολής…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Κάθετο (η λέξη μετά το /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Ψευδώνυμα (διαχωρισμένα με κόμμα)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Ενέργεια"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Πρότυπο URL — το %s αντικαθίσταται από τις λέξεις μετά την εντολή"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Άνοιγμα σε"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Φάκελος σελιδοδεικτών"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Προβολή"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Προεπιλογή στρατηγικής αφαίρεσης διπλοτύπων"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Προεπιλογή εμβέλειας αφαίρεσης διπλοτύπων"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Έναρξη σάρωσης κατά την εισαγωγή"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Τρέχουσα καρτέλα"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Νέα καρτέλα"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Νέο παράθυρο"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Καρτέλες παρασκηνίου"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Αποθήκευση εντολής"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Κάθετο: 1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες, με πρώτο χαρακτήρα γράμμα ή ψηφίο."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Ψευδώνυμα: ίδιοι κανόνες με το κάθετο (1–24 χαρακτήρες από πεζά γράμματα, ψηφία ή παύλες)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Αυτό το κάθετο ή ψευδώνυμο χρησιμοποιείται ήδη."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Επιτρέπονται μόνο διευθύνσεις URL http:// ή https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Επιλέξτε ένα φάκελο σελιδοδεικτών."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Επιλέξτε μια προβολή."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Το πρότυπο πρέπει να περιέχει ακριβώς ένα %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Επιλέξτε έναν τύπο ενέργειας."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Έχει φτάσει το όριο εντολών (100) — διαγράψτε μία πρώτα."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Δεν υπάρχουν ακόμη προσαρμοσμένες εντολές."
   },
   "paletteNoResults": {
     "message": "Δεν υπάρχουν αντίστοιχα αποτελέσματα"
@@ -1084,19 +1084,19 @@
     "message": "Έξοδος επιλογής"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Η εκκαθάριση νεκρών συνδέσμων διαγράφει σελιδοδείκτες μαζικά. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν από την πρώτη εκκαθάριση."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Η αφαίρεση διπλοτύπων διαγράφει μαζικά διπλότυπους σελιδοδείκτες. Δημιουργήστε αντίγραφο ασφαλείας των σελιδοδεικτών σας πριν την εφαρμογή."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Οδηγός αντιγράφων ασφαλείας & επαναφοράς"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Να μην εμφανιστεί ξανά"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Κλείσιμο"
   },
   "sessionEmpty": {
     "message": "Δεν υπάρχουν καρτέλες προς αποθήκευση"

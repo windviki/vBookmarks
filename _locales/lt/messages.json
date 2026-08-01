@@ -226,10 +226,10 @@
     "message": "Žymių URL siunčiami šiai trečiosios šalies paslaugai. Palikite tuščią, kad tikrintų tiesiogiai."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Tarpinis serveris: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Keisti"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Pašalinti"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Tarpinis serveris pašalintas"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Įveskite turimą tarpinį serverį (plėtinys jų neteikia), pvz., 127.0.0.1:7890 arba socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testavimo URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testuoti ir išsaugoti"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Tikrinama…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Tarpinis serveris išsaugotas — būsimuose nuskaitymuose tiesioginių patikrų nesėkmės bus tikrinamos per jį."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Neteisingas tarpinio serverio adresas — naudokite host:port arba scheme://host:port (http/https/socks5, be prisijungimo duomenų)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Tarpinis serveris nepasiekiamas — neišsaugotas"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Tarpinio serverio leidimas nesuteiktas"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Tarpinio serverio nustatymus valdo kitas plėtinys"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Šioje naršyklėje tarpinio serverio API nepasiekiama"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ žymių nepraėjo tiesioginių patikrų — pakartotinis tikrinimas per tarpinį serverį atskiria tikrai negyvas nuorodas nuo regionu apribotų.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Relay šablonas (nustatomas parinktyse)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Negyvos: $dead$ · Užblokuotos: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Neveikiančių nuorodų proxy šablonas"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Negyvų nuorodų tarpinis serveris"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Negyvų nuorodų rodinyje pridėkite ir testuokite tarpinį serverį; išsaugotas serveris kiekvieno nuskaitymo metu pakartotinai tikrina tiesioginių patikrų nesėkmes."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Išvalyti"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nenustatyta)"
   },
   "optionDeadScanConcurrency": {
     "message": "Neveikiančių nuorodų nuskaitymo gretinimas (1–16)"
@@ -810,124 +810,124 @@
     "message": "Perjungti rodymo skirtukus"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Nustatyti temą…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Naudojimas: /theme su temos pavadinimu — auto, light, dark, ink arba paper (veikia unikalus priešdėlis, pvz., /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "pasirinktinis"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Ištrinti komandą „$1“? Pakeitimas sinchronizuojamas visuose jūsų įrenginiuose."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Komandos „$1“ aplankas nebėra. Ištrinti komandą?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Išsaugoti „$1“ kaip komandą…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Atidaryti URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Atidaryti žymių aplankų grupę"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Atidaryti rodinį su išankstiniu nustatymu"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Atidaryti URL šabloną"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Komandų paletė"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Pasirinktinės pasvirojo brūkšnio komandos komandų paletei (Ctrl/Cmd+K). Jos sinchronizuojamos su jūsų nustatymais — daugiausia 100 įrašų."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Pridėti komandą…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Pasvirasis brūkšnys (žodis po /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasai (atskirti kableliais)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Veiksmas"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL šablonas — %s pakeičiamas žodžiais po komandos"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Atidaryti"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Adresyno aplankas"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Rodinys"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Dublikatų šalinimo strategijos išankstinis nustatymas"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Dublikatų šalinimo apimties išankstinis nustatymas"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Pradėti nuskaitymą įvedus"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Dabartinis skirtukas"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Naujas skirtukas"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Naujas langas"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Foniniai skirtukai"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Išsaugoti komandą"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Pasvirasis brūkšnys: 1–24 simboliai (mažosios raidės, skaitmenys ar brūkšneliai), pradedant raide ar skaitmeniu."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasai: tos pačios taisyklės kaip ir pasvirajam brūkšniui (1–24 simboliai, mažosios raidės, skaitmenys ar brūkšneliai)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Šis pasvirasis brūkšnys ar aliasas jau naudojamas."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Leidžiami tik http:// arba https:// URL."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Pasirinkite adresyno aplanką."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Pasirinkite rodinį."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Šablonas turi turėti tiksliai vieną %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Pasirinkite veiksmo tipą."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Pasiekta komandų riba (100) — pirmiausia ištrinkite vieną."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Pasirinktinių komandų dar nėra."
   },
   "paletteNoResults": {
     "message": "Atitikmenų nerasta"
@@ -1084,19 +1084,19 @@
     "message": "Baigti pasirinkimą"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Negyvų nuorodų valymas masiškai ištrina žymes. Prieš pirmą valymą sukurkite žymių atsarginę kopiją."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Dublikatų šalinimas masiškai ištrina pasikartojančias žymes. Prieš taikydami jį, pasidarykite žymių atsarginę kopiją."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Atsarginės kopijos ir atkūrimo vadovas"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Daugiau nerodyti"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Atmesti"
   },
   "sessionEmpty": {
     "message": "Nėra skirtukų išsaugoti"

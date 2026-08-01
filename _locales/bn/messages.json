@@ -226,10 +226,10 @@
     "message": "বুকমার্ক URL এই তৃতীয়-পক্ষ পরিষেবায় পাঠানো হয়। খালি রাখলে সরাসরি প্রোব করা হবে।"
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "প্রক্সি: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "পরিবর্তন"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "মুছুন"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "প্রক্সি সার্ভার মুছে ফেলা হয়েছে"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "আপনার কাছে থাকা একটি প্রক্সি সার্ভার লিখুন (এক্সটেনশন কোনো প্রক্সি সরবরাহ করে না), যেমন 127.0.0.1:7890 বা socks5://127.0.0.1:1080।"
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "পরীক্ষার URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "পরীক্ষা ও সংরক্ষণ"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "পরীক্ষা করা হচ্ছে…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "প্রক্সি সংরক্ষিত — ভবিষ্যতে স্ক্যানে সরাসরি ব্যর্থ লিংকগুলো এটি দিয়ে পুনরায় পরীক্ষা করা হবে।"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "অবৈধ প্রক্সি ঠিকানা — host:port বা scheme://host:port ব্যবহার করুন (http/https/socks5, কোনো শংসাপত্র ছাড়া)।"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "প্রক্সিতে পৌঁছানো যায়নি — সংরক্ষণ করা হয়নি"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "প্রক্সি ব্যবহারের অনুমতি দেওয়া হয়নি"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "প্রক্সি সেটিংস অন্য একটি এক্সটেনশন দ্বারা পরিচালিত"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "এই ব্রাউজারে প্রক্সি API উপলব্ধ নয়"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$টি বুকমার্ক সরাসরি পরীক্ষায় ব্যর্থ হয়েছে — প্রক্সি দিয়ে পুনঃপরীক্ষা আসল ডেড লিংক এবং অঞ্চল-অবরুদ্ধ লিংকগুলো আলাদা করে।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "রিলে টেমপ্লেট (অপশনে সেট করা)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "ডেড: $dead$ · অবরুদ্ধ: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "মৃত লিঙ্ক প্রক্সি টেমপ্লেট"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "ডেড-লিংক প্রক্সি সার্ভার"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "ডেড-লিংক ভিউ থেকে প্রক্সি যোগ ও পরীক্ষা করুন; সংরক্ষিত সার্ভার প্রতিটি স্ক্যানে সরাসরি ব্যর্থ লিংকগুলো পুনরায় পরীক্ষা করে।"
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "পরিষ্কার করুন"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(সেট করা হয়নি)"
   },
   "optionDeadScanConcurrency": {
     "message": "মৃত লিঙ্ক স্ক্যান সমবর্তিতা (১-১৬)"
@@ -810,124 +810,124 @@
     "message": "ট্যাব দৃশ্য টগল করুন"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "থিম সেট করুন…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "ব্যবহার: /theme এর পরে একটি থিমের নাম — auto, light, dark, ink বা paper (একটি অনন্য উপসর্গ কাজ করে, যেমন /theme d)।"
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "কাস্টম"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "\"$1\" কমান্ডটি মুছে ফেলবেন? পরিবর্তনটি আপনার সব ডিভাইসে সিঙ্ক হবে।"
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "\"$1\" কমান্ডের ফোল্ডারটি আর নেই। কমান্ডটি মুছে ফেলবেন?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "\"$1\" কমান্ড হিসেবে সংরক্ষণ করুন…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL খুলুন"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "বুকমার্ক ফোল্ডার গ্রুপ খুলুন"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "প্রিসেটসহ ভিউ খুলুন"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL টেমপ্লেট খুলুন"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "কমান্ড প্যালেট"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "কমান্ড প্যালেটের জন্য কাস্টম স্ল্যাশ কমান্ড (Ctrl/Cmd+K)। এগুলো আপনার সেটিংসের সাথে সিঙ্ক হয় — সর্বোচ্চ ১০০টি এন্ট্রি।"
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "কমান্ড যোগ করুন…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "স্ল্যাশ (/ এর পরে শব্দ)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "ডাকনাম (কমা-বিচ্ছিন্ন)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "ক্রিয়া"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL টেমপ্লেট — %s কমান্ডের পরে শব্দ দ্বারা প্রতিস্থাপিত হয়।"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "খোলার স্থান"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "বুকমার্ক ফোল্ডার"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "দৃশ্য"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "ডেডুপ কৌশল প্রিসেট"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "ডেডুপ পরিধি প্রিসেট"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "প্রবেশের সময় স্ক্যান শুরু করুন"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "বর্তমান ট্যাব"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "নতুন ট্যাব"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "নতুন উইন্ডো"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "পটভূমির ট্যাব"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "কমান্ড সংরক্ষণ করুন"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "স্ল্যাশ: ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর; অক্ষর বা সংখ্যা দিয়ে শুরু হতে হবে।"
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "ডাকনাম: স্ল্যাশের মতো একই নিয়ম (ছোট হাতের অক্ষর, সংখ্যা বা হাইফেনের ১–২৪ অক্ষর)।"
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "এই স্ল্যাশ বা ডাকনামটি ইতিমধ্যে ব্যবহৃত হচ্ছে।"
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "শুধুমাত্র http:// বা https:// URL অনুমোদিত।"
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "একটি বুকমার্ক ফোল্ডার নির্বাচন করুন।"
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "একটি দৃশ্য নির্বাচন করুন।"
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "টেমপ্লেটে অবশ্যই ঠিক একটি %s থাকতে হবে।"
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "একটি ক্রিয়ার ধরন নির্বাচন করুন।"
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "কমান্ড সীমা পূর্ণ হয়েছে (১০০) — আগে একটি মুছুন।"
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "এখনও কোনো কাস্টম কমান্ড নেই।"
   },
   "paletteNoResults": {
     "message": "কোনো মিল পাওয়া যায়নি"
@@ -1084,19 +1084,19 @@
     "message": "নির্বাচন বন্ধ করুন"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "ডেড-লিংক পরিষ্কার করার সময় অনেক বুকমার্ক একসাথে মুছে যায়। প্রথম পরিষ্কারের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "ডুপ্লিকেট অপসারণ একসাথে অনেকগুলো সদৃশ বুকমার্ক মুছে ফেলে। এটি প্রয়োগের আগে আপনার বুকমার্কগুলোর ব্যাকআপ নিন।"
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "ব্যাকআপ ও পুনরুদ্ধার নির্দেশিকা"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "আবার দেখাবেন না"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "বন্ধ করুন"
   },
   "sessionEmpty": {
     "message": "সংরক্ষণ করার মতো কোনো ট্যাব নেই"

@@ -225,10 +225,10 @@
     "message": "URL-адресите на обележувачите се испраќаат до оваа услуга од трета страна. Оставете празно за да испитувате директно само."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Додај прокси сервер за проверка на мртви врски"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Прокси: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -236,46 +236,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Промени"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Отстрани"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Прокси серверот е отстранет"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Внесете прокси сервер што веќе го имате (екстензијата не обезбедува), на пр. 127.0.0.1:7890 или socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Тест URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Тестирај и зачувај"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Тестирање…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Проксито е зачувано — идните скенирања повторно ги проверуваат директните неуспеси преку него"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Невалидна прокси адреса — користете host:port или scheme://host:port (http/https/socks5, без акредитиви)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Проксито е недостапно — не е зачувано"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Дозволата за прокси не е дадена"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Поставките за прокси ги управува друга екстензија"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "API-то за прокси е недостапно во овој прелистувач"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ обележувачи не успеаја на директните проверки — повторната проверка преку прокси ги одделува вистинските мртви врски од оние блокирани по регион",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -283,10 +283,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Шаблон за реле (поставен во опциите)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Мртви: $dead$ · Блокирани: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -615,16 +615,16 @@
     "message": "Шаблон за прокси за мртви врски"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Прокси сервер за мртви врски"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Додајте и тестирајте го проксито од прегледот на мртви врски; зачуваниот сервер ги проверува директните неуспеси при секое скенирање."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Исчисти"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(не е поставено)"
   },
   "optionDeadScanConcurrency": {
     "message": "Истовременост при скенирање на мртви врски (1-16)"
@@ -809,124 +809,124 @@
     "message": "Префрли приказ на јазичиња"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Постави тема…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Употреба: /theme проследено со име на тема — auto, light, dark, ink или paper (уникатен префикс работи, на пр. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "прилагодено"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Да се избрише командата \"$1\"? Промената се синхронизира на сите ваши уреди."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Папката на командата \"$1\" повеќе не постои. Да се избрише командата?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Зачувај \"$1\" како команда…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Отвори URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Отвори група папки со обележувачи"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Отвори преглед со претходно поставување"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Отвори шаблон за URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Командна палета"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Прилагодени команди со коса црта за командната палета (Ctrl/Cmd+K). Тие се синхронизираат со вашите поставки — најмногу 100 записи."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Додај команда…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Слеш (зборот по /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Алијаси (одвоени со запирка)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Дејство"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Шаблон за URL — %s се заменува со зборовите по командата"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Отвори во"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Папка за обележувачи"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Приказ"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Пресет за стратегија за дедупликација"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Пресет за опсег на дедупликација"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Започни го скенирањето при внес"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Тековно јазиче"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Ново јазиче"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Нов прозорец"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Јазичиња во позадина"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Зачувај команда"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Слеш: 1–24 знаци, мали букви, цифри или цртички, почнувајќи со буква или цифра."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Алијаси: исти правила како кај слешот (1–24 знаци, мали букви, цифри или цртички)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Тој слеш или алијас е веќе заземен."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Дозволени се само http:// или https:// URL-адреси."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Изберете папка за обележувачи."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Изберете приказ."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Шаблонот мора да содржи точно еден %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Изберете тип на дејство."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Достигнато е ограничувањето на команди (100) — прво избришете една."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Сè уште нема прилагодени команди."
   },
   "paletteNoResults": {
     "message": "Нема совпаѓачки резултати"
@@ -1083,19 +1083,19 @@
     "message": "Излези од избор"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Чистењето на мртви врски масовно брише обележувачи. Направете резервна копија на обележувачите пред првото чистење."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Дедупликацијата масовно брише дупликат обележувачи. Направете резервна копија на обележувачите пред да ја примените."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Водич за резервна копија и враќање"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Не прикажувај повторно"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Затвори"
   },
   "sessionEmpty": {
     "message": "Нема јазичиња за зачувување"

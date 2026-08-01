@@ -226,10 +226,10 @@
     "message": "Yer imi URL'leri bu üçüncü taraf hizmetine gönderilir. Yalnızca doğrudan yoklama yapmak için boş bırakın."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Değiştir"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Kaldır"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxy sunucusu kaldırıldı"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Sahip olduğunuz bir proxy sunucusunu girin (uzantı hiçbirini sağlamaz), örn. 127.0.0.1:7890 veya socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Test URL'si"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Test et ve kaydet"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Test ediliyor…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy kaydedildi — sonraki taramalar doğrudan başarısız sonuçları bunun üzerinden yeniden kontrol eder"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Geçersiz proxy adresi — host:port veya scheme://host:port kullanın (http/https/socks5, kimlik bilgisi yok)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy erişilemez — kaydedilmedi"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Proxy izni verilmedi"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Proxy ayarları başka bir uzantı tarafından yönetiliyor"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Proxy API'si bu tarayıcıda kullanılamıyor"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ yer imi doğrudan kontrollerde başarısız oldu — proxy ile yeniden kontrol, gerçek ölü bağlantıları bölge engeli olanlardan ayırır",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Aktarma şablonu (seçeneklerde ayarlanır)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Ölü: $dead$ · Engellendi: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Ölü bağlantı proxy şablonu"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Ölü bağlantı proxy sunucusu"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Proxy'yi ölü bağlantılar görünümünden ekleyin ve test edin; kaydedilen sunucu her taramada doğrudan başarısız sonuçları yeniden kontrol eder."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Temizle"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(ayarlanmadı)"
   },
   "optionDeadScanConcurrency": {
     "message": "Ölü bağlantı tarama eşzamanlılığı (1-16)"
@@ -810,124 +810,124 @@
     "message": "Sekme görünümünü değiştir"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Tema ayarla…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Kullanım: /theme ardından bir tema adı — auto, light, dark, ink veya paper (benzersiz bir önek çalışır, örn. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "özel"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "\"$1\" komutu silinsin mi? Değişiklik tüm cihazlarınıza eşitlenir."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "\"$1\" komutunun klasörü artık mevcut değil. Komut silinsin mi?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "\"$1\"i komut olarak kaydet…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL Aç"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Yer imi klasör grubunu aç"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Ön ayarlı görünümü aç"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL şablonu aç"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Komut paleti"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Komut paleti için özel eğik çizgi komutları (Ctrl/Cmd+K). Ayarlarınızla eşitlenir — en fazla 100 giriş."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Komut ekle…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Eğik çizgi ( / sonrası kelime)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Takma adlar (virgülle ayrılmış)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Eylem"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL şablonu — %s, komuttan sonraki kelimelerle değiştirilir"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Açılacağı yer"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Yer imi klasörü"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Görünüm"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Tekilleştirme stratejisi ön ayarı"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Tekilleştirme kapsamı ön ayarı"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Girişte taramayı başlat"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Geçerli sekme"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Yeni sekme"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Yeni pencere"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Arka plan sekmeleri"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Komutu kaydet"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Eğik çizgi: 1–24 karakter; yalnızca küçük harf, rakam veya tire içerebilir; bir harf veya rakamla başlamalıdır."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Takma adlar: eğik çizgiyle aynı kurallar (1–24 karakter; yalnızca küçük harf, rakam veya tire)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Bu eğik çizgi veya takma ad zaten kullanılıyor."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Yalnızca http:// veya https:// URL'lerine izin verilir."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Bir yer imi klasörü seçin."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Bir görünüm seçin."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Şablon tam olarak bir %s içermelidir."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Bir eylem türü seçin."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Komut sınırına ulaşıldı (100) — önce birini silin."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Henüz özel komut yok."
   },
   "paletteNoResults": {
     "message": "Eşleşen sonuç yok"
@@ -1084,19 +1084,19 @@
     "message": "Seçimden çık"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Ölü bağlantı temizliği yer imlerini toplu olarak siler. İlk temizlikten önce yer imlerinizi yedekleyin."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Yineleme kaldırma, kopya yer imlerini toplu olarak siler. Uygulamadan önce yer imlerinizi yedekleyin."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Yedekleme ve geri yükleme kılavuzu"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Tekrar gösterme"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Kapat"
   },
   "sessionEmpty": {
     "message": "Kaydedilecek sekme yok"

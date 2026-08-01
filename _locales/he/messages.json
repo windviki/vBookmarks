@@ -226,10 +226,10 @@
     "message": "כתובות האתרים של הסימניות נשלחות לשירות צד שלישי זה. השאר ריק כדי לבדוק ישירות בלבד."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "פרוקסי: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "שנה"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "הסר"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "שרת הפרוקסי הוסר"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "הזן שרת פרוקסי שכבר יש לך (ההרחבה אינה מספקת אחד), למשל 127.0.0.1:7890 או socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "כתובת URL לבדיקה"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "בדוק ושמור"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "בודק…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "הפרוקסי נשמר — סריקות עתידיות יבדקו דרכו שוב כשלים ישירים."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "כתובת פרוקסי לא תקינה — יש להשתמש בפורמט host:port או scheme://host:port (http/https/socks5, ללא פרטי התחברות)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "הפרוקסי אינו זמין — לא נשמר"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "הרשאת הפרוקסי לא ניתנה"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "הגדרות הפרוקסי מנוהלות על ידי הרחבה אחרת"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "ממשק ה-API של הפרוקסי אינו זמין בדפדפן זה"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ סימניות נכשלו בבדיקות ישירות — בדיקה חוזרת דרך פרוקסי מפרידה בין קישורים שבורים באמת לחסומים אזורית.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "תבנית ממסר (מוגדרת באפשרויות)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "שבורים: $dead$ · חסומים: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "תבנית פרוקסי לקישורים מתים"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "שרת פרוקסי לקישורים שבורים"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "הוסף ובדוק את הפרוקסי מתצוגת הקישורים השבורים; השרת שנשמר יבדוק שוב כשלים ישירים בכל סריקה."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "נקה"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(לא מוגדר)"
   },
   "optionDeadScanConcurrency": {
     "message": "מקביליות סריקת קישורים מתים (1-16)"
@@ -810,124 +810,124 @@
     "message": "הצג/הסתר לשוניות"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "הגדר ערכת נושא…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "שימוש: /theme ואחריו שם ערכת נושא — auto, light, dark, ink או paper (קידומת ייחודית עובדת, למשל /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "מותאם אישית"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "למחוק את הפקודה \"$1\"? השינוי יסונכרן לכל המכשירים שלך."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "התיקייה של הפקודה \"$1\" כבר אינה קיימת. למחוק את הפקודה?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "שמור את \"$1\" כפקודה…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "פתח כתובת URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "פתח קבוצת תיקיות של סימניות"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "פתח תצוגה עם הגדרה מראש"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "פתח תבנית URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "פלטת פקודות"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "פקודות סלאש מותאמות אישית לפלטת הפקודות (Ctrl/Cmd+K). הן מסונכרנות עם ההגדרות שלך — עד 100 פקודות."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "הוסף פקודה…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "לוכסן (המילה אחרי /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "כינויים (מופרדים בפסיקים)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "פעולה"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "תבנית URL — %s מוחלף במילים שאחרי הפקודה"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "פתח ב"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "תיקיית סימניות"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "תצוגה"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "אסטרטגיית הסרת כפילויות"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "טווח הסרת כפילויות"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "התחל סריקה עם הכניסה"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "לשונית נוכחית"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "לשונית חדשה"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "חלון חדש"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "לשוניות רקע"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "שמור פקודה"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "לוכסן: 1–24 תווים של אותיות קטנות, ספרות או מקפים, המתחיל באות או ספרה."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "כינויים: אותם כללים כמו הלוכסן (1–24 תווים של אותיות קטנות, ספרות או מקפים)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "הלוכסן או הכינוי הזה כבר תפוס."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "מותרות רק כתובות URL עם http:// או https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "בחר תיקיית סימניות."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "בחר תצוגה."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "התבנית חייבת להכיל בדיוק %s אחד."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "בחר סוג פעולה."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "הגעת למגבלת הפקודות (100) — מחק אחת תחילה."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "אין עדיין פקודות מותאמות אישית."
   },
   "paletteNoResults": {
     "message": "אין תוצאות תואמות"
@@ -1084,19 +1084,19 @@
     "message": "צא ממצב בחירה"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "ניקוי קישורים שבורים מוחק סימניות בכמות גדולה. גבה את הסימניות לפני הניקוי הראשון."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "הסרת כפילויות מוחקת סימניות כפולות בכמות גדולה. גבה את הסימניות לפני שתפעיל אותה."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "מדריך גיבוי ושחזור"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "לא להציג שוב"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "סגור"
   },
   "sessionEmpty": {
     "message": "אין כרטיסיות לשמירה"

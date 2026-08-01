@@ -226,10 +226,10 @@
     "message": "Lesezeichen-URLs werden an diesen Drittanbieterdienst gesendet. Leer lassen, um nur direkt zu überprüfen."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Ändern"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Entfernen"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Proxyserver entfernt"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Geben Sie einen vorhandenen Proxyserver ein (die Erweiterung stellt keinen bereit), z. B. 127.0.0.1:7890 oder socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Test-URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testen & speichern"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Wird getestet…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Proxy gespeichert – zukünftige Scans prüfen direkte Fehler darüber erneut."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Ungültige Proxy-Adresse – verwenden Sie host:port oder schema://host:port (http/https/socks5, ohne Zugangsdaten)."
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Proxy nicht erreichbar – nicht gespeichert"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Proxy-Berechtigung wurde nicht erteilt"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Die Proxy-Einstellungen werden von einer anderen Erweiterung verwaltet"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Die Proxy-API ist in diesem Browser nicht verfügbar"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ Lesezeichen scheiterten an direkten Prüfungen – eine Proxy-Neuprüfung trennt echte tote Links von regional gesperrten.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Relay-Vorlage (in den Optionen festgelegt)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Tot: $dead$ · Blockiert: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Proxy-Vorlage für defekte Links"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Proxyserver für tote Links"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Fügen Sie den Proxy in der Tote-Links-Ansicht hinzu und testen Sie ihn; der gespeicherte Server prüft bei jedem Scan direkte Fehler erneut."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Leeren"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nicht festgelegt)"
   },
   "optionDeadScanConcurrency": {
     "message": "Parallelität der Dead-Link-Scans (1-16)"
@@ -810,124 +810,124 @@
     "message": "Registerkarten umschalten"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Design festlegen…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Verwendung: /theme gefolgt von einem Designnamen – auto, light, dark, ink oder paper (ein eindeutiges Präfix funktioniert, z. B. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "benutzerdefiniert"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Befehl „$1“ löschen? Die Änderung wird mit allen Ihren Geräten synchronisiert."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Der Ordner des Befehls „$1“ existiert nicht mehr. Befehl löschen?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "„$1“ als Befehl speichern…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "URL öffnen"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Lesezeichenordner-Gruppe öffnen"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Ansicht mit Voreinstellung öffnen"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "URL-Vorlage öffnen"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Befehlspalette"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Benutzerdefinierte Schrägstrich-Befehle für die Befehlspalette (Strg/Cmd+K). Sie werden mit Ihren Einstellungen synchronisiert – maximal 100 Einträge."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Befehl hinzufügen…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Slash (das Wort nach /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliasse (kommagetrennt)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Aktion"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL-Vorlage – %s wird durch die Wörter nach dem Befehl ersetzt"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Öffnen in"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Lesezeichenordner"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Ansicht"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Voreinstellung für Dedup-Strategie"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Voreinstellung für Dedup-Bereich"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Scan bei Eingabe starten"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Aktueller Tab"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Neuer Tab"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Neues Fenster"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Hintergrund-Tabs"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Befehl speichern"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Slash: 1–24 Zeichen aus Kleinbuchstaben, Ziffern oder Bindestrichen, beginnend mit einem Buchstaben oder einer Ziffer."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliasse: gleiche Regeln wie beim Slash (1–24 Zeichen aus Kleinbuchstaben, Ziffern oder Bindestrichen)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Dieser Slash oder dieses Alias ist bereits vergeben."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Nur http://- oder https://-URLs sind zulässig."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Wähle einen Lesezeichenordner."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Wähle eine Ansicht."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Die Vorlage muss genau ein %s enthalten."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Wähle einen Aktionstyp."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Befehlslimit erreicht (100) – zuerst einen löschen."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Noch keine benutzerdefinierten Befehle."
   },
   "paletteNoResults": {
     "message": "Keine passenden Ergebnisse"
@@ -1084,19 +1084,19 @@
     "message": "Auswahl beenden"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Die Bereinigung toter Links löscht Lesezeichen in großen Mengen. Sichern Sie Ihre Lesezeichen vor der ersten Bereinigung."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Die Deduplizierung löscht doppelte Lesezeichen in großen Mengen. Sichern Sie Ihre Lesezeichen, bevor Sie sie ausführen."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Anleitung für Sicherung & Wiederherstellung"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Nicht mehr anzeigen"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Schließen"
   },
   "sessionEmpty": {
     "message": "Keine Tabs zum Speichern"

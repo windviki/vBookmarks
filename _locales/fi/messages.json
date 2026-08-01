@@ -226,10 +226,10 @@
     "message": "Kirjanmerkkien URL-osoitteet lähetetään tälle kolmannen osapuolen palvelulle. Jätä tyhjäksi, jotta tarkistetaan vain suoraan."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Välityspalvelin: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Muuta"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Poista"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Välityspalvelin poistettu"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Anna välityspalvelin, joka sinulla jo on (laajennus ei tarjoa sellaista), esim. 127.0.0.1:7890 tai socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testi-URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Testaa ja tallenna"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Testataan…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Välityspalvelin tallennettu — tulevat tarkistukset tarkistavat suorat epäonnistumiset sen kautta"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Virheellinen välityspalvelinosoite — käytä muotoa host:port tai scheme://host:port (http/https/socks5, ei tunnistetietoja)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Välityspalvelin ei tavoitettavissa — ei tallennettu"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Välityspalvelimen käyttöoikeutta ei myönnetty"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Välityspalvelimen asetuksia hallinnoi toinen laajennus"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Välityspalvelimen API ei ole käytettävissä tässä selaimessa"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ kirjanmerkkiä epäonnistui suorissa tarkistuksissa — välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Välityspohja (määritetty asetuksissa)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Kuolleet: $dead$ · Estetyt: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Kuolleen linkin välityspalvelinmalli"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Kuolleiden linkkien välityspalvelin"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Lisää ja testaa välityspalvelin kuolleiden linkkien näkymästä; tallennettu palvelin tarkistaa suorat epäonnistumiset uudelleen jokaisessa tarkistuksessa."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Tyhjennä"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(ei asetettu)"
   },
   "optionDeadScanConcurrency": {
     "message": "Kuolleen linkin skannauksen rinnakkaisuus (1-16)"
@@ -810,124 +810,124 @@
     "message": "Vaihda välilehtien näyttö"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Aseta teema…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Käyttö: /theme ja teeman nimi — auto, light, dark, ink tai paper (yksilöllinen etuliite toimii, esim. /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "mukautettu"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Poistetaanko komento \"$1\"? Muutos synkronoituu kaikkiin laitteisiisi."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Komennon \"$1\" kansiota ei ole enää olemassa. Poistetaanko komento?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Tallenna \"$1\" komentona…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Avaa URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Avaa kirjanmerkkikansion ryhmä"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Avaa näkymä esiasetuksella"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Avaa URL-malli"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Komentopaletti"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Mukautetut kauttaviivakomennot komentopaletille (Ctrl/Cmd+K). Ne synkronoituvat asetustesi kanssa — enintään 100 merkintää."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Lisää komento…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Kauttaviiva (sana /-merkin jälkeen)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aliakset (pilkuilla erotettuna)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Toiminto"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL-malli — %s korvataan komennon jälkeisillä sanoilla"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Avaa"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Kirjanmerkkikansio"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Näkymä"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Dedup-strategian esiasetus"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Dedup-laajuuden esiasetus"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Aloita skannaus syötettäessä"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Nykyinen välilehti"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Uusi välilehti"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Uusi ikkuna"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Taustavälilehdet"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Tallenna komento"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Kauttaviiva: 1–24 merkkiä, jotka koostuvat pienistä kirjaimista, numeroista tai väliviivoista ja alkavat kirjaimella tai numerolla."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aliakset: samat säännöt kuin kauttaviivalla (1–24 merkkiä pieniä kirjaimia, numeroita tai väliviivoja)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Tämä kauttaviiva tai alias on jo varattu."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Vain http://- tai https://-alkuiset URL-osoitteet ovat sallittuja."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Valitse kirjanmerkkikansio."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Valitse näkymä."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Mallissa on oltava täsmälleen yksi %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Valitse toiminnon tyyppi."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Komentoraja (100) on saavutettu — poista ensin yksi."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Ei mukautettuja komentoja vielä."
   },
   "paletteNoResults": {
     "message": "Ei vastaavia tuloksia"
@@ -1084,19 +1084,19 @@
     "message": "Poistu valinnasta"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Kuolleiden linkkien siivous poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen ensimmäistä siivousta."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Kaksoiskappaleiden poisto poistaa kirjanmerkkejä joukolla. Varmuuskopioi kirjanmerkkisi ennen poiston käyttöä."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Varmuuskopiointi- ja palautusopas"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Älä näytä uudelleen"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Sulje"
   },
   "sessionEmpty": {
     "message": "Ei tallennettavia välilehtiä"

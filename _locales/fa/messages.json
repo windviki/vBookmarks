@@ -226,10 +226,10 @@
     "message": "URLهای بوکمارک به این سرویس شخص ثالث ارسال می‌شوند. برای بررسی مستقیم فقط خالی بگذارید."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "پروکسی: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "تغییر"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "حذف"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "سرور پروکسی حذف شد"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "سرور پروکسی که از قبل دارید را وارد کنید (افزونه پروکسی‌ای ارائه نمی‌دهد)، مثلاً 127.0.0.1:7890 یا socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "آدرس آزمایش"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "آزمایش و ذخیره"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "در حال آزمایش…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "پروکسی ذخیره شد — پویش‌های آینده خطاهای مستقیم را از طریق آن دوباره بررسی می‌کنند."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "آدرس پروکسی نامعتبر — از host:port یا scheme://host:port استفاده کنید (http/https/socks5، بدون اطلاعات ورود)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "پروکسی غیرقابل دسترسی است — ذخیره نشد"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "مجوز پروکسی داده نشد"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "تنظیمات پروکسی توسط افزونه‌ای دیگر مدیریت می‌شود"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "API پروکسی در این مرورگر در دسترس نیست"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ نشانک در بررسی مستقیم ناموفق بودند — بررسی مجدد با پروکسی، لینک‌های واقعاً خراب را از موارد مسدودشده منطقه‌ای جدا می‌کند.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "قالب رله (در گزینه‌ها تنظیم شده)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "خراب: $dead$ · مسدود: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "قالب پروکسی لینک‌های مرده"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "سرور پروکسی لینک‌های خراب"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "پروکسی را از نمای لینک‌های خراب اضافه و آزمایش کنید؛ سرور ذخیره‌شده در هر پویش، خطاهای مستقیم را دوباره بررسی می‌کند."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "پاک کردن"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(تنظیم نشده)"
   },
   "optionDeadScanConcurrency": {
     "message": "هم‌روندی اسکن لینک مرده (۱-۱۶)"
@@ -810,124 +810,124 @@
     "message": "تغییر نمایش تب‌ها"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "انتخاب پوسته…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "کاربرد: بعد از /theme نام پوسته را وارد کنید — auto، light، dark، ink یا paper (پیشوند یکتا هم کار می‌کند، مثلاً /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "سفارشی"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "فرمان «$1» حذف شود؟ این تغییر در همه دستگاه‌های شما همگام‌سازی می‌شود."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "پوشه فرمان «$1» دیگر وجود ندارد. فرمان حذف شود؟"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "ذخیره «$1» به‌عنوان فرمان…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "باز کردن URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "باز کردن گروه پوشه نشانک‌ها"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "باز کردن نما با پیش‌تنظیم"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "باز کردن الگوی URL"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "پالت فرمان"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "فرمان‌های اسلش سفارشی برای پالت فرمان (Ctrl/Cmd+K). این فرمان‌ها با تنظیمات شما همگام می‌شوند — حداکثر ۱۰۰ مورد."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "افزودن فرمان…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "اسلش (واژه پس از /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "نام‌های مستعار (جدا شده با ویرگول)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "اقدام"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "قالب URL — %s با واژه‌های بعد از دستور جایگزین می‌شود."
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "باز کردن در"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "پوشه نشانک‌ها"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "نمایش"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "پیش‌تنظیم استراتژی حذف تکراری‌ها"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "پیش‌تنظیم محدوده حذف تکراری‌ها"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "شروع اسکن هنگام ورود"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "برگه فعلی"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "برگه جدید"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "پنجره جدید"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "برگه‌های پس‌زمینه"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "ذخیره دستور"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "اسلش: ۱ تا ۲۴ نویسه از حروف کوچک، ارقام یا خط تیره، که با حرف یا رقم شروع می‌شود."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "نام‌های مستعار: همان قواعد اسلش (۱ تا ۲۴ نویسه از حروف کوچک، ارقام یا خط تیره)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "این اسلش یا نام مستعار قبلاً استفاده شده است."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "فقط URLهای http:// یا https:// مجاز هستند."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "یک پوشه نشانک انتخاب کنید."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "یک نمایش انتخاب کنید."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "قالب باید دقیقاً یک %s داشته باشد."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "یک نوع اقدام انتخاب کنید."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "سقف دستورات رسیده است (۱۰۰) — ابتدا یکی را حذف کنید."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "هنوز دستور سفارشی‌ای وجود ندارد."
   },
   "paletteNoResults": {
     "message": "نتیجه‌ای یافت نشد"
@@ -1084,19 +1084,19 @@
     "message": "خروج از انتخاب"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "پاکسازی لینک‌های خراب به‌صورت گروهی نشانک‌ها را حذف می‌کند. قبل از اولین پاکسازی از نشانک‌های خود نسخه پشتیبان تهیه کنید."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "حذف موارد تکراری، نشانک‌های تکراری را به‌صورت گروهی حذف می‌کند. قبل از اعمال آن از نشانک‌های خود پشتیبان بگیرید."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "راهنمای پشتیبان‌گیری و بازیابی"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "دیگر نمایش نده"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "رد کردن"
   },
   "sessionEmpty": {
     "message": "زبانه‌ای برای ذخیره وجود ندارد"

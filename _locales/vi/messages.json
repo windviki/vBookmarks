@@ -226,10 +226,10 @@
     "message": "URL bookmark được gửi đến dịch vụ bên thứ ba này. Để trống để chỉ thăm dò trực tiếp."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Proxy: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Đổi"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Xóa"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Đã xóa máy chủ proxy"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Nhập một máy chủ proxy bạn đã có (tiện ích không cung cấp sẵn), ví dụ: 127.0.0.1:7890 hoặc socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "URL kiểm tra"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Kiểm tra và lưu"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Đang kiểm tra…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Đã lưu proxy — các lần quét sau sẽ kiểm tra lại các lỗi kết nối trực tiếp qua nó."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Địa chỉ proxy không hợp lệ — dùng host:port hoặc scheme://host:port (http/https/socks5, không kèm thông tin xác thực)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Không thể kết nối tới proxy — chưa lưu"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Quyền sử dụng proxy chưa được cấp"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Cài đặt proxy đang được quản lý bởi tiện ích mở rộng khác"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "API proxy không khả dụng trong trình duyệt này"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ dấu trang không vượt qua kiểm tra trực tiếp — kiểm tra lại qua proxy sẽ phân biệt liên kết hỏng thực sự với các liên kết bị chặn theo vùng",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Mẫu chuyển tiếp (đặt trong tùy chọn)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Hỏng: $dead$ · Bị chặn: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Mẫu proxy liên kết chết"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Máy chủ proxy cho liên kết hỏng"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Thêm và kiểm tra proxy từ chế độ xem liên kết hỏng; máy chủ đã lưu sẽ kiểm tra lại các lỗi kết nối trực tiếp trong mỗi lần quét."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Xóa"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(chưa đặt)"
   },
   "optionDeadScanConcurrency": {
     "message": "Độ đồng thời quét liên kết chết (1-16)"
@@ -810,124 +810,124 @@
     "message": "Bật/tắt tab xem"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Đặt giao diện…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Cách dùng: /theme kèm tên giao diện — auto, light, dark, ink hoặc paper (tiền tố duy nhất cũng được, ví dụ: /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "tùy chỉnh"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Xóa lệnh \"$1\"? Thay đổi sẽ được đồng bộ đến tất cả thiết bị của bạn."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Thư mục của lệnh \"$1\" không còn tồn tại. Xóa lệnh này?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Lưu \"$1\" thành một lệnh…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Mở URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Mở nhóm thư mục dấu trang"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Mở chế độ xem với cấu hình đặt sẵn"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Mở URL theo mẫu"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Bảng lệnh"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Lệnh gạch chéo tùy chỉnh cho bảng lệnh (Ctrl/Cmd+K). Chúng đồng bộ với cài đặt của bạn — tối đa 100 mục."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Thêm lệnh…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Slash (từ sau /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Bí danh (phân tách bằng dấu phẩy)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Hành động"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "Mẫu URL — %s được thay thế bằng các từ sau lệnh"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Mở trong"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Thư mục dấu trang"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Chế độ xem"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Cài đặt sẵn chiến lược khử trùng lặp"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Cài đặt sẵn phạm vi khử trùng lặp"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Bắt đầu quét khi nhập"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Tab hiện tại"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Tab mới"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Cửa sổ mới"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Tab nền"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Lưu lệnh"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Slash: 1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối, bắt đầu bằng chữ cái hoặc chữ số."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Bí danh: cùng quy tắc như slash (1–24 ký tự chữ thường, chữ số hoặc dấu gạch nối)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Slash hoặc bí danh này đã được sử dụng."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Chỉ cho phép URL http:// hoặc https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Chọn một thư mục dấu trang."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Chọn một chế độ xem."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Mẫu phải chứa chính xác một %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Chọn một loại hành động."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Đã đạt giới hạn lệnh (100) — hãy xóa một lệnh trước."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Chưa có lệnh tùy chỉnh nào."
   },
   "paletteNoResults": {
     "message": "Không có kết quả phù hợp"
@@ -1084,19 +1084,19 @@
     "message": "Thoát chọn"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Dọn dẹp liên kết hỏng sẽ xóa hàng loạt dấu trang. Hãy sao lưu dấu trang trước lần dọn dẹp đầu tiên."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Khử trùng lặp sẽ xóa hàng loạt dấu trang trùng lặp. Hãy sao lưu dấu trang trước khi áp dụng."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Hướng dẫn sao lưu và khôi phục"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Không hiển thị lại"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Bỏ qua"
   },
   "sessionEmpty": {
     "message": "Không có tab để lưu"

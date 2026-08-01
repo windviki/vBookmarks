@@ -226,10 +226,10 @@
     "message": "Grāmatzīmju URL tiek nosūtīti šim trešās puses pakalpojumam. Atstājiet tukšu, lai aptaujātu tikai tieši."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "Starpniekserveris: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "Mainīt"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "Noņemt"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "Starpniekserveris noņemts"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "Norādiet jau esošu starpniekserveri (paplašinājums tādu nepiedāvā), piem., 127.0.0.1:7890 vai socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "Testa URL"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "Pārbaudīt un saglabāt"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "Notiek pārbaude…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "Starpniekserveris saglabāts — turpmākajās skenēšanās neveiksmīgās tiešās pārbaudes tiks veiktas caur to"
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "Nederīga starpniekservera adrese — izmantojiet host:port vai scheme://host:port (http/https/socks5, bez akreditācijas datiem)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "Starpniekserveris nav sasniedzams — nav saglabāts"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "Atļauja starpniekserverim netika piešķirta"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "Starpniekservera iestatījumus pārvalda cits paplašinājums"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "Starpniekservera API nav pieejams šajā pārlūkprogrammā"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "$count$ grāmatzīmēm neizdevās tiešās pārbaudes — starpniekservera atkārtota pārbaude nošķir patiesi bojātas saites no reģionā bloķētām",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "Starpniekservera veidne (iestatīta opcijās)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "Bojātas: $dead$ · Bloķētas: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "Nedarbojošos saišu starpniekservera veidne"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "Bojātu saišu starpniekserveris"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "Pievienojiet un pārbaudiet starpniekserveri no bojātu saišu skata; saglabātais serveris katrā skenēšanā atkārtoti pārbauda tiešo pārbaužu kļūmes."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "Notīrīt"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(nav iestatīts)"
   },
   "optionDeadScanConcurrency": {
     "message": "Nedarbojošos saišu skenēšanas vienlaicīgums (1-16)"
@@ -810,124 +810,124 @@
     "message": "Pārslēgt skata cilnes"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "Iestatīt motīvu…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "Lietošana: /theme un motīva nosaukums — auto, light, dark, ink vai paper (der unikāls prefikss, piem., /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "pielāgots"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "Dzēst komandu \"$1\"? Izmaiņas sinhronizējas visās jūsu ierīcēs."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "Komandas \"$1\" mape vairs neeksistē. Dzēst komandu?"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "Saglabāt \"$1\" kā komandu…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "Atvērt URL"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "Atvērt grāmatzīmju mapju grupu"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "Atvērt skatu ar iepriekš iestatīto"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "Atvērt URL veidni"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "Komandu palete"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "Pielāgotas slīpsvītras komandas komandu paletei (Ctrl/Cmd+K). Tās sinhronizējas ar jūsu iestatījumiem — ne vairāk kā 100 ieraksti."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "Pievienot komandu…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "Slash (vārds pēc /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "Aizstājvārdi (atdalīti ar komatiem)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "Darbība"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "URL veidne — %s tiek aizstāts ar vārdiem pēc komandas"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "Atvērt:"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "Grāmatzīmju mape"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "Skats"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "Dublikātu stratēģijas priekšiestatījums"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "Dublikātu tvēruma priekšiestatījums"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "Sākt skenēšanu pēc ievadīšanas"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "Pašreizējā cilne"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "Jauna cilne"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "Jauns logs"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "Fona cilnes"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "Saglabāt komandu"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "Slash: 1–24 rakstzīmes — mazie burti, cipari vai defises, sākas ar burtu vai ciparu."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "Aizstājvārdi: tie paši noteikumi kā Slash (1–24 rakstzīmes no mazajiem burtiem, cipariem vai defisēm)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "Šis slash vai aizstājvārds jau ir aizņemts."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "Ir atļauti tikai http:// vai https:// URL."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "Izvēlieties grāmatzīmju mapi."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "Izvēlieties skatu."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "Veidnei jāsatur tieši viens %s."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "Izvēlieties darbības veidu."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "Sasniegts komandu ierobežojums (100) — vispirms izdzēsiet vienu."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "Pielāgotu komandu vēl nav."
   },
   "paletteNoResults": {
     "message": "Nav atbilstošu rezultātu"
@@ -1084,19 +1084,19 @@
     "message": "Iziet no atlases"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "Bojātu saišu tīrīšana masveidā dzēš grāmatzīmes. Pirms pirmās tīrīšanas dublējiet savas grāmatzīmes."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "Dublikātu noņemšana masveidā dzēš dublētas grāmatzīmes. Pirms lietošanas dublējiet savas grāmatzīmes."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "Dublēšanas un atjaunošanas ceļvedis"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "Vairs nerādīt"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "Aizvērt"
   },
   "sessionEmpty": {
     "message": "Nav cilņu, ko saglabāt"

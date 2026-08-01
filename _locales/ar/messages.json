@@ -226,10 +226,10 @@
     "message": "يتم إرسال عناوين URL للإشارات المرجعية إلى هذه الخدمة الخارجية. اتركه فارغًا للفحص المباشر فقط."
   },
   "deadProxyAdd": {
-    "message": "[TODO:deadProxyAdd]"
+    "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },
   "deadProxyLabel": {
-    "message": "[TODO:deadProxyLabel]",
+    "message": "الوكيل: $server$",
     "placeholders": {
       "server": {
         "content": "$1"
@@ -237,46 +237,46 @@
     }
   },
   "deadProxyChange": {
-    "message": "[TODO:deadProxyChange]"
+    "message": "تغيير"
   },
   "deadProxyRemove": {
-    "message": "[TODO:deadProxyRemove]"
+    "message": "إزالة"
   },
   "deadProxyRemoved": {
-    "message": "[TODO:deadProxyRemoved]"
+    "message": "تمت إزالة الخادم الوكيل"
   },
   "deadProxyPanelHint": {
-    "message": "[TODO:deadProxyPanelHint]"
+    "message": "أدخل خادم وكيل تمتلكه بالفعل (الإضافة لا توفر أيًا)، مثال: 127.0.0.1:7890 أو socks5://127.0.0.1:1080."
   },
   "deadProxyTestUrlLabel": {
-    "message": "[TODO:deadProxyTestUrlLabel]"
+    "message": "رابط الاختبار"
   },
   "deadProxyTestSave": {
-    "message": "[TODO:deadProxyTestSave]"
+    "message": "اختبار وحفظ"
   },
   "deadProxyTesting": {
-    "message": "[TODO:deadProxyTesting]"
+    "message": "جارٍ الاختبار…"
   },
   "deadProxySaved": {
-    "message": "[TODO:deadProxySaved]"
+    "message": "تم حفظ الوكيل — ستعيد عمليات الفحص المستقبلية فحص حالات الفشل المباشر من خلاله."
   },
   "deadProxyInvalid": {
-    "message": "[TODO:deadProxyInvalid]"
+    "message": "عنوان وكيل غير صالح — استخدم host:port أو scheme://host:port (http/https/socks5، بدون بيانات اعتماد)"
   },
   "deadProxyUnreachable": {
-    "message": "[TODO:deadProxyUnreachable]"
+    "message": "الوكيل غير قابل للوصول — لم يتم الحفظ"
   },
   "deadProxyDenied": {
-    "message": "[TODO:deadProxyDenied]"
+    "message": "لم يتم منح إذن الوكيل"
   },
   "deadProxyControlled": {
-    "message": "[TODO:deadProxyControlled]"
+    "message": "إعدادات الوكيل تدار بواسطة إضافة أخرى"
   },
   "deadProxyUnavailable": {
-    "message": "[TODO:deadProxyUnavailable]"
+    "message": "واجهة برمجة التطبيقات للوكيل غير متاحة في هذا المتصفح"
   },
   "deadProxyNudge": {
-    "message": "[TODO:deadProxyNudge]",
+    "message": "فشل $count$ من الإشارات المرجعية في الفحوصات المباشرة — إعادة الفحص عبر الوكيل تفصل الروابط المعطلة فعلًا عن المحجوبة حسب المنطقة",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -284,10 +284,10 @@
     }
   },
   "deadProxyTemplateChip": {
-    "message": "[TODO:deadProxyTemplateChip]"
+    "message": "قالب الترحيل (محدد في الخيارات)"
   },
   "deadSummary": {
-    "message": "[TODO:deadSummary]",
+    "message": "معطلة: $dead$ · محجوبة: $blocked$",
     "placeholders": {
       "dead": {
         "content": "$1"
@@ -616,16 +616,16 @@
     "message": "قالب وكيل الروابط المعطلة"
   },
   "optionDeadProxyServer": {
-    "message": "[TODO:optionDeadProxyServer]"
+    "message": "خادم وكيل الروابط المعطلة"
   },
   "deadProxyServerHint": {
-    "message": "[TODO:deadProxyServerHint]"
+    "message": "أضف الوكيل واختبره من عرض الروابط المعطلة؛ يقوم الخادم المحفوظ بإعادة فحص حالات الفشل المباشر في كل فحص."
   },
   "deadProxyClear": {
-    "message": "[TODO:deadProxyClear]"
+    "message": "مسح"
   },
   "deadProxyNone": {
-    "message": "[TODO:deadProxyNone]"
+    "message": "(غير محدد)"
   },
   "optionDeadScanConcurrency": {
     "message": "توازي فحص الروابط المعطلة (1-16)"
@@ -810,124 +810,124 @@
     "message": "تبديل علامات التبويب"
   },
   "paletteCmdTheme": {
-    "message": "[TODO:paletteCmdTheme]"
+    "message": "تعيين المظهر…"
   },
   "paletteCmdThemeUsage": {
-    "message": "[TODO:paletteCmdThemeUsage]"
+    "message": "الاستخدام: /theme متبوعًا باسم المظهر — auto أو light أو dark أو ink أو paper (تعمل بادئة فريدة، مثل /theme d)."
   },
   "paletteCustomTag": {
-    "message": "[TODO:paletteCustomTag]"
+    "message": "مخصص"
   },
   "paletteCustomDeleteConfirm": {
-    "message": "[TODO:paletteCustomDeleteConfirm]"
+    "message": "حذف الأمر \"$1\"؟ ستتم مزامنة التغيير مع جميع أجهزتك."
   },
   "paletteCustomBroken": {
-    "message": "[TODO:paletteCustomBroken]"
+    "message": "مجلد الأمر \"$1\" لم يعد موجودًا. هل تريد حذف الأمر؟"
   },
   "paletteCmdSaveAsCommand": {
-    "message": "[TODO:paletteCmdSaveAsCommand]"
+    "message": "حفظ \"$1\" كأمر…"
   },
   "paletteActionOpenUrl": {
-    "message": "[TODO:paletteActionOpenUrl]"
+    "message": "فتح الرابط"
   },
   "paletteActionOpenUrlGroup": {
-    "message": "[TODO:paletteActionOpenUrlGroup]"
+    "message": "فتح مجموعة مجلدات الإشارات المرجعية"
   },
   "paletteActionViewPreset": {
-    "message": "[TODO:paletteActionViewPreset]"
+    "message": "فتح العرض بالإعداد المسبق"
   },
   "paletteActionUrlTemplate": {
-    "message": "[TODO:paletteActionUrlTemplate]"
+    "message": "فتح قالب الرابط"
   },
   "optionsGroupPalette": {
-    "message": "[TODO:optionsGroupPalette]"
+    "message": "لوحة الأوامر"
   },
   "paletteCustomHint": {
-    "message": "[TODO:paletteCustomHint]"
+    "message": "أوامر الشرطة المائلة المخصصة للوحة الأوامر (Ctrl/Cmd+K). تتم مزامنتها مع إعداداتك — بحد أقصى 100 إدخال."
   },
   "paletteCustomAdd": {
-    "message": "[TODO:paletteCustomAdd]"
+    "message": "إضافة أمر…"
   },
   "paletteCustomUsage": {
-    "message": "[TODO:paletteCustomUsage]"
+    "message": "$1 / $2"
   },
   "paletteCustomSlash": {
-    "message": "[TODO:paletteCustomSlash]"
+    "message": "الشرطة المائلة (الكلمة بعد /)"
   },
   "paletteCustomAliases": {
-    "message": "[TODO:paletteCustomAliases]"
+    "message": "الأسماء المستعارة (مفصولة بفواصل)"
   },
   "paletteCustomAction": {
-    "message": "[TODO:paletteCustomAction]"
+    "message": "الإجراء"
   },
   "paletteCustomUrl": {
-    "message": "[TODO:paletteCustomUrl]"
+    "message": "URL"
   },
   "paletteCustomTemplate": {
-    "message": "[TODO:paletteCustomTemplate]"
+    "message": "قالب URL — %s يُستبدل بالكلمات بعد الأمر"
   },
   "paletteCustomWhere": {
-    "message": "[TODO:paletteCustomWhere]"
+    "message": "فتح في"
   },
   "paletteCustomFolder": {
-    "message": "[TODO:paletteCustomFolder]"
+    "message": "مجلد الإشارات المرجعية"
   },
   "paletteCustomView": {
-    "message": "[TODO:paletteCustomView]"
+    "message": "العرض"
   },
   "paletteCustomStrategy": {
-    "message": "[TODO:paletteCustomStrategy]"
+    "message": "إعداد مسبق لاستراتيجية إزالة التكرار"
   },
   "paletteCustomScope": {
-    "message": "[TODO:paletteCustomScope]"
+    "message": "إعداد مسبق لنطاق إزالة التكرار"
   },
   "paletteCustomScan": {
-    "message": "[TODO:paletteCustomScan]"
+    "message": "بدء الفحص عند الإدخال"
   },
   "paletteWhereCurrent": {
-    "message": "[TODO:paletteWhereCurrent]"
+    "message": "التبويب الحالي"
   },
   "paletteWhereTab": {
-    "message": "[TODO:paletteWhereTab]"
+    "message": "تبويب جديد"
   },
   "paletteWhereWindow": {
-    "message": "[TODO:paletteWhereWindow]"
+    "message": "نافذة جديدة"
   },
   "paletteWhereBackground": {
-    "message": "[TODO:paletteWhereBackground]"
+    "message": "تبويبات الخلفية"
   },
   "paletteCustomSave": {
-    "message": "[TODO:paletteCustomSave]"
+    "message": "حفظ الأمر"
   },
   "paletteCustomErrSlash": {
-    "message": "[TODO:paletteCustomErrSlash]"
+    "message": "الشرطة المائلة: من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات، تبدأ بحرف أو رقم."
   },
   "paletteCustomErrAlias": {
-    "message": "[TODO:paletteCustomErrAlias]"
+    "message": "الأسماء المستعارة: نفس قواعد الشرطة المائلة (من 1 إلى 24 حرفًا من الأحرف الصغيرة أو الأرقام أو الواصلات)."
   },
   "paletteCustomErrTaken": {
-    "message": "[TODO:paletteCustomErrTaken]"
+    "message": "الشرطة المائلة أو الاسم المستعار مستخدم بالفعل."
   },
   "paletteCustomErrUrl": {
-    "message": "[TODO:paletteCustomErrUrl]"
+    "message": "يُسمح فقط بعناوين URL بصيغة http:// أو https://."
   },
   "paletteCustomErrFolder": {
-    "message": "[TODO:paletteCustomErrFolder]"
+    "message": "اختر مجلد الإشارات المرجعية."
   },
   "paletteCustomErrView": {
-    "message": "[TODO:paletteCustomErrView]"
+    "message": "اختر عرضًا."
   },
   "paletteCustomErrTemplate": {
-    "message": "[TODO:paletteCustomErrTemplate]"
+    "message": "يجب أن يحتوي القالب على %s واحد بالضبط."
   },
   "paletteCustomErrAction": {
-    "message": "[TODO:paletteCustomErrAction]"
+    "message": "اختر نوع الإجراء."
   },
   "paletteCustomErrLimit": {
-    "message": "[TODO:paletteCustomErrLimit]"
+    "message": "تم بلوغ الحد الأقصى للأوامر (100) — احذف واحدًا أولاً."
   },
   "paletteCustomEmpty": {
-    "message": "[TODO:paletteCustomEmpty]"
+    "message": "لا توجد أوامر مخصصة بعد."
   },
   "paletteNoResults": {
     "message": "لا توجد نتائج مطابقة"
@@ -1084,19 +1084,19 @@
     "message": "إنهاء التحديد"
   },
   "deadRiskBanner": {
-    "message": "[TODO:deadRiskBanner]"
+    "message": "تنظيف الروابط المعطلة يحذف الإشارات المرجعية بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل أول عملية تنظيف."
   },
   "dupesRiskBanner": {
-    "message": "[TODO:dupesRiskBanner]"
+    "message": "إزالة التكرارات تحذف الإشارات المرجعية المكررة بشكل جماعي. قم بعمل نسخة احتياطية من الإشارات المرجعية قبل تطبيقها."
   },
   "riskBannerHelp": {
-    "message": "[TODO:riskBannerHelp]"
+    "message": "دليل النسخ الاحتياطي والاستعادة"
   },
   "riskBannerNever": {
-    "message": "[TODO:riskBannerNever]"
+    "message": "لا تظهر مرة أخرى"
   },
   "riskBannerDismiss": {
-    "message": "[TODO:riskBannerDismiss]"
+    "message": "تجاهل"
   },
   "sessionEmpty": {
     "message": "لا توجد تبويبات للحفظ"
