@@ -9,9 +9,11 @@ and runs three layers:
    options raise zero console errors; v4 behavioral assertions (rememberView
    boot, classic-experience chrome hiding, donation `#v4-notice`, palette
    wake-up paths, options groups, …).
-2. `verify-keyboard.js` (blocking) — 43 hard assertions on the tab strip's
-   bubble-phase keyboard model, focus zones and per-view rendering. Esc
-   chains stay in vitest; see `docs/cdp-escape-limitation.md`.
+2. `verify-keyboard.js` (blocking) — 89 hard assertions on the tab strip's
+   bubble-phase keyboard model, focus zones, the header-row arrow chain,
+   per-view ↑↓/past-top crossings, the banner's Tab-ring reachability and
+   per-view rendering. Esc chains stay in vitest; see
+   `docs/cdp-escape-limitation.md`.
 3. Screenshot suites into `tmp/shots/` (git-ignored).
 
 ## Layout
@@ -31,7 +33,10 @@ scripts/screenshots/
 └── diag/               # manual probes, NOT run by run.sh
     ├── diag.js           # generic page-state dump
     ├── diag-dead.js      # dead-view row layout probes (hover, narrow/wide)
-    └── diag-v4t3.js      # v4 task-3 layout probes
+    ├── diag-v4t3.js      # v4 task-3 layout probes
+    └── console/          # devtools-console snippets (paste into the popup's
+        ├── diagnose_alignment.js  # row twisty/icon/text alignment geometry
+        └── diagnose_colors.js     # recent-vs-tree computed text colors
 ```
 
 ## Usage

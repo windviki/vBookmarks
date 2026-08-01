@@ -94,9 +94,9 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1229 unit tests** across 39 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, search dual-zone, per-view rendering — 43 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **282 keys**, all 43 locales aligned.
+- **1246 unit tests** across 39 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings, banner keyboard reachability, search dual-zone, per-view rendering — 89 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **283 keys**, all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -140,7 +140,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 8. Show only the Bookmark Bar (option in settings).
 9. Open bookmarks in background tabs (option in settings).
 10. Control the popup zoom level in settings.
-11. **Options page**: the *Custom Styles* group customizes separator title/URL/style; the *Dead scan* group tunes scan concurrency/timeout.
+11. **Options page**: the *Separators* group customizes separator title/URL/style; the *Dead scan* group tunes scan concurrency/timeout.
 12. **Options page**: custom CSS for the whole popup (CodeMirror editor, *Custom Styles* group), e.g. `* { font-family: Consolas; }`.
 13. **Options page**: replace the toolbar icon with your own (*Custom Icon* group).
 14. Disable popup auto-resize to keep a fixed height.
@@ -152,7 +152,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 1229 cases across 39 suites)
+# Unit tests (Vitest, 1246 cases across 39 suites)
 npm install
 npm run test:run
 
@@ -201,7 +201,7 @@ Polish: selection modes in Dead links (batch mark/unmark) and Duplicates (batch 
 
 Fixed: search field click-through and unreliable native clear button; adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added); non-empty folder deletion is confirm-gated again (with undo).
 
-Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 282 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1229 cases across 39 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
+Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 283 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1246 cases across 39 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
 
 
 **ver3.7 2026/05/10**

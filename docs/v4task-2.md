@@ -608,3 +608,36 @@ v4task-3 落地后的整体抛光：通读 docs 下全部现代化计划对齐�
 - 截图：五个套件全部补 donation 静默 seed（`donationFactor:1, donationKey:30`，shots.js 的 12 号捐赠镜头保留）；shots-guide.js 新增死链/去重选择模式两张（dead-select/dupes-select）并配入 guide §3.4/§3.5；全量重拍更新 `docs/images/guide/`。
 
 第九轮验收：单测 1229 例 / 39 文件全绿；i18n missing todo=0、verify 通过、audit 通过；打包 97 文件（+icon.svg）校验通过；docker 全量 harness 通过（smoke 零控制台错误、verify-keyboard 43/43、五套件无错误）；guide 配图抽查无 donation 横幅、选择模式批量条可见。
+
+## 附录 J：第十轮——v4 最终抛光追加轮（2026-08-01，键盘模型定稿 + 方向键层级链 + 选项分组 + CSS 打磨）
+
+**1. scripts 整理**：根目录遗留的 `diagnose_alignment.js` / `diagnose_colors.js` 归入 `scripts/screenshots/diag/console/`（devtools console 手贴片段，与 Docker 探针分居），`scripts/screenshots/README.md` 目录树同步。
+
+**2. 全键盘模型定稿（`docs/keyboard-model.md`）**：通读 keyboard/view-manager/search/各 view/菜单/对话框全部键盘路径后，把方向键、Esc、Tab 语义成文为"规则 + 理由 + 代码落点 + 测试锚点"的设计文档——区域视觉栈（头部行/横幅/tab 条/视图内容/覆盖层）、↑↓ 垂直链与 ←→ 行内语义、搜索双区例外、Esc 分层蛋糕、Tab 区域环、**选项组合适配矩阵**（showViewTabs/单视图禁用/quickAddEnabled/showToolButton/经典体验/rememberView/面板/RTL/横幅：每条规则在任意组合下重排不失效）、不变量（按键永不聚焦隐藏元素、可见控件必可 Tab 到达）。guide-v4 双语 §2 随之重写为用户手册并互链。
+
+**3. 方向键朴素层级链落地与对齐**（核心诉求：方向键走位与视觉布局一一对应、可来回切换）
+
+| 变更 | 落点 |
+|---|---|
+| `views.focusDown()`：头部 ↓ 的分层目标（strip 可见→活动 tab，隐藏→直进列表） | `src/view-manager.js` |
+| 搜索框 ↓（浏览态）落到 tab 条（取代 v4task-3 #12 的直达列表跳层）；→（光标在文本末尾且无选区）出框到快速加星→工具按钮，隐藏按钮跳过 | `src/search.js` |
+| 头部行 ←/→ 链：quick-add ⇄ tool、← 回框时光标置末；按钮上 ↓ 同 focusDown | `src/keyboard.js` |
+| 搜索历史区 ↑ 越顶改走通用跨区 focusTop（strip→box），不再直达 box 跳层——双区例外仅保留"框 ↓ 直进本视图内容" | `src/search.js` |
+| 去重组头 ←/→/Enter/Space 折叠/展开后焦点重泊新组头（innerHTML 置换吞焦点，`pendingHeadFocus` 修复） | `src/view-dupes.js` |
+| 横幅键盘可达：Tab 环在其视觉位置（头部⇄tab 条间）加入可见横幅控件停靠；Esc 分层第 3 层消除横幅（派发到其自有"稍后"按钮，snooze 语义留在 neat.js）；横幅**不做**方向键停靠站（链稳定性） | `src/keyboard.js` |
+
+**4. 分割线设置独立成组**：选项页 8→9 组——Separators 组收编 4 个分割线设置项（移出 Custom styles，后者只剩 userstyle）；新 i18n 键 `separatorOptions`（en/zh_CN 实译，41 locale 经 `i18n.py translate --apply` 补译，missing=0、verify 通过）；`tests/options-layout.test.js` 组数/归属断言、AGENTS.md、README 双语同步。
+
+**5. CSS / UX 打磨（截图诊断驱动）**
+
+| 变更 | 落点 |
+|---|---|
+| 选项页 checkbox 标签悬挂缩进：`label:has(> input[type=checkbox]:first-child)` 加 bidi padding + 负 text-indent，绕排文本与标签文本首对齐（不再缩进于 checkbox 之下） | `css/options.css` |
+| 按钮 margin-left:1em 改 bidi 安全 margin-inline-start，且行首按钮（classic-experience/export/Use default）贴左边；checkbox 5px 间距 bidi 化 | `css/options.css` |
+| 分割线组 4 输入框 + 死链代理模板输入框改块级全宽（标签在上），input 包裹 label + 补 aria-labelledby | `pages/options.html`、`css/options.css` |
+| 对话框动作按钮间补 .5em 间距（此前仅靠空白文本节点约 4px） | `css/neat.css` |
+| shots.js 预存缺陷：06 号编辑对话框镜头此前在隐藏树视图上按 F2（焦点不可达，对话框从未打开，`edit dialog open: false` 被静默吞掉）——改为先切回树视图聚焦目标行再按 F2，现已出图 | `scripts/screenshots/suites/shots.js` |
+
+**6. 测试补足**：vitest 1229→1246（+17：header-row arrows 6、focusDown 2、box → 出框 4 情形、search-box ↓ focusDown 3、dupes 组头焦点重泊 2、横幅 Tab 环 2、横幅 Esc 层 2、历史区 ↑ focusTop 1、options 分割组归属 1 等）；verify-keyboard 43→89 断言全绿（§2.2c 各视图行导航/越顶 22、§2.1d 头部行方向链 7、§4.3b 双区焦点转移含历史区两段越顶 8、§7 横幅键盘可达 8；recent 段处理焦点记忆态——strip ↓ 恢复记忆行为设计行为，断言改 Home 归位后走查）。
+
+第十轮验收：单测 1246 例 / 39 文件全绿；i18n missing=0、verify 通过（4 个菜单超长警告为历史遗留）；docker 全量 harness 通过（smoke 零控制台错误含选项页 9 组、verify-keyboard 89/89、五截图套件无错误）；打包 97 文件校验通过。
