@@ -278,6 +278,14 @@
     "description": "Label of the undo button on the deletion toast.",
     "message": "Undo"
   },
+  "revealOutsideBarHint": {
+    "description": "Toast text when \"Reveal in tree\" targets a node outside the bookmarks bar while the only-show-bar setting is on.",
+    "message": "Only the bookmarks bar is shown: the target lies outside it."
+  },
+  "revealOutsideBarAction": {
+    "description": "Button on the outside-of-bar toast: temporarily show the whole tree (session only) and reveal the target.",
+    "message": "Show all and reveal"
+  },
   "dupesCleanAll": {
     "description": "Top row of the palette's duplicate-cleanup mode; removes every redundant copy in one go.",
     "message": "Clean all: $groups$ groups, $count$ extra copies",
@@ -299,6 +307,18 @@
       },
       "groups": {
         "content": "$2"
+      }
+    }
+  },
+  "dupesConfirmSelected": {
+    "message": "Remove $count$ duplicate bookmarks from the $groups$ selected groups?",
+    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups.",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
       }
     }
   },
@@ -329,6 +349,14 @@
       }
     }
   },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expand group"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Collapse group"
+  },
   "dupesNone": {
     "description": "Empty-state line of the palette's duplicate-cleanup mode.",
     "message": "No duplicates found"
@@ -349,6 +377,12 @@
   },
   "donationMessage": {
     "message": "If you like it, maybe you can donate for its future development. Any amount is welcome."
+  },
+  "donationV4Notice": {
+    "message": "v4.0 is a major upgrade: view tabs, command palette, dead-link scan, duplicate cleanup and more."
+  },
+  "donationV4GuideLink": {
+    "message": "Read the v4 guide →"
   },
   "donationGo": {
     "message": "Donate"
@@ -581,6 +615,35 @@
   "searchViewHint": {
     "message": "Type in the box above to search your bookmarks"
   },
+  "selectAll": {
+    "message": "All",
+    "description": "Selection mode (dead/dupes views): select every row/group."
+  },
+  "selectClear": {
+    "message": "Clear",
+    "description": "Selection mode (dead/dupes views): clear the whole selection."
+  },
+  "selectCount": {
+    "message": "$count$ selected",
+    "description": "Selection mode (dead/dupes views): label with the current selection size.",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invert",
+    "description": "Selection mode (dead/dupes views): invert the selection."
+  },
+  "selectModeEnter": {
+    "message": "Select",
+    "description": "Toolbar button that enters selection mode (dead/dupes views)."
+  },
+  "selectModeExit": {
+    "message": "Exit selection",
+    "description": "Selection mode (dead/dupes views): leave the mode."
+  },
   "sessionEmpty": {
     "description": "Alert shown when the current window has no tabs that can be bookmarked.",
     "message": "No tabs to save"
@@ -673,6 +736,27 @@
   "optionShowViewTabs": {
     "message": "Show view tabs below the search box"
   },
+  "optionRememberView": {
+    "message": "Remember the last active view and reopen it"
+  },
+  "optionShowTabBadges": {
+    "message": "Show count badges on the view tabs"
+  },
+  "optionPaletteEnabled": {
+    "message": "Enable the command palette (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Show the quick-add star button next to the search box"
+  },
+  "optionShowToolButton": {
+    "message": "Show the tool button (⋮) next to the search box"
+  },
+  "optionClassicExperience": {
+    "message": "Restore the classic header"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Turns off the command palette, the quick-add star, the tool button and the view tabs. Each can be re-enabled individually above."
+  },
   "optionShowItemPath": {
     "message": "Show the parent folder path on list rows"
   },
@@ -714,6 +798,10 @@
   "quickAddBookmark": {
     "message": "Bookmark this page (Ctrl+D)",
     "description": "Tooltip of the quick-add star button in the popup header."
+  },
+  "quickAddBookmarkCommand": {
+    "description": "Description of the keyboard shortcut command that saves the current tab as a bookmark.",
+    "message": "Quick-add the current tab as a bookmark"
   },
   "quickAdded": {
     "message": "Bookmark added"
@@ -777,6 +865,10 @@
     "message": "Dead rows marked",
     "description": "Toast shown after the \"mark all\" batch action finished."
   },
+  "deadMarkSelected": {
+    "message": "Mark selected",
+    "description": "Dead view selection mode: mark every selected row as dead."
+  },
   "deadProxyHint": {
     "message": "Bookmark URLs are sent to this third-party service. Leave empty to probe directly only.",
     "description": "Privacy hint under the dead-link proxy template setting."
@@ -802,12 +894,25 @@
     "message": "Clear all marks",
     "description": "Batch button in the dead-link view: remove every dead mark."
   },
+  "deadUnmarkSelected": {
+    "message": "Unmark selected",
+    "description": "Dead view selection mode: remove the dead mark from every selected row."
+  },
   "dupesApplyAll": {
     "message": "Apply all ($count$)",
     "description": "Primary button of the duplicates view: delete every non-keeper row across all groups; $count$ is the total doomed row count.",
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Dedup selected ($count$)",
+    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count.",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },

@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Mrtvi redovi označeni"
   },
+  "deadMarkSelected": {
+    "message": "Označi odabrano"
+  },
   "deadNone": {
     "message": "Nema pronađenih mrtvih poveznica"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Očisti sve oznake"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odznači odabrano"
   },
   "defaultIconButton": {
     "message": "Koristi zadano"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Ako vam se sviđa, možda biste mogli donirati za njegov budući razvoj. Svaki iznos je dobrodošao."
   },
+  "donationV4Notice": {
+    "message": "v4.0 je veliko ažuriranje: kartice prikaza, paleta naredbi, skeniranje mrtvih poveznica, uklanjanje duplikata i više."
+  },
+  "donationV4GuideLink": {
+    "message": "Pročitajte v4 vodič →"
+  },
   "donationNever": {
     "message": "Ne prikazuj više"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Ukloni duplikate odabranih ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Ukloniti $count$ dupliciranih zabilješki iz $groups$ odabranih grupa?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Zadržati najstariju i ukloniti ostalih $count$ kopija?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Proširi grupu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Sažmi grupu"
   },
   "dupesIgnoreScheme": {
     "message": "Zanemari http/https razlike"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Prikaži kartice prikaza ispod okvira za pretraživanje"
   },
+  "optionRememberView": {
+    "message": "Zapamti posljednji aktivni prikaz i ponovno ga otvori"
+  },
+  "optionShowTabBadges": {
+    "message": "Prikaži značke s brojem na karticama prikaza"
+  },
+  "optionPaletteEnabled": {
+    "message": "Omogući paletu naredbi (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Prikaži zvijezdu za brzo dodavanje pored okvira za pretraživanje"
+  },
+  "optionShowToolButton": {
+    "message": "Prikaži alatni gumb (⋮) pored okvira za pretraživanje"
+  },
+  "optionClassicExperience": {
+    "message": "Vrati klasično zaglavlje"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Isključuje paletu naredbi, zvijezdu za brzo dodavanje, alatni gumb i kartice prikaza. Svaka se može pojedinačno ponovno omogućiti iznad."
+  },
   "optionStatsEnabled": {
     "message": "Omogući statistiku posjeta"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Označi ovu stranicu (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Brzo dodaj trenutnu karticu kao zabilješku"
+  },
   "quickAdded": {
     "message": "Oznaka dodana"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Unesite u gornji okvir za pretraživanje oznaka"
+  },
+  "selectAll": {
+    "message": "Sve"
+  },
+  "selectClear": {
+    "message": "Očisti"
+  },
+  "selectCount": {
+    "message": "Odabrano: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertiraj"
+  },
+  "selectModeEnter": {
+    "message": "Odaberi"
+  },
+  "selectModeExit": {
+    "message": "Izađi iz odabira"
   },
   "sessionEmpty": {
     "message": "Nema kartica za spremanje"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Poništi"
+  },
+  "revealOutsideBarHint": {
+    "message": "Prikazana je samo traka sa zabilješkama: cilj se nalazi izvan nje."
+  },
+  "revealOutsideBarAction": {
+    "message": "Prikaži sve i otkrij"
   },
   "url": {
     "message": "URL"

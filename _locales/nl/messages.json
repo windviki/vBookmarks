@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Dode rijen gemarkeerd"
   },
+  "deadMarkSelected": {
+    "message": "Markeer geselecteerde"
+  },
   "deadNone": {
     "message": "Geen dode links gevonden"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Alle markeringen wissen"
+  },
+  "deadUnmarkSelected": {
+    "message": "Verwijder markering van geselecteerde"
   },
   "defaultIconButton": {
     "message": "Standaard gebruiken"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Als u het leuk vindt, kunt u misschien doneren voor toekomstige ontwikkeling. Elk bedrag is welkom."
   },
+  "donationV4Notice": {
+    "message": "v4.0 is een grote upgrade: weergavetabbladen, opdrachtenpalet, scan op dode links, duplicaten opschonen en meer."
+  },
+  "donationV4GuideLink": {
+    "message": "Lees de v4-gids →"
+  },
   "donationNever": {
     "message": "Niet meer tonen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Dedupliceer geselecteerde ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Verwijder $count$ dubbele bladwijzers uit de $groups$ geselecteerde groepen?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "De oudste behouden en de andere $count$ kopieën verwijderen?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Groep uitvouwen"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Groep inklappen"
   },
   "dupesIgnoreScheme": {
     "message": "Http/https-verschillen negeren"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Weergavetabbladen onder het zoekvak tonen"
   },
+  "optionRememberView": {
+    "message": "Onthoud de laatste actieve weergave en open deze opnieuw"
+  },
+  "optionShowTabBadges": {
+    "message": "Toon aantalbadges op de weergavetabbladen"
+  },
+  "optionPaletteEnabled": {
+    "message": "Schakel het opdrachtenpalet in (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Toon de ster-knop voor snel toevoegen naast het zoekvak"
+  },
+  "optionShowToolButton": {
+    "message": "Toon de toolknop (⋮) naast het zoekvak"
+  },
+  "optionClassicExperience": {
+    "message": "Herstel de klassieke koptekst"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Schakelt het opdrachtenpalet, de ster voor snel toevoegen, de toolknop en de weergavetabbladen uit. Elk kan hierboven afzonderlijk worden ingeschakeld."
+  },
   "optionStatsEnabled": {
     "message": "Bezoekstatistieken inschakelen"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Deze pagina bladwijzeren (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Snel het huidige tabblad als bladwijzer toevoegen"
+  },
   "quickAdded": {
     "message": "Bladwijzer toegevoegd"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Typ in het vak hierboven om uw bladwijzers te doorzoeken"
+  },
+  "selectAll": {
+    "message": "Alles"
+  },
+  "selectClear": {
+    "message": "Wissen"
+  },
+  "selectCount": {
+    "message": "$count$ geselecteerd",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Omkeren"
+  },
+  "selectModeEnter": {
+    "message": "Selecteren"
+  },
+  "selectModeExit": {
+    "message": "Selectie beëindigen"
   },
   "sessionEmpty": {
     "message": "Geen tabbladen om op te slaan"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Ongedaan maken"
+  },
+  "revealOutsideBarHint": {
+    "message": "Alleen de bladwijzerbalk wordt getoond: het doel ligt erbuiten."
+  },
+  "revealOutsideBarAction": {
+    "message": "Alles tonen en onthullen"
   },
   "url": {
     "message": "URL"

@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Ölü satırlar işaretlendi"
   },
+  "deadMarkSelected": {
+    "message": "Seçilenleri işaretle"
+  },
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Tüm işaretleri temizle"
+  },
+  "deadUnmarkSelected": {
+    "message": "Seçilenlerin işaretini kaldır"
   },
   "defaultIconButton": {
     "message": "Varsayılanı kullan"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Beğendiyseniz, gelecekteki geliştirme için bağış yapmayı düşünebilirsiniz. Her tutar kabul edilir."
   },
+  "donationV4Notice": {
+    "message": "v4.0 büyük bir sürüm yükseltmesi: görünüm sekmeleri, komut paleti, ölü bağlantı taraması, yinelenen temizliği ve daha fazlası."
+  },
+  "donationV4GuideLink": {
+    "message": "v4 rehberini okuyun →"
+  },
   "donationNever": {
     "message": "Tekrar Gösterme"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Seçilenleri tekilleştir ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Seçili $groups$ grupta bulunan $count$ yinelenen yer imi kaldırılsın mı?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "En eski kalsın, diğer $count$ kopya silinsin mi?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Grubu genişlet"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Grubu daralt"
   },
   "dupesIgnoreScheme": {
     "message": "http/https farklarını yoksay"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Arama kutusunun altında görünüm sekmelerini göster"
   },
+  "optionRememberView": {
+    "message": "Son etkin görünümü hatırla ve onu yeniden aç"
+  },
+  "optionShowTabBadges": {
+    "message": "Görünüm sekmelerinde sayı rozetlerini göster"
+  },
+  "optionPaletteEnabled": {
+    "message": "Komut paletini etkinleştir (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Arama kutusunun yanında hızlı ekleme yıldız düğmesini göster"
+  },
+  "optionShowToolButton": {
+    "message": "Arama kutusunun yanında araç düğmesini (⋮) göster"
+  },
+  "optionClassicExperience": {
+    "message": "Klasik başlığı geri yükle"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Komut paletini, hızlı ekleme yıldızını, araç düğmesini ve görünüm sekmelerini kapatır. Her biri yukarıda ayrı ayrı yeniden etkinleştirilebilir."
+  },
   "optionStatsEnabled": {
     "message": "Ziyaret istatistiklerini etkinleştir"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Bu sayfayı yer imlerine ekle (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Geçerli sekmeyi yer imi olarak hızlı ekle"
+  },
   "quickAdded": {
     "message": "Yer imi eklendi"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Yer imlerinizi aramak için yukarıdaki kutuya yazın"
+  },
+  "selectAll": {
+    "message": "Tümü"
+  },
+  "selectClear": {
+    "message": "Temizle"
+  },
+  "selectCount": {
+    "message": "$count$ seçili",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Tersini seç"
+  },
+  "selectModeEnter": {
+    "message": "Seç"
+  },
+  "selectModeExit": {
+    "message": "Seçimden çık"
   },
   "sessionEmpty": {
     "message": "Kaydedilecek sekme yok"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Geri Al"
+  },
+  "revealOutsideBarHint": {
+    "message": "Yalnızca yer imleri çubuğu gösteriliyor: hedef bunun dışında."
+  },
+  "revealOutsideBarAction": {
+    "message": "Tümünü göster ve ortaya çıkar"
   },
   "url": {
     "message": "URL"

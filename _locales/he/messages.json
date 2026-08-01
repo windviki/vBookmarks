@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "שורות מתות מסומנות"
   },
+  "deadMarkSelected": {
+    "message": "סמן נבחרים"
+  },
   "deadNone": {
     "message": "לא נמצאו קישורים מתים"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "נקה את כל הסימונים"
+  },
+  "deadUnmarkSelected": {
+    "message": "בטל סימון מהנבחרים"
   },
   "defaultIconButton": {
     "message": "השתמש בברירת מחדל"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "אם אתה אוהב את זה, אולי תוכל לתרום לפיתוח עתידי. כל סכום מתקבל בברכה."
   },
+  "donationV4Notice": {
+    "message": "v4.0 הוא שדרוג משמעותי: לשוניות תצוגה, פלטת פקודות, סריקת קישורים שבורים, ניקוי כפילויות ועוד."
+  },
+  "donationV4GuideLink": {
+    "message": "קרא את המדריך ל-v4 →"
+  },
   "donationNever": {
     "message": "אל תציג שוב"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "הסר כפילויות מהנבחרים ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "להסיר $count$ סימניות כפולות מבין $groups$ הקבוצות שנבחרו?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "לשמור את הישן ביותר ולהסיר את $count$ העותקים האחרים?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "הרחב קבוצה"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "כווץ קבוצה"
   },
   "dupesIgnoreScheme": {
     "message": "התעלם מהבדלי http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "הצג לשוניות תצוגה מתחת לתיבת החיפוש"
   },
+  "optionRememberView": {
+    "message": "זכור את התצוגה הפעילה האחרונה ופתח אותה מחדש"
+  },
+  "optionShowTabBadges": {
+    "message": "הצג תגי מספר על לשוניות התצוגה"
+  },
+  "optionPaletteEnabled": {
+    "message": "הפעל את פלטת הפקודות (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "הצג את כפתור הכוכב להוספה מהירה לצד תיבת החיפוש"
+  },
+  "optionShowToolButton": {
+    "message": "הצג את כפתור הכלים (⋮) לצד תיבת החיפוש"
+  },
+  "optionClassicExperience": {
+    "message": "שחזר את הכותרת הקלאסית"
+  },
+  "optionClassicExperienceHint": {
+    "message": "מכבה את פלטת הפקודות, את כוכב ההוספה המהירה, את כפתור הכלים ואת לשוניות התצוגה. ניתן להפעיל כל אחד מחדש בנפרד למעלה."
+  },
   "optionStatsEnabled": {
     "message": "הפעל סטטיסטיקות ביקור"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "הוסף סימניה לדף זה (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "הוספה מהירה של הלשונית הנוכחית כסימניה"
+  },
   "quickAdded": {
     "message": "סימניה נוספה"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "הקלד בתיבה למעלה כדי לחפש בסימניות שלך"
+  },
+  "selectAll": {
+    "message": "הכל"
+  },
+  "selectClear": {
+    "message": "נקה"
+  },
+  "selectCount": {
+    "message": "נבחרו $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "הפוך"
+  },
+  "selectModeEnter": {
+    "message": "בחר"
+  },
+  "selectModeExit": {
+    "message": "צא ממצב בחירה"
   },
   "sessionEmpty": {
     "message": "אין כרטיסיות לשמירה"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "בטל"
+  },
+  "revealOutsideBarHint": {
+    "message": "מוצג רק סרגל הסימניות: היעד נמצא מחוץ לו."
+  },
+  "revealOutsideBarAction": {
+    "message": "הצג הכול וגלה"
   },
   "url": {
     "message": "URL"

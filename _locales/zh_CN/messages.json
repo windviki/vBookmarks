@@ -47,6 +47,27 @@
   "optionShowViewTabs": {
     "message": "在搜索框下方显示视图标签栏"
   },
+  "optionRememberView": {
+    "message": "记住上次所在的视图并在打开时恢复"
+  },
+  "optionShowTabBadges": {
+    "message": "在视图标签上显示数量角标"
+  },
+  "optionPaletteEnabled": {
+    "message": "启用命令面板（Ctrl/Cmd+K）"
+  },
+  "optionQuickAddEnabled": {
+    "message": "在搜索框旁显示快速收藏星标按钮"
+  },
+  "optionShowToolButton": {
+    "message": "在搜索框旁显示工具按钮（⋮）"
+  },
+  "optionClassicExperience": {
+    "message": "一键恢复经典界面"
+  },
+  "optionClassicExperienceHint": {
+    "message": "关闭命令面板、快速收藏星标、工具按钮与视图标签；每一项都可在上方单独重新开启。"
+  },
   "optionShowItemPath": {
     "message": "在列表行上显示所在文件夹路径"
   },
@@ -132,6 +153,18 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "从所选的 $groups$ 个重复组中删除 $count$ 条重复书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    },
+    "description": "Confirm dialog of the dupes selection-mode apply: $count$ doomed rows across $groups$ selected groups."
+  },
   "accessibility": {
     "message": "无障碍"
   },
@@ -171,6 +204,9 @@
   },
   "quickAddBookmark": {
     "message": "收藏当前页面 (Ctrl+D)"
+  },
+  "quickAddBookmarkCommand": {
+    "message": "将当前标签页快速保存为书签"
   },
   "dupesCleanAll": {
     "message": "全部清理：$groups$ 组、$count$ 条多余副本",
@@ -281,6 +317,12 @@
   },
   "donationMessage": {
     "message": "如果您喜欢它，或许可以为其未来发展捐赠。任何金额都欢迎。"
+  },
+  "donationV4Notice": {
+    "message": "v4.0 是一次重大升级：视图标签、命令面板、死链扫描、重复清理等诸多变化。"
+  },
+  "donationV4GuideLink": {
+    "message": "阅读 v4 新特性指南 →"
   },
   "optionClickNewTab": {
     "message": "左键单击在新标签页中打开书签。"
@@ -423,6 +465,12 @@
   "undoAction": {
     "message": "撤销"
   },
+  "revealOutsideBarHint": {
+    "message": "当前仅显示书签栏：目标不在书签栏内。"
+  },
+  "revealOutsideBarAction": {
+    "message": "显示全部并定位"
+  },
   "optionOnlyShowBookmarkBar": {
     "message": "仅显示书签栏中的书签"
   },
@@ -468,6 +516,35 @@
   },
   "searchViewHint": {
     "message": "在上方输入框中输入关键字搜索书签"
+  },
+  "selectAll": {
+    "message": "全选",
+    "description": "Selection mode (dead/dupes views): select every row/group."
+  },
+  "selectClear": {
+    "message": "清空",
+    "description": "Selection mode (dead/dupes views): clear the whole selection."
+  },
+  "selectCount": {
+    "message": "已选 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    },
+    "description": "Selection mode (dead/dupes views): label with the current selection size."
+  },
+  "selectInvert": {
+    "message": "反选",
+    "description": "Selection mode (dead/dupes views): invert the selection."
+  },
+  "selectModeEnter": {
+    "message": "选择",
+    "description": "Toolbar button that enters selection mode (dead/dupes views)."
+  },
+  "selectModeExit": {
+    "message": "退出选择",
+    "description": "Selection mode (dead/dupes views): leave the mode."
   },
   "sessionFolderName": {
     "message": "会话 $date$",
@@ -554,6 +631,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "message": "展开分组",
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group."
+  },
+  "dupesGroupCollapse": {
+    "message": "收起分组",
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group."
   },
   "openNewTab": {
     "message": "在新标签页中打开"
@@ -724,6 +809,10 @@
   "deadMarked": {
     "message": "死链行已全部标记"
   },
+  "deadMarkSelected": {
+    "message": "标记所选",
+    "description": "Dead view selection mode: mark every selected row as dead."
+  },
   "deadProxyHint": {
     "message": "书签 URL 会发送给该第三方服务。留空则仅直连探测。"
   },
@@ -744,6 +833,10 @@
   "deadUnmarkAll": {
     "message": "清除所有标记"
   },
+  "deadUnmarkSelected": {
+    "message": "取消标记所选",
+    "description": "Dead view selection mode: remove the dead mark from every selected row."
+  },
   "donationGo": {
     "message": "支持一下"
   },
@@ -760,6 +853,15 @@
         "content": "$1"
       }
     }
+  },
+  "dupesApplySelected": {
+    "message": "去重所选（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    },
+    "description": "Dupes view selection mode: apply dedup to the selected groups; $count$ is the total doomed row count."
   },
   "dupesCleanRestHint": {
     "message": "保留“$title$”，删除其余 $count$ 项",

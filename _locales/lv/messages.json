@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Mirušās rindas atzīmētas"
   },
+  "deadMarkSelected": {
+    "message": "Atzīmēt atlasītos"
+  },
   "deadNone": {
     "message": "Nav atrastas bojātas saites"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Notīrīt visas atzīmes"
+  },
+  "deadUnmarkSelected": {
+    "message": "Noņemt atzīmi atlasītajiem"
   },
   "defaultIconButton": {
     "message": "Izmantot noklusējuma"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Ja jums patīk, varbūt jūs varētu ziedot tās turpmākai attīstībai. Jebkura summa ir laipni gaidīta."
   },
+  "donationV4Notice": {
+    "message": "v4.0 ir liels atjauninājums: skatu cilnes, komandu palete, mirušo saišu skenēšana, dublikātu tīrīšana un vēl."
+  },
+  "donationV4GuideLink": {
+    "message": "Lasīt v4 ceļvedi →"
+  },
   "donationNever": {
     "message": "Nerādīt vairs"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Noņemt dublikātus atlasītajiem ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Vai noņemt $count$ dublētās grāmatzīmes no $groups$ atlasītajām grupām?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Saglabāt vecāko un noņemt pārējās $count$ kopijas?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Izvērst grupu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Sakļaut grupu"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorēt http/https atšķirības"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Rādīt skatu cilnes zem meklēšanas lodziņa"
   },
+  "optionRememberView": {
+    "message": "Atcerēties pēdējo aktīvo skatu un atvērt to vēlreiz"
+  },
+  "optionShowTabBadges": {
+    "message": "Rādīt skaita nozīmītes uz skatu cilnēm"
+  },
+  "optionPaletteEnabled": {
+    "message": "Iespējot komandu paleti (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Rādīt ātrās pievienošanas zvaigznes pogu blakus meklēšanas lodziņam"
+  },
+  "optionShowToolButton": {
+    "message": "Rādīt rīku pogu (⋮) blakus meklēšanas lodziņam"
+  },
+  "optionClassicExperience": {
+    "message": "Atjaunot klasisko galveni"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigzni, rīku pogu un skatu cilnes. Katru no tām var atkal iespējot atsevišķi iepriekš."
+  },
   "optionStatsEnabled": {
     "message": "Iespējot apmeklējumu statistiku"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Pievienot šo lapu grāmatzīmēm (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Ātri pievienot pašreizējo cilni kā grāmatzīmi"
+  },
   "quickAdded": {
     "message": "Grāmatzīme pievienota"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Ierakstiet lodziņā augšpusē, lai meklētu grāmatzīmes"
+  },
+  "selectAll": {
+    "message": "Visi"
+  },
+  "selectClear": {
+    "message": "Notīrīt"
+  },
+  "selectCount": {
+    "message": "Atlasīti: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertēt"
+  },
+  "selectModeEnter": {
+    "message": "Atlasīt"
+  },
+  "selectModeExit": {
+    "message": "Iziet no atlases"
   },
   "sessionEmpty": {
     "message": "Nav cilņu, ko saglabāt"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Atsaukt"
+  },
+  "revealOutsideBarHint": {
+    "message": "Tiek rādīta tikai grāmatzīmju josla: mērķis atrodas ārpus tās."
+  },
+  "revealOutsideBarAction": {
+    "message": "Rādīt visu un atklāt"
   },
   "url": {
     "message": "URL"

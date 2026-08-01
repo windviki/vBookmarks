@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Označené mŕtve riadky"
   },
+  "deadMarkSelected": {
+    "message": "Označiť vybrané"
+  },
   "deadNone": {
     "message": "Nenašli sa žiadne nefunkčné odkazy"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Vymazať všetky označenia"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odznačiť vybrané"
   },
   "defaultIconButton": {
     "message": "Použiť predvolené"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Ak sa vám to páči, možno by ste mohli prispejať na jeho budúci vývoj. Akákoľvek suma je vítaná."
   },
+  "donationV4Notice": {
+    "message": "v4.0 je veľká aktualizácia: karty zobrazení, paleta príkazov, kontrola mŕtvych odkazov, čistenie duplicít a ďalšie."
+  },
+  "donationV4GuideLink": {
+    "message": "Prečítať si sprievodcu pre v4 →"
+  },
   "donationNever": {
     "message": "Nezobrazovať znova"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplikovať vybrané ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Odstrániť $count$ duplicitných záložiek z vybraných $groups$ skupín?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Zachovať najstaršiu a odstrániť ostatných $count$ kópií?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Rozbaliť skupinu"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Zbaliť skupinu"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorovať rozdiely http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Zobraziť karty zobrazenia pod vyhľadávacím poľom"
   },
+  "optionRememberView": {
+    "message": "Zapamätať si posledné aktívne zobrazenie a znovu ho otvoriť"
+  },
+  "optionShowTabBadges": {
+    "message": "Zobrazovať počty na kartách zobrazení"
+  },
+  "optionPaletteEnabled": {
+    "message": "Povoliť paletu príkazov (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Zobraziť tlačidlo rýchleho pridania (hviezdičku) vedľa vyhľadávacieho poľa"
+  },
+  "optionShowToolButton": {
+    "message": "Zobraziť tlačidlo nástrojov (⋮) vedľa vyhľadávacieho poľa"
+  },
+  "optionClassicExperience": {
+    "message": "Obnoviť klasickú hlavičku"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, tlačidlo nástrojov a karty zobrazení. Každú z nich je možné znovu povoliť jednotlivo vyššie."
+  },
   "optionStatsEnabled": {
     "message": "Povoliť štatistiky návštev"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Pridať túto stránku do záložiek (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Rýchlo pridať aktuálnu kartu ako záložku"
+  },
   "quickAdded": {
     "message": "Záložka pridaná"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Napíšte do poľa vyššie na vyhľadanie záložiek"
+  },
+  "selectAll": {
+    "message": "Všetko"
+  },
+  "selectClear": {
+    "message": "Vyčistiť"
+  },
+  "selectCount": {
+    "message": "$count$ vybratých",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertovať"
+  },
+  "selectModeEnter": {
+    "message": "Vybrať"
+  },
+  "selectModeExit": {
+    "message": "Ukončiť výber"
   },
   "sessionEmpty": {
     "message": "Žiadne karty na uloženie"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Späť"
+  },
+  "revealOutsideBarHint": {
+    "message": "Zobrazuje sa iba lišta záložiek: cieľ leží mimo nej."
+  },
+  "revealOutsideBarAction": {
+    "message": "Zobraziť všetko a odhaliť"
   },
   "url": {
     "message": "URL"

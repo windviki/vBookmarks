@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Označene mrtve vrstice"
   },
+  "deadMarkSelected": {
+    "message": "Označi izbrane"
+  },
   "deadNone": {
     "message": "Ni najdenih mrtvih povezav"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Počisti vse oznake"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odstrani oznake z izbranih"
   },
   "defaultIconButton": {
     "message": "Uporabi privzeto"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Če vam je všeč, morda lahko prispevate za njegov prihodnji razvoj. Vsak znesek je dobrodošel."
   },
+  "donationV4Notice": {
+    "message": "v4.0 je večja nadgradnja: zavihki pogleda, ukazna paleta, preverjanje mrtvih povezav, čiščenje dvojnikov in več."
+  },
+  "donationV4GuideLink": {
+    "message": "Preberite vodnik za v4 →"
+  },
   "donationNever": {
     "message": "Ne prikaži več"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Odstrani dvojnike iz izbranih ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Odstranim $count$ podvojenih zaznamkov iz $groups$ izbranih skupin?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Ohranim najstarejšega in odstranim ostalih $count$ kopij?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Razširi skupino"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Strni skupino"
   },
   "dupesIgnoreScheme": {
     "message": "Prezri razlike http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Pokaži zavihke pogleda pod iskalnim poljem"
   },
+  "optionRememberView": {
+    "message": "Zapomni si zadnji aktivni pogled in ga znova odpri"
+  },
+  "optionShowTabBadges": {
+    "message": "Prikaži številčne značke na zavihkih pogleda"
+  },
+  "optionPaletteEnabled": {
+    "message": "Omogoči ukazno paleto (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Prikaži gumb zvezdice za hitro dodajanje poleg iskalnega polja"
+  },
+  "optionShowToolButton": {
+    "message": "Prikaži gumb orodij (⋮) poleg iskalnega polja"
+  },
+  "optionClassicExperience": {
+    "message": "Obnovi klasično glavo"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Izklopi ukazno paleto, zvezdico za hitro dodajanje, gumb orodij in zavihke pogleda. Vsako funkcijo lahko zgoraj znova omogočite posamično."
+  },
   "optionStatsEnabled": {
     "message": "Omogoči statistiko obiskov"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Zaznamuj to stran (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Hitro dodaj trenutni zavihek kot zaznamek"
+  },
   "quickAdded": {
     "message": "Zaznamek dodan"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Vnesite v zgornje polje za iskanje svojih zaznamkov"
+  },
+  "selectAll": {
+    "message": "Vse"
+  },
+  "selectClear": {
+    "message": "Počisti"
+  },
+  "selectCount": {
+    "message": "Izbrano: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Obrni"
+  },
+  "selectModeEnter": {
+    "message": "Izberi"
+  },
+  "selectModeExit": {
+    "message": "Zapusti izbiro"
   },
   "sessionEmpty": {
     "message": "Ni zavihkov za shranjevanje"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Razveljavi"
+  },
+  "revealOutsideBarHint": {
+    "message": "Prikazana je samo vrstica z zaznamki: cilj je zunaj nje."
+  },
+  "revealOutsideBarAction": {
+    "message": "Prikaži vse in razkrij"
   },
   "url": {
     "message": "URL"

@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Linhas mortas marcadas"
   },
+  "deadMarkSelected": {
+    "message": "Marcar selecionados"
+  },
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Limpar todas as marcas"
+  },
+  "deadUnmarkSelected": {
+    "message": "Desmarcar selecionados"
   },
   "defaultIconButton": {
     "message": "Usar padrão"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Se você gostar, talvez possa doar para o desenvolvimento futuro. Qualquer quantia é bem-vinda."
   },
+  "donationV4Notice": {
+    "message": "A v4.0 é uma grande atualização: abas de visualização, paleta de comandos, verificação de links quebrados, limpeza de duplicados e mais."
+  },
+  "donationV4GuideLink": {
+    "message": "Leia o guia da v4 →"
+  },
   "donationNever": {
     "message": "Não mostrar novamente"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicar selecionados ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Remover $count$ favoritos duplicados dos $groups$ grupos selecionados?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Manter a mais antiga e remover as outras $count$ cópias?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expandir grupo"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Recolher grupo"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorar diferenças http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Mostrar abas de exibição abaixo da caixa de pesquisa"
   },
+  "optionRememberView": {
+    "message": "Lembrar a última visualização ativa e reabri-la"
+  },
+  "optionShowTabBadges": {
+    "message": "Mostrar contadores nas abas de visualização"
+  },
+  "optionPaletteEnabled": {
+    "message": "Ativar a paleta de comandos (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Mostrar o botão de estrela de adição rápida ao lado da caixa de pesquisa"
+  },
+  "optionShowToolButton": {
+    "message": "Mostrar o botão de ferramentas (⋮) ao lado da caixa de pesquisa"
+  },
+  "optionClassicExperience": {
+    "message": "Restaurar o cabeçalho clássico"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Desativa a paleta de comandos, a estrela de adição rápida, o botão de ferramentas e as abas de visualização. Cada um pode ser reativado individualmente acima."
+  },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Adicionar esta página aos favoritos (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Adicionar rapidamente a aba atual como favorito"
+  },
   "quickAdded": {
     "message": "Favorito adicionado"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Digite na caixa acima para pesquisar seus favoritos"
+  },
+  "selectAll": {
+    "message": "Todos"
+  },
+  "selectClear": {
+    "message": "Limpar"
+  },
+  "selectCount": {
+    "message": "$count$ selecionados",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverter"
+  },
+  "selectModeEnter": {
+    "message": "Selecionar"
+  },
+  "selectModeExit": {
+    "message": "Sair da seleção"
   },
   "sessionEmpty": {
     "message": "Nenhuma aba para salvar"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Desfazer"
+  },
+  "revealOutsideBarHint": {
+    "message": "Apenas a barra de favoritos está visível: o destino está fora dela."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mostrar tudo e revelar"
   },
   "url": {
     "message": "URL"

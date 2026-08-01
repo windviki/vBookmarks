@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "मृत पंक्तियाँ चिह्नित"
   },
+  "deadMarkSelected": {
+    "message": "चयनित को चिह्नित करें"
+  },
   "deadNone": {
     "message": "कोई मृत लिंक नहीं मिला"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "सभी चिह्न साफ़ करें"
+  },
+  "deadUnmarkSelected": {
+    "message": "चयनित का चिह्न हटाएँ"
   },
   "defaultIconButton": {
     "message": "डिफ़ॉल्ट उपयोग करें"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "यदि आपको यह पसंद है, तो शायद आप इसके भविष्य के विकास के लिए दान कर सकते हैं। कोई भी राशि स्वागत है।"
   },
+  "donationV4Notice": {
+    "message": "v4.0 एक बड़ा अपग्रेड है: दृश्य टैब, कमांड पैलेट, डेड-लिंक स्कैन, डुप्लिकेट सफाई और अधिक।"
+  },
+  "donationV4GuideLink": {
+    "message": "v4 गाइड पढ़ें →"
+  },
   "donationNever": {
     "message": "फिर न दिखाएं"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "चयनित को डीडुप करें ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "क्या $groups$ चयनित समूहों में से $count$ डुप्लिकेट बुकमार्क हटाए जाएँ?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "सबसे पुरानी रखें और अन्य $count$ प्रतियाँ हटाएँ?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "समूह विस्तारित करें"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "समूह संक्षिप्त करें"
   },
   "dupesIgnoreScheme": {
     "message": "http/https अंतरों को अनदेखा करें"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "खोज बॉक्स के नीचे दृश्य टैब दिखाएं"
   },
+  "optionRememberView": {
+    "message": "अंतिम सक्रिय दृश्य याद रखें और इसे फिर से खोलें"
+  },
+  "optionShowTabBadges": {
+    "message": "दृश्य टैब पर गिनती बैज दिखाएँ"
+  },
+  "optionPaletteEnabled": {
+    "message": "कमांड पैलेट सक्षम करें (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "खोज बॉक्स के बगल में त्वरित-जोड़ स्टार बटन दिखाएँ"
+  },
+  "optionShowToolButton": {
+    "message": "खोज बॉक्स के बगल में टूल बटन (⋮) दिखाएँ"
+  },
+  "optionClassicExperience": {
+    "message": "क्लासिक हेडर पुनर्स्थापित करें"
+  },
+  "optionClassicExperienceHint": {
+    "message": "कमांड पैलेट, त्वरित-जोड़ स्टार, टूल बटन और दृश्य टैब बंद कर देता है। इनमें से प्रत्येक को ऊपर अलग से फिर से सक्षम किया जा सकता है।"
+  },
   "optionStatsEnabled": {
     "message": "विज़िट आँकड़े सक्षम करें"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "इस पृष्ठ को बुकमार्क करें (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "वर्तमान टैब को बुकमार्क के रूप में त्वरित-जोड़ें"
+  },
   "quickAdded": {
     "message": "बुकमार्क जोड़ा गया"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "अपने बुकमार्क खोजने के लिए ऊपर दिए गए बॉक्स में टाइप करें"
+  },
+  "selectAll": {
+    "message": "सभी"
+  },
+  "selectClear": {
+    "message": "साफ़ करें"
+  },
+  "selectCount": {
+    "message": "$count$ चयनित",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "उल्टा करें"
+  },
+  "selectModeEnter": {
+    "message": "चयन करें"
+  },
+  "selectModeExit": {
+    "message": "चयन समाप्त करें"
   },
   "sessionEmpty": {
     "message": "सहेजने के लिए कोई टैब नहीं"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "पूर्ववत करें"
+  },
+  "revealOutsideBarHint": {
+    "message": "केवल बुकमार्क बार दिखाया गया है: लक्ष्य इसके बाहर है।"
+  },
+  "revealOutsideBarAction": {
+    "message": "सभी दिखाएँ और प्रकट करें"
   },
   "url": {
     "message": "URL"

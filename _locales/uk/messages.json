@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Позначено мертві рядки"
   },
+  "deadMarkSelected": {
+    "message": "Позначити вибране"
+  },
   "deadNone": {
     "message": "Мертвих посилань не знайдено"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Очистити всі позначки"
+  },
+  "deadUnmarkSelected": {
+    "message": "Зняти позначку з вибраного"
   },
   "defaultIconButton": {
     "message": "Використовувати за замовчуванням"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Якщо вам подобається, можливо, ви можете пожертвувати на його подальший розвиток. Будь-яка сума вітається."
   },
+  "donationV4Notice": {
+    "message": "v4.0 — це велике оновлення: вкладки перегляду, палітра команд, перевірка мертвих посилань, видалення дублікатів і не тільки."
+  },
+  "donationV4GuideLink": {
+    "message": "Читати посібник до v4 →"
+  },
   "donationNever": {
     "message": "Не показувати знову"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Дедуплікувати вибране ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Видалити $count$ дублікатів закладок із $groups$ вибраних груп?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Залишити найстарішу та видалити інші $count$ копій?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Розгорнути групу"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Згорнути групу"
   },
   "dupesIgnoreScheme": {
     "message": "Ігнорувати відмінності http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Показувати вкладки видів під рядком пошуку"
   },
+  "optionRememberView": {
+    "message": "Запам'ятовувати останній активний перегляд і відновлювати його"
+  },
+  "optionShowTabBadges": {
+    "message": "Показувати значки з кількістю на вкладках перегляду"
+  },
+  "optionPaletteEnabled": {
+    "message": "Увімкнути палітру команд (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Показувати кнопку-зірочку швидкого додавання поруч із полем пошуку"
+  },
+  "optionShowToolButton": {
+    "message": "Показувати кнопку інструментів (⋮) поруч із полем пошуку"
+  },
+  "optionClassicExperience": {
+    "message": "Відновити класичний заголовок"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Вимикає палітру команд, кнопку-зірочку швидкого додавання, кнопку інструментів і вкладки перегляду. Кожен елемент можна ввімкнути окремо вище."
+  },
   "optionStatsEnabled": {
     "message": "Увімкнути статистику відвідувань"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Додати сторінку до закладок (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Швидко додати поточну вкладку як закладку"
+  },
   "quickAdded": {
     "message": "Закладку додано"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Введіть текст у полі вище, щоб знайти закладки"
+  },
+  "selectAll": {
+    "message": "Усі"
+  },
+  "selectClear": {
+    "message": "Очистити"
+  },
+  "selectCount": {
+    "message": "Вибрано: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Інвертувати"
+  },
+  "selectModeEnter": {
+    "message": "Вибрати"
+  },
+  "selectModeExit": {
+    "message": "Вийти з вибору"
   },
   "sessionEmpty": {
     "message": "Немає вкладок для збереження"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Скасувати"
+  },
+  "revealOutsideBarHint": {
+    "message": "Показано лише панель закладок: ціль поза нею."
+  },
+  "revealOutsideBarAction": {
+    "message": "Показати все та виявити"
   },
   "url": {
     "message": "URL"

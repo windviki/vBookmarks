@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Righe morte segnate"
   },
+  "deadMarkSelected": {
+    "message": "Contrassegna selezionati"
+  },
   "deadNone": {
     "message": "Nessun collegamento interrotto trovato"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Cancella tutti i segni"
+  },
+  "deadUnmarkSelected": {
+    "message": "Decontrassegna selezionati"
   },
   "defaultIconButton": {
     "message": "Usa predefinito"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Se ti piace, forse puoi donare per il suo sviluppo futuro. Qualsiasi importo è il benvenuto."
   },
+  "donationV4Notice": {
+    "message": "v4.0 è un importante aggiornamento: schede di visualizzazione, palette dei comandi, scansione dei link interrotti, pulizia dei duplicati e altro."
+  },
+  "donationV4GuideLink": {
+    "message": "Leggi la guida alla v4 →"
+  },
   "donationNever": {
     "message": "Non mostrare più"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Rimuovi i duplicati dai selezionati ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Rimuovere $count$ segnalibri duplicati dai $groups$ gruppi selezionati?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Conservare la più vecchia e rimuovere le altre $count$ copie?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Espandi gruppo"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Comprimi gruppo"
   },
   "dupesIgnoreScheme": {
     "message": "Ignora differenze http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Mostra schede vista sotto la casella di ricerca"
   },
+  "optionRememberView": {
+    "message": "Ricorda l'ultima vista attiva e riaprila"
+  },
+  "optionShowTabBadges": {
+    "message": "Mostra i badge di conteggio sulle schede di visualizzazione"
+  },
+  "optionPaletteEnabled": {
+    "message": "Abilita la palette dei comandi (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Mostra il pulsante stella per l'aggiunta rapida accanto alla casella di ricerca"
+  },
+  "optionShowToolButton": {
+    "message": "Mostra il pulsante strumenti (⋮) accanto alla casella di ricerca"
+  },
+  "optionClassicExperience": {
+    "message": "Ripristina l'intestazione classica"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Disattiva la palette dei comandi, la stella di aggiunta rapida, il pulsante strumenti e le schede di visualizzazione. Ciascuna funzione può essere riattivata singolarmente qui sopra."
+  },
   "optionStatsEnabled": {
     "message": "Abilita statistiche di visita"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Aggiungi ai segnalibri (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Aggiungi rapidamente la scheda corrente come segnalibro"
+  },
   "quickAdded": {
     "message": "Segnalibro aggiunto"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Digita nella casella sopra per cercare i tuoi segnalibri"
+  },
+  "selectAll": {
+    "message": "Tutti"
+  },
+  "selectClear": {
+    "message": "Azzera"
+  },
+  "selectCount": {
+    "message": "$count$ selezionati",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverti"
+  },
+  "selectModeEnter": {
+    "message": "Seleziona"
+  },
+  "selectModeExit": {
+    "message": "Esci dalla selezione"
   },
   "sessionEmpty": {
     "message": "Nessuna scheda da salvare"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Annulla"
+  },
+  "revealOutsideBarHint": {
+    "message": "Viene mostrata solo la barra dei segnalibri: la destinazione si trova al di fuori di essa."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mostra tutto e rivela"
   },
   "url": {
     "message": "Indirizzo Web"

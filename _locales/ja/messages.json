@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "マークされたデッド行"
   },
+  "deadMarkSelected": {
+    "message": "選択済みをマーク"
+  },
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "すべてのマークを消去"
+  },
+  "deadUnmarkSelected": {
+    "message": "選択済みのマークを解除"
   },
   "defaultIconButton": {
     "message": "デフォルトを使用"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "気に入ったら、将来の開発のために寄付してください。どんな金額でも大歓迎です。"
   },
+  "donationV4Notice": {
+    "message": "v4.0 はメジャーアップグレードです: ビュータブ、コマンドパレット、リンク切れスキャン、重複整理など。"
+  },
+  "donationV4GuideLink": {
+    "message": "v4 ガイドを読む →"
+  },
   "donationNever": {
     "message": "再表示しない"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "選択済みを重複整理 ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "選択中の $groups$ グループから重複ブックマーク $count$ 件を削除しますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "最も古いものを残し、他の $count$ 個を削除しますか？",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "グループを展開"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "グループを折りたたみ"
   },
   "dupesIgnoreScheme": {
     "message": "http/httpsの違いを無視"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "検索ボックスの下にビュータブを表示"
   },
+  "optionRememberView": {
+    "message": "最後にアクティブだったビューを記憶して再度開く"
+  },
+  "optionShowTabBadges": {
+    "message": "ビュータブに件数バッジを表示"
+  },
+  "optionPaletteEnabled": {
+    "message": "コマンドパレットを有効にする (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "検索ボックスの横にクイック追加の星ボタンを表示"
+  },
+  "optionShowToolButton": {
+    "message": "検索ボックスの横にツールボタン (⋮) を表示"
+  },
+  "optionClassicExperience": {
+    "message": "クラシックヘッダーを復元"
+  },
+  "optionClassicExperienceHint": {
+    "message": "コマンドパレット、クイック追加の星、ツールボタン、ビュータブをオフにします。それぞれは上記の個別設定で再度有効にできます。"
+  },
   "optionStatsEnabled": {
     "message": "訪問統計を有効にする"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "このページをブックマーク（Ctrl+D）"
   },
+  "quickAddBookmarkCommand": {
+    "message": "現在のタブをブックマークとしてクイック追加"
+  },
   "quickAdded": {
     "message": "ブックマークを追加しました"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "上のボックスに入力してブックマークを検索"
+  },
+  "selectAll": {
+    "message": "すべて"
+  },
+  "selectClear": {
+    "message": "クリア"
+  },
+  "selectCount": {
+    "message": "$count$ 件を選択中",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "反転"
+  },
+  "selectModeEnter": {
+    "message": "選択"
+  },
+  "selectModeExit": {
+    "message": "選択を終了"
   },
   "sessionEmpty": {
     "message": "保存するタブがありません"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "元に戻す"
+  },
+  "revealOutsideBarHint": {
+    "message": "ブックマークバーのみ表示中です。対象はその外側にあります。"
+  },
+  "revealOutsideBarAction": {
+    "message": "すべて表示して対象を表示"
   },
   "url": {
     "message": "URL"

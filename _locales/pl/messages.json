@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Oznaczone martwe wiersze"
   },
+  "deadMarkSelected": {
+    "message": "Oznacz zaznaczone"
+  },
   "deadNone": {
     "message": "Nie znaleziono martwych linków"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Wyczyść wszystkie oznaczenia"
+  },
+  "deadUnmarkSelected": {
+    "message": "Odznacz zaznaczone"
   },
   "defaultIconButton": {
     "message": "Użyj domyślnego"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Jeśli ci się podoba, może możesz przekazać darowiznę na dalszy rozwój. Każda kwota jest mile widziana."
   },
+  "donationV4Notice": {
+    "message": "v4.0 to duże uaktualnienie: karty widoków, paleta poleceń, skanowanie martwych linków, czyszczenie duplikatów i więcej."
+  },
+  "donationV4GuideLink": {
+    "message": "Przeczytaj przewodnik v4 →"
+  },
   "donationNever": {
     "message": "Nie pokazuj więcej"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplikuj zaznaczone ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Usunąć $count$ zduplikowanych zakładek z $groups$ wybranych grup?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Zachować najstarszą i usunąć pozostałe $count$ kopie?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Rozwiń grupę"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Zwiń grupę"
   },
   "dupesIgnoreScheme": {
     "message": "Ignoruj różnice http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Pokaż karty widoków pod polem wyszukiwania"
   },
+  "optionRememberView": {
+    "message": "Zapamiętaj ostatnio aktywny widok i przywróć go"
+  },
+  "optionShowTabBadges": {
+    "message": "Pokazuj plakietki z liczbą na kartach widoków"
+  },
+  "optionPaletteEnabled": {
+    "message": "Włącz paletę poleceń (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Pokazuj przycisk gwiazdki szybkiego dodawania obok pola wyszukiwania"
+  },
+  "optionShowToolButton": {
+    "message": "Pokazuj przycisk narzędzi (⋮) obok pola wyszukiwania"
+  },
+  "optionClassicExperience": {
+    "message": "Przywróć klasyczny nagłówek"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Wyłącza paletę poleceń, gwiazdkę szybkiego dodawania, przycisk narzędzi i karty widoków. Każdą z nich można ponownie włączyć powyżej."
+  },
   "optionStatsEnabled": {
     "message": "Włącz statystyki odwiedzin"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Dodaj tę stronę do zakładek (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Szybko dodaj bieżącą kartę jako zakładkę"
+  },
   "quickAdded": {
     "message": "Zakładka dodana"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Wpisz w polu powyżej, aby przeszukać zakładki"
+  },
+  "selectAll": {
+    "message": "Wszystkie"
+  },
+  "selectClear": {
+    "message": "Wyczyść"
+  },
+  "selectCount": {
+    "message": "Wybrano: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Odwróć"
+  },
+  "selectModeEnter": {
+    "message": "Zaznacz"
+  },
+  "selectModeExit": {
+    "message": "Zakończ zaznaczanie"
   },
   "sessionEmpty": {
     "message": "Brak kart do zapisania"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Cofnij"
+  },
+  "revealOutsideBarHint": {
+    "message": "Wyświetlany jest tylko pasek zakładek: cel znajduje się poza nim."
+  },
+  "revealOutsideBarAction": {
+    "message": "Pokaż wszystkie i odsłoń"
   },
   "url": {
     "message": "URL"

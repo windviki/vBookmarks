@@ -203,6 +203,9 @@
   "deadMarked": {
     "message": "Означени мртви редови"
   },
+  "deadMarkSelected": {
+    "message": "Означи ги избраните"
+  },
   "deadNone": {
     "message": "Нема пронајдени мртви врски"
   },
@@ -240,6 +243,9 @@
   },
   "deadUnmarkAll": {
     "message": "Исчисти ги сите ознаки"
+  },
+  "deadUnmarkSelected": {
+    "message": "Одзначи ги избраните"
   },
   "defaultIconButton": {
     "message": "Користи стандардно"
@@ -285,6 +291,12 @@
   "donationMessage": {
     "message": "Ако ви се допаѓа, може да донирате за иден развој. Секоја сума е добредојдена."
   },
+  "donationV4Notice": {
+    "message": "v4.0 е големо ажурирање: јазичиња за преглед, командна палета, скенирање мртви врски, чистење дупликати и повеќе."
+  },
+  "donationV4GuideLink": {
+    "message": "Прочитај го водичот за v4 →"
+  },
   "donationNever": {
     "message": "Не прикажувај повторно"
   },
@@ -293,6 +305,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Отстрани дупликати од избраните ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -331,6 +351,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Да се отстранат $count$ дуплирани обележувачи од избраните $groups$ групи?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Да се задржи најстарата и да се отстранат другите $count$ копии?",
     "placeholders": {
@@ -357,6 +388,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Прошири група"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Собери група"
   },
   "dupesIgnoreScheme": {
     "message": "Игнорирај разлики http/https"
@@ -560,6 +599,27 @@
   "optionShowViewTabs": {
     "message": "Прикажи ги картичките за приказ под полето за пребарување"
   },
+  "optionRememberView": {
+    "message": "Запомни го последниот активен приказ и отвори го повторно"
+  },
+  "optionShowTabBadges": {
+    "message": "Прикажувај ознаки со броеви на јазичињата за преглед"
+  },
+  "optionPaletteEnabled": {
+    "message": "Овозможи командна палета (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Прикажувај го копчето со ѕвезда за брзо додавање веднаш до полето за пребарување"
+  },
+  "optionShowToolButton": {
+    "message": "Прикажувај го копчето за алатки (⋮) веднаш до полето за пребарување"
+  },
+  "optionClassicExperience": {
+    "message": "Врати го класичното заглавие"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Ги исклучува командната палета, ѕвездата за брзо додавање, копчето за алатки и јазичињата за преглед. Секоја од нив може повторно да се овозможи поединечно погоре."
+  },
   "optionStatsEnabled": {
     "message": "Овозможи статистики за посети"
   },
@@ -695,6 +755,9 @@
   "quickAddBookmark": {
     "message": "Обележи ја оваа страница (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Брзо додај го тековното јазиче како обележувач"
+  },
   "quickAdded": {
     "message": "Обележувачот е додаден"
   },
@@ -803,6 +866,29 @@
   },
   "searchViewHint": {
     "message": "Внесете во полето погоре за да ги пребарувате вашите обележувачи"
+  },
+  "selectAll": {
+    "message": "Сите"
+  },
+  "selectClear": {
+    "message": "Исчисти"
+  },
+  "selectCount": {
+    "message": "$count$ избрани",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Инвертирај"
+  },
+  "selectModeEnter": {
+    "message": "Избери"
+  },
+  "selectModeExit": {
+    "message": "Излези од избор"
   },
   "sessionEmpty": {
     "message": "Нема јазичиња за зачувување"
@@ -979,6 +1065,12 @@
   },
   "undoAction": {
     "message": "Врати"
+  },
+  "revealOutsideBarHint": {
+    "message": "Прикажана е само лентата со обележувачи: целта е надвор од неа."
+  },
+  "revealOutsideBarAction": {
+    "message": "Прикажи сè и откриј"
   },
   "url": {
     "message": "Рачно"

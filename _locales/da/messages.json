@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Døde rækker markeret"
   },
+  "deadMarkSelected": {
+    "message": "Markér valgte"
+  },
   "deadNone": {
     "message": "Ingen døde links fundet"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Ryd alle markeringer"
+  },
+  "deadUnmarkSelected": {
+    "message": "Afmarkér valgte"
   },
   "defaultIconButton": {
     "message": "Brug standard"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Hvis du kan lide det, må du kan donere til dets fremtidige udvikling. Ethvert beløb er velkomment."
   },
+  "donationV4Notice": {
+    "message": "v4.0 er en stor opgradering: visningsfaner, kommandopalet, scanning af døde links, oprydning af dubletter og meget mere."
+  },
+  "donationV4GuideLink": {
+    "message": "Læs v4-guiden →"
+  },
   "donationNever": {
     "message": "Vis ikke igen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Fjern dubletter blandt valgte ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Fjern $count$ dubletbogmærker fra de $groups$ valgte grupper?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Behold den ældste og fjern de andre $count$ kopier?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Udvid gruppe"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Skjul gruppe"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorer http/https-forskelle"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Vis faner under søgefeltet"
   },
+  "optionRememberView": {
+    "message": "Husk den senest aktive visning og åbn den igen"
+  },
+  "optionShowTabBadges": {
+    "message": "Vis antalsmærker på visningsfanerne"
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktivér kommandopaletten (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Vis stjerneknappen til hurtigtilføjelse ved søgefeltet"
+  },
+  "optionShowToolButton": {
+    "message": "Vis værktøjsknappen (⋮) ved siden af søgefeltet"
+  },
+  "optionClassicExperience": {
+    "message": "Gendan den klassiske header"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Deaktiverer kommandopaletten, hurtigtilføj-stjernen, værktøjsknappen og visningsfanerne. Hver af dem kan genaktiveres individuelt ovenfor."
+  },
   "optionStatsEnabled": {
     "message": "Aktivér besøgsstatistik"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Bogmærk denne side (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Hurtigtilføj den aktuelle fane som bogmærke"
+  },
   "quickAdded": {
     "message": "Bogmærke tilføjet"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Skriv i feltet ovenfor for at søge i dine bogmærker"
+  },
+  "selectAll": {
+    "message": "Alle"
+  },
+  "selectClear": {
+    "message": "Ryd"
+  },
+  "selectCount": {
+    "message": "$count$ valgt",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverter"
+  },
+  "selectModeEnter": {
+    "message": "Vælg"
+  },
+  "selectModeExit": {
+    "message": "Afslut valg"
   },
   "sessionEmpty": {
     "message": "Ingen faner at gemme"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Fortryd"
+  },
+  "revealOutsideBarHint": {
+    "message": "Kun bogmærkelinjen vises: målet ligger uden for den."
+  },
+  "revealOutsideBarAction": {
+    "message": "Vis alle og fremhæv"
   },
   "url": {
     "message": "URL"

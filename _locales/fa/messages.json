@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "ردیف‌های خراب علامت‌گذاری شدند"
   },
+  "deadMarkSelected": {
+    "message": "علامت‌گذاری انتخاب‌شده"
+  },
   "deadNone": {
     "message": "پیوند مرده‌ای یافت نشد"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "پاک کردن همه علامت‌ها"
+  },
+  "deadUnmarkSelected": {
+    "message": "برداشتن علامت انتخاب‌شده"
   },
   "defaultIconButton": {
     "message": "استفاده از پیش‌فرض"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "اگر خوشتان آمد، شاید بتوانید برای توسعه آینده آن کمک مالی کنید. هر مبلغی خوشآمدگویی است."
   },
+  "donationV4Notice": {
+    "message": "v4.0 یک ارتقای اساسی است: تب‌های نما، پالت فرمان، بررسی پیوندهای خراب، پاکسازی موارد تکراری و موارد بیشتر."
+  },
+  "donationV4GuideLink": {
+    "message": "راهنمای v4 را بخوانید →"
+  },
   "donationNever": {
     "message": "دیگر نشان نده"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "حذف موارد تکراری انتخاب‌شده ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "آیا $count$ نشانک تکراری از $groups$ گروه انتخاب‌شده حذف شوند؟",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "قدیمی‌ترین نگه داشته و $count$ نسخه دیگر حذف شود؟",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "باز کردن گروه"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "جمع کردن گروه"
   },
   "dupesIgnoreScheme": {
     "message": "نادیده گرفتن تفاوت http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "نمایش تب‌های نما در زیر کادر جستجو"
   },
+  "optionRememberView": {
+    "message": "به‌خاطر سپردن آخرین نمای فعال و بازگشایی آن"
+  },
+  "optionShowTabBadges": {
+    "message": "نمایش نشان‌های تعداد روی تب‌های نما"
+  },
+  "optionPaletteEnabled": {
+    "message": "فعال کردن پالت فرمان (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "نمایش دکمه ستاره افزودن سریع در کنار کادر جستجو"
+  },
+  "optionShowToolButton": {
+    "message": "نمایش دکمه ابزار (⋮) در کنار کادر جستجو"
+  },
+  "optionClassicExperience": {
+    "message": "بازیابی سربرگ کلاسیک"
+  },
+  "optionClassicExperienceHint": {
+    "message": "پالت فرمان، ستاره افزودن سریع، دکمه ابزار و تب‌های نما را خاموش می‌کند. هر کدام را می‌توان به‌طور جداگانه در بالا دوباره فعال کرد."
+  },
   "optionStatsEnabled": {
     "message": "فعال‌سازی آمار بازدید"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "نشانک این صفحه (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "افزودن سریع تب فعلی به‌عنوان نشانک"
+  },
   "quickAdded": {
     "message": "نشانک اضافه شد"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "در کادر بالا تایپ کنید تا بوکمارک‌های خود را جستجو کنید"
+  },
+  "selectAll": {
+    "message": "همه"
+  },
+  "selectClear": {
+    "message": "پاک کردن"
+  },
+  "selectCount": {
+    "message": "$count$ انتخاب‌شده",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "معکوس"
+  },
+  "selectModeEnter": {
+    "message": "انتخاب"
+  },
+  "selectModeExit": {
+    "message": "خروج از انتخاب"
   },
   "sessionEmpty": {
     "message": "زبانه‌ای برای ذخیره وجود ندارد"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "بازگردانی"
+  },
+  "revealOutsideBarHint": {
+    "message": "فقط نوار نشانک‌ها نمایش داده شده است: هدف خارج از آن قرار دارد."
+  },
+  "revealOutsideBarAction": {
+    "message": "نمایش همه و آشکارسازی"
   },
   "url": {
     "message": "URL"

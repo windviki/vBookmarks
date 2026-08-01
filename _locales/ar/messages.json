@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "تم وضع علامة على الصفوف المعطلة"
   },
+  "deadMarkSelected": {
+    "message": "وضع علامة على المحدد"
+  },
   "deadNone": {
     "message": "لم يتم العثور على روابط معطلة"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "مسح جميع العلامات"
+  },
+  "deadUnmarkSelected": {
+    "message": "إزالة العلامة عن المحدد"
   },
   "defaultIconButton": {
     "message": "استخدام الافتراضي"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "إذا أعجبك، ربما يمكنك التبرع لتطويره المستقبلي. أي مبلغ مرحب به."
   },
+  "donationV4Notice": {
+    "message": "الإصدار 4.0 ترقية رئيسية: علامات تبويب العرض، لوحة الأوامر، فحص الروابط المعطلة، تنظيف التكرارات والمزيد."
+  },
+  "donationV4GuideLink": {
+    "message": "اقرأ دليل v4 ←"
+  },
   "donationNever": {
     "message": "لا تظهر مرة أخرى"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "إزالة التكرار من المحدد ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "هل تريد إزالة $count$ إشارة مرجعية مكررة من المجموعات المحددة ($groups$)؟",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "الاحتفاظ بالأقدم وإزالة $count$ نسخ الأخرى؟",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "توسيع المجموعة"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "طي المجموعة"
   },
   "dupesIgnoreScheme": {
     "message": "تجاهل اختلافات http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "إظهار علامات تبويب العرض أسفل مربع البحث"
   },
+  "optionRememberView": {
+    "message": "تذكر آخر عرض نشط وأعد فتحه"
+  },
+  "optionShowTabBadges": {
+    "message": "إظهار شارات العدد على علامات تبويب العرض"
+  },
+  "optionPaletteEnabled": {
+    "message": "تفعيل لوحة الأوامر (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "إظهار زر النجمة للإضافة السريعة بجانب مربع البحث"
+  },
+  "optionShowToolButton": {
+    "message": "إظهار زر الأدوات (⋮) بجانب مربع البحث"
+  },
+  "optionClassicExperience": {
+    "message": "استعادة الترويسة الكلاسيكية"
+  },
+  "optionClassicExperienceHint": {
+    "message": "يُوقف تشغيل لوحة الأوامر، ونجمة الإضافة السريعة، وزر الأدوات، وعلامات تبويب العرض. يمكن إعادة تفعيل كل منها بشكل فردي أعلاه."
+  },
   "optionStatsEnabled": {
     "message": "تمكين إحصائيات الزيارة"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "إضافة إشارة مرجعية لهذه الصفحة (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "إضافة سريعة للتبويب الحالي كإشارة مرجعية"
+  },
   "quickAdded": {
     "message": "تمت إضافة الإشارة المرجعية"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "اكتب في المربع أعلاه للبحث في إشاراتك المرجعية"
+  },
+  "selectAll": {
+    "message": "الكل"
+  },
+  "selectClear": {
+    "message": "مسح"
+  },
+  "selectCount": {
+    "message": "تم تحديد $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "عكس التحديد"
+  },
+  "selectModeEnter": {
+    "message": "تحديد"
+  },
+  "selectModeExit": {
+    "message": "إنهاء التحديد"
   },
   "sessionEmpty": {
     "message": "لا توجد تبويبات للحفظ"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "تراجع"
+  },
+  "revealOutsideBarHint": {
+    "message": "يُعرض شريط الإشارات المرجعية فقط: الوجهة خارجه."
+  },
+  "revealOutsideBarAction": {
+    "message": "إظهار الكل وكشف الهدف"
   },
   "url": {
     "message": "URL"

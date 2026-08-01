@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Halott sorok megjelölve"
   },
+  "deadMarkSelected": {
+    "message": "Kijelöltek megjelölése"
+  },
   "deadNone": {
     "message": "Nincs hibás hivatkozás"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Összes jelölés törlése"
+  },
+  "deadUnmarkSelected": {
+    "message": "Kijelöltek megjelölésének törlése"
   },
   "defaultIconButton": {
     "message": "Alapértelmezett használata"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Ha tetszik, talán adományozhat a jövőbeli fejlesztéshez. Bármilyen összeget szívesen fogadunk."
   },
+  "donationV4Notice": {
+    "message": "A v4.0 jelentős frissítés: nézetfülek, parancspaletta, hibás linkek keresése, ismétlődések tisztítása és még sok más."
+  },
+  "donationV4GuideLink": {
+    "message": "Olvasd el a v4-es útmutatót →"
+  },
   "donationNever": {
     "message": "Ne jelenjen meg többet"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Kijelöltek ismétlődésmentesítése ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Eltávolítja a(z) $count$ ismétlődő könyvjelzőt a kiválasztott $groups$ csoportból?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Megtartja a legrégebbit és eltávolítja a többi $count$ másolatot?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Csoport kibontása"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Csoport összecsukása"
   },
   "dupesIgnoreScheme": {
     "message": "http/https különbségek figyelmen kívül hagyása"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Nézetfülek megjelenítése a keresőmező alatt"
   },
+  "optionRememberView": {
+    "message": "Az utolsó aktív nézet megjegyzése és újranyitása"
+  },
+  "optionShowTabBadges": {
+    "message": "Számjelvények megjelenítése a nézetfüleken"
+  },
+  "optionPaletteEnabled": {
+    "message": "A parancspaletta engedélyezése (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "A gyors hozzáadás csillaggomb megjelenítése a keresőmező mellett"
+  },
+  "optionShowToolButton": {
+    "message": "Az eszközgomb (⋮) megjelenítése a keresőmező mellett"
+  },
+  "optionClassicExperience": {
+    "message": "A klasszikus fejléc visszaállítása"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, az eszközgombot és a nézetfüleket. Mindegyik egyenként újra engedélyezhető a fenti beállításoknál."
+  },
   "optionStatsEnabled": {
     "message": "Látogatási statisztikák engedélyezése"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Oldal könyvjelzőzése (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Az aktuális lap gyors hozzáadása könyvjelzőként"
+  },
   "quickAdded": {
     "message": "Könyvjelző hozzáadva"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Írjon a fenti mezőbe a könyvjelzők kereséséhez"
+  },
+  "selectAll": {
+    "message": "Összes"
+  },
+  "selectClear": {
+    "message": "Törlés"
+  },
+  "selectCount": {
+    "message": "$count$ kiválasztva",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Megfordítás"
+  },
+  "selectModeEnter": {
+    "message": "Kijelölés"
+  },
+  "selectModeExit": {
+    "message": "Kijelölés befejezése"
   },
   "sessionEmpty": {
     "message": "Nincs menthető lap"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Visszavonás"
+  },
+  "revealOutsideBarHint": {
+    "message": "Csak a könyvjelzősáv látható: a cél azon kívül van."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mindent megmutat, és megjeleníti a célt"
   },
   "url": {
     "message": "URL"

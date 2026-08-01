@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Filas muertas marcadas"
   },
+  "deadMarkSelected": {
+    "message": "Marcar seleccionados"
+  },
   "deadNone": {
     "message": "No se encontraron enlaces rotos"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Borrar todas las marcas"
+  },
+  "deadUnmarkSelected": {
+    "message": "Desmarcar seleccionados"
   },
   "defaultIconButton": {
     "message": "Usar predeterminado"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Si le gusta, quizás pueda donar para su futuro desarrollo. Cualquier cantidad es bienvenida."
   },
+  "donationV4Notice": {
+    "message": "v4.0 es una actualización importante: pestañas de vista, paleta de comandos, escaneo de enlaces rotos, limpieza de duplicados y más."
+  },
+  "donationV4GuideLink": {
+    "message": "Leer la guía de v4 →"
+  },
   "donationNever": {
     "message": "No mostrar de nuevo"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicar seleccionados ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "¿Eliminar $count$ marcadores duplicados de los $groups$ grupos seleccionados?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "¿Conservar la más antigua y eliminar las otras $count$ copias?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expandir grupo"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Contraer grupo"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorar diferencias de http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Mostrar pestañas de vista debajo del cuadro de búsqueda"
   },
+  "optionRememberView": {
+    "message": "Recordar la última vista activa y volver a abrirla"
+  },
+  "optionShowTabBadges": {
+    "message": "Mostrar contadores en las pestañas de vista"
+  },
+  "optionPaletteEnabled": {
+    "message": "Habilitar la paleta de comandos (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Mostrar el botón de estrella de añadido rápido junto al cuadro de búsqueda"
+  },
+  "optionShowToolButton": {
+    "message": "Mostrar el botón de herramientas (⋮) junto al cuadro de búsqueda"
+  },
+  "optionClassicExperience": {
+    "message": "Restaurar el encabezado clásico"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Desactiva la paleta de comandos, la estrella de añadido rápido, el botón de herramientas y las pestañas de vista. Cada uno puede volver a habilitarse individualmente arriba."
+  },
   "optionStatsEnabled": {
     "message": "Habilitar estadísticas de visitas"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Marcar esta página (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Añadir rápidamente la pestaña actual como marcador"
+  },
   "quickAdded": {
     "message": "Marcador añadido"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Escribe en el cuadro de arriba para buscar tus marcadores"
+  },
+  "selectAll": {
+    "message": "Todos"
+  },
+  "selectClear": {
+    "message": "Limpiar"
+  },
+  "selectCount": {
+    "message": "$count$ seleccionados",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertir"
+  },
+  "selectModeEnter": {
+    "message": "Seleccionar"
+  },
+  "selectModeExit": {
+    "message": "Salir de la selección"
   },
   "sessionEmpty": {
     "message": "Sin pestañas para guardar"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Deshacer"
+  },
+  "revealOutsideBarHint": {
+    "message": "Solo se muestra la barra de marcadores: el destino está fuera de ella."
+  },
+  "revealOutsideBarAction": {
+    "message": "Mostrar todo y revelar"
   },
   "url": {
     "message": "URL"

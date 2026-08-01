@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Các hàng hỏng đã được đánh dấu"
   },
+  "deadMarkSelected": {
+    "message": "Đánh dấu mục đã chọn"
+  },
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Xóa tất cả dấu"
+  },
+  "deadUnmarkSelected": {
+    "message": "Bỏ đánh dấu mục đã chọn"
   },
   "defaultIconButton": {
     "message": "Sử dụng mặc định"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Nếu bạn thích nó, có thể bạn có thể quyên góp cho sự phát triển trong tương lai. Bất kỳ số lượng nào cũng được chào đón."
   },
+  "donationV4Notice": {
+    "message": "v4.0 là bản nâng cấp lớn: tab chế độ xem, bảng lệnh, quét liên kết hỏng, dọn trùng lặp và hơn thế nữa."
+  },
+  "donationV4GuideLink": {
+    "message": "Đọc hướng dẫn v4 →"
+  },
   "donationNever": {
     "message": "Không hiển thị lại"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Xóa trùng lặp mục đã chọn ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Xóa $count$ dấu trang trùng lặp khỏi $groups$ nhóm đã chọn?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Giữ lại bản cũ nhất và xóa $count$ bản sao còn lại?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Mở rộng nhóm"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Thu gọn nhóm"
   },
   "dupesIgnoreScheme": {
     "message": "Bỏ qua khác biệt http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Hiển thị các tab chế độ xem bên dưới ô tìm kiếm"
   },
+  "optionRememberView": {
+    "message": "Ghi nhớ chế độ xem cuối cùng và mở lại"
+  },
+  "optionShowTabBadges": {
+    "message": "Hiện huy hiệu số lượng trên các tab chế độ xem"
+  },
+  "optionPaletteEnabled": {
+    "message": "Bật bảng lệnh (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Hiện nút ngôi sao thêm nhanh bên cạnh ô tìm kiếm"
+  },
+  "optionShowToolButton": {
+    "message": "Hiện nút công cụ (⋮) bên cạnh ô tìm kiếm"
+  },
+  "optionClassicExperience": {
+    "message": "Khôi phục thanh tiêu đề cổ điển"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Tắt bảng lệnh, nút ngôi sao thêm nhanh, nút công cụ và các tab chế độ xem. Từng mục có thể bật lại riêng ở trên."
+  },
   "optionStatsEnabled": {
     "message": "Bật thống kê lượt truy cập"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Đánh dấu trang này (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Thêm nhanh tab hiện tại làm dấu trang"
+  },
   "quickAdded": {
     "message": "Đã thêm dấu trang"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Nhập vào ô bên trên để tìm kiếm bookmark của bạn"
+  },
+  "selectAll": {
+    "message": "Tất cả"
+  },
+  "selectClear": {
+    "message": "Bỏ chọn"
+  },
+  "selectCount": {
+    "message": "Đã chọn $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Đảo ngược"
+  },
+  "selectModeEnter": {
+    "message": "Chọn"
+  },
+  "selectModeExit": {
+    "message": "Thoát chọn"
   },
   "sessionEmpty": {
     "message": "Không có tab để lưu"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Hoàn tác"
+  },
+  "revealOutsideBarHint": {
+    "message": "Chỉ có thanh dấu trang được hiển thị: mục tiêu nằm ngoài thanh này."
+  },
+  "revealOutsideBarAction": {
+    "message": "Hiện tất cả và định vị"
   },
   "url": {
     "message": "URL"

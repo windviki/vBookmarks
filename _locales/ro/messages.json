@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Rânduri moarte marcate"
   },
+  "deadMarkSelected": {
+    "message": "Marcați selectatele"
+  },
   "deadNone": {
     "message": "Nicio legătură moartă găsită"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Curăță toate marcajele"
+  },
+  "deadUnmarkSelected": {
+    "message": "Anulați marcarea selectatelor"
   },
   "defaultIconButton": {
     "message": "Folosește implicit"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Dacă vă place, poate puteți dona pentru dezvoltarea viitoare. Orice sumă este binevenită."
   },
+  "donationV4Notice": {
+    "message": "v4.0 este o actualizare majoră: vizualizarea filelor, paleta de comenzi, scanarea linkurilor moarte, curățarea duplicatelor și nu numai."
+  },
+  "donationV4GuideLink": {
+    "message": "Citește ghidul v4 →"
+  },
   "donationNever": {
     "message": "Nu mai afișa"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicați selectatele ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Eliminați $count$ de marcaje duplicate din $groups$ grupuri selectate?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Păstrați cea mai veche și eliminați celelalte $count$ copii?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Extinde grupul"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Restrânge grupul"
   },
   "dupesIgnoreScheme": {
     "message": "Ignoră diferențele http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Afișează filele de vizualizare sub caseta de căutare"
   },
+  "optionRememberView": {
+    "message": "Reține ultima vizualizare activă și redeschide-o"
+  },
+  "optionShowTabBadges": {
+    "message": "Afișează ecusoane cu numere pe filele de vizualizare"
+  },
+  "optionPaletteEnabled": {
+    "message": "Activează paleta de comenzi (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Afișează butonul cu stea pentru adăugare rapidă lângă caseta de căutare"
+  },
+  "optionShowToolButton": {
+    "message": "Afișează butonul de instrumente (⋮) lângă caseta de căutare"
+  },
+  "optionClassicExperience": {
+    "message": "Restabiliți antetul clasic"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, butonul de instrumente și filele de vizualizare. Fiecare opțiune poate fi reactivată individual mai sus."
+  },
   "optionStatsEnabled": {
     "message": "Activează statisticile de vizită"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Marchează această pagină (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Adăugați rapid fila curentă ca semn de carte"
+  },
   "quickAdded": {
     "message": "Marcaj adăugat"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Tastați în caseta de mai sus pentru a căuta marcajele"
+  },
+  "selectAll": {
+    "message": "Toate"
+  },
+  "selectClear": {
+    "message": "Curăță"
+  },
+  "selectCount": {
+    "message": "$count$ selectate",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inversează"
+  },
+  "selectModeEnter": {
+    "message": "Selectare"
+  },
+  "selectModeExit": {
+    "message": "Ieșire din selecție"
   },
   "sessionEmpty": {
     "message": "Nicio filă de salvat"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Anulare"
+  },
+  "revealOutsideBarHint": {
+    "message": "Se afișează doar bara de marcaje: ținta se află în afara acesteia."
+  },
+  "revealOutsideBarAction": {
+    "message": "Afișează tot și dezvăluie"
   },
   "url": {
     "message": "URL"

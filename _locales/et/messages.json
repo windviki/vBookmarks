@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Surnud read märgitud"
   },
+  "deadMarkSelected": {
+    "message": "Märgi valitud"
+  },
   "deadNone": {
     "message": "Surnud linke ei leitud"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Kustuta kõik märked"
+  },
+  "deadUnmarkSelected": {
+    "message": "Eemalda märge valitutelt"
   },
   "defaultIconButton": {
     "message": "Kasuta vaikeväärtust"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Kui teile meeldib, võib-olla saate annetada selle tulevase arengu jaoks. Igat summat teretatakse."
   },
+  "donationV4Notice": {
+    "message": "v4.0 on suur uuendus: vahelehtede vaade, käsupalett, katkiste linkide skannimine, duplikaatide puhastus ja veel."
+  },
+  "donationV4GuideLink": {
+    "message": "Loe v4 juhendit →"
+  },
   "donationNever": {
     "message": "Ära näita enam"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Eemalda valitud duplikaadid ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Kas eemaldada $count$ duplikaatjärjehoidjat valitud gruppide hulgast ($groups$)?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Jätta vanim ja eemaldada ülejäänud $count$ koopiat?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Laienda grupp"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Ahenda grupp"
   },
   "dupesIgnoreScheme": {
     "message": "Ignoreeri http/https erinevusi"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Näita vaatekaarte otsingukasti all"
   },
+  "optionRememberView": {
+    "message": "Jäta meelde viimane aktiivne vaade ja ava see uuesti"
+  },
+  "optionShowTabBadges": {
+    "message": "Kuva vahelehtedel loendusmärgid"
+  },
+  "optionPaletteEnabled": {
+    "message": "Luba käsupalett (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Kuva kiirlisamise tärninupp otsingukasti kõrval"
+  },
+  "optionShowToolButton": {
+    "message": "Kuva töönupp (⋮) otsingukasti kõrval"
+  },
+  "optionClassicExperience": {
+    "message": "Taasta klassikaline päis"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, tööriistanupu ja vahekaardid. Igaüht saab ülal eraldi uuesti sisse lülitada."
+  },
   "optionStatsEnabled": {
     "message": "Luba külastusstatistika"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Lisa see leht järjehoidjasse (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Kiirlisa praegune vahekaart järjehoidjana"
+  },
   "quickAdded": {
     "message": "Järjehoidja lisatud"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Tipi ülalolevasse kasti oma järjehoidjate otsimiseks"
+  },
+  "selectAll": {
+    "message": "Kõik"
+  },
+  "selectClear": {
+    "message": "Tühjenda"
+  },
+  "selectCount": {
+    "message": "$count$ valitud",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Pööra"
+  },
+  "selectModeEnter": {
+    "message": "Vali"
+  },
+  "selectModeExit": {
+    "message": "Välju valikust"
   },
   "sessionEmpty": {
     "message": "Salvestamiseks pole vahekaarte"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Tagasi võtmine"
+  },
+  "revealOutsideBarHint": {
+    "message": "Ainult järjehoidjate riba on kuvatud: sihtmärk asub sellest väljas."
+  },
+  "revealOutsideBarAction": {
+    "message": "Kuva kõik ja paljasta"
   },
   "url": {
     "message": "URL"

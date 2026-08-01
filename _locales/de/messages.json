@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Tote Zeilen markiert"
   },
+  "deadMarkSelected": {
+    "message": "Ausgewählte markieren"
+  },
   "deadNone": {
     "message": "Keine defekten Links gefunden"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Alle Markierungen löschen"
+  },
+  "deadUnmarkSelected": {
+    "message": "Ausgewählte entmarkieren"
   },
   "defaultIconButton": {
     "message": "Standard verwenden"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Wenn es Ihnen gefällt, könnten Sie vielleicht für die zukünftige Entwicklung spenden. Jeder Betrag ist willkommen."
   },
+  "donationV4Notice": {
+    "message": "v4.0 ist ein bedeutendes Upgrade: Ansichts-Tabs, Befehlspalette, Dead-Link-Scan, Duplikatbereinigung und mehr."
+  },
+  "donationV4GuideLink": {
+    "message": "v4-Leitfaden lesen →"
+  },
   "donationNever": {
     "message": "Nicht mehr anzeigen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Ausgewählte deduplizieren ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Möchten Sie $count$ doppelte Lesezeichen aus den $groups$ ausgewählten Gruppen entfernen?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Die älteste Kopie behalten und die anderen $count$ Kopien entfernen?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Gruppe erweitern"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Gruppe einklappen"
   },
   "dupesIgnoreScheme": {
     "message": "http/https-Unterschiede ignorieren"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Ansichtsregister unterhalb des Suchfelds anzeigen"
   },
+  "optionRememberView": {
+    "message": "Letzte aktive Ansicht merken und wieder öffnen"
+  },
+  "optionShowTabBadges": {
+    "message": "Anzahl-Badges auf den Ansichts-Tabs anzeigen"
+  },
+  "optionPaletteEnabled": {
+    "message": "Befehlspalette aktivieren (Strg/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Stern-Button zum Schnellhinzufügen neben dem Suchfeld anzeigen"
+  },
+  "optionShowToolButton": {
+    "message": "Werkzeug-Button (⋮) neben dem Suchfeld anzeigen"
+  },
+  "optionClassicExperience": {
+    "message": "Klassische Kopfzeile wiederherstellen"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Deaktiviert die Befehlspalette, den Schnellhinzufügen-Stern, den Werkzeug-Button und die Ansichts-Tabs. Jede Funktion kann oben einzeln wieder aktiviert werden."
+  },
   "optionStatsEnabled": {
     "message": "Besuchsstatistik aktivieren"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Diese Seite als Lesezeichen (Strg+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Aktuellen Tab als Lesezeichen schnell hinzufügen"
+  },
   "quickAdded": {
     "message": "Lesezeichen hinzugefügt"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Geben Sie in das obere Feld ein, um Ihre Lesezeichen zu durchsuchen"
+  },
+  "selectAll": {
+    "message": "Alle"
+  },
+  "selectClear": {
+    "message": "Leeren"
+  },
+  "selectCount": {
+    "message": "$count$ ausgewählt",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Auswahl umkehren"
+  },
+  "selectModeEnter": {
+    "message": "Auswählen"
+  },
+  "selectModeExit": {
+    "message": "Auswahl beenden"
   },
   "sessionEmpty": {
     "message": "Keine Tabs zum Speichern"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Rückgängig"
+  },
+  "revealOutsideBarHint": {
+    "message": "Nur die Lesezeichenleiste wird angezeigt: Das Ziel liegt außerhalb."
+  },
+  "revealOutsideBarAction": {
+    "message": "Alle anzeigen und einblenden"
   },
   "url": {
     "message": "URL"

@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Döda rader markerade"
   },
+  "deadMarkSelected": {
+    "message": "Markera valda"
+  },
   "deadNone": {
     "message": "Inga döda länkar hittades"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Rensa alla markeringar"
+  },
+  "deadUnmarkSelected": {
+    "message": "Avmarkera valda"
   },
   "defaultIconButton": {
     "message": "Använd standard"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Om du gillar det kan du kanske donera för framtida utveckling. Alla belopp välkomnas."
   },
+  "donationV4Notice": {
+    "message": "v4.0 är en stor uppgradering: vyflikar, kommandopalett, skanning av döda länkar, rensning av dubbletter och mer."
+  },
+  "donationV4GuideLink": {
+    "message": "Läs v4-guiden →"
+  },
   "donationNever": {
     "message": "Visa inte igen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Deduplicera valda ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Ta bort $count$ dubblettbokmärken från de $groups$ valda grupperna?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Behåll den äldsta och ta bort de andra $count$ kopiorna?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Expandera grupp"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Kollapsa grupp"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorera http/https-skillnader"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Visa vyflikar under sökrutan"
   },
+  "optionRememberView": {
+    "message": "Kom ihåg den senast aktiva vyn och öppna den igen"
+  },
+  "optionShowTabBadges": {
+    "message": "Visa antalsmärken på vyflikarna"
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktivera kommandopaletten (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Visa snabbstjärnknappen bredvid sökrutan"
+  },
+  "optionShowToolButton": {
+    "message": "Visa verktygsknappen (⋮) bredvid sökrutan"
+  },
+  "optionClassicExperience": {
+    "message": "Återställ den klassiska rubriken"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Stänger av kommandopaletten, snabbstjärnan, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt ovan."
+  },
   "optionStatsEnabled": {
     "message": "Aktivera besöksstatistik"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Bokmärk denna sida (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Lägg snabbt till aktuell flik som bokmärke"
+  },
   "quickAdded": {
     "message": "Bokmärke tillagt"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Skriv i rutan ovan för att söka dina bokmärken"
+  },
+  "selectAll": {
+    "message": "Alla"
+  },
+  "selectClear": {
+    "message": "Rensa"
+  },
+  "selectCount": {
+    "message": "$count$ valda",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Invertera"
+  },
+  "selectModeEnter": {
+    "message": "Välj"
+  },
+  "selectModeExit": {
+    "message": "Avsluta markering"
   },
   "sessionEmpty": {
     "message": "Inga flikar att spara"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Ångra"
+  },
+  "revealOutsideBarHint": {
+    "message": "Endast bokmärkesfältet visas: målet ligger utanför det."
+  },
+  "revealOutsideBarAction": {
+    "message": "Visa alla och avslöja"
   },
   "url": {
     "message": "URL"

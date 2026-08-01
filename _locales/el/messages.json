@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Νεκρές γραμμές επισημάνθηκαν"
   },
+  "deadMarkSelected": {
+    "message": "Σήμανση επιλεγμένων"
+  },
   "deadNone": {
     "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Εκκαθάριση όλων των σημάνσεων"
+  },
+  "deadUnmarkSelected": {
+    "message": "Αφαίρεση σήμανσης επιλεγμένων"
   },
   "defaultIconButton": {
     "message": "Χρήση προεπιλογής"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Αν σας αρέσει, ίσως μπορείτε να κάνετε μια δωρεά για μελλοντική ανάπτυξη. Κάθε ποσό είναι ευπρόσδεκτο."
   },
+  "donationV4Notice": {
+    "message": "Η έκδοση v4.0 είναι μια σημαντική αναβάθμιση: καρτέλες προβολής, παλέτα εντολών, έλεγχος νεκρών συνδέσμων, καθαρισμός διπλοτύπων και άλλα."
+  },
+  "donationV4GuideLink": {
+    "message": "Διαβάστε τον οδηγό v4 →"
+  },
   "donationNever": {
     "message": "Να μην εμφανιστεί ξανά"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Αφαίρεση διπλοτύπων επιλεγμένων ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Να αφαιρεθούν $count$ διπλότυποι σελιδοδείκτες από τις $groups$ επιλεγμένες ομάδες;",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Διατήρηση του παλαιότερου και αφαίρεση των άλλων $count$ αντιγράφων;",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Ανάπτυξη ομάδας"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Σύμπτυξη ομάδας"
   },
   "dupesIgnoreScheme": {
     "message": "Αγνόηση διαφορών http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Εμφάνιση καρτελών προβολής κάτω από το πλαίσιο αναζήτησης"
   },
+  "optionRememberView": {
+    "message": "Να θυμάται την τελευταία ενεργή προβολή και να την ανοίγει ξανά"
+  },
+  "optionShowTabBadges": {
+    "message": "Εμφάνιση σημάτων αριθμού στις καρτέλες προβολής"
+  },
+  "optionPaletteEnabled": {
+    "message": "Ενεργοποίηση παλέτας εντολών (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Εμφάνιση του κουμπιού αστεριού γρήγορης προσθήκης δίπλα στο πεδίο αναζήτησης"
+  },
+  "optionShowToolButton": {
+    "message": "Εμφάνιση του κουμπιού εργαλείων (⋮) δίπλα στο πεδίο αναζήτησης"
+  },
+  "optionClassicExperience": {
+    "message": "Επαναφορά κλασικής κεφαλίδας"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Απενεργοποιεί την παλέτα εντολών, το αστέρι γρήγορης προσθήκης, το κουμπί εργαλείων και τις καρτέλες προβολής. Κάθε ένα μπορεί να ενεργοποιηθεί ξανά ξεχωριστά παραπάνω."
+  },
   "optionStatsEnabled": {
     "message": "Ενεργοποίηση στατιστικών επισκέψεων"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Προσθήκη σελιδοδείκτη (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Γρήγορη προσθήκη της τρέχουσας καρτέλας ως σελιδοδείκτη"
+  },
   "quickAdded": {
     "message": "Ο σελιδοδείκτης προστέθηκε"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Πληκτρολογήστε στο παραπάνω πλαίσιο για αναζήτηση των σελιδοδεικτών σας"
+  },
+  "selectAll": {
+    "message": "Όλα"
+  },
+  "selectClear": {
+    "message": "Εκκαθάριση"
+  },
+  "selectCount": {
+    "message": "$count$ επιλεγμένα",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Αντιστροφή"
+  },
+  "selectModeEnter": {
+    "message": "Επιλογή"
+  },
+  "selectModeExit": {
+    "message": "Έξοδος επιλογής"
   },
   "sessionEmpty": {
     "message": "Δεν υπάρχουν καρτέλες προς αποθήκευση"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Αναίρεση"
+  },
+  "revealOutsideBarHint": {
+    "message": "Εμφανίζεται μόνο η γραμμή σελιδοδεικτών: ο στόχος βρίσκεται εκτός αυτής."
+  },
+  "revealOutsideBarAction": {
+    "message": "Εμφάνιση όλων και αποκάλυψη"
   },
   "url": {
     "message": "URL"

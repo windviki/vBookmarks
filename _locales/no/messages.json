@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Døde rader merket"
   },
+  "deadMarkSelected": {
+    "message": "Merk valgte"
+  },
   "deadNone": {
     "message": "Ingen døde lenker funnet"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Fjern alle merker"
+  },
+  "deadUnmarkSelected": {
+    "message": "Fjern merking"
   },
   "defaultIconButton": {
     "message": "Bruk standard"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Hvis du liker det, kanskje du kan donere for fremtidig utvikling. Ethvert beløp er velkomment."
   },
+  "donationV4Notice": {
+    "message": "v4.0 er en stor oppgradering: fanevisning, kommandopalett, død-lenke-skanning, fjerning av duplikater og mer."
+  },
+  "donationV4GuideLink": {
+    "message": "Les v4-guiden →"
+  },
   "donationNever": {
     "message": "Ikke vis igjen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Fjern duplikater ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Fjerne $count$ dupliserte bokmerker fra de $groups$ valgte gruppene?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Behold den eldste og fjern de andre $count$ kopiene?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Utvid gruppe"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Skjul gruppe"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorer http/https-forskjeller"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Vis visningsfaner under søkeboksen"
   },
+  "optionRememberView": {
+    "message": "Husk siste aktive visning og åpne den igjen"
+  },
+  "optionShowTabBadges": {
+    "message": "Vis antallsmerker på visningsfanene"
+  },
+  "optionPaletteEnabled": {
+    "message": "Aktiver kommandopaletten (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Vis hurtiglegg-stjerneknappen ved søkefeltet"
+  },
+  "optionShowToolButton": {
+    "message": "Vis verktøyknappen (⋮) ved søkefeltet"
+  },
+  "optionClassicExperience": {
+    "message": "Gjenopprett klassisk topptekst"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Slår av kommandopaletten, hurtiglegg-stjernen, verktøyknappen og visningsfanene. Hver kan aktiveres enkeltvis ovenfor."
+  },
   "optionStatsEnabled": {
     "message": "Aktiver besøksstatistikk"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Bokmerk denne siden (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Hurtiglegg gjeldende fane som bokmerke"
+  },
   "quickAdded": {
     "message": "Bokmerke lagt til"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Skriv i boksen over for å søke i bokmerkene dine"
+  },
+  "selectAll": {
+    "message": "Alle"
+  },
+  "selectClear": {
+    "message": "Tøm"
+  },
+  "selectCount": {
+    "message": "$count$ valgt",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverter"
+  },
+  "selectModeEnter": {
+    "message": "Velg"
+  },
+  "selectModeExit": {
+    "message": "Avslutt valg"
   },
   "sessionEmpty": {
     "message": "Ingen faner å lagre"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Angre"
+  },
+  "revealOutsideBarHint": {
+    "message": "Kun bokmerkebjelken vises: målet ligger utenfor den."
+  },
+  "revealOutsideBarAction": {
+    "message": "Vis alle og avslør"
   },
   "url": {
     "message": "URL"

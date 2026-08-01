@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "깨진 행이 표시됨"
   },
+  "deadMarkSelected": {
+    "message": "선택 항목 표시"
+  },
   "deadNone": {
     "message": "끊긴 링크 없음"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "모든 표시 지우기"
+  },
+  "deadUnmarkSelected": {
+    "message": "선택 항목 표시 해제"
   },
   "defaultIconButton": {
     "message": "기본값 사용"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "마음에 드셨다면 향후 개발을 위해 기부해 주실 수 있습니다. 모든 금액을 환영합니다."
   },
+  "donationV4Notice": {
+    "message": "v4.0은 주요 업그레이드입니다: 보기 탭, 명령 팔레트, 끊긴 링크 검사, 중복 정리 등이 포함됩니다."
+  },
+  "donationV4GuideLink": {
+    "message": "v4 가이드 읽기 →"
+  },
   "donationNever": {
     "message": "다시 표시 안 함"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "선택 항목 중복 제거 ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "선택한 $groups$개 그룹에서 중복 북마크 $count$개를 제거하시겠습니까?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "가장 오래된 항목을 유지하고 나머지 $count$개를 제거할까요?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "그룹 펼치기"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "그룹 접기"
   },
   "dupesIgnoreScheme": {
     "message": "http/https 차이 무시"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "검색 상자 아래에 보기 탭 표시"
   },
+  "optionRememberView": {
+    "message": "마지막 활성 보기를 기억하고 다시 열기"
+  },
+  "optionShowTabBadges": {
+    "message": "보기 탭에 개수 배지 표시"
+  },
+  "optionPaletteEnabled": {
+    "message": "명령 팔레트 활성화 (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "검색 상자 옆에 빠른 추가 별표 버튼 표시"
+  },
+  "optionShowToolButton": {
+    "message": "검색 상자 옆에 도구 버튼(⋮) 표시"
+  },
+  "optionClassicExperience": {
+    "message": "클래식 헤더 복원"
+  },
+  "optionClassicExperienceHint": {
+    "message": "명령 팔레트, 빠른 추가 별표, 도구 버튼 및 보기 탭을 끕니다. 각 항목은 위에서 개별적으로 다시 활성화할 수 있습니다."
+  },
   "optionStatsEnabled": {
     "message": "방문 통계 활성화"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "이 페이지 북마크 (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "현재 탭을 북마크로 빠르게 추가"
+  },
   "quickAdded": {
     "message": "북마크 추가됨"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "위 상자에 입력하여 북마크를 검색하세요."
+  },
+  "selectAll": {
+    "message": "모두"
+  },
+  "selectClear": {
+    "message": "선택 해제"
+  },
+  "selectCount": {
+    "message": "$count$개 선택됨",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "반전"
+  },
+  "selectModeEnter": {
+    "message": "선택"
+  },
+  "selectModeExit": {
+    "message": "선택 종료"
   },
   "sessionEmpty": {
     "message": "저장할 탭 없음"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "실행 취소"
+  },
+  "revealOutsideBarHint": {
+    "message": "북마크 바만 표시됩니다: 대상은 그 바깥에 있습니다."
+  },
+  "revealOutsideBarAction": {
+    "message": "모두 표시하고 나타내기"
   },
   "url": {
     "message": "URL"

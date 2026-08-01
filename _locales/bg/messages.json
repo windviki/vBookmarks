@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Отбелязани мъртви редове"
   },
+  "deadMarkSelected": {
+    "message": "Маркиране на избраните"
+  },
   "deadNone": {
     "message": "Няма открити мъртви връзки"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Изчисти всички маркировки"
+  },
+  "deadUnmarkSelected": {
+    "message": "Отмаркиране на избраните"
   },
   "defaultIconButton": {
     "message": "Използване по подразбиране"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Ако ви харесва, може би можете да дарите за бъдещото му развитие. Всяка сума е добре дошла."
   },
+  "donationV4Notice": {
+    "message": "v4.0 е голямо обновяване: раздели за изглед, командна палитра, проверка за мъртви връзки, почистване на дубликати и още."
+  },
+  "donationV4GuideLink": {
+    "message": "Прочетете ръководството за v4 →"
+  },
   "donationNever": {
     "message": "Не показвай отново"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Премахване на дубликати от избраните ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Премахване на $count$ дублиращи се отметки от $groups$ избрани групи?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Запазване на най-старото и премахване на останалите $count$ копия?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Разгъване на групата"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Свиване на групата"
   },
   "dupesIgnoreScheme": {
     "message": "Игнорирай разликите http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Покажи разделите за изглед под полето за търсене"
   },
+  "optionRememberView": {
+    "message": "Запомняне и повторно отваряне на последния активен изглед"
+  },
+  "optionShowTabBadges": {
+    "message": "Показване на броячи върху разделите за изглед"
+  },
+  "optionPaletteEnabled": {
+    "message": "Активиране на командната палитра (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Показване на бутона със звезда за бързо добавяне до полето за търсене"
+  },
+  "optionShowToolButton": {
+    "message": "Показване на бутона за инструменти (⋮) до полето за търсене"
+  },
+  "optionClassicExperience": {
+    "message": "Възстановяване на класическия заглавен панел"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Изключва командната палитра, звездата за бързо добавяне, бутона за инструменти и разделите за изглед. Всяко от тях може да бъде включено отново поотделно по-горе."
+  },
   "optionStatsEnabled": {
     "message": "Активирай статистика на посещенията"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Отметка на тази страница (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Бързо добавяне на текущия раздел като отметка"
+  },
   "quickAdded": {
     "message": "Отметката е добавена"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Въведете в полето по-горе, за да търсите отметките си"
+  },
+  "selectAll": {
+    "message": "Всички"
+  },
+  "selectClear": {
+    "message": "Изчистване"
+  },
+  "selectCount": {
+    "message": "Избрани: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Инвертиране"
+  },
+  "selectModeEnter": {
+    "message": "Избор"
+  },
+  "selectModeExit": {
+    "message": "Изход от избора"
   },
   "sessionEmpty": {
     "message": "Няма раздели за запазване"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Отмяна"
+  },
+  "revealOutsideBarHint": {
+    "message": "Показва се само лентата с отметки: целта е извън нея."
+  },
+  "revealOutsideBarAction": {
+    "message": "Показване на всички и разкриване"
   },
   "url": {
     "message": "URL"

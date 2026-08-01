@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Negyvos eilutės pažymėtos"
   },
+  "deadMarkSelected": {
+    "message": "Pažymėti pasirinktus"
+  },
   "deadNone": {
     "message": "Nerasta neveikiančių nuorodų"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Išvalyti visus žymėjimus"
+  },
+  "deadUnmarkSelected": {
+    "message": "Atžymėti pasirinktus"
   },
   "defaultIconButton": {
     "message": "Naudoti numatytąjį"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Jei jums patinka, galbūt galite paremti jo ateities plėtrą. Bet kokia suma yra sveikinama."
   },
+  "donationV4Notice": {
+    "message": "v4.0 – didelis atnaujinimas: rodinių skirtukai, komandų paletė, neveikiančių nuorodų patikra, dublikatų valymas ir daugiau."
+  },
+  "donationV4GuideLink": {
+    "message": "Skaityti v4 vadovą →"
+  },
   "donationNever": {
     "message": "Nerodyti daugiau"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Pašalinti dublikatus pasirinktuose ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Pašalinti $count$ adresyno dublikatus iš $groups$ pasirinktų grupių?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Išlaikyti seniausią ir pašalinti kitas $count$ kopijas?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Išskleisti grupę"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Suskleisti grupę"
   },
   "dupesIgnoreScheme": {
     "message": "Nepaisyti http/https skirtumų"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Rodyti rodinių skirtukus po paieškos lauku"
   },
+  "optionRememberView": {
+    "message": "Įsiminti paskutinį aktyvų rodinį ir atidaryti jį iš naujo"
+  },
+  "optionShowTabBadges": {
+    "message": "Rodyti skaičių ženkliukus rodinių skirtukuose"
+  },
+  "optionPaletteEnabled": {
+    "message": "Įjungti komandų paletę (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Rodyti greitojo pridėjimo žvaigždutės mygtuką šalia paieškos laukelio"
+  },
+  "optionShowToolButton": {
+    "message": "Rodyti įrankių mygtuką (⋮) šalia paieškos laukelio"
+  },
+  "optionClassicExperience": {
+    "message": "Atkurti klasikinę antraštę"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Išjungia komandų paletę, greitojo pridėjimo žvaigždutę, įrankių mygtuką ir rodinių skirtukus. Kiekvieną iš jų galite vėl įjungti atskirai aukščiau."
+  },
   "optionStatsEnabled": {
     "message": "Įjungti lankomumo statistiką"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Pridėti šį puslapį prie žymių (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Greitai pridėti esamą skirtuką kaip adresyno įrašą"
+  },
   "quickAdded": {
     "message": "Žymė pridėta"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Įveskite aukščiau esančiame lauke, kad ieškotumėte savo žymių"
+  },
+  "selectAll": {
+    "message": "Visi"
+  },
+  "selectClear": {
+    "message": "Išvalyti"
+  },
+  "selectCount": {
+    "message": "Pasirinkta: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Apversti"
+  },
+  "selectModeEnter": {
+    "message": "Pasirinkti"
+  },
+  "selectModeExit": {
+    "message": "Baigti pasirinkimą"
   },
   "sessionEmpty": {
     "message": "Nėra skirtukų išsaugoti"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Atšaukti"
+  },
+  "revealOutsideBarHint": {
+    "message": "Rodoma tik adresyno juosta: tikslas yra už jos ribų."
+  },
+  "revealOutsideBarAction": {
+    "message": "Rodyti viską ir atskleisti"
   },
   "url": {
     "message": "URL"

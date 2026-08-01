@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "已標記失效行"
   },
+  "deadMarkSelected": {
+    "message": "標記所選項目"
+  },
   "deadNone": {
     "message": "找不到失效連結"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "清除所有標記"
+  },
+  "deadUnmarkSelected": {
+    "message": "取消標記所選項目"
   },
   "defaultIconButton": {
     "message": "使用默認圖標"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "如果你喜歡這個擴展，請考慮進行捐助。這樣我可以持續改進它的功能並保持開放。"
   },
+  "donationV4Notice": {
+    "message": "v4.0 是重大升級：檢視分頁、指令面板、失效連結掃描、重複項目清理及更多功能。"
+  },
+  "donationV4GuideLink": {
+    "message": "閱讀 v4 指南 →"
+  },
   "donationNever": {
     "message": "不再顯示"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "將所選項目去重 ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "要從 $groups$ 個選定群組中移除 $count$ 個重複書籤嗎？",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "保留最舊的，移除其他 $count$ 個副本？",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "展開群組"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "收合群組"
   },
   "dupesIgnoreScheme": {
     "message": "忽略 http/https 差異"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "在搜尋框下方顯示檢視標籤"
   },
+  "optionRememberView": {
+    "message": "記住最後使用的檢視，並於重新開啟時還原"
+  },
+  "optionShowTabBadges": {
+    "message": "在檢視分頁上顯示數量徽章"
+  },
+  "optionPaletteEnabled": {
+    "message": "啟用指令面板 (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "在搜尋框旁顯示快速新增星號按鈕"
+  },
+  "optionShowToolButton": {
+    "message": "在搜尋框旁顯示工具按鈕 (⋮)"
+  },
+  "optionClassicExperience": {
+    "message": "還原經典標題列"
+  },
+  "optionClassicExperienceHint": {
+    "message": "關閉指令面板、快速新增星號、工具按鈕和檢視分頁。以上各項均可獨立重新啟用。"
+  },
   "optionStatsEnabled": {
     "message": "啟用瀏覽統計"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "將此頁加入書籤（Ctrl+D）"
   },
+  "quickAddBookmarkCommand": {
+    "message": "將目前分頁快速新增為書籤"
+  },
   "quickAdded": {
     "message": "書籤已新增"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "在上方輸入框輸入以搜尋您的書籤"
+  },
+  "selectAll": {
+    "message": "全選"
+  },
+  "selectClear": {
+    "message": "清除"
+  },
+  "selectCount": {
+    "message": "已選取 $count$ 項",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "反向選擇"
+  },
+  "selectModeEnter": {
+    "message": "選擇"
+  },
+  "selectModeExit": {
+    "message": "結束選擇"
   },
   "sessionEmpty": {
     "message": "沒有可儲存的分頁"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "復原"
+  },
+  "revealOutsideBarHint": {
+    "message": "目前僅顯示書籤列：目標在書籤列以外。"
+  },
+  "revealOutsideBarAction": {
+    "message": "顯示全部並顯示目標"
   },
   "url": {
     "message": "網址"

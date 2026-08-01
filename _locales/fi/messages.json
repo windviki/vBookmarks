@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Kuolleet rivit merkitty"
   },
+  "deadMarkSelected": {
+    "message": "Merkitse valitut"
+  },
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Tyhjennä kaikki merkinnät"
+  },
+  "deadUnmarkSelected": {
+    "message": "Poista merkinnät valituilta"
   },
   "defaultIconButton": {
     "message": "Käytä oletusta"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Jos pidät siitä, ehkä voit lahjoittaa tulevaa kehitystä varten. Mikä tahansa summa on tervetullutta."
   },
+  "donationV4Notice": {
+    "message": "v4.0 on suuri päivitys: välilehtien tarkastelu, komentopaletti, kuolleiden linkkien tarkistus, kaksoiskappaleiden siivous ja paljon muuta."
+  },
+  "donationV4GuideLink": {
+    "message": "Lue v4-opas →"
+  },
   "donationNever": {
     "message": "Älä näytä uudelleen"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Poista päällekkäiset valituista ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Poistetaanko $count$ päällekkäistä kirjanmerkkiä valituista $groups$ ryhmistä?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Säilytetäänkö vanhin ja poistetaan muut $count$ kopiota?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Laajenna ryhmä"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Kutista ryhmä"
   },
   "dupesIgnoreScheme": {
     "message": "Ohita http/https-eroavaisuudet"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Näytä näkymävälilehdet hakukentän alla"
   },
+  "optionRememberView": {
+    "message": "Muista viimeisin aktiivinen näkymä ja avaa se uudelleen"
+  },
+  "optionShowTabBadges": {
+    "message": "Näytä lukumäärämerkit näkymävälilehdissä"
+  },
+  "optionPaletteEnabled": {
+    "message": "Ota komentopaletti käyttöön (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Näytä pikalisäystähti hakukentän vieressä"
+  },
+  "optionShowToolButton": {
+    "message": "Näytä työkalu-painike (⋮) hakukentän vieressä"
+  },
+  "optionClassicExperience": {
+    "message": "Palauta klassinen ylätunniste"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Poistaa käytöstä komentopaletin, pikalisäystähden, työkalu-painikkeen ja näkymävälilehdet. Jokaisen voi ottaa erikseen uudelleen käyttöön yllä."
+  },
   "optionStatsEnabled": {
     "message": "Ota käyttöön vierailutilastot"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Lisää tämä sivu kirjanmerkkeihin (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Lisää nykyinen välilehti nopeasti kirjanmerkiksi"
+  },
   "quickAdded": {
     "message": "Kirjanmerkki lisätty"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Kirjoita yllä olevaan kenttään hakeaksesi kirjanmerkkejäsi"
+  },
+  "selectAll": {
+    "message": "Kaikki"
+  },
+  "selectClear": {
+    "message": "Tyhjennä"
+  },
+  "selectCount": {
+    "message": "$count$ valittu",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Käännä valinta"
+  },
+  "selectModeEnter": {
+    "message": "Valitse"
+  },
+  "selectModeExit": {
+    "message": "Poistu valinnasta"
   },
   "sessionEmpty": {
     "message": "Ei tallennettavia välilehtiä"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Kumoa"
+  },
+  "revealOutsideBarHint": {
+    "message": "Vain kirjanmerkkipalkki näytetään: kohde on sen ulkopuolella."
+  },
+  "revealOutsideBarAction": {
+    "message": "Näytä kaikki ja paljasta"
   },
   "url": {
     "message": "URL"

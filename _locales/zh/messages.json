@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "已标记失效行"
   },
+  "deadMarkSelected": {
+    "message": "标记所选"
+  },
   "deadNone": {
     "message": "未发现失效链接"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "清除所有标记"
+  },
+  "deadUnmarkSelected": {
+    "message": "取消标记所选"
   },
   "defaultIconButton": {
     "message": "使用默认图标"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "如果你喜欢本扩展的话，请考虑进行捐助。这样我可以持续改进它的功能并保持开放。"
   },
+  "donationV4Notice": {
+    "message": "v4.0 是一次重大升级：视图标签页、命令面板、失效链接扫描、重复清理等功能。"
+  },
+  "donationV4GuideLink": {
+    "message": "阅读 v4 指南 →"
+  },
   "donationNever": {
     "message": "不再显示"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "去重所选（$count$）",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "从 $groups$ 个选定组中移除 $count$ 个重复书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "保留最早的，移除其他 $count$ 个副本？",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "展开分组"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "折叠分组"
   },
   "dupesIgnoreScheme": {
     "message": "忽略http/https差异"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "在搜索框下方显示视图标签"
   },
+  "optionRememberView": {
+    "message": "记住上次使用的视图并重新打开"
+  },
+  "optionShowTabBadges": {
+    "message": "在视图标签页上显示计数角标"
+  },
+  "optionPaletteEnabled": {
+    "message": "启用命令面板（Ctrl/Cmd+K）"
+  },
+  "optionQuickAddEnabled": {
+    "message": "在搜索框旁显示快速添加星标按钮"
+  },
+  "optionShowToolButton": {
+    "message": "在搜索框旁显示工具按钮（⋮）"
+  },
+  "optionClassicExperience": {
+    "message": "恢复经典页头"
+  },
+  "optionClassicExperienceHint": {
+    "message": "关闭命令面板、快速添加星标、工具按钮和视图标签页。以上各项均可单独重新启用。"
+  },
   "optionStatsEnabled": {
     "message": "启用访问统计"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "添加书签 (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "将当前标签页快速添加为书签"
+  },
   "quickAdded": {
     "message": "书签已添加"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "在上方输入框中输入以搜索书签"
+  },
+  "selectAll": {
+    "message": "全部"
+  },
+  "selectClear": {
+    "message": "清除"
+  },
+  "selectCount": {
+    "message": "已选 $count$ 项",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "反选"
+  },
+  "selectModeEnter": {
+    "message": "选择"
+  },
+  "selectModeExit": {
+    "message": "退出选择"
   },
   "sessionEmpty": {
     "message": "没有可保存的标签页"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "撤销"
+  },
+  "revealOutsideBarHint": {
+    "message": "当前仅显示书签栏：目标在其外部。"
+  },
+  "revealOutsideBarAction": {
+    "message": "显示全部并定位"
   },
   "url": {
     "message": "网址"

@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "ทำเครื่องหมายแถวตายแล้ว"
   },
+  "deadMarkSelected": {
+    "message": "ทำเครื่องหมายรายการที่เลือก"
+  },
   "deadNone": {
     "message": "ไม่พบลิงก์เสีย"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "ล้างเครื่องหมายทั้งหมด"
+  },
+  "deadUnmarkSelected": {
+    "message": "ยกเลิกเครื่องหมายรายการที่เลือก"
   },
   "defaultIconButton": {
     "message": "ใช้ค่าเริ่มต้น"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "หากคุณชอบสิ่งนี้ บางทีคุณอาจบริจาคเพื่อการพัฒนาในอนาคต จำนวนเงินใดๆ ก็ต้อนรับ"
   },
+  "donationV4Notice": {
+    "message": "v4.0 เป็นอัปเกรดครั้งใหญ่: แท็บมุมมอง, จานคำสั่ง, การสแกนลิงก์เสีย, การล้างรายการซ้ำ และอื่นๆ"
+  },
+  "donationV4GuideLink": {
+    "message": "อ่านคู่มือ v4 →"
+  },
   "donationNever": {
     "message": "ไม่ต้องแสดงอีก"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "ลบรายการซ้ำที่เลือก ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "ลบบุ๊กมาร์กที่ซ้ำกัน $count$ รายการจาก $groups$ กลุ่มที่เลือกหรือไม่",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "เก็บรายการที่เก่าที่สุดและลบ $count$ สำเนาอื่น?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "ขยายกลุ่ม"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "ยุบกลุ่ม"
   },
   "dupesIgnoreScheme": {
     "message": "ไม่สนใจความแตกต่าง http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "แสดงแท็บมุมมองใต้ช่องค้นหา"
   },
+  "optionRememberView": {
+    "message": "จดจำมุมมองที่ใช้งานล่าสุดและเปิดกลับมาใหม่"
+  },
+  "optionShowTabBadges": {
+    "message": "แสดงป้ายจำนวนบนแท็บมุมมอง"
+  },
+  "optionPaletteEnabled": {
+    "message": "เปิดใช้จานคำสั่ง (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "แสดงปุ่มดาวเพิ่มด่วนถัดจากช่องค้นหา"
+  },
+  "optionShowToolButton": {
+    "message": "แสดงปุ่มเครื่องมือ (⋮) ถัดจากช่องค้นหา"
+  },
+  "optionClassicExperience": {
+    "message": "กู้คืนส่วนหัวแบบคลาสสิก"
+  },
+  "optionClassicExperienceHint": {
+    "message": "ปิดจานคำสั่ง ปุ่มดาวเพิ่มด่วน ปุ่มเครื่องมือ และแท็บมุมมอง ซึ่งแต่ละรายการสามารถเปิดใช้ใหม่ได้ด้านบน"
+  },
   "optionStatsEnabled": {
     "message": "เปิดใช้งานสถิติการเข้าชม"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "บุ๊กมาร์กหน้านี้ (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "เพิ่มแท็บปัจจุบันเป็นบุ๊กมาร์กอย่างรวดเร็ว"
+  },
   "quickAdded": {
     "message": "เพิ่มบุ๊กมาร์กแล้ว"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "พิมพ์ในช่องด้านบนเพื่อค้นหาบุ๊กมาร์กของคุณ"
+  },
+  "selectAll": {
+    "message": "ทั้งหมด"
+  },
+  "selectClear": {
+    "message": "ล้าง"
+  },
+  "selectCount": {
+    "message": "เลือกแล้ว $count$ รายการ",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "สลับเลือก"
+  },
+  "selectModeEnter": {
+    "message": "เลือก"
+  },
+  "selectModeExit": {
+    "message": "ออกจากการเลือก"
   },
   "sessionEmpty": {
     "message": "ไม่มีแท็บให้บันทึก"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "เลิกทำ"
+  },
+  "revealOutsideBarHint": {
+    "message": "เฉพาะแถบบุ๊กมาร์กที่แสดงอยู่: เป้าหมายอยู่นอกแถบนี้"
+  },
+  "revealOutsideBarAction": {
+    "message": "แสดงทั้งหมดและชี้ตำแหน่ง"
   },
   "url": {
     "message": "URL"

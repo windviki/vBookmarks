@@ -204,6 +204,9 @@
   "deadMarked": {
     "message": "Lignes mortes marquées"
   },
+  "deadMarkSelected": {
+    "message": "Marquer la sélection"
+  },
   "deadNone": {
     "message": "Aucun lien mort trouvé"
   },
@@ -241,6 +244,9 @@
   },
   "deadUnmarkAll": {
     "message": "Effacer toutes les marques"
+  },
+  "deadUnmarkSelected": {
+    "message": "Démarquer la sélection"
   },
   "defaultIconButton": {
     "message": "utilisation par défaut"
@@ -286,6 +292,12 @@
   "donationMessage": {
     "message": "Si vous l'aimez, vous pouvez peut-être faire un don pour son développement futur. Tout montant est le bienvenu."
   },
+  "donationV4Notice": {
+    "message": "v4.0 est une mise à niveau majeure : onglets de vue, palette de commandes, analyse des liens morts, nettoyage des doublons et plus encore."
+  },
+  "donationV4GuideLink": {
+    "message": "Lire le guide v4 →"
+  },
   "donationNever": {
     "message": "Ne plus afficher"
   },
@@ -294,6 +306,14 @@
     "placeholders": {
       "count": {
         "content": "$1"
+      }
+    }
+  },
+  "dupesApplySelected": {
+    "message": "Dédupliquer la sélection ($count$)",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
       }
     }
   },
@@ -332,6 +352,17 @@
     },
     "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
   },
+  "dupesConfirmSelected": {
+    "message": "Supprimer $count$ signets en double des $groups$ groupes sélectionnés ?",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      },
+      "groups": {
+        "content": "$2$"
+      }
+    }
+  },
   "dupesConfirmGroup": {
     "message": "Garder la plus ancienne et supprimer les $count$ autres copies ?",
     "placeholders": {
@@ -358,6 +389,14 @@
       }
     },
     "description": "Suffix on a duplicate-group row in the command palette: how many bookmarks share the normalized URL."
+  },
+  "dupesGroupExpand": {
+    "description": "Dupes view group-head context menu: expand a collapsed duplicate group.",
+    "message": "Développer le groupe"
+  },
+  "dupesGroupCollapse": {
+    "description": "Dupes view group-head context menu: collapse an expanded duplicate group.",
+    "message": "Réduire le groupe"
   },
   "dupesIgnoreScheme": {
     "message": "Ignorer les différences http/https"
@@ -561,6 +600,27 @@
   "optionShowViewTabs": {
     "message": "Afficher les onglets de vue sous la boîte de recherche"
   },
+  "optionRememberView": {
+    "message": "Mémoriser la dernière vue active et la rouvrir"
+  },
+  "optionShowTabBadges": {
+    "message": "Afficher les badges de nombre sur les onglets de vue"
+  },
+  "optionPaletteEnabled": {
+    "message": "Activer la palette de commandes (Ctrl/Cmd+K)"
+  },
+  "optionQuickAddEnabled": {
+    "message": "Afficher le bouton étoile d'ajout rapide à côté du champ de recherche"
+  },
+  "optionShowToolButton": {
+    "message": "Afficher le bouton d'outils (⋮) à côté du champ de recherche"
+  },
+  "optionClassicExperience": {
+    "message": "Restaurer l'en-tête classique"
+  },
+  "optionClassicExperienceHint": {
+    "message": "Désactive la palette de commandes, l'étoile d'ajout rapide, le bouton d'outils et les onglets de vue. Chacun peut être réactivé individuellement ci-dessus."
+  },
   "optionStatsEnabled": {
     "message": "Activer les statistiques de visites"
   },
@@ -696,6 +756,9 @@
   "quickAddBookmark": {
     "message": "Ajouter cette page aux signets (Ctrl+D)"
   },
+  "quickAddBookmarkCommand": {
+    "message": "Ajouter rapidement l'onglet actif aux signets"
+  },
   "quickAdded": {
     "message": "Signet ajouté"
   },
@@ -804,6 +867,29 @@
   },
   "searchViewHint": {
     "message": "Saisissez dans la case ci-dessus pour rechercher vos marque-pages"
+  },
+  "selectAll": {
+    "message": "Tous"
+  },
+  "selectClear": {
+    "message": "Aucun"
+  },
+  "selectCount": {
+    "message": "Sélection : $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1$"
+      }
+    }
+  },
+  "selectInvert": {
+    "message": "Inverser"
+  },
+  "selectModeEnter": {
+    "message": "Sélectionner"
+  },
+  "selectModeExit": {
+    "message": "Quitter la sélection"
   },
   "sessionEmpty": {
     "message": "Aucun onglet à enregistrer"
@@ -980,6 +1066,12 @@
   },
   "undoAction": {
     "message": "Annuler"
+  },
+  "revealOutsideBarHint": {
+    "message": "Seule la barre de signets est affichée : la cible se trouve en dehors."
+  },
+  "revealOutsideBarAction": {
+    "message": "Tout afficher et révéler"
   },
   "url": {
     "message": "URL"
