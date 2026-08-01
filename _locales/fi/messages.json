@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Paperi (vaalea)"
   },
+  "paletteClose": {
+    "message": "Sulje"
+  },
   "optionZoom": {
     "message": "Zoomaus"
   },

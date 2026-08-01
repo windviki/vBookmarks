@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "کاغذ (روشن)"
   },
+  "paletteClose": {
+    "message": "بستن"
+  },
   "optionZoom": {
     "message": "بزرگنمایی"
   },

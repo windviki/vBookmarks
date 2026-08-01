@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Papir (svetlo)"
   },
+  "paletteClose": {
+    "message": "Zapri"
+  },
   "optionZoom": {
     "message": "Povečava"
   },

@@ -650,6 +650,9 @@
   "optionThemePaper": {
     "message": "Хартија (светла)"
   },
+  "paletteClose": {
+    "message": "Затвори"
+  },
   "optionZoom": {
     "message": "Зум"
   },

@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Popierius (šviesi)"
   },
+  "paletteClose": {
+    "message": "Uždaryti"
+  },
   "optionZoom": {
     "message": "Mastelis"
   },

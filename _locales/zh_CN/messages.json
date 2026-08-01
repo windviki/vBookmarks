@@ -670,6 +670,9 @@
   "donationDismiss": {
     "message": "忽略"
   },
+  "paletteClose": {
+    "message": "关闭"
+  },
   "paletteCmdDead": {
     "message": "检测死链"
   },

@@ -184,6 +184,10 @@ const setup = (opts = {}) => {
             blur() {
                 this.blurred = true;
             },
+            scrollIntoView(arg) {
+                this._scrolledIntoView = (this._scrolledIntoView || 0) + 1;
+                this._lastScrollArg = arg;
+            },
             setAttribute(k, v) {
                 this._attrs[k] = v;
             },
@@ -218,6 +222,11 @@ const setup = (opts = {}) => {
     paletteEl.hidden = true;
     const input = el('INPUT', 'palette-input');
     const results = el('UL', 'palette-results');
+    // Final polish: the × affordance and the footer close button (markup in
+    // popup.html/sidepanel.html mirrors this).
+    const clearBtn = el('BUTTON', 'palette-clear');
+    const closeBtn = el('BUTTON', 'palette-close');
+    closeBtn.querySelector = () => null; // the .palette-close-label span is markup-only here
     const tree = el('DIV', 'tree');
 
     const qsTable = opts.qs || {};
@@ -370,7 +379,7 @@ const setup = (opts = {}) => {
 
     return {
         palette, doc, body, chrome: chromeStub, actions, treeView, views, search,
-        quickAddCalls, paletteEl, input, results, tree, el, treeData, dialogs,
+        quickAddCalls, paletteEl, input, results, clearBtn, closeBtn, tree, el, treeData, dialogs,
         onChangedCalls, keydown, type, rowClasses, selectedIndex, store, storageData
     };
 };
@@ -706,6 +715,59 @@ describe('keyboard navigation', () => {
         palette.open();
         expect(keydown(input, { key: 'ArrowDown' }).defaultPrevented).toBe(true);
         expect(keydown(input, { key: 'ArrowUp' }).defaultPrevented).toBe(true);
+    });
+
+    // Final polish: the list scrolls to follow the highlight (it used to move
+    // off-screen silently).
+    it('the selected row is scrolled into view ({ block: nearest })', () => {
+        const { palette, input, results, keydown } = setup({});
+        palette.open();
+        keydown(input, { key: 'ArrowDown' });
+        const first = results._appended[0];
+        expect(first._scrolledIntoView).toBe(1);
+        expect(first._lastScrollArg).toEqual({ block: 'nearest' });
+        keydown(input, { key: 'ArrowDown' });
+        expect(results._appended[1]._scrolledIntoView).toBe(1);
+        keydown(input, { key: 'End' });
+        expect(results._appended[results._appended.length - 1]._scrolledIntoView).toBe(1);
+    });
+});
+
+describe('clear / close affordances (final polish)', () => {
+    it('typing tags the panel has-query; the × clears the query and keeps focus', () => {
+        const { palette, paletteEl, input, clearBtn, type } = setup({});
+        palette.open();
+        expect(paletteEl.classList.contains('has-query')).toBe(false);
+        type('gmail');
+        expect(paletteEl.classList.contains('has-query')).toBe(true);
+        clearBtn._listeners.click[0](makeEvent({}));
+        expect(input.value).toBe('');
+        expect(paletteEl.classList.contains('has-query')).toBe(false);
+        expect(input.focused).toBe(true); // typing can restart immediately
+    });
+
+    it('the × labels resolve from i18n at init', () => {
+        const { clearBtn } = setup({});
+        expect(clearBtn._attrs['aria-label']).toBe(getMessage('searchClear'));
+        expect(clearBtn.title).toBe(getMessage('searchClear'));
+    });
+
+    it('the footer close button closes the panel like Esc', () => {
+        const { palette, paletteEl, closeBtn } = setup({});
+        palette.open();
+        closeBtn._listeners.click[0](makeEvent({}));
+        expect(palette.isOpen()).toBe(false);
+        expect(paletteEl.hidden).toBe(true);
+    });
+
+    it('open() resets the has-query tag from a previous session', () => {
+        const { palette, paletteEl, input, type } = setup({});
+        palette.open();
+        type('abc');
+        palette.close();
+        palette.open();
+        expect(paletteEl.classList.contains('has-query')).toBe(false);
+        expect(input.value).toBe('');
     });
 });
 

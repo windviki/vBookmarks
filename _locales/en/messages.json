@@ -537,6 +537,10 @@
   "optionThemePaper": {
     "message": "Paper (light)"
   },
+  "paletteClose": {
+    "description": "Command palette: label of the visible footer button that closes the panel (the keyboard path is Esc).",
+    "message": "Close"
+  },
   "paletteCmdDead": {
     "description": "Command palette entry that switches the panel into dead-link scan mode (slash command /dead).",
     "message": "Find dead links"

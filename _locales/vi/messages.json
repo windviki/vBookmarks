@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Giấy (sáng)"
   },
+  "paletteClose": {
+    "message": "Đóng"
+  },
   "optionZoom": {
     "message": "Thu phóng"
   },

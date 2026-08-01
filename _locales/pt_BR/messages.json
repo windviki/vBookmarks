@@ -648,6 +648,9 @@
   "optionThemePaper": {
     "message": "Papel (claro)"
   },
+  "paletteClose": {
+    "message": "Fechar"
+  },
   "optionZoom": {
     "message": "Zoom"
   },

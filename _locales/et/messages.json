@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Paber (hele)"
   },
+  "paletteClose": {
+    "message": "Sule"
+  },
   "optionZoom": {
     "message": "Suum"
   },

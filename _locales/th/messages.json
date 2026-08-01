@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "กระดาษ (สว่าง)"
   },
+  "paletteClose": {
+    "message": "ปิด"
+  },
   "optionZoom": {
     "message": "ซูม"
   },

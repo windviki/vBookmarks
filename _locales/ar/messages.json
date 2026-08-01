@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "ورق (فاتح)"
   },
+  "paletteClose": {
+    "message": "إغلاق"
+  },
   "optionZoom": {
     "message": "تكبير"
   },

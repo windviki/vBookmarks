@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "কাগজ (হালকা)"
   },
+  "paletteClose": {
+    "message": "বন্ধ"
+  },
   "optionZoom": {
     "message": "জুম"
   },

@@ -95,6 +95,12 @@ export function initPalette(ctx = {}) {
     const $palette = $('command-palette');
     const $input = $('palette-input');
     const $results = $('palette-results');
+    // Final polish: the clear (×) affordance inside the field and the visible
+    // footer close button — both are mouse affordances (tabindex="-1" in the
+    // markup): the keyboard paths stay Esc (close) and plain editing (clear),
+    // mirroring the search box's #search-clear contract.
+    const $clear = $('palette-clear');
+    const $close = $('palette-close');
 
     // A dialog (confirm/edit/alert/new-folder/sort) owns the popup's modal
     // layer; the palette must not open over or steal keys from it.
@@ -302,6 +308,11 @@ export function initPalette(ctx = {}) {
             else
                 rows[i].el.classList.remove('selected');
         }
+        // Keep the highlighted row inside the scrollport — ↑/↓/Home/End used
+        // to move the selection off-screen without the list following.
+        const sel = selected >= 0 && rows[selected];
+        if (sel && sel.el.scrollIntoView)
+            sel.el.scrollIntoView({ block: 'nearest' });
     };
 
     const render = () => {
@@ -399,7 +410,11 @@ export function initPalette(ctx = {}) {
         updateSelection();
     };
 
-    $input.addEventListener('input', render);
+    $input.addEventListener('input', () => {
+        // The × affordance appears only with a query (search box contract).
+        $palette.classList.toggle('has-query', !!$input.value);
+        render();
+    });
     $input.addEventListener('keydown', e => {
         switch (e.key) {
             case 'ArrowDown':
@@ -503,6 +518,30 @@ export function initPalette(ctx = {}) {
         }
     });
 
+    // --- Clear / close affordances (final polish) ------------------------------
+    // Labels resolve once here (the placeholder still resolves per open).
+    $clear.setAttribute('aria-label', _m('searchClear'));
+    $clear.title = _m('searchClear');
+    $close.setAttribute('aria-label', _m('paletteClose'));
+    const closeLabel = $close.querySelector('.palette-close-label');
+    if (closeLabel)
+        closeLabel.textContent = _m('paletteClose');
+    // preventDefault on mousedown keeps the input's focus through the click —
+    // the same trick the result rows use against the focusout guard.
+    $clear.addEventListener('mousedown', e => e.preventDefault());
+    $clear.addEventListener('click', e => {
+        e.preventDefault();
+        $input.value = '';
+        $palette.classList.remove('has-query');
+        render();
+        $input.focus();
+    });
+    $close.addEventListener('mousedown', e => e.preventDefault());
+    $close.addEventListener('click', e => {
+        e.preventDefault();
+        close();
+    });
+
     // --- Open / close -----------------------------------------------------------
     const open = () => {
         if (openState || anyDialogOpen())
@@ -519,6 +558,7 @@ export function initPalette(ctx = {}) {
             clearMenu();
         openState = true;
         $palette.hidden = false;
+        $palette.classList.remove('has-query'); // fresh panel: no query, no ×
         $input.value = '';
         $input.placeholder = _m('palettePlaceholder');
         rebuildIndex(); // async; re-renders when the fresh index lands

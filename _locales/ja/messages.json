@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "ペーパー (ライト)"
   },
+  "paletteClose": {
+    "message": "閉じる"
+  },
   "optionZoom": {
     "message": "拡大"
   },

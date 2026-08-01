@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Papir (lys)"
   },
+  "paletteClose": {
+    "message": "Luk"
+  },
   "optionZoom": {
     "message": "Zoom"
   },

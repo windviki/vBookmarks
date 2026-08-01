@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Papier (licht)"
   },
+  "paletteClose": {
+    "message": "Sluiten"
+  },
   "optionZoom": {
     "message": "Zoom"
   },

@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Бумага (светлая)"
   },
+  "paletteClose": {
+    "message": "Закрыть"
+  },
   "optionZoom": {
     "message": "Увеличить"
   },

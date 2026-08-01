@@ -17,7 +17,7 @@ const makeChromeDouble = (opts = {}) => {
                 out[k] = data[k];
         return out;
     };
-    return {
+    const dbl = {
         calls, localData, sessionData, storageListeners,
         storage: {
             local: { get(keys, cb) { cb(read(localData, keys)); } },
@@ -42,7 +42,24 @@ const makeChromeDouble = (opts = {}) => {
             }
         }
     };
+    // Final polish: chrome.runtime.getContexts (Chrome 116+) is the primary
+    // panel-liveness probe. opts.panelContexts: undefined = API absent (the
+    // heartbeat fallback runs), an array = live SIDE_PANEL contexts, the
+    // string 'reject' = the promise rejects.
+    if (opts.panelContexts !== undefined) {
+        dbl.runtime = {
+            getContexts() {
+                return opts.panelContexts === 'reject'
+                    ? Promise.reject(new Error('no contexts'))
+                    : Promise.resolve(opts.panelContexts);
+            }
+        };
+    }
+    return dbl;
 };
+
+// getContexts answers asynchronously — flush the microtask queue.
+const flush = () => new Promise(resolve => setTimeout(resolve, 0));
 
 // v4 task-3 #19: a live panel = marker + fresh heartbeat (popup.js writes it
 // every PANEL_HEARTBEAT_MS; PANEL_STALE_MS is the SW-side grace window).
@@ -193,6 +210,56 @@ describe('initPanelBehavior — reacting to changes', () => {
         const d = makeChromeDouble({ rejectSetPanelBehavior: true });
         globalThis.chrome = d;
         expect(() => initPanelBehavior()).not.toThrow();
+        expect(d.calls.setPanelBehavior).toEqual([false]);
+    });
+});
+
+describe('initPanelBehavior — runtime.getContexts liveness (Chrome 116+)', () => {
+    beforeEach(() => { delete globalThis.chrome; });
+
+    // The reported bug: option turned OFF right after the panel was closed —
+    // pagehide never fired, so the marker + fresh heartbeat still claim
+    // "live" and the old code re-derived toggle mode (the action kept
+    // opening the panel). getContexts lists only LIVE panels: popup mode.
+    it('a dead panel with a fresh-heartbeat marker derives popup mode at startup', async () => {
+        const d = makeChromeDouble({ sessionData: livePanel(), panelContexts: [] });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([false]);
+        expect(d.calls.sessionGets).toBe(0); // the session is never consulted
+    });
+
+    it('option OFF with a dead panel (stale marker) drops to popup mode, not toggle', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            sessionData: livePanel(), // residue — the panel is actually gone
+            panelContexts: []
+        });
+        globalThis.chrome = d;
+        initPanelBehavior(); // option on → toggle
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local');
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, false]);
+    });
+
+    it('a live panel context keeps toggle mode when the option turns off', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }]
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local');
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, true]);
+    });
+
+    it('a rejecting getContexts falls back to "not live" (popup mode)', async () => {
+        const d = makeChromeDouble({ sessionData: livePanel(), panelContexts: 'reject' });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
         expect(d.calls.setPanelBehavior).toEqual([false]);
     });
 });

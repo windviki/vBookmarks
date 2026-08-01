@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "נייר (בהיר)"
   },
+  "paletteClose": {
+    "message": "סגור"
+  },
   "optionZoom": {
     "message": "זום"
   },

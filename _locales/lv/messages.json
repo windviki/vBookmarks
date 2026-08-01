@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Papīrs (gaišs)"
   },
+  "paletteClose": {
+    "message": "Aizvērt"
+  },
   "optionZoom": {
     "message": "Tālummaiņa"
   },

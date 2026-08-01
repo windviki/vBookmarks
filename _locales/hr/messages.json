@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Papir (svijetlo)"
   },
+  "paletteClose": {
+    "message": "Zatvori"
+  },
   "optionZoom": {
     "message": "Zumiranje"
   },

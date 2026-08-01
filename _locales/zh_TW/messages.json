@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "紙色（淺色）"
   },
+  "paletteClose": {
+    "message": "關閉"
+  },
   "optionZoom": {
     "message": "縮放"
   },

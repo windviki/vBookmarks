@@ -23,6 +23,17 @@
 // 残留" report). The panel page now heartbeats `sidePanelHeartbeat`
 // (Date.now) every PANEL_HEARTBEAT_MS; a marker counts as live only with a
 // heartbeat fresher than PANEL_STALE_MS. Stale markers are removed on read.
+//
+// Final-polish fix ("关掉选项后点击仍是面板开闭"): even the heartbeat can
+// outlive the panel — pagehide is not guaranteed on a normal action-toggle
+// close, and for up to PANEL_STALE_MS afterwards the fresh heartbeat made
+// readPanelLive answer "live", so turning the option OFF still derived
+// toggle mode and the next action click RE-OPENED the panel (which refreshed
+// the heartbeat — the user never got the popup back). Chrome 116+ gives an
+// authoritative liveness check, chrome.runtime.getContexts(SIDE_PANEL): a
+// dead panel never appears there, whatever storage.session says. It is now
+// the primary probe; the marker+heartbeat path remains the fallback for the
+// manifest's minimum (Chrome 114/115, no runtime.getContexts).
 
 export const PANEL_HEARTBEAT_MS = 20000;
 export const PANEL_STALE_MS = 90000; // > 4 heartbeats; slack for timer throttling
@@ -39,7 +50,17 @@ export const initPanelBehavior = () => {
 
     // #19: marker + fresh heartbeat = live panel. A marker without one is
     // residue from a dead panel — drop it so it stops being re-derived.
+    // Final polish: chrome.runtime.getContexts (Chrome 116+) is the
+    // authoritative probe — it only ever lists LIVE panel pages, so a closed
+    // panel stops deriving toggle mode the moment it actually dies instead
+    // of up to PANEL_STALE_MS later.
     const readPanelLive = cb => {
+        if (chrome.runtime && typeof chrome.runtime.getContexts === 'function') {
+            chrome.runtime.getContexts({ contextTypes: ['SIDE_PANEL'] })
+                .then(contexts => cb((contexts || []).length > 0))
+                .catch(() => cb(false));
+            return;
+        }
         chrome.storage.session.get(['sidePanelIsOpen', 'sidePanelHeartbeat'], session => {
             const live = !!session.sidePanelIsOpen
                 && typeof session.sidePanelHeartbeat === 'number'

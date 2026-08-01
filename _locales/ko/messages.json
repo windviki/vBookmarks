@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "종이(라이트)"
   },
+  "paletteClose": {
+    "message": "닫기"
+  },
   "optionZoom": {
     "message": "확대/축소"
   },

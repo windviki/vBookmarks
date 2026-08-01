@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Paper (světlý)"
   },
+  "paletteClose": {
+    "message": "Zavřít"
+  },
   "optionZoom": {
     "message": "Přiblížení"
   },

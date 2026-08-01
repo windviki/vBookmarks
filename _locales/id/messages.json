@@ -651,6 +651,9 @@
   "optionThemePaper": {
     "message": "Kertas (terang)"
   },
+  "paletteClose": {
+    "message": "Tutup"
+  },
   "optionZoom": {
     "message": "Perbesar"
   },
