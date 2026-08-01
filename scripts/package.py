@@ -79,12 +79,15 @@ CSS_FILES = [
 ]
 
 # Icon/image files referenced in manifest.json, HTML pages, or JS code
+# (manifest/action icons must stay PNG — Chrome rejects SVG there; icon.svg
+# is the vector master used by the extension pages' <img> tags)
 IMAGES = [
     'assets/icons/icon.png',
     'assets/icons/icon16.png',
     'assets/icons/icon32.png',
     'assets/icons/icon48.png',
     'assets/icons/icon128.png',
+    'assets/icons/icon.svg',
 ]
 
 # Metadata files for store listing and user reference

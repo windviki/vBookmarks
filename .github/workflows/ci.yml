@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Unit tests
+        run: npm run test:run
+
+      - name: i18n key parity (en baseline)
+        run: python3 scripts/i18n.py missing
+
+      - name: i18n full audit (placeholders, menu lengths)
+        run: python3 scripts/i18n.py verify
+
+      - name: Package the extension zip
+        run: python3 scripts/package.py
