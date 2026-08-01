@@ -194,7 +194,13 @@ h2{
 .options-list li button{
 	padding: .3em 1.5em;
 	font-weight: bold;
-	margin-left: 1em;
+	margin-__MSG_@@bidi_start_edge__: 1em;
+}
+/* A button opening the row (classic-experience, export, the icon group's
+   Use default) sits flush with the card edge — the 1em offset is only for
+   buttons trailing a label (stats-clear, import-after-export). */
+.options-list li button:first-child{
+	margin-__MSG_@@bidi_start_edge__: 0;
 }
 .options-list li button span{
 	font-weight: normal;
@@ -202,8 +208,27 @@ h2{
 .options-list li label{
 	display: block;
 }
+/* Hanging indent: wrapped checkbox text aligns with the label text, not
+   under the checkbox (1.4em ≈ the 13px box + its 5px end margin). */
+.options-list li label:has(> input[type=checkbox]:first-child){
+	padding-__MSG_@@bidi_start_edge__: 1.4em;
+	text-indent: -1.4em;
+}
 .options-list li input[type=checkbox]{
-	margin: 0 5px 0 0;
+	margin: 0;
+	margin-__MSG_@@bidi_end_edge__: 5px;
+}
+/* Separator group: label text above, the text field below on its own line
+   spanning the card — the label+input-inline mix wrapped raggedly. */
+.options-list li input#custom-separator-color,
+.options-list li input#custom-separator-title,
+.options-list li input#custom-separator-url,
+.options-list li input#custom-separator-string,
+.options-list li input#dead-proxy-template{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 4px;
 }
 .options-list li input[type=number]{
 	background: var(--vbm-bg-elev);

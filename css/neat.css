@@ -930,6 +930,11 @@ menu[type=context].hide-editables #folder-delete {
     text-align: __MSG_@@bidi_end_edge__;
 }
 
+/* Breathing room between a dialog's action buttons (OK ⇄ Cancel). */
+.dialog .buttons button + button {
+    margin-__MSG_@@bidi_start_edge__: .5em;
+}
+
 /* Button hierarchy: the first button in every dialog is the primary action
    (popup.html orders OK/submit first), so it gets the solid accent fill;
    the rest are quiet ghost buttons. */

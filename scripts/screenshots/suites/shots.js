@@ -154,11 +154,23 @@ const SEED = `
     await sleep(500);
     await page.screenshot({ path: '/tmp/shots/05-contextmenu-light.png' });
 
-    // Edit dialog (dark): Escape closes the menu (row stays active), F2 opens it
+    // Edit dialog (dark): Escape closes the menu, then F2 on the GitHub row.
+    // The menu was opened over the SEARCH view (states 03/04 left it active),
+    // so the row it pointed at lives in the hidden tree — F2 reaches the
+    // tree's keydown only from a focused, visible tree row: switch back first.
     await dark(page);
     await sleep(200);
     await page.keyboard.press('Escape');
     await sleep(400);
+    await page.click('#view-tab-tree');
+    await sleep(400);
+    await page.evaluate(() => {
+        const link = [...document.querySelectorAll('#tree a.tree-item-link')]
+            .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
+        if (!link) throw new Error('GitHub row not found');
+        link.focus();
+    });
+    await sleep(200);
     await page.keyboard.press('F2');
     await sleep(500);
     const dialogOpen = await page.evaluate(() =>
