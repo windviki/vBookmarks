@@ -312,6 +312,30 @@ export function initViewDead(ctx = {}) {
         return html + '</ul>';
     };
 
+    // --- Toolbar focus restore (final polish) --------------------------------
+    // The toolbar re-renders together with the rows (filter clicks, pause/
+    // resume, every scan-progress tick). Without a restore, a keyboard user
+    // holding focus on a control loses it to <body> on every repaint. The
+    // controls are positionally stable across re-renders, so an index
+    // suffices.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    const toolbarFocusIndex = () => {
+        if (typeof $list.querySelectorAll !== 'function')
+            return -1;
+        const controls = $list.querySelectorAll(TOOLBAR_SEL);
+        for (let i = 0, l = controls.length; i < l; i++)
+            if (controls[i] === document.activeElement)
+                return i;
+        return -1;
+    };
+    const restoreToolbarFocus = idx => {
+        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
+            return;
+        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
+        if (c && c.focus)
+            c.focus();
+    };
+
     const render = () => {
         if (selecting) {
             // prune members whose rows vanished (tree change / filter) BEFORE
@@ -339,7 +363,10 @@ export function initViewDead(ctx = {}) {
                 ? renderRows(rows)
                 : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
         }
+        // keep a focused toolbar control focused across the swap (see above)
+        const tbIdx = toolbarFocusIndex();
         $list.innerHTML = html;
+        restoreToolbarFocus(tbIdx);
     };
 
     // --- Overlay (§5.5c + 第五轮项3) ------------------------------------------
@@ -704,26 +731,9 @@ export function initViewDead(ctx = {}) {
         }
     }, true);
 
-    // Final polish: the filter seg gets the same ←/→ focus movement as the
-    // stats sort seg (buttons activate natively via Enter/Space).
-    $list.addEventListener('keydown', e => {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
-            return;
-        const t = e.target;
-        if (!t || !t.classList || !t.classList.contains('dead-filter-btn'))
-            return;
-        const seg = t.parentNode;
-        const btns = seg && seg.querySelectorAll ? seg.querySelectorAll('.dead-filter-btn') : [];
-        let idx = -1;
-        for (let i = 0, l = btns.length; i < l; i++)
-            if (btns[i] === t)
-                idx = i;
-        if (idx < 0 || btns.length < 2)
-            return;
-        e.preventDefault();
-        const dir = e.key === 'ArrowRight' ? 1 : -1;
-        btns[(idx + dir + btns.length) % btns.length].focus();
-    });
+    // (Final polish superseded the seg-local ←/→ walker: keyboard.js's
+    // non-row branch now walks ALL toolbar controls as one rung — a
+    // view-local filter-seg walker would double-step.)
 
     // M — toggle the focused row's dead mark; R — reveal it in the tree
     // (docs/v4task-2-list.md §3.5). Consumed by keyboard.js before the

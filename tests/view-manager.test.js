@@ -666,6 +666,94 @@ describe('focusDown (final polish: header ↓ zone chain)', () => {
     });
 });
 
+describe('in-list toolbar rung (§2.5, final-polish revision)', () => {
+    const addStats = (ctx, { disabledFirst = false } = {}) => {
+        const container = ctx.makeEl();
+        const toolbar = ctx.makeEl('div');
+        toolbar.classList.add('vbm-toolbar');
+        const b1 = ctx.makeEl('button');
+        const b2 = ctx.makeEl('button');
+        if (disabledFirst)
+            b1.disabled = true;
+        toolbar.appendChild(b1);
+        toolbar.appendChild(b2);
+        container.appendChild(toolbar);
+        const listEl = ctx.makeEl();
+        container.appendChild(listEl);
+        ctx.views.register({
+            id: 'stats', titleKey: 'viewStats', icon: '<svg/>', container, listEl
+        });
+        return { container, toolbar, b1, b2, listEl };
+    };
+    const fireTabs = (ctx, key) => {
+        const ev = { key, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+        ctx.byId['view-tabs'].trigger('keydown', ev);
+        return ev;
+    };
+
+    it('focusToolbar lands on the first enabled control of the active view', () => {
+        const ctx = setup({});
+        const { b1 } = addStats(ctx);
+        ctx.views.activate('stats');
+        expect(ctx.views.focusToolbar()).toBe(true);
+        expect(b1.focused).toBe(true);
+    });
+
+    it('focusToolbar skips disabled controls and reports false without a toolbar', () => {
+        const ctx = setup({});
+        const { b2 } = addStats(ctx, { disabledFirst: true });
+        ctx.views.activate('stats');
+        ctx.views.focusToolbar();
+        expect(b2.focused).toBe(true);
+        ctx.views.activate('tree'); // the tree has no .vbm-toolbar
+        expect(ctx.views.focusToolbar()).toBe(false);
+    });
+
+    it('strip ↓ lands on the toolbar rung before the rows', () => {
+        const ctx = setup({});
+        const { b1, listEl } = addStats(ctx);
+        const li = ctx.makeEl('li');
+        const a = ctx.makeEl('a');
+        li.appendChild(a);
+        listEl.appendChild(li);
+        ctx.views.activate('stats');
+        a.focused = false; // activation's focusDefault already proved itself
+        const down = fireTabs(ctx, 'ArrowDown');
+        expect(down.defaultPrevented).toBe(true);
+        expect(b1.focused).toBe(true);
+        expect(a.focused).toBe(false);
+    });
+
+    it('strip ↓ still enters the rows directly for toolbar-less views', () => {
+        const ctx = setup({});
+        const li = ctx.makeEl('li');
+        const a = ctx.makeEl('a');
+        li.appendChild(a);
+        ctx.byId.tree.appendChild(li);
+        fireTabs(ctx, 'ArrowDown'); // the tree is active: no toolbar rung
+        expect(a.focused).toBe(true);
+    });
+
+    it('focusDown (header ↓) with the strip hidden enters the toolbar rung', () => {
+        const ctx = setup({ storeData: { showViewTabs: '' } });
+        const { b1 } = addStats(ctx);
+        ctx.views.activate('stats');
+        ctx.views.focusDown();
+        expect(b1.focused).toBe(true);
+    });
+
+    it('focusListExit prefers the toolbar, falls back to focusTop without one', () => {
+        const ctx = setup({});
+        const { b1 } = addStats(ctx);
+        ctx.views.activate('stats');
+        ctx.views.focusListExit();
+        expect(b1.focused).toBe(true);
+        ctx.views.activate('tree');
+        ctx.views.focusListExit();
+        expect(ctx.tabs()[0].focused).toBe(true); // focusTop: the active tab
+    });
+});
+
 describe('tab strip keyboard model (§2.2)', () => {
     const fireTabs = (ctx, key) => {
         const ev = { key, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };

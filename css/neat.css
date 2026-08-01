@@ -1432,6 +1432,7 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     width: 100%;
     box-sizing: border-box;
     padding: 6px 8px;
+    padding-inline-end: 26px; /* room for the × affordance (search box recipe) */
     font-size: 110%;
     color: var(--vbm-fg);
     background-color: var(--vbm-bg);
@@ -1443,6 +1444,74 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
 #palette-input:focus {
     border-color: var(--vbm-accent);
     box-shadow: 0 0 0 2px var(--vbm-focus-ring);
+}
+
+/* The field wrapper lets the clear (×) button live INSIDE the input on the
+   trailing edge — the same overlay recipe as #search-field/#search-clear. */
+.palette-field {
+    position: relative;
+}
+
+#palette-clear {
+    position: absolute;
+    inset-inline-end: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    visibility: hidden;
+}
+
+#command-palette.has-query #palette-clear {
+    visibility: visible;
+}
+
+#palette-clear:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+/* Visible footer close button (final polish): a quiet full-width bar under
+   the results — the Esc kbd hint teaches the keyboard path on sight. */
+#palette-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin: 6px 0 0;
+    padding: 4px 8px;
+    border: 0;
+    border-top: 1px solid var(--vbm-border);
+    border-radius: 0 0 var(--vbm-radius) var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#palette-close:hover {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+}
+
+#palette-close kbd {
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1.4;
+    padding: 0 4px;
+    border: 1px solid var(--vbm-border);
+    border-radius: 3px;
+    color: var(--vbm-muted);
 }
 
 #palette-results {
@@ -2174,6 +2243,27 @@ body.panel-mode .vbm-row .row-sub {
     cursor: default;
 }
 
+/* Final polish (design-language unification): the dupes toolbar's plain
+   buttons (select-mode entry, the selecting bar's all/invert/clear/exit)
+   wore NATIVE button chrome while the dead toolbar's were flat accent text
+   buttons. Same recipe as .dead-toolbar button below, scoped away from the
+   two filled accent pills (apply-all / apply-selected keep their primary
+   look — :not() also keeps their hover from going flat). */
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected) {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 1px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):hover {
+    background: var(--vbm-bg-hover);
+}
+
 /* v4 task-3 #4/#5 selection mode: rows / group heads grow a checkbox at the
    inline start (::before joins the flex row), the selected state fills it
    and tints the row; the row action buttons + keeper radios hide so every
@@ -2307,9 +2397,12 @@ body.panel-mode .vbm-row .row-sub {
     margin-inline-end: 4px;
 }
 
-/* the clean-rest button follows the §1.5 row-button reveal on group heads */
-.dupes-group:hover .row-btn,
-.dupes-group:focus-within .row-btn {
+/* Final polish: the group head's quick apply (clean-rest ×) is ALWAYS
+   visible — it is the group's primary action (one click dedups the group
+   with the current keeper pick, the toolbar summary/tab badge update via
+   the regroup), and the §1.5 hover reveal left it undiscoverable. Member
+   rows keep the hover/focus reveal (.vbm-row rules above). */
+.dupes-group .group-head .row-btn {
     visibility: visible;
 }
 

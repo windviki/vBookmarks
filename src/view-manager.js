@@ -41,7 +41,8 @@
  * pathOf), the Escape chain view levels (onEscapeActive/escapeToTree), the
  * Ctrl/Cmd+1…6 direct view jump, the tab strip keyboard model (roving
  * tabindex, ←/→ with RTL flip, Home/End, ↑ to the search box, ↓ into the
- * list — docs/v4task-2-list.md §2.2) and the aria-live view announcements.
+ * zone below — the active view's in-list toolbar rung when it has one, else
+ * its rows, keyboard-model §2.1/§2.5) and the aria-live view announcements.
  *
  * initViewManager(ctx) is called once by neat.js right after the context
  * menus init (search.js needs it at init): ctx.store, ctx.isPanel,
@@ -259,17 +260,57 @@ export function initViewManager(ctx = {}) {
             searchInput.focus();
     };
 
+    // --- In-list toolbar rung (keyboard-model §2.5, final-polish revision) ----
+    // The stats/dead/dupes toolbars sit VISUALLY between the strip and the
+    // rows, so the naive layout correspondence makes them an arrow rung:
+    // strip ↓ lands on the first enabled control, ↑ past the first row lands
+    // here too, and the rung's own ↑/↓/←/→ live in keyboard.js. Views
+    // without a toolbar (tree/search/recent) skip the rung transparently.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    const toolbarControls = def => {
+        if (!def || !def.container || !def.container.querySelectorAll)
+            return [];
+        const out = [];
+        const controls = def.container.querySelectorAll(TOOLBAR_SEL);
+        for (let i = 0, l = controls.length; i < l; i++) {
+            const c = controls[i];
+            if (c.disabled)
+                continue;
+            // keyboard.js tabCycle's visibility contract: doubles without
+            // layout APIs count as visible (tests).
+            if (typeof c.getClientRects === 'function' && c.getClientRects().length === 0)
+                continue;
+            out.push(c);
+        }
+        return out;
+    };
+    const focusToolbar = () => {
+        const controls = toolbarControls(byId[activeId]);
+        if (!controls.length)
+            return false;
+        controls[0].focus();
+        return true;
+    };
+    // ↑ past a list's first row: the toolbar rung when the active view has
+    // one, else the strip/box crossing (focusTop).
+    const focusListExit = () => {
+        if (!focusToolbar())
+            focusTop();
+    };
+
     // ↓ from the header row (final polish): the naive vertical chain —
-    // header → tab strip → view content. With the strip visible the active
-    // tab takes focus (a second ↓ enters the list); with the strip hidden
-    // the list is the next thing below, so enter it directly.
+    // header → tab strip → [in-list toolbar] → view content. With the strip
+    // visible the active tab takes focus (a second ↓ enters the zone below);
+    // with the strip hidden the next rung below is entered directly — the
+    // toolbar when the active view has one, else its rows.
     const focusDown = () => {
         const def = byId[activeId];
         if (tabsVisible() && def && def.tabEl) {
             def.tabEl.focus();
             return;
         }
-        focusActive();
+        if (!focusToolbar())
+            focusActive();
     };
 
     // --- Activation ------------------------------------------------------------
@@ -516,7 +557,9 @@ export function initViewManager(ctx = {}) {
                 break;
             case 'ArrowDown':
                 e.preventDefault();
-                focusDefault(byId[activeId]);
+                // §2.5: the toolbar rung sits between the strip and the rows.
+                if (!focusToolbar())
+                    focusDefault(byId[activeId]);
                 break;
         }
     });
@@ -588,6 +631,8 @@ export function initViewManager(ctx = {}) {
         focusTop,
         focusDown,
         focusActive,
+        focusToolbar,
+        focusListExit,
         buildPathMap,
         pathOf,
         updateBadges,

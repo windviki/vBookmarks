@@ -316,11 +316,15 @@ export function initSearch(ctx = {}) {
                     }
                 } else if (idx > 0) {
                     rows[idx - 1].focus();
-                } else if (views.focusTop) {
-                    // keyboard-model §3: the universal ↑-crossing — the tab
-                    // strip when visible, else the box (was: straight to the
-                    // box, skipping the strip rung every other list stops at).
-                    views.focusTop();
+                } else if (views.focusListExit || views.focusTop) {
+                    // keyboard-model §3 + §2.5: the universal ↑-crossing —
+                    // the in-list toolbar when the active view has one (the
+                    // search view has none), then the tab strip when visible,
+                    // else the box.
+                    if (views.focusListExit)
+                        views.focusListExit();
+                    else
+                        views.focusTop();
                 } else {
                     searchInput.focus();
                 }

@@ -47,13 +47,16 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 ```
 ┌ Header: search box → ☆ quick-add → ⚙ tools ┐  ←/→ walk the row · ↓ to the tabs
 ├ (banner, only while shown — Tab reaches it) ┤
-├ Tab strip: six view tabs                    ┤  ←/→ switch · ↑ box · ↓ list
-├ List: the active view's rows                ┤  ↑ past the top → the tab
+├ Tab strip: six view tabs                    ┤  ←/→ switch · ↑ box · ↓ next rung
+├ Toolbar: atop Stats/Dead/Duplicates         ┤  ←/→ walk controls · ↑ tabs · ↓ list
+├ List: the active view's rows                ┤  ↑ past the top → toolbar (or tab)
 └─────────────────────────────────────────────┘
 ```
 
-- **`↓` in the search box** lands on the current tab; **`↓` again** enters the list at its remembered row.
-- **`↑` past the first row** of any list crosses to the current tab; **`↑` again** reaches the search box. (Hiding the tab strip collapses the chain to box ⇄ list directly.)
+- **`↓` in the search box** lands on the current tab; **`↓` again** enters the next rung down: Stats/Dead/Duplicates stop at the **in-list toolbar's** first control first, and only a further `↓` enters the list (at its remembered row); the tree/search/recent views have no toolbar and go straight to the list.
+- **`↑` past the first row** crosses to the toolbar (to the current tab when there is none); **`↑` on the toolbar** reaches the tab; **`↑` again** the search box. (Hiding the tab strip flows the chain through the remaining rungs directly.)
+- **`←`/`→` on the toolbar** walk every usable control in reading order and stop at the edges (RTL mirrors). **Native control semantics win**: a `<select>` (the Duplicates strategy/scope) keeps `↑`/`↓` for changing its option — leave it with `←`/`→`; on buttons and checkboxes `↑`/`↓` leave the rung.
+- The toolbar re-renders together with the list (sort toggles, scan progress, regrouping) — **focus is restored in place**, never lost.
 - **`→` on the header row** — once the caret is at the end of the text — leaves the box for the quick-add star, then the tools button; **`←`** walks back and parks the caret at the end, ready to type. RTL locales mirror both.
 - **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → the banner's buttons (only while it is up) → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
 - **Focus memory**: leaving a list for the tab strip or header and coming back lands on the row you left, not the top.
@@ -63,7 +66,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 
 | Key | Action |
 |---|---|
-| `↑` `↓` | Move the selection (past the first row, `↑` crosses to the tab strip) |
+| `↑` `↓` | Move the selection (past the first row, `↑` crosses to the view's toolbar, or the tab strip) |
 | `Home` / `End` | First / last row (Mac: `Cmd+↑` / `Cmd+↓`) |
 | `PageUp` / `PageDown` | Scroll one viewport |
 | `Enter` / `Space` | Open (`Ctrl/Cmd+Enter` new tab; `Shift+Enter` new window) |
@@ -89,7 +92,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 | `Alt+Shift+S` | Global (any page) | Quick-add the current tab straight into the quick-add folder |
 | `Alt+Shift+B` | Global | Open the side panel |
 
-On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` jump to the ends, `↑` to the search box, `↓` into the list.
+On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` jump to the ends, `↑` to the search box, `↓` into the view's toolbar (or the list when there is none).
 
 ### 2.4 The Esc layer cake
 
@@ -136,7 +139,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - **Where counts come from**: ① bookmarks you open from this extension (popup/panel/search/any view); ② a background collector that notices navigations to bookmarked URLs from anywhere else — deduplicated, so one open never counts twice.
 - Rows show a count pill + a relative "last visited"; sort by **count** or **recency** (persisted).
-- **Recently visited section** (optional): reads Chrome history; bookmarked rows wear a ★, everything else has a one-click ☆ to file it. First use requests the optional `history` permission — decline and the section simply never appears.
+- **Recently visited section** (optional): reads Chrome history; bookmarked rows wear a ★, everything else has a one-click ☆ to file it. Every row carries the absolute visit time (sharing the second line with the path on wide layouts; the relative-time badge stays on the right). First use requests the optional `history` permission — decline and the section simply never appears.
 - **Privacy switches**: turning off *visit statistics* stops all recording instantly; both the view footer and the options page have a confirm-gated *Clear statistics* button.
 
 ### 3.4 Dead links
@@ -176,6 +179,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 - **Three modes in one box**: plain text fuzzy-searches bookmarks *and* folders (Enter on a bookmark opens it, Enter on a folder **jumps to it in the tree**); a leading `/` lists slash commands (prefix-matched — `/d` shows `/dead` and `/dupes`); an empty query shows the full command table.
 - **Command table** (every command has aliases): `/tree` `/search` `/recent` `/stats` `/dead` `/dupes` (view jumps), `/session` (save the window's tabs as a folder), `/options`, theme switches (e.g. `/dark`, or `/theme` to list all five), `/tabs` (tab-strip visibility), `/path` (row path labels).
 - **Bridge row**: a plain query offers "Search in the search view for …" at the bottom — Enter runs it in the full search view.
+- **Chrome around the box**: a × button inside the field clears the query (mouse-only, like the search box); a full-width close bar sits at the bottom center for mouse users — the keyboard way out is `Esc`.
 - The palette closes itself when it loses focus; `Esc` peels layers as usual.
 
 ## 5. Getting the classic look and feel back

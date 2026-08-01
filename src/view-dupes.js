@@ -339,6 +339,30 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
+    // --- Toolbar focus restore (final polish) --------------------------------
+    // The toolbar re-renders together with the groups (strategy/scope/scheme
+    // changes, every regroup, selection-mode toggles). Without a restore, a
+    // keyboard user holding focus on a control loses it to <body> on every
+    // repaint. The controls are positionally stable across re-renders, so an
+    // index suffices.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    const toolbarFocusIndex = () => {
+        if (typeof $list.querySelectorAll !== 'function')
+            return -1;
+        const controls = $list.querySelectorAll(TOOLBAR_SEL);
+        for (let i = 0, l = controls.length; i < l; i++)
+            if (controls[i] === document.activeElement)
+                return i;
+        return -1;
+    };
+    const restoreToolbarFocus = idx => {
+        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
+            return;
+        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
+        if (c && c.focus)
+            c.focus();
+    };
+
     const render = () => {
         if (selecting) {
             // prune selected keys whose group vanished (regroup) BEFORE the
@@ -357,7 +381,10 @@ export function initViewDupes(ctx = {}) {
                 html += renderGroup(groups[i]);
             html += '</ul>';
         }
+        // keep a focused toolbar control focused across the swap (see above)
+        const tbIdx = toolbarFocusIndex();
         $list.innerHTML = html;
+        restoreToolbarFocus(tbIdx);
         onRowsRendered();
         // Post-render focus restore for the head-key fold/expand (the head
         // element was replaced by the innerHTML swap).

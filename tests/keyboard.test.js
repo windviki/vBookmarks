@@ -1616,16 +1616,30 @@ describe('view-manager integration (v4 task-2)', () => {
 // stats seg button dispatched a synthetic click to a tree row and Delete
 // deleted one. The guard: action keys stay with the control, navigation keys
 // walk this list only, the container itself keeps the .focus-row fallback.
-describe('in-list toolbar controls (item 7b)', () => {
-    // A stats-like view: #stats-list containing a toolbar BUTTON and two
-    // bookmark rows, registered next to the tree in the view registry.
+//
+// Final polish (keyboard-model §2.5): the toolbar is a RUNG of the vertical
+// chain — ↓ enters the rows (remembered first), ↑ crosses to the strip/box,
+// ←/→ walk the rung's controls in reading order (dead ends at the edges).
+describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
+    // A stats-like view: #stats-list containing a .vbm-toolbar with TWO
+    // buttons and two bookmark rows, registered next to the tree in the view
+    // registry.
     const setupStatsList = () => {
-        const bag = {};
+        const bag = { rec: { focusTopCalls: 0 } };
         const ctx = setup({
             views: ({ tree, el }) => {
                 const listEl = el('DIV', 'stats-list');
+                const toolbar = el('DIV');
+                toolbar.classList.add('vbm-toolbar');
                 const btn = el('BUTTON', 'seg-btn');
-                btn.parentNode = listEl;
+                const btn2 = el('BUTTON', 'stats-clear');
+                toolbar._qsa['button, select, input'] = [btn, btn2];
+                // minimal closest(): the buttons live in the toolbar, the
+                // rows in plain lis
+                const btnClosest = sel => sel === '.vbm-toolbar' ? toolbar : null;
+                btn.closest = btnClosest;
+                btn2.closest = btnClosest;
+                toolbar.parentNode = listEl;
                 const mkRow = id => {
                     const li = el('LI', `stats-item-${id}`);
                     li.dataset.nodeId = id;
@@ -1646,7 +1660,7 @@ describe('in-list toolbar controls (item 7b)', () => {
                 listEl._qs['li:last-child a, li:last-child span'] = r2.a;
                 listEl._qs['.focus'] = r1.a;
                 listEl._qs['ul>li:first-child'] = r1.li;
-                Object.assign(bag, { listEl, btn, r1, r2 });
+                Object.assign(bag, { listEl, toolbar, btn, btn2, r1, r2 });
                 const statsEntry = { id: 'stats', el: listEl, typeAhead: false };
                 return {
                     lists: () => [
@@ -1656,7 +1670,7 @@ describe('in-list toolbar controls (item 7b)', () => {
                     listOf: el2 => (el2 === listEl ? statsEntry : null),
                     onEscapeActive: () => false,
                     escapeToTree: () => false,
-                    focusTop: () => {},
+                    focusTop: () => { bag.rec.focusTopCalls++; },
                     activate: () => {}
                 };
             }
@@ -1692,22 +1706,99 @@ describe('in-list toolbar controls (item 7b)', () => {
         expect(r1.a.focused).toBe(false);
     });
 
-    it('ArrowDown on a toolbar button jumps into THIS list\'s first row, never the tree\'s', () => {
+    it('ArrowDown on a toolbar button enters THIS list\'s remembered row, never the tree\'s', () => {
         const { ctx, listEl, btn, r1 } = setupStatsList();
         ctx.doc.activeElement = btn;
         const ev = makeEvent({ key: 'ArrowDown' });
         fire(listEl, 'keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(r1.a.focused).toBe(true);
+        expect(r1.a.focused).toBe(true); // the .focus-marked (remembered) row
         expect(ctx.f1.link.focused).toBe(false);
     });
 
-    it('ArrowUp on a toolbar button jumps to this list\'s last row', () => {
-        const { ctx, listEl, btn, r2 } = setupStatsList();
+    it('ArrowUp on a toolbar button crosses to the strip/box (focusTop), not the last row', () => {
+        const { ctx, listEl, btn, r2, rec } = setupStatsList();
         ctx.doc.activeElement = btn;
-        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
-        expect(r2.a.focused).toBe(true);
+        const ev = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(rec.focusTopCalls).toBe(1);
+        expect(r2.a.focused).toBe(false);
         expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('ArrowUp/Down on a toolbar SELECT keep the native option change (not hijacked)', () => {
+        const { ctx, listEl, btn } = setupStatsList();
+        btn.tagName = 'SELECT';
+        ctx.doc.activeElement = btn;
+        const down = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', down);
+        expect(down.defaultPrevented).toBe(false);
+        const up = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', up);
+        expect(up.defaultPrevented).toBe(false);
+    });
+
+    it('←/→ walk the rung\'s controls in reading order; the edges are dead ends', () => {
+        const { ctx, listEl, btn, btn2 } = setupStatsList();
+        ctx.doc.activeElement = btn;
+        const right = makeEvent({ key: 'ArrowRight' });
+        fire(listEl, 'keydown', right);
+        expect(right.defaultPrevented).toBe(true);
+        expect(btn2.focused).toBe(true);
+        // btn2 is the last control: another → is a dead end (not consumed)
+        const right2 = makeEvent({ key: 'ArrowRight' });
+        fire(listEl, 'keydown', right2);
+        expect(right2.defaultPrevented).toBe(false);
+        // ← walks back
+        const left = makeEvent({ key: 'ArrowLeft' });
+        fire(listEl, 'keydown', left);
+        expect(left.defaultPrevented).toBe(true);
+        expect(btn.focused).toBe(true);
+    });
+
+    it('←/→ mirror in RTL', () => {
+        const bag = {};
+        const ctx = setup({
+            rtl: true,
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'stats-list');
+                const toolbar = el('DIV');
+                toolbar.classList.add('vbm-toolbar');
+                const btn = el('BUTTON', 'seg-btn');
+                const btn2 = el('BUTTON', 'stats-clear');
+                toolbar._qsa['button, select, input'] = [btn, btn2];
+                const btnClosest = sel => sel === '.vbm-toolbar' ? toolbar : null;
+                btn.closest = btnClosest;
+                btn2.closest = btnClosest;
+                toolbar.parentNode = listEl;
+                const li = el('LI', 'stats-item-s1');
+                li.dataset.nodeId = 's1';
+                const a = el('A');
+                a.parentNode = li;
+                a.parentElement = li;
+                li.firstElementChild = a;
+                li.parentNode = listEl;
+                listEl._qs['li a, li span'] = a;
+                listEl._qs['.focus'] = a;
+                Object.assign(bag, { listEl, btn, btn2 });
+                const statsEntry = { id: 'stats', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, statsEntry],
+                    listOf: el2 => (el2 === listEl ? statsEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        ctx.doc.activeElement = bag.btn;
+        // physical ArrowLeft in RTL reads as "forward" → the next control
+        fire(bag.listEl, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(bag.btn2.focused).toBe(true);
+        fire(bag.listEl, 'keydown', makeEvent({ key: 'ArrowRight' }));
+        expect(bag.btn.focused).toBe(true);
     });
 
     it('Home on a toolbar button falls through to the container case (first row)', () => {
@@ -1716,6 +1807,19 @@ describe('in-list toolbar controls (item 7b)', () => {
         fire(listEl, 'keydown', makeEvent({ key: 'Home' }));
         expect(r1.a.focused).toBe(true);
         expect(ctx.f1.link.focused).toBe(false);
+    });
+
+    it('inline row controls walk rows relative to the OWNING row (↑ past the top crosses)', () => {
+        const { ctx, listEl, r1, r2, rec } = setupStatsList();
+        // a keeper-radio-like button inside the first row
+        const radio = { ...r1.a, tagName: 'BUTTON', closest: sel => (sel === 'li' ? r1.li : null) };
+        ctx.doc.activeElement = radio;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(r2.a.focused).toBe(true); // next row, not the first row
+        // ↑ from the top row's control takes the toolbar/strip crossing
+        ctx.doc.activeElement = radio;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(rec.focusTopCalls).toBe(1);
     });
 
     it('focus on the list container itself keeps the .focus-row walk (ArrowDown)', () => {

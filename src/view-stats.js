@@ -19,7 +19,10 @@
  *      second line. Clicking opens through the shared bookmarkHandler,
  *      which is also the collection point (neat.js onOpenBookmark).
  *   2. 最近访问 (statsSectionRecent) — the latest chrome.history entries,
- *      most recent first, URL-deduped, capped at HISTORY_RECENT_MAX. The
+ *      most recent first, URL-deduped, capped at HISTORY_RECENT_MAX. Every
+ *      row shows its last-visit time in both layout slots (relative label
+ *      inline, absolute time on the wide/panel second line — final polish).
+ *      The
  *      section's point is the URLs that are NOT in the bookmark tree:
  *      an unbookmarked row carries no row id (no data-node-id — the open
  *      still goes through the shared bookmarkHandler via the anchor href,
@@ -257,17 +260,28 @@ export function initViewStats(ctx = {}) {
         if (historyPerm !== true || !histRows.length)
             return '';
         let html = '';
+        const showPath = views.showItemPath();
         for (let i = 0, l = histRows.length; i < l; i++) {
             const r = histRows[i];
             const head = i === 0 ? sectionHead('statsSectionRecent') : '';
             const cls = `vbm-row stats-hist-row${i === 0 ? ' has-head' : ''}`;
+            // Every entry carries its last-visit time in BOTH layout forms
+            // (final polish): the narrow inline right slot keeps the relative
+            // label, while the wide/panel second line (which REPLACES the
+            // right slot per the container query) gets the absolute time —
+            // it used to render nothing there, so wide/panel rows showed no
+            // time at all. Same recipe as view-recent (§3.3).
+            const absTime = new Date(r.t || 0).toLocaleString();
             if (r.bookmarkId) {
                 // Bookmarked: ★ badge + real row id — the open self-counts
                 // and the bookmark context menu applies; no star button.
+                const path = views.pathOf(r.bookmarkId);
                 html += `<li class="${cls}" id="stats-hist-${r.bookmarkId}" role="listitem" ` +
                     `data-node-id="${r.bookmarkId}">` +
                     treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', r.bookmarkId, null, {
+                        path,
                         rightText: relTimeLabel(r.t, _m),
+                        subText: (showPath && path) ? `${path} · ${absTime}` : absTime,
                         badge: { text: '★', cls: 'starred', aria: _m('statsHistoryBookmarked') }
                     }) +
                     head +
@@ -277,7 +291,8 @@ export function initViewStats(ctx = {}) {
                 // hover-revealed ☆ row button for the one-click add.
                 html += `<li class="${cls}" role="listitem">` +
                     treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', null, null, {
-                        rightText: relTimeLabel(r.t, _m)
+                        rightText: relTimeLabel(r.t, _m),
+                        subText: absTime
                     }) +
                     `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${i}" ` +
                     `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
@@ -321,6 +336,29 @@ export function initViewStats(ctx = {}) {
         return html;
     };
 
+    // --- Toolbar focus restore (final polish) --------------------------------
+    // The toolbar re-renders together with the rows (a sort switch, a clear,
+    // every scan-progress tick). Without a restore, a keyboard user holding
+    // focus on a control loses it to <body> on every repaint. The controls
+    // are positionally stable across re-renders, so an index suffices.
+    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
+    const toolbarFocusIndex = () => {
+        if (typeof $list.querySelectorAll !== 'function')
+            return -1;
+        const controls = $list.querySelectorAll(TOOLBAR_SEL);
+        for (let i = 0, l = controls.length; i < l; i++)
+            if (controls[i] === document.activeElement)
+                return i;
+        return -1;
+    };
+    const restoreToolbarFocus = idx => {
+        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
+            return;
+        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
+        if (c && c.focus)
+            c.focus();
+    };
+
     const render = () => {
         let html = renderToolbar();
         if (!enabled()) {
@@ -333,7 +371,12 @@ export function initViewStats(ctx = {}) {
             // before, and the toggle looked dead when every count tied).
             html += '<ul role="list">' + renderStatsSection() + renderHistorySection() + '</ul>';
         }
+        // Final polish: keep a focused toolbar control focused across the
+        // innerHTML swap (sort switch re-renders the bar) — positionally
+        // stable index, or the keyboard rung dies on every refresh.
+        const tbIdx = toolbarFocusIndex();
         $list.innerHTML = html;
+        restoreToolbarFocus(tbIdx);
         onRowsRendered();
     };
 
@@ -507,28 +550,9 @@ export function initViewStats(ctx = {}) {
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
 
-    // Final polish (v4task-2-list §3.4): segmented-control arrow keys — ←/→
-    // move focus within the sort seg (the buttons themselves activate
-    // natively via Enter/Space). Bubble phase suffices: keyboard.js's
-    // control guard ignores ArrowLeft/Right on non-row elements.
-    $list.addEventListener('keydown', e => {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
-            return;
-        const t = e.target;
-        if (!t || !t.classList || !t.classList.contains('seg-btn'))
-            return;
-        const seg = t.parentNode;
-        const btns = seg && seg.querySelectorAll ? seg.querySelectorAll('.seg-btn') : [];
-        let idx = -1;
-        for (let i = 0, l = btns.length; i < l; i++)
-            if (btns[i] === t)
-                idx = i;
-        if (idx < 0 || btns.length < 2)
-            return;
-        e.preventDefault();
-        const dir = e.key === 'ArrowRight' ? 1 : -1;
-        btns[(idx + dir + btns.length) % btns.length].focus();
-    });
+    // (v4task-2-list §3.4 superseded by the final-polish toolbar rung: ←/→
+    // walk ALL of the toolbar's controls, handled by keyboard.js's non-row
+    // branch — a view-local seg-only walker would double-step.)
 
     // Rows without a bookmark id: unbookmarked history rows now bubble to
     // the body-level handler, which gives them their own slim menu

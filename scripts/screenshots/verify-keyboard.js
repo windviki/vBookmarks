@@ -232,9 +232,13 @@ const SEED = `
 
     // ====================================================================
     // §2.2c per-view ↑↓ row navigation + crossings (v4 final polish):
-    // every registered list walks rows with ↑/↓, ↑ past the first row
-    // crosses to the tab strip (views.focusTop), dupes member ← returns
-    // to the group head and head ←/→ collapses/expands the group.
+    // every registered list walks rows with ↑/↓; views with an in-list
+    // toolbar (stats/dead/dupes) treat it as a rung — strip ↓ lands on its
+    // first control, ←/→ walk the rung (a <select> keeps native ↑/↓),
+    // control ↓ enters the rows, first-row ↑ returns to the rung, rung ↑
+    // crosses to the tab strip; toolbar-less views cross strip-wards
+    // directly. Dupes member ← returns to the group head and head ←/→
+    // collapses/expands the group.
     // ====================================================================
     console.log('═══ §2.2c 各视图行导航/越顶 ═══');
     const activeLiIndex = listSel => $(sel => {
@@ -288,38 +292,88 @@ const SEED = `
     check('recent ↑ past top: tab strip',
         await focusedTab() === 'view-tab-recent', await activeDesc());
 
-    // --- stats (three seeded bookmark rows) ---
+    // --- stats (three seeded bookmark rows + the §2.5 toolbar rung) ---
     await page.click('#view-tab-stats'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('stats ↓ from strip: the toolbar rung (first control)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.stats-toolbar')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('stats toolbar →: next control', await $(() =>
+        document.activeElement && document.activeElement.dataset.sort === 'recent'),
+        await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(200);
+    check('stats toolbar ←: back', await $(() =>
+        document.activeElement && document.activeElement.dataset.sort === 'count'),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#stats-list');
-    check('stats ↓ from strip: first bookmark-stats row', st.idx === 0, JSON.stringify(st));
+    check('stats toolbar ↓: first bookmark-stats row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#stats-list');
     check('stats ↓: next row', st.idx === 1, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('stats ↑ past top: tab strip',
+    check('stats ↑ past top: back to the toolbar rung', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.stats-toolbar')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('stats toolbar ↑: tab strip',
         await focusedTab() === 'view-tab-stats', await activeDesc());
 
-    // --- dead (cached scan renders two result rows) ---
+    // --- dead (cached scan renders two result rows + the toolbar rung) ---
     await page.click('#view-tab-dead'); await sleep(700);
     await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dead ↓ from strip: the toolbar rung (rescan)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');
-    check('dead ↓ from strip: first result row', st.idx === 0, JSON.stringify(st));
+    check('dead toolbar ↓: first result row', st.idx === 0, JSON.stringify(st));
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dead-list');
     check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
     await page.keyboard.press('ArrowUp'); await sleep(200);
     await page.keyboard.press('ArrowUp'); await sleep(200);
-    check('dead ↑ past top: tab strip',
+    check('dead ↑ past top: the toolbar rung', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.dead-toolbar')),
+        await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead toolbar ↑: tab strip',
         await focusedTab() === 'view-tab-dead', await activeDesc());
 
-    // --- dupes: head ⇄ members, member ← returns, head ←/→ folds ---
+    // --- dupes: the toolbar rung (a select keeps its native ↑/↓ — leave it
+    // by ←/→), then head ⇄ members, member ← returns, head ←/→ folds ---
     await page.click('#view-tab-dupes'); await sleep(900);
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes ↓ from strip: group head focused', await $(() =>
+    check('dupes ↓ from strip: the toolbar rung (strategy select)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-strategy')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes toolbar →: scope select', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-scope')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes toolbar →: scheme checkbox', await $(() =>
+        document.activeElement && document.activeElement.type === 'checkbox'),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes toolbar →: apply-all button', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-apply-all')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes toolbar ↓: group head focused', await $(() =>
         document.activeElement && document.activeElement.classList.contains('group-head')),
         await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dupes head ↑ past top: back to the toolbar rung', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dupes-strategy')),
+        await activeDesc());
+    // back to the head: the select's ↓ is native, so walk the rung first
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
     await page.keyboard.press('ArrowDown'); await sleep(200);
     st = await activeLiIndex('#dupes-list');
     check('dupes ↓: head→first member', st.idx === 1, JSON.stringify(st));

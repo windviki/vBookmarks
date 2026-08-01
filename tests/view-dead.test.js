@@ -941,60 +941,24 @@ describe('selection mode (v4 task-3 #4)', () => {
     });
 });
 
-// Final polish: the filter seg gets the same ←/→ focus movement as the
-// stats sort seg (buttons activate natively via Enter/Space).
-describe('filter seg arrow keys', () => {
-    const segSetup = () => {
-        const focused = [];
-        const mkBtn = name => ({
-            name,
-            classList: { contains: c => c === 'dead-filter-btn' },
-            focus() { focused.push(name); }
-        });
-        const btnA = mkBtn('all');
-        const btnB = mkBtn('dead');
-        const btnC = mkBtn('marked');
-        const seg = { querySelectorAll: sel => sel === '.dead-filter-btn' ? [btnA, btnB, btnC] : [] };
-        btnA.parentNode = seg;
-        btnB.parentNode = seg;
-        btnC.parentNode = seg;
-        return { focused, btnA, btnB, btnC };
-    };
-    const mkKey = (key, target) => ({
-        key,
-        target,
-        prevented: 0,
-        preventDefault() { this.prevented++; }
-    });
-
-    it('→ moves focus to the next filter button', () => {
+// Final polish (keyboard-model §2.5): the view no longer walks the filter
+// seg locally — ←/→ on toolbar controls are walked by keyboard.js's non-row
+// branch across the whole toolbar rung (a view-local handler would
+// double-step). The list's remaining keydown listener (the dead-start
+// Enter/Space runner) leaves arrows unconsumed.
+describe('filter seg arrow keys (§2.5 — owned by the toolbar rung)', () => {
+    it('the view consumes no ←/→/↑/↓ on filter buttons', () => {
         const { fire } = setup({});
-        const { focused, btnB } = segSetup();
-        const ev = mkKey('ArrowRight', btnB);
-        fire('keydown', ev);
-        expect(focused).toEqual(['marked']);
-        expect(ev.prevented).toBe(1);
-    });
-
-    it('← on the first button wraps to the last', () => {
-        const { fire } = setup({});
-        const { focused, btnA } = segSetup();
-        const ev = mkKey('ArrowLeft', btnA);
-        fire('keydown', ev);
-        expect(focused).toEqual(['marked']);
-        expect(ev.prevented).toBe(1);
-    });
-
-    it('ignores non-seg targets and other keys', () => {
-        const { fire } = setup({});
-        const { focused, btnA } = segSetup();
-        const notSeg = { classList: { contains: () => false }, parentNode: null };
-        const ev1 = mkKey('ArrowRight', notSeg);
-        fire('keydown', ev1);
-        const ev2 = mkKey('ArrowDown', btnA);
-        fire('keydown', ev2);
-        expect(focused).toEqual([]);
-        expect(ev1.prevented).toBe(0);
-        expect(ev2.prevented).toBe(0);
+        const btn = { classList: { contains: c => c === 'dead-filter-btn' } };
+        for (const key of ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp']) {
+            const ev = {
+                key,
+                target: btn,
+                prevented: 0,
+                preventDefault() { this.prevented++; }
+            };
+            fire('keydown', ev);
+            expect(ev.prevented).toBe(0);
+        }
     });
 });

@@ -83,27 +83,87 @@ export function initKeyboard(ctx = {}) {
         if (keyValue === 'ArrowUp' && metaKey)
             keyValue = 'Home'; // cmd + up (Mac)
         if (!/^(a|span)$/i.test(item.tagName)) {
-            // Focus is on the list container itself or on an in-list toolbar
-            // control (stats seg buttons, dead/dupes toolbar buttons/selects).
+            // Focus is on the list container itself, on an in-list toolbar
+            // control (stats seg buttons, dead/dupes toolbar buttons/selects)
+            // or on an inline row control (keeper radio, ⚑/× row buttons).
             // Action keys (Enter/Delete/F2/letters) stay with the control,
             // which has its own semantics for them; navigation keys walk THIS
             // list's rows — never a row of another (possibly hidden) list.
-            if (!/^(ArrowDown|ArrowUp|Home|End|PageDown|PageUp)$/.test(keyValue))
+            if (!/^(ArrowDown|ArrowUp|ArrowLeft|ArrowRight|Home|End|PageDown|PageUp)$/.test(keyValue))
                 return;
             if (item !== this) {
-                // A toolbar control: Arrow keys jump straight into the list
-                // (Down → first row, Up → last row, listbox-style). Home/End/
-                // Page fall through — their cases work off the container
-                // itself and never touch the fallback row.
-                if (keyValue === 'ArrowDown' || keyValue === 'ArrowUp') {
-                    const target = keyValue === 'ArrowDown'
-                        ? this.querySelector('li a, li span')
-                        : (this.querySelector('li:last-child a, li:last-child span') ||
-                           this.querySelector('li a, li span'));
-                    if (!target)
+                // keyboard-model §2.5 (final-polish revision): the toolbar is
+                // a rung of the vertical chain, sitting between the tab strip
+                // and the rows exactly where it renders.
+                const toolbar = item.closest && item.closest('.vbm-toolbar');
+                if (toolbar) {
+                    if (keyValue === 'ArrowDown' || keyValue === 'ArrowUp') {
+                        // A <select> keeps its native ↑/↓ (option change when
+                        // closed, popup navigation when open) — leave the rung
+                        // via ←/→ instead.
+                        if (item.tagName === 'SELECT')
+                            return;
+                        e.preventDefault();
+                        if (keyValue === 'ArrowDown') {
+                            // ↓ into the rows: the remembered row first (the
+                            // same landing the strip's ↓ makes).
+                            const target = this.querySelector('.focus')
+                                || this.querySelector('li a, li span');
+                            if (target)
+                                target.focus();
+                        } else {
+                            // ↑ out of the rung: the strip, else the box.
+                            views.focusTop();
+                        }
+                        return;
+                    }
+                    if (keyValue === 'ArrowLeft' || keyValue === 'ArrowRight') {
+                        // ←/→ walk the rung's enabled controls in reading
+                        // order (RTL mirrors); the rung's edges are dead
+                        // ends, the header-chain contract.
+                        const controls = toolbar.querySelectorAll
+                            ? toolbar.querySelectorAll('button, select, input') : [];
+                        const walk = [];
+                        for (let i = 0, l = controls.length; i < l; i++)
+                            if (!controls[i].disabled)
+                                walk.push(controls[i]);
+                        const idx = walk.indexOf(item);
+                        if (idx < 0)
+                            return;
+                        const dir = keyValue === 'ArrowRight' ? 1 : -1;
+                        const step = rtl ? -dir : dir;
+                        const next = walk[idx + step];
+                        if (!next)
+                            return;
+                        e.preventDefault();
+                        next.focus();
+                        return;
+                    }
+                    // Home/End/Page* fall through to the list's own cases —
+                    // they work off the container and never touch the row
+                    // under the control.
+                } else {
+                    // Inline row control or focusable row container (dead
+                    // start row): ↑/↓ walk rows relative to the OWNING row;
+                    // everything else keeps its native semantics.
+                    const ownLi = item.closest && item.closest('li');
+                    if (!ownLi)
+                        return;
+                    if (keyValue !== 'ArrowDown' && keyValue !== 'ArrowUp')
                         return;
                     e.preventDefault();
-                    target.focus();
+                    const sib = keyValue === 'ArrowDown'
+                        ? ownLi.nextElementSibling : ownLi.previousElementSibling;
+                    const target = sib && sib.querySelector ? sib.querySelector('a, span') : null;
+                    if (target) {
+                        target.focus();
+                    } else if (keyValue === 'ArrowUp') {
+                        // Owning row was the top row: the §2.1/§2.5 crossing.
+                        if (views.focusListExit)
+                            views.focusListExit();
+                        else
+                            views.focusTop();
+                    }
                     return;
                 }
             } else {
@@ -168,10 +228,14 @@ export function initKeyboard(ctx = {}) {
                     if (parentPrevLi && parentPrevLi.tagName === 'LI') {
                         parentPrevLi.querySelector('a, span').focus();
                     } else {
-                        // v4task-2-list §2.1: ↑ past the first row crosses
-                        // into the tab strip (or the search box when the
-                        // strip is hidden).
-                        views.focusTop();
+                        // v4task-2-list §2.1 + §2.5 (final polish): ↑ past
+                        // the first row crosses into the in-list toolbar when
+                        // the active view has one, else the tab strip (or the
+                        // search box when the strip is hidden).
+                        if (views.focusListExit)
+                            views.focusListExit();
+                        else
+                            views.focusTop();
                     }
                 }
             }

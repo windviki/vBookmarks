@@ -41,26 +41,32 @@ Top to bottom, the popup is:
 - The **banner** is transient chrome, not a rung: it joins the `Tab` cycle
   and answers to `Esc`, but arrow keys never stop on it (§7).
 - Each view's **in-list toolbar** (Stats sort, Dead scan controls, Duplicates
-  strategy/scope) is part of zone 4: a `Tab` stop group, never an arrow
-  rung — arrows are for rows (§2.4).
+  strategy/scope) is part of zone 4 AND a rung of the arrow chain: it sits
+  between the strip and the rows for `↑`/`↓` and its controls walk on
+  `←`/`→` (§2.5).
 
 ## 2. The arrow-key laws
 
 ### 2.1 The vertical chain (browsing state)
 
 ```
-search box  ──↓──▶  tab strip  ──↓──▶  active view's rows
-           ◀──↑──             ◀──↑──  (↑ past the first row)
+search box  ──↓──▶  tab strip  ──↓──▶  [in-list toolbar]  ──↓──▶  active view's rows
+           ◀──↑──             ◀──↑──   (stats/dead/dupes)  ◀──↑──  (↑ past the first row)
 ```
 
 - **Box `↓`** (caret at the text end, browsing state — for the search-view
   exception see §3) lands on the **active tab**; a second `↓` enters the
-  list. *(search.js keydown → views.focusDown)*
-- **Strip `↓`** enters the active list at its **remembered row** (focus
-  memory), else the first row. *(view-manager strip keydown → focusDefault)*
-- **`↑` past the first row** of any list crosses to the **active tab**;
-  **`↑` again** reaches the box. With the strip hidden, both crossings land
-  on the box directly (§7). *(keyboard.js ArrowUp fallback → views.focusTop)*
+  zone below. *(search.js keydown → views.focusDown)*
+- **Strip `↓`** lands on the active view's **in-list toolbar** when it has
+  one (§2.5), else enters the list at its **remembered row** (focus
+  memory), else the first row. *(view-manager strip keydown →
+  focusToolbar/focusDefault)*
+- **Toolbar `↓`** enters the list (remembered row first); **toolbar `↑`**
+  crosses to the strip/box. *(keyboard.js non-row branch)*
+- **`↑` past the first row** of any list crosses to the **toolbar** when
+  the active view has one, else the **active tab**; **`↑` again** reaches
+  the box. With the strip hidden, the chain re-flows over the surviving
+  rungs (§7). *(keyboard.js ArrowUp fallback → views.focusListExit)*
 - **Header buttons `↓`** behave like the box's `↓` (same focusDown rung).
 
 ### 2.2 The horizontal chain on the header row
@@ -108,14 +114,38 @@ Structural overrides, additive only:
 - **Dead/Stats/Duplicates letter keys** stay view-local (`M` mark, `R`
   reveal, `K` keeper); type-ahead exists only in tree + search results.
 
-### 2.5 In-list toolbar controls
+### 2.5 In-list toolbar controls (a real rung)
 
-Focus on a toolbar control (a button/select inside a list view): `↓` jumps
-to the **first row**, `↑` to the **last row** (listbox convention);
-`Home`/`End`/`Page*` fall through to the list's own handler; action keys
-keep the control's native semantics. `←`/`→` are not consumed. The toolbar
-itself is never an arrow rung between the strip and the rows — reaching it
-is `Tab`'s job (§5).
+The stats/dead/dupes toolbars render between the strip and the rows, so the
+naive layout correspondence makes them a **rung** of the vertical chain
+(revised in the final polish — they used to be Tab-only territory, which
+left the arrow chain inconsistent with the Tab ring):
+
+- **Entering**: strip `↓` lands on the rung's **first enabled control**;
+  `↑` past the list's first row lands there too. Toolbar-less views
+  (tree/search/recent) skip the rung transparently.
+- **`↓`** from a control enters the rows (remembered row first); **`↑`**
+  crosses to the strip, or to the box when the strip is hidden.
+- **`←`/`→`** walk the rung's enabled controls in reading order (RTL
+  mirrors); the edges are dead ends — the header-chain contract. This
+  supersedes the old view-local seg walkers (stats sort, dead filter),
+  which would double-step.
+- **Native semantics win inside a control**: a `<select>` keeps its native
+  `↑`/`↓` (option change when closed, popup navigation when open) — leave
+  it via `←`/`→`. Buttons and the scheme checkbox leave the rung on
+  `↑`/`↓`; action keys (Enter/Space/letters) are never hijacked.
+- **Home/End/Page\*** fall through to the list's own handler (first/last
+  row, one viewport), unchanged.
+- **Focus survives re-renders**: sort switches, filter clicks, regroups and
+  scan-progress ticks re-render the toolbar with the rows; each view
+  restores focus to the same-index control across the innerHTML swap, so
+  the rung never drops the user's place. *(the views' render functions)*
+- **Inline row controls** (the dupes keeper radio, the dead ⚑/× buttons)
+  are not the rung: when one holds focus (mouse click), `↑`/`↓` walk rows
+  relative to its owning row, and `↑` past the top takes the §2.1 crossing.
+
+`Tab` reaches the rung too, exactly as before (§5) — arrow chain and Tab
+ring now agree.
 
 ### 2.6 Context menus
 
@@ -207,7 +237,7 @@ endpoint moves to the next surviving rung.
 
 | Setting | Effect on the model |
 |---|---|
-| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ list directly (focusTop/focusDown read the flag live). Strip keys don't exist; `Ctrl+1…9` and the palette still reach every view. |
+| `showViewTabs` off (`body.no-view-tabs`) | `↑`-past-top and box `↓` retarget: box ⇄ [toolbar] ⇄ list (focusTop/focusDown/focusListExit read the flag live; the toolbar rung survives — it belongs to the view, not the strip). Strip keys don't exist; `Ctrl+1…9` and the palette still reach every view. |
 | One feature view disabled (`showRecentBookmarks` / `showStatsView` / `showDeadView` / `showDupesView`) | No tab, activation refused, `Ctrl+N` indexes the visible set. A remembered startup view that is now disabled falls back to the tree. |
 | `quickAddEnabled` off | Header `→` chain: box → tools; `←` chain: tools → box. Tab cycle skips it. |
 | `showToolButton` off (or palette off, which hides it) | `→` from quick-add is a no-op; Tab cycle skips it. |
@@ -227,11 +257,11 @@ unreachable by `Tab`.
 
 | Law | Code | Tests |
 |---|---|---|
-| Vertical chain (§2.1) | `view-manager.js` focusTop/focusDown/strip keydown; `search.js` box keydown; `keyboard.js` ArrowUp fallback | `tests/view-manager.test.js`, `tests/search.test.js`, Docker `verify-keyboard.js` §2.2/§2.2c/§2.1d |
+| Vertical chain (§2.1) | `view-manager.js` focusTop/focusDown/focusListExit/strip keydown; `search.js` box keydown; `keyboard.js` ArrowUp fallback | `tests/view-manager.test.js`, `tests/search.test.js`, Docker `verify-keyboard.js` §2.2/§2.2c/§2.1d |
 | Header chain (§2.2) | `search.js` (box `→`), `keyboard.js` headerArrow | `tests/search.test.js`, `tests/keyboard.test.js` (header-row arrows), verify §2.1d |
 | Strip model (§2.3) | `view-manager.js` strip keydown | `tests/view-manager.test.js`, verify §2.2 |
 | List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search-history.test.js`, verify §2.2c/§4.3b |
-| Toolbars (§2.5) | `keyboard.js` non-row branch of treeKeyDown | verify §2.2c (dead/dupes/stats rows) |
+| Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render() | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), verify §2.2c |
 | Menus (§2.6) | `keyboard.js` contextKeyDown | `tests/keyboard.test.js`, `tests/context-menu.test.js` |
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |

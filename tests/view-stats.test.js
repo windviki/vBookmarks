@@ -447,6 +447,24 @@ describe('recent-history section (第四轮项9)', () => {
         expect(html).toContain('statsHistoryAdd');
     });
 
+    // Final polish: every history row carries its last-visit time in BOTH
+    // layout slots — the relative label inline (rightText) and the absolute
+    // time on the wide/panel second line (subText), which replaces the right
+    // slot per the container query and used to render nothing.
+    it('history rows carry the absolute last-visit time on the wide second line', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        const bookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        const unbookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
+        const absA = new Date(HISTORY[0].lastVisitTime).toLocaleString();
+        const absB = new Date(HISTORY[1].lastVisitTime).toLocaleString();
+        // the bookmarked row also gains the unified path tooltip + path prefix
+        expect(bookmarkedCall.meta.path).toBe('bar');
+        expect(bookmarkedCall.meta.subText).toBe(`bar · ${absA}`);
+        expect(unbookmarkedCall.meta.subText).toBe(absB);
+        expect(unbookmarkedCall.meta.rightText).toBe('timeJustNow');
+    });
+
     it('renders newest first, dedupes slash-folded URLs and skips unbookmarkable schemes', () => {
         const s = setup({
             hasHistoryPermission: true,
@@ -649,58 +667,22 @@ describe('dataset revision dirty-check (第四轮缝合)', () => {
     });
 });
 
-// Final polish (v4task-2-list §3.4): ←/→ move focus within the sort seg;
-// the buttons themselves activate natively via Enter/Space.
-describe('sort seg arrow keys', () => {
-    const segSetup = () => {
-        const focused = [];
-        const mkBtn = name => ({
-            name,
-            classList: { contains: c => c === 'seg-btn' },
-            focus() { focused.push(name); }
-        });
-        const btnA = mkBtn('count');
-        const btnB = mkBtn('recent');
-        const seg = { querySelectorAll: sel => sel === '.seg-btn' ? [btnA, btnB] : [] };
-        btnA.parentNode = seg;
-        btnB.parentNode = seg;
-        return { focused, btnA, btnB };
-    };
-    const mkKey = (key, target) => ({
-        key,
-        target,
-        prevented: 0,
-        preventDefault() { this.prevented++; }
-    });
-
-    it('→ moves focus to the next seg button', () => {
+// Final polish (keyboard-model §2.5): the view no longer walks the seg
+// locally — ←/→ on toolbar controls are walked by keyboard.js's non-row
+// branch across the whole toolbar rung (a view-local handler would
+// double-step). The view binds no keydown of its own; even fed directly,
+// the keys pass through unconsumed.
+describe('sort seg arrow keys (§2.5 — owned by the toolbar rung)', () => {
+    it('the view consumes no ←/→ on seg buttons', () => {
         const s = setup({});
-        const { focused, btnA } = segSetup();
-        const ev = mkKey('ArrowRight', btnA);
-        s.keydown(ev);
-        expect(focused).toEqual(['recent']);
-        expect(ev.prevented).toBe(1);
-    });
-
-    it('← on the first button wraps to the last', () => {
-        const s = setup({});
-        const { focused, btnA } = segSetup();
-        const ev = mkKey('ArrowLeft', btnA);
-        s.keydown(ev);
-        expect(focused).toEqual(['recent']);
-        expect(ev.prevented).toBe(1);
-    });
-
-    it('ignores non-seg targets and other keys', () => {
-        const s = setup({});
-        const { focused, btnA } = segSetup();
-        const notSeg = { classList: { contains: () => false }, parentNode: null };
-        const ev1 = mkKey('ArrowRight', notSeg);
-        s.keydown(ev1);
-        const ev2 = mkKey('ArrowDown', btnA);
-        s.keydown(ev2);
-        expect(focused).toEqual([]);
-        expect(ev1.prevented).toBe(0);
-        expect(ev2.prevented).toBe(0);
+        const btn = { classList: { contains: c => c === 'seg-btn' } };
+        const ev = {
+            key: 'ArrowRight',
+            target: btn,
+            prevented: 0,
+            preventDefault() { this.prevented++; }
+        };
+        s.keydown(ev); // no view-local listener → a no-op pass-through
+        expect(ev.prevented).toBe(0);
     });
 });
