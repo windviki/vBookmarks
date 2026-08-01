@@ -179,6 +179,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
     // either. Choices: Donate (opens the page, long snooze), Later (short
     // snooze), Don't show again (permanent opt-out).
     let newOrUpgrade = true;
+    // v4 task-3 #9: crossing into 4.x from a 3.x (or older) install — the
+    // donation card then carries the "what's new in v4" notice + guide link.
+    let upgradedToV4 = false;
     const mf = chrome.runtime.getManifest();
     const currentVer = parseVersion(mf["version"]);
     if (!store.get('currentVersion')) {
@@ -195,6 +198,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
             if ( (recordVer['major'] > currentVer['major']) ||
                 ((recordVer['major'] == currentVer['major']) && (recordVer['minor'] >= currentVer['minor'])) ){
                 newOrUpgrade = false;
+            } else if (recordVer['major'] < 4 && currentVer['major'] >= 4) {
+                upgradedToV4 = true;
             }
         }
     }
@@ -211,11 +216,26 @@ import { markPopupOpen } from './visit-stats-sw.js';
     store.remove('donationCountDown'); // retired in v4 (was the 10s timer)
 
     const $donation = $('donation');
+    // The v4 guide lives in the repo docs; pick the file by UI language.
+    const guideV4Url = `https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4${
+        (chrome.i18n.getUILanguage() || '').startsWith('zh') ? '.zh' : ''}.md`;
     const showDonation = (show) => {
         if (show) {
             if (newOrUpgrade) {
                 $('new-version-text').innerHTML = _m('versionMessage', 
                     [mf["version"], 'Github']);
+            }
+            // v4 task-3 #9: on the 3.x→4.x upgrade the card also surfaces the
+            // v4 changes notice + the online guide (locale-picked).
+            const v4Notice = $('v4-notice');
+            if (upgradedToV4) {
+                $('v4-notice-text').textContent = _m('donationV4Notice');
+                const guideLink = $('v4-guide-link');
+                guideLink.textContent = _m('donationV4GuideLink');
+                guideLink.href = guideV4Url;
+                v4Notice.hidden = false;
+            } else {
+                v4Notice.hidden = true;
             }
             $('donation-text').innerHTML = _m('donationMessage');
             $('donation-go').innerHTML = _m('donationGo');
@@ -258,7 +278,17 @@ import { markPopupOpen } from './visit-stats-sw.js';
                 toggle: id => viewDead.toggleMark(id)
             };
         },
-        get dupesMenu() { return { setKeeper: id => viewDupes.setKeeper(id) }; }
+        get dupesMenu() {
+            return {
+                setKeeper: id => viewDupes.setKeeper(id),
+                // v4 task-3 #16: group-head menu (labels resolved at open
+                // time, dispatch by group key)
+                cleanHint: key => viewDupes.cleanHint(key),
+                isCollapsed: key => viewDupes.isCollapsed(key),
+                cleanGroup: key => viewDupes.cleanGroup(key),
+                toggleGroup: key => viewDupes.toggleGroup(key)
+            };
+        }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after
@@ -294,6 +324,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
         rememberState: !store.get('dontRememberState'),
         // v4 task-2: search mode rides the view state machine
         views,
+        // v4 task-3 #15: the history rows' menu key mirrors the tree's rtl rule
+        rtl,
         // §2.3 R 键在树中定位：treeView 在下方才初始化，惰性闭包求值
         revealInTree: (...args) => treeView.revealInTree(...args),
         // 第五轮项3: results re-render wipes the dead-mark × overlays —
@@ -493,7 +525,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
         },
         // 第五轮项3: the lazy folder-expand renders rows outside
         // generateTree — re-lay the dead-mark × overlays on them too.
-        onRowsRendered: () => deadOverlayRefresh()
+        onRowsRendered: () => deadOverlayRefresh(),
+        // v4 task-3 #14: the onlyShowBMBar reveal guard toasts through the
+        // undo bar's generic action toast (undo inits above, plain value).
+        toastAction: undo.toastAction
     });
 
     // Recent view (v4 task-2 切片 B): the old in-tree recent section becomes
@@ -593,10 +628,21 @@ import { markPopupOpen } from './visit-stats-sw.js';
         actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks#changelogs", true, true);
     });
 
+    // v4 task-3 #9: the guide link on the upgrade notice (middle-click and
+    // the context menu use the href; left-click goes through actions so the
+    // popup-respecting open semantics stay uniform).
+    $('v4-guide-link').addEventListener('click', e => {
+        e.preventDefault();
+        actions.openBookmarkNewTab(guideV4Url, true, true);
+    });
+
     // Phase 3 (issue #30): quick-add star button — one click bookmarks the
     // current tab; when the page is already bookmarked the star is solid and
     // clicking opens the edit dialog for the existing bookmark.
+    // v4 task-3 #20: quickAddEnabled (default on) hides it outright.
     const quickAddBtn = $('quick-add-btn');
+    if (!store.get('quickAddEnabled', '1'))
+        quickAddBtn.classList.add('hidden');
     const quickAddToast = $('quick-add-toast');
     let quickAddToastTimer = null;
     const showQuickAddToast = (msgKey, sub) => {
@@ -705,8 +751,12 @@ import { markPopupOpen } from './visit-stats-sw.js';
 
     // Tool button (⋮): opens the command palette for feature discovery —
     // dead-link scan, duplicate cleanup, session save, and all slash commands.
+    // v4 task-3 #20: hidden when showToolButton is off, or when the palette
+    // itself is disabled (the button's only job is opening it).
     const toolBtn = $('tool-btn');
     if (toolBtn) {
+        if (!store.get('showToolButton', '1') || !store.get('paletteEnabled', '1'))
+            toolBtn.classList.add('hidden');
         toolBtn.title = _m('toolButtonTitle');
         toolBtn.addEventListener('click', () => palette.open());
     }
@@ -765,6 +815,11 @@ import { markPopupOpen } from './visit-stats-sw.js';
     menus.separatorMenu.addEventListener('mousemove', contextMouseMove);
     if (menus.searchHistoryMenu)
         menus.searchHistoryMenu.addEventListener('mousemove', contextMouseMove);
+    // final polish: same hover-focus for the two v4 task-3 menus
+    if (menus.histRowMenu)
+        menus.histRowMenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.dupesGroupMenu)
+        menus.dupesGroupMenu.addEventListener('mousemove', contextMouseMove);
 
     const contextMouseOut = function () {
         if (parseInt(this.style.opacity, 10))
@@ -775,6 +830,10 @@ import { markPopupOpen } from './visit-stats-sw.js';
     menus.separatorMenu.addEventListener('mouseout', contextMouseOut);
     if (menus.searchHistoryMenu)
         menus.searchHistoryMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.histRowMenu)
+        menus.histRowMenu.addEventListener('mouseout', contextMouseOut);
+    if (menus.dupesGroupMenu)
+        menus.dupesGroupMenu.addEventListener('mouseout', contextMouseOut);
 
     // Resizer
     const $resizerx = $('resizer-x');

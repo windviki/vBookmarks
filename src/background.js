@@ -147,18 +147,39 @@ chrome.commands.onCommand.addListener(async command => {
         }
         return;
     }
+    if (command === 'quick-add-bookmark') {
+        // Global quick-add (final polish): bookmark the active tab straight
+        // into the configured quick-add folder — the keyboard sibling of the
+        // page context menu below. Silent on purpose: no popup is up to show
+        // a toast in, and the star outcome is visible in the bookmarks tree.
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (!tab || !tab.url)
+                return;
+            const data = await chrome.storage.local.get({ quickAddFolderId: '1' });
+            await chrome.bookmarks.create({
+                title: tab.title || tab.url,
+                url: tab.url,
+                parentId: data.quickAddFolderId || '1'
+            });
+        } catch (error) {
+            console.warn('vBookmarks: quick-add command failed:', error);
+        }
+        return;
+    }
     if (command !== 'open-side-panel') {
         return;
     }
     // 提前标记侧边栏打开状态，确保在页面加载完成前
-    // storage.onChanged 已触发 applyPanelBehavior(true)
-    await chrome.storage.session.set({ sidePanelIsOpen: true });
+    // storage.onChanged 已触发 applyPanelBehavior(true)；心跳同时写入，
+    // 使 SW 重启落在“面板尚未加载完”窗口内时标记仍被判为存活（#19）。
+    await chrome.storage.session.set({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
     try {
         const currentWindow = await chrome.windows.getCurrent();
         await chrome.sidePanel.open({ windowId: currentWindow.id });
     } catch (error) {
         // 打开失败时清除标记
-        await chrome.storage.session.remove('sidePanelIsOpen');
+        await chrome.storage.session.remove(['sidePanelIsOpen', 'sidePanelHeartbeat']);
         console.warn('vBookmarks: failed to open side panel:', error);
     }
 });

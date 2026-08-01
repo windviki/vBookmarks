@@ -51,6 +51,15 @@
 				"linux": "Ctrl+Shift+K"
 			},
 			"description": "__MSG_openCommandPaletteCommand__"
+		},
+		"quick-add-bookmark": {
+			"suggested_key": {
+				"windows": "Alt+Shift+S",
+				"mac": "Command+Shift+S",
+				"chromeos": "Alt+Shift+S",
+				"linux": "Alt+Shift+S"
+			},
+			"description": "__MSG_quickAddBookmarkCommand__"
 		}
 	},
 	"permissions": [

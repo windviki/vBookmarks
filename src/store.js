@@ -49,6 +49,9 @@
         'autoResizePopup',
         // v4 task-2: view layer (slice A)
         'activeView', 'viewState', 'showViewTabs', 'showItemPath',
+        // v4 task-3: remember-last-view / tab badges / classic-experience
+        // feature switches (items 6, 18, 20)
+        'rememberView', 'showTabBadges', 'paletteEnabled', 'quickAddEnabled', 'showToolButton',
         // v4 task-2: non-empty folder delete confirmation (slice A2, §5.7)
         'confirmDeleteFolder',
         // v4 task-2: recent view + search history (slice B, §4.3/§5.3)

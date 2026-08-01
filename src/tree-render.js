@@ -154,7 +154,7 @@ export function initTreeRender(ctx = {}) {
         const isBookmarklet = /^javascript:/i.test(url);
         const faviconHtml = isBookmarklet
             ? DOCUMENT_CODE_ICON
-            : `<img src="${getFaviconUrl(url)}" width="16" height="16" alt="">`;
+            : `<img src="${getFaviconUrl(url)}" width="16" height="16" alt="" loading="lazy">`;
         if (isBookmarklet && url.length > 140)
             tooltipURL = `${url.slice(0, 140)}...`;
         tooltipURL = htmlspecialchars(tooltipURL);
@@ -210,7 +210,7 @@ export function initTreeRender(ctx = {}) {
             }
         }
 
-        return `<a href="${u}" title="${tooltip}" tabindex="0" ${extras} class="tree-item-link">
+        return `<a href="${u}" title="${tooltip}" tabindex="-1" ${extras} class="tree-item-link">
                 <div class="favicon-container">
                     ${faviconHtml}
                     ${syncIndicator}
@@ -246,7 +246,7 @@ export function initTreeRender(ctx = {}) {
             }
         }
 
-        return `<span tabindex="0" ${extras} class="tree-item-span">
+        return `<span tabindex="-1" ${extras} class="tree-item-span">
 		   <b class="twisty">${CHEVRON_ICON}</b>
 		   <div class="favicon-container">
 		       ${FOLDER_ICON}
@@ -261,7 +261,7 @@ export function initTreeRender(ctx = {}) {
         // stretching from the row's indented start edge to the right margin
         // using the theme border token. No inline color or manual width calc.
         const aStyle = `style="-webkit-padding-start: ${paddingStart}px"`;
-        return `<a href="" tabindex="0" ${aStyle} class="tree-item-link separator-row">
+        return `<a href="" tabindex="-1" ${aStyle} class="tree-item-link separator-row">
                 <hr class="separator-line" role="separator">
                 </a>`;
     };

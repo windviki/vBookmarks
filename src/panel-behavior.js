@@ -14,6 +14,18 @@
 // even with a panel open (the "option sometimes does nothing" report).
 // Chrome forgets setPanelBehavior across worker restarts, so startup must
 // re-derive the behavior from option OR live panel state.
+//
+// v4 task-3 #19: the bare marker cannot prove a LIVE panel. storage.session
+// can outlive the panel page when the browser crashes or the panel renderer
+// is killed without pagehide — the stale `sidePanelIsOpen: true` then made
+// every worker start re-derive toggle mode with the option OFF, so clicking
+// the action kept opening/closing the side panel forever (the "历史版本数据
+// 残留" report). The panel page now heartbeats `sidePanelHeartbeat`
+// (Date.now) every PANEL_HEARTBEAT_MS; a marker counts as live only with a
+// heartbeat fresher than PANEL_STALE_MS. Stale markers are removed on read.
+
+export const PANEL_HEARTBEAT_MS = 20000;
+export const PANEL_STALE_MS = 90000; // > 4 heartbeats; slack for timer throttling
 
 export const initPanelBehavior = () => {
     const applyPanelBehavior = open => {
@@ -25,14 +37,25 @@ export const initPanelBehavior = () => {
         applyPanelBehavior(optionOn || panelOpen);
     };
 
+    // #19: marker + fresh heartbeat = live panel. A marker without one is
+    // residue from a dead panel — drop it so it stops being re-derived.
+    const readPanelLive = cb => {
+        chrome.storage.session.get(['sidePanelIsOpen', 'sidePanelHeartbeat'], session => {
+            const live = !!session.sidePanelIsOpen
+                && typeof session.sidePanelHeartbeat === 'number'
+                && Date.now() - session.sidePanelHeartbeat < PANEL_STALE_MS;
+            if (session.sidePanelIsOpen && !live)
+                chrome.storage.session.remove(['sidePanelIsOpen', 'sidePanelHeartbeat']);
+            cb(live);
+        });
+    };
+
     // Re-derive the behavior at every service worker startup.
     chrome.storage.local.get('openInSidePanel', data => {
         if (data.openInSidePanel) {
             applyPanelBehavior(true);
         } else {
-            chrome.storage.session.get('sidePanelIsOpen', session => {
-                applyFromState(false, !!session.sidePanelIsOpen);
-            });
+            readPanelLive(live => applyFromState(false, live));
         }
     });
 
@@ -45,15 +68,14 @@ export const initPanelBehavior = () => {
                 // 用户开启了边栏选项：始终使用面板切换模式
                 applyPanelBehavior(true);
             } else {
-                // 用户关闭了边栏选项：检查当前面板是否打开
+                // 用户关闭了边栏选项：检查当前面板是否存活（心跳判定）
                 // 若面板打开中，保持 toggle 模式以便下次点击关闭面板
-                chrome.storage.session.get('sidePanelIsOpen', session => {
-                    applyFromState(false, !!session.sidePanelIsOpen);
-                });
+                readPanelLive(live => applyFromState(false, live));
             }
         }
         // 侧边栏打开/关闭状态变化（由 popup.js 在 IS_PANEL 模式下写入）
-        // 仅在用户未开启边栏选项时动态切换 action 行为
+        // 仅在用户未开启边栏选项时动态切换 action 行为。标记写/删即面板
+        // 页面的生/死通告，此处无需再看心跳。
         if (areaName === 'session' && 'sidePanelIsOpen' in changes) {
             chrome.storage.local.get('openInSidePanel', data => {
                 if (!data.openInSidePanel) {

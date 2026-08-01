@@ -91,6 +91,8 @@ export function initSearch(ctx = {}) {
         activate: () => {}, activeId: () => 'tree', isActive: () => false,
         attach: () => {}, pathOf: () => ''
     };
+    // v4 task-3 #15: the history rows' →/← menu key mirrors the tree's rtl rule
+    const rtl = !!ctx.rtl;
     // Lazy closure over treeView (init order); only the R keypress calls it.
     const revealInTree = ctx.revealInTree || (() => {});
     // 第五轮项3: after every results render, neat.js re-lays the dead-mark
@@ -129,9 +131,13 @@ export function initSearch(ctx = {}) {
 
     // The custom clear button (native webkit cancel glyph removed in CSS):
     // visible only while the field has text, toggled from every path that
-    // mutates searchInput.value.
+    // mutates searchInput.value. The class must land on #search itself — the
+    // CSS gate is `#search.has-query #search-clear`; parentNode used to be
+    // #search but became #search-field when the wrapper was introduced
+    // (fourth-round item 3), which left the button permanently hidden.
+    const $search = $('search');
     const updateClearBtn = () => {
-        searchClearBtn.parentNode.classList.toggle('has-query', searchInput.value.length > 0);
+        ($search || searchClearBtn.parentNode).classList.toggle('has-query', searchInput.value.length > 0);
     };
     if (chrome.i18n.getMessage('searchClear')) {
         const clearLabel = _m('searchClear');
@@ -234,7 +240,7 @@ export function initSearch(ctx = {}) {
             const entry = list[i];
             const q = entry.q || '';
             html += `<li class="vbm-row search-history-row" role="listitem">` +
-                `<a href="" tabindex="0" data-q="${htmlspecialchars(q)}" title="${htmlspecialchars(q)}">` +
+                `<a href="" tabindex="-1" data-q="${htmlspecialchars(q)}" title="${htmlspecialchars(q)}">` +
                 `<span class="history-clock">${VIEW_ICONS.recent}</span>` +
                 `<i>${htmlspecialchars(q)}</i>` +
                 `<span class="history-meta">${_m('searchHistoryResultCount', `${entry.n | 0}`)}</span>` +
@@ -280,6 +286,10 @@ export function initSearch(ctx = {}) {
         // Row keyboard equivalents (§3.2): Enter reruns, Delete removes the
         // entry (the × button is the mouse path). Link activation on Enter is
         // the keydown default action, so preventDefault avoids a double run.
+        // v4 task-3 #12/#15: ↑/↓ walk the rows (↓ past the last crosses into
+        // the kept results, ↑ past the first returns to the box), Home/End
+        // jump the ends, and → (← in RTL) opens the row's context menu —
+        // the same synthetic-contextmenu contract as keyboard.js's tree rows.
         $historyArea.addEventListener('keydown', e => {
             const a = document.activeElement;
             if (!a || !a.dataset || typeof a.dataset.q === 'undefined')
@@ -290,6 +300,41 @@ export function initSearch(ctx = {}) {
             } else if (e.key === 'Delete') {
                 e.preventDefault();
                 removeHistoryEntry(a.dataset.q);
+            } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                const rows = Array.from($historyArea.querySelectorAll('a[data-q]'));
+                const idx = rows.indexOf(a);
+                if (e.key === 'ArrowDown') {
+                    const next = rows[idx + 1];
+                    if (next) {
+                        next.focus();
+                    } else {
+                        // may be the no-results empty state (no focusable row)
+                        const firstResult = $results.querySelector('ul>li:first-child a');
+                        if (firstResult)
+                            firstResult.focus();
+                    }
+                } else if (idx > 0) {
+                    rows[idx - 1].focus();
+                } else {
+                    searchInput.focus();
+                }
+            } else if (e.key === 'Home' || e.key === 'End') {
+                e.preventDefault();
+                const rows = $historyArea.querySelectorAll('a[data-q]');
+                const target = rows[e.key === 'Home' ? 0 : rows.length - 1];
+                if (target)
+                    target.focus();
+            } else if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight')) {
+                e.preventDefault();
+                const rect = a.getBoundingClientRect();
+                a.dispatchEvent(new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: rtl ? rect.left : rect.right,
+                    clientY: rect.bottom
+                }));
             }
         });
     }
@@ -449,7 +494,6 @@ export function initSearch(ctx = {}) {
     });
 
     searchInput.addEventListener('keydown', e => {
-        const focusID = store.get('focusID');
         if (e.key === 'ArrowDown' && searchInput.value.length === searchInput.selectionEnd) { // down
             e.preventDefault();
             if (searchMode) {
@@ -464,6 +508,11 @@ export function initSearch(ctx = {}) {
                 const target = firstHistory || $results.querySelector('ul>li:first-child a');
                 if (target)
                     target.focus();
+            } else if (views.focusActive) {
+                // v4 task-3 #12: ↓ lands on the ACTIVE view's list — this
+                // used to hardcode the tree, so on recent/stats/dead/dupes
+                // the keystroke focused a hidden row and looked dead.
+                views.focusActive();
             } else {
                 $tree.querySelector('ul>li:first-child').querySelector('span, a').focus();
             }
@@ -485,27 +534,6 @@ export function initSearch(ctx = {}) {
                         item.dispatchEvent(event);
                     }, 30);
                 }
-            }
-        } else if (e.key === 'Tab' && !searchMode) { // tab
-            if (typeof focusID !== 'undefined' && focusID !== null) {
-                const focusEl = $(`neat-tree-item-${focusID}`);
-                if (focusEl) {
-                    e.preventDefault();
-                    focusEl.firstElementChild.focus();
-                }
-            } else {
-                const bound = $tree.scrollTop;
-                const items = $tree.querySelectorAll('a, span');
-                let firstItem = null;
-                for (let i = 0, l = items.length; i < l; i++) {
-                    const item = items[i];
-                    if (!!item.parentElement.offsetHeight && ((item.offsetTop + item.offsetHeight) > bound)) {
-                        firstItem = item;
-                        break;
-                    }
-                }
-                if (firstItem)
-                    firstItem.focus();
             }
         } else if (e.key === 'Escape') { // esc
             if (searchInput.value) {

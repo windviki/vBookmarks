@@ -25,8 +25,16 @@
         // - 面板加载 → 切换到 toggle 模式，下次点击关闭面板
         // - 面板关闭 → 直接重置为 popup 模式（在 pagehide 中同步调用，
         //   避免 storage.onChanged 异步链路导致的竞态条件）
-        chrome.storage.session.set({ sidePanelIsOpen: true });
+        // v4 task-3 #19：裸标记无法证明面板存活（浏览器崩溃/渲染进程被杀
+        // 时 pagehide 不触发，storage.session 里的 true 会残留并被 SW 启动
+        // 反复推导成 toggle 模式）。面板页按 PANEL_HEARTBEAT_MS 间隔心跳
+        // sidePanelHeartbeat（与 src/panel-behavior.js 的常量保持一致——
+        // 本文件是传统脚本无法 import，改动时需同步两边）。
+        const beat = () => chrome.storage.session.set({ sidePanelHeartbeat: Date.now() });
+        chrome.storage.session.set({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
+        const heartbeatTimer = setInterval(beat, 20000); // PANEL_HEARTBEAT_MS
         window.addEventListener('pagehide', () => {
+            clearInterval(heartbeatTimer);
             chrome.storage.session.set({ sidePanelIsOpen: false });
             // 直接重置 panel behavior，不等 background 的 onChanged 回调。
             // pagehide 中 JS 仍可执行，同步发起调用确保在用户下次点击前生效。
@@ -40,7 +48,7 @@
         // bfcache 恢复时重新标记面板为打开状态
         window.addEventListener('pageshow', e => {
             if (e.persisted) {
-                chrome.storage.session.set({ sidePanelIsOpen: true });
+                chrome.storage.session.set({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
             }
         });
     }

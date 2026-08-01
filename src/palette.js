@@ -277,7 +277,7 @@ export function initPalette(ctx = {}) {
             // bookmark row: <a> tag so context-menu.js recognises it
             const title = row.title || row.url;
             li.id = row.id ? `results-item-${row.id}` : '';
-            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt=""></div><i>${htmlspecialchars(title)}</i></a>`;
+            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt="" loading="lazy"></div><i>${htmlspecialchars(title)}</i></a>`;
         }
         const i = rows.length;
         // Keep the input focused through the click: preventing the mousedown
@@ -506,6 +506,11 @@ export function initPalette(ctx = {}) {
     // --- Open / close -----------------------------------------------------------
     const open = () => {
         if (openState || anyDialogOpen())
+            return;
+        // v4 task-3 #20: the palette can be switched off entirely (classic
+        // experience) — one guard here covers Ctrl/Cmd+K, the tool button
+        // and the global wake path alike.
+        if (store && !store.get('paletteEnabled', '1'))
             return;
         // A context menu must not float over the panel (menus sit one layer
         // above the palette) — pointer paths clear it via the body click,

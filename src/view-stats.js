@@ -6,9 +6,19 @@
  *
  * Two sections share ONE flat <ul>, so the shared list keyboard contract
  * (keyboard.js ArrowUp/Down li walking, Home/End, Enter) crosses section
- * boundaries with zero view-specific keys:
+ * boundaries with zero view-specific keys. The bookmark-stats section
+ * leads (v4 task-3 #2: the toolbar sort segment controls it, so the
+ * controlled list must sit directly under the control — with the history
+ * section first, a count tie made the toggle look dead):
  *
- *   1. 最近访问 (statsSectionRecent) — the latest chrome.history entries,
+ *   1. 书签统计 (statsSectionBookmarks) — the slice-D per-bookmark
+ *      counters: one row per bookmark with at least one recorded open,
+ *      sorted by count (default) or recency (`statsSort` persists the
+ *      choice), count pill / relative time in the meta slots (the active
+ *      sort key sticks to the title column), parent path on the wide
+ *      second line. Clicking opens through the shared bookmarkHandler,
+ *      which is also the collection point (neat.js onOpenBookmark).
+ *   2. 最近访问 (statsSectionRecent) — the latest chrome.history entries,
  *      most recent first, URL-deduped, capped at HISTORY_RECENT_MAX. The
  *      section's point is the URLs that are NOT in the bookmark tree:
  *      an unbookmarked row carries no row id (no data-node-id — the open
@@ -21,18 +31,12 @@
  *      data-node-id (the click opens AND bumps that bookmark's own
  *      counter, and the body-level bookmark context menu — including
  *      在树中定位 — applies verbatim), and no star button. Right-click on
- *      rows WITHOUT a bookmark id is swallowed at the list level
- *      (preventDefault + stopPropagation): the body-level bookmark menu
- *      would otherwise act on a bogus id — the same hazard round-4 item 7
- *      fixed for search-history rows, solved here without touching
- *      context-menu.js.
- *   2. 书签统计 (statsSectionBookmarks) — the slice-D per-bookmark
- *      counters: one row per bookmark with at least one recorded open,
- *      sorted by count (default) or recency (`statsSort` persists the
- *      choice), count pill / relative time in the meta slots (the active
- *      sort key sticks to the title column), parent path on the wide
- *      second line. Clicking opens through the shared bookmarkHandler,
- *      which is also the collection point (neat.js onOpenBookmark).
+ *      an unbookmarked row opens its own slim menu (open in new tab /
+ *      window / incognito + bookmark-it) built by context-menu.js
+ *      (v4 task-3 #10): the body-level bookmark menu would otherwise act
+ *      on a bogus id — the same hazard round-4 item 7 fixed for
+ *      search-history rows. Only the permission guide row is still
+ *      swallowed at the list level (preventDefault + stopPropagation).
  *
  * Section heads are muted non-interactive labels (recent-group-head
  * semantics). Each rides INSIDE its section's first row as that row's
@@ -43,7 +47,7 @@
  * arrow walking from stranding on non-focusable rows: the recent section
  * is omitted entirely when granted-but-empty (a head with no rows under
  * it would read as a bug), while the stats section keeps its head on the
- * statsEmpty row, which is then the list's LAST <li>.
+ * statsEmpty row, which is then the list's FIRST <li>.
  *
  * Permission guide (a more compact take on view-recent's banner): while
  * stats is enabled but the optional `history` permission is missing, the
@@ -217,7 +221,9 @@ export function initViewStats(ctx = {}) {
 
     const renderToolbar = () => {
         const s = sort();
-        let html = '<div class="stats-toolbar">';
+        // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
+        // stops between the tab strip and the list rows (final polish).
+        let html = '<div class="stats-toolbar vbm-toolbar">';
         html += '<span class="seg" role="group">' +
             `<button class="seg-btn${s === 'count' ? ' active' : ''}" data-sort="count" ` +
             `aria-pressed="${s === 'count'}">${_m('statsSortByCount')}</button>` +
@@ -242,7 +248,7 @@ export function initViewStats(ctx = {}) {
         // firstElementChild — the same Enter contract as data rows.
         if (historyPerm === false) {
             return `<li class="stats-history-guide has-head" role="listitem">` +
-                `<a href="" class="stats-history-enable" tabindex="0">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
+                `<a href="" class="stats-history-enable" tabindex="-1">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
                 `<i>${htmlspecialchars(_m('statsHistoryGuide'))}</i>` +
                 sectionHead('statsSectionRecent') +
                 '</li>';
@@ -321,7 +327,11 @@ export function initViewStats(ctx = {}) {
             // Master switch off: guidance instead of data (§3.4 empty states).
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsDisabledHint')}</i></li></ul>`;
         } else {
-            html += '<ul role="list">' + renderHistorySection() + renderStatsSection() + '</ul>';
+            // v4 task-3 #2: the bookmark-stats section comes FIRST — the
+            // toolbar's sort segment controls it, so the controlled list
+            // sits directly under the control (the history section led
+            // before, and the toggle looked dead when every count tied).
+            html += '<ul role="list">' + renderStatsSection() + renderHistorySection() + '</ul>';
         }
         $list.innerHTML = html;
         onRowsRendered();
@@ -497,14 +507,40 @@ export function initViewStats(ctx = {}) {
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
 
-    // Rows without a bookmark id (unbookmarked history rows, the guide row)
-    // must never reach the body-level bookmark context menu — its entries
-    // would act on a bogus id. Bookmarked rows bubble through with their
-    // real data-node-id and get the full menu verbatim.
+    // Final polish (v4task-2-list §3.4): segmented-control arrow keys — ←/→
+    // move focus within the sort seg (the buttons themselves activate
+    // natively via Enter/Space). Bubble phase suffices: keyboard.js's
+    // control guard ignores ArrowLeft/Right on non-row elements.
+    $list.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
+            return;
+        const t = e.target;
+        if (!t || !t.classList || !t.classList.contains('seg-btn'))
+            return;
+        const seg = t.parentNode;
+        const btns = seg && seg.querySelectorAll ? seg.querySelectorAll('.seg-btn') : [];
+        let idx = -1;
+        for (let i = 0, l = btns.length; i < l; i++)
+            if (btns[i] === t)
+                idx = i;
+        if (idx < 0 || btns.length < 2)
+            return;
+        e.preventDefault();
+        const dir = e.key === 'ArrowRight' ? 1 : -1;
+        btns[(idx + dir + btns.length) % btns.length].focus();
+    });
+
+    // Rows without a bookmark id: unbookmarked history rows now bubble to
+    // the body-level handler, which gives them their own slim menu
+    // (context-menu.js, v4 task-3 #10). Only the permission guide row must
+    // still be swallowed — its Enable anchor would otherwise open the
+    // bookmark menu on a bogus id. Bookmarked rows bubble through with
+    // their real data-node-id and get the full menu verbatim.
     $list.addEventListener('contextmenu', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
         const li = closest('li');
-        if (li && !(li.dataset && li.dataset.nodeId)) {
+        if (li && !(li.dataset && li.dataset.nodeId)
+            && !(li.classList && li.classList.contains('stats-hist-row'))) {
             e.preventDefault();
             e.stopPropagation();
         }

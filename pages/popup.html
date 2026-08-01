@@ -13,6 +13,7 @@
             <svg id="donation-heart" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 14.4S1.6 10.5 1.6 6.2c0-2 1.6-3.6 3.5-3.6 1.1 0 2.2.6 2.9 1.5.7-.9 1.8-1.5 2.9-1.5 1.9 0 3.5 1.6 3.5 3.6 0 4.3-6.4 8.2-6.4 8.2z" fill="currentColor"/></svg>
             <div id="information-text">
                 <p id="new-version-text"></p>
+                <p id="v4-notice" hidden><span id="v4-notice-text"></span> <a id="v4-guide-link" href=""></a></p>
                 <p id="donation-text"></p>
                 <div id="donation-actions">
                     <button id="donation-go" type="button"></button>
@@ -35,78 +36,90 @@
 </div>
 <div id="drop-overlay"></div>
 <div id="bookmark-clone"></div>
-<menu id="bookmark-context-menu" type="context" tabindex="-1">
-    <div id="reveal-in-tree" class="menu-item" tabindex="-1" style="display:none"></div>
+<menu id="bookmark-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="reveal-in-tree" class="menu-item" role="menuitem" tabindex="-1" style="display:none"></div>
     <hr id="reveal-in-tree-sep" style="display:none">
-    <div id="dead-mark-toggle" class="menu-item" tabindex="-1" style="display:none"></div>
-    <div id="dupes-set-keeper" class="menu-item" tabindex="-1" style="display:none"></div>
-    <div id="bookmark-new-tab" class="menu-item" tabindex="-1"></div>
-    <div id="bookmark-new-window" class="menu-item" tabindex="-1"></div>
-    <div id="bookmark-new-incognito-window" class="menu-item" tabindex="-1"></div>
+    <div id="dead-mark-toggle" class="menu-item" role="menuitem" tabindex="-1" style="display:none"></div>
+    <div id="dupes-set-keeper" class="menu-item" role="menuitem" tabindex="-1" style="display:none"></div>
+    <div id="bookmark-new-tab" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="bookmark-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="bookmark-new-incognito-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep4">
-    <div id="bookmark-edit" class="menu-item" tabindex="-1"></div>
-    <div id="copy-title-and-url" class="menu-item" tabindex="-1"></div>
+    <div id="bookmark-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="copy-title-and-url" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep5">
-    <div id="add-bookmark-before-bookmark" class="menu-item" tabindex="-1"></div>
-    <div id="add-bookmark-after-bookmark" class="menu-item" tabindex="-1"></div>
+    <div id="add-bookmark-before-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-bookmark-after-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep1">
-    <div id="add-folder-before-bookmark" class="menu-item" tabindex="-1"></div>
-    <div id="add-folder-after-bookmark" class="menu-item" tabindex="-1"></div>
+    <div id="add-folder-before-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-folder-after-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep2">
-    <div id="add-separator" class="menu-item" tabindex="-1"></div>
+    <div id="add-separator" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep3">
-    <div id="replace-url" class="menu-item" tabindex="-1"></div>
+    <div id="replace-url" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep6">
-    <div id="bookmark-delete" class="menu-item" tabindex="-1"></div>
+    <div id="bookmark-delete" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
-<menu id="folder-context-menu" type="context" tabindex="-1">
-    <div id="folder-window" class="menu-item" tabindex="-1"></div>
-    <div id="open-bookmarks-in-group" class="menu-item" tabindex="-1"></div>
-    <div id="folder-new-window" class="menu-item" tabindex="-1"></div>
-    <div id="folder-new-incognito-window" class="menu-item" tabindex="-1"></div>
+<menu id="folder-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="folder-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="open-bookmarks-in-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-new-incognito-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep1">
-    <div id="folder-edit" class="menu-item" tabindex="-1"></div>
+    <div id="folder-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep7">
-    <div id="sort-folder-contents" class="menu-item" tabindex="-1"></div>
+    <div id="sort-folder-contents" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep2">
-    <div id="add-bookmark-top" class="menu-item" tabindex="-1"></div>
-    <div id="add-bookmark-bottom" class="menu-item" tabindex="-1"></div>
-    <div id="add-new-folder" class="menu-item" tabindex="-1"></div>
+    <div id="add-bookmark-top" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-bookmark-bottom" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-new-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep3">
-    <div id="add-bookmark-before-folder" class="menu-item" tabindex="-1"></div>
-    <div id="add-bookmark-after-folder" class="menu-item" tabindex="-1"></div>
-    <div id="add-folder-before-folder" class="menu-item" tabindex="-1"></div>
-    <div id="add-folder-after-folder" class="menu-item" tabindex="-1"></div>
-    <div id="add-folder-separator" class="menu-item" tabindex="-1"></div>
+    <div id="add-bookmark-before-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-bookmark-after-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-folder-before-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-folder-after-folder" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="add-folder-separator" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep4">
-    <div id="folder-delete" class="menu-item" tabindex="-1"></div>
+    <div id="folder-delete" class="menu-item" role="menuitem" tabindex="-1"></div>
     <!--<hr>
 	<command id="copy-all-titles-and-urls" tabindex="-1">-->
 </menu>
-<menu id="separator-context-menu" type="context" tabindex="-1">
-    <div id="remove-separator" class="menu-item" tabindex="-1"></div>
+<menu id="separator-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="remove-separator" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
-<menu id="search-history-context-menu" type="context" tabindex="-1">
-    <div id="search-history-menu-rerun" class="menu-item" tabindex="-1"></div>
+<menu id="search-history-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="search-history-menu-rerun" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="search-history-menu-sep1">
-    <div id="search-history-menu-remove" class="menu-item" tabindex="-1"></div>
-    <div id="search-history-menu-clear" class="menu-item" tabindex="-1"></div>
+    <div id="search-history-menu-remove" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="search-history-menu-clear" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="hist-row-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="hist-open-new-tab" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="hist-open-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="hist-open-incognito" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="hist-row-menu-sep1">
+    <div id="hist-add-bookmark" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="dupes-group-context-menu" type="context" role="menu" tabindex="-1">
+    <div id="dupes-group-clean" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="dupes-group-menu-sep1">
+    <div id="dupes-group-toggle" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
 <div id="resizer-x" class="resizer"></div>
 <div id="resizer-y" class="resizer"></div>
 <div id="cover"></div>
 <div id="command-palette" hidden><input id="palette-input" type="text"><ul id="palette-results"></ul></div>
-<div id="alert-dialog" class="dialog" role="dialog">
+<div id="alert-dialog" class="dialog" role="dialog" aria-modal="true">
     <p id="alert-dialog-text" class="dialog-text"></p>
 </div>
-<div id="confirm-dialog" class="dialog" role="dialog">
+<div id="confirm-dialog" class="dialog" role="dialog" aria-modal="true">
     <p id="confirm-dialog-text" class="dialog-text"></p>
     <div class="buttons">
         <button id="confirm-dialog-button-1"></button>
         <button id="confirm-dialog-button-2"></button>
     </div>
 </div>
-<div id="edit-dialog" class="dialog" role="dialog">
+<div id="edit-dialog" class="dialog" role="dialog" aria-modal="true">
     <form id="edit-dialog-form">
         <p id="edit-dialog-text" class="dialog-text"></p>
         <input id="edit-dialog-name">
@@ -117,7 +130,7 @@
         </div>
     </form>
 </div>
-<div id="new-folder-dialog" class="dialog" role="dialog">
+<div id="new-folder-dialog" class="dialog" role="dialog" aria-modal="true">
     <form id="new-folder-dialog-form">
         <p id="new-folder-dialog-text" class="dialog-text"></p>
         <input id="new-folder-dialog-name">
@@ -127,7 +140,7 @@
         </div>
     </form>
 </div>
-<div id="sort-dialog" class="dialog" role="dialog">
+<div id="sort-dialog" class="dialog" role="dialog" aria-modal="true">
     <p id="sort-dialog-text" class="dialog-text"></p>
     <div id="sort-dialog-options">
         <label><input type="radio" name="sort-by" id="sort-by-title" value="title" checked> <span id="sort-by-title-label"></span></label>

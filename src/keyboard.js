@@ -7,8 +7,11 @@
  * PageUp/PageDown, F2 rename and the type-ahead keyBuffer with its 500ms
  * reset timer), the tree/results keyup handler (Delete → delete actions),
  * the context menus' keydown handler (menu-item walking that skips <hr>s,
- * wrap-around off Mac, Escape/arrow-out closing the menu) and the document-
- * level Escape (close dialogs, quit search) / Ctrl+F (focus search) handler.
+ * wrap-around off Mac, Escape/arrow-out closing the menu), the document-
+ * level Escape (close dialogs, quit search) / Ctrl+F (focus search) handler
+ * and the Tab region cycle (docs/v4task-2-list.md §2.1: header controls →
+ * tab strip → active list's remembered row, Shift+Tab backwards; rows are
+ * tabindex="-1" so the cycle is the only Tab path into a list).
  *
  * initKeyboard(ctx) is called once by neat.js where the code used to live —
  * menus/search/actions/dialogs all init further up, so every collaborator is
@@ -57,6 +60,7 @@ export function initKeyboard(ctx = {}) {
             { id: 'search', el: ctx.search.results, typeAhead: true }
         ],
         listOf: () => null,
+        activeDef: () => ({ listEl: ctx.tree }),
         onEscapeActive: () => false,
         escapeToTree: () => false,
         focusTop: () => { ctx.search.input.focus(); },
@@ -525,6 +529,12 @@ export function initKeyboard(ctx = {}) {
     // fourth-round item 7: search-history menu gets full ↑↓/Enter/Esc support
     if (menus.searchHistoryMenu)
         menus.searchHistoryMenu.addEventListener('keydown', contextKeyDown);
+    // final polish (v4task-2-list §2.4): the two v4 task-3 menus get the same
+    // treatment — without these bindings their rows were unreachable by keys
+    if (menus.histRowMenu)
+        menus.histRowMenu.addEventListener('keydown', contextKeyDown);
+    if (menus.dupesGroupMenu)
+        menus.dupesGroupMenu.addEventListener('keydown', contextKeyDown);
 
     // Closing dialogs / context menus on escape.
     // Capture phase so we run before any child handler and before Chrome's
@@ -601,5 +611,125 @@ export function initKeyboard(ctx = {}) {
         }
     });
 
-    return { treeKeyDown, treeKeyUp, contextKeyDown };
+    // --- Tab region cycle (docs/v4task-2-list.md §2.1) -------------------------
+    // Three regions in a ring: the header controls (search box → quick-add →
+    // tool button), the tab strip (one stop — roving tabindex inside), and
+    // the active view's list (its remembered `.focus` row, else first row).
+    // Rows carry tabindex="-1", so this cycle is the only Tab path in or out
+    // of a list; Shift+Tab walks the ring backwards. Dialogs, open context
+    // menus and the palette keep their local Tab behavior (spec: 保持现状).
+    const ROW_SEL = 'li a, li span, li[tabindex]';
+    const menuContainers = [
+        menus.bookmarkMenu, menus.folderMenu, menus.searchHistoryMenu,
+        menus.histRowMenu, menus.dupesGroupMenu
+    ].filter(Boolean);
+    const isWithin = (root, node) => {
+        for (let n = node; n; n = n.parentNode) {
+            if (n === root)
+                return true;
+        }
+        return false;
+    };
+    // A stop counts when it is actually rendered: the `.hidden` class and an
+    // inline display:none are the explicit cases; getClientRects catches the
+    // stylesheet-driven hiding (body.no-view-tabs → #view-tabs, the option-
+    // hidden header buttons) where the element itself carries no marker.
+    const tabVisible = el => {
+        if (!el || el.classList.contains('hidden'))
+            return false;
+        if (el.style && el.style.display === 'none')
+            return false;
+        if (typeof el.getClientRects === 'function' && el.getClientRects().length === 0)
+            return false;
+        return true;
+    };
+    const tabCycle = e => {
+        if (e.key !== 'Tab' || e.defaultPrevented)
+            return;
+        if (dialogs.anyOpen()) {
+            // Modal Tab trap (final polish; the dialogs carry aria-modal):
+            // Tab must cycle among the open dialog's own controls instead of
+            // leaking focus into the page behind the cover.
+            const dlg = dialogs.activeEl ? dialogs.activeEl() : null;
+            if (!dlg || !dlg.querySelectorAll)
+                return;
+            e.preventDefault();
+            const controls = dlg.querySelectorAll('button, input');
+            const focusables = [];
+            for (let i = 0, l = controls.length; i < l; i++)
+                if (!controls[i].disabled)
+                    focusables.push(controls[i]);
+            if (!focusables.length)
+                return; // e.g. the alert dialog has no controls — stay put
+            const cur = focusables.indexOf(document.activeElement);
+            const next = cur < 0
+                ? (e.shiftKey ? focusables.length - 1 : 0)
+                : (cur + (e.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
+            focusables[next].focus();
+            return;
+        }
+        if (palette && palette.isOpen && palette.isOpen())
+            return;
+        const ae = document.activeElement;
+        for (let i = 0, l = menuContainers.length; i < l; i++) {
+            if (isWithin(menuContainers[i], ae))
+                return;
+        }
+        const stops = [];
+        const headerIds = ['search-input', 'quick-add-btn', 'tool-btn'];
+        for (let i = 0, l = headerIds.length; i < l; i++) {
+            const el = $(headerIds[i]);
+            if (tabVisible(el))
+                stops.push(el);
+        }
+        const tabsEl = $('view-tabs');
+        let tabStop = null;
+        const def = views.activeDef ? views.activeDef() : null;
+        if (tabVisible(tabsEl)) {
+            tabStop = (def && def.tabEl) || tabsEl.querySelector('.view-tab');
+            if (tabStop)
+                stops.push(tabStop);
+        }
+        // Final polish (v4task-2-list §3.4–3.6 "第 0 行" + 原则 2 全键盘可达):
+        // the active view's in-list toolbar controls (stats sort seg/clear,
+        // dead rescan/filter/mark-all, dupes strategy/scope/apply) join the
+        // cycle between the tab strip and the list rows — previously no
+        // keyboard path reached them at all.
+        const container = def && def.container;
+        if (container && container.querySelectorAll) {
+            const controls = container.querySelectorAll(
+                '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input');
+            for (let i = 0, l = controls.length; i < l; i++) {
+                const c = controls[i];
+                if (!c.disabled && tabVisible(c))
+                    stops.push(c);
+            }
+        }
+        const listEl = (def && def.listEl) || $tree;
+        const rowStop = listEl
+            ? (listEl.querySelector('.focus') || listEl.querySelector(ROW_SEL))
+            : null;
+        if (rowStop)
+            stops.push(rowStop);
+        if (!stops.length)
+            return;
+        let i = stops.indexOf(ae);
+        if (i < 0) {
+            // Focus sits inside a region but not on its stop (a row's inner
+            // control, the list container, a non-roving tab): continue from
+            // that region. From nowhere (body), enter at the near edge.
+            if (rowStop && isWithin(listEl, ae))
+                i = stops.indexOf(rowStop);
+            else if (tabStop && isWithin(tabsEl, ae))
+                i = stops.indexOf(tabStop);
+            else
+                i = e.shiftKey ? 0 : -1;
+        }
+        const next = stops[(i + (e.shiftKey ? -1 : 1) + stops.length) % stops.length];
+        e.preventDefault();
+        next.focus();
+    };
+    document.addEventListener('keydown', tabCycle);
+
+    return { treeKeyDown, treeKeyUp, contextKeyDown, tabCycle };
 }

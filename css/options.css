@@ -383,18 +383,20 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	body[data-theme="auto"] .cm-s-default span.cm-tag { color: #e06c75; }
 	body[data-theme="auto"] .cm-s-default span.cm-attribute { color: #d19a66; }
 }
-/* --- Responsive page layout (round-6 item 5) -------------------------------
-   The page is capped and centered; groups flow into as many ~380px CSS
-   columns as the width affords (1 below ~820px, 2 on laptops, 3 on wide
-   monitors). Multicol — not grid — because the groups have very uneven
-   heights: column balancing packs them without holes. */
+/* --- Responsive page layout (round-6 item 5, reworked in v4 task-3 #17) ----
+   The page is capped and centered; groups flow into as many ~340px CSS
+   columns as the width affords (1 below ~760px, 2 on laptops, up to 5 on
+   4K monitors — the old 1280px/380px pairing stranded wide screens at two
+   columns with a balancing void in the last one). Multicol — not grid —
+   because the groups have very uneven heights: column balancing packs them
+   without holes. */
 .options-page{
-	max-width: 1280px;
+	max-width: 1760px;
 	margin: 0 auto;
 }
 .options-grid{
-	columns: 380px;
-	column-gap: 2.5em;
+	columns: 340px;
+	column-gap: 2em;
 }
 .options-group,
 .options-grid>fieldset{

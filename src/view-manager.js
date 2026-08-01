@@ -70,6 +70,9 @@ export function initViewManager(ctx = {}) {
     const registry = []; // ViewDef array; order = tab order, tree stays [0]
     const byId = {};
     let activeId = null;
+    // A stored startup view id whose view has not registered yet (feature
+    // views init after the manager) — register() fires it when it lands.
+    let pendingRestore = null;
     let pathMap = {};
     let firstActivation = true;
 
@@ -98,6 +101,9 @@ export function initViewManager(ctx = {}) {
     };
 
     const updateBadges = () => {
+        // v4 task-3 #18: the compulsive-mode switch — every badge hidden
+        // regardless of counts when the user opts out (default on).
+        const show = !!store.get('showTabBadges', '1');
         for (let i = 0, l = registry.length; i < l; i++) {
             const def = registry[i];
             if (!def.tabEl)
@@ -105,7 +111,7 @@ export function initViewManager(ctx = {}) {
             const badge = def.tabEl.querySelector('.tab-badge');
             if (!badge)
                 continue;
-            const n = def.badge ? (def.badge() | 0) : 0;
+            const n = show && def.badge ? (def.badge() | 0) : 0;
             badge.hidden = !(n > 0);
             if (n > 0)
                 badge.textContent = `${n}`;
@@ -160,15 +166,50 @@ export function initViewManager(ctx = {}) {
     }
 
     // --- Registration --------------------------------------------------------
+    // §2.1 region focus memory relies on a LIVE `.focus` marker in every list
+    // view: a mouse click on a view tab moves DOM focus to the button before
+    // activate() runs, so the switch-away path can only consult the marker.
+    // (The tree has always maintained its own marker; this generalizes it.)
+    // The focused row's a/span carries the marker — or the tabindex row
+    // container itself (the dead view's start row); in-list toolbar controls
+    // keep their focus unmarked.
+    const bindFocusMarker = def => {
+        if (!def.listEl || def.focusMarkerBound)
+            return;
+        def.focusMarkerBound = true;
+        def.listEl.addEventListener('focusin', e => {
+            const t = e.target;
+            if (!t || t === def.listEl)
+                return;
+            const isRowFocus = /^(A|SPAN)$/.test(t.tagName)
+                || (t.tagName === 'LI' && t.getAttribute && t.getAttribute('tabindex') !== null);
+            if (!isRowFocus)
+                return;
+            const old = def.listEl.querySelector('.focus');
+            if (old && old !== t)
+                old.classList.remove('focus');
+            t.classList.add('focus');
+        });
+    };
+
     const register = def => {
         if (byId[def.id]) {
             Object.assign(byId[def.id], def);
+            bindFocusMarker(byId[def.id]);
             renderTabs();
             return byId[def.id];
         }
         registry.push(def);
         byId[def.id] = def;
+        bindFocusMarker(def);
         renderTabs();
+        // A stored startup view that registered late (feature views init
+        // after the manager) takes over as soon as it lands.
+        if (pendingRestore === def.id) {
+            pendingRestore = null;
+            if (!def.hidden)
+                activate(def.id, { keepFocus: true });
+        }
         return def;
     };
 
@@ -180,6 +221,10 @@ export function initViewManager(ctx = {}) {
     };
 
     // --- Focus ---------------------------------------------------------------
+    // Row-focus landing inside a list: the remembered `.focus` row first,
+    // then the first focusable row. `li[tabindex]` covers focusable row
+    // containers without an inner a/span (the dead view's start row).
+    const ROW_SEL = 'li a, li span, li[tabindex]';
     const focusDefault = def => {
         if (!def)
             return;
@@ -190,10 +235,15 @@ export function initViewManager(ctx = {}) {
         if (!def.listEl)
             return;
         const row = def.listEl.querySelector('.focus')
-            || def.listEl.querySelector('li a, li span');
+            || def.listEl.querySelector(ROW_SEL);
         if (row)
             row.focus();
     };
+
+    // v4 task-3 #12: the search box's ↓ needs "the active view's first row"
+    // without knowing which view that is — used to hardcode the tree and
+    // lose focus into the hidden list on recent/stats/dead/dupes.
+    const focusActive = () => focusDefault(byId[activeId]);
 
     // The ↑ crossing out of a list's first row (v4task-2-list §2.1): with the
     // strip visible the current tab takes focus (a second ↑ reaches the
@@ -217,6 +267,83 @@ export function initViewManager(ctx = {}) {
             return {};
         }
     };
+
+    // §2.1 region focus memory. The row a view is remembered on: the actually
+    // focused row when focus is inside the list, else the `.focus`-marked row
+    // (the tree maintains that marker itself). Stored per view as
+    // viewState[id] = { scroll, focus } — pre-v4.1 entries are plain scrollTop
+    // numbers and read back as scroll-only.
+    const focusedRowId = listEl => {
+        const ae = document.activeElement;
+        if (ae && ae !== listEl) {
+            let inside = false;
+            for (let n = ae; n; n = n.parentNode) {
+                if (n === listEl) {
+                    inside = true;
+                    break;
+                }
+            }
+            if (inside) {
+                const li = ae.closest ? ae.closest('li') : null;
+                if (li && li.id)
+                    return li.id;
+            }
+        }
+        const marked = listEl.querySelector('.focus');
+        const li = marked && marked.closest ? marked.closest('li') : null;
+        return (li && li.id) || null;
+    };
+
+    // innerHTML-rendered rows are found by a plain children walk — no CSS
+    // escaping, works on any row id the views mint.
+    const findRowById = (listEl, rowId) => {
+        const walk = node => {
+            const kids = node.children || [];
+            for (let i = 0, l = kids.length; i < l; i++) {
+                if (kids[i].id === rowId)
+                    return kids[i];
+                const hit = walk(kids[i]);
+                if (hit)
+                    return hit;
+            }
+            return null;
+        };
+        return walk(listEl);
+    };
+
+    // Put the `.focus` marker back on the remembered row (when it still
+    // exists) so focusDefault and the Tab cycle land where the view was left.
+    // Views re-render asynchronously from their activate hook (recent/stats
+    // probe → fetch → innerHTML swap), which wipes a synchronously restored
+    // marker — so this watches for a short window and re-marks as needed.
+    // A live marker always wins: once the user moves focus, nothing is done.
+    const restoreFocusRow = def => {
+        if (!def.listEl)
+            return;
+        const entry = readViewState()[def.id];
+        const rowId = (entry && typeof entry === 'object') ? entry.focus : null;
+        if (!rowId)
+            return;
+        let attempts = 0;
+        const tryMark = () => {
+            if (activeId !== def.id)
+                return; // switched away meanwhile
+            if (!def.listEl.querySelector('.focus')) {
+                const li = findRowById(def.listEl, rowId);
+                if (li) {
+                    const inner = li.firstElementChild;
+                    const target = (inner && /^(A|SPAN)$/.test(inner.tagName)) ? inner : li;
+                    target.classList.add('focus');
+                }
+            }
+            if (++attempts < 20)
+                setTimeout(tryMark, 100);
+        };
+        tryMark();
+    };
+
+    const scrollOf = entry => typeof entry === 'number' ? entry
+        : (entry && typeof entry === 'object' ? (entry.scroll | 0) : 0);
 
     const announce = def => {
         // The startup activation is not a user-driven switch: stay quiet.
@@ -254,9 +381,12 @@ export function initViewManager(ctx = {}) {
         if (prev) {
             if (prev.deactivate)
                 prev.deactivate();
-            if (prev.persistScroll && prev.listEl) {
+            if (prev.listEl) {
                 const state = readViewState();
-                state[prev.id] = prev.listEl.scrollTop;
+                state[prev.id] = {
+                    scroll: prev.persistScroll ? prev.listEl.scrollTop : scrollOf(state[prev.id]),
+                    focus: focusedRowId(prev.listEl)
+                };
                 store.set('viewState', JSON.stringify(state));
             }
             prev.container.hidden = true;
@@ -273,12 +403,15 @@ export function initViewManager(ctx = {}) {
         activeId = id;
         def.container.hidden = false;
         if (def.persistScroll && def.listEl) {
-            const state = readViewState();
-            if (state[id])
-                def.listEl.scrollTop = state[id];
+            const scroll = scrollOf(readViewState()[id]);
+            if (scroll)
+                def.listEl.scrollTop = scroll;
         }
         if (def.activate)
             def.activate({ keepFocus: !!opts.keepFocus });
+        // §2.1: after the view's own activate hook (which may re-render the
+        // rows), re-mark the remembered row so focus lands where it was left.
+        restoreFocusRow(def);
         store.set('activeView', id);
         for (let i = 0, l = registry.length; i < l; i++) {
             const v = registry[i];
@@ -410,11 +543,21 @@ export function initViewManager(ctx = {}) {
         id: 'search', titleKey: 'viewSearch', icon: VIEW_ICONS.search,
         container: $('view-search'), listEl: $('results')
     });
-    // activeView: the popup always lands on the tree; the panel restores the
-    // view it was left on (docs/v4task-2.md §3.3). keepFocus: the search
-    // input's autofocus attribute owns the startup focus.
+    // activeView: the panel always restores the view it was left on; the
+    // popup does too when rememberView is on (v4 task-3 #6, default on) —
+    // off means the classic "popup always lands on the tree". Feature views
+    // register AFTER this startup runs, so a stored feature-view id is held
+    // in pendingRestore and fires from register() when that view lands.
+    // keepFocus: the search input's autofocus attribute owns the startup focus.
     const stored = store.get('activeView');
-    const startId = (isPanel && byId[stored] && !byId[stored].hidden) ? stored : 'tree';
+    const remembers = isPanel || !!store.get('rememberView', '1');
+    let startId = 'tree';
+    if (remembers && stored && stored !== 'tree') {
+        if (byId[stored] && !byId[stored].hidden)
+            startId = stored;
+        else if (!byId[stored])
+            pendingRestore = stored;
+    }
     activate(startId, { keepFocus: true });
 
     return {
@@ -422,6 +565,7 @@ export function initViewManager(ctx = {}) {
         attach,
         activate,
         activeId: () => activeId,
+        activeDef: () => byId[activeId] || null,
         isActive: id => activeId === id,
         views: () => registry.slice(),
         lists,
@@ -429,6 +573,7 @@ export function initViewManager(ctx = {}) {
         onEscapeActive,
         escapeToTree,
         focusTop,
+        focusActive,
         buildPathMap,
         pathOf,
         updateBadges,

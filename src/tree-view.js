@@ -4,7 +4,7 @@
  * src/tree-render.js, slice 8a).
  *
  * Owns: the tree-view state (the nodeTrees parent map and the onlyShowBMBar
- * startup flag), generateTree (subtree selection incl. onlyShowBMBar, the
+ * startup flag, plus the v4 task-3 #14 session-only show-all override), generateTree (subtree selection incl. onlyShowBMBar, the
  * search-index refresh, the sync-indicator refresh, scroll/focus restore and
  * the legacy local-separator migration) plus the startup
  * chrome.bookmarks.getTree call, the four tree event handlers (scroll
@@ -39,6 +39,12 @@
  * ctx.onOpenBookmark(id,url) — v4 task-2 slice D: optional hook fired on every
  *                             bookmark open (the visit-stats collection point;
  *                             slice E: the url feeds the SW dedupe marker)
+ * ctx.toastAction(message, buttonLabel, onAction) — v4 task-3 #14: optional
+ *                             generic action toast (neat.js passes
+ *                             undo.toastAction); revealInTree uses it when the
+ *                             target sits outside an onlyShowBMBar-filtered
+ *                             tree. Missing → the guard silently falls back
+ *                             to the plain reveal (minimal setups).
  *
  * Returns { generateTree, adaptBookmarkTooltips, revealFolder, revealInTree,
  * bookmarkHandler }: neat.js's sortFolderContents rebuilds via
@@ -83,11 +89,17 @@ export function initTreeView(ctx = {}) {
     // v4 task-2: view-manager API — revealInTree activates the tree view
     // (optional so minimal test setups keep working).
     const views = ctx.views;
+    // v4 task-3 #14: generic action toast (undo.toastAction in neat.js).
+    const toastAction = ctx.toastAction;
 
     // 树视图状态：folder id -> parent id 映射（每次 generateTree 重建）与
     // onlyShowBMBar 启动开关（只有 generateTree 读取）。
     const nodeTrees = {};
     const onlyShowBMBar = !!store.get('onlyShowBMBar');
+    // v4 task-3 #14: session-only override set by the reveal hint's toast
+    // action — the tree shows the FULL tree until the page unloads; the
+    // onlyShowBMBar setting itself is never touched.
+    let showAllOverride = false;
 
     // Round-4 item 4: generateNodeTrees maps folders only, so a bookmark id
     // never resolved an ancestor chain in revealFolder — "在树中定位" opened
@@ -134,7 +146,7 @@ export function initTreeView(ctx = {}) {
 
     const generateTree = tree => {
         let subTree;
-        if (onlyShowBMBar) {
+        if (onlyShowBMBar && !showAllOverride) {
             // Find the bookmarks bar folder using folderType instead of fixed position
             const bookmarksBarFolder = treeRender.findFolderByType(tree, 'bookmarks-bar');
             if (bookmarksBarFolder) {
@@ -328,6 +340,31 @@ export function initTreeView(ctx = {}) {
     // view, then run the same reveal chain (works for bookmark ids too: the
     // row is focused via focusID, its ancestors opened).
     const revealInTree = id => {
+        // v4 task-3 #14: with "only show the bookmarks bar" on, a target
+        // outside the bar subtree has no nodeTrees entry at all — the old
+        // chain then silently revealed nothing (getParentPath degenerated to
+        // the bare id, the row never rendered). Instead of quietly failing,
+        // explain via toast and offer a one-click, session-only override
+        // that shows the full tree and completes the reveal. The user stays
+        // in the current view until they explicitly pick the action.
+        if (onlyShowBMBar && !showAllOverride && nodeTrees[id] === undefined && toastAction) {
+            toastAction(
+                chrome.i18n.getMessage('revealOutsideBarHint'),
+                chrome.i18n.getMessage('revealOutsideBarAction'),
+                () => {
+                    showAllOverride = true;
+                    // nodeTrees still maps the bar-only render — regenerate
+                    // over the full tree first so revealFolder's
+                    // getParentPath resolves the real ancestor chain.
+                    chrome.bookmarks.getTree(tree => {
+                        generateTree(tree);
+                        revealFolder(id);
+                        if (views)
+                            views.activate('tree', { keepFocus: true });
+                    });
+                });
+            return;
+        }
         revealFolder(id);
         if (views)
             views.activate('tree', { keepFocus: true });
@@ -393,6 +430,10 @@ export function initTreeView(ctx = {}) {
     $tree.addEventListener('click', bookmarkHandler);
     search.results.addEventListener('click', bookmarkHandler);
     $tree.addEventListener('auxclick', bookmarkHandler);
+    // Middle-click parity on the search results pane (the click-only binding
+    // above was a legacy gap): auxclick with button 1 opens in a tab like a
+    // ctrl-click, per bookmarkHandler's own modifier mapping.
+    search.results.addEventListener('auxclick', bookmarkHandler);
 
     return {
         generateTree,

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="/css/options.css">
+<link rel="stylesheet" href="/vendor/codemirror.css">
+<script src="/vendor/codemirror.js"></script>
 <script src="/src/store.js"></script>
 <script src="/src/options.js"></script>
 <div class="options-page">
-<div class="options-nav">
-    <a href="advanced-options.html">
-        <p id="advanced-options"></p>
-    </a>
-</div>
 <h1>
-    <img src="/assets/icons/icon32.png" width="32" height="32" alt="">
+    <img src="/assets/icons/icon.svg" width="32" height="32" alt="">
     <span id="ext-name"></span>
     <small id="small-options"></small>
 </h1>
@@ -35,15 +32,20 @@
 <h2 id="views-options"></h2>
 <ul class="options-list">
     <li><label><input type="checkbox" id="show-view-tabs" aria-labelledby="option-show-view-tabs"><span id="option-show-view-tabs"></span></label></li>
+    <li><label><input type="checkbox" id="remember-view" aria-labelledby="option-remember-view"><span id="option-remember-view"></span></label></li>
+    <li><label><input type="checkbox" id="show-tab-badges" aria-labelledby="option-show-tab-badges"><span id="option-show-tab-badges"></span></label></li>
     <li><label><input type="checkbox" id="show-item-path" aria-labelledby="option-show-item-path"><span id="option-show-item-path"></span></label></li>
     <li><label><input type="checkbox" id="show-recent-bookmarks" aria-labelledby="option-show-recent-bookmarks"><span id="option-show-recent-bookmarks"></span></label></li>
     <li><label><input type="checkbox" id="show-stats-view" aria-labelledby="option-show-stats-view"><span id="option-show-stats-view"></span></label></li>
     <li><label><input type="checkbox" id="show-dead-view" aria-labelledby="option-show-dead-view"><span id="option-show-dead-view"></span></label></li>
     <li><label><input type="checkbox" id="show-dupes-view" aria-labelledby="option-show-dupes-view"><span id="option-show-dupes-view"></span></label></li>
+    <li><label><input type="checkbox" id="palette-enabled" aria-labelledby="option-palette-enabled"><span id="option-palette-enabled"></span></label></li>
+    <li><label><input type="checkbox" id="quick-add-enabled" aria-labelledby="option-quick-add-enabled"><span id="option-quick-add-enabled"></span></label></li>
+    <li><label><input type="checkbox" id="show-tool-button" aria-labelledby="option-show-tool-button"><span id="option-show-tool-button"></span></label></li>
+    <li><button id="classic-experience" type="button"></button><br><small id="classic-experience-hint"></small></li>
     <li><label><span id="option-recent-count"></span> <select id="recent-count" aria-labelledby="option-recent-count"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></li>
     <li><label><input type="checkbox" id="search-history-enabled" aria-labelledby="option-search-history"><span id="option-search-history"></span></label><br><small id="option-search-history-hint"></small></li>
     <li><label><input type="checkbox" id="stats-enabled" aria-labelledby="option-stats-enabled"><span id="option-stats-enabled"></span></label> <button id="stats-clear" type="button"></button></li>
-    <li><label><span id="option-dead-proxy"></span> <input type="text" id="dead-proxy-template" aria-labelledby="option-dead-proxy" aria-describedby="dead-proxy-hint" spellcheck="false"></label><br><small id="dead-proxy-hint"></small></li>
 </ul>
 </section>
 <section class="options-group">
@@ -62,6 +64,40 @@
 </ul>
 </section>
 <section class="options-group">
+<h2 id="custom-icon"></h2>
+<ul class="options-list">
+    <li>
+        <div id="custom-icon-preview"><img src="/assets/icons/icon.svg" width="19" height="19" alt=""></div>
+        <p id="custom-icon-description"></p>
+        <div>
+            <button id="default-icon-button" type="button"></button><span id="default-icon-button-or"></span><input type="file" id="custom-icon-file">
+        </div>
+    </li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="custom-styles"></h2>
+<ul class="options-list">
+    <li><span id="custom-separator-color-description"></span> <input type="text" id="custom-separator-color"></li>
+    <li><span id="custom-separator-title-description"></span> <input type="text" id="custom-separator-title"></li>
+    <li><span id="custom-separator-url-description"></span> <input type="text" id="custom-separator-url"></li>
+    <li><span id="custom-separator-string-description"></span> <input type="text" id="custom-separator-string"></li>
+    <li>
+        <span id="custom-styles-description"></span> <span><a href="http://gist.github.com/">GitHub Gist</a></span>
+        <br>
+        <textarea id="userstyle"></textarea>
+    </li>
+</ul>
+</section>
+<section class="options-group">
+<h2 id="dead-scan-options"></h2>
+<ul class="options-list">
+    <li><label><span id="option-dead-proxy"></span> <input type="text" id="dead-proxy-template" aria-labelledby="option-dead-proxy" aria-describedby="dead-proxy-hint" spellcheck="false"></label><br><small id="dead-proxy-hint"></small></li>
+    <li><label><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></label></li>
+    <li><label><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></label></li>
+</ul>
+</section>
+<section class="options-group">
 <h2 id="backup-options"></h2>
 <ul class="options-list">
     <li>
@@ -70,6 +106,7 @@
         <input type="file" id="import-settings-file" accept=".json,application/json" hidden>
         <br><small id="backup-hint"></small>
     </li>
+    <li><span id="reset-settings-description"></span> <button id="reset-button" type="button"></button></li>
 </ul>
 </section>
 </main>

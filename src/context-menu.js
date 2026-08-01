@@ -15,6 +15,13 @@
  * Round-4 item 7 adds the search-history menu: rows of the upper search
  * pane are recorded queries, not bookmarks, so they get a dedicated minimal
  * menu (rerun / remove / clear-all) instead of the bookmark one.
+ * v4 task-3 adds three more row-aware behaviors: the positional bookmark
+ * entries (add before/after ×4 + add-separator) hide on every row outside
+ * the tree view (#11 — they make no sense in flat result lists); the
+ * unbookmarked recent-history rows of the stats view get their own slim
+ * menu (open×3 + bookmark-it, #10); and a dupes group head gets a group
+ * menu (apply-dedup / expand-collapse, #16) instead of the folder menu
+ * the span walk-up used to land on.
  *
  * initContextMenu(ctx) is called once by neat.js BEFORE initSearch: search
  * needs menus.switchBookmarkMenu at init time (a restored query calls it
@@ -29,7 +36,8 @@
  * ctx.dialogs                    — initDialogs API (SortDialog, read lazily)
  * ctx.revealInTree               — view-row → tree jump (read lazily)
  * ctx.deadMenu                   — { isMarked, toggle } of the dead view (lazily)
- * ctx.dupesMenu                  — { setKeeper } of the dupes view (lazily)
+ * ctx.dupesMenu                  — { setKeeper, cleanHint, isCollapsed,
+ *                                  cleanGroup, toggleGroup } of the dupes view (lazily)
  *
  * The #results element is looked up here directly (the same static node
  * search.js wraps and returns as search.results) — injecting the search API
@@ -50,6 +58,10 @@ export function initContextMenu(ctx = {}) {
     const $folderContextMenu = $('folder-context-menu');
     const $separatorContextMenu = $('separator-context-menu');
     const $searchHistoryContextMenu = $('search-history-context-menu');
+    // v4 task-3 #10/#16: unbookmarked stats-history rows and dupes group
+    // heads get their own menus (absent in minimal test setups → null-check).
+    const $histRowContextMenu = $('hist-row-context-menu');
+    const $dupesGroupContextMenu = $('dupes-group-context-menu');
     const $results = $('results');
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
@@ -88,6 +100,16 @@ export function initContextMenu(ctx = {}) {
             $searchHistoryContextMenu.style.left = '-999px';
             $searchHistoryContextMenu.style.opacity = '0';
             $searchHistoryContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($histRowContextMenu) {
+            $histRowContextMenu.style.left = '-999px';
+            $histRowContextMenu.style.opacity = '0';
+            $histRowContextMenu.style.transform = 'scale(.98)';
+        }
+        if ($dupesGroupContextMenu) {
+            $dupesGroupContextMenu.style.left = '-999px';
+            $dupesGroupContextMenu.style.opacity = '0';
+            $dupesGroupContextMenu.style.transform = 'scale(.98)';
         }
     };
 
@@ -143,6 +165,7 @@ export function initContextMenu(ctx = {}) {
         // toolbars. No row → no menu (default already suppressed above).
         if (!el.closest || !el.closest('li'))
             return;
+        const row = el.closest('li');
         let menu;
         // Round-4 item 7: a search-history row (the recorded-query rows of
         // the upper search pane) is not a bookmark — its li carries no
@@ -152,7 +175,39 @@ export function initContextMenu(ctx = {}) {
             && el.dataset && typeof el.dataset.q !== 'undefined'
             && el.parentNode && el.parentNode.classList
             && el.parentNode.classList.contains('search-history-row');
-        if (onHistoryRow && $searchHistoryContextMenu) {
+        // v4 task-3 #16: a dupes GROUP HEAD is a span row, so the generic
+        // branches below would open the folder menu on it — its entries act
+        // on a bogus id. The group head gets its own menu instead: apply
+        // dedup (label names keeper + doomed count, resolved live) and
+        // expand/collapse (label follows the current state).
+        const groupHead = el.closest('.group-head');
+        if (groupHead && groupHead.parentNode && groupHead.parentNode.classList
+            && groupHead.parentNode.classList.contains('dupes-group')
+            && $dupesGroupContextMenu && ctx.dupesMenu) {
+            el = groupHead;
+            menu = $dupesGroupContextMenu;
+            const key = groupHead.parentNode.dataset.key;
+            const hint = ctx.dupesMenu.cleanHint(key);
+            const cleanItem = $('dupes-group-clean');
+            cleanItem.textContent = hint;
+            cleanItem.style.display = hint ? 'block' : 'none';
+            const cleanSep = $('dupes-group-menu-sep1');
+            if (cleanSep)
+                cleanSep.style.display = hint ? 'block' : 'none';
+            $('dupes-group-toggle').textContent =
+                _m(ctx.dupesMenu.isCollapsed(key) ? 'dupesGroupExpand' : 'dupesGroupCollapse');
+        // v4 task-3 #10: an UNBOOKMARKED stats-history row has no bookmark
+        // id, so the bookmark menu would act on a bogus id (it used to be
+        // swallowed at the list level). Its slim menu: open×3 via the row
+        // href, bookmark-it via the row's own ☆ button.
+        } else if (row.classList && row.classList.contains('stats-hist-row')
+            && !(row.dataset && row.dataset.nodeId) && $histRowContextMenu) {
+            const anchor = el.tagName === 'A' ? el : row.querySelector('a');
+            if (!anchor)
+                return;
+            el = anchor;
+            menu = $histRowContextMenu;
+        } else if (onHistoryRow && $searchHistoryContextMenu) {
             menu = $searchHistoryContextMenu;
         } else if (el.tagName === 'A') {
             if (el.classList.contains('link-folder')) {
@@ -170,12 +225,19 @@ export function initContextMenu(ctx = {}) {
                 }
             } else {
                 menu = $bookmarkContextMenu;
+                // v4 task-3 #11: outside the tree view the positional add-*
+                // entries have no meaning (flat result lists have no
+                // before/after), so the menu collapses to its flat form.
+                // This subsumes switchBookmarkMenu's search-era hiding: a
+                // results row is never a tree row. (Palette rows land here
+                // too — same flat rule.)
+                const inTree = el.parentNode.id.startsWith('neat-tree-item-');
+                setPositionalItems(inTree);
                 // v4 task-2: "Reveal in tree" only makes sense for rows that
                 // live outside the tree view (recent list / search results);
                 // on a tree row the entry would be a no-op, so hide it there.
                 const revealItem = $('reveal-in-tree');
                 if (revealItem) {
-                    const inTree = el.parentNode.id.startsWith('neat-tree-item-');
                     revealItem.style.display = inTree ? 'none' : 'block';
                     const revealSep = $('reveal-in-tree-sep');
                     if (revealSep)
@@ -545,27 +607,100 @@ export function initContextMenu(ctx = {}) {
         $searchHistoryContextMenu.addEventListener('contextmenu', searchHistoryContextHandler);
     }
 
-    const switchBookmarkMenu = disable => {
-        if (disable) {
-            $('add-bookmark-before-bookmark').style.display = 'none';
-            $('add-bookmark-after-bookmark').style.display = 'none';
-            $('bookmark-context-menu-sep1').style.display = 'none';
-            $('add-folder-before-bookmark').style.display = 'none';
-            $('add-folder-after-bookmark').style.display = 'none';
-            $('bookmark-context-menu-sep2').style.display = 'none';
-            $('add-separator').style.display = 'none';
-            $('bookmark-context-menu-sep3').style.display = 'none';
-        } else {
-            $('add-bookmark-before-bookmark').style.display = 'block';
-            $('add-bookmark-after-bookmark').style.display = 'block';
-            $('bookmark-context-menu-sep1').style.display = 'block';
-            $('add-folder-before-bookmark').style.display = 'block';
-            $('add-folder-after-bookmark').style.display = 'block';
-            $('bookmark-context-menu-sep2').style.display = 'block';
-            $('add-separator').style.display = 'block';
-            $('bookmark-context-menu-sep3').style.display = 'block';
+    // v4 task-3 #10: the slim menu for unbookmarked stats-history rows.
+    // Open×3 ride the shared actions on the row href; bookmark-it clicks
+    // the row's own ☆ button, so view-stats keeps owning the add logic
+    // (the same decoupling as the search-history dispatch above).
+    if ($histRowContextMenu) {
+        $('hist-open-new-tab').textContent = _m('openNewTab');
+        $('hist-open-new-window').textContent = _m('openNewWindow');
+        $('hist-open-incognito').textContent = _m('openIncognitoWindow');
+        $('hist-add-bookmark').textContent = _m('statsHistoryAdd');
+    }
+    const histRowContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const actions = ctx.actions;
+        const url = currentContext.href;
+        switch (el.id) {
+            case 'hist-open-new-tab':
+                actions.openBookmarkNewTab(url);
+                break;
+            case 'hist-open-new-window':
+                actions.openBookmarkNewWindow(url);
+                break;
+            case 'hist-open-incognito':
+                actions.openBookmarkNewWindow(url, true);
+                break;
+            case 'hist-add-bookmark': {
+                const addBtn = currentContext.parentNode.querySelector('.stats-add-btn');
+                if (addBtn)
+                    addBtn.click();
+                break;
+            }
+        }
+        clearMenu();
+    };
+    if ($histRowContextMenu) {
+        $histRowContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                histRowContextHandler(e);
+        });
+        $histRowContextMenu.addEventListener('contextmenu', histRowContextHandler);
+    }
+
+    // v4 task-3 #16: the dupes group-head menu. currentContext is the
+    // group-head span; its parent li carries data-key. Labels are resolved
+    // at open time (they name the keeper / follow the collapsed state).
+    const dupesGroupContextHandler = e => {
+        if (!currentContext)
+            return;
+        const el = e.target;
+        if (!el.classList.contains('menu-item'))
+            return;
+        const key = currentContext.parentNode.dataset.key;
+        switch (el.id) {
+            case 'dupes-group-clean':
+                ctx.dupesMenu.cleanGroup(key);
+                break;
+            case 'dupes-group-toggle':
+                ctx.dupesMenu.toggleGroup(key);
+                break;
+        }
+        clearMenu();
+    };
+    if ($dupesGroupContextMenu) {
+        $dupesGroupContextMenu.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                dupesGroupContextHandler(e);
+        });
+        $dupesGroupContextMenu.addEventListener('contextmenu', dupesGroupContextHandler);
+    }
+
+    // v4 task-3 #11: the positional add-* entries + their separators, as one
+    // set — hidden for every row outside the tree view (open-time flat rule)
+    // and by switchBookmarkMenu (search.js's search-active toggle, kept for
+    // compatibility; the open-time rule already covers its case).
+    const POSITIONAL_IDS = [
+        'add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
+        'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
+        'add-folder-after-bookmark', 'bookmark-context-menu-sep2',
+        'add-separator', 'bookmark-context-menu-sep3'
+    ];
+    const setPositionalItems = visible => {
+        for (let i = 0; i < POSITIONAL_IDS.length; i++) {
+            const item = $(POSITIONAL_IDS[i]);
+            if (item)
+                item.style.display = visible ? 'block' : 'none';
         }
     };
+
+    const switchBookmarkMenu = disable => setPositionalItems(!disable);
 
     return {
         clearMenu,
@@ -578,6 +713,9 @@ export function initContextMenu(ctx = {}) {
         separatorMenu: $separatorContextMenu,
         // fourth-round item 7: dedicated menu for search-history rows; may be
         // absent in minimal test setups, so consumers must null-check
-        searchHistoryMenu: $searchHistoryContextMenu || null
+        searchHistoryMenu: $searchHistoryContextMenu || null,
+        // v4 task-3 #10/#16: same null-check contract as searchHistoryMenu
+        histRowMenu: $histRowContextMenu || null,
+        dupesGroupMenu: $dupesGroupContextMenu || null
     };
 }

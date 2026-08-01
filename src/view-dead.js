@@ -57,6 +57,14 @@
  * The filter (all / dead only / blocked only) is an in-memory view control,
  * deliberately not persisted (§5.5c).
  *
+ * Selection mode (v4 task-3 #4): the idle toolbar's 选择 button swaps every
+ * idle control for a batch bar — select all / invert / clear (over the
+ * filtered rows), mark selected / unmark selected (one batch, no confirm —
+ * the explicit selection is the confirmation) and exit. Row clicks toggle
+ * membership instead of opening (the ⚑/× buttons are CSS-hidden), Esc
+ * leaves the mode, and members that vanish mid-mode (tree change, filter)
+ * are pruned at render.
+ *
  * initViewDead(ctx) is called once by neat.js after treeView init.
  * ctx.store            — settings mirror (deadMarks/deadLastScan/deadProxyTemplate/
  *                        deadScanConcurrency/deadScanTimeout/showDeadView)
@@ -114,6 +122,12 @@ export function initViewDead(ctx = {}) {
     let lastScan = null;    // { ts, scannedCount, results: {id:{status,code}} }
     let treeItems = new Map(); // id → { id, title, url } of the last render
     let filter = 'all';     // 'all' | 'dead' | 'blocked' — in-memory (§5.5c)
+    // v4 task-3 #4 selection mode: the toolbar's 选择 button swaps the idle
+    // controls for a batch bar (all/invert/clear + mark/unmark selected);
+    // row clicks toggle membership instead of opening, Esc exits. Members
+    // are bookmark ids, pruned at render against rows that still exist.
+    let selecting = false;
+    const selected = new Set();
 
     const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
@@ -213,7 +227,9 @@ export function initViewDead(ctx = {}) {
 
     // --- Rendering --------------------------------------------------------------
     const renderToolbar = () => {
-        let html = '<div class="dead-toolbar">';
+        // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
+        // stops between the tab strip and the list rows (final polish).
+        let html = '<div class="dead-toolbar vbm-toolbar">';
         if (scan) {
             // scanning/paused share the toolbar; the toggle button and the
             // paused tag split them. Real <button>s: Tab-reachable and
@@ -225,6 +241,20 @@ export function initViewDead(ctx = {}) {
                 `<button class="dead-pause">${_m(paused ? 'deadResume' : 'deadPause')}</button>` +
                 `<button class="dead-cancel">${_m('deadCancel')}</button>`;
         } else {
+            if (selecting) {
+                // v4 task-3 #4: the batch bar replaces every idle control
+                // while the mode is on — the scan/filter buttons come back
+                // on exit. Action buttons disable on an empty selection.
+                html += `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
+                    `<button class="dead-select-all">${_m('selectAll')}</button>` +
+                    `<button class="dead-select-invert">${_m('selectInvert')}</button>` +
+                    `<button class="dead-select-clear">${_m('selectClear')}</button>` +
+                    `<button class="dead-mark-selected"${selected.size ? '' : ' disabled'}>${_m('deadMarkSelected')}</button>` +
+                    `<button class="dead-unmark-selected"${selected.size ? '' : ' disabled'}>${_m('deadUnmarkSelected')}</button>` +
+                    `<button class="dead-select-exit">${_m('selectModeExit')}</button>`;
+                html += '</div>';
+                return html;
+            }
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>` +
@@ -240,6 +270,9 @@ export function initViewDead(ctx = {}) {
             }
             if (deadMarks.size)
                 html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
+            // v4 task-3 #4: selection mode entry — only with results on screen
+            if (lastScan && allResultRows().length)
+                html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
         }
         html += '</div>';
         return html;
@@ -248,13 +281,14 @@ export function initViewDead(ctx = {}) {
     // One <ul> of result rows — shared by the cached result set and the
     // progressive mid-scan list (same row markup, same buttons).
     const renderRows = rows => {
-        let html = '<ul role="list">';
+        let html = `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
         for (let i = 0, l = rows.length; i < l; i++) {
             const { item, result } = rows[i];
             const blocked = result.status === 'blocked';
             const path = views.pathOf(item.id);
             const marked = deadMarks.has(item.id);
-            html += `<li class="vbm-row" id="dead-item-${item.id}" role="listitem" ` +
+            const sel = selecting && selected.has(item.id);
+            html += `<li class="vbm-row${sel ? ' sel' : ''}" id="dead-item-${item.id}" role="listitem" ` +
                 `data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
@@ -279,6 +313,14 @@ export function initViewDead(ctx = {}) {
     };
 
     const render = () => {
+        if (selecting) {
+            // prune members whose rows vanished (tree change / filter) BEFORE
+            // the toolbar reads selected.size for its count
+            const alive = new Set(resultRows().map(r => r.item.id));
+            for (const id of [...selected])
+                if (!alive.has(id))
+                    selected.delete(id);
+        }
         let html = renderToolbar();
         if (scan) {
             // Item 10: progressive rendering — settled dead/blocked checks
@@ -286,7 +328,7 @@ export function initViewDead(ctx = {}) {
             html += renderRows(liveRows());
         } else if (!lastScan) {
             // §3.5: the empty state itself is the executable start row.
-            html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="0">` +
+            html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                 `<i>${_m('deadStartHint', `${scanTotal || treeItems.size}`)}</i></li></ul>`;
         } else {
             const rows = resultRows();
@@ -389,6 +431,32 @@ export function initViewDead(ctx = {}) {
                     render();
             }
         });
+    };
+
+    // --- Selection mode (v4 task-3 #4) -----------------------------------------
+    const setSelecting = on => {
+        selecting = on;
+        if (!on)
+            selected.clear();
+        render();
+    };
+
+    // Mark / unmark every selected row in one batch (no ConfirmDialog — the
+    // explicit selection is the confirmation, and the action is reversible).
+    const markSelected = mark => {
+        if (!selected.size)
+            return;
+        for (const id of selected) {
+            if (mark)
+                deadMarks.add(id);
+            else
+                deadMarks.delete(id);
+        }
+        persistMarks();
+        refreshOverlays();
+        if (mark)
+            undo.showToast(_m('deadMarked'));
+        render();
     };
 
     // --- Scan (§5.5b/§5.5d + item 10 state machine) -----------------------------
@@ -540,6 +608,67 @@ export function initViewDead(ctx = {}) {
             unmarkAll();
             return;
         }
+        // v4 task-3 #4: selection mode controls + row-toggle clicks
+        if (closest('.dead-select-mode')) {
+            e.preventDefault();
+            setSelecting(true);
+            return;
+        }
+        if (closest('.dead-select-exit')) {
+            e.preventDefault();
+            setSelecting(false);
+            return;
+        }
+        if (closest('.dead-select-all')) {
+            e.preventDefault();
+            for (const { item } of resultRows())
+                selected.add(item.id);
+            render();
+            return;
+        }
+        if (closest('.dead-select-invert')) {
+            e.preventDefault();
+            for (const { item } of resultRows()) {
+                if (selected.has(item.id))
+                    selected.delete(item.id);
+                else
+                    selected.add(item.id);
+            }
+            render();
+            return;
+        }
+        if (closest('.dead-select-clear')) {
+            e.preventDefault();
+            selected.clear();
+            render();
+            return;
+        }
+        if (closest('.dead-mark-selected')) {
+            e.preventDefault();
+            markSelected(true);
+            return;
+        }
+        if (closest('.dead-unmark-selected')) {
+            e.preventDefault();
+            markSelected(false);
+            return;
+        }
+        if (selecting) {
+            // Row click toggles membership instead of opening; everything
+            // else (row buttons are CSS-hidden) is swallowed.
+            const li = closest('li');
+            if (li && li.dataset && li.dataset.nodeId) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = li.dataset.nodeId;
+                if (selected.has(id))
+                    selected.delete(id);
+                else
+                    selected.add(id);
+                render();
+            }
+            return;
+        }
         const markBtn = closest('.dead-mark-btn');
         if (markBtn) {
             e.preventDefault();
@@ -574,6 +703,27 @@ export function initViewDead(ctx = {}) {
             startScan();
         }
     }, true);
+
+    // Final polish: the filter seg gets the same ←/→ focus movement as the
+    // stats sort seg (buttons activate natively via Enter/Space).
+    $list.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
+            return;
+        const t = e.target;
+        if (!t || !t.classList || !t.classList.contains('dead-filter-btn'))
+            return;
+        const seg = t.parentNode;
+        const btns = seg && seg.querySelectorAll ? seg.querySelectorAll('.dead-filter-btn') : [];
+        let idx = -1;
+        for (let i = 0, l = btns.length; i < l; i++)
+            if (btns[i] === t)
+                idx = i;
+        if (idx < 0 || btns.length < 2)
+            return;
+        e.preventDefault();
+        const dir = e.key === 'ArrowRight' ? 1 : -1;
+        btns[(idx + dir + btns.length) % btns.length].focus();
+    });
 
     // M — toggle the focused row's dead mark; R — reveal it in the tree
     // (docs/v4task-2-list.md §3.5). Consumed by keyboard.js before the
@@ -617,6 +767,12 @@ export function initViewDead(ctx = {}) {
         // layered Esc contract (the view consumes Esc only while it holds
         // transient state). Cancelling is the explicit toolbar Cancel.
         onEscape: () => {
+            // v4 task-3 #4: while selecting, Esc leaves the mode (the
+            // selection goes with it) — before any scan semantics.
+            if (selecting) {
+                setSelecting(false);
+                return true;
+            }
             if (!scan)
                 return false;
             if (scan.isPaused())

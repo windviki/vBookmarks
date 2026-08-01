@@ -15,7 +15,13 @@
  * 'all' tree / 'bar' bookmarks-bar subtree only), the dupesIgnoreScheme
  * checkbox (fold http/https variants into one group), the preview summary
  * and the apply-all primary button. All three controls persist their value
- * and regroup on change.
+ * and regroup on change. The 选择 button (v4 task-3 #5) swaps the whole
+ * toolbar for a selection-mode batch bar: all/invert/clear over GROUPS,
+ * and a dedup-selected button whose count is the live doomed total of the
+ * selected groups (the sync the item asks for); one ConfirmDialog gates
+ * one serial deletion chain for all of them. Group heads keep their ×
+ * quick apply (cleanGroup) outside the mode; inside it every head/member
+ * click toggles the group's membership and Esc exits.
  *
  * Row spec (§3.6 — the "no repeated information" rule): the group header
  * shows the normalized URL ONCE (muted, monospace); member rows never
@@ -45,6 +51,9 @@
  * header span as a folder row); K sets the focused member as keeper; R
  * reveals it in the tree; Delete on a member row rides keyboard.js's
  * treeKeyUp → actions.deleteBookmark (the undo chain) untouched.
+ * Right-click on a group head opens the dedicated group menu (v4 task-3
+ * #16: apply dedup — label resolved live via cleanHint — and expand/
+ * collapse), never the folder menu the span walk-up used to land on.
  *
  * initViewDupes(ctx) is called once by neat.js after treeView init.
  * ctx.store            — settings mirror (dupesStrategy/dupesScope/dupesIgnoreScheme/
@@ -119,6 +128,12 @@ export function initViewDupes(ctx = {}) {
     const keepers = new Map();       // group key → manually pinned keeper item
     const collapsed = new Set();     // folded group keys
     let dirty = false;
+    // v4 task-3 #5 selection mode: groups (not rows) are the unit — the
+    // toolbar's 选择 button swaps the toolbar for a batch bar (all/invert/
+    // clear + dedup-selected with a live doomed count); head/member clicks
+    // toggle the group's membership, Esc exits. Keys prune at render.
+    let selecting = false;
+    const selected = new Set();      // group keys
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -231,9 +246,28 @@ export function initViewDupes(ctx = {}) {
 
     // --- Rendering --------------------------------------------------------------
     const renderToolbar = () => {
+        if (selecting) {
+            // v4 task-3 #5: the batch bar replaces the whole toolbar; the
+            // apply button's count is the LIVE doomed total of the selected
+            // groups (the "banner" the item text asks to keep in sync).
+            let doomedSel = 0;
+            for (const g of groups) {
+                if (selected.has(g.key))
+                    doomedSel += planDeletion(g, keeperOf(g)).length;
+            }
+            return '<div class="dupes-toolbar selecting-bar vbm-toolbar">' +
+                `<span class="select-count">${_m('selectCount', `${selected.size}`)}</span>` +
+                `<button class="dupes-select-all">${_m('selectAll')}</button>` +
+                `<button class="dupes-select-invert">${_m('selectInvert')}</button>` +
+                `<button class="dupes-select-clear">${_m('selectClear')}</button>` +
+                `<button class="dupes-apply-selected"${doomedSel ? '' : ' disabled'}>` +
+                `${_m('dupesApplySelected', `${doomedSel}`)}</button>` +
+                `<button class="dupes-select-exit">${_m('selectModeExit')}</button>` +
+                '</div>';
+        }
         const doomed = doomedCount();
         const statsOn = visitStats.enabled();
-        let html = '<div class="dupes-toolbar">';
+        let html = '<div class="dupes-toolbar vbm-toolbar">';
         html += `<select class="dupes-strategy" aria-label="${_m('dupesStrategyOldest')}">`;
         for (let i = 0; i < STRATEGIES.length; i++) {
             const [value, key] = STRATEGIES[i];
@@ -252,6 +286,9 @@ export function initViewDupes(ctx = {}) {
         html += `<span class="dupes-summary">${_m('dupesPreviewSummary', [`${groups.length}`, `${doomed}`])}</span>`;
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
             _m('dupesApplyAll', `${doomed}`) + '</button>';
+        // v4 task-3 #5: selection mode entry — only with groups on screen
+        if (groups.length)
+            html += `<button class="dupes-select-mode">${_m('selectModeEnter')}</button>`;
         html += '</div>';
         return html;
     };
@@ -266,8 +303,8 @@ export function initViewDupes(ctx = {}) {
         const doomed = planDeletion(group, keeper).length;
         const hint = htmlspecialchars(_m('dupesCleanRestHint',
             [keeper.title || _m('noTitle'), `${doomed}`]));
-        let html = `<li class="dupes-group" data-key="${key}">` +
-            `<span class="group-head" tabindex="0" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
+        let html = `<li class="dupes-group${selecting && selected.has(group.key) ? ' sel' : ''}" data-key="${key}">` +
+            `<span class="group-head" tabindex="-1" role="button" aria-expanded="${isCollapsed ? 'false' : 'true'}">` +
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
@@ -298,11 +335,19 @@ export function initViewDupes(ctx = {}) {
     };
 
     const render = () => {
+        if (selecting) {
+            // prune selected keys whose group vanished (regroup) BEFORE the
+            // toolbar counts them
+            const alive = new Set(groups.map(g => g.key));
+            for (const key of [...selected])
+                if (!alive.has(key))
+                    selected.delete(key);
+        }
         let html = renderToolbar();
         if (!groups.length) {
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('dupesNone')}</i></li></ul>`;
         } else {
-            html += '<ul role="list">';
+            html += `<ul role="list"${selecting ? ' class="selecting"' : ''}>`;
             for (let i = 0, l = groups.length; i < l; i++)
                 html += renderGroup(groups[i]);
             html += '</ul>';
@@ -364,6 +409,32 @@ export function initViewDupes(ctx = {}) {
         confirmDeletion(doomed, _m('dupesConfirmAll', [`${doomed.length}`, `${groups.length}`]));
     };
 
+    // --- Selection mode (v4 task-3 #5) -----------------------------------------
+    const setSelecting = on => {
+        selecting = on;
+        if (!on)
+            selected.clear();
+        render();
+    };
+
+    // Dedup the selected groups: one confirm, one serial deletion chain, one
+    // toast — the doomed rows of every selected group join a single plan
+    // (each group's own keeper still applies). Stale keys prune at render
+    // after the regroup lands.
+    const applySelected = () => {
+        const doomed = [];
+        let groupCount = 0;
+        for (const g of groups) {
+            if (!selected.has(g.key))
+                continue;
+            groupCount++;
+            doomed.push(...planDeletion(g, keeperOf(g)));
+        }
+        if (!doomed.length)
+            return;
+        confirmDeletion(doomed, _m('dupesConfirmSelected', [`${doomed.length}`, `${groupCount}`]));
+    };
+
     const setKeeper = id => {
         const item = itemIndex.get(id);
         if (!item)
@@ -378,6 +449,34 @@ export function initViewDupes(ctx = {}) {
             dirty = true; // the activate hook replays the render
             views.activate('dupes');
         }
+    };
+
+    // v4 task-3 #16: group-level API for the group-head context menu
+    // (context-menu.js resolves labels and dispatches by data-key).
+    const groupByKey = key => groups.find(g => g.key === key);
+    // The menu's apply-dedup label names the strategy pick up front — the
+    // same sentence the × quick-action button carries as its hint.
+    const cleanHint = key => {
+        const group = groupByKey(key);
+        if (!group)
+            return '';
+        const keeper = keeperOf(group);
+        return _m('dupesCleanRestHint',
+            [keeper.title || _m('noTitle'), `${planDeletion(group, keeper).length}`]);
+    };
+    const cleanGroupByKey = key => {
+        const group = groupByKey(key);
+        if (group)
+            cleanGroup(group);
+    };
+    const toggleGroup = key => {
+        if (!groupByKey(key))
+            return;
+        if (collapsed.has(key))
+            collapsed.delete(key);
+        else
+            collapsed.add(key);
+        refresh();
     };
 
     // --- Events ------------------------------------------------------------------
@@ -411,6 +510,63 @@ export function initViewDupes(ctx = {}) {
         if (closest('.dupes-apply-all')) {
             e.preventDefault();
             cleanAll();
+            return;
+        }
+        // v4 task-3 #5: selection mode controls + group-toggle clicks
+        if (closest('.dupes-select-mode')) {
+            e.preventDefault();
+            setSelecting(true);
+            return;
+        }
+        if (closest('.dupes-select-exit')) {
+            e.preventDefault();
+            setSelecting(false);
+            return;
+        }
+        if (closest('.dupes-select-all')) {
+            e.preventDefault();
+            for (const g of groups)
+                selected.add(g.key);
+            render();
+            return;
+        }
+        if (closest('.dupes-select-invert')) {
+            e.preventDefault();
+            for (const g of groups) {
+                if (selected.has(g.key))
+                    selected.delete(g.key);
+                else
+                    selected.add(g.key);
+            }
+            render();
+            return;
+        }
+        if (closest('.dupes-select-clear')) {
+            e.preventDefault();
+            selected.clear();
+            render();
+            return;
+        }
+        if (closest('.dupes-apply-selected')) {
+            e.preventDefault();
+            applySelected();
+            return;
+        }
+        if (selecting) {
+            // Head AND member clicks toggle the group's membership (both li
+            // kinds carry data-key); everything else is swallowed (the ×
+            // quick action and keeper radios are CSS-hidden in this mode).
+            const li = closest('li');
+            const key = li && li.dataset && li.dataset.key;
+            if (key) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (selected.has(key))
+                    selected.delete(key);
+                else
+                    selected.add(key);
+                render();
+            }
             return;
         }
         const cleanBtn = closest('.dupes-clean-rest');
@@ -463,24 +619,71 @@ export function initViewDupes(ctx = {}) {
         const head = (e.target && e.target.classList && e.target.classList.contains('group-head'))
             ? e.target
             : (e.target && e.target.closest ? e.target.closest('.group-head') : null);
-        if (!head)
+        if (head) {
+            const li = head.closest('li');
+            const key = li && li.dataset.key;
+            if (!key)
+                return;
+            const isCollapsed = collapsed.has(key);
+            const k = e.key;
+            const expand = (k === ' ' || k === 'Enter' || k === 'ArrowRight') && isCollapsed;
+            const collapse = (k === ' ' || k === 'Enter' || k === 'ArrowLeft') && !isCollapsed;
+            if (expand || collapse) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (expand)
+                    collapsed.delete(key);
+                else
+                    collapsed.add(key);
+                refresh();
+            }
             return;
-        const li = head.closest('li');
-        const key = li && li.dataset.key;
-        if (!key)
+        }
+        // Member-row keys (final-polish pass, v4task-2-list §2.3/§3.6 — the
+        // two confirmed conflicts): the row's firstElementChild is the
+        // keeper radio, so keyboard.js's generic Enter/Space synthetic click
+        // would SET THE KEEPER instead of opening the bookmark; open through
+        // the anchor here. The "back" arrow (RTL-aware) jumps to the owning
+        // group head — the generic fallback would try to focus the hidden
+        // tree view's folder row, a no-op outside the tree.
+        const memberLi = e.target && e.target.closest ? e.target.closest('li.dupes-member') : null;
+        if (!memberLi)
             return;
-        const isCollapsed = collapsed.has(key);
+        if (e.target.classList && e.target.classList.contains('keeper-radio'))
+            return; // focus on the radio itself: native button toggles keeper
         const k = e.key;
-        const expand = (k === ' ' || k === 'Enter' || k === 'ArrowRight') && isCollapsed;
-        const collapse = (k === ' ' || k === 'Enter' || k === 'ArrowLeft') && !isCollapsed;
-        if (expand || collapse) {
+        if (k === 'Enter' || k === ' ') {
+            const a = memberLi.querySelector('a');
+            if (!a)
+                return;
             e.preventDefault();
             e.stopPropagation();
-            if (expand)
-                collapsed.delete(key);
-            else
-                collapsed.add(key);
-            refresh();
+            a.dispatchEvent(new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                ctrlKey: e.ctrlKey,
+                shiftKey: e.shiftKey,
+                metaKey: e.metaKey
+            }));
+        } else {
+            const isRtl = !!(document.body && document.body.classList
+                && document.body.classList.contains('rtl'));
+            if (k === (isRtl ? 'ArrowRight' : 'ArrowLeft')) {
+                let headEl = null;
+                const groupLis = $list.querySelectorAll('li.dupes-group');
+                for (let i = 0, l = groupLis.length; i < l; i++) {
+                    if (groupLis[i].dataset && groupLis[i].dataset.key === memberLi.dataset.key) {
+                        headEl = groupLis[i].querySelector('.group-head');
+                        break;
+                    }
+                }
+                if (!headEl)
+                    return;
+                e.preventDefault();
+                e.stopPropagation();
+                headEl.focus();
+            }
         }
     }, true);
 
@@ -524,10 +727,26 @@ export function initViewDupes(ctx = {}) {
                 scheduleRefresh();
             }
         },
+        // v4 task-3 #5: while selecting, Esc leaves the mode (the selection
+        // goes with it) — same layered Esc contract as the dead view.
+        onEscape: () => {
+            if (!selecting)
+                return false;
+            setSelecting(false);
+            return true;
+        },
         onKey
     });
     if (hydrated)
         views.updateBadges(); // dupes was unregistered during hydrate()
 
-    return { refresh, setKeeper };
+    return {
+        refresh,
+        setKeeper,
+        // v4 task-3 #16: the group-head context menu reads/dispatches these
+        cleanHint,
+        isCollapsed: key => collapsed.has(key),
+        cleanGroup: cleanGroupByKey,
+        toggleGroup
+    };
 }

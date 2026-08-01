@@ -196,6 +196,22 @@ export function initDialogs(ctx = {}) {
         body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
         body.classList.contains('needSort');
 
+    // The open dialog's own element — keyboard.js's modal Tab trap cycles
+    // within it. Null when nothing is up; precedence mirrors closeDialogs.
+    const activeEl = () => {
+        if (body.classList.contains('needConfirm'))
+            return $('confirm-dialog');
+        if (body.classList.contains('needEdit'))
+            return $('edit-dialog');
+        if (body.classList.contains('needInputName'))
+            return $('new-folder-dialog');
+        if (body.classList.contains('needSort'))
+            return $('sort-dialog');
+        if (body.classList.contains('needAlert'))
+            return $('alert-dialog');
+        return null;
+    };
+
     // Escape / cover-click close-all; confirm dialogs resolve with fn2 (cancel)
     const closeDialogs = () => {
         if (body.classList.contains('needConfirm'))
@@ -212,5 +228,5 @@ export function initDialogs(ctx = {}) {
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, anyOpen, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, anyOpen, activeEl, closeDialogs };
 }

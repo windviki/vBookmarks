@@ -92,7 +92,7 @@ export function initViewRecent(ctx = {}) {
         const dismissLabel = _m('statsHistoryDismiss');
         return `<div class="stats-history-banner" role="note">` +
             `<i>${htmlspecialchars(_m('statsHistoryBanner'))}</i>` +
-            `<a href="" class="stats-history-enable" tabindex="0">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
+            `<a href="" class="stats-history-enable" tabindex="-1">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
             `<button type="button" class="row-btn stats-history-dismiss" tabindex="-1" ` +
             `aria-label="${htmlspecialchars(dismissLabel)}" title="${htmlspecialchars(dismissLabel)}">×</button>` +
             `</div>`;

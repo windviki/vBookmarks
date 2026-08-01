@@ -44,6 +44,12 @@
  *                  repeated calls reset the timer. The button runs undo()
  *                  and hides the toast when it settles. Missing toast DOM
  *                  makes showToast a no-op.
+ *   toastAction(message, buttonLabel, onAction) — v4 task-3 #14: the same
+ *                  toast bar with a custom button that runs onAction instead
+ *                  of undo() (one shot — a later showToast/toastAction or the
+ *                  auto-hide clears the pending action). Used by the tree
+ *                  view's "target is outside the bookmarks bar" hint.
+ *                  Missing toast DOM makes it a no-op.
  *
  * No neatools here: plain getElementById / DOM calls, and i18n goes straight
  * through chrome.i18n.getMessage like every other popup module.
@@ -135,17 +141,36 @@ export function initUndo(ctx = {}) {
     const toastText = $('undo-toast-text');
     const toastButton = $('undo-toast-button');
     let toastTimer = null;
+    // v4 task-3 #14: when toastAction armed the bar, the button runs this
+    // instead of undo() — one shot, cleared by hideToast/showToast.
+    let pendingAction = null;
     const hideToast = () => {
         clearTimeout(toastTimer);
         toastTimer = null;
+        pendingAction = null;
         if (toast)
             toast.hidden = true;
     };
     const showToast = message => {
         if (!toast)
             return;
+        pendingAction = null;
         if (toastText)
             toastText.textContent = message;
+        if (toastButton)
+            toastButton.textContent = _m('undoAction');
+        toast.hidden = false;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(hideToast, TOAST_MS);
+    };
+    const toastAction = (message, buttonLabel, onAction) => {
+        if (!toast)
+            return;
+        pendingAction = typeof onAction === 'function' ? onAction : null;
+        if (toastText)
+            toastText.textContent = message;
+        if (toastButton)
+            toastButton.textContent = buttonLabel;
         toast.hidden = false;
         clearTimeout(toastTimer);
         toastTimer = setTimeout(hideToast, TOAST_MS);
@@ -153,10 +178,17 @@ export function initUndo(ctx = {}) {
     if (toastButton) {
         toastButton.textContent = _m('undoAction');
         toastButton.addEventListener('click', async () => {
-            await undo();
-            hideToast();
+            const action = pendingAction;
+            pendingAction = null;
+            if (action) {
+                hideToast();
+                action();
+            } else {
+                await undo();
+                hideToast();
+            }
         });
     }
 
-    return { capture, undo, canUndo, peek, showToast };
+    return { capture, undo, canUndo, peek, showToast, toastAction };
 }

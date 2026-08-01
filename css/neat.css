@@ -370,6 +370,23 @@ body.linux input {
     margin: 0 0 2px;
 }
 
+/* v4 task-3 #9: the 3.x→4.x upgrade notice inside the donation card —
+   accent-framed so the "what's new" reads before the ask itself. */
+#v4-notice {
+    margin: 0 0 4px;
+    padding: 4px 6px;
+    border: 1px solid var(--vbm-accent);
+    border-radius: 6px;
+    color: var(--vbm-fg);
+    line-height: 1.45;
+}
+
+#v4-guide-link {
+    color: var(--vbm-accent);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 #donation-text {
     margin: 0;
     line-height: 1.45;
@@ -1263,6 +1280,14 @@ menu[type=context].hide-sort #sort-folder-contents {
     outline: 2px solid var(--vbm-focus-ring);
 }
 
+/* v4 task-3 #20: option-hidden header controls (quickAddEnabled /
+   showToolButton / paletteEnabled off). The `.hidden` class is set by
+   neat.js; the Tab region cycle (keyboard.js) skips rect-less stops. */
+#quick-add-btn.hidden,
+#tool-btn.hidden {
+    display: none;
+}
+
 /* --- Undo toast (P3.3) -----------------------------------------------------
    Deletion undo bar in popup.html/sidepanel.html. Fixed and centered along
    the bottom; colors come from the shared design tokens above, so the dark
@@ -1864,13 +1889,20 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 #recent-list ul li.has-head > a.tree-item-link {
-    flex: 1;
+    /* v4 task-3 #1: basis must be auto (max-content), not 0% — with basis 0
+       the anchor's hypothetical main size is 0, so it squeezes into the head
+       row's (flex 0 0 100%) zero remaining space instead of wrapping to line
+       2, gets clamped to zero width, and its children overflow into a
+       permanent horizontal scrollbar. */
+    flex: 1 1 auto;
     min-width: 0;
 }
 
 #recent-list .recent-group-head {
     order: -1;
     flex: 0 0 100%;
+    box-sizing: border-box; /* flex-basis:100% + side padding otherwise
+       overflows the list → a permanent horizontal scrollbar (v4 task-3 #1) */
     padding: 6px 8px 2px;
     font-size: 11px;
     color: var(--vbm-muted);
@@ -2137,6 +2169,68 @@ body.panel-mode .vbm-row .row-sub {
     cursor: default;
 }
 
+/* v4 task-3 #4/#5 selection mode: rows / group heads grow a checkbox at the
+   inline start (::before joins the flex row), the selected state fills it
+   and tints the row; the row action buttons + keeper radios hide so every
+   row click toggles membership. The batch bar shares the toolbar chrome. */
+#dead-list ul.selecting li.vbm-row::before,
+#dupes-list ul.selecting li.dupes-group .group-head::before {
+    content: '';
+    flex: none;
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    border: 1px solid var(--vbm-muted);
+    border-radius: 3px;
+    align-self: center;
+    background: var(--vbm-bg);
+    box-sizing: border-box;
+}
+
+#dead-list ul.selecting li.vbm-row.sel::before,
+#dupes-list ul.selecting li.dupes-group.sel .group-head::before {
+    content: '✓';
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: var(--vbm-accent-fg);
+    background: var(--vbm-accent);
+    border-color: var(--vbm-accent);
+}
+
+#dead-list ul.selecting li.vbm-row.sel,
+#dupes-list ul.selecting li.dupes-group.sel .group-head {
+    background-color: var(--vbm-bg-selected);
+}
+
+#dead-list ul.selecting .row-btn,
+#dupes-list ul.selecting .row-btn,
+#dupes-list ul.selecting .keeper-radio {
+    display: none;
+}
+
+.dupes-toolbar .select-count,
+.dead-toolbar .select-count {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dupes-toolbar .dupes-apply-selected {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+    font-size: 11px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.dupes-toolbar .dupes-apply-selected:disabled,
+.dead-toolbar button:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
 /* Group head (§3.6): chevron + normalized URL (muted, monospace, middle
    ellipsis) + count pill + clean-rest row button. It is a row of the focus
    model itself, so it gets the same hover/focus chrome as list anchors. */
@@ -2361,15 +2455,14 @@ body.panel-mode .vbm-row .row-sub {
    without flex the buttons wrapped onto a line below the anchor. Same recipe
    as .dupes-member / .stats-hist-row: the li goes flex, the anchor flexes
    and the buttons pin to the row's inline end.
-   第五轮项1: wide/panel rows are two lines tall (title + .row-sub path), and
-   align-items:center parked the badge and the row buttons on the seam between
-   the lines — reading as "a new line below the bookmark". flex-start pins the
-   favicon, the error badge and the buttons to the TITLE line (the first 20px,
-   identical to the single-line narrow case); the path line owns the second
-   line alone. */
+   v4 task-3 #3: wide/panel rows are two lines tall (title + .row-sub path) —
+   align-items:center vertically centers the mark/delete buttons against the
+   whole row (supersedes 第五轮项1's flex-start pinning). The anchor keeps
+   its own flex-start alignment, so the favicon and the status badge still
+   ride the TITLE line and the path line stays visually subordinate. */
 #dead-list ul li.vbm-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 }
 
 #dead-list ul li.vbm-row > a {
@@ -2521,7 +2614,9 @@ body.panel-mode .vbm-row .row-sub {
 
 #stats-list ul li.stats-hist-row > a.tree-item-link,
 #stats-list ul li.has-head > a.tree-item-link {
-    flex: 1;
+    flex: 1 1 auto; /* v4 task-3 #1: same as recent — auto basis forces the
+       anchor onto line 2; basis 0 lets it collapse to zero width on the
+       head's line and overflow the list horizontally */
     min-width: 0;
 }
 
@@ -2530,6 +2625,8 @@ body.panel-mode .vbm-row .row-sub {
 #stats-list .stats-section-head {
     order: -1;
     flex: 0 0 100%;
+    box-sizing: border-box; /* same horizontal-scrollbar guard as
+       .recent-group-head (v4 task-3 #1) */
     padding: 6px 8px 2px;
     font-size: 11px;
     color: var(--vbm-muted);
@@ -2559,7 +2656,8 @@ body.panel-mode .vbm-row .row-sub {
 
 #stats-list ul li.stats-history-guide i {
     order: 1;
-    flex: 1;
+    flex: 1 1 auto; /* v4 task-3 #1: same zero-width trap as the anchors —
+       basis 0 can park the sentence on the head's line at width 0 */
     min-width: 0;
     font-style: normal;
     color: var(--vbm-muted);
