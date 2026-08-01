@@ -319,3 +319,65 @@ describe('options.js settings backup', () => {
         });
     });
 });
+
+// Final polish coverage: the dead-scan tuning inputs clamp to the scanner's
+// supported ranges, and the footer reset button wipes every storage area.
+describe('options.js dead-scan clamps + reset', () => {
+    describe('bindClampedNumber', () => {
+        it('clamps stored out-of-range values into the inputs on load', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { deadScanConcurrency: '99', deadScanTimeout: '1' }
+            });
+            await sb.start();
+            expect(Number(sb.elements['dead-scan-concurrency'].value)).toBe(16);
+            expect(Number(sb.elements['dead-scan-timeout'].value)).toBe(2);
+        });
+
+        it('falls back to the defaults for non-numeric stored values', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { deadScanConcurrency: 'lots', deadScanTimeout: 'soon' }
+            });
+            await sb.start();
+            expect(Number(sb.elements['dead-scan-concurrency'].value)).toBe(4);
+            expect(Number(sb.elements['dead-scan-timeout'].value)).toBe(8);
+        });
+
+        it('clamps on change and persists the clamped string', async () => {
+            const sb = createSandbox({});
+            await sb.start();
+            const concurrency = sb.elements['dead-scan-concurrency'];
+            concurrency.value = '0';
+            await concurrency.fire('change');
+            expect(Number(concurrency.value)).toBe(1);
+            expect(sb.window.store.get('deadScanConcurrency')).toBe('1');
+
+            concurrency.value = 'abc'; // NaN → default
+            await concurrency.fire('change');
+            expect(Number(concurrency.value)).toBe(4);
+            expect(sb.window.store.get('deadScanConcurrency')).toBe('4');
+
+            const timeout = sb.elements['dead-scan-timeout'];
+            timeout.value = '999';
+            await timeout.fire('change');
+            expect(Number(timeout.value)).toBe(30);
+            expect(sb.window.store.get('deadScanTimeout')).toBe('30');
+        });
+    });
+
+    describe('reset button', () => {
+        it('wipes local + sync storage, alerts and reloads', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { theme: 'dark', deadScanConcurrency: '7' },
+                chromeSyncData: { showSyncStatus: 'true' }
+            });
+            await sb.start();
+            await sb.elements['reset-button'].fire('click');
+            for (let i = 0; i < 10; i++)
+                await new Promise(r => setTimeout(r, 0));
+            expect(sb.localData).toEqual({});
+            expect(sb.syncData).toEqual({});
+            expect(sb.alerts).toContain('vBookmarks has been reset.');
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
+    });
+});

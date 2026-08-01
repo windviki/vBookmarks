@@ -103,6 +103,9 @@ const setup = (opts = {}) => {
                 child.parentNode = this;
                 return child;
             },
+            get firstElementChild() {
+                return this.children[0] || null;
+            },
             addEventListener(type, fn) {
                 (this._listeners[type] = this._listeners[type] || []).push(fn);
             },
@@ -119,6 +122,15 @@ const setup = (opts = {}) => {
                 this.focused = true;
                 this.focusCount++;
                 doc.activeElement = this;
+            },
+            // Minimal Element.closest: tag selectors only ('li' is what the
+            // view-manager's focus-memory path asks for).
+            closest(sel) {
+                for (let n = this; n; n = n.parentNode) {
+                    if (n.tagName === sel.toUpperCase())
+                        return n;
+                }
+                return null;
             },
             querySelector(sel) {
                 return queryIn(this, sel);
@@ -220,10 +232,33 @@ describe('startup + tab rendering', () => {
         expect(byId['view-search'].hidden).toBe(true);
     });
 
-    it('the popup always starts on the tree view', () => {
+    it('the popup restores the stored view by default (rememberView on, v4 task-3 #6)', () => {
         const { views, store } = setup({ isPanel: false, storeData: { activeView: 'search' } });
+        expect(views.activeId()).toBe('search');
+        expect(store.get('activeView')).toBe('search');
+    });
+
+    it('rememberView off: the popup always lands on the tree', () => {
+        const { views } = setup({ isPanel: false, storeData: { activeView: 'search', rememberView: '' } });
         expect(views.activeId()).toBe('tree');
-        expect(store.get('activeView')).toBe('tree');
+    });
+
+    it('the popup falls back to the tree when the stored view is hidden/gone', () => {
+        const { views } = setup({ isPanel: false, storeData: { activeView: 'nope' } });
+        expect(views.activeId()).toBe('tree');
+    });
+
+    it('a stored feature view restores when it registers late (real init order)', () => {
+        const { views, addRecent } = setup({ isPanel: false, storeData: { activeView: 'recent' } });
+        expect(views.activeId()).toBe('tree'); // not registered yet at startup
+        addRecent();
+        expect(views.activeId()).toBe('recent'); // pending restore fired
+    });
+
+    it('a late-registered hidden view does not restore', () => {
+        const { views, addRecent } = setup({ isPanel: false, storeData: { activeView: 'recent' } });
+        addRecent({ hidden: true });
+        expect(views.activeId()).toBe('tree');
     });
 
     it('the panel restores the stored active view', () => {
@@ -299,7 +334,12 @@ describe('activate', () => {
         views.activate('recent', { keepFocus: true });
         recent.listEl.scrollTop = 42;
         views.activate('tree', { keepFocus: true });
-        expect(JSON.parse(store.get('viewState'))).toEqual({ recent: 42 });
+        // v4 task-3 #7: viewState entries are { scroll, focus } objects now —
+        // scroll for persistScroll views, focus for the remembered row (§2.1).
+        expect(JSON.parse(store.get('viewState'))).toEqual({
+            tree: { scroll: 0, focus: null },
+            recent: { scroll: 42, focus: null }
+        });
         recent.listEl.scrollTop = 0;
         views.activate('recent', { keepFocus: true });
         expect(recent.listEl.scrollTop).toBe(42);
@@ -355,6 +395,151 @@ describe('activate', () => {
         expect(doc.activeElement).toBeNull();
         views.activate('tree', { focusTab: true });
         expect(tabs()[0].focused).toBe(true);
+    });
+
+    it('remembers the focused row and re-marks it when the view is re-entered (§2.1)', () => {
+        const { views, store, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li1 = makeEl('li');
+        li1.id = 'recent-item-1';
+        const a1 = makeEl('a');
+        li1.appendChild(a1);
+        const li2 = makeEl('li');
+        li2.id = 'recent-item-2';
+        const a2 = makeEl('a');
+        li2.appendChild(a2);
+        recent.listEl.appendChild(li1);
+        recent.listEl.appendChild(li2);
+        views.activate('recent', { keepFocus: true });
+        a2.focus(); // the user arrows onto row 2
+        views.activate('tree', { keepFocus: true });
+        expect(JSON.parse(store.get('viewState')).recent.focus).toBe('recent-item-2');
+        views.activate('recent', { keepFocus: true });
+        expect(a2.classList.contains('focus')).toBe(true);
+        expect(a1.classList.contains('focus')).toBe(false);
+    });
+
+    it('falls back to the .focus-marked row when remembering', () => {
+        const { views, store, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li = makeEl('li');
+        li.id = 'recent-item-9';
+        const a = makeEl('a');
+        a.classList.add('focus');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        views.activate('tree', { keepFocus: true });
+        expect(JSON.parse(store.get('viewState')).recent.focus).toBe('recent-item-9');
+    });
+
+    it('drops the memory silently when the remembered row no longer exists', () => {
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li = makeEl('li');
+        li.id = 'recent-item-5';
+        const a = makeEl('a');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        a.focus();
+        views.activate('tree', { keepFocus: true });
+        recent.listEl.innerHTML = ''; // a re-render wiped the rows
+        views.activate('recent', { keepFocus: true });
+        expect(recent.listEl.querySelector('.focus')).toBeNull();
+    });
+
+    it('marks the row container itself when it has no inner a/span (dead-start model)', () => {
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li = makeEl('li');
+        li.id = 'dead-start';
+        li.appendChild(makeEl('i'));
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        li.focus(); // the tabindex row itself held focus
+        views.activate('tree', { keepFocus: true });
+        views.activate('recent', { keepFocus: true });
+        expect(li.classList.contains('focus')).toBe(true);
+    });
+
+    it('reads legacy numeric viewState entries as scroll-only', () => {
+        const { views, addRecent } = setup({ storeData: { viewState: '{"recent": 30}' } });
+        const recent = addRecent({ persistScroll: true });
+        views.activate('recent', { keepFocus: true });
+        expect(recent.listEl.scrollTop).toBe(30);
+    });
+
+    it('tracks the focused row with a live .focus marker (focusin)', () => {
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li1 = makeEl('li');
+        const a1 = makeEl('a');
+        li1.appendChild(a1);
+        const li2 = makeEl('li');
+        const a2 = makeEl('a');
+        li2.appendChild(a2);
+        recent.listEl.appendChild(li1);
+        recent.listEl.appendChild(li2);
+        recent.listEl.trigger('focusin', { target: a1 });
+        expect(a1.classList.contains('focus')).toBe(true);
+        recent.listEl.trigger('focusin', { target: a2 });
+        expect(a1.classList.contains('focus')).toBe(false);
+        expect(a2.classList.contains('focus')).toBe(true);
+        // in-list toolbar controls never take the marker
+        const btn = makeEl('button');
+        recent.listEl.appendChild(btn);
+        recent.listEl.trigger('focusin', { target: btn });
+        expect(btn.classList.contains('focus')).toBe(false);
+        expect(a2.classList.contains('focus')).toBe(true);
+    });
+
+    it('remembers the row via the live marker when a mouse switch moved focus first', () => {
+        // Real-mouse path: clicking a view tab focuses the BUTTON before the
+        // click handler runs activate(), so document.activeElement no longer
+        // points at the row — only the focusin-maintained marker survives.
+        const { views, store, addRecent, makeEl, tabs } = setup({});
+        const recent = addRecent();
+        const li1 = makeEl('li');
+        li1.id = 'recent-item-1';
+        const a1 = makeEl('a');
+        li1.appendChild(a1);
+        const li2 = makeEl('li');
+        li2.id = 'recent-item-2';
+        const a2 = makeEl('a');
+        li2.appendChild(a2);
+        recent.listEl.appendChild(li1);
+        recent.listEl.appendChild(li2);
+        views.activate('recent', { keepFocus: true });
+        recent.listEl.trigger('focusin', { target: a2 }); // user arrowed to row 2
+        tabs()[0].focus(); // the tree tab click grabs focus first…
+        views.activate('tree', { keepFocus: true }); // …then activate runs
+        expect(JSON.parse(store.get('viewState')).recent.focus).toBe('recent-item-2');
+        views.activate('recent', { keepFocus: true });
+        expect(a2.classList.contains('focus')).toBe(true);
+    });
+
+    it('re-marks the remembered row after the view async re-renders (real timers)', async () => {
+        // The real views fetch + innerHTML-render inside/after their activate
+        // hook (recent: probePermission → refresh → render), wiping a marker
+        // restored synchronously. restoreFocusRow watches briefly and re-marks.
+        const { views, store, addRecent, makeEl } = setup({});
+        const recent = addRecent({
+            activate: () => {
+                setTimeout(() => {
+                    recent.listEl.innerHTML = ''; // wipe, like a real re-render
+                    const li = makeEl('li');
+                    li.id = 'recent-item-7';
+                    li.appendChild(makeEl('a'));
+                    recent.listEl.appendChild(li);
+                }, 20);
+            }
+        });
+        store.set('viewState', JSON.stringify({ recent: { scroll: 0, focus: 'recent-item-7' } }));
+        views.activate('recent', { keepFocus: true });
+        await new Promise(r => setTimeout(r, 250));
+        const li = recent.listEl.children[0];
+        expect(li && li.firstElementChild.classList.contains('focus')).toBe(true);
     });
 
     it('announces switches through the aria-live region, silently at startup', () => {
@@ -581,6 +766,16 @@ describe('tab badges', () => {
         expect(badge().textContent).toBe('5');
         n = 0;
         ctx.views.activate('tree');
+        expect(badge().hidden).toBe(true);
+    });
+
+    it('showTabBadges off hides every badge regardless of counts (v4 task-3 #18)', () => {
+        const ctx = setup({ storeData: { showTabBadges: '' } });
+        const recent = ctx.addRecent({ badge: () => 9 });
+        const badge = () => recent.tabEl.querySelector('.tab-badge');
+        ctx.views.updateBadges();
+        expect(badge().hidden).toBe(true);
+        ctx.views.activate('recent');
         expect(badge().hidden).toBe(true);
     });
 });

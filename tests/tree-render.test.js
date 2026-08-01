@@ -135,9 +135,9 @@ describe('generateBookmarkHTML', () => {
     it('produces the exact row HTML for a plain bookmark (no extras, no sync)', () => {
         const tr = setup();
         const expected = [
-            `<a href="http://e.com/" title="http://e.com/" tabindex="0"  class="tree-item-link">`,
+            `<a href="http://e.com/" title="http://e.com/" tabindex="-1"  class="tree-item-link">`,
             `                <div class="favicon-container">`,
-            `                    <img src="${FAV_E}" width="16" height="16" alt="">`,
+            `                    <img src="${FAV_E}" width="16" height="16" alt="" loading="lazy">`,
             `                    `,
             `                </div>`,
             `                <i>T</i>`,
@@ -192,7 +192,7 @@ describe('generateBookmarkHTML', () => {
     it('passes extras through into the anchor tag', () => {
         const tr = setup();
         expect(tr.generateBookmarkHTML('T', 'http://e.com/', 'data-virtual="1"', '1'))
-            .toContain('tabindex="0" data-virtual="1" class="tree-item-link"');
+            .toContain('tabindex="-1" data-virtual="1" class="tree-item-link"');
     });
 
     it('renders the sync indicator when enabled, manager present and id given', () => {
@@ -458,7 +458,7 @@ describe('generateFolderHTML', () => {
     it('produces the exact row HTML for a plain folder', () => {
         const tr = setup();
         const expected = [
-            `<span tabindex="0" style="-webkit-padding-start: 0px" class="tree-item-span">`,
+            `<span tabindex="-1" style="-webkit-padding-start: 0px" class="tree-item-span">`,
             `\t\t   <b class="twisty">${CHEVRON_ICON}</b>`,
             `\t\t   <div class="favicon-container">`,
             `\t\t       ${FOLDER_ICON}`,

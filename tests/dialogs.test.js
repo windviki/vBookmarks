@@ -31,6 +31,7 @@ const makeEl = () => ({
 });
 
 const IDS = [
+    'alert-dialog', 'confirm-dialog', 'edit-dialog', 'new-folder-dialog', 'sort-dialog',
     'alert-dialog-text',
     'confirm-dialog-text', 'confirm-dialog-button-1', 'confirm-dialog-button-2',
     'edit-dialog-text', 'edit-dialog-name', 'edit-dialog-url', 'edit-dialog-form', 'edit-dialog-cancel-button',
@@ -206,5 +207,21 @@ describe('closeDialogs / anyOpen', () => {
         expect(bodyClasses.contains('needAlert')).toBe(true);
         els['cover'].trigger('click');
         expect(bodyClasses.contains('needAlert')).toBe(false);
+    });
+
+    it('activeEl maps the open dialog\'s body class to its element (final polish)', () => {
+        const d = freshDialogs();
+        expect(d.activeEl()).toBeNull();
+        d.AlertDialog.open('boom');
+        expect(d.activeEl()).toBe(els['alert-dialog']);
+        d.AlertDialog.close();
+        d.ConfirmDialog.open({ dialog: 'x', button1: 'b1', button2: 'b2' });
+        expect(d.activeEl()).toBe(els['confirm-dialog']);
+        d.closeDialogs();
+        expect(d.activeEl()).toBeNull();
+        d.SortDialog.open('42');
+        expect(d.activeEl()).toBe(els['sort-dialog']);
+        d.NewFolderDialog.open('n', () => {});
+        expect(d.activeEl()).toBe(els['new-folder-dialog']); // stacked: input-name outranks sort
     });
 });

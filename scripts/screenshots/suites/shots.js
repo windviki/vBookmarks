@@ -233,11 +233,11 @@ const SEED = `
     await opts.screenshot({ path: '/tmp/shots/09-options-dark.png' });
     await opts.close();
 
-    // --- advanced options (dark, CodeMirror) -------------------------------
+    // --- advanced sections of the merged options page (dark, CodeMirror) ---
     const adv = await browser.newPage();
     watch(adv, 'advanced');
     await adv.setViewport({ width: 1280, height: 800 });
-    await adv.goto(`chrome-extension://${extId}/pages/advanced-options.html`, { waitUntil: 'networkidle0' });
+    await adv.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
     await sleep(800);
     await dark(adv);
     await sleep(300);

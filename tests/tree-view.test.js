@@ -342,7 +342,8 @@ const setup = (opts = {}) => {
         leftClickNewTab: !!opts.leftClickNewTab,
         views: opts.views,
         onTreeGenerated: opts.onTreeGenerated,
-        onRowsRendered: opts.onRowsRendered
+        onRowsRendered: opts.onRowsRendered,
+        toastAction: opts.toastAction
     });
 
     // A folder row <li id="neat-tree-item-N" class="parent"><span></span></li>
@@ -817,6 +818,13 @@ describe('bookmarkHandler', () => {
         fire(ctx.search.results, 'click', makeEvent({ button: 0, target: a }));
         expect(ctx.actions.openBookmarkCalls).toEqual([['http://bm-3/']]);
     });
+
+    it('binds middle-button auxclick on the search results pane too', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmark('3');
+        fire(ctx.search.results, 'auxclick', makeEvent({ button: 1, target: a }));
+        expect(ctx.actions.openBookmarkNewTabCalls).toEqual([['http://bm-3/', true, undefined]]);
+    });
 });
 
 describe('revealInTree (v4 task-2 §2.3)', () => {
@@ -886,6 +894,99 @@ describe('revealInTree (v4 task-2 §2.3)', () => {
         ctx.treeView.revealInTree('7');
         expect(ctx.state.opens).toEqual(['1', '7']);
         expect(ctx.store.sets).toContainEqual(['focusID', '7']);
+    });
+});
+
+describe('revealInTree + onlyShowBMBar (v4 task-3 #14)', () => {
+    // The bar subtree holds folder 7 with bookmark 42; bookmark 99 lives in
+    // some other folder outside the bar, so the bar-only render has no
+    // nodeTrees entry for it.
+    const barSetup = (extra = {}) => {
+        const toastCalls = [];
+        const activateCalls = [];
+        const ctx = setup({
+            storeData: { onlyShowBMBar: '1' },
+            bookmarksBarFolder: {
+                id: '1',
+                children: [{ id: '7', parentId: '1', children: [{ id: '42', parentId: '7', url: 'http://in-bar/' }] }]
+            },
+            parentMap: { '7': '1' }, // folders; addBookmarkParents adds 42→7
+            toastAction: (...args) => toastCalls.push(args),
+            views: { activate: (...args) => activateCalls.push(args) },
+            ...extra
+        });
+        ctx.treeView.generateTree(['ROOT']);
+        return { ctx, toastCalls, activateCalls };
+    };
+
+    it('a target inside the bar reveals normally, no toast', () => {
+        const { ctx, toastCalls, activateCalls } = barSetup();
+        ctx.treeView.revealInTree('42');
+        expect(toastCalls).toEqual([]);
+        expect(ctx.store.sets).toContainEqual(['focusID', '42']);
+        expect(activateCalls).toEqual([['tree', { keepFocus: true }]]);
+    });
+
+    it('a target outside the bar toasts the hint and reveals nothing', () => {
+        const { ctx, toastCalls, activateCalls } = barSetup();
+        ctx.treeView.revealInTree('99');
+        expect(toastCalls).toHaveLength(1);
+        const [message, label, action] = toastCalls[0];
+        expect(message).toBe('MSG:revealOutsideBarHint');
+        expect(label).toBe('MSG:revealOutsideBarAction');
+        expect(typeof action).toBe('function');
+        // no reveal side effects: user stays put until they pick the action
+        expect(ctx.store.sets.some(([k]) => k === 'focusID')).toBe(false);
+        expect(ctx.chrome.bookmarks.getTreeCalls).toHaveLength(1); // startup only
+        expect(activateCalls).toEqual([]);
+    });
+
+    it('the toast action shows the full tree (session only) and completes the reveal', () => {
+        const { ctx, toastCalls, activateCalls } = barSetup({
+            // what the full-tree fetch returns for the override regenerate:
+            // the bar plus folder 80 holding bookmark 99
+            effectiveSubTree: [
+                { id: '1', parentId: '0', children: [{ id: '7', parentId: '1', children: [{ id: '42', parentId: '7', url: 'http://in-bar/' }] }] },
+                { id: '80', parentId: '0', children: [{ id: '99', parentId: '80', url: 'http://outside/' }] }
+            ]
+        });
+        ctx.treeRender.calls.getEffectiveSubTree.length = 0;
+        ctx.treeView.revealInTree('99');
+        expect(toastCalls).toHaveLength(1);
+        toastCalls[0][2](); // the user picks "show all and reveal"
+        // the override fetches the full tree, then its callback regenerates
+        // and runs the reveal chain (the getTree double fires by hand)
+        expect(ctx.chrome.bookmarks.getTreeCalls).toHaveLength(2); // startup + override fetch
+        ctx.chrome.bookmarks.getTreeCalls[1](['ROOT2']);
+        // regenerate ran over the FULL tree (override bypasses the bar filter)
+        expect(ctx.treeRender.calls.getEffectiveSubTree).toHaveLength(1);
+        // …which mapped 99→80→root, so revealFolder opens the real ancestors
+        expect(ctx.state.opens).toContain('80');
+        expect(ctx.store.sets).toContainEqual(['focusID', '99']);
+        expect(activateCalls).toEqual([['tree', { keepFocus: true }]]);
+        // the setting itself is never rewritten
+        expect(ctx.store.sets.some(([k]) => k === 'onlyShowBMBar')).toBe(false);
+    });
+
+    it('once overridden, later outside reveals go straight through without a toast', () => {
+        const { ctx, toastCalls } = barSetup();
+        ctx.treeView.revealInTree('99');
+        toastCalls[0][2]();
+        toastCalls.length = 0;
+        ctx.treeView.revealInTree('42'); // any id — override is already on
+        expect(toastCalls).toEqual([]);
+        expect(ctx.store.sets).toContainEqual(['focusID', '42']);
+    });
+
+    it('without a toastAction hook the guard falls back to the plain reveal (minimal setups)', () => {
+        const ctx = setup({
+            storeData: { onlyShowBMBar: '1' },
+            bookmarksBarFolder: { id: '1', children: [] },
+            parentPath: ['99']
+        });
+        ctx.treeView.generateTree(['ROOT']);
+        ctx.treeView.revealInTree('99');
+        expect(ctx.store.sets).toContainEqual(['focusID', '99']);
     });
 });
 

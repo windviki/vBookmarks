@@ -199,7 +199,13 @@ const setup = (opts = {}) => {
         attach: (id, hooks) => {
             viewHooks[id] = hooks;
         },
-        pathOf: opts.pathOf || (() => '')
+        pathOf: opts.pathOf || (() => ''),
+        // v4 task-3 #12: opt-in focusActive recorder (search.js falls back
+        // to the legacy tree branch when the manager API predates it)
+        ...(opts.withFocusActive ? {
+            focusActiveCalls: 0,
+            focusActive() { this.focusActiveCalls++; }
+        } : {})
     };
     const s = initSearch({
         store,
@@ -215,10 +221,11 @@ const setup = (opts = {}) => {
         },
         rememberState: !!opts.rememberState,
         views,
+        rtl: !!opts.rtl,
         revealInTree: opts.revealInTree,
         onRowsRendered: opts.onRowsRendered
     });
-    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, winListeners };
+    return { s, els, store, chrome: chromeStub, fuzzy, calls, bodyClasses, viewCalls, viewHooks, views, winListeners };
 };
 
 const type = (els, value) => {
@@ -586,32 +593,15 @@ describe('input listeners', () => {
         expect(prevented).toBe(2);
     });
 
-    it('Tab jumps to the stored focusID row when set', () => {
-        const focusRow = makeEl();
-        focusRow.firstElementChild = makeEl();
-        const { els } = setup({
-            storeData: { focusID: '42' },
-            extraEls: { 'neat-tree-item-42': focusRow }
-        });
+    it('leaves Tab alone — the document-level region cycle owns it (§2.1)', () => {
+        // v4 task-3 #7: the input handler used to jump to the stored focusID
+        // row / first visible tree item on Tab. That is superseded by the
+        // keyboard.js Tab region cycle (header → tab strip → list), which
+        // lands on the list's `.focus` row — the same marker focusID sets.
+        const { els } = setup({ storeData: { focusID: '42' } });
         let prevented = 0;
         els['search-input'].trigger('keydown', { key: 'Tab', preventDefault: () => prevented++ });
-        expect(prevented).toBe(1);
-        expect(focusRow.firstElementChild.focused).toBe(true);
-    });
-
-    it('Tab without focusID focuses the first visible tree item', () => {
-        const { els } = setup({});
-        const hidden = makeEl();
-        hidden.parentElement = { offsetHeight: 0 };
-        const visible = makeEl();
-        visible.offsetTop = 20;
-        visible.offsetHeight = 20;
-        visible.parentElement = { offsetHeight: 100 };
-        els.tree._qsa['a, span'] = [hidden, visible];
-        els.tree.scrollTop = 0;
-        els['search-input'].trigger('keydown', { key: 'Tab', preventDefault: () => {} });
-        expect(hidden.focused).toBe(false);
-        expect(visible.focused).toBe(true);
+        expect(prevented).toBe(0);
     });
 
     it('focus/blur toggles the searchFocus body class', () => {
@@ -904,5 +894,109 @@ describe('palette bridge run() (§4.4)', () => {
         expect(els['search-input'].value).toBe('new');
         expect(fuzzy.calls).toHaveLength(2);
         expect(fuzzy.calls[1].query).toBe('new');
+    });
+});
+
+describe('v4 task-3 #12: cross-view arrow continuity', () => {
+    const HIST = JSON.stringify([{ q: 'one', ts: 1, n: 2 }, { q: 'two', ts: 2, n: 3 }, { q: 'three', ts: 3, n: 4 }]);
+    it('search-box ↓ routes to the ACTIVE view list (focusActive), not the hidden tree', () => {
+        const { els, views } = setup({ withFocusActive: true, activeView: 'recent' });
+        const input = els['search-input'];
+        input.value = '';
+        input.selectionEnd = 0;
+        let prevented = 0;
+        input.trigger('keydown', { key: 'ArrowDown', preventDefault: () => prevented++ });
+        expect(prevented).toBe(1);
+        expect(views.focusActiveCalls).toBe(1);
+        // the legacy tree fallback stays for manager doubles without the API
+        const legacy = setup({});
+        legacy.els['search-input'].value = '';
+        legacy.els['search-input'].selectionEnd = 0;
+        const treeLink = makeEl();
+        const firstLi = makeEl();
+        firstLi._qs['span, a'] = treeLink;
+        legacy.els.tree._qs['ul>li:first-child'] = firstLi;
+        legacy.els['search-input'].trigger('keydown', { key: 'ArrowDown' });
+        expect(treeLink.focused).toBe(true);
+    });
+
+    const historyRows = (els, qs) => {
+        const rows = qs.map(q => {
+            const row = makeEl();
+            row.dataset.q = q;
+            return row;
+        });
+        els['search-history-area']._qsa['a[data-q]'] = rows;
+        return rows;
+    };
+
+    it('↓/↑ walk the history rows; ↓ past the last crosses into the kept results', () => {
+        const { els, viewHooks } = setup({ activeView: 'search', storeData: { searchHistory: HIST } });
+        viewHooks.search.activate();
+        const rows = historyRows(els, ['one', 'two']);
+        globalThis.document.activeElement = rows[0];
+        els['search-history-area'].trigger('keydown', { key: 'ArrowDown' });
+        expect(rows[1].focused).toBe(true);
+        // past the last history row → the first kept result row
+        const resultLink = makeEl();
+        els.results._qs['ul>li:first-child a'] = resultLink;
+        globalThis.document.activeElement = rows[1];
+        els['search-history-area'].trigger('keydown', { key: 'ArrowDown' });
+        expect(resultLink.focused).toBe(true);
+        // ↑ walks back; ↑ past the first returns to the search box
+        globalThis.document.activeElement = rows[1];
+        els['search-history-area'].trigger('keydown', { key: 'ArrowUp' });
+        expect(rows[0].focused).toBe(true);
+        globalThis.document.activeElement = rows[0];
+        els['search-history-area'].trigger('keydown', { key: 'ArrowUp' });
+        expect(els['search-input'].focused).toBe(true);
+    });
+
+    it('Home/End jump the history row ends', () => {
+        const { els, viewHooks } = setup({ activeView: 'search', storeData: { searchHistory: HIST } });
+        viewHooks.search.activate();
+        const rows = historyRows(els, ['one', 'two', 'three']);
+        globalThis.document.activeElement = rows[0];
+        els['search-history-area'].trigger('keydown', { key: 'End' });
+        expect(rows[2].focused).toBe(true);
+        els['search-history-area'].trigger('keydown', { key: 'Home' });
+        expect(rows[0].focused).toBe(true);
+    });
+});
+
+describe('v4 task-3 #15: history-row menu key', () => {
+    const HIST = JSON.stringify([{ q: 'one', ts: 1, n: 2 }, { q: 'two', ts: 2, n: 3 }]);
+    it('→ dispatches a contextmenu on the focused history row (← in RTL)', () => {
+        const { els, viewHooks } = setup({ activeView: 'search', storeData: { searchHistory: HIST } });
+        viewHooks.search.activate();
+        const row = makeEl();
+        row.dataset.q = 'one';
+        row.getBoundingClientRect = () => ({ right: 100, bottom: 40, left: 10 });
+        globalThis.document.activeElement = row;
+        let prevented = 0;
+        els['search-history-area'].trigger('keydown', { key: 'ArrowRight', preventDefault: () => prevented++ });
+        expect(prevented).toBe(1);
+        expect(row.dispatched).toHaveLength(1);
+        expect(row.dispatched[0].type).toBe('contextmenu');
+        expect(row.dispatched[0].clientX).toBe(100);
+        // RTL flips the key and the anchor point
+        const rtlCtx = setup({ activeView: 'search', storeData: { searchHistory: HIST }, rtl: true });
+        rtlCtx.viewHooks.search.activate();
+        const rtlRow = makeEl();
+        rtlRow.dataset.q = 'one';
+        rtlRow.getBoundingClientRect = () => ({ right: 100, bottom: 40, left: 10 });
+        globalThis.document.activeElement = rtlRow;
+        rtlCtx.els['search-history-area'].trigger('keydown', { key: 'ArrowLeft' });
+        expect(rtlRow.dispatched).toHaveLength(1);
+        expect(rtlRow.dispatched[0].clientX).toBe(10);
+    });
+
+    it('ignores the menu key when focus is not on a history row', () => {
+        const { els, viewHooks } = setup({ activeView: 'search', storeData: { searchHistory: HIST } });
+        viewHooks.search.activate();
+        globalThis.document.activeElement = makeEl(); // no dataset.q
+        let prevented = 0;
+        els['search-history-area'].trigger('keydown', { key: 'ArrowRight', preventDefault: () => prevented++ });
+        expect(prevented).toBe(0);
     });
 });

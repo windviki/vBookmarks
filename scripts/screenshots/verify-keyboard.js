@@ -128,6 +128,79 @@ const SEED = `
     check('↑: strip→search input', await $(() => document.activeElement && document.activeElement.id === 'search-input'));
 
     // ====================================================================
+    // §2.1 Tab region cycle (v4 task-3 #7): header → tab strip → list row,
+    // Shift+Tab backwards; rows are tabindex=-1 so the cycle is the only
+    // Tab path into a list. Tab keydowns reach bubble-phase document
+    // listeners over CDP (only Esc is short-circuited).
+    // ====================================================================
+    console.log('═══ §2.1 Tab 区域循环 ═══');
+    const activeDesc = () => $(() => {
+        const el = document.activeElement;
+        return el ? (el.id || el.className || el.tagName) : '(none)';
+    });
+    await page.click('#view-tab-tree'); await sleep(300);
+    await page.click('#search-input'); await sleep(200);
+    const tabTo = async (label, expected) => {
+        await page.keyboard.press('Tab'); await sleep(150);
+        const got = await activeDesc();
+        check(label, got === expected, got);
+    };
+    check('rows are tabindex=-1 (roving list model)', await $(() => {
+        const rows = [...document.querySelectorAll('#tree li > a, #tree li > span')];
+        return rows.length > 0 && rows.every(el => el.tabIndex === -1);
+    }));
+    await tabTo('Tab: search→quick-add', 'quick-add-btn');
+    await tabTo('Tab: quick-add→tool', 'tool-btn');
+    await tabTo('Tab: tool→active tab', 'view-tab-tree');
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: strip→list row', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#tree');
+    }), await activeDesc());
+    await tabTo('Tab: list→wraps to search', 'search-input');
+    // Shift+Tab backwards: search → list row → tab strip
+    await page.keyboard.down('Shift'); await page.keyboard.press('Tab'); await page.keyboard.up('Shift');
+    await sleep(150);
+    check('Shift+Tab: search→list row', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#tree');
+    }), await activeDesc());
+    await page.keyboard.down('Shift'); await page.keyboard.press('Tab'); await page.keyboard.up('Shift');
+    await sleep(150);
+    check('Shift+Tab: list→tab strip', await activeDesc() === 'view-tab-tree', await activeDesc());
+
+    // ====================================================================
+    // §2.1 region focus memory (v4 task-3 #7): the focused row is remembered
+    // per view and re-marked (.focus) when the view is re-entered.
+    // ====================================================================
+    console.log('═══ §2.1 区域焦点记忆 ═══');
+    await page.click('#view-tab-recent'); await sleep(900);
+    // Tab into the list (first row), ArrowDown onto the second row.
+    await page.click('#search-input'); await sleep(150);
+    await page.keyboard.press('Tab'); await sleep(150); // quick-add
+    await page.keyboard.press('Tab'); await sleep(150); // tool
+    await page.keyboard.press('Tab'); await sleep(150); // tab strip
+    await page.keyboard.press('Tab'); await sleep(150); // list row 1
+    check('memory setup: landed on a recent row', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#recent-list');
+    }), await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    const remembered = await $(() => {
+        const el = document.activeElement;
+        const li = el && el.closest('#recent-list li');
+        return li ? li.id : null;
+    });
+    check('memory setup: arrowed to a second recent row', !!remembered, String(remembered));
+    await page.click('#view-tab-tree'); await sleep(400);
+    await page.click('#view-tab-recent'); await sleep(500);
+    check('memory: .focus re-marked on the remembered row', await $(id => {
+        const li = id && document.getElementById(id);
+        const a = li && li.querySelector('a.focus, span.focus');
+        return !!a || (li && li.classList.contains('focus'));
+    }, remembered));
+
+    // ====================================================================
     // §4.3 search view: dual zone + persistence across view switches
     // ====================================================================
     console.log('═══ §4.3 搜索双区/重进 ═══');

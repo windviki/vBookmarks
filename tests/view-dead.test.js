@@ -570,9 +570,9 @@ describe('item 10: row layout CSS contract', () => {
     it('dead result rows go flex so the row buttons stay on the row line', () => {
         const body = ruleBody(neatCss, '#dead-list ul li.vbm-row {');
         expect(body).toContain('display: flex');
-        // 第五轮项1: two-line (wide/panel) rows pin the buttons to the TITLE
-        // line — center alignment parked them on the seam between the lines.
-        expect(body).toContain('align-items: flex-start');
+        // v4 task-3 #3: two-line (wide/panel) rows center the mark/delete
+        // buttons vertically against the whole row height.
+        expect(body).toContain('align-items: center');
     });
 
     it('the row anchor flexes with min-width:0, buttons pin to the inline end', () => {
@@ -805,5 +805,196 @@ describe('row interactions (§3.5)', () => {
         await flush();
         expect(calls).toHaveLength(3); // the three scannable bookmarks
         expect($list.innerHTML).toContain('deadNone'); // all healthy now
+    });
+});
+
+describe('selection mode (v4 task-3 #4)', () => {
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 3,
+        results: {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+    // the selection-mode row click: target.closest('li') hands back the row
+    const rowClick = (ctx, id) => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
+    });
+
+    it('the select button only shows with results and swaps the toolbar for the batch bar', () => {
+        const empty = setup({});
+        empty.def().activate();
+        expect(empty.$list.innerHTML).not.toContain('dead-select-mode');
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-select-mode');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+        expect($list.innerHTML).toContain('dead-mark-selected');
+        expect($list.innerHTML).toContain('dead-unmark-selected');
+        // the idle controls are gone while the mode is on
+        expect($list.innerHTML).not.toContain('dead-filter-btn');
+        expect($list.innerHTML).not.toContain('dead-rescan');
+        // the ul carries the mode class (CSS draws the checkboxes)
+        expect($list.innerHTML).toContain('<ul role="list" class="selecting">');
+        // empty selection → both batch buttons disabled
+        expect($list.innerHTML).toContain('class="dead-mark-selected" disabled');
+    });
+
+    it('row clicks toggle membership instead of opening the bookmark', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, treeView } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        const handlerCalls = treeView.handlerCalls;
+        rowClick(ctx, '12');
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-12"');
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).not.toContain('class="dead-mark-selected" disabled');
+        rowClick(ctx, '12'); // toggle off
+        expect($list.innerHTML).toContain('selectCount[0]');
+        expect($list.innerHTML).not.toContain('class="vbm-row sel" id="dead-item-12"');
+        expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
+    });
+
+    it('all / invert / clear operate on the filtered rows', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-all' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[2]'); // 12 + 13
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-invert' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-invert' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[2]');
+        rowClick(ctx, '12');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-clear' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+    });
+
+    it('mark-selected / unmark-selected batch the marks without a confirm dialog', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { store, dialogs, undo, viewDead } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '12');
+        ctx.clickOn({ closest: sel => (sel === '.dead-mark-selected' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toEqual([]); // selection is the confirmation
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        expect(viewDead.isMarked('13')).toBe(false);
+        expect(undo.toastCalls).toEqual(['deadMarked']);
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-selected' ? {} : null) });
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+    });
+
+    it('Esc exits the mode (selection cleared, idle toolbar back)', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect(ctx.def().onEscape()).toBe(false); // no scan, no selection: falls through
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '12');
+        expect(ctx.def().onEscape()).toBe(true);
+        expect($list.innerHTML).toContain('dead-select-mode'); // idle toolbar restored
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        // the exit cleared the membership: re-entering starts at zero
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+    });
+
+    it('the exit button leaves the mode like Esc does', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '13');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-exit' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-select-mode');
+        expect($list.innerHTML).not.toContain('class="selecting"');
+    });
+
+    it('members whose rows vanish are pruned at render', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, treeData } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-all' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[2]');
+        // bookmark 12 gets removed: the onRemoved → 300ms debounce re-joins
+        treeData[0].children[0].children =
+            treeData[0].children[0].children.filter(n => n.id !== '12');
+        ctx.chrome.bookmarks.fire('onRemoved', '12');
+        tick(300);
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+    });
+
+    it('the CSS contract: selecting rows get checkboxes, action buttons hide', () => {
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        expect(neatCss).toContain('#dead-list ul.selecting li.vbm-row::before');
+        expect(neatCss).toContain('#dead-list ul.selecting li.vbm-row.sel::before');
+        expect(neatCss).toContain('#dead-list ul.selecting .row-btn');
+        expect(neatCss).toContain('#dead-list ul.selecting li.vbm-row.sel,');
+    });
+});
+
+// Final polish: the filter seg gets the same ←/→ focus movement as the
+// stats sort seg (buttons activate natively via Enter/Space).
+describe('filter seg arrow keys', () => {
+    const segSetup = () => {
+        const focused = [];
+        const mkBtn = name => ({
+            name,
+            classList: { contains: c => c === 'dead-filter-btn' },
+            focus() { focused.push(name); }
+        });
+        const btnA = mkBtn('all');
+        const btnB = mkBtn('dead');
+        const btnC = mkBtn('marked');
+        const seg = { querySelectorAll: sel => sel === '.dead-filter-btn' ? [btnA, btnB, btnC] : [] };
+        btnA.parentNode = seg;
+        btnB.parentNode = seg;
+        btnC.parentNode = seg;
+        return { focused, btnA, btnB, btnC };
+    };
+    const mkKey = (key, target) => ({
+        key,
+        target,
+        prevented: 0,
+        preventDefault() { this.prevented++; }
+    });
+
+    it('→ moves focus to the next filter button', () => {
+        const { fire } = setup({});
+        const { focused, btnB } = segSetup();
+        const ev = mkKey('ArrowRight', btnB);
+        fire('keydown', ev);
+        expect(focused).toEqual(['marked']);
+        expect(ev.prevented).toBe(1);
+    });
+
+    it('← on the first button wraps to the last', () => {
+        const { fire } = setup({});
+        const { focused, btnA } = segSetup();
+        const ev = mkKey('ArrowLeft', btnA);
+        fire('keydown', ev);
+        expect(focused).toEqual(['marked']);
+        expect(ev.prevented).toBe(1);
+    });
+
+    it('ignores non-seg targets and other keys', () => {
+        const { fire } = setup({});
+        const { focused, btnA } = segSetup();
+        const notSeg = { classList: { contains: () => false }, parentNode: null };
+        const ev1 = mkKey('ArrowRight', notSeg);
+        fire('keydown', ev1);
+        const ev2 = mkKey('ArrowDown', btnA);
+        fire('keydown', ev2);
+        expect(focused).toEqual([]);
+        expect(ev1.prevented).toBe(0);
+        expect(ev2.prevented).toBe(0);
     });
 });

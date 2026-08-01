@@ -336,6 +336,11 @@ const setup = (opts = {}) => {
         anyOpen: () => flags.dialogOpen,
         closeDialogs: () => closeDialogsCalls.push('close')
     };
+    // Final polish: the modal Tab trap asks the dialogs module which dialog
+    // element is open; tests inject it lazily (built inside the views
+    // factory, which runs during initKeyboard below).
+    if (opts.dialogActiveEl)
+        dialogs.activeEl = opts.dialogActiveEl;
 
     const keyboard = initKeyboard({
         tree,
@@ -410,12 +415,13 @@ const setup = (opts = {}) => {
 };
 
 describe('module API', () => {
-    it('returns the three handlers and binds every listener', () => {
+    it('returns the four handlers and binds every listener', () => {
         const { keyboard, tree, results, bookmarkMenu, folderMenu, separatorMenu, doc } = setup({});
         expect(typeof keyboard.treeKeyDown).toBe('function');
         expect(typeof keyboard.treeKeyUp).toBe('function');
         expect(typeof keyboard.contextKeyDown).toBe('function');
-        expect(Object.keys(keyboard).sort()).toEqual(['contextKeyDown', 'treeKeyDown', 'treeKeyUp']);
+        expect(typeof keyboard.tabCycle).toBe('function');
+        expect(Object.keys(keyboard).sort()).toEqual(['contextKeyDown', 'tabCycle', 'treeKeyDown', 'treeKeyUp']);
         expect(tree._listeners.keydown).toHaveLength(1);
         expect(tree._listeners.keyup).toHaveLength(1);
         expect(results._listeners.keydown).toHaveLength(1);
@@ -423,7 +429,290 @@ describe('module API', () => {
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
         expect(separatorMenu._listeners.keydown).toBeUndefined(); // binding stays commented out
-        expect(doc._listeners.keydown).toHaveLength(2); // capture ESC + bubbling Ctrl+F
+        expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
+    });
+});
+
+// v4 task-3 #7 (docs/v4task-2-list.md §2.1): Tab / Shift+Tab cycles the three
+// regions — header controls → tab strip (one stop) → the active view's list
+// (its `.focus` row, else first row). Rows are tabindex="-1"; the cycle is
+// the only Tab path. Dialogs, open menus and the palette keep local Tab.
+describe('Tab region cycle (§2.1)', () => {
+    const ROW_SEL = 'li a, li span, li[tabindex]';
+    // Header controls + tab strip elements must exist before initKeyboard so
+    // the views double can reference them; doc.getElementById resolves them
+    // at event time through the el factory's byId registry.
+    const tabEnv = (opts = {}) => {
+        const refs = {};
+        const env = setup({
+            ...opts,
+            views: ({ tree, el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-tree');
+                refs.tabBtn.parentNode = refs.tabs;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree, tabEl: refs.tabBtn }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ...env, ...refs };
+    };
+
+    it('cycles header → tab strip → list and wraps around', () => {
+        const { doc, fireDoc, searchInput, quickAdd, tool, tabBtn, tree, f1 } = tabEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        searchInput.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(quickAdd);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tool);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(f1.link);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // wrap-around
+    });
+
+    it('Shift+Tab walks the ring backwards', () => {
+        const { doc, fireDoc, searchInput, tabBtn, tree, f1 } = tabEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        searchInput.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(f1.link); // backwards: the last stop
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(tabBtn);
+    });
+
+    it('enters at the near edge when focus is nowhere (body)', () => {
+        const { doc, fireDoc, body, searchInput, tree, f1 } = tabEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        doc.activeElement = body;
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput);
+        doc.activeElement = body;
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(f1.link);
+    });
+
+    it('skips hidden header buttons and a hidden tab strip', () => {
+        const { doc, fireDoc, searchInput, quickAdd, tool, tabs, tree, f1 } = tabEnv();
+        quickAdd.classList.add('hidden');
+        tabs.classList.add('hidden');
+        tree._qs[ROW_SEL] = f1.link;
+        searchInput.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tool); // quick-add skipped
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(f1.link); // no tab-strip stop
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput);
+    });
+
+    it('lands on the .focus row when the list has one', () => {
+        const { doc, fireDoc, tabBtn, tree, f1, b2 } = tabEnv();
+        tree._qs['.focus'] = b2.link;
+        tree._qs[ROW_SEL] = f1.link;
+        tabBtn.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(b2.link);
+    });
+
+    it('continues from the list region when focus is inside the list but not on its stop', () => {
+        const { doc, fireDoc, searchInput, tabBtn, tree, f1, b11 } = tabEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        b11.link.focus(); // some other row than the landing stop
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // past the list → wrap
+        // the list container itself also counts as the list region
+        tree.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(tabBtn); // backwards out of the list
+    });
+
+    it('does nothing while a dialog is open', () => {
+        const { doc, fireDoc, searchInput } = tabEnv({ dialogOpen: true });
+        searchInput.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(doc.activeElement).toBe(searchInput);
+    });
+
+    // Final polish (aria-modal): an open dialog traps Tab within its own
+    // controls — focus must never leak into the page behind the cover. The
+    // dialogs module reports the open element via activeEl().
+    const dialogTrapEnv = extra => {
+        const refs = {};
+        const env = setup({
+            dialogOpen: true,
+            dialogActiveEl: () => refs.dlg,
+            views: ({ tree, el }) => {
+                const dlg = el('DIV', 'confirm-dialog');
+                refs.btn1 = el('BUTTON', 'confirm-dialog-button-1');
+                refs.btn2 = el('BUTTON', 'confirm-dialog-button-2');
+                refs.btn1.parentNode = dlg;
+                refs.btn2.parentNode = dlg;
+                dlg._qsa['button, input'] = [refs.btn1, refs.btn2];
+                refs.dlg = dlg;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            },
+            ...extra
+        });
+        return { ...env, ...refs };
+    };
+
+    it('traps Tab inside the open dialog and wraps around its controls', () => {
+        const { doc, fireDoc, btn1, btn2 } = dialogTrapEnv();
+        btn1.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(doc.activeElement).toBe(btn2);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(btn1); // wraps — never leaves the dialog
+    });
+
+    it('walks backwards on Shift+Tab and enters at the near edge from outside', () => {
+        const { doc, fireDoc, body, btn1, btn2 } = dialogTrapEnv();
+        btn1.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(btn2); // wraps backwards
+        body.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(btn1); // forward entry: first control
+        body.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(btn2); // backward entry: last control
+    });
+
+    it('skips disabled dialog controls', () => {
+        const { doc, fireDoc, btn1, btn2 } = dialogTrapEnv();
+        btn2.disabled = true;
+        btn1.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(btn1); // only enabled control: stay
+    });
+
+    it('swallows Tab when the dialog has no focusable control (alert)', () => {
+        const { doc, fireDoc, body, dlg } = dialogTrapEnv();
+        dlg._qsa['button, input'] = [];
+        body.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(doc.activeElement).toBe(body); // nowhere to go — stay put
+    });
+
+    it('does nothing while a context menu owns focus', () => {
+        const { doc, fireDoc, item1 } = tabEnv();
+        item1.focus(); // a menu item inside the bookmark context menu
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(doc.activeElement).toBe(item1);
+    });
+
+    it('does nothing while the palette is open', () => {
+        const { doc, fireDoc, searchInput } = tabEnv({
+            palette: { isOpen: () => true, open: () => {}, close: () => {} }
+        });
+        searchInput.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(doc.activeElement).toBe(searchInput);
+    });
+
+    it('leaves the list out when it has no focusable row', () => {
+        const { doc, fireDoc, searchInput, tabBtn, tool } = tabEnv();
+        // no ROW_SEL seed → the empty list contributes no stop
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // wraps past the empty list
+    });
+
+    // Final polish: the active view's in-list toolbar controls (stats sort
+    // seg, dead rescan/filter, dupes strategy/apply) join the cycle between
+    // the tab strip and the list rows.
+    const toolbarEnv = () => {
+        const refs = {};
+        const env = setup({
+            views: ({ tree, el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-stats');
+                refs.tabBtn.parentNode = refs.tabs;
+                const container = el('DIV', 'stats-list');
+                refs.segCount = el('BUTTON');
+                refs.segRecent = el('BUTTON');
+                refs.clearBtn = el('BUTTON');
+                container._qsa['.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input'] =
+                    [refs.segCount, refs.segRecent, refs.clearBtn];
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree, tabEl: refs.tabBtn, container }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ...env, ...refs };
+    };
+
+    it('inserts the active view\'s toolbar controls between the tab strip and the list', () => {
+        const { doc, fireDoc, tabBtn, segCount, segRecent, clearBtn, tree, f1, searchInput } = toolbarEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        tabBtn.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(segCount);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(segRecent);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(clearBtn);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(f1.link); // list stop after the toolbar
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // wrap-around
+    });
+
+    it('skips disabled and hidden toolbar controls', () => {
+        const { doc, fireDoc, tabBtn, segCount, segRecent, clearBtn, tree, f1 } = toolbarEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        segCount.disabled = true;
+        segRecent.classList.add('hidden');
+        tabBtn.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(clearBtn); // only enabled+visible control
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(f1.link);
+    });
+
+    it('Shift+Tab from the list row lands on the last toolbar control', () => {
+        const { doc, fireDoc, clearBtn, tree, f1 } = toolbarEnv();
+        tree._qs[ROW_SEL] = f1.link;
+        f1.link.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(clearBtn);
     });
 });
 

@@ -122,7 +122,7 @@ const setup = (opts = {}) => {
 describe('module API', () => {
     it('returns the undo API', () => {
         const { undo } = setup({});
-        for (const name of ['capture', 'undo', 'canUndo', 'peek', 'showToast'])
+        for (const name of ['capture', 'undo', 'canUndo', 'peek', 'showToast', 'toastAction'])
             expect(typeof undo[name], name).toBe('function');
     });
 });
@@ -345,6 +345,54 @@ describe('toast', () => {
     it('showToast is a no-op when the toast DOM is missing', () => {
         const { undo } = setup({ noToastDom: true });
         expect(() => undo.showToast('x')).not.toThrow();
+        expect(timeouts).toEqual([]);
+    });
+});
+
+describe('toastAction (v4 task-3 #14)', () => {
+    it('fills the text, sets a custom button label and schedules the auto-hide', () => {
+        const { undo, els } = setup({});
+        undo.toastAction('Target outside the bar', 'Show all', () => {});
+        expect(els['undo-toast-text'].textContent).toBe('Target outside the bar');
+        expect(els['undo-toast-button'].textContent).toBe('Show all');
+        expect(els['undo-toast'].hidden).toBe(false);
+        expect(timeouts).toHaveLength(1);
+        expect(timeouts[0][1]).toBe(8000);
+    });
+
+    it('the button runs the action instead of undo, exactly once, then hides', async () => {
+        const { undo, els, chrome } = setup({ subTrees: { '5': BOOKMARK_NODE } });
+        undo.capture('5'); // something undoable — must NOT be consumed
+        let ran = 0;
+        undo.toastAction('hint', 'act', () => { ran++; });
+        await els['undo-toast-button'].listeners.click();
+        expect(ran).toBe(1);
+        expect(els['undo-toast'].hidden).toBe(true);
+        expect(chrome.bookmarks.createCalls).toEqual([]); // undo not touched
+        expect(undo.canUndo()).toBe(true); // stack still holds the entry
+        // a second click (toast re-shown via showToast) falls back to undo
+        undo.showToast('Deleted GH');
+        expect(els['undo-toast-button'].textContent).toBe('undoAction');
+        await els['undo-toast-button'].listeners.click();
+        expect(ran).toBe(1);
+        expect(chrome.bookmarks.createCalls).toHaveLength(1);
+    });
+
+    it('the auto-hide clears a pending action: a later plain toast button click undoes', async () => {
+        const { undo, els, chrome } = setup({ subTrees: { '5': BOOKMARK_NODE } });
+        undo.capture('5');
+        let ran = 0;
+        undo.toastAction('hint', 'act', () => { ran++; });
+        timeouts[0][0](); // auto-hide fires
+        undo.showToast('Deleted GH');
+        await els['undo-toast-button'].listeners.click();
+        expect(ran).toBe(0);
+        expect(chrome.bookmarks.createCalls).toHaveLength(1); // real undo ran
+    });
+
+    it('is a no-op when the toast DOM is missing', () => {
+        const { undo } = setup({ noToastDom: true });
+        expect(() => undo.toastAction('x', 'y', () => {})).not.toThrow();
         expect(timeouts).toEqual([]);
     });
 });

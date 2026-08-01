@@ -109,6 +109,9 @@ const setup = (opts = {}) => {
     const folderMenu = el('MENU', 'folder-context-menu');
     const separatorMenu = el('MENU', 'separator-context-menu');
     const searchHistoryMenu = el('MENU', 'search-history-context-menu');
+    // v4 task-3 #10/#16: the two new dedicated menus
+    const histRowMenu = el('MENU', 'hist-row-context-menu');
+    const dupesGroupMenu = el('MENU', 'dupes-group-context-menu');
     const results = el('DIV', 'results');
     for (const id of ['add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
         'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
@@ -126,6 +129,15 @@ const setup = (opts = {}) => {
     el('DIV', 'search-history-menu-rerun');
     el('DIV', 'search-history-menu-remove');
     el('DIV', 'search-history-menu-clear');
+    // v4 task-3 #10: the unbookmarked stats-history menu items (init labels)
+    el('DIV', 'hist-open-new-tab');
+    el('DIV', 'hist-open-new-window');
+    el('DIV', 'hist-open-incognito');
+    el('DIV', 'hist-add-bookmark');
+    // v4 task-3 #16: the dupes group-head menu items (open-time labels)
+    el('DIV', 'dupes-group-clean');
+    el('HR', 'dupes-group-menu-sep1');
+    el('DIV', 'dupes-group-toggle');
     const tree = el('DIV', 'tree');
     // round-3 item 3: the feature-view lists get the same scroll/focus
     // menu-dismissal wiring as the tree/results panes
@@ -228,6 +240,35 @@ const setup = (opts = {}) => {
         a.parentNode = li;
         return { li, a };
     };
+    // An unbookmarked stats-history row (v4 task-3 #10):
+    // <li class="stats-hist-row"><a href></a><button class="stats-add-btn">☆</button></li>
+    const makeStatsHistRow = (url = 'https://elsewhere.example/') => {
+        const li = el('LI');
+        li.classList.add('stats-hist-row');
+        const a = el('A');
+        a.href = url;
+        a.parentNode = li;
+        li._qs.a = a;
+        const addBtn = el('BUTTON');
+        addBtn.classList.add('stats-add-btn');
+        addBtn.parentNode = li;
+        li._qs['.stats-add-btn'] = addBtn;
+        return { li, a, addBtn };
+    };
+    // A dupes group head (v4 task-3 #16):
+    // <li class="dupes-group" data-key="k"><span class="group-head"><span class="dupes-key"></span></span></li>
+    const makeDupesGroupHead = (key = 'https://x.example/') => {
+        const li = el('LI');
+        li.classList.add('dupes-group');
+        li.dataset.key = key;
+        const head = el('SPAN');
+        head.classList.add('group-head');
+        head.parentNode = li;
+        const keySpan = el('SPAN');
+        keySpan.classList.add('dupes-key');
+        keySpan.parentNode = head;
+        return { li, head, keySpan };
+    };
     const menuItem = id => {
         const item = el('DIV', id);
         item.classList.add('menu-item');
@@ -238,9 +279,10 @@ const setup = (opts = {}) => {
 
     return {
         menus, byId, el, body, tree, results, viewLists,
-        bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
+        bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
         chrome: chromeStub, actionCalls, sortCalls, revealCalls,
-        makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow, menuItem, openOn,
+        makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
+        makeStatsHistRow, makeDupesGroupHead, menuItem, openOn,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -249,16 +291,20 @@ const setup = (opts = {}) => {
 };
 
 describe('module API', () => {
-    it('returns clearMenu/switchBookmarkMenu plus the four menu elements', () => {
-        const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu } = setup({});
+    it('returns clearMenu/switchBookmarkMenu plus the six menu elements', () => {
+        const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
+            histRowMenu, dupesGroupMenu } = setup({});
         expect(typeof menus.clearMenu).toBe('function');
         expect(typeof menus.switchBookmarkMenu).toBe('function');
         expect(menus.bookmarkMenu).toBe(bookmarkMenu);
         expect(menus.folderMenu).toBe(folderMenu);
         expect(menus.separatorMenu).toBe(separatorMenu);
         expect(menus.searchHistoryMenu).toBe(searchHistoryMenu);
+        expect(menus.histRowMenu).toBe(histRowMenu);
+        expect(menus.dupesGroupMenu).toBe(dupesGroupMenu);
         expect(Object.keys(menus).sort()).toEqual(
-            ['bookmarkMenu', 'clearMenu', 'folderMenu', 'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
+            ['bookmarkMenu', 'clearMenu', 'dupesGroupMenu', 'folderMenu', 'histRowMenu',
+                'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
     });
 });
 
@@ -773,8 +819,8 @@ describe('open-bookmarks-in-group menu item (P3.4)', () => {
     // (parity), right after folder-window, and neat.js assigns its text from
     // the openBookmarksInGroup message (the id→msg map every menu item uses).
     it('exists in popup.html and sidepanel.html right after folder-window, with a neat.js text mapping', () => {
-        const item = '<div id="open-bookmarks-in-group" class="menu-item" tabindex="-1"></div>';
-        const anchor = '<div id="folder-window" class="menu-item" tabindex="-1"></div>';
+        const item = '<div id="open-bookmarks-in-group" class="menu-item" role="menuitem" tabindex="-1"></div>';
+        const anchor = '<div id="folder-window" class="menu-item" role="menuitem" tabindex="-1"></div>';
         for (const page of ['popup.html', 'sidepanel.html']) {
             const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
             const anchorAt = html.indexOf(anchor);
@@ -1038,11 +1084,235 @@ describe('search-history context menu (round-4 item 7)', () => {
     // Wiring contract: the menu lives in both pages (parity), right after
     // the separator menu, with the three item ids the module assigns labels to.
     it('exists in popup.html and sidepanel.html right after the separator menu', () => {
-        const anchor = '</menu>\n<menu id="search-history-context-menu" type="context" tabindex="-1">';
+        const anchor = '</menu>\n<menu id="search-history-context-menu" type="context" role="menu" tabindex="-1">';
         for (const page of ['popup.html', 'sidepanel.html']) {
             const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
             expect(html.includes(anchor), page).toBe(true);
             for (const id of ['search-history-menu-rerun', 'search-history-menu-remove', 'search-history-menu-clear'])
+                expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
+        }
+    });
+});
+
+describe('flat bookmark menu outside the tree view (v4 task-3 #11)', () => {
+    const POSITIONAL = ['add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
+        'add-folder-before-bookmark', 'add-folder-after-bookmark', 'add-separator',
+        'bookmark-context-menu-sep1', 'bookmark-context-menu-sep2', 'bookmark-context-menu-sep3'];
+
+    it('hides the positional entries on non-tree rows and restores them on tree rows', () => {
+        const { openOn, makeBookmarkRow, byId } = setup({});
+        const recent = makeBookmarkRow('43');
+        recent.li.id = 'neat-recent-item-43';
+        openOn(recent.a);
+        for (const id of POSITIONAL)
+            expect(byId[id].style.display, id).toBe('none');
+        const treeRow = makeBookmarkRow('42');
+        openOn(treeRow.a);
+        for (const id of POSITIONAL)
+            expect(byId[id].style.display, id).toBe('block');
+    });
+
+    it('flattens dead/dupes/stats/results view rows as well', () => {
+        const { openOn, makeBookmarkRow, byId } = setup({});
+        for (const liId of ['dead-item-9', 'dupes-item-5', 'stats-hist-7', 'results-item-3']) {
+            const row = makeBookmarkRow('9');
+            row.li.id = liId;
+            openOn(row.a);
+            for (const id of POSITIONAL)
+                expect(byId[id].style.display, `${liId} ${id}`).toBe('none');
+        }
+    });
+
+    it('a tree row re-shows the entries even after switchBookmarkMenu(true) hid them', () => {
+        const { menus, openOn, makeBookmarkRow, byId } = setup({});
+        menus.switchBookmarkMenu(true); // the search-era global hide
+        const treeRow = makeBookmarkRow('42');
+        openOn(treeRow.a);
+        for (const id of POSITIONAL)
+            expect(byId[id].style.display, id).toBe('block');
+    });
+});
+
+describe('hist-row context menu (v4 task-3 #10)', () => {
+    it('opens the slim menu on an unbookmarked stats-history row, not the bookmark menu', () => {
+        const { openOn, makeStatsHistRow, histRowMenu, bookmarkMenu, folderMenu } = setup({});
+        const { a } = makeStatsHistRow();
+        openOn(a);
+        expect(a.classList.contains('active')).toBe(true);
+        expect(histRowMenu.style.opacity).toBe('1');
+        for (const menu of [bookmarkMenu, folderMenu])
+            expect(menu.style.opacity).not.toBe('1');
+    });
+
+    it('assigns the item labels at init from the i18n messages', () => {
+        const { byId } = setup({});
+        expect(byId['hist-open-new-tab'].textContent).toBe('openNewTab');
+        expect(byId['hist-open-new-window'].textContent).toBe('openNewWindow');
+        expect(byId['hist-open-incognito'].textContent).toBe('openIncognitoWindow');
+        expect(byId['hist-add-bookmark'].textContent).toBe('statsHistoryAdd');
+    });
+
+    it('resolves the row anchor when a non-anchor element of the row is right-clicked', () => {
+        const { openOn, makeStatsHistRow, histRowMenu } = setup({});
+        const { a, addBtn } = makeStatsHistRow();
+        openOn(addBtn); // the ☆ button is a BUTTON — no a/span walk-up target
+        expect(a.classList.contains('active')).toBe(true);
+        expect(histRowMenu.style.opacity).toBe('1');
+    });
+
+    it('bookmarked history rows still get the (flat) bookmark menu', () => {
+        const { openOn, makeStatsHistRow, histRowMenu, bookmarkMenu, byId } = setup({});
+        const { li, a } = makeStatsHistRow();
+        li.dataset.nodeId = '7';
+        li.id = 'stats-hist-7';
+        openOn(a);
+        expect(bookmarkMenu.style.opacity).toBe('1');
+        expect(histRowMenu.style.opacity).not.toBe('1');
+        // … and the flat rule hides the positional entries on it
+        expect(byId['add-bookmark-before-bookmark'].style.display).toBe('none');
+    });
+
+    it('hist-open-new-tab / new-window / incognito open the row url via the shared actions', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeStatsHistRow('https://elsewhere.example/page');
+        ctx.openOn(a);
+        fire(ctx.histRowMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('hist-open-new-tab') }));
+        expect(ctx.actionCalls).toEqual([['openBookmarkNewTab', 'https://elsewhere.example/page']]);
+        expect(ctx.histRowMenu.style.opacity).toBe('0'); // closed after dispatch
+
+        ctx.openOn(a);
+        fire(ctx.histRowMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('hist-open-incognito') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarkNewTab', 'https://elsewhere.example/page'],
+            ['openBookmarkNewWindow', 'https://elsewhere.example/page', true]
+        ]);
+    });
+
+    it('hist-add-bookmark clicks the row ☆ button (view-stats owns the add logic)', () => {
+        const ctx = setup({});
+        const { a, addBtn } = ctx.makeStatsHistRow();
+        let clicks = 0;
+        addBtn.click = () => clicks++;
+        ctx.openOn(a);
+        fire(ctx.histRowMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('hist-add-bookmark') }));
+        expect(clicks).toBe(1);
+        expect(ctx.histRowMenu.style.opacity).toBe('0');
+    });
+
+    it('does nothing when no menu is open (no context row)', () => {
+        const ctx = setup({});
+        fire(ctx.histRowMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('hist-open-new-tab') }));
+        expect(ctx.actionCalls).toEqual([]);
+    });
+
+    // Wiring contract: the menu lives in both pages (parity), right after the
+    // search-history menu, with the four item ids the module assigns labels to.
+    it('exists in popup.html and sidepanel.html right after the search-history menu', () => {
+        const anchor = '</menu>\n<menu id="hist-row-context-menu" type="context" role="menu" tabindex="-1">';
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            expect(html.includes(anchor), page).toBe(true);
+            for (const id of ['hist-open-new-tab', 'hist-open-new-window', 'hist-open-incognito', 'hist-add-bookmark'])
+                expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
+        }
+    });
+});
+
+describe('dupes group-head context menu (v4 task-3 #16)', () => {
+    const dupesMenuStub = (hint = 'Keep «X», remove the other 2', collapsed = false) => {
+        const calls = [];
+        return {
+            calls,
+            cleanHint: key => (key === 'https://x.example/' ? hint : ''),
+            isCollapsed: () => collapsed,
+            cleanGroup: key => calls.push(['cleanGroup', key]),
+            toggleGroup: key => calls.push(['toggleGroup', key])
+        };
+    };
+
+    it('opens the group menu on the group head, not the folder menu', () => {
+        const { openOn, makeDupesGroupHead, dupesGroupMenu, folderMenu, bookmarkMenu } =
+            setup({ dupesMenu: dupesMenuStub() });
+        const { head } = makeDupesGroupHead();
+        openOn(head);
+        expect(head.classList.contains('active')).toBe(true);
+        expect(dupesGroupMenu.style.opacity).toBe('1');
+        for (const menu of [folderMenu, bookmarkMenu])
+            expect(menu.style.opacity).not.toBe('1');
+    });
+
+    it('also opens from a child span of the group head (walk-up)', () => {
+        const { openOn, makeDupesGroupHead, dupesGroupMenu } = setup({ dupesMenu: dupesMenuStub() });
+        const { head, keySpan } = makeDupesGroupHead();
+        openOn(keySpan);
+        expect(head.classList.contains('active')).toBe(true);
+        expect(dupesGroupMenu.style.opacity).toBe('1');
+    });
+
+    it('resolves the labels at open time (clean hint + expand/collapse state)', () => {
+        const s = setup({ dupesMenu: dupesMenuStub('Keep «A», remove the other 3', false) });
+        const { head } = s.makeDupesGroupHead();
+        s.openOn(head);
+        expect(s.byId['dupes-group-clean'].textContent).toBe('Keep «A», remove the other 3');
+        expect(s.byId['dupes-group-toggle'].textContent).toBe('dupesGroupCollapse');
+        const collapsed = setup({ dupesMenu: dupesMenuStub('Keep «A», remove the other 3', true) });
+        collapsed.openOn(collapsed.makeDupesGroupHead().head);
+        expect(collapsed.byId['dupes-group-toggle'].textContent).toBe('dupesGroupExpand');
+    });
+
+    it('hides the clean entry (and its separator) when the hint resolves empty', () => {
+        const s = setup({ dupesMenu: dupesMenuStub('') });
+        s.openOn(s.makeDupesGroupHead('https://unknown.example/').head);
+        expect(s.byId['dupes-group-clean'].style.display).toBe('none');
+        expect(s.byId['dupes-group-menu-sep1'].style.display).toBe('none');
+        expect(s.byId['dupes-group-toggle'].style.display).not.toBe('none');
+    });
+
+    it('dispatches cleanGroup / toggleGroup with the group key', () => {
+        const dupesMenu = dupesMenuStub();
+        const s = setup({ dupesMenu });
+        s.openOn(s.makeDupesGroupHead().head);
+        fire(s.dupesGroupMenu, 'mouseup',
+            makeEvent({ button: 0, target: s.menuItem('dupes-group-clean') }));
+        expect(dupesMenu.calls).toEqual([['cleanGroup', 'https://x.example/']]);
+        expect(s.dupesGroupMenu.style.opacity).toBe('0'); // closed after dispatch
+        s.openOn(s.makeDupesGroupHead().head);
+        fire(s.dupesGroupMenu, 'mouseup',
+            makeEvent({ button: 0, target: s.menuItem('dupes-group-toggle') }));
+        expect(dupesMenu.calls).toEqual([
+            ['cleanGroup', 'https://x.example/'],
+            ['toggleGroup', 'https://x.example/']
+        ]);
+    });
+
+    it('falls back to the legacy folder-menu branch when the dupes API is absent', () => {
+        const { openOn, makeDupesGroupHead, dupesGroupMenu, folderMenu } = setup({});
+        const { head } = makeDupesGroupHead();
+        openOn(head);
+        expect(dupesGroupMenu.style.opacity).not.toBe('1');
+        expect(folderMenu.style.opacity).toBe('1');
+    });
+
+    it('does nothing when no menu is open (no context row)', () => {
+        const dupesMenu = dupesMenuStub();
+        const s = setup({ dupesMenu });
+        fire(s.dupesGroupMenu, 'mouseup',
+            makeEvent({ button: 0, target: s.menuItem('dupes-group-clean') }));
+        expect(dupesMenu.calls).toEqual([]);
+    });
+
+    // Wiring contract: the menu lives in both pages (parity), right after the
+    // hist-row menu, with the two item ids + separator the module resolves.
+    it('exists in popup.html and sidepanel.html right after the hist-row menu', () => {
+        const anchor = '</menu>\n<menu id="dupes-group-context-menu" type="context" role="menu" tabindex="-1">';
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            expect(html.includes(anchor), page).toBe(true);
+            for (const id of ['dupes-group-clean', 'dupes-group-menu-sep1', 'dupes-group-toggle'])
                 expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
         }
     });

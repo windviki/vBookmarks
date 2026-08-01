@@ -181,7 +181,7 @@ const SEED = `
         await adv.evaluateOnNewDocument(t => {
             try { localStorage.setItem('theme', t); } catch (e) {}
         }, theme);
-        await adv.goto(`chrome-extension://${extId}/pages/advanced-options.html`, { waitUntil: 'networkidle0' });
+        await adv.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
         await adv.evaluate(t => chrome.storage.local.set({ theme: t }), theme);
         await adv.reload({ waitUntil: 'networkidle0' });
         await sleep(1000);

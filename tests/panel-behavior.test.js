@@ -8,7 +8,7 @@ import { initPanelBehavior } from '../src/panel-behavior.js';
 const makeChromeDouble = (opts = {}) => {
     const localData = { ...(opts.localData || {}) };
     const sessionData = { ...(opts.sessionData || {}) };
-    const calls = { setPanelBehavior: [], sessionGets: 0 };
+    const calls = { setPanelBehavior: [], sessionGets: 0, sessionRemoves: [] };
     const storageListeners = [];
     const read = (data, keys) => {
         const out = {};
@@ -23,7 +23,13 @@ const makeChromeDouble = (opts = {}) => {
             local: { get(keys, cb) { cb(read(localData, keys)); } },
             session: {
                 get(keys, cb) { calls.sessionGets++; cb(read(sessionData, keys)); },
-                set(obj) { Object.assign(sessionData, obj); }
+                set(obj) { Object.assign(sessionData, obj); },
+                remove(keys) {
+                    for (const k of Array.isArray(keys) ? keys : [keys]) {
+                        calls.sessionRemoves.push(k);
+                        delete sessionData[k];
+                    }
+                }
             },
             onChanged: { addListener(fn) { storageListeners.push(fn); } }
         },
@@ -37,6 +43,10 @@ const makeChromeDouble = (opts = {}) => {
         }
     };
 };
+
+// v4 task-3 #19: a live panel = marker + fresh heartbeat (popup.js writes it
+// every PANEL_HEARTBEAT_MS; PANEL_STALE_MS is the SW-side grace window).
+const livePanel = () => ({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
 
 const fireStorage = (d, changes, areaName) => {
     for (const fn of d.storageListeners)
@@ -62,10 +72,42 @@ describe('initPanelBehavior — startup application', () => {
     });
 
     it('stays in toggle mode at startup when a panel outlived the worker (round-6 fix)', () => {
-        const d = makeChromeDouble({ sessionData: { sidePanelIsOpen: true } });
+        const d = makeChromeDouble({ sessionData: livePanel() });
         globalThis.chrome = d;
         initPanelBehavior();
         expect(d.calls.setPanelBehavior).toEqual([true]);
+    });
+
+    // v4 task-3 #19: a bare marker with no heartbeat is residue from a panel
+    // that died without pagehide (crash / session restore) — trusting it kept
+    // the action in toggle mode with the option off forever.
+    it('drops a heartbeat-less marker at startup: popup mode + stale keys removed', () => {
+        const d = makeChromeDouble({ sessionData: { sidePanelIsOpen: true } });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        expect(d.calls.setPanelBehavior).toEqual([false]);
+        expect(d.calls.sessionRemoves).toEqual(['sidePanelIsOpen', 'sidePanelHeartbeat']);
+        expect(d.sessionData).toEqual({});
+    });
+
+    it('drops a marker whose heartbeat is older than the stale window', () => {
+        const d = makeChromeDouble({
+            sessionData: { sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() - 120000 }
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        expect(d.calls.setPanelBehavior).toEqual([false]);
+        expect(d.calls.sessionRemoves).toEqual(['sidePanelIsOpen', 'sidePanelHeartbeat']);
+    });
+
+    it('keeps a heartbeat inside the stale window (throttled timers) alive', () => {
+        const d = makeChromeDouble({
+            sessionData: { sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() - 60000 }
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        expect(d.calls.setPanelBehavior).toEqual([true]);
+        expect(d.calls.sessionRemoves).toEqual([]);
     });
 });
 
@@ -83,7 +125,7 @@ describe('initPanelBehavior — reacting to changes', () => {
     it('keeps toggle mode when the option turns off while a panel is open', () => {
         const d = makeChromeDouble({
             localData: { openInSidePanel: true },
-            sessionData: { sidePanelIsOpen: true }
+            sessionData: livePanel()
         });
         globalThis.chrome = d;
         initPanelBehavior();
@@ -100,6 +142,19 @@ describe('initPanelBehavior — reacting to changes', () => {
         expect(d.calls.setPanelBehavior).toEqual([true, false]);
     });
 
+    it('drops to popup mode when the option turns off and the marker is stale (#19)', () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            sessionData: { sidePanelIsOpen: true } // no heartbeat — dead panel residue
+        });
+        globalThis.chrome = d;
+        initPanelBehavior(); // startup: option on → toggle, session untouched
+        expect(d.calls.setPanelBehavior).toEqual([true]);
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local');
+        expect(d.calls.setPanelBehavior).toEqual([true, false]);
+        expect(d.calls.sessionRemoves).toEqual(['sidePanelIsOpen', 'sidePanelHeartbeat']);
+    });
+
     it('enters toggle mode when a panel opens with the option off', () => {
         const d = makeChromeDouble({});
         globalThis.chrome = d;
@@ -109,7 +164,7 @@ describe('initPanelBehavior — reacting to changes', () => {
     });
 
     it('returns to popup mode when the panel closes with the option off', () => {
-        const d = makeChromeDouble({ sessionData: { sidePanelIsOpen: true } });
+        const d = makeChromeDouble({ sessionData: livePanel() });
         globalThis.chrome = d;
         initPanelBehavior();
         fireStorage(d, { sidePanelIsOpen: { newValue: false } }, 'session');

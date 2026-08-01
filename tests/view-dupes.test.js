@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
+import fs from 'node:fs';
 
 // view-dupes.js touches page globals (document/chrome/setTimeout) only
 // inside initViewDupes and its handlers, so the real module imports cleanly
@@ -247,9 +248,10 @@ describe('view registration (§5.6)', () => {
         expect(setup({ storeData: { showDupesView: '' } }).def().hidden).toBe(true);
     });
 
-    it('exposes refresh + setKeeper on the module API', () => {
+    it('exposes the module API (refresh/setKeeper + the #16 group-head menu hooks)', () => {
         const { viewDupes } = setup({});
-        expect(Object.keys(viewDupes).sort()).toEqual(['refresh', 'setKeeper']);
+        expect(Object.keys(viewDupes).sort()).toEqual(
+            ['cleanGroup', 'cleanHint', 'isCollapsed', 'refresh', 'setKeeper', 'toggleGroup']);
     });
 
     it('badge() tracks the group count (0 hides the tab badge)', () => {
@@ -487,6 +489,104 @@ describe('group collapse (§3.6)', () => {
         const passthrough = keyEv('ArrowRight');
         fire('keydown', passthrough);
         expect(passthrough.stopped).toBeUndefined();
+    });
+});
+
+describe('member-row keys (final polish, v4task-2-list §2.3/§3.6)', () => {
+    // The member row's firstElementChild is the keeper radio, so the generic
+    // Enter/Space synthetic click from keyboard.js would SET THE KEEPER
+    // instead of opening the bookmark; the view's capture handler reroutes
+    // through the anchor. The back arrow jumps to the owning group head.
+    beforeAll(() => {
+        globalThis.MouseEvent = class {
+            constructor(type, opts = {}) {
+                this.type = type;
+                Object.assign(this, opts);
+            }
+        };
+        globalThis.window = globalThis.window || {};
+    });
+    afterAll(() => {
+        delete globalThis.MouseEvent;
+    });
+
+    const keyEv = (key, target) => ({
+        key, target,
+        preventDefault() { this.prevented = true; },
+        stopPropagation() { this.stopped = true; }
+    });
+    const memberLi = clicks => ({
+        dataset: { key: 'https://a.com' },
+        querySelector: sel => (sel === 'a' ? { dispatchEvent: ev => clicks.push(ev) } : null)
+    });
+    const rowTarget = (li, isRadio = false) => ({
+        classList: { contains: c => (isRadio ? c === 'keeper-radio' : false) },
+        closest: sel => (sel === 'li.dupes-member' ? li : null)
+    });
+
+    it('Enter/Space on a member row opens the bookmark through the anchor', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        const clicks = [];
+        const ev = keyEv('Enter', rowTarget(memberLi(clicks)));
+        ctx.fire('keydown', ev);
+        expect(ev.stopped).toBe(true); // keyboard.js never sees it
+        expect(clicks).toHaveLength(1);
+        expect(clicks[0].type).toBe('click');
+        expect(clicks[0].bubbles).toBe(true);
+        const space = keyEv(' ', rowTarget(memberLi(clicks)));
+        ctx.fire('keydown', space);
+        expect(clicks).toHaveLength(2);
+    });
+
+    it('Enter/Space with focus on the keeper radio itself is left to the native path', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        const clicks = [];
+        const ev = keyEv('Enter', rowTarget(memberLi(clicks), true));
+        ctx.fire('keydown', ev);
+        expect(ev.prevented).toBeUndefined(); // not hijacked
+        expect(clicks).toHaveLength(0);
+    });
+
+    it('ArrowLeft jumps back to the owning group head (LTR)', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        const head = { focus() { this.focused = true; } };
+        const groupLi = {
+            dataset: { key: 'https://a.com' },
+            querySelector: sel => (sel === '.group-head' ? head : null)
+        };
+        ctx.$list.querySelectorAll = sel => (sel === 'li.dupes-group' ? [groupLi] : []);
+        const ev = keyEv('ArrowLeft', rowTarget(memberLi([])));
+        ctx.fire('keydown', ev);
+        expect(ev.stopped).toBe(true);
+        expect(head.focused).toBe(true);
+    });
+
+    it('the back arrow flips to ArrowRight under RTL, and unknown groups fall through', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        ctx.doc.body = { classList: { contains: c => c === 'rtl' } };
+        const head = { focus() { this.focused = true; } };
+        const groupLi = {
+            dataset: { key: 'https://a.com' },
+            querySelector: sel => (sel === '.group-head' ? head : null)
+        };
+        ctx.$list.querySelectorAll = sel => (sel === 'li.dupes-group' ? [groupLi] : []);
+        const right = keyEv('ArrowRight', rowTarget(memberLi([])));
+        ctx.fire('keydown', right);
+        expect(right.stopped).toBe(true);
+        expect(head.focused).toBe(true);
+        // ArrowLeft (visually forward in RTL) and unknown keys pass through
+        const left = keyEv('ArrowLeft', rowTarget(memberLi([])));
+        ctx.fire('keydown', left);
+        expect(left.stopped).toBeUndefined();
+        // a member whose group head is missing: no-op, no hijack
+        ctx.$list.querySelectorAll = () => [];
+        const orphan = keyEv('ArrowRight', rowTarget(memberLi([])));
+        ctx.fire('keydown', orphan);
+        expect(orphan.stopped).toBeUndefined();
     });
 });
 
@@ -731,5 +831,162 @@ describe('snapshot persistence (round-6 item 6)', () => {
         const { def, chrome } = setup({ storeData: { dupesLastResult: thin } });
         def().activate();
         expect(chrome.bookmarks.getTreeCalls).toBe(1); // single-member groups are no groups
+    });
+});
+
+describe('group-head menu API (v4 task-3 #16)', () => {
+    it('cleanHint names the strategy keeper and the doomed count for the group', () => {
+        const { viewDupes, def } = setup({});
+        def().activate();
+        expect(viewDupes.cleanHint('https://a.com')).toBe('dupesCleanRestHint[A oldest|2]');
+        expect(viewDupes.cleanHint('https://nope.example')).toBe(''); // unknown key
+    });
+
+    it('isCollapsed/toggleGroup drive the same fold state as clicking the head', () => {
+        const { viewDupes, def, $list } = setup({});
+        def().activate();
+        expect(viewDupes.isCollapsed('https://a.com')).toBe(false);
+        viewDupes.toggleGroup('https://a.com');
+        expect(viewDupes.isCollapsed('https://a.com')).toBe(true);
+        expect($list.innerHTML).toContain('chevron collapsed');
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"'); // members hidden
+        viewDupes.toggleGroup('https://a.com');
+        expect(viewDupes.isCollapsed('https://a.com')).toBe(false);
+        expect($list.innerHTML).toContain('id="dupes-item-11"');
+        viewDupes.toggleGroup('https://nope.example'); // unknown key: no-op, no crash
+        expect($list.innerHTML).toContain('id="dupes-item-11"');
+    });
+
+    it('cleanGroup by key runs the same confirm-gated deletion as the × button', async () => {
+        const ctx = setup({});
+        const { viewDupes, chrome, dialogs, undo } = ctx;
+        ctx.def().activate();
+        viewDupes.cleanGroup('https://a.com');
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmGroup[2]');
+        expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(undo.captureCalls).toEqual(['15', '21']);
+        expect(chrome.bookmarks.removeCalls).toEqual(['15', '21']);
+        expect(undo.toastCalls).toEqual(['dupesDone[2]']);
+        viewDupes.cleanGroup('https://nope.example'); // unknown key: no dialog
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+    });
+});
+
+describe('selection mode (v4 task-3 #5)', () => {
+    const groupClick = (ctx, key = 'https://a.com') => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { key } } : null)
+    });
+
+    it('the select button shows with groups and swaps the toolbar for the batch bar', () => {
+        const ctx = setup({});
+        const { $list, def } = ctx;
+        def().activate();
+        expect($list.innerHTML).toContain('dupes-select-mode');
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+        expect($list.innerHTML).toContain('dupesApplySelected[0]');
+        expect($list.innerHTML).toContain('class="dupes-apply-selected" disabled');
+        // the normal toolbar controls are gone while the mode is on
+        expect($list.innerHTML).not.toContain('dupes-strategy');
+        expect($list.innerHTML).not.toContain('dupes-apply-all');
+        expect($list.innerHTML).toContain('<ul role="list" class="selecting">');
+    });
+
+    it('head and member clicks toggle the group, and the apply count tracks the doomed rows', () => {
+        const ctx = setup({});
+        const { $list, def, treeView } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        const handlerCalls = treeView.handlerCalls;
+        groupClick(ctx); // head click
+        expect($list.innerHTML).toContain('class="dupes-group sel" data-key="https://a.com"');
+        expect($list.innerHTML).toContain('selectCount[1]');
+        // the apply button names the LIVE doomed total of the selected groups
+        expect($list.innerHTML).toContain('dupesApplySelected[2]');
+        expect($list.innerHTML).not.toContain('class="dupes-apply-selected" disabled');
+        groupClick(ctx); // off again
+        expect($list.innerHTML).toContain('selectCount[0]');
+        expect(treeView.handlerCalls).toBe(handlerCalls); // nothing opened
+    });
+
+    it('all / invert / clear operate on the group set', () => {
+        const ctx = setup({ storeData: { dupesIgnoreScheme: '1' } });
+        const { $list, def } = ctx;
+        def().activate(); // two groups: a.com + folded c.com
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-all' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[2]');
+        expect($list.innerHTML).toContain('dupesApplySelected[3]'); // 2 + 1 doomed
+        groupClick(ctx, '//a.com'); // drop one (scheme-folded key under ignoreScheme)
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).toContain('dupesApplySelected[1]');
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-invert' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[1]');
+        expect($list.innerHTML).toContain('dupesApplySelected[2]'); // a.com back in
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-clear' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+    });
+
+    it('dedup-selected confirms once with the selected totals and removes serially', async () => {
+        const ctx = setup({ storeData: { dupesIgnoreScheme: '1' } });
+        const { chrome, dialogs, undo, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        groupClick(ctx, '//a.com'); // ignoreScheme folds the keys to schemeless
+        groupClick(ctx, '//c.com');
+        ctx.clickOn({ closest: sel => (sel === '.dupes-apply-selected' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmSelected[3|2]');
+        expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['15', '21', '24']); // keepers 11 + 23 stay
+        expect(undo.toastCalls).toEqual(['dupesDone[3]']);
+    });
+
+    it('a fully-kept selection (nothing doomed) never opens the dialog', () => {
+        const ctx = setup({});
+        const { dialogs, def, $list } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        // empty selection → apply disabled and a no-op
+        ctx.clickOn({ closest: sel => (sel === '.dupes-apply-selected' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toEqual([]);
+        expect($list.innerHTML).toContain('selectCount[0]');
+    });
+
+    it('Esc exits the mode (selection cleared, normal toolbar back)', () => {
+        const ctx = setup({});
+        const { $list, def } = ctx;
+        def().activate();
+        expect(def().onEscape()).toBe(false); // not selecting: falls through
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        groupClick(ctx);
+        expect(def().onEscape()).toBe(true);
+        expect($list.innerHTML).toContain('dupes-select-mode');
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]'); // membership was cleared
+    });
+
+    it('the exit button leaves the mode like Esc does', () => {
+        const ctx = setup({});
+        const { $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        groupClick(ctx);
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-exit' ? {} : null) });
+        expect($list.innerHTML).toContain('dupes-select-mode');
+        expect($list.innerHTML).not.toContain('class="selecting"');
+    });
+
+    it('the CSS contract: group heads get checkboxes, × and radios hide', () => {
+        const neatCss = fs.readFileSync(new URL('../css/neat.css', import.meta.url), 'utf8');
+        expect(neatCss).toContain('#dupes-list ul.selecting li.dupes-group .group-head::before');
+        expect(neatCss).toContain('#dupes-list ul.selecting li.dupes-group.sel .group-head::before');
+        expect(neatCss).toContain('#dupes-list ul.selecting .keeper-radio');
     });
 });

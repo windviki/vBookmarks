@@ -383,6 +383,16 @@ describe('module API + open/close state machine', () => {
         expect(paletteEl.hidden).toBe(true);
     });
 
+    it('paletteEnabled off blocks every open path (v4 task-3 #20)', () => {
+        const { palette, paletteEl, input, doc, keydown } = setup({ storeSeed: { paletteEnabled: '' } });
+        palette.open();
+        expect(palette.isOpen()).toBe(false);
+        expect(paletteEl.hidden).toBe(true);
+        expect(input.focused).toBe(false);
+        keydown(doc, { key: 'k', ctrlKey: true }); // the Ctrl/Cmd+K binding too
+        expect(palette.isOpen()).toBe(false);
+    });
+
     it('open shows the panel, clears and focuses the input, sets the placeholder via i18n', () => {
         const { palette, paletteEl, input } = setup({});
         input.value = 'stale';
