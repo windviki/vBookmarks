@@ -130,6 +130,24 @@ const $ = id => document.getElementById(id);
         deadProxy.value = await getSetting('deadProxyTemplate', '');
         deadProxy.addEventListener('change', () => setSetting('deadProxyTemplate', deadProxy.value.trim()));
 
+        // The user's own proxy server for the scan's second channel
+        // (dead-proxy.js). Adding/testing lives in the dead-links view — it
+        // needs a click gesture for the optional `proxy` permission prompt
+        // and the reachability probe — so this row is display + clear,
+        // keeping the saved config visible from options as well.
+        const deadProxyServerValue = $('dead-proxy-server-value');
+        const deadProxyServerClear = $('dead-proxy-server-clear');
+        const refreshDeadProxyServer = async () => {
+            const value = await getSetting('deadProxyServer', '');
+            deadProxyServerValue.textContent = value || _m('deadProxyNone');
+            deadProxyServerClear.disabled = !value;
+        };
+        refreshDeadProxyServer();
+        deadProxyServerClear.addEventListener('click', async () => {
+            await removeSetting('deadProxyServer');
+            refreshDeadProxyServer();
+        });
+
         // v4 task-2 slice D (§5.4): the options-page twin of the stats
         // view's clear button — local behavior data needs a one-click
         // erasure exit paired with the statsEnabled switch. The popup's
@@ -399,6 +417,9 @@ const $ = id => document.getElementById(id);
         document.getElementById('stats-clear').innerText = __m('statsClearData');
         document.getElementById('option-dead-proxy').innerText = __m('optionDeadProxy');
         document.getElementById('dead-proxy-hint').innerText = __m('deadProxyHint');
+        document.getElementById('option-dead-proxy-server').innerText = __m('optionDeadProxyServer');
+        document.getElementById('dead-proxy-server-clear').innerText = __m('deadProxyClear');
+        document.getElementById('dead-proxy-server-hint').innerText = __m('deadProxyServerHint');
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

@@ -880,6 +880,96 @@
     "message": "Bookmark URLs are sent to this third-party service. Leave empty to probe directly only.",
     "description": "Privacy hint under the dead-link proxy template setting."
   },
+  "deadProxyAdd": {
+    "message": "Add a proxy server for dead-link checks",
+    "description": "Dead view proxy strip: button that opens the inline add-proxy panel."
+  },
+  "deadProxyLabel": {
+    "message": "Proxy: $server$",
+    "description": "Dead view proxy strip chip showing the configured proxy server; $server$ is scheme://host:port.",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "Change",
+    "description": "Dead view proxy strip: reopen the add panel prefilled with the configured proxy server."
+  },
+  "deadProxyRemove": {
+    "message": "Remove",
+    "description": "Dead view proxy strip: remove the configured proxy server."
+  },
+  "deadProxyRemoved": {
+    "message": "Proxy server removed",
+    "description": "Toast after the dead view's proxy server was removed."
+  },
+  "deadProxyPanelHint": {
+    "message": "Enter a proxy server you already have (the extension provides none), e.g. 127.0.0.1:7890 or socks5://127.0.0.1:1080.",
+    "description": "Hint line of the dead view's inline add-proxy panel."
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "Test URL",
+    "description": "Label/tooltip of the reachability test URL field in the dead view's add-proxy panel."
+  },
+  "deadProxyTestSave": {
+    "message": "Test & save",
+    "description": "Primary button of the dead view's add-proxy panel: probes the proxy and saves it only when reachable."
+  },
+  "deadProxyTesting": {
+    "message": "Testing…",
+    "description": "Busy state of the dead view's add-proxy panel while the reachability probe runs."
+  },
+  "deadProxySaved": {
+    "message": "Proxy saved — future scans re-check direct failures through it",
+    "description": "Toast after a reachable proxy server was saved in the dead view."
+  },
+  "deadProxyInvalid": {
+    "message": "Invalid proxy address — use host:port or scheme://host:port (http/https/socks5, no credentials)",
+    "description": "Error of the dead view's add-proxy panel when the address does not parse."
+  },
+  "deadProxyUnreachable": {
+    "message": "Proxy unreachable — not saved",
+    "description": "Error of the dead view's add-proxy panel when the reachability probe failed."
+  },
+  "deadProxyDenied": {
+    "message": "Proxy permission was not granted",
+    "description": "Error when the user dismisses Chrome's proxy permission prompt (dead view add-proxy flow or scan gate)."
+  },
+  "deadProxyControlled": {
+    "message": "Proxy settings are managed by another extension",
+    "description": "Error when another extension controls Chrome's proxy settings (dead view add-proxy flow or scan gate)."
+  },
+  "deadProxyUnavailable": {
+    "message": "The proxy API is unavailable in this browser",
+    "description": "Error when chrome.proxy is missing (dead view add-proxy flow or scan gate)."
+  },
+  "deadProxyNudge": {
+    "message": "$count$ bookmarks failed direct checks — a proxy re-check separates real dead links from region-blocked ones",
+    "description": "Dead view proxy strip nudge after a scan with direct-failing rows and no proxy configured; $count$ is the dead row count.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "Relay template (set in options)",
+    "description": "Dead view proxy strip chip marking that the legacy relay template channel is configured."
+  },
+  "deadSummary": {
+    "message": "Dead: $dead$ · Blocked: $blocked$",
+    "description": "Dead view toolbar summary counting the dead and blocked rows of the last scan.",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadStartHint": {
     "message": "Start scanning $n$ bookmarks",
     "description": "Executable empty state of the dead-link view before the first scan; $n$ is the scannable bookmark count.",
@@ -998,6 +1088,22 @@
   "optionDeadProxy": {
     "message": "Dead-link proxy template",
     "description": "Options label for the dead-link probe relay URL template (empty = direct probing only)."
+  },
+  "optionDeadProxyServer": {
+    "message": "Dead-link proxy server",
+    "description": "Options label for the user's own proxy server used by the dead-link scan's second channel."
+  },
+  "deadProxyServerHint": {
+    "message": "Add and test the proxy from the dead-links view; the saved server re-checks direct failures in every scan.",
+    "description": "Hint under the options page's dead-link proxy server row."
+  },
+  "deadProxyClear": {
+    "message": "Clear",
+    "description": "Button clearing the saved dead-link proxy server on the options page."
+  },
+  "deadProxyNone": {
+    "message": "(not set)",
+    "description": "Placeholder shown when no dead-link proxy server is configured (options page)."
   },
   "optionDeadScanConcurrency": {
     "message": "Dead-link scan concurrency (1-16)",

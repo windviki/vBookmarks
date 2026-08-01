@@ -199,6 +199,41 @@ describe('checkUrlDual (v4 task-2 §5.5b)', () => {
         expect(result.error).toBe('TypeError');
         expect(calls).toHaveLength(2);
     });
+
+    it('proxyServer: direct fail + marker-URL reachable → blocked (dead-proxy.js PAC routing)', async () => {
+        const calls = stubFetch(url =>
+            Promise.resolve({ status: url.includes('__vbm_px=1') ? 200 : 404 }));
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
+        expect(result.status).toBe('blocked');
+        expect(result.code).toBe(404);
+        expect(calls).toHaveLength(2);
+        expect(calls[0].url).toBe('https://a.com/');            // direct: bare
+        expect(calls[1].url).toBe('https://a.com/?__vbm_px=1'); // proxy: marked
+    });
+
+    it('proxyServer: the marker lands ahead of the fragment', async () => {
+        const calls = stubFetch(() => Promise.resolve({ status: 404 }));
+        await checkUrlDual('https://a.com/p#frag', { proxyServer: true });
+        expect(calls[1].url).toBe('https://a.com/p?__vbm_px=1#frag');
+    });
+
+    it('proxyServer: an unreachable proxy channel confirms dead', async () => {
+        stubFetch(url =>
+            url.includes('__vbm_px=1')
+                ? Promise.reject(new TypeError('Failed to fetch'))
+                : Promise.resolve({ status: 404 }));
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
+        expect(result.status).toBe('dead');
+        expect(result.proxy).toEqual({ status: 'error', ok: false, error: 'TypeError' });
+    });
+
+    it('proxyServer wins over the legacy relay template when both are set', async () => {
+        const calls = stubFetch(url =>
+            Promise.resolve({ status: url.includes('__vbm_px=1') ? 200 : 404 }));
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true, proxyTemplate: PROXY });
+        expect(result.status).toBe('blocked');
+        expect(calls[1].url).toBe('https://a.com/?__vbm_px=1'); // not the relay
+    });
 });
 
 describe('scanBookmarks', () => {

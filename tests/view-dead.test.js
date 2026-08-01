@@ -189,6 +189,9 @@ const setup = (opts = {}) => {
         },
         set(key, v) {
             this._data[key] = v;
+        },
+        remove(key) {
+            delete this._data[key];
         }
     };
 
@@ -960,5 +963,229 @@ describe('filter seg arrow keys (§2.5 — owned by the toolbar rung)', () => {
             fire('keydown', ev);
             expect(ev.prevented).toBe(0);
         }
+    });
+});
+
+// --- dead-proxy.js integration ----------------------------------------------
+// The proxy strip/panel and the proxy-gated scan. The view reads chrome.* at
+// call time, so the permission/proxy/storage doubles are patched onto the
+// setup's chrome stub per case; the i18n double renders _m('key', subs) as
+// 'key[sub1|sub2]', which the assertions lean on.
+const addProxyChrome = (ctx, opts = {}) => {
+    const calls = [];
+    const c = ctx.chrome;
+    c.runtime = {};
+    c.permissions = {
+        contains(perms, cb) { calls.push(['contains', perms]); cb('contains' in opts ? opts.contains : true); },
+        request(perms, cb) { calls.push(['request', perms]); cb('request' in opts ? opts.request : true); }
+    };
+    c.proxy = {
+        settings: {
+            get(details, cb) {
+                calls.push(['get']);
+                cb({ levelOfControl: opts.levelOfControl || 'controllable_by_this_extension' });
+            },
+            set(details, cb) { calls.push(['set', details]); cb(); },
+            clear(details, cb) { calls.push(['clear']); cb(); }
+        }
+    };
+    const sessionData = {};
+    c.storage = {
+        session: {
+            set(obj) { Object.assign(sessionData, obj); calls.push(['sessionSet']); },
+            remove(key) { delete sessionData[key]; calls.push(['sessionRemove']); },
+            data: sessionData
+        }
+    };
+    return calls;
+};
+
+const typeProxyAddr = (ctx, value) => ctx.fire('input', {
+    target: { classList: { contains: c => c === 'dead-proxy-input' }, value }
+});
+
+describe('proxy strip + add panel (dead-proxy.js)', () => {
+    it('no proxy: add button renders; a finished scan with dead rows shows nudge + summary', () => {
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const { $list, def } = setup({ storeData: { deadLastScan: cache } });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('dead-proxy-add');
+        expect(html).toContain('deadProxyNudge[1]'); // one direct-dead row
+        expect(html).toContain('deadSummary[1|1]');  // 1 dead · 1 blocked
+    });
+
+    it('no nudge while a relay template is configured (a second channel exists)', () => {
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 1,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const { $list, def } = setup({ storeData: { deadLastScan: cache, deadProxyTemplate: PROXY } });
+        def().activate();
+        expect($list.innerHTML).toContain('deadProxyTemplateChip');
+        expect($list.innerHTML).not.toContain('deadProxyNudge');
+    });
+
+    it('a configured server renders the chip with change/remove buttons', () => {
+        const { $list, def } = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
+        def().activate();
+        const html = $list.innerHTML;
+        expect(html).toContain('deadProxyLabel[http://127.0.0.1:7890]');
+        expect(html).toContain('dead-proxy-change');
+        expect(html).toContain('dead-proxy-remove');
+        expect(html).not.toContain('dead-proxy-add');
+    });
+
+    it('add flow: grant + reachable → the normalized server is saved and toasted', async () => {
+        const ctx = setup({});
+        const calls = addProxyChrome(ctx);
+        const seen = [];
+        globalThis.fetch = url => { seen.push(url); return Promise.resolve({ status: 204 }); };
+        const { $list, def, store, undo } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-proxy-input');
+        typeProxyAddr(ctx, '127.0.0.1:7890');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
+        await flush();
+        await flush();
+        expect(store.get('deadProxyServer')).toBe('http://127.0.0.1:7890');
+        expect(undo.toastCalls).toContain('deadProxySaved');
+        expect(seen).toEqual(['https://www.gstatic.com/generate_204?__vbm_px=1']);
+        // the permission prompt rode the click; the PAC write carried the proxy
+        expect(calls).toContainEqual(['request', { permissions: ['proxy'] }]);
+        expect(calls.find(c => c[0] === 'set')[1].value.pacScript.data)
+            .toContain('"PROXY 127.0.0.1:7890"');
+        expect(calls.map(c => c[0])).toContain('clear'); // test session torn down
+        expect($list.innerHTML).toContain('deadProxyLabel[http://127.0.0.1:7890]');
+    });
+
+    it('invalid input stops before any permission ask', async () => {
+        const ctx = setup({});
+        const calls = addProxyChrome(ctx);
+        const { $list, def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        typeProxyAddr(ctx, 'nope');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
+        await flush();
+        expect($list.innerHTML).toContain('deadProxyInvalid');
+        expect(calls.filter(c => c[0] === 'request')).toEqual([]);
+        expect(store.get('deadProxyServer', '')).toBe('');
+    });
+
+    it('a denied permission prompt is an error, nothing saved', async () => {
+        const ctx = setup({});
+        addProxyChrome(ctx, { request: false });
+        const { $list, def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        typeProxyAddr(ctx, '127.0.0.1:7890');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
+        await flush();
+        await flush();
+        expect($list.innerHTML).toContain('deadProxyDenied');
+        expect(store.get('deadProxyServer', '')).toBe('');
+    });
+
+    it('an unreachable proxy is rejected, nothing saved', async () => {
+        const ctx = setup({});
+        addProxyChrome(ctx);
+        globalThis.fetch = () => Promise.reject(new TypeError('Failed to fetch'));
+        const { $list, def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        typeProxyAddr(ctx, '127.0.0.1:7890');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
+        await flush();
+        await flush();
+        expect($list.innerHTML).toContain('deadProxyUnreachable');
+        expect(store.get('deadProxyServer', '')).toBe('');
+    });
+
+    it('proxy settings owned by another extension are rejected', async () => {
+        const ctx = setup({});
+        addProxyChrome(ctx, { levelOfControl: 'controlled_by_other_extensions' });
+        const { $list, def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        typeProxyAddr(ctx, '127.0.0.1:7890');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
+        await flush();
+        await flush();
+        expect($list.innerHTML).toContain('deadProxyControlled');
+        expect(store.get('deadProxyServer', '')).toBe('');
+    });
+
+    it('remove clears the saved server with a toast', () => {
+        const ctx = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
+        const { $list, def, store, undo } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-remove' ? {} : null) });
+        expect(store.get('deadProxyServer', '')).toBe('');
+        expect(undo.toastCalls).toContain('deadProxyRemoved');
+        expect($list.innerHTML).toContain('dead-proxy-add');
+    });
+
+    it('Esc closes the panel before any scan/selection layer', () => {
+        const ctx = setup({});
+        const { $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-proxy-input');
+        expect(def().onEscape()).toBe(true);
+        expect($list.innerHTML).not.toContain('dead-proxy-input');
+    });
+});
+
+describe('proxy-gated scan (dead-proxy.js)', () => {
+    it('installs the PAC before probing and tears it down on settle', async () => {
+        const ctx = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
+        const calls = addProxyChrome(ctx);
+        // direct: fine 200, the rest 404; marked channel: gone 404, rest 200
+        globalThis.fetch = url => {
+            if (url.includes('__vbm_px=1'))
+                return Promise.resolve({ status: url.includes('gone') ? 404 : 200 });
+            return Promise.resolve({ status: url.includes('fine') ? 200 : 404 });
+        };
+        const { def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        await flush();
+        const cache = JSON.parse(store.get('deadLastScan'));
+        expect(cache.results['11'].status).toBe('ok');
+        expect(cache.results['12'].status).toBe('dead');    // both channels 404
+        expect(cache.results['13'].status).toBe('blocked'); // direct 404, proxy 200
+        const verbs = calls.map(c => c[0]);
+        expect(verbs.indexOf('set')).toBeGreaterThan(-1);
+        expect(verbs.indexOf('set')).toBeLessThan(verbs.indexOf('clear'));
+        expect(verbs).toContain('sessionSet');
+        expect(verbs).toContain('sessionRemove');
+        expect(calls.find(c => c[0] === 'set')[1].value.pacScript.data)
+            .toContain('"PROXY 127.0.0.1:7890"');
+        expect(ctx.chrome.storage.session.data.vbmProxySession).toBeUndefined();
+    });
+
+    it('degrades to direct-only with the gate error when the permission is gone', async () => {
+        const ctx = setup({ storeData: { deadProxyServer: 'http://127.0.0.1:7890' } });
+        addProxyChrome(ctx, { contains: false });
+        const seen = [];
+        globalThis.fetch = url => { seen.push(url); return Promise.resolve({ status: 404 }); };
+        const { $list, def, store } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        await flush();
+        await flush();
+        expect(seen.filter(u => u.includes('__vbm_px=1'))).toEqual([]); // no proxy channel
+        expect(JSON.parse(store.get('deadLastScan')).results['13'].status).toBe('dead');
+        expect($list.innerHTML).toContain('deadProxyDenied'); // the chip explains
     });
 });

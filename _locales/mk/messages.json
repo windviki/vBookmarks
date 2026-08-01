@@ -224,6 +224,78 @@
   "deadProxyHint": {
     "message": "URL-адресите на обележувачите се испраќаат до оваа услуга од трета страна. Оставете празно за да испитувате директно само."
   },
+  "deadProxyAdd": {
+    "message": "[TODO:deadProxyAdd]"
+  },
+  "deadProxyLabel": {
+    "message": "[TODO:deadProxyLabel]",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "[TODO:deadProxyChange]"
+  },
+  "deadProxyRemove": {
+    "message": "[TODO:deadProxyRemove]"
+  },
+  "deadProxyRemoved": {
+    "message": "[TODO:deadProxyRemoved]"
+  },
+  "deadProxyPanelHint": {
+    "message": "[TODO:deadProxyPanelHint]"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "[TODO:deadProxyTestUrlLabel]"
+  },
+  "deadProxyTestSave": {
+    "message": "[TODO:deadProxyTestSave]"
+  },
+  "deadProxyTesting": {
+    "message": "[TODO:deadProxyTesting]"
+  },
+  "deadProxySaved": {
+    "message": "[TODO:deadProxySaved]"
+  },
+  "deadProxyInvalid": {
+    "message": "[TODO:deadProxyInvalid]"
+  },
+  "deadProxyUnreachable": {
+    "message": "[TODO:deadProxyUnreachable]"
+  },
+  "deadProxyDenied": {
+    "message": "[TODO:deadProxyDenied]"
+  },
+  "deadProxyControlled": {
+    "message": "[TODO:deadProxyControlled]"
+  },
+  "deadProxyUnavailable": {
+    "message": "[TODO:deadProxyUnavailable]"
+  },
+  "deadProxyNudge": {
+    "message": "[TODO:deadProxyNudge]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "[TODO:deadProxyTemplateChip]"
+  },
+  "deadSummary": {
+    "message": "[TODO:deadSummary]",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadRescan": {
     "message": "Повторно скенирај"
   },
@@ -541,6 +613,18 @@
   },
   "optionDeadProxy": {
     "message": "Шаблон за прокси за мртви врски"
+  },
+  "optionDeadProxyServer": {
+    "message": "[TODO:optionDeadProxyServer]"
+  },
+  "deadProxyServerHint": {
+    "message": "[TODO:deadProxyServerHint]"
+  },
+  "deadProxyClear": {
+    "message": "[TODO:deadProxyClear]"
+  },
+  "deadProxyNone": {
+    "message": "[TODO:deadProxyNone]"
   },
   "optionDeadScanConcurrency": {
     "message": "Истовременост при скенирање на мртви врски (1-16)"

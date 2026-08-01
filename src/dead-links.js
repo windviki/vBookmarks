@@ -14,7 +14,9 @@
  *     (TypeError) or timeout (AbortError).
  *
  * checkUrlDual (v4 task-2 §5.5b) wraps checkUrl with the two-channel
- * direct/proxy decision matrix (ok / dead / blocked / skipped).
+ * direct/proxy decision matrix (ok / dead / blocked / skipped). The second
+ * channel is either the user's own proxy server (marker-PAC routing, see
+ * dead-proxy.js) or a legacy relay template.
  *
  * scanBookmarks runs checkUrl over a flat [{ id, title, url }] list through
  * a concurrency pool (default 4 in flight), reports onProgress(done, total)
@@ -37,6 +39,8 @@
  * fired per settled check, before onProgress — so the view can render
  * dead/blocked rows incrementally instead of waiting for the full Map.
  */
+
+import { addProxyMarker } from './dead-proxy.js';
 
 const HTTP_URL = /^https?:\/\//i;
 // HEAD responses that mean "method refused", not "bookmark dead".
@@ -66,11 +70,12 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
 };
 
 // v4 task-2 §5.5b: two-channel probing. The direct fetch runs first; when
-// it fails and a `deadProxyTemplate` is configured, the proxy channel gets
-// its say — a relay service that fetches the target server-side (the
-// template's `{url}` placeholder receives the encoded bookmark URL; the
-// relay's own 2xx/3xx means "target reachable through the relay"). The
-// decision matrix:
+// it fails, a second channel gets its say — either the user's own proxy
+// server (`proxyServer: true`, routed via the marker-PAC session the dead
+// view installs around the scan; see dead-proxy.js) or a legacy relay
+// service (`proxyTemplate`, whose `{url}` placeholder receives the encoded
+// bookmark URL; the relay's own 2xx/3xx means "target reachable through the
+// relay"). The proxy server wins when both exist. The decision matrix:
 //   direct ok                      → ok
 //   direct fail, no proxy          → dead
 //   direct fail, proxy reachable   → blocked (region/ISP-limited, not dead)
@@ -78,15 +83,17 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
 //   non-http(s)                    → skipped
 // `blocked` rows carry ok:false — they surface in the dead view (the user
 // decides) but get the amber badge, not the dead ×.
-export const checkUrlDual = (url, { proxyTemplate = '', timeoutMs = 8000, signal } = {}) => {
+export const checkUrlDual = (url, { proxyTemplate = '', proxyServer = false, timeoutMs = 8000, signal } = {}) => {
     if (!HTTP_URL.test(url || ''))
         return Promise.resolve({ status: 'skipped', ok: true });
     return checkUrl(url, { timeoutMs, signal }).then(direct => {
         if (direct.ok)
             return { status: 'ok', ok: true, code: direct.status, direct };
-        if (!proxyTemplate)
+        const proxied = proxyServer ? addProxyMarker(url)
+            : proxyTemplate ? proxyTemplate.replace('{url}', encodeURIComponent(url))
+            : '';
+        if (!proxied)
             return { status: 'dead', ok: false, code: direct.status, error: direct.error, direct };
-        const proxied = proxyTemplate.replace('{url}', encodeURIComponent(url));
         return checkUrl(proxied, { timeoutMs, signal }).then(proxy =>
             proxy.ok
                 ? { status: 'blocked', ok: false, code: direct.status, error: direct.error, direct, proxy }

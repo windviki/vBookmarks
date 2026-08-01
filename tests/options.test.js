@@ -364,6 +364,33 @@ describe('options.js dead-scan clamps + reset', () => {
         });
     });
 
+    describe('proxy server row (dead-proxy.js)', () => {
+        it('shows "(not set)" with the clear button disabled when nothing is saved', async () => {
+            const sb = createSandbox({});
+            await sb.start();
+            expect(sb.elements['dead-proxy-server-value'].textContent).toBe('deadProxyNone');
+            expect(sb.elements['dead-proxy-server-clear'].disabled).toBe(true);
+            expect(sb.elements['option-dead-proxy-server'].innerText).toBe('optionDeadProxyServer');
+            expect(sb.elements['dead-proxy-server-clear'].innerText).toBe('deadProxyClear');
+            expect(sb.elements['dead-proxy-server-hint'].innerText).toBe('deadProxyServerHint');
+        });
+
+        it('shows the saved server and the clear button removes it', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { deadProxyServer: 'http://127.0.0.1:7890' }
+            });
+            await sb.start();
+            expect(sb.elements['dead-proxy-server-value'].textContent).toBe('http://127.0.0.1:7890');
+            expect(sb.elements['dead-proxy-server-clear'].disabled).toBe(false);
+            await sb.elements['dead-proxy-server-clear'].fire('click');
+            for (let i = 0; i < 10; i++)
+                await new Promise(r => setTimeout(r, 0));
+            expect('deadProxyServer' in sb.localData).toBe(false);
+            expect(sb.elements['dead-proxy-server-value'].textContent).toBe('deadProxyNone');
+            expect(sb.elements['dead-proxy-server-clear'].disabled).toBe(true);
+        });
+    });
+
     describe('reset button', () => {
         it('wipes local + sync storage, alerts and reloads', async () => {
             const sb = createSandbox({

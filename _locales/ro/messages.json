@@ -225,6 +225,78 @@
   "deadProxyHint": {
     "message": "URL-urile marcajelor sunt trimise către acest serviciu terț. Lăsați gol pentru a sonda doar direct."
   },
+  "deadProxyAdd": {
+    "message": "[TODO:deadProxyAdd]"
+  },
+  "deadProxyLabel": {
+    "message": "[TODO:deadProxyLabel]",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "[TODO:deadProxyChange]"
+  },
+  "deadProxyRemove": {
+    "message": "[TODO:deadProxyRemove]"
+  },
+  "deadProxyRemoved": {
+    "message": "[TODO:deadProxyRemoved]"
+  },
+  "deadProxyPanelHint": {
+    "message": "[TODO:deadProxyPanelHint]"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "[TODO:deadProxyTestUrlLabel]"
+  },
+  "deadProxyTestSave": {
+    "message": "[TODO:deadProxyTestSave]"
+  },
+  "deadProxyTesting": {
+    "message": "[TODO:deadProxyTesting]"
+  },
+  "deadProxySaved": {
+    "message": "[TODO:deadProxySaved]"
+  },
+  "deadProxyInvalid": {
+    "message": "[TODO:deadProxyInvalid]"
+  },
+  "deadProxyUnreachable": {
+    "message": "[TODO:deadProxyUnreachable]"
+  },
+  "deadProxyDenied": {
+    "message": "[TODO:deadProxyDenied]"
+  },
+  "deadProxyControlled": {
+    "message": "[TODO:deadProxyControlled]"
+  },
+  "deadProxyUnavailable": {
+    "message": "[TODO:deadProxyUnavailable]"
+  },
+  "deadProxyNudge": {
+    "message": "[TODO:deadProxyNudge]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "[TODO:deadProxyTemplateChip]"
+  },
+  "deadSummary": {
+    "message": "[TODO:deadSummary]",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadRescan": {
     "message": "Re-verificare"
   },
@@ -542,6 +614,18 @@
   },
   "optionDeadProxy": {
     "message": "Șablon proxy pentru linkuri moarte"
+  },
+  "optionDeadProxyServer": {
+    "message": "[TODO:optionDeadProxyServer]"
+  },
+  "deadProxyServerHint": {
+    "message": "[TODO:deadProxyServerHint]"
+  },
+  "deadProxyClear": {
+    "message": "[TODO:deadProxyClear]"
+  },
+  "deadProxyNone": {
+    "message": "[TODO:deadProxyNone]"
   },
   "optionDeadScanConcurrency": {
     "message": "Concurență scanare linkuri moarte (1-16)"

@@ -822,6 +822,78 @@
   "deadProxyHint": {
     "message": "书签 URL 会发送给该第三方服务。留空则仅直连探测。"
   },
+  "deadProxyAdd": {
+    "message": "添加代理服务器用于死链检测"
+  },
+  "deadProxyLabel": {
+    "message": "代理：$server$",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "更换"
+  },
+  "deadProxyRemove": {
+    "message": "移除"
+  },
+  "deadProxyRemoved": {
+    "message": "已移除代理服务器"
+  },
+  "deadProxyPanelHint": {
+    "message": "输入你已有的代理服务器地址（扩展本身不提供代理），如 127.0.0.1:7890 或 socks5://127.0.0.1:1080。"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "测试 URL"
+  },
+  "deadProxyTestSave": {
+    "message": "测试并保存"
+  },
+  "deadProxyTesting": {
+    "message": "正在测试…"
+  },
+  "deadProxySaved": {
+    "message": "代理已保存——之后的扫描会用它复核直连失败的书签"
+  },
+  "deadProxyInvalid": {
+    "message": "代理地址无效——请使用 host:port 或 scheme://host:port（支持 http/https/socks5，不支持账号密码）"
+  },
+  "deadProxyUnreachable": {
+    "message": "代理不可达，未保存"
+  },
+  "deadProxyDenied": {
+    "message": "未授予代理权限"
+  },
+  "deadProxyControlled": {
+    "message": "代理设置正由其他扩展管理，无法使用"
+  },
+  "deadProxyUnavailable": {
+    "message": "当前浏览器不支持代理接口"
+  },
+  "deadProxyNudge": {
+    "message": "$count$ 个书签直连失败——配置代理可区分真正的死链与区域受限",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "中转模板（在选项页配置）"
+  },
+  "deadSummary": {
+    "message": "死链 $dead$ · 受限 $blocked$",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadStartHint": {
     "message": "开始扫描 $n$ 个书签",
     "placeholders": {
@@ -930,6 +1002,18 @@
   },
   "optionDeadProxy": {
     "message": "死链探测中转模板"
+  },
+  "optionDeadProxyServer": {
+    "message": "死链检测代理服务器"
+  },
+  "deadProxyServerHint": {
+    "message": "在死链视图中添加并测试代理；保存后每次扫描都会用它复核直连失败的书签。"
+  },
+  "deadProxyClear": {
+    "message": "清除"
+  },
+  "deadProxyNone": {
+    "message": "（未设置）"
   },
   "optionDeadScanConcurrency": {
     "message": "死链扫描并发数（1-16）"

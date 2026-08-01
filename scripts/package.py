@@ -57,6 +57,7 @@ JS_FILES = [
     'src/palette.js',
     'src/dupes.js',
     'src/dead-links.js',
+    'src/dead-proxy.js',
     'src/session.js',
     'src/undo.js',
     'src/icons.js',

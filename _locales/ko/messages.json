@@ -225,6 +225,78 @@
   "deadProxyHint": {
     "message": "북마크 URL이 이 타사 서비스로 전송됩니다. 비워두면 직접 확인만 수행합니다."
   },
+  "deadProxyAdd": {
+    "message": "[TODO:deadProxyAdd]"
+  },
+  "deadProxyLabel": {
+    "message": "[TODO:deadProxyLabel]",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "[TODO:deadProxyChange]"
+  },
+  "deadProxyRemove": {
+    "message": "[TODO:deadProxyRemove]"
+  },
+  "deadProxyRemoved": {
+    "message": "[TODO:deadProxyRemoved]"
+  },
+  "deadProxyPanelHint": {
+    "message": "[TODO:deadProxyPanelHint]"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "[TODO:deadProxyTestUrlLabel]"
+  },
+  "deadProxyTestSave": {
+    "message": "[TODO:deadProxyTestSave]"
+  },
+  "deadProxyTesting": {
+    "message": "[TODO:deadProxyTesting]"
+  },
+  "deadProxySaved": {
+    "message": "[TODO:deadProxySaved]"
+  },
+  "deadProxyInvalid": {
+    "message": "[TODO:deadProxyInvalid]"
+  },
+  "deadProxyUnreachable": {
+    "message": "[TODO:deadProxyUnreachable]"
+  },
+  "deadProxyDenied": {
+    "message": "[TODO:deadProxyDenied]"
+  },
+  "deadProxyControlled": {
+    "message": "[TODO:deadProxyControlled]"
+  },
+  "deadProxyUnavailable": {
+    "message": "[TODO:deadProxyUnavailable]"
+  },
+  "deadProxyNudge": {
+    "message": "[TODO:deadProxyNudge]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "[TODO:deadProxyTemplateChip]"
+  },
+  "deadSummary": {
+    "message": "[TODO:deadSummary]",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadRescan": {
     "message": "다시 검색"
   },
@@ -542,6 +614,18 @@
   },
   "optionDeadProxy": {
     "message": "데드 링크 프록시 템플릿"
+  },
+  "optionDeadProxyServer": {
+    "message": "[TODO:optionDeadProxyServer]"
+  },
+  "deadProxyServerHint": {
+    "message": "[TODO:deadProxyServerHint]"
+  },
+  "deadProxyClear": {
+    "message": "[TODO:deadProxyClear]"
+  },
+  "deadProxyNone": {
+    "message": "[TODO:deadProxyNone]"
   },
   "optionDeadScanConcurrency": {
     "message": "데드 링크 스캔 동시 실행 수 (1-16)"

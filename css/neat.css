@@ -2537,6 +2537,84 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-fg-selected);
 }
 
+.dead-toolbar .dead-summary {
+    white-space: nowrap;
+    color: var(--vbm-fg);
+}
+
+/* Proxy strip (dead-proxy.js): the quick add/manage row above the scan
+   toolbar — same compact flex recipe as .dead-toolbar, token-driven. */
+.dead-proxy-strip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--vbm-border);
+    font-size: 11px;
+    color: var(--vbm-muted);
+    flex-wrap: wrap;
+}
+
+.dead-proxy-strip .dead-proxy-chip {
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    padding: 0 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
+.dead-proxy-strip .dead-proxy-chip.template {
+    border-style: dashed;
+}
+
+.dead-proxy-strip .dead-proxy-hint,
+.dead-proxy-strip .dead-proxy-error,
+.dead-proxy-strip .dead-proxy-nudge {
+    flex-basis: 100%;
+}
+
+.dead-proxy-strip .dead-proxy-error {
+    color: var(--vbm-danger);
+}
+
+.dead-proxy-strip .dead-proxy-nudge {
+    color: var(--vbm-warning);
+}
+
+.dead-proxy-strip input[type="text"] {
+    flex: 1;
+    min-width: 120px;
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    font-size: 11px;
+    padding: 2px 6px;
+}
+
+.dead-proxy-strip button {
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 1px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dead-proxy-strip button:hover {
+    background: var(--vbm-bg-hover);
+}
+
+.dead-proxy-strip button:disabled {
+    color: var(--vbm-muted);
+    cursor: default;
+    background: transparent;
+}
+
 /* Executable empty state (§3.5): the start row is clickable/focusable. */
 #dead-list ul li.dead-start {
     cursor: pointer;

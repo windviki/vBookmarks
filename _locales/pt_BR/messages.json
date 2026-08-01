@@ -224,6 +224,78 @@
   "deadProxyHint": {
     "message": "As URLs dos favoritos são enviadas a este serviço terceiro. Deixe vazio para testar apenas diretamente."
   },
+  "deadProxyAdd": {
+    "message": "[TODO:deadProxyAdd]"
+  },
+  "deadProxyLabel": {
+    "message": "[TODO:deadProxyLabel]",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "[TODO:deadProxyChange]"
+  },
+  "deadProxyRemove": {
+    "message": "[TODO:deadProxyRemove]"
+  },
+  "deadProxyRemoved": {
+    "message": "[TODO:deadProxyRemoved]"
+  },
+  "deadProxyPanelHint": {
+    "message": "[TODO:deadProxyPanelHint]"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "[TODO:deadProxyTestUrlLabel]"
+  },
+  "deadProxyTestSave": {
+    "message": "[TODO:deadProxyTestSave]"
+  },
+  "deadProxyTesting": {
+    "message": "[TODO:deadProxyTesting]"
+  },
+  "deadProxySaved": {
+    "message": "[TODO:deadProxySaved]"
+  },
+  "deadProxyInvalid": {
+    "message": "[TODO:deadProxyInvalid]"
+  },
+  "deadProxyUnreachable": {
+    "message": "[TODO:deadProxyUnreachable]"
+  },
+  "deadProxyDenied": {
+    "message": "[TODO:deadProxyDenied]"
+  },
+  "deadProxyControlled": {
+    "message": "[TODO:deadProxyControlled]"
+  },
+  "deadProxyUnavailable": {
+    "message": "[TODO:deadProxyUnavailable]"
+  },
+  "deadProxyNudge": {
+    "message": "[TODO:deadProxyNudge]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "[TODO:deadProxyTemplateChip]"
+  },
+  "deadSummary": {
+    "message": "[TODO:deadSummary]",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadRescan": {
     "message": "Reexaminar"
   },
@@ -539,6 +611,18 @@
   },
   "optionDeadProxy": {
     "message": "Modelo de proxy para links mortos"
+  },
+  "optionDeadProxyServer": {
+    "message": "[TODO:optionDeadProxyServer]"
+  },
+  "deadProxyServerHint": {
+    "message": "[TODO:deadProxyServerHint]"
+  },
+  "deadProxyClear": {
+    "message": "[TODO:deadProxyClear]"
+  },
+  "deadProxyNone": {
+    "message": "[TODO:deadProxyNone]"
   },
   "optionDeadScanConcurrency": {
     "message": "Simultaneidade de verificação de links mortos (1-16)"

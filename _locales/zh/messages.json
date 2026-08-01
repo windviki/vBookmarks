@@ -225,6 +225,78 @@
   "deadProxyHint": {
     "message": "书签URL将发送至第三方服务。留空则仅直接探测。"
   },
+  "deadProxyAdd": {
+    "message": "[TODO:deadProxyAdd]"
+  },
+  "deadProxyLabel": {
+    "message": "[TODO:deadProxyLabel]",
+    "placeholders": {
+      "server": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyChange": {
+    "message": "[TODO:deadProxyChange]"
+  },
+  "deadProxyRemove": {
+    "message": "[TODO:deadProxyRemove]"
+  },
+  "deadProxyRemoved": {
+    "message": "[TODO:deadProxyRemoved]"
+  },
+  "deadProxyPanelHint": {
+    "message": "[TODO:deadProxyPanelHint]"
+  },
+  "deadProxyTestUrlLabel": {
+    "message": "[TODO:deadProxyTestUrlLabel]"
+  },
+  "deadProxyTestSave": {
+    "message": "[TODO:deadProxyTestSave]"
+  },
+  "deadProxyTesting": {
+    "message": "[TODO:deadProxyTesting]"
+  },
+  "deadProxySaved": {
+    "message": "[TODO:deadProxySaved]"
+  },
+  "deadProxyInvalid": {
+    "message": "[TODO:deadProxyInvalid]"
+  },
+  "deadProxyUnreachable": {
+    "message": "[TODO:deadProxyUnreachable]"
+  },
+  "deadProxyDenied": {
+    "message": "[TODO:deadProxyDenied]"
+  },
+  "deadProxyControlled": {
+    "message": "[TODO:deadProxyControlled]"
+  },
+  "deadProxyUnavailable": {
+    "message": "[TODO:deadProxyUnavailable]"
+  },
+  "deadProxyNudge": {
+    "message": "[TODO:deadProxyNudge]",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deadProxyTemplateChip": {
+    "message": "[TODO:deadProxyTemplateChip]"
+  },
+  "deadSummary": {
+    "message": "[TODO:deadSummary]",
+    "placeholders": {
+      "dead": {
+        "content": "$1"
+      },
+      "blocked": {
+        "content": "$2"
+      }
+    }
+  },
   "deadRescan": {
     "message": "重新扫描"
   },
@@ -542,6 +614,18 @@
   },
   "optionDeadProxy": {
     "message": "死链代理模板"
+  },
+  "optionDeadProxyServer": {
+    "message": "[TODO:optionDeadProxyServer]"
+  },
+  "deadProxyServerHint": {
+    "message": "[TODO:deadProxyServerHint]"
+  },
+  "deadProxyClear": {
+    "message": "[TODO:deadProxyClear]"
+  },
+  "deadProxyNone": {
+    "message": "[TODO:deadProxyNone]"
   },
   "optionDeadScanConcurrency": {
     "message": "死链扫描并发数 (1-16)"

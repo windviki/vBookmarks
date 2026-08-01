@@ -14,6 +14,22 @@ createSyncEngine().start();
 // external links) into the same visitStats dataset the page side writes.
 createVisitStatsCollector().start();
 
+// --- Dead-scan proxy sweep (dead-proxy.js) ----------------------------------
+// The popup tears down its marker-PAC on every scan exit (settle/cancel/
+// pagehide), but a popup crash mid-scan would leave it installed. The PAC
+// only proxies marker-tagged probe URLs (everything else resolves DIRECT),
+// so residue is benign — still, sweep it whenever no live scan marker
+// exists. chrome.proxy only exists once the optional `proxy` permission was
+// granted, hence the namespace guard; settings.clear removes only what THIS
+// extension set.
+if (chrome.proxy && chrome.proxy.settings && chrome.storage && chrome.storage.session) {
+    chrome.storage.session.get('vbmProxySession', data => {
+        if (data && data.vbmProxySession)
+            return; // a scan is live right now — its PAC is legitimate
+        chrome.proxy.settings.clear({ scope: 'regular' }, () => void chrome.runtime.lastError);
+    });
+}
+
 (() => {
     if (chrome.omnibox) {
         const setSuggest = description => {

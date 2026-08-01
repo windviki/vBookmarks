@@ -13,12 +13,33 @@
  * with no cache the empty state is the executable deadStartHint row
  * (Enter/click starts the scan).
  *
- * §5.5b dual channel: every URL goes through dead-links.js's checkUrlDual
- * with the configured `deadProxyTemplate` (empty = direct only) — direct
- * failure + proxy reachability means `blocked` (region-limited, not dead),
- * rendered with the amber badge; both channels failing confirms `dead`.
- * `deadScanConcurrency` (default 4) and `deadScanTimeout` (default 8s) tune
- * the pool.
+ * §5.5b dual channel: every URL goes through dead-links.js's checkUrlDual —
+ * direct failure + proxy reachability means `blocked` (region-limited, not
+ * dead), rendered with the amber badge; both channels failing confirms
+ * `dead`. The second channel is the user's own proxy server when
+ * `deadProxyServer` is set (marker-PAC session, see dead-proxy.js: the scan
+ * installs a PAC routing only marker-tagged probe URLs through the proxy,
+ * so direct and proxied checks run concurrently and no other tab's traffic
+ * is touched), else the legacy `deadProxyTemplate` relay (empty = direct
+ * only). `deadScanConcurrency` (default 4) and `deadScanTimeout` (default
+ * 8s) tune the pool.
+ *
+ * Proxy strip (post-v4): a `.dead-proxy-strip` row above the toolbar gives
+ * one-click proxy management — no server: an add button (plus a nudge when
+ * a finished scan has direct-failing rows and no proxy at all); a saved
+ * server: a chip + change/remove. The inline add panel validates the
+ * address, requests the optional `proxy` permission inside the click
+ * gesture (Chrome's native confirmation, the stats view's history
+ * pattern), refuses servers another extension controls, probes
+ * reachability and persists ONLY a reachable one (`deadProxyServer`, the
+ * same key the options page displays/clears). Scan start installs the PAC
+ * session through the permission/controllability gate (failures degrade to
+ * direct+template and are remembered on the chip); settle/cancel/pagehide
+ * all tear it down, and a `vbmProxySession` storage.session marker lets
+ * the service worker sweep crash residue. The strip's controls disable
+ * mid-scan so the test never clobbers a live session; Esc closes the panel
+ * before the selection/scan layers. The idle toolbar also quantifies the
+ * result set (dead N · blocked M) ahead of the filter segments.
  *
  * §5.5c marks: `deadMarks` (id array) toggle per row (⚑ button / M key);
  * every list (tree / search results / recent / stats / dupes) overlays a
@@ -67,7 +88,7 @@
  *
  * initViewDead(ctx) is called once by neat.js after treeView init.
  * ctx.store            — settings mirror (deadMarks/deadLastScan/deadProxyTemplate/
- *                        deadScanConcurrency/deadScanTimeout/showDeadView)
+ *                        deadProxyServer/deadScanConcurrency/deadScanTimeout/showDeadView)
  * ctx.views            — view-manager API (register/isActive/pathOf)
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering (separators are http(s),
@@ -82,6 +103,7 @@
  */
 
 import { checkUrlDual, startPausableScan, filterScannable, collectDead, statusLabel } from './dead-links.js';
+import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, startProxySession, endProxySession, testProxyReachable } from './dead-proxy.js';
 import { VIEW_ICONS } from './icons.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -115,6 +137,7 @@ export function initViewDead(ctx = {}) {
     // `scan` non-null covers scanning+paused (scan.isPaused() splits them);
     // cancelling is scan→null inside cancelScan before the promise settles.
     let scan = null;        // live startPausableScan session
+    let scanStarting = false; // getTree + proxy-gate window before `scan` exists
     let scanProgress = 0;   // settled checks of the running scan
     let scanTotal = 0;      // item count of the running scan
     let scanItems = [];     // scan order (= tree order) for progressive rows
@@ -128,6 +151,23 @@ export function initViewDead(ctx = {}) {
     // are bookmark ids, pruned at render against rows that still exist.
     let selecting = false;
     const selected = new Set();
+
+    // Real-proxy support (dead-proxy.js): the quick add/manage strip above
+    // the scan toolbar. proxyPanelOpen toggles the inline add panel;
+    // proxyInput/proxyTestUrl mirror the panel's fields across re-renders
+    // (the innerHTML swap would otherwise eat them); proxyBusy locks the
+    // panel while the permission/test chain runs; proxyError is the panel's
+    // failure line; proxyGateError records WHY the last scan could not use
+    // the configured server (permission denied / another extension owns the
+    // proxy settings) so the chip can surface it.
+    let proxyPanelOpen = false;
+    let proxyInput = '';
+    let proxyTestUrl = DEFAULT_PROXY_TEST_URL;
+    let proxyBusy = false;
+    let proxyError = '';
+    let proxyGateError = '';     // '' | i18n key
+    let proxyTestGen = 0;        // stale-test guard: bumped on open/close
+    let proxySessionActive = false; // this popup installed the marker-PAC
 
     const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
@@ -151,9 +191,14 @@ export function initViewDead(ctx = {}) {
 
     const scanSettings = () => ({
         proxyTemplate: store.get('deadProxyTemplate', '') || '',
+        proxyServer: proxyServerSetting(),
         concurrency: Math.min(16, Math.max(1, parseInt(store.get('deadScanConcurrency', '4'), 10) || 4)),
         timeoutMs: Math.min(30, Math.max(2, parseInt(store.get('deadScanTimeout', '8'), 10) || 8)) * 1000
     });
+
+    // The configured real proxy server (dead-proxy.js), canonical
+    // 'scheme://host:port' in storage; null when unset/invalid.
+    const proxyServerSetting = () => parseProxyServer(store.get('deadProxyServer', '') || '');
 
     const flattenTree = tree => {
         const items = [];
@@ -225,6 +270,44 @@ export function initViewDead(ctx = {}) {
         return rows;
     };
 
+    // --- Proxy strip (dead-proxy.js quick add/manage) -------------------------
+    // Sits above the scan toolbar in every state (idle/scanning/selecting);
+    // its controls disable mid-scan so a reachability test can never clobber
+    // the running scan's PAC session. Carries .vbm-toolbar so keyboard.js's
+    // Tab cycle picks the controls up like the main toolbar's.
+    const renderProxyStrip = () => {
+        const server = proxyServerSetting();
+        const template = store.get('deadProxyTemplate', '') || '';
+        let html = '<div class="dead-proxy-strip vbm-toolbar">';
+        if (proxyPanelOpen) {
+            html += `<span class="dead-proxy-hint">${_m('deadProxyPanelHint')}</span>` +
+                `<input type="text" class="dead-proxy-input" value="${htmlspecialchars(proxyInput)}" ` +
+                `placeholder="127.0.0.1:7890" spellcheck="false" aria-label="${_m('deadProxyAdd')}"${proxyBusy ? ' disabled' : ''}>` +
+                `<input type="text" class="dead-proxy-testurl" value="${htmlspecialchars(proxyTestUrl)}" ` +
+                `spellcheck="false" aria-label="${_m('deadProxyTestUrlLabel')}" title="${_m('deadProxyTestUrlLabel')}"${proxyBusy ? ' disabled' : ''}>` +
+                `<button class="dead-proxy-save"${proxyBusy ? ' disabled' : ''}>${_m(proxyBusy ? 'deadProxyTesting' : 'deadProxyTestSave')}</button>` +
+                `<button class="dead-proxy-cancel"${proxyBusy ? ' disabled' : ''}>${_m('deadCancel')}</button>` +
+                (proxyError ? `<span class="dead-proxy-error">${proxyError}</span>` : '');
+        } else if (server) {
+            html += `<span class="dead-proxy-chip">${_m('deadProxyLabel', htmlspecialchars(formatProxyServer(server)))}</span>` +
+                (proxyGateError ? `<span class="dead-proxy-error">${_m(proxyGateError)}</span>` : '') +
+                `<button class="dead-proxy-change"${scan ? ' disabled' : ''}>${_m('deadProxyChange')}</button>` +
+                `<button class="dead-proxy-remove"${scan ? ' disabled' : ''}>${_m('deadProxyRemove')}</button>`;
+        } else {
+            if (template)
+                html += `<span class="dead-proxy-chip template">${_m('deadProxyTemplateChip')}</span>`;
+            html += `<button class="dead-proxy-add"${scan ? ' disabled' : ''}>${_m('deadProxyAdd')}</button>`;
+            // The nudge ties the original dual-channel design to the quick
+            // button: direct-failing rows may be region-blocks, not dead.
+            const deadN = !scan && !template && lastScan
+                ? allResultRows().filter(r => r.result.status === 'dead').length
+                : 0;
+            if (deadN)
+                html += `<span class="dead-proxy-nudge">${_m('deadProxyNudge', `${deadN}`)}</span>`;
+        }
+        return html + '</div>';
+    };
+
     // --- Rendering --------------------------------------------------------------
     const renderToolbar = () => {
         // vbm-toolbar: keyboard.js's Tab cycle picks the controls up as
@@ -262,6 +345,11 @@ export function initViewDead(ctx = {}) {
             }
             const rows = allResultRows();
             if (lastScan && rows.length) {
+                // Quantify the two situations up front (死链 vs 区域受限) so
+                // the filter segments below read as batch-workspace scopes,
+                // not mysteries.
+                const deadN = rows.filter(r => r.result.status === 'dead').length;
+                html += `<span class="dead-summary">${_m('deadSummary', [`${deadN}`, `${rows.length - deadN}`])}</span>`;
                 html += '<span class="dead-filter" role="group">';
                 for (const [value, key] of [['all', 'deadFilterAll'], ['dead', 'deadFilterDead'], ['blocked', 'deadFilterBlocked']])
                     html += `<button class="dead-filter-btn${filter === value ? ' active' : ''}" data-filter="${value}">${_m(key)}</button>`;
@@ -345,7 +433,7 @@ export function initViewDead(ctx = {}) {
                 if (!alive.has(id))
                     selected.delete(id);
         }
-        let html = renderToolbar();
+        let html = renderProxyStrip() + renderToolbar();
         if (scan) {
             // Item 10: progressive rendering — settled dead/blocked checks
             // are already rows while the scan keeps running.
@@ -486,10 +574,141 @@ export function initViewDead(ctx = {}) {
         render();
     };
 
+    // --- Proxy panel + session (dead-proxy.js) --------------------------------
+    // The panel opens empty (add) or prefilled (change); input events keep
+    // proxyInput/proxyTestUrl in sync WITHOUT re-rendering — an innerHTML
+    // swap per keystroke would destroy focus and selection.
+    const openProxyPanel = prefill => {
+        proxyPanelOpen = true;
+        proxyBusy = false;
+        proxyError = '';
+        proxyInput = prefill || '';
+        proxyTestUrl = DEFAULT_PROXY_TEST_URL;
+        proxyTestGen++;
+        render();
+        const input = typeof $list.querySelector === 'function' ? $list.querySelector('.dead-proxy-input') : null;
+        if (input && input.focus)
+            input.focus();
+    };
+
+    const closeProxyPanel = () => {
+        if (!proxyPanelOpen)
+            return;
+        proxyPanelOpen = false;
+        proxyBusy = false;
+        proxyError = '';
+        proxyTestGen++; // a test still in flight must no longer save
+        render();
+    };
+
+    const removeProxy = () => {
+        store.remove('deadProxyServer');
+        proxyGateError = '';
+        undo.showToast(_m('deadProxyRemoved'));
+        render();
+    };
+
+    // Test & save: parse → permission (the click's user gesture carries
+    // Chrome's native confirmation, same contract as the stats view's
+    // history Enable link) → controllability → reachability. Only a
+    // REACHABLE server is persisted (to the same store key the options page
+    // displays); every failure keeps the panel open with its reason.
+    const saveProxy = () => {
+        const server = parseProxyServer(proxyInput);
+        if (!server) {
+            proxyError = _m('deadProxyInvalid');
+            render();
+            return;
+        }
+        const gen = ++proxyTestGen;
+        proxyBusy = true;
+        proxyError = '';
+        render();
+        const fail = key => {
+            if (gen !== proxyTestGen)
+                return; // panel closed/reopened mid-flight — drop the result
+            proxyBusy = false;
+            proxyError = _m(key);
+            render();
+        };
+        requestProxyPermission().then(granted => {
+            if (gen !== proxyTestGen)
+                return;
+            if (!granted)
+                return fail('deadProxyDenied');
+            return proxyControllable().then(control => {
+                if (gen !== proxyTestGen)
+                    return;
+                if (control !== 'ok')
+                    return fail(control === 'other-extension' ? 'deadProxyControlled' : 'deadProxyUnavailable');
+                const testUrl = (proxyTestUrl || '').trim() || DEFAULT_PROXY_TEST_URL;
+                return testProxyReachable(server, { testUrl, timeoutMs: scanSettings().timeoutMs }).then(reachable => {
+                    if (gen !== proxyTestGen)
+                        return;
+                    if (!reachable)
+                        return fail('deadProxyUnreachable');
+                    store.set('deadProxyServer', formatProxyServer(server));
+                    proxyPanelOpen = false;
+                    proxyBusy = false;
+                    proxyGateError = '';
+                    undo.showToast(_m('deadProxySaved'));
+                    render();
+                });
+            });
+        });
+    };
+
+    // Marker-PAC session for a scan: permission → controllability → install.
+    // Resolves true only with the PAC live; a failure is remembered in
+    // proxyGateError (the chip shows it) and the scan degrades to
+    // direct(+template)-only instead of failing.
+    const startScanProxy = server =>
+        proxyPermission().then(have => {
+            if (!have) {
+                proxyGateError = 'deadProxyDenied';
+                return false;
+            }
+            return proxyControllable().then(control => {
+                if (control !== 'ok') {
+                    proxyGateError = control === 'other-extension' ? 'deadProxyControlled' : 'deadProxyUnavailable';
+                    return false;
+                }
+                return startProxySession(server).then(started => {
+                    if (!started) {
+                        proxyGateError = 'deadProxyControlled';
+                        return false;
+                    }
+                    proxyGateError = '';
+                    proxySessionActive = true;
+                    // Crash-residue marker: the SW sweeps a leftover PAC when
+                    // no live session marker exists (src/background.js).
+                    if (chrome.storage && chrome.storage.session)
+                        chrome.storage.session.set({ vbmProxySession: Date.now() });
+                    return true;
+                });
+            });
+        });
+
+    // Every scan exit path (settle / cancel / pagehide) funnels here — the
+    // PAC must not outlive its scan (clear() removes only OUR settings, so
+    // this is also safe when something else took control in between).
+    const stopProxySession = () => {
+        if (!proxySessionActive)
+            return;
+        proxySessionActive = false;
+        endProxySession();
+        if (chrome.storage && chrome.storage.session)
+            chrome.storage.session.remove('vbmProxySession');
+    };
+
     // --- Scan (§5.5b/§5.5d + item 10 state machine) -----------------------------
     const startScan = () => {
-        if (scan)
+        if (scan || scanStarting)
             return;
+        scanStarting = true;
+        // A scan installs its own PAC session — an open add panel's test
+        // would clobber it, so the panel goes first.
+        closeProxyPanel();
         const settings = scanSettings();
         chrome.bookmarks.getTree(tree => {
             const items = scannableItems(tree);
@@ -498,52 +717,62 @@ export function initViewDead(ctx = {}) {
             scanTotal = items.length;
             scanItems = items;
             scanResults = new Map();
-            const session = startPausableScan(items, {
-                concurrency: settings.concurrency,
-                timeoutMs: settings.timeoutMs,
-                checker: (url, o) => checkUrlDual(url, { ...o, proxyTemplate: settings.proxyTemplate }),
-                onResult: (id, result, done) => {
-                    // Progressive rendering: every settled check lands in the
-                    // partial Map and repaints at once (inactive view: the
-                    // closure keeps the state, activate() re-renders it).
-                    scanResults.set(id, result);
-                    scanProgress = done;
-                    if (views.isActive('dead'))
-                        render();
-                }
-            });
-            scan = session;
-            // render only after `scan` is set — the toolbar's progress row
-            // keys off it
-            if (views.isActive('dead'))
-                render();
-            session.promise.then(results => {
-                // Settled after cancelScan dropped the session (or a newer
-                // scan replaced it): the partial Map is discarded — cancel
-                // means "the run never happened" (item 10 semantics).
-                if (scan !== session)
-                    return;
-                scan = null;
-                scanItems = [];
-                scanResults = null;
-                const plain = {};
-                results.forEach((r, id) => {
-                    plain[id] = { status: r.status, code: r.code, error: r.error };
+            const launch = proxyActive => {
+                scanStarting = false;
+                const session = startPausableScan(items, {
+                    concurrency: settings.concurrency,
+                    timeoutMs: settings.timeoutMs,
+                    checker: (url, o) => checkUrlDual(url, { ...o, proxyTemplate: settings.proxyTemplate, proxyServer: proxyActive }),
+                    onResult: (id, result, done) => {
+                        // Progressive rendering: every settled check lands in the
+                        // partial Map and repaints at once (inactive view: the
+                        // closure keeps the state, activate() re-renders it).
+                        scanResults.set(id, result);
+                        scanProgress = done;
+                        if (views.isActive('dead'))
+                            render();
+                    }
                 });
-                lastScan = { ts: Date.now(), scannedCount: items.length, results: plain };
-                store.set('deadLastScan', JSON.stringify(lastScan));
-                // §5.5c: ids that came back healthy lose their mark
-                let pruned = false;
-                results.forEach((r, id) => {
-                    if ((r.status === 'ok' || r.status === 'skipped') && deadMarks.delete(id))
-                        pruned = true;
-                });
-                if (pruned)
-                    persistMarks();
-                refreshOverlays();
+                scan = session;
+                // render only after `scan` is set — the toolbar's progress row
+                // keys off it
                 if (views.isActive('dead'))
                     render();
-            });
+                session.promise.then(results => {
+                    // Settled after cancelScan dropped the session (or a newer
+                    // scan replaced it): the partial Map is discarded — cancel
+                    // means "the run never happened" (item 10 semantics).
+                    if (scan !== session)
+                        return;
+                    scan = null;
+                    scanItems = [];
+                    scanResults = null;
+                    stopProxySession();
+                    const plain = {};
+                    results.forEach((r, id) => {
+                        plain[id] = { status: r.status, code: r.code, error: r.error };
+                    });
+                    lastScan = { ts: Date.now(), scannedCount: items.length, results: plain };
+                    store.set('deadLastScan', JSON.stringify(lastScan));
+                    // §5.5c: ids that came back healthy lose their mark
+                    let pruned = false;
+                    results.forEach((r, id) => {
+                        if ((r.status === 'ok' || r.status === 'skipped') && deadMarks.delete(id))
+                            pruned = true;
+                    });
+                    if (pruned)
+                        persistMarks();
+                    refreshOverlays();
+                    if (views.isActive('dead'))
+                        render();
+                });
+            };
+            // The real proxy server wins over the legacy relay template when
+            // both are configured (dead-links.js applies the same priority).
+            if (settings.proxyServer)
+                startScanProxy(settings.proxyServer).then(launch);
+            else
+                launch(false);
         });
     };
 
@@ -558,6 +787,7 @@ export function initViewDead(ctx = {}) {
         scanItems = [];
         scanResults = null;
         session.cancel();
+        stopProxySession();
         if (views.isActive('dead'))
             render();
     };
@@ -616,6 +846,34 @@ export function initViewDead(ctx = {}) {
         if (closest('.dead-cancel')) {
             e.preventDefault();
             cancelScan();
+            return;
+        }
+        // --- proxy strip (dead-proxy.js) ---
+        if (closest('.dead-proxy-add')) {
+            e.preventDefault();
+            openProxyPanel('');
+            return;
+        }
+        if (closest('.dead-proxy-change')) {
+            e.preventDefault();
+            const server = proxyServerSetting();
+            openProxyPanel(server ? formatProxyServer(server) : '');
+            return;
+        }
+        if (closest('.dead-proxy-remove')) {
+            e.preventDefault();
+            removeProxy();
+            return;
+        }
+        if (closest('.dead-proxy-save')) {
+            e.preventDefault();
+            if (!proxyBusy)
+                saveProxy();
+            return;
+        }
+        if (closest('.dead-proxy-cancel')) {
+            e.preventDefault();
+            closeProxyPanel();
             return;
         }
         const filterBtn = closest('.dead-filter-btn');
@@ -719,6 +977,18 @@ export function initViewDead(ctx = {}) {
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
 
+    // Proxy panel fields: mirror into state WITHOUT re-rendering (an
+    // innerHTML swap per keystroke would destroy focus and selection).
+    $list.addEventListener('input', e => {
+        const t = e.target;
+        if (!t || !t.classList)
+            return;
+        if (t.classList.contains('dead-proxy-input'))
+            proxyInput = t.value;
+        else if (t.classList.contains('dead-proxy-testurl'))
+            proxyTestUrl = t.value;
+    });
+
     // The executable empty state runs on Enter/Space too.
     $list.addEventListener('keydown', e => {
         if (e.key !== 'Enter' && e.key !== ' ')
@@ -728,6 +998,14 @@ export function initViewDead(ctx = {}) {
             e.preventDefault();
             e.stopPropagation();
             startScan();
+            return;
+        }
+        // Enter in a proxy panel field = Test & save.
+        if (e.key === 'Enter' && proxyPanelOpen && !proxyBusy && e.target && e.target.classList &&
+            (e.target.classList.contains('dead-proxy-input') || e.target.classList.contains('dead-proxy-testurl'))) {
+            e.preventDefault();
+            e.stopPropagation();
+            saveProxy();
         }
     }, true);
 
@@ -777,6 +1055,12 @@ export function initViewDead(ctx = {}) {
         // layered Esc contract (the view consumes Esc only while it holds
         // transient state). Cancelling is the explicit toolbar Cancel.
         onEscape: () => {
+            // The proxy add panel is the most transient state — Esc closes
+            // it (and voids any in-flight test) before anything else.
+            if (proxyPanelOpen) {
+                closeProxyPanel();
+                return true;
+            }
             // v4 task-3 #4: while selecting, Esc leaves the mode (the
             // selection goes with it) — before any scan semantics.
             if (selecting) {
