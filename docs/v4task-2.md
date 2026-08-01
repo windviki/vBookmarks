@@ -641,3 +641,31 @@ v4task-3 落地后的整体抛光：通读 docs 下全部现代化计划对齐�
 **6. 测试补足**：vitest 1229→1246（+17：header-row arrows 6、focusDown 2、box → 出框 4 情形、search-box ↓ focusDown 3、dupes 组头焦点重泊 2、横幅 Tab 环 2、横幅 Esc 层 2、历史区 ↑ focusTop 1、options 分割组归属 1 等）；verify-keyboard 43→89 断言全绿（§2.2c 各视图行导航/越顶 22、§2.1d 头部行方向链 7、§4.3b 双区焦点转移含历史区两段越顶 8、§7 横幅键盘可达 8；recent 段处理焦点记忆态——strip ↓ 恢复记忆行为设计行为，断言改 Home 归位后走查）。
 
 第十轮验收：单测 1246 例 / 39 文件全绿；i18n missing=0、verify 通过（4 个菜单超长警告为历史遗留）；docker 全量 harness 通过（smoke 零控制台错误含选项页 9 组、verify-keyboard 89/89、五截图套件无错误）；打包 97 文件校验通过。
+
+## 附录 K：第十一轮——v4 抛光追加轮二（2026-08-01，九项问题修复 + 工具行方向键层级 + 命令面板收尾）
+
+**1. side panel 选项关闭后 action 不回 popup 修复**（问题 2）：根因——面板关闭时 pagehide 不保证触发，`sidePanelIsOpen:true` + 新鲜心跳在 90s 窗口内让 `readPanelLive` 误判"存活"，关选项后仍推导 toggle 模式。修复：`src/panel-behavior.js` 的 `readPanelLive` 优先用 `chrome.runtime.getContexts({contextTypes:['SIDE_PANEL']})`（Chrome 116+ 权威存活探针），无此 API 时回退原心跳路径（manifest 最低 114）。tests/panel-behavior.test.js +4 例（19/19）。
+
+**2. 去重视图视觉统一**（问题 3/4）：`.dupes-toolbar` 原生灰按钮改 accent 扁平文本按钮（镜像 `.dead-toolbar`，两个实心 accent 胶囊保持主按钮样式）；组头快速"应用"按钮（cleanGroup ×，带完整本地化 tooltip）由 hover/focus-within 才显改为**常显**——统计同步是构造保证：× → ConfirmDialog → removeSequentially → onRemoved → scheduleRefresh → regroup → renderToolbar 重算 dupesPreviewSummary/Apply-all 计数 + updateBadges。落点 `css/neat.css`。
+
+**3. 工具行成为方向链真实层级**（问题 5，keyboard-model §2.5）：
+
+| 变更 | 落点 |
+|---|---|
+| 新 API `focusToolbar()`（聚焦首个可用可见控件）/`focusListExit()`（toolbar 优先否则 focusTop）；strip keydown ArrowDown 与 `focusDown()` 先走工具行 | `src/view-manager.js` |
+| 非行分支重写：工具行内 ↓ 进记忆/首行、↑ 走 focusTop、←/→ 按阅读序走控件（RTL 镜像、边界死端、跳过 disabled）；**SELECT 的 ↑/↓ 不劫持**（原生改选项）；Home/End/Page* 落回列表自身分支；行内控件（keeper-radio、row-btn）↑/↓ 相对所在行行走，越顶走 focusListExit | `src/keyboard.js` |
+| 三视图删除各自 seg 局部 ←/→ walker（会被通用 walker 双击）；新增 `toolbarFocusIndex()/restoreToolbarFocus()`——工具行随列表重绘（排序切换、扫描进度、重新分组）时焦点原位恢复 | `src/view-stats.js`、`src/view-dead.js`、`src/view-dupes.js` |
+| 历史区 ↑ 越顶同走 focusListExit 显式分支（`(a||b)()` 会丢 this 绑定） | `src/search.js` |
+| 文档同步：keyboard-model §1/§2.1/§2.5/§7/§8 表，guide-v4 双语 §2.1 层级图与四条工具行要点、§2.2/§2.3 表格行 | `docs/` |
+
+**4. 命令面板收尾**（问题 6/7）：`updateSelection` 加 `scrollIntoView({block:'nearest'})`——↑↓ 移动焦点时可视范围跟随滚动；底部正中可见关闭按钮（含 `.palette-close-label` 与 `<kbd>Esc</kbd>`）+ 输入框右侧可点击清空 ×（search-clear 同款圆形按钮，`has-query` 门控，mousedown preventDefault 保焦点）；两按钮 `tabindex="-1"`。新 i18n 键 `paletteClose`（284 键，41 locale 经 translate --apply 补译）。落点 `src/palette.js`、`pages/popup.html`、`pages/sidepanel.html`、`css/neat.css`；palette.test.js +5 例（88/88）。
+
+**5. 统计视图最近访问条目补时间**（问题 8）：根因——宽屏(≥480px)/panel 模式 `.row-path` 被 CSS 隐藏只显 `.row-sub`，旧码没给 subText 导致时间完全消失；现每行 subText：已收藏行 `(showPath&&path) ? path·absTime : absTime`，未收藏行 `absTime`（`new Date(r.t||0).toLocaleString()`），rightText 保持 relTimeLabel。落点 `src/view-stats.js` renderHistorySection；view-stats.test.js +1 例（37/37）。
+
+**6. 搜索视图 ↑↓ 不对称确认**（问题 1）：**文档化设计行为，非 bug**——keyboard-model §3 双区例外：搜索框是搜索视图自身主控件，↓ 直进本视图内容（v3 肌肉记忆）；两区越顶 ↑ 仍走通用跨区（tab 条→搜索框）。
+
+**7. 命令面板自定义指令设计文档**（问题 9）：`docs/palette-commands-design.md`——数据模型 `paletteCustomCommands`（id/name/slash/aliases/action/useCount）；action 三层白名单（Tier 0：open-url / open-url-group（书签文件夹即 URL 组，会话快照天然可恢复）/ view-preset；Tier 1：url-template 参数化（`%s` 占位，slashRest 通道现成）/ bookmark-batch / tab-batch；Tier 2：macro + 导入导出）；内置命令保留字冲突裁决；选项页第 10 组管理 UI + 面板内"存为指令"闭环；sync 配额（100 条上限）与安全红线（仅 `https?://`，无任意脚本）；三阶段路线图。**只设计不实现**。
+
+**8. 测试补足**：vitest 1246→1262（+16：panel-behavior getContexts 4、palette 滚动跟随/关闭/清空 5、view-manager 工具行 rung 6、view-stats subText 1）；verify-keyboard 89→100 断言全绿（§2.2c stats/dead/dupes 工具行走位新断言 11 条——strip ↓→工具行首控件、→/← 走控件、工具行 ↓→首行、首行 ↑→工具行、工具行 ↑→tab、dupes select 原生 ↑/↓ 不劫持）。
+
+第十一轮验收：单测 1262 例 / 39 文件全绿；i18n 284 键 missing=0、verify 通过（4 个菜单超长警告为历史遗留）；docker harness 通过（smoke 零控制台错误、verify-keyboard 100/100、五截图套件重拍复核去重视图视觉）；打包 97 文件校验通过。

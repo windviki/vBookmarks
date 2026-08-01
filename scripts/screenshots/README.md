@@ -9,9 +9,10 @@ and runs three layers:
    options raise zero console errors; v4 behavioral assertions (rememberView
    boot, classic-experience chrome hiding, donation `#v4-notice`, palette
    wake-up paths, options groups, …).
-2. `verify-keyboard.js` (blocking) — 89 hard assertions on the tab strip's
+2. `verify-keyboard.js` (blocking) — 100 hard assertions on the tab strip's
    bubble-phase keyboard model, focus zones, the header-row arrow chain,
-   per-view ↑↓/past-top crossings, the banner's Tab-ring reachability and
+   per-view ↑↓/past-top crossings (stats/dead/dupes stop at their in-list
+   toolbar rung first), the banner's Tab-ring reachability and
    per-view rendering. Esc chains stay in vitest; see
    `docs/cdp-escape-limitation.md`.
 3. Screenshot suites into `tmp/shots/` (git-ignored).
