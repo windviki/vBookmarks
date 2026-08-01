@@ -35,9 +35,15 @@
  *     levelOfControl 'controlled_by_other_extensions' — the view reports it
  *     and the scan degrades to direct-only.
  *
- * The `proxy` permission sits in manifest's optional_permissions: the view
- * requests it with chrome.permissions.request inside the add-button's click
- * gesture, the same pattern the stats view uses for `history`.
+ * The `proxy` permission is a REQUIRED install-time permission in the
+ * manifest: Chrome refuses proxy in optional_permissions ("cannot be listed
+ * as optional"), and requesting an unlisted permission fails at runtime.
+ * The add flow therefore only VERIFIES it via chrome.permissions.contains
+ * (always true in practice) with a request fallback that never prompts
+ * while granted. Holding the permission is inert on its own — no PAC is
+ * ever installed unless the user saved a proxy server AND a scan (or the
+ * add-flow probe) is actually running; users who never configure a proxy
+ * or never open the dead view exercise zero proxy code paths.
  *
  * Pure parts (parse/marker/PAC text) are chrome-free; the chrome wrappers
  * touch chrome.* only when called, so vitest imports the module in node and

@@ -62,9 +62,10 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Dead-link view
 
-- **Dual-channel checking**: a direct fetch first; on failure, your own proxy template (e.g. a corporate gateway) gets the final say — so "down for everyone" and "just blocked here" read as different badges.
+- **Dual-channel checking**: a direct fetch first; on failure, a second channel gets the final say — so "down for everyone" and "just blocked here" read as different badges. The second channel is your **own proxy server** (http/https/socks5) added in one click from the strip above the list (reachability-tested before it is saved), or a legacy relay URL template from the options page.
+- **Proxy mechanics, honestly scoped**: checks through your proxy are routed by a temporary PAC script that matches only the scanner's own marker-tagged probe URLs — every other tab's traffic stays on its normal path, and the settings are restored the moment a scan settles, cancels or the popup closes. The `proxy` permission is declared at install time (Chrome does not allow it as an optional permission); it sits **completely unused** if you never configure a proxy server or never run a scan — no proxy code path executes otherwise.
 - **Progressive, pausable scans**: results stream in row by row; `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot.
-- Tunable concurrency (1–16) and timeout (2–30 s), a dead/blocked/all filter, and **dead marks** — flag a link once and the red ✕ follows it across the tree, search, recent and stats views.
+- Tunable concurrency (1–16) and timeout (2–30 s), a dead/blocked/all filter with a dead·blocked summary line, and **dead marks** — flag a link once and the red ✕ follows it across the tree, search, recent and stats views.
 
 ## Duplicates view
 
@@ -192,6 +193,12 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 
 # Changelogs
+
+**ver4.1 (unreleased)**
+
+New: the dead-link scanner's second channel now supports **your own proxy server** (http/https/socks5) — a one-click add button in the dead-link view's proxy strip validates the address, probes reachability (unreachable servers are rejected) and saves it for every future scan; change/remove live on the same strip, and the options page shows/clears the saved server. Routing uses a marker-matched temporary PAC: only the scanner's own probe URLs go through the proxy, other tabs are untouched, and settings are restored on settle/cancel/popup close (crash residue is swept by the service worker). Result clarity: a dead·blocked summary line in the toolbar, and a "configure a proxy to tell real dead links from region blocks" nudge when a scan leaves direct-failing rows with no proxy configured.
+
+Changed: the `proxy` permission moved to install-time required (Chrome refuses it as an optional permission). It is exercised ONLY while a configured proxy serves a running scan or the add-flow reachability probe — if you never set a proxy server or never use dead-link scanning, no proxy code path ever runs.
 
 **ver4.0 2026/07**
 

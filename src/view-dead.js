@@ -28,12 +28,13 @@
  * one-click proxy management — no server: an add button (plus a nudge when
  * a finished scan has direct-failing rows and no proxy at all); a saved
  * server: a chip + change/remove. The inline add panel validates the
- * address, requests the optional `proxy` permission inside the click
- * gesture (Chrome's native confirmation, the stats view's history
- * pattern), refuses servers another extension controls, probes
- * reachability and persists ONLY a reachable one (`deadProxyServer`, the
- * same key the options page displays/clears). Scan start installs the PAC
- * session through the permission/controllability gate (failures degrade to
+ * address, checks the `proxy` permission (a REQUIRED install-time
+ * permission — Chrome refuses proxy as optional — verified via contains,
+ * with a request fallback that never prompts when already granted),
+ * refuses servers another extension controls, probes reachability and
+ * persists ONLY a reachable one (`deadProxyServer`, the same key the
+ * options page displays/clears). Scan start installs the PAC session
+ * through the permission/controllability gate (failures degrade to
  * direct+template and are remembered on the chip); settle/cancel/pagehide
  * all tear it down, and a `vbmProxySession` storage.session marker lets
  * the service worker sweep crash residue. The strip's controls disable
@@ -608,11 +609,13 @@ export function initViewDead(ctx = {}) {
         render();
     };
 
-    // Test & save: parse → permission (the click's user gesture carries
-    // Chrome's native confirmation, same contract as the stats view's
-    // history Enable link) → controllability → reachability. Only a
-    // REACHABLE server is persisted (to the same store key the options page
-    // displays); every failure keeps the panel open with its reason.
+    // Test & save: parse → permission → controllability → reachability. The
+    // `proxy` permission is a REQUIRED install-time permission (Chrome
+    // refuses it as optional), so contains() is the gate and request() is
+    // only a fallback for states that should not exist — a granted required
+    // permission never triggers a prompt. Only a REACHABLE server is
+    // persisted (to the same store key the options page displays); every
+    // failure keeps the panel open with its reason.
     const saveProxy = () => {
         const server = parseProxyServer(proxyInput);
         if (!server) {
@@ -631,7 +634,9 @@ export function initViewDead(ctx = {}) {
             proxyError = _m(key);
             render();
         };
-        requestProxyPermission().then(granted => {
+        const ensurePermission = () =>
+            proxyPermission().then(have => have || requestProxyPermission());
+        ensurePermission().then(granted => {
             if (gen !== proxyTestGen)
                 return;
             if (!granted)

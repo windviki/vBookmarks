@@ -1059,8 +1059,11 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         expect(store.get('deadProxyServer')).toBe('http://127.0.0.1:7890');
         expect(undo.toastCalls).toContain('deadProxySaved');
         expect(seen).toEqual(['https://www.gstatic.com/generate_204?__vbm_px=1']);
-        // the permission prompt rode the click; the PAC write carried the proxy
-        expect(calls).toContainEqual(['request', { permissions: ['proxy'] }]);
+        // permission already held (required install-time permission):
+        // contains verifies it, request never fires; the PAC write carried
+        // the proxy
+        expect(calls).toContainEqual(['contains', { permissions: ['proxy'] }]);
+        expect(calls.filter(c => c[0] === 'request')).toEqual([]);
         expect(calls.find(c => c[0] === 'set')[1].value.pacScript.data)
             .toContain('"PROXY 127.0.0.1:7890"');
         expect(calls.map(c => c[0])).toContain('clear'); // test session torn down
@@ -1081,9 +1084,9 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         expect(store.get('deadProxyServer', '')).toBe('');
     });
 
-    it('a denied permission prompt is an error, nothing saved', async () => {
+    it('a missing permission falls back to request; a denial is an error, nothing saved', async () => {
         const ctx = setup({});
-        addProxyChrome(ctx, { request: false });
+        const calls = addProxyChrome(ctx, { contains: false, request: false });
         const { $list, def, store } = ctx;
         def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-proxy-add' ? {} : null) });
@@ -1091,6 +1094,7 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         ctx.clickOn({ closest: sel => (sel === '.dead-proxy-save' ? {} : null) });
         await flush();
         await flush();
+        expect(calls).toContainEqual(['request', { permissions: ['proxy'] }]);
         expect($list.innerHTML).toContain('deadProxyDenied');
         expect(store.get('deadProxyServer', '')).toBe('');
     });
