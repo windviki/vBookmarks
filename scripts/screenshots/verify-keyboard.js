@@ -25,19 +25,37 @@ const check = (label, ok, detail) => {
 
 // Compact seed: one work folder with three bookmarks, one read-later folder
 // holding a DUPLICATE of the GitHub row (gives the dupes view one group),
-// plus two rows in Other Bookmarks.
+// plus two rows in Other Bookmarks. visitStats/deadLastScan give the stats
+// and dead views real rows so the per-view ↑↓ navigation checks have
+// something to walk.
 const SEED = `
 (async () => {
     const create = p => new Promise(r => chrome.bookmarks.create(p, r));
     const work = await create({ parentId: '1', title: '工作区' });
-    await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
-    await create({ parentId: work.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
-    await create({ parentId: work.id, title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/chrome-extension' });
+    const gh = await create({ parentId: work.id, title: 'GitHub', url: 'https://github.com/vBookmarks' });
+    const mdn = await create({ parentId: work.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
+    const so = await create({ parentId: work.id, title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/chrome-extension' });
     const read = await create({ parentId: '1', title: '稍后读' });
     await create({ parentId: read.id, title: 'GitHub (mirror)', url: 'https://github.com/vBookmarks' });
     await create({ parentId: read.id, title: 'A List Apart', url: 'https://alistapart.com/topic/typography' });
-    await create({ parentId: '2', title: 'Awwwards', url: 'https://www.awwwards.com' });
-    await create({ parentId: '2', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+    const aw = await create({ parentId: '2', title: 'Awwwards', url: 'https://www.awwwards.com' });
+    const hn = await create({ parentId: '2', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+    const now = Date.now();
+    await new Promise(r => chrome.storage.local.set({
+        visitStats: JSON.stringify({
+            [gh.id]: { c: 42, t: now - 3600e3 },
+            [mdn.id]: { c: 7, t: now - 864e5 },
+            [so.id]: { c: 3, t: now }
+        }),
+        deadLastScan: JSON.stringify({
+            ts: now - 3600e3,
+            scannedCount: 8,
+            results: {
+                [aw.id]: { status: 'dead', code: 404 },
+                [hn.id]: { status: 'dead', code: 0, error: 'ERR_NAME_NOT_RESOLVED' }
+            }
+        })
+    }, r));
 })()`;
 
 (async () => {
@@ -80,6 +98,18 @@ const SEED = `
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
     await sleep(1500);
     const $ = (fn, ...args) => page.evaluate(fn, ...args);
+
+    // Fresh-install grace means the donation card is up on this profile.
+    // Dismiss it through its own Later button so the canonical zone walks
+    // below run without the transient rung (keyboard-model §7: the banner
+    // joins the Tab ring only while up — §7 at the end re-arms and walks it).
+    if (await $(() => {
+        const d = document.getElementById('donation');
+        return !!d && d.style.display !== 'none' && d.offsetHeight > 0;
+    })) {
+        await page.click('#donation-later');
+        await sleep(300);
+    }
 
     // ====================================================================
     // §2.1 focus zones: header / tab strip / list all present
@@ -201,6 +231,153 @@ const SEED = `
     }, remembered));
 
     // ====================================================================
+    // §2.2c per-view ↑↓ row navigation + crossings (v4 final polish):
+    // every registered list walks rows with ↑/↓, ↑ past the first row
+    // crosses to the tab strip (views.focusTop), dupes member ← returns
+    // to the group head and head ←/→ collapses/expands the group.
+    // ====================================================================
+    console.log('═══ §2.2c 各视图行导航/越顶 ═══');
+    const activeLiIndex = listSel => $(sel => {
+        const rows = [...document.querySelectorAll(sel + ' li')];
+        const el = document.activeElement;
+        const li = el && el.closest('li');
+        return { idx: rows.indexOf(li), total: rows.length,
+                 focus: el ? (el.id || el.className || el.tagName) : '(none)' };
+    }, listSel);
+
+    // --- tree: ↓↓ walk, ↑ back, ↑ past the top lands on the tab strip ---
+    await page.click('#view-tab-tree'); await sleep(300);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    let st = await activeLiIndex('#tree');
+    check('tree ↓: first row focused', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#tree');
+    check('tree ↓: next row', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    st = await activeLiIndex('#tree');
+    check('tree ↑: previous row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('tree ↑ past top: crosses to the tab strip',
+        await focusedTab() === 'view-tab-tree', await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    await page.keyboard.press('End'); await sleep(200);
+    st = await activeLiIndex('#tree');
+    check('tree End: last visible row', st.idx > 0 && st.idx === st.total - 1, JSON.stringify(st));
+    await page.keyboard.press('Home'); await sleep(200);
+    st = await activeLiIndex('#tree');
+    check('tree Home: first row', st.idx === 0, JSON.stringify(st));
+
+    // --- recent (the §2.1 memory walk left a remembered row here, so the
+    // strip's ↓ restores THAT row instead of the first — by design; Home
+    // then re-anchors the walk at the top) ---
+    await page.click('#view-tab-recent'); await sleep(700);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    st = await activeLiIndex('#recent-list');
+    check('recent ↓ from strip: remembered row restored',
+        st.idx >= 0 && /focus/.test(st.focus), JSON.stringify(st));
+    await page.keyboard.press('Home'); await sleep(200);
+    st = await activeLiIndex('#recent-list');
+    check('recent Home: first row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#recent-list');
+    check('recent ↓: next row', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    st = await activeLiIndex('#recent-list');
+    check('recent ↑: previous row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('recent ↑ past top: tab strip',
+        await focusedTab() === 'view-tab-recent', await activeDesc());
+
+    // --- stats (three seeded bookmark rows) ---
+    await page.click('#view-tab-stats'); await sleep(700);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    st = await activeLiIndex('#stats-list');
+    check('stats ↓ from strip: first bookmark-stats row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#stats-list');
+    check('stats ↓: next row', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('stats ↑ past top: tab strip',
+        await focusedTab() === 'view-tab-stats', await activeDesc());
+
+    // --- dead (cached scan renders two result rows) ---
+    await page.click('#view-tab-dead'); await sleep(700);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    st = await activeLiIndex('#dead-list');
+    check('dead ↓ from strip: first result row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#dead-list');
+    check('dead ↓: next row', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('dead ↑ past top: tab strip',
+        await focusedTab() === 'view-tab-dead', await activeDesc());
+
+    // --- dupes: head ⇄ members, member ← returns, head ←/→ folds ---
+    await page.click('#view-tab-dupes'); await sleep(900);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes ↓ from strip: group head focused', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('group-head')),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#dupes-list');
+    check('dupes ↓: head→first member', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#dupes-list');
+    check('dupes ↓: member→member', st.idx === 2, JSON.stringify(st));
+    await page.keyboard.press('ArrowLeft'); await sleep(200);
+    check('dupes member ←: jumps back to the group head', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('group-head')),
+        await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(300);
+    st = await activeLiIndex('#dupes-list');
+    check('dupes head ←: collapses the group (members unmounted)',
+        st.total === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowRight'); await sleep(300);
+    st = await activeLiIndex('#dupes-list');
+    check('dupes head →: expands back', st.total === 3, JSON.stringify(st));
+
+    // ====================================================================
+    // §2.1d header-row direction chain (final polish): the naive layout
+    // walk — box ↓ → strip, strip ↑ → box, box → → quick-add → tool,
+    // ← all the way back, and ↓ from a header button → the strip.
+    // (Only while browsing: with a live query the box's ↓ jumps straight
+    // into the results — §4.3b — and an empty box in the search view
+    // lands on the history rows; those dual-zone transfers stay.)
+    // ====================================================================
+    console.log('═══ §2.1d 头部行方向链 ═══');
+    await page.click('#view-tab-tree'); await sleep(300);
+    await page.click('#search-input'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('box ↓ (browse): lands on the tab strip',
+        await focusedTab() === 'view-tab-tree', await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('strip ↑: back to the box', await $(() =>
+        document.activeElement && document.activeElement.id === 'search-input'), await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('box → (caret at end): quick-add focused', await $(() =>
+        document.activeElement && document.activeElement.id === 'quick-add-btn'), await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('quick-add →: tool button focused', await $(() =>
+        document.activeElement && document.activeElement.id === 'tool-btn'), await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(200);
+    check('tool ←: back to quick-add', await $(() =>
+        document.activeElement && document.activeElement.id === 'quick-add-btn'), await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(200);
+    const boxState = await $(() => ({
+        id: document.activeElement && document.activeElement.id,
+        caretAtEnd: document.activeElement &&
+            document.activeElement.selectionEnd === document.activeElement.value.length
+    }));
+    check('quick-add ←: back to the box with the caret parked at the end',
+        boxState.id === 'search-input' && boxState.caretAtEnd, JSON.stringify(boxState));
+    await page.keyboard.press('ArrowRight'); await sleep(200); // → quick-add again
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('quick-add ↓: lands on the tab strip',
+        await focusedTab() === 'view-tab-tree', await activeDesc());
+
+    // ====================================================================
     // §4.3 search view: dual zone + persistence across view switches
     // ====================================================================
     console.log('═══ §4.3 搜索双区/重进 ═══');
@@ -234,6 +411,64 @@ const SEED = `
     check('re-entry: results DOM persisted', s2.resRows > 0, `rows:${s2.resRows}`);
     check('re-entry: history recorded the query', s2.histRows.some(t => t === 'github'),
         s2.histRows.join(','));
+
+    // ====================================================================
+    // §4.3b dual-zone focus transfers: with a query the box's ↓ lands on
+    // the results; with an empty box ↓ walks history rows and crosses
+    // into the kept results; ↑ past either zone's top takes the universal
+    // crossing (keyboard-model §3): the strip, then the box.
+    // ====================================================================
+    console.log('═══ §4.3b 搜索双区焦点转移 ═══');
+    await page.click('#search-input'); await sleep(200);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('search box ↓ (query): first result row focused', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#results li');
+    }), await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(200);
+    st = await activeLiIndex('#results');
+    check('search results ↓: next row', st.idx === 1, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    st = await activeLiIndex('#results');
+    check('search results ↑: previous row', st.idx === 0, JSON.stringify(st));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('search results ↑ past top: tab strip',
+        await focusedTab() === 'view-tab-search', await activeDesc());
+
+    // Empty the box (quits back to the tree), re-enter the search view:
+    // the box is empty, the history rows sit above the kept results.
+    await page.click('#search-input'); await sleep(150);
+    await $(() => {
+        const i = document.getElementById('search-input');
+        i.value = '';
+        i.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await sleep(400);
+    await page.click('#view-tab-search'); await sleep(500);
+    await page.click('#search-input'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('empty box ↓: first history row focused', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#search-history-area') &&
+            el.dataset && typeof el.dataset.q !== 'undefined';
+    }), await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('history ↓ past bottom: crosses into the kept results', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#results li');
+    }), await activeDesc());
+    await $(() => {
+        const a = document.querySelector('#search-history-area a[data-q]');
+        if (a) a.focus();
+    });
+    await sleep(150);
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('history ↑ past top: crosses to the tab strip (not the box)',
+        await focusedTab() === 'view-tab-search', await activeDesc());
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('strip ↑: back to the box',
+        await $(() => document.activeElement && document.activeElement.id === 'search-input'),
+        await activeDesc());
 
     // ====================================================================
     // View rendering: recent / stats / dead / dupes
@@ -272,6 +507,59 @@ const SEED = `
     check('Dupes: count pill', dupes.pill);
     check('Dupes: strategy + scope controls', dupes.strategy && dupes.scope);
     check('Dupes: exactly one keeper checked', dupes.keeper === 1, String(dupes.keeper));
+
+    // ====================================================================
+    // §7 banner keyboard reachability (keyboard-model §5/§7): the donation
+    // card is transient chrome — never an arrow rung, but its controls join
+    // the Tab ring at their visual spot whenever the card is up. Seeding a
+    // donationFactor past any snoozed donationKey forces it on at reload.
+    // (Esc dismissal stays in vitest — docs/cdp-escape-limitation.md.)
+    // ====================================================================
+    console.log('═══ §7 横幅键盘可达 ═══');
+    await $(() => new Promise(r => chrome.storage.local.set({ donationFactor: '9999' }, r)));
+    await page.reload({ waitUntil: 'networkidle0' }); await sleep(1200);
+    check('banner up after the seeded reload', await $(() => {
+        const d = document.getElementById('donation');
+        return !!d && d.style.display !== 'none' && d.offsetHeight > 0;
+    }), await $(() => {
+        const d = document.getElementById('donation');
+        return d ? `display:${d.style.display} h:${d.offsetHeight}` : '(missing)';
+    }));
+    await page.focus('#tool-btn'); await sleep(150);
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: tool → banner first control (go)',
+        await $(() => document.activeElement && document.activeElement.id === 'donation-go'),
+        await activeDesc());
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: go → later',
+        await $(() => document.activeElement && document.activeElement.id === 'donation-later'),
+        await activeDesc());
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: later → never',
+        await $(() => document.activeElement && document.activeElement.id === 'donation-never'),
+        await activeDesc());
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: never → the active view tab',
+        await $(() => document.activeElement && /^view-tab-/.test(document.activeElement.id)),
+        await activeDesc());
+    await page.keyboard.press('Tab'); // Shift not needed — walk on into the view
+    await sleep(150);
+    check('Tab: strip → view content (toolbar control or row)',
+        await $(() => {
+            const el = document.activeElement;
+            return !!el && !!el.closest('#views');
+        }), await activeDesc());
+    // Dismissing the card (the Later path) removes the rung from the ring.
+    await page.click('#donation-later'); await sleep(300);
+    check('Later dismisses the card', await $(() => {
+        const d = document.getElementById('donation');
+        return d && d.style.display === 'none';
+    }));
+    await page.focus('#tool-btn'); await sleep(150);
+    await page.keyboard.press('Tab'); await sleep(150);
+    check('Tab: tool → active tab directly (banner rung gone)',
+        await $(() => document.activeElement && /^view-tab-/.test(document.activeElement.id)),
+        await activeDesc());
 
     // ====================================================================
     // Summary (+ zero page errors gate)

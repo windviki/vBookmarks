@@ -134,6 +134,11 @@ export function initViewDupes(ctx = {}) {
     // toggle the group's membership, Esc exits. Keys prune at render.
     let selecting = false;
     const selected = new Set();      // group keys
+    // A head-key collapse/expand re-renders (async getTree → innerHTML swap)
+    // and the head element is replaced — without this the focus drops to
+    // <body> and the ←/→ key walk dies after one fold. render() restores
+    // focus to the new head element for the same group key.
+    let pendingHeadFocus = null;
 
     const strategy = () => store.get('dupesStrategy', 'keep-oldest') || 'keep-oldest';
     const scope = () => store.get('dupesScope', 'all') || 'all';
@@ -354,6 +359,22 @@ export function initViewDupes(ctx = {}) {
         }
         $list.innerHTML = html;
         onRowsRendered();
+        // Post-render focus restore for the head-key fold/expand (the head
+        // element was replaced by the innerHTML swap).
+        if (pendingHeadFocus) {
+            const key = pendingHeadFocus;
+            pendingHeadFocus = null;
+            let headEl = null;
+            const groupLis = $list.querySelectorAll('li.dupes-group');
+            for (let i = 0, l = groupLis.length; i < l; i++) {
+                if (groupLis[i].dataset && groupLis[i].dataset.key === key) {
+                    headEl = groupLis[i].querySelector('.group-head');
+                    break;
+                }
+            }
+            if (headEl)
+                headEl.focus();
+        }
     };
 
     const refresh = () => {
@@ -635,6 +656,9 @@ export function initViewDupes(ctx = {}) {
                     collapsed.delete(key);
                 else
                     collapsed.add(key);
+                // refresh() re-renders async and replaces the head element —
+                // park the key so render() can restore focus to the new head.
+                pendingHeadFocus = key;
                 refresh();
             }
             return;

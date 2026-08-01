@@ -64,6 +64,7 @@ export function initKeyboard(ctx = {}) {
         onEscapeActive: () => false,
         escapeToTree: () => false,
         focusTop: () => { ctx.search.input.focus(); },
+        focusDown: () => { ctx.search.input.focus(); },
         activate: () => {}
     };
 
@@ -536,6 +537,47 @@ export function initKeyboard(ctx = {}) {
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('keydown', contextKeyDown);
 
+    // Header-row arrows (final polish): the naive horizontal walk between
+    // the search box and the header buttons (quick-add ⇄ tool) plus ↓ from
+    // any header button into the zone below (tab strip / active list — the
+    // same focusDown the search box uses). The box's own →-at-text-edge
+    // binding lives in search.js next to its ↓ handler; ← from quick-add
+    // returns to the box with the caret parked at the end, ready to type.
+    const quickAddBtn = $('quick-add-btn');
+    const toolBtn = $('tool-btn');
+    // (doubles without layout APIs count as visible — tests)
+    const visibleEl = el => el && (el.getClientRects ? el.getClientRects().length > 0 : true);
+    const headerArrow = e => {
+        const left = rtl ? 'ArrowRight' : 'ArrowLeft';
+        const right = rtl ? 'ArrowLeft' : 'ArrowRight';
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            views.focusDown();
+            return;
+        }
+        let target = null;
+        if (e.currentTarget === quickAddBtn) {
+            if (e.key === left)
+                target = search.input;
+            else if (e.key === right && visibleEl(toolBtn))
+                target = toolBtn;
+        } else if (e.currentTarget === toolBtn && e.key === left) {
+            target = visibleEl(quickAddBtn) ? quickAddBtn : search.input;
+        }
+        if (!target)
+            return;
+        e.preventDefault();
+        target.focus();
+        if (target === search.input && search.input.setSelectionRange) {
+            const n = search.input.value.length;
+            search.input.setSelectionRange(n, n);
+        }
+    };
+    if (quickAddBtn)
+        quickAddBtn.addEventListener('keydown', headerArrow);
+    if (toolBtn)
+        toolBtn.addEventListener('keydown', headerArrow);
+
     // Closing dialogs / context menus on escape.
     // Capture phase so we run before any child handler and before Chrome's
     // built-in "Escape closes popup" behaviour.  We always preventDefault +
@@ -560,6 +602,18 @@ export function initKeyboard(ctx = {}) {
             active.focus();
             menus.clearMenu();
             return;
+        }
+        // Transient banner (donation / what's-new — keyboard-model §4 layer
+        // 3): dismiss it with the *Later* semantics, dispatched through the
+        // button itself so the snooze logic stays in neat.js. Visible means
+        // "not display:none" — neat.js always sets the inline style at boot.
+        const banner = $('donation');
+        if (banner && (!banner.style || banner.style.display !== 'none')) {
+            const later = $('donation-later');
+            if (later && later.click) {
+                later.click();
+                return;
+            }
         }
         if (palette && palette.isOpen()) {
             palette.close();
@@ -681,6 +735,19 @@ export function initKeyboard(ctx = {}) {
             const el = $(headerIds[i]);
             if (tabVisible(el))
                 stops.push(el);
+        }
+        // keyboard-model §7: the transient banner (donation / what's-new)
+        // joins the ring at its visual spot — between the header row and the
+        // tab strip — whenever it is up. Never an arrow rung: the arrow chain
+        // stays stable whether or not the banner happens to be showing.
+        const bannerEl = $('donation');
+        if (bannerEl && bannerEl.querySelectorAll && tabVisible(bannerEl)) {
+            const bannerControls = bannerEl.querySelectorAll('button, a[href]');
+            for (let i = 0, l = bannerControls.length; i < l; i++) {
+                const c = bannerControls[i];
+                if (!c.disabled && tabVisible(c))
+                    stops.push(c);
+            }
         }
         const tabsEl = $('view-tabs');
         let tabStop = null;

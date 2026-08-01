@@ -110,7 +110,9 @@ const setup = (opts = {}) => {
             _listeners: {},
             addEventListener(type, fn) {
                 (this._listeners[type] = this._listeners[type] || []).push(fn);
-            }
+            },
+            // no live DOM: the post-render focus restore finds no group rows
+            querySelectorAll: () => []
         };
         byId[id] = el;
         return el;
@@ -489,6 +491,49 @@ describe('group collapse (§3.6)', () => {
         const passthrough = keyEv('ArrowRight');
         fire('keydown', passthrough);
         expect(passthrough.stopped).toBeUndefined();
+    });
+
+    it('fold/expand restores focus to the NEW head after the innerHTML swap', () => {
+        const ctx = setup({});
+        const { $list, def, fire } = ctx;
+        def().activate();
+        const head = {
+            classList: { contains: c => c === 'group-head' },
+            closest: sel => (sel === 'li' ? { dataset: { key: 'https://a.com' } } : null)
+        };
+        // render() swaps innerHTML, so the post-render head is a different
+        // element — the double returns it for the parked key.
+        const focused = [];
+        const newHead = { focus() { focused.push(this); } };
+        $list.querySelectorAll = sel => (sel === 'li.dupes-group' ? [{
+            dataset: { key: 'https://a.com' },
+            querySelector: s => (s === '.group-head' ? newHead : null)
+        }] : []);
+        const keyEv = key => ({
+            key, target: head,
+            preventDefault() {}, stopPropagation() {}
+        });
+        fire('keydown', keyEv('ArrowLeft')); // collapse → re-render
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"');
+        expect(focused).toEqual([newHead]); // focus never dropped to body
+        fire('keydown', keyEv('ArrowRight')); // expand → re-render
+        expect($list.innerHTML).toContain('id="dupes-item-11"');
+        expect(focused.length).toBe(2);
+    });
+
+    it('a group key that vanished mid-refresh drops the parked focus quietly', () => {
+        const ctx = setup({});
+        const { $list, def, fire } = ctx;
+        def().activate();
+        $list.querySelectorAll = () => []; // no group rows in the new render
+        const head = {
+            classList: { contains: c => c === 'group-head' },
+            closest: sel => (sel === 'li' ? { dataset: { key: 'https://a.com' } } : null)
+        };
+        expect(() => fire('keydown', {
+            key: 'ArrowLeft', target: head,
+            preventDefault() {}, stopPropagation() {}
+        })).not.toThrow();
     });
 });
 

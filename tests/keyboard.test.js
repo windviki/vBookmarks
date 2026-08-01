@@ -137,6 +137,14 @@ const setup = (opts = {}) => {
     body.querySelector = sel =>
         sel === '.active' ? (allEls.find(n => n.classList.contains('active')) || null) : null;
     const searchInput = el('INPUT', 'search-input');
+    // final polish: header-row buttons — created before initKeyboard so the
+    // header-arrow binding lands on them (absent unless opts.headerEls)
+    let quickAddBtn = null;
+    let toolBtn = null;
+    if (opts.headerEls) {
+        quickAddBtn = el('BUTTON', 'quick-add-btn');
+        toolBtn = el('BUTTON', 'tool-btn');
+    }
     const bookmarkMenu = el('MENU', 'bookmark-context-menu');
     const folderMenu = el('MENU', 'folder-context-menu');
     const separatorMenu = el('MENU', 'separator-context-menu');
@@ -407,6 +415,7 @@ const setup = (opts = {}) => {
         tree, results, body, searchInput, search,
         bookmarkMenu, folderMenu, separatorMenu, menus,
         searchHistoryMenu, shmItem1, shmItem2,
+        quickAddBtn, toolBtn,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
         chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls,
@@ -523,6 +532,59 @@ describe('Tab region cycle (§2.1)', () => {
         tabBtn.focus();
         fireDoc('keydown', makeEvent({ key: 'Tab' }));
         expect(doc.activeElement).toBe(b2.link);
+    });
+
+    // keyboard-model §7: the transient donation/what's-new banner joins the
+    // ring at its visual spot (header ⇄ strip) whenever it is up — and is
+    // skipped entirely when display:none.
+    const bannerEnv = display => {
+        const refs = {};
+        const env = setup({
+            views: ({ tree, el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                const banner = el('DIV', 'donation');
+                banner.style.display = display;
+                refs.go = el('BUTTON', 'donation-go');
+                refs.later = el('BUTTON', 'donation-later');
+                refs.never = el('BUTTON', 'donation-never');
+                banner._qsa['button, a[href]'] = [refs.go, refs.later, refs.never];
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-tree');
+                refs.tabBtn.parentNode = refs.tabs;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree, tabEl: refs.tabBtn }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ...env, ...refs };
+    };
+
+    it('a visible banner contributes its controls between the header and the strip', () => {
+        const { doc, fireDoc, tool, go, later, never, tabBtn, tree, f1 } = bannerEnv('block');
+        tree._qs[ROW_SEL] = f1.link;
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(go);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(later);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(never);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn); // the ring continues below
+    });
+
+    it('a hidden (display:none) banner is skipped by the ring', () => {
+        const { doc, fireDoc, tool, tabBtn, tree, f1 } = bannerEnv('none');
+        tree._qs[ROW_SEL] = f1.link;
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn);
     });
 
     it('continues from the list region when focus is inside the list but not on its stop', () => {
@@ -1707,6 +1769,39 @@ describe('Esc layering — full document chain (item 2)', () => {
         expect(ctx.windowCloseCalls).toEqual([]);
     });
 
+    // keyboard-model §4 layer 3: a visible donation/what's-new banner is
+    // dismissed through its own Later button (snoozed, never unsubscribed);
+    // a hidden banner is skipped and the chain falls through.
+    it('the banner rung dismisses the card via its Later button', () => {
+        const ctx = setup({ searchActive: true });
+        const banner = ctx.el('DIV', 'donation');
+        banner.style.display = 'block';
+        const later = ctx.el('BUTTON', 'donation-later');
+        const clicks = [];
+        later.click = () => clicks.push('later');
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(clicks).toEqual(['later']);
+        expect(ctx.searchCalls).toEqual([]); // lower rungs untouched
+        expect(ctx.searchInput.value).toBe('query');
+        expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('a hidden banner is skipped — Esc falls through to the search rung', () => {
+        const ctx = setup({ searchActive: true });
+        const banner = ctx.el('DIV', 'donation');
+        banner.style.display = 'none';
+        const later = ctx.el('BUTTON', 'donation-later');
+        const clicks = [];
+        later.click = () => clicks.push('later');
+        ctx.searchInput.value = 'query'; // arm the search rung below
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(clicks).toEqual([]);
+        expect(ctx.searchCalls).toEqual(['escape']);
+    });
+
     it('a fully-armed popup peels one layer per press in the contract order', () => {
         const order = [];
         let paletteOpen = true;
@@ -1802,5 +1897,82 @@ describe('Esc layering — full document chain (item 2)', () => {
         ctx.fireDoc('keyup', ku);
         expect(ku.defaultPrevented).toBe(false);
         expect(ku.propagationStopped).toBe(false);
+    });
+});
+
+describe('header-row arrows (final polish)', () => {
+    const fireKey = (btn, key, ev = {}) =>
+        btn._listeners.keydown[0]({
+            key,
+            currentTarget: btn,
+            preventDefault: () => { ev.defaultPrevented = true; },
+            ...ev
+        });
+
+    it('binds keydown on the quick-add and tool buttons when present', () => {
+        const { quickAddBtn, toolBtn } = setup({ headerEls: true });
+        expect(quickAddBtn._listeners.keydown).toHaveLength(1);
+        expect(toolBtn._listeners.keydown).toHaveLength(1);
+    });
+
+    it('quick-add ← returns to the search box with the caret parked at the end', () => {
+        const { quickAddBtn, searchInput } = setup({ headerEls: true });
+        searchInput.value = 'abc';
+        searchInput.setSelectionRange = (a, b) => { searchInput._sel = [a, b]; };
+        const ev = {};
+        fireKey(quickAddBtn, 'ArrowLeft', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(searchInput.focused).toBe(true);
+        expect(searchInput._sel).toEqual([3, 3]);
+    });
+
+    it('quick-add → moves to the tool button; tool → stays put', () => {
+        const { quickAddBtn, toolBtn } = setup({ headerEls: true });
+        fireKey(quickAddBtn, 'ArrowRight');
+        expect(toolBtn.focused).toBe(true);
+        const ev = {};
+        fireKey(toolBtn, 'ArrowRight', ev);
+        expect(ev.defaultPrevented).toBeUndefined();
+    });
+
+    it('tool ← moves back to quick-add; a hidden quick-add is skipped to the box', () => {
+        const { quickAddBtn, toolBtn, searchInput } = setup({ headerEls: true });
+        fireKey(toolBtn, 'ArrowLeft');
+        expect(quickAddBtn.focused).toBe(true);
+        const s2 = setup({ headerEls: true });
+        s2.quickAddBtn.getClientRects = () => [];
+        fireKey(s2.toolBtn, 'ArrowLeft');
+        expect(s2.searchInput.focused).toBe(true);
+    });
+
+    it('↓ from a header button walks the zone chain via views.focusDown', () => {
+        const calls = [];
+        const views = {
+            lists: () => [],
+            listOf: () => null,
+            activeDef: () => ({}),
+            onEscapeActive: () => false,
+            escapeToTree: () => false,
+            focusTop: () => {},
+            focusDown: () => calls.push('down'),
+            activate: () => {}
+        };
+        const { quickAddBtn, toolBtn } = setup({ headerEls: true, views });
+        const ev = {};
+        fireKey(quickAddBtn, 'ArrowDown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        fireKey(toolBtn, 'ArrowDown');
+        expect(calls).toEqual(['down', 'down']);
+    });
+
+    it('rtl mirrors the walk (← is the forward direction)', () => {
+        const { quickAddBtn, toolBtn, searchInput } = setup({ headerEls: true, rtl: true });
+        fireKey(quickAddBtn, 'ArrowLeft');
+        expect(toolBtn.focused).toBe(true);
+        // the physical chain in rtl: tool → quick-add → search box
+        fireKey(toolBtn, 'ArrowRight');
+        expect(quickAddBtn.focused).toBe(true);
+        fireKey(quickAddBtn, 'ArrowRight');
+        expect(searchInput.focused).toBe(true);
     });
 });

@@ -259,6 +259,19 @@ export function initViewManager(ctx = {}) {
             searchInput.focus();
     };
 
+    // ↓ from the header row (final polish): the naive vertical chain —
+    // header → tab strip → view content. With the strip visible the active
+    // tab takes focus (a second ↓ enters the list); with the strip hidden
+    // the list is the next thing below, so enter it directly.
+    const focusDown = () => {
+        const def = byId[activeId];
+        if (tabsVisible() && def && def.tabEl) {
+            def.tabEl.focus();
+            return;
+        }
+        focusActive();
+    };
+
     // --- Activation ------------------------------------------------------------
     const readViewState = () => {
         try {
@@ -573,6 +586,7 @@ export function initViewManager(ctx = {}) {
         onEscapeActive,
         escapeToTree,
         focusTop,
+        focusDown,
         focusActive,
         buildPathMap,
         pathOf,

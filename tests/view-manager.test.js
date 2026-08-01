@@ -646,6 +646,26 @@ describe('focusTop (§2.1 region crossing)', () => {
     });
 });
 
+describe('focusDown (final polish: header ↓ zone chain)', () => {
+    it('focuses the active tab when the strip is visible', () => {
+        const { views, tabs } = setup({});
+        views.focusDown();
+        expect(tabs()[0].focused).toBe(true);
+    });
+
+    it('enters the active list directly when the strip is hidden (never the box)', () => {
+        const { views, byId, doc } = setup({ storeData: { showViewTabs: '' } });
+        expect(doc.body.classList.contains('no-view-tabs')).toBe(true);
+        const li = doc.createElement('li');
+        const a = doc.createElement('a');
+        li.children.push(a);
+        byId['tree'].children.push(li);
+        views.focusDown();
+        expect(a.focused).toBe(true);
+        expect(byId['search-input'].focused).toBe(false);
+    });
+});
+
 describe('tab strip keyboard model (§2.2)', () => {
     const fireTabs = (ctx, key) => {
         const ev = { key, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };

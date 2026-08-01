@@ -38,23 +38,26 @@
 
 ## 2. Full keyboard reference
 
-4.0 uses **one keyboard model everywhere**: the muscle memory from the tree works identically in the five other views.
+4.0 uses **one keyboard model everywhere**: the muscle memory from the tree works identically in the five other views, and the model re-flows itself over your settings — hide the tab strip, disable views or header buttons, and every key keeps working on what remains, nothing to relearn. The complete design (laws, Esc layering, the option-combination matrix) lives in [keyboard-model.md](keyboard-model.md); this section is the practical manual.
 
 ### 2.1 Focus zones
 
-Three zones, fully walkable with arrow keys alone — no Tab key needed:
+Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move between visual layers, `←`/`→` move along the current one:
 
 ```
-┌ Header: search box → ☆ quick-add → ⚙ settings ┐  ↑ from the tab strip
-├ Tab strip: six view tabs                      ┤  ↑ from a list's first row
-├ List: the active view's rows                  ┤  ↓ back into the list
-└───────────────────────────────────────────────┘
+┌ Header: search box → ☆ quick-add → ⚙ tools ┐  ←/→ walk the row · ↓ to the tabs
+├ (banner, only while shown — Tab reaches it) ┤
+├ Tab strip: six view tabs                    ┤  ←/→ switch · ↑ box · ↓ list
+├ List: the active view's rows                ┤  ↑ past the top → the tab
+└─────────────────────────────────────────────┘
 ```
 
-- **`↑` past the first row** of any list → focus lands on the current tab; **`↑` again** → the search box.
-- **`↓` on the tab strip** → back into the active view's first (or last-selected) row.
-- **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
+- **`↓` in the search box** lands on the current tab; **`↓` again** enters the list at its remembered row.
+- **`↑` past the first row** of any list crosses to the current tab; **`↑` again** reaches the search box. (Hiding the tab strip collapses the chain to box ⇄ list directly.)
+- **`→` on the header row** — once the caret is at the end of the text — leaves the box for the quick-add star, then the tools button; **`←`** walks back and parks the caret at the end, ready to type. RTL locales mirror both.
+- **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → the banner's buttons (only while it is up) → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
 - **Focus memory**: leaving a list for the tab strip or header and coming back lands on the row you left, not the top.
+- **Search view exception**: in the search view the box is the view's own head — `↓` with a query jumps straight into the results (with an empty box, into the history rows; `↓` past the last history row crosses into the kept results). `↑` past the top of either zone still takes the universal crossing: tab strip, then box.
 
 ### 2.2 Universal keys (tree + every list view)
 
@@ -93,7 +96,8 @@ On the tab strip itself: `←` `→` switch and activate (mirrored automatically
 `Esc` always peels exactly one layer, never everything:
 
 ```
-context menu → command palette → view-level action (Dead: pause/resume the scan;
+context menu → banner (dismiss = "Later") → command palette
+             → view-level action (Dead: pause/resume the scan;
              Dead/Duplicates: exit selection mode) → clear the search query
              → back to the tree → close the popup
 ```

@@ -205,6 +205,18 @@ const setup = (opts = {}) => {
         ...(opts.withFocusActive ? {
             focusActiveCalls: 0,
             focusActive() { this.focusActiveCalls++; }
+        } : {}),
+        // final polish: opt-in focusDown recorder — the header ↓ now walks
+        // the zone chain (strip when visible, active list when hidden)
+        ...(opts.withFocusDown ? {
+            focusDownCalls: 0,
+            focusDown() { this.focusDownCalls++; }
+        } : {}),
+        // keyboard-model §3: opt-in focusTop recorder — the history zone's
+        // ↑-past-top takes the universal crossing (strip/box), not the box
+        ...(opts.withFocusTop ? {
+            focusTopCalls: 0,
+            focusTop() { this.focusTopCalls++; }
         } : {})
     };
     const s = initSearch({
@@ -899,16 +911,23 @@ describe('palette bridge run() (§4.4)', () => {
 
 describe('v4 task-3 #12: cross-view arrow continuity', () => {
     const HIST = JSON.stringify([{ q: 'one', ts: 1, n: 2 }, { q: 'two', ts: 2, n: 3 }, { q: 'three', ts: 3, n: 4 }]);
-    it('search-box ↓ routes to the ACTIVE view list (focusActive), not the hidden tree', () => {
-        const { els, views } = setup({ withFocusActive: true, activeView: 'recent' });
+    it('search-box ↓ walks the zone chain (focusDown), never the hidden tree', () => {
+        const { els, views } = setup({ withFocusDown: true, withFocusActive: true, activeView: 'recent' });
         const input = els['search-input'];
         input.value = '';
         input.selectionEnd = 0;
         let prevented = 0;
         input.trigger('keydown', { key: 'ArrowDown', preventDefault: () => prevented++ });
         expect(prevented).toBe(1);
-        expect(views.focusActiveCalls).toBe(1);
-        // the legacy tree fallback stays for manager doubles without the API
+        expect(views.focusDownCalls).toBe(1);
+        expect(views.focusActiveCalls).toBe(0);
+        // manager doubles predating focusDown fall back to focusActive (#12)
+        const older = setup({ withFocusActive: true, activeView: 'recent' });
+        older.els['search-input'].value = '';
+        older.els['search-input'].selectionEnd = 0;
+        older.els['search-input'].trigger('keydown', { key: 'ArrowDown' });
+        expect(older.views.focusActiveCalls).toBe(1);
+        // the legacy tree fallback stays for manager doubles without either API
         const legacy = setup({});
         legacy.els['search-input'].value = '';
         legacy.els['search-input'].selectionEnd = 0;
@@ -918,6 +937,43 @@ describe('v4 task-3 #12: cross-view arrow continuity', () => {
         legacy.els.tree._qs['ul>li:first-child'] = firstLi;
         legacy.els['search-input'].trigger('keydown', { key: 'ArrowDown' });
         expect(treeLink.focused).toBe(true);
+    });
+
+    it('search-box → at the text edge moves to the quick-add button (rtl mirrors)', () => {
+        const extraEls = { 'quick-add-btn': makeEl(), 'tool-btn': makeEl() };
+        const { els } = setup({ extraEls });
+        const input = els['search-input'];
+        input.value = 'abc';
+        input.selectionStart = 3;
+        input.selectionEnd = 3;
+        let prevented = 0;
+        input.trigger('keydown', { key: 'ArrowRight', preventDefault: () => prevented++ });
+        expect(prevented).toBe(1);
+        expect(extraEls['quick-add-btn'].focused).toBe(true);
+        // caret mid-text: the arrow keeps its editing semantics
+        const s2 = setup({ extraEls: { 'quick-add-btn': makeEl(), 'tool-btn': makeEl() } });
+        s2.els['search-input'].value = 'abc';
+        s2.els['search-input'].selectionStart = 1;
+        s2.els['search-input'].selectionEnd = 1;
+        let p2 = 0;
+        s2.els['search-input'].trigger('keydown', { key: 'ArrowRight', preventDefault: () => p2++ });
+        expect(p2).toBe(0);
+        expect(s2.els['quick-add-btn'].focused).toBe(false);
+        // quick-add hidden (no layout API result): falls through to the tool button
+        const s3 = setup({ extraEls: { 'quick-add-btn': makeEl(), 'tool-btn': makeEl() } });
+        s3.els['quick-add-btn'].getClientRects = () => [];
+        s3.els['search-input'].value = '';
+        s3.els['search-input'].selectionStart = 0;
+        s3.els['search-input'].selectionEnd = 0;
+        s3.els['search-input'].trigger('keydown', { key: 'ArrowRight' });
+        expect(s3.els['tool-btn'].focused).toBe(true);
+        // rtl: ArrowLeft is the forward direction
+        const s4 = setup({ rtl: true, extraEls: { 'quick-add-btn': makeEl(), 'tool-btn': makeEl() } });
+        s4.els['search-input'].value = '';
+        s4.els['search-input'].selectionStart = 0;
+        s4.els['search-input'].selectionEnd = 0;
+        s4.els['search-input'].trigger('keydown', { key: 'ArrowLeft' });
+        expect(s4.els['quick-add-btn'].focused).toBe(true);
     });
 
     const historyRows = (els, qs) => {
@@ -950,6 +1006,21 @@ describe('v4 task-3 #12: cross-view arrow continuity', () => {
         globalThis.document.activeElement = rows[0];
         els['search-history-area'].trigger('keydown', { key: 'ArrowUp' });
         expect(els['search-input'].focused).toBe(true);
+    });
+
+    it('↑ past the first history row takes the universal crossing (focusTop)', () => {
+        // keyboard-model §3: with the manager's focusTop available the key
+        // lands on the tab strip (or the box when the strip is hidden) —
+        // never skipping a rung; doubles predating focusTop keep the box.
+        const { els, views, viewHooks } = setup({
+            activeView: 'search', withFocusTop: true, storeData: { searchHistory: HIST }
+        });
+        viewHooks.search.activate();
+        const rows = historyRows(els, ['one', 'two']);
+        globalThis.document.activeElement = rows[0];
+        els['search-history-area'].trigger('keydown', { key: 'ArrowUp' });
+        expect(views.focusTopCalls).toBe(1);
+        expect(els['search-input'].focused).toBe(false);
     });
 
     it('Home/End jump the history row ends', () => {

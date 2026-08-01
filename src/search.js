@@ -316,6 +316,11 @@ export function initSearch(ctx = {}) {
                     }
                 } else if (idx > 0) {
                     rows[idx - 1].focus();
+                } else if (views.focusTop) {
+                    // keyboard-model §3: the universal ↑-crossing — the tab
+                    // strip when visible, else the box (was: straight to the
+                    // box, skipping the strip rung every other list stops at).
+                    views.focusTop();
                 } else {
                     searchInput.focus();
                 }
@@ -508,6 +513,14 @@ export function initSearch(ctx = {}) {
                 const target = firstHistory || $results.querySelector('ul>li:first-child a');
                 if (target)
                     target.focus();
+            } else if (views.focusDown) {
+                // Final polish: the naive vertical chain — search box → tab
+                // strip → view content. ↓ from the box lands on the strip
+                // (a second ↓ enters the active list); with the strip
+                // hidden focusDown enters the list directly. (v4 task-3 #12
+                // routed this to the active list immediately, skipping the
+                // strip rung the visual layout implies.)
+                views.focusDown();
             } else if (views.focusActive) {
                 // v4 task-3 #12: ↓ lands on the ACTIVE view's list — this
                 // used to hardcode the tree, so on recent/stats/dead/dupes
@@ -541,6 +554,22 @@ export function initSearch(ctx = {}) {
                 // (two-level, §3.2); the document chain walks back on the 2nd.
                 e.preventDefault();
                 escapeSearch();
+            }
+        } else if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight') &&
+                searchInput.selectionStart === searchInput.selectionEnd &&
+                searchInput.selectionEnd === searchInput.value.length) {
+            // Header-row ←/→ (final polish): the caret sits at the text
+            // edge, so the forward arrow leaves the box to the quick-add
+            // star (skipped when hidden), then the tool button — the
+            // horizontal counterpart of the ↓ zone chain. RTL mirrors.
+            const qa = document.getElementById('quick-add-btn');
+            const tool = document.getElementById('tool-btn');
+            // (doubles without layout APIs count as visible — tests)
+            const visible = el => el && (el.getClientRects ? el.getClientRects().length > 0 : true);
+            const target = visible(qa) ? qa : (visible(tool) ? tool : null);
+            if (target) {
+                e.preventDefault();
+                target.focus();
             }
         }
     });
