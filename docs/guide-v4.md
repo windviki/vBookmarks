@@ -32,9 +32,9 @@
 
 (Tabs carry one 16px line icon per view plus a localized label; on narrow widths the label hides and the icon stays.)
 
-- **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live.
+- **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live; turn them off with *Show count badges on the view tabs* (`showTabBadges`).
 - **Visibility**: Settings → the *Views* group hides Stats/Dead/Duplicates individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
-- **Popup vs side panel**: the popup always boots on the tree; the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) restores the view you left, ready to be an always-on workspace.
+- **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace.
 
 ## 2. Full keyboard reference
 
@@ -53,6 +53,8 @@ Three zones, fully walkable with arrow keys alone — no Tab key needed:
 
 - **`↑` past the first row** of any list → focus lands on the current tab; **`↑` again** → the search box.
 - **`↓` on the tab strip** → back into the active view's first (or last-selected) row.
+- **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
+- **Focus memory**: leaving a list for the tab strip or header and coming back lands on the row you left, not the top.
 
 ### 2.2 Universal keys (tree + every list view)
 
@@ -81,6 +83,7 @@ Three zones, fully walkable with arrow keys alone — no Tab key needed:
 | `Ctrl/Cmd+K` | In the popup | Command palette |
 | `Ctrl/Cmd+Shift+K` | Global (any page) | Raise the popup with the palette open |
 | `Ctrl/Cmd+D` | In the popup | Quick-add the current page (opens the edit dialog if already bookmarked) |
+| `Alt+Shift+S` | Global (any page) | Quick-add the current tab straight into the quick-add folder |
 | `Alt+Shift+B` | Global | Open the side panel |
 
 On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` jump to the ends, `↑` to the search box, `↓` into the list.
@@ -90,8 +93,9 @@ On the tab strip itself: `←` `→` switch and activate (mirrored automatically
 `Esc` always peels exactly one layer, never everything:
 
 ```
-context menu → command palette → view-level action (Dead: pause/resume the scan)
-             → clear the search query → back to the tree → close the popup
+context menu → command palette → view-level action (Dead: pause/resume the scan;
+             Dead/Duplicates: exit selection mode) → clear the search query
+             → back to the tree → close the popup
 ```
 
 Example: one `Esc` during a dead-link scan pauses it (press again to resume) — your search query is untouched.
@@ -108,8 +112,8 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - **Top zone · recent searches** (MRU 10): each row shows the query, its result count and a relative timestamp.
   - Recorded only at meaningful moments (no prefix spam): pressing `Enter` to search, opening a result, or leaving the view.
-  - **Re-run**: click, press `Enter` on a selected row, or right-click → *Search again*.
-  - **Remove**: the row's `×` (revealed on hover/focus), the `Delete` key, or the context menu; the header's *Clear* wipes all.
+  - **Re-run**: click, press `Enter` on a selected row, or `→` / right-click → *Search again*.
+  - **Remove**: the row's `×` (revealed on hover/focus), the `Delete` key, or the `→` context menu; the header's *Clear* wipes all.
 - **Bottom zone · results**: leave the view and come back — the query, the results and the scroll position are **all still there**.
 - Related settings: `searchAfterEnter` (search on Enter instead of live), `searchHistoryEnabled` (off = stop recording **and wipe the stored history**).
 
@@ -119,7 +123,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - Newest bookmarks grouped **Today / This week (7 d) / This month (30 d) / Older**; a relative-time badge on the right, and `path · exact time` as the tail label (narrow) or second line (wide).
 - Row count is configurable (10/20/50/100, default 20).
-- `R` or right-click → *Reveal in tree* jumps to the bookmark's real position.
+- `R` or right-click → *Reveal in tree* jumps to the bookmark's real position. With *Show only the bookmarks bar* on and the target outside the bar, a hint toast explains instead of failing silently — its *Show all and reveal* action shows the full tree for the session and completes the jump.
 - A banner about the history permission may appear: that's the optional one-time import (see §3.3) — enable it or dismiss it; the view works either way.
 
 ### 3.3 Stats
@@ -137,10 +141,13 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - **Start**: the empty state tells you how many bookmarks will be scanned. Results **stream in row by row**.
 - **Control**: `Esc` pauses/resumes without losing progress; canceling restores the last completed snapshot; reopening the popup paints the previous results instantly.
-- **Dual channel**: direct fetch first; on failure your own **proxy template** (Settings → Views group; empty = direct only) gets the final say. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
+- **Dual channel**: direct fetch first; on failure your own **proxy template** (options page → *Dead scan* group; empty = direct only) gets the final say. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
 - **Filter**: All / Dead only / Blocked only.
 - **Marks**: `M` or the row button flags a link; the red ✕ follows it into the tree, search, recent and stats views. Bulk mark/unmark lives in the toolbar (confirm-gated).
-- **Tuning** (advanced options): concurrency 1–16 (default 4), timeout 2–30 s (default 8).
+- **Selection mode**: the toolbar's *Select* swaps the idle controls for a batch bar — *All / Invert / Clear* over the filtered rows, then *Mark selected* / *Unmark selected* in one shot (no extra confirm: the explicit selection is the confirmation). `Esc` exits the mode.
+
+![Dead-link selection mode](images/guide/dead-select.png)
+- **Tuning** (options page → *Dead scan* group): concurrency 1–16 (default 4), timeout 2–30 s (default 8).
 
 ### 3.5 Duplicates
 
@@ -149,6 +156,10 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 - **What counts as a duplicate**: URLs are normalized before grouping — tracking parameters (`utm_*`/`fbclid`/`gclid`) stripped, `#hash` dropped, root trailing slash folded; the toolbar's *Ignore http/https differences* checkbox merges scheme variants.
 - **Keeper strategies** (toolbar select, six): oldest / newest / bookmark-bar / shortest title / shallowest / most-visited (live counts from the Stats view; greyed out while stats are off).
 - **Manual pinning**: the row radio or `K` — manual picks survive strategy changes.
+- **Inside an expanded group**: `Enter`/`Space` opens that copy, `←` jumps back to the group head. The group head's own context menu (right-click or `→`) offers *Clean this group* and expand/collapse.
+- **Selection mode**: the toolbar's *Select* switches to a batch bar over whole groups (*All / Invert / Clear*); *Dedup selected* cleans every chosen group after a single confirmation. `Esc` exits the mode.
+
+![Duplicates selection mode](images/guide/dupes-select.png)
 - **Preview first, execute after**: everything but the keeper renders struck-through; the group `×` (clean this group) or *Apply all* commits. Batch deletion runs through the **undo chain** and ends in a single summary toast.
 - Scope can be limited to the bookmarks bar; the last result set is snapshotted — reopening paints instantly and re-validates in the background.
 - Long group URLs are **mid-truncated** (both ends stay visible); the full URL lives in the tooltip.
@@ -165,12 +176,16 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 ## 5. Getting the classic look and feel back
 
-Every new surface in 4.0 can be switched off. **To make it look and behave like 3.x**, use this recipe:
+Every new surface in 4.0 can be switched off. **The fastest route**: the *Restore the classic header* button in the options page's *Views* group — one click turns off the command palette, the quick-add star, the tool button and the view-tab strip, and each piece can be re-enabled individually right above it. For finer control, use this recipe:
 
 | You want | Setting (options page → *Views* group, unless noted) |
 |---|---|
 | No tab strip — one tree + `Ctrl+F` search (the 3.x layout) | Turn off **Show view tabs** (`showViewTabs`). Tree and search remain the only views, shortcuts unchanged |
 | An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab, its `Ctrl+number` jump and its palette command all disappear |
+| No command palette | Turn off **Enable the command palette** (`paletteEnabled`) — `Ctrl/Cmd+K` and the global wake-up both stand down |
+| No quick-add star or tool button | Turn off `quickAddEnabled` / `showToolButton` in the Views group |
+| Always open on the tree | Turn off **Remember the last active view** (`rememberView`) |
+| No count badges on the tabs | Turn off **Show count badges on the view tabs** (`showTabBadges`) |
 | Classic colors | General → theme: **Light** or **Dark** (Ink/Paper are the new 4.0 faces; Auto follows the OS) |
 | No search history | Turn off **Search history** (`searchHistoryEnabled`) — recording stops and stored entries are **wiped** |
 | No visit statistics | Turn off **Visit statistics** (`statsEnabled`) — recording stops; *Clear statistics* erases what's stored |
@@ -179,7 +194,7 @@ Every new surface in 4.0 can be switched off. **To make it look and behave like 
 | Don't remember popup state | General → uncheck *Remember previous state* (`dontRememberState`) |
 | Fixed popup height | General → turn off auto-resize (`autoResizePopup`) |
 
-Want it even closer? **Advanced options → Custom CSS** gives you full control (e.g. `* { font-family: Consolas; }`), and the toolbar icon can be replaced with your own. Every setting applies instantly — no restart needed.
+Want it even closer? The options page's **Custom Styles** group gives you full CSS control (e.g. `* { font-family: Consolas; }`), and the *Custom Icon* group replaces the toolbar icon with your own. Every setting applies instantly — no restart needed.
 
 ![The options page's Views group](images/guide/options-views.png)
 

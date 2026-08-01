@@ -526,3 +526,85 @@ view-system 分支（他人实现，与 master 同源 `5edc546`，28 提交）�
 | 10 | 文档矩阵落地：双语 README 按 4.0 全景重写（开篇可直接用于 webstore 介绍页）；新增双语 v4 功能指南（视图总览/全键盘手册/逐视图用法/经典外观配方/设置备份/隐私 + 8 张 docker 实拍截图）；新增 `shots-guide.js` 截图套件（搜索双区重进态、选项页视图分组卡片）纳入 run.sh | `docs/README.md`、`docs/README.zh.md`、`docs/guide-v4.md`、`docs/guide-v4.zh.md`、`docs/images/guide/`、`scripts/screenshots/shots-guide.js` |
 
 第七轮验收：i18n verify 0 错误（258 键 × 43 locale）、单测全绿（1103，37 文件）、docker 全量 harness 通过（smoke 零控制台错误 + verify-keyboard 32/32 + shots/shots-themes/shots-i18n/shots-palette/shots-guide 五套件无错误）、打包 96 文件校验通过。
+
+## 附录 H：第八轮——v4task-3 问题清单（2026-07-31，20 项中 19 项实施，项13 已提前解决）
+
+`docs/v4task-3.md` 的 20 项问题全部落地（项13 截图此前已重拍，标注忽略）。逐项对齐：
+
+| 项 | 变更 | 落点 |
+|---|---|---|
+| 1 | 最近添加/统计视图横向滚动条常驻：行模板三处 flex basis 由固定值改 auto，内容不再撑溢出 | `css/neat.css`、`scripts/screenshots/diag-v4t3.js`（真实浏览器探针） |
+| 2 | 统计视图排序段"看似无效"：根因是受控的书签统计区排在历史区之后，count 并列时切换无视觉变化——书签统计区提前到排序段正下方（受控列表紧贴控件），`.active` 高亮与 `statsSort` 持久化经探针实测 | `src/view-stats.js`、`tests/view-stats.test.js` |
+| 3 | 死链视图宽版双行时右侧标记/删除按钮垂直居中（原顶部对齐） | `css/neat.css` |
+| 4 | 死链视图选择模式：工具栏"选择"按钮进入/退出，全选/反选/取消全部，标记所选/取消标记所选；选中计数条幅 | `src/view-dead.js`、`tests/view-dead.test.js` |
+| 5 | 去重视图同款选择模式 + 每个重复组标题栏右上的单组"应用去重"快捷钮（直接按当前 keeper 应用并同步刷新上方统计条幅） | `src/view-dupes.js`、`tests/view-dupes.test.js` |
+| 6 | 记忆视图：`rememberView` 选项（默认开）——popup 重开恢复上次视图，关闭则回树视图；面板模式恒记忆。存储的视图 id 尚未注册时挂入 `pendingRestore`，待其模块注册即恢复（此前面板也只能恢复 tree/search，feature 视图注册晚于 startup） | `src/view-manager.js`、`src/options.js`、`tests/view-manager.test.js` |
+| 7 | §2.1 遗留项实施：全部行模板 `tabindex="0"` 改 `-1`（roving 列表模型，每视图列表只占一个 Tab 位）；`keyboard.js` 新增 document 级 Tab/Shift+Tab 三区域循环器（搜索框 → 可见头部按钮 → 活动 tab → 列表 `.focus`/首行，对话框/面板/菜单打开时放行；显隐判定含 `getClientRects`，覆盖 `body.no-view-tabs` 的 CSS 隐条）；区域焦点记忆——`viewState` 由纯 scrollTop 数字迁移为 `{ scroll, focus }`（旧值兼容），离开时记 `.focus` 行 id、`focusin` 实时标记鼠标点选行、进入时 100ms×20 看守循环重标（扛住视图 activate 钩子的异步重渲染）；旧 search.js 的 Tab→focusID 跳转分支删除（Tab 不再被 preventDefault） | `src/keyboard.js`、`src/view-manager.js`、`src/tree-render.js`、`src/search.js`、`src/view-recent.js`、`src/view-stats.js`、`src/view-dead.js`、`src/view-dupes.js` + 各测试；`verify-keyboard.js` 新增 §2.1 循环 8 断言 + 焦点记忆段（共 43 断言） |
+| 8 | 搜索框清空按钮不可见：`updateClearBtn` 改为给 `#search` 挂/摘 `has-query` 类，CSS 据此显隐（原直接操作按钮样式被层叠覆盖） | `src/search.js`、`css/neat.css`、`tests/search.test.js` |
+| 9 | 3.x→4.x 升级时捐赠卡醒目提示：新增 `#v4-notice`（accent 边框卡片，`donationV4Notice` 文案 + `donationV4GuideLink` 链接），链接按 `chrome.i18n.getUILanguage()` 选 `guide-v4[.zh].md`；仅 `recordVer.major<4 && currentVer.major>=4` 的升级路径显示，新装不见 | `src/neat.js`、`pages/popup.html`、`pages/sidepanel.html`、`css/neat.css`、`_locales/*` |
+| 10 | 统计视图最近访问区菜单分化：未收藏的历史行（无 bookmark id）给精简菜单——三种打开方式（经行 href）+ "收藏"（复用行内 ☆ 按钮路径）；已收藏行保持完整书签菜单 | `src/context-menu.js`（hist-row 菜单）、`pages/popup.html`、`pages/sidepanel.html`、`tests/context-menu.test.js` |
+| 11 | 非树视图书签菜单去方位项：`POSITIONAL_IDS`（此前/此后添加书签/文件夹等）在不可见树结构的视图一律隐藏，只留直观项 | `src/context-menu.js`（`setPositionalItems`）、`tests/context-menu.test.js` |
+| 12 | 方向键跨视图焦点修复：↓ 从搜索框进活动视图列表、搜索视图历史区→结果区连续转移、recent/stats/dead/dupes 视图 ↓ 不再无反应；`view-manager.focusActive()` 统一"聚焦活动列表"入口 | `src/keyboard.js`、`src/view-manager.js`、`tests/keyboard.test.js`；Docker verify-keyboard 实测 |
+| 14 | 树中定位 vs 只显示书签栏：见下方方案选型 | `src/tree-view.js`、`src/undo.js`、`src/neat.js`、`_locales/*`、`tests/tree-view.test.js`、`tests/undo.test.js` |
+| 15 | 搜索最近搜索区按 → 弹出该行的右键菜单（与鼠标右键同菜单，键盘快捷操作设计对齐）；历史区 ↑↓/Home/End 行导航 | `src/search.js`、`tests/search.test.js` |
+| 16 | 重复组头与重复项菜单分化：组头专属菜单——"应用去重"（文案实时含 keeper 标题与将删数量）+ 展开/收起（跟随当前态） | `src/context-menu.js`（dupes-group 菜单）、`pages/popup.html`、`pages/sidepanel.html`、`tests/context-menu.test.js` |
+| 17 | 选项/高级选项合并为单页八组（General/Views/Sync/Accessibility/Custom icon/Custom styles/Dead scan/Backup+reset）；`advanced-options.html` 变重定向桩（CSP 禁内联脚本，跳转逻辑在 `src/advanced-options.js`）；布局改 CSS multicol 卡片 `columns:340px` + 1760px 限宽——4K 下自动填更多列，消除左下空白；`deadProxyTemplate` 归入 Dead scan 组 | `pages/options.html`、`src/options.js`、`src/advanced-options.js`、`css/options.css`、`tests/options.test.js`、`tests/options-layout.test.js` |
+| 18 | 强迫症选项 `showTabBadges`（默认开）：关闭即隐藏全部 tab 数量角标 | `src/view-manager.js`、`src/options.js` |
+| 19 | 侧栏残留修复：见下方根因分析 | `src/panel-behavior.js`、`src/popup.js`、`src/background.js`、`tests/panel-behavior.test.js` |
+| 20 | 一键复原旧体验：Views 组新增"经典体验"按钮，一键关闭 `paletteEnabled`/`quickAddEnabled`/`showToolButton`/`showViewTabs` 并同步取消勾选；四项均可独立开关（前三者为本轮新增独立选项）；`palette.js open()` 守卫覆盖 Ctrl+K/工具按钮/全局命令全部唤醒路径 | `src/options.js`、`src/palette.js`、`src/neat.js`、`css/neat.css`、`tests/options.test.js`、`tests/palette.test.js` |
+
+**项14 方案选型（任务要求二选一）**：备选 (a) 定位失败时 toast 提示；(b) 开了"只显示书签栏"就把所有视图限定在栏内。选定 **(a) toast 提示 + "显示全部并定位"一次性动作**，理由：① 最近添加/统计/搜索等列表视图本质是全局工作区——新书签恰恰常落在栏外文件夹，全局限定会让这些视图缺数据，违背直觉；`onlyShowBMBar` 的既有语义是"树视图的显示过滤器"，悄悄扩大作用域破坏心智模型。② 静默失败是最差体验；toast 解释原因并给出一次性出口，定位任务总能完成。③ 覆盖仅会话内生效（`showAllOverride` 模块级标志），绝不回写设置——用户的过滤偏好不被一次定位动作悄悄改掉。实现：undo 条通用化为 `toastAction(message, label, onAction)`（一次性动作，showToast/自动隐藏即失效）；`revealInTree` 以 `nodeTrees` 无条目判定目标在栏外；动作先生成全树（祖先链方可解析）再走原 reveal 链。
+
+**项19 根因**：用户猜测的"历史数据残留"基本属实——`sidePanelIsOpen` 裸标记无法证明面板存活：浏览器崩溃/会话恢复/面板渲染进程被杀时 `pagehide` 不触发，`storage.session` 里残留的 `true` 会被每次 SW 启动反复推导成 toggle 模式，图标点击便持续开关侧栏。修复：面板页每 20s 心跳 `sidePanelHeartbeat`（`PANEL_HEARTBEAT_MS`），SW 启动与选项关闭时以"标记 + 90s 内心跳"（`PANEL_STALE_MS`）判定存活，残留标记读取即清除；命令开栏路径同步写心跳。活面板在 SW 重启后仍保持 toggle（第六轮语义不变）。
+
+**行为变更（升级须知）**：`rememberView`/`showTabBadges`/`paletteEnabled`/`quickAddEnabled` 默认开；选项页合并（advanced-options.html 仅重定向）；列表行 roving `tabindex="-1"` + Tab 三区域循环；`viewState` 持久化结构迁移为 `{ scroll, focus }`（读取兼容旧数字）；`storage.session` 新增 `sidePanelHeartbeat` 键。
+
+**新增 i18n 键（22）**：选择模式共用 `selectAll`/`selectClear`/`selectCount`/`selectInvert`/`selectModeEnter`/`selectModeExit`；死链 `deadMarkSelected`/`deadUnmarkSelected`；去重 `dupesApplySelected`/`dupesConfirmSelected`/`dupesGroupExpand`/`dupesGroupCollapse`；选项 `optionRememberView`/`optionShowTabBadges`/`optionPaletteEnabled`/`optionQuickAddEnabled`/`optionShowToolButton`/`optionClassicExperience`/`optionClassicExperienceHint`；升级提示 `donationV4Notice`/`donationV4GuideLink`；定位提示 `revealOutsideBarHint`/`revealOutsideBarAction`。en/zh_CN 实译，其余 41 locale `[TODO:key]` 占位待 `i18n.py translate` 跟进。
+
+第八轮验收：单测全绿（1184，37 文件）、i18n missing=0 且 audit 通过、打包 96 文件校验通过、docker 全量 harness 通过（smoke 零控制台错误——含 rememberView/经典开关/升级提示/栏外定位 toast/面板心跳/合并选项页/重定向七组行为断言，verify-keyboard 43/43，shots/shots-themes/shots-i18n/shots-palette/shots-guide 五套件无错误）。
+
+## 附录 I：第九轮——v4.0 抛光收尾（2026-08-01，冲突修复 + UX/无障碍 + 测试/基建 + 文档/截图/图标）
+
+v4task-3 落地后的整体抛光：通读 docs 下全部现代化计划对齐思路、查漏补缺，分五批实施。
+
+**批次 1 冲突修复（键盘/菜单/焦点）**
+
+| 变更 | 落点 |
+|---|---|
+| 去重组成员行键位补齐：Enter/Space 合成 click 打开该副本、← 回组头（RTL 镜像） | `src/view-dupes.js`、`tests/view-dupes.test.js` |
+| 新菜单（hist-row / dupes-group）接入键盘导航与鼠标轨迹高亮（contextKeyDown/contextMouseMove 绑定） | `src/keyboard.js` |
+| 工具行控件纳入 §2.1 Tab 循环：tabCycle 增加 `.vbm-toolbar` 停靠点，五视图工具行补类名 | `src/keyboard.js`、`src/view-stats.js`、`src/view-dead.js`、`src/view-dupes.js` |
+| 对话框打开时 Tab 圈禁在框内（以 `dialogs.activeEl()` 判定活动对话框） | `src/dialogs.js`、`src/keyboard.js` |
+| 搜索结果区补 auxclick（中键打开，与树一致） | `src/tree-view.js` |
+| 统计/死链视图排序段 ←/→ roving 迁移 | `src/view-stats.js`、`src/view-dead.js` |
+
+**批次 2 UX / 无障碍**
+
+| 变更 | 落点 |
+|---|---|
+| 右键菜单 ARIA 化：`role="menu"` / `role="menuitem"`（popup 6 + sidepanel 40 处；CSS 依赖 `menu[type=context]` 选择器故保留 `menu` 标签） | `pages/popup.html`、`pages/sidepanel.html` |
+| 5 个对话框容器补 `aria-modal="true"` | `pages/popup.html`、`pages/sidepanel.html` |
+| favicon 补 `loading="lazy"`（树行与面板行） | `src/tree-render.js`、`src/palette.js` |
+| 全局快速收藏键 Alt+Shift+S（mac Cmd+Shift+S）占用 manifest 第 4 命令槽 `quick-add-bookmark`，静默保存不弹窗 | `manifest.json`、`src/background.js`、`_locales/*` |
+
+**批次 3 测试补足**
+
+- 新增 `tests/background.test.js`（13 例：SW 导入双模式 chrome stub，命令分发/心跳/面板开关）；`tests/popup.test.js`（9 例：`new Function` 沙箱求值，双模式 storage stub）。
+- `tests/options.test.js` +4（死链并发/超时钳制与 reset 回默认）；`tests/keyboard.test.js` setup 支持 `dialogActiveEl` 惰性注入；`tests/dialogs.test.js` 容器 id 补 5 对话框。
+- `smoke.js` 2f 段：面板唤醒双路径断言（`?palette=1` 直开聚焦；`pendingPaletteOpen` 会话标记开一次即消费）。
+
+**批次 4 基建（CI / i18n / 目录重组）**
+
+- `.github/workflows/ci.yml`：单测 + `i18n.py missing` + `i18n.py verify` + `package.py` 打包校验（verify 无 `--strict` 时警告不阻塞）。
+- i18n 全量跑批：`quickAddBookmarkCommand` 等 24 键 × 41 locale 经 `i18n.py translate --apply` 补译，43 locale × 282 键 todo=0。
+- `scripts/screenshots/` 目录重组：5 截图套件入 `suites/`、3 诊断探针入 `diag/`（run.sh 不跑 diag），新增 README 说明布局与用法；run.sh / Dockerfile / 双语 README / AGENTS.md 引用同步。
+
+**批次 5 文档 / 截图 / 图标**
+
+- `docs/guide-v4.md` / `guide-v4.zh.md` 全量回填：rememberView 默认开与角标开关、§2.1 Tab 循环 + 焦点记忆、§2.3 Alt+Shift+S、§2.4 Esc 分层补选择模式层、§3.1 历史区 → 菜单、§3.2 栏外定位 toast、§3.4/§3.5 选择模式段、§5 经典体验配方 + 5 个新开关。
+- README 双语：启动语义、设置段重写、组名对齐、数字更新（1229 例 / 39 套件 / 282 键 / 43 locale）、changelog 补抛光段。
+- `docs/现代化演进总方案.md` 追加"§9 v4.0 定稿回写"，记录四项有意未做（保存流升级放弃、骨架屏/首次引导、ResizeObserver、搜索防抖）及理由。
+- 图标 SVG 化：`assets/icons/icon.svg`（透明圆角红方块 + 白色 chevron，按 128px PNG 实测几何重绘）；options 页两处 `<img>` 与预览改用 SVG；**manifest 与 `setIcon` 保留 PNG**——Chrome 拒绝 SVG 作 action 图标；`scripts/package.py` 清单同步。
+- 截图：五个套件全部补 donation 静默 seed（`donationFactor:1, donationKey:30`，shots.js 的 12 号捐赠镜头保留）；shots-guide.js 新增死链/去重选择模式两张（dead-select/dupes-select）并配入 guide §3.4/§3.5；全量重拍更新 `docs/images/guide/`。
+
+第九轮验收：单测 1229 例 / 39 文件全绿；i18n missing todo=0、verify 通过、audit 通过；打包 97 文件（+icon.svg）校验通过；docker 全量 harness 通过（smoke 零控制台错误、verify-keyboard 43/43、五套件无错误）；guide 配图抽查无 donation 横幅、选择模式批量条可见。

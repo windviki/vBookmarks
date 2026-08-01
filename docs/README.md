@@ -26,7 +26,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 - **Modern, calm UI** — a full design-token system with five looks: follow-system, light, dark, plus two crafted "fable" themes: **Ink** (deep dark) and **Paper** (warm light).
 - **Find anything instantly** — fzf-style fuzzy search with match highlighting (CJK-friendly), persistent search history, and a **command palette** (`Ctrl/Cmd+K`) unifying bookmark search, folder jumps, view jumps and power commands.
 - **Power tools built in** — a dead-link scanner with dual-channel checks and pause/resume, a duplicate cleaner with six keeper strategies and undo-safe batch deletion, a session saver, and one-click undo for every delete.
-- **Quick add everywhere** — star button in the popup, `Ctrl/Cmd+D`, or "Bookmark this page" from the page context menu.
+- **Quick add everywhere** — star button in the popup, `Ctrl/Cmd+D`, the global `Alt+Shift+S` shortcut, or "Bookmark this page" from the page context menu.
 - **Sync-aware** — on Chrome 138+ it understands Chrome's dual local/synced bookmark storage: local-only subtrees are gently dimmed, roots are labeled `(Local)` / `(Synced)`, and cross-storage drags are blocked with a polite toast instead of a hard failure.
 - **43 languages**, all aligned to the English baseline and kept in sync by an LLM-assisted translation pipeline.
 - **Private by design** — plain ES6+ JavaScript, no framework, no build step, no telemetry; the source you inspect is the code you run. Visit statistics are stored locally, can be paused with one switch and erased with one button.
@@ -41,7 +41,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 - **Six views**: **Tree** (the classic), **Search**, **Recent**, **Stats**, **Dead links**, **Duplicates**. The icon tab strip shows live count badges (dead marks, dupe groups, tracked pages) and can be hidden per view (Stats/Dead/Duplicates) or entirely for the classic single-pane layout.
 - **One keyboard model everywhere** — the tree's mature semantics (arrows, `Home`/`End`, `PageUp`/`PageDown`, `Enter`, `F2`, `Delete`, type-ahead) now work identically in every list view; `↑` past the first row steps up to the tab strip, then the search box; the strip itself is arrow/Home/End navigable with roving tabindex and RTL awareness; `Ctrl/Cmd+1…6` jumps straight to a view.
 - **Layered `Esc`** — context menu → command palette → view-level action (e.g. pausing a scan) → clear search → back to tree → close, always peeling one layer at a time.
-- **Popup vs panel** — the popup always boots on the tree; the side panel restores the view you left, ready to become your always-on bookmark workspace.
+- **Popup vs panel** — both reopen on the view you left (the popup via the default-on *remember the last view* switch — turn it off for the classic always-tree boot), and the side panel is ready to become your always-on bookmark workspace.
 
 ## Search view — dual zone
 
@@ -79,10 +79,10 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Settings, backup & the classic look
 
-- A new **Views** group in options: tab-strip visibility, per-view visibility, path labels, recent count, search history, visit statistics (+ erase), dead-link proxy.
+- The options page grew a **Views** group — tab-strip and per-view visibility, count badges, the remember-last-view switch, the palette/quick-add/tool-button chrome toggles, and a one-click *Restore the classic header* button — plus a **Dead scan** group (proxy template, concurrency, timeout).
 - **Backup & restore**: export every setting to a stamped JSON file, import it back with merge semantics — moving machines no longer means re-clicking forty toggles.
-- Options and advanced options now use a responsive multi-column card layout that stays readable from 320 px to 4K.
-- **Classic-mode friendly**: hide the view tabs, pick the light or dark theme, and 4.0 behaves like the vBookmarks you know — every new surface is opt-out.
+- Options and advanced options are now **one merged page** with a responsive multi-column card layout that stays readable from 320 px to 4K (the old advanced-options URL redirects).
+- **Classic-mode friendly**: one click on *Restore the classic header* — or a hand-picked set of toggles — and 4.0 behaves like the vBookmarks you know; every new surface is opt-out.
 
 ## The v4 foundation
 
@@ -94,9 +94,10 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1103 unit tests** across 37 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, search dual-zone, per-view rendering — 32 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **258 keys**, all 43 locales aligned.
+- **1229 unit tests** across 39 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, search dual-zone, per-view rendering — 43 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **282 keys**, all 43 locales aligned.
+- **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
 
@@ -139,9 +140,9 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 8. Show only the Bookmark Bar (option in settings).
 9. Open bookmarks in background tabs (option in settings).
 10. Control the popup zoom level in settings.
-11. **Advanced settings** (entry at the top right of the settings page): customize separator title/URL/style, tune dead-link scan concurrency/timeout.
-12. **Advanced settings**: custom CSS for the whole popup (CodeMirror editor), e.g. `* { font-family: Consolas; }`.
-13. **Advanced settings**: replace the toolbar icon with your own.
+11. **Options page**: the *Custom Styles* group customizes separator title/URL/style; the *Dead scan* group tunes scan concurrency/timeout.
+12. **Options page**: custom CSS for the whole popup (CodeMirror editor, *Custom Styles* group), e.g. `* { font-family: Consolas; }`.
+13. **Options page**: replace the toolbar icon with your own (*Custom Icon* group).
 14. Disable popup auto-resize to keep a fixed height.
 15. Export/import all settings as JSON from the Backup group at the bottom of the options page.
 
@@ -151,20 +152,21 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 1103 cases across 37 suites)
+# Unit tests (Vitest, 1229 cases across 39 suites)
 npm install
 npm run test:run
 
 # Headless harness (Docker; shots land in tmp/shots/)
 scripts/screenshots/run.sh                # smoke + keyboard verification + all suites
 scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard/view checks only
-#   smoke.js           popup/panel/options raise zero console errors
-#   verify-keyboard.js tab-strip keyboard model, focus zones, view rendering
-#   shots.js           interaction states (light/dark)
-#   shots-themes.js    view rows on all 5 themes
-#   shots-i18n.js      tree/tabs/menus/dialog/options × 8 UI languages
-#   shots-palette.js   palette + the four feature views
-#   shots-guide.js     guide screenshots (search dual zone, options Views group)
+#   smoke.js             popup/panel/options raise zero console errors
+#   verify-keyboard.js   tab-strip keyboard model, focus zones, view rendering
+#   suites/shots.js         interaction states (light/dark)
+#   suites/shots-themes.js  view rows on all 5 themes
+#   suites/shots-i18n.js    tree/tabs/menus/dialog/options × 8 UI languages
+#   suites/shots-palette.js palette + the four feature views
+#   suites/shots-guide.js   guide screenshots (search dual zone, options Views group)
+#   diag/                manual probes, run on demand inside the image
 
 # Locale pipeline (scripts/i18n.py, stdlib only)
 python3 scripts/i18n.py audit      # keys used in code vs en baseline
@@ -195,9 +197,11 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Ctrl/Cmd+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Command palette upgrades: Go commands per view, theme switching, `/session`, `/options`, aliases, search bridge row, auto-close on blur. Options: Views group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
 
+Polish: selection modes in Dead links (batch mark/unmark) and Duplicates (batch group cleaning) with `Esc` to exit; `Tab`/`Shift+Tab` region cycling including in-list toolbars, with per-region focus memory; duplicates member-row keys (`Enter` opens a copy, `←` returns to the group head) and group-head menus; remember-last-view restore (default on) and count-badge, palette, quick-add and tool-button switches, plus a one-click *Restore the classic header* button; options and advanced options merged into a single page (old URL redirects); global quick-add shortcut (`Alt+Shift+S`); ARIA roles on all context menus, `aria-modal` dialogs with a focus trap; lazy favicons; GitHub Actions CI.
+
 Fixed: search field click-through and unreliable native clear button; adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added); non-empty folder deletion is confirm-gated again (with undo).
 
-Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 258 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1103 cases across 37 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
+Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 282 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1229 cases across 39 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
 
 
 **ver3.7 2026/05/10**
