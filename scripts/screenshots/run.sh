@@ -5,7 +5,7 @@
 # work in some DinD setups, so the repo is tarred into the build context),
 # runs the zero-console-error smoke check (smoke.js, the image CMD) and the
 # real-browser keyboard/view verification (verify-keyboard.js, blocking),
-# then captures the screenshot suites:
+# then captures the screenshot suites (suites/):
 #   shots.js         — 11 interaction states, light + dark themes
 #   shots-themes.js  — view tab strip + full-state view rows on all 5 themes
 #                      (options/advanced keep ink + paper)
@@ -14,6 +14,8 @@
 #                      dupes/dead views + live dead rescan
 #   shots-guide.js   — guide-only states (search dual zone with history,
 #                      the options Views group card) for docs/guide-v4*.md
+# diag/ holds manual diagnostic probes (diag.js, diag-dead.js, diag-v4t3.js),
+# run on demand: docker run --rm vbm-smoke:local node /work/diag/diag.js
 # Screenshots land in tmp/shots/ (git-ignored).
 #
 # Usage: scripts/screenshots/run.sh [--smoke-only]
@@ -30,7 +32,9 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,diag.js,diag-dead.js,verify-keyboard.js,shots.js,shots-themes.js,shots-i18n.js,shots-palette.js,shots-guide.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js} "$CTX/"
+cp -r "$REPO_ROOT"/scripts/screenshots/suites "$CTX/suites"
+cp -r "$REPO_ROOT"/scripts/screenshots/diag "$CTX/diag"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
 docker run --rm "$IMAGE"
@@ -44,7 +48,7 @@ docker run --rm "$IMAGE" node /work/verify-keyboard.js
 for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
-    docker create --name "$name" "$IMAGE" node "/work/$suite" >/dev/null
+    docker create --name "$name" "$IMAGE" node "/work/suites/$suite" >/dev/null
     docker start -a "$name"
     docker cp "$name":/tmp/shots/. "$OUT/"
     docker rm "$name" >/dev/null

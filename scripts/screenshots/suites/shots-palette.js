@@ -47,6 +47,10 @@ const SEED = `
     // --- View datasets ---
     const now = Date.now();
     await new Promise(r => chrome.storage.local.set({
+        // Silence the donation ask + the 3.x→4.x upgrade notice in every shot
+        currentVersion: chrome.runtime.getManifest().version,
+        donationFactor: 1,
+        donationKey: 30,
         // stats view: three rows across count magnitudes and ages
         visitStats: JSON.stringify({
             [so.id]: { c: 128, t: now - 60e3 },

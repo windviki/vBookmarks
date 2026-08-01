@@ -16,6 +16,29 @@ const SEED = `
     await create({ parentId: work.id, title: 'MDN Web Docs', url: 'https://developer.mozilla.org/docs/Web' });
     await create({ parentId: work.id, title: 'Stack Overflow', url: 'https://stackoverflow.com/questions/tagged/chrome-extension' });
     await create({ parentId: '1', title: 'Hacker News', url: 'https://news.ycombinator.com' });
+
+    // Duplicate groups for the dupes selection-mode shot
+    await create({ parentId: work.id, title: 'MDN Web Docs (copy)', url: 'https://developer.mozilla.org/docs/Web' });
+    await create({ parentId: '1', title: 'MDN Web Docs (old)', url: 'https://developer.mozilla.org/docs/Web' });
+    await create({ parentId: '1', title: 'GitHub mirror', url: 'https://github.com/vBookmarks' });
+
+    // Dead links + a cached scan for the dead selection-mode shot
+    const dead1 = await create({ parentId: '1', title: 'Dead Link (example)', url: 'https://example.invalid/dead-page' });
+    const dead2 = await create({ parentId: '1', title: 'Bogus host', url: 'https://thishost.does.not.exist.example/' });
+    await new Promise(r => chrome.storage.local.set({
+        deadLastScan: JSON.stringify({
+            ts: Date.now() - 3600e3,
+            scannedCount: 8,
+            results: {
+                [dead1.id]: { status: 'dead', code: 404 },
+                [dead2.id]: { status: 'dead', code: 0, error: 'ERR_NAME_NOT_RESOLVED' }
+            }
+        }),
+        // Silence the donation ask + the 3.x→4.x upgrade notice in every shot
+        currentVersion: chrome.runtime.getManifest().version,
+        donationFactor: 1,
+        donationKey: 30
+    }, r));
 })()`;
 
 (async () => {
@@ -88,6 +111,72 @@ const SEED = `
     if (!dual.searchVisible || dual.input !== 'figma' || !dual.histRows || !dual.resRows)
         errors.push(`dual zone not populated: ${JSON.stringify(dual)}`);
     await page.screenshot({ path: '/tmp/shots/guide-search-dualzone.png' });
+
+    // --- 1b. dupes view: selection mode with one group ticked --------------
+    // The batch bar (count + all/invert/clear/apply/exit) replaces the idle
+    // toolbar; head/member clicks toggle the whole group (guide §3.5).
+    // Clear the search box first so the shot isn't carrying the dual-zone
+    // query over an unrelated view.
+    await page.evaluate(() => {
+        const i = document.getElementById('search-input');
+        i.value = '';
+        i.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await sleep(400);
+    await page.click('#view-tab-dupes'); await sleep(700);
+    const dupesSelect = await page.evaluate(() => {
+        const btn = document.querySelector('#view-dupes .dupes-select-mode');
+        if (!btn) return { entry: false };
+        btn.click();
+        return { entry: true };
+    });
+    await sleep(400);
+    if (!dupesSelect.entry)
+        errors.push('dupes select-mode entry button not found');
+    else {
+        await page.evaluate(() => {
+            const li = document.querySelector('#view-dupes ul.selecting li[data-key]');
+            if (!li) throw new Error('no dupes group row in selection mode');
+            li.querySelector('.group-head, a, span').click();
+        });
+        await sleep(400);
+        const st = await page.evaluate(() => ({
+            bar: !!document.querySelector('#view-dupes .dupes-toolbar.selecting-bar'),
+            sel: document.querySelectorAll('#view-dupes .dupes-group.sel').length
+        }));
+        if (!st.bar || !st.sel)
+            errors.push(`dupes selection state wrong: ${JSON.stringify(st)}`);
+        await page.screenshot({ path: '/tmp/shots/guide-dupes-select.png' });
+    }
+
+    // --- 1c. dead view: selection mode with one row ticked ------------------
+    // Cached scan from the seed puts results on screen (the 选择 entry only
+    // renders with results); row clicks toggle membership (guide §3.4).
+    await page.click('#view-tab-dead'); await sleep(700);
+    const deadSelect = await page.evaluate(() => {
+        const btn = document.querySelector('#view-dead .dead-select-mode');
+        if (!btn) return { entry: false };
+        btn.click();
+        return { entry: true };
+    });
+    await sleep(400);
+    if (!deadSelect.entry)
+        errors.push('dead select-mode entry button not found');
+    else {
+        await page.evaluate(() => {
+            const li = document.querySelector('#view-dead ul.selecting li[data-node-id]');
+            if (!li) throw new Error('no dead result row in selection mode');
+            li.querySelector('a, span').click();
+        });
+        await sleep(400);
+        const st = await page.evaluate(() => ({
+            bar: !!document.querySelector('#view-dead .select-count'),
+            sel: document.querySelectorAll('#view-dead li.sel').length
+        }));
+        if (!st.bar || !st.sel)
+            errors.push(`dead selection state wrong: ${JSON.stringify(st)}`);
+        await page.screenshot({ path: '/tmp/shots/guide-dead-select.png' });
+    }
 
     // --- 2. options page: the Views group card -------------------------------
     const opts = await browser.newPage();
