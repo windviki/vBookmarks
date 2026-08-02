@@ -2970,3 +2970,20 @@ body.panel-mode .vbm-row .row-sub {
     justify-content: center;
     padding-top: 8px;
 }
+
+/* === 横向滚动条防护（scrollbar-contract）===
+   所有列表/滚动容器：标题均已省略号截断，无横向滚动需求。overflow-x:hidden
+   兜底防止 sync-tooltip、超长 URL 的 min-content 等隐形内容撑出横向滚动条
+   （同 commit 98e29b3 对 #tree 的修复）。纵向滚动不受影响（overflow-y 保持
+   auto）。置于文件末尾：同特异性靠后胜出，覆盖上方各容器的 overflow:auto /
+   overflow-y:auto，避免把规则写进各容器内部造成重复。 */
+#tree,
+#results,
+#recent-list,
+#dupes-list,
+#dead-list,
+#stats-list,
+#search-history-area,
+#palette-results {
+    overflow-x: hidden;
+}
