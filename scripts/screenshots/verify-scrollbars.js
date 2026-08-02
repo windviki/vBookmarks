@@ -326,11 +326,13 @@ const sweepViews = async (page, tag, { includePalette }) => {
         width, height, autoResize ? '1' : 'false', '', '', '', '1', '1', '1'
     ];
 
-    const openMeasurePage = async (tag, { width, height, browserZoom, screen, autoResize }) => {
+    const openMeasurePage = async (tag, { width, height, browserZoom, screen, autoResize, viewportH = 800 }) => {
         const page = await browser.newPage();
         watch(page, tag);
         await page.evaluateOnNewDocument(makeInitScript(browserZoom, screen.w, screen.h));
-        await page.setViewport({ width, height: 800 }); // viewport 宽 = body 宽（#container 陷阱）
+        // viewport 宽 = body 宽（#container 陷阱）；高度默认 800（防 tab 自身滚动
+        // 干扰），Phase B2 用 600 复现 Chrome popup 物理限制场景
+        await page.setViewport({ width, height: viewportH });
         await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
         await sleep(1200);
         return page;
@@ -392,6 +394,30 @@ const sweepViews = async (page, tag, { includePalette }) => {
             check(bodyH >= 200, `${tag} body height ≥ minH 200 (got ${bodyH})`);
             await page.close();
         }
+    }
+
+    // ── Phase B2 双滚动条根因回归（浏览器 zoom 0.9 × Chrome popup 物理限制）
+    // 用户实测：深层树 + 浏览器 zoom 90%，resetHeight 的 maxH=(600/0.9)-1=666，
+    // 但 Chrome 实际 viewport 只给 600 → body 666 > 600 → html/body 层撑出第二根
+    // 纵向滚动条（+ #tree 内部滚动 = 双滚动条）。修复后 maxH 也 clamp 到
+    // window.innerHeight，body 绝不超过 viewport。viewportH=600 复现该限制。
+    SECTION('Phase B2 — 浏览器 zoom=0.9 × viewport 600（深层树双滚动根因回归）');
+    {
+        const browserZoom = 0.9, screen = { w: 1920, h: 1080 };
+        const tag = 'B2:bz0.9:vp600';
+        await setPrefs(basePrefs({ width: 320, height: 600, autoResize: true }));
+        const page = await openMeasurePage(tag, { width: 320, height: 600, browserZoom, screen, autoResize: true, viewportH: 600 });
+        await verifyStubs(page, tag, { browserZoom, screen });
+        await sweepViews(page, tag, { includePalette: false });
+        const m = await page.evaluate(() => ({
+            bodyH: document.body.offsetHeight,
+            vp: window.innerHeight,
+            htmlOverflow: document.documentElement.scrollHeight - document.documentElement.clientHeight
+        }));
+        // 修复核心：body 高度绝不超过 Chrome 实际 viewport → html 层无滚动条
+        check(m.bodyH <= m.vp, `${tag} body height ≤ viewport ${m.vp} (got ${m.bodyH}) — no html-level second scrollbar`);
+        check(m.htmlOverflow <= 1, `${tag} documentElement no vertical overflow (got ${m.htmlOverflow}px)`);
+        await page.close();
     }
 
     // ── Phase C 固定小高度（autoResizePopup=false 钉住高度）─────────────────

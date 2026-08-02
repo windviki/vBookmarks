@@ -360,7 +360,14 @@ import { markPopupOpen } from './visit-stats-sw.js';
         const currentH = body.offsetHeight;
         chrome.tabs.getZoom(zoomFactor => {
             const minH = Math.max(300 / zoomFactor, 200);
-            const maxH = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1);
+            // body 高度上限：屏幕剩余空间、popup 物理上限(600/zoom)、以及
+            // Chrome 实际给到的 viewport（window.innerHeight）。最后一项是
+            // 硬锚点——`600/zoomFactor` 假设 popup 物理最高 600px，但 Chrome
+            // 对 action popup 的真实高度限制在非 100% 浏览器 zoom 下比该假设
+            // 更紧（实测 zoom 0.9 时公式给 666px，Chrome 只给 600px），
+            // body 若设得比 viewport 高，html/body 层会撑出第二根纵向滚动条
+            // （深层树 + 非 100% zoom 的双滚动条根因）。
+            const maxH = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1, window.innerHeight);
             const clampedContent = Math.max(minH, Math.min(contentH, maxH));
 
             let targetH;
@@ -902,7 +909,9 @@ import { markPopupOpen } from './visit-stats-sw.js';
             // 240 < height < 600
             if (currentMaxHeight <= 0) {
                 chrome.tabs.getZoom(zoomFactor => {
-                    currentMaxHeight = (600 / zoomFactor) - 1;
+                    // 同 resetHeight：以 Chrome 实际 viewport 为硬锚点，拖拽高度
+                    // 上限不能超过窗口本身（否则 html 层撑出第二根纵向滚动条）
+                    currentMaxHeight = Math.min((600 / zoomFactor) - 1, window.innerHeight);
                     height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
                     body.style.height = `${height}px`;
                     store.set('popupHeight', height);
