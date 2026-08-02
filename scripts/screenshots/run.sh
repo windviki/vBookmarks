@@ -3,8 +3,10 @@
 #
 # Builds a Docker image with the extension baked in (bind mounts do not
 # work in some DinD setups, so the repo is tarred into the build context),
-# runs the zero-console-error smoke check (smoke.js, the image CMD) and the
-# real-browser keyboard/view verification (verify-keyboard.js, blocking),
+# runs the zero-console-error smoke check (smoke.js, the image CMD), the
+# real-browser keyboard/view verification (verify-keyboard.js, blocking) and
+# the scrollbar matrix probe (verify-scrollbars.js, blocking: screen ×
+# browser-zoom × in-extension zoom sweep, no horizontal scrollbar on any pane),
 # then captures the screenshot suites (suites/):
 #   shots.js         — 11 interaction states, light + dark themes
 #   shots-themes.js  — view tab strip + full-state view rows on all 5 themes
@@ -32,7 +34,7 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/screenshots/suites "$CTX/suites"
 cp -r "$REPO_ROOT"/scripts/screenshots/diag "$CTX/diag"
 
@@ -43,6 +45,9 @@ docker run --rm "$IMAGE"
 # model, focus zones, search dual-zone persistence and per-view rendering —
 # Esc chains stay in vitest (see docs/cdp-escape-limitation.md).
 docker run --rm "$IMAGE" node /work/verify-keyboard.js
+# Layer 2b — scrollbar matrix (blocking): screen × browser-zoom × in-extension
+# zoom × popup-size sweep, no horizontal scrollbar on any pane. ~2-3 min.
+docker run --rm "$IMAGE" node /work/verify-scrollbars.js
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
 for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js; do

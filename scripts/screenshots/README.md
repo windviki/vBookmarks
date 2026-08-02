@@ -15,17 +15,25 @@ and runs three layers:
    toolbar rung first), the banner's Tab-ring reachability and
    per-view rendering. Esc chains stay in vitest; see
    `docs/cdp-escape-limitation.md`.
-3. Screenshot suites into `tmp/shots/` (git-ignored).
+3. `verify-scrollbars.js` (blocking) — the horizontal-scrollbar matrix probe:
+   sweeps screen resolution × browser zoom (stubbed `chrome.tabs.getZoom`) ×
+   in-extension zoom (`body[data-zoom]`) × popup size, and asserts every
+   scrollable pane computes `overflow-x: hidden` (no horizontal scrollbar),
+   the injected `.sync-indicator.synced` tooltips stay `display: none`
+   (commit 98e29b3 root-cause guard) and the non-tree panes keep
+   `scrollWidth <= clientWidth`. Vertical scrolling is expected and allowed.
+4. Screenshot suites into `tmp/shots/` (git-ignored).
 
 ## Layout
 
 ```
 scripts/screenshots/
-├── run.sh              # entry point: build + smoke + keyboard + all suites
+├── run.sh              # entry point: build + smoke + keyboard + scrollbars + suites
 ├── Dockerfile          # copies smoke/verify into /work, suites+diag into subdirs
 ├── smoke.js            # layer 1 (image CMD)
 ├── verify-keyboard.js  # layer 2 (blocking)
-├── suites/             # layer 3 — screenshot suites, run in order by run.sh
+├── verify-scrollbars.js# layer 3 (blocking) — scrollbar matrix probe
+├── suites/             # layer 4 — screenshot suites, run in order by run.sh
 │   ├── shots.js          # interaction states, light + dark
 │   ├── shots-themes.js   # view tab strip + full-state rows on all 5 themes
 │   ├── shots-i18n.js     # tree/tabs/menus/dialog/options × 8 UI languages
