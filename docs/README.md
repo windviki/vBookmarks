@@ -98,8 +98,8 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1386 unit tests** across 43 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table and per-theme badge contrast.
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 115 hard assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- **1416 unit tests** across 44 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry).
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 115 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 695 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
 - Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys**, all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
@@ -161,10 +161,11 @@ npm install
 npm run test:run
 
 # Headless harness (Docker; shots land in tmp/shots/)
-scripts/screenshots/run.sh                # smoke + keyboard verification + all suites
-scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard/view checks only
-#   smoke.js             popup/panel/options raise zero console errors
-#   verify-keyboard.js   tab-strip keyboard model, focus zones, view rendering
+scripts/screenshots/run.sh                # smoke + keyboard + scrollbar checks + all suites
+scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard + scrollbar checks
+#   smoke.js               popup/panel/options raise zero console errors
+#   verify-keyboard.js     tab-strip keyboard model, focus zones, view rendering
+#   verify-scrollbars.js   screen×browser-zoom×in-extension-zoom sweep: no horizontal scrollbar
 #   suites/shots.js         interaction states (light/dark)
 #   suites/shots-themes.js  view rows on all 5 themes
 #   suites/shots-i18n.js    tree/tabs/menus/dialog/options × 8 UI languages

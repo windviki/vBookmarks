@@ -98,8 +98,8 @@ vBookmarks
 
 ## 工程
 
-- **1386 个单元测试**，43 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度的契约测试。
-- **Docker harness**：零控制台错误冒烟、真实浏览器键盘/视图验证套件（tab 条键盘模型、焦点区域、头部行方向链、各视图 ↑↓ 越顶含死链视图双工具行层级、横幅键盘可达、搜索双区、逐视图渲染、面板自定义指令——115 条硬断言），以及 5 主题 × 8 界面语言的截图套件（含 RTL 镜像断言）。
+- **1416 个单元测试**，44 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度、以及横向滚动条防护契约（每个滚动容器裁剪 overflow-x、文本槽省略号、固定槽 flex:none、zoom 规则不改几何）的契约测试。
+- **Docker harness**：零控制台错误冒烟、真实浏览器键盘/视图验证套件（tab 条键盘模型、焦点区域、头部行方向链、各视图 ↑↓ 越顶含死链视图双工具行层级、横幅键盘可达、搜索双区、逐视图渲染、面板自定义指令——115 条硬断言）、滚动条矩阵探针（屏幕分辨率 × 浏览器 zoom × 扩展内 zoom × popup 尺寸扫描，任何滚动容器无横向滚动条——695 条断言），以及 5 主题 × 8 界面语言的截图套件（含 RTL 镜像断言）。
 - 统一语言工具（`scripts/i18n.py`）：审计、缺失报告、LLM 批量翻译、verify 门禁。基准键从 75 增至 **345**，43 个语种全部对齐。
 - **CI**：GitHub Actions 在每次 push 与 PR 上跑单测、i18n 门禁与发布打包。
 - 目录结构 v4 重组：`src/`、`pages/`、`css/`、`assets/`、`scripts/`；过时产物（旧 `release/*.crx`、MV2 遗留）留存于 git 历史。
@@ -161,10 +161,11 @@ npm install
 npm run test:run
 
 # 无头 harness（Docker；截图输出到 tmp/shots/）
-scripts/screenshots/run.sh                # 冒烟 + 键盘验证 + 全部截图套件
-scripts/screenshots/run.sh --smoke-only   # 仅零控制台错误 + 键盘/视图检查
+scripts/screenshots/run.sh                # 冒烟 + 键盘 + 滚动条检查 + 全部截图套件
+scripts/screenshots/run.sh --smoke-only   # 仅零控制台错误 + 键盘 + 滚动条检查
 #   smoke.js             弹窗/侧栏/选项页零控制台错误
 #   verify-keyboard.js   tab 条键盘模型、焦点区域、逐视图渲染
+#   verify-scrollbars.js 屏幕×浏览器zoom×扩展内zoom 扫描：无横向滚动条
 #   suites/shots.js         交互状态（亮/暗主题）
 #   suites/shots-themes.js  五主题视图行
 #   suites/shots-i18n.js    树/tab 条/菜单/对话框/选项页 × 8 种界面语言
