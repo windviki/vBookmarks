@@ -74,7 +74,8 @@ export function initActions(ctx = {}) {
             copier.select();
             document.execCommand('copy');
         };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
+        // node 测试环境（Node <21）没有 navigator 全局，特性检测需先判存在
+        if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(copyText).catch(legacyCopy);
         } else {
             legacyCopy();
