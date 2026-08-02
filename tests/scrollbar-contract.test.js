@@ -231,8 +231,29 @@ describe('scrollbar-contract: sync-tooltip 回归守卫 98e29b3 (G)', () => {
         expect(ind).toContain('z-index: 10');
     });
 
-    it('the row flex selector excludes the sync spans (the 98e29b3 fix)', () => {
-        expect(neatCss).toContain('#tree ul li span:not(.sync-indicator):not(.sync-tooltip)');
+    it('the row flex selector is a child selector, so it can never reach nested overlay spans', () => {
+        // 98e29b3 曾用 `#tree ul li span:not(.sync-indicator):not(.sync-tooltip)`
+        // （后代选择器），特异性升到 (1,2,3) 反超 dead-indicator 防线，导致树
+        // 视图 × 变黑/偏移。改用子选择器 `#tree ul li > span` 后结构性排除所有
+        // 嵌套覆盖物（sync/死链 ×），特异性回到 (1,0,3)。
+        expect(neatCss).toContain('#tree ul li > span {');
+        // 后代版不得残留（它会把 display/line-height/padding 泄漏进覆盖物）
+        expect(neatCss).not.toContain('#tree ul li span:not(');
+    });
+
+    it('the dead-indicator pins its own box and its guard beats the row rule', () => {
+        // dead × 的防线规则（specificity 1,1,3）必须钉死白 × 与居中盒属性，
+        // 且不被行 flex 规则（现在是 > span，1,0,3）覆盖——98e29b3 的回退曾让
+        // 行规则的 color:var(--vbm-fg)（黑）、line-height:1.67em、padding 泄漏
+        // 进来，× 变黑、偏移、圆形被拉成椭圆（搜索视图因无 `#results ul li
+        // span` 后代规则而不受影响）。
+        const guard = ruleBody(neatCss, '#tree ul li span.dead-indicator {');
+        expect(guard).toContain('display: inline-flex');
+        expect(guard).toContain('color: var(--vbm-danger-fg)');
+        expect(guard).toContain('line-height: 1');
+        expect(guard).toContain('padding: 0');
+        expect(guard).toContain('width: 10px');
+        expect(guard).toContain('height: 10px');
     });
 
     it('the sync dot is pinned absolute from neat.css too (never enters the flex flow)', () => {

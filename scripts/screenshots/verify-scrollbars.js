@@ -148,12 +148,32 @@ const INJECT_SYNCED = `
     return injected;
 })()`;
 
-// 树视图准备：展开深链 + 注入 synced 角标，返回注入数。
+// 树视图准备：展开深链 + 注入 synced 角标 + 注入 dead-indicator ×，返回注入数。
 const prepareTree = async page => {
     const rows = await page.evaluate(EXPAND_ALL);
     const injected = await page.evaluate(INJECT_SYNCED);
-    return { rows, injected };
+    const dead = await page.evaluate(INJECT_DEAD);
+    return { rows, injected, dead };
 };
+
+// 往前 N 个 favicon 注入 .dead-indicator（与 view-dead.js refreshOverlays 完全
+// 相同的标记：<span class="dead-indicator">×</span>）。行 flex 规则若用后代选择
+// 器泄漏进覆盖物，× 会变黑/偏移/圆形被拉成椭圆（98e29b3 曾引入此回退，已改用
+// `#tree ul li > span` 子选择器修复）。
+const INJECT_DEAD = `
+(() => {
+    let injected = 0;
+    document.querySelectorAll('#tree .favicon-container').forEach(fc => {
+        if (injected >= 3) return;
+        if (fc.querySelector('.dead-indicator')) return;
+        const span = document.createElement('span');
+        span.className = 'dead-indicator';
+        span.textContent = '×';
+        fc.appendChild(span);
+        injected++;
+    });
+    return injected;
+})()`;
 
 // 程序化点击：`#container` 经 body[data-zoom] 缩放后，puppeteer 的几何点击
 // （clickablePoint 命中测试）会偶发失败；探针测的是布局溢出而非鼠标交互，
@@ -188,7 +208,7 @@ const sweepViews = async (page, tag, { includePalette }) => {
         await sleep(650); // view-manager 激活钩子异步渲染
 
         if (view.id === 'tree') {
-            const { rows, injected } = await prepareTree(page);
+            const { rows, injected, dead } = await prepareTree(page);
             check(rows >= 10, `${tag} tree rendered ≥10 rows (got ${rows})`);
             if (injected > 0) {
                 const states = await page.evaluate(() =>
@@ -201,6 +221,30 @@ const sweepViews = async (page, tag, { includePalette }) => {
                 const ok = states.length === injected && states.every(s => s.display === 'none');
                 check(ok, `${tag} tree injected ${injected} .sync-indicator.synced all computed display:none (98e29b3 root cause)` +
                     (ok ? '' : ` — got ${JSON.stringify(states)}`));
+            }
+            if (dead > 0) {
+                // dead × 必须钉住白/居中/10px 圆盒：行 flex 规则泄漏进来会
+                // 让 color==fg（黑）、line-height 1.67em、padding 4px、圆形被
+                // 拉成椭圆（搜索视图因无 `#results ul li span` 后代规则而不受
+                // 影响——树视图专属回退）。
+                const m = await page.evaluate(() => {
+                    const fg = getComputedStyle(document.body).color;
+                    return [...document.querySelectorAll('#tree .dead-indicator')].map(el => {
+                        const cs = getComputedStyle(el);
+                        return { color: cs.color, isFg: cs.color === fg,
+                                 lineHeight: cs.lineHeight,
+                                 padL: cs.paddingLeft, padR: cs.paddingRight,
+                                 w: cs.width, h: cs.height };
+                    });
+                });
+                // 树中所有 dead ×（含 seed 经 refreshOverlays 注入的真实标记）
+                // 都必须钉住白/居中/圆形盒。
+                const ok = m.length >= 1 && m.every(d =>
+                    !d.isFg && parseFloat(d.lineHeight) <= 15 &&
+                    d.padL === '0px' && d.padR === '0px' &&
+                    parseFloat(d.w) >= 9 && parseFloat(d.h) >= 9);
+                check(ok, `${tag} tree ${m.length} .dead-indicator pinned (white, centered, 10px circle)` +
+                    (ok ? '' : ` — got ${JSON.stringify(m)}`));
             }
         }
         if (view.id === 'search') {

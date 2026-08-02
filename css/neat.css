@@ -482,7 +482,14 @@ body.linux input {
 
 #results ul li a,
 #tree ul li a,
-#tree ul li span:not(.sync-indicator):not(.sync-tooltip) {
+/* v4 回归修复：用子选择器 > span 只命中文件夹行的 span.tree-item-span
+   （li 的直接子元素），结构性排除行内所有嵌套 span（sync-indicator、
+   sync-tooltip、dead-indicator × 及其它覆盖物）——后代选择器配 :not()
+   会把特异性抬到 (1,2,3)，反超 dead-indicator 的防线规则
+   `#tree ul li span.dead-indicator`（(1,1,3)），导致 × 变黑/偏移/圆形被
+   padding 拉成椭圆。子选择器特异性回到 (1,0,3)，覆盖物各自钉死的盒属性
+   重新胜出。 */
+#tree ul li > span {
     display: flex;
     align-items: center;
     line-height: 1.67em;
@@ -495,13 +502,13 @@ body.linux input {
 
 #results ul li a:hover,
 #tree ul li a:hover,
-#tree ul li span:not(.sync-indicator):not(.sync-tooltip):hover {
+#tree ul li > span:hover {
     background-color: var(--vbm-bg-hover);
 }
 
 #results ul li a *,
 #tree ul li a *,
-#tree ul li span:not(.sync-indicator):not(.sync-tooltip) * {
+#tree ul li > span * {
     pointer-events: none;
 }
 
