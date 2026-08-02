@@ -323,7 +323,11 @@ describe('open-side-panel command', () => {
 
     it('clears the open markers when sidePanel.open rejects (#19)', async () => {
         chromeDouble.sidePanel._openRejects = true;
+        // The production catch logs console.warn on purpose; spy it away so
+        // CI logs don't read this expected rejection as an error.
+        const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
         await listeners.commands('open-side-panel');
+        warn.mockRestore();
         expect(calls.sessionRemove).toContainEqual(['sidePanelIsOpen', 'sidePanelHeartbeat']);
         expect(sessionData.sidePanelIsOpen).toBeUndefined();
     });
