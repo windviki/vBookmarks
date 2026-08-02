@@ -454,6 +454,12 @@ body.linux input {
     position: relative;
 }
 
+/* 树视图标题已用省略号截断，不需要横向滚动；overflow-x:hidden
+   兜底防止 sync-tooltip 等不可见元素意外撑出横向滚动条 */
+#tree {
+    overflow-x: hidden;
+}
+
 /* v4 task-2: #results lives inside #view-search — visibility is the view
    layer's job (section hidden attribute), the pane itself stays block. */
 
@@ -476,7 +482,7 @@ body.linux input {
 
 #results ul li a,
 #tree ul li a,
-#tree ul li span {
+#tree ul li span:not(.sync-indicator):not(.sync-tooltip) {
     display: flex;
     align-items: center;
     line-height: 1.67em;
@@ -489,13 +495,13 @@ body.linux input {
 
 #results ul li a:hover,
 #tree ul li a:hover,
-#tree ul li span:hover {
+#tree ul li span:not(.sync-indicator):not(.sync-tooltip):hover {
     background-color: var(--vbm-bg-hover);
 }
 
 #results ul li a *,
 #tree ul li a *,
-#tree ul li span * {
+#tree ul li span:not(.sync-indicator):not(.sync-tooltip) * {
     pointer-events: none;
 }
 

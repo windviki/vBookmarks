@@ -33,7 +33,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
             '#recent-list ul li a:hover,\n#dupes-list ul li a:hover,\n#dead-list ul li a:hover,\n#stats-list ul li a:hover');
         expect(body).toContain('background-color: var(--vbm-bg-hover)');
         // …and the tree/search panes carry the same rule
-        const treeBody = ruleBody(neatCss, '#results ul li a:hover,\n#tree ul li a:hover,\n#tree ul li span:hover');
+        const treeBody = ruleBody(neatCss, '#results ul li a:hover,\n#tree ul li a:hover,\n#tree ul li span:not(.sync-indicator):not(.sync-tooltip):hover');
         expect(treeBody).toContain('background-color: var(--vbm-bg-hover)');
     });
 
