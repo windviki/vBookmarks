@@ -143,6 +143,16 @@ const setup = (opts = {}) => {
                 this._scrolledIntoView++;
             }
         };
+        // Real-DOM parity: className and classList are two views of the same
+        // token list. Assigning className must populate the classList set
+        // (bookmarkHandler's link-folder branch reads classList.contains).
+        Object.defineProperty(node, 'className', {
+            get: () => [...classes].join(' '),
+            set: v => {
+                classes.clear();
+                (v || '').split(/\s+/).filter(Boolean).forEach(c => classes.add(c));
+            }
+        });
         if (id)
             byId[id] = node;
         return node;
@@ -856,6 +866,26 @@ describe('revealInTree (v4 task-2 §2.3)', () => {
         li.dataset.nodeId = '7';
         fire(ctx.tree, 'click', makeEvent({ button: 0, target: a }));
         expect(ctx.treeRender.calls.getParentPath[0][0]).toBe('7');
+    });
+
+    // Issue #46: search.js/palette.js render folder rows with TWO classes
+    // (`link-folder tree-item-link`), so an exact className match silently
+    // fell through to the bookmark-open branch and opened the popup page's
+    // own URL in a new tab. The folder branch must key on classList
+    // membership, not a whole-string className equality.
+    it('a multi-class link-folder row (real search output) still reveals the folder', () => {
+        const ctx = setup({ parentPath: ['7'] });
+        const { li, a } = ctx.makeBookmark('70');
+        a.className = 'link-folder tree-item-link'; // real search.js/palette.js output
+        li.id = 'results-item-70';
+        li.dataset.nodeId = '7';
+        fire(ctx.tree, 'click', makeEvent({ button: 0, target: a }));
+        // The folder branch ran (revealFolder) instead of opening `a.href`.
+        expect(ctx.treeRender.calls.getParentPath[0][0]).toBe('7');
+        expect(ctx.actions.openBookmarkCalls).toHaveLength(0);
+        expect(ctx.actions.openBookmarkNewTabCalls).toHaveLength(0);
+        // The click did not trigger the bookmark-open reset path.
+        expect(ctx.search.resetCalls).toBe(0);
     });
 
     // Round-4 item 4: "在树中定位" on a bookmark row did nothing visible —

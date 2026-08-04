@@ -382,7 +382,11 @@ export function initTreeView(ctx = {}) {
         const ctrlMeta = (e.ctrlKey || e.metaKey || (e.button === 1));
         const shift = e.shiftKey;
         if (el.tagName === 'A' && !el.querySelector('hr')) { // bookmark
-            if (el.className === "link-folder") { // search result folder
+            // Search-result / palette folder rows carry `link-folder tree-item-link`
+            // — a classList membership test, never an exact className match
+            // (the exact match silently fell through to the bookmark-open
+            // branch and opened the popup page's own URL in a new tab).
+            if (el.classList.contains('link-folder')) { // search result folder
                 // get folder id (el parent is li); data-node-id is the
                 // v4 task-2 unified row id
                 const id = el.parentNode.dataset.nodeId

@@ -256,6 +256,21 @@ describe('scrollbar-contract: sync-tooltip 回归守卫 98e29b3 (G)', () => {
         expect(guard).toContain('height: 10px');
     });
 
+    it('the stats "by recent" time badge undoes the shared pill geometry (issue #47)', () => {
+        // The shared .vbm-row .row-badge base sizes every badge as a pill
+        // (fixed 14px height / 7px radius / centered 9px type). The time
+        // badge must reset that so a relative-time string renders as plain
+        // muted text — otherwise it is a transparent pill with clipped tiny
+        // centered text ("by recent" looked broken, issue #47).
+        const time = ruleBody(neatCss, '.vbm-row .row-badge.time {');
+        for (const prop of ['height: auto', 'border-radius: 0', 'min-width: 0',
+            'font-size: 12px', 'color: var(--vbm-muted)'])
+            expect(time, `.row-badge.time contains ${prop}`).toContain(prop);
+        // Pill-only geometry must NOT leak back in (regression guard).
+        expect(time).not.toContain('height: 14px');
+        expect(time).not.toContain('border-radius: 7px');
+    });
+
     it('the sync dot is pinned absolute from neat.css too (never enters the flex flow)', () => {
         const guard = ruleBody(neatCss, '#tree ul li .favicon-container .sync-indicator,\n#results ul li .favicon-container .sync-indicator {');
         expect(guard).toContain('position: absolute');

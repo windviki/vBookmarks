@@ -2863,15 +2863,26 @@ body.panel-mode .vbm-row .row-sub {
 
 /* §3.4: the count pill reuses the shared pill look with the selected-token
    colors and tabular numbers; the time badge (recent sort's primary key)
-   stays plain muted text — only the count is a true pill. */
+   stays plain muted text — only the count is a true pill. The shared
+   .vbm-row .row-badge base sizes every badge as a pill (fixed 14px height,
+   7px radius, centered 9px type); .time must undo that geometry or a
+   relative-time string like "just now" renders as a transparent pill with
+   clipped tiny centered text (issue #47). */
 .vbm-row .row-badge.count {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
 }
 
 .vbm-row .row-badge.time {
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    margin-inline-start: 8px;
+    border-radius: 0;
+    font-size: 12px;
+    line-height: inherit;
+    text-align: start;
     color: var(--vbm-muted);
-    padding: 0 2px;
 }
 
 
