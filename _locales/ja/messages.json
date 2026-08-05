@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "フォルダを並べ替え"
   },
+  "sortByName": {
+    "message": "名前順に並べ替え"
+  },
+  "sortByDate": {
+    "message": "追加日順に並べ替え"
+  },
+  "sortRecursiveSuffix": {
+    "message": "（再帰）"
+  },
+  "sortOptions": {
+    "message": "並べ替えオプション…"
+  },
+  "sortDone": {
+    "message": "フォルダーを並べ替えました"
+  },
   "sortFoldersFirst": {
     "message": "フォルダを先頭に"
   },

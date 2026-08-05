@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Mappa tartalmának rendezése"
   },
+  "sortByName": {
+    "message": "Rendezés név szerint"
+  },
+  "sortByDate": {
+    "message": "Rendezés dátum szerint"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzív)"
+  },
+  "sortOptions": {
+    "message": "Rendezési opciók…"
+  },
+  "sortDone": {
+    "message": "Mappa rendezve"
+  },
   "sortFoldersFirst": {
     "message": "Mappák legyenek felül"
   },

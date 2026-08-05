@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "폴더 정렬"
   },
+  "sortByName": {
+    "message": "이름순 정렬"
+  },
+  "sortByDate": {
+    "message": "추가 날짜순 정렬"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(재귀)"
+  },
+  "sortOptions": {
+    "message": "정렬 옵션…"
+  },
+  "sortDone": {
+    "message": "폴더 정렬됨"
+  },
   "sortFoldersFirst": {
     "message": "폴더를 위에 유지"
   },

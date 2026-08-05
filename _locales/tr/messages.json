@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Klasör İçeriğini Sırala"
   },
+  "sortByName": {
+    "message": "Ada göre sırala"
+  },
+  "sortByDate": {
+    "message": "Eklenme tarihine göre sırala"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(özyinelemeli)"
+  },
+  "sortOptions": {
+    "message": "Sıralama seçenekleri…"
+  },
+  "sortDone": {
+    "message": "Klasör sıralandı"
+  },
   "sortFoldersFirst": {
     "message": "Klasörler üstte kalsın"
   },

@@ -1,8 +1,11 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import fs from 'node:fs';
 
 // dialogs.js touches page globals (document/window/chrome) only inside
 // initDialogs, so the real module imports cleanly in node once the globals
-// are stubbed. ESM direct import — no copied implementation.
+// are stubbed. ESM direct import — no copied implementation. The sort dialog
+// reads persisted options through window.VBMSort.parseSortOptions, so the
+// REAL sort-utils.js classic script is evaluated onto the window stub.
 
 const makeEl = () => ({
     innerHTML: '',
@@ -62,6 +65,7 @@ beforeAll(async () => {
     };
     globalThis.window = { addEventListener: () => {} };
     globalThis.chrome = { i18n: { getMessage: key => key } };
+    new Function('window', fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8'))(globalThis.window);
     ({ widont, initDialogs } = await import('../src/dialogs.js'));
 });
 

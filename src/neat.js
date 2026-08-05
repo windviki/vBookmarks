@@ -106,7 +106,10 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
         'folder-delete': 'deleteEllipsis',
-        'sort-folder-contents': 'sortFolderContents',
+        // issue #33: direct sort actions + the "Sort options…" dialog opener
+        'sort-folder-by-name': 'sortByName',
+        'sort-folder-by-date': 'sortByDate',
+        'sort-folder-contents': 'sortOptions',
         'sort-dialog-text': 'sortFolderContents',
         'sort-by-title-label': 'sortByTitle',
         'sort-by-date-label': 'sortByDateAdded',
@@ -281,7 +284,13 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         },
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
         // — palette inits below, same lazy getter pattern as the views.
-        get paletteMenu() { return palette.customMenu; }
+        get paletteMenu() { return palette.customMenu; },
+        // issue #33: the direct sort menu items need the persisted sort
+        // options (for the label's recursive suffix and the sort opts) and the
+        // sortFolderContents dispatcher. Both read lazily — context-menu inits
+        // before sortFolderContents/undo are declared (TDZ-safe on user events).
+        get sortOptions() { return readSortOptions(); },
+        get sortFolder() { return (id, opts) => sortFolderContents(id, opts); }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after
@@ -396,20 +405,30 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     $tree.addEventListener('click', () => resetHeight(false));
     $tree.addEventListener('keyup', () => resetHeight(false));
 
+    // Parse the persisted sort options (shared with the dialog and options
+    // page via sort-utils.js); used by the direct sort menu items.
+    const readSortOptions = () =>
+        window.VBMSort ? window.VBMSort.parseSortOptions(store.get('sortOptions'))
+            : { by: 'title', foldersFirst: true, recursive: false };
+
     // Reorder the children of folderId with serial bookmarks.move calls, then
-    // rebuild the tree (the opens memory restores the expanded state).
+    // rebuild the tree (the opens memory restores the expanded state). The
+    // pre-sort child order is captured so the toast's Undo can move the nodes
+    // back to their original positions (a reorder — the deletion undo's
+    // recreate-by-copy would swap node ids, so it restores positions instead).
     const sortFolderContents = (folderId, opts) => {
         chrome.bookmarks.getSubTree(folderId, nodes => {
             if (!nodes || !nodes.length)
                 return;
+            const beforeIds = (nodes[0].children || []).map(n => n.id);
             const sorted = window.VBMSort.sortNodes(nodes[0].children || [], opts);
-            // Moving every node to its target index in ascending order leaves
-            // the parent sorted, because positions before i are already final.
-            const moveAll = list => list.reduce((chain, node, i) =>
+            // Moving every id to its target index in ascending order leaves the
+            // parent sorted, because positions before i are already final.
+            const moveToIndex = ids => ids.reduce((chain, id, i) =>
                 chain.then(() => new Promise(resolve => {
-                    chrome.bookmarks.move(node.id, { index: i }, () => resolve());
+                    chrome.bookmarks.move(id, { index: i }, () => resolve());
                 })), Promise.resolve());
-            const applyLevel = list => moveAll(list).then(() => {
+            const applyLevel = list => moveToIndex(list.map(n => n.id)).then(() => {
                 if (!opts.recursive)
                     return Promise.resolve();
                 return list.reduce((chain, node) =>
@@ -420,6 +439,14 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             applyLevel(sorted).then(() => {
                 // treeView 在下方声明；此调用只在排序动作的异步回调里执行，TDZ 安全
                 chrome.bookmarks.getTree(treeView.generateTree);
+                // issue #33: toast undo — Undo moves the children back to the
+                // order they had before this sort (undo 在下方声明,同样 TDZ 安全)。
+                if (undo && undo.toastAction) {
+                    undo.toastAction(_m('sortDone'), _m('undoAction'), () => {
+                        moveToIndex(beforeIds).then(() =>
+                            chrome.bookmarks.getTree(treeView.generateTree));
+                    });
+                }
             });
         });
     };

@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Sorteeri kausta sisu"
   },
+  "sortByName": {
+    "message": "Sorteeri nime järgi"
+  },
+  "sortByDate": {
+    "message": "Sorteeri lisamiskuupäeva järgi"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiivselt)"
+  },
+  "sortOptions": {
+    "message": "Sorteerimisvalikud…"
+  },
+  "sortDone": {
+    "message": "Kaust sorteeritud"
+  },
   "sortFoldersFirst": {
     "message": "Hoia kaustad eespool"
   },

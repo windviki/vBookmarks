@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Ordina contenuto cartella"
   },
+  "sortByName": {
+    "message": "Ordina per nome"
+  },
+  "sortByDate": {
+    "message": "Ordina per data di aggiunta"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(ricorsivo)"
+  },
+  "sortOptions": {
+    "message": "Opzioni di ordinamento…"
+  },
+  "sortDone": {
+    "message": "Cartella ordinata"
+  },
   "sortFoldersFirst": {
     "message": "Cartelle in cima"
   },

@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "排序資料夾內容"
   },
+  "sortByName": {
+    "message": "按名稱排序"
+  },
+  "sortByDate": {
+    "message": "按新增日期排序"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(遞迴)"
+  },
+  "sortOptions": {
+    "message": "排序選項…"
+  },
+  "sortDone": {
+    "message": "資料夾已排序"
+  },
   "sortFoldersFirst": {
     "message": "資料夾置頂"
   },

@@ -651,6 +651,26 @@
   "sortFolderContents": {
     "message": "排序文件夹内容"
   },
+  "sortByName": {
+    "message": "按名称排序",
+    "description": "文件夹右键菜单项（issue #33）：按标题排序，套用已保存的文件夹在前/递归选项。"
+  },
+  "sortByDate": {
+    "message": "按添加时间排序",
+    "description": "文件夹右键菜单项（issue #33）：按添加时间排序（新在前），套用已保存的文件夹在前/递归选项。"
+  },
+  "sortRecursiveSuffix": {
+    "message": "（递归）",
+    "description": "递归开启时追加到直接排序菜单项，如“按名称排序（递归）”。"
+  },
+  "sortOptions": {
+    "message": "排序选项…",
+    "description": "文件夹右键菜单项（issue #33）：打开排序对话框进行一次性配置。"
+  },
+  "sortDone": {
+    "message": "文件夹已排序",
+    "description": "排序完成后弹出的 toast；撤销按钮恢复原顺序。"
+  },
   "confirmDeleteFolder": {
     "message": "该文件夹包含 $count$ 个项目，删除后可撤销。",
     "placeholders": {

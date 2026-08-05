@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Mapinhoud sorteren"
   },
+  "sortByName": {
+    "message": "Sorteer op naam"
+  },
+  "sortByDate": {
+    "message": "Sorteer op toevoegdatum"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursief)"
+  },
+  "sortOptions": {
+    "message": "Sorteeropties…"
+  },
+  "sortDone": {
+    "message": "Map gesorteerd"
+  },
   "sortFoldersFirst": {
     "message": "Mappen bovenaan houden"
   },

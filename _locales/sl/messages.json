@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Razvrsti vsebino mape"
   },
+  "sortByName": {
+    "message": "Razvrsti po imenu"
+  },
+  "sortByDate": {
+    "message": "Razvrsti po datumu dodajanja"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzivno)"
+  },
+  "sortOptions": {
+    "message": "Možnosti razvrščanja…"
+  },
+  "sortDone": {
+    "message": "Mapa je razvrščena"
+  },
   "sortFoldersFirst": {
     "message": "Mape naj bodo na vrhu"
   },

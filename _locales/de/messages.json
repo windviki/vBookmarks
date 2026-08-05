@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Ordnerinhalte sortieren"
   },
+  "sortByName": {
+    "message": "Nach Namen sortieren"
+  },
+  "sortByDate": {
+    "message": "Nach Datum sortieren"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiv)"
+  },
+  "sortOptions": {
+    "message": "Sortieroptionen…"
+  },
+  "sortDone": {
+    "message": "Ordner sortiert"
+  },
   "sortFoldersFirst": {
     "message": "Ordner oben behalten"
   },

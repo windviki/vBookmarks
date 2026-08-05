@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Järjestä kansion sisältö"
   },
+  "sortByName": {
+    "message": "Lajittele nimen mukaan"
+  },
+  "sortByDate": {
+    "message": "Lajittele lisäyspäivän mukaan"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiivinen)"
+  },
+  "sortOptions": {
+    "message": "Lajitteluasetukset…"
+  },
+  "sortDone": {
+    "message": "Kansio lajiteltu"
+  },
   "sortFoldersFirst": {
     "message": "Pidä kansiot ylhäällä"
   },

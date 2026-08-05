@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Urutkan Isi Folder"
   },
+  "sortByName": {
+    "message": "Urutkan nama"
+  },
+  "sortByDate": {
+    "message": "Urutkan tanggal"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursif)"
+  },
+  "sortOptions": {
+    "message": "Opsi pengurutan…"
+  },
+  "sortDone": {
+    "message": "Folder diurutkan"
+  },
   "sortFoldersFirst": {
     "message": "Folder di atas"
   },

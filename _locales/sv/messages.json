@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Sortera mappinnehåll"
   },
+  "sortByName": {
+    "message": "Sortera efter namn"
+  },
+  "sortByDate": {
+    "message": "Sortera efter tilläggsdatum"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiv)"
+  },
+  "sortOptions": {
+    "message": "Sorteringsalternativ…"
+  },
+  "sortDone": {
+    "message": "Mapp sorterad"
+  },
   "sortFoldersFirst": {
     "message": "Behåll mappar överst"
   },

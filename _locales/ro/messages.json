@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Sortează conținutul folderului"
   },
+  "sortByName": {
+    "message": "După nume"
+  },
+  "sortByDate": {
+    "message": "După data adăugării"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursiv)"
+  },
+  "sortOptions": {
+    "message": "Opțiuni de sortare…"
+  },
+  "sortDone": {
+    "message": "Folder sortat"
+  },
   "sortFoldersFirst": {
     "message": "Păstrează folderele deasupra"
   },

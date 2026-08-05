@@ -64,5 +64,25 @@
         return sortLevel(nodes, opts);
     };
 
-    window.VBMSort = { sortNodes: sortNodes };
+    // Parse the persisted sortOptions JSON ({by, foldersFirst, recursive});
+    // missing segments fall back to the defaults, corrupted JSON too. Shared
+    // by the popup sort dialog (src/dialogs.js), the direct sort menu items
+    // and the options page Sorting group — one source of truth.
+    const parseSortOptions = raw => {
+        const defaults = { by: 'title', foldersFirst: true, recursive: false };
+        if (!raw)
+            return { ...defaults };
+        try {
+            const parsed = JSON.parse(raw);
+            return {
+                by: parsed.by === 'dateAdded' ? 'dateAdded' : 'title',
+                foldersFirst: parsed.foldersFirst !== false,
+                recursive: parsed.recursive === true
+            };
+        } catch (e) {
+            return { ...defaults };
+        }
+    };
+
+    window.VBMSort = { sortNodes: sortNodes, parseSortOptions: parseSortOptions };
 })(window);

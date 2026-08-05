@@ -1176,8 +1176,10 @@ body.panel-mode #resizer-y {
     margin: 4px 0 0;
 }
 
-/* the sort item never applies to the root folders */
+/* the sort items never apply to the root folders */
 menu[type=context].hide-sort #folder-context-menu-sep7,
+menu[type=context].hide-sort #sort-folder-by-name,
+menu[type=context].hide-sort #sort-folder-by-date,
 menu[type=context].hide-sort #sort-folder-contents {
     display: none;
 }

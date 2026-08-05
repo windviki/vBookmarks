@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "จัดเรียงเนื้อหาโฟลเดอร์"
   },
+  "sortByName": {
+    "message": "เรียงตามชื่อ"
+  },
+  "sortByDate": {
+    "message": "เรียงตามวันที่เพิ่ม"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(เรียกซ้ำ)"
+  },
+  "sortOptions": {
+    "message": "ตัวเลือกการจัดเรียง…"
+  },
+  "sortDone": {
+    "message": "จัดเรียงโฟลเดอร์แล้ว"
+  },
   "sortFoldersFirst": {
     "message": "เก็บโฟลเดอร์ไว้ด้านบน"
   },

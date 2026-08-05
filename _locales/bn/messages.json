@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "ফোল্ডার সাজান"
   },
+  "sortByName": {
+    "message": "নাম অনুসারে সাজান"
+  },
+  "sortByDate": {
+    "message": "যোগের তারিখ অনুসারে সাজান"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(পুনরাবৃত্ত)"
+  },
+  "sortOptions": {
+    "message": "সাজানোর বিকল্প…"
+  },
+  "sortDone": {
+    "message": "ফোল্ডার সাজানো হয়েছে"
+  },
   "sortFoldersFirst": {
     "message": "ফোল্ডার উপরে রাখুন"
   },

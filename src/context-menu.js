@@ -96,6 +96,21 @@ export function initContextMenu(ctx = {}) {
         }
     };
 
+    // issue #33: the direct sort items (by name / by date) run with the
+    // persisted sortOptions, so their labels reflect the recursive flag —
+    // the action's scope is visible before the click. "Sort options…" (the
+    // dialog opener) keeps its static label.
+    const updateSortLabels = () => {
+        const so = ctx.sortOptions || {};
+        const suffix = so.recursive ? ` ${_m('sortRecursiveSuffix')}` : '';
+        const nameItem = $('sort-folder-by-name');
+        if (nameItem)
+            nameItem.textContent = _m('sortByName') + suffix;
+        const dateItem = $('sort-folder-by-date');
+        if (dateItem)
+            dateItem.textContent = _m('sortByDate') + suffix;
+    };
+
     const clearMenu = e => {
         currentContext = null;
         const active = body.querySelector('.active');
@@ -323,6 +338,10 @@ export function initContextMenu(ctx = {}) {
             }
         } else {
         }
+        // issue #33: refresh the direct sort items' labels when the folder
+        // menu is about to show (recursive suffix follows the sortOptions).
+        if (menu === $folderContextMenu)
+            updateSortLabels();
         if (menu) {
             currentContext = el;
             const active = body.querySelector('.active');
@@ -575,8 +594,19 @@ export function initContextMenu(ctx = {}) {
                 case 'folder-delete':
                     actions.deleteBookmarks(id, urlsLen, children.length - urlsLen);
                     break;
+                // issue #33: direct sort actions run with the persisted
+                // sortOptions (foldersFirst/recursive), only the key flips.
+                case 'sort-folder-by-name':
+                    if (ctx.sortFolder)
+                        ctx.sortFolder(id, { ...(ctx.sortOptions || {}), by: 'title' });
+                    break;
+                case 'sort-folder-by-date':
+                    if (ctx.sortFolder)
+                        ctx.sortFolder(id, { ...(ctx.sortOptions || {}), by: 'dateAdded' });
+                    break;
                 case 'sort-folder-contents':
-                    dialogs.SortDialog.open(id);
+                    if (dialogs && dialogs.SortDialog)
+                        dialogs.SortDialog.open(id);
                     break;
             }
         });

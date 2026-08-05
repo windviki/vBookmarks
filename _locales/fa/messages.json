@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "مرتب‌سازی محتویات پوشه"
   },
+  "sortByName": {
+    "message": "مرتبسازی بر اساس نام"
+  },
+  "sortByDate": {
+    "message": "مرتبسازی برحسب تاریخ"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(بازگشتی)"
+  },
+  "sortOptions": {
+    "message": "گزینههای مرتبسازی…"
+  },
+  "sortDone": {
+    "message": "پوشه مرتب شد"
+  },
   "sortFoldersFirst": {
     "message": "نگه‌داشتن پوشه‌ها در بالا"
   },

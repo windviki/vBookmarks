@@ -103,3 +103,26 @@ describe('phase 3 wiring', () => {
         expect(sortAt).toBeLessThan(neatAt);
     });
 });
+
+describe('sort-utils.js parseSortOptions()', () => {
+    it('parses a full persisted sortOptions JSON', () => {
+        expect(VBMSort.parseSortOptions('{"by":"dateAdded","foldersFirst":false,"recursive":true}'))
+            .toEqual({ by: 'dateAdded', foldersFirst: false, recursive: true });
+    });
+
+    it('returns the defaults for a missing/empty raw value', () => {
+        expect(VBMSort.parseSortOptions('')).toEqual({ by: 'title', foldersFirst: true, recursive: false });
+        expect(VBMSort.parseSortOptions(null)).toEqual({ by: 'title', foldersFirst: true, recursive: false });
+        expect(VBMSort.parseSortOptions(undefined)).toEqual({ by: 'title', foldersFirst: true, recursive: false });
+    });
+
+    it('falls back to defaults on corrupted JSON', () => {
+        expect(VBMSort.parseSortOptions('not-json{['))
+            .toEqual({ by: 'title', foldersFirst: true, recursive: false });
+    });
+
+    it('normalizes unknown by/fields to the defaults', () => {
+        expect(VBMSort.parseSortOptions('{"by":"weird","foldersFirst":"yes","recursive":1}'))
+            .toEqual({ by: 'title', foldersFirst: true, recursive: false });
+    });
+});

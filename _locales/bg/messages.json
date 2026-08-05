@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Сортиране на съдържанието на папка"
   },
+  "sortByName": {
+    "message": "Сортиране по име"
+  },
+  "sortByDate": {
+    "message": "По дата на добавяне"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(рекурсивно)"
+  },
+  "sortOptions": {
+    "message": "Опции за сортиране…"
+  },
+  "sortDone": {
+    "message": "Папката е сортирана"
+  },
   "sortFoldersFirst": {
     "message": "Папките отгоре"
   },

@@ -1180,6 +1180,21 @@
   "sortFolderContents": {
     "message": "Подреди содржина на папка"
   },
+  "sortByName": {
+    "message": "Сортирај по име"
+  },
+  "sortByDate": {
+    "message": "Сортирај по датум на додавање"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(рекурзивно)"
+  },
+  "sortOptions": {
+    "message": "Опции за сортирање…"
+  },
+  "sortDone": {
+    "message": "Папката е сортирана"
+  },
   "sortFoldersFirst": {
     "message": "Чувај папки на врвот"
   },

@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Sorter mappeinnhold"
   },
+  "sortByName": {
+    "message": "Sorter på navn"
+  },
+  "sortByDate": {
+    "message": "Sorter etter dato"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursiv)"
+  },
+  "sortOptions": {
+    "message": "Sorteringsvalg…"
+  },
+  "sortDone": {
+    "message": "Mappen er sortert"
+  },
   "sortFoldersFirst": {
     "message": "Hold mapper øverst"
   },

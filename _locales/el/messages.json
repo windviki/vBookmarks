@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Ταξινόμηση περιεχομένων φακέλου"
   },
+  "sortByName": {
+    "message": "Ταξινόμηση με όνομα"
+  },
+  "sortByDate": {
+    "message": "Ταξινόμηση ημερομηνίας"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(αναδρομικά)"
+  },
+  "sortOptions": {
+    "message": "Επιλογές ταξινόμησης…"
+  },
+  "sortDone": {
+    "message": "Ο φάκελος ταξινομήθηκε"
+  },
   "sortFoldersFirst": {
     "message": "Διατήρηση φακέλων στην κορυφή"
   },

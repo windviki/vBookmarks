@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Seřadit obsah složky"
   },
+  "sortByName": {
+    "message": "Seřadit podle názvu"
+  },
+  "sortByDate": {
+    "message": "Řadit dle data přidání"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzivně)"
+  },
+  "sortOptions": {
+    "message": "Možnosti řazení…"
+  },
+  "sortDone": {
+    "message": "Složka seřazena"
+  },
   "sortFoldersFirst": {
     "message": "Složky nahoře"
   },

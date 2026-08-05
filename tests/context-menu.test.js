@@ -207,6 +207,9 @@ const setup = (opts = {}) => {
         actions[name] = (...args) => actionCalls.push([name, ...args]);
     const sortCalls = [];
     const dialogs = { SortDialog: { open: id => sortCalls.push(id) } };
+    // issue #33: direct sort dispatch + the persisted sort options (recursive
+    // suffix on the labels), injected lazily exactly like the views above.
+    const sortFolderCalls = [];
     const revealCalls = [];
 
     const menus = initContextMenu({
@@ -218,7 +221,9 @@ const setup = (opts = {}) => {
         revealInTree: id => revealCalls.push(id),
         // Slice C view menus are read lazily, exactly like in neat.js
         get deadMenu() { return opts.deadMenu; },
-        get dupesMenu() { return opts.dupesMenu; }
+        get dupesMenu() { return opts.dupesMenu; },
+        get sortOptions() { return opts.sortOptions; },
+        get sortFolder() { return (id, o) => sortFolderCalls.push([id, o]); }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href></a></li>
@@ -298,7 +303,7 @@ const setup = (opts = {}) => {
         menus, byId, el, body, tree, results, viewLists,
         bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
         paletteCmdMenu,
-        chrome: chromeStub, actionCalls, sortCalls, revealCalls,
+        chrome: chromeStub, actionCalls, sortCalls, sortFolderCalls, revealCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, menuItem, openOn,
         fireWindow: (type, ev) => {
@@ -719,6 +724,52 @@ describe('folderContextHandler', () => {
             makeEvent({ button: 0, target: ctx.menuItem('sort-folder-contents') }));
         expect(ctx.sortCalls).toEqual(['7']);
         expect(ctx.actionCalls).toEqual([]);
+    });
+
+    // issue #33: the direct sort items dispatch with the persisted sortOptions
+    // and only flip the sort key.
+    it('sort-folder-by-name dispatches the direct title sort with the saved options', () => {
+        const ctx = setup({
+            children: { '7': folderChildren },
+            sortOptions: { by: 'dateAdded', foldersFirst: false, recursive: true }
+        });
+        openFolderMenu(ctx);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('sort-folder-by-name') }));
+        expect(ctx.sortFolderCalls).toEqual([['7', { by: 'title', foldersFirst: false, recursive: true }]]);
+        expect(ctx.sortCalls).toEqual([]); // no dialog
+    });
+
+    it('sort-folder-by-date dispatches the direct date sort with the saved options', () => {
+        const ctx = setup({ children: { '7': folderChildren }, sortOptions: { by: 'title', recursive: false } });
+        openFolderMenu(ctx);
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('sort-folder-by-date') }));
+        expect(ctx.sortFolderCalls).toEqual([['7', { by: 'dateAdded', recursive: false }]]);
+        expect(ctx.sortCalls).toEqual([]);
+    });
+
+    it('the direct sort item labels carry the recursive suffix when the option is on', () => {
+        const ctx = setup({
+            children: { '7': folderChildren },
+            sortOptions: { by: 'title', foldersFirst: true, recursive: true }
+        });
+        const nameItem = ctx.el('DIV', 'sort-folder-by-name');
+        const dateItem = ctx.el('DIV', 'sort-folder-by-date');
+        openFolderMenu(ctx);
+        // i18n stub echoes keys: 'sortByName' + ' sortRecursiveSuffix'
+        expect(nameItem.textContent).toBe('sortByName sortRecursiveSuffix');
+        expect(dateItem.textContent).toBe('sortByDate sortRecursiveSuffix');
+    });
+
+    it('the direct sort item labels stay bare when recursive is off', () => {
+        const ctx = setup({
+            children: { '7': folderChildren },
+            sortOptions: { by: 'title', foldersFirst: true, recursive: false }
+        });
+        const nameItem = ctx.el('DIV', 'sort-folder-by-name');
+        openFolderMenu(ctx);
+        expect(nameItem.textContent).toBe('sortByName');
     });
 
     it('add-bookmark-top queries the current tab and adds at the top', () => {

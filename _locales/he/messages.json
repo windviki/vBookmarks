@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "מיין תוכן תיקייה"
   },
+  "sortByName": {
+    "message": "מיין לפי שם"
+  },
+  "sortByDate": {
+    "message": "מיין לפי תאריך הוספה"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(רקורסיבי)"
+  },
+  "sortOptions": {
+    "message": "אפשרויות מיון…"
+  },
+  "sortDone": {
+    "message": "התיקייה ממוינת"
+  },
   "sortFoldersFirst": {
     "message": "שמור תיקיות בראש"
   },

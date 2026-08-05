@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "फ़ोल्डर सामग्री क्रमबद्ध करें"
   },
+  "sortByName": {
+    "message": "नाम से क्रमबद्ध करें"
+  },
+  "sortByDate": {
+    "message": "जोड़ने की तिथि से क्रमबद्ध करें"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(पुनरावर्ती)"
+  },
+  "sortOptions": {
+    "message": "क्रमबद्ध विकल्प…"
+  },
+  "sortDone": {
+    "message": "फ़ोल्डर क्रमबद्ध किया गया"
+  },
   "sortFoldersFirst": {
     "message": "फ़ोल्डर शीर्ष पर रखें"
   },

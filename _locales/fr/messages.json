@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Trier le contenu du dossier"
   },
+  "sortByName": {
+    "message": "Trier par nom"
+  },
+  "sortByDate": {
+    "message": "Trier par date d'ajout"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(récursif)"
+  },
+  "sortOptions": {
+    "message": "Options de tri…"
+  },
+  "sortDone": {
+    "message": "Dossier trié"
+  },
   "sortFoldersFirst": {
     "message": "Dossiers en premier"
   },

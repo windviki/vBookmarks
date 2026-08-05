@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Zoradiť obsah priečinka"
   },
+  "sortByName": {
+    "message": "Zoradiť podľa názvu"
+  },
+  "sortByDate": {
+    "message": "Zoradiť podľa dátumu"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekurzívne)"
+  },
+  "sortOptions": {
+    "message": "Možnosti zoradenia…"
+  },
+  "sortDone": {
+    "message": "Priečinok zoradený"
+  },
   "sortFoldersFirst": {
     "message": "Ponechať priečinky navrchu"
   },

@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "فرز محتويات المجلد"
   },
+  "sortByName": {
+    "message": "فرز بالاسم"
+  },
+  "sortByDate": {
+    "message": "فرز حسب تاريخ الإضافة"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(متكرر)"
+  },
+  "sortOptions": {
+    "message": "خيارات الفرز…"
+  },
+  "sortDone": {
+    "message": "تم فرز المجلد"
+  },
   "sortFoldersFirst": {
     "message": "إبقاء المجلدات في الأعلى"
   },

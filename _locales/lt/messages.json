@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Rūšiuoti aplanko turinį"
   },
+  "sortByName": {
+    "message": "Rūšiuoti pagal pavadinimą"
+  },
+  "sortByDate": {
+    "message": "Pagal pridėjimo datą"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursyviai)"
+  },
+  "sortOptions": {
+    "message": "Rūšiavimo parinktys…"
+  },
+  "sortDone": {
+    "message": "Aplankas surūšiuotas"
+  },
   "sortFoldersFirst": {
     "message": "Aplankus viršuje"
   },

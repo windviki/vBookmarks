@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Kārtot mapes saturu"
   },
+  "sortByName": {
+    "message": "Kārtot pēc nosaukuma"
+  },
+  "sortByDate": {
+    "message": "Kārtot pēc datuma"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(rekursīvi)"
+  },
+  "sortOptions": {
+    "message": "Kārtošanas opcijas…"
+  },
+  "sortDone": {
+    "message": "Mape sakārtota"
+  },
   "sortFoldersFirst": {
     "message": "Saglabāt mapes augšpusē"
   },

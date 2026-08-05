@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Sắp xếp nội dung thư mục"
   },
+  "sortByName": {
+    "message": "Sắp xếp theo tên"
+  },
+  "sortByDate": {
+    "message": "Sắp xếp theo ngày thêm"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(đệ quy)"
+  },
+  "sortOptions": {
+    "message": "Tùy chọn sắp xếp…"
+  },
+  "sortDone": {
+    "message": "Đã sắp xếp thư mục"
+  },
   "sortFoldersFirst": {
     "message": "Giữ thư mục ở trên"
   },

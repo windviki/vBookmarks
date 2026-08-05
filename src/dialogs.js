@@ -137,24 +137,12 @@ export function initDialogs(ctx = {}) {
 
     // Phase 3 (issue #33): sort a folder's children by title or date added.
     // Defaults match the pre-persistence behavior; readSortOptions falls back
-    // to them on a missing or corrupted sortOptions key.
-    const SORT_DEFAULTS = { by: 'title', foldersFirst: true, recursive: false };
+    // to them on a missing or corrupted sortOptions key. The parsing lives in
+    // sort-utils.js's VBMSort.parseSortOptions (shared with the options page).
     const readSortOptions = () => {
-        if (!store)
-            return { ...SORT_DEFAULTS };
-        try {
-            const raw = store.get('sortOptions');
-            if (!raw)
-                return { ...SORT_DEFAULTS };
-            const parsed = JSON.parse(raw);
-            return {
-                by: parsed.by === 'dateAdded' ? 'dateAdded' : 'title',
-                foldersFirst: parsed.foldersFirst !== false,
-                recursive: parsed.recursive === true
-            };
-        } catch (e) {
-            return { ...SORT_DEFAULTS };
-        }
+        if (!store || !window.VBMSort)
+            return { by: 'title', foldersFirst: true, recursive: false };
+        return window.VBMSort.parseSortOptions(store.get('sortOptions'));
     };
     const writeSortOptions = opts => {
         if (!store)

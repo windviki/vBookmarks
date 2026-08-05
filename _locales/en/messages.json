@@ -837,6 +837,26 @@
   "sortFolderContents": {
     "message": "Sort Folder Contents"
   },
+  "sortByName": {
+    "message": "Sort by name",
+    "description": "Folder context-menu item (issue #33): sort the folder's contents by title, with the persisted folders-first/recursive options."
+  },
+  "sortByDate": {
+    "message": "Sort by date added",
+    "description": "Folder context-menu item (issue #33): sort by date added (newest first), with the persisted folders-first/recursive options."
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursive)",
+    "description": "Appended to the direct sort menu items when the recursive option is on, e.g. \"Sort by name (recursive)\"."
+  },
+  "sortOptions": {
+    "message": "Sort options…",
+    "description": "Folder context-menu item (issue #33): opens the sort dialog for one-off options."
+  },
+  "sortDone": {
+    "message": "Folder sorted",
+    "description": "Toast shown after sorting a folder's contents; the Undo button restores the previous order."
+  },
   "sortByTitle": {
     "message": "By title"
   },

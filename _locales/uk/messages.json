@@ -1181,6 +1181,21 @@
   "sortFolderContents": {
     "message": "Сортувати вміст папки"
   },
+  "sortByName": {
+    "message": "Сортувати за назвою"
+  },
+  "sortByDate": {
+    "message": "За датою додавання"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(рекурсивно)"
+  },
+  "sortOptions": {
+    "message": "Опції сортування…"
+  },
+  "sortDone": {
+    "message": "Папку відсортовано"
+  },
   "sortFoldersFirst": {
     "message": "Тримати папки зверху"
   },

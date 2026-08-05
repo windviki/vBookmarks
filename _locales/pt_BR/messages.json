@@ -1177,6 +1177,21 @@
   "sortFolderContents": {
     "message": "Ordenar Conteúdo da Pasta"
   },
+  "sortByName": {
+    "message": "Classificar por nome"
+  },
+  "sortByDate": {
+    "message": "Classificar por data de adição"
+  },
+  "sortRecursiveSuffix": {
+    "message": "(recursivo)"
+  },
+  "sortOptions": {
+    "message": "Opções de classificação…"
+  },
+  "sortDone": {
+    "message": "Pasta classificada"
+  },
   "sortFoldersFirst": {
     "message": "Manter pastas no topo"
   },
