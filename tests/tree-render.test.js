@@ -346,6 +346,26 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('row-main');
     });
 
+    // The stats rows feed badge:[time, count] + rightText:path; tree-render
+    // emits badge spans BEFORE the row-path span, and CSS order (stats-scoped)
+    // flips that to path → time → count visually. Pin the raw DOM order so the
+    // CSS-order contract has something to build on.
+    it('meta.badge array emits badge spans before the row-path span', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A',
+            rightText: 'Folder A',
+            badge: [
+                { text: 'just now', cls: 'time' },
+                { text: '×5', cls: 'count', aria: 'Visited 5 times' }
+            ]
+        });
+        const badgeAt = html.indexOf('row-badge time');
+        const pathAt = html.indexOf('row-path');
+        expect(badgeAt).toBeGreaterThan(-1);
+        expect(pathAt).toBeGreaterThan(badgeAt); // badges first, then row-path
+    });
+
     it('meta.badge as an empty array renders the plain layout', () => {
         const tr = setup({ store: makeStore({ showItemPath: '' }) });
         const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { badge: [] });

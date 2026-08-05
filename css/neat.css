@@ -2943,6 +2943,38 @@ body.panel-mode .vbm-row .row-sub {
     min-width: 0;
 }
 
+/* Narrow right-side order: the user wants the bookmark path left of the time,
+   left of the count, left of the ★/☆ line-end icon — i.e. LTR path → time →
+   count → icon. tree-render emits the anchor children as favicon → row-main →
+   badge(time) → badge(count) → row-path; reorder only inside the stats rows
+   (the shared tree-render order is untouched elsewhere). .row-main keeps its
+   implicit order 0 so it stays immediately after the favicon. */
+#stats-list ul li.vbm-row > a.tree-item-link .row-path { order: 2; }
+#stats-list ul li.vbm-row > a.tree-item-link .row-badge.time { order: 3; }
+#stats-list ul li.vbm-row > a.tree-item-link .row-badge.count { order: 4; }
+
+/* Two-line rows (wide/panel): the favicon and the meta column pin to the
+   TITLE line like the dead-list rows, and the wide second line (subText)
+   already carries the absolute time — the relative .time badge would repeat
+   it, so it drops there. */
+#stats-list ul li.vbm-row > a.tree-item-link {
+    align-items: flex-start;
+}
+
+#stats-list ul li.vbm-row > a.tree-item-link .favicon-container {
+    min-height: 1.67em;
+}
+
+@container (min-width: 480px) {
+    #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
+        display: none;
+    }
+}
+
+body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
+    display: none;
+}
+
 /* ★ bookmarked-state marker: always visible (unlike the hover-revealed ☆),
    solid accent against the ☆'s hollow muted glyph, same 20px slot so the two
    columns align across every row. */
@@ -2960,37 +2992,25 @@ body.panel-mode .vbm-row .row-sub {
     line-height: 1;
 }
 
-/* ☆ one-click-add: hollow outline glyph (a muted-bordered square reads as an
-   action, vs ★'s solid accent mark) — stays hover/focus-revealed like every
-   .row-btn, and the accent border on hover names the action. */
+/* ☆ one-click-add: a HOLLOW red five-pointed star (the ☆ glyph is itself an
+   outline shape) in the same 20px centered slot as the ★ — the two icon
+   columns align across rows. Red hollow reads as the "not yet bookmarked"
+   counterpart to ★'s solid accent, and the solid fill on hover names the
+   action. No box — the previous bordered square never centered the glyph. */
 #stats-list .stats-add-btn {
-    border: 1px solid var(--vbm-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0;
     border-radius: 4px;
-    color: var(--vbm-muted);
-    font-size: 12px;
+    color: var(--vbm-danger);
+    font-size: 14px;
 }
 
 #stats-list .stats-add-btn:hover {
-    border-color: var(--vbm-accent);
-    color: var(--vbm-accent);
-    background: transparent;
-}
-
-/* Bookmarked history rows carry a ★ in the badge slot (symbol + aria
-   label, never color alone); unbookmarked rows get the hover-revealed ☆
-   .row-btn instead. In the merged stats list the ★ is enlarged so the
-   bookmarked state reads at a glance next to the count/time pill beside
-   it (batch-deletion slice) — it sheds the pill geometry (fixed 14px
-   height / 7px radius) for a bigger plain glyph. */
-.vbm-row .row-badge.starred {
-    background: transparent;
-    color: var(--vbm-accent);
-    height: auto;
-    min-width: 0;
-    padding: 0 3px;
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 16px;
+    color: var(--vbm-danger);
+    background: var(--vbm-bg-hover);
 }
 
 /* Permission guide row: one muted sentence + the accent Enable link. DOM

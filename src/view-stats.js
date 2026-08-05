@@ -347,7 +347,16 @@ export function initViewStats(ctx = {}) {
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
                         path,
                         badge: badges,
-                        subText: (views.showItemPath() && path) ? path : ''
+                        // Narrow: the path rides the inline .row-path slot
+                        // (right before the time badge, so the right side
+                        // reads path → time → count → icon). Wide/panel: the
+                        // row-path hides and the second line shows the
+                        // absolute time + path (aligned with the unbookmarked
+                        // rows' bare absolute time).
+                        rightText: (views.showItemPath() && path) ? path : '',
+                        subText: (views.showItemPath() && path)
+                            ? `${absTime} · ${path}`
+                            : absTime
                     }) +
                     // ★: bookmarked-state marker, always visible, aligned with
                     // the unbookmarked rows' ☆ at the line end.

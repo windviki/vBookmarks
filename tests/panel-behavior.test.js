@@ -29,6 +29,7 @@ const makeChromeDouble = (opts = {}) => {
                         calls.sessionRemoves.push(k);
                         delete sessionData[k];
                     }
+                    return Promise.resolve();
                 }
             },
             onChanged: { addListener(fn) { storageListeners.push(fn); } }
@@ -55,6 +56,26 @@ const makeChromeDouble = (opts = {}) => {
             }
         };
     }
+    // Popup-restore signals: Chrome 142+ sidePanel.onClosed and the gated
+    // chrome.alarms liveness poll. opts.withClosedEvent opts into onClosed;
+    // opts.withAlarms opts into the alarms API.
+    if (opts.withClosedEvent) {
+        const closeListeners = [];
+        dbl.sidePanel.onClosed = { addListener(fn) { closeListeners.push(fn); } };
+        dbl.firePanelClosed = () => closeListeners.forEach(fn => fn());
+    }
+    if (opts.withAlarms) {
+        dbl.alarms = {
+            creates: [],
+            clears: [],
+            alarmListeners: [],
+            create(name, spec) { this.creates.push([name, spec]); return Promise.resolve(); },
+            clear(name) { this.clears.push(name); return Promise.resolve(true); }
+        };
+        // arrow binding keeps `this` on dbl.alarms, not the onAlarm object
+        dbl.alarms.onAlarm = { addListener: fn => dbl.alarms.alarmListeners.push(fn) };
+        dbl.fireAlarm = () => dbl.alarms.alarmListeners.forEach(fn => fn({ name: 'vbm-panel-liveness' }));
+    }
     return dbl;
 };
 
@@ -66,6 +87,10 @@ const flush = () => new Promise(resolve => setTimeout(resolve, 0));
 const livePanel = () => ({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
 
 const fireStorage = (d, changes, areaName) => {
+    // A real setSetting writes chrome.storage.local BEFORE the onChanged event
+    // fires — mirror that so callbacks re-reading the option see the new value.
+    if (areaName === 'local' && 'openInSidePanel' in changes)
+        d.localData.openInSidePanel = changes.openInSidePanel.newValue;
     for (const fn of d.storageListeners)
         fn(changes, areaName);
 };
@@ -261,5 +286,98 @@ describe('initPanelBehavior — runtime.getContexts liveness (Chrome 116+)', () 
         initPanelBehavior();
         await flush();
         expect(d.calls.setPanelBehavior).toEqual([false]);
+    });
+});
+
+describe('initPanelBehavior — popup restore after a toggle-close (final-polish gap)', () => {
+    beforeEach(() => { delete globalThis.chrome; });
+
+    // The reported bug: option off while the panel is open keeps toggle mode;
+    // the action-toggle close skips pagehide, so nothing told the SW the panel
+    // died — setPanelBehavior(true) stayed and every click re-opened the panel.
+
+    it('Chrome 142+ sidePanel.onClosed restores popup mode when the option is off', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true }, // option was on, then turned off below
+            sessionData: livePanel(),
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withClosedEvent: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior(); // startup: option on → toggle
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local'); // option off, panel live
+        await flush(); // getContexts answers live → toggle kept
+        expect(d.calls.setPanelBehavior).toEqual([true, true]); // toggle kept (panel open)
+        // the action-toggle closes the panel → getContexts now lists nothing,
+        // then onClosed fires
+        d.runtime.getContexts = () => Promise.resolve([]);
+        d.firePanelClosed();
+        await flush(); // the recovery re-reads the option + probes liveness
+        expect(d.calls.setPanelBehavior).toEqual([true, true, false]); // popup restored
+        expect(d.calls.sessionRemoves).toEqual(['sidePanelIsOpen', 'sidePanelHeartbeat']);
+    });
+
+    it('sidePanel.onClosed does nothing while the option is on (user governs)', () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            sessionData: livePanel(),
+            withClosedEvent: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        d.firePanelClosed();
+        expect(d.calls.setPanelBehavior).toEqual([true]); // unchanged
+    });
+
+    it('alarms poll restores popup mode once the panel dies (Chrome 114–141 fallback)', async () => {
+        // Option off, panel live at the off-transition → poll armed. The panel
+        // dies without pagehide; the next poll tick sees no live panel and
+        // drops to popup mode, cancelling the poll.
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            sessionData: livePanel(),
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withAlarms: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior(); // startup: option on → toggle
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local');
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, true]); // toggle kept, live
+        expect(d.alarms.creates.length).toBe(1); // poll armed in the ambiguous state
+        // panel dies: now getContexts answers empty on the next poll tick
+        d.runtime.getContexts = () => Promise.resolve([]);
+        d.fireAlarm();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, true, false]); // popup restored
+        expect(d.alarms.clears).toContain('vbm-panel-liveness'); // poll self-cancelled
+    });
+
+    it('alarms poll stays armed while the panel stays live, then stops when option is on', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            sessionData: livePanel(),
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withAlarms: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        fireStorage(d, { openInSidePanel: { newValue: false } }, 'local');
+        await flush();
+        d.fireAlarm();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, true]); // still live → still toggle
+        // re-enabling the option cancels the ambiguity watch
+        fireStorage(d, { openInSidePanel: { newValue: true } }, 'local');
+        expect(d.alarms.clears).toContain('vbm-panel-liveness');
+    });
+
+    it('no poll is armed when the option is off and no panel is live', async () => {
+        const d = makeChromeDouble({ panelContexts: [], withAlarms: true });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([false]);
+        expect(d.alarms.creates).toEqual([]); // nothing ambiguous to watch
     });
 });

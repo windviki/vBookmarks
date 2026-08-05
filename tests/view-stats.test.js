@@ -242,14 +242,15 @@ describe('rendering (sort by count, the default)', () => {
         // 8 (5 opens) before 7 (2 opens)
         expect(s.treeRender.calls.map(c => c.id)).toEqual(['8', '7']);
         const first = s.treeRender.calls[0].meta;
-        // the meta slot is now time → count (right to left: ★ at line end,
-        // then the count pill, then the time) — the ★ moved to the line end
+        // meta slot = time → count; the path rides rightText (CSS order puts
+        // it left of the time in the narrow row: path → time → count → icon)
         expect(first.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
         expect(first.badge[1]).toEqual({ text: '×5', cls: 'count', aria: 'statsVisitCount[5]' });
-        expect(first.rightText).toBeUndefined(); // no row-path slot any more
-        expect(first.subText).toBe(''); // 8 lives at root — pathOf gives ''
+        expect(first.rightText).toBe(''); // 8 lives at root — pathOf gives ''
+        expect(first.subText).toBe(new Date(NOW - 2000).toLocaleString()); // abs time, no path
         const second = s.treeRender.calls[1].meta;
-        expect(second.subText).toBe('bar'); // 7's parent path
+        expect(second.subText).toBe(`${new Date(NOW - 1000).toLocaleString()} · bar`); // time · path
+        expect(second.rightText).toBe('bar');
         expect(s.$list.innerHTML).toContain('id="stats-item-8"');
         expect(s.$list.innerHTML).toContain('data-node-id="7"');
         // the ★ rides the line end as a non-interactive marker (aligned with ☆)
@@ -296,7 +297,7 @@ describe('sort switching', () => {
         // fixed meta order regardless of sort: time → count (★ at line end)
         expect(first.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
         expect(first.badge[1]).toEqual({ text: '×2', cls: 'count', aria: 'statsVisitCount[2]' });
-        expect(first.rightText).toBeUndefined();
+        expect(first.rightText).toBe('bar'); // 7's parent path in the narrow slot
     });
 
     it('clicking the recent segment persists statsSort and re-renders', () => {
@@ -520,7 +521,10 @@ describe('merged list (统计合并)', () => {
         const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
         expect(bmCall.id).toBe('7');
         expect(bmCall.meta.path).toBe('bar');
-        expect(bmCall.meta.subText).toBe('bar'); // showItemPath on
+        // showItemPath on: wide second line = absTime · path, narrow slot = path
+        expect(bmCall.meta.subText)
+            .toBe(`${new Date(HISTORY[0].lastVisitTime).toLocaleString()} · bar`);
+        expect(bmCall.meta.rightText).toBe('bar');
         // the live tree supplies the row's parent id even though the stats
         // dataset never saw this bookmark
         expect(s.$list.innerHTML).toContain('data-node-id="7" data-parentid="1"');

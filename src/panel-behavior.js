@@ -48,6 +48,76 @@ export const initPanelBehavior = () => {
         applyPanelBehavior(optionOn || panelOpen);
     };
 
+    // --- Popup-restore signal (final-polish gap) ----------------------------
+    // Closing the panel via the action toggle does NOT reliably fire pagehide,
+    // so the SW never sees the sidePanelIsOpen → false transition and
+    // `openPanelOnActionClick: true` stays in force — the next icon click
+    // RE-OPENS the panel and the popup can never come back. Two authoritative
+    // signals restore it:
+    //   - Chrome 142+: sidePanel.onClosed fires the instant the panel dies.
+    //   - Chrome 114–141: a GATED chrome.alarms poll re-runs readPanelLive
+    //     (the getContexts liveness probe) while the action is in the
+    //     ambiguous state (option off + panel possibly live); a dead panel
+    //     drops to popup mode and the poll cancels itself. The alarm only
+    //     exists in exactly the window where the bug can occur.
+    const livenessAlarm = 'vbm-panel-liveness';
+    // The alarms API returns promises; some test doubles / older Chrome
+    // surfaces may not, so a bare `.catch` would throw on a non-promise.
+    const ignore = p => { if (p && p.catch) p.catch(() => {}); };
+    const startPoll = () => {
+        if (!chrome.alarms || !chrome.alarms.create)
+            return;
+        ignore(chrome.alarms.create(livenessAlarm, { periodInMinutes: 0.5 }));
+    };
+    const stopPoll = () => {
+        if (!chrome.alarms || !chrome.alarms.clear)
+            return;
+        ignore(chrome.alarms.clear(livenessAlarm));
+    };
+    // The async liveness probe may land AFTER the user flipped the option back
+    // on (or the panel closed). Every recovery path re-reads the option inside
+    // its callback so a stale "popup mode" decision can never clobber a newer
+    // "option on" state — and only then applies the change.
+    const recoverIfDead = () => {
+        chrome.storage.local.get('openInSidePanel', data => {
+            if (data.openInSidePanel) {
+                stopPoll(); // the option governs — no ambiguity to watch
+                return;
+            }
+            readPanelLive(live => {
+                // Re-read inside the callback: an option flip that landed while
+                // getContexts was in flight must win over this stale answer.
+                chrome.storage.local.get('openInSidePanel', data2 => {
+                    if (data2.openInSidePanel) {
+                        stopPoll();
+                        return;
+                    }
+                    if (!live) {
+                        applyPanelBehavior(false);
+                        stopPoll();
+                    }
+                });
+            });
+        });
+    };
+    if (chrome.alarms && chrome.alarms.onAlarm) {
+        chrome.alarms.onAlarm.addListener(alarm => {
+            if (alarm && alarm.name !== livenessAlarm)
+                return;
+            recoverIfDead();
+        });
+    }
+    if (chrome.sidePanel && chrome.sidePanel.onClosed) {
+        chrome.sidePanel.onClosed.addListener(() => {
+            // The panel really died. Clear the stale session marker FIRST so a
+            // concurrently in-flight getContexts that still answers "live"
+            // (the destroy had not completed when the probe was issued) cannot
+            // re-derive toggle mode from it.
+            ignore(chrome.storage.session.remove(['sidePanelIsOpen', 'sidePanelHeartbeat']));
+            recoverIfDead();
+        });
+    }
+
     // #19: marker + fresh heartbeat = live panel. A marker without one is
     // residue from a dead panel — drop it so it stops being re-derived.
     // Final polish: chrome.runtime.getContexts (Chrome 116+) is the
@@ -75,8 +145,15 @@ export const initPanelBehavior = () => {
     chrome.storage.local.get('openInSidePanel', data => {
         if (data.openInSidePanel) {
             applyPanelBehavior(true);
+            stopPoll(); // the option governs — nothing ambiguous to watch
         } else {
-            readPanelLive(live => applyFromState(false, live));
+            readPanelLive(live => {
+                applyFromState(false, live);
+                // Ambiguous state (panel possibly live): watch for its death so
+                // a toggle-close that skips pagehide still restores the popup.
+                if (live) startPoll();
+                else stopPoll();
+            });
         }
     });
 
@@ -88,10 +165,25 @@ export const initPanelBehavior = () => {
             if (newValue) {
                 // 用户开启了边栏选项：始终使用面板切换模式
                 applyPanelBehavior(true);
+                stopPoll(); // the option governs — no liveness to watch
             } else {
                 // 用户关闭了边栏选项：检查当前面板是否存活（心跳判定）
-                // 若面板打开中，保持 toggle 模式以便下次点击关闭面板
-                readPanelLive(live => applyFromState(false, live));
+                // 若面板打开中，保持 toggle 模式以便下次点击关闭面板，并
+                // 开启存活轮询——面板被 action-toggle 关掉时 pagehide 不
+                // 保证触发，轮询负责在那之后把 action 恢复成 popup 模式。
+                readPanelLive(live => {
+                    // Re-read inside the callback: an option flip back ON while
+                    // getContexts was in flight must win (F3 guard).
+                    chrome.storage.local.get('openInSidePanel', data2 => {
+                        if (data2.openInSidePanel) {
+                            stopPoll();
+                            return;
+                        }
+                        applyFromState(false, live);
+                        if (live) startPoll();
+                        else stopPoll();
+                    });
+                });
             }
         }
         // 侧边栏打开/关闭状态变化（由 popup.js 在 IS_PANEL 模式下写入）
@@ -101,6 +193,10 @@ export const initPanelBehavior = () => {
             chrome.storage.local.get('openInSidePanel', data => {
                 if (!data.openInSidePanel) {
                     applyFromState(false, !!changes.sidePanelIsOpen.newValue);
+                    // Panel open (and possibly killed without pagehide) →
+                    // watch its death; panel closed → nothing left to watch.
+                    if (changes.sidePanelIsOpen.newValue) startPoll();
+                    else stopPoll();
                 }
             });
         }
