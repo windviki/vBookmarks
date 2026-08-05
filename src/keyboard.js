@@ -547,10 +547,21 @@ export function initKeyboard(ctx = {}) {
     });
 
     //use keyboardEvent.key (>= Chrome 51)
-    // A menu-item walk target: enabled (no .disabled) and not an <hr>. Disabled
-    // entries (root-folder greys) must never receive focus, or the ↑↓ walk
-    // strands on them.
-    const menuWalkable = el => !!el && el.tagName !== 'HR' && !el.classList.contains('disabled');
+    // A menu-item walk target: enabled (no .disabled), not an <hr> and actually
+    // RENDERED. Disabled entries (root-folder greys) must never receive focus,
+    // or the ↑↓ walk strands on them — and neither may a CSS-hidden item (the
+    // root-folder menu's `hide-sort` hides #sort-folder-contents via
+    // display:none; focusing it makes the walk look like it died, since the
+    // focus ring lands on an invisible row).
+    const menuWalkable = el => {
+        if (!el || el.tagName === 'HR' || el.classList.contains('disabled'))
+            return false;
+        if (el.style && el.style.display === 'none')
+            return false;
+        if (typeof el.getClientRects === 'function' && el.getClientRects().length === 0)
+            return false;
+        return true;
+    };
     const nextMenuTarget = (from, dir) => {
         for (let n = from; n; n = dir > 0 ? n.nextElementSibling : n.previousElementSibling)
             if (menuWalkable(n))

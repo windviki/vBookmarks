@@ -1361,6 +1361,93 @@ describe('contextKeyDown', () => {
         expect(item1.focused).toBe(true); // item2 (disabled) never focused
     });
 
+    it('ArrowDown walks the whole root-folder menu landing only on enabled, visible items', () => {
+        // Mirror the REAL root-folder menu (pages/popup.html folder-context-menu):
+        // 4 open items, then the disabled edit, the CSS-hidden sort item, the
+        // three in-root adds, then the disabled before/after/separator cluster
+        // and the disabled delete. Walking down from the top must never land on
+        // a disabled or display:none item.
+        const { bookmarkMenu, el, doc } = setup({});
+        const mk = (id, extra) => {
+            const n = el('DIV', id);
+            n.classList.add('menu-item');
+            if (extra === 'disabled') n.classList.add('disabled');
+            if (extra === 'hidden') n.style.display = 'none';
+            return n;
+        };
+        const items = [
+            mk('folder-window'),
+            mk('open-bookmarks-in-group'),
+            mk('folder-new-window'),
+            mk('folder-new-incognito-window'),
+            el('HR'), mk('folder-edit', 'disabled'),
+            el('HR'), mk('sort-folder-contents', 'hidden'),
+            el('HR'),
+            mk('add-bookmark-top'), mk('add-bookmark-bottom'), mk('add-new-folder'),
+            el('HR'),
+            mk('add-bookmark-before-folder', 'disabled'), mk('add-bookmark-after-folder', 'disabled'),
+            mk('add-folder-before-folder', 'disabled'), mk('add-folder-after-folder', 'disabled'),
+            mk('add-folder-separator', 'disabled'),
+            el('HR'), mk('folder-delete', 'disabled')
+        ];
+        for (let i = 0; i < items.length; i++) {
+            items[i].previousElementSibling = items[i - 1] || null;
+            items[i].nextElementSibling = items[i + 1] || null;
+        }
+        bookmarkMenu.firstElementChild = items[0];
+        bookmarkMenu.lastElementChild = items[items.length - 1];
+        // Walk down from the first open item across the whole menu. The double's
+        // focus() does not update doc.activeElement, so advance it by hand to
+        // simulate a real browser — each step asserts the NEXT focused item is
+        // enabled AND visible (never a disabled edit or the hidden sort row).
+        const enabledVisible = items.filter(n =>
+            n.tagName !== 'HR' && !n.classList.contains('disabled') && n.style.display !== 'none');
+        doc.activeElement = items[0];
+        for (let step = 0; step < enabledVisible.length - 1; step++) {
+            fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+            // the walk must land on the NEXT enabled-visible item (the disabled
+            // edit, the hidden sort row and the disabled cluster are excluded
+            // from enabledVisible, so stepping on any of them would fail here)
+            const focused = enabledVisible[step + 1];
+            expect(focused.focused, `step ${step} should focus ${focused.id}`).toBe(true);
+            doc.activeElement = focused; // the next walk starts from here
+        }
+    });
+
+    it('ArrowDown crosses the root-folder menu: skips the disabled edit AND the CSS-hidden sort item', () => {
+        // Reproduces the reported gap: the ROOT folder menu has folder-edit
+        // disabled AND #sort-folder-contents display:none (hide-sort). Walking
+        // down from the last enabled open item must clear BOTH — focusing the
+        // hidden sort item would make the walk look dead (invisible focus ring).
+        // Chain: item1(enabled) <hr> edit(disabled) <hr> sort(display:none) <hr> item2(enabled)
+        const { bookmarkMenu, item1, item2, doc, el } = setup({});
+        const edit = el('DIV', 'folder-edit');
+        edit.classList.add('menu-item');
+        edit.classList.add('disabled');
+        const hr1 = el('HR');
+        const sort = el('DIV', 'sort-folder-contents');
+        sort.classList.add('menu-item');
+        sort.style.display = 'none'; // the CSS hide-sort rule, mirrored in the double
+        const hr2 = el('HR');
+        // re-wire: item1 <hr1> edit <hr1> sort <hr2> item2
+        item1.nextElementSibling = hr1;
+        hr1.previousElementSibling = item1;
+        hr1.nextElementSibling = edit;
+        edit.previousElementSibling = hr1;
+        edit.nextElementSibling = sort;
+        sort.previousElementSibling = edit;
+        sort.nextElementSibling = hr2;
+        hr2.previousElementSibling = sort;
+        hr2.nextElementSibling = item2;
+        item2.previousElementSibling = hr2;
+        doc.activeElement = item1;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        // one step: past the disabled edit and the hidden sort → lands on item2
+        expect(item2.focused).toBe(true);
+        expect(edit.focused).toBe(false); // disabled edit never focused
+        expect(sort.focused).toBe(false); // hidden sort never focused
+    });
+
     it('focuses the first/last item when the menu itself holds focus', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({});
         doc.activeElement = bookmarkMenu; // not a .menu-item
