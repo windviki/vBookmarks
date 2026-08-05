@@ -819,6 +819,10 @@ export function initViewDead(ctx = {}) {
                 persistMarks();
             refreshOverlays();
         }
+        // The tab badge is now the scan's dead+blocked count — a finished run
+        // always re-evaluates it, even when no mark was pruned (the scan's
+        // verdict alone can change the number).
+        views.updateBadges();
         if (views.isActive('dead'))
             render();
     };
@@ -1160,7 +1164,21 @@ export function initViewDead(ctx = {}) {
         listEl: $list,
         hidden: !store.get('showDeadView', '1'), // showDeadView → tab visibility
         typeAhead: false,
-        badge: () => deadMarks.size,
+        // Tab badge = the last scan's discovered dead+blocked rows (not the
+        // manual marks count) — the same "discovered count" semantics as the
+        // dupes (groups) and stats (rows) badges. No scan yet → 0 → hidden.
+        badge: () => {
+            const r = lastScan && lastScan.results ? lastScan.results : null;
+            if (!r)
+                return 0;
+            let n = 0;
+            for (const id in r) {
+                const res = r[id];
+                if (res.status === 'dead' || res.status === 'blocked')
+                    n++;
+            }
+            return n;
+        },
         activate: ({ preset } = {}) => {
             // v4 task-4 #16: sync straight from chrome.storage.local — the
             // store mirror only overlays at page init, but a scan may have

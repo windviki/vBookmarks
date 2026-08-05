@@ -325,42 +325,38 @@ export function initViewStats(ctx = {}) {
         `<i>${htmlspecialchars(_m('statsHistoryGuide'))}</i>` +
         '</li>';
 
-    // One flat <ul> of merged rows: bookmarked rows carry the ★ marker
-    // (enlarged via CSS) next to the active sort key's pill; unbookmarked
-    // rows keep the ☆ one-click-add button. The active sort key sticks to
-    // the badge slot, the secondary key to the right slot (§3.4 recipe).
+    // One flat <ul> of merged rows, right meta aligned: both rows put the
+    // bookmark icon (★ bookmarked / ☆ add) at the LINE END, then left of it
+    // the count pill and the time — so the ★ and ☆ align column, the count
+    // pill sits one slot left, and the time left of that (right to left:
+    // icon → count → time). Both time and count ride the badge slot (time
+    // is NOT the row-path), so the wide/panel container query that hides
+    // row-path can never drop the time.
     const renderRows = list => {
-        const byCount = sort() === 'count';
+        const countBadge = c => ({ text: `×${c}`, cls: 'count', aria: _m('statsVisitCount', `${c}`) });
+        const timeBadge = t => ({ text: relTimeLabel(t, _m), cls: 'time' });
         let html = '';
         for (let i = 0, l = list.length; i < l; i++) {
             const row = list[i];
             const absTime = new Date(row.t || 0).toLocaleString();
-            const countText = `×${row.c}`;
-            const timeText = relTimeLabel(row.t, _m);
-            const primary = byCount
-                ? { text: countText, cls: 'count', aria: _m('statsVisitCount', `${row.c}`) }
-                : { text: timeText, cls: 'time' };
-            const secondary = byCount ? timeText : countText;
+            const badges = [timeBadge(row.t), countBadge(row.c)];
             if (row.bookmarkId) {
                 const path = views.pathOf(row.bookmarkId);
                 html += `<li class="vbm-row" id="stats-item-${row.bookmarkId}" role="listitem" ` +
                     `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
                         path,
-                        // ★ marker + the sort key's pill share the badge slot
-                        badge: [
-                            { text: '★', cls: 'starred', aria: _m('statsHistoryBookmarked') },
-                            primary
-                        ],
-                        rightText: secondary,
+                        badge: badges,
                         subText: (views.showItemPath() && path) ? path : ''
                     }) +
+                    // ★: bookmarked-state marker, always visible, aligned with
+                    // the unbookmarked rows' ☆ at the line end.
+                    `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">★</span>` +
                     '</li>';
             } else {
                 html += `<li class="vbm-row stats-hist-row" role="listitem">` +
                     treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', null, null, {
-                        badge: [primary],
-                        rightText: secondary,
+                        badge: badges,
                         subText: absTime
                     }) +
                     `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${row.histIdx}" ` +

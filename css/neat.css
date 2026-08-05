@@ -2927,18 +2927,53 @@ body.panel-mode .vbm-row .row-sub {
 
 /* === 第四轮项9: stats view — recent-history section + one-click star === */
 
-/* The merged list's rows go flex (the dupes-member recipe) so the ☆ row
-   button sits on the row line instead of wrapping below the anchor. */
-#stats-list ul li.stats-hist-row {
+/* The merged list's rows go flex (the dupes-member recipe) so the ★/☆ line-
+   end icon sits on the row line instead of wrapping below the anchor. Both
+   row kinds share it — bookmarked rows now carry the ★ as a line-end marker
+   (moved out of the badge slot) so it aligns with the unbookmarked rows' ☆. */
+#stats-list ul li.vbm-row {
     display: flex;
     align-items: center;
 }
 
-#stats-list ul li.stats-hist-row > a.tree-item-link {
+#stats-list ul li.vbm-row > a.tree-item-link {
     flex: 1 1 auto; /* v4 task-3 #1: same as recent — auto basis forces the
        anchor onto line 2; basis 0 lets it collapse to zero width and
        overflow the list horizontally */
     min-width: 0;
+}
+
+/* ★ bookmarked-state marker: always visible (unlike the hover-revealed ☆),
+   solid accent against the ☆'s hollow muted glyph, same 20px slot so the two
+   columns align across every row. */
+#stats-list .stats-star {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-inline-end: 4px;
+    color: var(--vbm-accent);
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ☆ one-click-add: hollow outline glyph (a muted-bordered square reads as an
+   action, vs ★'s solid accent mark) — stays hover/focus-revealed like every
+   .row-btn, and the accent border on hover names the action. */
+#stats-list .stats-add-btn {
+    border: 1px solid var(--vbm-muted);
+    border-radius: 4px;
+    color: var(--vbm-muted);
+    font-size: 12px;
+}
+
+#stats-list .stats-add-btn:hover {
+    border-color: var(--vbm-accent);
+    color: var(--vbm-accent);
+    background: transparent;
 }
 
 /* Bookmarked history rows carry a ★ in the badge slot (symbol + aria

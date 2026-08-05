@@ -320,9 +320,33 @@ describe('view registration (§5.5)', () => {
         expect(typeof def().onKey).toBe('function');
     });
 
-    it('badge() tracks the persisted deadMarks size', () => {
-        const { def } = setup({ storeData: { deadMarks: '["11","12"]' } });
-        expect(def().badge()).toBe(2);
+    it("badge() counts the last scan's dead+blocked rows (marks are not the badge)", () => {
+        // marks alone (no scan cache) → 0: the badge is scan-derived
+        const noScan = setup({ storeData: { deadMarks: '["11","12"]' } });
+        noScan.def().activate(); // no deadLastScan in storage → lastScan stays null
+        expect(noScan.def().badge()).toBe(0);
+        // a cached scan with 1 dead + 1 blocked → 2, independent of marks
+        const cache = JSON.stringify({
+            ts: 1, scannedCount: 2,
+            results: {
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const withScan = setup({ storeData: { deadLastScan: cache } });
+        withScan.def().activate();
+        expect(withScan.def().badge()).toBe(2);
+        // ok/skipped rows count for nothing
+        const healthy = JSON.stringify({
+            ts: 1, scannedCount: 2,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'skipped', code: 0 }
+            }
+        });
+        const h = setup({ storeData: { deadLastScan: healthy } });
+        h.def().activate();
+        expect(h.def().badge()).toBe(0);
     });
 
     it('exposes refresh/refreshOverlays/isMarked/toggleMark on the module API', () => {
@@ -451,18 +475,22 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
 
     it('a finish (cache write + blob removal) renders the cache and prunes healthy marks', () => {
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
-        const { $list, store, def } = ctx;
+        const { $list, store, def, views } = ctx;
         def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
         publishBlob(ctx, blobOf({
             done: 2, results: { '12': { status: 'dead', code: 404 } }
         }));
         expect($list.innerHTML).toContain('deadChecking'); // mid-scan render
+        // a finish ALWAYS re-evaluates the scan-count badge, even when no
+        // mark was pruned (id 11 is healthy but NOT marked)
+        const badgeBumps = views.badgeCalls;
         finishScan(ctx, {
             '11': { status: 'ok', code: 200 },
             '12': { status: 'dead', code: 404 },
             '13': { status: 'blocked', code: 404 }
         });
+        expect(views.badgeCalls).toBeGreaterThan(badgeBumps);
         const html = $list.innerHTML;
         expect(html).toContain('deadLastScanAt');
         expect(html).toContain('id="dead-item-12"');
@@ -470,7 +498,9 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         expect(html).not.toContain('id="dead-item-11"');
         // §5.5c: ids that came back healthy lose their mark
         expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
-        expect(def().badge()).toBe(1);
+        // the badge is the scan's dead+blocked count (12 dead + 13 blocked),
+        // not the marks — unchanged by the prune
+        expect(def().badge()).toBe(2);
     });
 
     it('cancel with a previous cache restores the cached view', () => {
@@ -631,7 +661,8 @@ describe('filter + batch marks (§5.5c)', () => {
         dialogs.ConfirmDialog.openCalls[0].fn1();
         expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
         expect(viewDead.isMarked('12')).toBe(false);
-        expect(ctx.def().badge()).toBe(0);
+        // clearing the marks does not touch the scan-derived badge (12+13)
+        expect(ctx.def().badge()).toBe(2);
     });
 
     it('cancelling the batch dialog leaves the marks untouched', () => {

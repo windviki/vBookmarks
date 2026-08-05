@@ -242,15 +242,19 @@ describe('rendering (sort by count, the default)', () => {
         // 8 (5 opens) before 7 (2 opens)
         expect(s.treeRender.calls.map(c => c.id)).toEqual(['8', '7']);
         const first = s.treeRender.calls[0].meta;
-        // merged rows lead with the enlarged ★ marker, then the sort key pill
-        expect(first.badge[0]).toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+        // the meta slot is now time → count (right to left: ★ at line end,
+        // then the count pill, then the time) — the ★ moved to the line end
+        expect(first.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
         expect(first.badge[1]).toEqual({ text: '×5', cls: 'count', aria: 'statsVisitCount[5]' });
-        expect(first.rightText).toBe('timeJustNow');
+        expect(first.rightText).toBeUndefined(); // no row-path slot any more
         expect(first.subText).toBe(''); // 8 lives at root — pathOf gives ''
         const second = s.treeRender.calls[1].meta;
         expect(second.subText).toBe('bar'); // 7's parent path
         expect(s.$list.innerHTML).toContain('id="stats-item-8"');
         expect(s.$list.innerHTML).toContain('data-node-id="7"');
+        // the ★ rides the line end as a non-interactive marker (aligned with ☆)
+        expect(s.$list.innerHTML).toContain('class="stats-star"');
+        expect(s.$list.innerHTML).not.toContain('row-badge starred');
     });
 
     it('skips bookmarks without stats and separators with stats', () => {
@@ -289,9 +293,10 @@ describe('sort switching', () => {
         s.def().activate();
         expect(s.treeRender.calls.map(c => c.id)).toEqual(['7', '8']);
         const first = s.treeRender.calls[0].meta;
-        expect(first.badge[0]).toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
-        expect(first.badge[1]).toEqual({ text: 'timeJustNow', cls: 'time' });
-        expect(first.rightText).toBe('×2');
+        // fixed meta order regardless of sort: time → count (★ at line end)
+        expect(first.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
+        expect(first.badge[1]).toEqual({ text: '×2', cls: 'count', aria: 'statsVisitCount[2]' });
+        expect(first.rightText).toBeUndefined();
     });
 
     it('clicking the recent segment persists statsSort and re-renders', () => {
@@ -451,20 +456,25 @@ describe('merged list (统计合并)', () => {
         expect(html).toContain('class="stats-unbookmarked-input" checked');
         // ONE list: no section heads any more
         expect(html).not.toContain('stats-section-head');
-        // bookmarked row: ★ + count pill share the badge slot, real row id
+        // bookmarked row: time + count pill in the meta slot, ★ at line end
         expect(html).toContain('id="stats-item-7"');
         expect(html).toContain('data-node-id="7"');
         const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
         expect(bmCall.id).toBe('7');
         expect(bmCall.meta.badge).toEqual([
-            { text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' },
+            { text: 'timeJustNow', cls: 'time' },
             { text: '×5', cls: 'count', aria: 'statsVisitCount[5]' }
         ]);
+        expect(html).toContain('class="stats-star"'); // ★ line-end marker
+        expect(html).not.toContain('row-badge starred');
         // unbookmarked row: no row id, count comes from history visitCount,
-        // ☆ one-click-add button preserved
+        // ☆ one-click-add button preserved (hollow-outline line-end)
         const unCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
         expect(unCall.id).toBe(null);
-        expect(unCall.meta.badge).toEqual([{ text: '×1', cls: 'count', aria: 'statsVisitCount[1]' }]);
+        expect(unCall.meta.badge).toEqual([
+            { text: 'timeJustNow', cls: 'time' },
+            { text: '×1', cls: 'count', aria: 'statsVisitCount[1]' }
+        ]);
         expect(html).toContain('class="row-btn stats-add-btn" data-hist-idx="1"');
         expect(html).toContain('statsHistoryAdd');
         // count order interleaves them: 5 > 1
@@ -496,10 +506,12 @@ describe('merged list (统计合并)', () => {
         const html = s.$list.innerHTML;
         // the newer unbookmarked row leads the older bookmarked row
         expect(html.indexOf('stats-hist-row')).toBeLessThan(html.indexOf('stats-item-7'));
-        // the unbookmarked row keeps its count in the secondary (right) slot —
-        // the LAST render (recent order), not the activate-time count order
+        // the meta slot is fixed time→count regardless of sort — the count
+        // pill is the SECOND badge (left of ★/☆), not the row-path
         const unCall = [...s.treeRender.calls].reverse().find(c => c.url === 'http://elsewhere/');
-        expect(unCall.meta.rightText).toBe('×9');
+        expect(unCall.meta.badge[1]).toEqual({ text: '×9', cls: 'count', aria: 'statsVisitCount[9]' });
+        expect(unCall.meta.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
+        expect(unCall.meta.rightText).toBeUndefined();
     });
 
     it('a bookmarked history row with no stats entry joins as a count-from-history row', () => {
@@ -513,12 +525,13 @@ describe('merged list (统计合并)', () => {
         // dataset never saw this bookmark
         expect(s.$list.innerHTML).toContain('data-node-id="7" data-parentid="1"');
         expect(bmCall.meta.badge).toEqual([
-            { text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' },
+            { text: 'timeJustNow', cls: 'time' },
             { text: '×3', cls: 'count', aria: 'statsVisitCount[3]' } // history visitCount
         ]);
+        expect(s.$list.innerHTML).toContain('class="stats-star"');
         const unCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
         expect(unCall.meta.subText).toBe(new Date(HISTORY[1].lastVisitTime).toLocaleString());
-        expect(unCall.meta.rightText).toBe('timeJustNow');
+        expect(unCall.meta.badge[1]).toEqual({ text: '×1', cls: 'count', aria: 'statsVisitCount[1]' });
     });
 
     it('a newer history visit bumps the merged row t (recent order follows history)', () => {
@@ -533,8 +546,8 @@ describe('merged list (统计合并)', () => {
         });
         s.def().activate();
         const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
-        // under count order the time pill (secondary) reflects the bumped t
-        expect(bmCall.meta.rightText).toBe('timeJustNow'); // NOW-1000 → just now, not 5s ago
+        // the time badge reflects the bumped t (NOW-1000 → just now, not 5s ago)
+        expect(bmCall.meta.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
         // recent sort leads by the bumped t
         s.click({
             preventDefault() {},
@@ -711,14 +724,14 @@ describe('one-click bookmark from a history row (☆)', () => {
         expect(s.chrome.bookmarks.getCalls).toEqual(['5']);
         expect(s.undo.toasts).toEqual(['quickAddedTo[Work]']); // quick-add wording, reused
         expect(s.onChanged.calls).toBe(1);
-        // flipped: ★ badge + real id, the ☆ button is gone
+        // flipped: ★ line-end marker + real id, the ☆ button is gone
         expect(s.$list.innerHTML).not.toContain('stats-add-btn');
         expect(s.$list.innerHTML).toContain('id="stats-item-99"');
         expect(s.$list.innerHTML).toContain('data-node-id="99"');
+        expect(s.$list.innerHTML).toContain('class="stats-star"');
         const flipped = s.treeRender.calls[s.treeRender.calls.length - 1];
         expect(flipped.id).toBe('99');
-        expect(flipped.meta.badge[0])
-            .toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+        expect(flipped.meta.badge[0]).toEqual({ text: 'timeJustNow', cls: 'time' });
     });
 
     it('lands in the bookmarks bar (id 1) when quickAddFolderId is unset', () => {

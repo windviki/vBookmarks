@@ -74,6 +74,28 @@ export function initContextMenu(ctx = {}) {
     const rowId = li =>
         (li.dataset && li.dataset.nodeId) || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
 
+    // Folder-menu entries Chrome refuses on the ROOT folders (bookmarks bar /
+    // other bookmarks / mobile, whose parent is the '0' pseudo-root):
+    //   - folder-edit            — update() rejects root title changes;
+    //   - add-*-before/after     — create with parentId '0' (the root level)
+    //                              is rejected (positions are fixed);
+    //   - add-folder-separator   — same root-level insert.
+    // They grey out (disable) like folder-delete; the in-root inserts
+    // (top/bottom/new-folder) and the open actions stay enabled.
+    const ROOT_DISABLED_IDS = [
+        'folder-edit',
+        'add-bookmark-before-folder', 'add-bookmark-after-folder',
+        'add-folder-before-folder', 'add-folder-after-folder',
+        'add-folder-separator', 'folder-delete'
+    ];
+    const setRootDisabled = on => {
+        for (let i = 0, l = ROOT_DISABLED_IDS.length; i < l; i++) {
+            const item = $(ROOT_DISABLED_IDS[i]);
+            if (item)
+                item.classList[on ? 'add' : 'remove']('disabled');
+        }
+    };
+
     const clearMenu = e => {
         currentContext = null;
         const active = body.querySelector('.active');
@@ -118,11 +140,10 @@ export function initContextMenu(ctx = {}) {
             $paletteCmdContextMenu.style.opacity = '0';
             $paletteCmdContextMenu.style.transform = 'scale(.98)';
         }
-        // The folder-delete disabled state is per-open (root vs non-root);
-        // drop it here so it can never leak across unrelated menu opens.
-        const folderDelete = $('folder-delete');
-        if (folderDelete)
-            folderDelete.classList.remove('disabled');
+        // The root-folder disabled states are per-open (root vs non-root);
+        // drop them all here so they can never leak across unrelated menu
+        // opens.
+        setRootDisabled(false);
     };
 
     body.addEventListener('click', clearMenu);
@@ -232,12 +253,12 @@ export function initContextMenu(ctx = {}) {
             if (el.classList.contains('link-folder')) {
                 // Folder link (search results / palette folder rows) — show
                 // folder context menu. Root-level folder detection (hide-sort)
-                // isn't needed here; these are never root folders. The delete
-                // entry stays enabled (a non-root folder's disabled class from
-                // a previous root open must not linger).
+                // isn't needed here; these are never root folders. Every
+                // root-disabled entry stays enabled (a non-root folder's
+                // disabled classes from a previous root open must not linger).
                 menu = $folderContextMenu;
                 menu.classList.remove('hide-sort');
-                $('folder-delete').classList.remove('disabled');
+                setRootDisabled(false);
             } else if (el.querySelector('hr')) {
                 menu = $separatorContextMenu;
                 if (el.parentNode.dataset.parentid === '0') {
@@ -294,12 +315,11 @@ export function initContextMenu(ctx = {}) {
             // rejects removeTree on them — so the delete entry greys out
             // instead of acting on a call that can only fail.
             const isRoot = el.parentNode.dataset.parentid === '0';
+            setRootDisabled(isRoot);
             if (isRoot) {
                 menu.classList.add('hide-sort');
-                $('folder-delete').classList.add('disabled');
             } else {
                 menu.classList.remove('hide-sort');
-                $('folder-delete').classList.remove('disabled');
             }
         } else {
         }
