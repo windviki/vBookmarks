@@ -34,7 +34,8 @@
 export const PALETTE_RESERVED = [
     'add', 'star', 'new', 'folder', 'mkdir', 'session', 'save',
     'tree', 'home', 'search', 'find', 'recent', 'latest', 'stats', 'visits',
-    'dead', 'broken', 'dupes', 'dedup', 'theme', 'tabs', 'options', 'settings'
+    'dead', 'broken', 'dupes', 'dedup', 'theme',
+    'dark', 'light', 'ink', 'paper', 'tabs', 'options', 'settings'
 ];
 
 export const CUSTOM_COMMANDS_KEY = 'paletteCustomCommands';

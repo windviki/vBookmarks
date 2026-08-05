@@ -14,11 +14,14 @@
 
 v4 命令面板（`src/palette.js`）当前形态：
 
-- **13 条内置命令**（v4 task-4 #5 收敛后），统一结构 `{ slash, aliases, name, fn, keepOpen }`：
-  快速操作（`/add` `/new` `/folder` `/session`）、视图直达（`/tree` `/search` …
-  slash 名即视图 id，每条至多一个语义别名）、参数化 `/theme <名>`、开关
-  （`/tabs`）、`/options`。保留字全集导出为 `PALETTE_RESERVED`
-  （`src/palette-commands.js`），自定义指令不得撞车。
+- **17 条内置命令**（v4 task-4 #5 收敛后，round-5 新增四条直接主题切换），统一结构
+  `{ slash, aliases, name, fn, keepOpen }`：快速操作（`/add` `/new` `/folder`
+  `/session`）、视图直达（`/tree` `/search` … slash 名即视图 id，每条至多一个
+  语义别名）、参数化 `/theme <名>` 加直接切换 `/dark` `/light` `/ink` `/paper`、
+  开关（`/tabs`）、`/options`。slash 模式两遍渲染：slash 前缀命中排在模糊名命中
+  之前（`/ink` 回车切墨色主题，而非落到 "Go to Dead links view"）。
+  保留字全集导出为 `PALETTE_RESERVED`（`src/palette-commands.js`），自定义指令
+  不得撞车。
 - **两种查询模式**：`/` 前缀 = 指令模式（首词匹配 slash 名，余词作为
   `slashRest` 传给 `fn`——参数通道已经存在，`/search foo` 即在用）；
   普通查询 = 模糊匹配书签/文件夹 + 桥接行进搜索视图。

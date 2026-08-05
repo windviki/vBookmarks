@@ -74,6 +74,10 @@ const MSGS = {
     paletteCmdGoDupes: 'Go to Duplicates view',
     paletteCmdTheme: 'Set theme…',
     paletteCmdThemeUsage: 'Usage: /theme auto|light|dark|ink|paper',
+    optionThemeDark: 'Dark',
+    optionThemeLight: 'Light',
+    optionThemeInk: 'Ink (dark)',
+    optionThemePaper: 'Paper (light)',
     paletteCmdToggleViewTabs: 'Toggle view tabs',
     paletteCmdOptions: 'Open options page',
     paletteCmdSearchInView: "Search '$1' in Search view",
@@ -90,19 +94,21 @@ const MSGS = {
     paletteNoResults: 'No matching results'
 };
 
-// The full command table in order (v4 task-4 #5's cleanup — 13 entries, one
-// slash name plus at most one alias each): create-style commands, session,
-// one Go command per registered view, the parameterized /theme, the /tabs
-// toggle, /options last. The retired /sep (round-4 item 2) and the retired
-// five theme commands + /path (v4 task-4 #5) are gone from the table; the
-// /sep message stays in MSGS so the absence test can assert against it.
+// The full command table in order (v4 task-4 #5's cleanup — 17 entries after
+// round-5's four direct theme switches, one slash name plus at most one alias
+// each): create-style commands, session, one Go command per registered view,
+// the parameterized /theme, the four direct theme switches, the /tabs toggle,
+// /options last. The retired /sep (round-4 item 2) and the retired five
+// theme commands + /path (v4 task-4 #5) are gone from the table; the /sep
+// message stays in MSGS so the absence test can assert against it.
 const COMMAND_MSGS = [
     MSGS.paletteCmdQuickAdd, MSGS.paletteCmdNewBookmark, MSGS.paletteCmdNewFolder,
     MSGS.paletteCmdSaveSession, MSGS.paletteCmdGoTree,
     MSGS.paletteCmdGoSearch, MSGS.paletteCmdGoRecent, MSGS.paletteCmdGoStats,
     MSGS.paletteCmdGoDead, MSGS.paletteCmdGoDupes,
-    MSGS.paletteCmdTheme, MSGS.paletteCmdToggleViewTabs,
-    MSGS.paletteCmdOptions
+    MSGS.paletteCmdTheme,
+    MSGS.optionThemeDark, MSGS.optionThemeLight, MSGS.optionThemeInk, MSGS.optionThemePaper,
+    MSGS.paletteCmdToggleViewTabs, MSGS.paletteCmdOptions
 ];
 
 // chrome.i18n.getMessage double: $1/$2 substitution on top of the table.
@@ -1415,12 +1421,64 @@ describe('the parameterized /theme command (v4 task-4 #5)', () => {
     });
 });
 
+// --- Round-5: the four direct theme commands --------------------------------
+// '/dark' '/light' '/ink' '/paper' sit next to the parameterized /theme as
+// no-rest-word shortcuts: Enter applies the theme through the same
+// store/localStorage/body[data-theme] path and closes the panel (a resolved
+// /theme does the same). Names reuse the options page's optionTheme* labels.
+describe('the direct theme commands (round-5)', () => {
+    const CASES = [
+        ['/dark', 'dark'], ['/light', 'light'], ['/ink', 'ink'], ['/paper', 'paper']
+    ];
+
+    it('each direct command applies its theme and closes the panel', () => {
+        for (const [slash, theme] of CASES) {
+            const ctx = setup({});
+            ctx.palette.open();
+            ctx.type(slash);
+            ctx.keydown(ctx.input, { key: 'Enter' });
+            expect(ctx.store.setCalls, slash).toEqual([['theme', theme]]);
+            expect(ctx.storageData.theme, slash).toBe(theme);
+            expect(ctx.body.dataset.theme, slash).toBe(theme);
+            expect(ctx.palette.isOpen(), slash).toBe(false);
+        }
+    });
+
+    it('a direct theme row renders its single slash form + the localized label', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        for (const [slash, msg] of [
+            ['/dark', MSGS.optionThemeDark], ['/light', MSGS.optionThemeLight],
+            ['/ink', MSGS.optionThemeInk], ['/paper', MSGS.optionThemePaper]
+        ]) {
+            type(slash);
+            const row = results._appended.find(li => li._innerHTML.includes(msg));
+            expect(row, slash).toBeTruthy();
+            expect(row._innerHTML, slash).toContain(`<span class="palette-slash">${slash}</span>`);
+        }
+    });
+
+    it('the direct commands join the parameterized /theme in the full table', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('/');
+        for (const [slash, msg] of [
+            ['/dark', MSGS.optionThemeDark], ['/light', MSGS.optionThemeLight],
+            ['/ink', MSGS.optionThemeInk], ['/paper', MSGS.optionThemePaper]
+        ]) {
+            const row = results._appended.find(li => li._innerHTML.includes(msg));
+            expect(row, slash).toBeTruthy();
+            expect(row._innerHTML, slash).toContain(slash);
+        }
+    });
+});
+
 // --- Settings toggle commands ------------------------------------------------
 // The one surviving toggle, /tabs (round-4 item 2), flips a '1'/'' setting
 // and re-applies it the way view-manager.js does — the no-view-tabs body
 // class. Command rows are clicked by their i18n name rather than Entered —
-// other command names fuzzy-match '/tabs' too ("Save window tabs as
-// folder"), and table order decides the Enter row.
+// Enter would land on the first slash match (round-5's two-pass ordering
+// makes that /tabs itself), but clicking keeps the assertion explicit.
 const clickCommandRow = (ctx, msg) => {
     const row = ctx.results._appended.find(li => li._innerHTML.includes(msg));
     expect(row, `a row containing "${msg}"`).toBeTruthy();

@@ -34,9 +34,11 @@
  * one slash name plus at most one memorable alias each (semantic, short).
  * The themeauto…themepaper five-pack collapsed into a single parameterized
  * '/theme <name>' (any unique prefix: '/theme d' = dark; a bare or ambiguous
- * rest shows the usage alert). '/path' (itempath) confused more than it
- * helped — the toggle lives on the options page only. The full reserved
- * word list (every built-in slash + alias) is exported from
+ * rest shows the usage alert); round-5 adds the four direct theme switches
+ * '/dark' '/light' '/ink' '/paper' (same apply path as a resolved /theme,
+ * no rest word — Enter applies and closes). '/path' (itempath) confused
+ * more than it helped — the toggle lives on the options page only. The full
+ * reserved word list (every built-in slash + alias) is exported from
  * src/palette-commands.js as PALETTE_RESERVED for the custom-command
  * validation (v4 task-4 #6); palette.test.js pins the two in sync.
  *
@@ -250,6 +252,15 @@ export function initPalette(ctx = {}) {
         setTheme(hits[0])();
         close();
     };
+    // Round-5: the four direct theme commands (/dark /light /ink /paper)
+    // sit next to the parameterized /theme — the same three-write apply
+    // path, no rest word, and Enter applies + closes (as a resolved /theme
+    // does). Names reuse the options page's optionTheme* labels, already
+    // present in every locale.
+    const switchTheme = name => () => {
+        setTheme(name)();
+        close();
+    };
     // showViewTabs flips a '1'/'' setting (default on) and is applied the
     // way view-manager.js applies it — the no-view-tabs body class.
     const toggleViewTabs = () => {
@@ -257,10 +268,11 @@ export function initPalette(ctx = {}) {
         store.set('showViewTabs', on ? '1' : '');
         document.body.classList.toggle('no-view-tabs', !on);
     };
-    // v4 task-4 #5: the cleaned table — 13 commands, one slash name plus at
-    // most one memorable alias each. PALETTE_RESERVED (palette-commands.js)
-    // carries every slash + alias as custom-command reserved words; the two
-    // are pinned in sync by palette.test.js.
+    // v4 task-4 #5: the cleaned table — 17 commands (round-5 added the four
+    // direct theme switches), one slash name plus at most one memorable alias
+    // each. PALETTE_RESERVED (palette-commands.js) carries every slash +
+    // alias as custom-command reserved words; the two are pinned in sync by
+    // palette.test.js.
     const commands = [
         { slash: 'add', aliases: ['star'], name: () => _m('paletteCmdQuickAdd'), fn: () => quickAdd() },
         { slash: 'new', aliases: [], name: () => _m('paletteCmdNewBookmark'), fn: newBookmarkFromTab },
@@ -282,6 +294,10 @@ export function initPalette(ctx = {}) {
         { slash: 'dead', aliases: ['broken'], name: () => _m('paletteCmdGoDead'), fn: goView('dead') },
         { slash: 'dupes', aliases: ['dedup'], name: () => _m('paletteCmdGoDupes'), fn: goView('dupes') },
         { slash: 'theme', aliases: [], keepOpen: true, name: () => _m('paletteCmdTheme'), fn: themeFromRest },
+        { slash: 'dark', aliases: [], name: () => _m('optionThemeDark'), fn: switchTheme('dark') },
+        { slash: 'light', aliases: [], name: () => _m('optionThemeLight'), fn: switchTheme('light') },
+        { slash: 'ink', aliases: [], name: () => _m('optionThemeInk'), fn: switchTheme('ink') },
+        { slash: 'paper', aliases: [], name: () => _m('optionThemePaper'), fn: switchTheme('paper') },
         { slash: 'tabs', aliases: [], name: () => _m('paletteCmdToggleViewTabs'), fn: toggleViewTabs },
         { slash: 'options', aliases: ['settings'], name: () => _m('paletteCmdOptions'), fn: () => chrome.runtime.openOptionsPage() }
     ];
@@ -401,17 +417,27 @@ export function initPalette(ctx = {}) {
         plainHitCount = 0;
         // Commands: all on an empty query, fuzzy-filtered otherwise. A '/'
         // prefix restricts the panel to commands (omni-style slash frame).
-        for (let i = 0, l = commands.length; i < l; i++) {
-            const cmd = commands[i];
-            const name = cmd.name();
-            if (!q || window.VBMFuzzy.score(q, name) ||
-                (slashMode && slashNames(cmd).some(s => s.indexOf(slashWord) === 0)))
-                addRow({
-                    kind: 'command', name,
-                    slash: slashNames(cmd).map(s => `/${s}`).join(' '),
-                    fn: () => cmd.fn(slashRest),
-                    keepOpen: !!cmd.keepOpen
-                });
+        // Slash mode renders in two passes so the exact slash match wins the
+        // Enter row — '/ink' must apply the Ink theme, not the "Go to Dead
+        // links view" name collision (round-5 direct theme commands). Pass 0
+        // is the slash-prefix matches (the command the user asked for, table
+        // order among themselves); pass 1 the remaining name-fuzzy matches.
+        // Plain/empty queries skip pass 0, so they keep pure table order.
+        const slashHit = cmd => slashNames(cmd).some(s => s.indexOf(slashWord) === 0);
+        const nameHit = name => !q || window.VBMFuzzy.score(q, name);
+        for (let pass = 0; pass < 2; pass++) {
+            for (let i = 0, l = commands.length; i < l; i++) {
+                const cmd = commands[i];
+                const name = cmd.name();
+                const slash = slashMode && slashHit(cmd);
+                if ((pass === 0 && slash) || (pass === 1 && !slash && nameHit(name)))
+                    addRow({
+                        kind: 'command', name,
+                        slash: slashNames(cmd).map(s => `/${s}`).join(' '),
+                        fn: () => cmd.fn(slashRest),
+                        keepOpen: !!cmd.keepOpen
+                    });
+            }
         }
         // v4 task-4 #6: custom commands merge into the command area right
         // after the built-ins (those keep their table order — muscle memory);

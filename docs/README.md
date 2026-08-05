@@ -77,7 +77,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Command palette, upgraded
 
-- `Ctrl/Cmd+K` in the popup, `Ctrl/Cmd+Shift+K` anywhere: fuzzy bookmark search, folder jumps, and a curated slash-command table — one **Go** command per view, `/add` `/new` `/folder`, `/session`, `/theme <name>`, `/tabs` and `/options`, each with a short alias or two.
+- `Ctrl/Cmd+K` in the popup, `Ctrl/Cmd+Shift+K` anywhere: fuzzy bookmark search, folder jumps, and a curated slash-command table — one **Go** command per view, `/add` `/new` `/folder`, `/session`, `/theme <name>` (or the direct switches `/dark` `/light` `/ink` `/paper`), `/tabs` and `/options`, each with a short alias or two.
 - **Custom slash commands**: open a URL, fill a URL template from the rest words (`/g kimi code`), open a bookmark folder as a tab group, or jump to a view with a preset — managed in the options page's *Commands* group, saved straight from the palette's *Save as a command* row, synced across devices, and editable/deletable from the row's `→` menu.
 - A plain query that isn't a command offers a bridge row to run it in the full search view; the palette closes itself when it loses focus.
 

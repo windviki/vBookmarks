@@ -86,9 +86,9 @@ afterEach(() => {
 });
 
 describe('constants', () => {
-    it('PALETTE_RESERVED holds 23 unique words, all slash-conformant', () => {
-        expect(PALETTE_RESERVED).toHaveLength(23);
-        expect(new Set(PALETTE_RESERVED).size).toBe(23);
+    it('PALETTE_RESERVED holds 27 unique words, all slash-conformant', () => {
+        expect(PALETTE_RESERVED).toHaveLength(27);
+        expect(new Set(PALETTE_RESERVED).size).toBe(27);
         for (const w of PALETTE_RESERVED)
             expect(SLASH_RE.test(w), w).toBe(true);
     });
@@ -161,6 +161,9 @@ describe('validateCommand', () => {
         expect(validateCommand(draftUrl({ slash: 'add' })).error).toBe('paletteCustomErrTaken');
         expect(validateCommand(draftUrl({ slash: 'ADD' })).error).toBe('paletteCustomErrTaken');
         expect(validateCommand(draftUrl({ slash: 'ok1', aliases: ['theme'] })).error).toBe('paletteCustomErrTaken');
+        // round-5's direct theme shortcuts are reserved too
+        for (const w of ['dark', 'light', 'ink', 'paper'])
+            expect(validateCommand(draftUrl({ slash: w })).error, w).toBe('paletteCustomErrTaken');
     });
 
     it('rejects collisions with other custom commands (slash + aliases), except itself on edit', () => {
