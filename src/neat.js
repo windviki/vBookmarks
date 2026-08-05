@@ -17,6 +17,7 @@ import { initViewDead } from './view-dead.js';
 import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
 import { markPopupOpen } from './visit-stats-sw.js';
+import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 
 (window => {
     const store = window.store;
@@ -159,19 +160,6 @@ import { markPopupOpen } from './visit-stats-sw.js';
     // chrome.bookmarks.getTree）已剥离至 src/tree-view.js（P1，8b），
     // 在 actions/dnd 初始化之后经 initTreeView 装配（见下方）。
 
-    // parse version to dictionary
-    const parseVersion = function(strversion) {
-        let v = {};
-        const keys = [ 'major', 'minor' ];
-        let matches = strversion.match(/([\d]+)\.([\d]+)/i);
-        if (!matches)
-            return null;
-        matches.slice(1).forEach(function(m, i) {
-            v[keys[i]] = parseInt(m, 10);
-        });
-        return v;
-    };
-
     // Donation (v4 gentle-ask model): no countdown, no forced navigation,
     // no focus stealing. The card reappears on every popup open until the
     // user makes an explicit choice — closing the popup never counts as an
@@ -184,21 +172,23 @@ import { markPopupOpen } from './visit-stats-sw.js';
     let upgradedToV4 = false;
     const mf = chrome.runtime.getManifest();
     const currentVer = parseVersion(mf["version"]);
+    // Version gate semantics (shared module, src/version.js):
+    // - sameOrNewerMinor: the recorded version is not older than current at
+    //   the major.minor granularity — a patch bump (4.0 → 4.0.1) is a SILENT
+    //   fix release and must not re-arm the donation "new version" card.
+    // - crossedInto(…, V4): a 3.x → 4.x crossing pins the v4 notice onto the
+    //   card; the same helper serves any future "announce this version"
+    //   banner with its own threshold.
+    const V4 = parseVersion('4.0');
     if (!store.get('currentVersion')) {
         store.set('currentVersion', mf["version"]);
     } else {
-        let recordVer = parseVersion(store.get('currentVersion'));
+        const recordVer = parseVersion(store.get('currentVersion'));
         store.set('currentVersion', mf["version"]);
-        // x.0 versions have minor === 0, which is falsy — the old truthiness
-        // check skipped the comparison entirely and every popup open counted
-        // as an upgrade (donation card on every open). Compare numerically.
-        if (recordVer && currentVer
-                && typeof recordVer['major'] === 'number' && typeof recordVer['minor'] === 'number'
-                && typeof currentVer['major'] === 'number' && typeof currentVer['minor'] === 'number') {
-            if ( (recordVer['major'] > currentVer['major']) ||
-                ((recordVer['major'] == currentVer['major']) && (recordVer['minor'] >= currentVer['minor'])) ){
+        if (recordVer && currentVer) {
+            if (sameOrNewerMinor(recordVer, currentVer)) {
                 newOrUpgrade = false;
-            } else if (recordVer['major'] < 4 && currentVer['major'] >= 4) {
+            } else if (crossedInto(recordVer, currentVer, V4)) {
                 upgradedToV4 = true;
             }
         }

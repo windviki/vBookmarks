@@ -1,3 +1,5 @@
+import { majorOf } from './version.js';
+
 // v4 task-4 #14: pre-use risk banner for the bulk-destructive views (dead
 // links + duplicates). One shared factory keeps the two views' copy,
 // storage gate and keyboard integration identical.
@@ -11,11 +13,6 @@
 
 // Chrome's official bookmark export/import help.
 export const RISK_HELP_URL = 'https://support.google.com/chrome/answer/96816';
-
-const majorOf = version => {
-    const m = (version || '').match(/(\d+)/);
-    return m ? parseInt(m[1], 10) : -1;
-};
 
 export const makeRiskBanner = ({ store, ackKey, textKey }) => {
     const _m = chrome.i18n.getMessage;

@@ -73,6 +73,7 @@ JS_FILES = [
     'src/view-dupes.js',
     'src/view-dead.js',
     'src/risk-banner.js',
+    'src/version.js',
     'src/visit-stats.js',
     'src/visit-stats-sw.js',
     'src/view-stats.js',
