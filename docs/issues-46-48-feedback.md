@@ -112,22 +112,54 @@ If you do have custom CSS, please share roughly what it does — I can then repr
 
 ---
 
+## #49 — Right-click menu: remove the "Bookmark this page" entry ✅ 已解决 / Resolved
+
+### 中文
+
+**需求**：v4 在页面右键菜单新增了"用 vBookmarks 收藏此页"条目，且无法移除；报告者请求提供设置开关。
+
+**实现**（4.0.1）：
+- 设置页 **Views 组新增独立开关**「在页面右键菜单添加"用 vBookmarks 收藏此页"条目」，默认开启。关闭后立即移除该菜单条目（服务端 worker 监听 `chrome.storage.onChanged` 实时生效，无需等下次冷启动）；与搜索框旁的快速收藏**星标按钮相互独立**。
+- 该开关**纳入"一键恢复经典界面"预设**（与命令面板、星标、工具按钮、视图标签一起关闭）。
+- 新增 2 个 i18n 键并全量翻译（42 个 locale，missing=0、TODO=0、verify 0 错误）。
+
+**验证**：vitest 45 套件 / 1439 例全绿；Docker 真实浏览器探针——选项页开关默认开、可切换并持久化、经典预设一并关闭、manifest 4.0.1 加载无报错。
+
+### English
+
+**Request**: v4 added a "Bookmark this page with vBookmarks" entry to the page right-click menu that could not be removed; the reporter asked for a settings switch.
+
+**Implemented** (4.0.1):
+- A **dedicated toggle in the Settings → Views group**: "Add a 'Bookmark this page with vBookmarks' entry to the page right-click menu", on by default. Turning it off removes the entry live (the service worker listens to `chrome.storage.onChanged`, so it takes effect immediately, no cold start needed). It is **independent from the quick-add star button** next to the search box.
+- The toggle is **covered by the "Restore the classic header" one-click preset** (turned off together with the command palette, the star, the tool button and the view tabs).
+- Two new i18n keys fully translated across 42 locales (missing=0, TODO=0, verify 0 errors).
+
+**Verified**: vitest 45 suites / 1439 cases all green; Docker real-browser probe — the options toggle defaults on, toggles and persists, the classic preset also switches it off, manifest 4.0.1 loads with no page errors.
+
+---
+
 ## 附带建议（版本号）· Version numbering note
 
 ### 中文
 
-针对修复版发版的版本号选择（4.1 vs 4.0.1），说明如下：
+**最终决定：本次发版采用 4.0.1（可接受的静默补丁更新），并重构了版本读取与比较机制。**
 
-- 当前版本判定机制里，`neat.js parseVersion` 只用正则 `/(\d+)\.(\d+)/` 取**前两段**（major.minor），忽略 patch。
-- 因此选 **4.0.1**：老 4.0 用户升级到 4.0.1 时 `minor` 不变，`newOrUpgrade=false`，**不会**弹"新版本发布"卡片——这正是补丁版想要的静默升级；3.x→4.0.1 跨版本升级、风险横幅（只看 major）都正常。
-- 选 **4.1**：老 4.0 用户升级会触发"新版本"捐赠卡片。
-- 两者都是合法的 Chrome manifest 版本号。若选 4.0.1，唯一的限制是：想给存量 4.0 用户"播报这次修复内容"的话，现有版本门禁做不到（patch 升级不可见），需要另想机制。
+- **manifest / package 版本号升到 4.0.1**。按现有捐赠门禁语义（major.minor 粒度），老 4.0 用户升级到 4.0.1 时 `minor` 不变、**不会**弹"新版本发布"卡——正是补丁版想要的静默升级；3.x→4.0.1 跨版本升级（v4 须知）与风险横幅（major 制）均正常。
+- **版本机制重构**：新增 `src/version.js`（纯 ESM），统一所有版本读取与比较——
+  - `parseVersion` 解析完整 major.minor.patch（缺段补 0）；
+  - `compareVersions` / `versionBelow` / `versionAtLeast` 做完整语义比较，**能区分 4.0.1 与 4.0**（补丁级差异可感知）；
+  - `sameOrNewerMinor` 保留捐赠门禁的"补丁静默"语义（4.0→4.0.1 不算新版本）；
+  - `crossedInto(recorded, current, threshold)` 泛化了"从 X 以下跨到 X 及以上"判断——**以后任何横幅都可以用阈值版本声明"跨进某版本就弹"**（例如跨进 4.1 弹一次），不再局限于 major/minor 硬编码。
+  - `neat.js` 捐赠/v4 门禁与 `risk-banner.js` 均改用该模块，行为不变，语义集中。
 
 ### English
 
-On choosing the version number for this fix release (4.1 vs 4.0.1):
+**Decision: ship this fix as 4.0.1 (an acceptable silent patch update), and rework the version read/compare mechanism.**
 
-- In the current version-gate logic, `neat.js parseVersion` reads only the **first two segments** with `/(\d+)\.(\d+)/` (major.minor); the patch segment is ignored.
-- So **4.0.1** means: existing 4.0 users upgrading to 4.0.1 keep the same `minor`, so `newOrUpgrade=false` — the "new version" donation card is **not** shown. That is exactly the silent patch upgrade a fix release wants; 3.x→4.0.1 major-crossing upgrades and the risk banner (major-only) both behave correctly.
-- Choosing **4.1** would trigger the "new version" donation card for existing 4.0 users.
-- Both are valid Chrome manifest versions. The only limitation of 4.0.1: if you ever want to broadcast the contents of this fix to existing 4.0 users, the current version gate cannot do it (a patch bump is invisible), so you'd need a separate mechanism.
+- **manifest / package version bumped to 4.0.1**. Under the existing donation gate's major.minor granularity, existing 4.0 users upgrading to 4.0.1 keep the same `minor` — the "new version" donation card is **not** shown, exactly the silent patch upgrade a fix release wants. 3.x→4.0.1 major-crossing upgrades (v4 notice) and the risk banner (major-only) both behave correctly.
+- **Mechanism rework**: a new `src/version.js` (pure ESM) centralizes every version read/compare —
+  - `parseVersion` parses the full major.minor.patch (missing segments → 0);
+  - `compareVersions` / `versionBelow` / `versionAtLeast` do full semantic comparison and **can distinguish 4.0.1 from 4.0** (patch-level differences are observable);
+  - `sameOrNewerMinor` keeps the donation gate's "patch is silent" semantics (4.0→4.0.1 is not a new version);
+  - `crossedInto(recorded, current, threshold)` generalizes the "crossed from below X to at-or-above X" test — **any future banner can declare a threshold version and gate on it** (e.g. announce once when crossing into 4.1), no longer hardcoded to a major or minor bump.
+  - `neat.js`'s donation/v4 gate and `risk-banner.js` both use the module now; behavior is unchanged, the semantics live in one place.
