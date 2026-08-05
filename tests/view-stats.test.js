@@ -242,7 +242,9 @@ describe('rendering (sort by count, the default)', () => {
         // 8 (5 opens) before 7 (2 opens)
         expect(s.treeRender.calls.map(c => c.id)).toEqual(['8', '7']);
         const first = s.treeRender.calls[0].meta;
-        expect(first.badge).toEqual({ text: '×5', cls: 'count', aria: 'statsVisitCount[5]' });
+        // merged rows lead with the enlarged ★ marker, then the sort key pill
+        expect(first.badge[0]).toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+        expect(first.badge[1]).toEqual({ text: '×5', cls: 'count', aria: 'statsVisitCount[5]' });
         expect(first.rightText).toBe('timeJustNow');
         expect(first.subText).toBe(''); // 8 lives at root — pathOf gives ''
         const second = s.treeRender.calls[1].meta;
@@ -287,7 +289,8 @@ describe('sort switching', () => {
         s.def().activate();
         expect(s.treeRender.calls.map(c => c.id)).toEqual(['7', '8']);
         const first = s.treeRender.calls[0].meta;
-        expect(first.badge).toEqual({ text: 'timeJustNow', cls: 'time' });
+        expect(first.badge[0]).toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
+        expect(first.badge[1]).toEqual({ text: 'timeJustNow', cls: 'time' });
         expect(first.rightText).toBe('×2');
     });
 
@@ -333,8 +336,10 @@ describe('toolbar', () => {
 });
 
 describe('empty and disabled states', () => {
-    it('shows statsEmpty when nothing has been recorded', () => {
-        const s = setup({});
+    it('shows statsEmpty when nothing has been recorded (granted but empty history)', () => {
+        // with the history permission granted (empty) the merged list has no
+        // rows and no guide row → the standalone statsEmpty state
+        const s = setup({ hasHistoryPermission: true, historyItems: [] });
         s.def().activate();
         expect(s.$list.innerHTML).toContain('<i>statsEmpty</i>');
     });
@@ -349,7 +354,11 @@ describe('empty and disabled states', () => {
 
 describe('clear statistics', () => {
     it('gates on ConfirmDialog and fn1 wipes + re-renders', () => {
+        // history granted-but-empty so the cleared merged list lands on the
+        // standalone statsEmpty state (no guide row to hold it)
         const s = setup({
+            hasHistoryPermission: true,
+            historyItems: [],
             statsData: { '7': { c: 1, t: NOW }, '8': { c: 2, t: NOW } }
         });
         s.def().activate();
@@ -420,49 +429,178 @@ const HISTORY = [
     { url: 'http://elsewhere/', title: 'Elsewhere', visitCount: 1, lastVisitTime: NOW - 2000 } // not in the tree
 ];
 
-describe('recent-history section (第四轮项9)', () => {
-    it('renders the stats section above the recent-history rows (v4 task-3 #2)', () => {
-        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
-        s.def().activate();
-        expect(s.chrome.history.searchCalls).toEqual([{ text: '', startTime: 0, maxResults: 200 }]);
-        // both section heads, bookmark-stats first: the toolbar sort segment
-        // controls it, so the controlled list must sit right under the control
-        const html = s.$list.innerHTML;
-        const recentAt = html.indexOf('statsSectionRecent');
-        const statsAt = html.indexOf('statsSectionBookmarks');
-        expect(statsAt).toBeGreaterThan(-1);
-        expect(recentAt).toBeGreaterThan(statsAt);
-        // bookmarked row: real row id + ★ badge meta, no ☆ button on it
-        expect(html).toContain('id="stats-hist-7"');
-        expect(html).toContain('data-node-id="7"');
-        const bookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://a/');
-        expect(bookmarkedCall.id).toBe('7');
-        expect(bookmarkedCall.meta.rightText).toBe('timeJustNow');
-        expect(bookmarkedCall.meta.badge)
-            .toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
-        // unbookmarked row: ☆ row button, no bookmark id
-        const unbookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
-        expect(unbookmarkedCall.id).toBe(null);
-        expect(html).toContain('class="row-btn stats-add-btn" data-hist-idx="1"');
-        expect(html).toContain('statsHistoryAdd');
+describe('merged list (统计合并)', () => {
+    const toggleOff = s => s.$list._listeners.change[0]({
+        target: { classList: { contains: c => c === 'stats-unbookmarked-input' }, checked: false }
+    });
+    const clickSort = (s, value) => s.click({
+        preventDefault() {},
+        target: { closest: sel => (sel === '.seg-btn' ? { dataset: { sort: value } } : null) }
     });
 
-    // Final polish: every history row carries its last-visit time in BOTH
-    // layout slots — the relative label inline (rightText) and the absolute
-    // time on the wide/panel second line (subText), which replaces the right
-    // slot per the container query and used to render nothing.
-    it('history rows carry the absolute last-visit time on the wide second line', () => {
+    it('merges bookmarked stats rows and unbookmarked history rows into one list', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: HISTORY,
+            statsData: { '7': { c: 5, t: NOW } } // Alpha: 5 popup opens
+        });
+        s.def().activate();
+        expect(s.chrome.history.searchCalls).toEqual([{ text: '', startTime: 0, maxResults: 200 }]);
+        const html = s.$list.innerHTML;
+        // toolbar checkbox rides next to the sort segment, default on
+        expect(html).toContain('class="stats-unbookmarked-input" checked');
+        // ONE list: no section heads any more
+        expect(html).not.toContain('stats-section-head');
+        // bookmarked row: ★ + count pill share the badge slot, real row id
+        expect(html).toContain('id="stats-item-7"');
+        expect(html).toContain('data-node-id="7"');
+        const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        expect(bmCall.id).toBe('7');
+        expect(bmCall.meta.badge).toEqual([
+            { text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' },
+            { text: '×5', cls: 'count', aria: 'statsVisitCount[5]' }
+        ]);
+        // unbookmarked row: no row id, count comes from history visitCount,
+        // ☆ one-click-add button preserved
+        const unCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
+        expect(unCall.id).toBe(null);
+        expect(unCall.meta.badge).toEqual([{ text: '×1', cls: 'count', aria: 'statsVisitCount[1]' }]);
+        expect(html).toContain('class="row-btn stats-add-btn" data-hist-idx="1"');
+        expect(html).toContain('statsHistoryAdd');
+        // count order interleaves them: 5 > 1
+        expect(html.indexOf('stats-item-7')).toBeLessThan(html.indexOf('stats-hist-row'));
+    });
+
+    it('unbookmarked rows sort to the bottom when history carries no visitCount', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            statsData: { '7': { c: 2, t: NOW } },
+            historyItems: [{ url: 'http://elsewhere/', title: 'Elsewhere', lastVisitTime: NOW - 500 }]
+        });
+        s.def().activate();
+        const html = s.$list.innerHTML;
+        expect(html.indexOf('stats-item-7')).toBeLessThan(html.indexOf('stats-hist-row'));
+    });
+
+    it('recent sort interleaves bookmarked and unbookmarked rows by last visit time', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            statsData: { '7': { c: 3, t: NOW - 5000 } }, // bookmarked, older
+            historyItems: [
+                { url: 'http://a/', title: 'Alpha', visitCount: 1, lastVisitTime: NOW - 5000 },
+                { url: 'http://elsewhere/', title: 'Elsewhere', visitCount: 9, lastVisitTime: NOW - 1000 } // newer
+            ]
+        });
+        s.def().activate();
+        clickSort(s, 'recent');
+        const html = s.$list.innerHTML;
+        // the newer unbookmarked row leads the older bookmarked row
+        expect(html.indexOf('stats-hist-row')).toBeLessThan(html.indexOf('stats-item-7'));
+        // the unbookmarked row keeps its count in the secondary (right) slot —
+        // the LAST render (recent order), not the activate-time count order
+        const unCall = [...s.treeRender.calls].reverse().find(c => c.url === 'http://elsewhere/');
+        expect(unCall.meta.rightText).toBe('×9');
+    });
+
+    it('a bookmarked history row with no stats entry joins as a count-from-history row', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY }); // no statsData
+        s.def().activate();
+        const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        expect(bmCall.id).toBe('7');
+        expect(bmCall.meta.path).toBe('bar');
+        expect(bmCall.meta.subText).toBe('bar'); // showItemPath on
+        // the live tree supplies the row's parent id even though the stats
+        // dataset never saw this bookmark
+        expect(s.$list.innerHTML).toContain('data-node-id="7" data-parentid="1"');
+        expect(bmCall.meta.badge).toEqual([
+            { text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' },
+            { text: '×3', cls: 'count', aria: 'statsVisitCount[3]' } // history visitCount
+        ]);
+        const unCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
+        expect(unCall.meta.subText).toBe(new Date(HISTORY[1].lastVisitTime).toLocaleString());
+        expect(unCall.meta.rightText).toBe('timeJustNow');
+    });
+
+    it('a newer history visit bumps the merged row t (recent order follows history)', () => {
+        // id 7 has a stats entry with an old t; history shows a newer visit.
+        // The merged row's t must come from the fresher of the two.
+        const s = setup({
+            hasHistoryPermission: true,
+            statsData: { '7': { c: 2, t: NOW - 5000 } }, // stats t is old
+            historyItems: [
+                { url: 'http://a/', title: 'Alpha', visitCount: 1, lastVisitTime: NOW - 1000 } // history t newer
+            ]
+        });
+        s.def().activate();
+        const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        // under count order the time pill (secondary) reflects the bumped t
+        expect(bmCall.meta.rightText).toBe('timeJustNow'); // NOW-1000 → just now, not 5s ago
+        // recent sort leads by the bumped t
+        s.click({
+            preventDefault() {},
+            target: { closest: sel => (sel === '.seg-btn' ? { dataset: { sort: 'recent' } } : null) }
+        });
+        expect(s.$list.innerHTML).toContain('id="stats-item-7"');
+    });
+
+    it('a bookmarked history row with a stats entry keeps the stats count (not history visitCount)', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            statsData: { '7': { c: 5, t: NOW - 5000 } }, // 5 popup opens
+            historyItems: [{ url: 'http://a/', title: 'Alpha', visitCount: 40, lastVisitTime: NOW - 1000 }]
+        });
+        s.def().activate();
+        const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
+        // the ★ + stats count pill, NOT the history's 40
+        expect(bmCall.meta.badge[1])
+            .toEqual({ text: '×5', cls: 'count', aria: 'statsVisitCount[5]' });
+    });
+
+    it('unchecking the toggle drops the unbookmarked rows and persists the choice', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: HISTORY,
+            statsData: { '7': { c: 5, t: NOW } }
+        });
+        s.def().activate();
+        expect(s.$list.innerHTML).toContain('stats-hist-row');
+        toggleOff(s);
+        expect(s.store._data.statsShowUnbookmarked).toBe('');
+        const html = s.$list.innerHTML;
+        expect(html).not.toContain('stats-hist-row');
+        expect(html).toContain('id="stats-item-7"'); // bookmarked rows stay
+        // re-checking the box brings the unbookmarked rows back (the change
+        // handler flips the flag and repaints)
+        s.$list._listeners.change[0]({
+            target: { classList: { contains: c => c === 'stats-unbookmarked-input' }, checked: true }
+        });
+        expect(s.store._data.statsShowUnbookmarked).toBe('1');
+        expect(s.$list.innerHTML).toContain('stats-hist-row');
+    });
+
+    it('a persisted off flag reopens unchecked (popup survives reopen)', () => {
+        // a fresh view seeded with the stored off-flag renders the checkbox
+        // UNchecked and no unbookmarked rows, without any toggle click
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: HISTORY,
+            storeData: { statsShowUnbookmarked: '' }
+        });
+        s.def().activate();
+        expect(s.$list.innerHTML).toContain('class="stats-unbookmarked-input"'); // no checked attr
+        expect(s.$list.innerHTML).not.toContain('checked');
+        expect(s.$list.innerHTML).not.toContain('stats-hist-row');
+    });
+
+    it('clicking the toolbar checkbox never falls through to bookmarkHandler', () => {
         const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
         s.def().activate();
-        const bookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://a/');
-        const unbookmarkedCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
-        const absA = new Date(HISTORY[0].lastVisitTime).toLocaleString();
-        const absB = new Date(HISTORY[1].lastVisitTime).toLocaleString();
-        // the bookmarked row also gains the unified path tooltip + path prefix
-        expect(bookmarkedCall.meta.path).toBe('bar');
-        expect(bookmarkedCall.meta.subText).toBe(`bar · ${absA}`);
-        expect(unbookmarkedCall.meta.subText).toBe(absB);
-        expect(unbookmarkedCall.meta.rightText).toBe('timeJustNow');
+        const ev = {
+            preventDefault() { this.prevented = true; },
+            target: { closest: sel => (sel === '.stats-unbookmarked' ? {} : null) }
+        };
+        s.click(ev);
+        expect(s.treeView.handlerCalls).toEqual([]); // swallowed, no bookmark open
     });
 
     it('renders newest first, dedupes slash-folded URLs and skips unbookmarkable schemes', () => {
@@ -480,23 +618,12 @@ describe('recent-history section (第四轮项9)', () => {
         expect(s.treeRender.calls.map(c => c.url)).toEqual(['http://new/', 'http://old/']);
     });
 
-    it('omits the section entirely when granted but history is empty', () => {
+    it('shows statsEmpty when granted but both datasets are empty', () => {
         const s = setup({ hasHistoryPermission: true, historyItems: [] });
         s.def().activate();
-        expect(s.$list.innerHTML).not.toContain('statsSectionRecent');
+        expect(s.$list.innerHTML).not.toContain('stats-hist-row');
         expect(s.$list.innerHTML).not.toContain('stats-history-guide');
-        expect(s.$list.innerHTML).toContain('statsSectionBookmarks'); // stats section intact
         expect(s.$list.innerHTML).toContain('<i>statsEmpty</i>');
-    });
-
-    it('keeps the head as the carrier row LAST child (anchor stays firstElementChild for Enter)', () => {
-        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
-        s.def().activate();
-        const m = s.$list.innerHTML.match(/<li class="vbm-row stats-hist-row has-head"[^>]*>([\s\S]*?)<\/li>/);
-        expect(m).not.toBe(null);
-        expect(m[1].indexOf('<a ')).toBe(0); // anchor first (keyboard.js Enter contract)
-        expect(m[1]).toContain('stats-section-head" role="presentation">statsSectionRecent</div>');
-        expect(m[1].indexOf('stats-section-head')).toBeGreaterThan(m[1].indexOf('</a>'));
     });
 
     it('refetches history on every activation (data is only pulled on activate)', () => {
@@ -509,7 +636,7 @@ describe('recent-history section (第四轮项9)', () => {
 });
 
 describe('history-permission guide row', () => {
-    it('shows the compact guide (sentence + Enable) instead of the section while permission is missing', () => {
+    it('shows the compact guide (sentence + Enable) while permission is missing', () => {
         const s = setup({}); // hasHistoryPermission defaults to false
         s.def().activate();
         expect(s.chrome.permissions.containsCalls).toEqual([{ permissions: ['history'] }]);
@@ -517,10 +644,21 @@ describe('history-permission guide row', () => {
         const html = s.$list.innerHTML;
         expect(html).toContain('stats-history-guide');
         expect(html).toContain('statsHistoryGuide');
-        expect(html).toContain('statsSectionRecent'); // the guide carries the section head
+        expect(html).not.toContain('stats-section-head'); // no section heads in the merge
         // the enable link is the row's firstElementChild (keyboard Enter contract)
         expect(html).toContain(
-            '<li class="stats-history-guide has-head" role="listitem"><a href="" class="stats-history-enable"');
+            '<li class="stats-history-guide" role="listitem"><a href="" class="stats-history-enable"');
+    });
+
+    it('the guide row trails the bookmarked stats rows while permission is missing', () => {
+        // permission missing BUT stats rows exist: the merged list renders the
+        // stats rows, then the trailing guide row — never replaces them
+        const s = setup({ statsData: { '7': { c: 2, t: NOW } } }); // no hasHistoryPermission
+        s.def().activate();
+        const html = s.$list.innerHTML;
+        expect(html).toContain('id="stats-item-7"');
+        expect(html).toContain('stats-history-guide');
+        expect(html.indexOf('stats-item-7')).toBeLessThan(html.indexOf('stats-history-guide'));
     });
 
     it('granting from the guide row fetches history immediately and swaps in the rows', () => {
@@ -575,11 +713,11 @@ describe('one-click bookmark from a history row (☆)', () => {
         expect(s.onChanged.calls).toBe(1);
         // flipped: ★ badge + real id, the ☆ button is gone
         expect(s.$list.innerHTML).not.toContain('stats-add-btn');
-        expect(s.$list.innerHTML).toContain('id="stats-hist-99"');
+        expect(s.$list.innerHTML).toContain('id="stats-item-99"');
         expect(s.$list.innerHTML).toContain('data-node-id="99"');
         const flipped = s.treeRender.calls[s.treeRender.calls.length - 1];
         expect(flipped.id).toBe('99');
-        expect(flipped.meta.badge)
+        expect(flipped.meta.badge[0])
             .toEqual({ text: '★', cls: 'starred', aria: 'statsHistoryBookmarked' });
     });
 
@@ -631,7 +769,7 @@ describe('contextmenu on rows without a bookmark id', () => {
         s.contextmenu(ev(li(['vbm-row', 'stats-hist-row'], {})));
         expect(calls).toEqual({ prevent: 0, stop: 0 });
         // the permission guide row must still be swallowed (Enable anchor, bogus id)
-        s.contextmenu(ev(li(['stats-history-guide', 'has-head'], {})));
+        s.contextmenu(ev(li(['stats-history-guide'], {})));
         expect(calls).toEqual({ prevent: 1, stop: 1 });
         // bookmarked row → menu chain intact
         s.contextmenu(ev(li(['vbm-row', 'stats-hist-row'], { nodeId: '7' })));
@@ -646,7 +784,7 @@ describe('statsEnabled off (第四轮项9 regression)', () => {
         expect(s.chrome.permissions.containsCalls).toEqual([]);
         expect(s.chrome.history.searchCalls).toEqual([]);
         expect(s.$list.innerHTML).toContain('<i>statsDisabledHint</i>');
-        expect(s.$list.innerHTML).not.toContain('statsSectionRecent');
+        expect(s.$list.innerHTML).not.toContain('stats-hist-row'); // no history data
     });
 });
 

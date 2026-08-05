@@ -326,6 +326,33 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('<span class="row-badge x&quot; onmouseover=&quot;">&lt;b&gt;</span>');
     });
 
+    // batch-deletion slice: meta.badge may be an ARRAY — the merged stats
+    // rows render the enlarged ★ marker next to the count/time pill. Each
+    // entry gets its own span, empty/absent entries are skipped.
+    it('meta.badge as an array renders one span per entry, skipping empties', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: [
+                { text: '★', cls: 'starred', aria: 'Bookmarked' },
+                { text: '×5', cls: 'count', aria: 'Visited 5 times' },
+                null,
+                { text: '', cls: 'dead' } // empty text skipped
+            ]
+        });
+        expect(html).toContain(
+            '<span class="row-badge starred" aria-label="Bookmarked">★</span>' +
+            '<span class="row-badge count" aria-label="Visited 5 times">×5</span>');
+        expect(html).not.toContain('row-badge dead');
+        expect(html).toContain('row-main');
+    });
+
+    it('meta.badge as an empty array renders the plain layout', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { badge: [] });
+        expect(html).toContain('<i>T</i>');
+        expect(html).not.toContain('row-badge');
+    });
+
     // v4 task-2 slice D: meta.badge.aria adds an aria-label (the stats ×N
     // count pill is not self-explanatory to screen readers).
     it('meta.badge.aria renders an escaped aria-label', () => {

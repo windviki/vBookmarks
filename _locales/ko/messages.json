@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "최근순"
   },
+  "statsShowUnbookmarked": {
+    "message": "미등록 표시"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "기록에서 북마크로 저장되지 않은 페이지를 포함합니다."
+  },
   "statsVisitCount": {
     "message": "$count$회 방문",
     "placeholders": {

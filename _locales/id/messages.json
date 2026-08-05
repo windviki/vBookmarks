@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Berdasarkan terbaru"
   },
+  "statsShowUnbookmarked": {
+    "message": "Tampilkan yang tidak ditandai"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Sertakan halaman dari riwayat yang tidak disimpan sebagai bookmark."
+  },
   "statsVisitCount": {
     "message": "Dikunjungi $count$ kali",
     "placeholders": {

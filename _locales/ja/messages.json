@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "最近順"
   },
+  "statsShowUnbookmarked": {
+    "message": "未登録を表示"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "履歴の中でブックマークとして保存されていないページを含めます。"
+  },
   "statsVisitCount": {
     "message": "$count$ 回訪問",
     "placeholders": {

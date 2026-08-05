@@ -836,6 +836,16 @@ menu[type=context] #folder-delete {
     color: var(--vbm-danger);
 }
 
+/* A disabled menu item (root-folder delete) sheds the danger cue, greys out
+   and stops receiving the pointer — the same muted read as a disabled
+   toolbar button. #folder-delete.disabled outranks the danger rule above
+   (element+id+class beats element+id), so a disabled delete reads muted. */
+menu[type=context] .menu-item.disabled,
+menu[type=context] #folder-delete.disabled {
+    color: var(--vbm-muted);
+    pointer-events: none;
+}
+
 
 /* convert title-style to sentence-style capitalization, for Windows */
 
@@ -1121,6 +1131,7 @@ body.panel-mode #resizer-y {
 #recent-list ul li.empty-state,
 #dupes-list ul li.empty-state,
 #dead-list ul li.empty-state,
+#stats-list ul li.empty-state,
 #search-history-area ul li.empty-state {
     color: var(--vbm-muted);
     text-align: center;
@@ -2836,6 +2847,8 @@ body.panel-mode .vbm-row .row-sub {
     border-bottom: 1px solid var(--vbm-border);
     font-size: 11px;
     color: var(--vbm-muted);
+    flex-wrap: wrap; /* the sort seg + unbookmarked toggle + clear share one
+                        row; a narrow popup wraps instead of overflowing */
 }
 
 .stats-toolbar .seg {
@@ -2857,6 +2870,14 @@ body.panel-mode .vbm-row .row-sub {
 .stats-toolbar .seg-btn[aria-pressed="true"] {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
+}
+
+.stats-toolbar .stats-unbookmarked {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .stats-toolbar .stats-clear {
@@ -2906,54 +2927,35 @@ body.panel-mode .vbm-row .row-sub {
 
 /* === 第四轮项9: stats view — recent-history section + one-click star === */
 
-/* Both sections share one flat <ul>. Rows carrying a section head or an
-   inline action button go flex (the dupes-member recipe) so the ☆ row
-   button sits on the row line instead of wrapping below the anchor. The
-   head div is the row's LAST DOM child — `order:-1` on a full-basis flex
-   item wraps it above the row while li.firstElementChild stays the anchor
-   (keyboard.js Enter dispatches its synthetic click there). */
-#stats-list ul li.stats-hist-row,
-#stats-list ul li.has-head {
+/* The merged list's rows go flex (the dupes-member recipe) so the ☆ row
+   button sits on the row line instead of wrapping below the anchor. */
+#stats-list ul li.stats-hist-row {
     display: flex;
     align-items: center;
 }
 
-#stats-list ul li.has-head {
-    flex-wrap: wrap;
-}
-
-#stats-list ul li.stats-hist-row > a.tree-item-link,
-#stats-list ul li.has-head > a.tree-item-link {
+#stats-list ul li.stats-hist-row > a.tree-item-link {
     flex: 1 1 auto; /* v4 task-3 #1: same as recent — auto basis forces the
-       anchor onto line 2; basis 0 lets it collapse to zero width on the
-       head's line and overflow the list horizontally */
+       anchor onto line 2; basis 0 lets it collapse to zero width and
+       overflow the list horizontally */
     min-width: 0;
-}
-
-/* Section heads: muted small type (recent-group-head semantics), pulled
-   above their carrier row; the list's first row needs no extra top air. */
-#stats-list .stats-section-head {
-    order: -1;
-    flex: 0 0 100%;
-    box-sizing: border-box; /* same horizontal-scrollbar guard as
-       .recent-group-head (v4 task-3 #1) */
-    padding: 6px 8px 2px;
-    font-size: 11px;
-    color: var(--vbm-muted);
-    user-select: none;
-}
-
-#stats-list ul li:first-child .stats-section-head {
-    padding-top: 2px;
 }
 
 /* Bookmarked history rows carry a ★ in the badge slot (symbol + aria
    label, never color alone); unbookmarked rows get the hover-revealed ☆
-   .row-btn instead. */
+   .row-btn instead. In the merged stats list the ★ is enlarged so the
+   bookmarked state reads at a glance next to the count/time pill beside
+   it (batch-deletion slice) — it sheds the pill geometry (fixed 14px
+   height / 7px radius) for a bigger plain glyph. */
 .vbm-row .row-badge.starred {
     background: transparent;
     color: var(--vbm-accent);
-    padding: 0 2px;
+    height: auto;
+    min-width: 0;
+    padding: 0 3px;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 16px;
 }
 
 /* Permission guide row: one muted sentence + the accent Enable link. DOM
@@ -2998,13 +3000,6 @@ body.panel-mode .vbm-row .row-sub {
     background: none;
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
-}
-
-/* The stats section's empty state carries its head too: drop the big top
-   padding the headless variant needs and keep the hint centered. */
-#stats-list ul li.empty-state.has-head {
-    justify-content: center;
-    padding-top: 8px;
 }
 
 /* === 横向滚动条防护（scrollbar-contract）===

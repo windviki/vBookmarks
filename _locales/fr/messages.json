@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Par récent"
   },
+  "statsShowUnbookmarked": {
+    "message": "Afficher non marqués"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Inclure les pages de l'historique qui ne sont pas enregistrées comme signets."
+  },
   "statsVisitCount": {
     "message": "Visité $count$ fois",
     "placeholders": {

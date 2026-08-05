@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Etter nylig"
   },
+  "statsShowUnbookmarked": {
+    "message": "Vis umarkerte"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Inkluder sider fra historikken som ikke er lagret som bokmerker."
+  },
   "statsVisitCount": {
     "message": "Besøkt $count$ ganger",
     "placeholders": {

@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "По дате"
   },
+  "statsShowUnbookmarked": {
+    "message": "Показать несохранённые"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Включить страницы из истории, которые не сохранены как закладки."
+  },
   "statsVisitCount": {
     "message": "Посещено $count$ раз",
     "placeholders": {

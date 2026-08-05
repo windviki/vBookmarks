@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Pēc nesenuma"
   },
+  "statsShowUnbookmarked": {
+    "message": "Rādīt neatzīmētās"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Iekļaut vēstures lapas, kuras nav saglabātas kā grāmatzīmes."
+  },
   "statsVisitCount": {
     "message": "Apmeklēts $count$ reizes",
     "placeholders": {

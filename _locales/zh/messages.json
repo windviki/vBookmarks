@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "按最近"
   },
+  "statsShowUnbookmarked": {
+    "message": "显示未收藏书签"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "包含历史记录中未保存为书签的页面。"
+  },
   "statsVisitCount": {
     "message": "访问了 $count$ 次",
     "placeholders": {

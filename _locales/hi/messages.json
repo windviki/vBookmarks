@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "हालिया द्वारा"
   },
+  "statsShowUnbookmarked": {
+    "message": "अचिह्नित दिखाएँ"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "इतिहास के ऐसे पृष्ठ शामिल करें जो बुकमार्क के रूप में सहेजे नहीं गए हैं।"
+  },
   "statsVisitCount": {
     "message": "$count$ बार देखा गया",
     "placeholders": {

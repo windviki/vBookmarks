@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "按最近"
   },
+  "statsShowUnbookmarked": {
+    "message": "顯示未收藏書籤"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "包含瀏覽記錄中未儲存為書籤的頁面。"
+  },
   "statsVisitCount": {
     "message": "已瀏覽 $count$ 次",
     "placeholders": {

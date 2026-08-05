@@ -4,53 +4,47 @@
  * into a "history + statistics" hybrid meant to replace Chrome's native
  * history page).
  *
- * Two sections share ONE flat <ul>, so the shared list keyboard contract
- * (keyboard.js ArrowUp/Down li walking, Home/End, Enter) crosses section
- * boundaries with zero view-specific keys. The bookmark-stats section
- * leads (v4 task-3 #2: the toolbar sort segment controls it, so the
- * controlled list must sit directly under the control — with the history
- * section first, a count tie made the toggle look dead):
+ * One merged list lives in ONE flat <ul>, so the shared list keyboard
+ * contract (keyboard.js ArrowUp/Down li walking, Home/End, Enter) crosses
+ * row kinds with zero view-specific keys (batch-deletion slice). The
+ * bookmark-stats rows lead (the toolbar sort segment controls them, so
+ * the controlled list sits directly under the control) and the unbookmarked
+ * recent-history rows join them in the same list while the "显示未收藏书签"
+ * toolbar checkbox is on:
  *
- *   1. 书签统计 (statsSectionBookmarks) — the slice-D per-bookmark
- *      counters: one row per bookmark with at least one recorded open,
- *      sorted by count (default) or recency (`statsSort` persists the
- *      choice), count pill / relative time in the meta slots (the active
- *      sort key sticks to the title column), parent path on the wide
- *      second line. Clicking opens through the shared bookmarkHandler,
- *      which is also the collection point (neat.js onOpenBookmark).
- *   2. 最近访问 (statsSectionRecent) — the latest chrome.history entries,
- *      most recent first, URL-deduped, capped at HISTORY_RECENT_MAX. Every
- *      row shows its last-visit time in both layout slots (relative label
- *      inline, absolute time on the wide/panel second line — final polish).
- *      The
- *      section's point is the URLs that are NOT in the bookmark tree:
- *      an unbookmarked row carries no row id (no data-node-id — the open
- *      still goes through the shared bookmarkHandler via the anchor href,
- *      and the visitStats.record hook no-ops on the resulting empty id)
- *      and gets a hover-revealed ☆ row button (the .row-btn pattern of
- *      the dead/dupes views) for one-click bookmarking. A row whose URL
- *      already lives in the tree is recognizable instead: a ★ badge
- *      (row-badge.starred, aria-label statsHistoryBookmarked), a real
- *      data-node-id (the click opens AND bumps that bookmark's own
- *      counter, and the body-level bookmark context menu — including
- *      在树中定位 — applies verbatim), and no star button. Right-click on
- *      an unbookmarked row opens its own slim menu (open in new tab /
- *      window / incognito + bookmark-it) built by context-menu.js
- *      (v4 task-3 #10): the body-level bookmark menu would otherwise act
- *      on a bogus id — the same hazard round-4 item 7 fixed for
- *      search-history rows. Only the permission guide row is still
- *      swallowed at the list level (preventDefault + stopPropagation).
+ *   - 已收藏统计行 — the slice-D per-bookmark counters: one row per
+ *     bookmark with at least one recorded open, sorted by count (default)
+ *     or recency (`statsSort` persists the choice). A ★ badge (enlarged,
+ *     row-badge.starred) marks the bookmarked state, the active sort key
+ *     renders as the count pill / relative time in the badge slot (next to
+ *     the ★), the secondary key rides the right slot, and the parent path
+ *     sits on the wide second line. Clicking opens through the shared
+ *     bookmarkHandler, which is also the collection point (neat.js
+ *     onOpenBookmark). Bookmarked history rows whose id the stats dataset
+ *     lacks (visited but never opened through the popup) also land here as
+ *     count-0 rows — they are still visited bookmarks.
+ *   - 未收藏历史行 — the latest chrome.history entries NOT in the bookmark
+ *     tree, most recent first, URL-deduped, capped at HISTORY_RECENT_MAX.
+ *     They carry no row id (no data-node-id — the open still goes through
+ *     the shared bookmarkHandler via the anchor href, and the visitStats.
+ *     record hook no-ops on the resulting empty id) and get a hover-revealed
+ *     ☆ row button (the .row-btn pattern of the dead/dupes views) for
+ *     one-click bookmarking. Their count dimension is history's own
+ *     visitCount, so under count order they interleave by real visit volume
+ *     (0 when the entry carries none → they sort to the bottom). Right-click
+ *     on an unbookmarked row opens its own slim menu (open in new tab /
+ *     window / incognito + bookmark-it) built by context-menu.js
+ *     (v4 task-3 #10): the body-level bookmark menu would otherwise act on a
+ *     bogus id — the same hazard round-4 item 7 fixed for search-history
+ *     rows. Only the permission guide row is still swallowed at the list
+ *     level (preventDefault + stopPropagation).
  *
- * Section heads are muted non-interactive labels (recent-group-head
- * semantics). Each rides INSIDE its section's first row as that row's
- * LAST DOM child, pulled above the row by CSS order — deliberately NOT
- * view-recent's head-first pattern: keyboard.js Enter dispatches the
- * synthetic click at li.firstElementChild, which must stay the row anchor
- * for Enter=open to work on head-carrying rows. Empty-section rules keep
- * arrow walking from stranding on non-focusable rows: the recent section
- * is omitted entirely when granted-but-empty (a head with no rows under
- * it would read as a bug), while the stats section keeps its head on the
- * statsEmpty row, which is then the list's FIRST <li>.
+ * The unbookmarked toggle persists as `statsShowUnbookmarked` (default on —
+ * the recent history's unbookmarked rows are the merge's whole point); off,
+ * only the bookmarked rows render. Empty/guide rules keep arrow walking
+ * from stranding on non-focusable rows: a missing `history` permission
+ * collapses the recent data to a single trailing guide row, and with no
+ * rows at all the statsEmpty row stands alone as the list's FIRST <li>.
  *
  * Permission guide (a more compact take on view-recent's banner): while
  * stats is enabled but the optional `history` permission is missing, the
@@ -173,6 +167,13 @@ export function initViewStats(ctx = {}) {
         return items;
     };
 
+    // id → { title, url, parentId } of the LIVE tree (built each refresh).
+    // The count-from-history rows (visited + bookmarked but never opened
+    // through the popup) resolve their title and parent from here instead of
+    // trusting history's snapshot — a renamed bookmark renders its current
+    // title, and the row carries the real data-parentid.
+    let treeItems = new Map();
+
     const collectRows = items => {
         const stats = visitStats.all();
         const out = [];
@@ -217,10 +218,19 @@ export function initViewStats(ctx = {}) {
                 title: h.title || '',
                 url: h.url,
                 t: h.lastVisitTime || 0,
+                // history.search aggregates visitCount per URL — the unbookmarked
+                // rows' count dimension for the merged list's sort.
+                visitCount: h.visitCount || 0,
                 bookmarkId: urlToIds.get(matchUrl(h.url)) || null
             });
         }
     };
+
+    // Merged-list toggle (batch-deletion slice): whether the unbookmarked
+    // history rows join the bookmark-stats list. Persisted so the choice
+    // survives a popup reopen; default ON (the recent history's unbookmarked
+    // rows are the section's whole point).
+    const showUnbookmarked = () => store.get('statsShowUnbookmarked', '1') === '1';
 
     const renderToolbar = () => {
         const s = sort();
@@ -237,105 +247,127 @@ export function initViewStats(ctx = {}) {
             `<button class="seg-btn" data-sort="recent" ` +
             `aria-pressed="${s === 'recent'}">${_m('statsSortByRecent')}</button>` +
             '</span>';
+        html += `<label class="stats-unbookmarked" title="${_m('statsShowUnbookmarkedHint')}">` +
+            `<input type="checkbox" class="stats-unbookmarked-input"${showUnbookmarked() ? ' checked' : ''}>` +
+            `<span>${_m('statsShowUnbookmarked')}</span></label>`;
         html += `<button class="stats-clear"${rows.length ? '' : ' disabled'}>${_m('statsClearData')}</button>`;
         html += '</div>';
         return html;
     };
 
-    // Muted non-interactive section label (recent-group-head semantics).
-    // Rendered as the carrier row's LAST DOM child; CSS order pulls it above
-    // the row so li.firstElementChild stays the anchor (keyboard.js Enter
-    // dispatches its synthetic click there).
-    const sectionHead = key =>
-        `<div class="stats-section-head" role="presentation">${_m(key)}</div>`;
+    // (batch-deletion slice): the two section heads are gone — bookmarked
+    // and unbookmarked rows now share ONE flat list sorted by the active
+    // key, so there is no boundary to label. The shared list keyboard
+    // contract (keyboard.js li walking) still crosses the whole list.
 
-    const renderHistorySection = () => {
-        // Permission missing: the section collapses to a compact guide row
-        // (one sentence + Enable link, no dismiss). The link is the li's
-        // firstElementChild — the same Enter contract as data rows.
-        if (historyPerm === false) {
-            return `<li class="stats-history-guide has-head" role="listitem">` +
-                `<a href="" class="stats-history-enable" tabindex="-1">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
-                `<i>${htmlspecialchars(_m('statsHistoryGuide'))}</i>` +
-                sectionHead('statsSectionRecent') +
-                '</li>';
-        }
-        // Probe pending or granted-but-empty: omit the section entirely.
-        if (historyPerm !== true || !histRows.length)
-            return '';
-        let html = '';
-        const showPath = views.showItemPath();
-        for (let i = 0, l = histRows.length; i < l; i++) {
-            const r = histRows[i];
-            const head = i === 0 ? sectionHead('statsSectionRecent') : '';
-            const cls = `vbm-row stats-hist-row${i === 0 ? ' has-head' : ''}`;
-            // Every entry carries its last-visit time in BOTH layout forms
-            // (final polish): the narrow inline right slot keeps the relative
-            // label, while the wide/panel second line (which REPLACES the
-            // right slot per the container query) gets the absolute time —
-            // it used to render nothing there, so wide/panel rows showed no
-            // time at all. Same recipe as view-recent (§3.3).
-            const absTime = new Date(r.t || 0).toLocaleString();
-            if (r.bookmarkId) {
-                // Bookmarked: ★ badge + real row id — the open self-counts
-                // and the bookmark context menu applies; no star button.
-                const path = views.pathOf(r.bookmarkId);
-                html += `<li class="${cls}" id="stats-hist-${r.bookmarkId}" role="listitem" ` +
-                    `data-node-id="${r.bookmarkId}">` +
-                    treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', r.bookmarkId, null, {
-                        path,
-                        rightText: relTimeLabel(r.t, _m),
-                        subText: (showPath && path) ? `${path} · ${absTime}` : absTime,
-                        badge: { text: '★', cls: 'starred', aria: _m('statsHistoryBookmarked') }
-                    }) +
-                    head +
-                    '</li>';
-            } else {
-                // Unbookmarked: no row id (record no-ops on the empty id),
-                // hover-revealed ☆ row button for the one-click add.
-                html += `<li class="${cls}" role="listitem">` +
-                    treeRender.generateBookmarkHTML(r.title, r.url, 'data-virtual="1"', null, null, {
-                        rightText: relTimeLabel(r.t, _m),
-                        subText: absTime
-                    }) +
-                    `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${i}" ` +
-                    `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
-                    `title="${htmlspecialchars(_m('statsHistoryAdd'))}">☆</button>` +
-                    head +
-                    '</li>';
-            }
-        }
-        return html;
-    };
-
-    const renderStatsSection = () => {
-        const head = sectionHead('statsSectionBookmarks');
-        if (!rows.length)
-            return `<li class="empty-state has-head" role="listitem"><i>${_m('statsEmpty')}</i>${head}</li>`;
-        let html = '';
-        const showPath = views.showItemPath();
-        const byCount = sort() === 'count';
+    // Merge the bookmark-stats rows with the recent-history rows into one
+    // display list, sorted by the active key. Unbookmarked history rows join
+    // only while the toolbar checkbox is on; bookmarked history rows always
+    // join (an id the stats dataset lacks still holds a visited bookmark).
+    const buildDisplayRows = () => {
+        const out = [];
+        const byId = new Map();
         for (let i = 0, l = rows.length; i < l; i++) {
             const { item, stat } = rows[i];
-            const path = views.pathOf(item.id);
-            const countText = `×${stat.c}`;
-            const timeText = relTimeLabel(stat.t, _m);
-            // §3.4: the active sort key sticks to the title column — the
-            // badge slot renders it (pill style for counts, plain for
-            // time), the right slot takes the secondary key.
-            const badge = byCount
-                ? { text: countText, cls: 'count', aria: _m('statsVisitCount', `${stat.c}`) }
+            const r = {
+                kind: 'bm', id: item.id, title: item.title, url: item.url,
+                c: stat.c, t: stat.t, bookmarkId: item.id, parentId: item.parentId
+            };
+            byId.set(item.id, r);
+            out.push(r);
+        }
+        for (let i = 0, l = histRows.length; i < l; i++) {
+            const h = histRows[i];
+            if (h.bookmarkId) {
+                const existing = byId.get(h.bookmarkId);
+                if (existing) {
+                    // the stats row is authoritative for the count; the
+                    // history last-visit time can be fresher — merge up.
+                    if (h.t > existing.t)
+                        existing.t = h.t;
+                } else {
+                    // visited + bookmarked but never opened through the
+                    // popup: the stats dataset has no entry, history does.
+                    // The live tree supplies the current title + parent (a
+                    // renamed bookmark must not render history's stale copy).
+                    const treeItem = treeItems.get(h.bookmarkId);
+                    out.push({
+                        kind: 'bm', id: h.bookmarkId,
+                        title: (treeItem && treeItem.title) || h.title,
+                        url: (treeItem && treeItem.url) || h.url,
+                        parentId: treeItem && treeItem.parentId,
+                        c: h.visitCount, t: h.t, bookmarkId: h.bookmarkId
+                    });
+                }
+            } else if (showUnbookmarked()) {
+                // unbookmarked recent-history row: its count is history's
+                // own visitCount (0 when the entry carries none → sorts to
+                // the bottom under count order).
+                out.push({
+                    kind: 'hist', id: null, title: h.title, url: h.url,
+                    c: h.visitCount, t: h.t, bookmarkId: null, histIdx: i
+                });
+            }
+        }
+        const byCount = sort() === 'count';
+        out.sort((a, b) => byCount
+            ? (b.c - a.c) || (b.t - a.t)
+            : (b.t - a.t) || (b.c - a.c));
+        return out;
+    };
+
+    // The permission-guide row: shown while the `history` permission is
+    // missing (no recent-history data to merge). It survives as a trailing
+    // list row after the bookmarked rows.
+    const renderGuideRow = () =>
+        `<li class="stats-history-guide" role="listitem">` +
+        `<a href="" class="stats-history-enable" tabindex="-1">${htmlspecialchars(_m('statsHistoryEnable'))}</a>` +
+        `<i>${htmlspecialchars(_m('statsHistoryGuide'))}</i>` +
+        '</li>';
+
+    // One flat <ul> of merged rows: bookmarked rows carry the ★ marker
+    // (enlarged via CSS) next to the active sort key's pill; unbookmarked
+    // rows keep the ☆ one-click-add button. The active sort key sticks to
+    // the badge slot, the secondary key to the right slot (§3.4 recipe).
+    const renderRows = list => {
+        const byCount = sort() === 'count';
+        let html = '';
+        for (let i = 0, l = list.length; i < l; i++) {
+            const row = list[i];
+            const absTime = new Date(row.t || 0).toLocaleString();
+            const countText = `×${row.c}`;
+            const timeText = relTimeLabel(row.t, _m);
+            const primary = byCount
+                ? { text: countText, cls: 'count', aria: _m('statsVisitCount', `${row.c}`) }
                 : { text: timeText, cls: 'time' };
-            html += `<li class="vbm-row${i === 0 ? ' has-head' : ''}" id="stats-item-${item.id}" role="listitem" ` +
-                `data-node-id="${item.id}" data-parentid="${item.parentId}">` +
-                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
-                    path,
-                    badge,
-                    rightText: byCount ? timeText : countText,
-                    subText: (showPath && path) ? path : ''
-                }) +
-                (i === 0 ? head : '') +
-                '</li>';
+            const secondary = byCount ? timeText : countText;
+            if (row.bookmarkId) {
+                const path = views.pathOf(row.bookmarkId);
+                html += `<li class="vbm-row" id="stats-item-${row.bookmarkId}" role="listitem" ` +
+                    `data-node-id="${row.bookmarkId}" data-parentid="${row.parentId || ''}">` +
+                    treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', row.bookmarkId, null, {
+                        path,
+                        // ★ marker + the sort key's pill share the badge slot
+                        badge: [
+                            { text: '★', cls: 'starred', aria: _m('statsHistoryBookmarked') },
+                            primary
+                        ],
+                        rightText: secondary,
+                        subText: (views.showItemPath() && path) ? path : ''
+                    }) +
+                    '</li>';
+            } else {
+                html += `<li class="vbm-row stats-hist-row" role="listitem">` +
+                    treeRender.generateBookmarkHTML(row.title, row.url, 'data-virtual="1"', null, null, {
+                        badge: [primary],
+                        rightText: secondary,
+                        subText: absTime
+                    }) +
+                    `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${row.histIdx}" ` +
+                    `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
+                    `title="${htmlspecialchars(_m('statsHistoryAdd'))}">☆</button>` +
+                    '</li>';
+            }
         }
         return html;
     };
@@ -369,11 +401,16 @@ export function initViewStats(ctx = {}) {
             // Master switch off: guidance instead of data (§3.4 empty states).
             html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsDisabledHint')}</i></li></ul>`;
         } else {
-            // v4 task-3 #2: the bookmark-stats section comes FIRST — the
-            // toolbar's sort segment controls it, so the controlled list
-            // sits directly under the control (the history section led
-            // before, and the toggle looked dead when every count tied).
-            html += '<ul role="list">' + renderStatsSection() + renderHistorySection() + '</ul>';
+            // One merged list under the toolbar's sort control. The guide
+            // row (missing history permission) trails the bookmarked rows;
+            // with no rows and no guide, the statsEmpty state stands alone.
+            const list = buildDisplayRows();
+            const guideNeeded = historyPerm === false;
+            if (!list.length && !guideNeeded) {
+                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('statsEmpty')}</i></li></ul>`;
+            } else {
+                html += '<ul role="list">' + renderRows(list) + (guideNeeded ? renderGuideRow() : '') + '</ul>';
+            }
         }
         // Final polish: keep a focused toolbar control focused across the
         // innerHTML swap (sort switch re-renders the bar) — positionally
@@ -387,7 +424,8 @@ export function initViewStats(ctx = {}) {
     const refresh = () => {
         chrome.bookmarks.getTree(tree => {
             lastTree = tree;
-            rows = collectRows(flattenTree(tree));
+            treeItems = new Map(flattenTree(tree).map(item => [item.id, item]));
+            rows = collectRows([...treeItems.values()]);
             resolveHistRows(tree);
             // The tab badge tracks the row count even while the view is
             // hidden — recompute always, repaint only when active.
@@ -512,8 +550,26 @@ export function initViewStats(ctx = {}) {
         refreshTimer = setTimeout(refresh, 300);
     });
 
+    // The unbookmarked-history toggle: flip the persisted flag and repaint
+    // (the merged list grows or sheds its unbookmarked rows). The change
+    // event fires on the checkbox input itself.
+    $list.addEventListener('change', e => {
+        const t = e.target;
+        if (t && t.classList && t.classList.contains('stats-unbookmarked-input')) {
+            store.set('statsShowUnbookmarked', t.checked ? '1' : '');
+            refresh();
+        }
+    });
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // The toolbar checkbox must NOT fall through to bookmarkHandler:
+        // its unconditional preventDefault cancels the checkbox's native
+        // toggle (the click's default action), so the box would never flip
+        // and no change event would fire. Return early and let the browser
+        // flip it, then the change listener above repaints.
+        if (closest('.stats-unbookmarked')) {
+            return;
+        }
         const segBtn = closest('.seg-btn');
         if (segBtn) {
             e.preventDefault();

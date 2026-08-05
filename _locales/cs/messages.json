@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Podle nedávných"
   },
+  "statsShowUnbookmarked": {
+    "message": "Zobrazit neuložené"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Zahrnout stránky z historie, které nejsou uloženy jako záložky."
+  },
   "statsVisitCount": {
     "message": "Navštíveno $count$ krát",
     "placeholders": {

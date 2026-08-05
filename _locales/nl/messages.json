@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Op recent"
   },
+  "statsShowUnbookmarked": {
+    "message": "Niet-gemarkeerde tonen"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Pagina's uit de geschiedenis opnemen die niet als bladwijzer zijn opgeslagen."
+  },
   "statsVisitCount": {
     "message": "$count$ keer bezocht",
     "placeholders": {

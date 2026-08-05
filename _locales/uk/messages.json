@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "За недавністю"
   },
+  "statsShowUnbookmarked": {
+    "message": "Показати незбережені"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Включити сторінки з історії, які не збережені як закладки."
+  },
   "statsVisitCount": {
     "message": "Відвідано $count$ разів",
     "placeholders": {

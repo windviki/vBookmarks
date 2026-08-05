@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Hiljutise järgi"
   },
+  "statsShowUnbookmarked": {
+    "message": "Kuva mittejärjehoidjaid"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Kaasata ajaloo leheküljed, mida pole järjehoidjatena salvestatud."
+  },
   "statsVisitCount": {
     "message": "Külastatud $count$ korda",
     "placeholders": {

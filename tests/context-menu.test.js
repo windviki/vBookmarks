@@ -126,6 +126,11 @@ const setup = (opts = {}) => {
     // rows, shown on recent/results rows)
     el('DIV', 'reveal-in-tree');
     el('HR', 'reveal-in-tree-sep');
+    // Root-folder delete disabling: context-menu.js toggles a .disabled class
+    // on #folder-delete (present in the pages' markup, absent in the old stub).
+    // It is a menu-item like the real page HTML, so dispatch rules apply.
+    const folderDelete = el('DIV', 'folder-delete');
+    folderDelete.classList.add('menu-item');
     // v4 task-2 slice C: dead-view mark toggle + dupes-view keeper pin
     el('DIV', 'dead-mark-toggle');
     el('DIV', 'dupes-set-keeper');
@@ -734,6 +739,24 @@ describe('folderContextHandler', () => {
         fire(ctx.folderMenu, 'mouseup',
             makeEvent({ button: 0, target: ctx.menuItem('folder-delete') }));
         expect(ctx.actionCalls).toEqual([['deleteBookmarks', '7', 2, 1]]);
+    });
+
+    it('root folders disable the delete entry and dispatch nothing', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        // parentid '0' = one of the three root folders (bar / other / mobile)
+        const rootRow = ctx.makeFolderRow('7', '0', 'Bookmarks Bar');
+        ctx.openOn(rootRow.span);
+        // Chrome refuses to removeTree a root folder — the entry greys out
+        expect(ctx.folderMenu.classList.contains('hide-sort')).toBe(true);
+        expect(ctx.byId['folder-delete'].classList.contains('disabled')).toBe(true);
+        // the greyed item itself is the click target — dispatch is swallowed
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.byId['folder-delete'] }));
+        expect(ctx.actionCalls).toEqual([]);
+        // the disabled state does not linger onto the next non-root open
+        const plainRow = ctx.makeFolderRow('7', '1', 'My Folder');
+        ctx.openOn(plainRow.span);
+        expect(ctx.byId['folder-delete'].classList.contains('disabled')).toBe(false);
     });
 
     it('add-folder-separator adds a separator after the folder', () => {

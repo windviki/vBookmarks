@@ -602,6 +602,14 @@ export function initViewDupes(ctx = {}) {
             cleanAll();
             return;
         }
+        // The scheme checkbox must NOT fall through to bookmarkHandler —
+        // its unconditional preventDefault cancels the checkbox's native
+        // toggle (the click's default action), so the box would never flip
+        // and no change event would fire. Return early; the change listener
+        // (registered below) repaints.
+        if (closest('.dupes-scheme')) {
+            return;
+        }
         // v4 task-3 #5: selection mode controls + group-toggle clicks
         if (closest('.dupes-select-mode')) {
             e.preventDefault();

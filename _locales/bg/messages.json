@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "По скорошни"
   },
+  "statsShowUnbookmarked": {
+    "message": "Показ на неотметени"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Включване на страници от историята, които не са отбелязани като отметки."
+  },
   "statsVisitCount": {
     "message": "Посетено $count$ пъти",
     "placeholders": {

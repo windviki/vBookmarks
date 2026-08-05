@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Theo gần đây"
   },
+  "statsShowUnbookmarked": {
+    "message": "Hiển thị chưa đánh dấu"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Bao gồm các trang từ lịch sử chưa được lưu dưới dạng dấu trang."
+  },
   "statsVisitCount": {
     "message": "Đã truy cập $count$ lần",
     "placeholders": {

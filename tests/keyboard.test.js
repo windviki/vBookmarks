@@ -259,8 +259,9 @@ const setup = (opts = {}) => {
     tree._qs['li:first-child>span'] = f1.link; // activeElement fallback
     tree._qsa['ul>li:last-child'] = [b12.li, b31.li, b4.li]; // End
 
-    // a closed folder, for the open-on-arrow tests
-    const f5 = row('SPAN', 'neat-tree-item-5');
+    // a closed folder, for the open-on-arrow tests (non-root parent — the
+    // root-folder delete guard keys off parentid '0')
+    const f5 = row('SPAN', 'neat-tree-item-5', '1');
     f5.li.classList.add('parent');
     f5.li.parentNode = treeUl;
 
@@ -1239,6 +1240,18 @@ describe('treeKeyUp — Delete', () => {
         ctx.doc.activeElement = bare.link;
         fire(ctx.tree, 'keyup', makeEvent({ key: 'Delete' }));
         expect(ctx.actionCalls).toEqual([['deleteBookmark', '77']]); // unchanged
+    });
+
+    it('does not delete a root folder (parentid 0 — same guard as the menu)', () => {
+        const ctx = setup({}); // f1 is the parentid '0' root
+        ctx.doc.activeElement = ctx.f1.link;
+        fire(ctx.tree, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(ctx.actionCalls).toEqual([]); // no deleteBookmarks fires
+        // a NON-root folder still reaches the delete action
+        const { tree: t2, doc: d2, actionCalls: calls2, f5: sub } = setup({});
+        d2.activeElement = sub.link; // f5 is now parentid '1'
+        fire(t2, 'keyup', makeEvent({ key: 'Delete' }));
+        expect(calls2).toEqual([['deleteBookmarks', '5', 0, 0]]); // empty folder → 0/0
     });
 });
 

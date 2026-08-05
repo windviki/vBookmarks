@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Viimeaikaisuuden mukaan"
   },
+  "statsShowUnbookmarked": {
+    "message": "Näytä merkitsemättömät"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Sisällytä historian sivut, joita ei ole tallennettu kirjanmerkeiksi."
+  },
   "statsVisitCount": {
     "message": "Vierailtu $count$ kertaa",
     "placeholders": {

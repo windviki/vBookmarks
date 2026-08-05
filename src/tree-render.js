@@ -194,11 +194,16 @@ export function initTreeRender(ctx = {}) {
             ? meta.rightText : (showPath ? path : '');
         const subText = meta && typeof meta.subText === 'string'
             ? meta.subText : (showPath ? path : '');
-        const badge = meta && meta.badge && meta.badge.text
-            ? `<span class="row-badge ${htmlspecialchars(meta.badge.cls || '')}"` +
-              (meta.badge.aria ? ` aria-label="${htmlspecialchars(meta.badge.aria)}"` : '') +
-              `>${htmlspecialchars(meta.badge.text)}</span>`
-            : '';
+        // A view badge via meta.badge = { text, cls } (object form, the
+        // dead/dupes/stats convention) — or an ARRAY of them, when one row
+        // needs two independent pills (the stats merge: ★ bookmarked marker
+        // + the count/time sort key). Empty entries are skipped.
+        const badgeList = meta && Array.isArray(meta.badge) ? meta.badge
+            : (meta && meta.badge && meta.badge.text ? [meta.badge] : []);
+        const badge = badgeList.filter(b => b && b.text).map(b =>
+            `<span class="row-badge ${htmlspecialchars(b.cls || '')}"` +
+            (b.aria ? ` aria-label="${htmlspecialchars(b.aria)}"` : '') +
+            `>${htmlspecialchars(b.text)}</span>`).join('');
         const nameHtml = (rightText || subText || badge)
             ? `<span class="row-main"><i>${name}</i>` +
               (subText ? `<span class="row-sub" dir="auto">${htmlspecialchars(subText)}</span>` : '') +

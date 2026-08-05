@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "După recent"
   },
+  "statsShowUnbookmarked": {
+    "message": "Afișează nemarcate"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Includeți paginile din istoric care nu sunt salvate ca marcaje."
+  },
   "statsVisitCount": {
     "message": "Vizitat de $count$ ori",
     "placeholders": {

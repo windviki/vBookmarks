@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "ตามล่าสุด"
   },
+  "statsShowUnbookmarked": {
+    "message": "แสดงรายการที่ไม่ได้บันทึก"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "รวมหน้าเว็บจากประวัติที่ไม่ได้บันทึกเป็นบุ๊กมาร์ก"
+  },
   "statsVisitCount": {
     "message": "เข้าชม $count$ ครั้ง",
     "placeholders": {

@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Nach letztem Besuch"
   },
+  "statsShowUnbookmarked": {
+    "message": "Nicht markierte anzeigen"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Seiten aus dem Verlauf einbeziehen, die nicht als Lesezeichen gespeichert sind."
+  },
   "statsVisitCount": {
     "message": "$count$ Mal besucht",
     "placeholders": {

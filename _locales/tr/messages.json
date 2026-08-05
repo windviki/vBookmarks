@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Güncelliğe göre"
   },
+  "statsShowUnbookmarked": {
+    "message": "İşaretlenmemişleri göster"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Yer imi olarak kaydedilmemiş geçmiş sayfalarını dahil et."
+  },
   "statsVisitCount": {
     "message": "$count$ kez ziyaret edildi",
     "placeholders": {

@@ -1238,6 +1238,12 @@
   "statsSortByRecent": {
     "message": "Por recentes"
   },
+  "statsShowUnbookmarked": {
+    "message": "Mostrar não marcados"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Incluir páginas do histórico que não estão salvas como favoritos."
+  },
   "statsVisitCount": {
     "message": "Visitado $count$ vezes",
     "placeholders": {

@@ -1241,6 +1241,12 @@
   "statsSortByRecent": {
     "message": "По неодамнешни"
   },
+  "statsShowUnbookmarked": {
+    "message": "Прикажи необележани"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Вклучи страници од историјата што не се зачувани како обележувачи."
+  },
   "statsVisitCount": {
     "message": "Посетено $count$ пати",
     "placeholders": {

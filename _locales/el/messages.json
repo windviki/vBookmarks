@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Ανά πρόσφατο"
   },
+  "statsShowUnbookmarked": {
+    "message": "Εμφάνιση μη σελιδοδεικτών"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Συμπερίληψη σελίδων από το ιστορικό που δεν έχουν αποθηκευτεί ως σελιδοδείκτες."
+  },
   "statsVisitCount": {
     "message": "Επισκέφθηκε $count$ φορές",
     "placeholders": {

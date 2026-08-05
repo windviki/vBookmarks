@@ -518,6 +518,15 @@ export function initKeyboard(ctx = {}) {
                 const id = li.dataset.nodeId || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
                 if (!id)
                     break;
+                // Root folders (parentid '0' — bar / other / mobile) cannot be
+                // deleted: Chrome rejects removeTree on them, and actions'
+                // callback would drop the row from the DOM anyway. Same guard
+                // as the context menu's disabled delete entry. Scoped to the
+                // folder branch — a bookmark row's parentid is its real parent
+                // folder, never the '0' pseudo-root.
+                if (li.classList.contains('parent')
+                    && li.dataset && li.dataset.parentid === '0')
+                    break;
                 if (li.classList.contains('parent')) {
                     chrome.bookmarks.getChildren(id, children => {
                         // same undefined-guard as bookmarkHandler's folder branch

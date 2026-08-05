@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Per recenti"
   },
+  "statsShowUnbookmarked": {
+    "message": "Mostra non salvati"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Includi le pagine della cronologia che non sono salvate come segnalibri."
+  },
   "statsVisitCount": {
     "message": "Visitato $count$ volte",
     "placeholders": {

@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Po nedavnim"
   },
+  "statsShowUnbookmarked": {
+    "message": "Prikaži neoznačene"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Uključi stranice iz povijesti koje nisu spremljene kao oznake."
+  },
   "statsVisitCount": {
     "message": "Posjećeno $count$ puta",
     "placeholders": {

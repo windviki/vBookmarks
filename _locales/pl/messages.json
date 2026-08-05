@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Według ostatnich"
   },
+  "statsShowUnbookmarked": {
+    "message": "Pokaż nieoznaczone"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Uwzględnij strony z historii, które nie są zapisane jako zakładki."
+  },
   "statsVisitCount": {
     "message": "Odwiedzone $count$ razy",
     "placeholders": {

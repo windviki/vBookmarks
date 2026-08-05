@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "সাম্প্রতিক অনুসারে"
   },
+  "statsShowUnbookmarked": {
+    "message": "অমার্কড দেখান"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "ইতিহাসের যে পৃষ্ঠাগুলি বুকমার্ক হিসাবে সংরক্ষিত নয় সেগুলি অন্তর্ভুক্ত করুন।"
+  },
   "statsVisitCount": {
     "message": "$count$ বার দেখা হয়েছে",
     "placeholders": {

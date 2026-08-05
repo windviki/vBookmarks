@@ -1131,6 +1131,12 @@
     "message": "按最近",
     "description": "统计视图排序段：按最近访问时间降序。"
   },
+  "statsShowUnbookmarked": {
+    "message": "显示未收藏书签"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "在统计中包含历史记录里未收藏为书签的页面。"
+  },
   "statsEmpty": {
     "message": "统计会随着你打开书签而积累",
     "description": "统计视图尚无数据时的空态文案。"

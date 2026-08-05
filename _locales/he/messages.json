@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "לפי אחרונים"
   },
+  "statsShowUnbookmarked": {
+    "message": "הצג לא מסומנים"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "כלול עמודים מההיסטוריה שלא נשמרו כסימניות."
+  },
   "statsVisitCount": {
     "message": "בוקר $count$ פעמים",
     "placeholders": {

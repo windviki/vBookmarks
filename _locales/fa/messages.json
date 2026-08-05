@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "بر اساس اخیر"
   },
+  "statsShowUnbookmarked": {
+    "message": "نمایش نشانک‌نشده‌ها"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "صفحات تاریخچه که به عنوان نشانک ذخیره نشده‌اند را شامل شود."
+  },
   "statsVisitCount": {
     "message": "$count$ بار بازدید شده",
     "placeholders": {

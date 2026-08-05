@@ -1242,6 +1242,12 @@
   "statsSortByRecent": {
     "message": "Pagal naujumą"
   },
+  "statsShowUnbookmarked": {
+    "message": "Rodyti nepažymėtus"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Įtraukti istorijos puslapius, kurie neišsaugoti kaip adresyno žymės."
+  },
   "statsVisitCount": {
     "message": "Lankyta $count$ kartų",
     "placeholders": {

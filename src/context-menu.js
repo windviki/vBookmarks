@@ -118,6 +118,11 @@ export function initContextMenu(ctx = {}) {
             $paletteCmdContextMenu.style.opacity = '0';
             $paletteCmdContextMenu.style.transform = 'scale(.98)';
         }
+        // The folder-delete disabled state is per-open (root vs non-root);
+        // drop it here so it can never leak across unrelated menu opens.
+        const folderDelete = $('folder-delete');
+        if (folderDelete)
+            folderDelete.classList.remove('disabled');
     };
 
     body.addEventListener('click', clearMenu);
@@ -227,9 +232,12 @@ export function initContextMenu(ctx = {}) {
             if (el.classList.contains('link-folder')) {
                 // Folder link (search results / palette folder rows) — show
                 // folder context menu. Root-level folder detection (hide-sort)
-                // isn't needed here; these are never root folders.
+                // isn't needed here; these are never root folders. The delete
+                // entry stays enabled (a non-root folder's disabled class from
+                // a previous root open must not linger).
                 menu = $folderContextMenu;
                 menu.classList.remove('hide-sort');
+                $('folder-delete').classList.remove('disabled');
             } else if (el.querySelector('hr')) {
                 menu = $separatorContextMenu;
                 if (el.parentNode.dataset.parentid === '0') {
@@ -280,11 +288,18 @@ export function initContextMenu(ctx = {}) {
         } else if (el.tagName === 'SPAN') {
             menu = $folderContextMenu;
             // Sorting applies to a folder's contents, never to the root
-            // folders themselves (issue #33 excludes the bookmarks bar root)
-            if (el.parentNode.dataset.parentid === '0') {
+            // folders themselves (issue #33 excludes the bookmarks bar root).
+            // Root folders (bookmarks bar / other bookmarks / mobile, whose
+            // parent is the '0' pseudo-root) can ALSO not be deleted — Chrome
+            // rejects removeTree on them — so the delete entry greys out
+            // instead of acting on a call that can only fail.
+            const isRoot = el.parentNode.dataset.parentid === '0';
+            if (isRoot) {
                 menu.classList.add('hide-sort');
+                $('folder-delete').classList.add('disabled');
             } else {
                 menu.classList.remove('hide-sort');
+                $('folder-delete').classList.remove('disabled');
             }
         } else {
         }
@@ -436,9 +451,16 @@ export function initContextMenu(ctx = {}) {
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
+        // Disabled entries (e.g. deleting a root folder) dispatch nothing —
+        // the greyed item is visual state, and the action is impossible.
+        if (el.classList.contains('disabled'))
+            return;
         const li = currentContext.parentNode;
         const id = rowId(li);
         chrome.bookmarks.getChildren(id, children => {
+            // A deleted/ghost folder id makes getChildren call back with
+            // undefined + lastError — guard so the map doesn't throw.
+            children = children || [];
             // neatools' Array.map(c => c.url, children).clean(): urls of the
             // children that have one (folders have none, null/undefined dropped)
             const urls = children.map(c => c.url).filter(url => url != undefined);

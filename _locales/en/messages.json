@@ -1236,6 +1236,12 @@
     "message": "By recent",
     "description": "Stats view sort segment: order rows by most recent visit first."
   },
+  "statsShowUnbookmarked": {
+    "message": "Show unbookmarked"
+  },
+  "statsShowUnbookmarkedHint": {
+    "message": "Include pages from your history that are not saved as bookmarks."
+  },
   "statsEmpty": {
     "message": "Statistics build up as you open bookmarks",
     "description": "Empty state of the stats view when no visit data has been collected yet."
