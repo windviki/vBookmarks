@@ -349,6 +349,21 @@ describe('view registration (§5.5)', () => {
         expect(h.def().badge()).toBe(0);
     });
 
+    it('activate refreshes the tab badge after the async lastScan read — a stored scan shows on first open', () => {
+        const cache = JSON.stringify({
+            ts: 1, scannedCount: 1,
+            results: { '11': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const bumps = ctx.views.badgeCalls;
+        ctx.def().activate();
+        // the activation-time updateBadges ran BEFORE the storage read, so the
+        // read-then-render path must bump it again — otherwise the badge stays
+        // hidden until a later event (regression: dead tab badge missing on open).
+        expect(ctx.def().badge()).toBe(1);
+        expect(ctx.views.badgeCalls).toBeGreaterThan(bumps);
+    });
+
     it('exposes refresh/refreshOverlays/isMarked/toggleMark on the module API', () => {
         const { viewDead } = setup({});
         expect(Object.keys(viewDead).sort())

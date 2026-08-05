@@ -1196,6 +1196,12 @@ export function initViewDead(ctx = {}) {
                     // the first entry builds the tree-item map the rows join against
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
                     render();
+                    // Refresh the tab badge now that lastScan is available: the
+                    // activation-time updateBadges ran BEFORE the async storage
+                    // read resolved, so a stored scan's badge stayed hidden
+                    // until a later event (view switch / SW publish). Mirrors
+                    // the stats view's post-read badge refresh.
+                    views.updateBadges();
                     kick();
                 });
             if (!local || !local.get) // unit doubles without storage
