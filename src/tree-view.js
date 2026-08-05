@@ -258,6 +258,8 @@ export function initTreeView(ctx = {}) {
         if (!children) {
             const id = parent.id.replace('neat-tree-item-', '');
             chrome.bookmarks.getChildren(id, children => {
+                // same undefined-guard as bookmarkHandler's folder branch
+                children = children || [];
                 const html = treeRender.generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
                 const div = document.createElement('div');
                 div.innerHTML = html;
@@ -419,7 +421,10 @@ export function initTreeView(ctx = {}) {
             const li = el.parentNode;
             const id = li.id.replace('neat-tree-item-', '');
             chrome.bookmarks.getChildren(id, children => {
-                const urls = children.map(c => c.url).filter(Boolean);
+                // A stale/ghost row (folder deleted meanwhile, or an id that
+                // never resolves) makes getChildren call back with undefined
+                // + lastError — guard so the map doesn't throw.
+                const urls = (children || []).map(c => c.url).filter(Boolean);
                 const urlsLen = urls.length;
                 if (!urlsLen)
                     return;

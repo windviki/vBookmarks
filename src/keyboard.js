@@ -520,6 +520,8 @@ export function initKeyboard(ctx = {}) {
                     break;
                 if (li.classList.contains('parent')) {
                     chrome.bookmarks.getChildren(id, children => {
+                        // same undefined-guard as bookmarkHandler's folder branch
+                        children = children || [];
                         // neatools' Array.map(c => c.url, children).clean():
                         // child urls (folders have none, null/undefined dropped)
                         const urlsLen = children.map(c => c.url).filter(Boolean).length;

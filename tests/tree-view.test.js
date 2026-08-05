@@ -185,6 +185,10 @@ const setup = (opts = {}) => {
 
     const messages = opts.messages || {};
     const childrenMap = opts.childrenMap || {};
+    // Ids whose getChildren call resolves to undefined — the real Chrome API
+    // does this for an invalid/missing folder id (plus a runtime.lastError),
+    // and the callers must not crash on it.
+    const undefinedChildren = opts.undefinedChildren || [];
     const chromeStub = {
         i18n: { getMessage: key => (key in messages ? messages[key] : `MSG:${key}`) },
         bookmarks: {
@@ -197,7 +201,7 @@ const setup = (opts = {}) => {
             },
             getChildren(id, cb) {
                 this.getChildrenCalls.push(id);
-                cb(childrenMap[id] || []);
+                cb(undefinedChildren.includes(String(id)) ? undefined : (childrenMap[id] || []));
             },
             getRecent(n, cb) {
                 this.getRecentCalls.push(n);
@@ -819,6 +823,19 @@ describe('bookmarkHandler', () => {
         const f4 = ctx.makeFolder('4', { withUl: true });
         fire(ctx.tree, 'click', makeEvent({ button: 0, target: f4.span, ctrlKey: true })); // has urls
         expect(ctx.actions.openBookmarksCalls).toEqual([[['http://a/'], true]]);
+        expect(ctx.actions.openBookmarksNewWindowCalls).toEqual([]);
+    });
+
+    // A stale/ghost folder row (folder deleted meanwhile, or a row whose id
+    // never resolves) makes chrome.bookmarks.getChildren call back with
+    // undefined + lastError — the SPAN branch must not crash on it.
+    it('survives a getChildren(undefined) for a stale folder row on ctrl+click', () => {
+        const ctx = setup({ undefinedChildren: ['3'] });
+        const { span } = ctx.makeFolder('3', { withUl: true });
+        expect(() =>
+            fire(ctx.tree, 'click', makeEvent({ button: 0, target: span, ctrlKey: true }))
+        ).not.toThrow();
+        expect(ctx.actions.openBookmarksCalls).toEqual([]);
         expect(ctx.actions.openBookmarksNewWindowCalls).toEqual([]);
     });
 
