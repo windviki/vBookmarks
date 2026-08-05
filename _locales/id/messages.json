@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Hapus semua"
+  },
+  "deadDeleteSelected": {
+    "message": "Hapus yang dipilih"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Hapus $count$ bookmark mati yang dipilih?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ bookmark mati dihapus",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Semua"
   },

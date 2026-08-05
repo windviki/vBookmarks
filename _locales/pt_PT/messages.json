@@ -180,6 +180,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Eliminar todos"
+  },
+  "deadDeleteSelected": {
+    "message": "Eliminar selecionados"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Eliminar os $count$ marcadores mortos selecionados?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ marcadores mortos eliminados",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Tudo"
   },

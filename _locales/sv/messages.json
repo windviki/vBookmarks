@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Ta bort alla"
+  },
+  "deadDeleteSelected": {
+    "message": "Ta bort valda"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Ta bort de $count$ valda döda bokmärkena?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Tog bort $count$ döda bokmärken",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Alla"
   },

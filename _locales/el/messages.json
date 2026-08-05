@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Διαγραφή όλων"
+  },
+  "deadDeleteSelected": {
+    "message": "Διαγραφή επιλεγμένων"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Διαγραφή των $count$ επιλεγμένων νεκρών σελιδοδεικτών;",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Διαγράφηκαν $count$ νεκροί σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Όλα"
   },

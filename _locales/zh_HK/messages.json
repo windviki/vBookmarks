@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "刪除全部"
+  },
+  "deadDeleteSelected": {
+    "message": "刪除所選"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "刪除所選的 $count$ 個失效書籤？",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "已刪除 $count$ 個失效書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "全部"
   },

@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Alle löschen"
+  },
+  "deadDeleteSelected": {
+    "message": "Ausgewählte löschen"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Alle $count$ ausgewählten toten Lesezeichen löschen?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ tote Lesezeichen gelöscht",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Alle"
   },

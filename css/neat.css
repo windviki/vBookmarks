@@ -2647,6 +2647,24 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-fg);
 }
 
+/* Destructive batch actions (delete all / delete selected) read as danger —
+   the same cue as the context-menu delete entries, so the irreversible
+   control stands out from the mark/unmark pills. A disabled batch action
+   (empty selection) sheds the danger cue and its hover — it must read
+   inert, not urgent. */
+.dead-toolbar .dead-delete-all,
+.dead-toolbar .dead-delete-selected {
+    color: var(--vbm-danger);
+}
+
+.dead-toolbar .dead-delete-selected:disabled {
+    color: var(--vbm-muted);
+}
+
+.dead-toolbar button:disabled:hover {
+    background: transparent;
+}
+
 /* Proxy strip (dead-proxy.js): the quick add/manage row above the scan
    toolbar — same compact flex recipe as .dead-toolbar, token-driven. */
 .dead-proxy-strip {

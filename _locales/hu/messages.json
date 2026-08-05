@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Összes törlése"
+  },
+  "deadDeleteSelected": {
+    "message": "Kijelöltek törlése"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Törli a kiválasztott $count$ hibás könyvjelzőt?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ hibás könyvjelző törölve",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Összes"
   },

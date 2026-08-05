@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Удалить все"
+  },
+  "deadDeleteSelected": {
+    "message": "Удалить выбранные"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Удалить $count$ выбранных мёртвых закладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Удалено $count$ мёртвых закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Все"
   },

@@ -180,6 +180,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Delete all"
+  },
+  "deadDeleteSelected": {
+    "message": "Delete selected"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Delete the $count$ selected dead bookmarks?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Deleted $count$ dead bookmarks",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadNone": {
     "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",
     "message": "No dead links found"

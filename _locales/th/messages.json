@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "ลบทั้งหมด"
+  },
+  "deadDeleteSelected": {
+    "message": "ลบรายการที่เลือก"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "ลบที่คั่นหน้าตายที่เลือก $count$ รายการ?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "ลบที่คั่นหน้าตาย $count$ รายการแล้ว",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "ทั้งหมด"
   },

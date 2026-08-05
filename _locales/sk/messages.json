@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Odstrániť všetky"
+  },
+  "deadDeleteSelected": {
+    "message": "Odstrániť vybrané"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Odstrániť $count$ vybraných mŕtvych záložiek?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Odstránených $count$ mŕtvych záložiek",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Všetky"
   },

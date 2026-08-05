@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "সব মুছুন"
+  },
+  "deadDeleteSelected": {
+    "message": "নির্বাচিত মুছুন"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "নির্বাচিত $count$টি মৃত বুকমার্ক মুছবেন?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$টি মৃত বুকমার্ক মুছে ফেলা হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "সব"
   },

@@ -180,6 +180,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Избриши ги сите"
+  },
+  "deadDeleteSelected": {
+    "message": "Избриши ги избраните"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Да се избришат $count$ избрани мртви обележувачи?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Избришани $count$ мртви обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Сите"
   },

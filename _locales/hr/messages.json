@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Izbriši sve"
+  },
+  "deadDeleteSelected": {
+    "message": "Izbriši odabrane"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Izbrisati $count$ odabranih mrtvih oznaka?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Izbrisano $count$ mrtvih oznaka",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Sve"
   },

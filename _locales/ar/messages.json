@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "حذف الكل"
+  },
+  "deadDeleteSelected": {
+    "message": "حذف المحدد"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "حذف $count$ من الإشارات المرجعية المعطلة المحددة؟",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "تم حذف $count$ إشارات مرجعية معطلة",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "الكل"
   },

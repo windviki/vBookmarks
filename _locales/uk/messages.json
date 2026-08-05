@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Видалити всі"
+  },
+  "deadDeleteSelected": {
+    "message": "Видалити вибрані"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Видалити $count$ вибраних мертвих закладок?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Видалено $count$ мертвих закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Усі"
   },

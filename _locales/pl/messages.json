@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Usuń wszystkie"
+  },
+  "deadDeleteSelected": {
+    "message": "Usuń zaznaczone"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Usunąć $count$ wybranych martwych zakładek?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Usunięto $count$ martwych zakładek",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Wszystkie"
   },

@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "حذف همه"
+  },
+  "deadDeleteSelected": {
+    "message": "حذف انتخاب‌شده‌ها"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "$count$ نشانک مرده انتخاب‌شده حذف شوند؟",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ نشانک مرده حذف شد",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "همه"
   },

@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "删除全部"
+  },
+  "deadDeleteSelected": {
+    "message": "删除所选"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "删除所选 $count$ 个失效书签？",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "已删除 $count$ 个失效书签",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "全部"
   },

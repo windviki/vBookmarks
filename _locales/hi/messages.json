@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "सभी हटाएँ"
+  },
+  "deadDeleteSelected": {
+    "message": "चयनित हटाएँ"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "चयनित $count$ मृत बुकमार्क हटाएँ?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ मृत बुकमार्क हटाए गए",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "सभी"
   },

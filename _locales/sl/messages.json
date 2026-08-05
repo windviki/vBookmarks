@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Izbriši vse"
+  },
+  "deadDeleteSelected": {
+    "message": "Izbriši izbrane"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Izbrišem $count$ izbranih mrtvih zaznamkov?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Izbrisanih $count$ mrtvih zaznamkov",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Vsi"
   },

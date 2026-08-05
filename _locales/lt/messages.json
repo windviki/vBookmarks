@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Ištrinti visus"
+  },
+  "deadDeleteSelected": {
+    "message": "Ištrinti pasirinktus"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Ištrinti $count$ pasirinktus negyvus žymes?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Ištrinta $count$ negyvų žymių",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Visi"
   },

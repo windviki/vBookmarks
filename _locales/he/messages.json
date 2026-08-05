@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "מחק הכל"
+  },
+  "deadDeleteSelected": {
+    "message": "מחק נבחרים"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "למחוק את $count$ הסימניות המתות שנבחרו?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "נמחקו $count$ סימניות מתות",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "הכל"
   },

@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Xóa tất cả"
+  },
+  "deadDeleteSelected": {
+    "message": "Xóa mục đã chọn"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Xóa $count$ dấu trang chết đã chọn?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Đã xóa $count$ dấu trang chết",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Tất cả"
   },

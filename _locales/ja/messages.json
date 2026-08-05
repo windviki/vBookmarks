@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "すべて削除"
+  },
+  "deadDeleteSelected": {
+    "message": "選択を削除"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "選択中の $count$ 個の無効なブックマークを削除しますか？",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ 個の無効なブックマークを削除しました",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "すべて"
   },

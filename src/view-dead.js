@@ -349,6 +349,7 @@ export function initViewDead(ctx = {}) {
                     `<button class="dead-select-clear">${_m('selectClear')}</button>` +
                     `<button class="dead-mark-selected"${selected.size ? '' : ' disabled'}>${_m('deadMarkSelected')}</button>` +
                     `<button class="dead-unmark-selected"${selected.size ? '' : ' disabled'}>${_m('deadUnmarkSelected')}</button>` +
+                    `<button class="dead-delete-selected"${selected.size ? '' : ' disabled'}>${_m('deadDeleteSelected')}</button>` +
                     `<button class="dead-select-exit">${_m('selectModeExit')}</button>`;
                 html += '</div>';
                 return html;
@@ -373,6 +374,13 @@ export function initViewDead(ctx = {}) {
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)}</button>`;
                 html += '</span>';
                 html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
+                // Batch delete-all: removes every row of the ACTIVE filter
+                // segment (the same scope as mark-all, so 仅死链 narrows it
+                // to dead rows only). Rendered only when that set is
+                // non-empty — a danger button that clicks into nothing
+                // under a filter matching no rows must not appear.
+                if (resultRows().length)
+                    html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             }
             if (deadMarks.size)
                 html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
@@ -582,6 +590,60 @@ export function initViewDead(ctx = {}) {
                     render();
             }
         });
+    };
+
+    // --- Batch deletion (the dupes recipe: removeSequentially + ConfirmDialog
+    // + a single toast) ------------------------------------------------------
+    // Serial chain so the backend and the undo stack see one deletion at a
+    // time (every capture lands BEFORE its remove, chrome applies API calls
+    // in issue order). Deleting a row prunes its mark through the onRemoved
+    // listener.
+    const removeSequentially = ids =>
+        ids.reduce((chain, id) => chain.then(() => new Promise(resolve => {
+            undo.capture(id);
+            chrome.bookmarks.remove(id, resolve);
+        })), Promise.resolve());
+
+    // Shared batch-delete gate: ConfirmDialog with the running count, then
+    // the serial chain, then a single toast. The doomed rows are pruned from
+    // treeItems BEFORE the follow-up render, so they vanish immediately
+    // instead of lingering until the onRemoved→scheduleRender 300ms re-join
+    // (a stale list would let a fast second click re-target deleted ids).
+    // `done` is the caller-specific finish (deleteSelected exits the mode).
+    const confirmDeletion = (doomed, dialogKey, done) => {
+        if (!doomed.length)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m(dialogKey, `${doomed.length}`),
+            button1: `<strong>${_m('delete')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                removeSequentially(doomed).then(() => {
+                    undo.showToast(_m('deadDeleted', `${doomed.length}`));
+                    for (const id of doomed)
+                        treeItems.delete(id);
+                    if (done)
+                        done();
+                    else if (views.isActive('dead'))
+                        render();
+                });
+            }
+        });
+    };
+
+    // Toolbar "delete all": removes every row of the ACTIVE filter segment
+    // (all / dead / blocked — mirrors markAll).
+    const deleteAll = () =>
+        confirmDeletion(resultRows().map(({ item }) => item.id), 'deadDeleteAll');
+
+    // Selection-mode "delete selected": removes the selected rows after a
+    // confirm, then LEAVES the mode — the selection's rows are all gone, so
+    // a zero-count selection bar would be dead weight.
+    const deleteSelected = () => {
+        if (!selected.size)
+            return;
+        confirmDeletion([...selected], 'deadConfirmDeleteSelected',
+            () => setSelecting(false));
     };
 
     // --- Selection mode (v4 task-3 #4) -----------------------------------------
@@ -918,6 +980,11 @@ export function initViewDead(ctx = {}) {
             unmarkAll();
             return;
         }
+        if (closest('.dead-delete-all')) {
+            e.preventDefault();
+            deleteAll();
+            return;
+        }
         // v4 task-3 #4: selection mode controls + row-toggle clicks
         if (closest('.dead-select-mode')) {
             e.preventDefault();
@@ -961,6 +1028,11 @@ export function initViewDead(ctx = {}) {
         if (closest('.dead-unmark-selected')) {
             e.preventDefault();
             markSelected(false);
+            return;
+        }
+        if (closest('.dead-delete-selected')) {
+            e.preventDefault();
+            deleteSelected();
             return;
         }
         if (selecting) {

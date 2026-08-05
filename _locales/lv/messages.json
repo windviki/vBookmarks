@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Dzēst visas"
+  },
+  "deadDeleteSelected": {
+    "message": "Dzēst atlasītās"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Dzēst $count$ atlasītās mirušās grāmatzīmes?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Dzēstas $count$ mirušās grāmatzīmes",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Visi"
   },

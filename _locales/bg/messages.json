@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Изтрий всички"
+  },
+  "deadDeleteSelected": {
+    "message": "Изтрий избраните"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Изтриване на $count$ избрани мъртви отметки?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Изтрити $count$ мъртви отметки",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Всички"
   },

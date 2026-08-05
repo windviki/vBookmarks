@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Kustuta kõik"
+  },
+  "deadDeleteSelected": {
+    "message": "Kustuta valitud"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Kustutada valitud $count$ surnud järjehoidjat?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Kustutati $count$ surnud järjehoidjat",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Kõik"
   },

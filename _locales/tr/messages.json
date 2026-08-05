@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Tümünü sil"
+  },
+  "deadDeleteSelected": {
+    "message": "Seçilenleri sil"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Seçili $count$ ölü yer imi silinsin mi?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ ölü yer imi silindi",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Tümü"
   },

@@ -180,6 +180,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Excluir todos"
+  },
+  "deadDeleteSelected": {
+    "message": "Excluir selecionados"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Excluir os $count$ favoritos mortos selecionados?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ favoritos mortos excluídos",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Todos"
   },

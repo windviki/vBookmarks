@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Poista kaikki"
+  },
+  "deadDeleteSelected": {
+    "message": "Poista valitut"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Poistetaanko $count$ valittua kuollutta kirjanmerkkiä?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Poistettu $count$ kuollutta kirjanmerkkiä",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Kaikki"
   },

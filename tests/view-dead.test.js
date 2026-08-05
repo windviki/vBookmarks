@@ -166,9 +166,16 @@ const setup = (opts = {}) => {
         },
         bookmarks: {
             getTreeCalls: 0,
+            removeCalls: [],
             getTree(cb) {
                 this.getTreeCalls++;
                 cb(treeData);
+            },
+            // batch deletion: the serial removeSequentially chain calls remove
+            // with a per-item callback — the double records and resolves
+            remove(id, cb) {
+                this.removeCalls.push(id);
+                cb();
             },
             onRemoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
             onChanged: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
@@ -250,7 +257,9 @@ const setup = (opts = {}) => {
         }
     };
     const undo = {
+        captureCalls: [],
         toastCalls: [],
+        capture(id) { this.captureCalls.push(id); },
         showToast(msg) { this.toastCalls.push(msg); }
     };
 
@@ -632,6 +641,144 @@ describe('filter + batch marks (§5.5c)', () => {
         ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
         expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+    });
+});
+
+describe('batch deletion (delete all / delete selected)', () => {
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 3,
+        results: {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+    const clickDeleteAll = ctx =>
+        ctx.clickOn({ closest: sel => (sel === '.dead-delete-all' ? {} : null) });
+    const rowClick = (ctx, id) => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
+    });
+
+    it('the delete-all button only renders with rows on screen', () => {
+        const empty = setup({});
+        empty.def().activate();
+        expect(empty.$list.innerHTML).not.toContain('dead-delete-all'); // no cache yet
+        // a cache whose only rows came back healthy → no button either
+        const healthy = JSON.stringify({
+            ts: 1, scannedCount: 1,
+            results: { '11': { status: 'ok', code: 200 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: healthy } });
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).not.toContain('dead-delete-all');
+    });
+
+    it('delete-all gates behind a confirm carrying the running count', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { dialogs, chrome, undo } = ctx;
+        ctx.def().activate();
+        clickDeleteAll(ctx);
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].button1).toBe('<strong>delete</strong>');
+        expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
+        expect(undo.captureCalls).toEqual([]);
+    });
+
+    it('confirming delete-all removes every filtered row serially, then toasts once', async () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { dialogs, chrome, undo } = ctx;
+        ctx.def().activate();
+        clickDeleteAll(ctx);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        // capture lands BEFORE each remove (chrome applies calls in issue
+        // order, so the undo snapshot still sees the node); one deletion at
+        // a time; a single toast reports the batch
+        expect(undo.captureCalls).toEqual(['12', '13']);
+        expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']);
+        expect(undo.toastCalls).toEqual(['deadDeleted[2]']);
+    });
+
+    it('delete-all hides when the active filter matches no rows (no inert danger button)', () => {
+        // A cache with only a blocked row: under filter=dead the segment bar
+        // stays (filter lock-up), but the destructive delete-all must not
+        // render — a red button that clicks into nothing is a trap.
+        const blockedOnly = JSON.stringify({
+            ts: 1, scannedCount: 1,
+            results: { '13': { status: 'blocked', code: 404 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: blockedOnly } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-delete-all'); // filter=all → shows
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        expect($list.innerHTML).not.toContain('dead-delete-all'); // dead filter → hides
+        expect($list.innerHTML).toContain('deadFilterAll'); // segment still reachable
+    });
+
+    it('delete-all follows the active filter: 仅死链 deletes only the dead row', async () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { dialogs, chrome } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        clickDeleteAll(ctx);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[1]');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['12']); // blocked 13 stays
+    });
+
+    it('deleting rows drops them from the list through the onRemoved re-join', async () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12","13"]' } });
+        const { dialogs, chrome, $list, treeData, store } = ctx;
+        ctx.def().activate();
+        clickDeleteAll(ctx);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        // backend truth after the deletion, then the onRemoved replay
+        const bar = treeData[0].children[0];
+        bar.children = bar.children.filter(n => n.id !== '12' && n.id !== '13');
+        chrome.bookmarks.fire('onRemoved', '12');
+        chrome.bookmarks.fire('onRemoved', '13');
+        tick(300);
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('deadNone'); // no rows left
+        // the deletions pruned their marks through the onRemoved listener
+        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+    });
+
+    it('selection mode: delete-selected disables on an empty selection', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('class="dead-delete-selected" disabled');
+    });
+
+    it('delete-selected confirms, deletes the selected rows, toasts once and leaves the mode', async () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, dialogs, chrome, undo } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '12');
+        rowClick(ctx, '13');
+        expect($list.innerHTML).not.toContain('class="dead-delete-selected" disabled');
+        ctx.clickOn({ closest: sel => (sel === '.dead-delete-selected' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadConfirmDeleteSelected[2]');
+        expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(undo.captureCalls).toEqual(['12', '13']);
+        expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']);
+        expect(undo.toastCalls).toEqual(['deadDeleted[2]']);
+        // the selected rows are gone — the mode exits AND the deleted rows
+        // vanish immediately (pruned from treeItems, no 300ms stale window)
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('deadNone'); // immediate empty state
     });
 });
 

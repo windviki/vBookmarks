@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Elimina tutto"
+  },
+  "deadDeleteSelected": {
+    "message": "Elimina selezionati"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Eliminare i $count$ segnalibri morti selezionati?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Eliminati $count$ segnalibri morti",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Tutti"
   },

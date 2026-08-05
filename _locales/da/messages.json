@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Slet alle"
+  },
+  "deadDeleteSelected": {
+    "message": "Slet valgte"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "Slet $count$ valgte døde bogmærker?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "Slettede $count$ døde bogmærker",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Alle"
   },

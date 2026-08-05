@@ -181,6 +181,30 @@
       }
     }
   },
+  "deadDeleteAllBtn": {
+    "message": "Alles verwijderen"
+  },
+  "deadDeleteSelected": {
+    "message": "Geselecteerde verwijderen"
+  },
+  "deadConfirmDeleteSelected": {
+    "message": "De $count$ geselecteerde dode bladwijzers verwijderen?",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
+  "deadDeleted": {
+    "message": "$count$ dode bladwijzers verwijderd",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "8"
+      }
+    }
+  },
   "deadFilterAll": {
     "message": "Alle"
   },
