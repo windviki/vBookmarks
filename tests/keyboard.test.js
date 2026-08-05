@@ -1325,6 +1325,42 @@ describe('contextKeyDown', () => {
         expect(item1.focused).toBe(true);
     });
 
+    it('ArrowDown skips a disabled menu item (root-folder greys)', () => {
+        // menu: item1 (disabled) <hr> item2 — walking down from item1 must
+        // land on item2, never on the disabled item.
+        const ctx = setup({});
+        const { bookmarkMenu, item1, item2, doc } = ctx;
+        item1.classList.add('disabled');
+        doc.activeElement = item1;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(item2.focused).toBe(true); // the disabled item was skipped
+    });
+
+    it('ArrowUp skips a disabled menu item', () => {
+        const { bookmarkMenu, item1, item2, doc, el } = setup({});
+        const d = el('DIV', 'mi-disabled');
+        d.classList.add('menu-item');
+        d.classList.add('disabled');
+        // item1 <hr> disabled <hr> item2
+        item1.nextElementSibling = d;
+        d.previousElementSibling = item1;
+        d.nextElementSibling = item2;
+        item2.previousElementSibling = d;
+        doc.activeElement = item2;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(item1.focused).toBe(true); // skipped both the disabled item and hr
+    });
+
+    it('Meta+ArrowDown skips a disabled last item (lands on the last enabled)', () => {
+        const { bookmarkMenu, item1, item2, doc } = setup({});
+        // item1 <hr> item2, and item2 is disabled — Meta+↓ must walk back to
+        // item1 (the last enabled item), never focus the disabled last.
+        item2.classList.add('disabled');
+        doc.activeElement = item1;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown', metaKey: true }));
+        expect(item1.focused).toBe(true); // item2 (disabled) never focused
+    });
+
     it('focuses the first/last item when the menu itself holds focus', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({});
         doc.activeElement = bookmarkMenu; // not a .menu-item

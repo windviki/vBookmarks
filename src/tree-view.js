@@ -192,7 +192,20 @@ export function initTreeView(ctx = {}) {
                 const oriOverflow = $tree.style.overflow;
                 $tree.style.overflow = 'hidden';
                 focusEl.style.width = '100%';
-                focusEl.firstElementChild.classList.add('focus');
+                const focusTarget = focusEl.firstElementChild;
+                focusTarget.classList.add('focus');
+                // The blueFade class only paints the reveal highlight — the
+                // row must ALSO take keyboard focus, or an "reveal in tree"
+                // from another view strands the user with no way to continue
+                // (arrow keys do nothing until they click). The tree rows are
+                // tabindex="-1"; a programmatic focus() here is what makes
+                // ArrowUp/Down/Right walk on from the revealed row. The focus
+                // listener removes the .focus class on its event — re-apply it
+                // after focus() so the reveal highlight is not wiped by the
+                // very focus we just granted.
+                if (focusTarget && focusTarget.focus)
+                    focusTarget.focus();
+                focusTarget.classList.add('focus');
                 setTimeout(() => {
                     $tree.style.overflow = oriOverflow;
                 }, 1);

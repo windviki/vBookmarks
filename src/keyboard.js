@@ -547,6 +547,16 @@ export function initKeyboard(ctx = {}) {
     });
 
     //use keyboardEvent.key (>= Chrome 51)
+    // A menu-item walk target: enabled (no .disabled) and not an <hr>. Disabled
+    // entries (root-folder greys) must never receive focus, or the ↑↓ walk
+    // strands on them.
+    const menuWalkable = el => !!el && el.tagName !== 'HR' && !el.classList.contains('disabled');
+    const nextMenuTarget = (from, dir) => {
+        for (let n = from; n; n = dir > 0 ? n.nextElementSibling : n.previousElementSibling)
+            if (menuWalkable(n))
+                return n;
+        return null;
+    };
     const contextKeyDown = function (e) {
         const menu = this;
         const item = document.activeElement;
@@ -554,40 +564,28 @@ export function initKeyboard(ctx = {}) {
         switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();
-                if (metaKey) { // cmd + down (Mac)
-                    menu.lastElementChild.focus();
+                if (metaKey) { // cmd + down (Mac): jump to the last ENABLED item
+                    nextMenuTarget(menu.lastElementChild, -1)?.focus();
+                } else if (item.classList.contains('menu-item')) {
+                    const t = nextMenuTarget(item.nextElementSibling, 1)
+                        || (os !== 'mac' ? nextMenuTarget(menu.firstElementChild, 1) : null);
+                    if (t)
+                        t.focus();
                 } else {
-                    if (item.classList.contains('menu-item')) {
-                        let nextItem = item.nextElementSibling;
-                        if (nextItem && nextItem.tagName === 'HR')
-                            nextItem = nextItem.nextElementSibling;
-                        if (nextItem) {
-                            nextItem.focus();
-                        } else if (os !== 'mac') {
-                            menu.firstElementChild.focus();
-                        }
-                    } else {
-                        item.firstElementChild.focus();
-                    }
+                    item.firstElementChild.focus();
                 }
                 break;
             case 'ArrowUp':
                 e.preventDefault();
-                if (metaKey) { // cmd + up (Mac)
-                    menu.firstElementChild.focus();
+                if (metaKey) { // cmd + up (Mac): jump to the first ENABLED item
+                    nextMenuTarget(menu.firstElementChild, 1)?.focus();
+                } else if (item.classList.contains('menu-item')) {
+                    const t = nextMenuTarget(item.previousElementSibling, -1)
+                        || (os !== 'mac' ? nextMenuTarget(menu.lastElementChild, -1) : null);
+                    if (t)
+                        t.focus();
                 } else {
-                    if (item.classList.contains('menu-item')) {
-                        let prevItem = item.previousElementSibling;
-                        if (prevItem && prevItem.tagName === 'HR')
-                            prevItem = prevItem.previousElementSibling;
-                        if (prevItem) {
-                            prevItem.focus();
-                        } else if (os !== 'mac') {
-                            menu.lastElementChild.focus();
-                        }
-                    } else {
-                        item.lastElementChild.focus();
-                    }
+                    item.lastElementChild.focus();
                 }
                 break;
             case 'ArrowLeft':

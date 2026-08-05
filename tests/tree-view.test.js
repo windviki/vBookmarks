@@ -486,6 +486,9 @@ describe('generateTree', () => {
         ctx.tree.style.overflow = 'auto';
         ctx.treeView.generateTree(['ROOT']);
         expect(span.classList.contains('focus')).toBe(true);
+        // the reveal must ALSO take keyboard focus — the blueFade class alone
+        // strands the user (arrow keys do nothing until they click)
+        expect(span.focused).toBe(true);
         expect(li.style.width).toBe('100%');
         expect(ctx.tree.style.overflow).toBe('hidden');
         expect(ctx.store.removes).toEqual([]);
