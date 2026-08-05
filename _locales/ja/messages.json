@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "ビュー"
   },
+  "optionsGroupSort": {
+    "message": "並べ替え"
+  },
   "paletteCmdDead": {
     "message": "無効なリンクを検索"
   },

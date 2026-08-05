@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Zobrazení"
   },
+  "optionsGroupSort": {
+    "message": "Řazení"
+  },
   "paletteCmdDead": {
     "message": "Najít nefunkční odkazy"
   },

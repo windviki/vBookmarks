@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Viste"
   },
+  "optionsGroupSort": {
+    "message": "Ordinamento"
+  },
   "paletteCmdDead": {
     "message": "Trova collegamenti interrotti"
   },

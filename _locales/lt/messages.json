@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Rodiniai"
   },
+  "optionsGroupSort": {
+    "message": "Rūšiavimas"
+  },
   "paletteCmdDead": {
     "message": "Rasti neveikiančias nuorodas"
   },

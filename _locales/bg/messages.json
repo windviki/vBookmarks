@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Изгледи"
   },
+  "optionsGroupSort": {
+    "message": "Сортиране"
+  },
   "paletteCmdDead": {
     "message": "Намиране на мъртви връзки"
   },

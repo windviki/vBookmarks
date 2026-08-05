@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Näkymät"
   },
+  "optionsGroupSort": {
+    "message": "Lajittelu"
+  },
   "paletteCmdDead": {
     "message": "Etsi rikkinäiset linkit"
   },

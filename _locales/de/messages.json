@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Ansichten"
   },
+  "optionsGroupSort": {
+    "message": "Sortierung"
+  },
   "paletteCmdDead": {
     "message": "Defekte Links suchen"
   },

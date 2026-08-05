@@ -788,6 +788,9 @@
   "optionsGroupViews": {
     "message": "Прикази"
   },
+  "optionsGroupSort": {
+    "message": "Сортирање"
+  },
   "paletteCmdDead": {
     "message": "Најди мртви врски"
   },

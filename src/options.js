@@ -131,6 +131,34 @@ const $ = id => document.getElementById(id);
         recentCount.value = await getSetting('recentCount', '20');
         recentCount.addEventListener('change', () => setSetting('recentCount', recentCount.value));
 
+        // Issue #33: folder-sort options — the same sortOptions key the popup
+        // sort dialog reads/writes, so the options page is a persistent editor
+        // for "default/last-used sort prefs" with a single source of truth.
+        const SORT_DEFAULT = { by: 'title', foldersFirst: true, recursive: false };
+        const readSort = async () => {
+            try {
+                const raw = await getSetting('sortOptions', '');
+                return raw ? JSON.parse(raw) : { ...SORT_DEFAULT };
+            } catch (e) {
+                return { ...SORT_DEFAULT };
+            }
+        };
+        const saveSort = async () => {
+            await setSetting('sortOptions', JSON.stringify({
+                by: $('sort-options-date').checked ? 'dateAdded' : 'title',
+                foldersFirst: $('sort-options-folders-first').checked,
+                recursive: $('sort-options-recursive').checked
+            }));
+        };
+        const sortState = await readSort();
+        $('sort-options-title').checked = sortState.by !== 'dateAdded';
+        $('sort-options-date').checked = sortState.by === 'dateAdded';
+        $('sort-options-folders-first').checked = sortState.foldersFirst !== false;
+        $('sort-options-recursive').checked = sortState.recursive === true;
+        for (const id of ['sort-options-title', 'sort-options-date',
+            'sort-options-folders-first', 'sort-options-recursive'])
+            $(id).addEventListener('change', saveSort);
+
         // v4 task-2 (§5.5b/§7): dead-link scan proxy template — empty means
         // direct probing only. Free-text input, stored verbatim; view-dead
         // validates the {url} placeholder when a scan starts.
@@ -456,6 +484,13 @@ const $ = id => document.getElementById(id);
         document.getElementById('custom-separator-url-description').innerText = __m('customSeparatorUrlDescription');
         document.getElementById('custom-separator-string-description').innerText = __m('customSeparatorStringDescription');
         document.getElementById('custom-styles-description').innerText = __m('customStylesDescription');
+        // issue #33: the Sorting group reuses the popup sort-dialog labels
+        document.getElementById('sort-options').innerText = __m('optionsGroupSort');
+        document.getElementById('option-sort-by-title').innerText = __m('sortByTitle');
+        document.getElementById('option-sort-by-date').innerText = __m('sortByDateAdded');
+        document.getElementById('option-sort-folders-first').innerText = __m('sortFoldersFirst');
+        document.getElementById('option-sort-recursive').innerText = __m('sortRecursive');
+        document.getElementById('option-sort-recursive-hint').innerText = __m('sortRecursiveWarning');
         document.getElementById('dead-scan-options').innerText = __m('viewDead');
         document.getElementById('option-dead-scan-concurrency').innerText = __m('optionDeadScanConcurrency');
         document.getElementById('option-dead-scan-timeout').innerText = __m('optionDeadScanTimeout');

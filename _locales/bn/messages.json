@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "দৃশ্যসমূহ"
   },
+  "optionsGroupSort": {
+    "message": "সাজানো"
+  },
   "paletteCmdDead": {
     "message": "মৃত লিঙ্ক খুঁজুন"
   },

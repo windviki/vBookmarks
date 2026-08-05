@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Vizualizări"
   },
+  "optionsGroupSort": {
+    "message": "Sortare"
+  },
   "paletteCmdDead": {
     "message": "Găsește legături moarte"
   },

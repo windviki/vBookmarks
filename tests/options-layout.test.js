@@ -23,15 +23,14 @@ const ruleBody = (css, selector) => {
 const count = (haystack, needle) => haystack.split(needle).length - 1;
 
 describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', () => {
-    it('flows the ten merged card sections through .options-grid', () => {
+    it('flows the merged card sections through .options-grid', () => {
         // general / views / palette custom commands (v4 task-4 #6) / sync /
-        // accessibility / custom icon / separators (final polish: split out
-        // of custom styles) / custom styles / dead scan / backup+reset —
-        // advanced-options merged in.
-        expect(count(optionsHtml, '<section class="options-group">')).toBe(10);
+        // accessibility / custom icon / separators / sorting (issue #33) /
+        // custom styles / dead scan / backup+reset — advanced-options merged in.
+        expect(count(optionsHtml, '<section class="options-group">')).toBe(11);
         expect(optionsHtml).toContain('<main class="options-grid">');
         for (const id of ['general', 'views-options', 'palette-cmd-options', 'sync-options', 'accessibility',
-                'custom-icon', 'separator-options', 'custom-styles', 'dead-scan-options', 'backup-options'])
+                'custom-icon', 'separator-options', 'sort-options', 'custom-styles', 'dead-scan-options', 'backup-options'])
             expect(optionsHtml).toContain(`<h2 id="${id}">`);
     });
 
@@ -83,6 +82,17 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
                 'quick-add-enabled', 'quick-add-context-menu', 'show-tool-button',
                 'classic-experience', 'classic-experience-hint'])
             expect(body).toContain(`id="${id}"`);
+    });
+
+    it('carries the Sorting group (issue #33) after Separators', () => {
+        const sortIdx = optionsHtml.indexOf('id="sort-options"');
+        const sepIdx = optionsHtml.indexOf('id="separator-options"');
+        expect(sepIdx).toBeGreaterThan(-1);
+        expect(sortIdx).toBeGreaterThan(sepIdx);
+        for (const id of ['sort-options-title', 'sort-options-date',
+            'sort-options-folders-first', 'sort-options-recursive',
+            'option-sort-recursive-hint'])
+            expect(optionsHtml).toContain(`id="${id}"`);
     });
 });
 

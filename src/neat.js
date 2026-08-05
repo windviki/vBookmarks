@@ -424,8 +424,9 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         });
     };
 
-    // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children.
-    const dialogs = initDialogs({ onSort: sortFolderContents });
+    // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children,
+    // and store lets the sort dialog persist its options (issue #33).
+    const dialogs = initDialogs({ onSort: sortFolderContents, store });
 
     // Undo stack + deletion toast (P3.3) live in src/undo.js. The onChanged
     // closure only runs after a successful undo — long after initTreeView

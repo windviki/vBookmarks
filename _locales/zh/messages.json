@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "视图"
   },
+  "optionsGroupSort": {
+    "message": "排序"
+  },
   "paletteCmdDead": {
     "message": "查找失效链接"
   },

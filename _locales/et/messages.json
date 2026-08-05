@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Vaated"
   },
+  "optionsGroupSort": {
+    "message": "Sorteerimine"
+  },
   "paletteCmdDead": {
     "message": "Otsi surnud linke"
   },

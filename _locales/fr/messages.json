@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Vues"
   },
+  "optionsGroupSort": {
+    "message": "Tri"
+  },
   "paletteCmdDead": {
     "message": "Trouver les liens morts"
   },

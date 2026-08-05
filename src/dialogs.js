@@ -22,6 +22,10 @@ export function initDialogs(ctx = {}) {
     const body = document.body;
     const _m = chrome.i18n.getMessage;
     const onSort = ctx.onSort || (() => {});
+    // Issue #33: the sort dialog's options persist under one sortOptions key
+    // (shared with the options page's Sorting group) so re-sorting a folder
+    // keeps the last-used choices instead of resetting to defaults.
+    const store = ctx.store;
 
     const AlertDialog = {
         open: dialog => {
@@ -132,14 +136,40 @@ export function initDialogs(ctx = {}) {
     };
 
     // Phase 3 (issue #33): sort a folder's children by title or date added.
+    // Defaults match the pre-persistence behavior; readSortOptions falls back
+    // to them on a missing or corrupted sortOptions key.
+    const SORT_DEFAULTS = { by: 'title', foldersFirst: true, recursive: false };
+    const readSortOptions = () => {
+        if (!store)
+            return { ...SORT_DEFAULTS };
+        try {
+            const raw = store.get('sortOptions');
+            if (!raw)
+                return { ...SORT_DEFAULTS };
+            const parsed = JSON.parse(raw);
+            return {
+                by: parsed.by === 'dateAdded' ? 'dateAdded' : 'title',
+                foldersFirst: parsed.foldersFirst !== false,
+                recursive: parsed.recursive === true
+            };
+        } catch (e) {
+            return { ...SORT_DEFAULTS };
+        }
+    };
+    const writeSortOptions = opts => {
+        if (!store)
+            return;
+        store.set('sortOptions', JSON.stringify(opts));
+    };
     const SortDialog = {
         open: folderId => {
             SortDialog.folderId = folderId;
-            // reset to the defaults every time
-            $('sort-by-title').checked = true;
-            $('sort-folders-first').checked = true;
-            $('sort-recursive').checked = false;
-            $('sort-recursive-warning').hidden = true;
+            const opts = readSortOptions();
+            $('sort-by-title').checked = opts.by !== 'dateAdded';
+            $('sort-by-date').checked = opts.by === 'dateAdded';
+            $('sort-folders-first').checked = opts.foldersFirst;
+            $('sort-recursive').checked = opts.recursive;
+            $('sort-recursive-warning').hidden = !opts.recursive;
             body.classList.add('needSort');
             $('sort-dialog-ok-button').focus();
         },
@@ -157,14 +187,16 @@ export function initDialogs(ctx = {}) {
     });
     $('sort-dialog-ok-button').addEventListener('click', () => {
         const folderId = SortDialog.folderId;
-        SortDialog.close();
-        if (!folderId)
-            return;
-        onSort(folderId, {
+        const opts = {
             by: $('sort-by-date').checked ? 'dateAdded' : 'title',
             foldersFirst: $('sort-folders-first').checked,
             recursive: $('sort-recursive').checked
-        });
+        };
+        SortDialog.close();
+        if (!folderId)
+            return;
+        writeSortOptions(opts);
+        onSort(folderId, opts);
     });
 
     // Events for dialogs

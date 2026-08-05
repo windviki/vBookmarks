@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Weergaven"
   },
+  "optionsGroupSort": {
+    "message": "Sortering"
+  },
   "paletteCmdDead": {
     "message": "Dode links vinden"
   },

@@ -44,6 +44,10 @@
   "optionsGroupViews": {
     "message": "视图"
   },
+  "optionsGroupSort": {
+    "message": "排序",
+    "description": "选项分组（issue #33）：文件夹内容排序的默认偏好，与 popup 排序对话框共享。"
+  },
   "optionShowViewTabs": {
     "message": "在搜索框下方显示视图标签栏"
   },

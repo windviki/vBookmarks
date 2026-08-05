@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Vyer"
   },
+  "optionsGroupSort": {
+    "message": "Sortering"
+  },
   "paletteCmdDead": {
     "message": "Hitta döda länkar"
   },

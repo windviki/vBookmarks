@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "תצוגות"
   },
+  "optionsGroupSort": {
+    "message": "מיון"
+  },
   "paletteCmdDead": {
     "message": "מצא קישורים מתים"
   },

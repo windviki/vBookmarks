@@ -786,6 +786,9 @@
   "optionsGroupViews": {
     "message": "Vistas"
   },
+  "optionsGroupSort": {
+    "message": "Ordenação"
+  },
   "paletteCmdDead": {
     "message": "Encontrar links quebrados"
   },

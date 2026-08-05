@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Προβολές"
   },
+  "optionsGroupSort": {
+    "message": "Ταξινόμηση"
+  },
   "paletteCmdDead": {
     "message": "Εύρεση νεκρών συνδέσμων"
   },

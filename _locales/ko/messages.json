@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "보기"
   },
+  "optionsGroupSort": {
+    "message": "정렬"
+  },
   "paletteCmdDead": {
     "message": "끊긴 링크 찾기"
   },

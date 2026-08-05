@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Visninger"
   },
+  "optionsGroupSort": {
+    "message": "Sortering"
+  },
   "paletteCmdDead": {
     "message": "Find døde links"
   },

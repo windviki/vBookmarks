@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "दृश्य"
   },
+  "optionsGroupSort": {
+    "message": "क्रमबद्धता"
+  },
   "paletteCmdDead": {
     "message": "मृत लिंक खोजें"
   },

@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Skati"
   },
+  "optionsGroupSort": {
+    "message": "Kārtošana"
+  },
   "paletteCmdDead": {
     "message": "Atrast bojātas saites"
   },

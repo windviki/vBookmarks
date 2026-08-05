@@ -779,6 +779,10 @@
   "optionsGroupViews": {
     "message": "Views"
   },
+  "optionsGroupSort": {
+    "message": "Sorting",
+    "description": "Options group (issue #33): default folder-content sort preferences, shared with the popup sort dialog."
+  },
   "optionShowViewTabs": {
     "message": "Show view tabs below the search box"
   },

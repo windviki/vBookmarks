@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Pogledi"
   },
+  "optionsGroupSort": {
+    "message": "Razvrščanje"
+  },
   "paletteCmdDead": {
     "message": "Poišči mrtve povezave"
   },

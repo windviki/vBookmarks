@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "Види"
   },
+  "optionsGroupSort": {
+    "message": "Сортування"
+  },
   "paletteCmdDead": {
     "message": "Знайти мертві посилання"
   },

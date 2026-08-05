@@ -65,10 +65,13 @@ beforeAll(async () => {
     ({ widont, initDialogs } = await import('../src/dialogs.js'));
 });
 
-const freshDialogs = () => {
+const freshDialogs = (store) => {
     bodyClasses._set.clear();
     sorts = [];
-    return initDialogs({ onSort: (folderId, opts) => sorts.push([folderId, opts]) });
+    return initDialogs({
+        onSort: (folderId, opts) => sorts.push([folderId, opts]),
+        store
+    });
 };
 
 describe('widont', () => {
@@ -175,6 +178,50 @@ describe('SortDialog', () => {
         expect(sorts).toEqual([['42', { by: 'dateAdded', foldersFirst: true, recursive: true }]]);
         expect(d.SortDialog.folderId).toBeNull();
         expect(bodyClasses.contains('needSort')).toBe(false);
+    });
+
+    it('prefills from persisted sortOptions (issue #33) instead of hardcoded defaults', () => {
+        const store = {
+            data: { sortOptions: '{"by":"dateAdded","foldersFirst":false,"recursive":true}' },
+            get: k => store.data[k],
+            set: (k, v) => { store.data[k] = v; }
+        };
+        const d = freshDialogs(store);
+        d.SortDialog.open('42');
+        expect(els['sort-by-title'].checked).toBe(false);
+        expect(els['sort-by-date'].checked).toBe(true);
+        expect(els['sort-folders-first'].checked).toBe(false);
+        expect(els['sort-recursive'].checked).toBe(true);
+        expect(els['sort-recursive-warning'].hidden).toBe(false);
+    });
+
+    it('confirm writes the chosen options back to sortOptions (last-used wins)', () => {
+        const store = {
+            data: { sortOptions: '{"by":"title","foldersFirst":true,"recursive":false}' },
+            get: k => store.data[k],
+            set: (k, v) => { store.data[k] = v; }
+        };
+        const d = freshDialogs(store);
+        d.SortDialog.open('42');
+        els['sort-by-date'].checked = true;
+        els['sort-folders-first'].checked = false;
+        els['sort-recursive'].checked = true;
+        els['sort-dialog-ok-button'].trigger('click');
+        expect(store.data.sortOptions)
+            .toBe('{"by":"dateAdded","foldersFirst":false,"recursive":true}');
+    });
+
+    it('a corrupted sortOptions falls back to the defaults', () => {
+        const store = {
+            data: { sortOptions: 'not-json{[' },
+            get: k => store.data[k],
+            set: (k, v) => { store.data[k] = v; }
+        };
+        const d = freshDialogs(store);
+        d.SortDialog.open('42');
+        expect(els['sort-by-title'].checked).toBe(true);
+        expect(els['sort-folders-first'].checked).toBe(true);
+        expect(els['sort-recursive'].checked).toBe(false);
     });
 
     it('recursive checkbox toggles the warning row', () => {

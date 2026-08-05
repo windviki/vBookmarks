@@ -789,6 +789,9 @@
   "optionsGroupViews": {
     "message": "มุมมอง"
   },
+  "optionsGroupSort": {
+    "message": "การจัดเรียง"
+  },
   "paletteCmdDead": {
     "message": "ค้นหาลิงก์เสีย"
   },

@@ -445,3 +445,46 @@ describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
         expect(sb.localData.quickAddContextMenu).toBe('1');
     });
 });
+
+describe('Sorting group (issue #33)', () => {
+    it('reads sortOptions into the controls and writes changes back', async () => {
+        const sb = createSandbox({
+            chromeLocalData: { sortOptions: '{"by":"dateAdded","foldersFirst":false,"recursive":true}' }
+        });
+        await sb.start();
+        expect(sb.elements['sort-options-title'].checked).toBe(false);
+        expect(sb.elements['sort-options-date'].checked).toBe(true);
+        expect(sb.elements['sort-options-folders-first'].checked).toBe(false);
+        expect(sb.elements['sort-options-recursive'].checked).toBe(true);
+
+        // flip back to title (radio exclusivity is manual in the stub)
+        sb.elements['sort-options-title'].checked = true;
+        sb.elements['sort-options-date'].checked = false;
+        await sb.elements['sort-options-title'].fire('change');
+        sb.elements['sort-options-folders-first'].checked = true;
+        await sb.elements['sort-options-folders-first'].fire('change');
+
+        expect(JSON.parse(sb.localData.sortOptions))
+            .toEqual({ by: 'title', foldersFirst: true, recursive: true });
+    });
+
+    it('defaults to title/folders-first/non-recursive when sortOptions is unset', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        expect(sb.elements['sort-options-title'].checked).toBe(true);
+        expect(sb.elements['sort-options-date'].checked).toBe(false);
+        expect(sb.elements['sort-options-folders-first'].checked).toBe(true);
+        expect(sb.elements['sort-options-recursive'].checked).toBe(false);
+    });
+
+    it('assigns the group labels from i18n keys', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        expect(sb.elements['sort-options'].innerText).toBe('optionsGroupSort');
+        expect(sb.elements['option-sort-by-title'].innerText).toBe('sortByTitle');
+        expect(sb.elements['option-sort-by-date'].innerText).toBe('sortByDateAdded');
+        expect(sb.elements['option-sort-folders-first'].innerText).toBe('sortFoldersFirst');
+        expect(sb.elements['option-sort-recursive'].innerText).toBe('sortRecursive');
+        expect(sb.elements['option-sort-recursive-hint'].innerText).toBe('sortRecursiveWarning');
+    });
+});
