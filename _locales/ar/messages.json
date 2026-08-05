@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "فتح الكل في مجموعة تبويب جديدة"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "فتح الكل في مجموعة تبويبات جديدة…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "فتح الكل في مجموعة تبويبات موجودة…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "فتح العلامات في نافذة متخفية"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "فتح في علامة تبويب جديدة"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "فتح في مجموعة تبويبات جديدة"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "فتح في مجموعة تبويبات جديدة…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "فتح في مجموعة تبويبات موجودة…"
   },
   "openNewWindow": {
     "message": "فتح في نافذة جديدة"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي ولا يمكن التراجع عنه."
+  },
+  "tabGroupDialogTitle": {
+    "message": "مجموعة تبويبات جديدة"
+  },
+  "tabGroupTitleLabel": {
+    "message": "عنوان المجموعة"
+  },
+  "tabGroupColorLabel": {
+    "message": "اللون"
+  },
+  "tabGroupUntitled": {
+    "message": "مجموعة بدون عنوان"
+  },
+  "tabGroupNoGroups": {
+    "message": "لا توجد مجموعات تبويبات حالية"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "فتح في مجموعة تبويبات موجودة"
   },
   "statsClearConfirm": {
     "message": "مسح إحصائيات الزيارة لـ $count$ إشارة مرجعية؟ لا يمكن التراجع عن ذلك.",

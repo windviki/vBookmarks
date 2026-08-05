@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "সব নতুন ট্যাব গ্রুপে খুলুন"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "নতুন ট্যাব গ্রুপে সব খুলুন…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে সব খুলুন…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "নতুন ট্যাবে খুলুন"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "নতুন ট্যাব গ্রুপে খুলুন"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "নতুন ট্যাব গ্রুপে খুলুন…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন…"
   },
   "openNewWindow": {
     "message": "নতুন উইন্ডোতে খুলুন"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্ক পুনর্বিন্যাস করবে এবং পূর্বাবস্থায় ফেরানো যাবে না।"
+  },
+  "tabGroupDialogTitle": {
+    "message": "নতুন ট্যাব গ্রুপ"
+  },
+  "tabGroupTitleLabel": {
+    "message": "গ্রুপের শিরোনাম"
+  },
+  "tabGroupColorLabel": {
+    "message": "রঙ"
+  },
+  "tabGroupUntitled": {
+    "message": "নামহীন গ্রুপ"
+  },
+  "tabGroupNoGroups": {
+    "message": "কোনো বিদ্যমান ট্যাব গ্রুপ নেই"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "বিদ্যমান ট্যাব গ্রুপে খুলুন"
   },
   "statsClearConfirm": {
     "message": "$count$ বুকমার্কের জন্য ভিজিট পরিসংখ্যান মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",

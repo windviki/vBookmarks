@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Tümünü yeni sekme grubunda aç"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Tümünü yeni sekme grubunda aç…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Tümünü mevcut sekme grubunda aç…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Tüm yer imlerini gizli pencerede aç"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Yeni sekmede aç"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Yeni sekme grubunda aç"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Yeni sekme grubunda aç…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Mevcut sekme grubunda aç…"
   },
   "openNewWindow": {
     "message": "Yeni pencerede aç"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar ve geri alınamaz."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Yeni sekme grubu"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grup adı"
+  },
+  "tabGroupColorLabel": {
+    "message": "Renk"
+  },
+  "tabGroupUntitled": {
+    "message": "Adsız grup"
+  },
+  "tabGroupNoGroups": {
+    "message": "Mevcut sekme grubu yok"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Mevcut sekme grubunda aç"
   },
   "statsClearConfirm": {
     "message": "$count$ yer imi için ziyaret istatistikleri temizlensin mi? Bu işlem geri alınamaz.",

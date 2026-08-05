@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Alles openen in nieuw tabbladgroep"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Alles openen in nieuwe tabgroep…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Alles openen in bestaande tabgroep…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Incognito openen"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Openen in nieuw tabblad"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Openen in nieuwe tabgroep"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Openen in nieuwe tabgroep…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Openen in bestaande tabgroep…"
   },
   "openNewWindow": {
     "message": "Openen in nieuw venster"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Dit herordent bladwijzers in elke submap en kan niet ongedaan worden gemaakt."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nieuwe tabgroep"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Groepsnaam"
+  },
+  "tabGroupColorLabel": {
+    "message": "Kleur"
+  },
+  "tabGroupUntitled": {
+    "message": "Naamloze groep"
+  },
+  "tabGroupNoGroups": {
+    "message": "Geen bestaande tabgroepen"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Openen in bestaande tabgroep"
   },
   "statsClearConfirm": {
     "message": "Bezoekstatistieken voor $count$ bladwijzers wissen? Dit kan niet ongedaan worden gemaakt.",

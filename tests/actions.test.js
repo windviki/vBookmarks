@@ -164,6 +164,15 @@ const makeChrome = ops => ({
                 cb();
         }
     },
+    // P3.4 hardening: the open-as-group actions hand the open+group to the
+    // service worker via chrome.runtime.sendMessage (the popup would close
+    // mid-flight and drop the pending callbacks otherwise).
+    runtime: {
+        sent: [],
+        sendMessage(msg) {
+            this.sent.push(msg);
+        }
+    },
     windows: {
         WINDOW_ID_CURRENT: -1,
         created: [],
@@ -298,7 +307,8 @@ describe('module API', () => {
         const names = [
             'openBookmark', 'openBookmarkNewTab', 'openBookmarkNewWindow',
             'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl',
-            'openBookmarks', 'openBookmarksInGroup', 'openBookmarksNewWindow',
+            'openBookmarks', 'openBookmarksInGroup', 'openInExistingTabGroup',
+            'openBookmarksNewWindow',
             'editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks',
             'addSeparator', 'deleteSeparator'
         ];
@@ -447,94 +457,69 @@ describe('openBookmarksInGroup', () => {
     const urls = n => Array.from({ length: n }, (_, i) => `https://x/${i}`);
     const palette = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'];
 
-    it('opens ≤10 bookmarks directly: first tab active, the rest in background, then groups them', () => {
+    it('hands the open+group to the service worker (vbm-tab-group-open-new) without creating tabs here', () => {
         const { actions, chrome, calls } = setup({});
         actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
         expect(calls.confirm).toEqual([]);
-        expect(chrome.tabs.created).toEqual([
-            { url: 'https://x/0', active: true },
-            { url: 'https://x/1', active: false },
-            { url: 'https://x/2', active: false }
-        ]);
-        // every created tab id lands in one chrome.tabs.group call, in order
-        expect(chrome.tabs.grouped).toEqual([{ tabIds: ['500', '501', '502'] }]);
+        expect(chrome.tabs.created).toEqual([]); // the SW does the tab work now
+        expect(chrome.runtime.sent).toHaveLength(1);
+        const msg = chrome.runtime.sent[0];
+        expect(msg.type).toBe('vbm-tab-group-open-new');
+        expect(msg.urls).toEqual(['https://x/0', 'https://x/1', 'https://x/2']);
+        expect(msg.title).toBe('Dev Stuff');
+        expect(palette).toContain(msg.color);
     });
 
-    it('names the group after the folder and colors it from the palette', () => {
+    it('colors the group deterministically from the title, inside the tabGroups palette', () => {
         const { actions, chrome } = setup({});
         actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
-        expect(chrome.tabGroups.updated).toHaveLength(1);
-        const [groupId, props] = chrome.tabGroups.updated[0];
-        expect(groupId).toBe(900);
-        expect(props.title).toBe('Dev Stuff');
-        expect(palette).toContain(props.color);
-    });
-
-    it('always picks the same color for the same folder title', () => {
-        const { actions, chrome } = setup({});
+        const msg = chrome.runtime.sent[0];
+        expect(palette).toContain(msg.color);
         actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
-        actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
-        expect(chrome.tabGroups.updated).toHaveLength(2);
-        expect(chrome.tabGroups.updated[0][1].color).toBe(chrome.tabGroups.updated[1][1].color);
+        expect(chrome.runtime.sent[1].color).toBe(msg.color); // same title → same color
     });
 
     it('keeps the color inside the tabGroups palette for any title (including empty)', () => {
         const { actions, chrome } = setup({});
         for (const title of ['a', '书签', 'Dev Stuff', 'x'.repeat(200), ''])
             actions.openBookmarksInGroup(urls(1), title);
-        expect(chrome.tabGroups.updated).toHaveLength(5);
-        for (const [, props] of chrome.tabGroups.updated)
-            expect(palette).toContain(props.color);
+        for (const msg of chrome.runtime.sent)
+            expect(palette).toContain(msg.color);
     });
 
-    it('confirms above the limit and only opens after fn1', () => {
+    it('lets an explicit groupColor override the derived one (the setup dialog path)', () => {
+        const { actions, chrome } = setup({});
+        actions.openBookmarksInGroup(urls(1), 'Dev Stuff', 'orange');
+        expect(chrome.runtime.sent[0].color).toBe('orange');
+    });
+
+    it('confirms above the limit and only sends after fn1', () => {
         const { actions, chrome, calls } = setup({});
         actions.openBookmarksInGroup(urls(11), 'Big');
-        expect(chrome.tabs.created).toEqual([]);
-        expect(chrome.tabs.grouped).toEqual([]);
+        expect(chrome.runtime.sent).toEqual([]);
         expect(calls.confirm).toHaveLength(1);
         expect(calls.confirm[0].dialog).toBe('confirmOpenBookmarks[11]');
         expect(calls.confirm[0].button1).toBe('<strong>open</strong>');
         expect(calls.confirm[0].button2).toBe('nope');
         calls.confirm[0].fn1();
-        expect(chrome.tabs.created).toHaveLength(11);
-        expect(chrome.tabs.created[0].active).toBe(true);
-        expect(chrome.tabs.grouped).toHaveLength(1);
-        expect(chrome.tabs.grouped[0].tabIds).toHaveLength(11);
-        expect(chrome.tabGroups.updated[0][1].title).toBe('Big');
+        expect(chrome.runtime.sent).toHaveLength(1);
+        expect(chrome.runtime.sent[0].urls).toHaveLength(11);
+        expect(chrome.runtime.sent[0].title).toBe('Big');
     });
 
-    it('opens nothing when the confirm is never approved', () => {
+    it('sends nothing when the confirm is never approved', () => {
         const { actions, chrome, calls } = setup({});
         actions.openBookmarksInGroup(urls(11), 'Big');
         expect(calls.confirm).toHaveLength(1);
-        expect(chrome.tabs.created).toEqual([]);
-        expect(chrome.tabs.grouped).toEqual([]);
-        expect(chrome.tabGroups.updated).toEqual([]);
+        expect(chrome.runtime.sent).toEqual([]);
     });
 
     it('skips the confirm entirely when dontConfirmOpenFolder is set', () => {
         const { actions, chrome, calls } = setup({ storeData: { dontConfirmOpenFolder: '1' } });
         actions.openBookmarksInGroup(urls(11), 'Big');
         expect(calls.confirm).toEqual([]);
-        expect(chrome.tabs.created).toHaveLength(11);
-        expect(chrome.tabs.grouped).toHaveLength(1);
-    });
-
-    it('degrades to a plain batch-open when chrome.tabs.group is missing (old Chrome)', () => {
-        const { actions, chrome } = setup({});
-        delete chrome.tabs.group;
-        actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
-        expect(chrome.tabs.created).toHaveLength(3);
-        expect(chrome.tabGroups.updated).toEqual([]); // no group, no error
-    });
-
-    it('degrades to a plain batch-open when chrome.tabGroups is missing', () => {
-        const { actions, chrome } = setup({});
-        delete chrome.tabGroups;
-        actions.openBookmarksInGroup(urls(3), 'Dev Stuff');
-        expect(chrome.tabs.created).toHaveLength(3);
-        expect(chrome.tabs.grouped).toEqual([]);
+        expect(chrome.runtime.sent).toHaveLength(1);
+        expect(chrome.runtime.sent[0].urls).toHaveLength(11);
     });
 
     it('does not touch the input urls array', () => {
@@ -542,6 +527,40 @@ describe('openBookmarksInGroup', () => {
         const list = urls(3);
         actions.openBookmarksInGroup(list, 'Dev Stuff');
         expect(list).toEqual(['https://x/0', 'https://x/1', 'https://x/2']);
+    });
+});
+
+describe('openInExistingTabGroup', () => {
+    const urls = n => Array.from({ length: n }, (_, i) => `https://x/${i}`);
+
+    it('hands the open into an existing group to the service worker (vbm-tab-group-open-into)', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openInExistingTabGroup(urls(2), 'g1');
+        expect(calls.confirm).toEqual([]);
+        expect(chrome.tabs.created).toEqual([]);
+        expect(chrome.runtime.sent).toEqual([{
+            type: 'vbm-tab-group-open-into',
+            urls: ['https://x/0', 'https://x/1'],
+            groupId: 'g1'
+        }]);
+    });
+
+    it('confirms above the limit and only sends after fn1', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openInExistingTabGroup(urls(11), 'g1');
+        expect(chrome.runtime.sent).toEqual([]);
+        expect(calls.confirm).toHaveLength(1);
+        calls.confirm[0].fn1();
+        expect(chrome.runtime.sent).toHaveLength(1);
+        expect(chrome.runtime.sent[0].urls).toHaveLength(11);
+        expect(chrome.runtime.sent[0].groupId).toBe('g1');
+    });
+
+    it('sends nothing when the confirm is never approved', () => {
+        const { actions, chrome, calls } = setup({});
+        actions.openInExistingTabGroup(urls(11), 'g1');
+        expect(calls.confirm).toHaveLength(1);
+        expect(chrome.runtime.sent).toEqual([]);
     });
 });
 

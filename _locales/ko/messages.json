@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "새 탭 그룹으로 열기"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "새 탭 그룹에 모두 열기…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "기존 탭 그룹에 모두 열기…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "시크릿 창에서 모든 북마크 열기"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "새 탭에서 열기"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "새 탭 그룹에서 열기"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "새 탭 그룹에서 열기…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "기존 탭 그룹에서 열기…"
   },
   "openNewWindow": {
     "message": "새 창에서 열기"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "모든 하위 폴더의 북마크 순서가 변경되며 되돌릴 수 없습니다."
+  },
+  "tabGroupDialogTitle": {
+    "message": "새 탭 그룹"
+  },
+  "tabGroupTitleLabel": {
+    "message": "그룹 제목"
+  },
+  "tabGroupColorLabel": {
+    "message": "색상"
+  },
+  "tabGroupUntitled": {
+    "message": "제목 없는 그룹"
+  },
+  "tabGroupNoGroups": {
+    "message": "기존 탭 그룹 없음"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "기존 탭 그룹에서 열기"
   },
   "statsClearConfirm": {
     "message": "$count$개 북마크의 방문 통계를 지우시겠습니까? 이 작업은 되돌릴 수 없습니다.",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "เปิดทั้งหมดในกลุ่มแท็บใหม่"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "เปิดทั้งหมดในกลุ่มแท็บใหม่…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "เปิดทั้งหมดในกลุ่มแท็บเดิม…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างนิรนาม"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "เปิดในแท็บใหม่"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "เปิดในกลุ่มแท็บใหม่"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "เปิดในกลุ่มแท็บใหม่…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "เปิดในกลุ่มแท็บเดิม…"
   },
   "openNewWindow": {
     "message": "เปิดในหน้าต่างใหม่"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "การดำเนินการนี้จะจัดเรียงบุ๊กมาร์กในทุกโฟลเดอร์ย่อยและไม่สามารถยกเลิกได้"
+  },
+  "tabGroupDialogTitle": {
+    "message": "กลุ่มแท็บใหม่"
+  },
+  "tabGroupTitleLabel": {
+    "message": "ชื่อกลุ่ม"
+  },
+  "tabGroupColorLabel": {
+    "message": "สี"
+  },
+  "tabGroupUntitled": {
+    "message": "กลุ่มที่ไม่มีชื่อ"
+  },
+  "tabGroupNoGroups": {
+    "message": "ไม่มีกลุ่มแท็บที่มีอยู่"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "เปิดในกลุ่มแท็บเดิม"
   },
   "statsClearConfirm": {
     "message": "ล้างสถิติการเข้าชมสำหรับ $count$ บุ๊กมาร์ก? การดำเนินการนี้ไม่สามารถยกเลิกได้",

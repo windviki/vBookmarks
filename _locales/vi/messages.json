@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Mở tất cả trong nhóm tab mới"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Mở hết vào nhóm tab mới…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Mở hết vào nhóm tab hiện có…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Mở tất cả trong cửa sổ ẩn danh"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Mở trong Tab Mới"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Mở vào nhóm tab mới"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Mở vào nhóm tab mới…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Mở vào nhóm tab hiện có…"
   },
   "openNewWindow": {
     "message": "Mở trong Cửa Sổ Mới"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Thao tác này sắp xếp lại dấu trang trong mọi thư mục con và không thể hoàn tác."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nhóm tab mới"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Tên nhóm"
+  },
+  "tabGroupColorLabel": {
+    "message": "Màu"
+  },
+  "tabGroupUntitled": {
+    "message": "Nhóm chưa đặt tên"
+  },
+  "tabGroupNoGroups": {
+    "message": "Không có nhóm tab nào"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Mở vào nhóm tab hiện có"
   },
   "statsClearConfirm": {
     "message": "Xóa thống kê lượt truy cập cho $count$ dấu trang? Hành động này không thể hoàn tác.",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Deschide tot în grup nou"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Deschide tot în grup nou…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Deschide tot în grup existent…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Deschide în fereastră incognito"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Deschide în Tab Nou"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Deschide în grup nou"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Deschide în grup nou…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Deschide în grup existent…"
   },
   "openNewWindow": {
     "message": "Deschide în Fereastră Nouă"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Aceasta reordonează marcajele în fiecare subfolder și nu poate fi anulată."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Grup nou de file"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Titlul grupului"
+  },
+  "tabGroupColorLabel": {
+    "message": "Culoare"
+  },
+  "tabGroupUntitled": {
+    "message": "Grup fără titlu"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nu există grupuri de file"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Deschide într-un grup de file existent"
   },
   "statsClearConfirm": {
     "message": "Ștergeți statisticile de vizită pentru $count$ marcaje? Această acțiune nu poate fi anulată.",

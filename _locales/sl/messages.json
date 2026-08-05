@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Odpri vse v novi skupini zavihkov"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Odpri vse v novi skupini zavihkov…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Odpri vse v obstoječi skupini zavihkov…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Odpri vse zaznamke v incognito oknu"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Odpri v novem zavihku"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Odpri v novi skupini zavihkov"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Odpri v novi skupini zavihkov…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Odpri v obstoječi skupini zavihkov…"
   },
   "openNewWindow": {
     "message": "Odpri v novem oknu"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "To preuredi zaznamke v vsaki podmapah in ga ni mogoče razveljaviti."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nova skupina zavihkov"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Naslov skupine"
+  },
+  "tabGroupColorLabel": {
+    "message": "Barva"
+  },
+  "tabGroupUntitled": {
+    "message": "Neimenovana skupina"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ni obstoječih skupin zavihkov"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Odpri v obstoječi skupini zavihkov"
   },
   "statsClearConfirm": {
     "message": "Počisti statistiko obiskov za $count$ zaznamkov? Tega ni mogoče razveljaviti.",

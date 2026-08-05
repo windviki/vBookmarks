@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Apri tutto in gruppo schede"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Apri tutti in nuovo gruppo…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Apri tutti in gruppo esistente…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Apri tutti in finestra anonima"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Apri in un'altra scheda"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Apri in nuovo gruppo"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Apri in nuovo gruppo…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Apri in gruppo esistente…"
   },
   "openNewWindow": {
     "message": "Apri in un'altra finestra"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Questa operazione riordina i segnalibri in ogni sottocartella e non può essere annullata."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nuovo gruppo di schede"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Titolo del gruppo"
+  },
+  "tabGroupColorLabel": {
+    "message": "Colore"
+  },
+  "tabGroupUntitled": {
+    "message": "Gruppo senza titolo"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nessun gruppo di schede esistente"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Apri in gruppo di schede esistente"
   },
   "statsClearConfirm": {
     "message": "Cancellare le statistiche di visita per $count$ segnalibri? Questa operazione non può essere annullata.",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Відкрити всі в новій групі вкладок"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Відкрити все в новій групі вкладок…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Відкрити все в наявній групі вкладок…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Відкрити в інкогніто"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Відкрити у новій вкладці"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Відкрити в новій групі вкладок"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Відкрити в новій групі вкладок…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Відкрити в наявній групі вкладок…"
   },
   "openNewWindow": {
     "message": "Відкрити у новому вікні"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Це перевпорядковує закладки в кожній підпапці і не може бути скасовано."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Нова група вкладок"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Назва групи"
+  },
+  "tabGroupColorLabel": {
+    "message": "Колір"
+  },
+  "tabGroupUntitled": {
+    "message": "Група без назви"
+  },
+  "tabGroupNoGroups": {
+    "message": "Немає наявних груп вкладок"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Відкрити в наявній групі вкладок"
   },
   "statsClearConfirm": {
     "message": "Очистити статистику відвідувань для $count$ закладок? Цю дію не можна скасувати.",

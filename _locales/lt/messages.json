@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Atidaryti visus naujoje grupėje"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Atidaryti visus naujoje skirtukų grupėje…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Atidaryti visus esamoje skirtukų grupėje…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Atidaryti žymeles inkognito lange"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Atidaryti naujame skirtuke"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Atidaryti naujoje skirtukų grupėje"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Atidaryti naujoje skirtukų grupėje…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Atidaryti esamoje skirtukų grupėje…"
   },
   "openNewWindow": {
     "message": "Atidaryti naujame lange"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Tai perrikiuoja žymes kiekviename poaplankyje ir negali būti atšaukta."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nauja skirtukų grupė"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupės pavadinimas"
+  },
+  "tabGroupColorLabel": {
+    "message": "Spalva"
+  },
+  "tabGroupUntitled": {
+    "message": "Nepavadinta grupė"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nėra esamų skirtukų grupių"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Atidaryti esamoje skirtukų grupėje"
   },
   "statsClearConfirm": {
     "message": "Išvalyti $count$ žymių lankomumo statistiką? Šis veiksmas negrįžtamas.",

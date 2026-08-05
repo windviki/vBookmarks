@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Buka semua di grup tab baru"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Buka semua di grup tab baru…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Buka semua di grup tab yang ada…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Buka Semua Markah di Jendela Samaran"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Buka di Tab Baru"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Buka di grup tab baru"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Buka di grup tab baru…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Buka di grup tab yang ada…"
   },
   "openNewWindow": {
     "message": "Buka di Jendela Baru"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Ini akan mengatur ulang bookmark di setiap subfolder dan tidak dapat dibatalkan."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Grup tab baru"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Judul grup"
+  },
+  "tabGroupColorLabel": {
+    "message": "Warna"
+  },
+  "tabGroupUntitled": {
+    "message": "Grup tanpa judul"
+  },
+  "tabGroupNoGroups": {
+    "message": "Tidak ada grup tab yang tersedia"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Buka di grup tab yang ada"
   },
   "statsClearConfirm": {
     "message": "Hapus statistik kunjungan untuk $count$ bookmark? Tindakan ini tidak bisa dibatalkan.",

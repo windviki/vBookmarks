@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Megnyitás új lapcsoportban"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Összes megnyitása új lapcsoportban…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Összes megnyitása meglévő lapcsoportban…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Könyvjelzők Megnyitása Inkognitóban"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Megnyitás Új Lapon"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Megnyitás új lapcsoportban"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Megnyitás új lapcsoportban…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Megnyitás meglévő lapcsoportban…"
   },
   "openNewWindow": {
     "message": "Megnyitás Új Ablakban"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Ez átrendezi a könyvjelzőket minden almappában, és nem vonható vissza."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Új lapcsoport"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Csoport neve"
+  },
+  "tabGroupColorLabel": {
+    "message": "Szín"
+  },
+  "tabGroupUntitled": {
+    "message": "Névtelen csoport"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nincsenek meglévő lapcsoportok"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Megnyitás meglévő lapcsoportban"
   },
   "statsClearConfirm": {
     "message": "Törli $count$ könyvjelző látogatási statisztikáit? Ez nem vonható vissza.",

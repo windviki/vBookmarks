@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Åpne alle i ny fane-gruppe"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Åpne alle i ny fanegruppe…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Åpne alle i eksisterende fanegruppe…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Åpne bokmerker i inkognito"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Åpne i Ny Fane"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Åpne i ny fanegruppe"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Åpne i ny fanegruppe…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Åpne i eksisterende fanegruppe…"
   },
   "openNewWindow": {
     "message": "Åpne i Nytt Vindu"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Dette omorganiserer bokmerker i hver undermappe og kan ikke angres."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Ny fanegruppe"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Gruppetittel"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farge"
+  },
+  "tabGroupUntitled": {
+    "message": "Unavngitt gruppe"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ingen eksisterende fanegrupper"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Åpne i eksisterende fanegruppe"
   },
   "statsClearConfirm": {
     "message": "Tøm besøksstatistikk for $count$ bokmerker? Dette kan ikke angres",

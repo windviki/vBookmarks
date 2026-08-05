@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Otwórz wszystkie w grupie kart"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Otwórz wszystko w nowej grupie kart…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otwórz wszystko w istniejącej grupie kart…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otwórz zakładki w incognito"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Otwórz w nowej karcie"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otwórz w nowej grupie kart"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otwórz w nowej grupie kart…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otwórz w istniejącej grupie kart…"
   },
   "openNewWindow": {
     "message": "Otwórz w nowym oknie"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "To zmienia kolejność zakładek w każdym podfolderze i nie można tego cofnąć."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nowa grupa kart"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Tytuł grupy"
+  },
+  "tabGroupColorLabel": {
+    "message": "Kolor"
+  },
+  "tabGroupUntitled": {
+    "message": "Grupa bez tytułu"
+  },
+  "tabGroupNoGroups": {
+    "message": "Brak istniejących grup kart"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otwórz w istniejącej grupie kart"
   },
   "statsClearConfirm": {
     "message": "Wyczyścić statystyki odwiedzin dla $count$ zakładek? Tej operacji nie można cofnąć.",

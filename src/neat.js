@@ -81,6 +81,10 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         'bookmark-new-tab': 'openNewTab',
         'bookmark-new-window': 'openNewWindow',
         'bookmark-new-incognito-window': 'openIncognitoWindow',
+        // P3.4: single-bookmark tab-group entries
+        'bookmark-open-in-new-group': 'bookmarkOpenInNewGroup',
+        'bookmark-open-in-new-group-setup': 'bookmarkOpenInNewGroupSetup',
+        'bookmark-open-in-existing-group': 'bookmarkOpenInExistingGroup',
         'bookmark-edit': 'edit',
         'bookmark-delete': 'delete',
         'add-bookmark-top': 'addBookmarkTop',
@@ -102,6 +106,9 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         'replace-url': 'replaceUrl',
         'folder-window': 'openBookmarks',
         'open-bookmarks-in-group': 'openBookmarksInGroup',
+        // P3.4: the named-setup + existing-group folder entries
+        'open-bookmarks-in-group-setup': 'openBookmarksInGroupSetup',
+        'folder-open-in-existing-group': 'openBookmarksInExistingGroup',
         'folder-new-window': 'openBookmarksNewWindow',
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
@@ -121,7 +128,14 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         'new-folder-dialog-button': 'save',
         'new-folder-dialog-cancel-button': 'nope',
         'sort-dialog-ok-button': 'save',
-        'sort-dialog-cancel-button': 'nope'
+        'sort-dialog-cancel-button': 'nope',
+        // P3.4: the tab-group dialogs' labels + buttons (the dialog-text and
+        // the existing-group picker list are filled at open time)
+        'tab-group-title-label': 'tabGroupTitleLabel',
+        'tab-group-color-label': 'tabGroupColorLabel',
+        'tab-group-dialog-button': 'save',
+        'tab-group-dialog-cancel-button': 'nope',
+        'tab-group-pick-cancel-button': 'nope'
     }).forEach(([id, msg]) => {
         const el = $(id);
         const m = _m(msg);

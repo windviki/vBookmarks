@@ -12,10 +12,18 @@
  * ctx.onSort(folderId, opts) runs when the sort dialog is confirmed.
  * document/window/chrome remain page globals, as in the rest of the popup.
  */
+import { pickGroupColor } from './tab-group-utils.js';
 
 // Replaces neatools' String.prototype.widont with a pure function: keeps the
 // last two words of a dialog message on one line.
 export const widont = str => `${str}`.replace(/\s([^\s]+)$/i, '&nbsp;$1');
+
+// neatools' String.prototype.htmlspecialchars as a pure function (same local
+// copy as tree-render.js / palette.js): escape >, then <, then " — order
+// matters, ">" first so "&gt;" is not re-escaped. Used for the existing-tab-
+// group picker rows, whose titles are user data from other extensions.
+const htmlspecialchars = s =>
+    `${s}`.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 export function initDialogs(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -187,6 +195,107 @@ export function initDialogs(ctx = {}) {
         onSort(folderId, opts);
     });
 
+    // Tab-group creation dialog: define a new group's title + color before
+    // the folder/bookmark is opened into it (Chrome's "new tab group"
+    // title/color mechanism). The 9 color swatches live in the dialog HTML
+    // as radio inputs; this object only reads the checked one.
+    const GroupDialog = {
+        open: opts => {
+            if (!opts)
+                return;
+            if (opts.onConfirm)
+                GroupDialog.onConfirm = opts.onConfirm;
+            $('tab-group-dialog-text').innerHTML = widont(opts.dialog || _m('tabGroupDialogTitle'));
+            const name = $('tab-group-name');
+            name.value = opts.title || '';
+            const color = opts.color || pickGroupColor(name.value || '');
+            const radios = document.querySelectorAll('input[name="tab-group-color"]');
+            let found = false;
+            for (const r of radios) {
+                r.checked = r.value === color;
+                if (r.value === color)
+                    found = true;
+            }
+            if (!found && radios[0])
+                radios[0].checked = true;
+            body.classList.add('needTabGroup');
+            name.focus();
+            name.select();
+            name.scrollLeft = 0;
+        },
+        close: needSave => {
+            body.classList.remove('needTabGroup');
+            if (needSave === false)
+                return;
+            const name = $('tab-group-name');
+            const checked = document.querySelector('input[name="tab-group-color"]:checked');
+            GroupDialog.onConfirm(name.value.trim(), checked ? checked.value : 'grey');
+        },
+        onConfirm: () => {
+        }
+    };
+    $('tab-group-dialog-button').addEventListener('click', () => {
+        GroupDialog.close();
+    });
+    $('tab-group-dialog-cancel-button').addEventListener('click', () => {
+        GroupDialog.close(false);
+    });
+
+    // Existing-tab-group picker: list the browser's current tab groups (from
+    // chrome.tabGroups.query) and open the selection into the chosen one.
+    const GroupPickDialog = {
+        open: opts => {
+            if (!opts)
+                return;
+            if (opts.onPick)
+                GroupPickDialog.onPick = opts.onPick;
+            $('tab-group-pick-text').innerHTML = widont(opts.dialog || _m('tabGroupPickDialogTitle'));
+            const groups = opts.groups || [];
+            // Stable order: by title, then by id — so repeated opens of the
+            // same set land on the same row order.
+            const sorted = [...groups].sort((a, b) =>
+                (a.title || '').localeCompare(b.title || '') || String(a.id).localeCompare(String(b.id)));
+            const list = $('tab-group-pick-list');
+            list.innerHTML = '';
+            if (!sorted.length) {
+                const li = document.createElement('li');
+                li.className = 'tab-group-pick-empty';
+                li.textContent = _m('tabGroupNoGroups');
+                list.appendChild(li);
+            } else {
+                for (const g of sorted) {
+                    const li = document.createElement('li');
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'tab-group-pick-row';
+                    btn.innerHTML =
+                        `<span class="tab-group-dot tg-color-${htmlspecialchars(g.color || 'grey')}"></span>` +
+                        `<span class="tab-group-pick-title">${htmlspecialchars(g.title || _m('tabGroupUntitled'))}</span>`;
+                    btn.addEventListener('click', () => {
+                        GroupPickDialog.onPick(g.id);
+                        GroupPickDialog.close();
+                    });
+                    li.appendChild(btn);
+                    list.appendChild(li);
+                }
+            }
+            body.classList.add('needGroupPick');
+            const firstBtn = list.querySelector('button');
+            if (firstBtn)
+                firstBtn.focus();
+            else
+                $('tab-group-pick-cancel-button').focus();
+        },
+        close: () => {
+            body.classList.remove('needGroupPick');
+        },
+        onPick: () => {
+        }
+    };
+    $('tab-group-pick-cancel-button').addEventListener('click', () => {
+        GroupPickDialog.close();
+    });
+
     // Events for dialogs
     $('confirm-dialog-button-1').addEventListener('click', () => {
         ConfirmDialog.fn1();
@@ -214,7 +323,8 @@ export function initDialogs(ctx = {}) {
     // True while any dialog's body class is set (used by the Escape handler)
     const anyOpen = () => body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
         body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
-        body.classList.contains('needSort');
+        body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
+        body.classList.contains('needGroupPick');
 
     // The open dialog's own element — keyboard.js's modal Tab trap cycles
     // within it. Null when nothing is up; precedence mirrors closeDialogs.
@@ -227,6 +337,10 @@ export function initDialogs(ctx = {}) {
             return $('new-folder-dialog');
         if (body.classList.contains('needSort'))
             return $('sort-dialog');
+        if (body.classList.contains('needTabGroup'))
+            return $('tab-group-dialog');
+        if (body.classList.contains('needGroupPick'))
+            return $('tab-group-pick-dialog');
         if (body.classList.contains('needAlert'))
             return $('alert-dialog');
         return null;
@@ -243,10 +357,14 @@ export function initDialogs(ctx = {}) {
             NewFolderDialog.close(false);
         if (body.classList.contains('needSort'))
             SortDialog.close();
+        if (body.classList.contains('needTabGroup'))
+            GroupDialog.close(false);
+        if (body.classList.contains('needGroupPick'))
+            GroupPickDialog.close();
         if (body.classList.contains('needAlert'))
             AlertDialog.close();
     };
     $('cover').addEventListener('click', closeDialogs);
 
-    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, anyOpen, activeEl, closeDialogs };
+    return { AlertDialog, ConfirmDialog, EditDialog, NewFolderDialog, SortDialog, GroupDialog, GroupPickDialog, anyOpen, activeEl, closeDialogs };
 }

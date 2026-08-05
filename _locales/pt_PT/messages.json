@@ -594,6 +594,12 @@
   "openBookmarksInGroup": {
     "message": "Abrir tudo num novo grupo"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Abrir todos num novo grupo…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Abrir todos num grupo existente…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir marcadores em janela privada"
   },
@@ -608,6 +614,15 @@
   },
   "openNewTab": {
     "message": "Abrir num Novo Separador"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Abrir num novo grupo"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Abrir num novo grupo…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Abrir num grupo existente…"
   },
   "openNewWindow": {
     "message": "Abrir numa Nova Janela"
@@ -1200,6 +1215,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Isto reordena marcadores em todas as subpastas e não pode ser desfeito."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Novo grupo de separadores"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Título do grupo"
+  },
+  "tabGroupColorLabel": {
+    "message": "Cor"
+  },
+  "tabGroupUntitled": {
+    "message": "Grupo sem título"
+  },
+  "tabGroupNoGroups": {
+    "message": "Não existem grupos de separadores"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Abrir num grupo existente"
   },
   "statsClearConfirm": {
     "message": "Limpar estatísticas de visitas para $count$ marcadores? Isto não pode ser desfeito.",

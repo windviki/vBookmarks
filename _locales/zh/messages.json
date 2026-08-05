@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "在新标签页组中全部打开"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "在新标签页组中全部打开…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "在现有标签页组中全部打开…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "在隐身窗口中打开所有书签"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "在新标签页中打开"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "在新标签页组中打开"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "在新标签页组中打开…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "在现有标签页组中打开…"
   },
   "openNewWindow": {
     "message": "在新窗口中打开"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "此操作会重新排列每个子文件夹中的书签，且无法撤销。"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新建标签页组"
+  },
+  "tabGroupTitleLabel": {
+    "message": "组标题"
+  },
+  "tabGroupColorLabel": {
+    "message": "颜色"
+  },
+  "tabGroupUntitled": {
+    "message": "未命名组"
+  },
+  "tabGroupNoGroups": {
+    "message": "暂无标签页组"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "在现有标签页组中打开"
   },
   "statsClearConfirm": {
     "message": "清除 $count$ 个书签的访问统计？此操作无法撤销。",

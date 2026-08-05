@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Otvori sve u novoj grupi kartica"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Otvori sve u novoj grupi kartica…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otvori sve u postojećoj grupi kartica…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otvori oznake u inkognitu"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Otvori u novoj kartici"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otvori u novoj grupi kartica"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otvori u novoj grupi kartica…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otvori u postojećoj grupi kartica…"
   },
   "openNewWindow": {
     "message": "Otvori u novom prozoru"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Ovo preuređuje oznake u svakoj podmapu i ne može se poništiti."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nova grupa kartica"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Naziv grupe"
+  },
+  "tabGroupColorLabel": {
+    "message": "Boja"
+  },
+  "tabGroupUntitled": {
+    "message": "Neimenovana grupa"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nema postojećih grupa kartica"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otvori u postojećoj grupi kartica"
   },
   "statsClearConfirm": {
     "message": "Očistiti statistiku posjeta za $count$ oznaka? Ovo se ne može poništiti.",

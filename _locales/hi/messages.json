@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "नए टैब समूह में सभी खोलें"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "नए टैब समूह में सभी खोलें…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "मौजूदा टैब समूह में सभी खोलें…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "इनकॉग्निटो में सभी बुकमार्क खोलें"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "नए टैब में खोलें"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "नए टैब समूह में खोलें"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "नए टैब समूह में खोलें…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "मौजूदा टैब समूह में खोलें…"
   },
   "openNewWindow": {
     "message": "नई विंडो में खोलें"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "यह प्रत्येक उपफ़ोल्डर में बुकमार्क को पुनर्व्यवस्थित करता है और इसे पूर्ववत नहीं किया जा सकता।"
+  },
+  "tabGroupDialogTitle": {
+    "message": "नया टैब समूह"
+  },
+  "tabGroupTitleLabel": {
+    "message": "समूह शीर्षक"
+  },
+  "tabGroupColorLabel": {
+    "message": "रंग"
+  },
+  "tabGroupUntitled": {
+    "message": "अनाम समूह"
+  },
+  "tabGroupNoGroups": {
+    "message": "कोई मौजूदा टैब समूह नहीं"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "मौजूदा टैब समूह में खोलें"
   },
   "statsClearConfirm": {
     "message": "$count$ बुकमार्क के विज़िट आँकड़े साफ़ करें? इसे पूर्ववत नहीं किया जा सकता।",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Tout ouvrir dans un groupe"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Tout ouvrir dans un nouveau groupe…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Tout ouvrir dans un groupe existant…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Ouvrir en navigation privée"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Ouvrir dans un nouvel onglet"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Ouvrir dans un nouveau groupe"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Ouvrir dans un nouveau groupe…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Ouvrir dans un groupe existant…"
   },
   "openNewWindow": {
     "message": "Ouvrir dans une nouvelle fenetre"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Cela réorganise les signets dans chaque sous-dossier et ne peut pas être annulé."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nouveau groupe d'onglets"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Titre du groupe"
+  },
+  "tabGroupColorLabel": {
+    "message": "Couleur"
+  },
+  "tabGroupUntitled": {
+    "message": "Groupe sans titre"
+  },
+  "tabGroupNoGroups": {
+    "message": "Aucun groupe d'onglets existant"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Ouvrir dans un groupe d'onglets existant"
   },
   "statsClearConfirm": {
     "message": "Effacer les statistiques de visites pour $count$ signets ? Cette action est irréversible.",

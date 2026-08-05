@@ -8,7 +8,16 @@ import fs from 'node:fs';
 // REAL sort-utils.js classic script is evaluated onto the window stub.
 
 const makeEl = () => ({
-    innerHTML: '',
+    _innerHTML: '',
+    // setting innerHTML replaces the element's children (the picker rebuilds
+    // its <ul> this way); reading it returns the last value written.
+    get innerHTML() { return this._innerHTML; },
+    set innerHTML(v) {
+        this._innerHTML = v;
+        if (v === '')
+            this.children = [];
+    },
+    textContent: '',
     value: '',
     checked: false,
     hidden: false,
@@ -16,6 +25,11 @@ const makeEl = () => ({
     focused: false,
     scrollLeft: 0,
     style: {},
+    tagName: 'DIV',
+    className: '',
+    dataset: {},
+    children: [],
+    parentNode: null,
     // model input[type=url] validity: tracks the current value like a browser
     get validity() {
         return { valid: /^https?:\/\/.+/.test(this.value) };
@@ -30,7 +44,18 @@ const makeEl = () => ({
     focus() {
         this.focused = true;
     },
-    select() {}
+    select() {},
+    appendChild(child) {
+        this.children.push(child);
+        child.parentNode = this;
+    },
+    querySelector(sel) {
+        const want = sel.toUpperCase();
+        for (const c of this.children)
+            if (c.tagName === want)
+                return c;
+        return null;
+    }
 });
 
 const IDS = [
@@ -41,6 +66,11 @@ const IDS = [
     'new-folder-dialog-text', 'new-folder-dialog-name', 'new-folder-dialog-form', 'new-folder-dialog-cancel-button',
     'sort-by-title', 'sort-by-date', 'sort-folders-first', 'sort-recursive', 'sort-recursive-warning',
     'sort-dialog-ok-button', 'sort-dialog-cancel-button',
+    // P3.4: the new-tab-group dialog (title input + 9 color radios) and the
+    // existing-group picker (its list + cancel button)
+    'tab-group-dialog', 'tab-group-dialog-text', 'tab-group-name',
+    'tab-group-dialog-button', 'tab-group-dialog-cancel-button',
+    'tab-group-pick-dialog', 'tab-group-pick-text', 'tab-group-pick-list', 'tab-group-pick-cancel-button',
     'cover'
 ];
 
@@ -54,14 +84,37 @@ const makeClassList = () => {
     };
 };
 
-let widont, initDialogs, els, bodyClasses, sorts;
+let widont, initDialogs, els, bodyClasses, sorts, colorRadios;
+
+// The GroupDialog renders its 9 color swatches as hidden radio inputs; the
+// dialog code reads them via document.querySelectorAll/querySelector.
+const PALETTE = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'];
 
 beforeAll(async () => {
     els = Object.fromEntries(IDS.map(id => [id, makeEl()]));
+    colorRadios = PALETTE.map(color => {
+        const r = makeEl();
+        r.tagName = 'INPUT';
+        r.type = 'radio';
+        r.name = 'tab-group-color';
+        r.value = color;
+        return r;
+    });
     bodyClasses = makeClassList();
     globalThis.document = {
         getElementById: id => els[id] || null,
-        body: { classList: bodyClasses }
+        body: { classList: bodyClasses },
+        createElement: tag => {
+            const el = makeEl();
+            el.tagName = tag.toUpperCase();
+            return el;
+        },
+        querySelectorAll: sel =>
+            sel === 'input[name="tab-group-color"]' ? colorRadios : [],
+        querySelector: sel =>
+            sel === 'input[name="tab-group-color"]:checked'
+                ? (colorRadios.find(r => r.checked) || null)
+                : null
     };
     globalThis.window = { addEventListener: () => {} };
     globalThis.chrome = { i18n: { getMessage: key => key } };
@@ -72,6 +125,8 @@ beforeAll(async () => {
 const freshDialogs = (store) => {
     bodyClasses._set.clear();
     sorts = [];
+    for (const r of colorRadios)
+        r.checked = false;
     return initDialogs({
         onSort: (folderId, opts) => sorts.push([folderId, opts]),
         store
@@ -274,5 +329,133 @@ describe('closeDialogs / anyOpen', () => {
         expect(d.activeEl()).toBe(els['sort-dialog']);
         d.NewFolderDialog.open('n', () => {});
         expect(d.activeEl()).toBe(els['new-folder-dialog']); // stacked: input-name outranks sort
+    });
+});
+
+describe('GroupDialog (P3.4: new tab group title + color)', () => {
+    const checkedColor = () => colorRadios.find(r => r.checked);
+
+    it('open prefills the title, selects the given color, focuses the input and sets the class', () => {
+        const d = freshDialogs();
+        d.GroupDialog.open({ title: 'My Folder', color: 'blue', onConfirm: () => {} });
+        expect(els['tab-group-dialog-text'].innerHTML).toBe('tabGroupDialogTitle');
+        expect(els['tab-group-name'].value).toBe('My Folder');
+        expect(els['tab-group-name'].focused).toBe(true);
+        expect(checkedColor().value).toBe('blue');
+        expect(bodyClasses.contains('needTabGroup')).toBe(true);
+    });
+
+    it('derives a default color from the title via the hash picker when none is passed', () => {
+        const d = freshDialogs();
+        d.GroupDialog.open({ title: 'Dev Stuff', onConfirm: () => {} });
+        // pickGroupColor('Dev Stuff') — inside the 9-color palette
+        expect(PALETTE).toContain(checkedColor().value);
+    });
+
+    it('falls back to the first radio when no title-derived color exists (empty title)', () => {
+        const d = freshDialogs();
+        d.GroupDialog.open({ title: '', onConfirm: () => {} });
+        expect(checkedColor().value).toBe('grey');
+    });
+
+    it('close confirms with the trimmed title and the selected color', () => {
+        const d = freshDialogs();
+        let confirmed = null;
+        d.GroupDialog.open({ title: '  My Folder  ', color: 'purple', onConfirm: (t, c) => confirmed = [t, c] });
+        d.GroupDialog.close();
+        expect(confirmed).toEqual(['My Folder', 'purple']);
+        expect(bodyClasses.contains('needTabGroup')).toBe(false);
+    });
+
+    it('close(false) cancels without confirming', () => {
+        const d = freshDialogs();
+        let confirmed = false;
+        d.GroupDialog.open({ title: 'x', color: 'red', onConfirm: () => confirmed = true });
+        d.GroupDialog.close(false);
+        expect(confirmed).toBe(false);
+        expect(bodyClasses.contains('needTabGroup')).toBe(false);
+    });
+
+    it('the OK button confirms and the cancel button cancels', () => {
+        const d = freshDialogs();
+        let confirmed = null;
+        d.GroupDialog.open({ title: 'A', color: 'green', onConfirm: (t, c) => confirmed = [t, c] });
+        els['tab-group-name'].value = 'B';
+        els['tab-group-dialog-button'].trigger('click');
+        expect(confirmed).toEqual(['B', 'green']);
+        expect(bodyClasses.contains('needTabGroup')).toBe(false);
+
+        d.GroupDialog.open({ title: 'A', color: 'green', onConfirm: () => confirmed = 'again' });
+        els['tab-group-dialog-cancel-button'].trigger('click');
+        expect(confirmed).toEqual(['B', 'green']); // untouched: cancel does not confirm
+        expect(bodyClasses.contains('needTabGroup')).toBe(false);
+    });
+
+    it('the closeDialogs escape path cancels without confirming', () => {
+        const d = freshDialogs();
+        let confirmed = false;
+        d.GroupDialog.open({ title: 'x', color: 'red', onConfirm: () => confirmed = true });
+        d.closeDialogs();
+        expect(confirmed).toBe(false);
+        expect(d.anyOpen()).toBe(false);
+    });
+});
+
+describe('GroupPickDialog (P3.4: pick an existing tab group)', () => {
+    it('open renders one button per group (sorted) and a pick dispatches the group id', () => {
+        const d = freshDialogs();
+        let picked = null;
+        d.GroupPickDialog.open({
+            groups: [
+                { id: 'g2', title: 'Zeta', color: 'blue' },
+                { id: 'g1', title: 'Alpha', color: 'red' }
+            ],
+            onPick: id => picked = id
+        });
+        expect(els['tab-group-pick-text'].innerHTML).toBe('tabGroupPickDialogTitle');
+        expect(bodyClasses.contains('needGroupPick')).toBe(true);
+        const list = els['tab-group-pick-list'];
+        expect(list.children).toHaveLength(2);
+        // sorted by title: Alpha first
+        expect(list.children[0].children[0].innerHTML).toContain('Alpha');
+        expect(list.children[1].children[0].innerHTML).toContain('Zeta');
+        // clicking the Alpha row picks g1 and closes
+        list.children[0].children[0].trigger('click');
+        expect(picked).toBe('g1');
+        expect(bodyClasses.contains('needGroupPick')).toBe(false);
+    });
+
+    it('shows an untitled label for groups without a title', () => {
+        const d = freshDialogs();
+        d.GroupPickDialog.open({ groups: [{ id: 'g1', title: '', color: 'grey' }], onPick: () => {} });
+        expect(els['tab-group-pick-list'].children[0].children[0].innerHTML).toContain('tabGroupUntitled');
+    });
+
+    it('renders an empty state when there are no groups and focuses the cancel button', () => {
+        const d = freshDialogs();
+        d.GroupPickDialog.open({ groups: [], onPick: () => {} });
+        const list = els['tab-group-pick-list'];
+        expect(list.children).toHaveLength(1);
+        expect(list.children[0].className).toBe('tab-group-pick-empty');
+        expect(list.children[0].textContent).toBe('tabGroupNoGroups');
+        expect(els['tab-group-pick-cancel-button'].focused).toBe(true);
+    });
+
+    it('cancel closes the picker without dispatching', () => {
+        const d = freshDialogs();
+        let picked = false;
+        d.GroupPickDialog.open({ groups: [{ id: 'g1', title: 'X' }], onPick: () => picked = true });
+        els['tab-group-pick-cancel-button'].trigger('click');
+        expect(picked).toBe(false);
+        expect(bodyClasses.contains('needGroupPick')).toBe(false);
+    });
+
+    it('activeEl + closeDialogs cover the picker', () => {
+        const d = freshDialogs();
+        d.GroupPickDialog.open({ groups: [], onPick: () => {} });
+        expect(d.activeEl()).toBe(els['tab-group-pick-dialog']);
+        expect(d.anyOpen()).toBe(true);
+        d.closeDialogs();
+        expect(d.anyOpen()).toBe(false);
     });
 });

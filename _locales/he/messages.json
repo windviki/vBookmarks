@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "פתח הכל בקבוצת כרטיסיות"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "פתח הכל בקבוצת טאבים חדשה…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "פתח הכל בקבוצת טאבים קיימת…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "פתח סימניות בחלון פרטי"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "פתח בלשונית חדשה"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "פתח בקבוצת טאבים חדשה"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "פתח בקבוצת טאבים חדשה…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "פתח בקבוצת טאבים קיימת…"
   },
   "openNewWindow": {
     "message": "פתח בחלון חדש"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "פעולה זו מסדרת מחדש סימניות בכל תת-תיקייה ואינה ניתנת לביטול."
+  },
+  "tabGroupDialogTitle": {
+    "message": "קבוצת טאבים חדשה"
+  },
+  "tabGroupTitleLabel": {
+    "message": "שם הקבוצה"
+  },
+  "tabGroupColorLabel": {
+    "message": "צבע"
+  },
+  "tabGroupUntitled": {
+    "message": "קבוצה ללא שם"
+  },
+  "tabGroupNoGroups": {
+    "message": "אין קבוצות טאבים קיימות"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "פתח בקבוצת טאבים קיימת"
   },
   "statsClearConfirm": {
     "message": "לנקות סטטיסטיקות ביקור עבור $count$ סימניות? לא ניתן לבטל פעולה זו.",

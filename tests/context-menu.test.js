@@ -178,7 +178,7 @@ const setup = (opts = {}) => {
         }
     };
     const chromeStub = {
-        i18n: { getMessage: key => key },
+        i18n: { getMessage: opts.i18n || (key => key) },
         windows: { WINDOW_ID_CURRENT: -1 },
         tabs: {
             current: { id: 7, url: 'https://current.example/page', title: 'Current Tab' },
@@ -193,20 +193,39 @@ const setup = (opts = {}) => {
             getChildren(id, cb) {
                 cb(this.childNodes[id] || []);
             }
+        },
+        // P3.4: the existing-group pickers query the browser's tab groups
+        tabGroups: {
+            queried: [],
+            _groups: [],
+            query(q, cb) {
+                this.queried.push(q);
+                cb(this._groups);
+            }
         }
     };
     Object.assign(chromeStub.bookmarks.childNodes, opts.children || {});
+    Object.assign(chromeStub.tabGroups._groups, opts.tabGroups || []);
     globalThis.chrome = chromeStub;
 
     const actionCalls = [];
     const actions = {};
     for (const name of ['openBookmark', 'openBookmarkNewTab', 'openBookmarkNewWindow',
         'addNewBookmarkNode', 'copyAllTitlesAndUrls', 'replaceUrl', 'openBookmarks',
-        'openBookmarksInGroup', 'openBookmarksNewWindow', 'editBookmarkFolder', 'deleteBookmark',
+        'openBookmarksInGroup', 'openInExistingTabGroup', 'openBookmarksNewWindow',
+        'editBookmarkFolder', 'deleteBookmark',
         'deleteBookmarks', 'addSeparator', 'deleteSeparator'])
         actions[name] = (...args) => actionCalls.push([name, ...args]);
     const sortCalls = [];
-    const dialogs = { SortDialog: { open: id => sortCalls.push(id) } };
+    // P3.4: GroupDialog (title+color before opening a new group) and
+    // GroupPickDialog (existing-group picker) are recorded doubles.
+    const groupDialogCalls = [];
+    const groupPickCalls = [];
+    const dialogs = {
+        SortDialog: { open: id => sortCalls.push(id) },
+        GroupDialog: { open: o => groupDialogCalls.push(o) },
+        GroupPickDialog: { open: o => groupPickCalls.push(o) }
+    };
     // issue #33: direct sort dispatch + the persisted sort options (recursive
     // suffix on the labels), injected lazily exactly like the views above.
     const sortFolderCalls = [];
@@ -226,14 +245,19 @@ const setup = (opts = {}) => {
         get sortFolder() { return (id, o) => sortFolderCalls.push([id, o]); }
     });
 
-    // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href></a></li>
-    const makeBookmarkRow = (id = '42', parentid = '1') => {
+    // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
+    // (the <i> carries the displayed title, so the P3.4 group-title probe
+    // has a node to read)
+    const makeBookmarkRow = (id = '42', parentid = '1', title = '') => {
         const li = el('LI', `neat-tree-item-${id}`);
         li.dataset.parentid = parentid;
         const a = el('A');
         a.href = `https://bm-${id}.example/`;
         a.parentNode = li;
-        return { li, a };
+        const i = el('I');
+        i.textContent = title;
+        a._qs.i = i;
+        return { li, a, i };
     };
     // A folder row: <li id="neat-tree-item-7" data-parentid="1"><span><i>title</i></span></li>
     // (the <i> carries the displayed folder title, mirrored from generateFolderHTML)
@@ -304,6 +328,7 @@ const setup = (opts = {}) => {
         bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
         paletteCmdMenu,
         chrome: chromeStub, actionCalls, sortCalls, sortFolderCalls, revealCalls,
+        groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
         makeStatsHistRow, makeDupesGroupHead, menuItem, openOn,
         fireWindow: (type, ev) => {
@@ -941,6 +966,148 @@ describe('open-bookmarks-in-group menu item (P3.4)', () => {
         expect(neatSource).toContain("'open-bookmarks-in-group': 'openBookmarksInGroup'");
         const enMessages = JSON.parse(fs.readFileSync(new URL('../_locales/en/messages.json', import.meta.url), 'utf8'));
         expect(enMessages.openBookmarksInGroup.message).toBeTruthy();
+    });
+});
+
+describe('tab-group menu items (P3.4 hardening)', () => {
+    const folderChildren = [
+        { id: 'a', url: 'http://a/' },
+        { id: 'b' }, // subfolder: no url
+        { id: 'c', url: 'http://c/' }
+    ];
+    const openFolderMenu = (ctx, id = '7', parentid = '1', title = 'My Folder') => {
+        const { span } = ctx.makeFolderRow(id, parentid, title);
+        ctx.openOn(span);
+    };
+    const openBookmarkMenu = (ctx, id = '42', title = 'Dev Docs') => {
+        const { a } = ctx.makeBookmarkRow(id, '1', title);
+        ctx.openOn(a);
+    };
+
+    it('strips the localized sync suffix from the folder group title (one-click path)', () => {
+        const ctx = setup({
+            children: { '7': folderChildren },
+            i18n: key => key === 'syncSuffixLocal' ? '(Local)' : key === 'syncSuffixSynced' ? '(Synced)' : key
+        });
+        openFolderMenu(ctx, '7', '1', 'My Folder (Local)');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], 'My Folder']
+        ]);
+    });
+
+    it('folder setup item opens the GroupDialog prefilled, then dispatches on confirm', () => {
+        const ctx = setup({ children: { '7': folderChildren } });
+        openFolderMenu(ctx, '7', '1', 'My Folder');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group-setup') }));
+        expect(ctx.groupDialogCalls).toHaveLength(1);
+        const dlg = ctx.groupDialogCalls[0];
+        expect(dlg.title).toBe('My Folder');
+        expect(['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'])
+            .toContain(dlg.color);
+        dlg.onConfirm('Renamed', 'orange');
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], 'Renamed', 'orange']
+        ]);
+    });
+
+    it('folder existing-group item queries the tab groups and opens the picker, then dispatches on pick', () => {
+        const ctx = setup({ children: { '7': folderChildren }, tabGroups: [{ id: 'g1', title: 'Work' }] });
+        openFolderMenu(ctx, '7');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('folder-open-in-existing-group') }));
+        expect(ctx.chrome.tabGroups.queried).toEqual([{}]);
+        expect(ctx.groupPickCalls).toHaveLength(1);
+        expect(ctx.groupPickCalls[0].groups).toEqual([{ id: 'g1', title: 'Work' }]);
+        ctx.groupPickCalls[0].onPick('g1');
+        expect(ctx.actionCalls).toEqual([
+            ['openInExistingTabGroup', ['http://a/', 'http://c/'], 'g1']
+        ]);
+    });
+
+    it('does nothing for the folder group items on a subfolder-only folder', () => {
+        const ctx = setup({ children: { '9': [{ id: 'a' }] } });
+        openFolderMenu(ctx, '9');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group-setup') }));
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('folder-open-in-existing-group') }));
+        expect(ctx.actionCalls).toEqual([]);
+        expect(ctx.groupDialogCalls).toEqual([]);
+        expect(ctx.groupPickCalls).toEqual([]);
+    });
+
+    it('bookmark new-group item dispatches openBookmarksInGroup with the single url and its title', () => {
+        const ctx = setup({});
+        openBookmarkMenu(ctx, '42', 'Dev Docs');
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-open-in-new-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['https://bm-42.example/'], 'Dev Docs']
+        ]);
+    });
+
+    it('bookmark setup item opens the GroupDialog and dispatches the chosen title/color', () => {
+        const ctx = setup({});
+        openBookmarkMenu(ctx, '42', 'Dev Docs');
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-open-in-new-group-setup') }));
+        expect(ctx.groupDialogCalls).toHaveLength(1);
+        expect(ctx.groupDialogCalls[0].title).toBe('Dev Docs');
+        ctx.groupDialogCalls[0].onConfirm('Docs', 'green');
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['https://bm-42.example/'], 'Docs', 'green']
+        ]);
+    });
+
+    it('bookmark existing-group item queries the tab groups, opens the picker and dispatches on pick', () => {
+        const ctx = setup({ tabGroups: [{ id: 'g2', title: '' }] });
+        openBookmarkMenu(ctx, '42');
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-open-in-existing-group') }));
+        expect(ctx.chrome.tabGroups.queried).toEqual([{}]);
+        expect(ctx.groupPickCalls).toHaveLength(1);
+        expect(ctx.groupPickCalls[0].groups).toEqual([{ id: 'g2', title: '' }]);
+        ctx.groupPickCalls[0].onPick('g2');
+        expect(ctx.actionCalls).toEqual([
+            ['openInExistingTabGroup', ['https://bm-42.example/'], 'g2']
+        ]);
+    });
+
+    it('bookmark group items still dispatch with a missing <i> title node (empty title)', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42', '1', '');
+        a._qs.i = null;
+        ctx.openOn(a);
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-open-in-new-group') }));
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['https://bm-42.example/'], '']
+        ]);
+    });
+
+    it('new group items live in both pages with neat.js text mappings and en messages', () => {
+        const pairs = [
+            ['open-bookmarks-in-group-setup', 'openBookmarksInGroupSetup'],
+            ['folder-open-in-existing-group', 'openBookmarksInExistingGroup'],
+            ['bookmark-open-in-new-group', 'bookmarkOpenInNewGroup'],
+            ['bookmark-open-in-new-group-setup', 'bookmarkOpenInNewGroupSetup'],
+            ['bookmark-open-in-existing-group', 'bookmarkOpenInExistingGroup']
+        ];
+        for (const page of ['popup.html', 'sidepanel.html']) {
+            const html = fs.readFileSync(new URL(`../pages/${page}`, import.meta.url), 'utf8');
+            for (const [id] of pairs)
+                expect(html, `${page}#${id}`).toContain(
+                    `<div id="${id}" class="menu-item" role="menuitem" tabindex="-1"></div>`);
+        }
+        const neatSource = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+        const enMessages = JSON.parse(fs.readFileSync(new URL('../_locales/en/messages.json', import.meta.url), 'utf8'));
+        for (const [id, msgKey] of pairs) {
+            expect(neatSource).toContain(`'${id}': '${msgKey}'`);
+            expect(enMessages[msgKey].message).toBeTruthy();
+        }
     });
 });
 

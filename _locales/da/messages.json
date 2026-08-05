@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Åbn alle i ny fanegruppe"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Åbn alle i ny fanegruppe…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Åbn alle i eksisterende fanegruppe…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Åbn alle i inkognitovindue"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Åbn i Ny Fane"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Åbn i ny fanegruppe"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Åbn i ny fanegruppe…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Åbn i eksisterende fanegruppe…"
   },
   "openNewWindow": {
     "message": "Åbn i Nyt Vindue"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Dette omordner bogmærker i hver undermappe og kan ikke fortrydes."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Ny fanegruppe"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Gruppetitel"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farve"
+  },
+  "tabGroupUntitled": {
+    "message": "Unavngiven gruppe"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ingen eksisterende fanegrupper"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Åbn i eksisterende fanegruppe"
   },
   "statsClearConfirm": {
     "message": "Ryd besøgsstatistik for $count$ bogmærker? Dette kan ikke fortrydes.",

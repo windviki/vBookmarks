@@ -1,5 +1,6 @@
 import { uuidFast } from './separators.js';
 import { TREE_INDENT } from './tree-render.js';
+import { pickGroupColor } from './tab-group-utils.js';
 
 /**
  * Popup action layer (P1 module extracted from neat.js).
@@ -33,18 +34,6 @@ import { TREE_INDENT } from './tree-render.js';
  * plain getElementById and DOM calls only (neatools' el.destroy() is inlined
  * as parentNode.removeChild).
  */
-
-// P3.4: chrome.tabGroups accepts exactly these nine group colors.
-const tabGroupColors = ['grey', 'blue', 'red', 'yellow', 'green', 'pink', 'purple', 'cyan', 'orange'];
-
-// Deterministic group color for a folder title: a plain charCode-sum hash
-// modulo the palette, so the same folder name always lands on the same color.
-const pickGroupColor = title => {
-    let hash = 0;
-    for (let i = 0; i < title.length; i++)
-        hash += title.charCodeAt(i);
-    return tabGroupColors[hash % tabGroupColors.length];
-};
 
 export function initActions(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -459,38 +448,46 @@ export function initActions(ctx = {}) {
         },
 
         // P3.4: same batch-open as openBookmarks (same >10 ConfirmDialog
-        // gate), then the new tabs become one named tab group. On a Chrome
-        // too old for tab groups the feature-detect fails and the tabs stay
-        // a plain batch-open — no error, just no group.
-        openBookmarksInGroup: (urls, groupTitle) => {
+        // gate), then the new tabs become one named tab group. The actual
+        // tab creation + grouping runs in the background service worker
+        // (vbm-tab-group-open-new) — a popup must not own this pipeline: the
+        // first active tab would close it mid-flight and drop the pending
+        // chrome.tabs.create callbacks, so the group never formed. groupColor
+        // is optional; the deterministic pickGroupColor(groupTitle) is the
+        // default, so the one-click path and the dialog path share one call.
+        openBookmarksInGroup: (urls, groupTitle, groupColor) => {
             const urlsLen = urls.length;
             const open = () => {
-                const tabIds = [];
-                let pending = urlsLen;
-                const onCreated = tab => {
-                    tabIds.push(tab.id);
-                    if (--pending > 0)
-                        return;
-                    if (!(chrome.tabs.group && chrome.tabGroups))
-                        return;
-                    chrome.tabs.group({ tabIds: tabIds }, groupId => {
-                        chrome.tabGroups.update(groupId, {
-                            title: groupTitle,
-                            color: pickGroupColor(groupTitle)
-                        });
-                    });
-                };
-                chrome.tabs.create({
-                    url: urls[0],
-                    active: true
-                    // first tab will be selected
-                }, onCreated);
-                for (let i = 1; i < urlsLen; i++) {
-                    chrome.tabs.create({
-                        url: urls[i],
-                        active: false
-                    }, onCreated);
-                }
+                chrome.runtime.sendMessage({
+                    type: 'vbm-tab-group-open-new',
+                    urls: urls,
+                    title: groupTitle,
+                    color: groupColor || pickGroupColor(groupTitle)
+                });
+            };
+            if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
+                dialogs.ConfirmDialog.open({
+                    dialog: _m('confirmOpenBookmarks', `${urlsLen}`),
+                    button1: `<strong>${_m('open')}</strong>`,
+                    button2: _m('nope'),
+                    fn1: open
+                });
+            } else {
+                open();
+            }
+        },
+
+        // Open the given URLs as tabs added to an existing tab group (folder
+        // menu + bookmark menu "open to existing group"). Same >10 confirm
+        // gate; the service worker moves the new tabs into the group.
+        openInExistingTabGroup: (urls, groupId) => {
+            const urlsLen = urls.length;
+            const open = () => {
+                chrome.runtime.sendMessage({
+                    type: 'vbm-tab-group-open-into',
+                    urls: urls,
+                    groupId: groupId
+                });
             };
             if (!dontConfirmOpenFolder && urlsLen > openBookmarksLimit) {
                 dialogs.ConfirmDialog.open({

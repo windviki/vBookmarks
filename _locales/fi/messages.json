@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Avaa kaikki uuteen välilehtiryhmään"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Avaa kaikki uudessa välilehtiryhmässä…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Avaa kaikki olemassa olevassa välilehtiryhmässä…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Avaa kirjanmerkit incognitossa"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Avaa Uudessa Välilehdessä"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Avaa uudessa välilehtiryhmässä"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Avaa uudessa välilehtiryhmässä…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Avaa olemassa olevassa välilehtiryhmässä…"
   },
   "openNewWindow": {
     "message": "Avaa Uudessa Ikkunassa"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa eikä sitä voi peruuttaa."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Uusi välilehtiryhmä"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Ryhmän otsikko"
+  },
+  "tabGroupColorLabel": {
+    "message": "Väri"
+  },
+  "tabGroupUntitled": {
+    "message": "Nimetön ryhmä"
+  },
+  "tabGroupNoGroups": {
+    "message": "Ei olemassa olevia välilehtiryhmiä"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Avaa olemassa olevassa välilehtiryhmässä"
   },
   "statsClearConfirm": {
     "message": "Tyhjennä vierailutilastot $count$ kirjanmerkille? Tätä ei voi peruuttaa.",

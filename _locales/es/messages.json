@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Abrir todo en grupo de pestañas"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Abrir todo en grupo nuevo…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Abrir todo en grupo existente…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir marcadores en incógnito"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Abrir en nueva pestaña"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Abrir en grupo nuevo"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Abrir en grupo nuevo…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Abrir en grupo existente…"
   },
   "openNewWindow": {
     "message": "Abrir en ventana nueva"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Esto reordena los marcadores en cada subcarpeta y no se puede deshacer."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nuevo grupo de pestañas"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Título del grupo"
+  },
+  "tabGroupColorLabel": {
+    "message": "Color"
+  },
+  "tabGroupUntitled": {
+    "message": "Grupo sin título"
+  },
+  "tabGroupNoGroups": {
+    "message": "No hay grupos de pestañas existentes"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Abrir en grupo de pestañas existente"
   },
   "statsClearConfirm": {
     "message": "¿Borrar estadísticas de visitas de $count$ marcadores? Esta acción no se puede deshacer.",

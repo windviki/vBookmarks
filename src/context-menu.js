@@ -46,6 +46,8 @@
  * helpers: plain getElementById/classList only (neatools'
  * Array.map(c => c.url, children).clean() is inlined as map + filter).
  */
+import { cleanGroupTitle, pickGroupColor } from './tab-group-utils.js';
+
 export function initContextMenu(ctx = {}) {
     const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
@@ -73,6 +75,15 @@ export function initContextMenu(ctx = {}) {
     // every list view shares), the legacy prefix strip as fallback.
     const rowId = li =>
         (li.dataset && li.dataset.nodeId) || li.id.replace(/(neat-tree|neat-recent|results|recent)-item-/, '');
+
+    // P3.4: a row's proposed group title = its <i> text (the displayed name),
+    // with the localized sync suffix stripped — a group must not be named
+    // "Foo (Local)" just because the tree row showed the sync annotation.
+    const rowGroupTitle = () => {
+        const titleNode = currentContext && currentContext.querySelector('i');
+        return cleanGroupTitle(titleNode ? titleNode.textContent.trim() : '',
+            [_m('syncSuffixLocal'), _m('syncSuffixSynced')]);
+    };
 
     // Folder-menu entries Chrome refuses on the ROOT folders (bookmarks bar /
     // other bookmarks / mobile, whose parent is the '0' pseudo-root):
@@ -388,6 +399,7 @@ export function initContextMenu(ctx = {}) {
         if (!currentContext)
             return;
         const actions = ctx.actions;
+        const dialogs = ctx.dialogs;
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
@@ -396,6 +408,31 @@ export function initContextMenu(ctx = {}) {
         const id = rowId(li);
         switch (el.id) {
             // ++++++++ modified by windviki@gmail.com ++++++++
+            // P3.4: open the bookmark as a one-tab tab group. The open
+            // itself is handed to the service worker (vbm-tab-group-open-*)
+            // so closing the popup cannot abort it.
+            case 'bookmark-open-in-new-group': {
+                actions.openBookmarksInGroup([url], rowGroupTitle());
+                break;
+            }
+            case 'bookmark-open-in-new-group-setup': {
+                const title = rowGroupTitle();
+                dialogs.GroupDialog.open({
+                    title: title,
+                    color: pickGroupColor(title),
+                    onConfirm: (t, c) => actions.openBookmarksInGroup([url], t, c)
+                });
+                break;
+            }
+            case 'bookmark-open-in-existing-group': {
+                chrome.tabGroups.query({}, groups => {
+                    dialogs.GroupPickDialog.open({
+                        groups: groups || [],
+                        onPick: groupId => actions.openInExistingTabGroup([url], groupId)
+                    });
+                });
+                break;
+            }
             case 'add-bookmark-before-bookmark':
                 chrome.tabs.query({
                         'active': true,
@@ -568,14 +605,38 @@ export function initContextMenu(ctx = {}) {
                         return;
                     actions.openBookmarks(urls);
                     break;
-                // P3.4: batch-open as a named tab group. The folder's <i>
-                // carries the displayed title (the span's own textContent
-                // would include the sync-tooltip text).
+                // P3.4: batch-open as a named tab group — one-click path
+                // (folder name + deterministic color), named-setup path
+                // (GroupDialog lets the user pick title + color) and the
+                // existing-group path (GroupPickDialog lists the browser's
+                // current tab groups). The open itself runs in the service
+                // worker, so the popup closing cannot abort the grouping.
                 case 'open-bookmarks-in-group': {
                     if (noURLS)
                         return;
-                    const titleNode = currentContext.querySelector('i');
-                    actions.openBookmarksInGroup(urls, titleNode ? titleNode.textContent.trim() : '');
+                    actions.openBookmarksInGroup(urls, rowGroupTitle());
+                    break;
+                }
+                case 'open-bookmarks-in-group-setup': {
+                    if (noURLS)
+                        return;
+                    const title = rowGroupTitle();
+                    dialogs.GroupDialog.open({
+                        title: title,
+                        color: pickGroupColor(title),
+                        onConfirm: (t, c) => actions.openBookmarksInGroup(urls, t, c)
+                    });
+                    break;
+                }
+                case 'folder-open-in-existing-group': {
+                    if (noURLS)
+                        return;
+                    chrome.tabGroups.query({}, groups => {
+                        dialogs.GroupPickDialog.open({
+                            groups: groups || [],
+                            onPick: groupId => actions.openInExistingTabGroup(urls, groupId)
+                        });
+                    });
                     break;
                 }
                 case 'folder-new-window':

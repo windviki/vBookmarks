@@ -594,6 +594,12 @@
   "openBookmarksInGroup": {
     "message": "Abrir tudo em novo grupo de abas"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Abrir todos num novo grupo…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Abrir todos num grupo existente…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir favoritos em janela anônima"
   },
@@ -608,6 +614,15 @@
   },
   "openNewTab": {
     "message": "Abrir em uma nova guia"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Abrir num novo grupo de abas"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Abrir num novo grupo de abas…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Abrir num grupo de abas existente…"
   },
   "openNewWindow": {
     "message": "Abrir em uma nova janela"
@@ -1200,6 +1215,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Isso reordena favoritos em cada subpasta e não pode ser desfeito."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Novo grupo de abas"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Título do grupo"
+  },
+  "tabGroupColorLabel": {
+    "message": "Cor"
+  },
+  "tabGroupUntitled": {
+    "message": "Grupo sem título"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nenhum grupo de abas existente"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Abrir em grupo de abas existente"
   },
   "statsClearConfirm": {
     "message": "Limpar estatísticas de visitas de $count$ favoritos? Esta ação não pode ser desfeita.",

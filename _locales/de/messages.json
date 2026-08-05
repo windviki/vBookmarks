@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Alle in neuer Tab-Gruppe öffnen"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Alle in neuer Tab-Gruppe öffnen…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "In vorhandener Tab-Gruppe öffnen…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Alle in Inkognito öffnen"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "In neuem Tab öffnen"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "In neuer Tab-Gruppe öffnen"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "In neuer Tab-Gruppe öffnen…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "In vorhandener Tab-Gruppe öffnen…"
   },
   "openNewWindow": {
     "message": "In neuem Fenster öffnen"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Dies ordnet Lesezeichen in jedem Unterordner neu und kann nicht rückgängig gemacht werden."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Neue Tab-Gruppe"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Gruppentitel"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farbe"
+  },
+  "tabGroupUntitled": {
+    "message": "Unbenannte Gruppe"
+  },
+  "tabGroupNoGroups": {
+    "message": "Keine vorhandenen Tab-Gruppen"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "In vorhandener Tab-Gruppe öffnen"
   },
   "statsClearConfirm": {
     "message": "Besuchsstatistiken für $count$ Lesezeichen löschen? Dies kann nicht rückgängig gemacht werden.",

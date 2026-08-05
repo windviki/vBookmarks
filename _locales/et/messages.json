@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Ava kõik uues vahekaardigrupis"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Ava kõik uues vahekaardirühmas…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Ava kõik olemasolevas vahekaardirühmas…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Ava järjehoidjad inkognito aknas"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Ava uues vahelehes"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Ava uues vahekaardirühmas"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Ava uues vahekaardirühmas…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Ava olemasolevas vahekaardirühmas…"
   },
   "openNewWindow": {
     "message": "Ava uues aknas"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "See järjestab järjehoidjad ümber igas alamkaustas ja seda ei saa tagasi võtta."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Uus vahekaardirühm"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Rühma nimi"
+  },
+  "tabGroupColorLabel": {
+    "message": "Värv"
+  },
+  "tabGroupUntitled": {
+    "message": "Nimetu rühm"
+  },
+  "tabGroupNoGroups": {
+    "message": "Olemasolevaid vahekaardirühmi pole"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Ava olemasolevas vahekaardirühmas"
   },
   "statsClearConfirm": {
     "message": "Kas tühjendada külastusstatistika $count$ järjehoidja jaoks? Seda ei saa tagasi võtta.",

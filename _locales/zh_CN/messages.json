@@ -429,6 +429,12 @@
   "openBookmarksInGroup": {
     "message": "全部打开为标签组"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "全部打开为标签组并设置…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "全部打开到已有标签组…"
+  },
   "optionConfirmOpenFolder": {
     "message": "从文件夹打开大量书签时显示确认。"
   },
@@ -609,6 +615,24 @@
   "sortRecursiveWarning": {
     "message": "将重排所有子文件夹内的书签，且无法撤销。"
   },
+  "tabGroupDialogTitle": {
+    "message": "新建标签组"
+  },
+  "tabGroupTitleLabel": {
+    "message": "组标题"
+  },
+  "tabGroupColorLabel": {
+    "message": "颜色"
+  },
+  "tabGroupUntitled": {
+    "message": "未命名标签组"
+  },
+  "tabGroupNoGroups": {
+    "message": "当前没有已有标签组"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "打开到已有标签组"
+  },
   "optionsFooterText": {
     "message": "由 $authorName$ 构建。",
     "placeholders": {
@@ -712,6 +736,15 @@
   },
   "openNewTab": {
     "message": "在新标签页中打开"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "打开到新标签组"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "打开到新标签组并设置…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "打开到已有标签组…"
   },
   "addBookmarkAfter": {
     "message": "在此后添加书签"

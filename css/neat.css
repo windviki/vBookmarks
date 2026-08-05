@@ -1044,6 +1044,143 @@ menu[type=context].hide-editables #folder-delete {
     outline-color: var(--vbm-danger);
 }
 
+/* --- Tab-group dialog (P3.4: new group title + color) ---
+   Reuses the shared body-class + #cover dialog pattern. The 9 swatches are
+   Chrome's tab-group palette (--tg-color on each .tg-* class); the checked
+   radio gets a focus ring around its dot. */
+.needTabGroup #tab-group-dialog,
+.needGroupPick #tab-group-pick-dialog {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.needTabGroup #cover,
+.needGroupPick #cover {
+    left: 0;
+    opacity: 1;
+}
+
+#tab-group-dialog .dialog-text {
+    margin: 0 0 .6em;
+    font-weight: bold;
+}
+
+#tab-group-title-label,
+#tab-group-color-label {
+    display: block;
+    font-size: 90%;
+    color: var(--vbm-muted);
+    margin: .5em 0 .25em;
+}
+
+#tab-group-dialog input:not([type=radio]) {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    background: var(--vbm-bg);
+    color: var(--vbm-fg);
+    border: 1px solid var(--vbm-border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+#tab-group-dialog input:not([type=radio]):focus {
+    border-color: var(--vbm-accent);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+#tab-group-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.tab-group-color {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tab-group-color span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--tg-color);
+}
+
+.tab-group-color input:checked + span {
+    box-shadow: 0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--tg-color);
+}
+
+.tab-group-color input:focus-visible + span {
+    box-shadow: 0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--vbm-accent);
+}
+
+.tg-grey { --tg-color: #5f6368; }
+.tg-blue { --tg-color: #1a73e8; }
+.tg-red { --tg-color: #d93025; }
+.tg-yellow { --tg-color: #f9ab00; }
+.tg-green { --tg-color: #188038; }
+.tg-pink { --tg-color: #d01884; }
+.tg-purple { --tg-color: #9334e6; }
+.tg-cyan { --tg-color: #12b5cb; }
+.tg-orange { --tg-color: #fa903e; }
+
+/* --- Existing-tab-group picker (P3.4) --- */
+#tab-group-pick-list {
+    list-style: none;
+    margin: 0 0 .5em;
+    padding: 0;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.tab-group-pick-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--vbm-radius);
+    background: transparent;
+    color: var(--vbm-fg);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.tab-group-pick-row:hover,
+.tab-group-pick-row:focus-visible {
+    background: var(--vbm-bg-elev);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
+}
+
+.tab-group-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--tg-color);
+}
+
+.tab-group-pick-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tab-group-pick-empty {
+    padding: 10px 8px;
+    color: var(--vbm-muted);
+    text-align: center;
+}
+
 .needAlert #alert-dialog,
 .needConfirm #confirm-dialog,
 .needEdit #edit-dialog {

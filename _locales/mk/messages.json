@@ -596,6 +596,12 @@
   "openBookmarksInGroup": {
     "message": "Отвори сè во нова група јазичиња"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Отвори сè во нова група јазичиња…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Отвори сè во постоечка група јазичиња…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Отвори обележувачи во инкогнито"
   },
@@ -610,6 +616,15 @@
   },
   "openNewTab": {
     "message": "Отвори во ново јазиче"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Отвори во нова група јазичиња"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Отвори во нова група јазичиња…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Отвори во постоечка група јазичиња…"
   },
   "openNewWindow": {
     "message": "Отвори во нов прозорец"
@@ -1203,6 +1218,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Ова ги преуредува обележувачите во секоја подпапка и не може да се врати назад."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Нова група јазичиња"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Наслов на групата"
+  },
+  "tabGroupColorLabel": {
+    "message": "Боја"
+  },
+  "tabGroupUntitled": {
+    "message": "Група без наслов"
+  },
+  "tabGroupNoGroups": {
+    "message": "Нема постоечки групи јазичиња"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Отвори во постоечка група јазичиња"
   },
   "statsClearConfirm": {
     "message": "Да се исчистат статистиките за посети за $count$ обележувачи? Ова не може да се врати.",

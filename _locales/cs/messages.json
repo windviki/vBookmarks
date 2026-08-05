@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Otevřít vše ve skupině karet"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Otevřít vše v nové skupině karet…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otevřít vše v existující skupině…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otevřít v anonymním okně"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Otevřít v Novém Panelu"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otevřít v nové skupině karet"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otevřít v nové skupině karet…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otevřít v existující skupině karet…"
   },
   "openNewWindow": {
     "message": "Otevřít v Novém Okně"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Toto přeuspořádá záložky ve všech podsložkách a nelze to vrátit zpět."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nová skupina karet"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Název skupiny"
+  },
+  "tabGroupColorLabel": {
+    "message": "Barva"
+  },
+  "tabGroupUntitled": {
+    "message": "Nepojmenovaná skupina"
+  },
+  "tabGroupNoGroups": {
+    "message": "Neexistují žádné skupiny karet"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otevřít v existující skupině karet"
   },
   "statsClearConfirm": {
     "message": "Vymazat statistiky návštěv pro $count$ záložek? Tuto akci nelze vrátit zpět.",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Öppna alla i ny flikgrupp"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Öppna alla i ny flikgrupp…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Öppna alla i befintlig flikgrupp…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Öppna alla i inkognito"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Öppna i ny flik"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Öppna i ny flikgrupp"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Öppna i ny flikgrupp…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Öppna i befintlig flikgrupp…"
   },
   "openNewWindow": {
     "message": "Öppna i nytt fönster"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Detta ändrar ordningen på bokmärken i varje undermapp och kan inte ångras."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Ny flikgrupp"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupptitel"
+  },
+  "tabGroupColorLabel": {
+    "message": "Färg"
+  },
+  "tabGroupUntitled": {
+    "message": "Namnlös grupp"
+  },
+  "tabGroupNoGroups": {
+    "message": "Inga befintliga flikgrupper"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Öppna i befintlig flikgrupp"
   },
   "statsClearConfirm": {
     "message": "Rensa besöksstatistik för $count$ bokmärken? Detta kan inte ångras.",

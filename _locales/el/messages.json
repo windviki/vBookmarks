@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Άνοιγμα όλων σε νέα ομάδα καρτελών…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Άνοιγμα όλων σε υπάρχουσα ομάδα καρτελών…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Άνοιγμα σε ανώνυμη περιήγηση"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Άνοιγμα σε Νέα Καρτέλα"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Άνοιγμα σε νέα ομάδα καρτελών"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Άνοιγμα σε νέα ομάδα καρτελών…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών…"
   },
   "openNewWindow": {
     "message": "Άνοιγμα σε Νέο Παράθυρο"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο και δεν μπορεί να αναιρεθεί."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Νέα ομάδα καρτελών"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Τίτλος ομάδας"
+  },
+  "tabGroupColorLabel": {
+    "message": "Χρώμα"
+  },
+  "tabGroupUntitled": {
+    "message": "Ομάδα χωρίς τίτλο"
+  },
+  "tabGroupNoGroups": {
+    "message": "Δεν υπάρχουν υπάρχουσες ομάδες καρτελών"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Άνοιγμα σε υπάρχουσα ομάδα καρτελών"
   },
   "statsClearConfirm": {
     "message": "Εκκαθάριση στατιστικών επισκέψεων για $count$ σελιδοδείκτες; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",

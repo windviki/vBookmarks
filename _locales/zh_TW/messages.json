@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "全部開在新分頁群組"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "在新分頁群組中開啟全部…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "在現有分頁群組中開啟全部…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "在無痕式視窗中開啟所有書籤"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "在新分頁中開啟"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "在新分頁群組中開啟"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "在新分頁群組中開啟…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "在現有分頁群組中開啟…"
   },
   "openNewWindow": {
     "message": "在新視窗中開啟"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "這會重新排列每個子資料夾中的書籤，且無法復原。"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新分頁群組"
+  },
+  "tabGroupTitleLabel": {
+    "message": "群組名稱"
+  },
+  "tabGroupColorLabel": {
+    "message": "顏色"
+  },
+  "tabGroupUntitled": {
+    "message": "未命名群組"
+  },
+  "tabGroupNoGroups": {
+    "message": "目前沒有分頁群組"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "在現有分頁群組中開啟"
   },
   "statsClearConfirm": {
     "message": "清除 $count$ 个书签的访问统计资料？此动作无法还原。",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "すべてを新しいタブグループで開く"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "すべてを新規タブグループで開く…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "すべてを既存タブグループで開く…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "すべてをシークレットで開く"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "新しいタブで開く"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "新規タブグループで開く"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "新規タブグループで開く…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "既存タブグループで開く…"
   },
   "openNewWindow": {
     "message": "新しいウィンドウで開く"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "すべてのサブフォルダ内のブックマークが並べ替えられ、元に戻せません。"
+  },
+  "tabGroupDialogTitle": {
+    "message": "新規タブグループ"
+  },
+  "tabGroupTitleLabel": {
+    "message": "グループ名"
+  },
+  "tabGroupColorLabel": {
+    "message": "色"
+  },
+  "tabGroupUntitled": {
+    "message": "無題グループ"
+  },
+  "tabGroupNoGroups": {
+    "message": "既存のタブグループはありません"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "既存のタブグループで開く"
   },
   "statsClearConfirm": {
     "message": "$count$ 件のブックマークの訪問統計をクリアしますか？この操作は元に戻せません。",

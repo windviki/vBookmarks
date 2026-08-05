@@ -3,6 +3,7 @@ import { createSyncEngine } from './sync-engine.js';
 import { createVisitStatsCollector } from './visit-stats-sw.js';
 import { initPanelBehavior } from './panel-behavior.js';
 import { createDeadScanRunner } from './dead-scan-sw.js';
+import { createTabGroupOpener } from './tab-groups-sw.js';
 
 // --- Sync status engine (P3.6) ---------------------------------------------
 // Computes bookmark sync status in the service worker and publishes it via
@@ -19,6 +20,13 @@ createVisitStatsCollector().start();
 // The scan outlives the popup here: pages send vbm-dead-scan-* messages and
 // mirror the published vbmDeadScan blob; a cold start resumes a live run.
 createDeadScanRunner().start();
+
+// --- Tab-group opener SW runner (P3.4 hardening) ----------------------------
+// Opening bookmarks "as a tab group" must outlive the popup too: the popup
+// page closes the moment its first (active) tab opens, which used to drop
+// the pending create callbacks and the group never formed. The SW creates
+// the tabs and groups them on vbm-tab-group-open-* messages.
+createTabGroupOpener().start();
 
 // --- Dead-scan proxy sweep (dead-proxy.js) ----------------------------------
 // The popup tears down its marker-PAC on every scan exit (settle/cancel/

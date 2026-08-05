@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Atvērt visus jaunā cilņu grupā"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Atvērt visus jaunā cilņu grupā…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Atvērt visus esošajā cilņu grupā…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Atvērt visas incognito logā"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Atvērt jaunā cilnē"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Atvērt jaunā cilņu grupā"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Atvērt jaunā cilņu grupā…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Atvērt esošajā cilņu grupā…"
   },
   "openNewWindow": {
     "message": "Atvērt jaunā logā"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Tas pārkārto grāmatzīmes katrā apakšmapē un to nevar atsaukt."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Jauna cilņu grupa"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Grupas nosaukums"
+  },
+  "tabGroupColorLabel": {
+    "message": "Krāsa"
+  },
+  "tabGroupUntitled": {
+    "message": "Nenosaukta grupa"
+  },
+  "tabGroupNoGroups": {
+    "message": "Nav esošu cilņu grupu"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Atvērt esošajā cilņu grupā"
   },
   "statsClearConfirm": {
     "message": "Notīrīt apmeklējumu statistiku $count$ grāmatzīmēm? Šo darbību nevar atcelt.",

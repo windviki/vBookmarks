@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Отвори всички в нова група"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Отвори всички в нова група раздели…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Отвори всички в съществуваща група…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Отвори всички в инкогнито"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Отваряне в нов раздел"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Отвори в нова група раздели"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Отвори в нова група раздели…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Отвори в съществуваща група…"
   },
   "openNewWindow": {
     "message": "Отваряне в нов прозорец"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Това пренарежда отметките във всяка подпапка и не може да бъде отменено."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Нова група раздели"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Име на групата"
+  },
+  "tabGroupColorLabel": {
+    "message": "Цвят"
+  },
+  "tabGroupUntitled": {
+    "message": "Група без име"
+  },
+  "tabGroupNoGroups": {
+    "message": "Няма съществуващи групи раздели"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Отвори в съществуваща група раздели"
   },
   "statsClearConfirm": {
     "message": "Изчистване на статистика за посещения за $count$ отметки? Това действие не може да бъде отменено.",

@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Открыть все в новой группе вкладок"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Открыть все в новой группе вкладок…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Открыть все в существующей группе вкладок…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Открыть все в окне инкогнито"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Открыть в новой вкладке"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Открыть в новой группе вкладок"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Открыть в новой группе вкладок…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Открыть в существующей группе вкладок…"
   },
   "openNewWindow": {
     "message": "Открыть в новом окне"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Это переупорядочит закладки во всех подпапках, и отменить это действие невозможно."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Новая группа вкладок"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Название группы"
+  },
+  "tabGroupColorLabel": {
+    "message": "Цвет"
+  },
+  "tabGroupUntitled": {
+    "message": "Безымянная группа"
+  },
+  "tabGroupNoGroups": {
+    "message": "Нет существующих групп вкладок"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Открыть в существующей группе вкладок"
   },
   "statsClearConfirm": {
     "message": "Очистить статистику посещений для $count$ закладок? Это действие нельзя отменить.",

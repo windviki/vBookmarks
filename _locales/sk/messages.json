@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "Otvoriť v novej skupine"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "Otvoriť všetko v novej skupine kariet…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "Otvoriť všetko v existujúcej skupine kariet…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otvoriť v inkognito okne"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "Otvoriť na novej karte"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "Otvoriť v novej skupine kariet"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "Otvoriť v novej skupine kariet…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "Otvoriť v existujúcej skupine kariet…"
   },
   "openNewWindow": {
     "message": "Otvoriť v novom okne"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "Toto preusporiada záložky v každom podpriečinku a nedá sa vrátiť späť."
+  },
+  "tabGroupDialogTitle": {
+    "message": "Nová skupina kariet"
+  },
+  "tabGroupTitleLabel": {
+    "message": "Názov skupiny"
+  },
+  "tabGroupColorLabel": {
+    "message": "Farba"
+  },
+  "tabGroupUntitled": {
+    "message": "Skupina bez názvu"
+  },
+  "tabGroupNoGroups": {
+    "message": "Žiadne existujúce skupiny kariet"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "Otvoriť v existujúcej skupine kariet"
   },
   "statsClearConfirm": {
     "message": "Vymazať štatistiky návštev pre $count$ záložiek? Tento krok sa nedá vrátiť.",

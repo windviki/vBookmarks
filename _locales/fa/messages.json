@@ -597,6 +597,12 @@
   "openBookmarksInGroup": {
     "message": "باز کردن همه در گروه زبانه جدید"
   },
+  "openBookmarksInGroupSetup": {
+    "message": "باز کردن همه در گروه برگه جدید…"
+  },
+  "openBookmarksInExistingGroup": {
+    "message": "باز کردن همه در گروه برگه موجود…"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
   },
@@ -611,6 +617,15 @@
   },
   "openNewTab": {
     "message": "باز کردن در تب جدید"
+  },
+  "bookmarkOpenInNewGroup": {
+    "message": "باز کردن در گروه برگه جدید"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "message": "باز کردن در گروه برگه جدید…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "message": "باز کردن در گروه برگه موجود…"
   },
   "openNewWindow": {
     "message": "باز کردن در پنجره جدید"
@@ -1204,6 +1219,24 @@
   },
   "sortRecursiveWarning": {
     "message": "این کار نشانک‌ها را در هر زیرپوشه مرتب می‌کند و قابل بازگشت نیست."
+  },
+  "tabGroupDialogTitle": {
+    "message": "گروه برگه جدید"
+  },
+  "tabGroupTitleLabel": {
+    "message": "عنوان گروه"
+  },
+  "tabGroupColorLabel": {
+    "message": "رنگ"
+  },
+  "tabGroupUntitled": {
+    "message": "گروه بدون عنوان"
+  },
+  "tabGroupNoGroups": {
+    "message": "هیچ گروه برگه موجودی نیست"
+  },
+  "tabGroupPickDialogTitle": {
+    "message": "باز کردن در گروه برگه موجود"
   },
   "statsClearConfirm": {
     "message": "آمار بازدید $count$ نشانک پاک شود؟ این عمل قابل بازگشت نیست.",

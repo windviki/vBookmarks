@@ -478,6 +478,14 @@
     "description": "Folder context-menu item: opens every bookmark of the folder as tabs in one new browser tab group, titled and colored after the folder.",
     "message": "Open all in new tab group"
   },
+  "openBookmarksInGroupSetup": {
+    "description": "Folder context-menu item: opens a dialog to set the new tab group's title and color before opening the folder's bookmarks as one tab group.",
+    "message": "Open all in new tab group…"
+  },
+  "openBookmarksInExistingGroup": {
+    "description": "Folder context-menu item: lets the user pick an existing browser tab group, then opens the folder's bookmarks into it.",
+    "message": "Open all in existing tab group…"
+  },
   "openBookmarksNewWindow": {
     "message": "Open All Bookmarks in New Window"
   },
@@ -490,6 +498,18 @@
   },
   "openNewTab": {
     "message": "Open in New Tab"
+  },
+  "bookmarkOpenInNewGroup": {
+    "description": "Bookmark context-menu item: opens the bookmark in a new tab group named and colored after the bookmark.",
+    "message": "Open in new tab group"
+  },
+  "bookmarkOpenInNewGroupSetup": {
+    "description": "Bookmark context-menu item: opens a dialog to set the new tab group's title and color, then opens the bookmark into it.",
+    "message": "Open in new tab group…"
+  },
+  "bookmarkOpenInExistingGroup": {
+    "description": "Bookmark context-menu item: lets the user pick an existing browser tab group, then opens the bookmark into it.",
+    "message": "Open in existing tab group…"
   },
   "openNewWindow": {
     "message": "Open in New Window"
@@ -871,6 +891,30 @@
   },
   "sortRecursiveWarning": {
     "message": "This reorders bookmarks in every subfolder and cannot be undone."
+  },
+  "tabGroupDialogTitle": {
+    "description": "Heading of the new-tab-group dialog (set title + color before opening).",
+    "message": "New tab group"
+  },
+  "tabGroupTitleLabel": {
+    "description": "Label of the group-title input in the new-tab-group dialog.",
+    "message": "Group title"
+  },
+  "tabGroupColorLabel": {
+    "description": "Label of the color swatches in the new-tab-group dialog.",
+    "message": "Color"
+  },
+  "tabGroupUntitled": {
+    "description": "Label shown in the existing-group picker for a tab group that has no title.",
+    "message": "Untitled group"
+  },
+  "tabGroupNoGroups": {
+    "description": "Empty state of the existing-group picker: there is no tab group to open into.",
+    "message": "No existing tab groups"
+  },
+  "tabGroupPickDialogTitle": {
+    "description": "Heading of the picker that lists the browser's existing tab groups.",
+    "message": "Open in existing tab group"
   },
   "quickAddBookmark": {
     "message": "Bookmark this page (Ctrl+D)",

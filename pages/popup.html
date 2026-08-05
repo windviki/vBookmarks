@@ -44,6 +44,10 @@
     <div id="bookmark-new-tab" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="bookmark-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="bookmark-new-incognito-window" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <hr id="bookmark-context-menu-sep7">
+    <div id="bookmark-open-in-new-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="bookmark-open-in-new-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="bookmark-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="bookmark-context-menu-sep4">
     <div id="bookmark-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="copy-title-and-url" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -63,6 +67,8 @@
 <menu id="folder-context-menu" type="context" role="menu" tabindex="-1">
     <div id="folder-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="open-bookmarks-in-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="open-bookmarks-in-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="folder-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="folder-new-incognito-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep1">
@@ -158,6 +164,34 @@
     <div class="buttons">
         <button id="sort-dialog-ok-button" type="button"></button>
         <button id="sort-dialog-cancel-button" type="button"></button>
+    </div>
+</div>
+<div id="tab-group-dialog" class="dialog" role="dialog" aria-modal="true">
+    <p id="tab-group-dialog-text" class="dialog-text"></p>
+    <label id="tab-group-title-label" for="tab-group-name"></label>
+    <input id="tab-group-name">
+    <div id="tab-group-colors" role="radiogroup">
+        <span id="tab-group-color-label"></span>
+        <label class="tab-group-color tg-grey"><input type="radio" name="tab-group-color" value="grey" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-blue"><input type="radio" name="tab-group-color" value="blue" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-red"><input type="radio" name="tab-group-color" value="red" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-yellow"><input type="radio" name="tab-group-color" value="yellow" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-green"><input type="radio" name="tab-group-color" value="green" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-pink"><input type="radio" name="tab-group-color" value="pink" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-purple"><input type="radio" name="tab-group-color" value="purple" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-cyan"><input type="radio" name="tab-group-color" value="cyan" class="visually-hidden"><span></span></label>
+        <label class="tab-group-color tg-orange"><input type="radio" name="tab-group-color" value="orange" class="visually-hidden"><span></span></label>
+    </div>
+    <div class="buttons">
+        <button id="tab-group-dialog-button" type="button"></button>
+        <button id="tab-group-dialog-cancel-button" type="button"></button>
+    </div>
+</div>
+<div id="tab-group-pick-dialog" class="dialog" role="dialog" aria-modal="true">
+    <p id="tab-group-pick-text" class="dialog-text"></p>
+    <ul id="tab-group-pick-list"></ul>
+    <div class="buttons">
+        <button id="tab-group-pick-cancel-button" type="button"></button>
     </div>
 </div>
 <script src="/src/store.js"></script>
