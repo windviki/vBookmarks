@@ -249,7 +249,7 @@ describe('render (docs/v4task-2-list.md §3.3)', () => {
         expect(treeRender.calls[0].id).toBe('101');
     });
 
-    it('fills the meta slots: relative time on the right, `path · absolute time` as the second line', () => {
+    it('fills the meta slots: relative time as the left time column, path right-aligned, `path · absolute time` second line', () => {
         const { treeRender, def } = setup({
             recentItems: ITEMS,
             separatorUrls: ['http://sep/'],
@@ -258,12 +258,14 @@ describe('render (docs/v4task-2-list.md §3.3)', () => {
         def().activate();
         const first = treeRender.calls[0].meta;
         expect(first.path).toBe('path-of-101');
-        expect(first.rightText).toBe('timeJustNow');
+        expect(first.badge).toEqual({ text: 'timeJustNow', cls: 'time' });
+        expect(first.rightText).toBe('path-of-101');
         const abs = new Date(ITEMS[0].dateAdded).toLocaleString();
         expect(first.subText).toBe(`path-of-101 · ${abs}`);
         // 3 days old → the days bucket with n
         const older = treeRender.calls[1].meta;
-        expect(older.rightText).toBe('timeDaysAgo[3]');
+        expect(older.badge).toEqual({ text: 'timeDaysAgo[3]', cls: 'time' });
+        expect(older.rightText).toBe('path-of-104');
     });
 
     it('drops the path half of the second line when showItemPath is off', () => {
@@ -274,13 +276,18 @@ describe('render (docs/v4task-2-list.md §3.3)', () => {
         });
         def().activate();
         expect(treeRender.calls[0].meta.subText).toBe(new Date(ITEMS[0].dateAdded).toLocaleString());
+        // no path column either — the right slot is empty, the time stays
+        expect(treeRender.calls[0].meta.rightText).toBe('');
+        expect(treeRender.calls[0].meta.badge).toEqual({ text: 'timeJustNow', cls: 'time' });
     });
 
-    it('shows the absolute date for entries older than 7 days', () => {
+    it('shows the absolute date for entries older than 7 days in the time column', () => {
         const old = { id: '9', parentId: '1', title: 'Old', url: 'http://o/', dateAdded: NOW - 30 * 86400000 };
         const { treeRender, def } = setup({ recentItems: [old] });
         def().activate();
-        expect(treeRender.calls[0].meta.rightText).toBe(new Date(old.dateAdded).toLocaleDateString());
+        expect(treeRender.calls[0].meta.badge).toEqual(
+            { text: new Date(old.dateAdded).toLocaleDateString(), cls: 'time' });
+        expect(treeRender.calls[0].meta.rightText).toBe(''); // no path
     });
 
     it('renders the empty state when nothing comes back', () => {

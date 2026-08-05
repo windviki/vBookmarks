@@ -239,7 +239,12 @@ export function initViewRecent(ctx = {}) {
                 `data-node-id="${d.id}" data-parentid="${d.parentId}">` +
                 treeRender.generateBookmarkHTML(d.title, d.url, 'data-virtual="1"', d.id, null, {
                     path,
-                    rightText: relTimeLabel(d.dateAdded, _m),
+                    // §3.3 unified meta: relative time rides the left-aligned
+                    // time slot (first column), the path the right-aligned
+                    // row-path (second column); wide/panel keeps time and moves
+                    // path to the second line.
+                    badge: { text: relTimeLabel(d.dateAdded, _m), cls: 'time' },
+                    rightText: (showPath && path) ? path : '',
                     subText
                 }) +
                 groupHead +

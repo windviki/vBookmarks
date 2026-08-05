@@ -342,7 +342,12 @@ export function initViewDupes(ctx = {}) {
                 `aria-label="${_m('dupesKeepThis')}" title="${_m('dupesKeepThis')}"></button>` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
-                    rightText: path ? `${path} · ${shortDate}` : shortDate,
+                    // §3.6 unified meta: the date rides the left-aligned time
+                    // slot (first column), the path the right-aligned row-path
+                    // (second column); wide/panel keeps the date and moves path
+                    // to the second line.
+                    badge: { text: shortDate, cls: 'time' },
+                    rightText: path ? path : '',
                     subText: path ? `${path} · ${fullTime}` : fullTime
                 }) +
                 '</li>';

@@ -319,11 +319,13 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         // the keeper radio: exactly one checked, all labelled
         expect(html.match(/keeper-radio checked/g)).toHaveLength(1);
         expect(html.match(/aria-label="dupesKeepThis"/g)).toHaveLength(3);
-        // member meta: path + dateAdded slots, never the URL (§3.6)
+        // member meta: date in the left time column, path right-aligned,
+        // full time on the wide second line — never the URL (§3.6)
         expect(treeRender.calls).toHaveLength(3);
         expect(treeRender.calls[0].meta.path).toBe('path-of-11');
-        expect(treeRender.calls[0].meta.rightText)
-            .toBe(`path-of-11 · ${new Date(100).toLocaleDateString()}`);
+        expect(treeRender.calls[0].meta.badge)
+            .toEqual({ text: new Date(100).toLocaleDateString(), cls: 'time' });
+        expect(treeRender.calls[0].meta.rightText).toBe('path-of-11');
         expect(treeRender.calls[0].meta.subText)
             .toBe(`path-of-11 · ${new Date(100).toLocaleString()}`);
         expect(treeRender.calls[0].extras).toBe('data-virtual="1"');
