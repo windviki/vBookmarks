@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Hiện nút ngôi sao thêm nhanh bên cạnh ô tìm kiếm"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Thêm mục \"Đánh dấu trang này bằng vBookmarks\" vào menu chuột phải trên trang"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Độc lập với nút ngôi sao thêm nhanh; khôi phục trải nghiệm cổ điển cũng tắt mục này."
+  },
   "optionShowToolButton": {
     "message": "Hiện nút công cụ (⋮) bên cạnh ô tìm kiếm"
   },
@@ -706,7 +712,7 @@
     "message": "Khôi phục thanh tiêu đề cổ điển"
   },
   "optionClassicExperienceHint": {
-    "message": "Tắt bảng lệnh, nút ngôi sao thêm nhanh, nút công cụ và các tab chế độ xem. Từng mục có thể bật lại riêng ở trên."
+    "message": "Tắt bảng lệnh, ngôi sao thêm nhanh, mục chuột phải trên trang của nó, nút công cụ và các tab xem. Từng mục có thể được bật lại riêng lẻ ở trên."
   },
   "optionStatsEnabled": {
     "message": "Bật thống kê lượt truy cập"

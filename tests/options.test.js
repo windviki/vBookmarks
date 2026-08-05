@@ -50,7 +50,7 @@ const createSandbox = ({
         },
         runtime: {
             sendMessage: () => {},
-            getManifest: () => ({ version: '4.0' })
+            getManifest: () => ({ version: '4.0.1' })
         }
     };
 
@@ -185,6 +185,9 @@ describe('options.js settings backup', () => {
             expect(sb.elements['export-settings'].innerText).toBe('settingsExport');
             expect(sb.elements['import-settings'].innerText).toBe('settingsImport');
             expect(sb.elements['backup-hint'].innerText).toBe('settingsBackupHint');
+            // issue #49: the quick-add page context-menu toggle gets its label + hint
+            expect(sb.elements['option-quick-add-context-menu'].innerText).toBe('optionQuickAddContextMenu');
+            expect(sb.elements['option-quick-add-context-menu-hint'].innerText).toBe('optionQuickAddContextMenuHint');
         });
 
         it('the import button forwards to the hidden file input', async () => {
@@ -214,7 +217,7 @@ describe('options.js settings backup', () => {
             const blob = sb.objectURLs[0];
             const backup = JSON.parse(await blob.text());
             expect(backup.app).toBe('vBookmarks');
-            expect(backup.version).toBe('4.0');
+            expect(backup.version).toBe('4.0.1');
             expect(typeof backup.exportedAt).toBe('string');
             expect(backup.local).toEqual({ __migrated_v1: '1', theme: 'dark', zoom: 110 });
             // sync payload is restricted to store.syncKeys
@@ -406,5 +409,39 @@ describe('options.js dead-scan clamps + reset', () => {
             expect(sb.alerts).toContain('vBookmarks has been reset.');
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
+    });
+});
+
+describe('classic-experience preset (v4 task-3 #20 + issue #49)', () => {
+    it('turns off every v4-only switch including the quick-add page context menu', async () => {
+        const sb = createSandbox(); // fresh storage → all default ON
+        await sb.start();
+
+        // default: the quick-add context-menu switch starts checked
+        expect(sb.elements['quick-add-context-menu'].checked).toBe(true);
+
+        await sb.elements['classic-experience'].fire('click');
+
+        for (const key of ['paletteEnabled', 'quickAddEnabled', 'quickAddContextMenu',
+            'showToolButton', 'showViewTabs'])
+            expect(sb.localData[key]).toBe('');
+        expect(sb.elements['quick-add-context-menu'].checked).toBe(false);
+        expect(sb.elements['palette-enabled'].checked).toBe(false);
+        expect(sb.elements['show-tool-button'].checked).toBe(false);
+    });
+
+    it('the quick-add context-menu switch binds to storage and toggles independently', async () => {
+        const sb = createSandbox();
+        await sb.start();
+
+        // user unchecks the context-menu entry → key flips to '' (off)
+        sb.elements['quick-add-context-menu'].checked = false;
+        await sb.elements['quick-add-context-menu'].fire('change');
+        expect(sb.localData.quickAddContextMenu).toBe('');
+
+        // re-checks → back to '1'
+        sb.elements['quick-add-context-menu'].checked = true;
+        await sb.elements['quick-add-context-menu'].fire('change');
+        expect(sb.localData.quickAddContextMenu).toBe('1');
     });
 });

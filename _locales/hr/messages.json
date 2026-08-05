@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Prikaži zvijezdu za brzo dodavanje pored okvira za pretraživanje"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Dodaj stavku \"Zabilježi ovu stranicu s vBookmarks\" u kontekstni izbornik stranice."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Neovisno o gumbu zvjezdice za brzo dodavanje; vraćanje klasičnog iskustva također isključuje ovaj unos."
+  },
   "optionShowToolButton": {
     "message": "Prikaži alatni gumb (⋮) pored okvira za pretraživanje"
   },
@@ -706,7 +712,7 @@
     "message": "Vrati klasično zaglavlje"
   },
   "optionClassicExperienceHint": {
-    "message": "Isključuje paletu naredbi, zvijezdu za brzo dodavanje, alatni gumb i kartice prikaza. Svaka se može pojedinačno ponovno omogućiti iznad."
+    "message": "Isključuje paletu naredbi, zvjezdicu za brzo dodavanje, njezin unos u kontekstnom izborniku stranice, alatni gumb i kartice prikaza. Svaka se stavka može ponovno omogućiti pojedinačno iznad."
   },
   "optionStatsEnabled": {
     "message": "Omogući statistiku posjeta"

@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "在搜尋框旁顯示快速新增星形按鈕"
   },
+  "optionQuickAddContextMenu": {
+    "message": "在頁面右鍵選單新增「用 vBookmarks 為此頁面加書籤」項目"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "與快速新增星號按鈕不相關；經典體驗還原也會關閉此項目。"
+  },
   "optionShowToolButton": {
     "message": "在搜尋框旁顯示工具按鈕（⋮）"
   },
@@ -706,7 +712,7 @@
     "message": "還原傳統頁首"
   },
   "optionClassicExperienceHint": {
-    "message": "這會關閉指令面板、快速新增星形按鈕、工具按鈕與檢視分頁。以上各項皆可個別重新啟用。"
+    "message": "關閉指令面板、快速新增星號、其頁面右鍵項目、工具按鈕及檢視分頁。以上項目皆可於上方個別重新啟用。"
   },
   "optionStatsEnabled": {
     "message": "启用访问统计"

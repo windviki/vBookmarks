@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Visa snabbstjärnknappen bredvid sökrutan"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Lägg till \"Bokmärk den här sidan med vBookmarks\" i sidans högerklicksmeny."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Fristående från stjärnknappen för snabbt tillägg; återställning av den klassiska upplevelsen stänger även av den här posten."
+  },
   "optionShowToolButton": {
     "message": "Visa verktygsknappen (⋮) bredvid sökrutan"
   },
@@ -706,7 +712,7 @@
     "message": "Återställ den klassiska rubriken"
   },
   "optionClassicExperienceHint": {
-    "message": "Stänger av kommandopaletten, snabbstjärnan, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt ovan."
+    "message": "Stänger av kommandopaletten, stjärnknappen för snabbt tillägg, dess högerklickspost på sidan, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt ovan."
   },
   "optionStatsEnabled": {
     "message": "Aktivera besöksstatistik"

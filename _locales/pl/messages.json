@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Pokazuj przycisk gwiazdki szybkiego dodawania obok pola wyszukiwania"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Dodaj wpis „Zapisz tę stronę w zakładkach za pomocą vBookmarks” do menu kontekstowego strony"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Niezależne od przycisku szybkiego dodawania (gwiazdki); przywrócenie klasycznego widoku również wyłącza ten wpis."
+  },
   "optionShowToolButton": {
     "message": "Pokazuj przycisk narzędzi (⋮) obok pola wyszukiwania"
   },
@@ -706,7 +712,7 @@
     "message": "Przywróć klasyczny nagłówek"
   },
   "optionClassicExperienceHint": {
-    "message": "Wyłącza paletę poleceń, gwiazdkę szybkiego dodawania, przycisk narzędzi i karty widoków. Każdą z nich można ponownie włączyć powyżej."
+    "message": "Wyłącza paletę poleceń, gwiazdkę szybkiego dodawania, jej pozycję w menu kontekstowym strony, przycisk narzędziowy oraz karty widoku. Każdy z tych elementów można ponownie włączyć indywidualnie powyżej."
   },
   "optionStatsEnabled": {
     "message": "Włącz statystyki odwiedzin"

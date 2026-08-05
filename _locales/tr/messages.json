@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Arama kutusunun yanında hızlı ekleme yıldız düğmesini göster"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Sayfa sağ tıklama menüsüne \"vBookmarks ile bu sayfayı yer imlerine ekle\" girişi ekle"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Hızlı ekleme yıldız düğmesinden bağımsızdır; klasik deneyim geri yükleme bu girişi de kapatır."
+  },
   "optionShowToolButton": {
     "message": "Arama kutusunun yanında araç düğmesini (⋮) göster"
   },
@@ -706,7 +712,7 @@
     "message": "Klasik başlığı geri yükle"
   },
   "optionClassicExperienceHint": {
-    "message": "Komut paletini, hızlı ekleme yıldızını, araç düğmesini ve görünüm sekmelerini kapatır. Her biri yukarıda ayrı ayrı yeniden etkinleştirilebilir."
+    "message": "Komut paletini, hızlı ekleme yıldızını, sayfa sağ tıklama girişini, araç düğmesini ve görünüm sekmelerini kapatır. Her biri yukarıda ayrı ayrı yeniden etkinleştirilebilir."
   },
   "optionStatsEnabled": {
     "message": "Ziyaret istatistiklerini etkinleştir"

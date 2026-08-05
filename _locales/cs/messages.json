@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Zobrazovat tlačítko hvězdičky pro rychlé přidání vedle vyhledávacího pole"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Přidat položku \"Přidat tuto stránku do záložek pomocí vBookmarks\" do místní nabídky stránky"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Nezávisí na tlačítku hvězdičky pro rychlé přidání; obnovení klasického prostředí tuto položku také vypne."
+  },
   "optionShowToolButton": {
     "message": "Zobrazovat tlačítko nástrojů (⋮) vedle vyhledávacího pole"
   },
@@ -706,7 +712,7 @@
     "message": "Obnovit klasické záhlaví"
   },
   "optionClassicExperienceHint": {
-    "message": "Vypne paletu příkazů, hvězdičku pro rychlé přidání, tlačítko nástrojů a karty zobrazení. Každou z nich lze znovu povolit jednotlivě výše."
+    "message": "Vypíná paletu příkazů, hvězdičku pro rychlé přidání, její položku v místní nabídce stránky, tlačítko na panelu nástrojů a karty zobrazení. Každou z nich lze výše znovu povolit jednotlivě."
   },
   "optionStatsEnabled": {
     "message": "Povolit statistiky návštěv"

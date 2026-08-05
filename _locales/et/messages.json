@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Kuva kiirlisamise tärninupp otsingukasti kõrval"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Lisa \"Bookmark this page with vBookmarks\" üksus lehe paremklõpsumenüüsse"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Sõltumatu kiirlisamise tähenupust; klassikalise kogemuse taastamine lülitab selle kirje ka välja."
+  },
   "optionShowToolButton": {
     "message": "Kuva töönupp (⋮) otsingukasti kõrval"
   },
@@ -706,7 +712,7 @@
     "message": "Taasta klassikaline päis"
   },
   "optionClassicExperienceHint": {
-    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, tööriistanupu ja vahekaardid. Igaüht saab ülal eraldi uuesti sisse lülitada."
+    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, selle lehe paremklõpsu kirje, tööriistanupu ja vahekaardid. Igaühte saab ülal eraldi uuesti lubada."
   },
   "optionStatsEnabled": {
     "message": "Luba külastusstatistika"

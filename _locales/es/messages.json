@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Mostrar el botón de estrella de añadido rápido junto al cuadro de búsqueda"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Añadir una entrada \"Marcar esta página con vBookmarks\" al menú contextual de la página"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independiente del botón de estrella de añadido rápido; la restauración de la experiencia clásica también desactiva esta entrada."
+  },
   "optionShowToolButton": {
     "message": "Mostrar el botón de herramientas (⋮) junto al cuadro de búsqueda"
   },
@@ -706,7 +712,7 @@
     "message": "Restaurar el encabezado clásico"
   },
   "optionClassicExperienceHint": {
-    "message": "Desactiva la paleta de comandos, la estrella de añadido rápido, el botón de herramientas y las pestañas de vista. Cada uno puede volver a habilitarse individualmente arriba."
+    "message": "Desactiva la paleta de comandos, la estrella de añadido rápido, su entrada en el menú contextual de la página, el botón de herramienta y las pestañas de vista. Cada uno puede volver a habilitarse individualmente arriba."
   },
   "optionStatsEnabled": {
     "message": "Habilitar estadísticas de visitas"

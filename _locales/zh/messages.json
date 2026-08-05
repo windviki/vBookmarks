@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "在搜索框旁显示快速添加星标按钮"
   },
+  "optionQuickAddContextMenu": {
+    "message": "在页面右键菜单中添加“使用 vBookmarks 收藏此页面”条目"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "与快速添加星标按钮相互独立；经典体验还原也会关闭此条目。"
+  },
   "optionShowToolButton": {
     "message": "在搜索框旁显示工具按钮（⋮）"
   },
@@ -706,7 +712,7 @@
     "message": "恢复经典页头"
   },
   "optionClassicExperienceHint": {
-    "message": "关闭命令面板、快速添加星标、工具按钮和视图标签页。以上各项均可单独重新启用。"
+    "message": "关闭命令面板、快速添加星标、其页面右键菜单项、工具按钮和视图标签页。以上各项均可单独重新启用。"
   },
   "optionStatsEnabled": {
     "message": "启用访问统计"

@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Zobraziť tlačidlo rýchleho pridania (hviezdičku) vedľa vyhľadávacieho poľa"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Pridať do kontextovej ponuky stránky položku „Pridať túto stránku do záložiek pomocou vBookmarks“"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Táto položka je nezávislá od tlačidla hviezdičky rýchleho pridávania; obnovenie klasického prostredia ju tiež vypne."
+  },
   "optionShowToolButton": {
     "message": "Zobraziť tlačidlo nástrojov (⋮) vedľa vyhľadávacieho poľa"
   },
@@ -706,7 +712,7 @@
     "message": "Obnoviť klasickú hlavičku"
   },
   "optionClassicExperienceHint": {
-    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, tlačidlo nástrojov a karty zobrazení. Každú z nich je možné znovu povoliť jednotlivo vyššie."
+    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, jej položku v kontextovej ponuke stránky, tlačidlo na paneli nástrojov a karty zobrazenia. Každú z nich je možné vyššie znova povoliť jednotlivo."
   },
   "optionStatsEnabled": {
     "message": "Povoliť štatistiky návštev"

@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Prikaži gumb zvezdice za hitro dodajanje poleg iskalnega polja"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Dodaj vnos »Zaznamuj to stran z vBookmarks« v kontekstni meni strani"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Neodvisno od gumba za hitro dodajanje z zvezdico; obnovitev klasične izkušnje prav tako izklopi ta vnos."
+  },
   "optionShowToolButton": {
     "message": "Prikaži gumb orodij (⋮) poleg iskalnega polja"
   },
@@ -706,7 +712,7 @@
     "message": "Obnovi klasično glavo"
   },
   "optionClassicExperienceHint": {
-    "message": "Izklopi ukazno paleto, zvezdico za hitro dodajanje, gumb orodij in zavihke pogleda. Vsako funkcijo lahko zgoraj znova omogočite posamično."
+    "message": "Izklopi ukazno paleto, zvezdico za hitro dodajanje, njen vnos v kontekstnem meniju strani, orodni gumb in zavihke pogleda. Vsakega od teh je mogoče zgoraj posamično znova omogočiti."
   },
   "optionStatsEnabled": {
     "message": "Omogoči statistiko obiskov"

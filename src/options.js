@@ -82,6 +82,10 @@ const $ = id => document.getElementById(id);
             // v4 task-3 #20: the v4 chrome is individually switchable…
             { id: 'palette-enabled', key: 'paletteEnabled', defaultValue: '1', inverted: false },
             { id: 'quick-add-enabled', key: 'quickAddEnabled', defaultValue: '1', inverted: false },
+            // issue #49: the "Bookmark this page with vBookmarks" PAGE
+            // context-menu entry is v4-only; its own switch (default on) lets
+            // users drop it without losing the in-popup quick-add star.
+            { id: 'quick-add-context-menu', key: 'quickAddContextMenu', defaultValue: '1', inverted: false },
             { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
@@ -107,9 +111,13 @@ const $ = id => document.getElementById(id);
         // quick-add star, tool button and view tabs all off. Each switch
         // above re-enables its feature individually.
         $('classic-experience').addEventListener('click', async () => {
+            // The classic v3 chrome turns off every v4-only extra: command
+            // palette, quick-add star, its page right-click menu entry (issue
+            // #49), the tool button and the view tabs.
             const classic = [
                 ['paletteEnabled', 'palette-enabled'],
                 ['quickAddEnabled', 'quick-add-enabled'],
+                ['quickAddContextMenu', 'quick-add-context-menu'],
                 ['showToolButton', 'show-tool-button'],
                 ['showViewTabs', 'show-view-tabs']
             ];
@@ -407,6 +415,9 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-show-dupes-view').innerText = __m('optionShowDupesView');
         document.getElementById('option-palette-enabled').innerText = __m('optionPaletteEnabled');
         document.getElementById('option-quick-add-enabled').innerText = __m('optionQuickAddEnabled');
+        // issue #49: the page right-click "Bookmark this page" entry toggle
+        document.getElementById('option-quick-add-context-menu').innerText = __m('optionQuickAddContextMenu');
+        document.getElementById('option-quick-add-context-menu-hint').innerText = __m('optionQuickAddContextMenuHint');
         document.getElementById('option-show-tool-button').innerText = __m('optionShowToolButton');
         document.getElementById('classic-experience').innerText = __m('optionClassicExperience');
         document.getElementById('classic-experience-hint').innerText = __m('optionClassicExperienceHint');

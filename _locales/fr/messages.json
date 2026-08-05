@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Afficher le bouton étoile d'ajout rapide à côté du champ de recherche"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Ajouter une entrée « Mettre cette page en signet avec vBookmarks » au menu contextuel de la page"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Indépendant du bouton d'ajout rapide en étoile ; la restauration de l'expérience classique désactive également cette entrée."
+  },
   "optionShowToolButton": {
     "message": "Afficher le bouton d'outils (⋮) à côté du champ de recherche"
   },
@@ -706,7 +712,7 @@
     "message": "Restaurer l'en-tête classique"
   },
   "optionClassicExperienceHint": {
-    "message": "Désactive la palette de commandes, l'étoile d'ajout rapide, le bouton d'outils et les onglets de vue. Chacun peut être réactivé individuellement ci-dessus."
+    "message": "Désactive la palette de commandes, l'ajout rapide en étoile, son entrée dans le menu contextuel de la page, le bouton d'outil et les onglets de vue. Chacun peut être réactivé individuellement ci-dessus."
   },
   "optionStatsEnabled": {
     "message": "Activer les statistiques de visites"

@@ -23,7 +23,8 @@ const buildChrome = () => {
     listeners = {
         commands: null,
         contextMenuClicked: null,
-        installed: null
+        installed: null,
+        storageChanged: null
     };
     calls = {
         bookmarksCreate: [],
@@ -185,7 +186,7 @@ const buildChrome = () => {
                 set: dualSet(sessionData),
                 remove: dualRemove(sessionData, calls.sessionRemove)
             },
-            onChanged: noopListener
+            onChanged: { addListener(fn) { listeners.storageChanged = fn; } }
         }
     };
 };
@@ -254,6 +255,37 @@ describe('service worker startup wiring', () => {
         listeners.installed();
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
+    });
+
+    it('issue #49: does NOT create the menu when quickAddContextMenu is off', () => {
+        localData.quickAddContextMenu = ''; // off
+        calls.contextMenusCreate = [];
+        listeners.installed();
+        // remove-first still runs (idempotent), but no re-create happens
+        expect(calls.contextMenusRemove).toContain('vbm-quick-add');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
+    });
+
+    it('issue #49: a storage flip off removes the live menu, back on recreates it', () => {
+        calls.contextMenusCreate = [];
+        // Real flow: the options page wrote '' first, then storage.onChanged
+        // fired — the handler re-reads storage, so mirror the write.
+        localData.quickAddContextMenu = '';
+        listeners.storageChanged({ quickAddContextMenu: { newValue: '' } }, 'local');
+        expect(calls.contextMenusRemove).toContain('vbm-quick-add');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
+        // back on: remove-first then recreate
+        calls.contextMenusCreate = [];
+        localData.quickAddContextMenu = '1';
+        listeners.storageChanged({ quickAddContextMenu: { newValue: '1' } }, 'local');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
+    });
+
+    it('issue #49: ignores storage changes outside the local quickAddContextMenu key', () => {
+        calls.contextMenusCreate = [];
+        listeners.storageChanged({ unrelated: { newValue: 'x' } }, 'local');
+        // no re-create was triggered for an unrelated key
+        expect(calls.contextMenusCreate).toHaveLength(0);
     });
 });
 

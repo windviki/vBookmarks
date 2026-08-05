@@ -52,6 +52,9 @@
         // v4 task-3: remember-last-view / tab badges / classic-experience
         // feature switches (items 6, 18, 20)
         'rememberView', 'showTabBadges', 'paletteEnabled', 'quickAddEnabled', 'showToolButton',
+        // issue #49: "Bookmark this page with vBookmarks" page right-click
+        // menu entry switch (v4-only, covered by the classic-experience preset)
+        'quickAddContextMenu',
         // v4 task-2: non-empty folder delete confirmation (slice A2, §5.7)
         'confirmDeleteFolder',
         // v4 task-2: recent view + search history (slice B, §4.3/§5.3)

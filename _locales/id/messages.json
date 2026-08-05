@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Tampilkan tombol bintang tambah cepat di samping kolom pencarian"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Tambahkan entri \"Tandai halaman ini dengan vBookmarks\" ke menu klik kanan halaman"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Tidak tergantung pada tombol bintang tambah cepat; pemulihan pengalaman klasik juga akan mematikan entri ini."
+  },
   "optionShowToolButton": {
     "message": "Tampilkan tombol alat (⋮) di samping kolom pencarian"
   },
@@ -706,7 +712,7 @@
     "message": "Kembalikan header klasik"
   },
   "optionClassicExperienceHint": {
-    "message": "Menonaktifkan palet perintah, bintang tambah cepat, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di atas."
+    "message": "Menonaktifkan palet perintah, bintang tambah cepat, entri klik kanan halamannya, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di atas."
   },
   "optionStatsEnabled": {
     "message": "Aktifkan statistik kunjungan"

@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Vis stjerneknappen til hurtigtilføjelse ved søgefeltet"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Tilføj et \"Bogmærk denne side med vBookmarks\"-punkt til sidens højreklikmenu"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Uafhængig af stjerneknappen til hurtig tilføjelse; gendannelse af den klassiske oplevelse slår også denne indstilling fra."
+  },
   "optionShowToolButton": {
     "message": "Vis værktøjsknappen (⋮) ved siden af søgefeltet"
   },
@@ -706,7 +712,7 @@
     "message": "Gendan den klassiske header"
   },
   "optionClassicExperienceHint": {
-    "message": "Deaktiverer kommandopaletten, hurtigtilføj-stjernen, værktøjsknappen og visningsfanerne. Hver af dem kan genaktiveres individuelt ovenfor."
+    "message": "Slår kommandopaletten, stjerneknappen til hurtig tilføjelse, dens punkt i sidens højreklikmenu, værktøjsknappen og visningsfanerne fra. Hver enkelt kan genaktiveres individuelt ovenfor."
   },
   "optionStatsEnabled": {
     "message": "Aktivér besøgsstatistik"

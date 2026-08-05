@@ -696,6 +696,12 @@
   "optionQuickAddEnabled": {
     "message": "Mostrar o botão de estrela de adição rápida junto à caixa de pesquisa"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Adicionar uma entrada \"Adicionar esta página aos favoritos com o vBookmarks\" ao menu de contexto da página"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada."
+  },
   "optionShowToolButton": {
     "message": "Mostrar o botão de ferramentas (⋮) junto à caixa de pesquisa"
   },
@@ -703,7 +709,7 @@
     "message": "Restaurar o cabeçalho clássico"
   },
   "optionClassicExperienceHint": {
-    "message": "Desativa a paleta de comandos, a estrela de adição rápida, o botão de ferramentas e os separadores de vista. Cada um pode ser reativado individualmente acima."
+    "message": "Desativa a paleta de comandos, a estrela de adição rápida, a respetiva entrada no menu de contexto, o botão de ferramentas e os separadores de vista. Cada um pode ser reativado individualmente acima."
   },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"

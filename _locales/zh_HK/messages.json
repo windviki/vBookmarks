@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "在搜尋框旁顯示快速新增星號按鈕"
   },
+  "optionQuickAddContextMenu": {
+    "message": "在頁面右鍵選單中加入「使用 vBookmarks 將此頁加入書籤」的項目"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "此選項與快速新增星號按鈕無關；還原經典體驗也會關閉此項目。"
+  },
   "optionShowToolButton": {
     "message": "在搜尋框旁顯示工具按鈕 (⋮)"
   },
@@ -706,7 +712,7 @@
     "message": "還原經典標題列"
   },
   "optionClassicExperienceHint": {
-    "message": "關閉指令面板、快速新增星號、工具按鈕和檢視分頁。以上各項均可獨立重新啟用。"
+    "message": "關閉命令面板、快速新增星號按鈕、其頁面右鍵選單項目、工具按鈕及檢視分頁。以上各項均可單獨重新啟用。"
   },
   "optionStatsEnabled": {
     "message": "啟用瀏覽統計"

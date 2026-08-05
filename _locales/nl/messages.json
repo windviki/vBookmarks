@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Toon de ster-knop voor snel toevoegen naast het zoekvak"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Voeg een menu-item \"Deze pagina bookmarken met vBookmarks\" toe aan het rechtsklikmenu van de pagina."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Onafhankelijk van de sneltoevoegen-sterknop; het herstel van de klassieke ervaring schakelt dit item ook uit."
+  },
   "optionShowToolButton": {
     "message": "Toon de toolknop (⋮) naast het zoekvak"
   },
@@ -706,7 +712,7 @@
     "message": "Herstel de klassieke koptekst"
   },
   "optionClassicExperienceHint": {
-    "message": "Schakelt het opdrachtenpalet, de ster voor snel toevoegen, de toolknop en de weergavetabbladen uit. Elk kan hierboven afzonderlijk worden ingeschakeld."
+    "message": "Schakelt het opdrachtenpalet, de sneltoevoegen-ster, het bijbehorende item in het rechtsklikmenu van de pagina, de werkbalkknop en de weergavetabbladen uit. Elk kan hierboven afzonderlijk opnieuw worden ingeschakeld."
   },
   "optionStatsEnabled": {
     "message": "Bezoekstatistieken inschakelen"

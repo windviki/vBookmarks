@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Vis hurtiglegg-stjerneknappen ved søkefeltet"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Legg til et \"Bokmerk denne siden med vBookmarks\"-valg i sidens høyreklikkmeny."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Uavhengig av stjerneknappen for hurtiglegging; gjenoppretting av klassisk opplevelse slår også av dette valget."
+  },
   "optionShowToolButton": {
     "message": "Vis verktøyknappen (⋮) ved søkefeltet"
   },
@@ -706,7 +712,7 @@
     "message": "Gjenopprett klassisk topptekst"
   },
   "optionClassicExperienceHint": {
-    "message": "Slår av kommandopaletten, hurtiglegg-stjernen, verktøyknappen og visningsfanene. Hver kan aktiveres enkeltvis ovenfor."
+    "message": "Slår av kommandopaletten, stjerneknappen for hurtiglegging, dens høyreklikkvalg på siden, verktøyknappen og visningsfanene. Hver av dem kan aktiveres på nytt enkeltvis ovenfor."
   },
   "optionStatsEnabled": {
     "message": "Aktiver besøksstatistikk"

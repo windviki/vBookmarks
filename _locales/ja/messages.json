@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "検索ボックスの横にクイック追加の星ボタンを表示"
   },
+  "optionQuickAddContextMenu": {
+    "message": "ページの右クリック メニューに「vBookmarks でこのページをブックマーク」項目を追加する"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "クイック追加スター ボタンとは独立しています。クラシック エクスペリエンスの復元時には、この項目もオフになります。"
+  },
   "optionShowToolButton": {
     "message": "検索ボックスの横にツールボタン (⋮) を表示"
   },
@@ -706,7 +712,7 @@
     "message": "クラシックヘッダーを復元"
   },
   "optionClassicExperienceHint": {
-    "message": "コマンドパレット、クイック追加の星、ツールボタン、ビュータブをオフにします。それぞれは上記の個別設定で再度有効にできます。"
+    "message": "コマンド パレット、クイック追加スター、そのページの右クリック項目、ツール ボタン、ビュー タブをオフにします。それぞれは上記で個別に再度有効にできます。"
   },
   "optionStatsEnabled": {
     "message": "訪問統計を有効にする"

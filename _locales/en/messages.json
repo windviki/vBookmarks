@@ -770,6 +770,13 @@
   "optionQuickAddEnabled": {
     "message": "Show the quick-add star button next to the search box"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Add a \"Bookmark this page with vBookmarks\" entry to the page right-click menu",
+    "description": "Options checkbox (issue #49): controls the v4-only page context-menu quick-add entry."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independent from the quick-add star button; the classic-experience restore also turns this entry off."
+  },
   "optionShowToolButton": {
     "message": "Show the tool button (⋮) next to the search box"
   },
@@ -777,7 +784,7 @@
     "message": "Restore the classic header"
   },
   "optionClassicExperienceHint": {
-    "message": "Turns off the command palette, the quick-add star, the tool button and the view tabs. Each can be re-enabled individually above."
+    "message": "Turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view tabs. Each can be re-enabled individually above."
   },
   "optionShowItemPath": {
     "message": "Show the parent folder path on list rows"

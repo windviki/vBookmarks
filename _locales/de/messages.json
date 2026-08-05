@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Stern-Button zum Schnellhinzufügen neben dem Suchfeld anzeigen"
   },
+  "optionQuickAddContextMenu": {
+    "message": "\"Diese Seite mit vBookmarks speichern\" zum Rechtsklick-Menü der Seite hinzufügen"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Unabhängig vom Stern-Button zum Schnellhinzufügen; die Wiederherstellung des klassischen Erlebnisses deaktiviert diesen Eintrag ebenfalls."
+  },
   "optionShowToolButton": {
     "message": "Werkzeug-Button (⋮) neben dem Suchfeld anzeigen"
   },
@@ -706,7 +712,7 @@
     "message": "Klassische Kopfzeile wiederherstellen"
   },
   "optionClassicExperienceHint": {
-    "message": "Deaktiviert die Befehlspalette, den Schnellhinzufügen-Stern, den Werkzeug-Button und die Ansichts-Tabs. Jede Funktion kann oben einzeln wieder aktiviert werden."
+    "message": "Deaktiviert die Befehlspalette, den Schnellhinzufügen-Stern, seinen Rechtsklick-Eintrag im Kontextmenü der Seite, die Tool-Schaltfläche und die Ansichts-Tabs. Jede Option kann oben einzeln wieder aktiviert werden."
   },
   "optionStatsEnabled": {
     "message": "Besuchsstatistik aktivieren"

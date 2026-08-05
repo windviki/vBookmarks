@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "검색 상자 옆에 빠른 추가 별표 버튼 표시"
   },
+  "optionQuickAddContextMenu": {
+    "message": "페이지 오른쪽 클릭 메뉴에 \"vBookmarks로 이 페이지 북마크\" 항목 추가"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "빠른 추가 별표 버튼과 독립적입니다. 클래식 환경 복원 시 이 항목도 꺼집니다."
+  },
   "optionShowToolButton": {
     "message": "검색 상자 옆에 도구 버튼(⋮) 표시"
   },
@@ -706,7 +712,7 @@
     "message": "클래식 헤더 복원"
   },
   "optionClassicExperienceHint": {
-    "message": "명령 팔레트, 빠른 추가 별표, 도구 버튼 및 보기 탭을 끕니다. 각 항목은 위에서 개별적으로 다시 활성화할 수 있습니다."
+    "message": "명령 팔레트, 빠른 추가 별표, 해당 페이지 오른쪽 클릭 항목, 도구 버튼 및 보기 탭을 끕니다. 각 항목은 위에서 개별적으로 다시 활성화할 수 있습니다."
   },
   "optionStatsEnabled": {
     "message": "방문 통계 활성화"

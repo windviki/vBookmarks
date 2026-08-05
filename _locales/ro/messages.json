@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Afișează butonul cu stea pentru adăugare rapidă lângă caseta de căutare"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Adaugă o intrare \"Salvează această pagină în semne de carte cu vBookmarks\" în meniul cu clic dreapta al paginii"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Independent de butonul stea de adăugare rapidă; restaurarea experienței clasice dezactivează și această intrare."
+  },
   "optionShowToolButton": {
     "message": "Afișează butonul de instrumente (⋮) lângă caseta de căutare"
   },
@@ -706,7 +712,7 @@
     "message": "Restabiliți antetul clasic"
   },
   "optionClassicExperienceHint": {
-    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, butonul de instrumente și filele de vizualizare. Fiecare opțiune poate fi reactivată individual mai sus."
+    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, intrarea acesteia din meniul cu clic dreapta al paginii, butonul de instrumente și filele de vizualizare. Fiecare poate fi reactivată individual mai sus."
   },
   "optionStatsEnabled": {
     "message": "Activează statisticile de vizită"

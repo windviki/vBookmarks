@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "A gyors hozzáadás csillaggomb megjelenítése a keresőmező mellett"
   },
+  "optionQuickAddContextMenu": {
+    "message": "„Könyvjelzőzés a vBookmarks segítségével” bejegyzés hozzáadása az oldal jobb gombos menüjéhez"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Független a gyors hozzáadás csillaggombjától; a klasszikus élmény visszaállítása ezt a bejegyzést is kikapcsolja."
+  },
   "optionShowToolButton": {
     "message": "Az eszközgomb (⋮) megjelenítése a keresőmező mellett"
   },
@@ -706,7 +712,7 @@
     "message": "A klasszikus fejléc visszaállítása"
   },
   "optionClassicExperienceHint": {
-    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, az eszközgombot és a nézetfüleket. Mindegyik egyenként újra engedélyezhető a fenti beállításoknál."
+    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, annak jobb gombos menüpontját, az eszközgombot és a nézetfüleket. Mindegyik egyenként újra engedélyezhető a fenti beállításokban."
   },
   "optionStatsEnabled": {
     "message": "Látogatási statisztikák engedélyezése"

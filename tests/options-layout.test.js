@@ -80,8 +80,8 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         const views = optionsHtml.split('<section class="options-group">')[2];
         const body = views.slice(0, views.indexOf('</section>'));
         for (const id of ['remember-view', 'show-tab-badges', 'palette-enabled',
-                'quick-add-enabled', 'show-tool-button', 'classic-experience',
-                'classic-experience-hint'])
+                'quick-add-enabled', 'quick-add-context-menu', 'show-tool-button',
+                'classic-experience', 'classic-experience-hint'])
             expect(body).toContain(`id="${id}"`);
     });
 });

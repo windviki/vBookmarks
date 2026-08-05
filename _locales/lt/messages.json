@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Rodyti greitojo pridėjimo žvaigždutės mygtuką šalia paieškos laukelio"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Pridėti \"Išsaugoti puslapį su vBookmarks\" į puslapio dešiniojo pelės mygtuko meniu"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Nepriklauso nuo greitosios žvaigždutės mygtuko; atkūrus klasikinę patirtį šis įrašas taip pat išjungiamas."
+  },
   "optionShowToolButton": {
     "message": "Rodyti įrankių mygtuką (⋮) šalia paieškos laukelio"
   },
@@ -706,7 +712,7 @@
     "message": "Atkurti klasikinę antraštę"
   },
   "optionClassicExperienceHint": {
-    "message": "Išjungia komandų paletę, greitojo pridėjimo žvaigždutę, įrankių mygtuką ir rodinių skirtukus. Kiekvieną iš jų galite vėl įjungti atskirai aukščiau."
+    "message": "Išjungia komandų paletę, greitosios žvaigždutės mygtuką, jo įrašą puslapio dešiniojo pelės mygtuko meniu, įrankių mygtuką ir rodymo skirtukus. Kiekvieną iš jų galima vėl įjungti atskirai aukščiau."
   },
   "optionStatsEnabled": {
     "message": "Įjungti lankomumo statistiką"

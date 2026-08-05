@@ -228,20 +228,32 @@ chrome.commands.onCommand.addListener(async command => {
 // --- Quick add bookmark from the page context menu (Phase 3, issue #30) ---
 // The menu is created on install and at every service worker startup; the
 // remove() first keeps re-creation idempotent across SW restarts (creating a
-// duplicated id would raise a runtime error).
+// duplicated id would raise a runtime error). Issue #49: gated on the
+// `quickAddContextMenu` setting (default on) — off removes the entry entirely,
+// and the chrome.storage.onChanged listener below makes the toggle live so an
+// options-page flip takes effect without waiting for the next SW cold start.
 const QUICK_ADD_MENU_ID = 'vbm-quick-add';
 if (chrome.contextMenus) {
     const createQuickAddMenu = () => {
-        chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
-            void chrome.runtime.lastError; // the menu simply didn't exist yet
-            chrome.contextMenus.create({
-                id: QUICK_ADD_MENU_ID,
-                contexts: ['page'],
-                title: chrome.i18n.getMessage('contextMenuAddBookmark')
+        chrome.storage.local.get({ quickAddContextMenu: '1' }, data => {
+            const on = !!data.quickAddContextMenu && data.quickAddContextMenu !== 'false';
+            chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
+                void chrome.runtime.lastError; // the menu simply didn't exist yet
+                if (on) {
+                    chrome.contextMenus.create({
+                        id: QUICK_ADD_MENU_ID,
+                        contexts: ['page'],
+                        title: chrome.i18n.getMessage('contextMenuAddBookmark')
+                    });
+                }
             });
         });
     };
     chrome.runtime.onInstalled.addListener(createQuickAddMenu);
+    chrome.storage.onChanged.addListener((changes, area) => {
+        if (area === 'local' && 'quickAddContextMenu' in changes)
+            createQuickAddMenu();
+    });
     createQuickAddMenu();
     chrome.contextMenus.onClicked.addListener((info, tab) => {
         if (info.menuItemId !== QUICK_ADD_MENU_ID || !tab || !tab.url) {

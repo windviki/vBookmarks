@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Näytä pikalisäystähti hakukentän vieressä"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Lisää \"Lisää sivu kirjanmerkkeihin vBookmarksilla\" -vaihtoehto sivun oikean painikkeen valikkoon."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Riippumaton pikalisäyksen tähtipainikkeesta; klassisen kokemuksen palautus poistaa käytöstä myös tämän merkinnän."
+  },
   "optionShowToolButton": {
     "message": "Näytä työkalu-painike (⋮) hakukentän vieressä"
   },
@@ -706,7 +712,7 @@
     "message": "Palauta klassinen ylätunniste"
   },
   "optionClassicExperienceHint": {
-    "message": "Poistaa käytöstä komentopaletin, pikalisäystähden, työkalu-painikkeen ja näkymävälilehdet. Jokaisen voi ottaa erikseen uudelleen käyttöön yllä."
+    "message": "Poistaa käytöstä komentopaletin, pikalisäystähden, sen sivun pikavalikkokohdan, työkalupainikkeen ja näkymä-välilehdet. Kukin voidaan ottaa uudelleen käyttöön erikseen yllä."
   },
   "optionStatsEnabled": {
     "message": "Ota käyttöön vierailutilastot"

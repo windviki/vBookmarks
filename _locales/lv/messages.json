@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Rādīt ātrās pievienošanas zvaigznes pogu blakus meklēšanas lodziņam"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Pievienot \"Grāmatzīmi šai lapai ar vBookmarks\" lapas ar peles labo pogu izvēlnei"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Neatkarīgs no ātrās pievienošanas zvaigznītes; klasiskās pieredzes atjaunošana arī izslēdz šo ierakstu."
+  },
   "optionShowToolButton": {
     "message": "Rādīt rīku pogu (⋮) blakus meklēšanas lodziņam"
   },
@@ -706,7 +712,7 @@
     "message": "Atjaunot klasisko galveni"
   },
   "optionClassicExperienceHint": {
-    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigzni, rīku pogu un skatu cilnes. Katru no tām var atkal iespējot atsevišķi iepriekš."
+    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigznīti, tās lapas ar peles labo pogu izvēlni, rīka pogu un skata cilnes. Katru no tām var atkārtoti iespējot atsevišķi iepriekš."
   },
   "optionStatsEnabled": {
     "message": "Iespējot apmeklējumu statistiku"

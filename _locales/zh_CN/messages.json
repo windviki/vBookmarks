@@ -59,6 +59,13 @@
   "optionQuickAddEnabled": {
     "message": "在搜索框旁显示快速收藏星标按钮"
   },
+  "optionQuickAddContextMenu": {
+    "message": "在页面右键菜单添加“用 vBookmarks 收藏此页”条目",
+    "description": "选项复选框（issue #49）：控制 v4 新增的页面右键菜单快速收藏条目。"
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "与快速收藏星标按钮相互独立；“一键恢复经典界面”也会一并关闭该条目。"
+  },
   "optionShowToolButton": {
     "message": "在搜索框旁显示工具按钮（⋮）"
   },
@@ -66,7 +73,7 @@
     "message": "一键恢复经典界面"
   },
   "optionClassicExperienceHint": {
-    "message": "关闭命令面板、快速收藏星标、工具按钮与视图标签；每一项都可在上方单独重新开启。"
+    "message": "关闭命令面板、快速收藏星标、页面右键收藏条目、工具按钮与视图标签；每一项都可在上方单独重新开启。"
   },
   "optionShowItemPath": {
     "message": "在列表行上显示所在文件夹路径"

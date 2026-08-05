@@ -699,6 +699,12 @@
   "optionQuickAddEnabled": {
     "message": "Mostra il pulsante stella per l'aggiunta rapida accanto alla casella di ricerca"
   },
+  "optionQuickAddContextMenu": {
+    "message": "Aggiungi una voce \"Aggiungi questa pagina ai segnalibri con vBookmarks\" al menu contestuale della pagina."
+  },
+  "optionQuickAddContextMenuHint": {
+    "message": "Indipendente dal pulsante stella di aggiunta rapida; il ripristino dell'esperienza classica disattiva anche questa voce."
+  },
   "optionShowToolButton": {
     "message": "Mostra il pulsante strumenti (⋮) accanto alla casella di ricerca"
   },
@@ -706,7 +712,7 @@
     "message": "Ripristina l'intestazione classica"
   },
   "optionClassicExperienceHint": {
-    "message": "Disattiva la palette dei comandi, la stella di aggiunta rapida, il pulsante strumenti e le schede di visualizzazione. Ciascuna funzione può essere riattivata singolarmente qui sopra."
+    "message": "Disattiva la tavolozza dei comandi, la stella di aggiunta rapida, la relativa voce nel menu contestuale della pagina, il pulsante della barra degli strumenti e le schede di visualizzazione. Ciascuna può essere riattivata singolarmente qui sopra."
   },
   "optionStatsEnabled": {
     "message": "Abilita statistiche di visita"
