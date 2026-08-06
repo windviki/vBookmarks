@@ -247,6 +247,14 @@ const setup = (opts = {}) => {
         querySelector: sel => (sel in qsTable ? qsTable[sel] : null),
         addEventListener(type, fn) {
             (this._listeners[type] = this._listeners[type] || []).push(fn);
+        },
+        removeEventListener(type, fn) {
+            const arr = this._listeners[type];
+            if (arr) {
+                const i = arr.indexOf(fn);
+                if (i >= 0)
+                    arr.splice(i, 1);
+            }
         }
     };
     globalThis.document = doc;
@@ -1707,5 +1715,56 @@ describe('custom commands (v4 task-4 #6)', () => {
         const customs = ctx.results._appended.filter(li => li.className.includes('palette-command-custom'));
         expect(customs).toHaveLength(1);
         expect(customs[0]._innerHTML).toContain('Kimi search');
+    });
+});
+
+describe('closing a context menu over the palette (← / Esc) — focus returns to the input', () => {
+    // Regression: ArrowRight opened a bookmark menu (focus moves to it);
+    // closing it used to drop focus on the .active result row, and because
+    // palette ↑↓ handlers live on the input, every further arrow key died
+    // (visual selection stayed, keyboard did not).
+    it('ArrowLeft closes the menu, clears the active marker and refocuses the input', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active'); // a context menu is open on a result row
+        const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.body.classList.contains('active')).toBe(false); // marker dropped
+        expect(ctx.input.focused).toBe(true); // ↑↓ keep working (they live on the input)
+        expect(clearCalls).toHaveLength(2); // open() cleared once + this close
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('Escape closes the menu, keeps the panel open and refocuses the input', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active');
+        const ev = ctx.keydown(ctx.doc, { key: 'Escape' });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.body.classList.contains('active')).toBe(false);
+        expect(ctx.input.focused).toBe(true);
+        expect(ctx.palette.isOpen()).toBe(true); // the menu closed, not the panel
+    });
+
+    it('leaves ArrowLeft alone when no menu is open over the palette', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
+        expect(ev.defaultPrevented).toBe(false);
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(clearCalls).toHaveLength(1); // only the open() clear
+    });
+
+    it('unbinds the guard when the palette closes', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.palette.close();
+        ctx.body.classList.add('active');
+        const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
+        expect(ev.defaultPrevented).toBe(false); // guard removed — no swallow
     });
 });

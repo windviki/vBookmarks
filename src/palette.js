@@ -685,6 +685,29 @@ export function initPalette(ctx = {}) {
     });
 
     // --- Open / close -----------------------------------------------------------
+    // A context menu opened over the palette (ArrowRight / right-click) steals
+    // focus to the menu; closing it (← / Esc) hands focus back to the .active
+    // ROW — which strands palette navigation, because the ↑↓ handlers live on
+    // the input. Intercept the close key while the menu is up, clear it and
+    // return focus to the input. Capture: runs before the menu's own keydown
+    // (contextKeyDown's ArrowLeft/Escape would drop focus on the row).
+    const onDocKey = e => {
+        const closeKey = document.body.classList.contains('rtl') ? 'ArrowRight' : 'ArrowLeft';
+        if (e.key !== closeKey && e.key !== 'Escape')
+            return;
+        if (!clearMenu || !document.body.querySelector('.active'))
+            return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        clearMenu();
+        // clearMenu() (no arg) keeps the .active marker and refocuses the row;
+        // the palette must drop both and hand focus to its input instead.
+        const act = document.body.querySelector('.active');
+        if (act)
+            act.classList.remove('active');
+        $input.focus();
+    };
+
     const open = () => {
         if (openState || anyDialogOpen())
             return;
@@ -699,6 +722,7 @@ export function initPalette(ctx = {}) {
         if (clearMenu)
             clearMenu();
         openState = true;
+        document.addEventListener('keydown', onDocKey, true);
         $palette.hidden = false;
         $palette.classList.remove('has-query'); // fresh panel: no query, no ×
         $input.value = '';
@@ -713,6 +737,7 @@ export function initPalette(ctx = {}) {
         if (!openState)
             return;
         openState = false;
+        document.removeEventListener('keydown', onDocKey, true);
         $palette.hidden = true;
         // Hand focus back to the tree: the focused row, else its first row,
         // else just drop focus from the input.
