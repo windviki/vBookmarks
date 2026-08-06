@@ -926,14 +926,26 @@ menu[type=context].hide-editables #folder-delete {
     right: 0;
     opacity: 0;
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: var(--vbm-bg-elev);
     padding: 1em;
     border-bottom: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     -webkit-box-shadow: 0 0 100px var(--vbm-shadow);
     box-shadow: 0 0 100px var(--vbm-shadow);
+    transition: opacity .15s ease, top .18s ease;
     /* Layer 4 — above palette (100), paired with #cover (200) */
     z-index: 200;
+}
+
+/* Dialog content is capped at a comfortable measure and centered: a very
+   wide popup / side panel must not stretch a short message across the whole
+   width. The full-width band stays (it reads as a top notification bar), but
+   the text and controls form one centered column. */
+.dialog > * {
+    width: min(340px, 100%);
 }
 
 .transitional .dialog {
@@ -952,9 +964,17 @@ menu[type=context].hide-editables #folder-delete {
     font-size: 110%;
 }
 
+/* Informational dialogs (confirm / alert) read best as one centered block
+   inside the capped column; the form dialogs keep their left-aligned bold
+   heading and laid-out controls. */
+#confirm-dialog .dialog-text,
+#alert-dialog .dialog-text {
+    text-align: center;
+}
+
 .dialog .buttons {
     margin: 1em 0 0;
-    text-align: __MSG_@@bidi_end_edge__;
+    text-align: center;
 }
 
 /* Breathing room between a dialog's action buttons (OK ⇄ Cancel). */
@@ -2427,6 +2447,9 @@ body.panel-mode .vbm-row .row-sub {
    (focus-within keeps it reachable by keyboard). */
 .row-btn {
     flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 20px;
     height: 20px;
     margin-inline-end: 4px;
@@ -2437,6 +2460,7 @@ body.panel-mode .vbm-row .row-sub {
     cursor: pointer;
     visibility: hidden;
     line-height: 1;
+    padding: 0;
 }
 
 .vbm-row:hover .row-btn,
@@ -2687,7 +2711,6 @@ body.panel-mode .vbm-row .row-sub {
 
 .dupes-clean-rest {
     color: var(--vbm-accent);
-    font-weight: 700;
 }
 
 /* Member rows: the 16px keeper slot takes the chevron column's place, so

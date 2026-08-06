@@ -29,6 +29,16 @@ export const DOCUMENT_CODE_ICON =
     '<polyline points="9.5 8.5 10.75 9.75 9.5 11"/>' +
     '</svg>';
 
+// Dupes-view per-group "apply dedup" action: a completed-check badge on the
+// same 16px line grid as FOLDER_ICON (1.5px stroke, currentColor), replacing
+// the old text "✓" glyph so the row action matches the tile icons' style.
+export const CHECK_ICON =
+    '<svg class="vbm-icon vbm-icon-check" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="8" cy="8" r="5.6"/>' +
+    '<polyline points="5.4 8.2 7.1 9.9 10.7 6.1"/>' +
+    '</svg>';
+
 // Folder twisty glyph (chevron-right; CSS rotates it 90° on .open rows and
 // mirrors it for RTL). Lives inside <b class="twisty"> in folder rows —
 // smaller optical size than the tile icons, so the stroke reads lighter.

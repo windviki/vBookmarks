@@ -305,10 +305,13 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         // the per-group quick action names the strategy's keeper pick and
         // the doomed count up front (item 4: one click keeps one per setting)
         expect(html).toContain('aria-label="dupesCleanRestHint[A oldest|2]"');
-        // v4 task-4 #9: the quick apply is a ✓ glyph ("apply this group's
-        // dedup"), always visible via .dupes-group .group-head .row-btn
+        // v4 task-4 #9: the quick apply is a check action ("apply this
+        // group's dedup"), always visible via .dupes-group .group-head
+        // .row-btn — rendered as the shared CHECK_ICON SVG (same 16px line
+        // grid as the folder/tab icons), not a bare text glyph.
         expect(html).toContain('class="row-btn dupes-clean-rest"');
-        expect(html).toMatch(/dupes-clean-rest"[^>]*>✓</);
+        expect(html).toMatch(/dupes-clean-rest"[^>]*>.*vbm-icon-check/s);
+        expect(html).not.toMatch(/dupes-clean-rest"[^>]*>✓/);
         // member rows: keeper oldest first; the other two will-delete
         expect(html).toContain('id="dupes-item-11"');
         expect(html).toContain('id="dupes-item-15"');

@@ -73,7 +73,7 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -324,7 +324,7 @@ export function initViewDupes(ctx = {}) {
             `<span class="chevron${isCollapsed ? ' collapsed' : ''}"></span>` +
             `<span class="dupes-key" dir="auto" title="${key}">${htmlspecialchars(midTruncate(group.key))}</span>` +
             `<span class="count-pill" aria-label="${_m('dupesGroupCount', `${group.items.length}`)}">${group.items.length}</span>` +
-            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">✓</button>` +
+            `<button class="row-btn dupes-clean-rest" aria-label="${hint}" title="${hint}">${CHECK_ICON}</button>` +
             '</span></li>';
         if (isCollapsed)
             return html;
