@@ -593,8 +593,17 @@ export function initViewManager(ctx = {}) {
             return;
         if (!/^[1-9]$/.test(e.key))
             return;
-        const ae = document.activeElement;
-        if (ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))
+        // An open modal dialog or the command palette owns its input — do not
+        // yank a half-edited form. Everywhere else the shortcut switches
+        // views even while the search box has focus: Ctrl+2 lands in the
+        // search input, and the old "input owns the keystroke" guard swallowed
+        // every further Ctrl+1/3…, stranding the user in the search view.
+        const paletteEl = $('command-palette');
+        if (body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
+            body.classList.contains('needInputName') || body.classList.contains('needSort') ||
+            body.classList.contains('needAlert') || body.classList.contains('needTabGroup') ||
+            body.classList.contains('needGroupPick') ||
+            (paletteEl && !paletteEl.hidden))
             return;
         const views = visibleViews();
         const def = views[parseInt(e.key, 10) - 1];

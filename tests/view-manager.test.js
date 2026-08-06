@@ -891,12 +891,33 @@ describe('Ctrl/Cmd/Alt+number direct jump (§3.4, v4 task-4 #10)', () => {
         expect(ctx.views.activeId()).toBe('tree');
     });
 
-    it('never fires while an input owns the keystroke', () => {
+    it('switches even from the search box (the Ctrl+2 landing spot), so Ctrl+1/3… can get back out', () => {
         const ctx = setup({});
-        ctx.doc.activeElement = ctx.byId['search-input']; // tagName INPUT
+        ctx.doc.activeElement = ctx.byId['search-input']; // Ctrl+2 lands here
         const ev = key(ctx, '2', { ctrl: true });
-        expect(ev.defaultPrevented).toBe(false);
-        expect(key(ctx, '2', { alt: true }).defaultPrevented).toBe(false);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.views.activeId()).toBe('search');
+        // and back out again — the regression: the old input-owns guard
+        // swallowed every further Ctrl+digit once focus was in the box
+        expect(key(ctx, '1', { ctrl: true }).defaultPrevented).toBe(true);
+        expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('a modal dialog (body need* class) keeps the shortcut off — no form yank', () => {
+        const ctx = setup({});
+        ctx.doc.body.classList.add('needEdit');
+        ctx.doc.activeElement = ctx.byId['search-input'];
+        expect(key(ctx, '2', { ctrl: true }).defaultPrevented).toBe(false);
+        expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('the open command palette keeps the shortcut off (its input owns the key)', () => {
+        const ctx = setup({});
+        const palette = ctx.makeEl('div');
+        palette.hidden = false;
+        ctx.byId['command-palette'] = palette;
+        ctx.doc.activeElement = ctx.byId['search-input'];
+        expect(key(ctx, '2', { ctrl: true }).defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
     });
 });
