@@ -2257,19 +2257,22 @@ body.panel-mode .vbm-row .row-sub {
     white-space: nowrap;
 }
 
+/* The clear-all is styled as a toolbar action button (same flat-accent
+   recipe as the dead/dupes toolbar buttons), not a text link — the search
+   history header reads as a toolbar row, so its one control matches. */
 #search-history-clear {
     flex: none;
     border: 0;
+    border-radius: var(--vbm-radius);
     background: transparent;
-    color: var(--vbm-muted);
-    font-size: 12px;
+    color: var(--vbm-accent);
+    font-size: 11px;
+    padding: 1px 6px;
     cursor: pointer;
-    padding: 0 2px;
 }
 
 #search-history-clear:hover {
-    color: var(--vbm-fg);
-    text-decoration: underline;
+    background: var(--vbm-bg-hover);
 }
 
 /* History-permission banner (recent view): one-line ask with an enable
@@ -2857,11 +2860,6 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-fg-selected);
 }
 
-.dead-toolbar .dead-summary {
-    white-space: nowrap;
-    color: var(--vbm-fg);
-}
-
 /* Destructive batch actions (delete all / delete selected) read as danger —
    the same cue as the context-menu delete entries, so the irreversible
    control stands out from the mark/unmark pills. A disabled batch action
@@ -2969,11 +2967,12 @@ body.panel-mode .vbm-row .row-sub {
    without flex the buttons wrapped onto a line below the anchor. Same recipe
    as .dupes-member / .stats-hist-row: the li goes flex, the anchor flexes
    and the buttons pin to the row's inline end.
-   v4 task-3 #3: wide/panel rows are two lines tall (title + .row-sub path) —
-   align-items:center vertically centers the mark/delete buttons against the
-   whole row (supersedes 第五轮项1's flex-start pinning). The anchor keeps
-   its own flex-start alignment, so the favicon and the status badge still
-   ride the TITLE line and the path line stays visually subordinate. */
+   v4 task-3 #3: wide/panel rows are two lines tall (title + .row-sub path).
+   align-items:center on the li vertically centers the mark/delete buttons
+   against the whole row; the anchor now centers too, so the favicon sits
+   on the two-line row's center like the dupes group-head (the old flex-start
+   pinned it to the title line, which read as off-center next to the wide
+   rows). */
 #dead-list ul li.vbm-row {
     display: flex;
     align-items: center;
@@ -2982,15 +2981,8 @@ body.panel-mode .vbm-row .row-sub {
 #dead-list ul li.vbm-row > a {
     flex: 1;
     min-width: 0;
-    align-items: flex-start;
+    align-items: center;
     margin-right: 4px;
-}
-
-/* …and the icon slot tracks the title line's height (1.67em, the anchor's
-   line-height) so the icon center stays on the title-line center instead of
-   shrinking to the 16px bitmap and riding high. */
-#dead-list ul li.vbm-row > a .favicon-container {
-    min-height: 1.67em;
 }
 
 /* Dead-view row actions: the mark toggle is a flag in the theme accent
@@ -3168,16 +3160,12 @@ body.panel-mode .vbm-row .row-sub {
 #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time { order: 3; }
 #stats-list ul li.vbm-row > a.tree-item-link .row-badge.count { order: 4; }
 
-/* Two-line rows (wide/panel): the favicon and the meta column pin to the
-   TITLE line like the dead-list rows, and the wide second line (subText)
-   already carries the absolute time — the relative .time badge would repeat
-   it, so it drops there. */
+/* Two-line rows (wide/panel): the anchor centers its favicon against the
+   full two-line row (mirroring the dead-list rows and the dupes group-head),
+   and the wide second line (subText) already carries the absolute time — the
+   relative .time badge would repeat it, so it drops there. */
 #stats-list ul li.vbm-row > a.tree-item-link {
-    align-items: flex-start;
-}
-
-#stats-list ul li.vbm-row > a.tree-item-link .favicon-container {
-    min-height: 1.67em;
+    align-items: center;
 }
 
 @container (min-width: 480px) {

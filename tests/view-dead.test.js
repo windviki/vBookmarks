@@ -616,17 +616,18 @@ describe('item 10: row layout CSS contract', () => {
         expect(body).toContain('align-items: center');
     });
 
-    it('the row anchor flexes with min-width:0, buttons pin to the inline end', () => {
+    it('the row anchor flexes with min-width:0 and centers its favicon', () => {
         const body = ruleBody(neatCss, '#dead-list ul li.vbm-row > a {');
         expect(body).toContain('flex: 1');
         expect(body).toContain('min-width: 0');
-        // badge + favicon inside the anchor join the buttons on the title line
-        expect(body).toContain('align-items: flex-start');
+        // the anchor centers the favicon against the two-line row (the old
+        // flex-start pinned it to the title line — off-center on wide rows)
+        expect(body).toContain('align-items: center');
     });
 
-    it('the icon slot tracks the title-line height so the icon stays centered on it', () => {
-        const body = ruleBody(neatCss, '#dead-list ul li.vbm-row > a .favicon-container {');
-        expect(body).toContain('min-height: 1.67em');
+    it('no favicon-container min-height override remains (the anchor centers it)', () => {
+        expect(neatCss).not.toMatch(
+            /#dead-list ul li\.vbm-row > a \.favicon-container \{[^}]*min-height/);
     });
 });
 
@@ -1220,7 +1221,10 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         const html = $list.innerHTML;
         expect(html).toContain('dead-proxy-add');
         expect(html).toContain('deadProxyNudge[1]'); // one direct-dead row
-        expect(html).toContain('deadSummary[1|1]');  // 1 dead · 1 blocked
+        // the summary merged into the filter segments' counts (1 dead · 1 blocked)
+        expect(html).toContain('deadFilterDead 1');
+        expect(html).toContain('deadFilterBlocked 1');
+        expect(html).not.toContain('dead-summary');
     });
 
     it('no nudge while a relay template is configured (a second channel exists)', () => {

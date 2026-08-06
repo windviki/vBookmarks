@@ -336,8 +336,10 @@ const SEED = `
         document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dead proxy strip ↓: the scan toolbar rung (rescan)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
+    // the toolbar now opens with the merged filter segment (counts inline),
+    // so the first rung below the proxy strip is the first filter button
+    check('dead proxy strip ↓: the scan toolbar rung (filter)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');

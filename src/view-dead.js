@@ -356,24 +356,31 @@ export function initViewDead(ctx = {}) {
             }
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
-                html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>` +
-                    `<button class="dead-rescan">${_m('deadRescan')}</button>`;
+                html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>`;
             }
             const rows = allResultRows();
             if (lastScan && rows.length) {
-                // Quantify the two situations up front (死链 vs 区域受限) so
-                // the filter segments below read as batch-workspace scopes,
-                // not mysteries.
+                // dead-filter and the old dead-summary merge: each segment
+                // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0"),
+                // so the two situations read at a glance instead of as a
+                // separate summary line. Order: scan-time → filter → rescan →
+                // mark-all → unmark-all → delete-all → select-mode.
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
-                html += `<span class="dead-summary">${_m('deadSummary', [`${deadN}`, `${rows.length - deadN}`])}</span>`;
                 html += '<span class="dead-filter" role="group">';
                 // v4 task-4 #1: pressed state = aria-pressed only (the
                 // 'active' class is context-menu.js's menu-open marker —
                 // clearMenu strips it body-wide on click/focus).
-                for (const [value, key] of [['all', 'deadFilterAll'], ['dead', 'deadFilterDead'], ['blocked', 'deadFilterBlocked']])
-                    html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)}</button>`;
+                for (const [value, key, count] of [
+                    ['all', 'deadFilterAll', rows.length],
+                    ['dead', 'deadFilterDead', deadN],
+                    ['blocked', 'deadFilterBlocked', rows.length - deadN]
+                ])
+                    html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
+                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
                 html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
+                if (deadMarks.size)
+                    html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
                 // Batch delete-all: removes every row of the ACTIVE filter
                 // segment (the same scope as mark-all, so 仅死链 narrows it
                 // to dead rows only). Rendered only when that set is
@@ -381,12 +388,9 @@ export function initViewDead(ctx = {}) {
                 // under a filter matching no rows must not appear.
                 if (resultRows().length)
                     html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
-            }
-            if (deadMarks.size)
-                html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
-            // v4 task-3 #4: selection mode entry — only with results on screen
-            if (lastScan && allResultRows().length)
+                // v4 task-3 #4: selection mode entry — only with results on screen
                 html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
+            }
         }
         html += '</div>';
         return html;
