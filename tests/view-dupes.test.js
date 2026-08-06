@@ -338,10 +338,12 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         const { $list, def } = setup({});
         def().activate();
         const html = $list.innerHTML;
-        expect(html).toContain('<select class="dupes-strategy"');
-        expect(html).toContain('<option value="keep-oldest" selected>');
-        expect(html).toContain('<option value="keep-most-visited">');
-        expect(html).toContain('<select class="dupes-scope"');
+        // strategy/scope are custom dropdowns now (native <select> could not
+        // follow the arrow protocol) — a trigger button + a hidden listbox
+        expect(html).toContain('class="vbm-dropdown dupes-strategy"');
+        expect(html).toContain('class="vbm-dropdown dupes-scope"');
+        expect(html).toContain('data-value="keep-oldest" aria-selected="true"');
+        expect(html).toContain('data-value="keep-most-visited"');
         expect(html).toContain('dupesIgnoreScheme');
         expect(html).toContain('dupesPreviewSummary[1|2]'); // 1 group, 2 doomed
         expect(html).toContain('dupesApplyAll[2]');
@@ -402,7 +404,8 @@ describe('keeper strategies (§5.6b)', () => {
     it('greys out keep-most-visited while statsEnabled is off', () => {
         const { $list, def } = setup({ statsOff: true });
         def().activate();
-        expect($list.innerHTML).toContain('<option value="keep-most-visited" disabled>');
+        // the dropdown greys the option (unpickable) instead of disabling it
+        expect($list.innerHTML).toContain('data-value="keep-most-visited" class="greyed"');
     });
 
     it('a manual radio pick overrides the strategy and survives a strategy switch', () => {
@@ -418,9 +421,10 @@ describe('keeper strategies (§5.6b)', () => {
         let html = $list.innerHTML;
         let rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
         expect(rowOfChecked[1]).toBe('15');
-        // switching the strategy regroups but keeps the manual pin (still in group)
-        store.set('dupesStrategy', 'keep-oldest');
-        ctx.fire('change', { target: { classList: { contains: c => c === 'dupes-strategy' }, value: 'keep-oldest', closest: () => null } });
+        // switching the strategy regroups but keeps the manual pin (still in
+        // group) — via the same persist+refresh the dropdown onSelect drives
+        // (dropdown.test.js covers the interaction; this proves the effect)
+        def().activate({ preset: { strategy: 'keep-oldest' } });
         html = $list.innerHTML;
         rowOfChecked = html.split('keeper-radio checked')[0].match(/dupes-item-(\d+)(?!.*dupes-item)/);
         expect(rowOfChecked[1]).toBe('15'); // the pin, not the strategy default 11
@@ -450,16 +454,13 @@ describe('scope + ignoreScheme (§5.6c)', () => {
         const ctx = setup({});
         const { $list, def, store, fire } = ctx;
         def().activate();
-        fire('change', { target: { classList: { contains: () => false }, value: 'bar', closest: sel => sel === '.dupes-scope' } });
-        // not the scope select: closest('.dupes-scheme') was null and classList
-        // contains false — nothing should change
-        expect(store.get('dupesScope', 'all')).toBe('all');
-        // ignoreScheme first (full tree): the c.com pair folds into one group
+        // the scheme checkbox stays a native control with a change event
         fire('change', { target: { classList: { contains: () => false }, checked: true, closest: sel => sel === '.dupes-scheme' } });
         expect(store.get('dupesIgnoreScheme')).toBe('1');
         expect($list.innerHTML).toContain('//c.com');
-        // then the scope switch: bar-only regroup drops everything outside '1'
-        fire('change', { target: { classList: { contains: c => c === 'dupes-scope' }, value: 'bar', closest: () => null } });
+        // the scope change's persist+regroup — the effect the dropdown onSelect
+        // drives (dropdown.test.js covers the interaction)
+        def().activate({ preset: { scope: 'bar' } });
         expect(store.get('dupesScope')).toBe('bar');
         expect($list.innerHTML).toContain('dupesPreviewSummary[1|1]');
         expect($list.innerHTML).not.toContain('//c.com');

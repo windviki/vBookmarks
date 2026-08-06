@@ -247,7 +247,10 @@ const SEED = `
     // ====================================================================
     console.log('═══ §2.2c 各视图行导航/越顶 ═══');
     const activeLiIndex = listSel => $(sel => {
-        const rows = [...document.querySelectorAll(sel + ' li')];
+        // the custom dropdowns' option <li>s live inside the list container
+        // but are NOT rows — exclude them from the row index
+        const rows = [...document.querySelectorAll(sel + ' li')]
+            .filter(li => !li.closest('.vbm-dropdown-list'));
         const el = document.activeElement;
         const li = el && el.closest('li');
         return { idx: rows.indexOf(li), total: rows.length,
@@ -360,16 +363,17 @@ const SEED = `
     check('dead proxy strip ↑: tab strip',
         await focusedTab() === 'view-tab-dead', await activeDesc());
 
-    // --- dupes: the toolbar rung (a select keeps its native ↑/↓ — leave it
-    // by ←/→), then head ⇄ members, member ← returns, head ←/→ folds ---
+    // --- dupes: the toolbar rung — the strategy/scope custom dropdowns
+    // (dropdown.js: trigger ↓ opens, ↑ walks the rung; →/Enter picks, ←/Esc
+    // cancels), then head ⇄ members, member ← returns, head ←/→ folds ---
     await page.click('#view-tab-dupes'); await sleep(900);
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    check('dupes ↓ from strip: the toolbar rung (strategy select)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-strategy')),
+    check('dupes ↓ from strip: the toolbar rung (strategy dropdown)', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
-    check('dupes toolbar →: scope select', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-scope')),
+    check('dupes toolbar →: scope dropdown', await $(() =>
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-scope')),
         await activeDesc());
     await page.keyboard.press('ArrowRight'); await sleep(200);
     check('dupes toolbar →: scheme checkbox', await $(() =>
@@ -385,9 +389,10 @@ const SEED = `
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
     check('dupes head ↑ past top: back to the toolbar rung', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dupes-strategy')),
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy')),
         await activeDesc());
-    // back to the head: the select's ↓ is native, so walk the rung first
+    // walk the rung off the dropdown (→→→ to the apply-all button), then ↓
+    // into the list — the dropdown trigger's own ↓ opens its list instead
     await page.keyboard.press('ArrowRight'); await sleep(150);
     await page.keyboard.press('ArrowRight'); await sleep(150);
     await page.keyboard.press('ArrowRight'); await sleep(150);
@@ -409,6 +414,21 @@ const SEED = `
     await page.keyboard.press('ArrowRight'); await sleep(300);
     st = await activeLiIndex('#dupes-list');
     check('dupes head →: expands back', st.total === 3, JSON.stringify(st));
+
+    // dropdown protocol (kept at the END — a pick changes the strategy and
+    // must not disturb the row walks above): ↓ on the trigger opens the list,
+    // → picks + closes back on the trigger
+    await page.evaluate(() => document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger').focus());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes strategy ↓: the dropdown opens', await $(() =>
+        !document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list').hidden &&
+        !!document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list li:focus')),
+        await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(200);
+    check('dupes strategy →: picks + closes back on the trigger', await $(() =>
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list').hidden &&
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown-trigger')),
+        await activeDesc());
 
     // ====================================================================
     // §2.1d header-row direction chain (final polish): the naive layout
@@ -571,8 +591,8 @@ const SEED = `
     const dupes = await $(() => ({
         groups: document.querySelectorAll('#dupes-list .dupes-group').length,
         pill: !!document.querySelector('#dupes-list .count-pill'),
-        strategy: !!document.querySelector('#dupes-list select.dupes-strategy'),
-        scope: !!document.querySelector('#dupes-list select.dupes-scope'),
+        strategy: !!document.querySelector('#dupes-list .vbm-dropdown.dupes-strategy'),
+        scope: !!document.querySelector('#dupes-list .vbm-dropdown.dupes-scope'),
         keeper: document.querySelectorAll('#dupes-list .keeper-radio.checked').length
     }));
     check('Dupes: one group from the seeded pair', dupes.groups === 1, `groups:${dupes.groups}`);

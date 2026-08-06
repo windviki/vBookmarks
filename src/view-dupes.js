@@ -73,7 +73,8 @@
  */
 
 import { findDupes, pickKeeper, planDeletion } from './dupes.js';
-import { VIEW_ICONS, CHECK_ICON } from './icons.js';
+import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON } from './icons.js';
+import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -281,21 +282,31 @@ export function initViewDupes(ctx = {}) {
         }
         const doomed = doomedCount();
         const statsOn = visitStats.enabled();
+        // Shared custom dropdowns (see dropdown.js for the keyboard protocol):
+        // the native <select> could not follow the arrow contract (↑ leaves,
+        // ↓ opens, → picks, ← cancels), so strategy/scope are dropdowns with
+        // that exact behaviour.
+        const dropdownHtml = (cls, labelKey, options, current) => {
+            const curKey = (options.find(o => o[0] === current) || [])[1] || options[0][1];
+            let opts = '';
+            for (const [value, key, greyed] of options)
+                opts += `<li role="option" tabindex="-1" data-value="${value}"` +
+                    `${value === current ? ' aria-selected="true"' : ''}` +
+                    `${greyed ? ' class="greyed"' : ''}>${_m(key)}</li>`;
+            return `<div class="vbm-dropdown ${cls}">` +
+                `<button type="button" class="vbm-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="${_m(labelKey)}">` +
+                `<span class="vbm-dropdown-value">${_m(curKey)}</span>${CHEVRON_ICON}</button>` +
+                `<ul class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
+        };
         let html = '<div class="dupes-toolbar vbm-toolbar">';
-        html += `<select class="dupes-strategy" aria-label="${_m('dupesStrategyOldest')}">`;
-        for (let i = 0; i < STRATEGIES.length; i++) {
-            const [value, key] = STRATEGIES[i];
+        html += dropdownHtml('dupes-strategy', 'dupesStrategyOldest',
             // §5.4 联动: no visit data exists while statsEnabled is off —
             // grey out keep-most-visited instead of silently picking oldest.
-            const greyed = value === 'keep-most-visited' && !statsOn;
-            html += `<option value="${value}"${value === strategy() ? ' selected' : ''}` +
-                `${greyed ? ' disabled' : ''}>${_m(key)}</option>`;
-        }
-        html += '</select>';
-        html += `<select class="dupes-scope" aria-label="${_m('dupesScopeAll')}">` +
-            `<option value="all"${scope() === 'all' ? ' selected' : ''}>${_m('dupesScopeAll')}</option>` +
-            `<option value="bar"${scope() === 'bar' ? ' selected' : ''}>${_m('dupesScopeBar')}</option>` +
-            '</select>';
+            STRATEGIES.map(([v, k]) => [v, k, v === 'keep-most-visited' && !statsOn]),
+            strategy());
+        html += dropdownHtml('dupes-scope', 'dupesScopeAll',
+            [['all', 'dupesScopeAll'], ['bar', 'dupesScopeBar']],
+            scope());
         html += `<label class="dupes-scheme"><input type="checkbox"${ignoreScheme() ? ' checked' : ''}>${_m('dupesIgnoreScheme')}</label>`;
         html += `<span class="dupes-summary">${_m('dupesPreviewSummary', [`${groups.length}`, `${doomed}`])}</span>`;
         html += `<button class="dupes-apply-all"${doomed ? '' : ' disabled'}>` +
@@ -566,15 +577,23 @@ export function initViewDupes(ctx = {}) {
     chrome.bookmarks.onChanged.addListener(scheduleRefresh);
     chrome.bookmarks.onMoved.addListener(scheduleRefresh);
 
+    // Strategy/scope are custom dropdowns now (native <select> could not
+    // follow the arrow protocol). The scheme checkbox stays a native control
+    // (its change still fires).
+    initDropdowns($list, {
+        onSelect: (dd, value) => {
+            if (dd.classList.contains('dupes-strategy'))
+                store.set('dupesStrategy', value);
+            else if (dd.classList.contains('dupes-scope'))
+                store.set('dupesScope', value);
+            refresh();
+        },
+        rtl: !!(ctx.rtl || (document.body && document.body.classList.contains('rtl')))
+    });
+
     $list.addEventListener('change', e => {
         const el = e.target;
-        if (el.classList.contains('dupes-strategy')) {
-            store.set('dupesStrategy', el.value);
-            refresh();
-        } else if (el.classList.contains('dupes-scope')) {
-            store.set('dupesScope', el.value);
-            refresh();
-        } else if (el.closest('.dupes-scheme')) {
+        if (el.closest('.dupes-scheme')) {
             store.set('dupesIgnoreScheme', el.checked ? '1' : '');
             refresh();
         }

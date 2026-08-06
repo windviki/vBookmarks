@@ -143,9 +143,17 @@ without an enabled control is skipped transparently:
   mirrors); the edges are dead ends — the header-chain contract. This
   supersedes the old view-local seg walkers (stats sort, dead filter),
   which would double-step.
-- **Native semantics win inside a control**: a `<select>` keeps its native
-  `↑`/`↓` (option change when closed, popup navigation when open) — leave
-  it via `←`/`→`. Buttons and the scheme checkbox leave the rung on
+- **Dropdowns follow one shared protocol** (`dropdown.js`; the dupes toolbar's
+  strategy/scope are the first users — native `<select>` handed its open-state
+  keys to the browser, so it could not follow this). On the **closed trigger**:
+  `↓`/`Enter`/`Space` open the list and move focus to the current option, while
+  `↑` is **not** intercepted — the rung walks it to the toolbar/strip/box
+  above. Inside the **open list**: `↑`/`↓` navigate options (greyed options
+  are skipped), `→` (RTL `←`), `Enter` or `Space` picks the focused option,
+  closes and refocuses the trigger, `←` (RTL `→`) or `Esc` cancels — closes,
+  keeps the
+  current pick, refocuses the trigger — and `Tab` picks + closes and lets the
+  browser move focus on. Buttons and the scheme checkbox leave the rung on
   `↑`/`↓`; action keys (Enter/Space/letters) are never hijacked.
 - **Home/End/Page\*** fall through to the list's own handler (first/last
   row, one viewport), unchanged.
@@ -277,7 +285,7 @@ unreachable by `Tab`.
 | Header chain (§2.2) | `search.js` (box `→`), `keyboard.js` headerArrow | `tests/search.test.js`, `tests/keyboard.test.js` (header-row arrows), verify §2.1d |
 | Strip model (§2.3) | `view-manager.js` strip keydown | `tests/view-manager.test.js`, verify §2.2 |
 | List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search-history.test.js`, verify §2.2c/§4.3b |
-| Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render() | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), verify §2.2c |
+| Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render(); the dropdown protocol in `dropdown.js` + `view-dupes.js` (strategy/scope) | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), `tests/dropdown.test.js` (protocol), verify §2.2c |
 | Menus (§2.6) | `keyboard.js` contextKeyDown | `tests/keyboard.test.js`, `tests/context-menu.test.js` |
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |
