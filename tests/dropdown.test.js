@@ -238,4 +238,46 @@ describe('dropdown keyboard protocol', () => {
         expect(ctx.picks).toEqual([[ctx.dd, 'keep-newest']]);
         expect(ctx.isOpen()).toBe(false);
     });
+
+    it('clicking the toolbar outside an open dropdown closes it', () => {
+        const ctx = setup({});
+        const scheme = wireClosest(makeEl('LABEL', ['dupes-scheme']));
+        ctx.container.appendChild(scheme);
+        ctx.click(ctx.trigger); // open
+        expect(ctx.isOpen()).toBe(true);
+        ctx.click(scheme);      // another control — the open dropdown closes
+        expect(ctx.isOpen()).toBe(false);
+        expect(ctx.trigger.getAttribute('aria-expanded')).toBe('false');
+        expect(ctx.picks).toEqual([]); // nothing picked — just dismissed
+    });
+
+    it('opening a second dropdown closes the first (one open per toolbar)', () => {
+        const ctx = setup({});
+        const dd2 = wireClosest(makeEl('DIV', ['vbm-dropdown', 'dupes-scope']));
+        const trigger2 = wireClosest(makeEl('BUTTON', ['vbm-dropdown-trigger']));
+        const list2 = wireClosest(makeEl('UL', ['vbm-dropdown-list']));
+        list2.hidden = true;
+        const o2 = wireClosest(makeEl('LI', ['li']));
+        o2.dataset.value = 'all';
+        o2.setAttribute('aria-selected', 'true');
+        list2.appendChild(o2);
+        o2.classList.add('li');
+        dd2.appendChild(trigger2);
+        dd2.appendChild(list2);
+        ctx.container.appendChild(dd2);
+        dd2._qs['.vbm-dropdown-trigger'] = trigger2;
+        dd2._qs['.vbm-dropdown-list'] = list2;
+        list2._qs['li:focus'] = null;
+        list2._qs['[aria-selected="true"]'] = o2;
+        const origFocus = o2.focus.bind(o2);
+        o2.focus = () => { list2._qs['li:focus'] = o2; origFocus(); };
+
+        ctx.click(ctx.trigger); // open strategy
+        expect(ctx.isOpen()).toBe(true);
+        ctx.click(trigger2);    // open scope — strategy closes
+        expect(ctx.isOpen()).toBe(false);
+        expect(list2.hidden).toBe(false);
+        expect(ctx.dd.classList.contains('open')).toBe(false);
+        expect(dd2.classList.contains('open')).toBe(true);
+    });
 });

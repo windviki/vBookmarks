@@ -162,6 +162,14 @@ body {
     height: 600px;
 }
 
+/* The hidden attribute must win over any author display rule — without this,
+   a reset like `#dupes-list ul { display: block }` (higher specificity than
+   the UA `[hidden]` style) would force the shared dropdown's listbox visible
+   at all times. One !important rule fixes the whole class of conflicts. */
+[hidden] {
+    display: none !important;
+}
+
 body.linux {
     font-size: 12px;
 }
@@ -1544,10 +1552,6 @@ menu[type=context].hide-sort #sort-folder-contents {
     z-index: 400;
 }
 
-#undo-toast[hidden] {
-    display: none;
-}
-
 #undo-toast-text {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1650,10 +1654,6 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     border-radius: var(--vbm-radius);
     box-shadow: 0 8px 40px var(--vbm-shadow);
     z-index: 100;
-}
-
-#command-palette[hidden] {
-    display: none;
 }
 
 #palette-input {
@@ -1991,10 +1991,6 @@ body.no-view-tabs #view-tabs {
     min-height: 0;
     display: flex;
     flex-direction: column;
-}
-
-.view[hidden] {
-    display: none;
 }
 
 /* 150ms single-property fade on view switch (killed by reduced-motion) */
@@ -2533,29 +2529,43 @@ body.panel-mode .vbm-row .row-sub {
     background: var(--vbm-bg);
     color: var(--vbm-fg);
     font-size: 11px;
-    padding: 1px 4px;
+    padding: 2px 6px;
     cursor: pointer;
     white-space: nowrap;
+}
+
+.dupes-toolbar .vbm-dropdown-trigger:hover {
+    background: var(--vbm-bg-hover);
+}
+
+/* The open dropdown reads as an active control: accent border + tinted
+   background, chevron flipped to point up. */
+.dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger {
+    border-color: var(--vbm-accent);
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-accent);
 }
 
 .dupes-toolbar .vbm-dropdown-trigger .vbm-icon {
     width: 11px;
     height: 11px;
+    flex: none;
     color: var(--vbm-muted);
     transform: rotate(90deg); /* right chevron → down */
 }
 
 .dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger .vbm-icon {
+    color: var(--vbm-accent);
     transform: rotate(270deg);
 }
 
 .dupes-toolbar .vbm-dropdown-list {
     position: absolute;
     top: 100%;
-    left: 0;
+    inset-inline-start: 0; /* auto-flips with the popup's RTL direction */
     z-index: 300; /* above the rows */
     margin: 2px 0 0;
-    padding: 2px;
+    padding: 4px;
     min-width: 100%;
     max-height: 240px;
     overflow-y: auto;
@@ -2567,27 +2577,33 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 .dupes-toolbar .vbm-dropdown-list li {
-    padding: 2px 8px;
+    padding: 4px 10px;
     border-radius: 4px;
     cursor: pointer;
     white-space: nowrap;
     color: var(--vbm-fg);
 }
 
+.dupes-toolbar .vbm-dropdown-list li:hover,
+.dupes-toolbar .vbm-dropdown-list li:focus {
+    background: var(--vbm-bg-hover);
+    color: var(--vbm-fg);
+    outline: 0;
+}
+
+/* The selected rule lands after hover so the current pick keeps its tint
+   (accent + weight + bg-selected) even while the pointer sits on it; a
+   different option highlighted underneath still reads as the hovered one. */
 .dupes-toolbar .vbm-dropdown-list li[aria-selected="true"] {
+    background: var(--vbm-bg-selected);
     color: var(--vbm-accent);
     font-weight: 600;
 }
 
-.dupes-toolbar .vbm-dropdown-list li:focus,
-.dupes-toolbar .vbm-dropdown-list li:hover {
-    background: var(--vbm-bg-selected);
-    color: var(--vbm-fg-selected);
-    outline: 0;
-}
-
-.dupes-toolbar .vbm-dropdown-list li.greyed {
+.dupes-toolbar .vbm-dropdown-list li.greyed,
+.dupes-toolbar .vbm-dropdown-list li.greyed:hover {
     color: var(--vbm-muted);
+    background: transparent;
     cursor: default;
 }
 

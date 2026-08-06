@@ -45,7 +45,17 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
 
     const options = list => [...(list ? list.querySelectorAll('li[data-value]') : [])];
 
+    // The single open dropdown in this container, if any. Kept here (not by
+    // re-querying) so an outside click or a second trigger knows what to
+    // close; the toolbar re-renders on every change, so the pointer may go
+    // stale — that is harmless (the detached element just closes itself).
+    let openDd = null;
+
     const open = dd => {
+        // One open dropdown per toolbar: opening one closes any other.
+        if (openDd && openDd !== dd)
+            close(openDd, false);
+        openDd = dd;
         const { trigger, list } = find(dd);
         if (!list)
             return;
@@ -57,6 +67,8 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
     };
 
     const close = (dd, keepFocus) => {
+        if (openDd === dd)
+            openDd = null;
         const { trigger, list } = find(dd);
         if (!list)
             return;
@@ -97,8 +109,14 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
 
     container.addEventListener('click', e => {
         const dd = e.target.closest('.vbm-dropdown');
-        if (!dd)
+        if (!dd) {
+            // Clicking the toolbar outside an open dropdown closes it — a
+            // pick closes its own; this covers changing your mind and hitting
+            // another control (scheme checkbox, apply-all, …) instead.
+            if (openDd)
+                close(openDd, false);
             return;
+        }
         if (e.target.closest('.vbm-dropdown-trigger')) {
             const isOpen = dd.classList.contains('open');
             close(dd, isOpen);
