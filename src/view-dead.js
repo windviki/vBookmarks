@@ -1243,5 +1243,22 @@ export function initViewDead(ctx = {}) {
         onKey
     });
 
+    // Cold-start badge: the dead tab's count comes from the stored lastScan,
+    // which activate() only reads once the tab is opened. Reopening the popup
+    // on another view left the badge dark until a switch — preload the cache
+    // right after registration (registration's own renderTabs → updateBadges
+    // ran with lastScan still null) so the count lights immediately.
+    const coldLocal = chrome.storage && chrome.storage.local;
+    if (coldLocal && coldLocal.get) {
+        coldLocal.get([DEAD_LAST_KEY], data => {
+            try {
+                lastScan = data[DEAD_LAST_KEY] ? JSON.parse(data[DEAD_LAST_KEY]) : null;
+            } catch (e) {
+                lastScan = null;
+            }
+            views.updateBadges();
+        });
+    }
+
     return { refresh: render, refreshOverlays, isMarked, toggleMark };
 }

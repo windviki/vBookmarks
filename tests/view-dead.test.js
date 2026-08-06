@@ -364,6 +364,26 @@ describe('view registration (§5.5)', () => {
         expect(ctx.views.badgeCalls).toBeGreaterThan(bumps);
     });
 
+    it('preloads the stored lastScan at init — the badge lights without opening the tab', () => {
+        // Popup reopened on another view: dead never activates, so the badge
+        // must come from an init-time storage read, not the activate hook.
+        const cache = JSON.stringify({
+            ts: 1, scannedCount: 3,
+            results: {
+                '11': { status: 'dead', code: 404 },
+                '12': { status: 'blocked', code: 404 },
+                '13': { status: 'ok', code: 200 }
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        expect(ctx.def().badge()).toBe(2); // dead + blocked, ok excluded
+        // the init preload bumped the badges right after registration
+        expect(ctx.views.badgeCalls).toBeGreaterThan(0);
+        // without a stored scan the cold badge stays hidden (0)
+        const none = setup({});
+        expect(none.def().badge()).toBe(0);
+    });
+
     it('exposes refresh/refreshOverlays/isMarked/toggleMark on the module API', () => {
         const { viewDead } = setup({});
         expect(Object.keys(viewDead).sort())
