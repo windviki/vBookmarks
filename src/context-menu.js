@@ -531,6 +531,11 @@ export function initContextMenu(ctx = {}) {
         // the greyed item is visual state, and the action is impossible.
         if (el.classList.contains('disabled'))
             return;
+        // P3.4: capture the proposed group title BEFORE scheduling getChildren.
+        // clearMenu() at the end of this handler nulls currentContext, and the
+        // group cases below run inside the async callback — reading the title
+        // there would see null and silently produce an untitled group.
+        const groupTitle = rowGroupTitle();
         const li = currentContext.parentNode;
         const id = rowId(li);
         chrome.bookmarks.getChildren(id, children => {
@@ -614,16 +619,15 @@ export function initContextMenu(ctx = {}) {
                 case 'open-bookmarks-in-group': {
                     if (noURLS)
                         return;
-                    actions.openBookmarksInGroup(urls, rowGroupTitle());
+                    actions.openBookmarksInGroup(urls, groupTitle);
                     break;
                 }
                 case 'open-bookmarks-in-group-setup': {
                     if (noURLS)
                         return;
-                    const title = rowGroupTitle();
                     dialogs.GroupDialog.open({
-                        title: title,
-                        color: pickGroupColor(title),
+                        title: groupTitle,
+                        color: pickGroupColor(groupTitle),
                         onConfirm: (t, c) => actions.openBookmarksInGroup(urls, t, c)
                     });
                     break;

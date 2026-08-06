@@ -1987,7 +1987,8 @@ body.no-view-tabs #view-tabs {
 }
 
 .vbm-row .row-path {
-    flex: none;
+    flex: 0 1 auto;
+    min-width: 0;
     max-width: 45%;
     margin-inline-start: 8px;
     color: var(--vbm-muted);

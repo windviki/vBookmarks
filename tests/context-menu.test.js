@@ -984,6 +984,24 @@ describe('tab-group menu items (P3.4 hardening)', () => {
         ctx.openOn(a);
     };
 
+    it('captures the folder group title before the async getChildren resolves (real-Chrome timing)', async () => {
+        // The real chrome.bookmarks.getChildren defers its callback, so by
+        // the time the switch runs, clearMenu() has already nulled
+        // currentContext. The proposed group title must be read synchronously
+        // before the async hop, or the group silently forms untitled.
+        const ctx = setup({ children: { '7': folderChildren } });
+        ctx.chrome.bookmarks.getChildren = (id, cb) =>
+            Promise.resolve().then(() => cb(ctx.chrome.bookmarks.childNodes[id] || []));
+        openFolderMenu(ctx, '7', '1', 'My Folder');
+        fire(ctx.folderMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('open-bookmarks-in-group') }));
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(ctx.actionCalls).toEqual([
+            ['openBookmarksInGroup', ['http://a/', 'http://c/'], 'My Folder']
+        ]);
+    });
+
     it('strips the localized sync suffix from the folder group title (one-click path)', () => {
         const ctx = setup({
             children: { '7': folderChildren },

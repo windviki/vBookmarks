@@ -16,6 +16,10 @@
 #                      dupes/dead views + live dead rescan
 #   shots-guide.js   — guide-only states (search dual zone with history,
 #                      the options Views group card) for docs/guide-v4*.md
+#   shots-tabgroups.js — tab-group surface: folder/bookmark menus, the
+#                      new-group dialog (title + 9 colors), the existing-group
+#                      picker, plus functional assertions that the SW actually
+#                      forms the group / joins it (popup-closing-safe)
 # diag/ holds manual diagnostic probes (diag.js, diag-dead.js, diag-v4t3.js),
 # run on demand: docker run --rm vbm-smoke:local node /work/diag/diag.js
 # Screenshots land in tmp/shots/ (git-ignored).
@@ -50,7 +54,7 @@ docker run --rm "$IMAGE" node /work/verify-keyboard.js
 docker run --rm "$IMAGE" node /work/verify-scrollbars.js
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
-for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js; do
+for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/suites/$suite" >/dev/null

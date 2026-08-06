@@ -20,6 +20,7 @@ Usage:
 
 import json
 import os
+import re
 import sys
 import zipfile
 import argparse
@@ -65,6 +66,8 @@ JS_FILES = [
     'src/dead-links.js',
     'src/dead-proxy.js',
     'src/dead-scan-sw.js',
+    'src/tab-group-utils.js',
+    'src/tab-groups-sw.js',
     'src/session.js',
     'src/undo.js',
     'src/icons.js',
@@ -195,6 +198,12 @@ def collect_files(root, manifest):
     for name in JS_FILES:
         add(name)
 
+    # Recursively resolve every relative `./x.js` / `'./x.js'` import of the
+    # packaged modules — the explicit JS_FILES list alone silently ships a
+    # broken zip when a module is added (e.g. src/tab-groups-sw.js) but
+    # forgotten here: the service worker would fail to import it at runtime.
+    resolve_js_imports(root, included)
+
     # CSS
     for name in CSS_FILES:
         add(name)
@@ -223,6 +232,48 @@ def collect_files(root, manifest):
         del included[arc]
 
     return sorted(included.items())
+
+
+# Matches the repo's ESM import forms: `import { x } from './a.js'`,
+# `import './b.js'` (double or single quotes).
+IMPORT_RE = re.compile(r"""(?:from|import)\s+['"]([^'"]+\.js)['"]""")
+
+
+def resolve_js_imports(root, included):
+    """Add every relative JS import referenced by the packaged modules.
+
+    Walks the packaged .js files until no new file appears; a relative target
+    is resolved against the importing file's directory. Non-relative targets
+    (bare specifiers) and non-.js imports are ignored. This makes the
+    explicit JS_FILES list a seed rather than the whole truth, so a forgotten
+    module can no longer produce a zip that fails to load.
+    """
+    arcnames = set(included)
+    changed = True
+    while changed:
+        changed = False
+        for arc in list(arcnames):
+            if not arc.endswith('.js'):
+                continue
+            try:
+                with open(os.path.join(root, arc), encoding='utf-8') as f:
+                    text = f.read()
+            except OSError:
+                continue
+            for target in IMPORT_RE.findall(text):
+                if not target.startswith('.'):
+                    continue
+                resolved = os.path.normpath(
+                    os.path.join(os.path.dirname(arc), target)).replace('\\', '/')
+                if resolved in arcnames:
+                    continue
+                full = os.path.join(root, resolved)
+                if os.path.isfile(full):
+                    included[resolved] = full
+                    arcnames.add(resolved)
+                    changed = True
+                else:
+                    print(f'WARNING: import target not found: {arc} -> {resolved}')
 
 
 def verify_no_strays(root, included):
