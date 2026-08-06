@@ -1046,8 +1046,10 @@ menu[type=context].hide-editables #folder-delete {
 
 /* --- Tab-group dialog (P3.4: new group title + color) ---
    Reuses the shared body-class + #cover dialog pattern. The 9 swatches are
-   Chrome's tab-group palette (--tg-color on each .tg-* class); the checked
-   radio gets a focus ring around its dot. */
+   Chrome's tab-group palette (--tg-color on each .tg-* class). The color
+   picker mirrors Chrome's own new-group picker: larger dots spaced across the
+   row, a checked dot shows a theme-bg inner dot + colored ring (and a hovered
+   dot scales up slightly); focus-visible keeps the accent ring. */
 .needTabGroup #tab-group-dialog,
 .needGroupPick #tab-group-pick-dialog {
     top: 0;
@@ -1062,7 +1064,7 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 #tab-group-dialog .dialog-text {
-    margin: 0 0 .6em;
+    margin: 0 0 .75em;
     font-weight: bold;
 }
 
@@ -1071,13 +1073,20 @@ menu[type=context].hide-editables #folder-delete {
     display: block;
     font-size: 90%;
     color: var(--vbm-muted);
-    margin: .5em 0 .25em;
+}
+
+#tab-group-title-label {
+    margin: .25em 0 .4em;
+}
+
+#tab-group-color-label {
+    margin: 1.2em 0 0;
 }
 
 #tab-group-dialog input:not([type=radio]) {
     width: 100%;
     box-sizing: border-box;
-    padding: 4px 6px;
+    padding: 6px 8px;
     background: var(--vbm-bg);
     color: var(--vbm-fg);
     border: 1px solid var(--vbm-border);
@@ -1094,29 +1103,55 @@ menu[type=context].hide-editables #folder-delete {
 #tab-group-colors {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 2px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .tab-group-color {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
+    padding: 3px;
+    border-radius: 50%;
 }
 
 .tab-group-color span {
+    position: relative;
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: var(--tg-color);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
+    transition: transform .12s ease, box-shadow .12s ease;
 }
 
-.tab-group-color input:checked + span {
-    box-shadow: 0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--tg-color);
+.tab-group-color:hover span {
+    transform: scale(1.12);
 }
 
 .tab-group-color input:focus-visible + span {
-    box-shadow: 0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--vbm-accent);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06),
+        0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--vbm-accent);
+}
+
+.tab-group-color input:checked + span {
+    transform: scale(1.06);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06),
+        0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--tg-color);
+}
+
+.tab-group-color input:checked + span::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: var(--vbm-bg);
 }
 
 .tg-grey { --tg-color: #5f6368; }
