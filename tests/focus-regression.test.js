@@ -237,6 +237,17 @@ describe('A — view switching + focus landing', () => {
         expect(ctx.views.activeId()).toBe('tree');
     });
 
+    it('Ctrl+digit lands focus in the NEW view even before its rows render (async activate)', () => {
+        const ctx = setup({});
+        ctx.doc.activeElement = ctx.searchInput; // the pre-switch focus spot
+        ctx.key('2', { ctrl: true });
+        expect(ctx.views.activeId()).toBe('search');
+        // search's rows render asynchronously, so focusDefault finds none and
+        // must park on the list container — otherwise ↑/↓ stay dead on the
+        // old focus (the Ctrl+number regression)
+        expect(ctx.doc.activeElement).toBe(ctx.results);
+    });
+
     it('Ctrl+Alt is AltGr (never a jump), and Shift combos are ignored', () => {
         const ctx = setup({});
         expect(ctx.key('1', { ctrl: true, alt: true }).defaultPrevented).toBe(false);

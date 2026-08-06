@@ -239,8 +239,18 @@ export function initViewManager(ctx = {}) {
             return;
         const row = def.listEl.querySelector('.focus')
             || def.listEl.querySelector(ROW_SEL);
-        if (row)
+        if (row) {
             row.focus();
+            return;
+        }
+        // The view's activate hook may render its rows asynchronously (stats
+        // probes history, dead reads the scan cache), so focusDefault can find
+        // nothing yet. Focus the list container itself — the arrow keys then
+        // land in the NEW view (↑ back to the strip/box, ↓ into the rows once
+        // they render) instead of stranding focus in the old spot. Regression:
+        // Ctrl+number switched the view but ↑/↓ stayed dead on the old focus.
+        if (def.listEl && def.listEl.focus)
+            def.listEl.focus();
     };
 
     // v4 task-3 #12: the search box's ↓ needs "the active view's first row"
