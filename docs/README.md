@@ -198,6 +198,49 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+**ver4.0.1 2026/08**
+
+**New**
+
+- **Tab groups for folders & bookmarks**: "open all as a tab group" now creates/joins the group **in the service worker**, so closing the popup mid-flight no longer aborts it. The folder/bookmark context menus add **…and set name/color** (a new-group dialog with a title and nine Chrome-style color swatches) and **open into an existing group** (a picker of your current tab groups); old Chrome or a vanished group falls back to a plain open.
+- **Dead-link batch delete**: the toolbar's red **Delete all** removes every row in the current filter (All / Dead / Blocked; the confirm shows the exact count); selection mode gains **Delete selected** — both run serially through the undo chain and end in one summary toast.
+- **Folder sorting** ([#33](https://github.com/windviki/vBookmarks/issues/33)): the folder menu offers **Sort by name** / **Sort by date added** as direct commands (recursive folders append "(recursive)") beside **Sort options…**; a new options-page **Sorting** group edits the same persisted `sortOptions` (by / folders-first / recursive). Sorting physically reorders the bookmarks (survives restarts), and every sort is undoable via toast.
+- **Palette theme shortcuts** ([#44](https://github.com/windviki/vBookmarks/issues/44)): next to `/theme <name>`, the direct switches `/dark` `/light` `/ink` `/paper` apply a theme in one keystroke — the exact slash match now always wins the Enter row.
+- **Page context-menu quick-add switch** ([#49](https://github.com/windviki/vBookmarks/issues/49)): the "Bookmark this page" entry is now an independent **Views** toggle (`quickAddContextMenu`) — off removes it from every page on the fly, and the *Restore the classic header* preset covers it too.
+- **Stats view merges recent visits into one list**: bookmarked history rows merge into the main list wearing a solid ★ and their visit count in the pill; a toolbar **Show unbookmarked** checkbox (`statsShowUnbookmarked`) brings in the rest (one-click ☆ files them). The row end reads right-to-left: star → count pill → time.
+- **Shared dropdown component**: the Duplicates strategy/scope selects become a custom dropdown with one keyboard protocol (`↓`/`Enter`/`Space` open, `←`/`Esc` cancel, `Tab` applies) — the browser's native select no longer hijacks the arrows.
+
+**Fixed**
+
+- [#46](https://github.com/windviki/vBookmarks/issues/46): clicking a folder in search results opened the popup's own URL in a new tab — folder rows now jump in place (multi-class matching).
+- [#47](https://github.com/windviki/vBookmarks/issues/47): the Stats "recent" time badge was crushed into a tiny pill — now plain muted text aligned with the path column.
+- "Open all as a tab group" could silently do nothing when the popup closed mid-creation (its tab callbacks were dropped).
+- Dead-link tab badge missing on cold start, and intermittently when opening the popup straight into the dead view — now pre-loaded and refreshed after the async read.
+- Clicking a ghosted/stale row (a folder deleted or synced away mid-redraw) no longer crashes.
+- A context-menu click on a re-rendered row (search-history remove / stats star) no longer throws.
+- Popup height could lock to 300 px while the tree was hidden — invisible trees are no longer measured.
+- Closing the side panel via the toolbar toggle could leave the popup unreachable — restored instantly (Chrome 142+) or via an alarm probe (114–141).
+- `Ctrl/Alt+1-9` stopped working after `Ctrl+2` parked focus in the search box — ordinary inputs no longer swallow view switches (only modal dialogs and the open palette do).
+- `Ctrl+digit` view switches could strand focus in the old view — focus now lands on the new view and the arrows work immediately.
+- In the palette, closing a context menu with `←`/`Esc` stranded focus on a result row — it returns to the input.
+- "Reveal in tree" (`R`) left no keyboard focus — the revealed row now receives it.
+- New-tab-group dialog input misaligned with the color row — now the same width.
+- The packaged zip could silently miss new modules — the packaging script now resolves imports recursively.
+- Stats view overflowed horizontally at narrow widths — the path column now wraps instead of stretching.
+
+**Polish**
+
+- One 16 px line-art SVG icon set: solid/hollow star (stats), flag + trash (dead marks/deletes), check (dupes apply); danger actions stay red.
+- Dialogs: content width-capped and centered with a soft slide-in; the new-tab-group dialog gained breathing room and Chrome-style selected-color states.
+- Dead-link toolbar reordered: scan time → filter segment **with counts** (All 2 · Dead 1 · Blocked 1) → rescan / mark-all / unmark-all / delete-all / select.
+- Row metadata aligned across all list views: time column left, path column right.
+- Root-folder menus disable the actions Chrome refuses (delete, rename, add before/after, separator) instead of erroring.
+
+**Changed**
+
+- Version handling refactored into `src/version.js` (full `major.minor.patch` comparison, threshold "crossed into" checks); the release is **4.0.1 — a silent patch**, so existing 4.0 users don't get a "new version" card.
+- Keyboard model hardening: menu walking skips disabled *and* CSS-hidden items; a new focus-regression suite gates cross-view focus hand-offs.
+
 **ver4.0 2026/07**
 
 New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Alt+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks — running **in the service worker**, so closing the popup mid-scan loses nothing — and its second channel now also supports **your own proxy server** (http/https/socks5): a one-click add button in the view's proxy strip validates the address and probes reachability (unreachable servers are rejected) before saving, change/remove live on the same strip and the options page shows/clears the saved server; routing uses a marker-matched temporary PAC, so only the scanner's own probe URLs go through the proxy (other tabs untouched, settings restored on settle/cancel/popup close, crash residue swept by the service worker); the toolbar adds a dead·blocked summary line and a configure-a-proxy nudge when direct-failing rows have no proxy. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Both bulk tools show a one-time backup-first risk banner. Command palette upgrades: Go commands per view, `/theme <name>`, `/session`, `/options`, aliases, custom slash commands (URL/template/folder-group/view-preset, synced), search bridge row, auto-close on blur. Options: Views group, custom-commands group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).

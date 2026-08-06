@@ -36,7 +36,7 @@
 
 - **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live; turn them off with *Show count badges on the view tabs* (`showTabBadges`).
 - **Visibility**: Settings → the *Views* group hides Stats/Dead/Duplicates individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
-- **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace.
+- **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace. Closing the side panel via the toolbar toggle hands control straight back to the popup — the service worker learns of the close instantly (Chrome 142+) or probes with an alarm (114–141).
 
 ## 2. Full keyboard reference
 
@@ -96,6 +96,8 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 
 On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` jump to the ends, `↑` to the search box, `↓` into the view's toolbar (or the list when there is none).
 
+View switches work even while the search/filter box has focus — only a modal dialog or the open command palette intercepts `Ctrl/Alt+digit`.
+
 ### 2.4 The Esc layer cake
 
 `Esc` always peels exactly one layer, never everything:
@@ -111,9 +113,17 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 ### 2.5 Palette keyboard
 
-`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows (on a custom command row it opens the command's own edit/delete menu); keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically.
+`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows (on a custom command row it opens the command's own edit/delete menu); keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically. Closing that menu (`←`/`Esc`) returns focus to the input.
 
 ## 3. The views, one by one
+
+### 3.0 Tree — the home view
+
+The classic hierarchical tree (startup view). It is where most organizing happens, and its folder/bookmark context menus (right-click or `→`) carry three mechanism groups worth knowing about:
+
+- **Folder sorting** — *Sort by name* / *Sort by date added* sort instantly (recursive folders append "(recursive)"; the persisted `sortOptions` apply), while *Sort options…* fine-tunes; the same settings live on the options page → **Sorting** group. Sorting **physically reorders** the bookmarks, so it survives restarts — and every sort is undoable via a toast.
+- **Tab groups** — *Open all as a tab group* creates/joins the group **in the service worker**, so closing the popup can't abort it; **…and set name/color** opens a new-group dialog (title + nine Chrome-style colors), and *open into an existing group* picks one of your current tab groups. Old Chrome or a vanished group degrades to a plain open.
+- **Root folders** — the actions Chrome refuses on a root (rename, delete, add before/after, separator) are disabled in the menu instead of erroring; adding *inside* the folder and opening stay enabled.
 
 ### 3.1 Search — the dual zone
 
@@ -141,7 +151,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 - **Where counts come from**: ① bookmarks you open from this extension (popup/panel/search/any view); ② a background collector that notices navigations to bookmarked URLs from anywhere else — deduplicated, so one open never counts twice.
 - Rows show a count pill + a relative "last visited"; sort by **count** or **recency** (persisted).
-- **Recently visited section** (optional): reads Chrome history; bookmarked rows wear a ★, everything else has a one-click ☆ to file it. Every row carries the absolute visit time (sharing the second line with the path on wide layouts; the relative-time badge stays on the right). First use requests the optional `history` permission — decline and the section simply never appears.
+- **Recent visits merge into one list**: with history on, bookmarked history rows merge into the main list wearing a solid ★ and their visit count in the pill; the toolbar's **Show unbookmarked** checkbox (`statsShowUnbookmarked`) brings in the rest — one-click ☆ files them, counts come from live visit stats. The row end reads right-to-left: star → count pill → time. First use requests the optional `history` permission — decline and history rows simply never appear.
 - **Privacy switches**: turning off *visit statistics* stops all recording instantly; both the view footer and the options page have a confirm-gated *Clear statistics* button.
 
 ### 3.4 Dead links
@@ -159,6 +169,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 - **Selection mode**: the toolbar's *Select* swaps the idle controls for a batch bar — *All / Invert / Clear* over the filtered rows, then *Mark selected* / *Unmark selected* in one shot (no extra confirm: the explicit selection is the confirmation). `Esc` exits the mode.
 
 ![Dead-link selection mode](images/guide/dead-select.png)
+- **Batch delete**: the toolbar's red *Delete all* removes every row in the current filter (the confirm shows the exact count); in selection mode *Delete selected* removes just those — both run serially through the undo chain and end in one summary toast.
 - **Tuning** (options page → *Dead scan* group): concurrency 1–16 (default 4), timeout 2–30 s (default 8).
 
 ### 3.5 Duplicates
@@ -199,6 +210,7 @@ Every new surface in 4.0 can be switched off. **The fastest route**: the *Restor
 | An even quieter strip | Individually hide Stats/Dead/Duplicates (`showStatsView`/`showDeadView`/`showDupesView`) or Recent (`showRecentBookmarks`) — the tab, its `Alt+number` jump and its palette command all disappear |
 | No command palette | Turn off **Enable the command palette** (`paletteEnabled`) — `Ctrl/Cmd+K` and the global wake-up both stand down |
 | No quick-add star or tool button | Turn off `quickAddEnabled` / `showToolButton` in the Views group |
+| No "Bookmark this page" in the page's right-click menu | Turn off **Page context-menu quick-add** (`quickAddContextMenu`) — the entry disappears from every page on the fly |
 | Always open on the tree | Turn off **Remember the last active view** (`rememberView`) |
 | No count badges on the tabs | Turn off **Show count badges on the view tabs** (`showTabBadges`) |
 | Classic colors | General → theme: **Light** or **Dark** (Ink/Paper are the new 4.0 faces; Auto follows the OS) |
