@@ -735,7 +735,11 @@ export function initContextMenu(ctx = {}) {
                 currentContext.click();
                 break;
             case 'search-history-menu-remove': {
-                const removeBtn = currentContext.parentNode.querySelector('.search-history-remove');
+                // The row may have been re-rendered away since the menu opened
+                // (currentContext then has no parentNode) — a stale-row click
+                // must not crash on a null querySelector.
+                const removeBtn = currentContext.parentNode &&
+                    currentContext.parentNode.querySelector('.search-history-remove');
                 if (removeBtn)
                     removeBtn.click();
                 break;
@@ -787,7 +791,10 @@ export function initContextMenu(ctx = {}) {
                 actions.openBookmarkNewWindow(url, true);
                 break;
             case 'hist-add-bookmark': {
-                const addBtn = currentContext.parentNode.querySelector('.stats-add-btn');
+                // Same stale-row guard as the search-history remove entry: a
+                // re-rendered list can leave currentContext detached.
+                const addBtn = currentContext.parentNode &&
+                    currentContext.parentNode.querySelector('.stats-add-btn');
                 if (addBtn)
                     addBtn.click();
                 break;

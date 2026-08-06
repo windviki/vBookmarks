@@ -1325,6 +1325,21 @@ describe('search-history context menu (round-4 item 7)', () => {
         expect(ctx.searchHistoryMenu.style.opacity).toBe('0');
     });
 
+    it('search-history-menu-remove survives a row re-render (detached currentContext)', () => {
+        // The menu opened on a row that was re-rendered away before the click:
+        // currentContext keeps the detached anchor (parentNode === null), and
+        // the remove handler must not crash on it.
+        const ctx = setup({});
+        const { a } = ctx.makeHistoryRow('git');
+        ctx.openOn(a); // menu opens, currentContext = the history anchor
+        a.parentNode = null; // the row is gone from the DOM
+        expect(() => {
+            fire(ctx.searchHistoryMenu, 'mouseup',
+                makeEvent({ button: 0, target: ctx.menuItem('search-history-menu-remove') }));
+        }).not.toThrow();
+        expect(ctx.searchHistoryMenu.style.opacity).toBe('0'); // still closes
+    });
+
     it('search-history-menu-clear clicks the history area clear-all button', () => {
         const ctx = setup({});
         let clicks = 0;
@@ -1492,6 +1507,21 @@ describe('hist-row context menu (v4 task-3 #10)', () => {
         fire(ctx.histRowMenu, 'mouseup',
             makeEvent({ button: 0, target: ctx.menuItem('hist-add-bookmark') }));
         expect(clicks).toBe(1);
+        expect(ctx.histRowMenu.style.opacity).toBe('0');
+    });
+
+    it('hist-add-bookmark survives a row re-render (detached currentContext)', () => {
+        // stats view re-renders its list on every refresh — a menu opened on a
+        // row can outlive it. The detached anchor's parentNode is null; the
+        // add handler must not crash looking for the ☆ button.
+        const ctx = setup({});
+        const { a } = ctx.makeStatsHistRow();
+        ctx.openOn(a);
+        a.parentNode = null; // the row is gone from the DOM
+        expect(() => {
+            fire(ctx.histRowMenu, 'mouseup',
+                makeEvent({ button: 0, target: ctx.menuItem('hist-add-bookmark') }));
+        }).not.toThrow();
         expect(ctx.histRowMenu.style.opacity).toBe('0');
     });
 
