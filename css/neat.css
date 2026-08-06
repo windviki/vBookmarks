@@ -920,6 +920,10 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 .dialog {
+    /* Shared capped content measure: every direct child and the tab-group
+       name input align to it (the input overrides width:100% with this, so a
+       wide dialog cannot stretch the field past the labels/dots). */
+    --dialog-content-width: min(340px, 100%);
     position: absolute;
     top: -150px;
     left: 0;
@@ -945,7 +949,7 @@ menu[type=context].hide-editables #folder-delete {
    width. The full-width band stays (it reads as a top notification bar), but
    the text and controls form one centered column. */
 .dialog > * {
-    width: min(340px, 100%);
+    width: var(--dialog-content-width);
 }
 
 .transitional .dialog {
@@ -1104,7 +1108,9 @@ menu[type=context].hide-editables #folder-delete {
 }
 
 #tab-group-dialog input:not([type=radio]) {
-    width: 100%;
+    /* capped like the labels/dots — width:100% would otherwise outrun the
+       centered column and misalign the field with the color picker */
+    width: var(--dialog-content-width);
     box-sizing: border-box;
     padding: 6px 8px;
     background: var(--vbm-bg);
@@ -2977,6 +2983,7 @@ body.panel-mode .vbm-row .row-sub {
     flex: 1;
     min-width: 0;
     align-items: flex-start;
+    margin-right: 4px;
 }
 
 /* …and the icon slot tracks the title line's height (1.67em, the anchor's
