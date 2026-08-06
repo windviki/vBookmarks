@@ -2986,8 +2986,18 @@ body.panel-mode .vbm-row .row-sub {
     min-height: 1.67em;
 }
 
-/* Marked rows: the dead-mark button stays lit (not hover-only) so the
-   marked state reads from the row itself too. */
+/* Dead-view row actions: the mark toggle is a flag in the theme accent
+   (danger once the row is marked and stays lit), the delete is a trash can
+   always in danger red — destructive reads red, everything else follows the
+   accent token, per the original color intent. */
+#dead-list .row-btn.dead-mark-btn {
+    color: var(--vbm-accent);
+}
+
+#dead-list .row-btn.dead-del-btn {
+    color: var(--vbm-danger);
+}
+
 #dead-list .row-btn.dead-mark-btn.marked {
     visibility: visible;
     color: var(--vbm-danger);
@@ -3186,15 +3196,13 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
     box-sizing: border-box;
     margin-inline-end: 4px;
     color: var(--vbm-accent);
-    font-size: 14px;
-    line-height: 1;
 }
 
-/* ☆ one-click-add: a HOLLOW red five-pointed star (the ☆ glyph is itself an
-   outline shape) in the same 20px centered slot as the ★ — the two icon
-   columns align across rows. Red hollow reads as the "not yet bookmarked"
-   counterpart to ★'s solid accent, and the solid fill on hover names the
-   action. No box — the previous bordered square never centered the glyph. */
+/* ☆ one-click-add: a HOLLOW star (STAR_ICON) in the same 20px centered slot
+   as the filled ★ (STAR_ICON_FILLED) — the two icon columns align across
+   rows. Hollow + danger red reads as the "not yet bookmarked" counterpart to
+   ★'s solid accent; one shared star path keeps both in a single design
+   language. No box — the previous bordered square never centered the glyph. */
 #stats-list .stats-add-btn {
     display: flex;
     align-items: center;
@@ -3203,7 +3211,6 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
     border: 0;
     border-radius: 4px;
     color: var(--vbm-danger);
-    font-size: 14px;
 }
 
 #stats-list .stats-add-btn:hover {

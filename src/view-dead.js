@@ -111,7 +111,7 @@
 import { filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
-import { VIEW_ICONS } from './icons.js';
+import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
@@ -418,9 +418,9 @@ export function initViewDead(ctx = {}) {
                 }) +
                 `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
                 `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
-                `title="${marked ? _m('deadUnmark') : _m('deadMark')}">⚑</button>` +
+                `title="${marked ? _m('deadUnmark') : _m('deadMark')}">${FLAG_ICON}</button>` +
                 `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                `title="${_m('rowActionDelete')}">×</button>` +
+                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
                 '</li>';
         }
         return html + '</ul>';

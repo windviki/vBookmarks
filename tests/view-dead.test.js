@@ -410,6 +410,12 @@ describe('empty state + cached results (§5.5a)', () => {
         // the badge rides the meta slot (the treeRender double renders no pills)
         expect(treeRender.calls.find(c => c.id === '12').meta.badge)
             .toEqual({ text: '404', cls: 'dead' });
+        // the row actions are SVG icons now (flag mark toggle + trash delete),
+        // on the same 16px line grid as the folder/tab icons
+        expect(html).toContain('vbm-icon-flag');
+        expect(html).toContain('vbm-icon-trash');
+        expect(html).not.toMatch(/dead-mark-btn"[^>]*>⚑/);
+        expect(html).not.toMatch(/dead-del-btn"[^>]*>×/);
     });
 
     it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {

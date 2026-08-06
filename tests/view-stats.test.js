@@ -253,8 +253,10 @@ describe('rendering (sort by count, the default)', () => {
         expect(second.rightText).toBe('bar');
         expect(s.$list.innerHTML).toContain('id="stats-item-8"');
         expect(s.$list.innerHTML).toContain('data-node-id="7"');
-        // the ★ rides the line end as a non-interactive marker (aligned with ☆)
+        // the ★ rides the line end as a non-interactive marker (aligned with
+        // ☆) — rendered as the filled STAR_ICON_FILLED svg, not a text glyph
         expect(s.$list.innerHTML).toContain('class="stats-star"');
+        expect(s.$list.innerHTML).toContain('vbm-icon-star-filled');
         expect(s.$list.innerHTML).not.toContain('row-badge starred');
     });
 
@@ -467,9 +469,11 @@ describe('merged list (统计合并)', () => {
             { text: '×5', cls: 'count', aria: 'statsVisitCount[5]' }
         ]);
         expect(html).toContain('class="stats-star"'); // ★ line-end marker
+        expect(html).toContain('vbm-icon-star-filled'); // filled STAR_ICON
         expect(html).not.toContain('row-badge starred');
         // unbookmarked row: no row id, count comes from history visitCount,
-        // ☆ one-click-add button preserved (hollow-outline line-end)
+        // ☆ one-click-add button preserved (hollow-outline line-end) — the
+        // hollow STAR_ICON, same path as the filled marker, danger-red
         const unCall = s.treeRender.calls.find(c => c.url === 'http://elsewhere/');
         expect(unCall.id).toBe(null);
         expect(unCall.meta.badge).toEqual([
@@ -477,6 +481,7 @@ describe('merged list (统计合并)', () => {
             { text: '×1', cls: 'count', aria: 'statsVisitCount[1]' }
         ]);
         expect(html).toContain('class="row-btn stats-add-btn" data-hist-idx="1"');
+        expect(html).toContain('vbm-icon-star'); // hollow STAR_ICON
         expect(html).toContain('statsHistoryAdd');
         // count order interleaves them: 5 > 1
         expect(html.indexOf('stats-item-7')).toBeLessThan(html.indexOf('stats-hist-row'));

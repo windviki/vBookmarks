@@ -93,7 +93,7 @@
  */
 
 import { relTimeLabel } from './tree-render.js';
-import { VIEW_ICONS } from './icons.js';
+import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED } from './icons.js';
 
 // Same escape recipe as the other render modules (self-contained modules).
 const htmlspecialchars = s =>
@@ -358,9 +358,10 @@ export function initViewStats(ctx = {}) {
                             ? `${absTime} · ${path}`
                             : absTime
                     }) +
-                    // ★: bookmarked-state marker, always visible, aligned with
-                    // the unbookmarked rows' ☆ at the line end.
-                    `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">★</span>` +
+                    // ★: bookmarked-state marker (filled star), always visible,
+                    // aligned with the unbookmarked rows' ☆ (hollow star) at
+                    // the line end — one glyph, two states.
+                    `<span class="stats-star" aria-label="${_m('statsHistoryBookmarked')}">${STAR_ICON_FILLED}</span>` +
                     '</li>';
             } else {
                 html += `<li class="vbm-row stats-hist-row" role="listitem">` +
@@ -370,7 +371,7 @@ export function initViewStats(ctx = {}) {
                     }) +
                     `<button type="button" class="row-btn stats-add-btn" data-hist-idx="${row.histIdx}" ` +
                     `aria-label="${htmlspecialchars(_m('statsHistoryAdd'))}" ` +
-                    `title="${htmlspecialchars(_m('statsHistoryAdd'))}">☆</button>` +
+                    `title="${htmlspecialchars(_m('statsHistoryAdd'))}">${STAR_ICON}</button>` +
                     '</li>';
             }
         }

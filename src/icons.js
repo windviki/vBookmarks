@@ -39,6 +39,40 @@ export const CHECK_ICON =
     '<polyline points="5.4 8.2 7.1 9.9 10.7 6.1"/>' +
     '</svg>';
 
+// Bookmark star, hollow (line) form: the quick-add header button and the
+// stats view's one-click "add this history row" action share it. The filled
+// form (STAR_ICON_FILLED) marks the already-bookmarked state in the stats
+// view and the quick-add button's .starred state — one glyph, two states.
+const STAR_PATH = 'M8 1.7l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z';
+export const STAR_ICON =
+    '<svg class="vbm-icon vbm-icon-star" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${STAR_PATH}"/>` +
+    '</svg>';
+export const STAR_ICON_FILLED =
+    '<svg class="vbm-icon vbm-icon-star vbm-icon-star-filled" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true">' +
+    `<path d="${STAR_PATH}"/>` +
+    '</svg>';
+
+// Dead-view row actions, same 16px line grid: the mark toggle is a flag
+// (colored by the theme accent, danger once marked) and the delete button is
+// a trash can (always danger — destructive). Both follow currentColor so the
+// danger/accent tokens decide the actual color.
+export const FLAG_ICON =
+    '<svg class="vbm-icon vbm-icon-flag" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<line x1="3.5" y1="1.5" x2="3.5" y2="14.5"/>' +
+    '<path d="M3.5 2.5h7.6l-1.8 2.1 1.8 2.1H3.5"/>' +
+    '</svg>';
+export const TRASH_ICON =
+    '<svg class="vbm-icon vbm-icon-trash" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M3 4.5h10"/>' +
+    '<path d="M6 4.5V3.2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.3"/>' +
+    '<path d="M4.4 4.5l.6 8.1a1.2 1.2 0 0 0 1.2 1.1h3.6a1.2 1.2 0 0 0 1.2-1.1l.6-8.1"/>' +
+    '</svg>';
+
 // Folder twisty glyph (chevron-right; CSS rotates it 90° on .open rows and
 // mirrors it for RTL). Lives inside <b class="twisty"> in folder rows —
 // smaller optical size than the tile icons, so the stroke reads lighter.
