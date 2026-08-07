@@ -2048,6 +2048,10 @@ body.no-view-tabs #view-tabs {
     min-width: 0;
     max-width: 45%;
     margin-inline-start: 8px;
+    /* the row's right-edge breathing room, matching the tree rows'
+       padding-inline-end:4px and the dead rows' anchor margin-right:4px —
+       without it the right-aligned path text sits flush against the edge. */
+    margin-inline-end: 4px;
     color: var(--vbm-muted);
     font-size: 12px;
     overflow: hidden;
