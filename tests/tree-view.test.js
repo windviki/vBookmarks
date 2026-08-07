@@ -191,6 +191,7 @@ const setup = (opts = {}) => {
     const undefinedChildren = opts.undefinedChildren || [];
     const chromeStub = {
         i18n: { getMessage: key => (key in messages ? messages[key] : `MSG:${key}`) },
+        runtime: { lastError: null },
         bookmarks: {
             getTreeCalls: [],
             getChildrenCalls: [],
@@ -201,7 +202,12 @@ const setup = (opts = {}) => {
             },
             getChildren(id, cb) {
                 this.getChildrenCalls.push(id);
-                cb(undefinedChildren.includes(String(id)) ? undefined : (childrenMap[id] || []));
+                const stale = undefinedChildren.includes(String(id));
+                // Mirror the real API: an invalid id sets runtime.lastError AND
+                // calls back with undefined — callers must read lastError (to
+                // suppress the Unchecked warning) and not crash on undefined.
+                chromeStub.runtime.lastError = stale ? { message: 'Bookmark id is invalid' } : null;
+                cb(stale ? undefined : (childrenMap[id] || []));
             },
             getRecent(n, cb) {
                 this.getRecentCalls.push(n);
@@ -831,8 +837,10 @@ describe('bookmarkHandler', () => {
 
     // A stale/ghost folder row (folder deleted meanwhile, or a row whose id
     // never resolves) makes chrome.bookmarks.getChildren call back with
-    // undefined + lastError — the SPAN branch must not crash on it.
-    it('survives a getChildren(undefined) for a stale folder row on ctrl+click', () => {
+    // undefined + lastError — the SPAN branch must read lastError (so Chrome
+    // never surfaces the Unchecked warning) and not crash. The stub mirrors
+    // the real API: an invalid id sets runtime.lastError AND returns undefined.
+    it('survives a getChildren(undefined + lastError) for a stale folder row on ctrl+click', () => {
         const ctx = setup({ undefinedChildren: ['3'] });
         const { span } = ctx.makeFolder('3', { withUl: true });
         expect(() =>

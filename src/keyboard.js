@@ -529,6 +529,10 @@ export function initKeyboard(ctx = {}) {
                     break;
                 if (li.classList.contains('parent')) {
                     chrome.bookmarks.getChildren(id, children => {
+                        // A stale row (folder gone meanwhile) fails getChildren
+                        // — read lastError to suppress the warning, then guard.
+                        if (chrome.runtime.lastError)
+                            return;
                         // same undefined-guard as bookmarkHandler's folder branch
                         children = children || [];
                         // neatools' Array.map(c => c.url, children).clean():

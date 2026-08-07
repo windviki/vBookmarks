@@ -738,6 +738,10 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
                 // Track the id we're removing so the star refresh won't re-add it.
                 const rmId = bookmark.id;
                 chrome.bookmarks.remove(rmId, () => {
+                    // The bookmark vanished between the search and this
+                    // remove (synced away) — suppress the warning and skip.
+                    if (chrome.runtime.lastError)
+                        return;
                     quickAddBtn.classList.remove('starred');
                     quickAddBtn.title = _m('quickAddBookmark');
                     showQuickAddToast('quickRemoved');

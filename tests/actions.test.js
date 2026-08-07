@@ -169,6 +169,7 @@ const makeChrome = ops => ({
     // mid-flight and drop the pending callbacks otherwise).
     runtime: {
         sent: [],
+        lastError: null,
         sendMessage(msg) {
             this.sent.push(msg);
         }

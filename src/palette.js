@@ -622,8 +622,13 @@ export function initPalette(ctx = {}) {
                     // chrome.bookmarks API must be called; we keep it simple:
                     // fall back to context-menu delete which does the full flow.
                     chrome.bookmarks.getChildren(row.id, children => {
-                        const urlsLen = children.map(c => c.url).filter(Boolean).length;
-                        actions.deleteBookmarks(row.id, urlsLen, children.length - urlsLen);
+                        // A stale row (folder gone meanwhile) fails getChildren
+                        // — suppress the warning and skip, guard the map too.
+                        if (chrome.runtime.lastError)
+                            return;
+                        const kids = children || [];
+                        const urlsLen = kids.map(c => c.url).filter(Boolean).length;
+                        actions.deleteBookmarks(row.id, urlsLen, kids.length - urlsLen);
                     });
                     close();
                 }

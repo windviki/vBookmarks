@@ -327,11 +327,19 @@ export function initTreeRender(ctx = {}) {
                     } else {
                         (_id => {
                             chrome.bookmarks.getChildren(_id, children => {
-                                const html = generateHTML(children, level + 1);
+                                // A folder deleted/synced away between the last
+                                // getTree and this lazy expand fails getChildren
+                                // with lastError — read it to suppress the
+                                // warning; also the row may be gone from the DOM.
+                                if (chrome.runtime.lastError)
+                                    return;
+                                const html = generateHTML(children || [], level + 1);
                                 const div = document.createElement('div');
                                 div.innerHTML = html;
                                 const ul = div.querySelector('ul');
-                                document.getElementById(`neat-tree-item-${_id}`).appendChild(ul);
+                                const row = document.getElementById(`neat-tree-item-${_id}`);
+                                if (row)
+                                    row.appendChild(ul);
                                 div.remove();
                             });
                         })(id);

@@ -162,6 +162,7 @@ const setup = (opts = {}) => {
     const windowCloseCalls = [];
     globalThis.window = { close: () => windowCloseCalls.push('close') };
     const chromeStub = {
+        runtime: { lastError: null },
         bookmarks: {
             childNodes: {},
             getChildren(id, cb) {

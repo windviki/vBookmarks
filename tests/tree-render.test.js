@@ -24,7 +24,7 @@ let lastCreatedDiv;   // captures innerHTML assigned in the lazy-load path
 beforeAll(() => {
     globalThis.chrome = {
         i18n: { getMessage: key => MESSAGES[key] || `MSG:${key}` },
-        runtime: { getURL: path => `chrome-extension://test${path}` },
+        runtime: { getURL: path => `chrome-extension://test${path}`, lastError: null },
         bookmarks: {
             getChildren: (id, cb) => {
                 getChildrenCalls.push(id);

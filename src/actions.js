@@ -607,6 +607,11 @@ export function initActions(ctx = {}) {
             const title = titleNode ? titleNode.textContent.trim() : '';
             undo.capture(id);
             chrome.bookmarks.remove(id, () => {
+                // The node is already gone (double delete / synced away) —
+                // drop the "Bookmark id is invalid" warning and skip the
+                // DOM removal + toast (nothing was deleted to toast about).
+                if (chrome.runtime.lastError)
+                    return;
                 if (li1) {
                     const nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
                     li1.parentNode && li1.parentNode.removeChild(li1);
@@ -638,6 +643,10 @@ export function initActions(ctx = {}) {
             const doDelete = () => {
                 undo.capture(id);
                 chrome.bookmarks.removeTree(id, () => {
+                    // The folder is already gone — suppress the warning and
+                    // skip (no row to remove, nothing to toast about).
+                    if (chrome.runtime.lastError)
+                        return;
                     li.parentNode && li.parentNode.removeChild(li);
                     undo.showToast(_m('deletedFolder', [folderName]));
                 });
