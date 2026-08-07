@@ -165,4 +165,22 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
                 pick(dd); break; // pick + close, browser moves focus out
         }
     }, true);
+
+    // Esc layering: with a dropdown open, Escape must close it before the
+    // popup's own layer chain runs — otherwise Esc on an open listbox would
+    // jump back to the tree or close the popup (keyboard.js's Escape chain is
+    // a document-capture handler that calls stopImmediatePropagation, so it
+    // swallows everything at or below document). Window capture always runs
+    // before ANY document listener regardless of registration order, so this
+    // sits one ring earlier and wins the first look at Esc. The container's
+    // own Escape case stays for list-focused keys (and the jsdom-less tests).
+    if (typeof window !== 'undefined' && window.addEventListener) {
+        window.addEventListener('keydown', e => {
+            if (e.key !== 'Escape' || !openDd)
+                return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            close(openDd, true);
+        }, true);
+    }
 }

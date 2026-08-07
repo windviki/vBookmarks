@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import { initDropdowns } from '../src/dropdown.js';
 
 // The shared dropdown keyboard protocol (dropdown.js) — the exact contract
@@ -74,6 +74,16 @@ const setup = (opts = {}) => {
     doc = { activeElement: null };
     globalThis.document = doc;
 
+    // window stub: the Esc-layering handler registers on window capture (it
+    // must run before the popup's document-capture Escape chain).
+    const windowEvents = {};
+    globalThis.window = {
+        _listeners: windowEvents,
+        addEventListener(type, fn) {
+            (windowEvents[type] = windowEvents[type] || []).push(fn);
+        }
+    };
+
     // a dropdown: trigger + a listbox of three options (one greyed)
     const dd = wireClosest(makeEl('DIV', ['vbm-dropdown', 'dupes-strategy']));
     const trigger = wireClosest(makeEl('BUTTON', ['vbm-dropdown-trigger']));
@@ -115,9 +125,18 @@ const setup = (opts = {}) => {
         return ev;
     };
     const click = target => fire(container, 'click', { target });
+    const fireWindow = (type, ev) => {
+        for (const fn of (windowEvents[type] || []))
+            fn.call(null, ev);
+    };
 
-    return { container, dd, trigger, list, opt1, opt2, opt3, picks, key, click, isOpen: () => !list.hidden };
+    return { container, dd, trigger, list, opt1, opt2, opt3, picks, key, click,
+        fireWindow, isOpen: () => !list.hidden };
 };
+
+afterEach(() => {
+    delete globalThis.window;
+});
 
 describe('dropdown keyboard protocol', () => {
     it('trigger ↓ opens the list and focuses the current option', () => {
@@ -279,5 +298,38 @@ describe('dropdown keyboard protocol', () => {
         expect(list2.hidden).toBe(false);
         expect(ctx.dd.classList.contains('open')).toBe(false);
         expect(dd2.classList.contains('open')).toBe(true);
+    });
+});
+
+// Esc layering: the dropdown registers on window capture so Escape closes an
+// open listbox BEFORE the popup's document-capture Escape chain (keyboard.js)
+// runs — otherwise Esc on an open dropdown would jump back to the tree.
+describe('Esc layering (window capture)', () => {
+    const esc = () => {
+        const ev = { key: 'Escape', defaultPrevented: false, propagationStopped: false,
+            preventDefault() { this.defaultPrevented = true; },
+            stopImmediatePropagation() { this.propagationStopped = true; } };
+        return ev;
+    };
+
+    it('Escape with a dropdown open closes it and swallows the key', () => {
+        const ctx = setup({});
+        ctx.click(ctx.trigger); // open
+        expect(ctx.isOpen()).toBe(true);
+        const ev = esc();
+        ctx.fireWindow('keydown', ev);
+        expect(ctx.isOpen()).toBe(false);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ev.propagationStopped).toBe(true); // keyboard.js never sees it
+        expect(ctx.trigger.getAttribute('aria-expanded')).toBe('false');
+        expect(doc.activeElement).toBe(ctx.trigger); // focus back on the trigger
+    });
+
+    it('Escape with no open dropdown passes through untouched', () => {
+        const ctx = setup({});
+        const ev = esc();
+        ctx.fireWindow('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(ev.propagationStopped).toBe(false);
     });
 });

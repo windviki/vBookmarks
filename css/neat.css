@@ -2562,14 +2562,20 @@ body.panel-mode .vbm-row .row-sub {
    the same elevated surface (0 8px 24px shadow), 5px vertical padding and
    26px option rows with full-width hover. The option text lines up with the
    trigger's: both start at border 1px + an 8px inline padding, the list
-   itself carries no inline padding to shift them. */
+   itself carries no inline padding to shift them.
+
+   !important on the reset-able spacing is a component contract: the shared
+   list-view reset `#dupes-list ul / #dupes-list ul li { margin:0; padding:0 }`
+   (ID specificity) would otherwise squash the listbox's own 8px option
+   padding — which is exactly what makes the option text line up with the
+   trigger text — and its vertical breathing room. */
 .dupes-toolbar .vbm-dropdown-list {
     position: absolute;
     top: 100%;
     inset-inline-start: 0; /* auto-flips with the popup's RTL direction */
     z-index: 300; /* above the rows */
-    margin: 3px 0 0;
-    padding: 5px 0;
+    margin: 3px 0 0 !important;
+    padding: 5px 0 !important;
     min-width: 100%;
     max-height: 240px;
     overflow-y: auto;
@@ -2581,7 +2587,7 @@ body.panel-mode .vbm-row .row-sub {
 }
 
 .dupes-toolbar .vbm-dropdown-list li {
-    padding: 0 8px;
+    padding: 0 8px !important;
     line-height: 26px;
     cursor: pointer;
     white-space: nowrap;
