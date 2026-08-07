@@ -2523,13 +2523,13 @@ body.panel-mode .vbm-row .row-sub {
 .dupes-toolbar .vbm-dropdown-trigger {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
     background: var(--vbm-bg);
     color: var(--vbm-fg);
     font-size: 11px;
-    padding: 2px 6px;
+    padding: 3px 8px;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -2538,17 +2538,16 @@ body.panel-mode .vbm-row .row-sub {
     background: var(--vbm-bg-hover);
 }
 
-/* The open dropdown reads as an active control: accent border + tinted
-   background, chevron flipped to point up. */
+/* The open dropdown reads as an active control: accent border + text,
+   chevron flipped to point up — the trigger becomes the menu's anchor. */
 .dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger {
     border-color: var(--vbm-accent);
-    background: var(--vbm-bg-selected);
     color: var(--vbm-accent);
 }
 
 .dupes-toolbar .vbm-dropdown-trigger .vbm-icon {
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
     flex: none;
     color: var(--vbm-muted);
     transform: rotate(90deg); /* right chevron → down */
@@ -2559,13 +2558,18 @@ body.panel-mode .vbm-row .row-sub {
     transform: rotate(270deg);
 }
 
+/* The listbox is a miniature context menu (menu[type=context]'s recipe):
+   the same elevated surface (0 8px 24px shadow), 5px vertical padding and
+   26px option rows with full-width hover. The option text lines up with the
+   trigger's: both start at border 1px + an 8px inline padding, the list
+   itself carries no inline padding to shift them. */
 .dupes-toolbar .vbm-dropdown-list {
     position: absolute;
     top: 100%;
     inset-inline-start: 0; /* auto-flips with the popup's RTL direction */
     z-index: 300; /* above the rows */
-    margin: 2px 0 0;
-    padding: 4px;
+    margin: 3px 0 0;
+    padding: 5px 0;
     min-width: 100%;
     max-height: 240px;
     overflow-y: auto;
@@ -2573,38 +2577,35 @@ body.panel-mode .vbm-row .row-sub {
     background: var(--vbm-bg-elev);
     border: 1px solid var(--vbm-border);
     border-radius: var(--vbm-radius);
-    box-shadow: 0 4px 12px var(--vbm-shadow);
+    box-shadow: 0 8px 24px var(--vbm-shadow);
 }
 
 .dupes-toolbar .vbm-dropdown-list li {
-    padding: 4px 10px;
-    border-radius: 4px;
+    padding: 0 8px;
+    line-height: 26px;
     cursor: pointer;
     white-space: nowrap;
     color: var(--vbm-fg);
 }
 
+/* Full-width highlight, same as menu[type=context] .menu-item:hover. */
 .dupes-toolbar .vbm-dropdown-list li:hover,
 .dupes-toolbar .vbm-dropdown-list li:focus {
     background: var(--vbm-bg-hover);
-    color: var(--vbm-fg);
     outline: 0;
 }
 
-/* The selected rule lands after hover so the current pick keeps its tint
-   (accent + weight + bg-selected) even while the pointer sits on it; a
-   different option highlighted underneath still reads as the hovered one. */
+/* The current pick: accent text + weight only (no background — the hover
+   state owns the background, so the two never fight). */
 .dupes-toolbar .vbm-dropdown-list li[aria-selected="true"] {
-    background: var(--vbm-bg-selected);
     color: var(--vbm-accent);
     font-weight: 600;
 }
 
-.dupes-toolbar .vbm-dropdown-list li.greyed,
-.dupes-toolbar .vbm-dropdown-list li.greyed:hover {
+/* An unpickable option reads like a disabled menu item. */
+.dupes-toolbar .vbm-dropdown-list li.greyed {
     color: var(--vbm-muted);
-    background: transparent;
-    cursor: default;
+    pointer-events: none;
 }
 
 .dupes-toolbar .dupes-scheme {
@@ -2640,8 +2641,10 @@ body.panel-mode .vbm-row .row-sub {
    wore NATIVE button chrome while the dead toolbar's were flat accent text
    buttons. Same recipe as .dead-toolbar button below, scoped away from the
    two filled accent pills (apply-all / apply-selected keep their primary
-   look — :not() also keeps their hover from going flat). */
-.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected) {
+   look — :not() also keeps their hover from going flat). The dropdown
+   trigger is its own bordered control, so it joins the exclusion list (its
+   (0,2,0) rules would otherwise lose to this (0,3,1) one). */
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger) {
     border: 0;
     border-radius: var(--vbm-radius);
     background: transparent;
@@ -2652,7 +2655,7 @@ body.panel-mode .vbm-row .row-sub {
     white-space: nowrap;
 }
 
-.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):hover {
+.dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger):hover {
     background: var(--vbm-bg-hover);
 }
 
