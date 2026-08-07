@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "En pausa"
   },
-  "deadProxyHint": {
-    "message": "Las URLs de los marcadores se envían a este servicio de terceros. Déjalo vacío para sondear solo directamente."
-  },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
   },
@@ -300,15 +297,12 @@
     "message": "La API de proxy no está disponible en este navegador"
   },
   "deadProxyNudge": {
-    "message": "$count$ marcadores fallaron las comprobaciones directas: una revisión con proxy separa los enlaces realmente rotos de los bloqueados por región.",
+    "message": "$count$ marcadores fallaron en comprobaciones directas: un re-chequeo a través de proxy distingue enlaces muertos reales de los bloqueados por región. Configúralo aquí o en la página de opciones.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Plantilla de relay (configurada en opciones)"
   },
   "deadSummary": {
     "message": "Rotos: $dead$ · Bloqueados: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Servidor proxy para enlaces rotos"
   },
   "deadProxyServerHint": {
-    "message": "Añade y prueba el proxy desde la vista de enlaces rotos; el servidor guardado vuelve a comprobar los fallos directos en cada análisis."
+    "message": "El servidor guardado vuelve a comprobar los marcadores que fallan directamente en cada análisis de enlaces muertos, distinguiendo enlaces muertos reales de los bloqueados por región. Prueba y guarda para probarlo (solo se conserva un servidor accesible); también puedes añadirlo desde la vista de enlaces muertos."
   },
   "deadProxyClear": {
     "message": "Limpiar"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Árbol"
+  },
+  "deadProxyNeverShow": {
+    "message": "No mostrar de nuevo"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Mostrar la sugerencia de añadir un proxy en la vista de enlaces muertos"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Desactivado oculta esa sugerencia allí; el servidor proxy sigue configurable aquí, y un servidor guardado siempre muestra su fila de administración en la vista."
   }
 }

@@ -5,6 +5,7 @@
 <script src="/src/store.js"></script>
 <script src="/src/options.js"></script>
 <script type="module" src="/src/options-palette-commands.js"></script>
+<script type="module" src="/src/options-proxy.js"></script>
 <div class="options-page">
 <h1>
     <img src="/assets/icons/icon.svg" width="32" height="32" alt="">
@@ -134,8 +135,8 @@
 <section class="options-group">
 <h2 id="dead-scan-options"></h2>
 <ul class="options-list">
-    <li><label><span id="option-dead-proxy"></span> <input type="text" id="dead-proxy-template" aria-labelledby="option-dead-proxy" aria-describedby="dead-proxy-hint" spellcheck="false"></label><br><small id="dead-proxy-hint"></small></li>
-    <li><span id="option-dead-proxy-server"></span> <code id="dead-proxy-server-value"></code> <button type="button" id="dead-proxy-server-clear"></button><br><small id="dead-proxy-server-hint"></small></li>
+    <li><span id="option-dead-proxy-server"></span> <input type="text" id="dead-proxy-server-input" aria-labelledby="option-dead-proxy-server" aria-describedby="dead-proxy-server-hint" spellcheck="false" placeholder="127.0.0.1:7890"> <button type="button" id="dead-proxy-server-save"></button> <code id="dead-proxy-server-value"></code> <button type="button" id="dead-proxy-server-clear"></button><br><small id="dead-proxy-server-hint"></small> <span id="dead-proxy-server-error"></span></li>
+    <li><label><input type="checkbox" id="dead-proxy-strip-visible"> <span id="option-dead-proxy-strip"></span></label><br><small id="dead-proxy-strip-hint"></small></li>
     <li><label><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></label></li>
     <li><label><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></label></li>
 </ul>

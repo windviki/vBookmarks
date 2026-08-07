@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Wstrzymane"
   },
-  "deadProxyHint": {
-    "message": "Adresy URL zakładek są wysyłane do tej usługi zewnętrznej. Pozostaw puste, aby sondować tylko bezpośrednio."
-  },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
   },
@@ -300,15 +297,12 @@
     "message": "API proxy jest niedostępne w tej przeglądarce."
   },
   "deadProxyNudge": {
-    "message": "$count$ zakładek nie przeszło bezpośrednich testów — ponowne sprawdzenie przez proxy oddziela faktycznie martwe linki od zablokowanych regionalnie.",
+    "message": "Bezpośrednie sprawdzenie nie powiodło się dla $count$ zakładek — sprawdzenie przez proxy oddziela prawdziwie martwe linki od zablokowanych regionalnie. Skonfiguruj je tutaj lub na stronie opcji.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Szablon przekaźnika (ustawiany w opcjach)"
   },
   "deadSummary": {
     "message": "Martwe: $dead$ · Zablokowane: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Serwer proxy dla martwych linków"
   },
   "deadProxyServerHint": {
-    "message": "Dodaj i przetestuj proxy z widoku martwych linków; zapisany serwer ponownie sprawdza bezpośrednie błędy w każdym skanie."
+    "message": "Zapisany serwer ponownie sprawdza zakładki, które nie przeszły bezpośredniego sprawdzenia, podczas każdego skanowania martwych linków, oddzielając prawdziwie martwe linki od zablokowanych regionalnie. Przetestuj i zapisz — to sprawdza serwer (zapisywany jest tylko osiągalny); możesz go też dodać z widoku martwych linków."
   },
   "deadProxyClear": {
     "message": "Wyczyść"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Drzewo"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nie pokazuj ponownie"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Pokaż wskazówkę dodawania serwera proxy w widoku martwych linków"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Wyłączenie ukrywa tę wskazówkę; serwer proxy pozostaje tutaj konfigurowalny, a zapisany serwer zawsze pokazuje swój wiersz zarządzania w widoku."
   }
 }

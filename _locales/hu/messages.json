@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Szüneteltetve"
   },
-  "deadProxyHint": {
-    "message": "A könyvjelző URL-ek elküldésre kerülnek erre a harmadik fél által üzemeltetett szolgáltatásra. Hagyja üresen, ha csak közvetlenül szeretne vizsgálni."
-  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },
@@ -300,15 +297,12 @@
     "message": "A proxy API nem érhető el ebben a böngészőben."
   },
   "deadProxyNudge": {
-    "message": "$count$ könyvjelző nem ment át a közvetlen ellenőrzésen — a proxyval végzett újraellenőrzés elválasztja a valódi hibás linkeket a régióban blokkoltaktól.",
+    "message": "$count$ könyvjelző nem ment át a közvetlen ellenőrzésen – a proxy újraellenőrzése elválasztja a valóban megszűnt linkeket a régiókorlátozottaktól. Itt vagy a beállítások oldalán konfigurálhatja.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relé sablon (a beállításokban adható meg)"
   },
   "deadSummary": {
     "message": "Hibás: $dead$ · Blokkolt: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Hibás linkek proxykiszolgálója"
   },
   "deadProxyServerHint": {
-    "message": "Adja hozzá és tesztelje a proxyt a hibás linkek nézetében; a mentett kiszolgáló minden vizsgálatkor újraellenőrzi a közvetlenül elérhetetlen linkeket."
+    "message": "A mentett szerver minden megszűnt link ellenőrzésekor újraellenőrzi a közvetlen ellenőrzésen elbukott könyvjelzőket, elkülönítve a valóban megszűnt linkeket a régiókorlátozottaktól. A Tesztelés és mentés gomb kipróbálja (csak elérhető szerver marad meg); a megszűnt linkek nézetéből is hozzáadhatja."
   },
   "deadProxyClear": {
     "message": "Törlés"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Fa"
+  },
+  "deadProxyNeverShow": {
+    "message": "Ne mutassa többé"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Jelenítse meg a proxy hozzáadására vonatkozó tippet a holt linkek nézetében"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "A kikapcsolás elrejti ott ezt a tippet; a proxy szerver itt továbbra is beállítható, és egy mentett szerver mindig megjeleníti a kezelési sorát a nézetben."
   }
 }

@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Duraklatıldı"
   },
-  "deadProxyHint": {
-    "message": "Yer imi URL'leri bu üçüncü taraf hizmetine gönderilir. Yalnızca doğrudan yoklama yapmak için boş bırakın."
-  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy API'si bu tarayıcıda kullanılamıyor"
   },
   "deadProxyNudge": {
-    "message": "$count$ yer imi doğrudan kontrollerde başarısız oldu — proxy ile yeniden kontrol, gerçek ölü bağlantıları bölge engeli olanlardan ayırır",
+    "message": "$count$ yer imi doğrudan denetimde başarısız oldu — bir proxy yeniden denetimi, gerçek ölü bağlantıları bölge engelli olanlardan ayırır. Bunu buradan veya seçenekler sayfasından yapılandırın.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Aktarma şablonu (seçeneklerde ayarlanır)"
   },
   "deadSummary": {
     "message": "Ölü: $dead$ · Engellendi: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Ölü bağlantı proxy sunucusu"
   },
   "deadProxyServerHint": {
-    "message": "Proxy'yi ölü bağlantılar görünümünden ekleyin ve test edin; kaydedilen sunucu her taramada doğrudan başarısız sonuçları yeniden kontrol eder."
+    "message": "Kaydedilen sunucu, her ölü bağlantı taramasında doğrudan başarısız olan yer imlerini yeniden denetler ve gerçek ölü bağlantıları bölge engelli olanlardan ayırır. Test et ve kaydet, sunucuyu yoklar (yalnızca erişilebilir bir sunucu saklanır); ayrıca ölü bağlantılar görünümünden ekleyebilirsiniz."
   },
   "deadProxyClear": {
     "message": "Temizle"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Ağaç"
+  },
+  "deadProxyNeverShow": {
+    "message": "Bir daha gösterme"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Ölü bağlantılar görünümünde proxy ekleme ipucunu göster"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Kapalı, oradaki ipucunu gizler; proxy sunucusu burada yapılandırılabilir kalır ve kaydedilmiş bir sunucu görünümde her zaman yönetim satırını gösterir."
   }
 }

@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pausad"
   },
-  "deadProxyHint": {
-    "message": "Bokmärkes-URL:er skickas till denna tredjepartstjänst. Lämna tomt för att endast testa direkt."
-  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy-API:et är inte tillgängligt i den här webbläsaren."
   },
   "deadProxyNudge": {
-    "message": "$count$ bokmärken misslyckades med direkta kontroller — en proxy-omkontroll skiljer verkligt döda länkar från regionsblockerade.",
+    "message": "$count$ bokmärken klarade inte direkta kontroller – en proxy-omkontroll särskiljer riktiga döda länkar från regionsblockerade. Konfigurera det här eller på alternativsidan.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relämall (anges i alternativ)"
   },
   "deadSummary": {
     "message": "Döda: $dead$ · Blockerade: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxyserver för döda länkar"
   },
   "deadProxyServerHint": {
-    "message": "Lägg till och testa proxyn från vyn för döda länkar; den sparade servern används för att omkontrollera direkta fel vid varje skanning."
+    "message": "Den sparade servern gör en ny kontroll av bokmärken som misslyckas direkt vid varje skanning av döda länkar, och skiljer riktiga döda länkar från regionsblockerade. Testa och spara testar servern (endast en nåbar server behålls); du kan också lägga till den från vyn över döda länkar."
   },
   "deadProxyClear": {
     "message": "Rensa"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Träd"
+  },
+  "deadProxyNeverShow": {
+    "message": "Visa inte igen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Visa tipset om att lägga till en proxy i vyn över döda länkar"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Av döljer tipset där; proxyservern förblir konfigurerbar här, och en sparad server visar alltid sin hanteringsrad i vyn."
   }
 }

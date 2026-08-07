@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pauset"
   },
-  "deadProxyHint": {
-    "message": "Bokmerke-URLer sendes til denne tredjepartstjenesten. La stå tom for å bare undersøke direkte."
-  },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy-API-en er ikke tilgjengelig i denne nettleseren"
   },
   "deadProxyNudge": {
-    "message": "$count$ bokmerker feilet ved direkte sjekker — en ny proxy-sjekk skiller ekte døde lenker fra regionsblokkerte",
+    "message": "$count$ bokmerker mislyktes i direkte sjekker — en proxy-re-sjekk skiller ekte døde lenker fra regionblokkerte. Konfigurer det her eller på alternativsiden.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relé-mal (angitt i innstillinger)"
   },
   "deadSummary": {
     "message": "Døde: $dead$ · Blokkert: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxy-server for døde lenker"
   },
   "deadProxyServerHint": {
-    "message": "Legg til og test proxyen fra visningen for døde lenker; den lagrede serveren sjekker direktefeil på nytt i hver skanning."
+    "message": "Den lagrede serveren re-sjekker direkte mislykkede bokmerker i hver død-lenke-skanning, og skiller ekte døde lenker fra regionblokkerte. Test & lagre undersøker den (bare en tilgjengelig server beholdes); du kan også legge den til fra død-lenke-visningen."
   },
   "deadProxyClear": {
     "message": "Tøm"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Tre"
+  },
+  "deadProxyNeverShow": {
+    "message": "Ikke vis igjen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Vis hintet om å legge til proxy i visningen for døde koblinger"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Av skjuler hintet der; proxyserveren forblir konfigurerbar her, og en lagret server viser alltid sin administrasjonsrad i visningen."
   }
 }

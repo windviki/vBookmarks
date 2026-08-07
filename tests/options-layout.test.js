@@ -60,7 +60,12 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
         for (const id of ['custom-icon-preview', 'custom-icon-file', 'default-icon-button',
                 'custom-separator-color', 'custom-separator-title', 'custom-separator-url',
                 'custom-separator-string', 'userstyle',
-                'dead-proxy-template', 'dead-scan-concurrency', 'dead-scan-timeout',
+                // the retired relay-template input is gone; the proxy server row
+                // (input + test-save + clear + hint) and the strip-visibility
+                // checkbox own the dead-scan proxy surface now
+                'dead-proxy-server-input', 'dead-proxy-server-save',
+                'dead-proxy-server-value', 'dead-proxy-server-clear',
+                'dead-proxy-strip-visible', 'dead-scan-concurrency', 'dead-scan-timeout',
                 'reset-button'])
             expect(optionsHtml).toContain(`id="${id}"`);
         // CodeMirror ships with the merged page now

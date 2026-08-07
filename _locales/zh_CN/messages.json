@@ -922,9 +922,6 @@
     "message": "标记所选",
     "description": "Dead view selection mode: mark every selected row as dead."
   },
-  "deadProxyHint": {
-    "message": "书签 URL 会发送给该第三方服务。留空则仅直连探测。"
-  },
   "deadProxyAdd": {
     "message": "添加代理服务器用于死链检测"
   },
@@ -976,15 +973,12 @@
     "message": "当前浏览器不支持代理接口"
   },
   "deadProxyNudge": {
-    "message": "$count$ 个书签直连失败——配置代理可区分真正的死链与区域受限",
+    "message": "$count$ 个书签直连失败——配置代理可区分真正的死链与区域受限。可在此处或设置页配置。",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "中转模板（在选项页配置）"
   },
   "deadSummary": {
     "message": "死链 $dead$ · 受限 $blocked$",
@@ -1110,7 +1104,7 @@
     "message": "死链检测代理服务器"
   },
   "deadProxyServerHint": {
-    "message": "在死链视图中添加并测试代理；保存后每次扫描都会用它复核直连失败的书签。"
+    "message": "保存后每次死链扫描都会用它复核直连失败的书签,区分真正的死链与区域受限。点\"测试并保存\"会探测可达性(只保留可达的服务器);也可在死链视图中添加。"
   },
   "deadProxyClear": {
     "message": "清除"
@@ -1430,5 +1424,14 @@
   },
   "deadPaused": {
     "message": "已暂停"
+  },
+  "deadProxyNeverShow": {
+    "message": "不再显示"
+  },
+  "optionDeadProxyStrip": {
+    "message": "在死链视图显示\"添加代理\"提示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "关闭后隐藏死链视图里的无代理提示;代理服务器仍可在此页配置,已保存的代理在视图中始终显示管理行。"
   }
 }

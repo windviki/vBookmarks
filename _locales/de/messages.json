@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pausiert"
   },
-  "deadProxyHint": {
-    "message": "Lesezeichen-URLs werden an diesen Drittanbieterdienst gesendet. Leer lassen, um nur direkt zu überprüfen."
-  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },
@@ -300,15 +297,12 @@
     "message": "Die Proxy-API ist in diesem Browser nicht verfügbar"
   },
   "deadProxyNudge": {
-    "message": "$count$ Lesezeichen scheiterten an direkten Prüfungen – eine Proxy-Neuprüfung trennt echte tote Links von regional gesperrten.",
+    "message": "$count$ Lesezeichen sind bei der direkten Prüfung fehlgeschlagen – eine erneute Prüfung über einen Proxy trennt echte defekte Links von regional gesperrten. Konfigurieren Sie das hier oder auf der Optionsseite.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relay-Vorlage (in den Optionen festgelegt)"
   },
   "deadSummary": {
     "message": "Tot: $dead$ · Blockiert: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxyserver für tote Links"
   },
   "deadProxyServerHint": {
-    "message": "Fügen Sie den Proxy in der Tote-Links-Ansicht hinzu und testen Sie ihn; der gespeicherte Server prüft bei jedem Scan direkte Fehler erneut."
+    "message": "Der gespeicherte Server überprüft bei jedem Dead-Link-Scan Lesezeichen, die direkt fehlgeschlagen sind, und trennt echte defekte Links von regional gesperrten. Beim Test & Speichern wird der Server geprüft (nur ein erreichbarer Server wird gespeichert); Sie können ihn auch aus der Ansicht für defekte Links hinzufügen."
   },
   "deadProxyClear": {
     "message": "Leeren"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Baum"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nicht mehr anzeigen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Hinweis zum Hinzufügen eines Proxys in der Ansicht für defekte Links anzeigen"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Wenn deaktiviert, wird der Hinweis dort ausgeblendet; der Proxy-Server bleibt hier konfigurierbar, und ein gespeicherter Server zeigt seine Verwaltungszeile stets in der Ansicht an."
   }
 }

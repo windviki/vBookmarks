@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Apturēts"
   },
-  "deadProxyHint": {
-    "message": "Grāmatzīmju URL tiek nosūtīti šim trešās puses pakalpojumam. Atstājiet tukšu, lai aptaujātu tikai tieši."
-  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },
@@ -300,15 +297,12 @@
     "message": "Starpniekservera API nav pieejams šajā pārlūkprogrammā"
   },
   "deadProxyNudge": {
-    "message": "$count$ grāmatzīmēm neizdevās tiešās pārbaudes — starpniekservera atkārtota pārbaude nošķir patiesi bojātas saites no reģionā bloķētām",
+    "message": "$count$ grāmatzīmes neizturēja tiešo pārbaudi — starpniekservera atkārtota pārbaude atšķir patiesi bojātas saites no reģionāli bloķētām. Konfigurējiet to šeit vai opciju lapā.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Starpniekservera veidne (iestatīta opcijās)"
   },
   "deadSummary": {
     "message": "Bojātas: $dead$ · Bloķētas: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Bojātu saišu starpniekserveris"
   },
   "deadProxyServerHint": {
-    "message": "Pievienojiet un pārbaudiet starpniekserveri no bojātu saišu skata; saglabātais serveris katrā skenēšanā atkārtoti pārbauda tiešo pārbaužu kļūmes."
+    "message": "Saglabātais serveris katrā bojātu saišu skenēšanā atkārtoti pārbauda grāmatzīmes, kas neizturēja tiešo pārbaudi, atšķirot patiesi bojātas saites no reģionāli bloķētām. Testēt un saglabāt pārbauda to (tiek saglabāts tikai sasniedzams serveris); varat to pievienot arī no bojātu saišu skata."
   },
   "deadProxyClear": {
     "message": "Notīrīt"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Koks"
+  },
+  "deadProxyNeverShow": {
+    "message": "Vairs nerādīt"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Rādīt proxy pievienošanas norādi bojātu saišu skatā"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Izslēgts slēpj šo norādi; starpposma serveris paliek konfigurējams šeit, un saglabātais serveris vienmēr rāda savu pārvaldīšanas rindu skatā."
   }
 }

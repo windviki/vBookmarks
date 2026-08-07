@@ -159,30 +159,8 @@ const $ = id => document.getElementById(id);
             'sort-options-folders-first', 'sort-options-recursive'])
             $(id).addEventListener('change', saveSort);
 
-        // v4 task-2 (§5.5b/§7): dead-link scan proxy template — empty means
-        // direct probing only. Free-text input, stored verbatim; view-dead
-        // validates the {url} placeholder when a scan starts.
-        const deadProxy = $('dead-proxy-template');
-        deadProxy.value = await getSetting('deadProxyTemplate', '');
-        deadProxy.addEventListener('change', () => setSetting('deadProxyTemplate', deadProxy.value.trim()));
-
-        // The user's own proxy server for the scan's second channel
-        // (dead-proxy.js). Adding/testing lives in the dead-links view — it
-        // needs a click gesture for the optional `proxy` permission prompt
-        // and the reachability probe — so this row is display + clear,
-        // keeping the saved config visible from options as well.
-        const deadProxyServerValue = $('dead-proxy-server-value');
-        const deadProxyServerClear = $('dead-proxy-server-clear');
-        const refreshDeadProxyServer = async () => {
-            const value = await getSetting('deadProxyServer', '');
-            deadProxyServerValue.textContent = value || _m('deadProxyNone');
-            deadProxyServerClear.disabled = !value;
-        };
-        refreshDeadProxyServer();
-        deadProxyServerClear.addEventListener('click', async () => {
-            await removeSetting('deadProxyServer');
-            refreshDeadProxyServer();
-        });
+        // The dead-link proxy server row (add/test/save + display + clear)
+        // is owned by src/options-proxy.js — a module importing dead-proxy.js.
 
         // v4 task-2 slice D (§5.4): the options-page twin of the stats
         // view's clear button — local behavior data needs a one-click
@@ -454,11 +432,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
         document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');
         document.getElementById('stats-clear').innerText = __m('statsClearData');
-        document.getElementById('option-dead-proxy').innerText = __m('optionDeadProxy');
-        document.getElementById('dead-proxy-hint').innerText = __m('deadProxyHint');
-        document.getElementById('option-dead-proxy-server').innerText = __m('optionDeadProxyServer');
-        document.getElementById('dead-proxy-server-clear').innerText = __m('deadProxyClear');
-        document.getElementById('dead-proxy-server-hint').innerText = __m('deadProxyServerHint');
+        // The dead-link proxy server row (label/buttons/hint/error) is bound
+        // by src/options-proxy.js — a module, so it can import dead-proxy.js.
         document.getElementById('option-theme').innerText = __m('optionTheme');
         document.getElementById('option-theme-auto').innerText = __m('optionThemeAuto');
         document.getElementById('option-theme-light').innerText = __m('optionThemeLight');

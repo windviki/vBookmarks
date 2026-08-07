@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pozastavené"
   },
-  "deadProxyHint": {
-    "message": "Adresy URL záložiek sú odosielané tejto tretej strane. Ponechajte prázdne pre priame testovanie."
-  },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy API nie je v tomto prehliadači k dispozícii"
   },
   "deadProxyNudge": {
-    "message": "$count$ záložiek zlyhalo pri priamych kontrolách — kontrola cez proxy oddelí skutočne nefunkčné odkazy od regionálne blokovaných",
+    "message": "$count$ záložiek zlyhalo pri priamej kontrole – opätovná kontrola cez proxy oddelí skutočne mŕtve odkazy od regionálne blokovaných. Nakonfigurujte to tu alebo na stránke možností.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Šablóna relay (nastavená v možnostiach)"
   },
   "deadSummary": {
     "message": "Nefunkčné: $dead$ · Blokované: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxy server pre nefunkčné odkazy"
   },
   "deadProxyServerHint": {
-    "message": "Pridať a otestovať proxy môžete v zobrazení nefunkčných odkazov; uložený server pri každej kontrole znova preverí priame zlyhania."
+    "message": "Uložený server pri každej kontrole mŕtvych odkazov znovu skontroluje záložky, ktoré zlyhali pri priamom teste, a oddelí skutočne mŕtve odkazy od regionálne blokovaných. Testovať a uložiť ho otestuje (zachová sa len dosiahnuteľný server); môžete ho pridať aj z pohľadu mŕtvych odkazov."
   },
   "deadProxyClear": {
     "message": "Vymazať"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Strom"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nezobrazovať znova"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Zobraziť tip na pridanie proxy v zobrazení mŕtvych odkazov"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Vypnutie tento tip v zobrazení skryje; proxy server tu zostáva konfigurovateľný a uložený server sa v zobrazení vždy zobrazí so svojím riadkom správy."
   }
 }

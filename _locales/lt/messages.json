@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pristabdyta"
   },
-  "deadProxyHint": {
-    "message": "Žymių URL siunčiami šiai trečiosios šalies paslaugai. Palikite tuščią, kad tikrintų tiesiogiai."
-  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },
@@ -300,15 +297,12 @@
     "message": "Šioje naršyklėje tarpinio serverio API nepasiekiama"
   },
   "deadProxyNudge": {
-    "message": "$count$ žymių nepraėjo tiesioginių patikrų — pakartotinis tikrinimas per tarpinį serverį atskiria tikrai negyvas nuorodas nuo regionu apribotų.",
+    "message": "$count$ žymės nepraėjo tiesioginės patikros — pakartotinis tikrinimas per tarpinį serverį atskiria tikrai neveikiančias nuorodas nuo regionu blokuotų. Konfigūruokite čia arba parinkčių puslapyje.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relay šablonas (nustatomas parinktyse)"
   },
   "deadSummary": {
     "message": "Negyvos: $dead$ · Užblokuotos: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Negyvų nuorodų tarpinis serveris"
   },
   "deadProxyServerHint": {
-    "message": "Negyvų nuorodų rodinyje pridėkite ir testuokite tarpinį serverį; išsaugotas serveris kiekvieno nuskaitymo metu pakartotinai tikrina tiesioginių patikrų nesėkmes."
+    "message": "Išsaugotas serveris kiekvieno neveikiančių nuorodų nuskaitymo metu pakartotinai tikrina tiesiogiai nepraėjusias žymes, atskirdamas tikrai neveikiančias nuorodas nuo regionu blokuotų. „Bandyti ir išsaugoti“ jį patikrina (išlaikomas tik pasiekiamas serveris); taip pat galite jį pridėti iš neveikiančių nuorodų rodinio."
   },
   "deadProxyClear": {
     "message": "Išvalyti"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Medis"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nerodyti daugiau"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Rodyti proxy pridėjimo užuominą neveikiančių nuorodų rodinyje"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Išjungus, ta užuomina ten paslepiama; proxy serverį vis tiek galima konfigūruoti čia, o išsaugotas serveris visada rodo savo valdymo eilutę rodinyje"
   }
 }

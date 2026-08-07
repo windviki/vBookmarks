@@ -77,7 +77,6 @@ const makeTree = () => [{
     ]
 }];
 
-const PROXY = 'https://relay.example/fetch?target={url}';
 
 // li stub for the overlay assertions: dataset/id + a favicon-container that
 // accepts and removes the .dead-indicator span.
@@ -1227,15 +1226,30 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         expect(html).not.toContain('dead-summary');
     });
 
-    it('no nudge while a relay template is configured (a second channel exists)', () => {
-        const cache = JSON.stringify({
-            ts: 1700000000000, scannedCount: 1,
-            results: { '12': { status: 'dead', code: 404 } }
+    it('no server: the add strip carries a small dismiss ×; clicking it hides the strip', () => {
+        const ctx = setup({});
+        ctx.def().activate();
+        expect(ctx.$list.innerHTML).toContain('dead-proxy-hide');
+        ctx.clickOn({ closest: sel => (sel === '.dead-proxy-hide' ? {} : null) });
+        expect(ctx.store.get('hideDeadProxyStrip')).toBe('1');
+        expect(ctx.$list.innerHTML).not.toContain('dead-proxy-strip');
+    });
+
+    it('a hidden no-server strip stays hidden, but a saved server keeps its manage row', () => {
+        // hidden + no server → the whole strip is gone (options has the entry)
+        const hidden = setup({ storeData: { hideDeadProxyStrip: '1' } });
+        hidden.def().activate();
+        expect(hidden.$list.innerHTML).not.toContain('dead-proxy-strip');
+        // hidden + a saved server → the manage row still shows (never dismissable)
+        const withServer = setup({
+            storeData: { hideDeadProxyStrip: '1', deadProxyServer: 'http://127.0.0.1:7890' }
         });
-        const { $list, def } = setup({ storeData: { deadLastScan: cache, deadProxyTemplate: PROXY } });
-        def().activate();
-        expect($list.innerHTML).toContain('deadProxyTemplateChip');
-        expect($list.innerHTML).not.toContain('deadProxyNudge');
+        withServer.def().activate();
+        const html = withServer.$list.innerHTML;
+        expect(html).toContain('dead-proxy-strip');
+        expect(html).toContain('dead-proxy-change');
+        expect(html).toContain('dead-proxy-remove');
+        expect(html).not.toContain('dead-proxy-hide');
     });
 
     it('a configured server renders the chip with change/remove buttons', () => {

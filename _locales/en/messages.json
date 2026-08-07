@@ -990,10 +990,6 @@
     "message": "Mark selected",
     "description": "Dead view selection mode: mark every selected row as dead."
   },
-  "deadProxyHint": {
-    "message": "Bookmark URLs are sent to this third-party service. Leave empty to probe directly only.",
-    "description": "Privacy hint under the dead-link proxy template setting."
-  },
   "deadProxyAdd": {
     "message": "Add a proxy server for dead-link checks",
     "description": "Dead view proxy strip: button that opens the inline add-proxy panel."
@@ -1060,7 +1056,7 @@
     "description": "Error when chrome.proxy is missing (dead view add-proxy flow or scan gate)."
   },
   "deadProxyNudge": {
-    "message": "$count$ bookmarks failed direct checks — a proxy re-check separates real dead links from region-blocked ones",
+    "message": "$count$ bookmarks failed direct checks — a proxy re-check separates real dead links from region-blocked ones. Configure it here or in the options page.",
     "description": "Dead view proxy strip nudge after a scan with direct-failing rows and no proxy configured; $count$ is the dead row count.",
     "placeholders": {
       "count": {
@@ -1068,9 +1064,9 @@
       }
     }
   },
-  "deadProxyTemplateChip": {
-    "message": "Relay template (set in options)",
-    "description": "Dead view proxy strip chip marking that the legacy relay template channel is configured."
+  "deadProxyNeverShow": {
+    "message": "Don't show again",
+    "description": "Dead view proxy strip: hides the no-server add/nudge hint permanently; the proxy stays configurable from the options page."
   },
   "deadSummary": {
     "message": "Dead: $dead$ · Blocked: $blocked$",
@@ -1208,7 +1204,7 @@
     "description": "Options label for the user's own proxy server used by the dead-link scan's second channel."
   },
   "deadProxyServerHint": {
-    "message": "Add and test the proxy from the dead-links view; the saved server re-checks direct failures in every scan.",
+    "message": "The saved server re-checks direct-failing bookmarks in every dead-link scan, separating real dead links from region-blocked ones. Test & save probes it (only a reachable server is kept); you can also add it from the dead-links view.",
     "description": "Hint under the options page's dead-link proxy server row."
   },
   "deadProxyClear": {
@@ -1218,6 +1214,14 @@
   "deadProxyNone": {
     "message": "(not set)",
     "description": "Placeholder shown when no dead-link proxy server is configured (options page)."
+  },
+  "optionDeadProxyStrip": {
+    "message": "Show the add-a-proxy hint in the dead-links view",
+    "description": "Options checkbox controlling the dead view's no-server proxy hint strip (add button + nudge + dismiss ×)."
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Off hides that hint there; the proxy server stays configurable here, and a saved server always shows its manage row in the view.",
+    "description": "Hint under the options checkbox controlling the dead view's proxy hint strip."
   },
   "optionDeadScanConcurrency": {
     "message": "Dead-link scan concurrency (1-16)",

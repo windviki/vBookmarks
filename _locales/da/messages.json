@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pauseret"
   },
-  "deadProxyHint": {
-    "message": "Bogmærke-URL'er sendes til denne tredjepartstjeneste. Lad feltet være tomt for kun at probe direkte."
-  },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy-API'et er ikke tilgængeligt i denne browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ bogmærker fejlede direkte tjek – en proxy-genkontrol adskiller reelle døde links fra regionalt blokerede.",
+    "message": "$count$ bogmærker fejlede direkte kontrol — en proxy-genkontrol adskiller rigtige døde links fra regionsblokerede. Konfigurer det her eller på indstillingssiden.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relay-skabelon (indstilles i indstillinger)"
   },
   "deadSummary": {
     "message": "Døde: $dead$ · Blokerede: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxyserver til døde links"
   },
   "deadProxyServerHint": {
-    "message": "Tilføj og test proxyen fra visningen af døde links; den gemte server genkontrollerer direkte fejl ved hver scanning."
+    "message": "Den gemte server genkontrollerer bogmærker, der fejler direkte kontrol, i hver død-link-scanning og adskiller rigtige døde links fra regionsblokerede. Test og gem afprøver den (kun en tilgængelig server bevares); du kan også tilføje den fra visningen af døde links."
   },
   "deadProxyClear": {
     "message": "Ryd"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Træ"
+  },
+  "deadProxyNeverShow": {
+    "message": "Vis ikke igen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Vis tip om at tilføje proxy i visningen af døde links"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Fra skjuler tippet der; proxy-serveren forbliver konfigurerbar her, og en gemt server viser altid sin administrationsrække i visningen."
   }
 }

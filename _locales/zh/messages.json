@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "已暂停"
   },
-  "deadProxyHint": {
-    "message": "书签URL将发送至第三方服务。留空则仅直接探测。"
-  },
   "deadProxyAdd": {
     "message": "为死链检查添加代理"
   },
@@ -300,15 +297,12 @@
     "message": "此浏览器不支持代理 API"
   },
   "deadProxyNudge": {
-    "message": "$count$ 个书签未通过直接检查——通过代理重新检查可区分真正的死链与受区域限制的链接",
+    "message": "有 $count$ 个书签未通过直接检查——通过代理复查可区分真正失效链接与地区受限链接。可在此处或选项页配置。",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "中继模板（在选项中设置）"
   },
   "deadSummary": {
     "message": "失效：$dead$ · 被屏蔽：$blocked$",
@@ -658,7 +652,7 @@
     "message": "死链代理服务器"
   },
   "deadProxyServerHint": {
-    "message": "在死链视图中添加并测试代理；保存的服务器将在每次扫描中重新检查直接失败的链接。"
+    "message": "已保存的服务器会在每次死链扫描中重新检查直接失败的书签，从而区分真正失效的链接与地区受限的链接。点击“测试并保存”可对其进行探测（仅保留可访问的服务器）；你也可以从死链视图中添加该服务器。"
   },
   "deadProxyClear": {
     "message": "清除"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "树"
+  },
+  "deadProxyNeverShow": {
+    "message": "不再显示"
+  },
+  "optionDeadProxyStrip": {
+    "message": "在死链视图中显示添加代理提示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "关闭后将在死链视图中隐藏该提示；代理服务器仍可在此处配置，且已保存的服务器始终会在该视图中显示其管理行。"
   }
 }

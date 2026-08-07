@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "In pausa"
   },
-  "deadProxyHint": {
-    "message": "Gli URL dei segnalibri vengono inviati a questo servizio di terze parti. Lascia vuoto per eseguire solo sondaggi diretti."
-  },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
   },
@@ -300,15 +297,12 @@
     "message": "L'API proxy non è disponibile in questo browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ segnalibri non hanno superato i controlli diretti — un ricontrollo tramite proxy distingue i link realmente morti da quelli bloccati per regione.",
+    "message": "$count$ segnalibri non hanno superato i controlli diretti — una nuova verifica tramite proxy distingue i link realmente morti da quelli bloccati per regione. Configuralo qui o nella pagina delle opzioni.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Modello relay (impostato nelle opzioni)"
   },
   "deadSummary": {
     "message": "Morti: $dead$ · Bloccati: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Server proxy per link morti"
   },
   "deadProxyServerHint": {
-    "message": "Aggiungi e testa il proxy dalla vista dei link morti; il server salvato ricontrolla i fallimenti diretti in ogni scansione."
+    "message": "Il server salvato ricontrolla i segnalibri che non superano i controlli diretti a ogni scansione dei link morti, separando i link realmente morti da quelli bloccati per regione. Test e salvataggio lo verificano (viene mantenuto solo un server raggiungibile); puoi anche aggiungerlo dalla vista dei link morti."
   },
   "deadProxyClear": {
     "message": "Cancella"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Albero"
+  },
+  "deadProxyNeverShow": {
+    "message": "Non mostrare più"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Mostra il suggerimento per aggiungere un proxy nella vista dei collegamenti non funzionanti"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Off nasconde quel suggerimento; il server proxy rimane configurabile qui, e un server salvato mostra sempre la relativa riga di gestione nella vista."
   }
 }

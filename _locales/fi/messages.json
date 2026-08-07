@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Keskeytetty"
   },
-  "deadProxyHint": {
-    "message": "Kirjanmerkkien URL-osoitteet lähetetään tälle kolmannen osapuolen palvelulle. Jätä tyhjäksi, jotta tarkistetaan vain suoraan."
-  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },
@@ -300,15 +297,12 @@
     "message": "Välityspalvelimen API ei ole käytettävissä tässä selaimessa"
   },
   "deadProxyNudge": {
-    "message": "$count$ kirjanmerkkiä epäonnistui suorissa tarkistuksissa — välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä",
+    "message": "$count$ kirjanmerkkiä epäonnistui suorissa tarkistuksissa — välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä. Määritä se tässä tai asetussivulla.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Välityspohja (määritetty asetuksissa)"
   },
   "deadSummary": {
     "message": "Kuolleet: $dead$ · Estetyt: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Kuolleiden linkkien välityspalvelin"
   },
   "deadProxyServerHint": {
-    "message": "Lisää ja testaa välityspalvelin kuolleiden linkkien näkymästä; tallennettu palvelin tarkistaa suorat epäonnistumiset uudelleen jokaisessa tarkistuksessa."
+    "message": "Tallennettu palvelin tarkistaa uudelleen suorissa tarkistuksissa epäonnistuneet kirjanmerkit jokaisessa kuolleiden linkkien skannauksessa, erottaen todelliset kuolleet linkit alueellisesti estetyistä. Testaa ja tallenna -toiminto kokeilee sitä (vain toimiva palvelin säilytetään); voit myös lisätä sen kuolleiden linkkien näkymästä."
   },
   "deadProxyClear": {
     "message": "Tyhjennä"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Puu"
+  },
+  "deadProxyNeverShow": {
+    "message": "Älä näytä uudelleen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Näytä välityspalvelimen lisäysvihje kuolleiden linkkien näkymässä"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Poistaminen käytöstä piilottaa vihjeen siellä; välityspalvelin on edelleen määritettävissä täällä, ja tallennettu palvelin näyttää aina hallintarivinsä kyseisessä näkymässä."
   }
 }

@@ -1,9 +1,9 @@
 /**
- * Real-proxy support for the dead-link scan (post-v4): lets the dual-channel
- * checker route its second channel through the user's OWN HTTP/SOCKS proxy
- * server, instead of only the legacy third-party relay template
- * (`deadProxyTemplate`). The extension never implements a proxy server — it
- * only routes requests through one the user already has.
+ * Real-proxy support for the dead-link scan (post-v4): the dual-channel
+ * checker routes its second channel through the user's OWN HTTP/SOCKS proxy
+ * server (the legacy third-party relay template `deadProxyTemplate` is
+ * retired). The extension never implements a proxy server — it only routes
+ * requests through one the user already has.
  *
  * Mechanism (marker-PAC): chrome.proxy can only change browser-wide proxy
  * settings, and fetch() cannot pick a proxy per request. The trick that

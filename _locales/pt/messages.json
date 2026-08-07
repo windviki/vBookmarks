@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pausado"
   },
-  "deadProxyHint": {
-    "message": "As URLs dos favoritos são enviadas para este serviço terceirizado. Deixe em branco para apenas verificar diretamente."
-  },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
   },
@@ -300,15 +297,12 @@
     "message": "A API de proxy está indisponível neste navegador"
   },
   "deadProxyNudge": {
-    "message": "$count$ favoritos falharam nas verificações diretas — uma re-verificação via proxy separa links realmente quebrados dos bloqueados por região",
+    "message": "$count$ favoritos falharam nas verificações diretas — uma nova verificação via proxy separa links realmente mortos dos bloqueados por região. Configure aqui ou na página de opções.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Modelo de relay (definido nas opções)"
   },
   "deadSummary": {
     "message": "Quebrados: $dead$ · Bloqueados: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Servidor proxy para links quebrados"
   },
   "deadProxyServerHint": {
-    "message": "Adicione e teste o proxy na visualização de links quebrados; o servidor salvo reexamina falhas diretas em cada verificação."
+    "message": "O servidor salvo reverifica favoritos que falham na verificação direta em cada varredura de links mortos, separando links realmente mortos daqueles bloqueados por região. Testar e salvar testa o servidor (apenas um servidor acessível é mantido); você também pode adicioná-lo pela visualização de links mortos."
   },
   "deadProxyClear": {
     "message": "Limpar"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Árvore"
+  },
+  "deadProxyNeverShow": {
+    "message": "Não mostrar novamente"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Mostrar a dica de adicionar proxy na visão de links mortos"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Desativar oculta essa dica lá; o servidor proxy permanece configurável aqui, e um servidor salvo sempre mostra sua linha de gerenciamento na visão."
   }
 }

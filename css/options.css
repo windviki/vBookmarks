@@ -223,12 +223,34 @@ h2{
 .options-list li input#custom-separator-color,
 .options-list li input#custom-separator-title,
 .options-list li input#custom-separator-url,
-.options-list li input#custom-separator-string,
-.options-list li input#dead-proxy-template{
+.options-list li input#custom-separator-string{
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
 	margin-top: 4px;
+}
+/* Dead-link proxy server input rides the row inline (Test & save + display
+   + clear sit beside it), so it stays compact rather than full-card. */
+.options-list li input#dead-proxy-server-input{
+	background: var(--vbm-bg-elev);
+	color: var(--vbm-fg);
+	border: 1px solid var(--vbm-border);
+	border-radius: 6px;
+	padding: 2px 6px;
+	font: inherit;
+	margin: 0;
+	margin-__MSG_@@bidi_start_edge__: 1em;
+	width: 12em;
+}
+/* Result line under the row: failures read as danger, success as accent. */
+.options-list li #dead-proxy-server-error{
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	color: var(--vbm-danger);
+}
+.options-list li #dead-proxy-server-error.ok{
+	color: var(--vbm-accent);
 }
 .options-list li input[type=number]{
 	background: var(--vbm-bg-elev);

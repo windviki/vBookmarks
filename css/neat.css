@@ -3046,6 +3046,32 @@ body.panel-mode .vbm-row .row-sub {
     background: transparent;
 }
 
+/* The no-server hint's dismiss: a small, muted × that hides just the hint —
+   the proxy stays configurable from the options page. Inline-flex centers
+   the 10px glyph; the row keeps the muted read so it never fights the accent
+   add button beside it. */
+.dead-proxy-strip button.dead-proxy-hide {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border-radius: 50%;
+    color: var(--vbm-muted);
+}
+
+.dead-proxy-strip button.dead-proxy-hide:hover {
+    color: var(--vbm-fg);
+    background: var(--vbm-bg-hover);
+}
+
+.dead-proxy-strip button.dead-proxy-hide .vbm-icon {
+    width: 10px;
+    height: 10px;
+}
+
 /* Executable empty state (§3.5): the start row is clickable/focusable. */
 #dead-list ul li.dead-start {
     cursor: pointer;

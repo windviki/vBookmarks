@@ -131,20 +131,20 @@ describe('checkUrl', () => {
 });
 
 // v4 task-2 §5.5b: the two-channel decision matrix. The direct probe runs
-// first; only a direct failure lets the configured proxy channel vote.
+// first; only a direct failure lets the configured proxy channel vote. The
+// legacy relay template (deadProxyTemplate) is retired — the channel is the
+// user's own proxy server (proxyServer: true, marker-PAC from dead-proxy.js).
 describe('checkUrlDual (v4 task-2 §5.5b)', () => {
-    const PROXY = 'https://relay.example/fetch?target={url}';
-
     it('skips non-http(s) URLs without calling fetch', async () => {
         const calls = stubFetch(respond(200));
-        expect(await checkUrlDual('javascript:1', { proxyTemplate: PROXY }))
+        expect(await checkUrlDual('javascript:1', { proxyServer: true }))
             .toEqual({ status: 'skipped', ok: true });
         expect(calls).toHaveLength(0);
     });
 
     it('direct ok → ok, with the proxy left alone', async () => {
         const calls = stubFetch(respond(200));
-        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
         expect(result).toEqual({
             status: 'ok', ok: true, code: 200,
             direct: { status: 200, ok: true }
@@ -153,7 +153,7 @@ describe('checkUrlDual (v4 task-2 §5.5b)', () => {
         expect(calls[0].url).toBe('https://a.com/');
     });
 
-    it('direct fail without a proxy template → dead', async () => {
+    it('direct fail without a proxy → dead', async () => {
         const calls = stubFetch(respond(404));
         const result = await checkUrlDual('https://a.com/');
         expect(result.status).toBe('dead');
@@ -165,23 +165,22 @@ describe('checkUrlDual (v4 task-2 §5.5b)', () => {
 
     it('direct fail + proxy reachable → blocked (ok:false so collectDead picks it up)', async () => {
         const calls = stubFetch(url =>
-            Promise.resolve({ status: url.startsWith(PROXY.split('{')[0]) ? 200 : 404 }));
-        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+            Promise.resolve({ status: url.includes('__vbm_px=1') ? 200 : 404 }));
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
         expect(result.status).toBe('blocked');
         expect(result.ok).toBe(false);
         expect(result.code).toBe(404); // the direct channel's verdict
         expect(result.proxy).toEqual({ status: 200, ok: true });
         expect(calls).toHaveLength(2);
-        expect(calls[1].url).toBe(
-            'https://relay.example/fetch?target=' + encodeURIComponent('https://a.com/'));
+        expect(calls[1].url).toBe('https://a.com/?__vbm_px=1');
     });
 
     it('direct fail + proxy fail → dead (both channels agree)', async () => {
         const calls = stubFetch(url =>
-            url.startsWith(PROXY.split('{')[0])
+            url.includes('__vbm_px=1')
                 ? Promise.reject(new TypeError('Failed to fetch'))
                 : Promise.resolve({ status: 500 }));
-        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
         expect(result.status).toBe('dead');
         expect(result.ok).toBe(false);
         expect(result.code).toBe(500);
@@ -191,13 +190,14 @@ describe('checkUrlDual (v4 task-2 §5.5b)', () => {
 
     it('a direct network error (not just a dead status) also consults the proxy', async () => {
         const calls = stubFetch(url =>
-            url.startsWith(PROXY.split('{')[0])
+            url.includes('__vbm_px=1')
                 ? Promise.resolve({ status: 200 })
                 : Promise.reject(new TypeError('Failed to fetch')));
-        const result = await checkUrlDual('https://a.com/', { proxyTemplate: PROXY });
+        const result = await checkUrlDual('https://a.com/', { proxyServer: true });
         expect(result.status).toBe('blocked');
         expect(result.error).toBe('TypeError');
         expect(calls).toHaveLength(2);
+        expect(calls[1].url).toBe('https://a.com/?__vbm_px=1');
     });
 
     it('proxyServer: direct fail + marker-URL reachable → blocked (dead-proxy.js PAC routing)', async () => {
@@ -225,14 +225,6 @@ describe('checkUrlDual (v4 task-2 §5.5b)', () => {
         const result = await checkUrlDual('https://a.com/', { proxyServer: true });
         expect(result.status).toBe('dead');
         expect(result.proxy).toEqual({ status: 'error', ok: false, error: 'TypeError' });
-    });
-
-    it('proxyServer wins over the legacy relay template when both are set', async () => {
-        const calls = stubFetch(url =>
-            Promise.resolve({ status: url.includes('__vbm_px=1') ? 200 : 404 }));
-        const result = await checkUrlDual('https://a.com/', { proxyServer: true, proxyTemplate: PROXY });
-        expect(result.status).toBe('blocked');
-        expect(calls[1].url).toBe('https://a.com/?__vbm_px=1'); // not the relay
     });
 });
 

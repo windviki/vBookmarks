@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "În pauză"
   },
-  "deadProxyHint": {
-    "message": "URL-urile marcajelor sunt trimise către acest serviciu terț. Lăsați gol pentru a sonda doar direct."
-  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },
@@ -300,15 +297,12 @@
     "message": "API-ul proxy nu este disponibil în acest browser."
   },
   "deadProxyNudge": {
-    "message": "$count$ marcaje au eșuat verificările directe — o reverificare prin proxy separă linkurile moarte reale de cele blocate regional.",
+    "message": "$count$ marcaje nu au trecut verificarea directă — o reverificare prin proxy separă linkurile moarte reale de cele blocate pe regiuni. Configurează aici sau în pagina de opțiuni.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Șablon de releu (setat în opțiuni)"
   },
   "deadSummary": {
     "message": "Moarte: $dead$ · Blocate: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Server proxy pentru linkuri moarte"
   },
   "deadProxyServerHint": {
-    "message": "Adaugă și testează proxy-ul din vizualizarea linkurilor moarte; serverul salvat reverifică eșecurile directe în fiecare scanare."
+    "message": "Serverul salvat reverifică, la fiecare scanare a linkurilor moarte, marcajele care nu au trecut verificarea directă, separând linkurile moarte reale de cele blocate pe regiuni. Testează și salvează îl probează (se păstrează doar un server accesibil); îl poți adăuga și din vizualizarea linkurilor moarte."
   },
   "deadProxyClear": {
     "message": "Șterge"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Arbore"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nu mai afișa"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Afișează sugestia de adăugare a unui proxy în vizualizarea linkurilor moarte"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Dezactivarea ascunde acea sugestie acolo; serverul proxy rămâne configurabil aici, iar un server salvat afișează întotdeauna rândul său de gestionare în vizualizare."
   }
 }

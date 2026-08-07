@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "已暫停"
   },
-  "deadProxyHint": {
-    "message": "書籤 URL 會傳送至此第三方服務。留空則僅直接探測。"
-  },
   "deadProxyAdd": {
     "message": "新增代理伺服器以檢查失效連結"
   },
@@ -300,15 +297,12 @@
     "message": "此瀏覽器不提供代理 API。"
   },
   "deadProxyNudge": {
-    "message": "$count$ 個書籤直接檢查失敗——透過代理重新檢查可區分真正失效連結與受地區限制的連結。",
+    "message": "$count$ 個書籤直接檢查失敗——透過代理重新檢查可區分真正失效連結與受地區限制的連結。可在這裡或選項頁面設定。",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "中繼範本（在選項中設定）"
   },
   "deadSummary": {
     "message": "失效：$dead$ · 被封鎖：$blocked$",
@@ -658,7 +652,7 @@
     "message": "失效連結代理伺服器"
   },
   "deadProxyServerHint": {
-    "message": "在失效連結檢視中新增及測試代理；已儲存的伺服器會在每次掃描時重新檢查直接失敗的項目。"
+    "message": "已儲存的伺服器會在每次失效連結掃描中重新檢查直接失敗的書籤，區分真正失效連結與受地區限制的連結。測試並儲存會探查該伺服器（只保留可連線的伺服器）；你也可以從失效連結檢視中新增。"
   },
   "deadProxyClear": {
     "message": "清除"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "樹狀"
+  },
+  "deadProxyNeverShow": {
+    "message": "不再顯示"
+  },
+  "optionDeadProxyStrip": {
+    "message": "在失效連結檢視中顯示新增代理提示"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "關閉會隱藏該處的提示；代理伺服器仍可在此設定，而已儲存的伺服器一律會在檢視中顯示其管理列。"
   }
 }

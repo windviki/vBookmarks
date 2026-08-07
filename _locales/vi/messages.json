@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Đã tạm dừng"
   },
-  "deadProxyHint": {
-    "message": "URL bookmark được gửi đến dịch vụ bên thứ ba này. Để trống để chỉ thăm dò trực tiếp."
-  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },
@@ -300,15 +297,12 @@
     "message": "API proxy không khả dụng trong trình duyệt này"
   },
   "deadProxyNudge": {
-    "message": "$count$ dấu trang không vượt qua kiểm tra trực tiếp — kiểm tra lại qua proxy sẽ phân biệt liên kết hỏng thực sự với các liên kết bị chặn theo vùng",
+    "message": "$count$ dấu trang không vượt qua kiểm tra trực tiếp — kiểm tra lại qua proxy giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo khu vực. Định cấu hình tại đây hoặc trong trang tùy chọn.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Mẫu chuyển tiếp (đặt trong tùy chọn)"
   },
   "deadSummary": {
     "message": "Hỏng: $dead$ · Bị chặn: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Máy chủ proxy cho liên kết hỏng"
   },
   "deadProxyServerHint": {
-    "message": "Thêm và kiểm tra proxy từ chế độ xem liên kết hỏng; máy chủ đã lưu sẽ kiểm tra lại các lỗi kết nối trực tiếp trong mỗi lần quét."
+    "message": "Máy chủ đã lưu sẽ kiểm tra lại các dấu trang không vượt qua kiểm tra trực tiếp trong mỗi lần quét liên kết chết, giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo khu vực. Kiểm tra và lưu sẽ thử nghiệm máy chủ đó (chỉ giữ lại máy chủ truy cập được); bạn cũng có thể thêm máy chủ từ chế độ xem liên kết chết."
   },
   "deadProxyClear": {
     "message": "Xóa"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Cây"
+  },
+  "deadProxyNeverShow": {
+    "message": "Không hiển thị lại"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Hiển thị gợi ý thêm proxy trong chế độ xem liên kết chết"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Tắt sẽ ẩn gợi ý đó ở đó; máy chủ proxy vẫn có thể định cấu hình tại đây, và máy chủ đã lưu luôn hiển thị hàng quản lý của nó trong chế độ xem."
   }
 }

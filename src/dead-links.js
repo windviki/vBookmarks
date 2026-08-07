@@ -70,12 +70,11 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
 };
 
 // v4 task-2 §5.5b: two-channel probing. The direct fetch runs first; when
-// it fails, a second channel gets its say — either the user's own proxy
-// server (`proxyServer: true`, routed via the marker-PAC session the dead
-// view installs around the scan; see dead-proxy.js) or a legacy relay
-// service (`proxyTemplate`, whose `{url}` placeholder receives the encoded
-// bookmark URL; the relay's own 2xx/3xx means "target reachable through the
-// relay"). The proxy server wins when both exist. The decision matrix:
+// it fails, the user's own proxy server gets the final say (`proxyServer:
+// true` routes the probe via the marker-PAC session the dead view installs
+// around the scan — see dead-proxy.js). The legacy relay template channel
+// (`deadProxyTemplate`) is retired: the real proxy server replaces it. The
+// decision matrix:
 //   direct ok                      → ok
 //   direct fail, no proxy          → dead
 //   direct fail, proxy reachable   → blocked (region/ISP-limited, not dead)
@@ -83,17 +82,15 @@ export const checkUrl = (url, { timeoutMs = 8000, signal } = {}) => {
 //   non-http(s)                    → skipped
 // `blocked` rows carry ok:false — they surface in the dead view (the user
 // decides) but get the amber badge, not the dead ×.
-export const checkUrlDual = (url, { proxyTemplate = '', proxyServer = false, timeoutMs = 8000, signal } = {}) => {
+export const checkUrlDual = (url, { proxyServer = false, timeoutMs = 8000, signal } = {}) => {
     if (!HTTP_URL.test(url || ''))
         return Promise.resolve({ status: 'skipped', ok: true });
     return checkUrl(url, { timeoutMs, signal }).then(direct => {
         if (direct.ok)
             return { status: 'ok', ok: true, code: direct.status, direct };
-        const proxied = proxyServer ? addProxyMarker(url)
-            : proxyTemplate ? proxyTemplate.replace('{url}', encodeURIComponent(url))
-            : '';
-        if (!proxied)
+        if (!proxyServer)
             return { status: 'dead', ok: false, code: direct.status, error: direct.error, direct };
+        const proxied = addProxyMarker(url);
         return checkUrl(proxied, { timeoutMs, signal }).then(proxy =>
             proxy.ok
                 ? { status: 'blocked', ok: false, code: direct.status, error: direct.error, direct, proxy }

@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Dijeda"
   },
-  "deadProxyHint": {
-    "message": "URL bookmark dikirim ke layanan pihak ketiga ini. Biarkan kosong untuk hanya memeriksa langsung."
-  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },
@@ -300,15 +297,12 @@
     "message": "API proxy tidak tersedia di peramban ini"
   },
   "deadProxyNudge": {
-    "message": "$count$ penanda gagal pemeriksaan langsung — pemeriksaan ulang melalui proxy memisahkan tautan mati yang sesungguhnya dari yang diblokir wilayah",
+    "message": "$count$ penanda gagal dalam pemeriksaan langsung — pemeriksaan ulang proxy memisahkan tautan mati yang sebenarnya dari yang diblokir wilayah. Konfigurasikan di sini atau di halaman opsi.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Templat relai (diatur di opsi)"
   },
   "deadSummary": {
     "message": "Mati: $dead$ · Diblokir: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Server proxy tautan mati"
   },
   "deadProxyServerHint": {
-    "message": "Tambahkan dan uji proxy dari tampilan tautan mati; server yang disimpan akan memeriksa ulang kegagalan langsung di setiap pemindaian."
+    "message": "Server yang tersimpan memeriksa ulang penanda yang gagal dalam pemeriksaan langsung di setiap pemindaian tautan mati, memisahkan tautan mati yang sebenarnya dari yang diblokir wilayah. Uji & simpan mengujinya (hanya server yang dapat dijangkau yang disimpan); Anda juga dapat menambahkannya dari tampilan tautan mati."
   },
   "deadProxyClear": {
     "message": "Bersihkan"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Pohon"
+  },
+  "deadProxyNeverShow": {
+    "message": "Jangan tampilkan lagi"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Tampilkan petunjuk menambah proksi di tampilan tautan mati"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Nonaktif menyembunyikan petunjuk itu di sana; server proksi tetap dapat dikonfigurasi di sini, dan server yang tersimpan selalu menampilkan baris kelolaannya di tampilan."
   }
 }

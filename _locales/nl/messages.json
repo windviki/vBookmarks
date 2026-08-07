@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Gepauzeerd"
   },
-  "deadProxyHint": {
-    "message": "Bladwijzer-URL's worden naar deze externe service gestuurd. Leeg laten om alleen direct te controleren."
-  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },
@@ -300,15 +297,12 @@
     "message": "De proxy-API is niet beschikbaar in deze browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ bookmarks zijn mislukt bij directe controles — een proxyhercontrole onderscheidt echte dode links van regio-geblokkeerde links",
+    "message": "$count$ bladwijzers faalden bij directe controles — een proxy-hercontrole onderscheidt echte dode links van regiogeblokkeerde. Configureer dit hier of op de optiepagina.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Relay-sjabloon (ingesteld in opties)"
   },
   "deadSummary": {
     "message": "Dode: $dead$ · Geblokkeerd: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxyserver voor dode links"
   },
   "deadProxyServerHint": {
-    "message": "Voeg de proxy toe en test deze vanuit de dode-linkweergave; de opgeslagen server hercontroleert directe fouten bij elke scan."
+    "message": "De opgeslagen server hercontroleert bij elke dode-link-scan de bladwijzers die bij de directe controle falen, en scheidt echte dode links van regiogeblokkeerde. Testen en opslaan test dit (alleen een bereikbare server wordt bewaard); je kunt het ook toevoegen vanuit de dode-linksweergave."
   },
   "deadProxyClear": {
     "message": "Wissen"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Boom"
+  },
+  "deadProxyNeverShow": {
+    "message": "Niet meer tonen"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Toon de voeg-een-proxy-tip in de dode links-weergave"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Uit verbergt die tip daar; de proxyserver blijft hier configureerbaar en een opgeslagen server toont altijd zijn beheerrij in de weergave."
   }
 }

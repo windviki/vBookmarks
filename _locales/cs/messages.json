@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pozastaveno"
   },
-  "deadProxyHint": {
-    "message": "URL záložek jsou odesílány této třetí straně. Ponechte prázdné pro přímé testování."
-  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },
@@ -300,15 +297,12 @@
     "message": "API pro proxy není v tomto prohlížeči dostupné"
   },
   "deadProxyNudge": {
-    "message": "U $count$ záložek selhala přímá kontrola — kontrola přes proxy oddělí skutečně nefunkční odkazy od regionálně blokovaných.",
+    "message": "$count$ záložek neprošlo přímou kontrolou — kontrola přes proxy oddělí skutečně mrtvé odkazy od regionálně blokovaných. Nastavte ji zde nebo na stránce možností.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Šablona relay (nastavit v možnostech)"
   },
   "deadSummary": {
     "message": "Nefunkční: $dead$ · Blokováno: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxy server pro nefunkční odkazy"
   },
   "deadProxyServerHint": {
-    "message": "Proxy přidáte a otestujete v zobrazení nefunkčních odkazů; uložený server pak při každém skenování znovu zkontroluje přímé chyby."
+    "message": "Uložený server při každé kontrole mrtvých odkazů znovu prozkoumává záložky, které neprošly přímou kontrolou, a odděluje skutečně mrtvé odkazy od regionálně blokovaných. Funkce Test a uložit ověří server (uchován je pouze dosažitelný); můžete jej také přidat z pohledu mrtvých odkazů."
   },
   "deadProxyClear": {
     "message": "Vymazat"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Strom"
+  },
+  "deadProxyNeverShow": {
+    "message": "Nezobrazovat znovu"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Zobrazit nápovědu k přidání proxy v zobrazení mrtvých odkazů"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Vypnuto skryje tuto nápovědu v tomto zobrazení; proxy server zůstává zde konfigurovatelný a uložený server v zobrazení vždy zobrazí svůj řádek pro správu."
   }
 }

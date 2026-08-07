@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Pauzirano"
   },
-  "deadProxyHint": {
-    "message": "URL-ovi oznaka šalju se ovoj usluzi treće strane. Ostavite prazno za izravno ispitivanje."
-  },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
   },
@@ -300,15 +297,12 @@
     "message": "Proxy API nije dostupan u ovom pregledniku."
   },
   "deadProxyNudge": {
-    "message": "$count$ zabilješki nije prošlo izravne provjere — ponovna provjera putem proxyja razdvaja stvarno mrtve veze od onih blokiranih za regiju.",
+    "message": "Knjižne oznake koje nisu prošle izravnu provjeru: $count$ — ponovna provjera putem proxyja odvaja stvarno mrtve poveznice od onih blokiranih za regiju. Konfigurirajte ovdje ili na stranici s opcijama.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Predložak releja (postavlja se u opcijama)"
   },
   "deadSummary": {
     "message": "Mrtve: $dead$ · Blokirane: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Proxy poslužitelj za mrtve veze"
   },
   "deadProxyServerHint": {
-    "message": "Dodajte i testirajte proxy iz prikaza mrtvih veza; spremljeni poslužitelj pri svakom skeniranju ponovno provjerava neuspjele izravne provjere."
+    "message": "Pohranjeni poslužitelj u svakom skeniranju mrtvih poveznica ponovno provjerava oznake koje ne prolaze izravnu provjeru, odvajajući stvarno mrtve poveznice od onih blokiranih za regiju. Opcija Ispitaj i spremi provjerava poslužitelj (zadržava se samo dostupan poslužitelj); možete ga dodati i iz prikaza mrtvih poveznica."
   },
   "deadProxyClear": {
     "message": "Očisti"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Stablo"
+  },
+  "deadProxyNeverShow": {
+    "message": "Ne prikazuj više"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Prikaži naputak za dodavanje proxyja u prikazu mrtvih poveznica"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Isključeno skriva taj naputak tamo; proxy poslužitelj i dalje se može konfigurirati ovdje, a spremljeni poslužitelj uvijek prikazuje svoj redak za upravljanje u prikazu."
   }
 }

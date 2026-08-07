@@ -144,7 +144,6 @@ export function createDeadScanRunner() {
 
     // --- Settings + items -----------------------------------------------------------
     const readSettings = data => ({
-        proxyTemplate: data.deadProxyTemplate || '',
         proxyServer: parseProxyServer(data.deadProxyServer || ''),
         concurrency: Math.min(16, Math.max(1, parseInt(data.deadScanConcurrency || '4', 10) || 4)),
         timeoutMs: Math.min(30, Math.max(2, parseInt(data.deadScanTimeout || '8', 10) || 8)) * 1000,
@@ -167,7 +166,7 @@ export function createDeadScanRunner() {
         return out;
     };
 
-    const SETTING_KEYS = ['deadProxyTemplate', 'deadProxyServer',
+    const SETTING_KEYS = ['deadProxyServer',
         'deadScanConcurrency', 'deadScanTimeout',
         'separatorTitle', 'separatorURL', 'separatorString', 'separators'];
 
@@ -190,7 +189,6 @@ export function createDeadScanRunner() {
             startPaused: paused,
             checker: (url, o) => checkUrlDual(url, {
                 ...o,
-                proxyTemplate: settings.proxyTemplate,
                 proxyServer: proxyOn
             }),
             onResult: (id, result, done) => {

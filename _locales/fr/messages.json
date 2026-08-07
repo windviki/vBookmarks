@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "En pause"
   },
-  "deadProxyHint": {
-    "message": "Les URL des marque-pages sont envoyées à ce service tiers. Laissez vide pour sonder uniquement directement."
-  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },
@@ -300,15 +297,12 @@
     "message": "L'API proxy n'est pas disponible dans ce navigateur"
   },
   "deadProxyNudge": {
-    "message": "$count$ signets ont échoué aux vérifications directes — une revérification via proxy distingue les liens réellement morts de ceux bloqués par région",
+    "message": "$count$ signets ont échoué à la vérification directe — une revérification via proxy distingue les liens réellement morts de ceux bloqués par région. Configurez-la ici ou dans la page d'options.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Modèle de relais (défini dans les options)"
   },
   "deadSummary": {
     "message": "Morts : $dead$ · Bloqués : $blocked$",
@@ -658,7 +652,7 @@
     "message": "Serveur proxy pour liens morts"
   },
   "deadProxyServerHint": {
-    "message": "Ajoutez et testez le proxy depuis la vue des liens morts ; le serveur enregistré revérifie les échecs directs à chaque analyse."
+    "message": "Le serveur enregistré revérifie les signets qui échouent à la vérification directe lors de chaque analyse des liens morts, en distinguant les liens réellement morts de ceux bloqués par région. Le bouton « Tester et enregistrer » sonde le serveur (seul un serveur accessible est conservé) ; vous pouvez aussi l'ajouter depuis la vue des liens morts."
   },
   "deadProxyClear": {
     "message": "Effacer"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Arborescence"
+  },
+  "deadProxyNeverShow": {
+    "message": "Ne plus afficher"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Afficher l'astuce d'ajout de proxy dans la vue des liens morts"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Désactivée masque cette astuce là-bas ; le serveur proxy reste configurable ici, et un serveur enregistré affiche toujours sa ligne de gestion dans la vue."
   }
 }

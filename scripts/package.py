@@ -62,6 +62,7 @@ JS_FILES = [
     'src/palette.js',
     'src/palette-commands.js',
     'src/options-palette-commands.js',
+    'src/options-proxy.js',
     'src/dupes.js',
     'src/dead-links.js',
     'src/dead-proxy.js',

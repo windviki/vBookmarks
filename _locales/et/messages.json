@@ -246,9 +246,6 @@
   "deadPaused": {
     "message": "Peatatud"
   },
-  "deadProxyHint": {
-    "message": "Järjehoidjate URL-id saadetakse sellele kolmanda osapoole teenusele. Jäta tühjaks, et otse kontrollida."
-  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },
@@ -300,15 +297,12 @@
     "message": "Puhverserveri API pole selles brauseris saadaval"
   },
   "deadProxyNudge": {
-    "message": "$count$ järjehoidjat ebaõnnestus otsesel kontrollil — puhverserveri abil saab eristada tõeliselt surnud lingid regioonipiirangutega linkidest",
+    "message": "$count$ järjehoidja puhul ei läbinud otsest kontrolli — puhverserveriga uuesti kontrollimine eristab tegelikud katkised lingid piirkonnapiiranguga linkidest. Seadista see siin või valikute lehel.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
-  },
-  "deadProxyTemplateChip": {
-    "message": "Vahendusmall (seatud suvandites)"
   },
   "deadSummary": {
     "message": "Surnud: $dead$ · Blokeeritud: $blocked$",
@@ -658,7 +652,7 @@
     "message": "Surnud linkide puhverserver"
   },
   "deadProxyServerHint": {
-    "message": "Lisage ja testige puhverserverit surnud linkide vaatest; salvestatud server kontrollib igas skannis otseselt ebaõnnestunud linke."
+    "message": "Salvestatud server kontrollib igal katkiste linkide skaneerimisel uuesti otsesel kontrollil ebaõnnestunud järjehoidjaid, eristades tegelikud katkised lingid piirkonnapiiranguga linkidest. Testi ja salvesta nupp testib seda (ainult kättesaadav server säilitatakse); saate selle lisada ka katkiste linkide vaatest."
   },
   "deadProxyClear": {
     "message": "Tühjenda"
@@ -1406,5 +1400,14 @@
   },
   "viewTree": {
     "message": "Puu"
+  },
+  "deadProxyNeverShow": {
+    "message": "Ära näita enam"
+  },
+  "optionDeadProxyStrip": {
+    "message": "Kuva puhverserveri lisamise vihje surnud linkide vaates"
+  },
+  "optionDeadProxyStripHint": {
+    "message": "Väljas peidab selle vihje seal; puhverserver jääb siin konfigureeritavaks ja salvestatud server kuvab alati oma haldusrea vaates."
   }
 }

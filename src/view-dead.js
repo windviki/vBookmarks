@@ -20,24 +20,27 @@
  * `deadProxyServer` is set (marker-PAC session, see dead-proxy.js: the scan
  * installs a PAC routing only marker-tagged probe URLs through the proxy,
  * so direct and proxied checks run concurrently and no other tab's traffic
- * is touched), else the legacy `deadProxyTemplate` relay (empty = direct
- * only). `deadScanConcurrency` (default 4) and `deadScanTimeout` (default
- * 8s) tune the pool.
+ * is touched; no server = direct only — the legacy `deadProxyTemplate`
+ * relay channel is retired). `deadScanConcurrency` (default 4) and
+ * `deadScanTimeout` (default 8s) tune the pool.
  *
  * Proxy strip (post-v4): a `.dead-proxy-strip` row above the toolbar gives
  * one-click proxy management — no server: an add button (plus a nudge when
- * a finished scan has direct-failing rows and no proxy at all); a saved
- * server: a chip + change/remove. The inline add panel validates the
- * address, checks the `proxy` permission (a REQUIRED install-time
- * permission — Chrome refuses proxy as optional — verified via contains,
- * with a request fallback that never prompts when already granted),
- * refuses servers another extension controls, probes reachability and
- * persists ONLY a reachable one (`deadProxyServer`, the same key the
- * options page displays/clears). The PAC session itself is installed by
- * the service worker at scan start (v4 task-4 #16 moved the scan there —
- * see below); its gate failures come back on the live blob's proxy.gate
- * and surface on the chip. The strip's controls disable mid-scan so the
- * test never clobbers a live session; Esc closes the panel before the
+ * a finished scan has direct-failing rows and no proxy at all) and a
+ * "don't show again" hide; a saved server: a chip + change/remove (a saved
+ * server always keeps its manage row — only the no-server hint is
+ * dismissable, and the options page has a full add/test/clear entry via
+ * src/options-proxy.js). The inline add panel validates the address,
+ * checks the `proxy` permission (a REQUIRED install-time permission —
+ * Chrome refuses proxy as optional — verified via contains, with a request
+ * fallback that never prompts when already granted), refuses servers
+ * another extension controls, probes reachability and persists ONLY a
+ * reachable one (`deadProxyServer`, the same key the options page
+ * reads/clears). The PAC session itself is installed by the service worker
+ * at scan start (v4 task-4 #16 moved the scan there — see below); its gate
+ * failures come back on the live blob's proxy.gate and surface on the
+ * chip. The strip's controls disable mid-scan so the test never clobbers a
+ * live session; Esc closes the panel before the
  * selection/scan layers. The idle toolbar also quantifies the result set
  * (dead N · blocked M) ahead of the filter segments.
  *
@@ -93,8 +96,8 @@
  * are pruned at render.
  *
  * initViewDead(ctx) is called once by neat.js after treeView init.
- * ctx.store            — settings mirror (deadMarks/deadLastScan/deadProxyTemplate/
- *                        deadProxyServer/deadScanConcurrency/deadScanTimeout/showDeadView)
+ * ctx.store            — settings mirror (deadMarks/deadLastScan/deadProxyServer/
+ *                        deadScanConcurrency/deadScanTimeout/showDeadView)
  * ctx.views            — view-manager API (register/isActive/pathOf)
  * ctx.treeRender       — tree-render.js API (generateBookmarkHTML)
  * ctx.separatorManager — isSeparator filtering (separators are http(s),
@@ -286,9 +289,15 @@ export function initViewDead(ctx = {}) {
     // its controls disable mid-scan so a reachability test can never clobber
     // the running scan's PAC session. Carries .vbm-toolbar so keyboard.js's
     // Tab cycle picks the controls up like the main toolbar's.
+    // Dismissable: with no server saved, the strip (add button + nudge) can
+    // be hidden for good — the options page has a full add/test/clear entry
+    // now (src/options-proxy.js), so the hint is not the only way in. A saved
+    // server always keeps its manage row (change/remove) visible.
+    const proxyStripHidden = () => !proxyServerSetting() && store.get('hideDeadProxyStrip', '') === '1';
     const renderProxyStrip = () => {
+        if (proxyStripHidden())
+            return '';
         const server = proxyServerSetting();
-        const template = store.get('deadProxyTemplate', '') || '';
         let html = '<div class="dead-proxy-strip vbm-toolbar">';
         if (proxyPanelOpen) {
             html += `<span class="dead-proxy-hint">${_m('deadProxyPanelHint')}</span>` +
@@ -305,16 +314,21 @@ export function initViewDead(ctx = {}) {
                 `<button class="dead-proxy-change"${live ? ' disabled' : ''}>${_m('deadProxyChange')}</button>` +
                 `<button class="dead-proxy-remove"${live ? ' disabled' : ''}>${_m('deadProxyRemove')}</button>`;
         } else {
-            if (template)
-                html += `<span class="dead-proxy-chip template">${_m('deadProxyTemplateChip')}</span>`;
             html += `<button class="dead-proxy-add"${live ? ' disabled' : ''}>${_m('deadProxyAdd')}</button>`;
-            // The nudge ties the original dual-channel design to the quick
-            // button: direct-failing rows may be region-blocks, not dead.
-            const deadN = !live && !template && lastScan
+            // The nudge ties the dual-channel design to the quick button:
+            // direct-failing rows may be region-blocks, not dead.
+            const deadN = !live && lastScan
                 ? allResultRows().filter(r => r.result.status === 'dead').length
                 : 0;
             if (deadN)
                 html += `<span class="dead-proxy-nudge">${_m('deadProxyNudge', `${deadN}`)}</span>`;
+            // The dismiss is a small × (not a wordy button) — it only hides
+            // the no-server hint; the options page keeps the full add entry.
+            html += `<button class="dead-proxy-hide"${live ? ' disabled' : ''} ` +
+                `title="${_m('deadProxyNeverShow')}" aria-label="${_m('deadProxyNeverShow')}">` +
+                `<svg class="vbm-icon" width="10" height="10" viewBox="0 0 16 16" fill="none" ` +
+                `stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">` +
+                `<path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button>`;
         }
         return html + '</div>';
     };
@@ -968,6 +982,14 @@ export function initViewDead(ctx = {}) {
         if (closest('.dead-proxy-cancel')) {
             e.preventDefault();
             closeProxyPanel();
+            return;
+        }
+        if (closest('.dead-proxy-hide')) {
+            e.preventDefault();
+            // Hide the add/nudge strip for good — the options page keeps a
+            // full proxy add/test/clear entry (src/options-proxy.js).
+            store.set('hideDeadProxyStrip', '1');
+            render();
             return;
         }
         const filterBtn = closest('.dead-filter-btn');
