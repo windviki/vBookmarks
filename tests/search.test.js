@@ -710,6 +710,9 @@ describe('search history area (§3.2/§4.3)', () => {
         expect(html).toContain('<span class="history-meta">searchHistoryResultCount[3]</span>');
         expect(html).toContain('<span class="history-time">timeJustNow</span>');
         expect(html).toContain('class="row-btn search-history-remove"');
+        // the per-entry remove button is a TRASH_ICON SVG now, not a × glyph
+        expect(html).toContain('vbm-icon-trash');
+        expect(html).not.toContain('search-history-remove">×');
     });
 
     it('escapes queries in the row markup', () => {

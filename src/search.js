@@ -50,7 +50,7 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
-import { FOLDER_ICON, VIEW_ICONS } from './icons.js';
+import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON } from './icons.js';
 import { relTimeLabel } from './tree-render.js';
 
 // Same escape recipe as tree-render.js's module-private copy (modules stay
@@ -252,7 +252,7 @@ export function initSearch(ctx = {}) {
                 `<span class="history-meta">${_m('searchHistoryResultCount', `${entry.n | 0}`)}</span>` +
                 `<span class="history-time">${relTimeLabel(entry.ts, _m)}</span>` +
                 `</a>` +
-                `<button type="button" class="row-btn search-history-remove" tabindex="-1" data-q="${htmlspecialchars(q)}" aria-label="${_m('searchHistoryRemove')}">×</button>` +
+                `<button type="button" class="row-btn search-history-remove" tabindex="-1" data-q="${htmlspecialchars(q)}" aria-label="${_m('searchHistoryRemove')}">${TRASH_ICON}</button>` +
                 `</li>`;
         }
         html += '</ul>';
