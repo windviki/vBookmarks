@@ -57,7 +57,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 
 - **`↓` in the search box** lands on the current tab; **`↓` again** enters the next rung down: Stats/Dead/Duplicates stop at the **in-list toolbar's** first control first, and only a further `↓` enters the list (at its remembered row); the tree/search/recent views have no toolbar and go straight to the list.
 - **`↑` past the first row** crosses to the toolbar (to the current tab when there is none); **`↑` on the toolbar** reaches the tab; **`↑` again** the search box. (Hiding the tab strip flows the chain through the remaining rungs directly.)
-- **`←`/`→` on the toolbar** walk every usable control in reading order and stop at the edges (RTL mirrors). **Dropdowns** (the Duplicates strategy/scope) follow their own protocol: on the closed trigger `↓` (`Enter` or `Space`) opens the list and focus moves to the current option, while `↑` leaves the toolbar upward; inside the list `↑`/`↓` move between options (`Home`/`End` jump to the first/last usable one), `→` (`Enter` or `Space`) applies and closes, `←` (or `Esc`) cancels — closes, keeps the current choice and returns focus to the trigger — and `Tab` applies and moves on to the next control. On buttons and checkboxes `↑`/`↓` leave the rung.
+- **`←`/`→` on the toolbar** walk every usable control in reading order and wrap around at the edges (RTL mirrors); the header row stays non-cycling because the search box's caret editing takes priority. **Dropdowns** (the Duplicates strategy/scope) follow their own protocol: on the closed trigger `↓` (`Enter` or `Space`) opens the list and focus moves to the current option, while `↑` leaves the toolbar upward; inside the list `↑`/`↓` move between options (`Home`/`End` jump to the first/last usable one), `→` (`Enter` or `Space`) applies and closes, `←` (or `Esc`) cancels — closes, keeps the current choice and returns focus to the trigger — and `Tab` applies and moves on to the next control. On buttons and checkboxes `↑`/`↓` leave the rung.
 - The toolbar re-renders together with the list (sort toggles, scan progress, regrouping) — **focus is restored in place**, never lost.
 - **`→` on the header row** — once the caret is at the end of the text — leaves the box for the quick-add star, then the tools button; **`←`** walks back and parks the caret at the end, ready to type. RTL locales mirror both.
 - **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → the banner's buttons (only while it is up) → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
@@ -80,6 +80,8 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 | `Ctrl+F` | Focus the search box |
 | `Esc` | Layered exit, see §2.4 |
 
+Inside every context menu (all seven are keyboard-bound — the separator menu's "remove separator" entry is reachable now too): `↑`/`↓` cycle through the items, `Home`/`End` jump to the first/last usable one, `→`/`Enter`/`Space` execute and close — focus returns to the owning row — and `←`/`Esc` cancel and close the same way (RTL mirrors the arrows).
+
 ### 2.3 View-specific and jump keys
 
 | Key | Where | Action |
@@ -94,7 +96,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 | `Alt+Shift+S` | Global (any page) | Quick-add the current tab straight into the quick-add folder |
 | `Alt+Shift+B` | Global | Open the side panel |
 
-On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` jump to the ends, `↑` to the search box, `↓` into the view's toolbar (or the list when there is none).
+On the tab strip itself: `←` `→` switch and activate (mirrored automatically in RTL locales), `Home`/`End` focus the current view's first/last row — they no longer jump between tabs, and with no rows focus stays on the tab — `↑` to the search box, `↓` into the view's toolbar (or the list when there is none).
 
 View switches work even while the search/filter box has focus — only a modal dialog or the open command palette intercepts `Ctrl/Alt+digit`.
 
@@ -163,7 +165,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Runs in the background**: the scan lives in the service worker, not the page — close the popup or side panel mid-scan and it keeps going; reopen to a live mirror of the progress (an interrupted run even resumes itself after a browser restart). Canceling restores the last completed snapshot, and a finished scan paints instantly on the next open.
 - **Control**: `Esc` pauses/resumes without losing progress; the **Rescan** button stays on the toolbar even after a clean scan (zero dead rows).
 - **Live but quiet**: progress ticks repaint the list **without touching your scroll position or focus** — scrolling deep into the results mid-scan no longer snaps back to the top.
-- **Backup first**: the first visit shows a risk banner (bulk changes ahead) with a link to Chrome's own backup & restore guide; *Don't show again* silences it until the next major version, the × for the session.
+- **Backup first**: the first visit shows a risk banner (bulk changes ahead) with a link to Chrome's own backup & restore guide; *Don't show again* silences it until the next major or minor version (patch updates stay silent), the × for the session.
 - **Dual channel**: direct fetch first; on failure your own **proxy server** (http/https/socks5) gets the final say — add it from the proxy strip above the list or in the options page's *Dead scan* group (the address is saved only after a reachability probe passes; unreachable servers are rejected). With no proxy set, the strip's hint can be dismissed with × and brought back from the options page. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
 - **Filter**: All / Dead only / Blocked only, each segment with its live count (e.g. All 2 · Dead 1 · Blocked 1).
 - **Marks**: `M` or the row button flags a link; the red ✕ follows it into the tree, search, recent and stats views. Bulk mark/unmark lives in the toolbar (confirm-gated).
@@ -178,7 +180,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 ![Duplicates view](images/guide/view-dupes.png)
 
 - **What counts as a duplicate**: URLs are normalized before grouping — tracking parameters (`utm_*`/`fbclid`/`gclid`) stripped, `#hash` dropped, root trailing slash folded; the toolbar's *Ignore http/https differences* checkbox merges scheme variants.
-- **Backup first**: the same risk banner as the dead-link view shows before your first cleanup — *Don't show again* silences it until the next major version.
+- **Backup first**: the same risk banner as the dead-link view shows before your first cleanup — *Don't show again* silences it until the next major or minor version (patch updates stay silent).
 - **Keeper strategies** (toolbar select, six): oldest / newest / bookmark-bar / shortest title / shallowest / most-visited (live counts from the Stats view; greyed out while stats are off).
 - **Manual pinning**: the row radio or `K` — manual picks survive strategy changes.
 - **Inside an expanded group**: `Enter`/`Space` opens that copy, `←` jumps back to the group head. The group head's own context menu (right-click or `→`) offers *Clean this group* and expand/collapse.
