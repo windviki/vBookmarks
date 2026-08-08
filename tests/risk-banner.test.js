@@ -59,21 +59,34 @@ describe('risk banner (v4 task-4 #14)', () => {
         expect(b.html()).toBe('');
     });
 
-    it('a MAJOR version bump re-arms an acked banner; minor/patch do not', () => {
-        stubChrome('4.2.0');
+    it('a patch bump stays silent; a minor or major bump re-arms an acked banner', () => {
+        stubChrome('4.0.1');
         const store = makeStore({ deadRiskAck: '4.0.0' });
         const b = makeRiskBanner({ store, ackKey: 'deadRiskAck', textKey: 'deadRiskBanner' });
-        expect(b.visible()).toBe(false); // same major, later minor: stays acked
-        stubChrome('5.0');
+        expect(b.visible()).toBe(false); // patch bump: silent, stays acked
+        stubChrome('4.1.0');
+        expect(b.visible()).toBe(true); // minor bump re-arms
+        stubChrome('5.0.0');
         expect(b.visible()).toBe(true); // major bump re-arms
+        stubChrome('4.0.0');
+        expect(b.visible()).toBe(false); // same version: stays acked
         stubChrome('3.9');
-        expect(b.visible()).toBe(false); // an ack from a NEWER major still counts
+        expect(b.visible()).toBe(false); // an ack from a NEWER version still counts
     });
 
     it('a malformed ack value is treated as "never acked"', () => {
         stubChrome('4.2.0');
         const b = makeRiskBanner({
             store: makeStore({ deadRiskAck: 'garbage' }),
+            ackKey: 'deadRiskAck', textKey: 'deadRiskBanner'
+        });
+        expect(b.visible()).toBe(true);
+    });
+
+    it('an unparsable manifest version fails open too', () => {
+        stubChrome('garbage');
+        const b = makeRiskBanner({
+            store: makeStore({ deadRiskAck: '4.0.0' }),
             ackKey: 'deadRiskAck', textKey: 'deadRiskBanner'
         });
         expect(b.visible()).toBe(true);

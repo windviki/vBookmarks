@@ -158,6 +158,7 @@
 
 1. **S1 递归撤销:改实现不改文案**——"可撤销"是排序功能的用户安全感来源;快照全层级成本极低(内存中 id 序列),撤销逐层回放复用现有 moveToIndex。
 2. **V1 risk-banner:不动**——MAJOR-only 三处文档一致,是设计而非缺陷。
+   - **订正(2026-08-08)**:已被所有者推翻——自 4.0.1 起 ack 门改为 major.minor(patch 静默,major/minor 晋升重弹),已在 `src/risk-banner.js` 经 `sameOrNewerMinor` 实现,`majorOf` 已从 `src/version.js` 移除。
 3. **X3 文案:不恢复旧键,改写 deadDeleteAll**——确认框说明"当前筛选 All 含 blocked(被墙≠失效)"+ 撤销粒度提示;en/zh 实译,其余 locale 走既有 translate 管道。
 4. **C14 未提交 margin:保留微调**——`2px 2px 4px`,理由见报告 07。
 5. **C18/K11/D7/V5:记录不动**——零收益风险比,保持本 diff 可审。
@@ -174,4 +175,4 @@
 - **测试**:vitest 根 tests/ **50 套件 1659 例**(1629 + B6 21 + worktree 8 + K16 重进恢复 1)全绿;Docker harness `verify-keyboard.js` **130 pass / 0 fail**(含 §4.3b 搜索双区 4 断言,初次跑 126/4 暴露 K16 未处理"重进恢复"——框内查询按 2026-07-25 合约保留、结果 DOM 存活但 searchMode 已清;修复:search.js `views.attach('search')` activate 钩子在 renderHistoryArea 后检测 `searchInput.value.trim()` 非空则恢复 searchMode + switchBookmarkMenu(true),tests/search.test.js 补 K16 follow-up 用例)。
 - **截图复核批(C19/C20)**:重拍比对时新发现两处本版引入的视觉回归并修复——palette 列表 320px 定值 cap(17 命令后 /options 被切、矮窗口页脚被裁,改 `min(430px, calc(85vh - 90px))`)、stats 权限引导行死 `order` 规则(Enable 与句子粘连,补 `display:flex`)。
 - **终验(2026-08-08)**:Docker 全量 harness exit=0——smoke 无页面错误、verify-keyboard **130/0**、verify-scrollbars **752 断言 ALL PASS**、六个截图套件全 OK;`package.py` 107 文件零 WARNING;`i18n.py verify` 0 error(27 条小语种菜单超长提示为既有良性)。guide 图 9 张已用新 UI 重拍回填(view-dead/view-stats/view-dupes/view-recent/palette/options-views/dead-select/dupes-select/search-dualzone),三张关键图人工复核通过。
-- **遗留(有意不动,见 §决策记录)**:V1(risk-banner MAJOR 门)、C18(工具行骨架收敛)、K11(dead 扫描中行焦点,存量)、D7(dropdown destroy API)、V5(打包种子自动收集)、X6(徽标双读窄竞态)。
+- **遗留(有意不动,见 §决策记录)**:V1(risk-banner MAJOR 门——已于 2026-08-08 被所有者推翻,见 §决策记录第 2 条订正)、C18(工具行骨架收敛)、K11(dead 扫描中行焦点,存量)、D7(dropdown destroy API)、V5(打包种子自动收集)、X6(徽标双读窄竞态)。

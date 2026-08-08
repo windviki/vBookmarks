@@ -1,4 +1,4 @@
-import { majorOf } from './version.js';
+import { parseVersion, sameOrNewerMinor } from './version.js';
 
 // v4 task-4 #14: pre-use risk banner for the bulk-destructive views (dead
 // links + duplicates). One shared factory keeps the two views' copy,
@@ -6,7 +6,8 @@ import { majorOf } from './version.js';
 //
 // Gate model (mirrors the donation card's version gate): the banner shows
 // until the user picks "Don't show again", which records the current
-// version; a later MAJOR version bump re-arms it once. The × dismisses for
+// version; a later major OR minor version bump re-arms it once, while a
+// patch bump (4.0.0 → 4.0.1) stays silent. The × dismisses for
 // the popup session only (an in-memory flag). The banner is a Tab-ring
 // stop and an Esc layer (keyboard.js), never an arrow rung — keyboard-model
 // §7: transient UI must not move the arrow chain.
@@ -24,8 +25,14 @@ export const makeRiskBanner = ({ store, ackKey, textKey }) => {
         const ack = store.get(ackKey, '') || '';
         if (!ack)
             return true;
-        // An ack recorded under an older major re-arms the banner once.
-        return majorOf(ack) < majorOf(chrome.runtime.getManifest().version);
+        // Fail-open: an unparsable ack or manifest version shows the banner.
+        const recorded = parseVersion(ack);
+        const current = parseVersion(chrome.runtime.getManifest().version);
+        if (!recorded || !current)
+            return true;
+        // An ack recorded under an older major.minor re-arms the banner once;
+        // a patch bump stays silent.
+        return !sameOrNewerMinor(recorded, current);
     };
 
     const ack = () => {

@@ -6,9 +6,13 @@
  * (src/risk-banner.js) — decides "did the user cross into a version we want
  * to announce" from the manifest version versus the version recorded on
  * their last run. This module is the single place that reads and compares
- * versions, and it parses the FULL major.minor.patch, so a future banner can
- * gate on any version pair (e.g. "announce when crossing into 4.1") rather
- * than being locked to a major or minor bump.
+ * versions, and it parses the FULL major.minor.patch.
+ *
+ * The 4.0.1 rule (three-part versions): the LAST digit (patch) is a silent
+ * update by default — a fix release must NOT re-arm anything — while the
+ * first two digits (major.minor) MAY re-arm banners and cards
+ * (sameOrNewerMinor). For an exact "crossing into version X" gate,
+ * crossedInto takes an explicit threshold version instead.
  *
  * The manifest version is a Chrome-style "1.4 dot-separated integers" string
  * ("4.0", "4.0.1", …); only the first three segments are read — a fourth, if
@@ -37,13 +41,6 @@ export const compareVersions = (a, b) => {
 
 export const versionBelow = (a, b) => compareVersions(a, b) < 0;
 export const versionAtLeast = (a, b) => compareVersions(a, b) >= 0;
-
-// The leading integer of a version ("4.0.1" → 4). The risk banner re-arms on
-// a MAJOR bump only; kept here so every version reading shares one parse.
-export const majorOf = version => {
-    const v = parseVersion(version);
-    return v ? v.major : -1;
-};
 
 // "Is the recorded version not older than the current one at the MAJOR.MINOR
 // granularity?" Patch bumps (4.0 → 4.0.1) intentionally read as "same": a fix

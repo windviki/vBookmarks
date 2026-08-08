@@ -25,6 +25,7 @@
 ## 编号问题清单
 
 1. **[中·语义确认] risk-banner 对 4.1 不重弹** — `src/risk-banner.js:28`。代码注释、`tests/risk-banner.test.js:62-71`、反馈文档三处一致声明 MAJOR-only(4.0→4.1 不重弹,5.0 才重弹),与审阅要点预期"4.1 重弹一次"不符。若产品意图是 minor 也重弹,需改用 `crossedInto` 阈值门;若 MAJOR-only 是设计,无需改动——需定夺。
+   - **解决(2026-08-08)**:所有者定夺推翻 MAJOR-only——自 4.0.1 起 ack 门为 major.minor(patch 静默,major/minor 晋升重弹),`src/risk-banner.js` 已改用 `sameOrNewerMinor` 实现,`majorOf` 已从 `src/version.js` 移除。
 
 2. **[低] #49 快速连切的 remove/create 竞态** — `src/background.js:245-258`。两次 onChanged 紧邻时,先发的 `storage.get` 回调读到旧值:on→off 快切可能在最终 off 状态下重新 create(菜单残留至下次 SW 冷启动自愈);双 on 时 `create` 撞 duplicate id(unchecked error)。修法:onChanged 分支直接读 `changes.quickAddContextMenu.newValue` 判定,免去二次异步 get。
 

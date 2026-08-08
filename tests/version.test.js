@@ -4,7 +4,6 @@ import {
     compareVersions,
     versionBelow,
     versionAtLeast,
-    majorOf,
     sameOrNewerMinor,
     crossedInto
 } from '../src/version.js';
@@ -61,24 +60,15 @@ describe('versionBelow / versionAtLeast', () => {
     });
 });
 
-describe('majorOf', () => {
-    it('reads the leading integer', () => {
-        expect(majorOf('4.0.1')).toBe(4);
-        expect(majorOf('4.1')).toBe(4);
-        expect(majorOf('3.7.0')).toBe(3);
-        expect(majorOf('')).toBe(-1);
-    });
-});
-
-describe('sameOrNewerMinor (donation "new version" gate)', () => {
+describe('sameOrNewerMinor (donation card + risk banner gate)', () => {
     it('patch bumps are silent — 4.0.0 recorded, 4.0.1 current', () => {
         expect(sameOrNewerMinor(parseVersion('4.0.0'), parseVersion('4.0.1'))).toBe(true);
     });
-    it('minor bumps DO count as newer — 4.0.1 recorded, 4.1 current', () => {
-        expect(sameOrNewerMinor(parseVersion('4.0.1'), parseVersion('4.1'))).toBe(false);
+    it('minor bumps DO count as newer — 4.0.x recorded, 4.1.0 current', () => {
+        expect(sameOrNewerMinor(parseVersion('4.0.1'), parseVersion('4.1.0'))).toBe(false);
     });
-    it('major bumps count as newer', () => {
-        expect(sameOrNewerMinor(parseVersion('3.9.9'), parseVersion('4.0.1'))).toBe(false);
+    it('major bumps count as newer — 4.x recorded, 5.0.0 current', () => {
+        expect(sameOrNewerMinor(parseVersion('4.9.9'), parseVersion('5.0.0'))).toBe(false);
     });
     it('downgrades read as same-or-newer (no re-ask)', () => {
         expect(sameOrNewerMinor(parseVersion('4.1'), parseVersion('4.0.1'))).toBe(true);
