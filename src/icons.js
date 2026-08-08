@@ -29,6 +29,22 @@ export const DOCUMENT_CODE_ICON =
     '<polyline points="9.5 8.5 10.75 9.75 9.5 11"/>' +
     '</svg>';
 
+// Default bookmark glyph (document with a folded top-right corner): replaces
+// the browser's stock no-favicon placeholder — a flat bitmap drawn for light
+// backgrounds (gray globe on Chrome, a darker document glyph on Edge) that
+// nearly vanishes on the dark/ink themes (the 4.0.1 brightness lift was only
+// a partial fix, and each browser serves a different gray). Same 16px line
+// grid, currentColor → follows the theme exactly like FOLDER_ICON; the
+// silhouette matches DOCUMENT_CODE_ICON minus the code brackets.
+// favicon-fallback.js swaps it in when an <img> matches the calibrated
+// placeholder fingerprint.
+export const DEFAULT_BOOKMARK_ICON =
+    '<svg class="vbm-icon vbm-icon-doc" width="16" height="16" viewBox="0 0 16 16" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M9.33 1.33H4a1.33 1.33 0 0 0-1.33 1.34v10.66A1.33 1.33 0 0 0 4 14.67h8a1.33 1.33 0 0 0 1.33-1.34V5.33z"/>' +
+    '<polyline points="9.33 1.33 9.33 5.33 13.33 5.33"/>' +
+    '</svg>';
+
 // Dupes-view per-group "apply dedup" action: a completed-check badge on the
 // same 16px line grid as FOLDER_ICON (1.5px stroke, currentColor), replacing
 // the old text "✓" glyph so the row action matches the tile icons' style.

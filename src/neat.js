@@ -18,6 +18,7 @@ import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
 import { markPopupOpen } from './visit-stats-sw.js';
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
+import { initFaviconFallback } from './favicon-fallback.js';
 
 (window => {
     const store = window.store;
@@ -35,6 +36,12 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     // closes that gap; once initContextMenu attaches its own body
     // contextmenu listener both coexist — ours always wins.
     window.document.body.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Default-favicon fallback (4.0.2): swap Chrome's flat-gray no-favicon
+    // placeholder bitmap for the theme-following DEFAULT_BOOKMARK_ICON.
+    // Installed before any rows render (the store.ready block below) so the
+    // capture-phase load delegation catches every favicon <img>.
+    initFaviconFallback(window.document);
 
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read
