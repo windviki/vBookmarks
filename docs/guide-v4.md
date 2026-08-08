@@ -1,6 +1,6 @@
 # vBookmarks 4.0 Feature Guide
 
-> [中文版](guide-v4.zh.md) | Applies to 4.0 (Chrome 114+).
+> [中文版](guide-v4.zh.md) | Applies to 4.0.x (Chrome 114+).
 > Covers: the view system, the full keyboard model, a per-view walkthrough, the command palette, **how to get the classic look back**, and settings backup.
 
 ## Contents
@@ -57,7 +57,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 
 - **`↓` in the search box** lands on the current tab; **`↓` again** enters the next rung down: Stats/Dead/Duplicates stop at the **in-list toolbar's** first control first, and only a further `↓` enters the list (at its remembered row); the tree/search/recent views have no toolbar and go straight to the list.
 - **`↑` past the first row** crosses to the toolbar (to the current tab when there is none); **`↑` on the toolbar** reaches the tab; **`↑` again** the search box. (Hiding the tab strip flows the chain through the remaining rungs directly.)
-- **`←`/`→` on the toolbar** walk every usable control in reading order and stop at the edges (RTL mirrors). **Dropdowns** (the Duplicates strategy/scope) follow their own protocol: `↓` opens the list (focus moves to the current option), `↑` leaves the toolbar upward; inside the list `↑`/`↓` choose an option, `→` (`Enter` or `Space`) applies it and closes, `←` (or `Esc`) closes and keeps the current choice. On buttons and checkboxes `↑`/`↓` leave the rung.
+- **`←`/`→` on the toolbar** walk every usable control in reading order and stop at the edges (RTL mirrors). **Dropdowns** (the Duplicates strategy/scope) follow their own protocol: on the closed trigger `↓` (`Enter` or `Space`) opens the list and focus moves to the current option, while `↑` leaves the toolbar upward; inside the list `↑`/`↓` move between options (`Home`/`End` jump to the first/last usable one), `→` (`Enter` or `Space`) applies and closes, `←` (or `Esc`) cancels — closes, keeps the current choice and returns focus to the trigger — and `Tab` applies and moves on to the next control. On buttons and checkboxes `↑`/`↓` leave the rung.
 - The toolbar re-renders together with the list (sort toggles, scan progress, regrouping) — **focus is restored in place**, never lost.
 - **`→` on the header row** — once the caret is at the end of the text — leaves the box for the quick-add star, then the tools button; **`←`** walks back and parks the caret at the end, ready to type. RTL locales mirror both.
 - **`Tab` works too**: `Tab` / `Shift+Tab` cycle the same regions — header controls → the banner's buttons (only while it is up) → tab strip → the active view's in-list toolbar (Stats sort, Dead scan controls, Duplicates strategy) → the list rows — then wrap around. Menus, dialogs and the palette keep their own local `Tab`.
@@ -87,7 +87,7 @@ Arrow keys walk the popup exactly the way the eye scans it — `↓`/`↑` move 
 | `R` | Search/Recent/Dead/Duplicates | **Reveal in tree** |
 | `K` | Duplicates | Pin the focused row as the group's **keeper** |
 | `M` | Dead links | Toggle a **dead mark** (the red ✕ syncs across all views) |
-| `Alt+1…6` | Anywhere | Jump to the Nth visible view (`Ctrl/Cmd+1…6` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
+| `Alt+1…6` | Anywhere outside open dialogs/palette | Jump to the Nth visible view (`Ctrl/Cmd+1…6` is the legacy twin — works on Chrome's popup/panel, but Edge reserves `Ctrl+1…8` for browser-tab switching) |
 | `Ctrl/Cmd+K` | In the popup | Command palette |
 | `Ctrl/Cmd+Shift+K` | Global (any page) | Raise the popup with the palette open |
 | `Ctrl/Cmd+D` | In the popup | Quick-add the current page (opens the edit dialog if already bookmarked) |
@@ -103,7 +103,8 @@ View switches work even while the search/filter box has focus — only a modal d
 `Esc` always peels exactly one layer, never everything:
 
 ```
-context menu → banner (dismiss = "Later") → command palette
+open dropdown (close it, focus back to the trigger) → context menu
+             → banner (dismiss = "Later") → command palette
              → view-level action (Dead: pause/resume the scan;
              Dead/Duplicates: exit selection mode) → clear the search query
              → back to the tree → close the popup
@@ -132,7 +133,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Top zone · recent searches** (MRU 10): each row shows the query, its result count and a relative timestamp.
   - Recorded only at meaningful moments (no prefix spam): pressing `Enter` to search, opening a result, or leaving the view.
   - **Re-run**: click, press `Enter` on a selected row, or `→` / right-click → *Search again*.
-  - **Remove**: the row's `×` (revealed on hover/focus), the `Delete` key, or the `→` context menu; the header's *Clear* wipes all.
+  - **Remove**: the row's trash button (the same line-art icon as dead-link deletes, revealed on hover/focus), the `Delete` key, or the `→` context menu; the header's *Clear* wipes all.
 - **Bottom zone · results**: leave the view and come back — the query, the results and the scroll position are **all still there**.
 - Related settings: `searchAfterEnter` (search on Enter instead of live), `searchHistoryEnabled` (off = stop recording **and wipe the stored history**).
 
@@ -160,16 +161,16 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 
 - **Start**: the empty state tells you how many bookmarks will be scanned. Results **stream in row by row**.
 - **Runs in the background**: the scan lives in the service worker, not the page — close the popup or side panel mid-scan and it keeps going; reopen to a live mirror of the progress (an interrupted run even resumes itself after a browser restart). Canceling restores the last completed snapshot, and a finished scan paints instantly on the next open.
-- **Control**: `Esc` pauses/resumes without losing progress.
+- **Control**: `Esc` pauses/resumes without losing progress; the **Rescan** button stays on the toolbar even after a clean scan (zero dead rows).
 - **Live but quiet**: progress ticks repaint the list **without touching your scroll position or focus** — scrolling deep into the results mid-scan no longer snaps back to the top.
 - **Backup first**: the first visit shows a risk banner (bulk changes ahead) with a link to Chrome's own backup & restore guide; *Don't show again* silences it until the next major version, the × for the session.
-- **Dual channel**: direct fetch first; on failure your own **proxy template** (options page → *Dead scan* group; empty = direct only) gets the final say. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
-- **Filter**: All / Dead only / Blocked only.
+- **Dual channel**: direct fetch first; on failure your own **proxy server** (http/https/socks5) gets the final say — add it from the proxy strip above the list or in the options page's *Dead scan* group (the address is saved only after a reachability probe passes; unreachable servers are rejected). With no proxy set, the strip's hint can be dismissed with × and brought back from the options page. **Dead** (red) and **Blocked** (amber) are different badges — "down for everyone" vs "just blocked here".
+- **Filter**: All / Dead only / Blocked only, each segment with its live count (e.g. All 2 · Dead 1 · Blocked 1).
 - **Marks**: `M` or the row button flags a link; the red ✕ follows it into the tree, search, recent and stats views. Bulk mark/unmark lives in the toolbar (confirm-gated).
 - **Selection mode**: the toolbar's *Select* swaps the idle controls for a batch bar — *All / Invert / Clear* over the filtered rows, then *Mark selected* / *Unmark selected* in one shot (no extra confirm: the explicit selection is the confirmation). `Esc` exits the mode.
 
 ![Dead-link selection mode](images/guide/dead-select.png)
-- **Batch delete**: the toolbar's red *Delete all* removes every row in the current filter (the confirm shows the exact count); in selection mode *Delete selected* removes just those — both run serially through the undo chain and end in one summary toast.
+- **Batch delete**: the toolbar's red *Delete all* removes every row in the current filter — the confirm shows the exact count, and under *All* that includes blocked rows (reachable through your proxy, likely still alive); Undo restores only the most recent deletion. In selection mode *Delete selected* removes just the chosen rows — both run serially through the undo chain and end in one summary toast.
 - **Tuning** (options page → *Dead scan* group): concurrency 1–16 (default 4), timeout 2–30 s (default 8).
 
 ### 3.5 Duplicates
@@ -202,7 +203,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 
 ## 5. Getting the classic look and feel back
 
-Every new surface in 4.0 can be switched off. **The fastest route**: the *Restore the classic header* button in the options page's *Views* group — one click turns off the command palette, the quick-add star, the tool button and the view-tab strip, and each piece can be re-enabled individually right above it. For finer control, use this recipe:
+Every new surface in 4.0 can be switched off. **The fastest route**: the *Restore the classic header* button in the options page's *Views* group — one click turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view-tab strip, and each piece can be re-enabled individually right above it. For finer control, use this recipe:
 
 | You want | Setting (options page → *Views* group, unless noted) |
 |---|---|
@@ -237,4 +238,4 @@ The **Backup** group at the bottom of the options page:
 - Everything (bookmark caches, visit statistics, search history, dead/dupe snapshots) lives in the browser's local storage. Nothing is sent anywhere.
 - Visit statistics can be paused (`statsEnabled`) and erased at any time; search history can be disabled and wiped.
 - The `history` permission is **optional** and only requested when you enable the recently-visited section / history import; declining simply hides that section.
-- The dead-link scanner only fetches your bookmarked URLs (and your own proxy template, if configured).
+- The dead-link scanner only fetches your bookmarked URLs (through your own proxy server, if configured).

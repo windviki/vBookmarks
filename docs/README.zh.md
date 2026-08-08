@@ -77,7 +77,7 @@ vBookmarks
 
 ## 命令面板再升级
 
-- 弹窗内 `Ctrl/Cmd+K`，全局 `Ctrl/Cmd+Shift+K`：模糊搜书签、跳文件夹，以及一张收敛过的斜杠命令表——每个视图一条 **Go** 命令、`/add` `/new` `/folder`、`/session`、`/theme <主题名>`、`/tabs`、`/options`，各带一两个短别名。
+- 弹窗内 `Ctrl/Cmd+K`，全局 `Ctrl/Cmd+Shift+K`：模糊搜书签、跳文件夹，以及一张收敛过的斜杠命令表——每个视图一条 **Go** 命令、`/add` `/new` `/folder`、`/session`、`/theme <主题名>`（或直接切换 `/dark` `/light` `/ink` `/paper`）、`/tabs`、`/options`，各带一两个短别名。
 - **自定义斜杠指令**：打开 URL、用剩余词填充 URL 模板（`/g kimi code`）、把书签文件夹开成标签页组、带预设跳视图——在选项页"命令"分组管理，也可以从面板的"存为指令"行直接创建；随同步区跨设备同步，行上按 `→` 可编辑/删除。
 - 普通查询词给出桥接行，一键送进完整搜索视图；失焦自动关闭，不留残留状态。
 
@@ -98,9 +98,9 @@ vBookmarks
 
 ## 工程
 
-- **1416 个单元测试**，44 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度、以及横向滚动条防护契约（每个滚动容器裁剪 overflow-x、文本槽省略号、固定槽 flex:none、zoom 规则不改几何）的契约测试。
+- **1629 个单元测试**，50 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度、以及横向滚动条防护契约（每个滚动容器裁剪 overflow-x、文本槽省略号、固定槽 flex:none、zoom 规则不改几何）的契约测试。
 - **Docker harness**：零控制台错误冒烟、真实浏览器键盘/视图验证套件（tab 条键盘模型、焦点区域、头部行方向链、各视图 ↑↓ 越顶含死链视图双工具行层级、横幅键盘可达、搜索双区、逐视图渲染、面板自定义指令——115 条硬断言）、滚动条矩阵探针（屏幕分辨率 × 浏览器 zoom × 扩展内 zoom × popup 尺寸扫描，任何滚动容器无横向滚动条——695 条断言），以及 5 主题 × 8 界面语言的截图套件（含 RTL 镜像断言）。
-- 统一语言工具（`scripts/i18n.py`）：审计、缺失报告、LLM 批量翻译、verify 门禁。基准键从 75 增至 **345**，43 个语种全部对齐。
+- 统一语言工具（`scripts/i18n.py`）：审计、缺失报告、LLM 批量翻译、verify 门禁。基准键从 75 增至 **345**（4.0.1 起 **379**），43 个语种全部对齐。
 - **CI**：GitHub Actions 在每次 push 与 PR 上跑单测、i18n 门禁与发布打包。
 - 目录结构 v4 重组：`src/`、`pages/`、`css/`、`assets/`、`scripts/`；过时产物（旧 `release/*.crx`、MV2 遗留）留存于 git 历史。
 
@@ -156,7 +156,7 @@ vBookmarks
 无构建步骤 —— 在 `chrome://extensions/` 中**加载已解压的扩展程序**，选择仓库根目录即可。
 
 ```bash
-# 单元测试（Vitest，39 个测试文件共 1262 例）
+# 单元测试（Vitest，50 个测试文件共 1629 例）
 npm install
 npm run test:run
 
@@ -171,6 +171,7 @@ scripts/screenshots/run.sh --smoke-only   # 仅零控制台错误 + 键盘 + 滚
 #   suites/shots-i18n.js    树/tab 条/菜单/对话框/选项页 × 8 种界面语言
 #   suites/shots-palette.js 命令面板 + 四个功能视图
 #   suites/shots-guide.js   指南配图（搜索双区、选项页视图分组）
+#   suites/shots-tabgroups.js 标签组菜单与对话框全流程（service worker 侧验证）
 #   diag/                手动诊断探针，按需进入镜像运行
 
 # 语言流水线（scripts/i18n.py，仅标准库）
@@ -204,11 +205,11 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - **书签/文件夹的标签组**："全部打开为标签组"改为**在 service worker 里建组/入组**——关闭弹窗不再中断。文件夹与书签右键菜单新增 **"…并设置"**（新组对话框：组标题 + 9 色 Chrome 风格色板）与 **"打开到已有标签组"**（列出当前标签组供选择）；旧版 Chrome 或组已失效时退化为普通打开。
 - **死链批量删除**：工具行危险红 **"删除全部"** 作用于当前筛选结果（全部/仅死链/仅受限，确认框显示确切数量）；选择模式新增 **"删除所选"**——两者都串行走撤销链，结束弹一条汇总 toast。
-- **文件夹排序**（[#33](https://github.com/windviki/vBookmarks/issues/33)）：文件夹菜单新增 **"按名称排序" / "按添加时间排序"** 直接指令（递归开启时后缀追加 `(recursive)`），旁边保留 **"排序选项…"** 对话框；选项页新增 **"排序"** 分组，编辑同一份持久化 `sortOptions`（依据 / 文件夹在前 / 递归）。排序物理重排书签（重启后保持），每次排序都可经 toast 撤销。
+- **文件夹排序**（[#33](https://github.com/windviki/vBookmarks/issues/33)）：文件夹菜单新增 **"按名称排序" / "按添加时间排序"** 直接指令（递归开启时后缀追加 `(recursive)`），旁边保留 **"排序选项…"** 对话框；选项页新增 **"排序"** 分组，编辑同一份持久化 `sortOptions`（依据 / 文件夹在前 / 递归）。排序物理重排书签（重启后保持），含递归在内的每次排序都可经 toast 撤销（Undo 按排序前快照逐层还原）。
 - **命令面板主题快捷键**（[#44](https://github.com/windviki/vBookmarks/issues/44)）：在 `/theme <主题名>` 之外新增直接切换 `/dark` `/light` `/ink` `/paper`，一键换主题——回车现在总是落在用户敲的那条命令上。
 - **页面右键"收藏此页"开关**（[#49](https://github.com/windviki/vBookmarks/issues/49)）：右键菜单里的"用 vBookmarks 收藏此页"改为独立开关 `quickAddContextMenu`（"视图"分组）——关闭后实时从每个页面移除该条目；"一键恢复经典界面"预设一并覆盖。
 - **统计视图合并最近访问**：开启历史后，已收藏的历史行并入主列表（实心 ★，计数进 pill）；工具行 **"显示未收藏书签"** 复选框（`statsShowUnbookmarked`）带出其余行（描边 ☆ 一键收藏）。行尾从右到左 = 收藏图标 → 计数 pill → 时间。
-- **统一下拉组件**：去重视图的 strategy/scope 原生 select 换成自绘下拉，统一键盘协议（`↓`/`Enter`/空格 展开，`←`/`Esc` 取消，`Tab` 确认）——浏览器不再接管方向键。
+- **统一下拉组件**：去重视图的 strategy/scope 原生 select 换成自绘下拉，统一键盘协议（`↓`/`Enter`/空格 展开，`Home`/`End` 跳首/末选项，`←`/`Esc` 取消，`Tab` 确认）——浏览器不再接管方向键。
 
 **修复**
 
@@ -227,6 +228,10 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 新标签组对话框输入框与颜色条目不对齐——改为同宽。
 - 打包 zip 可能静默缺新模块——打包脚本现递归解析模块相对引用，自动包含。
 - 统计视图窄宽度下横向溢出——路径列改为可收缩换行。
+- 死链扫描全健康（0 死链）后视图内没有重扫入口——**重新检测**按钮现在常显工具行。
+- [#50](https://github.com/windviki/vBookmarks/issues/50)：中键/后台打开书签时即使未开“保持打开”也会关掉弹窗——后台打开不再强制关闭弹窗（仅前台打开受该设置约束），与文件夹“全部打开”行为一致。
+- [#51](https://github.com/windviki/vBookmarks/issues/51)：手动拖拽缩小的弹窗高度总是“被重置”（下次点树时自动高度又撑回内容高，弹窗只能越变越大）——一旦手动拖拽弹窗边缘，自动高度在本次会话内退位。
+- [#52](https://github.com/windviki/vBookmarks/issues/52)：自定义工具栏图标重启浏览器后失效（`chrome.action.setIcon` 是会话级）——service worker 现在每次冷启动都会恢复它。
 
 **抛光**
 
@@ -240,6 +245,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 版本机制重构为 `src/version.js`（完整 `major.minor.patch` 比较、阈值"跨入"判断）；本版为 **4.0.1 静默补丁**——存量 4.0 用户不会弹"新版本"卡。
 - 键盘模型加固：菜单行走跳过禁用项 *与* CSS 隐藏项；新增 focus-regression 综合套件把关跨视图焦点移交。
+- **死链代理整合**：退役旧的中转 URL 模板（`deadProxyTemplate`）——老版本存下的值在升级时自动从存储中清理。选项页"死链扫描"分组现在可以就地管理你的代理服务器（添加 / 测试 / 保存 / 清除；保存前依次过 解析 → 权限 → 可控性 → 可达性探测，不可达拒收）；视图内的"添加代理"提示条可用 × 关闭，并在"死链扫描"分组的复选框恢复（`hideDeadProxyStrip`）。
 
 **ver4.0 2026/07**
 

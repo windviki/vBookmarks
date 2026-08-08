@@ -97,8 +97,8 @@ Every list view (tree, search results, recent, stats, dead, dupes members):
 | `Enter` / `Space` | activate (`Ctrl/Cmd` new tab, `Shift` new window) |
 | `→` (LTR) | open the row's context menu at the row's edge |
 | `←` (LTR) | context-menu back-out / structural up (below) |
-| `F2` | rename / edit (not on macOS) |
-| `Delete` | delete (undoable; non-empty folders confirm) |
+| `F2` | rename / edit (not on macOS; root folders are refused — the same guard as `Delete`) |
+| `Delete` | delete (undoable; non-empty folders confirm; root folders are refused — the same guard as the context menu's disabled delete, and with no `.focus` row (a freshly focused list container) `Delete` does nothing) |
 
 Structural overrides, additive only:
 
@@ -149,14 +149,19 @@ without an enabled control is skipped transparently:
   `↓`/`Enter`/`Space` open the list and move focus to the current option, while
   `↑` is **not** intercepted — the rung walks it to the toolbar/strip/box
   above. Inside the **open list**: `↑`/`↓` navigate options (greyed options
-  are skipped), `→` (RTL `←`), `Enter` or `Space` picks the focused option,
-  closes and refocuses the trigger, `←` (RTL `→`) or `Esc` cancels — closes,
-  keeps the
-  current pick, refocuses the trigger — and `Tab` picks + closes and lets the
-  browser move focus on. Buttons and the scheme checkbox leave the rung on
+  are skipped), `Home`/`End` jump to the first/last pickable option (Page*
+  are swallowed, never leaking to the rows behind), `→` (RTL `←`), `Enter`
+  or `Space` picks the focused option, closes and refocuses the trigger,
+  `←` (RTL `→`) or `Esc` cancels — closes, keeps the
+  current pick, refocuses the trigger — and `Tab` picks + closes, refocuses
+  the trigger and lets the §5 Tab ring step on from there (the dropdown
+  itself never moves focus; a greyed current option closes WITHOUT picking —
+  the cancel semantics). Buttons and the scheme checkbox leave the rung on
   `↑`/`↓`; action keys (Enter/Space/letters) are never hijacked.
 - **Home/End/Page\*** fall through to the list's own handler (first/last
-  row, one viewport), unchanged.
+  row, one viewport), unchanged — except while a dropdown is open: the list
+  handles `Home`/`End` itself and swallows Page* (and the row handler's
+  first/last-row selectors exclude `.vbm-dropdown-list` markup anyway).
 - **Focus survives re-renders**: sort switches, filter clicks, regroups and
   scan-progress ticks re-render the toolbar with the rows; each view
   restores focus to the same-index control across the innerHTML swap, so
@@ -172,8 +177,14 @@ ring now agree.
 
 `↑`/`↓` walk items, skipping separators, wrap-around except on macOS;
 `Enter`/`Space` execute; `Esc` or the *back* arrow (`←` LTR, `→` RTL) close
-the menu and return focus to the owning row. The same handler serves all
-five menus (bookmark, folder, search-history, history-row, dupes-group).
+the menu and return focus to the owning row — one exception: a menu opened
+from the **palette** (the palette-command edit/delete menu) returns focus
+to the palette's input box, its real keyboard anchor, and the palette stays
+open. Seven menu elements exist; the same handler serves six of them
+(bookmark, folder, search-history, history-row, dupes-group,
+palette-command — the last also joins the §5 Tab ring's menu containers).
+The separator menu stays unbound by design: a single entry, the documented
+exception.
 
 ## 3. The search view: the dual-zone exception
 
@@ -201,21 +212,27 @@ the popup" (keydown **and** keyup are both pre-empted), so the popup closes
 only as the deliberate last layer. From top to bottom, exactly one layer
 per press:
 
-1. **Dialogs** open → close them.
-2. **Context menu** open → close it, focus returns to the owning row.
-3. **Banner** visible → dismiss it (the donation card uses the *Later*
+1. **Open dropdown** → close it, focus returns to its trigger. This layer
+   sits ABOVE all the others: the dropdown's `Esc` handler is a
+   window-capture listener (registered ahead of the document-capture chain
+   that owns layers 2–9), so an open listbox always eats the first `Esc`,
+   even with a dialog or the palette open behind it.
+2. **Dialogs** open → close them.
+3. **Context menu** open → close it, focus returns to the owning row (a
+   palette-opened menu: to the palette's input box, §2.6).
+4. **Banner** visible → dismiss it (the donation card uses the *Later*
    semantics — it snoozes, never unsubscribes; a dead/dupes **risk banner**
    (v4 task-4 #14) dismisses with its session × semantics).
-4. **Palette** open → close it.
-5. **View-local transient state**: Duplicates/Dead **selection mode** exits;
+5. **Palette** open → close it.
+6. **View-local transient state**: Duplicates/Dead **selection mode** exits;
    a Dead **scan pauses** (next `Esc` resumes — non-destructive; cancelling
    is the toolbar's explicit button).
-6. **Search query** in the box → record it into history, clear the box,
+7. **Search query** in the box → record it into history, clear the box,
    keep the results and the view (level one of the two-level search exit).
-7. **Non-tree view** active → back to the tree (browser-style "back").
-8. Nothing left → **close the popup**.
+8. **Non-tree view** active → back to the tree (browser-style "back").
+9. Nothing left → **close the popup**.
 
-Layers 1–4 are also reachable in any order a user could plausibly stack
+Layers 2–5 are also reachable in any order a user could plausibly stack
 them; the list is a priority order for simultaneous states, not a required
 sequence.
 
@@ -246,7 +263,7 @@ search box → quick-add → tools → [banner controls] → active tab
 | Key | Action |
 |---|---|
 | `Ctrl/Cmd+F` | activate the search view, focus + select the box |
-| `Alt+1…9` | jump to the Nth **visible** view (never fires inside inputs). `Ctrl/Cmd+1…9` is the legacy twin — kept where the browser lets it through (Chrome's popup/side panel), but Edge reserves `Ctrl+1…8` for browser-tab switching, so `Alt` is the portable form (v4 task-4 #10) |
+| `Alt+1…9` | jump to the Nth **visible** view (an ordinary input does NOT swallow it — since 9888f8a the search box keeps typing digits yet `Ctrl/Alt+1…9` still switches views; only an open modal dialog or the open palette intercepts). `Ctrl/Cmd+1…9` is the legacy twin — kept where the browser lets it through (Chrome's popup/side panel), but Edge reserves `Ctrl+1…8` for browser-tab switching, so `Alt` is the portable form (v4 task-4 #10) |
 | `Ctrl/Cmd+K` | command palette |
 | `Ctrl/Cmd+D` | quick-add the current page (edit dialog if already bookmarked) |
 | Letters/digits | tree + search results: type-ahead (500 ms rolling buffer, wraps) |
@@ -284,10 +301,11 @@ unreachable by `Tab`.
 | Vertical chain (§2.1) | `view-manager.js` focusTop/focusDown/focusListExit/strip keydown; `search.js` box keydown; `keyboard.js` ArrowUp fallback | `tests/view-manager.test.js`, `tests/search.test.js`, Docker `verify-keyboard.js` §2.2/§2.2c/§2.1d |
 | Header chain (§2.2) | `search.js` (box `→`), `keyboard.js` headerArrow | `tests/search.test.js`, `tests/keyboard.test.js` (header-row arrows), verify §2.1d |
 | Strip model (§2.3) | `view-manager.js` strip keydown | `tests/view-manager.test.js`, verify §2.2 |
-| List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search-history.test.js`, verify §2.2c/§4.3b |
+| List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search.test.js` (the search-history rows), verify §2.2c/§4.3b |
 | Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render(); the dropdown protocol in `dropdown.js` + `view-dupes.js` (strategy/scope) | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), `tests/dropdown.test.js` (protocol), verify §2.2c |
 | Menus (§2.6) | `keyboard.js` contextKeyDown | `tests/keyboard.test.js`, `tests/context-menu.test.js` |
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |
 | Tab ring (§5) | `keyboard.js` tabCycle | `tests/keyboard.test.js` (Tab region cycle), verify §2.1 |
 | Matrix (§7) | visibility checks in `tabCycle`/headerArrow/`focusTop`/`focusDown` | verify-keyboard option seeds + `tests/keyboard.test.js` hidden-button cases |
+| Cross-module focus transfers (§2.1/§4/§5) | the real `view-manager.js` + `palette.js` + `keyboard.js` wired together (the per-module suites mock each other) | `tests/focus-regression.test.js` — the mandatory gate: view-jump keys land focus, dialogs/palette own their keys, the layered Esc order holds end-to-end |

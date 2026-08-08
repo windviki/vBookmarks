@@ -98,9 +98,9 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1416 unit tests** across 44 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry).
+- **1629 unit tests** across 50 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry).
 - **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 115 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 695 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys**, all 43 locales aligned.
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**379** as of 4.0.1), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -156,7 +156,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 1262 cases across 39 suites)
+# Unit tests (Vitest, 1629 cases across 50 suites)
 npm install
 npm run test:run
 
@@ -171,6 +171,7 @@ scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard + scro
 #   suites/shots-i18n.js    tree/tabs/menus/dialog/options × 8 UI languages
 #   suites/shots-palette.js palette + the four feature views
 #   suites/shots-guide.js   guide screenshots (search dual zone, options Views group)
+#   suites/shots-tabgroups.js tab-group menus & dialogs, verified from the service worker
 #   diag/                manual probes, run on demand inside the image
 
 # Locale pipeline (scripts/i18n.py, stdlib only)
@@ -204,11 +205,11 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - **Tab groups for folders & bookmarks**: "open all as a tab group" now creates/joins the group **in the service worker**, so closing the popup mid-flight no longer aborts it. The folder/bookmark context menus add **…and set name/color** (a new-group dialog with a title and nine Chrome-style color swatches) and **open into an existing group** (a picker of your current tab groups); old Chrome or a vanished group falls back to a plain open.
 - **Dead-link batch delete**: the toolbar's red **Delete all** removes every row in the current filter (All / Dead / Blocked; the confirm shows the exact count); selection mode gains **Delete selected** — both run serially through the undo chain and end in one summary toast.
-- **Folder sorting** ([#33](https://github.com/windviki/vBookmarks/issues/33)): the folder menu offers **Sort by name** / **Sort by date added** as direct commands (recursive folders append "(recursive)") beside **Sort options…**; a new options-page **Sorting** group edits the same persisted `sortOptions` (by / folders-first / recursive). Sorting physically reorders the bookmarks (survives restarts), and every sort is undoable via toast.
+- **Folder sorting** ([#33](https://github.com/windviki/vBookmarks/issues/33)): the folder menu offers **Sort by name** / **Sort by date added** as direct commands (recursive folders append "(recursive)") beside **Sort options…**; a new options-page **Sorting** group edits the same persisted `sortOptions` (by / folders-first / recursive). Sorting physically reorders the bookmarks (survives restarts), and every sort — recursive ones included — is undoable via toast (Undo replays the pre-sort snapshot level by level).
 - **Palette theme shortcuts** ([#44](https://github.com/windviki/vBookmarks/issues/44)): next to `/theme <name>`, the direct switches `/dark` `/light` `/ink` `/paper` apply a theme in one keystroke — the exact slash match now always wins the Enter row.
 - **Page context-menu quick-add switch** ([#49](https://github.com/windviki/vBookmarks/issues/49)): the "Bookmark this page" entry is now an independent **Views** toggle (`quickAddContextMenu`) — off removes it from every page on the fly, and the *Restore the classic header* preset covers it too.
 - **Stats view merges recent visits into one list**: bookmarked history rows merge into the main list wearing a solid ★ and their visit count in the pill; a toolbar **Show unbookmarked** checkbox (`statsShowUnbookmarked`) brings in the rest (one-click ☆ files them). The row end reads right-to-left: star → count pill → time.
-- **Shared dropdown component**: the Duplicates strategy/scope selects become a custom dropdown with one keyboard protocol (`↓`/`Enter`/`Space` open, `←`/`Esc` cancel, `Tab` applies) — the browser's native select no longer hijacks the arrows.
+- **Shared dropdown component**: the Duplicates strategy/scope selects become a custom dropdown with one keyboard protocol (`↓`/`Enter`/`Space` open, `Home`/`End` jump to the first/last option, `←`/`Esc` cancel, `Tab` applies) — the browser's native select no longer hijacks the arrows.
 
 **Fixed**
 
@@ -227,6 +228,10 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - New-tab-group dialog input misaligned with the color row — now the same width.
 - The packaged zip could silently miss new modules — the packaging script now resolves imports recursively.
 - Stats view overflowed horizontally at narrow widths — the path column now wraps instead of stretching.
+- A clean dead-link scan (zero dead rows) left no way to scan again from the view — the **Rescan** button now stays on the toolbar.
+- [#50](https://github.com/windviki/vBookmarks/issues/50): middle-clicking a bookmark closed the popup even with "stay open" off — background opens no longer force-close the popup (only foreground opens honor the setting), matching the folder open-all behavior.
+- [#51](https://github.com/windviki/vBookmarks/issues/51): a manually shrunken popup height kept "resetting" (auto-height re-grew it on the next tree click, so the popup could only ever grow) — once you drag the popup edge, auto-height steps back for the rest of the session.
+- [#52](https://github.com/windviki/vBookmarks/issues/52): the custom toolbar icon did not survive a browser restart (`chrome.action.setIcon` is session-scoped) — the service worker now restores it on every cold start.
 
 **Polish**
 
@@ -240,6 +245,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - Version handling refactored into `src/version.js` (full `major.minor.patch` comparison, threshold "crossed into" checks); the release is **4.0.1 — a silent patch**, so existing 4.0 users don't get a "new version" card.
 - Keyboard model hardening: menu walking skips disabled *and* CSS-hidden items; a new focus-regression suite gates cross-view focus hand-offs.
+- **Dead-link proxy consolidation**: the legacy relay URL template (`deadProxyTemplate`) is retired — values stored by older versions are cleaned out of storage automatically on upgrade. The options page's *Dead scan* group now manages your proxy server in place (add / test / save / clear; saving runs parse → permission → control → reachability probe and rejects unreachable servers), and the view's add-a-proxy hint strip can be dismissed with × and brought back from the *Dead scan* group's checkbox (`hideDeadProxyStrip`).
 
 **ver4.0 2026/07**
 

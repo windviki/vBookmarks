@@ -1,8 +1,8 @@
-# Issues #46 / #47 / #48 反馈 · Feedback
+# Issues #46 / #47 / #48 / #49 反馈 · Feedback
 
-针对 v4 发布后 2026-08-03 提交的三个 issue，逐一说明处理结论与修复情况。每条先给中文，再给可直接粘贴到 GitHub 的英文回复。
+针对 v4 发布后提交的四个 issue（#46 / #47 / #48 于 2026-08-03，#49 随后），逐一说明处理结论与修复情况。每条先给中文，再给可直接粘贴到 GitHub 的英文回复。
 
-Status of the three issues filed on 2026-08-03 after the v4 release. Each section first gives the Chinese explanation, then a copy-paste-ready English reply.
+Status of four issues filed after the v4 release (#46 / #47 / #48 on 2026-08-03, #49 later). Each section first gives the Chinese explanation, then a copy-paste-ready English reply.
 
 ---
 
