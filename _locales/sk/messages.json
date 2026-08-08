@@ -301,12 +301,7 @@
     "message": "Proxy API nie je v tomto prehliadači k dispozícii"
   },
   "deadProxyNudge": {
-    "message": "$count$ záložiek zlyhalo pri priamej kontrole – opätovná kontrola cez proxy oddelí skutočne mŕtve odkazy od regionálne blokovaných. Nakonfigurujte to tu alebo na stránke možností.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Opätovná kontrola cez proxy rozlišuje skutočne nefunkčné odkazy od regionálne blokovaných — nakonfigurujte ju tu alebo na stránke možností."
   },
   "deadRescan": {
     "message": "Opätovné skenovanie"

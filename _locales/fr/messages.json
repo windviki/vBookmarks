@@ -301,12 +301,7 @@
     "message": "L'API proxy n'est pas disponible dans ce navigateur"
   },
   "deadProxyNudge": {
-    "message": "$count$ signets ont échoué à la vérification directe — une revérification via proxy distingue les liens réellement morts de ceux bloqués par région. Configurez-la ici ou dans la page d'options.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Une nouvelle vérification via proxy permet de distinguer les liens réellement morts de ceux bloqués par région — configurez-la ici ou dans la page d'options."
   },
   "deadRescan": {
     "message": "Re-analyser"

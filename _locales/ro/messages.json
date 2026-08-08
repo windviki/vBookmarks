@@ -301,12 +301,7 @@
     "message": "API-ul proxy nu este disponibil în acest browser."
   },
   "deadProxyNudge": {
-    "message": "$count$ marcaje nu au trecut verificarea directă — o reverificare prin proxy separă linkurile moarte reale de cele blocate pe regiuni. Configurează aici sau în pagina de opțiuni.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "O reverificare prin proxy separă linkurile moarte reale de cele blocate regional — configurează aici sau în pagina de opțiuni."
   },
   "deadRescan": {
     "message": "Re-verificare"

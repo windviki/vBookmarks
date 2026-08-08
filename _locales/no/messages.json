@@ -301,12 +301,7 @@
     "message": "Proxy-API-en er ikke tilgjengelig i denne nettleseren"
   },
   "deadProxyNudge": {
-    "message": "$count$ bokmerker mislyktes i direkte sjekker — en proxy-re-sjekk skiller ekte døde lenker fra regionblokkerte. Konfigurer det her eller på alternativsiden.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "En proxy-re-sjekk skiller virkelig døde koblinger fra regionblokkerte — konfigurer den her eller på alternativsiden."
   },
   "deadRescan": {
     "message": "Skann på nytt"

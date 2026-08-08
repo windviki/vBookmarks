@@ -301,12 +301,7 @@
     "message": "此浏览器不支持代理 API"
   },
   "deadProxyNudge": {
-    "message": "有 $count$ 个书签未通过直接检查——通过代理复查可区分真正失效链接与地区受限链接。可在此处或选项页配置。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "代理重新检查可区分真正失效的链接和受区域限制的链接——在此处或选项页中配置。"
   },
   "deadRescan": {
     "message": "重新扫描"

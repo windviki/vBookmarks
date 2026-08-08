@@ -301,12 +301,7 @@
     "message": "API proxy jest niedostępne w tej przeglądarce."
   },
   "deadProxyNudge": {
-    "message": "Bezpośrednie sprawdzenie nie powiodło się dla $count$ zakładek — sprawdzenie przez proxy oddziela prawdziwie martwe linki od zablokowanych regionalnie. Skonfiguruj je tutaj lub na stronie opcji.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Ponowne sprawdzenie przez proxy odróżnia faktycznie martwe linki od tych blokowanych regionalnie — skonfiguruj to tutaj lub na stronie opcji."
   },
   "deadRescan": {
     "message": "Skanuj ponownie"

@@ -317,20 +317,25 @@ export function initViewDead(ctx = {}) {
                 `<button class="dead-proxy-remove"${live ? ' disabled' : ''}>${_m('deadProxyRemove')}</button>`;
         } else {
             html += `<button class="dead-proxy-add"${live ? ' disabled' : ''}>${_m('deadProxyAdd')}</button>`;
-            // The nudge ties the dual-channel design to the quick button:
-            // direct-failing rows may be region-blocks, not dead.
-            const deadN = !live && lastScan
-                ? allResultRows().filter(r => r.result.status === 'dead').length
-                : 0;
-            if (deadN)
-                html += `<span class="dead-proxy-nudge">${_m('deadProxyNudge', `${deadN}`)}</span>`;
             // The dismiss is a small × (not a wordy button) — it only hides
             // the no-server hint; the options page keeps the full add entry.
+            // It renders SECOND: the strip's CSS pushes it to the first
+            // row's right end (margin-inline-start:auto).
             html += `<button class="dead-proxy-hide"${live ? ' disabled' : ''} ` +
                 `title="${_m('deadProxyNeverShow')}" aria-label="${_m('deadProxyNeverShow')}">` +
                 `<svg class="vbm-icon" width="10" height="10" viewBox="0 0 16 16" fill="none" ` +
                 `stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">` +
                 `<path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button>`;
+            // The nudge ties the dual-channel design to the quick button:
+            // direct-failing rows may be region-blocks, not dead. It renders
+            // LAST — flex-basis:100% wraps it onto its own second row — and
+            // the wording no longer carries the dead-row count (the
+            // visibility gate still keys off it).
+            const deadN = !live && lastScan
+                ? allResultRows().filter(r => r.result.status === 'dead').length
+                : 0;
+            if (deadN)
+                html += `<span class="dead-proxy-nudge">${_m('deadProxyNudge')}</span>`;
         }
         return html + '</div>';
     };
@@ -476,6 +481,61 @@ export function initViewDead(ctx = {}) {
             c.focus();
     };
 
+    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // The list-row twin of the toolbar pair above: the render's innerHTML
+    // swap replaces every row, so a focused row drops to <body> and the ↓
+    // walk dies (every filter click, mark toggle and scan tick repaints).
+    // Park the focused row before the swap, restore it after — by row id
+    // when the row carries one (dead-item-<id>), else by its index among the
+    // list's <li>s, clamped on restore so a vanished row lands on the row
+    // that took its place; an emptied list parks on the container itself.
+    const parkRowFocus = () => {
+        let li = document.activeElement;
+        while (li && li.tagName !== 'LI')
+            li = li.parentNode;
+        // the row must belong to THIS list — another view's row does not count
+        for (let p = li; p; p = p.parentNode) {
+            if (p !== $list)
+                continue;
+            if (typeof $list.querySelectorAll !== 'function')
+                return null;
+            const lis = $list.querySelectorAll('li');
+            for (let i = 0, l = lis.length; i < l; i++)
+                if (lis[i] === li)
+                    return { id: li.id || '', idx: i };
+            return null;
+        }
+        return null;
+    };
+    const unparkRowFocus = parked => {
+        if (!parked)
+            return;
+        let li = parked.id ? document.getElementById(parked.id) : null;
+        if (!li) {
+            if (typeof $list.querySelectorAll !== 'function')
+                return;
+            const lis = $list.querySelectorAll('li');
+            if (!lis.length) {
+                // no rows at all — park focus on the list container itself
+                if ($list.focus)
+                    $list.focus();
+                return;
+            }
+            li = lis[Math.min(parked.idx, lis.length - 1)];
+        }
+        if (!li)
+            return;
+        // A row carrying tabindex takes the focus itself (the executable
+        // start-hint row); plain rows hand it to their anchor/span — the
+        // same element keyboard.js's row walk focuses. (getAttribute is
+        // guarded: test doubles may lack it.)
+        const target = (li.getAttribute && li.getAttribute('tabindex') !== null)
+            ? li
+            : (li.querySelector ? li.querySelector('a, span') : null);
+        if (target && target.focus)
+            target.focus();
+    };
+
     const render = () => {
         if (selecting) {
             // prune members whose rows vanished (tree change / filter) BEFORE
@@ -506,6 +566,8 @@ export function initViewDead(ctx = {}) {
         }
         // keep a focused toolbar control focused across the swap (see above)
         const tbIdx = toolbarFocusIndex();
+        // 4.0.2 focus law: a focused list ROW rides the same swap
+        const parkedRow = parkRowFocus();
         // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
         // position survives the innerHTML swap (idle interactions keep the
         // old reset-to-top behavior).
@@ -514,6 +576,9 @@ export function initViewDead(ctx = {}) {
         if (live && scroll)
             $list.scrollTop = scroll;
         restoreToolbarFocus(tbIdx);
+        // …restored BEFORE the pendingRowFocus block below, so that explicit
+        // override still wins when set (v4 task-4 #8).
+        unparkRowFocus(parkedRow);
         // v4 task-4 #8: select-mode Space toggle — restore the row's anchor.
         if (pendingRowFocus) {
             const id = pendingRowFocus;

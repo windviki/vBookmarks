@@ -301,12 +301,7 @@
     "message": "API proxy tidak tersedia di peramban ini"
   },
   "deadProxyNudge": {
-    "message": "$count$ penanda gagal dalam pemeriksaan langsung — pemeriksaan ulang proxy memisahkan tautan mati yang sebenarnya dari yang diblokir wilayah. Konfigurasikan di sini atau di halaman opsi.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Pemeriksaan ulang proxy memisahkan tautan mati yang sesungguhnya dari tautan yang diblokir karena wilayah — konfigurasikan di sini atau di halaman opsi."
   },
   "deadRescan": {
     "message": "Pindai ulang"

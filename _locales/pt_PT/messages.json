@@ -300,12 +300,7 @@
     "message": "A API de proxy não está disponível neste navegador"
   },
   "deadProxyNudge": {
-    "message": "$count$ marcadores falharam nas verificações diretas — uma re-verificação via proxy separa links realmente mortos dos bloqueados por região. Configure-o aqui ou na página de opções.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Uma nova verificação via proxy separa links realmente mortos dos bloqueados por região — configure aqui ou na página de opções."
   },
   "deadRescan": {
     "message": "Revarrir"

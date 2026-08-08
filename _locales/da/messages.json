@@ -301,12 +301,7 @@
     "message": "Proxy-API'et er ikke tilgængeligt i denne browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ bogmærker fejlede direkte kontrol — en proxy-genkontrol adskiller rigtige døde links fra regionsblokerede. Konfigurer det her eller på indstillingssiden.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "En proxy-genkontrol adskiller rigtige døde links fra regionblokerede — konfigurer det her eller på indstillingssiden."
   },
   "deadRescan": {
     "message": "Genscan"

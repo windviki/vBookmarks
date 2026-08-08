@@ -1096,13 +1096,8 @@
     "description": "Error when chrome.proxy is missing (dead view add-proxy flow or scan gate)."
   },
   "deadProxyNudge": {
-    "message": "$count$ bookmarks failed direct checks — a proxy re-check separates real dead links from region-blocked ones. Configure it here or in the options page.",
-    "description": "Dead view proxy strip nudge after a scan with direct-failing rows and no proxy configured; $count$ is the dead row count.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "A proxy re-check separates real dead links from region-blocked ones — configure it here or in the options page.",
+    "description": "Dead view proxy strip nudge shown after a scan when no proxy is configured."
   },
   "deadProxyNeverShow": {
     "message": "Don't show again",

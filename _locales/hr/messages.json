@@ -301,12 +301,7 @@
     "message": "Proxy API nije dostupan u ovom pregledniku."
   },
   "deadProxyNudge": {
-    "message": "Knjižne oznake koje nisu prošle izravnu provjeru: $count$ — ponovna provjera putem proxyja odvaja stvarno mrtve poveznice od onih blokiranih za regiju. Konfigurirajte ovdje ili na stranici s opcijama.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Ponovna provjera putem proxyja razdvaja stvarno mrtve poveznice od regionalno blokiranih — konfigurirajte ovdje ili na stranici opcija."
   },
   "deadRescan": {
     "message": "Ponovno skeniraj"

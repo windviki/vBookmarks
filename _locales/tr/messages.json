@@ -301,12 +301,7 @@
     "message": "Proxy API'si bu tarayıcıda kullanılamıyor"
   },
   "deadProxyNudge": {
-    "message": "$count$ yer imi doğrudan denetimde başarısız oldu — bir proxy yeniden denetimi, gerçek ölü bağlantıları bölge engelli olanlardan ayırır. Bunu buradan veya seçenekler sayfasından yapılandırın.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Proxy yeniden kontrolü, gerçek ölü bağlantıları bölge engelli olanlardan ayırır — buradan veya seçenekler sayfasından yapılandırın."
   },
   "deadRescan": {
     "message": "Yeniden Tara"

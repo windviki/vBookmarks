@@ -301,12 +301,7 @@
     "message": "De proxy-API is niet beschikbaar in deze browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ bladwijzers faalden bij directe controles — een proxy-hercontrole onderscheidt echte dode links van regiogeblokkeerde. Configureer dit hier of op de optiepagina.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Een proxy-hercontrole scheidt echt dode links van regio-geblokkeerde — configureer dit hier of op de optiepagina."
   },
   "deadRescan": {
     "message": "Opnieuw scannen"

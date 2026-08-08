@@ -301,12 +301,7 @@
     "message": "Proxy-API:et är inte tillgängligt i den här webbläsaren."
   },
   "deadProxyNudge": {
-    "message": "$count$ bokmärken klarade inte direkta kontroller – en proxy-omkontroll särskiljer riktiga döda länkar från regionsblockerade. Konfigurera det här eller på alternativsidan.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "En proxy-omkontroll skiljer verkliga döda länkar från regionsspärrade — konfigurera här eller på alternativsidan."
   },
   "deadRescan": {
     "message": "Skanna om"

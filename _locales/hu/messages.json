@@ -301,12 +301,7 @@
     "message": "A proxy API nem érhető el ebben a böngészőben."
   },
   "deadProxyNudge": {
-    "message": "$count$ könyvjelző nem ment át a közvetlen ellenőrzésen – a proxy újraellenőrzése elválasztja a valóban megszűnt linkeket a régiókorlátozottaktól. Itt vagy a beállítások oldalán konfigurálhatja.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "A proxy újraellenőrzés elválasztja a valóban nem működő linkeket a régió által blokkoltaktól — állítsd be itt vagy a beállítások oldalon."
   },
   "deadRescan": {
     "message": "Újravizsgálás"

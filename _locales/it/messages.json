@@ -301,12 +301,7 @@
     "message": "L'API proxy non è disponibile in questo browser"
   },
   "deadProxyNudge": {
-    "message": "$count$ segnalibri non hanno superato i controlli diretti — una nuova verifica tramite proxy distingue i link realmente morti da quelli bloccati per regione. Configuralo qui o nella pagina delle opzioni.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Un ricontrollo tramite proxy separa i link realmente morti da quelli bloccati per regione — configuralo qui o nella pagina delle opzioni."
   },
   "deadRescan": {
     "message": "Riscansiona"

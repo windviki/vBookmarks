@@ -301,12 +301,7 @@
     "message": "Die Proxy-API ist in diesem Browser nicht verfügbar"
   },
   "deadProxyNudge": {
-    "message": "$count$ Lesezeichen sind bei der direkten Prüfung fehlgeschlagen – eine erneute Prüfung über einen Proxy trennt echte defekte Links von regional gesperrten. Konfigurieren Sie das hier oder auf der Optionsseite.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Eine erneute Proxy-Überprüfung unterscheidet echte tote Links von regional blockierten – konfigurieren Sie dies hier oder auf der Optionsseite."
   },
   "deadRescan": {
     "message": "Erneut scannen"

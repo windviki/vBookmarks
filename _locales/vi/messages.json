@@ -301,12 +301,7 @@
     "message": "API proxy không khả dụng trong trình duyệt này"
   },
   "deadProxyNudge": {
-    "message": "$count$ dấu trang không vượt qua kiểm tra trực tiếp — kiểm tra lại qua proxy giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo khu vực. Định cấu hình tại đây hoặc trong trang tùy chọn.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Kiểm tra lại qua proxy giúp phân biệt liên kết chết thực sự với liên kết bị chặn theo vùng — hãy cấu hình tại đây hoặc trong trang tùy chọn."
   },
   "deadRescan": {
     "message": "Quét lại"

@@ -301,12 +301,7 @@
     "message": "Starpniekservera API nav pieejams šajā pārlūkprogrammā"
   },
   "deadProxyNudge": {
-    "message": "$count$ grāmatzīmes neizturēja tiešo pārbaudi — starpniekservera atkārtota pārbaude atšķir patiesi bojātas saites no reģionāli bloķētām. Konfigurējiet to šeit vai opciju lapā.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Proxy atkārtota pārbaude atdala patiesi bojātas saites no reģionā bloķētām — konfigurējiet to šeit vai opciju lapā."
   },
   "deadRescan": {
     "message": "Pārskenēt"

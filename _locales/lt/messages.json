@@ -301,12 +301,7 @@
     "message": "Šioje naršyklėje tarpinio serverio API nepasiekiama"
   },
   "deadProxyNudge": {
-    "message": "$count$ žymės nepraėjo tiesioginės patikros — pakartotinis tikrinimas per tarpinį serverį atskiria tikrai neveikiančias nuorodas nuo regionu blokuotų. Konfigūruokite čia arba parinkčių puslapyje.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Tarpinio serverio pakartotinis patikrinimas atskiria tikrai neveikiančias nuorodas nuo regionu blokuotų — nustatykite jį čia arba parinkčių puslapyje."
   },
   "deadRescan": {
     "message": "Nuskaityti iš naujo"

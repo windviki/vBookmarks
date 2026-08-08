@@ -301,12 +301,7 @@
     "message": "此瀏覽器不提供代理 API。"
   },
   "deadProxyNudge": {
-    "message": "$count$ 個書籤直接檢查失敗——透過代理重新檢查可區分真正失效連結與受地區限制的連結。可在這裡或選項頁面設定。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "代理伺服器重新檢查能區分真正失效的連結與受地區限制的連結——可在此處或選項頁面設定。"
   },
   "deadRescan": {
     "message": "重新掃描"

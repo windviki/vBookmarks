@@ -3106,17 +3106,18 @@ body.panel-mode .vbm-row .row-sub {
 
 /* The no-server hint's dismiss: a small, muted × that hides just the hint —
    the proxy stays configurable from the options page. Inline-flex centers
-   the 10px glyph; the row keeps the muted read so it never fights the accent
-   add button beside it. */
+   the 10px glyph; margin-inline-start: auto pushes it to the right end of
+   the strip's first row (top-right), matching the risk banner's dismiss. */
 .dead-proxy-strip button.dead-proxy-hide {
     flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    margin-inline-start: auto;
     padding: 0;
-    border-radius: 50%;
+    border-radius: 4px;
     color: var(--vbm-muted);
 }
 

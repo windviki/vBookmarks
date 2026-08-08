@@ -1313,7 +1313,16 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         def().activate();
         const html = $list.innerHTML;
         expect(html).toContain('dead-proxy-add');
-        expect(html).toContain('deadProxyNudge[1]'); // one direct-dead row
+        // the nudge no longer takes the dead-row count — one direct-dead row
+        // still gates its visibility
+        expect(html).toContain('class="dead-proxy-nudge">deadProxyNudge</span>');
+        expect(html).not.toContain('deadProxyNudge[');
+        // strip order (4.0.2): add button → dismiss × → nudge LAST (the CSS
+        // flex-basis:100% wraps the nudge onto its own second row while
+        // margin-inline-start:auto pins the × to the first row's right end)
+        const at = s => html.indexOf(s);
+        expect(at('class="dead-proxy-add"')).toBeLessThan(at('class="dead-proxy-hide"'));
+        expect(at('class="dead-proxy-hide"')).toBeLessThan(at('class="dead-proxy-nudge"'));
         // the summary merged into the filter segments' counts (1 dead · 1 blocked)
         expect(html).toContain('deadFilterDead 1');
         expect(html).toContain('deadFilterBlocked 1');
@@ -1520,5 +1529,117 @@ describe('risk banner (v4 task-4 #14)', () => {
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.risk-banner-help' ? {} : null) });
         expect(opened).toEqual([['https://support.google.com/chrome/answer/96816', true, true]]);
+    });
+});
+
+describe('row focus park/restore (4.0.2 focus law)', () => {
+    // The list-row twin of the toolbar park/restore: every render's
+    // innerHTML swap replaces the focused row (filter clicks, mark toggles,
+    // scan ticks) and the ↓ walk used to die on <body>. The doubles model
+    // the swap the way the real DOM behaves: assigning innerHTML replaces
+    // the li set querySelectorAll('li') hands out ($list._lis), and the
+    // hand-written focus() lands on doc.activeElement.
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 3,
+        results: {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+    const wireSwap = ($list, doc) => {
+        const swap = { next: null };
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            get() { return html; },
+            set(v) {
+                html = v;
+                this.scrollTop = 0; // keep the harness's #17 reset model
+                if (swap.next) {
+                    $list._lis = swap.next;
+                    swap.next = null;
+                }
+            }
+        });
+        $list.focus = function () { doc.activeElement = this; };
+        return swap;
+    };
+    const ulOf = $list => ({ tagName: 'UL', parentNode: $list });
+    // a row double: li + anchor, parented up to the list (a → li → ul → $list)
+    const row = (doc, ul, id) => {
+        const a = {
+            tagName: 'A',
+            focus() { doc.activeElement = this; }
+        };
+        const li = {
+            tagName: 'LI', id: id || '',
+            parentNode: ul,
+            getAttribute: () => null,
+            querySelector: sel => (sel === 'a, span' ? a : null)
+        };
+        a.parentNode = li;
+        return { li, a };
+    };
+
+    it('a focused result row regains focus on its same-id replacement after a re-render', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, doc, def, viewDead } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'dead-item-12');
+        $list._lis = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        // the post-swap replacement row: same id, new element
+        const newRow = row(doc, ul, 'dead-item-12');
+        swap.next = [newRow.li];
+        const origGet = doc.getElementById;
+        doc.getElementById = id => (id === 'dead-item-12' ? newRow.li : origGet(id));
+        viewDead.refresh(); // the mark toggle / filter click repaint
+        expect(doc.activeElement).toBe(newRow.a);
+    });
+
+    it('a vanished row id falls back to the index-clamped row', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, doc, def, viewDead } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const r1 = row(doc, ul, 'dead-item-12');
+        const r2 = row(doc, ul, 'dead-item-13');
+        const r3 = row(doc, ul, 'dead-item-14');
+        $list._lis = [r1.li, r2.li, r3.li]; // focus sits on the third row
+        doc.activeElement = r3.a;
+        // row 14 is gone after the repaint — no getElementById hit — and the
+        // list shrank to two rows
+        const n1 = row(doc, ul, 'dead-item-12');
+        const n2 = row(doc, ul, 'dead-item-13');
+        swap.next = [n1.li, n2.li];
+        viewDead.refresh();
+        expect(doc.activeElement).toBe(n2.a); // min(2, 1) → the second row
+    });
+
+    it('with no rows at all after the swap, focus parks on the list container', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list, doc, def, viewDead } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'dead-item-12');
+        $list._lis = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        swap.next = []; // nothing left to focus
+        viewDead.refresh();
+        expect(doc.activeElement).toBe($list);
+    });
+
+    it('focus outside the list (a proxy-panel input) is left untouched by the render', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { doc, def, viewDead } = ctx;
+        def().activate();
+        const outside = { tagName: 'INPUT' }; // no LI anywhere up the chain
+        doc.activeElement = outside;
+        viewDead.refresh();
+        expect(doc.activeElement).toBe(outside);
     });
 });

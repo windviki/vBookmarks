@@ -1013,12 +1013,7 @@
     "message": "当前浏览器不支持代理接口"
   },
   "deadProxyNudge": {
-    "message": "$count$ 个书签直连失败——配置代理可区分真正的死链与区域受限。可在此处或设置页配置。",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "代理复查可区分真正的死链与区域受限——可在此处或设置页配置。"
   },
   "deadStartHint": {
     "message": "开始扫描 $n$ 个书签",

@@ -301,12 +301,7 @@
     "message": "Välityspalvelimen API ei ole käytettävissä tässä selaimessa"
   },
   "deadProxyNudge": {
-    "message": "$count$ kirjanmerkkiä epäonnistui suorissa tarkistuksissa — välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä. Määritä se tässä tai asetussivulla.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Välityspalvelimen uudelleentarkistus erottaa todelliset kuolleet linkit alueellisesti estetyistä — määritä se tässä tai asetussivulla."
   },
   "deadRescan": {
     "message": "Uudelleenskannaa"

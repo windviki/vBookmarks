@@ -301,12 +301,7 @@
     "message": "API za proxy v tem brskalniku ni na voljo"
   },
   "deadProxyNudge": {
-    "message": "$count$ zaznamkov ni uspelo pri neposrednih preverjanjih — ponovno preverjanje prek proxyja loči resnično mrtve povezave od regijsko blokiranih. Konfigurirajte ga tukaj ali na strani z možnostmi.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Ponovno preverjanje posrednika loči dejansko mrtve povezave od tistih, blokiranih zaradi regije — konfigurirajte ga tukaj ali na strani z možnostmi."
   },
   "deadRescan": {
     "message": "Ponovno skeniranje"

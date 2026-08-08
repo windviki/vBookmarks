@@ -301,12 +301,7 @@
     "message": "Puhverserveri API pole selles brauseris saadaval"
   },
   "deadProxyNudge": {
-    "message": "$count$ järjehoidja puhul ei läbinud otsest kontrolli — puhverserveriga uuesti kontrollimine eristab tegelikud katkised lingid piirkonnapiiranguga linkidest. Seadista see siin või valikute lehel.",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
+    "message": "Puhverserveri uuesti kontrollimine eristab tegelikke surnud linke piirkondlikult blokeeritutest — seadista see siin või valikute lehel."
   },
   "deadRescan": {
     "message": "Uuesti skännimine"
