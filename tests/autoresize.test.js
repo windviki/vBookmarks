@@ -11,20 +11,27 @@ import { describe, it, expect } from 'vitest';
  * The logic (v4.1 fix):
  *   clampedContent = clamp(contentH, minH, maxH)
  *
- *   if clampedContent > currentH          → GROW  (content outgrew the popup)
+ *   if userResized                     → STAY  (issue #51: a manual edge drag
+ *                                               suspends auto-height for the
+ *                                               rest of the session)
+ *   if clampedContent > currentH       → GROW  (content outgrew the popup)
  *   elif allowShrink
  *        && clampedContent <= currentH
- *        && contentH <= maxH              → SHRINK (full tree fits, real waste)
+ *        && contentH <= maxH           → SHRINK (full tree fits, real waste)
  *        && clampedContent < currentH*0.7
- *   else                                  → STAY
+ *   else                               → STAY
  *
  * Call-sites:
  *   - initial load / zoom:  allowShrink=true
  *   - click / keyup events: allowShrink=false  (folder toggle → never shrink)
+ *   - after a manual resize drag: userResized=true (short-circuits everything)
  */
 
 // The decision kernel extracted from neat.js for verification.
-function heightDecision({ contentH, currentH, minH, maxH, allowShrink }) {
+function heightDecision({ contentH, currentH, minH, maxH, allowShrink, userResized }) {
+    if (userResized)
+        return { action: 'stay' };
+
     const clamped = Math.max(minH, Math.min(contentH, maxH));
 
     if (clamped > currentH)
@@ -138,6 +145,30 @@ describe('auto-resize: edge cases', () => {
     it('content far larger than maxH but popup taller → grow', () => {
         // clamped=600, current=550 → clamped(600) > current(550) → grow
         const r = heightDecision({ contentH: 900, currentH: 550, minH: 200, maxH: 600, allowShrink: true });
+        expect(r.action).toBe('grow');
+        expect(r.target).toBe(600);
+    });
+});
+
+describe('auto-resize: manual resize lock (issue #51)', () => {
+    // Once the user drags the popup edge, auto-height must step back — a tree
+    // click must NOT re-grow a manually shrunken popup to the content height.
+    it('a manual shrink sticks even when content is much taller', () => {
+        // content 700 ≫ popup 300, but the user dragged it down to 300:
+        // grow would previously undo the drag (the #51 "always resets" bug).
+        const r = heightDecision({ contentH: 700, currentH: 300, minH: 200, maxH: 600, allowShrink: false, userResized: true });
+        expect(r.action).toBe('stay');
+    });
+
+    it('a manual grow also sticks and is never shrunk back', () => {
+        const r = heightDecision({ contentH: 200, currentH: 550, minH: 200, maxH: 600, allowShrink: false, userResized: true });
+        expect(r.action).toBe('stay');
+    });
+
+    it('the lock is session-scoped: without it the normal rules apply again', () => {
+        // Same inputs as the lock test but no flag → grow (the pre-#51 shape,
+        // which a fresh popup open legitimately performs once via allowShrink).
+        const r = heightDecision({ contentH: 700, currentH: 300, minH: 200, maxH: 600, allowShrink: true, userResized: false });
         expect(r.action).toBe('grow');
         expect(r.target).toBe(600);
     });

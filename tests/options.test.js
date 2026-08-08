@@ -7,6 +7,7 @@ import fs from 'node:fs';
 // production wiring) and then the REAL options.js against a stub DOM —
 // nothing is copied from the sources under test.
 const storeSource = fs.readFileSync(new URL('../src/store.js', import.meta.url), 'utf8');
+const sortUtilsSource = fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8');
 const optionsSource = fs.readFileSync(new URL('../src/options.js', import.meta.url), 'utf8');
 const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta.url), 'utf8');
 
@@ -108,6 +109,10 @@ const createSandbox = ({
     new Function('window', 'chrome', 'localStorage', 'document', storeSource)(
         window, chrome, localStorage, document
     );
+
+    // 1b. real sort-utils.js → window.VBMSort (options.html loads it as a
+    // classic script before options.js, same recipe as dialogs.test.js)
+    new Function('window', sortUtilsSource)(window);
 
     // 2. real options.js with the remaining page globals stubbed
     const location = { reload: vi.fn() };
@@ -463,5 +468,22 @@ describe('Sorting group (issue #33)', () => {
         expect(sb.elements['option-sort-folders-first'].innerText).toBe('sortFoldersFirst');
         expect(sb.elements['option-sort-recursive'].innerText).toBe('sortRecursive');
         expect(sb.elements['option-sort-recursive-hint'].innerText).toBe('sortRecursiveWarning');
+    });
+
+    it('options.html loads sort-utils.js before options.js (shared parseSortOptions, review 05-S4)', () => {
+        const sortAt = optionsHtml.indexOf('<script src="/src/sort-utils.js"></script>');
+        const optionsAt = optionsHtml.indexOf('<script src="/src/options.js"></script>');
+        expect(sortAt).toBeGreaterThan(-1);
+        expect(optionsAt).toBeGreaterThan(-1);
+        expect(sortAt).toBeLessThan(optionsAt);
+    });
+
+    it('falls back to the defaults on corrupted sortOptions JSON', async () => {
+        const sb = createSandbox({ chromeLocalData: { sortOptions: '{oops' } });
+        await sb.start();
+        expect(sb.elements['sort-options-title'].checked).toBe(true);
+        expect(sb.elements['sort-options-date'].checked).toBe(false);
+        expect(sb.elements['sort-options-folders-first'].checked).toBe(true);
+        expect(sb.elements['sort-options-recursive'].checked).toBe(false);
     });
 });

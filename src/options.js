@@ -134,15 +134,10 @@ const $ = id => document.getElementById(id);
         // Issue #33: folder-sort options — the same sortOptions key the popup
         // sort dialog reads/writes, so the options page is a persistent editor
         // for "default/last-used sort prefs" with a single source of truth.
-        const SORT_DEFAULT = { by: 'title', foldersFirst: true, recursive: false };
-        const readSort = async () => {
-            try {
-                const raw = await getSetting('sortOptions', '');
-                return raw ? JSON.parse(raw) : { ...SORT_DEFAULT };
-            } catch (e) {
-                return { ...SORT_DEFAULT };
-            }
-        };
+        // Parsing is shared via sort-utils.js (loaded by options.html) —
+        // corrupted JSON falls back to the defaults there.
+        const readSort = async () =>
+            window.VBMSort.parseSortOptions(await getSetting('sortOptions', ''));
         const saveSort = async () => {
             await setSetting('sortOptions', JSON.stringify({
                 by: $('sort-options-date').checked ? 'dateAdded' : 'title',

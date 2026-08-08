@@ -101,6 +101,11 @@ const setup = (opts = {}) => {
                 this.getCalls.push(id);
                 cb(opts.folderNodes || [{ title: 'Bookmarks bar' }]);
             },
+            searchCalls: [],
+            search(q, cb) {
+                this.searchCalls.push(q);
+                cb(opts.urlSearchResults || []);
+            },
             onRemoved: { addListener(fn) { this.fn = fn; } }
         },
         permissions: {
@@ -249,7 +254,7 @@ describe('rendering (sort by count, the default)', () => {
         expect(first.rightText).toBe(''); // 8 lives at root — pathOf gives ''
         expect(first.subText).toBe(new Date(NOW - 2000).toLocaleString()); // abs time, no path
         const second = s.treeRender.calls[1].meta;
-        expect(second.subText).toBe(`${new Date(NOW - 1000).toLocaleString()} · bar`); // time · path
+        expect(second.subText).toBe(`bar · ${new Date(NOW - 1000).toLocaleString()}`); // path · time
         expect(second.rightText).toBe('bar');
         expect(s.$list.innerHTML).toContain('id="stats-item-8"');
         expect(s.$list.innerHTML).toContain('data-node-id="7"');
@@ -526,9 +531,9 @@ describe('merged list (统计合并)', () => {
         const bmCall = s.treeRender.calls.find(c => c.url === 'http://a/');
         expect(bmCall.id).toBe('7');
         expect(bmCall.meta.path).toBe('bar');
-        // showItemPath on: wide second line = absTime · path, narrow slot = path
+        // showItemPath on: wide second line = path · absTime, narrow slot = path
         expect(bmCall.meta.subText)
-            .toBe(`${new Date(HISTORY[0].lastVisitTime).toLocaleString()} · bar`);
+            .toBe(`bar · ${new Date(HISTORY[0].lastVisitTime).toLocaleString()}`);
         expect(bmCall.meta.rightText).toBe('bar');
         // the live tree supplies the row's parent id even though the stats
         // dataset never saw this bookmark
@@ -770,6 +775,33 @@ describe('one-click bookmark from a history row (☆)', () => {
         expect(s.undo.toasts).toEqual([]);
         expect(s.onChanged.calls).toBe(0);
         expect(s.$list.innerHTML).toContain('stats-add-btn'); // still unbookmarked
+    });
+
+    // review 05-S6: a bookmark created mid-session (quick-add star, tree add)
+    // doesn't flip the stale history row — the ☆ must not mint a duplicate.
+    it('a URL already bookmarked mid-session flips the row instead of creating a dupe', () => {
+        const s = setup({
+            hasHistoryPermission: true,
+            historyItems: HISTORY,
+            urlSearchResults: [{ id: '42', title: 'Elsewhere', url: 'http://elsewhere/' }]
+        });
+        s.def().activate();
+        starClick(s, 1); // the unbookmarked row
+        expect(s.chrome.bookmarks.searchCalls).toEqual([{ url: 'http://elsewhere/' }]);
+        expect(s.chrome.bookmarks.createCalls).toHaveLength(0); // no duplicate
+        expect(s.undo.toasts).toEqual([]); // nothing was added — no quick-add toast
+        expect(s.onChanged.calls).toBe(1);
+        expect(s.$list.innerHTML).not.toContain('stats-add-btn');
+        expect(s.$list.innerHTML).toContain('id="stats-item-42"');
+        expect(s.$list.innerHTML).toContain('class="stats-star"');
+    });
+
+    it('checks the URL before creating (search precedes create)', () => {
+        const s = setup({ hasHistoryPermission: true, historyItems: HISTORY });
+        s.def().activate();
+        starClick(s, 1);
+        expect(s.chrome.bookmarks.searchCalls).toEqual([{ url: 'http://elsewhere/' }]);
+        expect(s.chrome.bookmarks.createCalls).toHaveLength(1);
     });
 });
 

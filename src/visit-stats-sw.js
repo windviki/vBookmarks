@@ -34,6 +34,7 @@
 
 export const POPUP_OPENS_KEY = 'vbmPopupOpens';
 const FLUSH_DEBOUNCE_MS = 2000;
+const REBUILD_DEBOUNCE_MS = 300;
 const DEDUPE_MS = 10000;
 
 // Page-side half of the dedupe protocol: call right before a popup-initiated
@@ -58,6 +59,7 @@ export function createVisitStatsCollector() {
     let urlIndex = new Map();   // exact url → [bookmarkId, ...]
     let pending = new Map();    // bookmarkId → { n, t } since the last flush
     let flushTimer = null;
+    let rebuildTimer = null;
     let enabled = true;         // statsEnabled mirror (default on)
     let started = false;
 
@@ -166,11 +168,24 @@ export function createVisitStatsCollector() {
         });
         rebuildIndex();
         // The index follows every tree mutation; import-end covers bulk adds.
-        const rebuildEvents = ['onCreated', 'onRemoved', 'onChanged', 'onMoved', 'onImportEnded'];
+        // onMoved is debounced (same trailing-timer pattern as the flush): a
+        // recursive folder sort fires one onMoved per moved node, and wiring
+        // it straight to rebuildIndex would rebuild the whole tree index per
+        // move — O(moves × treeSize) (review 05-S5).
+        const rebuildEvents = ['onCreated', 'onRemoved', 'onChanged', 'onImportEnded'];
         for (const name of rebuildEvents) {
             if (chrome.bookmarks[name])
                 chrome.bookmarks[name].addListener(rebuildIndex);
         }
+        if (chrome.bookmarks.onMoved)
+            chrome.bookmarks.onMoved.addListener(() => {
+                if (rebuildTimer)
+                    clearTimeout(rebuildTimer);
+                rebuildTimer = setTimeout(() => {
+                    rebuildTimer = null;
+                    rebuildIndex();
+                }, REBUILD_DEBOUNCE_MS);
+            });
         chrome.tabs.onUpdated.addListener(onUpdated);
         chrome.storage.onChanged.addListener(onStorageChanged);
     };

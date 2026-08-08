@@ -364,13 +364,23 @@ describe('openBookmark', () => {
 });
 
 describe('openBookmarkNewTab', () => {
-    it('creates a background tab when selected is false, then closes popup', () => {
+    it('creates a background tab when selected is false and keeps the popup open', () => {
         const { actions, chrome } = setup({});
         actions.openBookmarkNewTab('https://a/', false);
         expect(chrome.tabs.created).toEqual([{ url: 'https://a/', active: false }]);
         expect(chrome.tabs.updated).toEqual([]);
-        // 修复：openBookmarkNewTab 现统一在 bookmarkClickStayOpen=false 时关闭 popup
-        expect(timeouts).toEqual([[window.close, 200]]);
+        // issue #50：后台打开（中键/后台新标签）不再显式关闭 popup——
+        // 只有前台打开（selected=true）才受 bookmarkClickStayOpen 约束。
+        expect(timeouts).toEqual([]);
+    });
+
+    it('keeps the popup open on a background tab even when bookmarkClickStayOpen is off', () => {
+        const { actions, chrome } = setup({ storeData: { bookmarkClickStayOpen: '' } });
+        actions.openBookmarkNewTab('https://a/', false);
+        expect(chrome.tabs.created).toEqual([{ url: 'https://a/', active: false }]);
+        // 后台打开无论 bookmarkClickStayOpen 都保持 popup（浏览器惯例，
+        // 与 openBookmarks 文件夹分支一致）。
+        expect(timeouts).toEqual([]);
     });
 
     it('reuses a chrome://newtab tab when blankTabCheck is on, then closes', () => {

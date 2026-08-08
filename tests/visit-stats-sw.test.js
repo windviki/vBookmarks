@@ -121,6 +121,23 @@ describe('start + index', () => {
         chromeDouble.listeners.bookmarks.onCreated();
         expect(chromeDouble.calls.getTree).toBe(2);
     });
+
+    // review 05-S5: onMoved is debounced — a recursive folder sort fires one
+    // onMoved per moved node and must not rebuild the whole index per move.
+    it('debounces a burst of onMoved events into one index rebuild', () => {
+        createVisitStatsCollector().start();
+        expect(chromeDouble.calls.getTree).toBe(1);
+        for (let i = 0; i < 20; i++)
+            chromeDouble.listeners.bookmarks.onMoved();
+        vi.advanceTimersByTime(299);
+        expect(chromeDouble.calls.getTree).toBe(1); // still settling
+        vi.advanceTimersByTime(1);
+        expect(chromeDouble.calls.getTree).toBe(2); // one rebuild for the burst
+        // a later, isolated move rebuilds again after its own quiet window
+        chromeDouble.listeners.bookmarks.onMoved();
+        vi.advanceTimersByTime(300);
+        expect(chromeDouble.calls.getTree).toBe(3);
+    });
 });
 
 describe('navigation counting', () => {

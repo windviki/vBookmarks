@@ -9,20 +9,20 @@
  * row kinds with zero view-specific keys (batch-deletion slice). The
  * bookmark-stats rows lead (the toolbar sort segment controls them, so
  * the controlled list sits directly under the control) and the unbookmarked
- * recent-history rows join them in the same list while the "显示未收藏书签"
- * toolbar checkbox is on:
+ * recent-history rows join them in the same list while the
+ * statsShowUnbookmarked toolbar checkbox is on:
  *
  *   - 已收藏统计行 — the slice-D per-bookmark counters: one row per
  *     bookmark with at least one recorded open, sorted by count (default)
- *     or recency (`statsSort` persists the choice). A ★ badge (enlarged,
- *     row-badge.starred) marks the bookmarked state, the active sort key
- *     renders as the count pill / relative time in the badge slot (next to
- *     the ★), the secondary key rides the right slot, and the parent path
- *     sits on the wide second line. Clicking opens through the shared
+ *     or recency (`statsSort` persists the choice). The bookmarked state
+ *     shows as a ★ inline SVG at the line end (.stats-star — not a badge;
+ *     the badge slot always renders [relative time, count pill]), and the
+ *     parent path rides the rightText slot and the wide second line.
+ *     Clicking opens through the shared
  *     bookmarkHandler, which is also the collection point (neat.js
  *     onOpenBookmark). Bookmarked history rows whose id the stats dataset
- *     lacks (visited but never opened through the popup) also land here as
- *     count-0 rows — they are still visited bookmarks.
+ *     lacks (visited but never opened through the popup) also land here,
+ *     counted at history's visitCount — they are still visited bookmarks.
  *   - 未收藏历史行 — the latest chrome.history entries NOT in the bookmark
  *     tree, most recent first, URL-deduped, capped at HISTORY_RECENT_MAX.
  *     They carry no row id (no data-node-id — the open still goes through
@@ -350,12 +350,13 @@ export function initViewStats(ctx = {}) {
                         // Narrow: the path rides the inline .row-path slot
                         // (right before the time badge, so the right side
                         // reads path → time → count → icon). Wide/panel: the
-                        // row-path hides and the second line shows the
-                        // absolute time + path (aligned with the unbookmarked
-                        // rows' bare absolute time).
+                        // row-path hides and the second line shows
+                        // path · absolute time — the same template as the
+                        // recent/dupes views (aligned with the unbookmarked
+                        // rows' bare absolute time when the path is off).
                         rightText: (views.showItemPath() && path) ? path : '',
                         subText: (views.showItemPath() && path)
-                            ? `${absTime} · ${path}`
+                            ? `${path} · ${absTime}`
                             : absTime
                     }) +
                     // ★: bookmarked-state marker (filled star), always visible,
@@ -515,20 +516,33 @@ export function initViewStats(ctx = {}) {
         const row = histRows[idx];
         if (!row || row.bookmarkId)
             return;
-        const parentId = store.get('quickAddFolderId', '1');
-        chrome.bookmarks.create({ title: row.title || row.url, url: row.url, parentId }, created => {
-            if (!created || created.id === undefined || created.id === null)
-                return; // create failed (lastError) — leave the row untouched
-            // State flip: the row becomes its bookmarked form (★ badge,
-            // data-node-id, no button).
-            row.bookmarkId = `${created.id}`;
+        // State flip: the row becomes its bookmarked form (★ badge,
+        // data-node-id, no button).
+        const flipToBookmarked = id => {
+            row.bookmarkId = `${id}`;
             onChanged(); // invalidate the already-rendered tree
-            // The quick-add toast wording, reused verbatim.
-            chrome.bookmarks.get(parentId, nodes => {
-                const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
-                undo.showToast(_m('quickAddedTo', folderName));
-            });
             render();
+        };
+        // Session blind spot (review 05-S6): this view only listens to
+        // onRemoved, so a bookmark created mid-session (quick-add star, tree
+        // add) doesn't flip the stale row — re-check by URL before create or
+        // the ☆ would mint a duplicate.
+        chrome.bookmarks.search({ url: row.url }, existing => {
+            if (existing && existing.length) {
+                flipToBookmarked(existing[0].id);
+                return;
+            }
+            const parentId = store.get('quickAddFolderId', '1');
+            chrome.bookmarks.create({ title: row.title || row.url, url: row.url, parentId }, created => {
+                if (!created || created.id === undefined || created.id === null)
+                    return; // create failed (lastError) — leave the row untouched
+                flipToBookmarked(created.id);
+                // The quick-add toast wording, reused verbatim.
+                chrome.bookmarks.get(parentId, nodes => {
+                    const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
+                    undo.showToast(_m('quickAddedTo', folderName));
+                });
+            });
         });
     };
 

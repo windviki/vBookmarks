@@ -357,10 +357,18 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     // the popup keeps its saved / default height unconditionally.
     const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
     const $views = $('views');
+    // issue #51: the user dragging the popup's bottom edge is an explicit size
+    // intent. Auto-height must then step back — otherwise the next tree click
+    // re-grows the popup to the content height, so the manual shrink "resets"
+    // and the window can only ever get bigger. The flag is session-scoped (the
+    // popup page reloads each open); a fresh open restores the saved height.
+    let userResizedHeight = false;
     const resetHeight = (allowShrink) => {
         if (IS_PANEL)
             return;
         if (!autoResizeEnabled())
+            return;
+        if (userResizedHeight)
             return;
         // The content height is the TREE's — but when another view (search /
         // stats / dead / dupes) is active, #view-tree is display:none and
@@ -427,40 +435,54 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 
     // Reorder the children of folderId with serial bookmarks.move calls, then
     // rebuild the tree (the opens memory restores the expanded state). The
-    // pre-sort child order is captured so the toast's Undo can move the nodes
-    // back to their original positions (a reorder — the deletion undo's
-    // recreate-by-copy would swap node ids, so it restores positions instead).
+    // pre-sort order of EVERY level is captured (VBMSort.snapshotOrder) so
+    // the toast's Undo replays each level back to its original positions (a
+    // reorder — the deletion undo's recreate-by-copy would swap node ids, so
+    // it restores positions instead). All planning lives in sort-utils.js
+    // (pure); this is the thin chrome executor. One chain at a time: the
+    // lock refuses re-triggers while a sort (or an Undo replay) is in
+    // flight — the direct menu items and the sort dialog share this
+    // executor, so one lock covers both entries.
+    const sortLock = window.VBMSort.createSortLock();
     const sortFolderContents = (folderId, opts) => {
+        if (!sortLock.acquire())
+            return;
         chrome.bookmarks.getSubTree(folderId, nodes => {
-            if (!nodes || !nodes.length)
+            if (!nodes || !nodes.length) {
+                sortLock.release();
                 return;
-            const beforeIds = (nodes[0].children || []).map(n => n.id);
-            const sorted = window.VBMSort.sortNodes(nodes[0].children || [], opts);
+            }
+            const children = nodes[0].children || [];
+            const snapshot = window.VBMSort.snapshotOrder(folderId, children);
+            const sorted = window.VBMSort.sortNodes(children, opts);
             // Moving every id to its target index in ascending order leaves the
             // parent sorted, because positions before i are already final.
             const moveToIndex = ids => ids.reduce((chain, id, i) =>
                 chain.then(() => new Promise(resolve => {
-                    chrome.bookmarks.move(id, { index: i }, () => resolve());
+                    chrome.bookmarks.move(id, { index: i }, () => {
+                        void chrome.runtime.lastError; // read per 793e336
+                        resolve();
+                    });
                 })), Promise.resolve());
-            const applyLevel = list => moveToIndex(list.map(n => n.id)).then(() => {
-                if (!opts.recursive)
-                    return Promise.resolve();
-                return list.reduce((chain, node) =>
-                    (node.children && node.children.length) ?
-                        chain.then(() => applyLevel(node.children)) : chain,
-                    Promise.resolve());
-            });
-            applyLevel(sorted).then(() => {
+            const runLevels = levels => levels.reduce((chain, ids) =>
+                chain.then(() => moveToIndex(ids)), Promise.resolve());
+            runLevels(window.VBMSort.planSortMoves(sorted, !!opts.recursive)).then(() => {
                 // treeView 在下方声明；此调用只在排序动作的异步回调里执行，TDZ 安全
                 chrome.bookmarks.getTree(treeView.generateTree);
-                // issue #33: toast undo — Undo moves the children back to the
-                // order they had before this sort (undo 在下方声明,同样 TDZ 安全)。
+                // issue #33: toast undo — Undo replays every level the sort
+                // touched back to its snapshot order, recursive sorts
+                // included (undo 在下方声明,同样 TDZ 安全)。The lock is
+                // re-held for the replay so a new sort can't interleave
+                // (best-effort acquire: a chain already in flight holds it).
                 if (undo && undo.toastAction) {
                     undo.toastAction(_m('sortDone'), _m('undoAction'), () => {
-                        moveToIndex(beforeIds).then(() =>
-                            chrome.bookmarks.getTree(treeView.generateTree));
+                        sortLock.acquire();
+                        runLevels(window.VBMSort.planUndoMoves(snapshot, !!opts.recursive))
+                            .then(() => chrome.bookmarks.getTree(treeView.generateTree))
+                            .then(() => sortLock.release());
                     });
                 }
+                sortLock.release();
             });
         });
     };
@@ -773,7 +795,8 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             return;
         if (body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
             body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
-            body.classList.contains('needSort'))
+            body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
+            body.classList.contains('needGroupPick'))
             return;
         e.preventDefault();
         e.stopPropagation();
@@ -948,6 +971,9 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             menus.clearMenu();
         } else {
             // record current height
+            // issue #51: any vertical drag is an explicit size choice — from
+            // here on the auto-height logic backs off (see resetHeight).
+            userResizedHeight = true;
             const changedHeight = e.screenY - screenY;
             let height = bodyHeight + changedHeight;
             // 240 < height < 600
