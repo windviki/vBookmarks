@@ -352,8 +352,21 @@ const setup = (opts = {}) => {
         }
     };
     const clearMenuCalls = [];
+    const closeMenuCalls = [];
     const menus = {
         clearMenu: () => clearMenuCalls.push('clear'),
+        // 4.0.2 cancel semantics: the double mirrors the real closeMenu's
+        // marker-off + owner refocus, so the keyboard cancel paths (menu
+        // ←/Esc, document Esc) can assert the focus law. (Menu hiding is
+        // not modeled by the doubles — opacity is poked directly.)
+        closeMenu: () => {
+            closeMenuCalls.push('close');
+            const active = body.querySelector('.active');
+            if (active) {
+                active.classList.remove('active');
+                active.focus();
+            }
+        },
         bookmarkMenu,
         folderMenu,
         separatorMenu
@@ -442,7 +455,7 @@ const setup = (opts = {}) => {
         quickAddBtn, toolBtn,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
-        chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls,
+        chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls, closeMenuCalls,
         closeDialogsCalls, flags, windowCloseCalls
     };
 };
@@ -461,7 +474,7 @@ describe('module API', () => {
         expect(results._listeners.keyup).toHaveLength(1);
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
-        expect(separatorMenu._listeners.keydown).toBeUndefined(); // binding stays commented out
+        expect(separatorMenu._listeners.keydown).toHaveLength(1); // 4.0.2: bound like every other menu
         expect(paletteCmdMenu._listeners.keydown).toHaveLength(1); // K7: bound like the other menus
         expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
     });
@@ -1324,18 +1337,18 @@ describe('contextKeyDown', () => {
         expect(item2.focused).toBe(true);
     });
 
-    it('ArrowDown past the last item wraps to the first (off Mac)', () => {
+    it('ArrowDown past the last item wraps to the first', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({});
         doc.activeElement = item2;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
         expect(item1.focused).toBe(true);
     });
 
-    it('ArrowDown past the last item does not wrap on Mac', () => {
+    it('ArrowDown past the last item wraps on Mac too (4.0.2 P1: no platform exception)', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({ os: 'mac' });
         doc.activeElement = item2;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
-        expect(item1.focused).toBe(false);
+        expect(item1.focused).toBe(true);
     });
 
     it('ArrowUp moves to the previous menu item, skipping <hr> separators', () => {
@@ -1345,18 +1358,18 @@ describe('contextKeyDown', () => {
         expect(item1.focused).toBe(true);
     });
 
-    it('ArrowUp past the first item wraps to the last (off Mac)', () => {
+    it('ArrowUp past the first item wraps to the last', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({});
         doc.activeElement = item1;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowUp' }));
         expect(item2.focused).toBe(true);
     });
 
-    it('ArrowUp past the first item does not wrap on Mac', () => {
+    it('ArrowUp past the first item wraps on Mac too (4.0.2 P1: no platform exception)', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({ os: 'mac' });
         doc.activeElement = item1;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowUp' }));
-        expect(item2.focused).toBe(false);
+        expect(item2.focused).toBe(true);
     });
 
     it('Meta+ArrowDown/ArrowUp jump to the last/first menu item', () => {
@@ -1545,7 +1558,7 @@ describe('contextKeyDown', () => {
         expect(item2.focused).toBe(false); // the disabled tail never takes focus
     });
 
-    it('Enter dispatches a mouseup on the focused menu item', () => {
+    it('Enter confirms: a bubbling button-0 mouseup on the focused menu item', () => {
         const { bookmarkMenu, item1, doc } = setup({});
         doc.activeElement = item1;
         const ev = makeEvent({ key: 'Enter' });
@@ -1553,73 +1566,176 @@ describe('contextKeyDown', () => {
         expect(ev.defaultPrevented).toBe(true);
         expect(item1._dispatched).toHaveLength(1);
         expect(item1._dispatched[0].type).toBe('mouseup');
+        expect(item1._dispatched[0].button).toBe(0);
+        expect(item1._dispatched[0].bubbles).toBe(true);
     });
 
-    it('Space dispatches the same mouseup', () => {
+    it('Space confirms with the same mouseup', () => {
         const { bookmarkMenu, item2, doc } = setup({});
         doc.activeElement = item2;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: ' ' }));
         expect(item2._dispatched).toHaveLength(1);
         expect(item2._dispatched[0].type).toBe('mouseup');
+        expect(item2._dispatched[0].button).toBe(0);
     });
 
-    it('Escape unmarks and refocuses the active row, then clears the menu', () => {
-        const { bookmarkMenu, item1, doc, clearMenuCalls, row } = setup({});
+    it('confirm keys are a no-op (besides preventDefault) when the menu container holds focus', () => {
+        const { bookmarkMenu, item1, doc } = setup({});
+        doc.activeElement = bookmarkMenu; // freshly opened: no item focused
+        for (const key of ['ArrowRight', 'Enter', ' ']) { // LTR: → confirms too
+            const ev = makeEvent({ key });
+            fire(bookmarkMenu, 'keydown', ev);
+            expect(ev.defaultPrevented).toBe(true);
+        }
+        expect(item1._dispatched).toEqual([]);
+        expect(bookmarkMenu._dispatched).toEqual([]); // never dispatched on the container
+    });
+
+    it('confirm keys are a no-op on a DISABLED menu item', () => {
+        const { bookmarkMenu, item1, doc } = setup({});
+        item1.classList.add('disabled');
+        doc.activeElement = item1;
+        for (const key of ['ArrowRight', 'Enter', ' ']) {
+            const ev = makeEvent({ key });
+            fire(bookmarkMenu, 'keydown', ev);
+            expect(ev.defaultPrevented).toBe(true);
+        }
+        expect(item1._dispatched).toEqual([]);
+    });
+
+    it('Home/End jump to the first/last menu item (P2)', () => {
+        const { bookmarkMenu, item1, item2, doc } = setup({});
+        doc.activeElement = item2;
+        const home = makeEvent({ key: 'Home' });
+        fire(bookmarkMenu, 'keydown', home);
+        expect(home.defaultPrevented).toBe(true);
+        expect(item1.focused).toBe(true);
+        doc.activeElement = item1;
+        const end = makeEvent({ key: 'End' });
+        fire(bookmarkMenu, 'keydown', end);
+        expect(end.defaultPrevented).toBe(true);
+        expect(item2.focused).toBe(true);
+    });
+
+    it('Home/End land on the first/last ENABLED item, skipping a disabled edge', () => {
+        const { bookmarkMenu, item1, item2, doc } = setup({});
+        item2.classList.add('disabled'); // the tail greys out (root-folder delete)
+        doc.activeElement = bookmarkMenu;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'End' }));
+        expect(item1.focused).toBe(true);
+        expect(item2.focused).toBe(false);
+        item2.classList.remove('disabled');
+        item1.classList.add('disabled'); // now the HEAD is disabled
+        item1.focused = false;
+        doc.activeElement = bookmarkMenu;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Home' }));
+        expect(item2.focused).toBe(true);
+        expect(item1.focused).toBe(false);
+    });
+
+    it('Escape cancels the menu: closeMenu unmarks and refocuses the active row', () => {
+        const { bookmarkMenu, item1, doc, closeMenuCalls, clearMenuCalls, row } = setup({});
         const active = row('A', 'neat-tree-item-42');
         active.link.classList.add('active');
         doc.activeElement = item1;
         const ev = makeEvent({ key: 'Escape' });
         fire(bookmarkMenu, 'keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(active.link.classList.contains('active')).toBe(false);
+        expect(closeMenuCalls).toEqual(['close']);
+        expect(clearMenuCalls).toEqual([]); // routed through closeMenu now
+        expect(active.link.classList.contains('active')).toBe(false); // the double mirrors it
         expect(active.link.focused).toBe(true);
-        expect(clearMenuCalls).toEqual(['clear']);
     });
 
-    it('Escape still clears the menu when no row is active', () => {
-        const { bookmarkMenu, item1, doc, clearMenuCalls } = setup({});
+    it('Escape still cancels the menu when no row is active', () => {
+        const { bookmarkMenu, item1, doc, closeMenuCalls } = setup({});
         doc.activeElement = item1;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Escape' }));
-        expect(clearMenuCalls).toEqual(['clear']);
+        expect(closeMenuCalls).toEqual(['close']);
     });
 
-    it('ArrowLeft closes the menu in ltr but not in rtl', () => {
+    it('cancel falls back to the inline close when the menus double lacks closeMenu', () => {
+        const { bookmarkMenu, item1, doc, menus, clearMenuCalls, closeMenuCalls, row } = setup({});
+        delete menus.closeMenu; // minimal setup: the pre-4.0.2 inline path
+        const active = row('A', 'neat-tree-item-42');
+        active.link.classList.add('active');
+        doc.activeElement = item1;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Escape' }));
+        expect(closeMenuCalls).toEqual([]);
+        expect(clearMenuCalls).toEqual(['clear']);
+        expect(active.link.classList.contains('active')).toBe(false);
+        expect(active.link.focused).toBe(true);
+    });
+
+    it('ArrowLeft cancels in ltr (closeMenu) but confirms in rtl (mouseup dispatch)', () => {
         const ltr = setup({});
         const activeLtr = ltr.row('A', 'neat-tree-item-42');
         activeLtr.link.classList.add('active');
         ltr.doc.activeElement = ltr.item1;
-        fire(ltr.bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowLeft' }));
-        expect(ltr.clearMenuCalls).toEqual(['clear']);
+        const evLtr = makeEvent({ key: 'ArrowLeft' });
+        fire(ltr.bookmarkMenu, 'keydown', evLtr);
+        expect(evLtr.defaultPrevented).toBe(true);
+        expect(ltr.closeMenuCalls).toEqual(['close']);
         expect(activeLtr.link.classList.contains('active')).toBe(false);
+        expect(activeLtr.link.focused).toBe(true);
+        expect(ltr.item1._dispatched).toEqual([]); // cancel never dispatches
 
         const rtl = setup({ rtl: true });
         rtl.doc.activeElement = rtl.item1;
         const ev = makeEvent({ key: 'ArrowLeft' });
         fire(rtl.bookmarkMenu, 'keydown', ev);
         expect(ev.defaultPrevented).toBe(true);
-        expect(rtl.clearMenuCalls).toEqual([]);
+        expect(rtl.closeMenuCalls).toEqual([]);
+        // confirm = the focused enabled item's own mouseup (button 0, bubbling)
+        expect(rtl.item1._dispatched).toHaveLength(1);
+        expect(rtl.item1._dispatched[0].type).toBe('mouseup');
+        expect(rtl.item1._dispatched[0].button).toBe(0);
     });
 
-    it('ArrowRight closes the menu in rtl but not in ltr', () => {
+    it('ArrowRight confirms in ltr (mouseup dispatch) but cancels in rtl (closeMenu)', () => {
+        const ltr = setup({});
+        ltr.doc.activeElement = ltr.item1;
+        const evLtr = makeEvent({ key: 'ArrowRight' });
+        fire(ltr.bookmarkMenu, 'keydown', evLtr);
+        expect(evLtr.defaultPrevented).toBe(true);
+        expect(ltr.closeMenuCalls).toEqual([]);
+        expect(ltr.item1._dispatched).toHaveLength(1);
+        expect(ltr.item1._dispatched[0].type).toBe('mouseup');
+        expect(ltr.item1._dispatched[0].button).toBe(0);
+        expect(ltr.item1._dispatched[0].bubbles).toBe(true);
+
         const rtl = setup({ rtl: true });
         const activeRtl = rtl.row('A', 'neat-tree-item-42');
         activeRtl.link.classList.add('active');
         rtl.doc.activeElement = rtl.item1;
         fire(rtl.bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowRight' }));
-        expect(rtl.clearMenuCalls).toEqual(['clear']);
+        expect(rtl.closeMenuCalls).toEqual(['close']);
         expect(activeRtl.link.classList.contains('active')).toBe(false);
-
-        const ltr = setup({});
-        ltr.doc.activeElement = ltr.item1;
-        fire(ltr.bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowRight' }));
-        expect(ltr.clearMenuCalls).toEqual([]);
+        expect(rtl.item1._dispatched).toEqual([]); // cancel never dispatches
     });
 
     it('is also bound on the folder menu', () => {
-        const { folderMenu, item1, doc, clearMenuCalls } = setup({});
+        const { folderMenu, item1, doc, closeMenuCalls } = setup({});
         doc.activeElement = item1;
         fire(folderMenu, 'keydown', makeEvent({ key: 'Escape' }));
-        expect(clearMenuCalls).toEqual(['clear']);
+        expect(closeMenuCalls).toEqual(['close']);
+    });
+
+    it('is bound on the separator menu too (4.0.2: remove-separator was unreachable by keys)', () => {
+        const { separatorMenu, doc, el } = setup({});
+        expect(separatorMenu._listeners.keydown).toHaveLength(1);
+        // the real menu's single entry
+        const rm = el('DIV', 'remove-separator');
+        rm.classList.add('menu-item');
+        rm.parentNode = separatorMenu;
+        separatorMenu.firstElementChild = rm;
+        separatorMenu.lastElementChild = rm;
+        doc.activeElement = separatorMenu; // freshly opened: container focus
+        fire(separatorMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(rm.focused).toBe(true); // ↓ enters the only item
+        fire(separatorMenu, 'keydown', makeEvent({ key: 'Enter' }));
+        expect(rm._dispatched).toHaveLength(1);
+        expect(rm._dispatched[0].type).toBe('mouseup'); // confirm runs it
     });
 
     it('binds the full walk on the palette custom-command menu too (K7)', () => {
@@ -1883,7 +1999,8 @@ describe('view-manager integration (v4 task-2)', () => {
 //
 // Final polish (keyboard-model §2.5): the toolbar is a RUNG of the vertical
 // chain — ↓ enters the rows (remembered first), ↑ crosses to the strip/box,
-// ←/→ walk the rung's controls in reading order (dead ends at the edges).
+// ←/→ walk the rung's controls in reading order and WRAP at the edges
+// (4.0.2 P1: a bounded fixed set cycles, the tab strip's ←/→ rule).
 describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
     // A stats-like view: #stats-list containing a .vbm-toolbar with TWO
     // buttons and two bookmark rows, registered next to the tree in the view
@@ -2003,22 +2120,23 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(up.defaultPrevented).toBe(false);
     });
 
-    it('←/→ walk the rung\'s controls in reading order; the edges are dead ends', () => {
+    it('←/→ walk the rung\'s controls in reading order and wrap at the edges (4.0.2 P1)', () => {
         const { ctx, listEl, btn, btn2 } = setupStatsList();
         ctx.doc.activeElement = btn;
         const right = makeEvent({ key: 'ArrowRight' });
         fire(listEl, 'keydown', right);
         expect(right.defaultPrevented).toBe(true);
         expect(btn2.focused).toBe(true);
-        // btn2 is the last control: another → is a dead end (not consumed)
+        // btn2 is the last control: another → WRAPS to the first (bounded set)
         const right2 = makeEvent({ key: 'ArrowRight' });
         fire(listEl, 'keydown', right2);
-        expect(right2.defaultPrevented).toBe(false);
-        // ← walks back
+        expect(right2.defaultPrevented).toBe(true);
+        expect(btn.focused).toBe(true);
+        // ← from the first wraps to the last
         const left = makeEvent({ key: 'ArrowLeft' });
         fire(listEl, 'keydown', left);
         expect(left.defaultPrevented).toBe(true);
-        expect(btn.focused).toBe(true);
+        expect(btn2.focused).toBe(true);
     });
 
     it('←/→ mirror in RTL', () => {
@@ -2073,17 +2191,38 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(ctx.f1.link.focused).toBe(false);
     });
 
-    it('Home/End with no row-list match are no-ops (D1: a bare listbox ul cannot crash them)', () => {
+    it('Home/End with no row-list match take the top crossing (D1: a bare listbox ul cannot crash them)', () => {
         // The dupes toolbar's strategy listbox is a ul inside the list
         // container whose option rows carry no span/a — the row-list selectors
         // exclude it (ul:not(.vbm-dropdown-list)) and the guards absorb an
-        // empty result.
-        const { ctx, listEl, btn, r1 } = setupStatsList();
+        // empty result; 4.0.2 P4 then falls back to views.focusTop().
+        const { ctx, listEl, btn, r1, rec } = setupStatsList();
         delete listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'];
         ctx.doc.activeElement = btn;
         expect(() => fire(listEl, 'keydown', makeEvent({ key: 'Home' }))).not.toThrow();
         expect(r1.a.focused).toBe(false);
+        expect(rec.focusTopCalls).toBe(1);
         expect(() => fire(listEl, 'keydown', makeEvent({ key: 'End' }))).not.toThrow();
+        expect(rec.focusTopCalls).toBe(2);
+    });
+
+    it('Home/End focus a focusable row CONTAINER itself (li[tabindex] — the dead start row)', () => {
+        // The dead view's li.dead-start is a row with no inner span/a that is
+        // itself focusable; 4.0.2 P4 lands Home/End on the li. (The plain
+        // doubles lack getAttribute — the source guards for that; add it here.)
+        const { ctx, listEl, r1 } = setupStatsList();
+        const start = ctx.el('LI', 'dead-start');
+        start.getAttribute = k => (k === 'tabindex' ? '-1' : null);
+        listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'] = start;
+        ctx.doc.activeElement = r1.a;
+        fire(listEl, 'keydown', makeEvent({ key: 'Home' }));
+        expect(start.focused).toBe(true); // the li itself, never a null inner row
+        // End: the same rule through the visible-last-row walk
+        start.parentNode = { offsetHeight: 40 }; // the doubles' visibility probe
+        listEl._qsa['ul:not(.vbm-dropdown-list)>li:last-child'] = [start];
+        ctx.doc.activeElement = r1.a;
+        fire(listEl, 'keydown', makeEvent({ key: 'End' }));
+        expect(start.focusCount).toBe(2);
     });
 
     it('inline row controls walk rows relative to the OWNING row (↑ past the top crosses)', () => {
@@ -2211,9 +2350,9 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
 
     // K17: f5903c8 parks focus on the container while an async view renders —
     // with no .focus marker and no rows at all the old early-return killed ↑
-    // too. ↑ now takes the §2.1/§2.5 crossing; ↓/Home/End stay put until rows
-    // exist.
-    it('container-focused with NO rows: ↑ crosses out, ↓/Home/End stay put (K17)', () => {
+    // too. ↑ takes the §2.1/§2.5 crossing; 4.0.2 P4 gives Home/End the same
+    // crossing (the view has no rows to jump to); ↓ stays put until rows exist.
+    it('container-focused with NO rows: ↑/Home/End cross out via focusTop, ↓ stays put (K17)', () => {
         const { ctx, listEl, rec } = setupStatsList();
         delete listEl._qs['.focus'];
         delete listEl._qs['li a, li span']; // rows not rendered yet
@@ -2223,11 +2362,17 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(up.defaultPrevented).toBe(true);
         expect(rec.focusTopCalls).toBe(1); // no focusListExit on this double
         ctx.doc.activeElement = listEl;
-        for (const k of ['ArrowDown', 'Home', 'End']) {
+        const down = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', down);
+        expect(ctx.doc.activeElement).toBe(listEl); // ↓ stayed put
+        expect(rec.focusTopCalls).toBe(1);
+        for (const k of ['Home', 'End']) {
+            ctx.doc.activeElement = listEl;
             const ev = makeEvent({ key: k });
             fire(listEl, 'keydown', ev);
-            expect(ctx.doc.activeElement).toBe(listEl); // stayed put
+            expect(ev.defaultPrevented).toBe(true);
         }
+        expect(rec.focusTopCalls).toBe(3); // Home + End took the top crossing
     });
 });
 
@@ -2328,12 +2473,28 @@ describe('Esc layering — full document chain (item 2)', () => {
         ctx.searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         ctx.fireDoc('keydown', ev);
-        expect(active.link.classList.contains('active')).toBe(false);
+        // 4.0.2 P2: the document-level dismiss is the same cancel semantics
+        // as the menu's own ←/Esc — routed through menus.closeMenu.
+        expect(ctx.closeMenuCalls).toEqual(['close']);
+        expect(ctx.clearMenuCalls).toEqual([]);
+        expect(active.link.classList.contains('active')).toBe(false); // the double mirrors it
         expect(active.link.focused).toBe(true);
-        expect(ctx.clearMenuCalls).toEqual(['clear']);
         expect(ctx.searchCalls).toEqual([]); // the search clear is not reached
         expect(ctx.searchInput.value).toBe('query');
         expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('the document-level menu rung falls back to the inline close without closeMenu', () => {
+        const ctx = setup({});
+        delete ctx.menus.closeMenu; // minimal setup: the pre-4.0.2 inline path
+        const active = ctx.row('A', 'neat-tree-item-42');
+        active.link.classList.add('active');
+        ctx.bookmarkMenu.style.opacity = '1';
+        ctx.fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(ctx.closeMenuCalls).toEqual([]);
+        expect(ctx.clearMenuCalls).toEqual(['clear']);
+        expect(active.link.classList.contains('active')).toBe(false);
+        expect(active.link.focused).toBe(true);
     });
 
     it('the palette rung closes the panel before the view/search rungs', () => {
@@ -2510,7 +2671,7 @@ describe('Esc layering — full document chain (item 2)', () => {
         ctx.flags.dialogOpen = false;
 
         esc(); // 2 — the context-menu layer
-        expect(ctx.clearMenuCalls).toEqual(['clear']);
+        expect(ctx.closeMenuCalls).toEqual(['close']);
         expect(order).toEqual([]);
 
         esc(); // 3 — the palette layer

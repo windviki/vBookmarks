@@ -28,7 +28,8 @@ import { initKeyboard } from '../src/keyboard.js';
 //      - the palette closed over a NON-tree view lands focus in THAT view's
 //        anchor, never a hidden tree row (K13);
 //      - a row-less list container holding focus still crosses OUT on ↑
-//        (K17); ↓/Home/End stay put until rows render.
+//        (K17); 4.0.2: Home/End cross to the view anchor too (item e) —
+//        only ↓ stays put until rows render.
 //
 // The per-module suites keep the deep behaviour (dialog traps, per-view arrow
 // walks, palette menu-close focus) — this file is the mandatory gate that
@@ -338,17 +339,23 @@ describe('E — K13/K17: hidden-view + row-less-container landings', () => {
         expect(ctx.doc.activeElement).toBe(ctx.results);
     });
 
-    it('K17: ↑ from a row-less container crosses out; ↓/Home/End stay put', () => {
+    it('K17: ↑ from a row-less container crosses out; Home/End cross to the view anchor; ↓ stays put', () => {
         const ctx = setup({});
         ctx.doc.activeElement = ctx.tree; // f5903c8 parks focus on the container
         const up = ctx.keyOn(ctx.tree, 'ArrowUp');
         expect(up.defaultPrevented).toBe(true);
         // focusListExit → no toolbar rung → focusTop → the strip's active tab
         expect(ctx.doc.activeElement).toBe(ctx.views.activeDef().tabEl);
-        ctx.doc.activeElement = ctx.tree;
-        for (const k of ['ArrowDown', 'Home', 'End']) {
+        // 4.0.2 (item e): Home/End on a row-less container no longer trap
+        // focus — they cross to the view anchor (focusTop), the same landing
+        // ↑ takes. ↓ keeps waiting for rows to render.
+        for (const k of ['Home', 'End']) {
+            ctx.doc.activeElement = ctx.tree;
             ctx.keyOn(ctx.tree, k);
-            expect(ctx.doc.activeElement).toBe(ctx.tree); // rows not rendered yet
+            expect(ctx.doc.activeElement).toBe(ctx.views.activeDef().tabEl);
         }
+        ctx.doc.activeElement = ctx.tree;
+        ctx.keyOn(ctx.tree, 'ArrowDown');
+        expect(ctx.doc.activeElement).toBe(ctx.tree); // rows not rendered yet
     });
 });

@@ -826,12 +826,56 @@ describe('tab strip keyboard model (§2.2)', () => {
         expect(ctx.views.activeId()).toBe('tree');
     });
 
-    it('Home/End jump to the first/last tab', () => {
+    it('Home/End are view-scoped: the CURRENT view\'s first/last row, never a view switch (4.0.2 P4)', () => {
         const ctx = setup({});
         ctx.addRecent();
+        // two rows in the tree view's list (the ACTIVE view)
+        const mkRow = () => {
+            const li = ctx.makeEl('li');
+            const a = ctx.makeEl('a');
+            li.appendChild(a);
+            ctx.byId.tree.appendChild(li);
+            return a;
+        };
+        const first = mkRow();
+        const last = mkRow();
+        const end = fireTabs(ctx, 'End');
+        expect(end.defaultPrevented).toBe(true);
+        expect(last.focused).toBe(true);
+        expect(ctx.views.activeId()).toBe('tree'); // no view switch
+        ctx.tabs()[0].focus(); // back on the strip
+        const home = fireTabs(ctx, 'Home');
+        expect(home.defaultPrevented).toBe(true);
+        expect(first.focused).toBe(true);
+        expect(ctx.views.activeId()).toBe('tree'); // still no view switch
+    });
+
+    it('strip Home/End with NO rows keep focus on the current tab (and never switch)', () => {
+        const ctx = setup({});
+        ctx.addRecent();
+        const tab = ctx.tabs()[0];
+        tab.focus();
+        const home = fireTabs(ctx, 'Home');
+        expect(home.defaultPrevented).toBe(true);
+        expect(ctx.doc.activeElement).toBe(tab); // focus simply stayed on the tab
+        expect(ctx.views.activeId()).toBe('tree');
         fireTabs(ctx, 'End');
-        expect(ctx.views.activeId()).toBe('recent');
-        fireTabs(ctx, 'Home');
+        expect(ctx.doc.activeElement).toBe(tab);
+        expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('strip Home/End never reach into another view\'s rows', () => {
+        const ctx = setup({});
+        // rows only in the (inactive) search view — the active tree has none
+        const li = ctx.makeEl('li');
+        const a = ctx.makeEl('a');
+        li.appendChild(a);
+        ctx.byId.results.appendChild(li);
+        const tab = ctx.tabs()[0];
+        tab.focus();
+        fireTabs(ctx, 'End');
+        expect(a.focused).toBe(false);
+        expect(ctx.doc.activeElement).toBe(tab);
         expect(ctx.views.activeId()).toBe('tree');
     });
 

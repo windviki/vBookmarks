@@ -47,6 +47,12 @@ Top to bottom, the popup is:
 
 ## 2. The arrow-key laws
 
+One cycling principle underlies them all: **bounded fixed sets cycle** —
+menus, the tab strip, and in-list toolbar rungs wrap around at their edges;
+**long lists don't** — tree/results/per-view rows keep their one-way
+top/bottom crossings instead. (The header row also never cycles: the text
+box's caret editing takes priority there, §2.2.)
+
 ### 2.1 The vertical chain (browsing state)
 
 ```
@@ -82,8 +88,10 @@ headerArrow)*
 
 `←`/`→` move **and activate** the neighbor tab (roving tabindex, focus
 follows, auto-activation is cheap because rendering is local), `Home`/`End`
-jump to the ends, `↑` → the box, `↓` → the list. RTL mirrors `←`/`→`.
-*(view-manager strip keydown)*
+focus the **current view's** first/last row — view-scoped, they never
+switch views, and with no rows focus simply stays on the tab — `↑` → the
+box, `↓` → the list. RTL mirrors `←`/`→`. *(view-manager strip keydown,
+focusEdgeRow)*
 
 ### 2.4 Rows: the universal list contract
 
@@ -92,7 +100,7 @@ Every list view (tree, search results, recent, stats, dead, dupes members):
 | Key | Action |
 |---|---|
 | `↑` `↓` | previous / next row (past the first row, `↑` crosses per §2.1) |
-| `Home` / `End` | first / last row (`Cmd+↑`/`Cmd+↓` on macOS) |
+| `Home` / `End` | first / last row (`Cmd+↑`/`Cmd+↓` on macOS); a focusable `li[tabindex]` row (the dead view's start row) is focused directly, not via a child; on a row-less container `Home`/`End` cross OUT to the view anchor (focusTop — the tab or the search box), same landing as `↑` |
 | `PageUp` / `PageDown` | one viewport up / down |
 | `Enter` / `Space` | activate (`Ctrl/Cmd` new tab, `Shift` new window) |
 | `→` (LTR) | open the row's context menu at the row's edge |
@@ -140,9 +148,11 @@ without an enabled control is skipped transparently:
   above, or crosses to the strip from the topmost rung (to the box when
   the strip is hidden).
 - **`←`/`→`** walk the rung's enabled controls in reading order (RTL
-  mirrors); the edges are dead ends — the header-chain contract. This
-  supersedes the old view-local seg walkers (stats sort, dead filter),
-  which would double-step.
+  mirrors) and **wrap around** at the edges — a rung is a bounded fixed
+  set, so it cycles like the tab strip (they used to be dead ends). The
+  header row stays non-cycling: the text box's caret editing takes
+  priority there (§2.2). This supersedes the old view-local seg walkers
+  (stats sort, dead filter), which would double-step.
 - **Dropdowns follow one shared protocol** (`dropdown.js`; the dupes toolbar's
   strategy/scope are the first users — native `<select>` handed its open-state
   keys to the browser, so it could not follow this). On the **closed trigger**:
@@ -165,7 +175,12 @@ without an enabled control is skipped transparently:
 - **Focus survives re-renders**: sort switches, filter clicks, regroups and
   scan-progress ticks re-render the toolbar with the rows; each view
   restores focus to the same-index control across the innerHTML swap, so
-  the rung never drops the user's place. *(the views' render functions)*
+  the rung never drops the user's place. The views now also park/restore a
+  focused **list row** across the swap (the dupes/dead/stats/recent renders
+  and the search-history area): same-id replacement row first, then the
+  index-clamped row, then the container/input when the list is empty — so a
+  menu action that re-renders (e.g. "set as keeper") no longer loses
+  keyboard focus. *(the views' render functions)*
 - **Inline row controls** (the dupes keeper radio, the dead ⚑/× buttons)
   are not the rung: when one holds focus (mouse click), `↑`/`↓` walk rows
   relative to its owning row, and `↑` past the top takes the §2.1 crossing.
@@ -175,16 +190,26 @@ ring now agree.
 
 ### 2.6 Context menus
 
-`↑`/`↓` walk items, skipping separators, wrap-around except on macOS;
-`Enter`/`Space` execute; `Esc` or the *back* arrow (`←` LTR, `→` RTL) close
-the menu and return focus to the owning row — one exception: a menu opened
-from the **palette** (the palette-command edit/delete menu) returns focus
-to the palette's input box, its real keyboard anchor, and the palette stays
-open. Seven menu elements exist; the same handler serves six of them
-(bookmark, folder, search-history, history-row, dupes-group,
-palette-command — the last also joins the §5 Tab ring's menu containers).
-The separator menu stays unbound by design: a single entry, the documented
-exception.
+All seven menus are keyboard-bound — bookmark, folder, search-history,
+history-row, dupes-group, palette-command (the last also joins the §5 Tab
+ring's menu containers) **and the separator menu** (its lone "remove
+separator" entry used to be keyboard-unreachable — that was the reported
+bug; the "unbound by design" exception is gone). `↑`/`↓` walk items,
+skipping separators and hidden entries, and wrap around **on every
+platform** (the old macOS no-wrap exception is deleted); `Home`/`End` jump
+to the first/last enabled item. Confirm/cancel mirrors the dropdown.js
+protocol: `→` (LTR; RTL `←`) = `Enter` = `Space` **confirm** — execute the
+focused enabled item, close the menu, focus returns to the owning row;
+`←` (LTR; RTL `→`) = `Esc` **cancel** — close without executing, focus
+returns to the owning row. Confirming while the bare menu **container**
+holds focus (no item chosen yet) or on a greyed (disabled) item is a no-op.
+One exception stays: a menu opened from the **palette** (the
+palette-command edit/delete menu) returns focus to the palette's input box,
+its real keyboard anchor, and the palette stays open. New focus law (4.0.2):
+a menu-item dispatch closes the menu FIRST and returns focus to the owning
+row, THEN runs the action; if the action re-renders the list and the owning
+row element was swapped, focus lands on the same-id replacement row (then
+the list container as fallback).
 
 ## 3. The search view: the dual-zone exception
 
@@ -300,10 +325,10 @@ unreachable by `Tab`.
 |---|---|---|
 | Vertical chain (§2.1) | `view-manager.js` focusTop/focusDown/focusListExit/strip keydown; `search.js` box keydown; `keyboard.js` ArrowUp fallback | `tests/view-manager.test.js`, `tests/search.test.js`, Docker `verify-keyboard.js` §2.2/§2.2c/§2.1d |
 | Header chain (§2.2) | `search.js` (box `→`), `keyboard.js` headerArrow | `tests/search.test.js`, `tests/keyboard.test.js` (header-row arrows), verify §2.1d |
-| Strip model (§2.3) | `view-manager.js` strip keydown | `tests/view-manager.test.js`, verify §2.2 |
+| Strip model (§2.3) | `view-manager.js` strip keydown + focusEdgeRow (view-scoped Home/End) | `tests/view-manager.test.js`, verify §2.2 |
 | List contract (§2.4) | `keyboard.js` treeKeyDown/treeKeyUp; dupes overrides in `view-dupes.js`; history in `search.js` | `tests/keyboard.test.js`, `tests/view-dupes.test.js`, `tests/search.test.js` (the search-history rows), verify §2.2c/§4.3b |
 | Toolbar rung (§2.5) | `view-manager.js` focusToolbar/focusListExit; `keyboard.js` non-row branch of treeKeyDown; focus restore in the three views' render(); the dropdown protocol in `dropdown.js` + `view-dupes.js` (strategy/scope) | `tests/view-manager.test.js` (rung describe), `tests/keyboard.test.js` (item-7b + §2.5), `tests/dropdown.test.js` (protocol), verify §2.2c |
-| Menus (§2.6) | `keyboard.js` contextKeyDown | `tests/keyboard.test.js`, `tests/context-menu.test.js` |
+| Menus (§2.6) | `keyboard.js` contextKeyDown + `context-menu.js` closeMenu/refocusOwner | `tests/keyboard.test.js`, `tests/context-menu.test.js` (all seven menus, wrap + Home/End + confirm/cancel, dispatch refocus) |
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |
 | Tab ring (§5) | `keyboard.js` tabCycle | `tests/keyboard.test.js` (Tab region cycle), verify §2.1 |

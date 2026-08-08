@@ -42,9 +42,11 @@
  * from every tree regeneration through buildPathMap, read by list rows via
  * pathOf), the Escape chain view levels (onEscapeActive/escapeToTree), the
  * Ctrl/Cmd+1…6 direct view jump, the tab strip keyboard model (roving
- * tabindex, ←/→ with RTL flip, Home/End, ↑ to the search box, ↓ into the
- * zone below — the active view's in-list toolbar rung when it has one, else
- * its rows, keyboard-model §2.1/§2.5) and the aria-live view announcements.
+ * tabindex, ←/→ with RTL flip and wrap-around, the view-scoped Home/End —
+ * 4.0.2 P4: the CURRENT view's first/last row, never a view switch —, ↑ to
+ * the search box, ↓ into the zone below — the active view's in-list toolbar
+ * rung when it has one, else its rows, keyboard-model §2.1/§2.5) and the
+ * aria-live view announcements.
  *
  * initViewManager(ctx) is called once by neat.js right after the context
  * menus init (search.js needs it at init): ctx.store, ctx.isPanel,
@@ -257,6 +259,31 @@ export function initViewManager(ctx = {}) {
     // without knowing which view that is — used to hardcode the tree and
     // lose focus into the hidden list on recent/stats/dead/dupes.
     const focusActive = () => focusDefault(byId[activeId]);
+
+    // 4.0.2 P4: Home/End is view-scoped — the strip's Home/End focuses the
+    // CURRENT view's first/last row and never switches views. The same
+    // ROW_SEL row contract as focusDefault; rows inside a toolbar dropdown's
+    // listbox (.vbm-dropdown-list lives inside the same container) are
+    // filtered out programmatically, so a listbox option is never the view's
+    // edge row. Returns false when the view has no rows — the caller's focus
+    // then simply stays where it is (on the current tab).
+    const focusEdgeRow = last => {
+        const def = byId[activeId];
+        if (!def || !def.listEl || !def.listEl.querySelectorAll)
+            return false;
+        const rows = def.listEl.querySelectorAll(ROW_SEL);
+        const kept = [];
+        for (let i = 0, l = rows.length; i < l; i++) {
+            const r = rows[i];
+            if (r.closest && r.closest('.vbm-dropdown-list'))
+                continue;
+            kept.push(r);
+        }
+        if (!kept.length)
+            return false;
+        kept[last ? kept.length - 1 : 0].focus();
+        return true;
+    };
 
     // The ↑ crossing out of a list's first row (v4task-2-list §2.1): with the
     // strip visible the current tab takes focus (a second ↑ reaches the
@@ -568,12 +595,12 @@ export function initViewManager(ctx = {}) {
                 break;
             }
             case 'Home':
-                e.preventDefault();
-                activate(views[0].id, { focusTab: true });
-                break;
             case 'End':
                 e.preventDefault();
-                activate(views[views.length - 1].id, { focusTab: true });
+                // 4.0.2 P4: view-scoped — the CURRENT view's first/last
+                // row, never a view switch; with no rows the focus simply
+                // stays on the current tab.
+                focusEdgeRow(e.key === 'End');
                 break;
             case 'ArrowUp':
                 e.preventDefault();
@@ -679,6 +706,7 @@ export function initViewManager(ctx = {}) {
         focusActive,
         focusToolbar,
         focusListExit,
+        focusEdgeRow,
         buildPathMap,
         pathOf,
         updateBadges,

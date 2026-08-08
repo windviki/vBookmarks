@@ -150,7 +150,13 @@ const SEED = `
     await page.keyboard.press('ArrowRight'); await sleep(300);
     check('→: search→recent', await focusedTab() === 'view-tab-recent');
     await page.keyboard.press('Home'); await sleep(300);
-    check('Home: →tree', await focusedTab() === 'view-tab-tree');
+    // 4.0.2 (item e): strip Home/End are view-scoped — Home focuses the
+    // CURRENT view's first row (recent is active here), never the first tab.
+    check('Home: view-scoped → recent first row', await $(() => {
+        const el = document.activeElement;
+        return !!el && !!el.closest('#recent-list');
+    }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
+    await page.click('#view-tab-tree'); await sleep(300);
     // ↓ from the strip enters the active view's list (first row takes focus)
     await page.keyboard.press('ArrowDown'); await sleep(400);
     check('↓: strip→list (tree row focused)', await $(() => {
@@ -159,7 +165,22 @@ const SEED = `
     }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
     await page.click('#view-tab-tree'); await sleep(300);
     await page.keyboard.press('End'); await sleep(300);
-    check('End: →dupes', await focusedTab() === 'view-tab-dupes');
+    // 4.0.2 (item e): strip End focuses the CURRENT view's last row — the
+    // tree stays active; no more jump to the last tab.
+    check('End: view-scoped → tree last row, no view switch', await $(() => {
+        const el = document.activeElement;
+        const sel = (document.querySelector('#view-tabs [aria-selected="true"]') || {}).id;
+        return !!el && !!el.closest('#tree') && sel === 'view-tab-tree';
+    }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
+    // Re-anchor the tree's remembered row at the top — the tree section
+    // below assumes the strip's ↓ restores the FIRST row.
+    await page.keyboard.press('Home'); await sleep(200);
+    check('Home from the last row: tree first row (memory re-anchored)', await $(() => {
+        const rows = [...document.querySelectorAll('#tree li')];
+        const el = document.activeElement;
+        return rows.length > 0 && !!el && rows[0].contains(el);
+    }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
+    await page.click('#view-tab-dupes'); await sleep(300);
     await page.keyboard.press('ArrowLeft'); await sleep(300);
     check('←: dupes→dead', await focusedTab() === 'view-tab-dead');
     await page.keyboard.press('ArrowUp'); await sleep(300);
