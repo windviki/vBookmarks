@@ -928,14 +928,25 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     // and the resizer still call it for post-drag / post-resize cleanup.
     function resetSeparator() {}
 
-    // Drag the edge
-    // Pointer capture (4.0.1): a Chrome popup grows LEFTWARD from its toolbar
-    // anchor, so a widen drag pushes the pointer out of the popup window.
-    // Without capture the window stops receiving mousemove AND the mouseup is
-    // lost — the resizerXDown flag sticks and the next mousemove resizes from
-    // a stale baseline (the reported "can't narrow after widening" regression).
-    // Capturing the pointer on pointerdown keeps move/up flowing until the
-    // button is truly released, wherever the pointer is.
+    // Drag the edge — POINTER events + capture (4.0.1 regression gate).
+    // A Chrome popup grows LEFTWARD from its toolbar anchor, so a widen drag
+    // pushes the pointer out of the popup window. The drag must therefore be
+    // driven by pointer events (capture keeps move/up flowing even outside the
+    // window); the old mousemove/mouseup on document stopped at the window
+    // edge, and a lost mouseup wedged `resizerXDown` — the next mousemove
+    // resized from a stale baseline (the reported "can't narrow after
+    // widening" regression). pointercancel / window blur also clear the state
+    // so a cancelled drag can never leave the next mousemove hijacking width.
+    const resetDragState = () => {
+        resizerXDown = false;
+        resizerYDown = false;
+        // Commit the final size synchronously: popup pagehide is NOT
+        // guaranteed on close, so the debounced store write could be lost if
+        // the popup closes right after the drag (the "widened but next open is
+        // the default width" half of the regression).
+        store.flush();
+        treeView.adaptBookmarkTooltips();
+    };
     const capturePointer = e => {
         if (e.target.setPointerCapture)
             try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
@@ -944,26 +955,8 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         if (e.target.releasePointerCapture && e.pointerId != null)
             try { e.target.releasePointerCapture(e.pointerId); } catch (_) {}
     };
-    $resizerx.addEventListener('pointerdown', capturePointer);
-    $resizery.addEventListener('pointerdown', capturePointer);
-    $resizerx.addEventListener('pointerup', releasePointer);
-    $resizery.addEventListener('pointerup', releasePointer);
-
-    // The popup's moving edge must never leave the screen: it grows away from
-    // its anchor (toward whichever side has room), and a wider-than-screen
-    // popup pushes its resize handle off-screen, where it can no longer be
-    // grabbed to narrow back (the other half of the same regression). At
-    // mousedown we freeze how far the edge may still travel.
-    let maxResizeWidth = 640;
-    const onScreenMaxWidth = () => {
-        const leftRoom = window.screenX > 0 ? window.screenX : 0;
-        const curW = window.innerWidth || body.offsetWidth;
-        const rightRoom = (window.screen && screen.availWidth)
-            ? Math.max(0, screen.availWidth - ((window.screenX || 0) + curW))
-            : 0;
-        return Math.min(640, bodyWidth + Math.max(leftRoom, rightRoom));
-    };
-    $resizerx.addEventListener('mousedown', e => {
+    $resizerx.addEventListener('pointerdown', e => {
+        capturePointer(e);
         e.preventDefault();
         e.stopPropagation();
         resizerXDown = true;
@@ -971,23 +964,40 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         screenX = e.screenX;
         maxResizeWidth = onScreenMaxWidth();
     });
-    $resizery.addEventListener('mousedown', e => {
+    $resizery.addEventListener('pointerdown', e => {
+        capturePointer(e);
         e.preventDefault();
         e.stopPropagation();
         resizerYDown = true;
         bodyHeight = body.offsetHeight;
         screenY = e.screenY;
     });
+    $resizerx.addEventListener('pointerup', releasePointer);
+    $resizery.addEventListener('pointerup', releasePointer);
+
+    // The popup's moving edge must never leave the screen — and must keep a
+    // grabbable margin so the resize handle itself never flushes against the
+    // screen edge (a handle pinned at x=0 is nearly impossible to grab back,
+    // the "hard to narrow after widening" symptom). At pointerdown we freeze
+    // how far the edge may still travel.
+    const RESIZE_EDGE_MARGIN = 24;
+    let maxResizeWidth = 640;
+    const onScreenMaxWidth = () => {
+        const curW = window.innerWidth || body.offsetWidth;
+        const leftRoom = Math.max(0, (window.screenX || 0) - RESIZE_EDGE_MARGIN);
+        const rightRoom = (window.screen && screen.availWidth)
+            ? Math.max(0, screen.availWidth - ((window.screenX || 0) + curW) - RESIZE_EDGE_MARGIN)
+            : 0;
+        return Math.min(640, bodyWidth + Math.max(leftRoom, rightRoom));
+    };
     let currentMaxHeight = 0;
-    function mouseMoveHandler(e) {
+    function pointerDragHandler(e) {
         if (!resizerXDown && !resizerYDown)
             return;
         e.preventDefault();
         const isX = resizerXDown;
-        if (e.type === 'mouseup') {
-            resizerXDown = false;
-            resizerYDown = false;
-            treeView.adaptBookmarkTooltips();
+        if (e.type === 'pointerup' || e.type === 'pointercancel') {
+            resetDragState();
         }
         if (isX) {
             // record current width
@@ -1022,6 +1032,7 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
                     height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
                     body.style.height = `${height}px`;
                     store.set('popupHeight', height);
+                    store.flush(); // commit before the popup can close
                     resetSeparator(); // Reset separators
                     menus.clearMenu();
                 });
@@ -1031,14 +1042,19 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
                 store.set('popupHeight', height);
                 resetSeparator(); // Reset separators
                 menus.clearMenu();
-                if (e.type === 'mouseup') {
+                if (e.type === 'pointerup' || e.type === 'pointercancel') {
                     currentMaxHeight = 0;
                 }
             }
         }
     }
-    document.addEventListener('mousemove', mouseMoveHandler);
-    document.addEventListener('mouseup', mouseMoveHandler);
+    document.addEventListener('pointermove', pointerDragHandler);
+    document.addEventListener('pointerup', pointerDragHandler);
+    document.addEventListener('pointercancel', pointerDragHandler);
+    // A real popup loses the drag when focus leaves (clicking a dialog, the
+    // pointer crossing into another window): clear the state so a later
+    // stray pointermove cannot keep resizing from a stale baseline.
+    window.addEventListener('blur', resetDragState);
 
     // Make webkit transitions work only after elements are settled down
     setTimeout(() => {

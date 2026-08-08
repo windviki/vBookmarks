@@ -211,16 +211,32 @@ describe('popup WIDTH resize (4.0.1 regression gate)', () => {
 const neatJs = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
 
 describe('resizer source contract (4.0.1 width regression gate)', () => {
-    it('captures the pointer on resizer pointerdown (mouseup is never lost)', () => {
+    it('drives the drag with POINTER events + capture, not mouse (pointer leaves the popup window)', () => {
+        // The drag must be pointer-driven: a Chrome popup grows away from its
+        // anchor, pushing the pointer out of the window mid-drag; document
+        // mousemove/mouseup stop at the window edge and a lost mouseup wedges
+        // resizerXDown (the "can't narrow after widening" bug).
         expect(neatJs).toMatch(/setPointerCapture\(e\.pointerId\)/);
-        expect(neatJs).toMatch(/releasePointerCapture/);
-        // both resizers must be bound
-        const bindings = (neatJs.match(/addEventListener\('pointerdown', capturePointer\)/g) || []).length;
-        expect(bindings).toBe(2);
+        expect(neatJs).toMatch(/addEventListener\('pointermove', pointerDragHandler\)/);
+        expect(neatJs).toMatch(/addEventListener\('pointerup', pointerDragHandler\)/);
+        expect(neatJs).toMatch(/addEventListener\('pointercancel', pointerDragHandler\)/);
+        // both resizers capture the pointer on their own pointerdown
+        const pds = (neatJs.match(/addEventListener\('pointerdown', e => \{/g) || []).length;
+        expect(pds).toBe(2);
+        // a cancelled drag or a focus loss clears the state (no stale hijack)
+        expect(neatJs).toMatch(/addEventListener\('blur', resetDragState\)/);
     });
 
-    it('clamps width to the on-screen bound, not a bare 640', () => {
+    it('clamps width to the on-screen bound leaving a grabbable margin, not a bare 640', () => {
         expect(neatJs).toContain('width = Math.min(maxResizeWidth, Math.max(320, width))');
         expect(neatJs).toContain('onScreenMaxWidth');
+        expect(neatJs).toContain('RESIZE_EDGE_MARGIN');
+        // the margin means the handle never sits flush at screen x=0
+        expect(neatJs).toMatch(/RESIZE_EDGE_MARGIN\s*=\s*24/);
+    });
+
+    it('persists synchronously on drag end (popup pagehide is not guaranteed)', () => {
+        expect(neatJs).toMatch(/store\.flush\(\)/);
+        expect(neatJs).toMatch(/resetDragState = \(\) => \{[\s\S]*?store\.flush\(\)/);
     });
 });

@@ -182,6 +182,13 @@
         // The sync-area key list, exposed so the options page's settings
         // backup exports exactly these keys from chrome.storage.sync
         syncKeys: SYNC_KEYS,
+        // Force-flush the debounced pending writes NOW (drag-end persistence:
+        // popup pagehide is not guaranteed on close, so a width/height drag
+        // ending must not rely on it to reach storage).
+        flush() {
+            flush();
+            flushSync();
+        },
         // Wipe everything (mirror, chrome.storage.local/sync, localStorage);
         // used by the "reset" button on the advanced options page
         clearAll() {
