@@ -173,13 +173,17 @@
     "message": "このブックマークを削除しますか？"
   },
   "deadDeleteAll": {
-    "message": "すべての$count$個の無効なブックマークを削除",
+    "message": "現在のフィルター内の $count$ 個のブックマークをすべて削除しますか？",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Allフィルターでは、ブロックされたブックマーク（プロキシ経由で到達可能、おそらくまだ有効）も含まれます。元に戻せるのは直近の削除のみです。",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "すべて削除"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "リンク切れ: $dead$・ブロック済み: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "フォルダから多くのブックマークを開くとき、警告する"
-  },
-  "optionDeadProxy": {
-    "message": "デッドリンクプロキシテンプレート"
   },
   "optionDeadProxyServer": {
     "message": "リンク切れプロキシサーバー"
@@ -1212,7 +1202,7 @@
     "message": "サブフォルダも並べ替え（再帰的）"
   },
   "sortRecursiveWarning": {
-    "message": "すべてのサブフォルダ内のブックマークが並べ替えられ、元に戻せません。"
+    "message": "すべてのサブフォルダーのブックマークの並び順が変更されます。"
   },
   "tabGroupDialogTitle": {
     "message": "新規タブグループ"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "色"
+  },
+  "tabGroupColorGrey": {
+    "message": "グレー",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "ブルー",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "レッド",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "イエロー",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "グリーン",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "ピンク",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "パープル",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "シアン",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "オレンジ",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "無題グループ"

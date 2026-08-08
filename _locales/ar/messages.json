@@ -173,13 +173,17 @@
     "message": "إزالة هذه الإشارة المرجعية؟"
   },
   "deadDeleteAll": {
-    "message": "حذف جميع الإشارات المرجعية المعطلة ($count$)",
+    "message": "حذف كل $count$ من الإشارات المرجعية في الفلتر الحالي؟",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "في فلتر الكل، يتضمن ذلك الإشارات المرجعية المحظورة (يمكن الوصول إليها عبر الوكيل، وقد لا تزال حية). يمكن للتراجع استعادة أحدث عملية حذف فقط.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "حذف الكل"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "معطلة: $dead$ · محجوبة: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "عرض تأكيد عند فتح العديد من العلامات المرجعية من مجلد."
-  },
-  "optionDeadProxy": {
-    "message": "قالب وكيل الروابط المعطلة"
   },
   "optionDeadProxyServer": {
     "message": "خادم وكيل الروابط المعطلة"
@@ -1212,7 +1202,7 @@
     "message": "فرز المجلدات الفرعية أيضًا (تكراري)"
   },
   "sortRecursiveWarning": {
-    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي ولا يمكن التراجع عنه."
+    "message": "سيؤدي هذا إلى إعادة ترتيب الإشارات المرجعية في كل مجلد فرعي."
   },
   "tabGroupDialogTitle": {
     "message": "مجموعة تبويبات جديدة"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "اللون"
+  },
+  "tabGroupColorGrey": {
+    "message": "رمادي",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "أزرق",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "أحمر",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "أصفر",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "أخضر",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "وردي",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "بنفسجي",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "سماوي",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "برتقالي",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "مجموعة بدون عنوان"

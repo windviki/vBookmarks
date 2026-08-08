@@ -173,13 +173,17 @@
     "message": "Eltávolítja ezt a könyvjelzőt?"
   },
   "deadDeleteAll": {
-    "message": "Összes $count$ hibás könyvjelző törlése",
+    "message": "Törölje az összes $count$ könyvjelzőt az aktuális szűrőből?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Az Összes szűrő alatt ez magában foglalja a blokkolt könyvjelzőket is (amelyek proxyn keresztül elérhetők, valószínűleg még élnek). A visszavonás csak a legutóbbi törlést tudja visszaállítani.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Összes törlése"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Hibás: $dead$ · Blokkolt: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Megerősítés megjelenítése, amikor sok könyvjelzőt nyit meg egy mappából."
-  },
-  "optionDeadProxy": {
-    "message": "Holt hivatkozás proxy sablon"
   },
   "optionDeadProxyServer": {
     "message": "Hibás linkek proxykiszolgálója"
@@ -1212,7 +1202,7 @@
     "message": "Almappák rendezése is (rekurzív)"
   },
   "sortRecursiveWarning": {
-    "message": "Ez átrendezi a könyvjelzőket minden almappában, és nem vonható vissza."
+    "message": "Ez átrendezi a könyvjelzőket minden almappában."
   },
   "tabGroupDialogTitle": {
     "message": "Új lapcsoport"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Szín"
+  },
+  "tabGroupColorGrey": {
+    "message": "Szürke",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Kék",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Piros",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Sárga",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zöld",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rózsaszín",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lila",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cián",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Narancssárga",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Névtelen csoport"

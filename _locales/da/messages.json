@@ -173,13 +173,17 @@
     "message": "Fjern dette bogmærke?"
   },
   "deadDeleteAll": {
-    "message": "Slet alle $count$ døde bogmærker",
+    "message": "Slet alle $count$ bogmærker i det aktuelle filter?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Under filteret Alle omfatter dette blokerede bogmærker (tilgængelige via din proxy, sandsynligvis stadig aktive). Fortryd kan kun gendanne den seneste sletning.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Slet alle"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Døde: $dead$ · Blokerede: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Vis bekræftelse, når der åbnes mange bogmærker fra en mappe."
-  },
-  "optionDeadProxy": {
-    "message": "Proxy-skabelon for døde links"
   },
   "optionDeadProxyServer": {
     "message": "Proxyserver til døde links"
@@ -1212,7 +1202,7 @@
     "message": "Sortér også undermapper (rekursivt)"
   },
   "sortRecursiveWarning": {
-    "message": "Dette omordner bogmærker i hver undermappe og kan ikke fortrydes."
+    "message": "Dette omarrangerer bogmærker i hver undermappe."
   },
   "tabGroupDialogTitle": {
     "message": "Ny fanegruppe"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Farve"
+  },
+  "tabGroupColorGrey": {
+    "message": "Grå",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Blå",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rød",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Gul",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Grøn",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Lyserød",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lilla",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Unavngiven gruppe"

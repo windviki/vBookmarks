@@ -173,13 +173,17 @@
     "message": "Odstranit tuto záložku?"
   },
   "deadDeleteAll": {
-    "message": "Smazat všech $count$ mrtvých záložek",
+    "message": "Smazat všech $count$ záložek v aktuálním filtru?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Ve filtru Vše jsou zahrnuty i blokované záložky (dostupné přes proxy server, pravděpodobně stále funkční). Vrátit zpět lze pouze poslední smazání.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Smazat všechny"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Nefunkční: $dead$ · Blokováno: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Zobrazit potvrzení při otevírání mnoha záložek ze složky."
-  },
-  "optionDeadProxy": {
-    "message": "Šablona proxy pro mrtvé odkazy"
   },
   "optionDeadProxyServer": {
     "message": "Proxy server pro nefunkční odkazy"
@@ -1212,7 +1202,7 @@
     "message": "Seřadit i podsložky (rekurzivně)"
   },
   "sortRecursiveWarning": {
-    "message": "Toto přeuspořádá záložky ve všech podsložkách a nelze to vrátit zpět."
+    "message": "Toto přeuspořádá záložky ve všech podsložkách."
   },
   "tabGroupDialogTitle": {
     "message": "Nová skupina karet"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Barva"
+  },
+  "tabGroupColorGrey": {
+    "message": "Šedá",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Modrá",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Červená",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Žlutá",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zelená",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Růžová",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Fialová",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Azurová",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranžová",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nepojmenovaná skupina"

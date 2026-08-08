@@ -173,13 +173,17 @@
     "message": "Noņemt šo grāmatzīmi?"
   },
   "deadDeleteAll": {
-    "message": "Dzēst visas $count$ mirušās grāmatzīmes",
+    "message": "Dzēst visas $count$ grāmatzīmes pašreizējā filtrā?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Filtrā Visi šis ietver bloķētās grāmatzīmes (sasniedzamas caur jūsu starpniekserveri, visticamāk, joprojām aktīvas). Atsaukt var tikai pēdējo dzēšanu.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Dzēst visas"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Bojātas: $dead$ · Bloķētas: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Rādīt apstiprinājumu, atverot daudz grāmatzīmju no mapes."
-  },
-  "optionDeadProxy": {
-    "message": "Nedarbojošos saišu starpniekservera veidne"
   },
   "optionDeadProxyServer": {
     "message": "Bojātu saišu starpniekserveris"
@@ -1212,7 +1202,7 @@
     "message": "Kārtot arī apakšmapes (rekursīvi)"
   },
   "sortRecursiveWarning": {
-    "message": "Tas pārkārto grāmatzīmes katrā apakšmapē un to nevar atsaukt."
+    "message": "Tas pārkārto grāmatzīmes katrā apakšmapē."
   },
   "tabGroupDialogTitle": {
     "message": "Jauna cilņu grupa"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Krāsa"
+  },
+  "tabGroupColorGrey": {
+    "message": "Pelēka",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Zila",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Sarkana",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Dzeltena",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zaļa",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rozā",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violeta",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Ciāna",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranža",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nenosaukta grupa"

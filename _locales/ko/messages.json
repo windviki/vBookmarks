@@ -173,13 +173,17 @@
     "message": "이 북마크를 삭제할까요?"
   },
   "deadDeleteAll": {
-    "message": "$count$개의 끊어진 북마크 모두 삭제",
+    "message": "현재 필터의 $count$개 북마크를 모두 삭제하시겠습니까?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "전체 필터에서는 차단된 북마크(프록시를 통해 접근 가능하며 여전히 유효할 가능성이 있음)도 포함됩니다. 실행 취소는 가장 최근 삭제만 복원할 수 있습니다.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "모두 삭제"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "죽은 링크: $dead$ · 차단됨: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "폴더에서 많은 북마크를 열 때 확인을 표시합니다."
-  },
-  "optionDeadProxy": {
-    "message": "데드 링크 프록시 템플릿"
   },
   "optionDeadProxyServer": {
     "message": "죽은 링크 프록시 서버"
@@ -1212,7 +1202,7 @@
     "message": "하위 폴더도 정렬 (재귀)"
   },
   "sortRecursiveWarning": {
-    "message": "모든 하위 폴더의 북마크 순서가 변경되며 되돌릴 수 없습니다."
+    "message": "이 작업은 모든 하위 폴더의 북마크를 재정렬합니다."
   },
   "tabGroupDialogTitle": {
     "message": "새 탭 그룹"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "색상"
+  },
+  "tabGroupColorGrey": {
+    "message": "회색",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "파란색",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "빨간색",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "노란색",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "초록색",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "분홍색",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "보라색",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "청록색",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "주황색",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "제목 없는 그룹"

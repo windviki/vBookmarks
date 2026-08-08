@@ -173,13 +173,17 @@
     "message": "Usunąć tę zakładkę?"
   },
   "deadDeleteAll": {
-    "message": "Usuń wszystkie $count$ martwe zakładki",
+    "message": "Usunąć wszystkie zakładki w bieżącym filtrze? ($count$)",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "W filtrze Wszystkie dotyczy to również zablokowanych zakładek (dostępnych przez Twoje proxy, prawdopodobnie nadal działających). Cofnięcie może przywrócić tylko ostatnie usunięcie.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Usuń wszystkie"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Martwe: $dead$ · Zablokowane: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Pokaż potwierdzenie przy otwieraniu wielu zakładek z folderu."
-  },
-  "optionDeadProxy": {
-    "message": "Szablon proxy dla martwych linków"
   },
   "optionDeadProxyServer": {
     "message": "Serwer proxy dla martwych linków"
@@ -1212,7 +1202,7 @@
     "message": "Sortuj też podfoldery (rekurencyjnie)"
   },
   "sortRecursiveWarning": {
-    "message": "To zmienia kolejność zakładek w każdym podfolderze i nie można tego cofnąć."
+    "message": "To zmienia kolejność zakładek w każdym podfolderze."
   },
   "tabGroupDialogTitle": {
     "message": "Nowa grupa kart"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Kolor"
+  },
+  "tabGroupColorGrey": {
+    "message": "Szary",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Niebieski",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Czerwony",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Żółty",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zielony",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Różowy",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Fioletowy",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyjan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Pomarańczowy",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Grupa bez tytułu"

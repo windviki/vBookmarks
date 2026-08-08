@@ -173,13 +173,17 @@
     "message": "Eliminați acest marcaj?"
   },
   "deadDeleteAll": {
-    "message": "Ștergeți toate cele $count$ marcaje moarte",
+    "message": "Ștergeți toate cele $count$ marcaje din filtrul curent?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "În filtrul Toate, aceasta include marcajele blocate (accesibile prin proxy-ul dvs., probabil încă active). Undo poate restaura doar ultima ștergere.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Ștergeți tot"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Moarte: $dead$ · Blocate: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Afișează confirmare la deschiderea multor semne de carte dintr-un dosar."
-  },
-  "optionDeadProxy": {
-    "message": "Șablon proxy pentru linkuri moarte"
   },
   "optionDeadProxyServer": {
     "message": "Server proxy pentru linkuri moarte"
@@ -1212,7 +1202,7 @@
     "message": "Sortează și subfolderele (recursiv)"
   },
   "sortRecursiveWarning": {
-    "message": "Aceasta reordonează marcajele în fiecare subfolder și nu poate fi anulată."
+    "message": "Aceasta reordonează marcajele din fiecare subdosar."
   },
   "tabGroupDialogTitle": {
     "message": "Grup nou de file"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Culoare"
+  },
+  "tabGroupColorGrey": {
+    "message": "Gri",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Albastru",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Roșu",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Galben",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Verde",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Roz",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violet",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Portocaliu",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Grup fără titlu"

@@ -258,13 +258,17 @@
     "message": "删除这条书签？"
   },
   "deadDeleteAll": {
-    "message": "删除全部 $count$ 个失效书签",
+    "message": "删除当前筛选下的全部 $count$ 个书签?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)。撤销只能恢复最近一次删除。",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "删除全部"
@@ -613,7 +617,7 @@
     "description": "Title of the bookmark folder created by the save-session command; $date$ is the local save time, formatted YYYY-MM-DD HH:mm."
   },
   "sortRecursiveWarning": {
-    "message": "将重排所有子文件夹内的书签，且无法撤销。"
+    "message": "将重排所有子文件夹内的书签。"
   },
   "tabGroupDialogTitle": {
     "message": "新建标签组"
@@ -623,6 +627,42 @@
   },
   "tabGroupColorLabel": {
     "message": "颜色"
+  },
+  "tabGroupColorGrey": {
+    "message": "灰",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "蓝",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "红",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "黄",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "绿",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "粉",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "紫",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "青",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "橙",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "未命名标签组"
@@ -980,17 +1020,6 @@
       }
     }
   },
-  "deadSummary": {
-    "message": "死链 $dead$ · 受限 $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
-      }
-    }
-  },
   "deadStartHint": {
     "message": "开始扫描 $n$ 个书签",
     "placeholders": {
@@ -1096,9 +1125,6 @@
   },
   "dupesStrategyShortestTitle": {
     "message": "保留最短标题"
-  },
-  "optionDeadProxy": {
-    "message": "死链探测中转模板"
   },
   "optionDeadProxyServer": {
     "message": "死链检测代理服务器"

@@ -173,13 +173,17 @@
     "message": "Bu yer imi silinsin mi?"
   },
   "deadDeleteAll": {
-    "message": "Tüm $count$ ölü yer imlerini sil",
+    "message": "Geçerli filtredeki $count$ yer iminin tümü silinsin mi?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Tümü filtresinde bu, engellenen yer imlerini de içerir (proxy'niz üzerinden erişilebilir, büyük olasılıkla hâlâ geçerli). Geri al yalnızca en son silme işlemini geri getirebilir.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Tümünü sil"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Ölü: $dead$ · Engellendi: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Bir klasörden birçok yer imi açarken onay göster."
-  },
-  "optionDeadProxy": {
-    "message": "Ölü bağlantı proxy şablonu"
   },
   "optionDeadProxyServer": {
     "message": "Ölü bağlantı proxy sunucusu"
@@ -1212,7 +1202,7 @@
     "message": "Alt klasörleri de sırala (özyinelemeli)"
   },
   "sortRecursiveWarning": {
-    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar ve geri alınamaz."
+    "message": "Bu, her alt klasördeki yer imlerini yeniden sıralar."
   },
   "tabGroupDialogTitle": {
     "message": "Yeni sekme grubu"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Renk"
+  },
+  "tabGroupColorGrey": {
+    "message": "Gri",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Mavi",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Kırmızı",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Sarı",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Yeşil",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Pembe",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Mor",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Camgöbeği",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Turuncu",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Adsız grup"

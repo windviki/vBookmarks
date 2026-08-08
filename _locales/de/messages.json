@@ -173,13 +173,17 @@
     "message": "Dieses Lesezeichen entfernen?"
   },
   "deadDeleteAll": {
-    "message": "Alle $count$ toten Lesezeichen löschen",
+    "message": "Alle $count$ Lesezeichen im aktuellen Filter löschen?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Unter dem Filter „Alle“ umfasst dies auch blockierte Lesezeichen (über Ihren Proxy erreichbar, wahrscheinlich noch vorhanden). Über „Rückgängig“ kann nur die letzte Löschung wiederhergestellt werden.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Alle löschen"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Tot: $dead$ · Blockiert: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Bestätigung anzeigen, wenn viele Lesezeichen aus einem Ordner geöffnet werden."
-  },
-  "optionDeadProxy": {
-    "message": "Proxy-Vorlage für defekte Links"
   },
   "optionDeadProxyServer": {
     "message": "Proxyserver für tote Links"
@@ -1212,7 +1202,7 @@
     "message": "Auch Unterordner sortieren (rekursiv)"
   },
   "sortRecursiveWarning": {
-    "message": "Dies ordnet Lesezeichen in jedem Unterordner neu und kann nicht rückgängig gemacht werden."
+    "message": "Dies sortiert Lesezeichen in jedem Unterordner neu."
   },
   "tabGroupDialogTitle": {
     "message": "Neue Tab-Gruppe"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Farbe"
+  },
+  "tabGroupColorGrey": {
+    "message": "Grau",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Blau",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rot",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Gelb",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Grün",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Pink",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lila",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Unbenannte Gruppe"

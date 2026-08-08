@@ -173,13 +173,17 @@
     "message": "Deze bladwijzer verwijderen?"
   },
   "deadDeleteAll": {
-    "message": "Alle $count$ dode bladwijzers verwijderen",
+    "message": "Alle $count$ bladwijzers in de huidige filter verwijderen?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Onder het filter Alles omvat dit geblokkeerde bladwijzers (bereikbaar via je proxy, waarschijnlijk nog actief). Ongedaan maken herstelt alleen de meest recente verwijdering.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Alles verwijderen"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Dode: $dead$ · Geblokkeerd: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Bevestiging weergeven bij het openen van veel bladwijzers uit een map."
-  },
-  "optionDeadProxy": {
-    "message": "Dode-link proxy-sjabloon"
   },
   "optionDeadProxyServer": {
     "message": "Proxyserver voor dode links"
@@ -1212,7 +1202,7 @@
     "message": "Ook submappen sorteren (recursief)"
   },
   "sortRecursiveWarning": {
-    "message": "Dit herordent bladwijzers in elke submap en kan niet ongedaan worden gemaakt."
+    "message": "Dit herordent bladwijzers in elke submap."
   },
   "tabGroupDialogTitle": {
     "message": "Nieuwe tabgroep"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Kleur"
+  },
+  "tabGroupColorGrey": {
+    "message": "Grijs",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Blauw",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rood",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Geel",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Groen",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Roze",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Paars",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyaan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranje",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Naamloze groep"

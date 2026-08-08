@@ -173,13 +173,17 @@
     "message": "Eemaldada see järjehoidja?"
   },
   "deadDeleteAll": {
-    "message": "Kustutada kõik $count$ surnud järjehoidjat",
+    "message": "Kustutada kõik $count$ järjehoidjat praeguses filtris?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Kõik-filtri all hõlmab see blokeeritud järjehoidjaid (teie proksi kaudu kättesaadavad, tõenäoliselt endiselt elus). Tagasi võtta saab ainult kõige viimase kustutamise.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Kustuta kõik"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Surnud: $dead$ · Blokeeritud: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Kuva kinnitus, kui avad palju järjehoidjaid kaustast."
-  },
-  "optionDeadProxy": {
-    "message": "Surnud linkide proksi mall"
   },
   "optionDeadProxyServer": {
     "message": "Surnud linkide puhverserver"
@@ -1212,7 +1202,7 @@
     "message": "Sorteeri ka alamkaustad (rekursiivne)"
   },
   "sortRecursiveWarning": {
-    "message": "See järjestab järjehoidjad ümber igas alamkaustas ja seda ei saa tagasi võtta."
+    "message": "See järjestab ümber järjehoidjad igas alamkaustas."
   },
   "tabGroupDialogTitle": {
     "message": "Uus vahekaardirühm"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Värv"
+  },
+  "tabGroupColorGrey": {
+    "message": "Hall",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Sinine",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Punane",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Kollane",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Roheline",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Roosa",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Lilla",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Tsüaan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranž",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nimetu rühm"

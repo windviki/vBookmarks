@@ -173,13 +173,17 @@
     "message": "להסיר סימניה זו?"
   },
   "deadDeleteAll": {
-    "message": "מחק את כל $count$ הסימניות המתות",
+    "message": "למחוק את כל $count$ הסימניות במסנן הנוכחי?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "במסנן 'הכל', זה כולל סימניות חסומות (נגישות דרך הפרוקסי שלך, ככל הנראה עדיין פעילות). ביטול יכול לשחזר רק את המחיקה האחרונה.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "מחק הכל"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "שבורים: $dead$ · חסומים: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "הצג אישור בעת פתיחת הרבה סימניות מתיקייה."
-  },
-  "optionDeadProxy": {
-    "message": "תבנית פרוקסי לקישורים מתים"
   },
   "optionDeadProxyServer": {
     "message": "שרת פרוקסי לקישורים שבורים"
@@ -1212,7 +1202,7 @@
     "message": "מיין גם תת-תיקיות (רקורסיבי)"
   },
   "sortRecursiveWarning": {
-    "message": "פעולה זו מסדרת מחדש סימניות בכל תת-תיקייה ואינה ניתנת לביטול."
+    "message": "פעולה זו מסדרת מחדש סימניות בכל תיקיית משנה."
   },
   "tabGroupDialogTitle": {
     "message": "קבוצת טאבים חדשה"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "צבע"
+  },
+  "tabGroupColorGrey": {
+    "message": "אפור",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "כחול",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "אדום",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "צהוב",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "ירוק",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "ורוד",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "סגול",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "ציאן",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "כתום",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "קבוצה ללא שם"

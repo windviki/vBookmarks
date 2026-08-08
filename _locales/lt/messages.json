@@ -173,13 +173,17 @@
     "message": "Pašalinti šią žymę?"
   },
   "deadDeleteAll": {
-    "message": "Ištrinti visus $count$ negyvus žymes",
+    "message": "Ištrinti visas $count$ žymes dabartiniame filtre?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Pagal filtrą „Viskas“ tai apima užblokuotas žymes (pasiekiamas per jūsų tarpinį serverį, tikriausiai vis dar veikiančias). Atšaukti galima tik paskutinį ištrynimą.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Ištrinti visus"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Negyvos: $dead$ · Užblokuotos: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Rodyti patvirtinimą atidarant daug žymelių iš aplanko."
-  },
-  "optionDeadProxy": {
-    "message": "Neveikiančių nuorodų proxy šablonas"
   },
   "optionDeadProxyServer": {
     "message": "Negyvų nuorodų tarpinis serveris"
@@ -1212,7 +1202,7 @@
     "message": "Rūšiuoti ir poaplankius (rekursyviai)"
   },
   "sortRecursiveWarning": {
-    "message": "Tai perrikiuoja žymes kiekviename poaplankyje ir negali būti atšaukta."
+    "message": "Tai perrikiuoja žymes kiekviename poaplankyje."
   },
   "tabGroupDialogTitle": {
     "message": "Nauja skirtukų grupė"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Spalva"
+  },
+  "tabGroupColorGrey": {
+    "message": "Pilka",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Mėlyna",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Raudona",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Geltona",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Žalia",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rožinė",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violetinė",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Žydra",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranžinė",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nepavadinta grupė"

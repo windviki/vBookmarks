@@ -173,13 +173,17 @@
     "message": "এই বুকমার্কটি সরিয়ে ফেলবেন?"
   },
   "deadDeleteAll": {
-    "message": "সব $count$টি মৃত বুকমার্ক মুছুন",
+    "message": "বর্তমান ফিল্টারের $count$টি বুকমার্ক মুছে ফেলবেন?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "সব ফিল্টারে এতে ব্লক করা বুকমার্ক অন্তর্ভুক্ত (আপনার প্রক্সির মাধ্যমে অ্যাক্সেসযোগ্য, সম্ভবত এখনও সক্রিয়)। পূর্বাবস্থায় ফেরানো কেবলমাত্র সবচেয়ে সাম্প্রতিক মুছে ফেলা পুনরুদ্ধার করতে পারে।",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "সব মুছুন"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "ডেড: $dead$ · অবরুদ্ধ: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "ফোল্ডার থেকে অনেক বুকমার্ক খোলার সময় নিশ্চিতকরণ দেখান।"
-  },
-  "optionDeadProxy": {
-    "message": "মৃত লিঙ্ক প্রক্সি টেমপ্লেট"
   },
   "optionDeadProxyServer": {
     "message": "ডেড-লিংক প্রক্সি সার্ভার"
@@ -1212,7 +1202,7 @@
     "message": "সাবফোল্ডারও সাজান (পুনরাবৃত্ত)"
   },
   "sortRecursiveWarning": {
-    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্ক পুনর্বিন্যাস করবে এবং পূর্বাবস্থায় ফেরানো যাবে না।"
+    "message": "এটি প্রতিটি সাবফোল্ডারের বুকমার্কগুলো পুনর্বিন্যাস করে।"
   },
   "tabGroupDialogTitle": {
     "message": "নতুন ট্যাব গ্রুপ"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "রঙ"
+  },
+  "tabGroupColorGrey": {
+    "message": "ধূসর",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "নীল",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "লাল",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "হলুদ",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "সবুজ",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "গোলাপী",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "বেগুনি",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "সায়ান",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "কমলা",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "নামহীন গ্রুপ"

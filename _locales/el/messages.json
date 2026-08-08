@@ -173,13 +173,17 @@
     "message": "Αφαίρεση αυτού του σελιδοδείκτη;"
   },
   "deadDeleteAll": {
-    "message": "Διαγραφή όλων των $count$ νεκρών σελιδοδεικτών",
+    "message": "Διαγραφή όλων των $count$ σελιδοδεικτών στο τρέχον φίλτρο;",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Στο φίλτρο «Όλα», αυτό περιλαμβάνει αποκλεισμένους σελιδοδείκτες (προσβάσιμους μέσω του διακομιστή μεσολάβησης, πιθανόν ακόμη ενεργούς). Η αναίρεση μπορεί να επαναφέρει μόνο την πιο πρόσφατη διαγραφή.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Διαγραφή όλων"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Νεκροί: $dead$ · Αποκλεισμένοι: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Εμφάνιση επιβεβαίωσης κατά το άνοιγμα πολλών σελιδοδεικτών από φάκελο."
-  },
-  "optionDeadProxy": {
-    "message": "Πρότυπο διακομιστή μεσολάβησης νεκρών συνδέσμων"
   },
   "optionDeadProxyServer": {
     "message": "Διακομιστής μεσολάβησης για νεκρούς συνδέσμους"
@@ -1218,7 +1208,7 @@
     "message": "Ταξινόμηση και υποφακέλων (αναδρομικά)"
   },
   "sortRecursiveWarning": {
-    "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο και δεν μπορεί να αναιρεθεί."
+    "message": "Αυτό αναδιατάσσει τους σελιδοδείκτες σε κάθε υποφάκελο."
   },
   "tabGroupDialogTitle": {
     "message": "Νέα ομάδα καρτελών"
@@ -1228,6 +1218,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Χρώμα"
+  },
+  "tabGroupColorGrey": {
+    "message": "Γκρι",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Μπλε",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Κόκκινο",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Κίτρινο",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Πράσινο",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Ροζ",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Μωβ",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Κυανό",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Πορτοκαλί",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Ομάδα χωρίς τίτλο"

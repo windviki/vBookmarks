@@ -173,13 +173,17 @@
     "message": "Удалить эту закладку?"
   },
   "deadDeleteAll": {
-    "message": "Удалить все $count$ мёртвых закладок",
+    "message": "Удалить все $count$ закладок в текущем фильтре?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "В фильтре «Все» сюда входят заблокированные закладки (доступные через прокси, вероятно, ещё живые). Отмена может восстановить только последнее удаление.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Удалить все"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Битые: $dead$ · Заблокированные: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Запрашивать подтверждение при открытии большого количества закладок из папки."
-  },
-  "optionDeadProxy": {
-    "message": "Шаблон прокси для битых ссылок"
   },
   "optionDeadProxyServer": {
     "message": "Прокси-сервер для битых ссылок"
@@ -1212,7 +1202,7 @@
     "message": "Сортировать подпапки (рекурсивно)"
   },
   "sortRecursiveWarning": {
-    "message": "Это переупорядочит закладки во всех подпапках, и отменить это действие невозможно."
+    "message": "Это изменит порядок закладок во всех подпапках."
   },
   "tabGroupDialogTitle": {
     "message": "Новая группа вкладок"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Цвет"
+  },
+  "tabGroupColorGrey": {
+    "message": "Серый",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Синий",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Красный",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Жёлтый",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Зелёный",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Розовый",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Фиолетовый",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Голубой",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Оранжевый",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Безымянная группа"

@@ -173,13 +173,17 @@
     "message": "این نشانک حذف شود؟"
   },
   "deadDeleteAll": {
-    "message": "حذف همه $count$ نشانک مرده",
+    "message": "همه $count$ نشانک در فیلتر فعلی حذف شوند؟",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "در فیلتر «همه»، این شامل نشانک‌های مسدودشده نیز می‌شود (که از طریق پروکسی قابل دسترسی هستند و احتمالاً هنوز فعال‌اند). واگرد فقط می‌تواند آخرین حذف را بازیابی کند.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "حذف همه"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "خراب: $dead$ · مسدود: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "نمایش تأیید هنگام باز کردن بسیاری از نشانک‌ها از یک پوشه."
-  },
-  "optionDeadProxy": {
-    "message": "قالب پروکسی لینک‌های مرده"
   },
   "optionDeadProxyServer": {
     "message": "سرور پروکسی لینک‌های خراب"
@@ -1212,7 +1202,7 @@
     "message": "مرتب‌سازی زیرپوشه‌ها نیز (بازگشتی)"
   },
   "sortRecursiveWarning": {
-    "message": "این کار نشانک‌ها را در هر زیرپوشه مرتب می‌کند و قابل بازگشت نیست."
+    "message": "این کار ترتیب نشانک‌ها را در هر زیرپوشه تغییر می‌دهد."
   },
   "tabGroupDialogTitle": {
     "message": "گروه برگه جدید"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "رنگ"
+  },
+  "tabGroupColorGrey": {
+    "message": "خاکستری",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "آبی",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "قرمز",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "زرد",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "سبز",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "صورتی",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "بنفش",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "فیروزه‌ای",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "نارنجی",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "گروه بدون عنوان"

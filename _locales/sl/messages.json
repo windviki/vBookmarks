@@ -173,13 +173,17 @@
     "message": "Odstranim ta zaznamek?"
   },
   "deadDeleteAll": {
-    "message": "Izbriši vseh $count$ mrtvih zaznamkov",
+    "message": "Ali želite izbrisati vse $count$ zaznamke v trenutnem filtru?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Pod filtrom Vsi so vključeni tudi blokirani zaznamki (dostopni prek vašega posrednika, verjetno še vedno aktivni). Razveljavi lahko obnovi samo zadnji izbris.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Izbriši vse"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Mrtvi: $dead$ · Blokirani: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Prikaži potrditev pri odpiranju veliko zaznamkov iz mape."
-  },
-  "optionDeadProxy": {
-    "message": "Predloga proxyja mrtvih povezav"
   },
   "optionDeadProxyServer": {
     "message": "Proxy strežnik za mrtve povezave"
@@ -1212,7 +1202,7 @@
     "message": "Razvrsti tudi podmape (rekurzivno)"
   },
   "sortRecursiveWarning": {
-    "message": "To preuredi zaznamke v vsaki podmapah in ga ni mogoče razveljaviti."
+    "message": "To preuredi zaznamke v vsaki podmapi."
   },
   "tabGroupDialogTitle": {
     "message": "Nova skupina zavihkov"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Barva"
+  },
+  "tabGroupColorGrey": {
+    "message": "Siva",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Modra",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rdeča",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Rumena",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Zelena",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Roza",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Vijolična",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cian",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranžna",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Neimenovana skupina"

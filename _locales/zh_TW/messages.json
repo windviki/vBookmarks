@@ -173,13 +173,17 @@
     "message": "要移除這個書籤嗎？"
   },
   "deadDeleteAll": {
-    "message": "刪除所有 $count$ 個失效書籤",
+    "message": "刪除目前篩選中的所有 $count$ 個書籤？",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "在「全部」篩選下，這包括被封鎖的書籤（可透過您的 Proxy 存取，可能仍然有效）。復原僅能還原最近一次的刪除。",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "刪除全部"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "失效：$dead$ · 封鎖：$blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "開啟多個書籤前需確認"
-  },
-  "optionDeadProxy": {
-    "message": "失效链接代理模板"
   },
   "optionDeadProxyServer": {
     "message": "失效連結代理伺服器"
@@ -1212,7 +1202,7 @@
     "message": "同時排序子資料夾（遞迴）"
   },
   "sortRecursiveWarning": {
-    "message": "這會重新排列每個子資料夾中的書籤，且無法復原。"
+    "message": "這會重新排序每個子資料夾中的書籤。"
   },
   "tabGroupDialogTitle": {
     "message": "新分頁群組"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "顏色"
+  },
+  "tabGroupColorGrey": {
+    "message": "灰色",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "藍色",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "紅色",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "黃色",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "綠色",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "粉紅色",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "紫色",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "青色",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "橘色",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "未命名群組"

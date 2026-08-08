@@ -173,13 +173,17 @@
     "message": "Supprimer ce signet ?"
   },
   "deadDeleteAll": {
-    "message": "Supprimer les $count$ signets morts",
+    "message": "Supprimer les $count$ signets du filtre actuel ?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Avec le filtre Tous, cela inclut les signets bloqués (accessibles via votre proxy, probablement encore actifs). Annuler ne peut restaurer que la suppression la plus récente.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Supprimer tout"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Morts : $dead$ · Bloqués : $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Afficher la confirmation lors de l'ouverture d'un grand nombre de favoris à partir d'un dossier."
-  },
-  "optionDeadProxy": {
-    "message": "Modèle de proxy pour liens morts"
   },
   "optionDeadProxyServer": {
     "message": "Serveur proxy pour liens morts"
@@ -1212,7 +1202,7 @@
     "message": "Trier aussi les sous-dossiers (récursif)"
   },
   "sortRecursiveWarning": {
-    "message": "Cela réorganise les signets dans chaque sous-dossier et ne peut pas être annulé."
+    "message": "Ceci réorganise les signets dans chaque sous-dossier."
   },
   "tabGroupDialogTitle": {
     "message": "Nouveau groupe d'onglets"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Couleur"
+  },
+  "tabGroupColorGrey": {
+    "message": "Gris",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Bleu",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Rouge",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Jaune",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Vert",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Rose",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violet",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Groupe sans titre"

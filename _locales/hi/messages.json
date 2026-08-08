@@ -173,13 +173,17 @@
     "message": "इस बुकमार्क को हटाएँ?"
   },
   "deadDeleteAll": {
-    "message": "सभी $count$ मृत बुकमार्क हटाएँ",
+    "message": "क्या वर्तमान फ़िल्टर में सभी $count$ बुकमार्क हटाएं?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "All फ़िल्टर के अंतर्गत इसमें ब्लॉक किए गए बुकमार्क शामिल हैं (आपके प्रॉक्सी के माध्यम से पहुंच योग्य, संभवतः अभी भी सक्रिय)। Undo केवल सबसे हालिया विलोपन को पुनर्स्थापित कर सकता है।",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "सभी हटाएँ"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "डेड: $dead$ · अवरुद्ध: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "फोल्डर से कई बुकमार्क खोलते समय पुष्टि दिखाएं।"
-  },
-  "optionDeadProxy": {
-    "message": "मृत-लिंक प्रॉक्सी टेम्पलेट"
   },
   "optionDeadProxyServer": {
     "message": "डेड-लिंक प्रॉक्सी सर्वर"
@@ -1212,7 +1202,7 @@
     "message": "उपफ़ोल्डर भी क्रमबद्ध करें (पुनरावर्ती)"
   },
   "sortRecursiveWarning": {
-    "message": "यह प्रत्येक उपफ़ोल्डर में बुकमार्क को पुनर्व्यवस्थित करता है और इसे पूर्ववत नहीं किया जा सकता।"
+    "message": "यह हर उपफ़ोल्डर में बुकमार्क्स को पुनः क्रमबद्ध करता है।"
   },
   "tabGroupDialogTitle": {
     "message": "नया टैब समूह"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "रंग"
+  },
+  "tabGroupColorGrey": {
+    "message": "ग्रे",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "नीला",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "लाल",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "पीला",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "हरा",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "गुलाबी",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "बैंगनी",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "सियान",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "नारंगी",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "अनाम समूह"

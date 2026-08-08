@@ -173,13 +173,17 @@
     "message": "Hapus bookmark ini?"
   },
   "deadDeleteAll": {
-    "message": "Hapus semua $count$ bookmark mati",
+    "message": "Hapus semua $count$ bookmark dalam filter saat ini?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Pada filter Semua, ini mencakup bookmark yang diblokir (dapat dijangkau melalui proxy Anda, kemungkinan masih aktif). Urungkan hanya dapat memulihkan penghapusan terbaru.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Hapus semua"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Mati: $dead$ · Diblokir: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Tampilkan konfirmasi saat membuka banyak markah dari folder."
-  },
-  "optionDeadProxy": {
-    "message": "Template proksi tautan mati"
   },
   "optionDeadProxyServer": {
     "message": "Server proxy tautan mati"
@@ -1212,7 +1202,7 @@
     "message": "Urutkan subfolder juga (rekursif)"
   },
   "sortRecursiveWarning": {
-    "message": "Ini akan mengatur ulang bookmark di setiap subfolder dan tidak dapat dibatalkan."
+    "message": "Ini akan mengurutkan ulang bookmark di setiap subfolder."
   },
   "tabGroupDialogTitle": {
     "message": "Grup tab baru"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Warna"
+  },
+  "tabGroupColorGrey": {
+    "message": "Abu-abu",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Biru",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Merah",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Kuning",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Hijau",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Merah Muda",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Ungu",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranye",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Grup tanpa judul"

@@ -173,13 +173,17 @@
     "message": "Poistetaanko tämä kirjanmerkki?"
   },
   "deadDeleteAll": {
-    "message": "Poista kaikki $count$ kuollutta kirjanmerkkiä",
+    "message": "Poistetaanko kaikki $count$ kirjanmerkkiä nykyisestä suodattimesta?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Kaikki-suodattimessa tämä sisältää myös estetyt kirjanmerkit (saavutettavissa välityspalvelimen kautta, todennäköisesti edelleen toimivia). Kumoa voi palauttaa vain viimeisimmän poiston.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Poista kaikki"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Kuolleet: $dead$ · Estetyt: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Näytä vahvistus, kun avataan paljon kirjanmerkkejä kansiosta."
-  },
-  "optionDeadProxy": {
-    "message": "Kuolleen linkin välityspalvelinmalli"
   },
   "optionDeadProxyServer": {
     "message": "Kuolleiden linkkien välityspalvelin"
@@ -1212,7 +1202,7 @@
     "message": "Järjestä myös alikansiot (rekursiivinen)"
   },
   "sortRecursiveWarning": {
-    "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa eikä sitä voi peruuttaa."
+    "message": "Tämä järjestää kirjanmerkit uudelleen jokaisessa alikansiossa."
   },
   "tabGroupDialogTitle": {
     "message": "Uusi välilehtiryhmä"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Väri"
+  },
+  "tabGroupColorGrey": {
+    "message": "Harmaa",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Sininen",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Punainen",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Keltainen",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Vihreä",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Vaaleanpunainen",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Violetti",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Syaani",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Oranssi",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nimetön ryhmä"

@@ -172,13 +172,17 @@
     "message": "Да го отстранам овој обележувач?"
   },
   "deadDeleteAll": {
-    "message": "Избриши ги сите $count$ мртви обележувачи",
+    "message": "Да се избришат сите $count$ обележувачи во тековниот филтер?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Под филтерот „Сите“ ова вклучува блокирани обележувачи (достапни преку вашиот прокси, најверојатно сè уште активни). Враќањето може да го врати само последното бришење.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Избриши ги сите"
@@ -300,17 +304,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Мртви: $dead$ · Блокирани: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -643,9 +636,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Прикаже потврда кога се отвара многу обележувачите од папка."
-  },
-  "optionDeadProxy": {
-    "message": "Шаблон за прокси за мртви врски"
   },
   "optionDeadProxyServer": {
     "message": "Прокси сервер за мртви врски"
@@ -1211,7 +1201,7 @@
     "message": "Подреди и подпапки (рекурзивно)"
   },
   "sortRecursiveWarning": {
-    "message": "Ова ги преуредува обележувачите во секоја подпапка и не може да се врати назад."
+    "message": "Ова ги преуредува обележувачите во секоја потпапка."
   },
   "tabGroupDialogTitle": {
     "message": "Нова група јазичиња"
@@ -1221,6 +1211,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Боја"
+  },
+  "tabGroupColorGrey": {
+    "message": "Сива",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Сина",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Црвена",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Жолта",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Зелена",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Розова",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Виолетова",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Цијан",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Портокалова",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Група без наслов"

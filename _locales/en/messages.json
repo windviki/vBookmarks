@@ -172,13 +172,17 @@
   },
   "deadDeleteAll": {
     "description": "Top row of the palette's dead-link scan results; deletes every dead bookmark in one batch. $count$ is the total.",
-    "message": "Delete all $count$ dead bookmarks",
+    "message": "Delete all $count$ bookmarks in the current filter?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive). Undo can only restore the most recent deletion.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Delete all"
@@ -890,7 +894,7 @@
     "message": "Also sort subfolders (recursive)"
   },
   "sortRecursiveWarning": {
-    "message": "This reorders bookmarks in every subfolder and cannot be undone."
+    "message": "This reorders bookmarks in every subfolder."
   },
   "tabGroupDialogTitle": {
     "description": "Heading of the new-tab-group dialog (set title + color before opening).",
@@ -903,6 +907,42 @@
   "tabGroupColorLabel": {
     "description": "Label of the color swatches in the new-tab-group dialog.",
     "message": "Color"
+  },
+  "tabGroupColorGrey": {
+    "message": "Grey",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Blue",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Red",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Yellow",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Green",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Pink",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Purple",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "description": "Label shown in the existing-group picker for a tab group that has no title.",
@@ -1068,18 +1108,6 @@
     "message": "Don't show again",
     "description": "Dead view proxy strip: hides the no-server add/nudge hint permanently; the proxy stays configurable from the options page."
   },
-  "deadSummary": {
-    "message": "Dead: $dead$ · Blocked: $blocked$",
-    "description": "Dead view toolbar summary counting the dead and blocked rows of the last scan.",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
-      }
-    }
-  },
   "deadStartHint": {
     "message": "Start scanning $n$ bookmarks",
     "description": "Executable empty state of the dead-link view before the first scan; $n$ is the scannable bookmark count.",
@@ -1194,10 +1222,6 @@
   "dupesStrategyShortestTitle": {
     "message": "Keep the shortest title",
     "description": "Keeper strategy: keep the copy with the shortest title."
-  },
-  "optionDeadProxy": {
-    "message": "Dead-link proxy template",
-    "description": "Options label for the dead-link probe relay URL template (empty = direct probing only)."
   },
   "optionDeadProxyServer": {
     "message": "Dead-link proxy server",

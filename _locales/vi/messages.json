@@ -173,13 +173,17 @@
     "message": "Xóa dấu trang này?"
   },
   "deadDeleteAll": {
-    "message": "Xóa tất cả $count$ dấu trang chết",
+    "message": "Xóa tất cả $count$ dấu trang trong bộ lọc hiện tại?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy của bạn, có thể vẫn còn hoạt động). Hoàn tác chỉ có thể khôi phục lần xóa gần nhất.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Xóa tất cả"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Hỏng: $dead$ · Bị chặn: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Hiển thị xác nhận khi mở nhiều dấu trang từ một thư mục."
-  },
-  "optionDeadProxy": {
-    "message": "Mẫu proxy liên kết chết"
   },
   "optionDeadProxyServer": {
     "message": "Máy chủ proxy cho liên kết hỏng"
@@ -1212,7 +1202,7 @@
     "message": "Sắp xếp cả thư mục con (đệ quy)"
   },
   "sortRecursiveWarning": {
-    "message": "Thao tác này sắp xếp lại dấu trang trong mọi thư mục con và không thể hoàn tác."
+    "message": "Thao tác này sắp xếp lại các dấu trang trong mọi thư mục con."
   },
   "tabGroupDialogTitle": {
     "message": "Nhóm tab mới"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Màu"
+  },
+  "tabGroupColorGrey": {
+    "message": "Xám",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Xanh dương",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Đỏ",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Vàng",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Xanh lá",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Hồng",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Tím",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Xanh lơ",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Cam",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Nhóm chưa đặt tên"

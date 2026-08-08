@@ -173,13 +173,17 @@
     "message": "Премахване на този отметка?"
   },
   "deadDeleteAll": {
-    "message": "Изтрий всичките $count$ мъртви отметки",
+    "message": "Да се изтрият ли всички $count$ отметки в текущия филтър?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "При филтъра „Всички“ това включва блокирани отметки (достъпни чрез вашия прокси, вероятно все още активни). Отмяната може да възстанови само последното изтриване.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Изтрий всички"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Мъртви: $dead$ · Блокирани: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Показване на потвърждение при отваряне на много отметки от папка."
-  },
-  "optionDeadProxy": {
-    "message": "Шаблон на прокси за мъртви връзки"
   },
   "optionDeadProxyServer": {
     "message": "Прокси сървър за мъртви връзки"
@@ -1212,7 +1202,7 @@
     "message": "Сортиране и на подпапки (рекурсивно)"
   },
   "sortRecursiveWarning": {
-    "message": "Това пренарежда отметките във всяка подпапка и не може да бъде отменено."
+    "message": "Това пренарежда отметките във всяка подпапка."
   },
   "tabGroupDialogTitle": {
     "message": "Нова група раздели"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Цвят"
+  },
+  "tabGroupColorGrey": {
+    "message": "Сиво",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Синьо",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Червено",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Жълто",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Зелено",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Розово",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Лилаво",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Циан",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Оранжево",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Група без име"

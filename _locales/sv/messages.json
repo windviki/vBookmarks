@@ -173,13 +173,17 @@
     "message": "Ta bort detta bokmärke?"
   },
   "deadDeleteAll": {
-    "message": "Ta bort alla $count$ döda bokmärken",
+    "message": "Ta bort alla $count$ bokmärken i det aktuella filtret?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "Under filtret Alla inkluderar detta blockerade bokmärken (nåbara via din proxy, troligen fortfarande aktiva). Ångra kan bara återställa den senaste borttagningen.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Ta bort alla"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Döda: $dead$ · Blockerade: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Visa bekräftelse när många bokmärken öppnas från en mapp."
-  },
-  "optionDeadProxy": {
-    "message": "Proxy-mall för döda länkar"
   },
   "optionDeadProxyServer": {
     "message": "Proxyserver för döda länkar"
@@ -1212,7 +1202,7 @@
     "message": "Sortera även undermappar (rekursivt)"
   },
   "sortRecursiveWarning": {
-    "message": "Detta ändrar ordningen på bokmärken i varje undermapp och kan inte ångras."
+    "message": "Detta sorterar om bokmärken i varje undermapp."
   },
   "tabGroupDialogTitle": {
     "message": "Ny flikgrupp"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Färg"
+  },
+  "tabGroupColorGrey": {
+    "message": "grå",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "blå",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "röd",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "gul",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "grön",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "rosa",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "lila",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "cyan",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "orange",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Namnlös grupp"

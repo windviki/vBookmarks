@@ -173,13 +173,17 @@
     "message": "Видалити цю закладку?"
   },
   "deadDeleteAll": {
-    "message": "Видалити всі $count$ мертвих закладок",
+    "message": "Видалити всі $count$ закладок у поточному фільтрі?",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "У фільтрі «Усі» це включає заблоковані закладки (доступні через ваш проксі, імовірно, ще живі). Скасування може відновити лише останнє видалення.",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "Видалити всі"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "Мертві: $dead$ · Заблоковані: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "Показувати підтвердження при відкритті багатьох закладок з папки."
-  },
-  "optionDeadProxy": {
-    "message": "Шаблон проксі для мертвих посилань"
   },
   "optionDeadProxyServer": {
     "message": "Проксі-сервер для мертвих посилань"
@@ -1212,7 +1202,7 @@
     "message": "Також сортувати підпапки (рекурсивно)"
   },
   "sortRecursiveWarning": {
-    "message": "Це перевпорядковує закладки в кожній підпапці і не може бути скасовано."
+    "message": "Це змінить порядок закладок у кожній підпапці."
   },
   "tabGroupDialogTitle": {
     "message": "Нова група вкладок"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "Колір"
+  },
+  "tabGroupColorGrey": {
+    "message": "Сірий",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "Синій",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "Червоний",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "Жовтий",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "Зелений",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "Рожевий",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "Фіолетовий",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "Блакитний",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "Оранжевий",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "Група без назви"

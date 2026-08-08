@@ -173,13 +173,17 @@
     "message": "ลบบุ๊กมาร์กนี้?"
   },
   "deadDeleteAll": {
-    "message": "ลบที่คั่นหน้าตายทั้งหมด $count$ รายการ",
+    "message": "ลบบุ๊กมาร์กทั้งหมด $count$ รายการในตัวกรองปัจจุบันหรือไม่",
     "placeholders": {
       "count": {
         "content": "$1",
         "example": "8"
       }
     }
+  },
+  "deadDeleteAllNote": {
+    "message": "ภายใต้ตัวกรองทั้งหมด สิ่งนี้รวมถึงบุ๊กมาร์กที่ถูกบล็อก (สามารถเข้าถึงได้ผ่านพร็อกซี ซึ่งอาจยังใช้งานได้) เลิกทำได้เฉพาะการลบครั้งล่าสุดเท่านั้น",
+    "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "deadDeleteAllBtn": {
     "message": "ลบทั้งหมด"
@@ -301,17 +305,6 @@
     "placeholders": {
       "count": {
         "content": "$1"
-      }
-    }
-  },
-  "deadSummary": {
-    "message": "เสีย: $dead$ · ถูกบล็อก: $blocked$",
-    "placeholders": {
-      "dead": {
-        "content": "$1"
-      },
-      "blocked": {
-        "content": "$2"
       }
     }
   },
@@ -644,9 +637,6 @@
   },
   "optionConfirmOpenFolder": {
     "message": "แสดงการยืนยันเมื่อเปิดที่คั่นหน้าจำนวนมากจากโฟลเดอร์"
-  },
-  "optionDeadProxy": {
-    "message": "เทมเพลตพร็อกซีลิงก์เสีย"
   },
   "optionDeadProxyServer": {
     "message": "พร็อกซีเซิร์ฟเวอร์สำหรับลิงก์เสีย"
@@ -1212,7 +1202,7 @@
     "message": "จัดเรียงโฟลเดอร์ย่อยด้วย (แบบเรียกซ้ำ)"
   },
   "sortRecursiveWarning": {
-    "message": "การดำเนินการนี้จะจัดเรียงบุ๊กมาร์กในทุกโฟลเดอร์ย่อยและไม่สามารถยกเลิกได้"
+    "message": "การดำเนินการนี้จะจัดเรียงบุ๊กมาร์กในทุกโฟลเดอร์ย่อย"
   },
   "tabGroupDialogTitle": {
     "message": "กลุ่มแท็บใหม่"
@@ -1222,6 +1212,42 @@
   },
   "tabGroupColorLabel": {
     "message": "สี"
+  },
+  "tabGroupColorGrey": {
+    "message": "เทา",
+    "description": "Accessible name of the grey color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorBlue": {
+    "message": "น้ำเงิน",
+    "description": "Accessible name of the blue color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorRed": {
+    "message": "แดง",
+    "description": "Accessible name of the red color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorYellow": {
+    "message": "เหลือง",
+    "description": "Accessible name of the yellow color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorGreen": {
+    "message": "เขียว",
+    "description": "Accessible name of the green color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPink": {
+    "message": "ชมพู",
+    "description": "Accessible name of the pink color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorPurple": {
+    "message": "ม่วง",
+    "description": "Accessible name of the purple color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorCyan": {
+    "message": "ฟ้า",
+    "description": "Accessible name of the cyan color swatch in the new-tab-group dialog."
+  },
+  "tabGroupColorOrange": {
+    "message": "ส้ม",
+    "description": "Accessible name of the orange color swatch in the new-tab-group dialog."
   },
   "tabGroupUntitled": {
     "message": "กลุ่มที่ไม่มีชื่อ"
