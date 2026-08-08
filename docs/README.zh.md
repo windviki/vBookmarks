@@ -98,8 +98,8 @@ vBookmarks
 
 ## 工程
 
-- **1629 个单元测试**，50 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度、以及横向滚动条防护契约（每个滚动容器裁剪 overflow-x、文本槽省略号、固定槽 flex:none、zoom 规则不改几何）的契约测试。
-- **Docker harness**：零控制台错误冒烟、真实浏览器键盘/视图验证套件（tab 条键盘模型、焦点区域、头部行方向链、各视图 ↑↓ 越顶含死链视图双工具行层级、横幅键盘可达、搜索双区、逐视图渲染、面板自定义指令——115 条硬断言）、滚动条矩阵探针（屏幕分辨率 × 浏览器 zoom × 扩展内 zoom × popup 尺寸扫描，任何滚动容器无横向滚动条——695 条断言），以及 5 主题 × 8 界面语言的截图套件（含 RTL 镜像断言）。
+- **1701 个单元测试**，50 个 Vitest 套件覆盖全部模块——含钉住行对齐几何、z-index 层级表、各主题徽标对比度、以及横向滚动条防护契约（每个滚动容器裁剪 overflow-x、文本槽省略号、固定槽 flex:none、zoom 规则不改几何）的契约测试。
+- **Docker harness**：零控制台错误冒烟、真实浏览器键盘/视图验证套件（tab 条键盘模型、焦点区域、头部行方向链、各视图 ↑↓ 越顶含死链视图双工具行层级、横幅键盘可达、搜索双区、逐视图渲染、面板自定义指令——132 条硬断言）、滚动条矩阵探针（屏幕分辨率 × 浏览器 zoom × 扩展内 zoom × popup 尺寸扫描，任何滚动容器无横向滚动条——752 条断言），以及 5 主题 × 8 界面语言的截图套件（含 RTL 镜像断言）。
 - 统一语言工具（`scripts/i18n.py`）：审计、缺失报告、LLM 批量翻译、verify 门禁。基准键从 75 增至 **345**（4.0.1 起 **379**），43 个语种全部对齐。
 - **CI**：GitHub Actions 在每次 push 与 PR 上跑单测、i18n 门禁与发布打包。
 - 目录结构 v4 重组：`src/`、`pages/`、`css/`、`assets/`、`scripts/`；过时产物（旧 `release/*.crx`、MV2 遗留）留存于 git 历史。
@@ -156,7 +156,7 @@ vBookmarks
 无构建步骤 —— 在 `chrome://extensions/` 中**加载已解压的扩展程序**，选择仓库根目录即可。
 
 ```bash
-# 单元测试（Vitest，50 个测试文件共 1629 例）
+# 单元测试（Vitest，50 个测试文件共 1701 例）
 npm install
 npm run test:run
 
@@ -199,9 +199,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 # 更新日志
 
-**ver4.0.1 2026/08**
+### v4.0.1 · 2026-08
 
-**新增**
+#### 新增
 
 - **书签/文件夹的标签组**："全部打开为标签组"改为**在 service worker 里建组/入组**——关闭弹窗不再中断。文件夹与书签右键菜单新增 **"…并设置"**（新组对话框：组标题 + 9 色 Chrome 风格色板）与 **"打开到已有标签组"**（列出当前标签组供选择）；旧版 Chrome 或组已失效时退化为普通打开。
 - **死链批量删除**：工具行危险红 **"删除全部"** 作用于当前筛选结果（全部/仅死链/仅受限，确认框显示确切数量）；选择模式新增 **"删除所选"**——两者都串行走撤销链，结束弹一条汇总 toast。
@@ -211,7 +211,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **统计视图合并最近访问**：开启历史后，已收藏的历史行并入主列表（实心 ★，计数进 pill）；工具行 **"显示未收藏书签"** 复选框（`statsShowUnbookmarked`）带出其余行（描边 ☆ 一键收藏）。行尾从右到左 = 收藏图标 → 计数 pill → 时间。
 - **统一下拉组件**：去重视图的 strategy/scope 原生 select 换成自绘下拉，统一键盘协议（`↓`/`Enter`/空格 展开，`Home`/`End` 跳首/末选项，`←`/`Esc` 取消，`Tab` 确认）——浏览器不再接管方向键。
 
-**修复**
+#### 修复
 
 - [#46](https://github.com/windviki/vBookmarks/issues/46)：搜索结果里点文件夹会在新标签打开"搜索页"——现改为在弹窗内直达文件夹（多类名匹配）。
 - [#47](https://github.com/windviki/vBookmarks/issues/47)：统计"最近"时间徽章被挤进小药丸——改为与路径列对齐的普通弱化文本。
@@ -232,180 +232,220 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - [#50](https://github.com/windviki/vBookmarks/issues/50)：中键/后台打开书签时即使未开“保持打开”也会关掉弹窗——后台打开不再强制关闭弹窗（仅前台打开受该设置约束），与文件夹“全部打开”行为一致。
 - [#51](https://github.com/windviki/vBookmarks/issues/51)：手动拖拽缩小的弹窗高度总是“被重置”（下次点树时自动高度又撑回内容高，弹窗只能越变越大）——一旦手动拖拽弹窗边缘，自动高度在本次会话内退位。
 - [#52](https://github.com/windviki/vBookmarks/issues/52)：自定义工具栏图标重启浏览器后失效（`chrome.action.setIcon` 是会话级）——service worker 现在每次冷启动都会恢复它。
+- **去重视图工具栏回归**：打开策略/范围下拉后再按 `↓` 无法从按钮区进入列表——下拉选项不再偷走"记住行"的 `.focus` 标记，工具行 rung 的 `↓` 也会跳过隐藏在 listbox 内的标记。
+- **菜单动作与重渲染不再丢失键盘焦点**：每次菜单派发都先关菜单、焦点回归所属行；去重/统计/最近视图与搜索历史区在 `innerHTML` 重绘前后 park/恢复行焦点——"设为保留"、删除历史行等操作后方向键依然可用。
+- 分隔线菜单唯一的"移除分隔线"条目此前键盘完全不可达——现已绑定菜单行走并加入 `Tab` 环。
 
-**抛光**
+#### 抛光
 
 - 图标统一为一套 16px 线稿 SVG：实心/空心星（统计）、旗帜 + 垃圾桶（死链标记/删除）、对勾（去重应用）——危险操作保持红色。
 - 对话框内容限宽居中 + 柔和滑入过渡；新标签组对话框加呼吸空间与 Chrome 风格选中态。
 - 死链工具栏重排：扫描时间 → 带计数的 filter 段（全部 2 · 仅死链 1 · 仅受限 1）→ rescan / 全标 / 全清 / 删全部 / 选择模式。
 - 五个列表视图行 meta 统一：时间左列左对齐、路径右列右对齐。
 - 根文件夹菜单对 Chrome 拒绝的操作（删除/重命名/前后添加/分隔线）置灰禁用，不再报错。
+- **键盘交互加固**（菜单、工具行 rung、Home/End）：
+  - 全部七个右键菜单在**所有平台**上首尾回卷——旧的 macOS 不回卷例外已删除——并支持 `Home`/`End` 跳到首/末可用项。
+  - 菜单与下拉统一确认/取消协议：`→`/`Enter`/`Space` 确认，`←`/`Esc` 取消，RTL 镜像；在裸菜单容器或置灰项上确认是 no-op。
+  - 工具行 rung 到边回卷（对齐 tab 条）；tab 条的 `Home`/`End` 改为**视图作用域**（当前视图首/末行，不再跨视图跳转）；无行的视图越顶交叉回视图锚点，不再困住焦点。
+- 死链"添加代理"提示横幅：× 按钮右上对齐（与 risk-banner 关闭钮一致），文案去掉"xx 条直连失败"前缀。
 
-**变更**
+#### 变更
 
 - 版本机制重构为 `src/version.js`（完整 `major.minor.patch` 比较、阈值"跨入"判断）；本版为 **4.0.1 静默补丁**——存量 4.0 用户不会弹"新版本"卡。
 - 键盘模型加固：菜单行走跳过禁用项 *与* CSS 隐藏项；新增 focus-regression 综合套件把关跨视图焦点移交。
+- **风险横幅重弹门**改为 major.minor 粒度（原先只认大版本）：patch 晋升（4.0.0 → 4.0.1）静默，4.0 → 4.1 或 4 → 5 会重弹一次。
 - **死链代理整合**：退役旧的中转 URL 模板（`deadProxyTemplate`）——老版本存下的值在升级时自动从存储中清理。选项页"死链扫描"分组现在可以就地管理你的代理服务器（添加 / 测试 / 保存 / 清除；保存前依次过 解析 → 权限 → 可控性 → 可达性探测，不可达拒收）；视图内的"添加代理"提示条可用 × 关闭，并在"死链扫描"分组的复选框恢复（`hideDeadProxyStrip`）。
 
-**ver4.0 2026/07**
+### v4.0 · 2026/07
 
-新增：六视图管理器（树 / 搜索 / 最近 / 统计 / 死链 / 重复），图标 tab 条、实时计数角标、单视图显隐开关、`Alt+1…6` 直达。搜索视图双区布局与可重跑的搜索历史。最近视图粗时间分组与树中定位。本地访问统计：后台采集器、最近访问分区、一键加星。死链扫描：双通道检测、渐进呈现、暂停/恢复/取消、跨视图死链标记——**扫描跑在 service worker 里**，中途关掉弹窗进度不丢——第二通道新增支持**你自己的代理服务器**（http/https/socks5）：视图代理条一键添加，校验地址并探测可达性（不可达拒收）后才保存，更换/移除同处可及，选项页同步展示与清除；路由采用标记匹配的临时 PAC，仅扫描器自己的探测 URL 走代理（其他标签页不受影响，扫描结束/取消/弹窗关闭即还原，崩溃残留由 Service Worker 清扫）；工具栏新增死链·受限计数与"配置代理区分真死链与区域受限"引导。重复清理：URL 归一化、六种保留策略、待删预览、可撤销的批量删除。两个批量工具首次使用前都会显示"先备份"风险横幅。命令面板升级：逐视图 Go 命令、`/theme <主题名>`、`/session`、`/options`、别名、自定义斜杠指令（URL/模板/文件夹成组/视图预设，随同步区同步）、搜索桥接行、失焦自动关闭。选项页：视图分组、命令分组、设置备份/恢复、响应式卡片布局。Ink 与 Paper 双 fable 主题；快速收藏星标按钮；同步状态呈现重做（安静圆点、本地化 tooltip、`（仅本地）`/`（已同步）`根标注、拖拽拦截 toast、"高亮未同步"淡显生效）。
+#### 新增
 
-修复：搜索框点击穿透与原生清除按钮不可靠（新增自定义清除按钮）；向折叠文件夹添加内容立即可见；复制标题/URL 改用异步 Clipboard API（新增 `clipboardWrite` 权限）；非空文件夹删除恢复确认门控（删除仍可撤销）。
+- **六视图管理器** —— 树 / 搜索 / 最近 / 统计 / 死链 / 重复，图标 tab 条、实时计数角标、单视图显隐开关、`Alt+1…6` 直达。
+- **搜索视图** —— 双区布局（上区历史、下区结果）与可重跑的搜索历史。
+- **最近视图** —— 粗时间分组与树中定位。
+- **本地访问统计** —— 后台采集器、最近访问分区、一键加星。
+- **死链扫描** —— 双通道检测、渐进呈现、暂停/恢复/取消、跨视图死链标记——**扫描跑在 service worker 里**，中途关掉弹窗进度不丢。第二通道新增支持**你自己的代理服务器**（http/https/socks5）：视图代理条一键添加，校验地址并探测可达性（不可达拒收）后才保存，更换/移除同处可及，选项页同步展示与清除；路由采用标记匹配的临时 PAC，仅扫描器自己的探测 URL 走代理（其他标签页不受影响，扫描结束/取消/弹窗关闭即还原，崩溃残留由 Service Worker 清扫）；工具栏新增死链·受限计数与"配置代理区分真死链与区域受限"引导。
+- **重复清理** —— URL 归一化、六种保留策略、待删预览、可撤销的批量删除。
+- **风险横幅** —— 两个批量工具首次使用前都会显示"先备份"横幅。
+- **命令面板升级** —— 逐视图 Go 命令、`/theme <主题名>`、`/session`、`/options`、别名、自定义斜杠指令（URL/模板/文件夹成组/视图预设，随同步区同步）、搜索桥接行、失焦自动关闭。
+- **选项页** —— 视图分组、命令分组、设置备份/恢复、响应式卡片布局。
+- **Ink 与 Paper 双 fable 主题**；快速收藏星标按钮；同步状态呈现重做（安静圆点、本地化 tooltip、`（仅本地）`/`（已同步）`根标注、拖拽拦截 toast、"高亮未同步"淡显生效）。
 
-抛光：死链与重复视图新增选择模式（批量标记/批量清组，`Esc` 退出）；`Tab`/`Shift+Tab` 区域循环覆盖列表内工具行，各区域带焦点记忆；重复视图成员行键位（`Enter` 打开副本、`←` 回到组头）与组头菜单；"记住上次视图"（默认开）与角标、命令面板、星标、工具按钮开关，外加"一键恢复经典界面"按钮；选项页与高级选项页合并为单页（旧地址自动跳转）；全局快速收藏快捷键（`Alt+Shift+S`）；全部右键菜单补齐 ARIA 角色，对话框加 `aria-modal` 与焦点圈禁；favicon 懒加载；接入 GitHub Actions CI。
+#### 抛光
 
-变更：仓库目录重组（`src/`、`pages/`、`css/`、`assets/`、`scripts/`）；删除过时 `release/` 与 MV2 遗留（留存 git 历史）；图标全量内联 SVG；语言基准增至 306 键，43 个语种经 `scripts/i18n.py` LLM 流水线重新对齐；测试增至 40 个文件 1303 例；Docker harness 扩展键盘/视图验证套件与多主题、多语言截图；`proxy` 权限为安装时声明（Chrome 不允许列为可选权限），仅在配置了代理且扫描运行中（或添加流程的可达性探测时）使用——不设置代理服务器或不使用死链功能时完全不触发。
+- 死链与重复视图新增选择模式（批量标记/批量清组，`Esc` 退出）。
+- `Tab`/`Shift+Tab` 区域循环覆盖列表内工具行，各区域带焦点记忆。
+- 重复视图成员行键位（`Enter` 打开副本、`←` 回到组头）与组头菜单。
+- "记住上次视图"（默认开）与角标、命令面板、星标、工具按钮开关，外加"一键恢复经典界面"按钮。
+- 选项页与高级选项页合并为单页（旧地址自动跳转）。
+- 全局快速收藏快捷键（`Alt+Shift+S`）。
+- 全部右键菜单补齐 ARIA 角色，对话框加 `aria-modal` 与焦点圈禁。
+- favicon 懒加载；接入 GitHub Actions CI。
 
+#### 修复
 
-**ver3.7 2026/05/10**
+- 搜索框点击穿透与原生清除按钮不可靠（新增自定义清除按钮）。
+- 向折叠文件夹添加内容立即可见。
+- 复制标题/URL 改用异步 Clipboard API（新增 `clipboardWrite` 权限）。
+- 非空文件夹删除恢复确认门控（删除仍可撤销）。
 
-新增：[#36](https://github.com/windviki/vBookmarks/issues/36)：弹窗高度自动调整开关（常规设置）。
+#### 变更
 
-修复：[#42](https://github.com/windviki/vBookmarks/issues/42)：Chrome 148 弃用 `<command>` 元素导致扩展失效，改用 `<div>` 完全兼容。
+- 仓库目录重组（`src/`、`pages/`、`css/`、`assets/`、`scripts/`）；删除过时 `release/` 与 MV2 遗留（留存 git 历史）。
+- 图标全量内联 SVG。
+- 语言基准增至 306 键，43 个语种经 `scripts/i18n.py` LLM 流水线重新对齐。
+- 测试增至 40 个文件 1303 例；Docker harness 扩展键盘/视图验证套件与多主题、多语言截图。
+- `proxy` 权限为安装时声明（Chrome 不允许列为可选权限），仅在配置了代理且扫描运行中（或添加流程的可达性探测时）使用——不设置代理服务器或不使用死链功能时完全不触发。
 
-新增：自 cc-dev 分支同步的 42 语言支持，全部对齐英文基准（75 键）：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
 
+### v3.7 · 2026/05/10
 
-**ver3.6 2024/01/08**
+- 新增：[#36](https://github.com/windviki/vBookmarks/issues/36)：弹窗高度自动调整开关（常规设置）。
 
-修复：[#31](https://github.com/windviki/vBookmarks/issues/31)：自定义图标失效。
+- 修复：[#42](https://github.com/windviki/vBookmarks/issues/42)：Chrome 148 弃用 `<command>` 元素导致扩展失效，改用 `<div>` 完全兼容。
 
+- 新增：自 cc-dev 分支同步的 42 语言支持，全部对齐英文基准（75 键）：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
 
-**ver3.5 2023/09/04**
 
-修复：[#29](https://github.com/windviki/vBookmarks/issues/29)：清除搜索文本后光标焦点不保留在搜索框。
+### v3.6 · 2024/01/08
 
-修复 manifest 快捷键。默认快捷键现为 Ctrl+Shift+V（Ctrl+Shift+B 在新版 Chrome 不可用）。
+- 修复：[#31](https://github.com/windviki/vBookmarks/issues/31)：自定义图标失效。
 
 
-**ver3.4 2023/02/14**
+### v3.5 · 2023/09/04
 
-修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：后台打开文件夹。
+- 修复：[#29](https://github.com/windviki/vBookmarks/issues/29)：清除搜索文本后光标焦点不保留在搜索框。
 
-新增：方向键右键打开上下文菜单（焦点在已打开文件夹或书签上时），左键关闭菜单。
+- 修复 manifest 快捷键。默认快捷键现为 Ctrl+Shift+V（Ctrl+Shift+B 在新版 Chrome 不可用）。
 
-移除高度重置延时，加快弹窗速度。
 
+### v3.4 · 2023/02/14
 
-**ver3.3 2023/02/02**
+- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：后台打开文件夹。
 
-修复：[#23](https://github.com/windviki/vBookmarks/issues/23)：选项页链接错误。
+- 新增：方向键右键打开上下文菜单（焦点在已打开文件夹或书签上时），左键关闭菜单。
 
-修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：Chrome 107 中中键/Ctrl 点击不再后台打开书签。
+- 移除高度重置延时，加快弹窗速度。
 
-新增：[#24](https://github.com/windviki/vBookmarks/issues/24)：新增关闭即时搜索的选项（按 ENTER 搜索）。
 
-修复：愚蠢的双滚动条（终于）。
+### v3.3 · 2023/02/02
 
-修复：退出搜索模式时焦点丢失。
+- 修复：[#23](https://github.com/windviki/vBookmarks/issues/23)：选项页链接错误。
 
-修复：搜索模式下方向键下报错。
+- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：Chrome 107 中中键/Ctrl 点击不再后台打开书签。
 
-修复若干 undefined 错误。
+- 新增：[#24](https://github.com/windviki/vBookmarks/issues/24)：新增关闭即时搜索的选项（按 ENTER 搜索）。
 
-升级至 Manifest V3，minimum_chrome_version = 88。
+- 修复：愚蠢的双滚动条（终于）。
 
+- 修复：退出搜索模式时焦点丢失。
 
-**ver3.2 2020/09/12**
+- 修复：搜索模式下方向键下报错。
 
-修复：[#19](https://github.com/windviki/vBookmarks/issues/19)：「添加到文件夹末尾」功能失效。
+- 修复若干 undefined 错误。
 
-新增：[#15](https://github.com/windviki/vBookmarks/issues/15)：搜索栏支持搜索文件夹。
+- 升级至 Manifest V3，minimum_chrome_version = 88。
 
-新增：弹窗高度调整。
 
-新增：意大利语。
+### v3.2 · 2020/09/12
 
-新增：俄语，感谢 @Stanislav。
+- 修复：[#19](https://github.com/windviki/vBookmarks/issues/19)：「添加到文件夹末尾」功能失效。
 
-修复若干 undefined 错误。
+- 新增：[#15](https://github.com/windviki/vBookmarks/issues/15)：搜索栏支持搜索文件夹。
 
-升级至 ECMAScript 6，minimum_chrome_version = 61。
+- 新增：弹窗高度调整。
 
+- 新增：意大利语。
 
+- 新增：俄语，感谢 @Stanislav。
 
-**ver3.1 2020/07/03**
+- 修复若干 undefined 错误。
 
-修复：[#12](https://github.com/windviki/vBookmarks/issues/12)：清除菜单时焦点丢失。
+- 升级至 ECMAScript 6，minimum_chrome_version = 61。
 
-修复：[#18](https://github.com/windviki/vBookmarks/issues/18)：拖拽到顶部/底部时树不滚动。
 
-修复按下方向键时的 undefined 错误。
 
-修复 bookmarklet 支持，感谢 @ZG-nico。
+### v3.1 · 2020/07/03
 
-新增：法语，感谢 @Fab-fr。
+- 修复：[#12](https://github.com/windviki/vBookmarks/issues/12)：清除菜单时焦点丢失。
 
-新增：中文（香港）。
+- 修复：[#18](https://github.com/windviki/vBookmarks/issues/18)：拖拽到顶部/底部时树不滚动。
 
+- 修复按下方向键时的 undefined 错误。
 
-**ver3.0 2019/08/22**
+- 修复 bookmarklet 支持，感谢 @ZG-nico。
 
-修复：新图标。
+- 新增：法语，感谢 @Fab-fr。
 
+- 新增：中文（香港）。
 
-**ver2.9 2019/08/22**
 
-修复：Chrome 77+ 双滚动条。
+### v3.0 · 2019/08/22
 
+- 修复：新图标。
 
-**ver2.8 2019/05/06**
 
-修复：中键点击重复打开 URL。https://github.com/windviki/vBookmarks/issues/9
+### v2.9 · 2019/08/22
 
-修复：搜索偶发失败。https://github.com/windviki/vBookmarks/issues/7
+- 修复：Chrome 77+ 双滚动条。
 
-修复：右键菜单位置。
 
-改进：滚动条 CSS。
+### v2.8 · 2019/05/06
 
-新增：书签 URL 占位符 "\_\_VBM_CURRENT_TAB_URL\_\_"，让部分 bookmarklet 可用（Chrome 不允许 bookmarklet 中的 _document.location.href_）。从 vBookmarks 点击时会替换为当前活动标签页 URL。
+- 修复：中键点击重复打开 URL。https://github.com/windviki/vBookmarks/issues/9
 
+- 修复：搜索偶发失败。https://github.com/windviki/vBookmarks/issues/7
 
-**ver2.6 2013/10/21**
+- 修复：右键菜单位置。
 
-修复：移除双滚动条。
+- 改进：滚动条 CSS。
 
+- 新增：书签 URL 占位符 "\_\_VBM_CURRENT_TAB_URL\_\_"，让部分 bookmarklet 可用（Chrome 不允许 bookmarklet 中的 _document.location.href_）。从 vBookmarks 点击时会替换为当前活动标签页 URL。
 
-**ver2.5 2013/08/30**
 
-修复：移除 HTML 通知（已不可用）。https://bugs.webkit.org/show_bug.cgi?id=98388
+### v2.6 · 2013/10/21
 
+- 修复：移除双滚动条。
 
-**ver2.4 2013/08/29**
 
-修复：js 中 "Unexpected end of input"。
+### v2.5 · 2013/08/30
 
+- 修复：移除 HTML 通知（已不可用）。https://bugs.webkit.org/show_bug.cgi?id=98388
 
-**ver2.3 2013/04/09**
 
-修复：上下滚动时右键菜单未关闭（上一版回归）。
+### v2.4 · 2013/08/29
 
-修复：滚动条位置记忆（上一版回归）。
+- 修复：js 中 "Unexpected end of input"。
 
 
-**ver2.2 2013/04/02**
+### v2.3 · 2013/04/09
 
-修复：Chrome 26+ 滚动条失效（测试不足）。
+- 修复：上下滚动时右键菜单未关闭（上一版回归）。
 
+- 修复：滚动条位置记忆（上一版回归）。
 
-**ver2.1 2012/12/12**
 
-修复：正确记忆并恢复滚动条位置。
+### v2.2 · 2013/04/02
 
-改进：右键菜单位置；上下滚动时菜单会关闭。
+- 修复：Chrome 26+ 滚动条失效（测试不足）。
 
-新增：对话框取消按钮。
 
+### v2.1 · 2012/12/12
 
-**ver2.0 2012/11/01**
+- 修复：正确记忆并恢复滚动条位置。
 
-修复：background.js 版本检查。
+- 改进：右键菜单位置；上下滚动时菜单会关闭。
 
-改进：可同步的分隔线。
+- 新增：对话框取消按钮。
 
-新增：分隔线高级选项。
+
+### v2.0 · 2012/11/01
+
+- 修复：background.js 版本检查。
+
+- 改进：可同步的分隔线。
+
+- 新增：分隔线高级选项。
 
 
 - 「作为分隔线显示的书签的真实标题」：默认为 "|"。即你在 vBookmarks 中添加的分隔线，在 Chrome 书签管理器或书签菜单中会以该标题显示为普通书签。可改为 "------------"，这样在 Chrome 书签菜单中也能起到分隔作用。
@@ -417,84 +457,84 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 「URL 包含此字符串的书签将显示为分隔线」：可设置多个 URL 以 ";" 连接，所有 URL 包含其中任一字符串的书签都会在 vBookmarks 中显示为分隔线。例如设为 google.com，所有 Google 服务都会显示为分隔线。
 
 
-**ver1.9 2012/08/19**
+### v1.9 · 2012/08/19
 
-修复：Neat Bookmarks 缺陷：打开弹窗并向下滚动后滚动条会回到顶部。
+- 修复：Neat Bookmarks 缺陷：打开弹窗并向下滚动后滚动条会回到顶部。
 
-更新：图标颜色。
+- 更新：图标颜色。
 
-更新：分隔线样式。
-
-
-**ver1.8 2012/08/01**
-
-新增：书签/文件夹分隔线。本地记录，暂不支持多设备同步，见 https://github.com/windviki/vBookmarks/issues/3
-
-修复：Neat Bookmarks 缺陷：滚动条向下滚动后拖拽书签位置错误（Chrome18 起）。
-
-新增：图标颜色改为红色。
-
-新增：简单的更新检查与桌面通知。
-
-移除：部分语言，仅保留 4 个 locale：en, ja, zh, zh_TW。无力维护更多翻译。
+- 更新：分隔线样式。
 
 
-**ver1.7 2012/06/26**
+### v1.8 · 2012/08/01
 
-修复：Chrome 19 双滚动条。为之前未经测试的发布抱歉，我没有多个版本的 Chrome :)
+- 新增：书签/文件夹分隔线。本地记录，暂不支持多设备同步，见 https://github.com/windviki/vBookmarks/issues/3
 
-修复：展开根文件夹时宽度重置。https://github.com/windviki/vBookmarks/issues/2
+- 修复：Neat Bookmarks 缺陷：滚动条向下滚动后拖拽书签位置错误（Chrome18 起）。
 
+- 新增：图标颜色改为红色。
 
-**ver1.6 2012/06/24**
+- 新增：简单的更新检查与桌面通知。
 
-修复：地址栏无法搜索书签（*+空格）。[内容安全策略]
-
-修复：恢复弹窗宽度。[内容安全策略]
-
-修复：对话框无法提交表单。[内容安全策略]
+- 移除：部分语言，仅保留 4 个 locale：en, ja, zh, zh_TW。无力维护更多翻译。
 
 
-**ver1.5 2012/06/21**
+### v1.7 · 2012/06/26
 
-修复：Chrome 20+ manifest 问题。
+- 修复：Chrome 19 双滚动条。为之前未经测试的发布抱歉，我没有多个版本的 Chrome :)
 
-修复：独立脚本文件替代内联脚本，见内容安全策略 http://code.google.com/chrome/extensions/contentSecurityPolicy.html
-
-
-**ver1.4 2012/06/20**
-
-修复：Chrome 18、19 滚动条问题。https://github.com/windviki/vBookmarks/issues/2
+- 修复：展开根文件夹时宽度重置。https://github.com/windviki/vBookmarks/issues/2
 
 
-**ver1.3 2012/05/25**
+### v1.6 · 2012/06/24
 
-修复：滚动条故障。https://github.com/windviki/vBookmarks/issues/1
+- 修复：地址栏无法搜索书签（*+空格）。[内容安全策略]
 
+- 修复：恢复弹窗宽度。[内容安全策略]
 
-**ver1.2 2011/11/30**
-
-新增：用当前 URL 更新选中书签。
-
-新增：复制选中书签的标题和 URL 到剪贴板。
-
-修复：向关闭的文件夹添加新书签或文件夹后，原有子项无法正确显示。
-
-修复：补齐 cs（捷克语）缺失的翻译。
+- 修复：对话框无法提交表单。[内容安全策略]
 
 
-**ver1.1 2011/11/16**
+### v1.5 · 2012/06/21
 
-新增：只显示书签栏书签的选项。
+- 修复：Chrome 20+ manifest 问题。
 
-新增：在书签/文件夹前后添加文件夹的右键菜单。
-
-修复：多语言支持中的部分翻译。
+- 修复：独立脚本文件替代内联脚本，见内容安全策略 http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
 
-**ver1.0 2011/11/15**
+### v1.4 · 2012/06/20
 
-首个版本。
+- 修复：Chrome 18、19 滚动条问题。https://github.com/windviki/vBookmarks/issues/2
+
+
+### v1.3 · 2012/05/25
+
+- 修复：滚动条故障。https://github.com/windviki/vBookmarks/issues/1
+
+
+### v1.2 · 2011/11/30
+
+- 新增：用当前 URL 更新选中书签。
+
+- 新增：复制选中书签的标题和 URL 到剪贴板。
+
+- 修复：向关闭的文件夹添加新书签或文件夹后，原有子项无法正确显示。
+
+- 修复：补齐 cs（捷克语）缺失的翻译。
+
+
+### v1.1 · 2011/11/16
+
+- 新增：只显示书签栏书签的选项。
+
+- 新增：在书签/文件夹前后添加文件夹的右键菜单。
+
+- 修复：多语言支持中的部分翻译。
+
+
+### v1.0 · 2011/11/15
+
+- 首个版本。
 
 
 # 注意事项

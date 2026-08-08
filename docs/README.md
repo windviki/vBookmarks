@@ -98,8 +98,8 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 ## Engineering
 
-- **1629 unit tests** across 50 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry).
-- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 115 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 695 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
+- **1701 unit tests** across 50 Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry).
+- **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 132 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
 - Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**379** as of 4.0.1), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
@@ -156,7 +156,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 
 ```bash
-# Unit tests (Vitest, 1629 cases across 50 suites)
+# Unit tests (Vitest, 1701 cases across 50 suites)
 npm install
 npm run test:run
 
@@ -199,9 +199,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
-**ver4.0.1 2026/08**
+### v4.0.1 · 2026-08
 
-**New**
+#### New
 
 - **Tab groups for folders & bookmarks**: "open all as a tab group" now creates/joins the group **in the service worker**, so closing the popup mid-flight no longer aborts it. The folder/bookmark context menus add **…and set name/color** (a new-group dialog with a title and nine Chrome-style color swatches) and **open into an existing group** (a picker of your current tab groups); old Chrome or a vanished group falls back to a plain open.
 - **Dead-link batch delete**: the toolbar's red **Delete all** removes every row in the current filter (All / Dead / Blocked; the confirm shows the exact count); selection mode gains **Delete selected** — both run serially through the undo chain and end in one summary toast.
@@ -211,7 +211,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Stats view merges recent visits into one list**: bookmarked history rows merge into the main list wearing a solid ★ and their visit count in the pill; a toolbar **Show unbookmarked** checkbox (`statsShowUnbookmarked`) brings in the rest (one-click ☆ files them). The row end reads right-to-left: star → count pill → time.
 - **Shared dropdown component**: the Duplicates strategy/scope selects become a custom dropdown with one keyboard protocol (`↓`/`Enter`/`Space` open, `Home`/`End` jump to the first/last option, `←`/`Esc` cancel, `Tab` applies) — the browser's native select no longer hijacks the arrows.
 
-**Fixed**
+#### Fixed
 
 - [#46](https://github.com/windviki/vBookmarks/issues/46): clicking a folder in search results opened the popup's own URL in a new tab — folder rows now jump in place (multi-class matching).
 - [#47](https://github.com/windviki/vBookmarks/issues/47): the Stats "recent" time badge was crushed into a tiny pill — now plain muted text aligned with the path column.
@@ -232,180 +232,220 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - [#50](https://github.com/windviki/vBookmarks/issues/50): middle-clicking a bookmark closed the popup even with "stay open" off — background opens no longer force-close the popup (only foreground opens honor the setting), matching the folder open-all behavior.
 - [#51](https://github.com/windviki/vBookmarks/issues/51): a manually shrunken popup height kept "resetting" (auto-height re-grew it on the next tree click, so the popup could only ever grow) — once you drag the popup edge, auto-height steps back for the rest of the session.
 - [#52](https://github.com/windviki/vBookmarks/issues/52): the custom toolbar icon did not survive a browser restart (`chrome.action.setIcon` is session-scoped) — the service worker now restores it on every cold start.
+- **Duplicates toolbar regression**: after opening the strategy/scope dropdown, `↓` from the button area could no longer enter the rows — a listbox option no longer steals the remembered-row `.focus` marker, and the toolbar rung's `↓` skips a marker parked inside a hidden listbox.
+- **Menu actions and re-renders no longer strand keyboard focus**: every menu dispatch closes the menu and returns focus to the owning row *first*, and the dupes/stats/recent views plus the search-history area park/restore a focused row across their `innerHTML` swaps — "set as keeper", deleting a history row and similar actions leave the arrow keys live.
+- The separator menu's lone "remove separator" entry used to be keyboard-unreachable by design — it is now bound to the menu walker and joins the `Tab` ring.
 
-**Polish**
+#### Polish
 
 - One 16 px line-art SVG icon set: solid/hollow star (stats), flag + trash (dead marks/deletes), check (dupes apply); danger actions stay red.
 - Dialogs: content width-capped and centered with a soft slide-in; the new-tab-group dialog gained breathing room and Chrome-style selected-color states.
 - Dead-link toolbar reordered: scan time → filter segment **with counts** (All 2 · Dead 1 · Blocked 1) → rescan / mark-all / unmark-all / delete-all / select.
 - Row metadata aligned across all list views: time column left, path column right.
 - Root-folder menus disable the actions Chrome refuses (delete, rename, add before/after, separator) instead of erroring.
+- **Keyboard interaction hardening** (menus, toolbar rungs, Home/End):
+  - Context menus (all seven) wrap around on **every platform** — the old macOS no-wrap exception is gone — with `Home`/`End` jumping to the first/last enabled item.
+  - A shared confirm/cancel protocol for menus and dropdowns: `→`/`Enter`/`Space` confirm, `←`/`Esc` cancel, mirrored under RTL; confirming on a bare menu container or a greyed item is a no-op.
+  - Toolbar rungs cycle at their edges like the tab strip; the tab strip's `Home`/`End` are now **view-scoped** (the current view's first/last row — they no longer switch views), and a row-less view crosses out to its anchor instead of trapping focus.
+- Dead-link proxy hint banner: the × sits top-right (aligned with the risk banner's close button) and the hint drops the "N direct failures" prefix.
 
-**Changed**
+#### Changed
 
 - Version handling refactored into `src/version.js` (full `major.minor.patch` comparison, threshold "crossed into" checks); the release is **4.0.1 — a silent patch**, so existing 4.0 users don't get a "new version" card.
 - Keyboard model hardening: menu walking skips disabled *and* CSS-hidden items; a new focus-regression suite gates cross-view focus hand-offs.
+- **Risk-banner re-arm gate** is now major.minor-grained (it used to be major-only): a patch bump (4.0.0 → 4.0.1) stays silent, while 4.0 → 4.1 or 4 → 5 re-arms the banner once.
 - **Dead-link proxy consolidation**: the legacy relay URL template (`deadProxyTemplate`) is retired — values stored by older versions are cleaned out of storage automatically on upgrade. The options page's *Dead scan* group now manages your proxy server in place (add / test / save / clear; saving runs parse → permission → control → reachability probe and rejects unreachable servers), and the view's add-a-proxy hint strip can be dismissed with × and brought back from the *Dead scan* group's checkbox (`hideDeadProxyStrip`).
 
-**ver4.0 2026/07**
+### v4.0 · 2026-07
 
-New: six-view manager (Tree / Search / Recent / Stats / Dead links / Duplicates) with an icon tab strip, live count badges, per-view visibility toggles and `Alt+1…6` jumps. Search view with dual-zone layout and re-runnable search history. Recent view with coarse time groups and reveal-in-tree. Local visit statistics with a background collector, recently-visited section and one-click starring. Dead-link scanner with dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks — running **in the service worker**, so closing the popup mid-scan loses nothing — and its second channel now also supports **your own proxy server** (http/https/socks5): a one-click add button in the view's proxy strip validates the address and probes reachability (unreachable servers are rejected) before saving, change/remove live on the same strip and the options page shows/clears the saved server; routing uses a marker-matched temporary PAC, so only the scanner's own probe URLs go through the proxy (other tabs untouched, settings restored on settle/cancel/popup close, crash residue swept by the service worker); the toolbar adds a dead·blocked summary line and a configure-a-proxy nudge when direct-failing rows have no proxy. Duplicate cleaner with URL normalization, six keeper strategies, will-delete preview and undoable batch deletion. Both bulk tools show a one-time backup-first risk banner. Command palette upgrades: Go commands per view, `/theme <name>`, `/session`, `/options`, aliases, custom slash commands (URL/template/folder-group/view-preset, synced), search bridge row, auto-close on blur. Options: Views group, custom-commands group, settings backup/restore, responsive card layout. Ink & Paper "fable" themes; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
+#### New
 
-Polish: selection modes in Dead links (batch mark/unmark) and Duplicates (batch group cleaning) with `Esc` to exit; `Tab`/`Shift+Tab` region cycling including in-list toolbars, with per-region focus memory; duplicates member-row keys (`Enter` opens a copy, `←` returns to the group head) and group-head menus; remember-last-view restore (default on) and count-badge, palette, quick-add and tool-button switches, plus a one-click *Restore the classic header* button; options and advanced options merged into a single page (old URL redirects); global quick-add shortcut (`Alt+Shift+S`); ARIA roles on all context menus, `aria-modal` dialogs with a focus trap; lazy favicons; GitHub Actions CI.
+- **Six-view manager** — Tree / Search / Recent / Stats / Dead links / Duplicates behind an icon tab strip with live count badges, per-view visibility toggles and `Alt+1…6` jumps.
+- **Search view** — dual-zone layout (history top / results below) with re-runnable search history.
+- **Recent view** — coarse time groups and reveal-in-tree.
+- **Local visit statistics** — background collector, recently-visited section, one-click starring.
+- **Dead-link scanner** — dual-channel checks, progressive rendering, pause/resume/cancel and cross-view dead marks, running **in the service worker** so closing the popup mid-scan loses nothing. Its second channel now also supports **your own proxy server** (http/https/socks5): a one-click add button in the view's proxy strip validates the address and probes reachability (unreachable servers are rejected) before saving, change/remove live on the same strip, and the options page shows/clears the saved server. Routing uses a marker-matched temporary PAC so only the scanner's own probe URLs go through the proxy (other tabs untouched, settings restored on settle/cancel/popup close, crash residue swept by the service worker). The toolbar adds a dead·blocked summary line and a configure-a-proxy nudge when direct-failing rows have no proxy.
+- **Duplicate cleaner** — URL normalization, six keeper strategies, will-delete preview, undoable batch deletion.
+- **Risk banner** — both bulk tools show a one-time backup-first banner before first cleanup.
+- **Command palette upgrades** — Go commands per view, `/theme <name>`, `/session`, `/options`, aliases, custom slash commands (URL/template/folder-group/view-preset, synced), search bridge row, auto-close on blur.
+- **Options** — Views group, custom-commands group, settings backup/restore, responsive card layout.
+- **Ink & Paper "fable" themes**; quick-add star button; sync status presentation rework (quiet dots, localized tooltips, `(Local)`/`(Synced)` root labels, blocked-drag toast, working "highlight unsynced" dimming).
 
-Fixed: search field click-through and unreliable native clear button; adding into collapsed folders is immediately visible; copy title/URL via the async Clipboard API (`clipboardWrite` permission added); non-empty folder deletion is confirm-gated again (with undo).
+#### Polish
 
-Changed: repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history); all icons are inline SVG now; locale baseline grew to 306 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline; test suite grew to 1303 cases across 40 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures; the `proxy` permission is declared at install time (Chrome refuses it as an optional permission) and is exercised only while a configured proxy serves a running scan or the add-flow reachability probe — never when no proxy server is set or dead-link scanning is unused.
+- Selection modes in Dead links (batch mark/unmark) and Duplicates (batch group cleaning) with `Esc` to exit.
+- `Tab`/`Shift+Tab` region cycling including in-list toolbars, with per-region focus memory.
+- Duplicates member-row keys (`Enter` opens a copy, `←` returns to the group head) and group-head menus.
+- Remember-last-view restore (default on) and count-badge, palette, quick-add and tool-button switches, plus a one-click *Restore the classic header* button.
+- Options and advanced options merged into a single page (old URL redirects).
+- Global quick-add shortcut (`Alt+Shift+S`).
+- ARIA roles on all context menus, `aria-modal` dialogs with a focus trap.
+- Lazy favicons; GitHub Actions CI.
 
+#### Fixed
 
-**ver3.7 2026/05/10**
+- Search field click-through and unreliable native clear button.
+- Adding into collapsed folders is immediately visible.
+- Copy title/URL via the async Clipboard API (`clipboardWrite` permission added).
+- Non-empty folder deletion is confirm-gated again (with undo).
 
-New: [#36](https://github.com/windviki/vBookmarks/issues/36): Add auto-resize popup toggle option. Enable/disable automatic popup height adjustment in General settings.
+#### Changed
 
-Fixed: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
+- Repository reorganized (`src/`, `pages/`, `css/`, `assets/`, `scripts/`); obsolete `release/` and MV2 leftovers removed (kept in git history).
+- All icons are inline SVG now.
+- Locale baseline grew to 306 keys with all 43 locales re-aligned through the `scripts/i18n.py` LLM pipeline.
+- Test suite grew to 1303 cases across 40 suites; Docker harness extended with a keyboard/view verification suite and multi-theme, multi-language screenshot captures.
+- The `proxy` permission is declared at install time (Chrome refuses it as an optional permission) and is exercised only while a configured proxy serves a running scan or the add-flow reachability probe — never when no proxy server is set or dead-link scanning is unused.
 
-New: Full 42-language support synced from cc-dev branch, all aligned with English baseline (75 keys). Languages: ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW.
 
+### v3.7 · 2026/05/10
 
-**ver3.6 2024/01/08**
+- **New**: [#36](https://github.com/windviki/vBookmarks/issues/36): Add auto-resize popup toggle option. Enable/disable automatic popup height adjustment in General settings.
 
-Fixed: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
+- **Fixed**: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
 
+- **New**: Full 42-language support synced from cc-dev branch, all aligned with English baseline (75 keys). Languages: ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW.
 
-**ver3.5 2023/09/04**
 
-Fixed: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doesn't stay in search bar after clearing the search text.
+### v3.6 · 2024/01/08
 
-Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
+- **Fixed**: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
 
 
-**ver3.4 2023/02/14**
+### v3.5 · 2023/09/04
 
-Fixed: [#26](https://github.com/windviki/vBookmarks/issues/26): open directory in the background.
+- **Fixed**: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doesn't stay in search bar after clearing the search text.
 
-New: Key Right to open context menu (when focus on an opened dir or a bookmark) and key Left to close it (when context menu is showing).
+- Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
 
-Remove timeout of height reset. Speed up the popup.
 
+### v3.4 · 2023/02/14
 
-**ver3.3 2023/02/02**
+- **Fixed**: [#26](https://github.com/windviki/vBookmarks/issues/26): open directory in the background.
 
-Fixed: [#23](https://github.com/windviki/vBookmarks/issues/23): Incorrect link on the options page.
+- **New**: Key Right to open context menu (when focus on an opened dir or a bookmark) and key Left to close it (when context menu is showing).
 
-Fixed: [#26](https://github.com/windviki/vBookmarks/issues/26): Middle/Ctrl click no longer opens bookmarks in the background in Chrome 107.
+- Remove timeout of height reset. Speed up the popup.
 
-New: [#24](https://github.com/windviki/vBookmarks/issues/24): Add new option to disable incremental search (use ENTER to search).
 
-Fixed: The stupid double scroll bar (finally).
+### v3.3 · 2023/02/02
 
-Fixed: Focus lost when quit from search mode.
+- **Fixed**: [#23](https://github.com/windviki/vBookmarks/issues/23): Incorrect link on the options page.
 
-Fixed: Arrow down triggers an error in search mode.
+- **Fixed**: [#26](https://github.com/windviki/vBookmarks/issues/26): Middle/Ctrl click no longer opens bookmarks in the background in Chrome 107.
 
-Fix some undefined errors.
+- **New**: [#24](https://github.com/windviki/vBookmarks/issues/24): Add new option to disable incremental search (use ENTER to search).
 
-Update code to manifest V3. minimum_chrome_version = 88.
+- **Fixed**: The stupid double scroll bar (finally).
 
+- **Fixed**: Focus lost when quit from search mode.
 
-**ver3.2 2020/09/12**
+- **Fixed**: Arrow down triggers an error in search mode.
 
-Fixed: [#19](https://github.com/windviki/vBookmarks/issues/19): "Add to the end of folder" feature does not work bugs.
+- Fix some undefined errors.
 
-New: [#15](https://github.com/windviki/vBookmarks/issues/15): Search for folders in bookmark search bar.
+- Update code to manifest V3. minimum_chrome_version = 88.
 
-New: Resize the height of popup.
 
-Added: Italy language.
+### v3.2 · 2020/09/12
 
-Added: Russian language. Thanks for @Stanislav .
+- **Fixed**: [#19](https://github.com/windviki/vBookmarks/issues/19): "Add to the end of folder" feature does not work bugs.
 
-Fix some undefined errors.
+- **New**: [#15](https://github.com/windviki/vBookmarks/issues/15): Search for folders in bookmark search bar.
 
-Update code to ecmascript version 6. minimum_chrome_version = 61.
+- **New**: Resize the height of popup.
 
+- **Added**: Italy language.
 
+- **Added**: Russian language. Thanks for @Stanislav .
 
-**ver3.1 2020/07/03**
+- Fix some undefined errors.
 
-Fixed: [#12](https://github.com/windviki/vBookmarks/issues/12): Focus lost when clear the menu.
+- Update code to ecmascript version 6. minimum_chrome_version = 61.
 
-Fixed: [#18](https://github.com/windviki/vBookmarks/issues/18): Tree does not scroll when drag to top or bottom.
 
-Fix an undefined error when pressing key DOWN.
 
-Fix the support of bookmarklet. Thanks for @ZG-nico.
+### v3.1 · 2020/07/03
 
-Added: France language. Thanks for @Fab-fr.
+- **Fixed**: [#12](https://github.com/windviki/vBookmarks/issues/12): Focus lost when clear the menu.
 
-Added: Chinese Hong Kong language.
+- **Fixed**: [#18](https://github.com/windviki/vBookmarks/issues/18): Tree does not scroll when drag to top or bottom.
 
+- Fix an undefined error when pressing key DOWN.
 
-**ver3.0 2019/08/22**
+- Fix the support of bookmarklet. Thanks for @ZG-nico.
 
-Fixed: New icons.
+- **Added**: France language. Thanks for @Fab-fr.
 
+- **Added**: Chinese Hong Kong language.
 
-**ver2.9 2019/08/22**
 
-Fixed: Double scrollbar since Chrome version 77+.
+### v3.0 · 2019/08/22
 
+- **Fixed**: New icons.
 
-**ver2.8 2019/05/06**
 
-Fixed: Open URL twice when clicked by middle button of mouse. https://github.com/windviki/vBookmarks/issues/9
+### v2.9 · 2019/08/22
 
-Fixed: Sometimes search will fail. https://github.com/windviki/vBookmarks/issues/7
+- **Fixed**: Double scrollbar since Chrome version 77+.
 
-Fixed: Context menu position.
 
-Improved: Scrollbar CSS style.
+### v2.8 · 2019/05/06
 
-Added: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bookmarklets work (Chrome does not allow _document.location.href_ in BMlet). It will be replaced with URL of current active tab when you click BMlet from vBookmarks.
+- **Fixed**: Open URL twice when clicked by middle button of mouse. https://github.com/windviki/vBookmarks/issues/9
 
+- **Fixed**: Sometimes search will fail. https://github.com/windviki/vBookmarks/issues/7
 
-**ver2.6 2013/10/21**
+- **Fixed**: Context menu position.
 
-Fixed: Remove double scroll bars.
+- **Improved**: Scrollbar CSS style.
 
+- **Added**: Placeholder "\_\_VBM_CURRENT_TAB_URL\_\_" in bookmark URL to make some bookmarklets work (Chrome does not allow _document.location.href_ in BMlet). It will be replaced with URL of current active tab when you click BMlet from vBookmarks.
 
-**ver2.5 2013/08/30**
 
-Fixed: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.
+### v2.6 · 2013/10/21
 
+- **Fixed**: Remove double scroll bars.
 
-**ver2.4 2013/08/29**
 
-Fixed: "Unexpected end of input" in js.
+### v2.5 · 2013/08/30
 
+- **Fixed**: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.
 
-**ver2.3 2013/04/09**
 
-Fixed: Context menu will be dismissed when scrolling up/down (broken again in previous version).
+### v2.4 · 2013/08/29
 
-Fixed: Remember position of scroll bar (broken again in previous version).
+- **Fixed**: "Unexpected end of input" in js.
 
 
-**ver2.2 2013/04/02**
+### v2.3 · 2013/04/09
 
-Fixed: Scroll bar does not work above chrome 26+ (not well tested).
+- **Fixed**: Context menu will be dismissed when scrolling up/down (broken again in previous version).
 
+- **Fixed**: Remember position of scroll bar (broken again in previous version).
 
-**ver2.1 2012/12/12**
 
-Fixed: Now it can remember and restore position of scroll bar correctly.
+### v2.2 · 2013/04/02
 
-Improved: Position of context menu. And context menu will be dismissed when scrolling up/down.
+- **Fixed**: Scroll bar does not work above chrome 26+ (not well tested).
 
-Added: Cancel button for dialogs in vbookmarks.
 
+### v2.1 · 2012/12/12
 
-**ver2.0 2012/11/01**
+- **Fixed**: Now it can remember and restore position of scroll bar correctly.
 
-Fixed: Version checking in background.js.
+- **Improved**: Position of context menu. And context menu will be dismissed when scrolling up/down.
 
-Improved: Synchronizable separators.
+- **Added**: Cancel button for dialogs in vbookmarks.
 
-Added: Advanced options for separator.
+
+### v2.0 · 2012/11/01
+
+- **Fixed**: Version checking in background.js.
+
+- **Improved**: Synchronizable separators.
+
+- **Added**: Advanced options for separator.
 
 
 - "The real title of bookmark which is shown as a separator": By default it is "|". That means the separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this title value. You can modify it to "------------" so that you can split your bookmarks horizontally even if you check your bookmarks in Chrome bookmark menu.
@@ -417,84 +457,84 @@ Added: Advanced options for separator.
 - "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
 
 
-**ver1.9 2012/08/19**
+### v1.9 · 2012/08/19
 
-Fixed: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
+- **Fixed**: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
 
-Updated: Color of ICON.
+- **Updated**: Color of ICON.
 
-Updated: Style of separator.
-
-
-**ver1.8 2012/08/01**
-
-Added: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see https://github.com/windviki/vBookmarks/issues/3
-
-Fixed: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrollbar is scrolled down (since Chrome18).
-
-Added: Color of icon is changed to red.
-
-Added: Simple update checking and desktop notification.
-
-Removed: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
+- **Updated**: Style of separator.
 
 
-**ver1.7 2012/06/26**
+### v1.8 · 2012/08/01
 
-Fixed: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
+- **Added**: Separators for bookmarks/folders. But it is a local record and cannot be synchronized between different devices. see https://github.com/windviki/vBookmarks/issues/3
 
-Fixed: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
+- **Fixed**: Neatbookmarks bug: Wrong position of dragged bookmark when vertical scrollbar is scrolled down (since Chrome18).
 
+- **Added**: Color of icon is changed to red.
 
-**ver1.6 2012/06/24**
+- **Added**: Simple update checking and desktop notification.
 
-Fixed: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]
-
-Fixed: Restore width of the popup window. [Content Security Policy]
-
-Fixed: Dialogs cannot submit their forms. [Content Security Policy]
+- **Removed**: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
 
 
-**ver1.5 2012/06/21**
+### v1.7 · 2012/06/26
 
-Fixed: manifest problem in Chrome 20+.
+- **Fixed**: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
 
-Fixed: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
-
-
-**ver1.4 2012/06/20**
-
-Fixed: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
+- **Fixed**: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
 
 
-**ver1.3 2012/05/25**
+### v1.6 · 2012/06/24
 
-Fixed: Scrollbar glitch in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/1
+- **Fixed**: Cannot search bookmarks in Omnibox (*+space). [Content Security Policy]
 
+- **Fixed**: Restore width of the popup window. [Content Security Policy]
 
-**ver1.2 2011/11/30**
-
-Added: update selected bookmark with current URL.
-
-Added: copy title and URL of selected bookmark to clipboard.
-
-Fixed: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly.
-
-Fixed: make up some missing translations for cs(Czech).
+- **Fixed**: Dialogs cannot submit their forms. [Content Security Policy]
 
 
-**ver1.1 2011/11/16**
+### v1.5 · 2012/06/21
 
-Added: option for only displaying bookmarks in Bookmark Bar.
+- **Fixed**: manifest problem in Chrome 20+.
 
-Added: context menu for adding folder before/after bookmark/folder.
-
-Fixed: some translations in multi-language support.
+- **Fixed**: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
 
-**ver1.0 2011/11/15**
+### v1.4 · 2012/06/20
 
-First version.
+- **Fixed**: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
+
+
+### v1.3 · 2012/05/25
+
+- **Fixed**: Scrollbar glitch in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/1
+
+
+### v1.2 · 2011/11/30
+
+- **Added**: update selected bookmark with current URL.
+
+- **Added**: copy title and URL of selected bookmark to clipboard.
+
+- **Fixed**: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly.
+
+- **Fixed**: make up some missing translations for cs(Czech).
+
+
+### v1.1 · 2011/11/16
+
+- **Added**: option for only displaying bookmarks in Bookmark Bar.
+
+- **Added**: context menu for adding folder before/after bookmark/folder.
+
+- **Fixed**: some translations in multi-language support.
+
+
+### v1.0 · 2011/11/15
+
+- First version.
 
 
 # Attentions
