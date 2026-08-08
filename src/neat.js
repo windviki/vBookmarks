@@ -929,12 +929,47 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     function resetSeparator() {}
 
     // Drag the edge
+    // Pointer capture (4.0.2): a Chrome popup grows LEFTWARD from its toolbar
+    // anchor, so a widen drag pushes the pointer out of the popup window.
+    // Without capture the window stops receiving mousemove AND the mouseup is
+    // lost — the resizerXDown flag sticks and the next mousemove resizes from
+    // a stale baseline (the reported "can't narrow after widening" regression).
+    // Capturing the pointer on pointerdown keeps move/up flowing until the
+    // button is truly released, wherever the pointer is.
+    const capturePointer = e => {
+        if (e.target.setPointerCapture)
+            try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    };
+    const releasePointer = e => {
+        if (e.target.releasePointerCapture && e.pointerId != null)
+            try { e.target.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+    $resizerx.addEventListener('pointerdown', capturePointer);
+    $resizery.addEventListener('pointerdown', capturePointer);
+    $resizerx.addEventListener('pointerup', releasePointer);
+    $resizery.addEventListener('pointerup', releasePointer);
+
+    // The popup's moving edge must never leave the screen: it grows away from
+    // its anchor (toward whichever side has room), and a wider-than-screen
+    // popup pushes its resize handle off-screen, where it can no longer be
+    // grabbed to narrow back (the other half of the same regression). At
+    // mousedown we freeze how far the edge may still travel.
+    let maxResizeWidth = 640;
+    const onScreenMaxWidth = () => {
+        const leftRoom = window.screenX > 0 ? window.screenX : 0;
+        const curW = window.innerWidth || body.offsetWidth;
+        const rightRoom = (window.screen && screen.availWidth)
+            ? Math.max(0, screen.availWidth - ((window.screenX || 0) + curW))
+            : 0;
+        return Math.min(640, bodyWidth + Math.max(leftRoom, rightRoom));
+    };
     $resizerx.addEventListener('mousedown', e => {
         e.preventDefault();
         e.stopPropagation();
         resizerXDown = true;
         bodyWidth = body.offsetWidth;
         screenX = e.screenX;
+        maxResizeWidth = onScreenMaxWidth();
     });
     $resizery.addEventListener('mousedown', e => {
         e.preventDefault();
@@ -958,8 +993,9 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             // record current width
             const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
             let width = bodyWidth + changedWidth;
-            // 320 < width < 640
-            width = Math.min(640, Math.max(320, width));
+            // 320 < width < 640, and never wider than the screen leaves room
+            // for (a wider popup pushes its resize handle off-screen).
+            width = Math.min(maxResizeWidth, Math.max(320, width));
             // if (!rtl && e.screenX < 640 || rtl && e.screenX > 640) {
             //     $resizerx.style.cursor = 'not-allowed';
             // } else {

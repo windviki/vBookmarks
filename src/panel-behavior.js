@@ -67,7 +67,10 @@ export const initPanelBehavior = () => {
     const startPoll = () => {
         if (!chrome.alarms || !chrome.alarms.create)
             return;
-        ignore(chrome.alarms.create(livenessAlarm, { periodInMinutes: 0.5 }));
+        // 20s (< the 30s SW idle timeout): keeps the SW alive while a panel is
+        // open so the vbm-panel port disconnect is always delivered, and bounds
+        // the no-port safety net at ≤20s instead of ≤30s.
+        ignore(chrome.alarms.create(livenessAlarm, { periodInMinutes: 1 / 3 }));
     };
     const stopPoll = () => {
         if (!chrome.alarms || !chrome.alarms.clear)
@@ -115,6 +118,36 @@ export const initPanelBehavior = () => {
             // re-derive toggle mode from it.
             ignore(chrome.storage.session.remove(['sidePanelIsOpen', 'sidePanelHeartbeat']));
             recoverIfDead();
+        });
+    }
+
+    // 4.0.2 (option-off one-time toggle): the authoritative, event-driven death
+    // signal for a panel closed by the action toggle. The panel page opens a
+    // runtime port (popup.js IS_PANEL); when Chrome destroys the page — which
+    // an action-toggle close does without a guaranteed pagehide, and where the
+    // page's own async setPanelBehavior may be dropped mid-teardown — the port
+    // disconnects and this listener runs instantly. With the option off that is
+    // the exact moment to leave toggle mode: the next action click opens the
+    // popup again ("关闭侧边栏后，再次点击应回到 popup" — the reported bug was
+    // that it kept toggling the panel). `sidePanel.onClosed` does NOT exist in
+    // the documented API, so this is the reliable replacement; the alarm poll
+    // below remains as a safety net (and, at <30s, keeps the SW alive so the
+    // disconnect is actually delivered).
+    if (chrome.runtime && chrome.runtime.onConnect) {
+        chrome.runtime.onConnect.addListener(port => {
+            if (!port || port.name !== 'vbm-panel')
+                return;
+            port.onDisconnect.addListener(() => {
+                chrome.storage.local.get('openInSidePanel', data => {
+                    if (data.openInSidePanel)
+                        return; // the option governs — nothing to undo
+                    // The panel page is gone. Clear the stale marker so the
+                    // state can never re-derive toggle mode from it.
+                    ignore(chrome.storage.session.remove(['sidePanelIsOpen', 'sidePanelHeartbeat']));
+                    applyPanelBehavior(false);
+                    stopPoll();
+                });
+            });
         });
     }
 

@@ -33,6 +33,18 @@
         const beat = () => chrome.storage.session.set({ sidePanelHeartbeat: Date.now() });
         chrome.storage.session.set({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
         const heartbeatTimer = setInterval(beat, 20000); // PANEL_HEARTBEAT_MS
+        // 4.0.2 (option-off one-time toggle): hold a runtime port open for the
+        // panel's lifetime. When Chrome destroys the panel page (an action-toggle
+        // close — pagehide is not guaranteed, and the page's async reset can be
+        // dropped mid-teardown), the port disconnects and the service worker
+        // (panel-behavior.js) immediately restores popup mode so the next icon
+        // click opens the popup again.
+        if (chrome.runtime && chrome.runtime.connect) {
+            const panelPort = chrome.runtime.connect({ name: 'vbm-panel' });
+            window.addEventListener('pagehide', () => {
+                try { panelPort.disconnect(); } catch (_) {}
+            }, { once: true });
+        }
         window.addEventListener('pagehide', () => {
             clearInterval(heartbeatTimer);
             chrome.storage.session.set({ sidePanelIsOpen: false });

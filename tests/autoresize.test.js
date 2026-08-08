@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import fs from 'node:fs';
 
 /**
  * Popup auto-resize logic — pure-function verification.
@@ -171,5 +172,55 @@ describe('auto-resize: manual resize lock (issue #51)', () => {
         const r = heightDecision({ contentH: 700, currentH: 300, minH: 200, maxH: 600, allowShrink: true, userResized: false });
         expect(r.action).toBe('grow');
         expect(r.target).toBe(600);
+    });
+});
+
+describe('popup WIDTH resize (4.0.2 regression gate)', () => {
+    // The width clamp mirrors the height kernel but bounds the WINDOW on screen.
+    // A Chrome popup grows away from its toolbar anchor, so the resize handle
+    // (on the moving edge) can be pushed off-screen by a too-wide popup — the
+    // "can't narrow back after widening" regression. The max width must leave
+    // the moving edge on-screen: bodyWidth + the room on the growth side.
+    const widthMax = ({ bodyWidth, leftRoom, rightRoom, hardMax = 640 }) =>
+        Math.min(hardMax, bodyWidth + Math.max(leftRoom, rightRoom));
+
+    it('keeps the popup on-screen: the moving edge may travel at most its screen room', () => {
+        // popup 320 wide, 251px of screen to its left (icon on the right)
+        // → max width 571, at which the left edge sits exactly at screen 0.
+        expect(widthMax({ bodyWidth: 320, leftRoom: 251, rightRoom: 221 })).toBe(571);
+        // icon centered-ish, room both sides → grows toward the larger room
+        expect(widthMax({ bodyWidth: 320, leftRoom: 200, rightRoom: 300 })).toBe(620);
+    });
+
+    it('never widens beyond the hard 640 cap, and a tiny room caps hard', () => {
+        expect(widthMax({ bodyWidth: 320, leftRoom: 500, rightRoom: 500 })).toBe(640);
+        expect(widthMax({ bodyWidth: 500, leftRoom: 40, rightRoom: 20 })).toBe(540);
+        expect(widthMax({ bodyWidth: 320, leftRoom: 0, rightRoom: 0 })).toBe(320); // no room to grow
+    });
+
+    it('narrowing back is always reachable: min width never exceeds 320', () => {
+        const minW = w => Math.max(320, Math.min(w, widthMax({ bodyWidth: w, leftRoom: 251, rightRoom: 221 })));
+        // after widening to the max, the user can drag all the way back to 320
+        expect(minW(320)).toBe(320);
+        expect(minW(571)).toBe(571); // widening to max is allowed
+    });
+});
+
+// Source-contract gate: the resizer must use pointer capture + the on-screen
+// clamp — a regression that drops either re-breaks the reported width bug.
+const neatJs = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+
+describe('resizer source contract (4.0.2 width regression gate)', () => {
+    it('captures the pointer on resizer pointerdown (mouseup is never lost)', () => {
+        expect(neatJs).toMatch(/setPointerCapture\(e\.pointerId\)/);
+        expect(neatJs).toMatch(/releasePointerCapture/);
+        // both resizers must be bound
+        const bindings = (neatJs.match(/addEventListener\('pointerdown', capturePointer\)/g) || []).length;
+        expect(bindings).toBe(2);
+    });
+
+    it('clamps width to the on-screen bound, not a bare 640', () => {
+        expect(neatJs).toContain('width = Math.min(maxResizeWidth, Math.max(320, width))');
+        expect(neatJs).toContain('onScreenMaxWidth');
     });
 });

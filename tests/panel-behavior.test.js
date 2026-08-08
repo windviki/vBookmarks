@@ -47,14 +47,32 @@ const makeChromeDouble = (opts = {}) => {
     // panel-liveness probe. opts.panelContexts: undefined = API absent (the
     // heartbeat fallback runs), an array = live SIDE_PANEL contexts, the
     // string 'reject' = the promise rejects.
-    if (opts.panelContexts !== undefined) {
-        dbl.runtime = {
-            getContexts() {
-                return opts.panelContexts === 'reject'
-                    ? Promise.reject(new Error('no contexts'))
-                    : Promise.resolve(opts.panelContexts);
-            }
+    if (opts.panelContexts !== undefined || opts.withConnect) {
+        dbl.runtime = dbl.runtime || {};
+        if (opts.panelContexts !== undefined) {
+            dbl.runtime.getContexts = () => opts.panelContexts === 'reject'
+                ? Promise.reject(new Error('no contexts'))
+                : Promise.resolve(opts.panelContexts);
+        }
+    }
+    // 4.0.2: the panel page holds a runtime port; its disconnect is the
+    // event-driven "panel died" signal that restores popup mode (the reliable
+    // replacement for the non-existent sidePanel.onClosed).
+    if (opts.withConnect) {
+        const connectListeners = [];
+        dbl.connectListeners = connectListeners;
+        dbl.runtime.onConnect = { addListener(fn) { connectListeners.push(fn); } };
+        dbl.firePanelDisconnect = () => {
+            const listeners = dbl._panelDisconnect || [];
+            listeners.forEach(fn => fn());
         };
+        dbl.runtime.__connect = () => {
+            const port = { name: 'vbm-panel', _disc: [] };
+            port.onDisconnect = { addListener(fn) { port._disc.push(fn); } };
+            (dbl._panelDisconnect = dbl._panelDisconnect || []).push(() => port._disc.forEach(fn => fn()));
+            connectListeners.forEach(fn => fn(port));
+        };
+        dbl.connectPanel = () => dbl.runtime.__connect();
     }
     // Popup-restore signals: Chrome 142+ sidePanel.onClosed and the gated
     // chrome.alarms liveness poll. opts.withClosedEvent opts into onClosed;
@@ -379,5 +397,73 @@ describe('initPanelBehavior — popup restore after a toggle-close (final-polish
         await flush();
         expect(d.calls.setPanelBehavior).toEqual([false]);
         expect(d.alarms.creates).toEqual([]); // nothing ambiguous to watch
+    });
+});
+
+describe('initPanelBehavior — vbm-panel port disconnect (4.0.2 one-time toggle)', () => {
+    // The panel page holds a runtime port; Chrome destroying the panel (an
+    // action-toggle close — no guaranteed pagehide, and the page's own async
+    // reset can be dropped mid-teardown) disconnects it. With the option OFF,
+    // that disconnect must immediately restore popup mode so the next icon
+    // click opens the popup instead of re-toggling the panel (the reported bug:
+    // "选项未开时,点图标只是开关侧边栏,再也回不到 popup").
+    beforeEach(() => { delete globalThis.chrome; });
+
+    it('a panel-port disconnect with the option off restores popup mode + clears the marker', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: false },
+            sessionData: livePanel(),
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withAlarms: true,
+            withConnect: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
+        // panel live → toggle mode
+        expect(d.calls.setPanelBehavior).toEqual([true]);
+        d.connectPanel();
+        // the panel dies → port disconnects
+        d.firePanelDisconnect();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true, false]); // popup restored
+        expect(d.sessionData.sidePanelIsOpen).toBeUndefined(); // stale marker cleared
+        expect(d.calls.sessionRemoves).toContain('sidePanelIsOpen');
+        expect(d.alarms.clears).toContain('vbm-panel-liveness'); // nothing left to watch
+    });
+
+    it('a panel-port disconnect leaves toggle mode alone when the option is ON', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: true },
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withConnect: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true]); // the option governs
+        d.connectPanel();
+        d.firePanelDisconnect();
+        await flush();
+        // the option stays ON → no flip, no marker clearing
+        expect(d.calls.setPanelBehavior).toEqual([true]);
+        expect(d.calls.sessionRemoves).toEqual([]);
+    });
+
+    it('the port listener ignores non-panel ports', async () => {
+        const d = makeChromeDouble({
+            localData: { openInSidePanel: false },
+            sessionData: livePanel(),
+            panelContexts: [{ contextType: 'SIDE_PANEL', documentId: 'x' }],
+            withConnect: true
+        });
+        globalThis.chrome = d;
+        initPanelBehavior();
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true]);
+        // a port with a different name connects and disconnects — ignored
+        d.connectListeners.forEach(fn => fn({ name: 'other', onDisconnect: { addListener() {} } }));
+        await flush();
+        expect(d.calls.setPanelBehavior).toEqual([true]); // unchanged
     });
 });
