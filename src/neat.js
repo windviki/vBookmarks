@@ -1074,7 +1074,12 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
         e.preventDefault();
         zoom(e.deltaY || e.wheelDelta);
     }
-    document.addEventListener('wheel', wheelHandler);
+    // `wheel` is passive by default in Chrome — this handler calls
+    // preventDefault() (Ctrl/⌘+wheel zoom), so it must opt out explicitly.
+    // Without { passive: false } Chrome logs "Unable to preventDefault inside
+    // passive event listener" and silently ignores the cancellation, leaving
+    // the native scroll gesture running alongside the zoom.
+    document.addEventListener('wheel', wheelHandler, { passive: false });
     document.addEventListener('mousewheel', wheelHandler);
     document.addEventListener('keydown', e => {
         if (!e.metaKey && !e.ctrlKey)
