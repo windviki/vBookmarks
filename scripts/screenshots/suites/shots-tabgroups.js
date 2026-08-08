@@ -173,6 +173,12 @@ const SEED = `
         const row = document.querySelector('.tab-group-pick-row');
         if (!row || !row.textContent.includes('工作区 (组)'))
             throw new Error('picker does not list the group: ' + (row && row.textContent));
+        // T1 regression: the color dot must actually paint — the old
+        // tg-color-* class matched no rule and rendered transparent.
+        const dot = row.querySelector('.tab-group-dot');
+        const bg = dot && getComputedStyle(dot).backgroundColor;
+        if (!bg || bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)')
+            throw new Error('picker color dot is transparent: ' + bg);
     });
     await page2.screenshot({ path: '/tmp/shots/32-tabgroup-pick.png' });
 

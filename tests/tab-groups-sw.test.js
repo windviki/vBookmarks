@@ -23,6 +23,17 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
             create(props, cb) {
                 const tab = { id: String(nextId++), url: props.url, windowId: props.windowId || 1, active: !!props.active };
                 calls.created.push(props);
+                // Failure hook: tests simulate a chrome-level create failure
+                // (the callback fires with no tab and lastError set, exactly
+                // as in a real browser).
+                const err = c._failCreate ? c._failCreate(props) : null;
+                if (err) {
+                    c.runtime.lastError = { message: err };
+                    if (cb)
+                        cb(undefined);
+                    c.runtime.lastError = null;
+                    return undefined;
+                }
                 if (cb)
                     cb(tab);
                 return tab;
@@ -35,6 +46,16 @@ const makeChrome = ({ noTabGroups = false } = {}) => {
     if (!noTabGroups) {
         c.tabs.group = (opts, cb) => {
             calls.grouped.push(opts);
+            if (c._groupError) {
+                c.runtime.lastError = { message: c._groupError };
+                if (cb)
+                    cb();
+                c.runtime.lastError = null;
+                return;
+            }
+            // a fresh async call: its callback must not see a stale
+            // lastError left over from a nested (synchronous) caller
+            c.runtime.lastError = null;
             if (cb)
                 cb('group-1');
         };
@@ -101,6 +122,37 @@ describe('tab-groups SW opener', () => {
         expect(calls.updated).toHaveLength(0);
     });
 
+    it('a single failed create skips that tab but still groups the rest', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        // e.g. a javascript: bookmarklet URL chrome refuses to open
+        chrome._failCreate = props => (props.url.startsWith('javascript:') ? 'Cannot open' : null);
+        createTabGroupOpener().openNewGroup(['http://a/', 'javascript:x'], 'Dev', 'blue');
+        expect(calls.created).toHaveLength(2);
+        // no TypeError, no stuck chain: the one live tab still forms a group
+        expect(calls.grouped).toEqual([{ tabIds: ['100'] }]);
+        expect(calls.updated).toEqual([['group-1', { title: 'Dev', color: 'blue' }]]);
+    });
+
+    it('when every create fails there is no group call (and no exception)', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        chrome._failCreate = () => 'Cannot open';
+        createTabGroupOpener().openNewGroup(['http://a/', 'http://b/'], 'Dev', 'blue');
+        expect(calls.created).toHaveLength(2);
+        expect(calls.grouped).toHaveLength(0);
+        expect(calls.updated).toHaveLength(0);
+    });
+
+    it('a lastError from tabs.group leaves the opened tabs plain (no update)', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        chrome._groupError = 'Grouping failed.';
+        createTabGroupOpener().openNewGroup(['http://a/'], 'Dev', 'blue');
+        expect(calls.grouped).toEqual([{ tabIds: ['100'] }]);
+        expect(calls.updated).toHaveLength(0);
+    });
+
     it('openIntoGroup resolves the group window and creates the tabs there, then joins them', () => {
         const { chrome, calls } = makeChrome();
         globalThis.chrome = chrome;
@@ -132,6 +184,35 @@ describe('tab-groups SW opener', () => {
         createTabGroupOpener().openIntoGroup(['http://a/'], 'g1');
         expect(calls.created).toHaveLength(1);
         expect(calls.got).toHaveLength(0);
+        expect(calls.grouped).toHaveLength(0);
+    });
+
+    it('openIntoGroup skips a failed create (non-window reason) but joins the rest', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        chrome._failCreate = props => (props.url.startsWith('javascript:') ? 'Cannot open' : null);
+        createTabGroupOpener().openIntoGroup(['javascript:x', 'http://b/'], 'g1');
+        expect(calls.created).toHaveLength(2);
+        // no windowId retry for an ordinary failure; the live tab joins the group
+        expect(calls.created.every(p => p.windowId === 7)).toBe(true);
+        expect(calls.grouped).toEqual([{ tabIds: ['101'], groupId: 'g1' }]);
+    });
+
+    it('openIntoGroup retries once without windowId when the window closed mid-open', () => {
+        const { chrome, calls } = makeChrome();
+        globalThis.chrome = chrome;
+        // The group's window (id 7) is gone by the time the creates run.
+        chrome._failCreate = props => (props.windowId === 7 ? 'No window with id: 7.' : null);
+        createTabGroupOpener().openIntoGroup(['http://a/', 'http://b/'], 'g1');
+        // 2 failed windowed attempts + 2 plain-open retries (the fallback
+        // fires once, for all urls)
+        expect(calls.created).toHaveLength(4);
+        const windowed = calls.created.filter(p => p.windowId === 7);
+        const plain = calls.created.filter(p => !('windowId' in p));
+        expect(windowed).toHaveLength(2);
+        expect(plain).toHaveLength(2);
+        expect(plain[0].active).toBe(true);
+        // nothing opened in the (dead) window, so no group call
         expect(calls.grouped).toHaveLength(0);
     });
 

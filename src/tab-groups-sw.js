@@ -18,7 +18,9 @@
  * Degradation: on Chrome too old for `chrome.tabs.group`/`chrome.tabGroups`
  * both messages fall back to a plain batch-open (no error, no group); an
  * `open-into` whose group is gone (window closed between query and open)
- * degrades the same way via the lastError guard.
+ * degrades the same way via the lastError guard, and a window that closes
+ * after the get makes the creates fail with a window lastError — retried
+ * once without windowId, again a plain open.
  *
  * The module only touches the chrome global inside functions, so tests
  * inject a double on globalThis before createTabGroupOpener() (same recipe
@@ -54,9 +56,15 @@ export function createTabGroupOpener() {
         const tabIds = [];
         let pending = urls.length;
         const onCreated = tab => {
-            tabIds.push(tab.id);
+            // A failed create (unopenable URL, etc.) must not wedge the
+            // chain: skip the tab but still count it down, and group
+            // whatever did open.
+            if (!chrome.runtime.lastError && tab)
+                tabIds.push(tab.id);
             if (--pending > 0)
                 return;
+            if (!tabIds.length)
+                return; // every create failed — nothing to group
             chrome.tabs.group({ tabIds }, groupId => {
                 if (chrome.runtime.lastError)
                     return; // grouping failed — the tabs are already open
@@ -91,13 +99,29 @@ export function createTabGroupOpener() {
             const windowId = group.windowId;
             const tabIds = [];
             let pending = urls.length;
+            let fellBack = false;
             const onCreated = tab => {
-                tabIds.push(tab.id);
+                if (!chrome.runtime.lastError && tab) {
+                    tabIds.push(tab.id);
+                } else {
+                    // The window closed between the get and this create —
+                    // retry once without windowId as a plain open (the
+                    // header's degradation promise). Any other failure just
+                    // skips the tab, same as openNewGroup.
+                    const err = chrome.runtime.lastError;
+                    if (!fellBack && err && /window/i.test(err.message || '')) {
+                        fellBack = true;
+                        plainOpen(urls);
+                    }
+                }
                 if (--pending > 0)
                     return;
+                if (!tabIds.length)
+                    return; // nothing opened in the group's window
                 chrome.tabs.group({ tabIds, groupId }, () => {
                     // Tabs land in the group; a lastError here (group closed
                     // between the get and this call) leaves them plain.
+                    void chrome.runtime.lastError;
                 });
             };
             chrome.tabs.create({ url: urls[0], active: true, windowId }, onCreated);

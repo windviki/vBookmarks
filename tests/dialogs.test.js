@@ -28,6 +28,13 @@ const makeEl = () => ({
     tagName: 'DIV',
     className: '',
     dataset: {},
+    attributes: {},
+    setAttribute(name, value) {
+        this.attributes[name] = String(value);
+    },
+    getAttribute(name) {
+        return name in this.attributes ? this.attributes[name] : null;
+    },
     children: [],
     parentNode: null,
     // model input[type=url] validity: tracks the current value like a browser
@@ -84,7 +91,7 @@ const makeClassList = () => {
     };
 };
 
-let widont, initDialogs, els, bodyClasses, sorts, colorRadios;
+let widont, initDialogs, els, bodyClasses, sorts, colorRadios, viewSections;
 
 // The GroupDialog renders its 9 color swatches as hidden radio inputs; the
 // dialog code reads them via document.querySelectorAll/querySelector.
@@ -101,16 +108,23 @@ beforeAll(async () => {
         return r;
     });
     bodyClasses = makeClassList();
+    viewSections = [];
     globalThis.document = {
         getElementById: id => els[id] || null,
         body: { classList: bodyClasses },
+        activeElement: null,
         createElement: tag => {
             const el = makeEl();
             el.tagName = tag.toUpperCase();
             return el;
         },
-        querySelectorAll: sel =>
-            sel === 'input[name="tab-group-color"]' ? colorRadios : [],
+        querySelectorAll: sel => {
+            if (sel === 'input[name="tab-group-color"]')
+                return colorRadios;
+            if (sel === '#views > section') // K15's disconnected-invoker fallback
+                return viewSections;
+            return [];
+        },
         querySelector: sel =>
             sel === 'input[name="tab-group-color"]:checked'
                 ? (colorRadios.find(r => r.checked) || null)
@@ -125,8 +139,16 @@ beforeAll(async () => {
 const freshDialogs = (store) => {
     bodyClasses._set.clear();
     sorts = [];
+    viewSections = [];
+    globalThis.document.activeElement = null;
     for (const r of colorRadios)
         r.checked = false;
+    // els are shared across tests: drop every previously registered listener
+    // so a trigger fires only THIS instance's handlers (the real popup runs
+    // exactly one initDialogs) — accumulated handlers share the body classes
+    // and race the K15 focus restore to a stale invoker.
+    for (const id of IDS)
+        els[id].listeners = {};
     return initDialogs({
         onSort: (folderId, opts) => sorts.push([folderId, opts]),
         store
@@ -399,6 +421,46 @@ describe('GroupDialog (P3.4: new tab group title + color)', () => {
         expect(confirmed).toBe(false);
         expect(d.anyOpen()).toBe(false);
     });
+
+    it('open without onConfirm resets the handler (no sticky callback)', () => {
+        const d = freshDialogs();
+        let first = 0;
+        d.GroupDialog.open({ title: 'A', color: 'blue', onConfirm: () => first++ });
+        d.GroupDialog.close(false); // cancel: the armed handler stays unused
+        d.GroupDialog.open({ title: 'B' }); // no callback this time
+        d.GroupDialog.close();
+        expect(first).toBe(0); // the previous handler must not leak into this open
+    });
+
+    it('Enter in the title input saves (same path as the Save button)', () => {
+        const d = freshDialogs();
+        let confirmed = null;
+        d.GroupDialog.open({ title: 'A', color: 'cyan', onConfirm: (t, c) => confirmed = [t, c] });
+        els['tab-group-name'].value = 'B';
+        const ev = { key: 'Enter', defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+        els['tab-group-name'].trigger('keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(confirmed).toEqual(['B', 'cyan']);
+        expect(bodyClasses.contains('needTabGroup')).toBe(false);
+    });
+
+    it('other keys in the title input do not save (Escape is left to the Esc layer)', () => {
+        const d = freshDialogs();
+        let confirmed = null;
+        d.GroupDialog.open({ title: 'A', color: 'cyan', onConfirm: (t, c) => confirmed = [t, c] });
+        els['tab-group-name'].trigger('keydown', { key: 'a' });
+        els['tab-group-name'].trigger('keydown', { key: 'Escape' });
+        expect(confirmed).toBeNull();
+        expect(bodyClasses.contains('needTabGroup')).toBe(true);
+    });
+
+    it('every color radio gets a localized accessible name (aria-label from its color key)', () => {
+        freshDialogs();
+        // the i18n stub echoes the key back, so each radio must carry
+        // tabGroupColor<Color> for its palette entry
+        expect(colorRadios.map(r => r.getAttribute('aria-label')))
+            .toEqual(PALETTE.map(c => `tabGroupColor${c[0].toUpperCase()}${c.slice(1)}`));
+    });
 });
 
 describe('GroupPickDialog (P3.4: pick an existing tab group)', () => {
@@ -457,5 +519,145 @@ describe('GroupPickDialog (P3.4: pick an existing tab group)', () => {
         expect(d.anyOpen()).toBe(true);
         d.closeDialogs();
         expect(d.anyOpen()).toBe(false);
+    });
+
+    it('color dots use the tg-<color> class (the --tg-color token lives there, tg-color-* matches no rule)', () => {
+        const d = freshDialogs();
+        d.GroupPickDialog.open({ groups: [{ id: 'g1', title: 'A', color: 'purple' }], onPick: () => {} });
+        expect(els['tab-group-pick-list'].children[0].children[0].innerHTML)
+            .toContain('tab-group-dot tg-purple');
+    });
+
+    it('rows carry the full group title as a tooltip (long titles truncate in the row)', () => {
+        const d = freshDialogs();
+        d.GroupPickDialog.open({
+            groups: [{ id: 'g1', title: 'A very long group title', color: 'grey' }],
+            onPick: () => {}
+        });
+        expect(els['tab-group-pick-list'].children[0].children[0].title).toBe('A very long group title');
+    });
+
+    it('open without onPick resets the handler (no sticky callback)', () => {
+        const d = freshDialogs();
+        let first = 0;
+        d.GroupPickDialog.open({ groups: [{ id: 'g1', title: 'A', color: 'red' }], onPick: () => first++ });
+        d.GroupPickDialog.close();
+        d.GroupPickDialog.open({ groups: [{ id: 'g2', title: 'B', color: 'blue' }] }); // no callback
+        els['tab-group-pick-list'].children[0].children[0].trigger('click');
+        expect(first).toBe(0); // the previous handler must not leak into this open
+    });
+});
+
+describe('K15: closing a dialog hands focus back to its invoker', () => {
+    // The element the dialog is opened from — a tree row in the real popup.
+    const invoker = () => {
+        const el = makeEl();
+        globalThis.document.activeElement = el;
+        return el;
+    };
+    // Every dialog's natural cancel/close trigger — the unified close path
+    // must restore focus no matter which dialog was up.
+    const cases = [
+        ['alert (cover-click close-all)',
+            d => d.AlertDialog.open('boom'),
+            () => els['cover'].trigger('click')],
+        ['confirm (cancel button)',
+            d => d.ConfirmDialog.open({ dialog: 'x', button1: 'b1', button2: 'b2' }),
+            () => els['confirm-dialog-button-2'].trigger('click')],
+        ['edit (cancel button)',
+            d => d.EditDialog.open({ dialog: 'e', name: 'n', url: 'http://a.test/' }),
+            () => els['edit-dialog-cancel-button'].trigger('click')],
+        ['new-folder (cancel button)',
+            d => d.NewFolderDialog.open('NF', () => {}),
+            () => els['new-folder-dialog-cancel-button'].trigger('click')],
+        ['sort (cancel button)',
+            d => d.SortDialog.open('42'),
+            () => els['sort-dialog-cancel-button'].trigger('click')],
+        ['tab-group (cancel button)',
+            d => d.GroupDialog.open({}),
+            () => els['tab-group-dialog-cancel-button'].trigger('click')],
+        ['group-pick (cancel button)',
+            d => d.GroupPickDialog.open({ groups: [] }),
+            () => els['tab-group-pick-cancel-button'].trigger('click')]
+    ];
+    for (const [label, open, cancel] of cases) {
+        it(label, () => {
+            const d = freshDialogs();
+            const from = invoker();
+            open(d);
+            expect(d.anyOpen()).toBe(true);
+            expect(from.focused).toBe(false); // the dialog's control owns focus now
+            cancel();
+            expect(d.anyOpen()).toBe(false);
+            expect(from.focused).toBe(true); // handed back — arrows live again
+        });
+    }
+
+    it('closeDialogs (the Esc layer\'s path) restores focus too', () => {
+        const d = freshDialogs();
+        const from = invoker();
+        d.EditDialog.open({ dialog: 'e', name: 'n', url: 'http://a.test/' });
+        d.closeDialogs();
+        expect(d.anyOpen()).toBe(false);
+        expect(from.focused).toBe(true);
+    });
+
+    it('a disconnected invoker falls back to the visible view\'s anchor', () => {
+        const d = freshDialogs();
+        const from = invoker();
+        from.isConnected = false; // a re-render swapped the row out mid-dialog
+        const anchorRow = makeEl();
+        const list = {
+            focused: false,
+            querySelector: sel => (sel === '.focus' ? anchorRow : null),
+            focus() { this.focused = true; }
+        };
+        viewSections = [
+            { hidden: true, querySelector: () => null }, // the inactive views are skipped
+            { hidden: false, querySelector: sel => (sel === 'div[tabindex]' ? list : null) }
+        ];
+        d.ConfirmDialog.open({ dialog: 'x', button1: 'b1', button2: 'b2' });
+        els['confirm-dialog-button-1'].trigger('click');
+        expect(from.focused).toBe(false);
+        expect(anchorRow.focused).toBe(true); // the visible view's .focus row
+    });
+
+    it('a follow-up dialog opened from a close handler keeps the modal focus (no steal)', () => {
+        const d = freshDialogs();
+        const from = invoker();
+        d.EditDialog.open({
+            dialog: 'e', name: 'n', url: 'http://a.test/',
+            fn: () => d.AlertDialog.open('saved') // edit → save chains an alert
+        });
+        els['edit-dialog-form'].trigger('submit');
+        expect(bodyClasses.contains('needEdit')).toBe(false);
+        expect(bodyClasses.contains('needAlert')).toBe(true);
+        expect(from.focused).toBe(false); // never yanked out of the follow-up dialog
+        els['cover'].trigger('click'); // closing the alert returns the invoker at last
+        expect(from.focused).toBe(true);
+    });
+
+    it('closeDialogs with nothing open never steals focus (the was-open guard)', () => {
+        const d = freshDialogs();
+        const somewhere = makeEl();
+        globalThis.document.activeElement = somewhere;
+        d.closeDialogs(); // ConfirmDialog.close runs unconditionally inside
+        expect(somewhere.focused).toBe(false);
+    });
+});
+
+describe('Ctrl/Cmd+D quick-add guard (neat.js)', () => {
+    // neat.js is the page bootstrap with no unit-test mount point, so the
+    // quick-add guard list is asserted on its source — same recipe as
+    // context-menu.test.js.
+    it('skips quick-add while either tab-group dialog is open', () => {
+        const src = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+        const start = src.indexOf('if (!(e.metaKey || e.ctrlKey)');
+        const end = src.indexOf('quickAddCurrentTab();', start);
+        expect(start).toBeGreaterThan(-1);
+        expect(end).toBeGreaterThan(start);
+        const guardBlock = src.slice(start, end);
+        expect(guardBlock).toContain("body.classList.contains('needTabGroup')");
+        expect(guardBlock).toContain("body.classList.contains('needGroupPick')");
     });
 });
