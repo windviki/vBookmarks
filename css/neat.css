@@ -14,10 +14,12 @@
    Layer 4  z-index: 200 #cover + .dialog (modal backdrop & dialogs)
                            → dialog must cover palette when a confirm/alert
                              pops over /dupes or /dead inside the panel
-   Layer 5  z-index: 300 menu[type=context] (right-click context menus)
+   Layer 5  z-index: 300 menu[type=context] (right-click context menus),
+                           .vbm-dropdown-list (toolbar dropdown listboxes)
    Layer 6  z-index: 400 #undo-toast, #notice-toast (temporary toasts)
    ───────────────────────────────────────────────────────────────────── */
 :root {
+    color-scheme: light;
     --vbm-bg: #ffffff;
     --vbm-bg-elev: #ffffff;
     --vbm-bg-hover: rgba(0, 0, 0, 0.05);
@@ -30,6 +32,7 @@
     --vbm-accent-fg: #ffffff;
     --vbm-focus-ring: rgba(11, 87, 208, 0.40);
     --vbm-danger: #d93025;
+    --vbm-success: #188038;
     --vbm-scrim: rgba(0, 0, 0, 0.3);
     --vbm-shadow: rgba(0, 0, 0, 0.2);
     --vbm-flash: rgba(43, 93, 205, 0.2);
@@ -38,7 +41,6 @@
     --vbm-radius: 8px;
     /* v4 task-2 (docs/v4task-2-list.md §5): list-row metrics + amber warning */
     --vbm-row-h: 28px;
-    --vbm-indent: 12px;
     --vbm-warning: #f9ab00;
     /* on-colors for danger/warning fills (badges) — white on light danger,
        dark maroon on the pale dark-theme dangers (see theme blocks) */
@@ -47,6 +49,7 @@
 }
 
 body[data-theme="dark"] {
+    color-scheme: dark;
     --vbm-bg: #1b1c1f;
     --vbm-bg-elev: #26282c;
     --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -59,6 +62,7 @@ body[data-theme="dark"] {
     --vbm-accent-fg: #0b57d0;
     --vbm-focus-ring: rgba(168, 199, 250, 0.45);
     --vbm-danger: #f28b82;
+    --vbm-success: #81c995;
     --vbm-scrim: rgba(0, 0, 0, 0.55);
     --vbm-shadow: rgba(0, 0, 0, 0.5);
     --vbm-flash: var(--vbm-bg-selected);
@@ -71,6 +75,7 @@ body[data-theme="dark"] {
 
 @media (prefers-color-scheme: dark) {
     body[data-theme="auto"] {
+        color-scheme: dark;
         --vbm-bg: #1b1c1f;
         --vbm-bg-elev: #26282c;
         --vbm-bg-hover: rgba(255, 255, 255, 0.07);
@@ -83,6 +88,7 @@ body[data-theme="dark"] {
         --vbm-accent-fg: #0b57d0;
         --vbm-focus-ring: rgba(168, 199, 250, 0.45);
         --vbm-danger: #f28b82;
+        --vbm-success: #81c995;
         --vbm-scrim: rgba(0, 0, 0, 0.55);
         --vbm-shadow: rgba(0, 0, 0, 0.5);
         --vbm-flash: var(--vbm-bg-selected);
@@ -99,6 +105,7 @@ body[data-theme="dark"] {
    phosphor glow, like magnetic field lines on an oscilloscope.
    Explicit theme only — "auto" never maps here. */
 body[data-theme="ink"] {
+    color-scheme: dark;
     --vbm-bg: #0e1118;
     --vbm-bg-elev: #171c28;
     --vbm-bg-hover: rgba(139, 156, 255, 0.09);
@@ -111,6 +118,7 @@ body[data-theme="ink"] {
     --vbm-accent-fg: #10142e;
     --vbm-focus-ring: rgba(139, 156, 255, 0.45);
     --vbm-danger: #f2a196;
+    --vbm-success: #7ee0a3;
     --vbm-scrim: rgba(0, 0, 0, 0.6);
     --vbm-shadow: rgba(0, 0, 0, 0.55);
     --vbm-flash: var(--vbm-bg-selected);
@@ -125,18 +133,20 @@ body[data-theme="ink"] {
    Rice-paper base, ink text, vermilion seal accent — the calm precision
    of a well-made analog instrument. Explicit theme only. */
 body[data-theme="paper"] {
+    color-scheme: light;
     --vbm-bg: #f6f2e9;
     --vbm-bg-elev: #fffdf7;
     --vbm-bg-hover: rgba(43, 38, 32, 0.05);
     --vbm-bg-selected: #efe2ca;
     --vbm-fg: #2b2620;
     --vbm-fg-selected: #b03a20;
-    --vbm-muted: #82796a;
+    --vbm-muted: #756c5d; /* 4.6:1 on the paper bg (was #82796a, 3.9:1 — below AA for the 11px toolbar text) */
     --vbm-border: rgba(74, 63, 48, 0.16);
     --vbm-accent: #c2402a;
     --vbm-accent-fg: #fff8f0;
     --vbm-focus-ring: rgba(194, 64, 42, 0.35);
     --vbm-danger: #b3261e;
+    --vbm-success: #1e7a34;
     --vbm-scrim: rgba(43, 38, 32, 0.3);
     --vbm-shadow: rgba(74, 63, 48, 0.25);
     --vbm-flash: rgba(194, 64, 42, 0.15);
@@ -243,7 +253,10 @@ body.linux input {
 #search {
     position: relative;
     z-index: 2;
-    margin: 0 0 4px;
+    /* 2px head/side room so the row's focus rings (input: 2px offset -1;
+       quick-add/tool: 2px no-offset) are not clipped by the window edge;
+       4px bottom keeps the old rhythm above the tabs bar. */
+    margin: 2px 2px 4px;
     padding: 0;
     /* isolate the search row's stacking so no child (toast, buttons) leaks
        behind the tree or other elements */
@@ -947,10 +960,19 @@ menu[type=context].hide-editables #folder-delete {
     border-radius: var(--vbm-radius);
     -webkit-box-shadow: 0 0 100px var(--vbm-shadow);
     box-shadow: 0 0 100px var(--vbm-shadow);
-    transition: opacity .15s ease, top .18s ease;
+    /* No transition on this base rule: the slide/fade timing is owned by
+       .transitional .dialog below (neat.js adds body.transitional ~10ms
+       after load; that rule's higher specificity wins, so any transition
+       declared here only ever applied during those first 10ms — dead code). */
     /* Layer 4 — above palette (100), paired with #cover (200) */
     z-index: 200;
 }
+
+/* Two landing tiers for the slide-in, by dialog height: regular dialogs
+   (alert/confirm/edit/new-folder) settle at top:40px — clear of the search
+   row; the tall dialogs (sort, tab-group new/pick) need the full popup
+   height, so they settle at top:0 and may cover the search row. This split
+   is intentional — keep new dialogs on one of the two tiers. */
 
 /* Dialog content is capped at a comfortable measure and centered: a very
    wide popup / side panel must not stretch a short message across the whole
@@ -1009,6 +1031,18 @@ menu[type=context].hide-editables #folder-delete {
 
 .dialog .buttons button:hover {
     background: var(--vbm-bg-hover);
+}
+
+/* Token focus ring for every dialog action button — dialogs are modal, so a
+   keyboard user Tabs straight onto these and the UA's thin auto ring is the
+   only indicator without it. The donation card's three buttons (same modal-
+   like prominence when the card shows) get the identical ring. */
+.dialog .buttons button:focus-visible,
+#donation-go:focus-visible,
+#donation-later:focus-visible,
+#donation-never:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: 1px;
 }
 
 .dialog .buttons button:first-of-type {
@@ -1079,8 +1113,10 @@ menu[type=context].hide-editables #folder-delete {
 /* --- Tab-group dialog (P3.4: new group title + color) ---
    Reuses the shared body-class + #cover dialog pattern. The 9 swatches are
    Chrome's tab-group palette (--tg-color on each .tg-* class). The color
-   picker mirrors Chrome's own new-group picker: larger dots spaced across the
-   row, a checked dot shows a theme-bg inner dot + colored ring (and a hovered
+   picker mirrors Chrome's own new-group picker: one row of dots at the
+   default 320px width (20px dots + 2px label padding + 6px gaps ≈ 264px,
+   so zoom levels wrap gracefully instead of stranding an orphan dot), a
+   checked dot shows a dialog-surface inner dot + colored ring (and a hovered
    dot scales up slightly); focus-visible keeps the accent ring. */
 .needTabGroup #tab-group-dialog,
 .needGroupPick #tab-group-pick-dialog {
@@ -1137,8 +1173,7 @@ menu[type=context].hide-editables #folder-delete {
 #tab-group-colors {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
+    gap: 6px;
     margin-top: 10px;
 }
 
@@ -1146,15 +1181,15 @@ menu[type=context].hide-editables #folder-delete {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    padding: 3px;
+    padding: 2px;
     border-radius: 50%;
 }
 
 .tab-group-color span {
     position: relative;
     display: block;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: var(--tg-color);
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
@@ -1167,13 +1202,13 @@ menu[type=context].hide-editables #folder-delete {
 
 .tab-group-color input:focus-visible + span {
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06),
-        0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--vbm-accent);
+        0 0 0 2px var(--vbm-bg-elev), 0 0 0 4px var(--vbm-accent);
 }
 
 .tab-group-color input:checked + span {
     transform: scale(1.06);
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06),
-        0 0 0 2px var(--vbm-bg), 0 0 0 4px var(--tg-color);
+        0 0 0 2px var(--vbm-bg-elev), 0 0 0 4px var(--tg-color);
 }
 
 .tab-group-color input:checked + span::after {
@@ -1185,7 +1220,7 @@ menu[type=context].hide-editables #folder-delete {
     height: 8px;
     margin: -4px 0 0 -4px;
     border-radius: 50%;
-    background: var(--vbm-bg);
+    background: var(--vbm-bg-elev);
 }
 
 .tg-grey { --tg-color: #5f6368; }
@@ -1219,7 +1254,7 @@ menu[type=context].hide-editables #folder-delete {
     background: transparent;
     color: var(--vbm-fg);
     font: inherit;
-    text-align: left;
+    text-align: start;
     cursor: pointer;
 }
 
@@ -1413,7 +1448,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     box-sizing: border-box;
     width: 30px;
     height: 30px;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     padding: 0;
     border: 1px solid var(--vbm-border);
     border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
@@ -1444,7 +1479,7 @@ menu[type=context].hide-sort #sort-folder-contents {
 #quick-add-toast {
     position: absolute;
     top: 100%;
-    right: 0;
+    inset-inline-end: 0;
     margin-top: 2px;
     padding: 2px 8px;
     border-radius: var(--vbm-radius);
@@ -1458,8 +1493,8 @@ menu[type=context].hide-sort #sort-folder-contents {
     /* Never expand upward into the button row */
     max-height: 24px;
     overflow: hidden;
-    -webkit-transition: opacity .3s;
-    transition: opacity .3s;
+    -webkit-transition: opacity .18s;
+    transition: opacity .18s;
 }
 
 #quick-add-toast.show {
@@ -1503,7 +1538,7 @@ menu[type=context].hide-sort #sort-folder-contents {
     box-sizing: border-box;
     width: 30px;
     height: 30px;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     padding: 0;
     border: 1px solid var(--vbm-border);
     border-color: color-mix(in srgb, var(--vbm-fg) 26%, transparent);
@@ -1532,7 +1567,8 @@ menu[type=context].hide-sort #sort-folder-contents {
 /* --- Undo toast (P3.3) -----------------------------------------------------
    Deletion undo bar in popup.html/sidepanel.html. Fixed and centered along
    the bottom; colors come from the shared design tokens above, so the dark
-   theme follows automatically. Sits above the command palette (11). */
+   theme follows automatically. Top of the stack (Layer 6, 400): above the
+   palette (100), the cover/dialogs (200) and the menus (300). */
 #undo-toast {
     position: fixed;
     bottom: 12px;
@@ -1639,8 +1675,9 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
 /* --- Command palette (P2) --------------------------------------------------
    Ctrl/Cmd+K overlay in popup.html/sidepanel.html. Fixed and centered near
    the top; colors come from the shared design tokens above, so the dark
-   theme follows automatically. Sits above the cover (9) and the context
-   menus (10). */
+   theme follows automatically. Layer 3 (100): below the cover/dialogs (200)
+   and the context menus (300) — a confirm popping over a palette command
+   must be able to cover the palette. */
 #command-palette {
     position: fixed;
     top: 15%;
@@ -1671,7 +1708,8 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
 
 #palette-input:focus {
     border-color: var(--vbm-accent);
-    box-shadow: 0 0 0 2px var(--vbm-focus-ring);
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -1px;
 }
 
 /* The field wrapper lets the clear (×) button live INSIDE the input on the
@@ -1746,7 +1784,10 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
     list-style: none;
     margin: 6px 0 0;
     padding: 0;
-    max-height: 320px;
+    /* Bounded by construction: top:15% + this 85vh term keep the bottom edge
+       ≤ 100vh at any zoom/font — short windows shrink the list instead of
+       clipping the footer. 430px fits all builtin commands at default font. */
+    max-height: min(430px, calc(85vh - 90px));
     overflow-y: auto;
 }
 
@@ -1793,7 +1834,7 @@ body[data-theme="ink"].highlight-unsynced #tree li.unsynced-subtree > span.tree-
 
 /* Command rows: the muted right-aligned list of slash forms (/cmd + aliases) */
 .palette-row .palette-slash {
-    margin-left: auto;
+    margin-inline-start: auto;
     flex: none;
     color: var(--vbm-muted);
     font-size: 85%;
@@ -2487,8 +2528,8 @@ body.panel-mode .vbm-row .row-sub {
    visible everywhere — row action buttons, view toolbars, search history. */
 .row-btn:focus-visible,
 .dupes-toolbar button:focus-visible,
-.dupes-toolbar select:focus-visible,
 .dead-toolbar button:focus-visible,
+.dead-proxy-strip button:focus-visible,
 .stats-toolbar button:focus-visible,
 #search-history-clear:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
@@ -2533,7 +2574,7 @@ body.panel-mode .vbm-row .row-sub {
     background: var(--vbm-bg);
     color: var(--vbm-fg);
     font-size: 11px;
-    padding: 3px 8px;
+    padding: 2px 8px;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -2598,15 +2639,32 @@ body.panel-mode .vbm-row .row-sub {
     color: var(--vbm-fg);
 }
 
-/* Full-width highlight, same as menu[type=context] .menu-item:hover. */
-.dupes-toolbar .vbm-dropdown-list li:hover,
-.dupes-toolbar .vbm-dropdown-list li:focus {
+/* Hover keeps the subtle full-width tint (same as menu[type=context]
+   .menu-item:hover); keyboard focus speaks the menu's louder selected
+   language (bg-selected + fg-selected, like .menu-item:focus) so ↑↓
+   navigation is actually visible, dark/ink included. The committed pick
+   ([aria-selected="true"] below) is text-only, so the two states stack
+   readably. */
+.dupes-toolbar .vbm-dropdown-list li:hover {
     background: var(--vbm-bg-hover);
+}
+
+.dupes-toolbar .vbm-dropdown-list li:focus {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
     outline: 0;
 }
 
-/* The current pick: accent text + weight only (no background — the hover
-   state owns the background, so the two never fight). */
+/* forced-colors takes over the themed backgrounds, erasing the focus tint —
+   hand the focused option a real outline so keyboard position stays visible. */
+@media (forced-colors: active) {
+    .dupes-toolbar .vbm-dropdown-list li:focus {
+        outline: 2px solid Highlight;
+    }
+}
+
+/* The current pick: accent text + weight only (no background — hover and
+   focus own the background, so the states never fight). */
 .dupes-toolbar .vbm-dropdown-list li[aria-selected="true"] {
     color: var(--vbm-accent);
     font-weight: 600;
@@ -2660,7 +2718,7 @@ body.panel-mode .vbm-row .row-sub {
     background: transparent;
     color: var(--vbm-accent);
     font-size: 11px;
-    padding: 1px 6px;
+    padding: 2px 6px;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -2679,7 +2737,7 @@ body.panel-mode .vbm-row .row-sub {
     flex: none;
     width: 14px;
     height: 14px;
-    margin-right: 6px;
+    margin-inline-end: 6px;
     border: 1px solid var(--vbm-muted);
     border-radius: 3px;
     align-self: center;
@@ -3103,7 +3161,7 @@ body.panel-mode .vbm-row .row-sub {
     flex: 1;
     min-width: 0;
     align-items: center;
-    margin-right: 4px;
+    margin-inline-end: 4px;
 }
 
 /* Dead-view row actions: the mark toggle is a flag in the theme accent
@@ -3339,6 +3397,11 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    text-then-link. The shared `li a` row chrome (16px slot, hover/selected
    backgrounds) is peeled back off the link. */
 #stats-list ul li.stats-history-guide {
+    /* Flex is what activates the order/flex rules on the <i>/<a> below —
+       without it the link jams against the sentence in markup order. */
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 2px 8px 6px;
 }
 

@@ -13,6 +13,7 @@
     --vbm-accent-fg: #ffffff;
     --vbm-focus-ring: rgba(11, 87, 208, 0.40);
     --vbm-danger: #d93025;
+    --vbm-success: #188038;
     --vbm-scrim: rgba(0, 0, 0, 0.3);
     --vbm-shadow: rgba(0, 0, 0, 0.2);
     --vbm-flash: rgba(43, 93, 205, 0.2);
@@ -35,6 +36,7 @@ body[data-theme="dark"] {
     --vbm-accent-fg: #0b57d0;
     --vbm-focus-ring: rgba(168, 199, 250, 0.45);
     --vbm-danger: #f28b82;
+    --vbm-success: #81c995;
     --vbm-scrim: rgba(0, 0, 0, 0.55);
     --vbm-shadow: rgba(0, 0, 0, 0.5);
     --vbm-flash: var(--vbm-bg-selected);
@@ -57,6 +59,7 @@ body[data-theme="dark"] {
         --vbm-accent-fg: #0b57d0;
         --vbm-focus-ring: rgba(168, 199, 250, 0.45);
         --vbm-danger: #f28b82;
+        --vbm-success: #81c995;
         --vbm-scrim: rgba(0, 0, 0, 0.55);
         --vbm-shadow: rgba(0, 0, 0, 0.5);
         --vbm-flash: var(--vbm-bg-selected);
@@ -80,6 +83,7 @@ body[data-theme="ink"] {
     --vbm-accent-fg: #10142e;
     --vbm-focus-ring: rgba(139, 156, 255, 0.45);
     --vbm-danger: #f2a196;
+    --vbm-success: #7ee0a3;
     --vbm-scrim: rgba(0, 0, 0, 0.6);
     --vbm-shadow: rgba(0, 0, 0, 0.55);
     --vbm-flash: var(--vbm-bg-selected);
@@ -95,12 +99,13 @@ body[data-theme="paper"] {
     --vbm-bg-selected: #efe2ca;
     --vbm-fg: #2b2620;
     --vbm-fg-selected: #b03a20;
-    --vbm-muted: #82796a;
+    --vbm-muted: #756c5d;
     --vbm-border: rgba(74, 63, 48, 0.16);
     --vbm-accent: #c2402a;
     --vbm-accent-fg: #fff8f0;
     --vbm-focus-ring: rgba(194, 64, 42, 0.35);
     --vbm-danger: #b3261e;
+    --vbm-success: #1e7a34;
     --vbm-scrim: rgba(43, 38, 32, 0.3);
     --vbm-shadow: rgba(74, 63, 48, 0.25);
     --vbm-flash: rgba(194, 64, 42, 0.15);
@@ -232,17 +237,12 @@ h2{
 /* Dead-link proxy server input rides the row inline (Test & save + display
    + clear sit beside it), so it stays compact rather than full-card. */
 .options-list li input#dead-proxy-server-input{
-	background: var(--vbm-bg-elev);
-	color: var(--vbm-fg);
-	border: 1px solid var(--vbm-border);
-	border-radius: 6px;
-	padding: 2px 6px;
-	font: inherit;
 	margin: 0;
 	margin-__MSG_@@bidi_start_edge__: 1em;
 	width: 12em;
 }
-/* Result line under the row: failures read as danger, success as accent. */
+/* Result line under the row: failures read as danger, success as the green
+   success token (paper's accent is vermilion — too close to the danger red). */
 .options-list li #dead-proxy-server-error{
 	display: block;
 	margin-top: 4px;
@@ -250,7 +250,7 @@ h2{
 	color: var(--vbm-danger);
 }
 .options-list li #dead-proxy-server-error.ok{
-	color: var(--vbm-accent);
+	color: var(--vbm-success);
 }
 .options-list li input[type=number]{
 	background: var(--vbm-bg-elev);

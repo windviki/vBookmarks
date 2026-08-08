@@ -79,7 +79,7 @@ describe('theme design tokens in neat.css', () => {
 
 // Third-round item 5 — four themes, one level of finish.
 // (a) Every theme block overrides the SAME full color-token set (structural
-//     tokens --vbm-radius/--vbm-row-h/--vbm-indent stay :root-only by design).
+//     tokens --vbm-radius/--vbm-row-h stay :root-only by design).
 // (b) Badge on-colors meet WCAG AA (4.5:1) against their fill in every
 //     theme — white on the pale dark-theme danger fills was 2.4:1 before
 //     --vbm-danger-fg existed.
