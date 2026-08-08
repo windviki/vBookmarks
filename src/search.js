@@ -231,12 +231,68 @@ export function initSearch(ctx = {}) {
     // there is history, the searchViewHint guide row otherwise. The lower
     // #results list keeps the last search's output between searches.
     const $historyArea = $('search-history-area');
+    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // The history-area twin of the list views' row park: renderHistoryArea's
+    // innerHTML swap replaces every row, so a focused row drops to <body>
+    // and the ↓ walk dies (the Delete key removes a row; the context menu's
+    // remove/clear-all re-renders). Park the focused row before the swap,
+    // restore it after — history rows carry no id, so the park is its index
+    // among the area's <li>s, clamped on restore; with no rows left the
+    // search box takes the focus back (not the area container).
+    const parkRowFocus = () => {
+        let li = document.activeElement;
+        while (li && li.tagName !== 'LI')
+            li = li.parentNode;
+        // the row must belong to the history area — a results row does not count
+        for (let p = li; p; p = p.parentNode) {
+            if (p !== $historyArea)
+                continue;
+            if (typeof $historyArea.querySelectorAll !== 'function')
+                return null;
+            const lis = $historyArea.querySelectorAll('li');
+            for (let i = 0, l = lis.length; i < l; i++)
+                if (lis[i] === li)
+                    return { id: li.id || '', idx: i };
+            return null;
+        }
+        return null;
+    };
+    const unparkRowFocus = parked => {
+        if (!parked)
+            return;
+        let li = parked.id ? document.getElementById(parked.id) : null;
+        if (!li) {
+            if (typeof $historyArea.querySelectorAll !== 'function')
+                return;
+            const lis = $historyArea.querySelectorAll('li');
+            if (!lis.length) {
+                // no rows at all — hand focus back to the search box
+                if (searchInput.focus)
+                    searchInput.focus();
+                return;
+            }
+            li = lis[Math.min(parked.idx, lis.length - 1)];
+        }
+        if (!li)
+            return;
+        // A row carrying tabindex takes the focus itself; plain rows hand it
+        // to their anchor/span — the same element the area's ↓ walk focuses.
+        // (getAttribute is guarded: test doubles may lack it.)
+        const target = (li.getAttribute && li.getAttribute('tabindex') !== null)
+            ? li
+            : (li.querySelector ? li.querySelector('a, span') : null);
+        if (target && target.focus)
+            target.focus();
+    };
     const renderHistoryArea = () => {
         if (!$historyArea)
             return;
+        // 4.0.2 focus law: park a focused history row across the swap
+        const parkedRow = parkRowFocus();
         const list = historyEnabled() ? readHistory() : [];
         if (!list.length) {
             $historyArea.innerHTML = `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('searchViewHint')}</i></li></ul>`;
+            unparkRowFocus(parkedRow);
             return;
         }
         let html = `<div class="search-history-head"><i>${htmlspecialchars(_m('searchHistoryTitle'))}</i>` +
@@ -262,6 +318,8 @@ export function initSearch(ctx = {}) {
         // remainder fits. The stored MRU keeps all 10 entries; this is a
         // pure view concern (jsdom/no-layout doubles report 0 ≥ 0 → no-op).
         trimHistoryToFit();
+        // …restored AFTER the trim, so a trimmed-away row can't take focus.
+        unparkRowFocus(parkedRow);
     };
     const trimHistoryToFit = () => {
         if (!$historyArea)

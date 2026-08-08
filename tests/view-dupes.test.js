@@ -1187,3 +1187,130 @@ describe('risk banner (v4 task-4 #14)', () => {
         expect(store.get('dupesRiskAck')).toBeUndefined();
     });
 });
+
+describe('row focus park/restore (4.0.2 focus law)', () => {
+    // The 4.0.2 bug: picking 设置为保留 from a row's context menu re-renders
+    // the list and the keyboard focus died on <body>, so ↓ could not
+    // continue. The doubles model the innerHTML swap the way the real DOM
+    // behaves: assigning innerHTML replaces the li set that
+    // querySelectorAll('li') hands out, and the hand-written focus() lands
+    // on doc.activeElement.
+    const wireSwap = ($list, doc) => {
+        const swap = { current: [], next: null };
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            get() { return html; },
+            set(v) {
+                html = v;
+                if (swap.next) {
+                    swap.current = swap.next;
+                    swap.next = null;
+                }
+            }
+        });
+        $list.querySelectorAll = sel => (sel === 'li' ? swap.current : []);
+        $list.focus = function () { doc.activeElement = this; };
+        return swap;
+    };
+    const ulOf = $list => ({ tagName: 'UL', parentNode: $list });
+    // a row double: li + anchor, parented up to the list (a → li → ul → $list)
+    const row = (doc, ul, id) => {
+        const a = {
+            tagName: 'A',
+            focus() { doc.activeElement = this; }
+        };
+        const li = {
+            tagName: 'LI', id: id || '',
+            parentNode: ul,
+            getAttribute: () => null,
+            querySelector: sel => (sel === 'a, span' ? a : null)
+        };
+        a.parentNode = li;
+        return { li, a };
+    };
+
+    it('a focused member row regains focus on its same-id replacement after a re-render', () => {
+        const ctx = setup({});
+        const { $list, doc, def, viewDupes } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'dupes-item-15');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        // the post-swap replacement row: same id, new element
+        const newRow = row(doc, ul, 'dupes-item-15');
+        swap.next = [newRow.li];
+        const origGet = doc.getElementById;
+        doc.getElementById = id => (id === 'dupes-item-15' ? newRow.li : origGet(id));
+        viewDupes.refresh(); // the setKeeper chain's regroup re-render
+        expect(doc.activeElement).toBe(newRow.a);
+    });
+
+    it('a vanished row id falls back to the index-clamped row', () => {
+        const ctx = setup({});
+        const { $list, doc, def, viewDupes } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const head = {
+            tagName: 'LI', id: '', parentNode: ul,
+            getAttribute: () => null, querySelector: () => null
+        };
+        const r1 = row(doc, ul, 'dupes-item-11');
+        const r2 = row(doc, ul, 'dupes-item-21');
+        swap.current = [head, r1.li, r2.li]; // focus sits on row 21 (idx 2)
+        doc.activeElement = r2.a;
+        // row 21 is gone after the regroup — no getElementById hit — and the
+        // list shrank to two rows
+        const n1 = row(doc, ul, 'dupes-item-11');
+        const n2 = row(doc, ul, 'dupes-item-15');
+        swap.next = [n1.li, n2.li];
+        viewDupes.refresh();
+        expect(doc.activeElement).toBe(n2.a); // min(2, 1) → the second row
+    });
+
+    it('with no rows at all after the swap, focus parks on the list container', () => {
+        const ctx = setup({});
+        const { $list, doc, def, viewDupes } = ctx;
+        def().activate();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'dupes-item-15');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        swap.next = []; // nothing left to focus
+        viewDupes.refresh();
+        expect(doc.activeElement).toBe($list);
+    });
+
+    it('focus outside the list is left untouched by the render', () => {
+        const ctx = setup({});
+        const { doc, def, viewDupes } = ctx;
+        def().activate();
+        const outside = { tagName: 'BUTTON' }; // no LI anywhere up the chain
+        doc.activeElement = outside;
+        viewDupes.refresh();
+        expect(doc.activeElement).toBe(outside);
+    });
+
+    it('toggleGroup (context-menu fold) lands focus back on the group head', () => {
+        const ctx = setup({});
+        const { $list, def, viewDupes } = ctx;
+        def().activate();
+        const focused = [];
+        const newHead = { focus() { focused.push(this); } };
+        $list.querySelectorAll = sel => (sel === 'li.dupes-group' ? [{
+            dataset: { key: 'https://a.com' },
+            querySelector: s => (s === '.group-head' ? newHead : null)
+        }] : []);
+        viewDupes.toggleGroup('https://a.com'); // collapse via the menu path
+        expect(viewDupes.isCollapsed('https://a.com')).toBe(true);
+        // 4.0.2: the click fold parks the head key exactly like the keyboard
+        // fold, so focus survives the refresh's innerHTML swap
+        expect(focused).toEqual([newHead]);
+        viewDupes.toggleGroup('https://a.com'); // expand again
+        expect(viewDupes.isCollapsed('https://a.com')).toBe(false);
+        expect(focused.length).toBe(2);
+    });
+});

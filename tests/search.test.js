@@ -1113,3 +1113,121 @@ describe('v4 task-3 #15: history-row menu key', () => {
         expect(prevented).toBe(0);
     });
 });
+
+describe('history-row focus park/restore (4.0.2 focus law)', () => {
+    // The history area's innerHTML swap replaces every row: Delete removes
+    // an entry and the context menu's remove/clear-all re-renders — the
+    // focused row used to drop to <body> and the ↓ walk died. The doubles
+    // model the swap the way the real DOM behaves: assigning innerHTML
+    // replaces the li set querySelectorAll('li') hands out; the harness's
+    // focus() flag proves the landing spot.
+    const HIST3 = JSON.stringify([
+        { q: 'one', ts: 1, n: 1 },
+        { q: 'two', ts: 2, n: 2 },
+        { q: 'three', ts: 3, n: 3 }
+    ]);
+    const wireHistorySwap = area => {
+        const swap = { next: null };
+        let html = area.innerHTML;
+        Object.defineProperty(area, 'innerHTML', {
+            get() { return html; },
+            set(v) {
+                html = v;
+                if (swap.next) {
+                    area._qsa['li'] = swap.next;
+                    swap.next = null;
+                }
+            }
+        });
+        return swap;
+    };
+    // history row doubles: a → li → ul → area, anchors carrying data-q
+    const histRows = (area, qs) => {
+        const ul = { tagName: 'UL', parentNode: area };
+        return qs.map(q => {
+            const a = makeEl();
+            a.dataset.q = q;
+            const li = makeEl();
+            li.tagName = 'LI';
+            li.parentNode = ul;
+            li._qs['a, span'] = a;
+            a.parentNode = li;
+            return { li, a };
+        });
+    };
+
+    it('Delete on a focused history row hands focus to the row that takes its place', () => {
+        const { els, viewHooks, store } = setup({
+            activeView: 'search',
+            storeData: { searchHistory: HIST3 }
+        });
+        viewHooks.search.activate();
+        const area = els['search-history-area'];
+        const swap = wireHistorySwap(area);
+        // the pre-swap rows: focus sits on 'two's anchor (idx 1)
+        const oldRows = histRows(area, ['one', 'two', 'three']);
+        area._qsa['li'] = oldRows.map(r => r.li);
+        globalThis.document.activeElement = oldRows[1].a;
+        // the swap replaces the li set like the real DOM
+        const newRows = histRows(area, ['one', 'three']);
+        swap.next = newRows.map(r => r.li);
+        area.trigger('keydown', { key: 'Delete' });
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['one', 'three']);
+        // 'three' slid into the deleted row's slot and has the focus: ↓ lives
+        expect(newRows[1].a.dataset.q).toBe('three');
+        expect(newRows[1].a.focused).toBe(true);
+    });
+
+    it('Delete on the LAST history row hands focus back to the search box', () => {
+        const { els, viewHooks, store } = setup({
+            activeView: 'search',
+            storeData: { searchHistory: JSON.stringify([{ q: 'only', ts: 1, n: 1 }]) }
+        });
+        viewHooks.search.activate();
+        const area = els['search-history-area'];
+        const swap = wireHistorySwap(area);
+        const oldRows = histRows(area, ['only']);
+        area._qsa['li'] = oldRows.map(r => r.li);
+        globalThis.document.activeElement = oldRows[0].a;
+        swap.next = []; // the empty-state hint has no focusable row
+        area.trigger('keydown', { key: 'Delete' });
+        expect(store.get('searchHistory')).toBe('[]');
+        expect(area.innerHTML).toContain('searchViewHint');
+        expect(els['search-input'].focused).toBe(true);
+    });
+
+    it('clear-all with a row focused parks focus back in the search box', () => {
+        // the context menu's clear-all ends in the same renderHistoryArea:
+        // the menu was opened from a row, so that row's anchor holds focus
+        const { els, viewHooks, store } = setup({
+            activeView: 'search',
+            storeData: { searchHistory: HIST3 }
+        });
+        viewHooks.search.activate();
+        const area = els['search-history-area'];
+        const swap = wireHistorySwap(area);
+        const oldRows = histRows(area, ['one', 'two', 'three']);
+        area._qsa['li'] = oldRows.map(r => r.li);
+        globalThis.document.activeElement = oldRows[0].a;
+        swap.next = [];
+        area.trigger('click', {
+            target: { closest: sel => (sel === '#search-history-clear' ? {} : null) }
+        });
+        expect(store.get('searchHistory')).toBe('[]');
+        expect(els['search-input'].focused).toBe(true);
+    });
+
+    it('focus outside the history area survives the re-render untouched', () => {
+        const { els, viewHooks } = setup({
+            activeView: 'search',
+            storeData: { searchHistory: HIST3 }
+        });
+        viewHooks.search.activate();
+        const sentinel = makeEl(); // no LI anywhere up the chain
+        globalThis.document.activeElement = sentinel;
+        viewHooks.search.activate(); // the re-entry re-render
+        expect(sentinel.focused).toBe(false);
+        expect(globalThis.document.activeElement).toBe(sentinel);
+        expect(els['search-input'].focused).toBe(false);
+    });
+});

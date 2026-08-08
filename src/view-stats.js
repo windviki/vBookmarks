@@ -402,6 +402,61 @@ export function initViewStats(ctx = {}) {
             c.focus();
     };
 
+    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // The list-row twin of the toolbar pair above: the render's innerHTML
+    // swap replaces every row, so a focused row drops to <body> and the ↓
+    // walk dies (a sort switch, a star-add flip, a clear all repaint). Park
+    // the focused row before the swap, restore it after — by row id when the
+    // row carries one (stats-item-<id>; the unbookmarked history rows carry
+    // none), else by its index among the list's <li>s, clamped on restore so
+    // a vanished row lands on the row that took its place; an emptied list
+    // parks on the container itself.
+    const parkRowFocus = () => {
+        let li = document.activeElement;
+        while (li && li.tagName !== 'LI')
+            li = li.parentNode;
+        // the row must belong to THIS list — another view's row does not count
+        for (let p = li; p; p = p.parentNode) {
+            if (p !== $list)
+                continue;
+            if (typeof $list.querySelectorAll !== 'function')
+                return null;
+            const lis = $list.querySelectorAll('li');
+            for (let i = 0, l = lis.length; i < l; i++)
+                if (lis[i] === li)
+                    return { id: li.id || '', idx: i };
+            return null;
+        }
+        return null;
+    };
+    const unparkRowFocus = parked => {
+        if (!parked)
+            return;
+        let li = parked.id ? document.getElementById(parked.id) : null;
+        if (!li) {
+            if (typeof $list.querySelectorAll !== 'function')
+                return;
+            const lis = $list.querySelectorAll('li');
+            if (!lis.length) {
+                // no rows at all — park focus on the list container itself
+                if ($list.focus)
+                    $list.focus();
+                return;
+            }
+            li = lis[Math.min(parked.idx, lis.length - 1)];
+        }
+        if (!li)
+            return;
+        // A row carrying tabindex takes the focus itself; plain rows hand it
+        // to their anchor/span — the same element keyboard.js's row walk
+        // focuses. (getAttribute is guarded: test doubles may lack it.)
+        const target = (li.getAttribute && li.getAttribute('tabindex') !== null)
+            ? li
+            : (li.querySelector ? li.querySelector('a, span') : null);
+        if (target && target.focus)
+            target.focus();
+    };
+
     const render = () => {
         let html = renderToolbar();
         if (!enabled()) {
@@ -423,8 +478,11 @@ export function initViewStats(ctx = {}) {
         // innerHTML swap (sort switch re-renders the bar) — positionally
         // stable index, or the keyboard rung dies on every refresh.
         const tbIdx = toolbarFocusIndex();
+        // 4.0.2 focus law: a focused list ROW rides the same swap
+        const parkedRow = parkRowFocus();
         $list.innerHTML = html;
         restoreToolbarFocus(tbIdx);
+        unparkRowFocus(parkedRow);
         onRowsRendered();
     };
 

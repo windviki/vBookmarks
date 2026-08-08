@@ -878,3 +878,115 @@ describe('sort seg arrow keys (§2.5 — owned by the toolbar rung)', () => {
         expect(ev.prevented).toBe(0);
     });
 });
+
+describe('row focus park/restore (4.0.2 focus law)', () => {
+    // The list-row twin of the toolbar park/restore above: every render's
+    // innerHTML swap replaces the focused row (a sort switch, a star-add
+    // flip, a clear) and the ↓ walk used to die on <body>. The doubles
+    // model the swap the way the real DOM behaves: assigning innerHTML
+    // replaces the li set querySelectorAll('li') hands out, and the
+    // hand-written focus() lands on document.activeElement.
+    const STATS = {
+        '7': { c: 2, t: NOW - 1000 },
+        '8': { c: 5, t: NOW - 2000 }
+    };
+    const wireSwap = ($list, doc) => {
+        const swap = { current: [], next: null };
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            get() { return html; },
+            set(v) {
+                html = v;
+                if (swap.next) {
+                    swap.current = swap.next;
+                    swap.next = null;
+                }
+            }
+        });
+        $list.querySelectorAll = sel => (sel === 'li' ? swap.current : []);
+        $list.focus = function () { doc.activeElement = this; };
+        return swap;
+    };
+    const ulOf = $list => ({ tagName: 'UL', parentNode: $list });
+    // a row double: li + anchor, parented up to the list (a → li → ul → $list)
+    const row = (doc, ul, id) => {
+        const a = {
+            tagName: 'A',
+            focus() { doc.activeElement = this; }
+        };
+        const li = {
+            tagName: 'LI', id: id || '',
+            parentNode: ul,
+            getAttribute: () => null,
+            querySelector: sel => (sel === 'a, span' ? a : null)
+        };
+        a.parentNode = li;
+        return { li, a };
+    };
+    const statsSetup = () => {
+        const s = setup({
+            hasHistoryPermission: true, historyItems: [],
+            statsData: STATS
+        });
+        s.def().activate();
+        return s;
+    };
+
+    it('a focused stats row regains focus on its same-id replacement after a re-render', () => {
+        const s = statsSetup();
+        const doc = globalThis.document;
+        const swap = wireSwap(s.$list, doc);
+        const ul = ulOf(s.$list);
+        const oldRow = row(doc, ul, 'stats-item-8');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        // the post-swap replacement row: same id, new element
+        const newRow = row(doc, ul, 'stats-item-8');
+        swap.next = [newRow.li];
+        const origGet = doc.getElementById;
+        doc.getElementById = id => (id === 'stats-item-8' ? newRow.li : origGet(id));
+        s.viewStats.refresh(); // the sort switch's repaint
+        expect(doc.activeElement).toBe(newRow.a);
+    });
+
+    it('a vanished row id falls back to the index-clamped row', () => {
+        const s = statsSetup();
+        const doc = globalThis.document;
+        const swap = wireSwap(s.$list, doc);
+        const ul = ulOf(s.$list);
+        const r1 = row(doc, ul, 'stats-item-8');
+        const r2 = row(doc, ul, 'stats-item-7');
+        const r3 = row(doc, ul, 'stats-item-42');
+        swap.current = [r1.li, r2.li, r3.li]; // focus sits on the third row
+        doc.activeElement = r3.a;
+        // row 42 is gone after the repaint — no getElementById hit — and the
+        // list shrank to two rows
+        const n1 = row(doc, ul, 'stats-item-8');
+        const n2 = row(doc, ul, 'stats-item-7');
+        swap.next = [n1.li, n2.li];
+        s.viewStats.refresh();
+        expect(doc.activeElement).toBe(n2.a); // min(2, 1) → the second row
+    });
+
+    it('with no rows at all after the swap, focus parks on the list container', () => {
+        const s = statsSetup();
+        const doc = globalThis.document;
+        const swap = wireSwap(s.$list, doc);
+        const ul = ulOf(s.$list);
+        const oldRow = row(doc, ul, 'stats-item-8');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        swap.next = []; // nothing left to focus
+        s.viewStats.refresh();
+        expect(doc.activeElement).toBe(s.$list);
+    });
+
+    it('focus outside the list is left untouched by the render', () => {
+        const s = statsSetup();
+        const doc = globalThis.document;
+        const outside = { tagName: 'BUTTON' }; // no LI anywhere up the chain
+        doc.activeElement = outside;
+        s.viewStats.refresh();
+        expect(doc.activeElement).toBe(outside);
+    });
+});

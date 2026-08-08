@@ -215,7 +215,12 @@ const setup = (opts = {}) => {
         'openBookmarksInGroup', 'openInExistingTabGroup', 'openBookmarksNewWindow',
         'editBookmarkFolder', 'deleteBookmark',
         'deleteBookmarks', 'addSeparator', 'deleteSeparator'])
-        actions[name] = (...args) => actionCalls.push([name, ...args]);
+        actions[name] = (...args) => {
+            actionCalls.push([name, ...args]);
+            // 4.0.2: lets a test observe the menu/focus state DURING the action
+            if (opts.onAction)
+                opts.onAction(name, args);
+        };
     const sortCalls = [];
     // P3.4: GroupDialog (title+color before opening a new group) and
     // GroupPickDialog (existing-group picker) are recorded doubles.
@@ -343,6 +348,8 @@ describe('module API', () => {
         const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
             histRowMenu, dupesGroupMenu, paletteCmdMenu } = setup({});
         expect(typeof menus.clearMenu).toBe('function');
+        // 4.0.2 menu focus law: cancel-semantics close for the keyboard layer
+        expect(typeof menus.closeMenu).toBe('function');
         expect(typeof menus.switchBookmarkMenu).toBe('function');
         expect(menus.bookmarkMenu).toBe(bookmarkMenu);
         expect(menus.folderMenu).toBe(folderMenu);
@@ -353,7 +360,7 @@ describe('module API', () => {
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
         expect(menus.paletteCmdMenu).toBe(paletteCmdMenu);
         expect(Object.keys(menus).sort()).toEqual(
-            ['bookmarkMenu', 'clearMenu', 'dupesGroupMenu', 'folderMenu', 'histRowMenu',
+            ['bookmarkMenu', 'clearMenu', 'closeMenu', 'dupesGroupMenu', 'folderMenu', 'histRowMenu',
                 'paletteCmdMenu', 'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
     });
 });
@@ -448,6 +455,86 @@ describe('clearMenu', () => {
                 expect(bookmarkMenu.style.left, `${id} ${type}`).toBe('-999px');
             }
         }
+    });
+});
+
+// 4.0.2 menu focus law: a menu close must never drop focus to <body> or
+// strand it on the hidden menu — closeMenu() (cancel semantics for the
+// keyboard layer's ←/Esc) drops the marker AND refocuses the owner row;
+// no-arg clearMenu() (programmatic close) keeps the marker but refocuses
+// too; a re-rendered owner is found through its same-id replacement row.
+describe('closeMenu (4.0.2 menu focus law)', () => {
+    it('removes the .active marker, refocuses the owner row and hides every menu', () => {
+        const { menus, bookmarkMenu, folderMenu, separatorMenu, makeBookmarkRow, openOn } = setup({});
+        const { a } = makeBookmarkRow('42');
+        openOn(a);
+        expect(a.classList.contains('active')).toBe(true);
+        expect(bookmarkMenu.style.opacity).toBe('1');
+        menus.closeMenu();
+        expect(a.classList.contains('active')).toBe(false); // cancel: marker OFF
+        expect(a.focused).toBe(true); // focus back on the owning row
+        for (const menu of [bookmarkMenu, folderMenu, separatorMenu]) {
+            expect(menu.style.left).toBe('-999px');
+            expect(menu.style.opacity).toBe('0');
+        }
+    });
+
+    it('no-arg clearMenu refocuses the owner too (marker kept — the K6 contract)', () => {
+        const { menus, makeBookmarkRow, openOn } = setup({});
+        const { a } = makeBookmarkRow('42');
+        openOn(a);
+        menus.clearMenu();
+        expect(a.classList.contains('active')).toBe(true); // marker STAYS
+        expect(a.focused).toBe(true); // but the focus law holds
+    });
+
+    it('refocuses the same-id replacement row when the owner element was re-rendered away', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42'); // owner li id: neat-tree-item-42
+        ctx.openOn(a);
+        // A view re-render swaps the list's innerHTML under the open menu:
+        // the owner anchor detaches, a fresh same-id li + anchor replace it.
+        a.isConnected = false;
+        const li = ctx.el('LI', 'neat-tree-item-42');
+        const a2 = ctx.el('A');
+        li._qs['a, span'] = a2;
+        ctx.menus.closeMenu();
+        expect(a.focused).toBe(false); // the detached owner is never focused
+        expect(a2.focused).toBe(true); // its replacement's a/span child is
+    });
+
+    it('focuses the replacement li itself when it is a tabindex row container', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a);
+        a.isConnected = false;
+        // The dead view's start-row shape: a focusable li without a/span
+        // (the plain doubles lack getAttribute — add it for this row only).
+        const li = ctx.el('LI', 'neat-tree-item-42');
+        li.getAttribute = k => (k === 'tabindex' ? '0' : null);
+        ctx.menus.closeMenu();
+        expect(li.focused).toBe(true);
+    });
+
+    it('a menu-item dispatch closes the menu BEFORE the action runs', () => {
+        let during = null;
+        let rowA = null;
+        const ctx = setup({
+            onAction: () => {
+                during = {
+                    opacity: ctx.bookmarkMenu.style.opacity,
+                    rowFocused: rowA.focused
+                };
+            }
+        });
+        ({ a: rowA } = ctx.makeBookmarkRow('42'));
+        ctx.openOn(rowA);
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-new-tab') }));
+        expect(ctx.actionCalls).toEqual([['openBookmarkNewTab', 'https://bm-42.example/']]);
+        // inside the action the menu was already hidden and focus already
+        // back on the owning row (close-first, not close-last)
+        expect(during).toEqual({ opacity: '0', rowFocused: true });
     });
 });
 

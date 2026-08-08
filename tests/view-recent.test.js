@@ -713,3 +713,104 @@ describe('coarse time sections (第四轮项8)', () => {
         expect(m[0]).not.toMatch(/<[as][\s>]/); // no a/span: keys & clicks skip it
     });
 });
+
+describe('row focus park/restore (4.0.2 focus law)', () => {
+    // The recent view has no toolbar pair, so this is the list's only
+    // park/restore: every refresh's innerHTML swap replaces the focused row
+    // (each onCreated/onRemoved repaint) and the ↓ walk used to die on
+    // <body>. The doubles model the swap the way the real DOM behaves:
+    // assigning innerHTML replaces the li set querySelectorAll('li') hands
+    // out, and the hand-written focus() lands on doc.activeElement.
+    const wireSwap = ($list, doc) => {
+        const swap = { current: [], next: null };
+        let html = $list.innerHTML;
+        Object.defineProperty($list, 'innerHTML', {
+            get() { return html; },
+            set(v) {
+                html = v;
+                if (swap.next) {
+                    swap.current = swap.next;
+                    swap.next = null;
+                }
+            }
+        });
+        $list.querySelectorAll = sel => (sel === 'li' ? swap.current : []);
+        $list.focus = function () { doc.activeElement = this; };
+        return swap;
+    };
+    const ulOf = $list => ({ tagName: 'UL', parentNode: $list });
+    // a row double: li + anchor, parented up to the list (a → li → ul → $list)
+    const row = (doc, ul, id) => {
+        const a = {
+            tagName: 'A',
+            focus() { doc.activeElement = this; }
+        };
+        const li = {
+            tagName: 'LI', id: id || '',
+            parentNode: ul,
+            getAttribute: () => null,
+            querySelector: sel => (sel === 'a, span' ? a : null)
+        };
+        a.parentNode = li;
+        return { li, a };
+    };
+    const recentSetup = () => {
+        const ctx = setup({ recentItems: ITEMS });
+        ctx.def().activate();
+        return ctx;
+    };
+
+    it('a focused recent row regains focus on its same-id replacement after a re-render', () => {
+        const { $list, doc, viewRecent } = recentSetup();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'recent-item-101');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        // the post-swap replacement row: same id, new element
+        const newRow = row(doc, ul, 'recent-item-101');
+        swap.next = [newRow.li];
+        const origGet = doc.getElementById;
+        doc.getElementById = id => (id === 'recent-item-101' ? newRow.li : origGet(id));
+        viewRecent.refresh(); // the onCreated/onRemoved debounce's repaint
+        expect(doc.activeElement).toBe(newRow.a);
+    });
+
+    it('a vanished row id falls back to the index-clamped row', () => {
+        const { $list, doc, viewRecent } = recentSetup();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const r1 = row(doc, ul, 'recent-item-101');
+        const r2 = row(doc, ul, 'recent-item-104');
+        const r3 = row(doc, ul, 'recent-item-105');
+        swap.current = [r1.li, r2.li, r3.li]; // focus sits on the third row
+        doc.activeElement = r3.a;
+        // row 105 is gone after the repaint — no getElementById hit — and
+        // the list shrank to two rows
+        const n1 = row(doc, ul, 'recent-item-101');
+        const n2 = row(doc, ul, 'recent-item-104');
+        swap.next = [n1.li, n2.li];
+        viewRecent.refresh();
+        expect(doc.activeElement).toBe(n2.a); // min(2, 1) → the second row
+    });
+
+    it('with no rows at all after the swap, focus parks on the list container', () => {
+        const { $list, doc, viewRecent } = recentSetup();
+        const swap = wireSwap($list, doc);
+        const ul = ulOf($list);
+        const oldRow = row(doc, ul, 'recent-item-101');
+        swap.current = [oldRow.li];
+        doc.activeElement = oldRow.a;
+        swap.next = []; // nothing left to focus
+        viewRecent.refresh();
+        expect(doc.activeElement).toBe($list);
+    });
+
+    it('focus outside the list is left untouched by the render', () => {
+        const { doc, viewRecent } = recentSetup();
+        const outside = { tagName: 'BUTTON' }; // no LI anywhere up the chain
+        doc.activeElement = outside;
+        viewRecent.refresh();
+        expect(doc.activeElement).toBe(outside);
+    });
+});

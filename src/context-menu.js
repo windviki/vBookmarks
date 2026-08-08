@@ -70,6 +70,15 @@ export function initContextMenu(ctx = {}) {
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
     let currentContext = null;
+    // …plus the owner row's identity for the post-close focus restore: a
+    // view re-render (regroup, mark toggle, scan tick) swaps the list's
+    // innerHTML under an open/just-closed menu, so the owner ELEMENT may be
+    // detached by the time focus returns. The li id survives on the
+    // replacement row; the list container element itself is never swapped.
+    let ownerInfo = null;
+    // Every scrollable list a row menu can open on (ownerInfo capture).
+    const LIST_SEL = '#tree, #results, #recent-list, #stats-list, #dead-list, ' +
+        '#dupes-list, #search-history-area, #palette-results';
 
     // v4 task-2: unified row-id extraction — data-node-id first (the row id
     // every list view shares), the legacy prefix strip as fallback.
@@ -122,21 +131,7 @@ export function initContextMenu(ctx = {}) {
             dateItem.textContent = _m('sortByDate') + suffix;
     };
 
-    const clearMenu = e => {
-        currentContext = null;
-        const active = body.querySelector('.active');
-        if (active) {
-            if (e) {
-                active.classList.remove('active');
-                const el = e.target;
-                if (el === $tree || el === $results) {
-                    active.focus();
-                }
-            } else {
-                // When menu is closed, do not lost focus
-                active.focus();
-            }
-        }
+    const hideAllMenus = () => {
         $bookmarkContextMenu.style.left = '-999px';
         $bookmarkContextMenu.style.opacity = '0';
         $bookmarkContextMenu.style.transform = 'scale(.98)';
@@ -170,6 +165,85 @@ export function initContextMenu(ctx = {}) {
         // drop them all here so they can never leak across unrelated menu
         // opens.
         setRootDisabled(false);
+    };
+
+    // Focus after a menu closes (4.0.2 focus law: a menu close must never
+    // drop focus to <body> or strand it on the hidden menu). The owning row
+    // first; when a re-render swapped it out, its same-id replacement row;
+    // failing both, the list container (the arrow keys keep working from
+    // there — keyboard.js's container branch). A menu opened over the
+    // PALETTE returns to the panel's input box instead: the result rows
+    // carry no keyboard handlers, the panel's ↑↓ live on the input (K2).
+    const refocusOwner = () => {
+        const owner = currentContext;
+        if (owner && owner.closest && owner.closest('#command-palette')) {
+            const input = $('palette-input');
+            if (input && input.focus) {
+                input.focus();
+                return;
+            }
+        }
+        if (owner && owner.isConnected !== false && owner.focus) { // doubles count as connected
+            owner.focus();
+            return;
+        }
+        const info = owner ? ownerInfo : null;
+        if (info && info.liId) {
+            const li = document.getElementById(info.liId);
+            const t = li && ((li.getAttribute && li.getAttribute('tabindex') !== null)
+                ? li
+                : (li.querySelector ? li.querySelector('a, span') : null));
+            if (t && t.focus) {
+                t.focus();
+                return;
+            }
+        }
+        if (info && info.listEl && info.listEl.focus) {
+            info.listEl.focus();
+            return;
+        }
+        // No recorded owner (a stale-marker close — view switch, palette
+        // open): the legacy behavior, focus whatever row still carries it.
+        const active = body.querySelector('.active');
+        if (active && active.focus)
+            active.focus();
+    };
+
+    const clearMenu = e => {
+        const active = body.querySelector('.active');
+        if (e) {
+            currentContext = null;
+            ownerInfo = null;
+            if (active) {
+                active.classList.remove('active');
+                const el = e.target;
+                if (el === $tree || el === $results) {
+                    active.focus();
+                }
+            }
+        } else {
+            // Programmatic close (menu-item dispatch, view switch, palette
+            // open): the .active marker stays (K6's stale-state contract)
+            // and focus returns to the owning row, robust against the view
+            // re-renders an action may have triggered.
+            refocusOwner();
+            currentContext = null;
+            ownerInfo = null;
+        }
+        hideAllMenus();
+    };
+
+    // Cancel semantics (keyboard.js's ←-back / Esc): the marker comes OFF
+    // the owning row and focus returns to it (refocusOwner covers a row
+    // re-rendered away under the open menu), then every menu hides.
+    const closeMenu = () => {
+        const active = body.querySelector('.active');
+        if (active)
+            active.classList.remove('active');
+        refocusOwner();
+        currentContext = null;
+        ownerInfo = null;
+        hideAllMenus();
     };
 
     body.addEventListener('click', clearMenu);
@@ -355,6 +429,15 @@ export function initContextMenu(ctx = {}) {
             updateSortLabels();
         if (menu) {
             currentContext = el;
+            // Capture the owner row's identity NOW — a view re-render under
+            // the open menu detaches the element and breaks its parentNode
+            // chain, so the close-time refocusOwner could not find the list
+            // or the replacement row otherwise.
+            const ownerLi = el.closest ? el.closest('li') : null;
+            ownerInfo = {
+                liId: (ownerLi && ownerLi.id) || '',
+                listEl: ownerLi && ownerLi.closest ? ownerLi.closest(LIST_SEL) : null
+            };
             const active = body.querySelector('.active');
             if (active)
                 active.classList.remove('active');
@@ -406,20 +489,30 @@ export function initContextMenu(ctx = {}) {
         const url = currentContext.href;
         const li = currentContext.parentNode;
         const id = rowId(li);
+        // Capture the proposed group title BEFORE clearMenu — rowGroupTitle
+        // reads currentContext, which the close nulls.
+        const groupTitle = rowGroupTitle();
+        // Close FIRST (the 4.0.2 menu focus law): focus returns to the
+        // owning row before the action runs — a dialog the action opens then
+        // captures the ROW as its invoker (not the hidden menu), and a view
+        // re-render triggered by the action finds the row focused, so the
+        // views' render-time focus park carries it across the innerHTML
+        // swap. Closing last used to strand focus on the hidden menu or
+        // yank it out of a just-opened dialog.
+        clearMenu();
         switch (el.id) {
             // ++++++++ modified by windviki@gmail.com ++++++++
             // P3.4: open the bookmark as a one-tab tab group. The open
             // itself is handed to the service worker (vbm-tab-group-open-*)
             // so closing the popup cannot abort it.
             case 'bookmark-open-in-new-group': {
-                actions.openBookmarksInGroup([url], rowGroupTitle());
+                actions.openBookmarksInGroup([url], groupTitle);
                 break;
             }
             case 'bookmark-open-in-new-group-setup': {
-                const title = rowGroupTitle();
                 dialogs.GroupDialog.open({
-                    title: title,
-                    color: pickGroupColor(title),
+                    title: groupTitle,
+                    color: pickGroupColor(groupTitle),
                     onConfirm: (t, c) => actions.openBookmarksInGroup([url], t, c)
                 });
                 break;
@@ -506,7 +599,6 @@ export function initContextMenu(ctx = {}) {
             }
                 break;
         }
-        clearMenu();
     };
     // On Mac, all three mouse clicks work; on Windows, middle-click doesn't work
     $bookmarkContextMenu.addEventListener('mouseup', e => {
@@ -532,12 +624,16 @@ export function initContextMenu(ctx = {}) {
         if (el.classList.contains('disabled'))
             return;
         // P3.4: capture the proposed group title BEFORE scheduling getChildren.
-        // clearMenu() at the end of this handler nulls currentContext, and the
-        // group cases below run inside the async callback — reading the title
-        // there would see null and silently produce an untitled group.
+        // clearMenu() below nulls currentContext, and the group cases run
+        // inside the async callback — reading the title there would see null
+        // and silently produce an untitled group.
         const groupTitle = rowGroupTitle();
         const li = currentContext.parentNode;
         const id = rowId(li);
+        // Close FIRST (the 4.0.2 menu focus law — see the bookmark handler):
+        // the owning row retakes focus before the async dispatch below opens
+        // any dialog or triggers a re-render.
+        clearMenu();
         chrome.bookmarks.getChildren(id, children => {
             // A deleted/ghost folder id makes getChildren call back with
             // undefined + lastError — guard so the map doesn't throw.
@@ -675,7 +771,6 @@ export function initContextMenu(ctx = {}) {
                     break;
             }
         });
-        clearMenu();
     };
     $folderContextMenu.addEventListener('mouseup', e => {
         e.stopPropagation();
@@ -697,12 +792,13 @@ export function initContextMenu(ctx = {}) {
             return;
         const li = currentContext.parentNode;
         const id = rowId(li);
+        // Close FIRST (the 4.0.2 menu focus law — see the bookmark handler).
+        clearMenu();
         switch (el.id) {
             case 'remove-separator':
                 actions.deleteSeparator(id);
                 break;
         }
-        clearMenu();
     };
     $separatorContextMenu.addEventListener('mouseup', e => {
         e.stopPropagation();
@@ -729,17 +825,21 @@ export function initContextMenu(ctx = {}) {
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
+        // Close FIRST (menu focus law); the dispatch below rides the
+        // captured row — currentContext is null after clearMenu().
+        const row = currentContext;
+        clearMenu();
         switch (el.id) {
             case 'search-history-menu-rerun':
                 // Activating the row anchor reruns its query.
-                currentContext.click();
+                row.click();
                 break;
             case 'search-history-menu-remove': {
                 // The row may have been re-rendered away since the menu opened
-                // (currentContext then has no parentNode) — a stale-row click
+                // (row then has no parentNode) — a stale-row click
                 // must not crash on a null querySelector.
-                const removeBtn = currentContext.parentNode &&
-                    currentContext.parentNode.querySelector('.search-history-remove');
+                const removeBtn = row.parentNode &&
+                    row.parentNode.querySelector('.search-history-remove');
                 if (removeBtn)
                     removeBtn.click();
                 break;
@@ -751,7 +851,6 @@ export function initContextMenu(ctx = {}) {
                 break;
             }
         }
-        clearMenu();
     };
     if ($searchHistoryContextMenu) {
         $searchHistoryContextMenu.addEventListener('mouseup', e => {
@@ -779,7 +878,10 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const actions = ctx.actions;
-        const url = currentContext.href;
+        // Close FIRST (menu focus law); the dispatch rides the captured row.
+        const row = currentContext;
+        const url = row.href;
+        clearMenu();
         switch (el.id) {
             case 'hist-open-new-tab':
                 actions.openBookmarkNewTab(url);
@@ -792,15 +894,14 @@ export function initContextMenu(ctx = {}) {
                 break;
             case 'hist-add-bookmark': {
                 // Same stale-row guard as the search-history remove entry: a
-                // re-rendered list can leave currentContext detached.
-                const addBtn = currentContext.parentNode &&
-                    currentContext.parentNode.querySelector('.stats-add-btn');
+                // re-rendered list can leave the captured row detached.
+                const addBtn = row.parentNode &&
+                    row.parentNode.querySelector('.stats-add-btn');
                 if (addBtn)
                     addBtn.click();
                 break;
             }
         }
-        clearMenu();
     };
     if ($histRowContextMenu) {
         $histRowContextMenu.addEventListener('mouseup', e => {
@@ -821,6 +922,9 @@ export function initContextMenu(ctx = {}) {
         if (!el.classList.contains('menu-item'))
             return;
         const key = currentContext.parentNode.dataset.key;
+        // Close FIRST (menu focus law): the group-head span retakes focus
+        // before clean/toggle re-renders the dupes list.
+        clearMenu();
         switch (el.id) {
             case 'dupes-group-clean':
                 ctx.dupesMenu.cleanGroup(key);
@@ -829,7 +933,6 @@ export function initContextMenu(ctx = {}) {
                 ctx.dupesMenu.toggleGroup(key);
                 break;
         }
-        clearMenu();
     };
     if ($dupesGroupContextMenu) {
         $dupesGroupContextMenu.addEventListener('mouseup', e => {
@@ -853,7 +956,11 @@ export function initContextMenu(ctx = {}) {
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
+        // Close FIRST (menu focus law): focus returns to the palette input
+        // (refocusOwner's palette branch) before edit/remove opens a dialog
+        // or re-renders the result list.
         const id = currentContext.dataset && currentContext.dataset.ccId;
+        clearMenu();
         if (!id || !ctx.paletteMenu)
             return;
         switch (el.id) {
@@ -864,7 +971,6 @@ export function initContextMenu(ctx = {}) {
                 ctx.paletteMenu.remove(id);
                 break;
         }
-        clearMenu();
     };
     if ($paletteCmdContextMenu) {
         $paletteCmdContextMenu.addEventListener('mouseup', e => {
@@ -897,6 +1003,9 @@ export function initContextMenu(ctx = {}) {
 
     return {
         clearMenu,
+        // Cancel semantics for the keyboard layer (←-back / Esc): marker off,
+        // focus back to the owning row, all menus hidden.
+        closeMenu,
         switchBookmarkMenu,
         // The keyboard/mouse bindings that stay in neat.js
         // (contextKeyDown/contextMouseMove/contextMouseOut) attach through
