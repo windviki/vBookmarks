@@ -123,12 +123,16 @@ const setup = (opts = {}) => {
                 this.focusCount++;
                 doc.activeElement = this;
             },
-            // Minimal Element.closest: tag selectors only ('li' is what the
-            // view-manager's focus-memory path asks for).
+            // Minimal Element.closest: tag selectors plus the leading-dot
+            // class form ('.vbm-dropdown-list' — the marker guard asks for it).
             closest(sel) {
                 for (let n = this; n; n = n.parentNode) {
-                    if (n.tagName === sel.toUpperCase())
+                    if (sel.startsWith('.')) {
+                        if (n.classList.contains(sel.slice(1)))
+                            return n;
+                    } else if (n.tagName === sel.toUpperCase()) {
                         return n;
+                    }
                 }
                 return null;
             },
@@ -504,6 +508,38 @@ describe('activate', () => {
         recent.listEl.trigger('focusin', { target: btn });
         expect(btn.classList.contains('focus')).toBe(false);
         expect(a2.classList.contains('focus')).toBe(true);
+    });
+
+    it('a dropdown listbox option never takes the .focus marker (4.0.2 regressions gate)', () => {
+        // The dupes toolbar's custom dropdowns render <li role="option"
+        // tabindex="-1"> inside #dupes-list. Before the guard, opening the
+        // listbox focused such an option, which matched the LI[tabindex] row
+        // heuristic and STOLE the remembered-row marker — the toolbar rung's
+        // ↓ then targeted the hidden option (querySelector('.focus')) and the
+        // crossing into the rows silently died.
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li1 = makeEl('li');
+        const a1 = makeEl('a');
+        li1.appendChild(a1);
+        recent.listEl.appendChild(li1);
+        recent.listEl.trigger('focusin', { target: a1 });
+        expect(a1.classList.contains('focus')).toBe(true);
+        // a dropdown: <div.vbm-dropdown><ul.vbm-dropdown-list><li[tabindex]>
+        const dropdown = makeEl('div');
+        dropdown.classList.add('vbm-dropdown');
+        const listbox = makeEl('ul');
+        listbox.classList.add('vbm-dropdown-list');
+        const option = makeEl('li');
+        option.setAttribute('tabindex', '-1');
+        option.classList.add('vbm-dropdown-option');
+        dropdown.appendChild(listbox);
+        listbox.appendChild(option);
+        recent.listEl.appendChild(dropdown);
+        // focusing the option must NOT displace the row marker
+        recent.listEl.trigger('focusin', { target: option });
+        expect(option.classList.contains('focus')).toBe(false);
+        expect(a1.classList.contains('focus')).toBe(true);
     });
 
     it('remembers the row via the live marker when a mouse switch moved focus first', () => {

@@ -2374,6 +2374,144 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         }
         expect(rec.focusTopCalls).toBe(3); // Home + End took the top crossing
     });
+
+    // --- Dupes-specific rung surface (4.0.2 regressions gate) --------------
+    // The dupes toolbar (strategy/scope custom dropdowns + scheme checkbox +
+    // apply-all / select-mode buttons) is the richest rung. The user-facing
+    // contract (keyboard-model §2.5): the dropdown trigger's ↓ opens its
+    // listbox (dropdown.js — tested there) and its ↑ walks the rung up; every
+    // OTHER control's ↓ crosses into the rows (remembered first) and ↑ crosses
+    // to the strip/box. A `.focus` marker that somehow sits inside a hidden
+    // listbox (the 4.0.2 marker-steal regression: view-manager's focusin
+    // guard now keeps it off dropdown options) must not dead-end that crossing.
+    const setupDupesBar = () => {
+        const bag = { rec: { focusTopCalls: 0 } };
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'dupes-list');
+                const bar = el('DIV');
+                bar.classList.add('dupes-toolbar');
+                bar.classList.add('vbm-toolbar');
+                // the custom dropdown: trigger button + hidden listbox option
+                const dropdown = el('DIV');
+                dropdown.classList.add('vbm-dropdown');
+                dropdown.classList.add('dupes-strategy');
+                const trigger = el('BUTTON', 'dupes-strategy-trigger');
+                trigger.classList.add('vbm-dropdown-trigger');
+                const listbox = el('UL');
+                listbox.classList.add('vbm-dropdown-list');
+                listbox.hidden = true;
+                const option = el('LI', 'dupes-strategy-opt');
+                option.parentNode = listbox;
+                listbox.parentNode = dropdown;
+                trigger.parentNode = dropdown;
+                dropdown.parentNode = bar;
+                const checkbox = el('INPUT', 'dupes-scheme-input');
+                checkbox.type = 'checkbox';
+                checkbox.parentNode = bar;
+                const applyAll = el('BUTTON', 'dupes-apply-all');
+                applyAll.classList.add('dupes-apply-all');
+                applyAll.parentNode = bar;
+                bar.parentNode = listEl;
+                bar._qsa['button, select, input'] = [trigger, checkbox, applyAll];
+                listEl._qsa['.vbm-toolbar'] = [bar];
+                // closest(): the controls live in the rung, the option in the
+                // hidden listbox (the stale-marker defense keys off that)
+                const inBar = sel => (sel === '.vbm-toolbar' ? bar : null);
+                trigger.closest = inBar;
+                checkbox.closest = inBar;
+                applyAll.closest = inBar;
+                option.closest = sel =>
+                    sel === '.vbm-dropdown-list' ? listbox : inBar(sel);
+                const mkRow = id => {
+                    const li = el('LI', id);
+                    li.dataset.nodeId = id;
+                    const a = el('A');
+                    a.parentNode = li;
+                    a.parentElement = li;
+                    li.firstElementChild = a;
+                    li.parentNode = listEl;
+                    return { li, a };
+                };
+                const r1 = mkRow('dupes-item-11');
+                const r2 = mkRow('dupes-item-12');
+                r1.li.nextElementSibling = r2.li;
+                r2.li.previousElementSibling = r1.li;
+                listEl._qs['li a, li span'] = r1.a;
+                Object.assign(bag, { listEl, bar, trigger, listbox, option, checkbox, applyAll, r1, r2 });
+                const dupesEntry = { id: 'dupes', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, dupesEntry],
+                    listOf: el2 => (el2 === listEl ? dupesEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => { bag.rec.focusTopCalls++; },
+                    activate: () => {}
+                };
+            }
+        });
+        return { ctx, ...bag };
+    };
+
+    it('dupes rung: ↓ from the checkbox / apply-all crosses into the rows', () => {
+        const { ctx, listEl, checkbox, applyAll, r1 } = setupDupesBar();
+        listEl._qs['.focus'] = r1.a; // the remembered row
+        for (const ctl of [checkbox, applyAll]) {
+            ctx.doc.activeElement = ctl;
+            const ev = makeEvent({ key: 'ArrowDown' });
+            fire(listEl, 'keydown', ev);
+            expect(ev.defaultPrevented).toBe(true);
+            expect(r1.a.focused).toBe(true);
+        }
+    });
+
+    it('dupes rung: ↑ from the checkbox / apply-all crosses to the strip/box', () => {
+        const { ctx, listEl, checkbox, applyAll, rec } = setupDupesBar();
+        for (const ctl of [checkbox, applyAll]) {
+            ctx.doc.activeElement = ctl;
+            const ev = makeEvent({ key: 'ArrowUp' });
+            fire(listEl, 'keydown', ev);
+            expect(ev.defaultPrevented).toBe(true);
+        }
+        expect(rec.focusTopCalls).toBe(2);
+    });
+
+    it('dupes rung: ↑ from the closed dropdown trigger walks the rung up (no listbox interception)', () => {
+        const { ctx, listEl, trigger, rec } = setupDupesBar();
+        ctx.doc.activeElement = trigger;
+        const up = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', up);
+        expect(up.defaultPrevented).toBe(true);
+        expect(rec.focusTopCalls).toBe(1);
+    });
+
+    it('dupes rung: ←/→ walk trigger → checkbox → apply-all in reading order', () => {
+        const { ctx, listEl, trigger, checkbox, applyAll } = setupDupesBar();
+        ctx.doc.activeElement = trigger;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowRight' }));
+        expect(checkbox.focused).toBe(true);
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowRight' }));
+        expect(applyAll.focused).toBe(true);
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(checkbox.focused).toBe(true);
+    });
+
+    it('dupes rung: a stale .focus inside the hidden listbox does NOT dead-end ↓ (marker-steal regression)', () => {
+        // Regression gate for the reported 4.0.2 bug: opening the strategy
+        // dropdown used to focus the listbox option, which (pre-guard) stole
+        // the `.focus` row marker. The toolbar's ↓ then targeted the HIDDEN
+        // option (querySelector('.focus')) and .focus() silently failed — the
+        // button area could no longer enter the rows. The rung must skip a
+        // listbox-resident marker and fall through to the real row.
+        const { ctx, listEl, applyAll, option, r1 } = setupDupesBar();
+        listEl._qs['.focus'] = option; // the marker was parked on the option
+        ctx.doc.activeElement = applyAll;
+        const ev = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(option.focused).toBe(false); // never the hidden option
+        expect(r1.a.focused).toBe(true);    // the crossing lands on a real row
+    });
 });
 
 // --- K14: a toolbar text input owns its caret keys ---------------------------

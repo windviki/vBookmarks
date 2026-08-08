@@ -190,6 +190,16 @@ export function initViewManager(ctx = {}) {
                 || (t.tagName === 'LI' && t.getAttribute && t.getAttribute('tabindex') !== null);
             if (!isRowFocus)
                 return;
+            // A toolbar dropdown's option <li role="option" tabindex="-1">
+            // (the dupes strategy/scope listboxes) is toolbar chrome, not a
+            // list row — it must never displace the remembered-row marker. A
+            // marker parked on a hidden listbox option dead-ends the toolbar
+            // rung's ↓ (keyboard.js targets `this.querySelector('.focus')`,
+            // and .focus() on a hidden element silently fails) — the reported
+            // 4.0.2 regression: open the strategy dropdown, then ↓ from the
+            // button area could no longer enter the rows.
+            if (t.closest && t.closest('.vbm-dropdown-list'))
+                return;
             const old = def.listEl.querySelector('.focus');
             if (old && old !== t)
                 old.classList.remove('focus');

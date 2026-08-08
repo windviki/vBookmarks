@@ -520,6 +520,22 @@ const SEED = `
         document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger')),
         await activeDesc());
 
+    // 4.0.2 regression gate: opening (and closing) the strategy dropdown used
+    // to let the listbox option steal the `.focus` row marker — the toolbar's
+    // ↓ then targeted the HIDDEN option (querySelector('.focus')) and the
+    // button area could no longer enter the rows. After the open/close above,
+    // the →→→ apply-all ↓ walk must STILL land on the group head.
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowRight'); await sleep(150);
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('dupes rung ↓ still enters the rows after the dropdown was open/closed (marker-steal gate)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('group-head')),
+        await activeDesc());
+    await page.evaluate(() =>
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger').focus());
+    await sleep(150);
+
     // 失焦即关 (D3/K8): an open listbox must not survive a view switch. A
     // real tab click doubles for Ctrl+2 here — CDP digits do not reach the
     // document-capture view-switch listener, and activate() moves focus the

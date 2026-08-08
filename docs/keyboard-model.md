@@ -181,6 +181,15 @@ without an enabled control is skipped transparently:
   index-clamped row, then the container/input when the list is empty — so a
   menu action that re-renders (e.g. "set as keeper") no longer loses
   keyboard focus. *(the views' render functions)*
+- **The remembered-row marker is row-scoped**: the live `.focus` marker
+  (view-manager's focusin handler) never lands on a toolbar dropdown's
+  option `<li role="option" tabindex="-1">` — those are listbox chrome, not
+  rows, and a marker parked on a HIDDEN option dead-ended the rung's `↓`
+  (the 4.0.2 regression: after opening the strategy dropdown, the button
+  area could no longer enter the rows). The rung's ↓ also skips a
+  listbox-resident marker defensively. *(view-manager `bindFocusMarker`,
+  keyboard.js rung ↓; gate in verify-keyboard.js + tests/view-manager and
+  tests/keyboard)*
 - **Inline row controls** (the dupes keeper radio, the dead ⚑/× buttons)
   are not the rung: when one holds focus (mouse click), `↑`/`↓` walk rows
   relative to its owning row, and `↑` past the top takes the §2.1 crossing.

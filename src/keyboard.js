@@ -147,9 +147,17 @@ export function initKeyboard(ctx = {}) {
                                 }
                             }
                             // ↓ into the rows: the remembered row first (the
-                            // same landing the strip's ↓ makes).
-                            const target = this.querySelector('.focus')
-                                || this.querySelector('li a, li span');
+                            // same landing the strip's ↓ makes). The marker
+                            // must sit on a real row — a stale `.focus` inside
+                            // a toolbar dropdown's hidden listbox (a marker
+                            // restored from storage or left behind before the
+                            // focusin guard) would target a hidden option and
+                            // silently dead-end the crossing.
+                            const focused = this.querySelector('.focus');
+                            const target = (focused
+                                    && !(focused.closest && focused.closest('.vbm-dropdown-list')))
+                                ? focused
+                                : this.querySelector('li a, li span');
                             if (target)
                                 target.focus();
                         } else {
