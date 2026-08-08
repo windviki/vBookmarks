@@ -256,9 +256,9 @@ const setup = (opts = {}) => {
     treeUl.firstElementChild = f1.li;
     treeUl.lastElementChild = b4.li;
 
-    tree._qs['ul>li:first-child'] = f1.li; // Home
+    tree._qs['ul:not(.vbm-dropdown-list)>li:first-child'] = f1.li; // Home
     tree._qs['li:first-child>span'] = f1.link; // activeElement fallback
-    tree._qsa['ul>li:last-child'] = [b12.li, b31.li, b4.li]; // End
+    tree._qsa['ul:not(.vbm-dropdown-list)>li:last-child'] = [b12.li, b31.li, b4.li]; // End
 
     // a closed folder, for the open-on-arrow tests (non-root parent — the
     // root-folder delete guard keys off parentid '0')
@@ -306,6 +306,25 @@ const setup = (opts = {}) => {
         searchHistoryMenu.lastElementChild = shmItem2;
     }
 
+    // v4 task-4 #6's palette custom-command menu (K7): same binding; omitted
+    // entirely when opts.noPaletteCmdMenu (guard coverage)
+    let paletteCmdMenu = null;
+    let pcmItem1 = null;
+    let pcmItem2 = null;
+    if (!opts.noPaletteCmdMenu) {
+        paletteCmdMenu = el('MENU', 'palette-cmd-context-menu');
+        pcmItem1 = el('DIV', 'palette-cmd-edit');
+        pcmItem1.classList.add('menu-item');
+        pcmItem2 = el('DIV', 'palette-cmd-delete');
+        pcmItem2.classList.add('menu-item');
+        pcmItem1.nextElementSibling = pcmItem2;
+        pcmItem2.previousElementSibling = pcmItem1;
+        for (const n of [pcmItem1, pcmItem2])
+            n.parentNode = paletteCmdMenu;
+        paletteCmdMenu.firstElementChild = pcmItem1;
+        paletteCmdMenu.lastElementChild = pcmItem2;
+    }
+
     const actionCalls = [];
     const actions = {};
     for (const name of ['editBookmarkFolder', 'deleteBookmark', 'deleteBookmarks'])
@@ -341,6 +360,8 @@ const setup = (opts = {}) => {
     };
     if (searchHistoryMenu)
         menus.searchHistoryMenu = searchHistoryMenu;
+    if (paletteCmdMenu)
+        menus.paletteCmdMenu = paletteCmdMenu;
     const closeDialogsCalls = [];
     const dialogs = {
         anyOpen: () => flags.dialogOpen,
@@ -417,6 +438,7 @@ const setup = (opts = {}) => {
         tree, results, body, searchInput, search,
         bookmarkMenu, folderMenu, separatorMenu, menus,
         searchHistoryMenu, shmItem1, shmItem2,
+        paletteCmdMenu, pcmItem1, pcmItem2,
         quickAddBtn, toolBtn,
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
@@ -427,7 +449,7 @@ const setup = (opts = {}) => {
 
 describe('module API', () => {
     it('returns the four handlers and binds every listener', () => {
-        const { keyboard, tree, results, bookmarkMenu, folderMenu, separatorMenu, doc } = setup({});
+        const { keyboard, tree, results, bookmarkMenu, folderMenu, separatorMenu, paletteCmdMenu, doc } = setup({});
         expect(typeof keyboard.treeKeyDown).toBe('function');
         expect(typeof keyboard.treeKeyUp).toBe('function');
         expect(typeof keyboard.contextKeyDown).toBe('function');
@@ -440,6 +462,7 @@ describe('module API', () => {
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
         expect(separatorMenu._listeners.keydown).toBeUndefined(); // binding stays commented out
+        expect(paletteCmdMenu._listeners.keydown).toHaveLength(1); // K7: bound like the other menus
         expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
     });
 });
@@ -689,6 +712,15 @@ describe('Tab region cycle (§2.1)', () => {
         fireDoc('keydown', ev);
         expect(ev.defaultPrevented).toBe(false);
         expect(doc.activeElement).toBe(item1);
+    });
+
+    it('does nothing inside the palette-cmd menu either (K7: it joined menuContainers)', () => {
+        const { doc, fireDoc, pcmItem1 } = tabEnv();
+        pcmItem1.focus();
+        const ev = makeEvent({ key: 'Tab' });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false);
+        expect(doc.activeElement).toBe(pcmItem1);
     });
 
     it('does nothing while the palette is open', () => {
@@ -1106,6 +1138,17 @@ describe('treeKeyDown — F2 / Delete', () => {
         expect(ctx.actionCalls).toEqual([['editBookmarkFolder', '77']]);
     });
 
+    it('F2 does nothing on a root folder (K3 — the same parentid 0 guard as Delete)', () => {
+        const { tree, f1, f5, doc, actionCalls } = setup({});
+        doc.activeElement = f1.link; // root folder (parentid '0')
+        fire(tree, 'keydown', makeEvent({ key: 'F2' }));
+        expect(actionCalls).toEqual([]); // Chrome would reject update() on it
+        // a NON-root folder still reaches the edit action
+        doc.activeElement = f5.link; // parentid '1'
+        fire(tree, 'keydown', makeEvent({ key: 'F2' }));
+        expect(actionCalls).toEqual([['editBookmarkFolder', '5']]);
+    });
+
     it('Delete on keydown is swallowed (the delete action fires on keyup)', () => {
         const { tree, b11, doc, actionCalls } = setup({});
         doc.activeElement = b11.link;
@@ -1459,6 +1502,49 @@ describe('contextKeyDown', () => {
         expect(item2.focused).toBe(true);
     });
 
+    it('container-held ↓ enters at the first VISIBLE enabled item (K1: bookmark menu on a tree row)', () => {
+        // Mirror the real bookmark menu opened on a tree row (pages/popup.html):
+        // reveal-in-tree / its separator / dead-mark-toggle / dupes-set-keeper
+        // are all display:none — the first WALKABLE item is bookmark-new-tab.
+        // The old entry branch focused firstElementChild (display:none →
+        // unfocusable), deadlocking ↓ on the container.
+        const { bookmarkMenu, item2, el, doc } = setup({});
+        const hiddenItem = id => {
+            const n = el('DIV', id);
+            n.classList.add('menu-item');
+            n.style.display = 'none';
+            return n;
+        };
+        const reveal = hiddenItem('reveal-in-tree');
+        const sep = el('HR');
+        sep.style.display = 'none';
+        const mark = hiddenItem('dead-mark-toggle');
+        const keeper = hiddenItem('dupes-set-keeper');
+        const newTab = el('DIV', 'bookmark-new-tab');
+        newTab.classList.add('menu-item');
+        const nodes = [reveal, sep, mark, keeper, newTab, item2];
+        for (let i = 0; i < nodes.length; i++) {
+            nodes[i].previousElementSibling = nodes[i - 1] || null;
+            nodes[i].nextElementSibling = nodes[i + 1] || null;
+        }
+        bookmarkMenu.firstElementChild = reveal;
+        bookmarkMenu.lastElementChild = item2;
+        doc.activeElement = bookmarkMenu;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(newTab.focused).toBe(true);
+        expect(reveal.focused).toBe(false);
+        expect(mark.focused).toBe(false);
+    });
+
+    it('container-held ↑ enters at the last ENABLED item (K9: root-folder delete greys out)', () => {
+        const { bookmarkMenu, item1, item2, doc } = setup({});
+        item2.classList.add('disabled'); // folder-delete on a root folder
+        doc.activeElement = bookmarkMenu;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(item1.focused).toBe(true);
+        expect(item2.focused).toBe(false); // the disabled tail never takes focus
+    });
+
     it('Enter dispatches a mouseup on the focused menu item', () => {
         const { bookmarkMenu, item1, doc } = setup({});
         doc.activeElement = item1;
@@ -1535,6 +1621,23 @@ describe('contextKeyDown', () => {
         fire(folderMenu, 'keydown', makeEvent({ key: 'Escape' }));
         expect(clearMenuCalls).toEqual(['clear']);
     });
+
+    it('binds the full walk on the palette custom-command menu too (K7)', () => {
+        const { paletteCmdMenu, pcmItem1, pcmItem2, doc } = setup({});
+        expect(paletteCmdMenu._listeners.keydown).toHaveLength(1);
+        doc.activeElement = pcmItem1;
+        fire(paletteCmdMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(pcmItem2.focused).toBe(true);
+        // Enter dispatches the item's mouseup, same as every other menu
+        fire(paletteCmdMenu, 'keydown', makeEvent({ key: 'Enter' }));
+        expect(pcmItem2._dispatched).toHaveLength(1);
+        expect(pcmItem2._dispatched[0].type).toBe('mouseup');
+    });
+
+    it('init does not throw when the palette-cmd menu is absent', () => {
+        const { paletteCmdMenu } = setup({ noPaletteCmdMenu: true });
+        expect(paletteCmdMenu).toBe(null);
+    });
 });
 
 describe('document Escape / Ctrl+F', () => {
@@ -1610,6 +1713,30 @@ describe('document Escape / Ctrl+F', () => {
         expect(ev.defaultPrevented).toBe(true);
         expect(searchInput.focused).toBe(true);
         expect(searchInput.selected).toBe(true);
+    });
+
+    it('Ctrl+F is a no-op while a dialog is open (K5)', () => {
+        const { fireDoc, searchInput } = setup({ dialogOpen: true });
+        const ev = makeEvent({ key: 'f', ctrlKey: true });
+        fireDoc('keydown', ev);
+        expect(ev.defaultPrevented).toBe(false); // the dialog keeps its keys
+        expect(searchInput.focused).toBe(false); // focus is not yanked out
+        expect(searchInput.selected).toBe(false);
+    });
+
+    it('Ctrl+F with a dialog open never activates the search view either', () => {
+        const activateCalls = [];
+        const views = {
+            lists: () => [],
+            listOf: () => null,
+            onEscapeActive: () => false,
+            escapeToTree: () => false,
+            focusTop: () => {},
+            activate: id => activateCalls.push(id)
+        };
+        const { fireDoc } = setup({ dialogOpen: true, views });
+        fireDoc('keydown', makeEvent({ key: 'f', ctrlKey: true }));
+        expect(activateCalls).toEqual([]);
     });
 });
 
@@ -1796,7 +1923,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
                 listEl._qs['li a, li span'] = r1.a;
                 listEl._qs['li:last-child a, li:last-child span'] = r2.a;
                 listEl._qs['.focus'] = r1.a;
-                listEl._qs['ul>li:first-child'] = r1.li;
+                listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'] = r1.li;
                 Object.assign(bag, { listEl, toolbar, btn, btn2, r1, r2 });
                 const statsEntry = { id: 'stats', el: listEl, typeAhead: false };
                 return {
@@ -1946,6 +2073,19 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(ctx.f1.link.focused).toBe(false);
     });
 
+    it('Home/End with no row-list match are no-ops (D1: a bare listbox ul cannot crash them)', () => {
+        // The dupes toolbar's strategy listbox is a ul inside the list
+        // container whose option rows carry no span/a — the row-list selectors
+        // exclude it (ul:not(.vbm-dropdown-list)) and the guards absorb an
+        // empty result.
+        const { ctx, listEl, btn, r1 } = setupStatsList();
+        delete listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'];
+        ctx.doc.activeElement = btn;
+        expect(() => fire(listEl, 'keydown', makeEvent({ key: 'Home' }))).not.toThrow();
+        expect(r1.a.focused).toBe(false);
+        expect(() => fire(listEl, 'keydown', makeEvent({ key: 'End' }))).not.toThrow();
+    });
+
     it('inline row controls walk rows relative to the OWNING row (↑ past the top crosses)', () => {
         const { ctx, listEl, r1, r2, rec } = setupStatsList();
         // a keeper-radio-like button inside the first row
@@ -1972,6 +2112,19 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         ctx.doc.activeElement = listEl;
         fire(listEl, 'keyup', makeEvent({ key: 'Delete' }));
         expect(ctx.actionCalls).toEqual([['deleteBookmark', 's1']]);
+    });
+
+    it('Delete (keyup) on the list container with NO .focus marker deletes nothing (K4)', () => {
+        // f5903c8 parks focus on the container while an async view renders —
+        // rows exist but none is marked; the old `|| first row` fallback would
+        // delete an invisible target.
+        const { ctx, listEl } = setupStatsList();
+        delete listEl._qs['.focus']; // rows rendered, nothing marked
+        ctx.doc.activeElement = listEl;
+        const ev = makeEvent({ key: 'Delete' });
+        fire(listEl, 'keyup', ev);
+        expect(ctx.actionCalls).toEqual([]);
+        expect(ev.defaultPrevented).toBe(false);
     });
 
     // v4 task-4 #13: the dead view stacks two toolbars (proxy strip above
@@ -2055,6 +2208,109 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         fire(listEl, 'keydown', up);
         expect(b1.focused).toBe(false);
     });
+
+    // K17: f5903c8 parks focus on the container while an async view renders —
+    // with no .focus marker and no rows at all the old early-return killed ↑
+    // too. ↑ now takes the §2.1/§2.5 crossing; ↓/Home/End stay put until rows
+    // exist.
+    it('container-focused with NO rows: ↑ crosses out, ↓/Home/End stay put (K17)', () => {
+        const { ctx, listEl, rec } = setupStatsList();
+        delete listEl._qs['.focus'];
+        delete listEl._qs['li a, li span']; // rows not rendered yet
+        ctx.doc.activeElement = listEl;
+        const up = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', up);
+        expect(up.defaultPrevented).toBe(true);
+        expect(rec.focusTopCalls).toBe(1); // no focusListExit on this double
+        ctx.doc.activeElement = listEl;
+        for (const k of ['ArrowDown', 'Home', 'End']) {
+            const ev = makeEvent({ key: k });
+            fire(listEl, 'keydown', ev);
+            expect(ctx.doc.activeElement).toBe(listEl); // stayed put
+        }
+    });
+});
+
+// --- K14: a toolbar text input owns its caret keys ---------------------------
+// The dead view's proxy URL/test-URL inputs live in a .vbm-toolbar — the rung
+// walk must not hijack ←/→/Home/End (caret movement) the way it walks buttons
+// and selects; the passthrough mirrors the SELECT's native ↑/↓. ↑/↓ still
+// leave the field through the rung walk.
+describe('K14: toolbar text input keeps ←/→/Home/End (caret, not the rung)', () => {
+    const setupProxyBar = () => {
+        const bag = { rec: { focusTopCalls: 0 } };
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'dead-list');
+                const bar = el('DIV');
+                bar.classList.add('vbm-toolbar');
+                const input = el('INPUT', 'dead-proxy-input');
+                input.type = 'text';
+                const btn = el('BUTTON', 'dead-proxy-add');
+                bar._qsa['button, select, input'] = [input, btn];
+                input.closest = btn.closest = sel => (sel === '.vbm-toolbar' ? bar : null);
+                bar.parentNode = listEl;
+                const li = el('LI', 'dead-item-d1');
+                li.dataset.nodeId = 'd1';
+                const a = el('A');
+                a.parentNode = li;
+                a.parentElement = li;
+                li.firstElementChild = a;
+                li._qs['span, a'] = a;
+                li.parentNode = listEl;
+                listEl._qsa['.vbm-toolbar'] = [bar];
+                listEl._qs['li a, li span'] = a;
+                listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'] = li;
+                listEl._qs['ul:not(.vbm-dropdown-list)>li:last-child'] = li;
+                Object.assign(bag, { listEl, input, btn, a });
+                const deadEntry = { id: 'dead', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, deadEntry],
+                    listOf: el2 => (el2 === listEl ? deadEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => { bag.rec.focusTopCalls++; },
+                    activate: () => {}
+                };
+            }
+        });
+        return { ctx, ...bag };
+    };
+
+    it('←/→/Home/End are not hijacked — the field keeps its caret keys', () => {
+        const { ctx, listEl, input, btn, a } = setupProxyBar();
+        for (const k of ['ArrowLeft', 'ArrowRight', 'Home', 'End']) {
+            ctx.doc.activeElement = input;
+            const ev = makeEvent({ key: k });
+            fire(listEl, 'keydown', ev);
+            expect(ev.defaultPrevented).toBe(false); // native caret movement
+            expect(btn.focused).toBe(false); // no rung walk
+            expect(a.focused).toBe(false);   // no first/last-row jump
+        }
+    });
+
+    it('↑/↓ still leave the field through the rung walk', () => {
+        const { ctx, listEl, input, a, rec } = setupProxyBar();
+        ctx.doc.activeElement = input;
+        const down = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', down);
+        expect(down.defaultPrevented).toBe(true);
+        expect(a.focused).toBe(true); // the single rung → crosses into the rows
+        ctx.doc.activeElement = input;
+        const up = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', up);
+        expect(up.defaultPrevented).toBe(true);
+        expect(rec.focusTopCalls).toBe(1); // the top rung → strip/box
+    });
+
+    it('← from a sibling control still walks INTO the input', () => {
+        const { ctx, listEl, input, btn } = setupProxyBar();
+        ctx.doc.activeElement = btn;
+        const left = makeEvent({ key: 'ArrowLeft' });
+        fire(listEl, 'keydown', left);
+        expect(left.defaultPrevented).toBe(true);
+        expect(input.focused).toBe(true);
+    });
 });
 
 // --- Item 2: Esc layering — the full document chain -------------------------
@@ -2068,6 +2324,7 @@ describe('Esc layering — full document chain (item 2)', () => {
         const ctx = setup({ searchActive: true });
         const active = ctx.row('A', 'neat-tree-item-42');
         active.link.classList.add('active');
+        ctx.bookmarkMenu.style.opacity = '1'; // the menu is actually shown
         ctx.searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         ctx.fireDoc('keydown', ev);
@@ -2090,6 +2347,52 @@ describe('Esc layering — full document chain (item 2)', () => {
         expect(ctx.searchCalls).toEqual([]);
         expect(ctx.searchInput.value).toBe('query');
         expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('a stale .active marker (menu hidden) does not consume Esc (K6)', () => {
+        // clearMenu() (no arg — view switch / palette open) keeps the .active
+        // marker while hiding every menu; the marker alone must not count as
+        // "menu open" or Esc (and the row refocus) get stolen.
+        const ctx = setup({ searchActive: true });
+        const active = ctx.row('A', 'neat-tree-item-42');
+        active.link.classList.add('active'); // every menu double has opacity ''
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(ctx.clearMenuCalls).toEqual([]); // no visible menu to dismiss
+        expect(active.link.classList.contains('active')).toBe(true); // marker untouched
+        expect(active.link.focused).toBe(false); // focus not stolen
+        expect(ctx.searchCalls).toEqual(['escape']); // fell through to the next rung
+    });
+
+    it('a stale .active with the palette open lets Esc close the panel (the K6 sequence)', () => {
+        const calls = [];
+        const palette = { isOpen: () => true, close: () => calls.push('close') };
+        const ctx = setup({ palette });
+        const active = ctx.row('A', 'neat-tree-item-42');
+        active.link.classList.add('active'); // left over from the pre-palette menu
+        ctx.fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(calls).toEqual(['close']);
+        expect(active.link.focused).toBe(false); // the palette input is not robbed
+    });
+
+    it('a menu over the palette delegates Esc to palette.refocus (K2)', () => {
+        const calls = [];
+        const palette = {
+            isOpen: () => true,
+            close: () => calls.push('close'),
+            refocus: () => calls.push('refocus')
+        };
+        const ctx = setup({ palette });
+        const active = ctx.row('A', 'results-item-42');
+        active.link.classList.add('active');
+        ctx.bookmarkMenu.style.opacity = '1'; // the menu really is open over the panel
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(calls).toEqual(['refocus']); // one layer peeled — the panel stays
+        expect(ctx.clearMenuCalls).toEqual([]); // refocus owns the menu close
+        expect(active.link.classList.contains('active')).toBe(true); // and the marker
+        expect(active.link.focused).toBe(false); // focus never lands on the row
     });
 
     // keyboard-model §4 layer 3: a visible donation/what's-new banner is
@@ -2192,6 +2495,7 @@ describe('Esc layering — full document chain (item 2)', () => {
         const ctx = setup({ dialogOpen: true, palette, views, searchActive: true });
         const active = ctx.row('A', 'neat-tree-item-42');
         active.link.classList.add('active');
+        ctx.bookmarkMenu.style.opacity = '1'; // the menu is actually shown
         ctx.searchInput.value = 'query';
         const esc = () => {
             const ev = makeEvent({ key: 'Escape' });

@@ -393,9 +393,33 @@ export function initSearch(ctx = {}) {
         // Re-entry contract: the box stays as it is (empty after the
         // two-level Esc / a fresh switch), the history area re-renders and
         // the results list simply survives — no last-query refill.
-        activate: () => renderHistoryArea(),
+        activate: () => {
+            renderHistoryArea();
+            // K16 follow-up: leaving the view cleared the mode, but the box
+            // keeps its query and the results DOM survives (the re-entry
+            // contract) — so a live query brings the mode (and the dual-zone
+            // arrow laws) straight back.
+            if (!searchMode && searchInput.value.trim()) {
+                searchMode = true;
+                switchBookmarkMenu(true);
+            }
+        },
         // §4.3 record timing ③: leaving the view with a live query.
-        deactivate: () => recordHistory(searchInput.value),
+        deactivate: () => {
+            recordHistory(searchInput.value);
+            // K16: leaving the search view also leaves search MODE. A
+            // Ctrl/Alt+digit jump (or a tab click) with a live query used to
+            // keep searchMode set, so the tree's Home/End walked the hidden
+            // results list and ↓ stopped climbing — those branches gate on
+            // isActive(). quitSearchMode() can't run here (it re-enters
+            // views.activate() mid-switch), so the flag flips inline. The
+            // box keeps its query per the re-entry contract above — view
+            // switches never touch it; only the mode resets.
+            if (searchMode) {
+                searchMode = false;
+                switchBookmarkMenu(false);
+            }
+        },
         focus: () => searchInput.focus(),
         // §2.3: R reveals the focused result row in the tree (bookmark and
         // folder rows alike — the folder rows' old click-jump unified here).

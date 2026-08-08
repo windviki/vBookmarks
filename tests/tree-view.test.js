@@ -513,6 +513,21 @@ describe('generateTree', () => {
         expect(store.removes).toEqual([]);
     });
 
+    it('a focusID row without a focusable child skips the highlight but keeps the cleanup timers (K12)', () => {
+        // A detached/mid-render row has firstElementChild === null — the reveal
+        // must not throw, and the overflow/focusID cleanup must still run.
+        const ctx = setup({ storeData: { focusID: '5' } });
+        const { li } = ctx.makeFolder('5');
+        li.firstElementChild = null;
+        ctx.tree.style.overflow = 'auto';
+        expect(() => ctx.treeView.generateTree(['ROOT'])).not.toThrow();
+        expect(ctx.tree.style.overflow).toBe('hidden');
+        tick(1);
+        expect(ctx.tree.style.overflow).toBe('auto');
+        tick(4000);
+        expect(ctx.store.removes).toEqual(['focusID']);
+    });
+
     it('migrates legacy local separators through actions.addSeparator, then clears and saves', () => {
         const { treeView, actions, smInstances, store } = setup({ legacySeps: ['s1', null, 's2'] });
         treeView.generateTree(['ROOT']);

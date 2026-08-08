@@ -291,12 +291,13 @@ export function initViewDupes(ctx = {}) {
             let opts = '';
             for (const [value, key, greyed] of options)
                 opts += `<li role="option" tabindex="-1" data-value="${value}"` +
-                    `${value === current ? ' aria-selected="true"' : ''}` +
-                    `${greyed ? ' class="greyed"' : ''}>${_m(key)}</li>`;
+                    ` aria-selected="${value === current ? 'true' : 'false'}"` +
+                    `${greyed ? ' class="greyed" aria-disabled="true"' : ''}>${_m(key)}</li>`;
             return `<div class="vbm-dropdown ${cls}">` +
-                `<button type="button" class="vbm-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="${_m(labelKey)}">` +
+                `<button type="button" class="vbm-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false"` +
+                ` aria-controls="${cls}-listbox" aria-label="${_m(labelKey)}">` +
                 `<span class="vbm-dropdown-value">${_m(curKey)}</span>${CHEVRON_ICON}</button>` +
-                `<ul class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
+                `<ul id="${cls}-listbox" class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
         };
         let html = '<div class="dupes-toolbar vbm-toolbar">';
         html += dropdownHtml('dupes-strategy', 'dupesStrategyOldest',
@@ -322,6 +323,7 @@ export function initViewDupes(ctx = {}) {
         const keeper = keeperOf(group);
         const key = htmlspecialchars(group.key);
         const isCollapsed = collapsed.has(group.key);
+        const showPath = views.showItemPath();
         // The per-group quick action names its strategy pick up front
         // ("keep 〈title〉, remove the other N") — one click applies the
         // configured strategy to this group alone. v4 task-4 #9: the glyph
@@ -356,10 +358,11 @@ export function initViewDupes(ctx = {}) {
                     // §3.6 unified meta: the date rides the left-aligned time
                     // slot (first column), the path the right-aligned row-path
                     // (second column); wide/panel keeps the date and moves path
-                    // to the second line.
+                    // to the second line (`路径 · 时间`, same template as the
+                    // recent view). The path half follows showItemPath.
                     badge: { text: shortDate, cls: 'time' },
-                    rightText: path ? path : '',
-                    subText: path ? `${path} · ${fullTime}` : fullTime
+                    rightText: (showPath && path) ? path : '',
+                    subText: (showPath && path) ? `${path} · ${fullTime}` : fullTime
                 }) +
                 '</li>';
         }
@@ -763,8 +766,13 @@ export function initViewDupes(ctx = {}) {
                 render();
                 return;
             }
-            const expand = (k === ' ' || k === 'Enter' || k === 'ArrowRight') && isCollapsed;
-            const collapse = (k === ' ' || k === 'Enter' || k === 'ArrowLeft') && !isCollapsed;
+            // K18: the fold arrows mirror under RTL (visually "forward"
+            // flips) — the same RTL read the member rows' back arrow below
+            // uses, per keyboard-model §7's "every horizontal law mirrors".
+            const isRtl = !!(document.body && document.body.classList
+                && document.body.classList.contains('rtl'));
+            const expand = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowLeft' : 'ArrowRight')) && isCollapsed;
+            const collapse = (k === ' ' || k === 'Enter' || k === (isRtl ? 'ArrowRight' : 'ArrowLeft')) && !isCollapsed;
             if (expand || collapse) {
                 e.preventDefault();
                 e.stopPropagation();

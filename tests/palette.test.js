@@ -394,7 +394,13 @@ const setup = (opts = {}) => {
         activate(id) {
             this.activateCalls.push(id);
             return true;
-        }
+        },
+        // K13: opt-in focusActive recorder — close()'s focus handback falls
+        // back to the ACTIVE view's anchor when the tree row is hidden.
+        ...(opts.withFocusActive ? {
+            focusActiveCalls: 0,
+            focusActive() { this.focusActiveCalls++; }
+        } : {})
     };
     const search = {
         runCalls: [],
@@ -458,9 +464,9 @@ const setup = (opts = {}) => {
 };
 
 describe('module API + open/close state machine', () => {
-    it('returns { open, close, isOpen, customMenu } and starts closed', () => {
+    it('returns { open, close, isOpen, refocus, customMenu } and starts closed', () => {
         const { palette, paletteEl } = setup({});
-        expect(Object.keys(palette).sort()).toEqual(['close', 'customMenu', 'isOpen', 'open']);
+        expect(Object.keys(palette).sort()).toEqual(['close', 'customMenu', 'isOpen', 'open', 'refocus']);
         expect(palette.isOpen()).toBe(false);
         expect(paletteEl.hidden).toBe(true);
     });
@@ -513,7 +519,7 @@ describe('module API + open/close state machine', () => {
     });
 
     it('refuses to open while any dialog class sits on body', () => {
-        for (const cls of ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort']) {
+        for (const cls of ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort', 'needTabGroup', 'needGroupPick']) {
             const { palette, chrome, body } = setup({});
             body.classList.add(cls);
             palette.open();
@@ -531,6 +537,22 @@ describe('module API + open/close state machine', () => {
         palette.open();
         palette.close();
         expect(row.focused).toBe(true);
+        expect(input.blurred).toBe(false);
+    });
+
+    it('close over a NON-tree view lands on the active view\'s anchor, never the hidden tree row (K13)', () => {
+        // The palette opens over any view; outside the tree view #tree's
+        // section is hidden and focusing its row is a no-op that strands the
+        // keys on the hidden input — the handback must skip invisible targets.
+        const hiddenSection = setup({}).el('SECTION', 'view-tree');
+        hiddenSection.hidden = true; // view-manager sets this on the inactive view
+        const row = setup({}).el('A');
+        row.parentNode = hiddenSection;
+        const { palette, input, views } = setup({ qs: { '#tree .focus': row }, withFocusActive: true });
+        palette.open();
+        palette.close();
+        expect(row.focused).toBe(false); // focus() into the hidden section would strand
+        expect(views.focusActiveCalls).toBe(1); // the active view's own anchor instead
         expect(input.blurred).toBe(false);
     });
 
@@ -1766,5 +1788,45 @@ describe('closing a context menu over the palette (← / Esc) — focus returns 
         ctx.body.classList.add('active');
         const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
         expect(ev.defaultPrevented).toBe(false); // guard removed — no swallow
+    });
+});
+
+describe('refocus() — keyboard.js Esc-chain delegation (K2)', () => {
+    // Regression: Esc over a context menu that floats on the open palette is
+    // captured by keyboard.js's document chain before the palette's own
+    // open-time guard can run; keyboard.js delegates to palette.refocus(),
+    // which must drop the .active marker, clear the menu and hand focus back
+    // to the input without closing the panel.
+    it('drops the .active marker, clears the menu and refocuses the input', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.input.focused = false; // focus sits on the open menu
+        ctx.body.classList.add('active');
+        ctx.palette.refocus();
+        expect(ctx.body.classList.contains('active')).toBe(false); // marker dropped BEFORE clearMenu
+        expect(clearCalls).toHaveLength(2); // open() cleared once + refocus
+        expect(ctx.input.focused).toBe(true);
+        expect(ctx.palette.isOpen()).toBe(true); // the panel stays open
+    });
+
+    it('still refocuses the input when no clearMenu was injected', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        ctx.input.focused = false;
+        ctx.body.classList.add('active');
+        expect(() => ctx.palette.refocus()).not.toThrow();
+        expect(ctx.body.classList.contains('active')).toBe(false);
+        expect(ctx.input.focused).toBe(true);
+    });
+
+    it('is a no-op marker-wise when no menu is open (just refocuses)', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        clearCalls.length = 0; // ignore the open()-time clear
+        ctx.palette.refocus();
+        expect(clearCalls).toHaveLength(1); // clearMenu still runs, harmlessly
+        expect(ctx.input.focused).toBe(true);
     });
 });

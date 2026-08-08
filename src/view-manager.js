@@ -603,6 +603,11 @@ export function initViewManager(ctx = {}) {
             return;
         if (!/^[1-9]$/.test(e.key))
             return;
+        // K19: a numpad digit is never a view jump — under Alt it is Windows'
+        // Alt-code character input (e.key still reads '1'…'9'), and typing
+        // characters must not switch views or be preventDefaulted.
+        if (e.code && e.code.startsWith('Numpad'))
+            return;
         // An open modal dialog or the command palette owns its input — do not
         // yank a half-edited form. Everywhere else the shortcut switches
         // views even while the search box has focus: Ctrl+2 lands in the

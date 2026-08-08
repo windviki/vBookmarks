@@ -70,10 +70,11 @@
  * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
  *                    session save added a folder
  *
- * Returns { open, close, isOpen, customMenu }. neat.js wires the global-wake
- * auto-open (URL ?palette=1 / storage.session flag) on top of open(); the
- * customMenu pair (edit/remove) is context-menu.js's dispatch target for
- * custom-command rows.
+ * Returns { open, close, isOpen, refocus, customMenu }. neat.js wires the
+ * global-wake auto-open (URL ?palette=1 / storage.session flag) on top of
+ * open(); the customMenu pair (edit/remove) is context-menu.js's dispatch
+ * target for custom-command rows; refocus is keyboard.js's delegation
+ * target for Esc over a menu opened on a palette row (K2).
  *
  * chrome.bookmarks/tabs/runtime, chrome.i18n.getMessage, document and
  * window.VBMFuzzy remain page globals. No neatools helpers: getElementById/
@@ -119,9 +120,11 @@ export function initPalette(ctx = {}) {
     const $clear = $('palette-clear');
     const $close = $('palette-close');
 
-    // A dialog (confirm/edit/alert/new-folder/sort) owns the popup's modal
-    // layer; the palette must not open over or steal keys from it.
-    const DIALOG_CLASSES = ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort'];
+    // A dialog (confirm/edit/alert/new-folder/sort/tab-group/group-pick)
+    // owns the popup's modal layer; the palette must not open over or steal
+    // keys from it. Mirrors dialogs.js's anyOpen() class set (T3).
+    const DIALOG_CLASSES = ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort',
+        'needTabGroup', 'needGroupPick'];
     const anyDialogOpen = () =>
         DIALOG_CLASSES.some(c => document.body.classList.contains(c));
 
@@ -713,6 +716,21 @@ export function initPalette(ctx = {}) {
         $input.focus();
     };
 
+    // The same close-the-menu-over-the-palette dance as onDocKey's, exposed
+    // for keyboard.js's document Escape chain (K2): that capture handler
+    // registered before this module's open-time one can ever run, so Esc over
+    // a palette menu reaches it first and it delegates here. Dropping the
+    // marker BEFORE clearMenu() keeps clearMenu from refocusing the row —
+    // the panel's focus anchor is the input, never a result row.
+    const refocus = () => {
+        const act = document.body.querySelector('.active');
+        if (act)
+            act.classList.remove('active');
+        if (clearMenu)
+            clearMenu();
+        $input.focus();
+    };
+
     const open = () => {
         if (openState || anyDialogOpen())
             return;
@@ -738,18 +756,37 @@ export function initPalette(ctx = {}) {
         $input.focus();
     };
 
+    // Visibility as the popup drives it: a `hidden` section/property or an
+    // inline display:none up the ancestor chain (doubles without layout APIs
+    // count as visible — tests).
+    const isVisible = el => {
+        for (let n = el; n; n = n.parentNode) {
+            if (n.hidden)
+                return false;
+            if (n.style && n.style.display === 'none')
+                return false;
+        }
+        return true;
+    };
+
     const close = () => {
         if (!openState)
             return;
         openState = false;
         document.removeEventListener('keydown', onDocKey, true);
         $palette.hidden = true;
-        // Hand focus back to the tree: the focused row, else its first row,
-        // else just drop focus from the input.
+        // Hand focus back to the tree: the focused row, else its first row.
+        // The palette opens over ANY view, though — outside the tree view the
+        // #tree section is hidden and focus() into it is a no-op that strands
+        // the keys on the hidden input (K13), so an invisible target falls
+        // back to the ACTIVE view's own anchor (its remembered/first row, the
+        // list container, or the search box — view-manager's focusDefault).
         const row = document.querySelector('#tree .focus')
             || document.querySelector('#tree a, #tree span');
-        if (row)
+        if (row && isVisible(row))
             row.focus();
+        else if (views && views.focusActive)
+            views.focusActive();
         else
             $input.blur();
     };
@@ -795,7 +832,7 @@ export function initPalette(ctx = {}) {
     }, true);
 
     return {
-        open, close, isOpen,
+        open, close, isOpen, refocus,
         // v4 task-4 #6: context-menu.js dispatches the custom-command row
         // menu (edit / delete) through here (lazy getter on its ctx).
         customMenu: { edit: editCustom, remove: removeCustom }

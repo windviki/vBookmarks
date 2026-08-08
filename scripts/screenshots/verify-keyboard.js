@@ -12,6 +12,9 @@
 // NOT exercised here: CDP Input.dispatchKeyEvent short-circuits the event
 // dispatch pipeline and never reaches document capture-phase listeners —
 // see docs/cdp-escape-limitation.md; Esc is covered by tests/keyboard.test.js.
+// The one exception is the dropdown's window-capture Esc, exercised below by
+// dispatching a synthetic keydown directly on window (target-phase delivery
+// fires capture handlers registered on window itself).
 //
 // Exits non-zero on any failed check (wired as a blocking run.sh step).
 const puppeteer = require('puppeteer');
@@ -239,11 +242,11 @@ const SEED = `
     // §2.2c per-view ↑↓ row navigation + crossings (v4 final polish):
     // every registered list walks rows with ↑/↓; views with an in-list
     // toolbar (stats/dead/dupes) treat it as a rung — strip ↓ lands on its
-    // first control, ←/→ walk the rung (a <select> keeps native ↑/↓),
-    // control ↓ enters the rows, first-row ↑ returns to the rung, rung ↑
-    // crosses to the tab strip; toolbar-less views cross strip-wards
-    // directly. Dupes member ← returns to the group head and head ←/→
-    // collapses/expands the group.
+    // first control, ←/→ walk the rung (a dropdown trigger's own ↓ opens
+    // its listbox instead of walking the rung), control ↓ enters the rows,
+    // first-row ↑ returns to the rung, rung ↑ crosses to the tab strip;
+    // toolbar-less views cross strip-wards directly. Dupes member ←
+    // returns to the group head and head ←/→ collapses/expands the group.
     // ====================================================================
     console.log('═══ §2.2c 各视图行导航/越顶 ═══');
     const activeLiIndex = listSel => $(sel => {
@@ -339,10 +342,11 @@ const SEED = `
         document.activeElement && document.activeElement.classList.contains('dead-proxy-add')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
-    // the toolbar now opens with the merged filter segment (counts inline),
-    // so the first rung below the proxy strip is the first filter button
-    check('dead proxy strip ↓: the scan toolbar rung (filter)', await $(() =>
-        document.activeElement && document.activeElement.classList.contains('dead-filter-btn')),
+    // the scan toolbar's control order is scan-time → rescan → filter
+    // (counts inline on the filter buttons), so the first rung control
+    // below the proxy strip is the rescan button
+    check('dead proxy strip ↓: the scan toolbar rung (rescan)', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-rescan')),
         await activeDesc());
     await page.keyboard.press('ArrowDown'); await sleep(250);
     st = await activeLiIndex('#dead-list');
@@ -361,6 +365,43 @@ const SEED = `
         await activeDesc());
     await page.keyboard.press('ArrowUp'); await sleep(200);
     check('dead proxy strip ↑: tab strip',
+        await focusedTab() === 'view-tab-dead', await activeDesc());
+
+    // K14: the proxy strip's text inputs own their caret keys — ←/→/Home/End
+    // move the caret inside the value, never walk the rung's controls or jump
+    // to the list's first/last row (the same passthrough the SELECT's ↑/↓
+    // already had). ↑ still leaves the field through the rung walk. The panel
+    // (add → input + test-url) is opened through its own button first.
+    await page.click('.dead-proxy-add'); await sleep(400);
+    check('K14 setup: the proxy panel opens with its URL input focused', await $(() =>
+        document.activeElement && document.activeElement.classList.contains('dead-proxy-input')),
+        await activeDesc());
+    await page.keyboard.type('127.0.0.1:7890', { delay: 20 });
+    await sleep(200);
+    const k14len = await $(() => document.querySelector('.dead-proxy-input').value.length);
+    await page.keyboard.press('ArrowLeft'); await sleep(150);
+    const k14left = await $(() => ({
+        caret: document.activeElement && document.activeElement.selectionStart,
+        inField: document.activeElement && document.activeElement.classList.contains('dead-proxy-input')
+    }));
+    check('K14: ← moves the caret, focus stays in the field (no rung walk)',
+        k14left.inField && k14left.caret === k14len - 1, JSON.stringify(k14left));
+    await page.keyboard.press('Home'); await sleep(150);
+    const k14home = await $(() => ({
+        caret: document.activeElement && document.activeElement.selectionStart,
+        inField: document.activeElement && document.activeElement.classList.contains('dead-proxy-input')
+    }));
+    check('K14: Home goes to the caret start, not the first row',
+        k14home.inField && k14home.caret === 0, JSON.stringify(k14home));
+    await page.keyboard.press('End'); await sleep(150);
+    const k14end = await $(() => ({
+        caret: document.activeElement && document.activeElement.selectionStart,
+        inField: document.activeElement && document.activeElement.classList.contains('dead-proxy-input')
+    }));
+    check('K14: End goes to the caret end, not the last row',
+        k14end.inField && k14end.caret === k14len, JSON.stringify(k14end));
+    await page.keyboard.press('ArrowUp'); await sleep(200);
+    check('K14: ↑ still leaves the field through the rung walk (tab strip)',
         await focusedTab() === 'view-tab-dead', await activeDesc());
 
     // --- dupes: the toolbar rung — the strategy/scope custom dropdowns
@@ -428,6 +469,91 @@ const SEED = `
     check('dupes strategy →: picks + closes back on the trigger', await $(() =>
         document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list').hidden &&
         document.activeElement && !!document.activeElement.closest('.vbm-dropdown-trigger')),
+        await activeDesc());
+
+    // D1: with the trigger focused (list CLOSED), Home falls through to the
+    // list's own row walk — the strategy listbox's <li>s are excluded from
+    // the row selector, so the landing spot is the first real row (the
+    // group head), never a text-only option (null.focus() used to throw).
+    await page.evaluate(() =>
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger').focus());
+    await page.keyboard.press('Home'); await sleep(250);
+    st = await activeLiIndex('#dupes-list');
+    check('D1: Home on a closed dropdown trigger lands on the first row (group head)',
+        st.idx === 0 && await $(() =>
+            document.activeElement && document.activeElement.classList.contains('group-head')),
+        JSON.stringify(st));
+
+    // dropdown Esc layering: the window-capture handler closes an open list
+    // before keyboard.js's document chain. CDP key events do not reach the
+    // window-capture listeners in this harness, so dispatch a synthetic
+    // keydown ON window — target-phase delivery fires the capture handler.
+    await page.evaluate(() =>
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger').focus());
+    await page.keyboard.press('ArrowDown'); await sleep(250); // open the list
+    await page.evaluate(() =>
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', cancelable: true })));
+    await sleep(250);
+    check('dropdown Esc: listbox closes and focus returns to the trigger', await $(() =>
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list').hidden &&
+        document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger')),
+        await activeDesc());
+
+    // 失焦即关 (D3/K8): an open listbox must not survive a view switch. A
+    // real tab click doubles for Ctrl+2 here — CDP digits do not reach the
+    // document-capture view-switch listener, and activate() moves focus the
+    // same way (plus the click's own mousedown lands outside the dropdown).
+    await page.keyboard.press('ArrowDown'); await sleep(250); // open again from the trigger
+    await page.click('#view-tab-search'); await sleep(400);
+    check('view switch closes the open dropdown (no floating listbox)', await $(() =>
+        !document.querySelector('.vbm-dropdown.open') &&
+        document.querySelector('.vbm-dropdown.dupes-strategy .vbm-dropdown-list').hidden),
+        await activeDesc());
+    await page.click('#view-tab-dupes'); await sleep(500);
+    check('back in dupes: the re-rendered toolbar starts fully closed', await $(() =>
+        !document.querySelector('.vbm-dropdown.open') &&
+        [...document.querySelectorAll('#dupes-list .vbm-dropdown-list')].every(l => l.hidden)),
+        await activeDesc());
+
+    // K1: a freshly opened context menu holds focus on the CONTAINER — ↓
+    // must enter through the same walkable rules as the item-to-item walk.
+    // The bookmark menu's first four children are display:none outside
+    // their views (reveal/dead-mark/keeper entries), so the landing spot
+    // is #bookmark-new-tab; focusing a hidden item would strand every arrow.
+    await page.click('#view-tab-tree'); await sleep(400);
+    // the fresh profile renders every folder collapsed (opens=[]), so expand
+    // through the app's own click toggle until a bookmark row exists
+    await page.evaluate(async () => {
+        const nap = ms => new Promise(r => setTimeout(r, ms));
+        for (let guard = 0; guard < 12 && !document.querySelector('#tree li.child'); guard++) {
+            const p = document.querySelector('#tree li.parent:not(.open) > span');
+            if (!p)
+                break;
+            p.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            await nap(150); // expand re-renders via async chrome.bookmarks.getChildren
+        }
+        const a = document.querySelector('#tree li.child a');
+        if (a)
+            a.focus();
+    });
+    await sleep(300);
+    check('K1 setup: a bookmark row focused', await $(() => {
+        const el = document.activeElement;
+        const li = el && el.closest('li');
+        return !!el && el.tagName === 'A' && !!li && li.classList.contains('child');
+    }), await activeDesc());
+    await page.keyboard.press('ArrowRight'); await sleep(400); // → synthetic contextmenu
+    check('K1: row → opens the bookmark menu (container focused)', await $(() =>
+        document.activeElement && document.activeElement.id === 'bookmark-context-menu'),
+        await activeDesc());
+    await page.keyboard.press('ArrowDown'); await sleep(250);
+    check('K1: menu ↓ from the container skips the hidden head items',
+        await $(() => document.activeElement && document.activeElement.id === 'bookmark-new-tab'),
+        await activeDesc());
+    await page.keyboard.press('ArrowLeft'); await sleep(300); // close, back to the row
+    check('K1: menu ← closes and focus returns to the tree row', await $(() =>
+        document.getElementById('bookmark-context-menu').style.opacity === '0' &&
+        document.activeElement && !!document.activeElement.closest('#tree li.child')),
         await activeDesc());
 
     // ====================================================================

@@ -75,7 +75,7 @@ describe('list-view hover/selected parity (item 7b)', () => {
             '.row-btn:focus-visible,\n.dupes-toolbar button:focus-visible,');
         expect(body).toContain('outline: 2px solid var(--vbm-focus-ring)');
         for (const sel of [
-            '.dupes-toolbar select:focus-visible',
+            '.dead-proxy-strip button:focus-visible',
             '.dead-toolbar button:focus-visible',
             '.stats-toolbar button:focus-visible',
             '#search-history-clear:focus-visible'

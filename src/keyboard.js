@@ -97,6 +97,15 @@ export function initKeyboard(ctx = {}) {
                 // and the rows exactly where it renders.
                 const toolbar = item.closest && item.closest('.vbm-toolbar');
                 if (toolbar) {
+                    // K14: a text field owns its caret keys — ←/→/Home/End
+                    // move the caret inside the value, never walk the rung's
+                    // controls or jump to the list's first/last row (the same
+                    // passthrough pattern as the SELECT's ↑/↓ below; the dead
+                    // view's proxy URL/test-URL inputs live in a .vbm-toolbar).
+                    // ↑/↓ still leave the field through the rung walk.
+                    if ((item.tagName === 'TEXTAREA' || (item.tagName === 'INPUT' && item.type === 'text'))
+                        && /^(ArrowLeft|ArrowRight|Home|End)$/.test(keyValue))
+                        return;
                     if (keyValue === 'ArrowDown' || keyValue === 'ArrowUp') {
                         // A <select> keeps its native ↑/↓ (option change when
                         // closed, popup navigation when open) — leave the rung
@@ -202,8 +211,21 @@ export function initKeyboard(ctx = {}) {
                 }
             } else {
                 item = this.querySelector('.focus') || this.querySelector('li a, li span');
-                if (!item)
+                if (!item) {
+                    // K17: the container holds focus but the view's rows have
+                    // not rendered yet (async activate) — ↑ still takes the
+                    // §2.1/§2.5 crossing to the toolbar/strip/box instead of
+                    // dying here with the other keys; ↓/Home/End staying put
+                    // until rows exist is the reasonable contract.
+                    if (keyValue === 'ArrowUp') {
+                        e.preventDefault();
+                        if (views.focusListExit)
+                            views.focusListExit();
+                        else
+                            views.focusTop();
+                    }
                     return; // empty list / empty state only
+                }
             }
         }
         let li = item.parentNode;
@@ -368,10 +390,15 @@ export function initKeyboard(ctx = {}) {
                     if (lastResult)
                         lastResult.focus();
                 } else {
-                    const lis = this.querySelectorAll('ul>li:last-child');
+                    // Row lists only — a toolbar dropdown's listbox ul
+                    // (.vbm-dropdown-list) sits inside the same container and
+                    // its option rows carry no span/a (D1).
+                    const lis = this.querySelectorAll('ul:not(.vbm-dropdown-list)>li:last-child');
                     const visible = Array.from(lis).filter(li => !!li.parentNode.offsetHeight);
                     const li = visible[visible.length - 1];
-                    li.querySelector('span, a').focus();
+                    const focus = li && li.querySelector('span, a');
+                    if (focus)
+                        focus.focus();
                 }
                 break;
             case 'Home': // home
@@ -380,7 +407,14 @@ export function initKeyboard(ctx = {}) {
                     if (firstResult)
                         firstResult.focus();
                 } else {
-                    this.querySelector('ul>li:first-child').querySelector('span, a').focus();
+                    // Same listbox exclusion as End (D1): the dupes toolbar's
+                    // strategy listbox precedes the group list in document
+                    // order, so a bare ul>li:first-child hits a text-only
+                    // option row and null.focus() throws.
+                    const firstRow = this.querySelector('ul:not(.vbm-dropdown-list)>li:first-child');
+                    const firstFocus = firstRow && firstRow.querySelector('span, a');
+                    if (firstFocus)
+                        firstFocus.focus();
                 }
                 break;
             case 'PageDown': // page down
@@ -425,6 +459,13 @@ export function initKeyboard(ctx = {}) {
             case 'F2': // F2, not for Mac
             {
                 if (os === 'mac')
+                    break;
+                // Root folders (parentid '0') cannot be renamed either —
+                // Chrome rejects update() on them and actions' callback
+                // throws on the failed call's undefined node. Same guard as
+                // treeKeyUp's Delete below / the menu's disabled folder-edit.
+                if (li.classList.contains('parent')
+                    && li.dataset && li.dataset.parentid === '0')
                     break;
                 // data-node-id is the v4 task-2 unified row id; the legacy
                 // prefix strip stays for rows that predate it.
@@ -504,10 +545,13 @@ export function initKeyboard(ctx = {}) {
         if (!/^(a|span)$/i.test(item.tagName)) {
             // Delete on an in-list toolbar control must never reach a row —
             // only the list container itself falls back to its .focus row
-            // (never to a row of another, possibly hidden, list).
+            // (never to a row of another, possibly hidden, list). No marker
+            // → no delete: an async view can render rows while the container
+            // still holds focus, and deleting an un-marked row the user
+            // cannot see is a surprise (K4, f5903c8 made this path common).
             if (item !== e.currentTarget)
                 return;
-            item = e.currentTarget.querySelector('.focus') || e.currentTarget.querySelector('li a, li span');
+            item = e.currentTarget.querySelector('.focus');
             if (!item)
                 return;
         }
@@ -587,7 +631,15 @@ export function initKeyboard(ctx = {}) {
                     if (t)
                         t.focus();
                 } else {
-                    item.firstElementChild.focus();
+                    // The menu container itself holds focus (freshly opened):
+                    // enter through the same walkable rules as the item-to-
+                    // item walk — the first children may be display:none
+                    // (the bookmark menu's out-of-tree entries) or disabled
+                    // (the root-folder greys), and focusing those strands ↓/↑
+                    // on an unfocusable/invisible item (K1/K9).
+                    const t = nextMenuTarget(menu.firstElementChild, 1);
+                    if (t)
+                        t.focus();
                 }
                 break;
             case 'ArrowUp':
@@ -600,7 +652,9 @@ export function initKeyboard(ctx = {}) {
                     if (t)
                         t.focus();
                 } else {
-                    item.lastElementChild.focus();
+                    const t = nextMenuTarget(menu.lastElementChild, -1);
+                    if (t)
+                        t.focus();
                 }
                 break;
             case 'ArrowLeft':
@@ -658,6 +712,11 @@ export function initKeyboard(ctx = {}) {
         menus.histRowMenu.addEventListener('keydown', contextKeyDown);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('keydown', contextKeyDown);
+    // v4 task-4 #6's palette custom-command menu gets the same binding (K7) —
+    // without it the edit/delete rows were unreachable by keys. The separator
+    // menu stays unbound by design (a single entry, declared an exception).
+    if (menus.paletteCmdMenu)
+        menus.paletteCmdMenu.addEventListener('keydown', contextKeyDown);
 
     // Header-row arrows (final polish): the naive horizontal walk between
     // the search box and the header buttons (quick-add ⇄ tool) plus ↓ from
@@ -707,6 +766,26 @@ export function initKeyboard(ctx = {}) {
     // popup only closes when we explicitly call window.close() as the last resort.
     // stopImmediatePropagation is used (not stopPropagation) to also block any
     // other capture-phase listeners on the same document node.
+    //
+    // "A context menu is open" = a row carries .active AND some menu element
+    // is actually VISIBLE. clearMenu() (no arg — view switches, palette
+    // opens) keeps the .active marker while hiding every menu (inline
+    // opacity:0 + left:-999px; the show path sets opacity '1'), so the marker
+    // alone is stale state: treating it as "menu open" steals Esc — and the
+    // focus that comes with it — for a menu that is not there (K6).
+    const allMenus = [
+        menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
+        menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
+        menus.paletteCmdMenu
+    ].filter(Boolean);
+    const anyMenuVisible = () => {
+        for (let i = 0, l = allMenus.length; i < l; i++) {
+            const m = allMenus[i];
+            if (m.style && m.style.opacity === '1')
+                return true;
+        }
+        return false;
+    };
     document.addEventListener('keydown', e => {
         if (e.key !== 'Escape') return;
 
@@ -719,7 +798,17 @@ export function initKeyboard(ctx = {}) {
         }
         // Context menu open — dismiss just the menu.
         const active = body.querySelector('.active');
-        if (active) {
+        if (active && anyMenuVisible()) {
+            // A menu opened over the palette: delegate to the panel (K2) —
+            // its Esc capture handler registered too late to see this key,
+            // and the generic branch below would strand focus on the result
+            // row (the palette's ↑↓ live on its input). refocus() mirrors
+            // the ← path: menu closed, marker dropped, input focused — one
+            // layer peeled, the panel kept open.
+            if (palette && palette.isOpen && palette.isOpen() && palette.refocus) {
+                palette.refocus();
+                return;
+            }
             active.classList.remove('active');
             active.focus();
             menus.clearMenu();
@@ -791,6 +880,11 @@ export function initKeyboard(ctx = {}) {
 
     document.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && (e.key === 'f' || e.key === 'F')) { // cmd/ctrl + f
+            // A modal dialog owns the keystroke (K5 — the same guard the
+            // Ctrl+digit view jumps already have): never yank focus out of
+            // a half-edited form into the search box.
+            if (dialogs.anyOpen())
+                return;
             // §4.2: Ctrl/Cmd+F enters the search view and focuses the box
             views.activate('search');
             search.input.focus();
@@ -809,7 +903,7 @@ export function initKeyboard(ctx = {}) {
     const ROW_SEL = 'li a, li span, li[tabindex]';
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.searchHistoryMenu,
-        menus.histRowMenu, menus.dupesGroupMenu
+        menus.histRowMenu, menus.dupesGroupMenu, menus.paletteCmdMenu
     ].filter(Boolean);
     const isWithin = (root, node) => {
         for (let n = node; n; n = n.parentNode) {

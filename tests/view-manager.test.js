@@ -853,7 +853,7 @@ describe('tab strip keyboard model (§2.2)', () => {
 describe('Ctrl/Cmd/Alt+number direct jump (§3.4, v4 task-4 #10)', () => {
     const key = (ctx, k, mods = {}) => {
         const ev = {
-            key: k, ctrlKey: !!mods.ctrl, metaKey: !!mods.meta,
+            key: k, code: mods.code, ctrlKey: !!mods.ctrl, metaKey: !!mods.meta,
             altKey: !!mods.alt, shiftKey: !!mods.shift, defaultPrevented: false,
             preventDefault() { this.defaultPrevented = true; }
         };
@@ -919,6 +919,16 @@ describe('Ctrl/Cmd/Alt+number direct jump (§3.4, v4 task-4 #10)', () => {
         ctx.doc.activeElement = ctx.byId['search-input'];
         expect(key(ctx, '2', { ctrl: true }).defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
+    });
+
+    it('numpad digits are never a jump (Windows Alt-code input types characters) — K19', () => {
+        const ctx = setup({});
+        expect(key(ctx, '1', { alt: true, code: 'Numpad1' }).defaultPrevented).toBe(false);
+        expect(key(ctx, '2', { ctrl: true, code: 'Numpad2' }).defaultPrevented).toBe(false);
+        expect(ctx.views.activeId()).toBe('tree');
+        // sanity: the top-row digit still jumps — only the numpad is excluded
+        expect(key(ctx, '2', { ctrl: true, code: 'Digit2' }).defaultPrevented).toBe(true);
+        expect(ctx.views.activeId()).toBe('search');
     });
 });
 

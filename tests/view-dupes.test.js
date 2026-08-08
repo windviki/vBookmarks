@@ -349,6 +349,33 @@ describe('render (docs/v4task-2-list.md §3.6)', () => {
         expect(html).toContain('dupesApplyAll[2]');
     });
 
+    it('dropdown markup carries the full ARIA wiring (D5)', () => {
+        const { $list, def } = setup({ statsOff: true });
+        def().activate();
+        const html = $list.innerHTML;
+        // trigger points at its listbox; the listbox carries that id
+        expect(html).toContain('aria-controls="dupes-strategy-listbox"');
+        expect(html).toContain('id="dupes-strategy-listbox"');
+        expect(html).toContain('aria-controls="dupes-scope-listbox"');
+        expect(html).toContain('id="dupes-scope-listbox"');
+        // every option states its selection explicitly, not just the current one
+        expect(html).toContain('data-value="keep-oldest" aria-selected="true"');
+        expect(html).toContain('data-value="keep-newest" aria-selected="false"');
+        // stats off greys keep-most-visited — and says so to AT
+        expect(html).toMatch(/data-value="keep-most-visited" aria-selected="false" class="greyed" aria-disabled="true"/);
+    });
+
+    it('hides the path columns when showItemPath is off (#19)', () => {
+        const { treeRender, def } = setup({
+            showItemPath: () => false,
+            pathOf: id => `path-of-${id}`
+        });
+        def().activate();
+        expect(treeRender.calls[0].meta.rightText).toBe('');
+        // the sub line degrades to the bare timestamp — no leading ' · '
+        expect(treeRender.calls[0].meta.subText).toBe(new Date(100).toLocaleString());
+    });
+
     it('disables apply-all and renders the empty state when nothing collides', () => {
         const { $list, def } = setup({ tree: [{ id: '0', title: '', children: [
             { id: '1', title: 'Bar', children: [
@@ -405,7 +432,7 @@ describe('keeper strategies (§5.6b)', () => {
         const { $list, def } = setup({ statsOff: true });
         def().activate();
         // the dropdown greys the option (unpickable) instead of disabling it
-        expect($list.innerHTML).toContain('data-value="keep-most-visited" class="greyed"');
+        expect($list.innerHTML).toContain('data-value="keep-most-visited" aria-selected="false" class="greyed"');
     });
 
     it('a manual radio pick overrides the strategy and survives a strategy switch', () => {
@@ -516,6 +543,33 @@ describe('group collapse (§3.6)', () => {
         const passthrough = keyEv('ArrowRight');
         fire('keydown', passthrough);
         expect(passthrough.stopped).toBeUndefined();
+    });
+
+    it('the fold arrows mirror under RTL: → collapses, ← expands (K18)', () => {
+        const ctx = setup({});
+        const { $list, def, fire } = ctx;
+        def().activate();
+        ctx.doc.body = { classList: { contains: c => c === 'rtl' } };
+        const head = {
+            classList: { contains: c => c === 'group-head' },
+            closest: sel => (sel === 'li' ? { dataset: { key: 'https://a.com' } } : null)
+        };
+        const keyEv = key => ({
+            key, target: head,
+            preventDefault() { this.prevented = true; },
+            stopPropagation() { this.stopped = true; }
+        });
+        const rtlRight = keyEv('ArrowRight'); // visually "back" under RTL
+        fire('keydown', rtlRight);
+        expect(rtlRight.stopped).toBe(true);
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"'); // collapsed
+        fire('keydown', keyEv('ArrowLeft')); // visually "forward" → expands back
+        expect($list.innerHTML).toContain('id="dupes-item-11"');
+        // Space/Enter keep their fold semantics under RTL too
+        fire('keydown', keyEv(' '));
+        expect($list.innerHTML).not.toContain('id="dupes-item-11"');
+        fire('keydown', keyEv('Enter'));
+        expect($list.innerHTML).toContain('id="dupes-item-11"');
     });
 
     it('fold/expand restores focus to the NEW head after the innerHTML swap', () => {

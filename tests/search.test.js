@@ -825,6 +825,45 @@ describe('search history record timings (§4.3)', () => {
         expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['second', 'git']);
     });
 
+    it('K16: deactivate drops search MODE (the tree leaves the search selectors) but keeps the box', () => {
+        // A Ctrl/Alt+digit jump (or a tab click) with a live query used to
+        // keep searchMode set — the tree's Home/End then walked the hidden
+        // results list and ↓ stopped climbing (keyboard.js gates those on
+        // isActive()). The mode must flip inline; the box keeps its query
+        // (the 2026-07-25 re-entry contract — view switches never touch it).
+        const { s, els, viewHooks, viewCalls, calls, store } = setup({});
+        type(els, 'git');
+        expect(s.isActive()).toBe(true);
+        viewCalls.length = 0;
+        viewHooks.search.deactivate(); // what view-manager runs on the switch
+        expect(s.isActive()).toBe(false); // tree Home/End/↓ leave the search path
+        expect(els['search-input'].value).toBe('git'); // box untouched
+        expect(store.get('searchQuery')).toBe('git');
+        expect(calls.switchBookmarkMenu[calls.switchBookmarkMenu.length - 1]).toBe(false);
+        expect(viewCalls).toEqual([]); // no views.activate re-entry mid-switch
+        expect(JSON.parse(store.get('searchHistory')).map(e => e.q)).toEqual(['git']); // timing ③ kept
+    });
+
+    it('K16 follow-up: re-entry with a live query restores search MODE (the dual-zone arrows live again)', () => {
+        // deactivate clears the mode (K16), but the box keeps its query and
+        // the results DOM survives (the re-entry contract) — activate must
+        // bring the mode back, or the results ↑/↓ navigation stays dead
+        // after a view-switch round trip (verify-keyboard §4.3b).
+        const { s, els, viewHooks, calls } = setup({});
+        type(els, 'git');
+        expect(s.isActive()).toBe(true);
+        viewHooks.search.deactivate();
+        expect(s.isActive()).toBe(false);
+        viewHooks.search.activate();
+        expect(s.isActive()).toBe(true);
+        expect(calls.switchBookmarkMenu[calls.switchBookmarkMenu.length - 1]).toBe(true);
+        // an empty box (post-Esc) stays modeless on re-entry
+        viewHooks.search.deactivate();
+        els['search-input'].value = '';
+        viewHooks.search.activate();
+        expect(s.isActive()).toBe(false);
+    });
+
     it('records on Enter in searchAfterEnter mode', () => {
         const { els, store } = setup({ storeData: { searchAfterEnter: '1' } });
         type(els, 'git');

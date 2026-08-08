@@ -24,6 +24,11 @@ import { initKeyboard } from '../src/keyboard.js';
 //      - opening focuses its input; ↑↓ keep the input focused (selection is a
 //        highlight, focus stays put) — this is what later lets ←/Esc hand
 //        focus back without stranding arrow navigation.
+//   E. K13/K17 landings:
+//      - the palette closed over a NON-tree view lands focus in THAT view's
+//        anchor, never a hidden tree row (K13);
+//      - a row-less list container holding focus still crosses OUT on ↑
+//        (K17); ↓/Home/End stay put until rows render.
 //
 // The per-module suites keep the deep behaviour (dialog traps, per-view arrow
 // walks, palette menu-close focus) — this file is the mandatory gate that
@@ -265,6 +270,18 @@ describe('B — modal dialogs own their keyboard', () => {
         expect(ctx.key('2', { alt: true }).defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
     });
+
+    it('the Tab ring does not cycle views while a dialog is open (#18)', () => {
+        const ctx = setup({ dialogOpen: true }); // keyboard's dialogs.anyOpen()
+        ctx.searchInput.focus(); // focus sits in the page behind the cover
+        const ev = ctx.key('Tab');
+        // tabCycle's dialog branch traps only among the dialog's own controls
+        // (the double exposes no dialog element, so no trap either) — the one
+        // thing it must NOT do is cycle the view ring or move page focus.
+        expect(ev.defaultPrevented).toBe(false);
+        expect(ctx.doc.activeElement).toBe(ctx.searchInput);
+        expect(ctx.views.activeId()).toBe('tree');
+    });
 });
 
 describe('C — the open palette owns Tab/Escape', () => {
@@ -284,6 +301,15 @@ describe('C — the open palette owns Tab/Escape', () => {
         expect(ctx.key('2', { ctrl: true }).defaultPrevented).toBe(false);
         expect(ctx.views.activeId()).toBe('tree');
     });
+
+    it('Tab neither cycles the view ring nor closes the open palette (#18)', () => {
+        const ctx = setup({});
+        ctx.palette.open();
+        const ev = ctx.key('Tab');
+        expect(ev.defaultPrevented).toBe(false); // tabCycle bows out to the palette
+        expect(ctx.palette.isOpen()).toBe(true);
+        expect(ctx.doc.activeElement).toBe(ctx.paletteInput); // focus stays anchored
+    });
 });
 
 describe('D — layered Escape', () => {
@@ -294,5 +320,35 @@ describe('D — layered Escape', () => {
         // Escape: with the palette open and no menu over it, the panel closes
         ctx.key('Escape');
         expect(ctx.palette.isOpen()).toBe(false);
+    });
+});
+
+describe('E — K13/K17: hidden-view + row-less-container landings', () => {
+    it('K13: palette closed over a non-tree view lands in THAT view, not the hidden tree', () => {
+        const ctx = setup({});
+        // a tree row exists, but its section hides once another view activates
+        const treeRow = ctx.el('SPAN');
+        ctx.byId['view-tree'].appendChild(treeRow);
+        ctx.doc.querySelector = sel => (sel === '#tree .focus' ? treeRow : null);
+        ctx.key('2', { ctrl: true }); // search view active → view-tree hidden
+        ctx.palette.open();
+        ctx.palette.close();
+        expect(treeRow.focused).toBe(false); // focusing into a hidden section strands
+        // the ACTIVE view's anchor: the search list container (no rows yet)
+        expect(ctx.doc.activeElement).toBe(ctx.results);
+    });
+
+    it('K17: ↑ from a row-less container crosses out; ↓/Home/End stay put', () => {
+        const ctx = setup({});
+        ctx.doc.activeElement = ctx.tree; // f5903c8 parks focus on the container
+        const up = ctx.keyOn(ctx.tree, 'ArrowUp');
+        expect(up.defaultPrevented).toBe(true);
+        // focusListExit → no toolbar rung → focusTop → the strip's active tab
+        expect(ctx.doc.activeElement).toBe(ctx.views.activeDef().tabEl);
+        ctx.doc.activeElement = ctx.tree;
+        for (const k of ['ArrowDown', 'Home', 'End']) {
+            ctx.keyOn(ctx.tree, k);
+            expect(ctx.doc.activeElement).toBe(ctx.tree); // rows not rendered yet
+        }
     });
 });
