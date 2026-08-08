@@ -15,8 +15,8 @@
  *
  * checkUrlDual (v4 task-2 §5.5b) wraps checkUrl with the two-channel
  * direct/proxy decision matrix (ok / dead / blocked / skipped). The second
- * channel is either the user's own proxy server (marker-PAC routing, see
- * dead-proxy.js) or a legacy relay template.
+ * channel is the user's own proxy server (marker-PAC routing, see
+ * dead-proxy.js); the legacy relay template channel is retired.
  *
  * scanBookmarks runs checkUrl over a flat [{ id, title, url }] list through
  * a concurrency pool (default 4 in flight), reports onProgress(done, total)
@@ -101,7 +101,8 @@ export const checkUrlDual = (url, { proxyServer = false, timeoutMs = 8000, signa
 export const scanBookmarks = (items, { concurrency = 4, timeoutMs = 8000, onProgress, onResult, signal, checker, pauser } = {}) =>
     new Promise(resolve => {
         // checker: per-URL probe, defaults to the plain direct check; the
-        // dead view injects checkUrlDual with the configured proxy template.
+        // scan runner (dead-scan-sw.js) injects checkUrlDual with the
+        // configured proxy server.
         // pauser (item 10): optional { paused } gate — while paused the pump
         // dispatches nothing new; pauser.pump is wired back so resume() can
         // re-enter the pump (see startPausableScan).

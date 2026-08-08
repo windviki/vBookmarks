@@ -53,7 +53,8 @@
  * 项3). Marks prune on bookmark removal, and ids that came back
  * ok/skipped after a rescan drop out automatically. Batch "mark all"
  * (every dead+blocked row of the result set) and "clear all marks" are
- * ConfirmDialog-gated. badge() = deadMarks.length.
+ * ConfirmDialog-gated. badge() = the last scan's dead+blocked count (see
+ * the badge hook at registration — NOT the marks count).
  *
  * §5.5d lifecycle (v4 task-4 #16 — the scan runs in the service worker):
  * the scan engine lives in src/dead-scan-sw.js so a popup close NEVER
@@ -190,8 +191,9 @@ export function initViewDead(ctx = {}) {
 
     const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
-        // The tab badge is the marks count — keep it in sync on every
-        // mutation (toggle/mark-all/clear/scan prune/onRemoved prune).
+        // Refresh the tab badge on every marks mutation (toggle/mark-all/
+        // clear/scan prune/onRemoved prune). badge() itself counts the last
+        // scan's dead+blocked rows, not the marks.
         views.updateBadges();
     };
 
@@ -371,13 +373,18 @@ export function initViewDead(ctx = {}) {
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>`;
+                // Rescan rides the timestamp, not the result rows: a clean
+                // scan (zero dead rows) must still offer the way back into
+                // a fresh run (f5bc7cb had stranded the button inside the
+                // rows branch, leaving no in-view rescan after a clean scan).
+                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
             }
             const rows = allResultRows();
             if (lastScan && rows.length) {
                 // dead-filter and the old dead-summary merge: each segment
                 // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0"),
                 // so the two situations read at a glance instead of as a
-                // separate summary line. Order: scan-time → filter → rescan →
+                // separate summary line. Order: scan-time → rescan → filter →
                 // mark-all → unmark-all → delete-all → select-mode.
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
                 html += '<span class="dead-filter" role="group">';
@@ -391,7 +398,6 @@ export function initViewDead(ctx = {}) {
                 ])
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
-                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
                 html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
                 if (deadMarks.size)
                     html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
@@ -615,29 +621,40 @@ export function initViewDead(ctx = {}) {
     // Serial chain so the backend and the undo stack see one deletion at a
     // time (every capture lands BEFORE its remove, chrome applies API calls
     // in issue order). Deleting a row prunes its mark through the onRemoved
-    // listener.
-    const removeSequentially = ids =>
-        ids.reduce((chain, id) => chain.then(() => new Promise(resolve => {
+    // listener. A doomed id can vanish mid-batch (sync, another page): the
+    // remove callback reads lastError so that failure neither logs an
+    // "Unchecked runtime.lastError" nor counts toward the toast — the
+    // promise resolves with the number of rows ACTUALLY deleted.
+    const removeSequentially = ids => {
+        let removed = 0;
+        return ids.reduce((chain, id) => chain.then(() => new Promise(resolve => {
             undo.capture(id);
-            chrome.bookmarks.remove(id, resolve);
-        })), Promise.resolve());
+            chrome.bookmarks.remove(id, () => {
+                if (!chrome.runtime.lastError)
+                    removed++;
+                resolve();
+            });
+        })), Promise.resolve()).then(() => removed);
+    };
 
     // Shared batch-delete gate: ConfirmDialog with the running count, then
-    // the serial chain, then a single toast. The doomed rows are pruned from
-    // treeItems BEFORE the follow-up render, so they vanish immediately
-    // instead of lingering until the onRemoved→scheduleRender 300ms re-join
-    // (a stale list would let a fast second click re-target deleted ids).
-    // `done` is the caller-specific finish (deleteSelected exits the mode).
-    const confirmDeletion = (doomed, dialogKey, done) => {
+    // the serial chain, then a single toast reporting the actual deletions.
+    // The doomed rows are pruned from treeItems BEFORE the follow-up render,
+    // so they vanish immediately instead of lingering until the
+    // onRemoved→scheduleRender 300ms re-join (a stale list would let a fast
+    // second click re-target deleted ids). `done` is the caller-specific
+    // finish (deleteSelected exits the mode); `noteKey` appends a second
+    // line to the dialog (delete-all's blocked/undo-granularity warning).
+    const confirmDeletion = (doomed, dialogKey, done, noteKey) => {
         if (!doomed.length)
             return;
         dialogs.ConfirmDialog.open({
-            dialog: _m(dialogKey, `${doomed.length}`),
+            dialog: _m(dialogKey, `${doomed.length}`) + (noteKey ? `<br>${_m(noteKey)}` : ''),
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
-                removeSequentially(doomed).then(() => {
-                    undo.showToast(_m('deadDeleted', `${doomed.length}`));
+                removeSequentially(doomed).then(removed => {
+                    undo.showToast(_m('deadDeleted', `${removed}`));
                     for (const id of doomed)
                         treeItems.delete(id);
                     if (done)
@@ -650,9 +667,12 @@ export function initViewDead(ctx = {}) {
     };
 
     // Toolbar "delete all": removes every row of the ACTIVE filter segment
-    // (all / dead / blocked — mirrors markAll).
+    // (all / dead / blocked — mirrors markAll). The dialog names the
+    // current-filter scope (the old text lumped everything under "dead
+    // bookmarks" while All also deletes blocked rows) and carries the note
+    // about blocked rows and the one-step undo granularity.
     const deleteAll = () =>
-        confirmDeletion(resultRows().map(({ item }) => item.id), 'deadDeleteAll');
+        confirmDeletion(resultRows().map(({ item }) => item.id), 'deadDeleteAll', null, 'deadDeleteAllNote');
 
     // Selection-mode "delete selected": removes the selected rows after a
     // confirm, then LEAVES the mode — the selection's rows are all gone, so
@@ -899,6 +919,15 @@ export function initViewDead(ctx = {}) {
         if (deadMarks.delete(id)) {
             persistMarks();
             refreshOverlays();
+        }
+        // The badge counts the cached scan's dead+blocked verdicts without a
+        // tree join — drop the removed id there too, or the count stays
+        // higher than the rows on screen (and a cold-start preload would
+        // "revive" it). In-memory only: the persisted deadLastScan is the
+        // SW's to rewrite on the next scan.
+        if (lastScan && lastScan.results && id in lastScan.results) {
+            delete lastScan.results[id];
+            views.updateBadges();
         }
     });
     let refreshTimer = null;

@@ -236,8 +236,8 @@ def collect_files(root, manifest):
 
 
 # Matches the repo's ESM import forms: `import { x } from './a.js'`,
-# `import './b.js'` (double or single quotes).
-IMPORT_RE = re.compile(r"""(?:from|import)\s+['"]([^'"]+\.js)['"]""")
+# `import './b.js'` (double or single quotes), and dynamic `import('./c.js')`.
+IMPORT_RE = re.compile(r"""(?:(?:from|import)\s+['"]|import\s*\(\s*['"])([^'"]+\.js)['"]""")
 
 
 def resolve_js_imports(root, included):

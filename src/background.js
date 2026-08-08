@@ -43,6 +43,36 @@ if (chrome.proxy && chrome.proxy.settings && chrome.storage && chrome.storage.se
     });
 }
 
+// --- Custom action icon persistence (issue #52) -----------------------------
+// chrome.action.setIcon is session-scoped: a browser restart resets the action
+// icon to the manifest default. The popup page (neat.js) re-applies the icon on
+// open, but until the user clicks the action button the icon shows the default.
+// The SW restores it on every cold start so the custom icon survives restarts.
+// The stored value is JSON.stringify(imageData.data) — a 19×19 RGBA flat array.
+const restoreCustomIcon = () => {
+    if (!chrome.action || !chrome.storage || !chrome.storage.local)
+        return;
+    chrome.storage.local.get('customIcon', data => {
+        const raw = data && data.customIcon;
+        if (!raw)
+            return;
+        try {
+            const pixels = JSON.parse(raw);
+            const canvas = new OffscreenCanvas(19, 19);
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, 19, 19);
+            for (const key in pixels)
+                imageData.data[key] = pixels[key];
+            chrome.action.setIcon({ imageData });
+        } catch (e) {
+            // Corrupt/legacy value — ignore; the manifest icon stays.
+        }
+    });
+};
+restoreCustomIcon();
+chrome.runtime.onStartup.addListener(restoreCustomIcon);
+chrome.runtime.onInstalled.addListener(restoreCustomIcon);
+
 (() => {
     if (chrome.omnibox) {
         const setSuggest = description => {
@@ -242,25 +272,34 @@ chrome.commands.onCommand.addListener(async command => {
 // options-page flip takes effect without waiting for the next SW cold start.
 const QUICK_ADD_MENU_ID = 'vbm-quick-add';
 if (chrome.contextMenus) {
+    const applyQuickAddMenu = on => {
+        chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
+            void chrome.runtime.lastError; // the menu simply didn't exist yet
+            if (on) {
+                chrome.contextMenus.create({
+                    id: QUICK_ADD_MENU_ID,
+                    contexts: ['page'],
+                    title: chrome.i18n.getMessage('contextMenuAddBookmark')
+                });
+            }
+        });
+    };
     const createQuickAddMenu = () => {
         chrome.storage.local.get({ quickAddContextMenu: '1' }, data => {
-            const on = !!data.quickAddContextMenu && data.quickAddContextMenu !== 'false';
-            chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
-                void chrome.runtime.lastError; // the menu simply didn't exist yet
-                if (on) {
-                    chrome.contextMenus.create({
-                        id: QUICK_ADD_MENU_ID,
-                        contexts: ['page'],
-                        title: chrome.i18n.getMessage('contextMenuAddBookmark')
-                    });
-                }
-            });
+            applyQuickAddMenu(!!data.quickAddContextMenu && data.quickAddContextMenu !== 'false');
         });
     };
     chrome.runtime.onInstalled.addListener(createQuickAddMenu);
     chrome.storage.onChanged.addListener((changes, area) => {
-        if (area === 'local' && 'quickAddContextMenu' in changes)
-            createQuickAddMenu();
+        if (area !== 'local' || !('quickAddContextMenu' in changes))
+            return;
+        // Read the change event's newValue instead of re-reading storage:
+        // a fast second flip could settle before the first event's async
+        // get() ran, and its stale value then re-created (or removed) the
+        // menu against the final state (#49). A key removal (newValue
+        // undefined) maps to the same default-on as the startup read.
+        const value = changes.quickAddContextMenu.newValue;
+        applyQuickAddMenu(value === undefined || (!!value && value !== 'false'));
     });
     createQuickAddMenu();
     chrome.contextMenus.onClicked.addListener((info, tab) => {

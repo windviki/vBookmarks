@@ -450,6 +450,28 @@ describe('empty state + cached results (§5.5a)', () => {
         ctx.def().activate({ preset: { scan: true } });
         expect(ctx.chrome.runtime.sent).toEqual([]); // a live run: no second start
     });
+
+    it('a clean scan (zero dead rows) still offers rescan next to the timestamp', () => {
+        // f5bc7cb regression: the rescan button had moved inside the
+        // rows-non-empty branch, so a fully healthy result left no in-view
+        // way to scan again.
+        const clean = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'ok', code: 200 },
+                '13': { status: 'ok', code: 200 }
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: clean } });
+        const { $list, chrome } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('deadNone'); // the clean empty state
+        expect($list.innerHTML).not.toContain('dead-delete-all'); // nothing to delete
+        expect($list.innerHTML).toContain('class="dead-rescan"'); // …but rescan stays
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        expect(chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
+    });
 });
 
 describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
@@ -751,7 +773,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         ctx.def().activate();
         clickDeleteAll(ctx);
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote');
         expect(dialogs.ConfirmDialog.openCalls[0].button1).toBe('<strong>delete</strong>');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         expect(undo.captureCalls).toEqual([]);
@@ -795,10 +817,59 @@ describe('batch deletion (delete all / delete selected)', () => {
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
         clickDeleteAll(ctx);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[1]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[1]<br>deadDeleteAllNote');
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['12']); // blocked 13 stays
+    });
+
+    it('filter=all: the doomed set includes blocked rows but never ok/skipped ones', async () => {
+        // X3 semantics: under All the batch covers blocked rows (the dialog's
+        // note says so), while healthy/skipped verdicts stay out.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: {
+                '11': { status: 'skipped', code: 0 },
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const { dialogs, chrome, undo } = ctx;
+        ctx.def().activate(); // default filter is all
+        clickDeleteAll(ctx);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']); // blocked included
+        expect(chrome.bookmarks.removeCalls).not.toContain('11'); // skipped stays
+        expect(undo.toastCalls).toEqual(['deadDeleted[2]']);
+    });
+
+    it('a removal failing mid-batch is skipped and the toast counts only real deletions', async () => {
+        // X4: a doomed id vanishing mid-batch (sync / another page) sets
+        // runtime.lastError in the remove callback — read it, skip the
+        // count, and let the toast report the actual deletions.
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { dialogs, chrome, undo } = ctx;
+        ctx.def().activate();
+        const stub = chrome.bookmarks;
+        const realRemove = stub.remove.bind(stub);
+        stub.remove = (id, cb) => {
+            if (id === '13') {
+                stub.removeCalls.push(id); // attempted, but already gone
+                chrome.runtime.lastError = { message: 'Bookmark id is invalid' };
+                cb();
+                chrome.runtime.lastError = undefined;
+                return;
+            }
+            realRemove(id, cb);
+        };
+        clickDeleteAll(ctx);
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']); // both attempted in order
+        expect(undo.toastCalls).toEqual(['deadDeleted[1]']); // only one really deleted
     });
 
     it('deleting rows drops them from the list through the onRemoved re-join', async () => {
@@ -929,6 +1000,29 @@ describe('marks + overlay (§5.5c)', () => {
         const { chrome, store } = ctx;
         chrome.bookmarks.fire('onRemoved', '12');
         expect(JSON.parse(store.get('deadMarks'))).toEqual(['13']);
+    });
+
+    it('removing a bookmark prunes its scan verdict too — the badge stays in step with the rows', () => {
+        // badge() counts lastScan.results without a tree join, so onRemoved
+        // must drop the id there as well (in-memory only — the persisted
+        // deadLastScan is the SW's to rewrite on the next scan).
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const { chrome, def, store } = ctx;
+        ctx.def().activate();
+        expect(def().badge()).toBe(2); // 12 dead + 13 blocked
+        chrome.bookmarks.fire('onRemoved', '12');
+        expect(def().badge()).toBe(1);
+        chrome.bookmarks.fire('onRemoved', '11'); // a healthy row: no-op
+        expect(def().badge()).toBe(1);
+        expect(store.get('deadLastScan')).toBe(cache); // storage untouched
     });
 });
 

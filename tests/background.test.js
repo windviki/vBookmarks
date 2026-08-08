@@ -23,7 +23,8 @@ const buildChrome = () => {
     listeners = {
         commands: null,
         contextMenuClicked: null,
-        installed: null,
+        installed: [],
+        startup: [],
         storageChanged: null
     };
     calls = {
@@ -34,6 +35,7 @@ const buildChrome = () => {
         tabsUpdate: [],
         windowsCreate: [],
         actionOpenPopup: 0,
+        actionSetIcon: [],
         sidePanelOpen: 0,
         setPanelBehavior: [],
         sessionRemove: [],
@@ -89,7 +91,18 @@ const buildChrome = () => {
     return {
         runtime: {
             lastError: undefined,
-            onInstalled: { addListener(fn) { listeners.installed = fn; } },
+            // Multiple modules register on onInstalled (quick-add menu,
+            // restoreCustomIcon #52); keep an array so each test can drive all.
+            onInstalled: {
+                addListener(fn) {
+                    (listeners.installed = listeners.installed || []).push(fn);
+                }
+            },
+            onStartup: {
+                addListener(fn) {
+                    (listeners.startup = listeners.startup || []).push(fn);
+                }
+            },
             onMessage: noopListener,
             getURL: p => `chrome-extension://test/${p}`
         },
@@ -138,6 +151,7 @@ const buildChrome = () => {
             }
         },
         action: {
+            setIcon: icon => { calls.actionSetIcon.push(icon); },
             openPopup: () => {
                 calls.actionOpenPopup++;
                 return Promise.resolve();
@@ -194,6 +208,23 @@ const buildChrome = () => {
 beforeAll(async () => {
     chromeDouble = buildChrome();
     globalThis.chrome = chromeDouble;
+    // background.js's restoreCustomIcon (#52) rebuilds the action icon via
+    // OffscreenCanvas, which node lacks — stub it with a recording canvas so
+    // the top-level call on import doesn't throw.
+    globalThis.OffscreenCanvas = class {
+        constructor(w, h) {
+            this.width = w;
+            this.height = h;
+            const data = new Uint8ClampedArray(w * h * 4);
+            data.fill(255); // opaque white, like a blank getImageData
+            this._imageData = { width: w, height: h, data };
+        }
+        getContext() {
+            return {
+                getImageData: (x, y, w, h) => this._imageData
+            };
+        }
+    };
     await import('../src/background.js');
     // Startup side effects (context-menu creation) would be wiped by the
     // per-test call reset — snapshot them before any beforeEach runs.
@@ -234,13 +265,15 @@ beforeEach(() => {
 
 afterAll(() => {
     delete globalThis.chrome;
+    delete globalThis.OffscreenCanvas;
 });
 
 describe('service worker startup wiring', () => {
     it('registers the command, context-menu and install listeners', () => {
         expect(typeof listeners.commands).toBe('function');
         expect(typeof listeners.contextMenuClicked).toBe('function');
-        expect(typeof listeners.installed).toBe('function');
+        expect(Array.isArray(listeners.installed)).toBe(true);
+        expect(listeners.installed.length).toBeGreaterThan(0);
     });
 
     it('creates the quick-add page context menu at startup (idempotent remove first)', () => {
@@ -252,7 +285,7 @@ describe('service worker startup wiring', () => {
     });
 
     it('re-creates the menu on install (same idempotent remove-first path)', () => {
-        listeners.installed();
+        listeners.installed.forEach(fn => fn());
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
     });
@@ -260,7 +293,7 @@ describe('service worker startup wiring', () => {
     it('issue #49: does NOT create the menu when quickAddContextMenu is off', () => {
         localData.quickAddContextMenu = ''; // off
         calls.contextMenusCreate = [];
-        listeners.installed();
+        listeners.installed.forEach(fn => fn());
         // remove-first still runs (idempotent), but no re-create happens
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
@@ -268,16 +301,35 @@ describe('service worker startup wiring', () => {
 
     it('issue #49: a storage flip off removes the live menu, back on recreates it', () => {
         calls.contextMenusCreate = [];
-        // Real flow: the options page wrote '' first, then storage.onChanged
-        // fired — the handler re-reads storage, so mirror the write.
-        localData.quickAddContextMenu = '';
+        // The handler reads the change event's newValue directly.
         listeners.storageChanged({ quickAddContextMenu: { newValue: '' } }, 'local');
         expect(calls.contextMenusRemove).toContain('vbm-quick-add');
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
         // back on: remove-first then recreate
         calls.contextMenusCreate = [];
-        localData.quickAddContextMenu = '1';
         listeners.storageChanged({ quickAddContextMenu: { newValue: '1' } }, 'local');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
+    });
+
+    it('issue #49: a fast on→off flip settles on the final state (no stale storage re-read)', () => {
+        // Regression: the handler used to re-read storage asynchronously, so
+        // a stale get() callback could re-create the menu after the final
+        // off. localData deliberately still says ON — newValue must win.
+        localData.quickAddContextMenu = '1';
+        calls.contextMenusCreate = [];
+        calls.contextMenusRemove = [];
+        listeners.storageChanged({ quickAddContextMenu: { newValue: '' } }, 'local');
+        expect(calls.contextMenusRemove).toContain('vbm-quick-add');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(false);
+        // …and the symmetric race: storage says OFF, the final event says ON
+        localData.quickAddContextMenu = '';
+        listeners.storageChanged({ quickAddContextMenu: { newValue: '1' } }, 'local');
+        expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
+    });
+
+    it('issue #49: removing the setting falls back to the default-on menu', () => {
+        calls.contextMenusCreate = [];
+        listeners.storageChanged({ quickAddContextMenu: {} }, 'local'); // newValue undefined
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
     });
 
@@ -437,5 +489,59 @@ describe('omnibox search (v4 task-4 #11)', () => {
         await flushMicrotasks();
         expect(calls.tabsUpdate).toEqual([]);
         expect(calls.tabsCreate).toEqual([]);
+    });
+});
+
+// issue #52: the custom action icon is session-scoped (a browser restart
+// resets it to the manifest default). The SW must re-apply it on every cold
+// start — top-level on import, and again on runtime.onStartup/onInstalled.
+// restoreCustomIcon reads the persisted JSON (19×19 RGBA flat array) and
+// rebuilds the ImageData via OffscreenCanvas before chrome.action.setIcon.
+describe('custom icon persistence (issue #52)', () => {
+    // The top-level restoreCustomIcon() ran once at import time (beforeAll),
+    // when no icon was stored — a legitimate no-op. The user-facing path is the
+    // onStartup/onInstalled listeners, which re-read storage each time.
+
+    it('applies the stored custom icon on runtime.onStartup', async () => {
+        localData.customIcon = JSON.stringify({ 0: 255, 1: 0, 2: 0, 3: 255 });
+        listeners.startup.forEach(fn => fn());
+        await flushMicrotasks();
+        expect(calls.actionSetIcon.length).toBe(1);
+        const call = calls.actionSetIcon[0];
+        expect(call.imageData).toBeDefined();
+        // A 19×19 RGBA buffer.
+        expect(call.imageData.width).toBe(19);
+        expect(call.imageData.height).toBe(19);
+        // The mock OffscreenCanvas keeps its ImageData opaque-white by default;
+        // the real one copies the stored pixels in. Assert the transfer shape
+        // (flat RGBA length), not the bytes, which depend on the stub canvas.
+        expect(call.imageData.data.length).toBe(19 * 19 * 4);
+    });
+
+    it('does nothing when no custom icon is stored', async () => {
+        delete localData.customIcon;
+        calls.actionSetIcon = [];
+        listeners.startup.forEach(fn => fn());
+        await flushMicrotasks();
+        expect(calls.actionSetIcon).toEqual([]);
+    });
+
+    it('re-applies the icon on every cold-start hook (startup + installed)', async () => {
+        localData.customIcon = '{}';
+        calls.actionSetIcon = [];
+        listeners.startup.forEach(fn => fn());
+        await flushMicrotasks();
+        expect(calls.actionSetIcon.length).toBe(1);
+        listeners.installed.forEach(fn => fn());
+        await flushMicrotasks();
+        expect(calls.actionSetIcon.length).toBe(2);
+    });
+
+    it('ignores a corrupt/legacy stored value without throwing', async () => {
+        localData.customIcon = 'not json {';
+        calls.actionSetIcon = [];
+        listeners.startup.forEach(fn => fn());
+        await flushMicrotasks();
+        expect(calls.actionSetIcon).toEqual([]);
     });
 });

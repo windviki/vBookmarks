@@ -251,6 +251,15 @@
                 await chrome.storage.local.remove('separatorUrl');
                 localStorage.removeItem('separatorUrl');
             }
+            // 4. Retired-key cleanup (idempotent, runs on every load): the v3
+            // dead-link relay template setting was replaced by the user's own
+            // proxy server (deadProxyServer) in v4 — drop the stale key so it
+            // stops riding the options-page settings backup.
+            if (mirror.deadProxyTemplate !== undefined && mirror.deadProxyTemplate !== null) {
+                delete mirror.deadProxyTemplate;
+                await chrome.storage.local.remove('deadProxyTemplate');
+                localStorage.removeItem('deadProxyTemplate');
+            }
             // 1c. Load the sync area into its own mirror
             try {
                 const syncData = await chrome.storage.sync.get(null);

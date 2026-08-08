@@ -11,7 +11,8 @@
  * than being locked to a major or minor bump.
  *
  * The manifest version is a Chrome-style "1.4 dot-separated integers" string
- * ("4.0", "4.0.1", …); missing segments parse to 0. Nothing here touches
+ * ("4.0", "4.0.1", …); only the first three segments are read — a fourth, if
+ * present, is ignored — and missing segments parse to 0. Nothing here touches
  * chrome APIs — plain string/number math, unit-testable in node.
  */
 

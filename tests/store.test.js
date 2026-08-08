@@ -358,4 +358,35 @@ describe('store.js', () => {
             expect(second.window.store.get('separatorURL')).toBe('http://legacy.test/');
         });
     });
+
+    describe('deadProxyTemplate cleanup (v4 proxy retirement)', () => {
+        it('drops the retired v3 relay key from chrome.storage on startup', async () => {
+            const sb = createSandbox({
+                chromeLocalData: {
+                    deadProxyTemplate: 'https://relay.example/?u=%s',
+                    deadProxyServer: 'http://127.0.0.1:7890',
+                    __migrated_v1: '1'
+                }
+            });
+            await sb.window.store.ready;
+
+            expect(sb.window.store.get('deadProxyTemplate')).toBeUndefined();
+            expect('deadProxyTemplate' in sb.localData).toBe(false);
+            // the replacement setting is untouched
+            expect(sb.window.store.get('deadProxyServer')).toBe('http://127.0.0.1:7890');
+        });
+
+        it('is idempotent: a second init against the cleaned profile removes nothing more', async () => {
+            const first = createSandbox({
+                chromeLocalData: { deadProxyTemplate: 'https://relay.example/?u=%s', __migrated_v1: '1' }
+            });
+            await first.window.store.ready;
+            expect('deadProxyTemplate' in first.localData).toBe(false);
+
+            const second = createSandbox({ chromeLocalData: first.localData });
+            await second.window.store.ready;
+            expect('deadProxyTemplate' in second.localData).toBe(false);
+            expect(second.window.store.get('deadProxyTemplate')).toBeUndefined();
+        });
+    });
 });
