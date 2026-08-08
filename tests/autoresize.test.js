@@ -239,4 +239,24 @@ describe('resizer source contract (4.0.1 width regression gate)', () => {
         expect(neatJs).toMatch(/store\.flush\(\)/);
         expect(neatJs).toMatch(/resetDragState = \(\) => \{[\s\S]*?store\.flush\(\)/);
     });
+
+    it('sizes the ROOT element, not just body — the popup window follows <html> width', () => {
+        // Verified on a real Edge 151 popup: the OS window is sized from the
+        // root element; <html> width:auto tracks the viewport, so after a
+        // widen the root sticks at the widest width and the window can never
+        // narrow (body shrank, innerWidth stayed pinned). The drag must write
+        // documentElement's width alongside body's or narrowing is dead.
+        expect(neatJs).toMatch(/document\.documentElement\.style\.width = `\$\{width\}px`/);
+    });
+
+    it('flushes AFTER the final width write on drag end, not before', () => {
+        // resetDragState() contains store.flush(); if it ran before the final
+        // store.set('popupWidth'), the definitive width would fall back to the
+        // 200ms debounce and be lost on a fast popup close.
+        const finalWrite = neatJs.indexOf("store.set('popupWidth', width)");
+        const dragEndFlush = neatJs.indexOf('if (isDragEnd)');
+        expect(finalWrite).toBeGreaterThan(-1);
+        expect(dragEndFlush).toBeGreaterThan(finalWrite);
+        expect(neatJs.slice(dragEndFlush, dragEndFlush + 80)).toMatch(/resetDragState\(\)/);
+    });
 });

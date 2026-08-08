@@ -996,9 +996,7 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             return;
         e.preventDefault();
         const isX = resizerXDown;
-        if (e.type === 'pointerup' || e.type === 'pointercancel') {
-            resetDragState();
-        }
+        const isDragEnd = e.type === 'pointerup' || e.type === 'pointercancel';
         if (isX) {
             // record current width
             const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
@@ -1012,6 +1010,15 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
             //     $resizerx.style.cursor = 'col-resize';
             // }
             body.style.width = `${width}px`;
+            // The popup OS window is sized from the ROOT element, not body —
+            // and <html> width:auto tracks the VIEWPORT, so once the window
+            // has grown the root stays at the widest attained width and the
+            // window can never narrow again ("widened, can't narrow back":
+            // body shrank but innerWidth stayed pinned, verified on Edge
+            // 151). Setting the root width explicitly lets the window follow
+            // the drag in both directions. (Height needs no such help:
+            // <html> height:auto shrink-wraps the content.)
+            document.documentElement.style.width = `${width}px`;
             store.set('popupWidth', width);
             resetSeparator(); // Reset separators
             menus.clearMenu();
@@ -1047,6 +1054,12 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
                 }
             }
         }
+        // Drag-end bookkeeping runs AFTER the final size write above:
+        // resetDragState() flushes the store, and a flush taken before the
+        // last store.set() would leave the final width to the 200ms debounce
+        // — lost if the popup closes within that window.
+        if (isDragEnd)
+            resetDragState();
     }
     document.addEventListener('pointermove', pointerDragHandler);
     document.addEventListener('pointerup', pointerDragHandler);
