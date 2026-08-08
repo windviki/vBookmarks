@@ -217,7 +217,7 @@ const setup = (opts = {}) => {
         'deleteBookmarks', 'addSeparator', 'deleteSeparator'])
         actions[name] = (...args) => {
             actionCalls.push([name, ...args]);
-            // 4.0.2: lets a test observe the menu/focus state DURING the action
+            // 4.0.1: lets a test observe the menu/focus state DURING the action
             if (opts.onAction)
                 opts.onAction(name, args);
         };
@@ -348,7 +348,7 @@ describe('module API', () => {
         const { menus, bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
             histRowMenu, dupesGroupMenu, paletteCmdMenu } = setup({});
         expect(typeof menus.clearMenu).toBe('function');
-        // 4.0.2 menu focus law: cancel-semantics close for the keyboard layer
+        // 4.0.1 menu focus law: cancel-semantics close for the keyboard layer
         expect(typeof menus.closeMenu).toBe('function');
         expect(typeof menus.switchBookmarkMenu).toBe('function');
         expect(menus.bookmarkMenu).toBe(bookmarkMenu);
@@ -458,12 +458,12 @@ describe('clearMenu', () => {
     });
 });
 
-// 4.0.2 menu focus law: a menu close must never drop focus to <body> or
+// 4.0.1 menu focus law: a menu close must never drop focus to <body> or
 // strand it on the hidden menu — closeMenu() (cancel semantics for the
 // keyboard layer's ←/Esc) drops the marker AND refocuses the owner row;
 // no-arg clearMenu() (programmatic close) keeps the marker but refocuses
 // too; a re-rendered owner is found through its same-id replacement row.
-describe('closeMenu (4.0.2 menu focus law)', () => {
+describe('closeMenu (4.0.1 menu focus law)', () => {
     it('removes the .active marker, refocuses the owner row and hides every menu', () => {
         const { menus, bookmarkMenu, folderMenu, separatorMenu, makeBookmarkRow, openOn } = setup({});
         const { a } = makeBookmarkRow('42');

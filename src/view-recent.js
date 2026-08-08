@@ -206,7 +206,7 @@ export function initViewRecent(ctx = {}) {
     };
 
     let dirty = false;
-    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // --- Row focus park/restore (4.0.1 focus law) --------------------------
     // The same park/restore the toolbared views run for their controls: the
     // render's innerHTML swap replaces every row, so a focused row drops to
     // <body> and the ↓ walk dies (every onCreated/onRemoved refresh
@@ -307,7 +307,7 @@ export function initViewRecent(ctx = {}) {
         if (!count)
             html += `<li class="empty-state" role="listitem"><i>${_m('recentEmpty')}</i></li>`;
         html += '</ul>';
-        // 4.0.2 focus law: a focused row rides the swap (park above, restore
+        // 4.0.1 focus law: a focused row rides the swap (park above, restore
         // here) so the ↓ walk survives every refresh repaint.
         const parkedRow = parkRowFocus();
         $list.innerHTML = html;

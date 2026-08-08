@@ -167,7 +167,7 @@ export function initContextMenu(ctx = {}) {
         setRootDisabled(false);
     };
 
-    // Focus after a menu closes (4.0.2 focus law: a menu close must never
+    // Focus after a menu closes (4.0.1 focus law: a menu close must never
     // drop focus to <body> or strand it on the hidden menu). The owning row
     // first; when a re-render swapped it out, its same-id replacement row;
     // failing both, the list container (the arrow keys keep working from
@@ -492,7 +492,7 @@ export function initContextMenu(ctx = {}) {
         // Capture the proposed group title BEFORE clearMenu — rowGroupTitle
         // reads currentContext, which the close nulls.
         const groupTitle = rowGroupTitle();
-        // Close FIRST (the 4.0.2 menu focus law): focus returns to the
+        // Close FIRST (the 4.0.1 menu focus law): focus returns to the
         // owning row before the action runs — a dialog the action opens then
         // captures the ROW as its invoker (not the hidden menu), and a view
         // re-render triggered by the action finds the row focused, so the
@@ -630,7 +630,7 @@ export function initContextMenu(ctx = {}) {
         const groupTitle = rowGroupTitle();
         const li = currentContext.parentNode;
         const id = rowId(li);
-        // Close FIRST (the 4.0.2 menu focus law — see the bookmark handler):
+        // Close FIRST (the 4.0.1 menu focus law — see the bookmark handler):
         // the owning row retakes focus before the async dispatch below opens
         // any dialog or triggers a re-render.
         clearMenu();
@@ -792,7 +792,7 @@ export function initContextMenu(ctx = {}) {
             return;
         const li = currentContext.parentNode;
         const id = rowId(li);
-        // Close FIRST (the 4.0.2 menu focus law — see the bookmark handler).
+        // Close FIRST (the 4.0.1 menu focus law — see the bookmark handler).
         clearMenu();
         switch (el.id) {
             case 'remove-separator':

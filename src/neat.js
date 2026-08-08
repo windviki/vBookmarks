@@ -929,7 +929,7 @@ import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
     function resetSeparator() {}
 
     // Drag the edge
-    // Pointer capture (4.0.2): a Chrome popup grows LEFTWARD from its toolbar
+    // Pointer capture (4.0.1): a Chrome popup grows LEFTWARD from its toolbar
     // anchor, so a widen drag pushes the pointer out of the popup window.
     // Without capture the window stops receiving mousemove AND the mouseup is
     // lost — the resizerXDown flag sticks and the next mousemove resizes from

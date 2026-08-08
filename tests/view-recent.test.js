@@ -714,7 +714,7 @@ describe('coarse time sections (第四轮项8)', () => {
     });
 });
 
-describe('row focus park/restore (4.0.2 focus law)', () => {
+describe('row focus park/restore (4.0.1 focus law)', () => {
     // The recent view has no toolbar pair, so this is the list's only
     // park/restore: every refresh's innerHTML swap replaces the focused row
     // (each onCreated/onRemoved repaint) and the ↓ walk used to die on

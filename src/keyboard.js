@@ -7,9 +7,9 @@
  * PageUp/PageDown, F2 rename and the type-ahead keyBuffer with its 500ms
  * reset timer), the tree/results keyup handler (Delete → delete actions),
  * the context menus' keydown handler (menu-item walking that skips <hr>s
- * and wraps on EVERY platform — 4.0.2 P1: a menu is a bounded fixed set,
+ * and wraps on EVERY platform — 4.0.1 P1: a menu is a bounded fixed set,
  * bounded fixed sets cycle —, Home/End to the first/last enabled item and
- * the 4.0.2 P2 confirm/cancel protocol mirroring src/dropdown.js: Enter/
+ * the 4.0.1 P2 confirm/cancel protocol mirroring src/dropdown.js: Enter/
  * Space/the LTR → dispatch the focused enabled item's own mouseup, the
  * LTR ← and Escape cancel through menus.closeMenu(); RTL flips the
  * arrows), the document-
@@ -175,7 +175,7 @@ export function initKeyboard(ctx = {}) {
                     }
                     if (keyValue === 'ArrowLeft' || keyValue === 'ArrowRight') {
                         // ←/→ walk the rung's enabled controls in reading
-                        // order (RTL mirrors) and WRAP at the edges — 4.0.2
+                        // order (RTL mirrors) and WRAP at the edges — 4.0.1
                         // P1: the rung is a bounded fixed set, and bounded
                         // fixed sets cycle (the tab strip's ←/→ rule).
                         const controls = toolbar.querySelectorAll
@@ -227,7 +227,7 @@ export function initKeyboard(ctx = {}) {
                     // K17: the container holds focus but the view's rows have
                     // not rendered yet (async activate) — ↑ still takes the
                     // §2.1/§2.5 crossing to the toolbar/strip/box instead of
-                    // dying here with the other keys; 4.0.2 P4 gives Home/End
+                    // dying here with the other keys; 4.0.1 P4 gives Home/End
                     // the same crossing when the view has no rows at all.
                     // ↓ staying put until rows exist is the reasonable contract.
                     if (keyValue === 'ArrowUp') {
@@ -412,7 +412,7 @@ export function initKeyboard(ctx = {}) {
                     const lis = this.querySelectorAll('ul:not(.vbm-dropdown-list)>li:last-child');
                     const visible = Array.from(lis).filter(li => !!li.parentNode.offsetHeight);
                     const li = visible[visible.length - 1];
-                    // 4.0.2 P4: a focusable row CONTAINER (the dead view's
+                    // 4.0.1 P4: a focusable row CONTAINER (the dead view's
                     // li.dead-start) takes the focus itself — it has no inner
                     // span/a. (The getAttribute guard: hand-written test
                     // doubles lack it.)
@@ -437,7 +437,7 @@ export function initKeyboard(ctx = {}) {
                     // order, so a bare ul>li:first-child hits a text-only
                     // option row and null.focus() throws.
                     const firstRow = this.querySelector('ul:not(.vbm-dropdown-list)>li:first-child');
-                    // Same li[tabindex] row-container rule as End (4.0.2 P4).
+                    // Same li[tabindex] row-container rule as End (4.0.1 P4).
                     const firstFocus = firstRow && (firstRow.getAttribute && firstRow.getAttribute('tabindex') !== null
                         ? firstRow
                         : firstRow.querySelector('span, a'));
@@ -647,10 +647,10 @@ export function initKeyboard(ctx = {}) {
                 return n;
         return null;
     };
-    // 4.0.2 P2 cancel semantics (mirrors src/dropdown.js): the .active
+    // 4.0.1 P2 cancel semantics (mirrors src/dropdown.js): the .active
     // marker comes off the owning row, focus returns to it and every menu
     // hides — context-menu.js's closeMenu(). The inline fallback is the
-    // pre-4.0.2 close, for minimal test doubles without closeMenu.
+    // pre-4.0.1 close, for minimal test doubles without closeMenu.
     const cancelOpenMenu = () => {
         if (menus.closeMenu) {
             menus.closeMenu();
@@ -667,7 +667,7 @@ export function initKeyboard(ctx = {}) {
         const menu = this;
         const item = document.activeElement;
         const metaKey = e.metaKey;
-        // 4.0.2 P2 confirm: run the focused ENABLED menu item through its
+        // 4.0.1 P2 confirm: run the focused ENABLED menu item through its
         // own mouseup handler (context-menu.js closes first and restores
         // focus itself). Focus on the menu container (no item) or on a
         // disabled item: a no-op beyond the caller's preventDefault.
@@ -687,7 +687,7 @@ export function initKeyboard(ctx = {}) {
                 if (metaKey) { // cmd + down (Mac): jump to the last ENABLED item
                     nextMenuTarget(menu.lastElementChild, -1)?.focus();
                 } else if (item.classList.contains('menu-item')) {
-                    // 4.0.2 P1: ↑/↓ wrap on ALL platforms — the old mac
+                    // 4.0.1 P1: ↑/↓ wrap on ALL platforms — the old mac
                     // dead-end exception is gone.
                     const t = nextMenuTarget(item.nextElementSibling, 1)
                         || nextMenuTarget(menu.firstElementChild, 1);
@@ -753,7 +753,7 @@ export function initKeyboard(ctx = {}) {
     };
     menus.bookmarkMenu.addEventListener('keydown', contextKeyDown);
     menus.folderMenu.addEventListener('keydown', contextKeyDown);
-    // 4.0.2: the separator menu is bound too — while it stayed unbound its
+    // 4.0.1: the separator menu is bound too — while it stayed unbound its
     // only entry (remove-separator) was unreachable by keyboard. (Its
     // hide-editables CSS never applied to this menu, so the walk is safe.)
     menus.separatorMenu.addEventListener('keydown', contextKeyDown);
@@ -862,7 +862,7 @@ export function initKeyboard(ctx = {}) {
                 palette.refocus();
                 return;
             }
-            // 4.0.2 P2: the same cancel semantics as the menu's own ←/Esc.
+            // 4.0.1 P2: the same cancel semantics as the menu's own ←/Esc.
             cancelOpenMenu();
             return;
         }

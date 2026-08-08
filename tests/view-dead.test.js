@@ -1317,7 +1317,7 @@ describe('proxy strip + add panel (dead-proxy.js)', () => {
         // still gates its visibility
         expect(html).toContain('class="dead-proxy-nudge">deadProxyNudge</span>');
         expect(html).not.toContain('deadProxyNudge[');
-        // strip order (4.0.2): add button → dismiss × → nudge LAST (the CSS
+        // strip order (4.0.1): add button → dismiss × → nudge LAST (the CSS
         // flex-basis:100% wraps the nudge onto its own second row while
         // margin-inline-start:auto pins the × to the first row's right end)
         const at = s => html.indexOf(s);
@@ -1532,7 +1532,7 @@ describe('risk banner (v4 task-4 #14)', () => {
     });
 });
 
-describe('row focus park/restore (4.0.2 focus law)', () => {
+describe('row focus park/restore (4.0.1 focus law)', () => {
     // The list-row twin of the toolbar park/restore: every render's
     // innerHTML swap replaces the focused row (filter clicks, mark toggles,
     // scan ticks) and the ↓ walk used to die on <body>. The doubles model

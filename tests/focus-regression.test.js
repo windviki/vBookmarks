@@ -28,7 +28,7 @@ import { initKeyboard } from '../src/keyboard.js';
 //      - the palette closed over a NON-tree view lands focus in THAT view's
 //        anchor, never a hidden tree row (K13);
 //      - a row-less list container holding focus still crosses OUT on ↑
-//        (K17); 4.0.2: Home/End cross to the view anchor too (item e) —
+//        (K17); 4.0.1: Home/End cross to the view anchor too (item e) —
 //        only ↓ stays put until rows render.
 //
 // The per-module suites keep the deep behaviour (dialog traps, per-view arrow
@@ -346,7 +346,7 @@ describe('E — K13/K17: hidden-view + row-less-container landings', () => {
         expect(up.defaultPrevented).toBe(true);
         // focusListExit → no toolbar rung → focusTop → the strip's active tab
         expect(ctx.doc.activeElement).toBe(ctx.views.activeDef().tabEl);
-        // 4.0.2 (item e): Home/End on a row-less container no longer trap
+        // 4.0.1 (item e): Home/End on a row-less container no longer trap
         // focus — they cross to the view anchor (focusTop), the same landing
         // ↑ takes. ↓ keeps waiting for rows to render.
         for (const k of ['Home', 'End']) {

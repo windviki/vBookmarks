@@ -879,7 +879,7 @@ describe('sort seg arrow keys (§2.5 — owned by the toolbar rung)', () => {
     });
 });
 
-describe('row focus park/restore (4.0.2 focus law)', () => {
+describe('row focus park/restore (4.0.1 focus law)', () => {
     // The list-row twin of the toolbar park/restore above: every render's
     // innerHTML swap replaces the focused row (a sort switch, a star-add
     // flip, a clear) and the ↓ walk used to die on <body>. The doubles

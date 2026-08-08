@@ -355,7 +355,7 @@ const setup = (opts = {}) => {
     const closeMenuCalls = [];
     const menus = {
         clearMenu: () => clearMenuCalls.push('clear'),
-        // 4.0.2 cancel semantics: the double mirrors the real closeMenu's
+        // 4.0.1 cancel semantics: the double mirrors the real closeMenu's
         // marker-off + owner refocus, so the keyboard cancel paths (menu
         // ←/Esc, document Esc) can assert the focus law. (Menu hiding is
         // not modeled by the doubles — opacity is poked directly.)
@@ -474,7 +474,7 @@ describe('module API', () => {
         expect(results._listeners.keyup).toHaveLength(1);
         expect(bookmarkMenu._listeners.keydown).toHaveLength(1);
         expect(folderMenu._listeners.keydown).toHaveLength(1);
-        expect(separatorMenu._listeners.keydown).toHaveLength(1); // 4.0.2: bound like every other menu
+        expect(separatorMenu._listeners.keydown).toHaveLength(1); // 4.0.1: bound like every other menu
         expect(paletteCmdMenu._listeners.keydown).toHaveLength(1); // K7: bound like the other menus
         expect(doc._listeners.keydown).toHaveLength(3); // capture ESC + bubbling Ctrl+F + Tab cycle
     });
@@ -1344,7 +1344,7 @@ describe('contextKeyDown', () => {
         expect(item1.focused).toBe(true);
     });
 
-    it('ArrowDown past the last item wraps on Mac too (4.0.2 P1: no platform exception)', () => {
+    it('ArrowDown past the last item wraps on Mac too (4.0.1 P1: no platform exception)', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({ os: 'mac' });
         doc.activeElement = item2;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
@@ -1365,7 +1365,7 @@ describe('contextKeyDown', () => {
         expect(item2.focused).toBe(true);
     });
 
-    it('ArrowUp past the first item wraps on Mac too (4.0.2 P1: no platform exception)', () => {
+    it('ArrowUp past the first item wraps on Mac too (4.0.1 P1: no platform exception)', () => {
         const { bookmarkMenu, item1, item2, doc } = setup({ os: 'mac' });
         doc.activeElement = item1;
         fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowUp' }));
@@ -1656,7 +1656,7 @@ describe('contextKeyDown', () => {
 
     it('cancel falls back to the inline close when the menus double lacks closeMenu', () => {
         const { bookmarkMenu, item1, doc, menus, clearMenuCalls, closeMenuCalls, row } = setup({});
-        delete menus.closeMenu; // minimal setup: the pre-4.0.2 inline path
+        delete menus.closeMenu; // minimal setup: the pre-4.0.1 inline path
         const active = row('A', 'neat-tree-item-42');
         active.link.classList.add('active');
         doc.activeElement = item1;
@@ -1721,7 +1721,7 @@ describe('contextKeyDown', () => {
         expect(closeMenuCalls).toEqual(['close']);
     });
 
-    it('is bound on the separator menu too (4.0.2: remove-separator was unreachable by keys)', () => {
+    it('is bound on the separator menu too (4.0.1: remove-separator was unreachable by keys)', () => {
         const { separatorMenu, doc, el } = setup({});
         expect(separatorMenu._listeners.keydown).toHaveLength(1);
         // the real menu's single entry
@@ -2000,7 +2000,7 @@ describe('view-manager integration (v4 task-2)', () => {
 // Final polish (keyboard-model §2.5): the toolbar is a RUNG of the vertical
 // chain — ↓ enters the rows (remembered first), ↑ crosses to the strip/box,
 // ←/→ walk the rung's controls in reading order and WRAP at the edges
-// (4.0.2 P1: a bounded fixed set cycles, the tab strip's ←/→ rule).
+// (4.0.1 P1: a bounded fixed set cycles, the tab strip's ←/→ rule).
 describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
     // A stats-like view: #stats-list containing a .vbm-toolbar with TWO
     // buttons and two bookmark rows, registered next to the tree in the view
@@ -2120,7 +2120,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(up.defaultPrevented).toBe(false);
     });
 
-    it('←/→ walk the rung\'s controls in reading order and wrap at the edges (4.0.2 P1)', () => {
+    it('←/→ walk the rung\'s controls in reading order and wrap at the edges (4.0.1 P1)', () => {
         const { ctx, listEl, btn, btn2 } = setupStatsList();
         ctx.doc.activeElement = btn;
         const right = makeEvent({ key: 'ArrowRight' });
@@ -2195,7 +2195,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         // The dupes toolbar's strategy listbox is a ul inside the list
         // container whose option rows carry no span/a — the row-list selectors
         // exclude it (ul:not(.vbm-dropdown-list)) and the guards absorb an
-        // empty result; 4.0.2 P4 then falls back to views.focusTop().
+        // empty result; 4.0.1 P4 then falls back to views.focusTop().
         const { ctx, listEl, btn, r1, rec } = setupStatsList();
         delete listEl._qs['ul:not(.vbm-dropdown-list)>li:first-child'];
         ctx.doc.activeElement = btn;
@@ -2208,7 +2208,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
 
     it('Home/End focus a focusable row CONTAINER itself (li[tabindex] — the dead start row)', () => {
         // The dead view's li.dead-start is a row with no inner span/a that is
-        // itself focusable; 4.0.2 P4 lands Home/End on the li. (The plain
+        // itself focusable; 4.0.1 P4 lands Home/End on the li. (The plain
         // doubles lack getAttribute — the source guards for that; add it here.)
         const { ctx, listEl, r1 } = setupStatsList();
         const start = ctx.el('LI', 'dead-start');
@@ -2350,7 +2350,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
 
     // K17: f5903c8 parks focus on the container while an async view renders —
     // with no .focus marker and no rows at all the old early-return killed ↑
-    // too. ↑ takes the §2.1/§2.5 crossing; 4.0.2 P4 gives Home/End the same
+    // too. ↑ takes the §2.1/§2.5 crossing; 4.0.1 P4 gives Home/End the same
     // crossing (the view has no rows to jump to); ↓ stays put until rows exist.
     it('container-focused with NO rows: ↑/Home/End cross out via focusTop, ↓ stays put (K17)', () => {
         const { ctx, listEl, rec } = setupStatsList();
@@ -2375,14 +2375,14 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(rec.focusTopCalls).toBe(3); // Home + End took the top crossing
     });
 
-    // --- Dupes-specific rung surface (4.0.2 regressions gate) --------------
+    // --- Dupes-specific rung surface (4.0.1 regressions gate) --------------
     // The dupes toolbar (strategy/scope custom dropdowns + scheme checkbox +
     // apply-all / select-mode buttons) is the richest rung. The user-facing
     // contract (keyboard-model §2.5): the dropdown trigger's ↓ opens its
     // listbox (dropdown.js — tested there) and its ↑ walks the rung up; every
     // OTHER control's ↓ crosses into the rows (remembered first) and ↑ crosses
     // to the strip/box. A `.focus` marker that somehow sits inside a hidden
-    // listbox (the 4.0.2 marker-steal regression: view-manager's focusin
+    // listbox (the 4.0.1 marker-steal regression: view-manager's focusin
     // guard now keeps it off dropdown options) must not dead-end that crossing.
     const setupDupesBar = () => {
         const bag = { rec: { focusTopCalls: 0 } };
@@ -2497,7 +2497,7 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
     });
 
     it('dupes rung: a stale .focus inside the hidden listbox does NOT dead-end ↓ (marker-steal regression)', () => {
-        // Regression gate for the reported 4.0.2 bug: opening the strategy
+        // Regression gate for the reported 4.0.1 bug: opening the strategy
         // dropdown used to focus the listbox option, which (pre-guard) stole
         // the `.focus` row marker. The toolbar's ↓ then targeted the HIDDEN
         // option (querySelector('.focus')) and .focus() silently failed — the
@@ -2611,7 +2611,7 @@ describe('Esc layering — full document chain (item 2)', () => {
         ctx.searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         ctx.fireDoc('keydown', ev);
-        // 4.0.2 P2: the document-level dismiss is the same cancel semantics
+        // 4.0.1 P2: the document-level dismiss is the same cancel semantics
         // as the menu's own ←/Esc — routed through menus.closeMenu.
         expect(ctx.closeMenuCalls).toEqual(['close']);
         expect(ctx.clearMenuCalls).toEqual([]);
@@ -2624,7 +2624,7 @@ describe('Esc layering — full document chain (item 2)', () => {
 
     it('the document-level menu rung falls back to the inline close without closeMenu', () => {
         const ctx = setup({});
-        delete ctx.menus.closeMenu; // minimal setup: the pre-4.0.2 inline path
+        delete ctx.menus.closeMenu; // minimal setup: the pre-4.0.1 inline path
         const active = ctx.row('A', 'neat-tree-item-42');
         active.link.classList.add('active');
         ctx.bookmarkMenu.style.opacity = '1';

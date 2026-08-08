@@ -510,7 +510,7 @@ describe('activate', () => {
         expect(a2.classList.contains('focus')).toBe(true);
     });
 
-    it('a dropdown listbox option never takes the .focus marker (4.0.2 regressions gate)', () => {
+    it('a dropdown listbox option never takes the .focus marker (4.0.1 regressions gate)', () => {
         // The dupes toolbar's custom dropdowns render <li role="option"
         // tabindex="-1"> inside #dupes-list. Before the guard, opening the
         // listbox focused such an option, which matched the LI[tabindex] row
@@ -862,7 +862,7 @@ describe('tab strip keyboard model (§2.2)', () => {
         expect(ctx.views.activeId()).toBe('tree');
     });
 
-    it('Home/End are view-scoped: the CURRENT view\'s first/last row, never a view switch (4.0.2 P4)', () => {
+    it('Home/End are view-scoped: the CURRENT view\'s first/last row, never a view switch (4.0.1 P4)', () => {
         const ctx = setup({});
         ctx.addRecent();
         // two rows in the tree view's list (the ACTIVE view)

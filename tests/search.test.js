@@ -1114,7 +1114,7 @@ describe('v4 task-3 #15: history-row menu key', () => {
     });
 });
 
-describe('history-row focus park/restore (4.0.2 focus law)', () => {
+describe('history-row focus park/restore (4.0.1 focus law)', () => {
     // The history area's innerHTML swap replaces every row: Delete removes
     // an entry and the context menu's remove/clear-all re-renders — the
     // focused row used to drop to <body> and the ↓ walk died. The doubles

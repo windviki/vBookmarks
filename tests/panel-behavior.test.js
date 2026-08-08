@@ -55,7 +55,7 @@ const makeChromeDouble = (opts = {}) => {
                 : Promise.resolve(opts.panelContexts);
         }
     }
-    // 4.0.2: the panel page holds a runtime port; its disconnect is the
+    // 4.0.1: the panel page holds a runtime port; its disconnect is the
     // event-driven "panel died" signal that restores popup mode (the reliable
     // replacement for the non-existent sidePanel.onClosed).
     if (opts.withConnect) {
@@ -400,7 +400,7 @@ describe('initPanelBehavior — popup restore after a toggle-close (final-polish
     });
 });
 
-describe('initPanelBehavior — vbm-panel port disconnect (4.0.2 one-time toggle)', () => {
+describe('initPanelBehavior — vbm-panel port disconnect (4.0.1 one-time toggle)', () => {
     // The panel page holds a runtime port; Chrome destroying the panel (an
     // action-toggle close — no guaranteed pagehide, and the page's own async
     // reset can be dropped mid-teardown) disconnects it. With the option OFF,

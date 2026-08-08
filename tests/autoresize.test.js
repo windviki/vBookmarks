@@ -175,7 +175,7 @@ describe('auto-resize: manual resize lock (issue #51)', () => {
     });
 });
 
-describe('popup WIDTH resize (4.0.2 regression gate)', () => {
+describe('popup WIDTH resize (4.0.1 regression gate)', () => {
     // The width clamp mirrors the height kernel but bounds the WINDOW on screen.
     // A Chrome popup grows away from its toolbar anchor, so the resize handle
     // (on the moving edge) can be pushed off-screen by a too-wide popup — the
@@ -210,7 +210,7 @@ describe('popup WIDTH resize (4.0.2 regression gate)', () => {
 // clamp — a regression that drops either re-breaks the reported width bug.
 const neatJs = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
 
-describe('resizer source contract (4.0.2 width regression gate)', () => {
+describe('resizer source contract (4.0.1 width regression gate)', () => {
     it('captures the pointer on resizer pointerdown (mouseup is never lost)', () => {
         expect(neatJs).toMatch(/setPointerCapture\(e\.pointerId\)/);
         expect(neatJs).toMatch(/releasePointerCapture/);

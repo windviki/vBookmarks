@@ -1188,8 +1188,8 @@ describe('risk banner (v4 task-4 #14)', () => {
     });
 });
 
-describe('row focus park/restore (4.0.2 focus law)', () => {
-    // The 4.0.2 bug: picking 设置为保留 from a row's context menu re-renders
+describe('row focus park/restore (4.0.1 focus law)', () => {
+    // The 4.0.1 bug: picking 设置为保留 from a row's context menu re-renders
     // the list and the keyboard focus died on <body>, so ↓ could not
     // continue. The doubles model the innerHTML swap the way the real DOM
     // behaves: assigning innerHTML replaces the li set that
@@ -1306,7 +1306,7 @@ describe('row focus park/restore (4.0.2 focus law)', () => {
         }] : []);
         viewDupes.toggleGroup('https://a.com'); // collapse via the menu path
         expect(viewDupes.isCollapsed('https://a.com')).toBe(true);
-        // 4.0.2: the click fold parks the head key exactly like the keyboard
+        // 4.0.1: the click fold parks the head key exactly like the keyboard
         // fold, so focus survives the refresh's innerHTML swap
         expect(focused).toEqual([newHead]);
         viewDupes.toggleGroup('https://a.com'); // expand again

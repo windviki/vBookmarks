@@ -43,7 +43,7 @@
  * pathOf), the Escape chain view levels (onEscapeActive/escapeToTree), the
  * Ctrl/Cmd+1…6 direct view jump, the tab strip keyboard model (roving
  * tabindex, ←/→ with RTL flip and wrap-around, the view-scoped Home/End —
- * 4.0.2 P4: the CURRENT view's first/last row, never a view switch —, ↑ to
+ * 4.0.1 P4: the CURRENT view's first/last row, never a view switch —, ↑ to
  * the search box, ↓ into the zone below — the active view's in-list toolbar
  * rung when it has one, else its rows, keyboard-model §2.1/§2.5) and the
  * aria-live view announcements.
@@ -196,7 +196,7 @@ export function initViewManager(ctx = {}) {
             // marker parked on a hidden listbox option dead-ends the toolbar
             // rung's ↓ (keyboard.js targets `this.querySelector('.focus')`,
             // and .focus() on a hidden element silently fails) — the reported
-            // 4.0.2 regression: open the strategy dropdown, then ↓ from the
+            // 4.0.1 regression: open the strategy dropdown, then ↓ from the
             // button area could no longer enter the rows.
             if (t.closest && t.closest('.vbm-dropdown-list'))
                 return;
@@ -270,7 +270,7 @@ export function initViewManager(ctx = {}) {
     // lose focus into the hidden list on recent/stats/dead/dupes.
     const focusActive = () => focusDefault(byId[activeId]);
 
-    // 4.0.2 P4: Home/End is view-scoped — the strip's Home/End focuses the
+    // 4.0.1 P4: Home/End is view-scoped — the strip's Home/End focuses the
     // CURRENT view's first/last row and never switches views. The same
     // ROW_SEL row contract as focusDefault; rows inside a toolbar dropdown's
     // listbox (.vbm-dropdown-list lives inside the same container) are
@@ -607,7 +607,7 @@ export function initViewManager(ctx = {}) {
             case 'Home':
             case 'End':
                 e.preventDefault();
-                // 4.0.2 P4: view-scoped — the CURRENT view's first/last
+                // 4.0.1 P4: view-scoped — the CURRENT view's first/last
                 // row, never a view switch; with no rows the focus simply
                 // stays on the current tab.
                 focusEdgeRow(e.key === 'End');

@@ -402,7 +402,7 @@ export function initViewStats(ctx = {}) {
             c.focus();
     };
 
-    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // --- Row focus park/restore (4.0.1 focus law) --------------------------
     // The list-row twin of the toolbar pair above: the render's innerHTML
     // swap replaces every row, so a focused row drops to <body> and the ↓
     // walk dies (a sort switch, a star-add flip, a clear all repaint). Park
@@ -478,7 +478,7 @@ export function initViewStats(ctx = {}) {
         // innerHTML swap (sort switch re-renders the bar) — positionally
         // stable index, or the keyboard rung dies on every refresh.
         const tbIdx = toolbarFocusIndex();
-        // 4.0.2 focus law: a focused list ROW rides the same swap
+        // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus();
         $list.innerHTML = html;
         restoreToolbarFocus(tbIdx);

@@ -394,7 +394,7 @@ export function initViewDupes(ctx = {}) {
             c.focus();
     };
 
-    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // --- Row focus park/restore (4.0.1 focus law) --------------------------
     // The list-row twin of the toolbar pair above: the render's innerHTML
     // swap replaces every row, so a focused row drops to <body> and the ↓
     // walk dies (the reported bug: the row menu's 设置为保留 re-renders the
@@ -470,7 +470,7 @@ export function initViewDupes(ctx = {}) {
         }
         // keep a focused toolbar control focused across the swap (see above)
         const tbIdx = toolbarFocusIndex();
-        // 4.0.2 focus law: a focused list ROW rides the same swap
+        // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus();
         $list.innerHTML = html;
         restoreToolbarFocus(tbIdx);
@@ -626,7 +626,7 @@ export function initViewDupes(ctx = {}) {
             collapsed.delete(key);
         else
             collapsed.add(key);
-        // Same park as the keyboard fold path (4.0.2 focus law): refresh()
+        // Same park as the keyboard fold path (4.0.1 focus law): refresh()
         // re-renders and replaces the head element — land focus back on it.
         pendingHeadFocus = key;
         refresh();

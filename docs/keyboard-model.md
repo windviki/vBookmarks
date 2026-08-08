@@ -185,7 +185,7 @@ without an enabled control is skipped transparently:
   (view-manager's focusin handler) never lands on a toolbar dropdown's
   option `<li role="option" tabindex="-1">` — those are listbox chrome, not
   rows, and a marker parked on a HIDDEN option dead-ended the rung's `↓`
-  (the 4.0.2 regression: after opening the strategy dropdown, the button
+  (the 4.0.1 regression: after opening the strategy dropdown, the button
   area could no longer enter the rows). The rung's ↓ also skips a
   listbox-resident marker defensively. *(view-manager `bindFocusMarker`,
   keyboard.js rung ↓; gate in verify-keyboard.js + tests/view-manager and
@@ -214,7 +214,7 @@ returns to the owning row. Confirming while the bare menu **container**
 holds focus (no item chosen yet) or on a greyed (disabled) item is a no-op.
 One exception stays: a menu opened from the **palette** (the
 palette-command edit/delete menu) returns focus to the palette's input box,
-its real keyboard anchor, and the palette stays open. New focus law (4.0.2):
+its real keyboard anchor, and the palette stays open. New focus law (4.0.1):
 a menu-item dispatch closes the menu FIRST and returns focus to the owning
 row, THEN runs the action; if the action re-renders the list and the owning
 row element was swapped, focus lands on the same-id replacement row (then

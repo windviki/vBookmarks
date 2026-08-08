@@ -150,7 +150,7 @@ const SEED = `
     await page.keyboard.press('ArrowRight'); await sleep(300);
     check('→: search→recent', await focusedTab() === 'view-tab-recent');
     await page.keyboard.press('Home'); await sleep(300);
-    // 4.0.2 (item e): strip Home/End are view-scoped — Home focuses the
+    // 4.0.1 (item e): strip Home/End are view-scoped — Home focuses the
     // CURRENT view's first row (recent is active here), never the first tab.
     check('Home: view-scoped → recent first row', await $(() => {
         const el = document.activeElement;
@@ -165,7 +165,7 @@ const SEED = `
     }), await $(() => document.activeElement && (document.activeElement.id || document.activeElement.className)));
     await page.click('#view-tab-tree'); await sleep(300);
     await page.keyboard.press('End'); await sleep(300);
-    // 4.0.2 (item e): strip End focuses the CURRENT view's last row — the
+    // 4.0.1 (item e): strip End focuses the CURRENT view's last row — the
     // tree stays active; no more jump to the last tab.
     check('End: view-scoped → tree last row, no view switch', await $(() => {
         const el = document.activeElement;
@@ -520,7 +520,7 @@ const SEED = `
         document.activeElement && !!document.activeElement.closest('.vbm-dropdown.dupes-strategy .vbm-dropdown-trigger')),
         await activeDesc());
 
-    // 4.0.2 regression gate: opening (and closing) the strategy dropdown used
+    // 4.0.1 regression gate: opening (and closing) the strategy dropdown used
     // to let the listbox option steal the `.focus` row marker — the toolbar's
     // ↓ then targeted the HIDDEN option (querySelector('.focus')) and the
     // button area could no longer enter the rows. After the open/close above,

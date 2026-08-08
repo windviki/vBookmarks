@@ -121,7 +121,7 @@ export const initPanelBehavior = () => {
         });
     }
 
-    // 4.0.2 (option-off one-time toggle): the authoritative, event-driven death
+    // 4.0.1 (option-off one-time toggle): the authoritative, event-driven death
     // signal for a panel closed by the action toggle. The panel page opens a
     // runtime port (popup.js IS_PANEL); when Chrome destroys the page — which
     // an action-toggle close does without a guaranteed pagehide, and where the

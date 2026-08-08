@@ -231,7 +231,7 @@ export function initSearch(ctx = {}) {
     // there is history, the searchViewHint guide row otherwise. The lower
     // #results list keeps the last search's output between searches.
     const $historyArea = $('search-history-area');
-    // --- Row focus park/restore (4.0.2 focus law) --------------------------
+    // --- Row focus park/restore (4.0.1 focus law) --------------------------
     // The history-area twin of the list views' row park: renderHistoryArea's
     // innerHTML swap replaces every row, so a focused row drops to <body>
     // and the ↓ walk dies (the Delete key removes a row; the context menu's
@@ -287,7 +287,7 @@ export function initSearch(ctx = {}) {
     const renderHistoryArea = () => {
         if (!$historyArea)
             return;
-        // 4.0.2 focus law: park a focused history row across the swap
+        // 4.0.1 focus law: park a focused history row across the swap
         const parkedRow = parkRowFocus();
         const list = historyEnabled() ? readHistory() : [];
         if (!list.length) {

@@ -33,7 +33,7 @@
         const beat = () => chrome.storage.session.set({ sidePanelHeartbeat: Date.now() });
         chrome.storage.session.set({ sidePanelIsOpen: true, sidePanelHeartbeat: Date.now() });
         const heartbeatTimer = setInterval(beat, 20000); // PANEL_HEARTBEAT_MS
-        // 4.0.2 (option-off one-time toggle): hold a runtime port open for the
+        // 4.0.1 (option-off one-time toggle): hold a runtime port open for the
         // panel's lifetime. When Chrome destroys the panel page (an action-toggle
         // close — pagehide is not guaranteed, and the page's async reset can be
         // dropped mid-teardown), the port disconnects and the service worker
