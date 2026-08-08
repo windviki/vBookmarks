@@ -31,7 +31,7 @@ const init = async () => {
     const clearBtn = $('dead-proxy-server-clear');
     const hintEl = $('dead-proxy-server-hint');
     const errorEl = $('dead-proxy-server-error');
-    if (!input || !saveBtn)
+    if (!input || !saveBtn || !label || !valueEl || !clearBtn || !hintEl || !errorEl)
         return; // the Dead scan group is present on this page
 
     label.innerText = _m('optionDeadProxyServer');
