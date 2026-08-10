@@ -14,8 +14,12 @@
 //    拖成独立窗口或停靠到 popup 之外, 避免遮挡右键菜单)。
 // 3. 切到 Console 标签, 把本文件整个代码块粘贴进去, 回车。
 //    应看到一行: [VBM] folder-menu probe installed
-//    随后紧跟一行 [VBM] ENV (浏览器/OS/Chrome 版本/扩展版本/是否侧边栏/DPR/
-//    窗口尺寸) —— 这一行请在反馈时一并贴出, 用来定位是哪个环境。
+//    随后紧跟一行 [VBM] ENV —— 含 浏览器身份/品牌 (browser, 如 "Microsoft Edge"
+//    或 "Google Chrome", 不是只看 UA 的误报)、Chromium 内核版本 (chromeVersion)、
+//    OS、扩展版本、是否侧边栏、触屏/touch、DPR、窗口尺寸。
+//    注意: Edge 的 UA 同时含 Chrome/ 与 Edg/ 两个 token, 所以 browser 与
+//    chromeVersion 可能不同 (如 browser=Microsoft Edge 150, chromeVersion 也是
+//    150) —— 两个都要看。这一行请在反馈时一并贴出, 用来定位是哪个环境。
 // 4. 依次执行下面的右键场景, 每次右键后稍等约 1 秒再做下一个:
 //      a) 树视图里一个普通文件夹 (含子书签)   ← 最关键
 //      b) 根文件夹 (书签栏 / 其他书签)
@@ -43,6 +47,8 @@
 //    - MOUSE2-UP 里的 macHoldRisk=true (且 elapsedMs≥500): Mac 上按住右键超过
 //      500ms 再松开, 扩展的"长按关菜单"机制会把刚打开的菜单关掉 —— 换个
 //      快速点击右键的姿势即可验证。
+//    - ENV 里 touch=true 的触屏设备 (平板/触摸屏笔记本) 没有传统右键,
+//      contextmenu 来自长按/两指手势 —— 这也是"右键没反应"的一类环境因素。
 // 6. 若菜单确实没出现, 执行: __vbmEnvInfo()  和  __vbmMenuReport()
 //    把两个函数的输出 + 全部 [VBM] 日志 一起贴回 issue #48。
 // 7. 附一张右键瞬间的整屏截图 (尤其是有没有一闪而过的菜单)。
@@ -76,6 +82,9 @@
     // os —— context-menu.js 的 macCloseContextMenu (长按右键 500ms 后松开会关菜单)
     //        只对 'mac' 生效; rtl —— 菜单定位用 pageX 反方向计算。
     const os = (navigator.platform.toLowerCase().match(/mac|win|linux/i) || ['other'])[0];
+    // 内核版本 = 扩展自己读的版本 (见 src/neat.js): 取 UA 的 Chrome/ token。
+    // 注意 Edge 的 UA 同时含 Chrome/ 与 Edg/ 两个 token, 所以这里读到的始终是
+    // Chromium 内核版本; 真实浏览器身份由下面的 detectBrowser() 区分。
     const chromeVersion = (() => {
         const matches = navigator.userAgent.match(/chrome\/([\d]+)\.([\d]+)\.([\d]+)\.([\d]+)/i);
         if (!matches)
@@ -86,6 +95,48 @@
         return v;
     })();
     const rtl = getComputedStyle(document.body).direction === 'rtl';
+
+    // ── 浏览器身份识别 ──────────────────────────────────────────────────
+    // 区分 Chrome / Edge / 其它 Chromium 系。优先 navigator.userAgentData.brands
+    // (结构化品牌, 含 "Microsoft Edge" / "Google Chrome"), 不可用时退回 UA 解析
+    // (Edg/ → Edge, OPR/ → Opera, Chrome/ → Chrome, Chromium/ → Chromium)。
+    // 全程 try/catch, 任何一步失败都降级, 绝不抛错。
+    const detectBrowser = () => {
+        try {
+            const brands = navigator.userAgentData && navigator.userAgentData.brands;
+            if (brands && brands.length) {
+                // 品牌表里会混入 "Chromium" / "Not_A Brand" 这类子品牌, 必须优先
+                // 挑真实品牌; 完全没命中真实品牌时 (裸 Chromium) 才取 "Chromium"。
+                const preferred = [
+                    /microsoft edge/i, /google chrome/i, /opera/i, /vivaldi/i,
+                    /brave/i, /samsung internet/i, /firefox/i
+                ];
+                for (const re of preferred) {
+                    const hit = brands.find(b => re.test(b.brand));
+                    if (hit) return { name: hit.brand, version: hit.version };
+                }
+                const chromium = brands.find(b => /^chromium$/i.test(b.brand));
+                if (chromium) return { name: 'Chromium', version: chromium.version };
+            }
+        } catch (_) { /* userAgentData 不可用时走 UA 解析 */ }
+        const ua = navigator.userAgent;
+        const mEdge = ua.match(/\bEdg\/(\d+)(?:\.(\d+))?/i);
+        if (mEdge) return { name: 'Microsoft Edge', version: mEdge[1] + (mEdge[2] ? '.' + mEdge[2] : '') };
+        const mOpera = ua.match(/\bOPR\/(\d+)(?:\.(\d+))?/i);
+        if (mOpera) return { name: 'Opera', version: mOpera[1] + (mOpera[2] ? '.' + mOpera[2] : '') };
+        const mChrome = ua.match(/\bChrome\/(\d+)(?:\.(\d+))?/i);
+        if (mChrome) return { name: 'Chrome', version: mChrome[1] + (mChrome[2] ? '.' + mChrome[2] : '') };
+        const mChromium = ua.match(/\bChromium\/(\d+)(?:\.(\d+))?/i);
+        if (mChromium) return { name: 'Chromium', version: mChromium[1] + (mChromium[2] ? '.' + mChromium[2] : '') };
+        return { name: 'unknown', version: '' };
+    };
+    const browser = detectBrowser();
+    // 触屏设备 (平板/触摸屏笔记本) 没有传统"右键", 通常用长按手势触发 contextmenu。
+    const touchDevice = navigator.maxTouchPoints > 0;
+    const uaDataMobile = (() => {
+        try { return navigator.userAgentData ? !!navigator.userAgentData.mobile : undefined; }
+        catch (_) { return undefined; }
+    })();
 
     // All seven right-click menus; null-tolerant for pages that lack some.
     const MENU_IDS = [
@@ -235,8 +286,9 @@
     window.__vbmEnvInfo = async () => {
         const info = {
             manifestVersion: chrome.runtime.getManifest().version,
-            os, rtl, chromeVersion,
-            panelMode: document.body.classList.contains('panel-mode'),
+            browser, chromeVersion, // browser=真实浏览器(如 Microsoft Edge), chromeVersion=Chromium 内核
+            os, rtl, panelMode,
+            touch: touchDevice, mobile: uaDataMobile,
             url: location.href,
             ua: navigator.userAgent,
             platform: navigator.platform,
@@ -290,8 +342,9 @@
     // 浏览器/系统/版本上下文。
     rec('ENV', {
         manifestVersion: chrome.runtime.getManifest().version,
-        os, rtl, chromeVersion,
-        panelMode: document.body.classList.contains('panel-mode'),
+        browser, chromeVersion,
+        os, rtl, panelMode: document.body.classList.contains('panel-mode'),
+        touch: touchDevice, mobile: uaDataMobile,
         platform: navigator.platform,
         maxTouchPoints: navigator.maxTouchPoints,
         dpr: window.devicePixelRatio,
