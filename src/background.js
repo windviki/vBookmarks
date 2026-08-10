@@ -272,17 +272,40 @@ chrome.commands.onCommand.addListener(async command => {
 // options-page flip takes effect without waiting for the next SW cold start.
 const QUICK_ADD_MENU_ID = 'vbm-quick-add';
 if (chrome.contextMenus) {
+    // Serialize the remove→create cycles. contextMenus calls are async, so
+    // overlapping applyQuickAddMenu calls (SW startup × onInstalled — every
+    // dev reload — or a storage flip while a startup cycle is in flight) would
+    // each run their own remove callback and then both create(): the second
+    // create() raised "Cannot create item with duplicate id vbm-quick-add"
+    // (an unchecked runtime.lastError). Only the latest requested state
+    // matters; a cycle that finishes with a newer state pending re-runs once.
+    let quickAddMenuBusy = false;
+    let quickAddMenuPending = null;
     const applyQuickAddMenu = on => {
-        chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
-            void chrome.runtime.lastError; // the menu simply didn't exist yet
-            if (on) {
-                chrome.contextMenus.create({
-                    id: QUICK_ADD_MENU_ID,
-                    contexts: ['page'],
-                    title: chrome.i18n.getMessage('contextMenuAddBookmark')
-                });
-            }
-        });
+        quickAddMenuPending = on;
+        if (quickAddMenuBusy)
+            return;
+        quickAddMenuBusy = true;
+        const run = () => {
+            const want = quickAddMenuPending;
+            chrome.contextMenus.remove(QUICK_ADD_MENU_ID, () => {
+                void chrome.runtime.lastError; // the menu simply didn't exist yet
+                if (want) {
+                    chrome.contextMenus.create({
+                        id: QUICK_ADD_MENU_ID,
+                        contexts: ['page'],
+                        title: chrome.i18n.getMessage('contextMenuAddBookmark')
+                    }, () => {
+                        void chrome.runtime.lastError; // serialized, but a residual duplicate must not surface
+                    });
+                }
+                quickAddMenuBusy = false;
+                if (quickAddMenuPending !== want) {
+                    run(); // state changed mid-cycle — apply the latest
+                }
+            });
+        };
+        run();
     };
     const createQuickAddMenu = () => {
         chrome.storage.local.get({ quickAddContextMenu: '1' }, data => {

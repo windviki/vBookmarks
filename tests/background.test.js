@@ -333,6 +333,46 @@ describe('service worker startup wiring', () => {
         expect(calls.contextMenusCreate.some(m => m.id === 'vbm-quick-add')).toBe(true);
     });
 
+    it('serializes overlapping remove→create cycles — no duplicate-id create (unchecked lastError)', async () => {
+        // contextMenus calls are async in reality: an onInstalled cycle and a
+        // storage flip can both be in flight before the first remove callback
+        // fires. The old remove→create chain then ran TWO creates and the
+        // second raised "Cannot create item with duplicate id vbm-quick-add"
+        // (an unchecked runtime.lastError, seen on every dev reload). Defer
+        // remove so the two cycles genuinely overlap.
+        const origRemove = chromeDouble.contextMenus.remove;
+        let gateResolve;
+        const gate = new Promise(res => { gateResolve = res; });
+        let released = false;
+        const release = () => {
+            if (released) return;
+            released = true;
+            gateResolve();
+        };
+        chromeDouble.contextMenus.remove = (id, cb) => {
+            calls.contextMenusRemove.push(id);
+            gate.then(() => cb && cb());
+        };
+        try {
+            calls.contextMenusCreate = [];
+            calls.contextMenusRemove = [];
+            // Two overlapping cycles: the onInstalled path and a storage flip-on.
+            listeners.installed.forEach(fn => fn());
+            listeners.storageChanged({ quickAddContextMenu: { newValue: '1' } }, 'local');
+            // Neither remove callback has fired yet — no create may happen.
+            expect(calls.contextMenusCreate.filter(m => m.id === 'vbm-quick-add')).toHaveLength(0);
+            release();
+            await gate;
+            await flushMicrotasks();
+            // Both cycles settled → the serialized chain ran exactly ONE create.
+            expect(calls.contextMenusCreate.filter(m => m.id === 'vbm-quick-add')).toHaveLength(1);
+        } finally {
+            release(); // drain the deferred callbacks even on failure
+            chromeDouble.contextMenus.remove = origRemove;
+            await flushMicrotasks();
+        }
+    });
+
     it('issue #49: ignores storage changes outside the local quickAddContextMenu key', () => {
         calls.contextMenusCreate = [];
         listeners.storageChanged({ unrelated: { newValue: 'x' } }, 'local');

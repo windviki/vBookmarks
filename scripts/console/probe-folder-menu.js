@@ -23,16 +23,23 @@
 //      d) 右键文件夹的"标题文字", 而非行的空白处
 //      e) 空文件夹
 //      f) 如果平时用侧边栏模式, 在那里也试一次
-// 5. 观察控制台 [VBM] 日志 —— 每次右键应依次出现:
-//      MOUSE2-DOWN → MOUSE2-UP → CTXMENU → MENU-SNAP ×3 (0ms/16ms/200ms)
+// 5. 观察控制台 [VBM] 日志 —— 每次右键应看到:
+//      MOUSE2-DOWN → [MOUSE2-UP →] CTXMENU → CTXMENU-BUBBLE → MENU-SNAP ×3
+//    (MOUSE2-UP 与 CTXMENU 的顺序因平台而异: macOS 上 contextmenu 在 mouseup
+//    之前触发, Windows 上在其后 —— 顺序不同不影响判定。)
 //    - 若只有 MOUSE2-DOWN/UP 而没有 CTXMENU: 说明 contextmenu 事件根本没进
 //      到页面 (系统/其它扩展/手势层面), 与 vBookmarks 无关。
 //    - 若 CTXMENU 里 verdict 是 NO-LI: 右键目标不落在任何列表行内, 菜单被
 //      有意跳过 (需看右键到了哪个元素)。
-//    - 若 MENU-SNAP 显示 folder-context-menu 的 visible=true / opacity=1 却
-//      看不到菜单: 是渲染/层级问题 (z-index/裁剪/背景), 不是触发问题。
-//    - 若 MENU-SNAP 显示先 opacity=1 随后 0 (0ms 可见 → 200ms 隐藏): 菜单被
-//      打开后立即被某个 CLICK / FOCUSIN / SCROLL 关闭 —— 看对应那行日志。
+//    - 判读菜单状态看 MENU-SNAP 里的两个字段:
+//        · shown —— 内联 opacity 是否被置 '1' (扩展"已打开菜单"的权威信号);
+//        · visible —— 计算样式/几何, "是否真的画到了屏幕上"。
+//      shown=true 但 visible=false 且 opacity 正从 0 渐变: 是淡入过渡的正常
+//      中间态 (ms:0 处尤其常见), 看 ms:16/200 的快照即可; 若 200ms 后仍
+//      visible=false, 才是渲染/层级问题 (z-index/裁剪/背景/自定义样式)。
+//    - 若 MENU-SNAP 显示先 shown/visible=true 随后变 false (0ms 可见 →
+//      200ms 隐藏): 菜单被打开后立即被某个 CLICK / FOCUSIN / SCROLL 关闭
+//      —— 看对应那行日志。
 //    - MOUSE2-UP 里的 macHoldRisk=true (且 elapsedMs≥500): Mac 上按住右键超过
 //      500ms 再松开, 扩展的"长按关菜单"机制会把刚打开的菜单关掉 —— 换个
 //      快速点击右键的姿势即可验证。
@@ -47,9 +54,13 @@
 // — you should see "[VBM] folder-menu probe installed", 4) right-click a folder
 // (regular, root, a search-result folder, the folder's title text, an empty
 // folder, and in side-panel mode), 5) watch the [VBM] lines — a healthy
-// right-click logs MOUSE2-DOWN → MOUSE2-UP → CTXMENU → MENU-SNAP ×3, 6) if no
-// menu appears run __vbmMenuReport() and paste its output plus every [VBM] line
-// back into issue #48, 7) add a screenshot of the right-click moment.
+// right-click logs MOUSE2-DOWN → CTXMENU → CTXMENU-BUBBLE → MENU-SNAP ×3 (the
+// MOUSE2-UP slot moves: macOS fires contextmenu before mouseup, Windows after),
+// and the folder menu's MENU-SNAP shows shown:true and visible:true from the
+// 16ms snapshot on (ms:0 may read visible:false — that's just the fade-in
+// transition), 6) if no menu appears run __vbmMenuReport() and paste its output
+// plus every [VBM] line back into issue #48, 7) add a screenshot of the
+// right-click moment.
 (() => {
     if (window.__vbmMenuProbeInstalled)
         return console.log('[VBM] folder-menu probe already installed');
@@ -83,7 +94,18 @@
         'dupes-group-context-menu', 'palette-cmd-context-menu'
     ];
 
+    // SVG 元素的 className 是 SVGAnimatedString (对象), JSON 序列化会变成 {} —
+    // 统一安全地转成字符串 (baseVal 是实际类名)。
+    const clsOf = el =>
+        typeof el.className === 'string' ? el.className
+            : (el.className && el.className.baseVal) || '';
+
     // Menu-state snapshot: inline style, computed style, geometry, item count.
+    // shown —— context-menu.js 显示菜单就是把 style.opacity 置 '1' (hideAllMenus
+    //           置 '0'), 所以内联 opacity 是"代码是否已打开菜单"的权威信号;
+    // visible —— 基于计算样式/几何, 反映"是否真的画到了屏幕上"。两者不一致
+    //           (shown=true 但 visible=false) 且 opacity 正在 0→1 渐变 = 淡入
+    //           过渡的正常中间态; 若 200ms 后仍 false 才是渲染/层级问题。
     const snapMenus = () => {
         const out = {};
         for (const id of MENU_IDS) {
@@ -92,6 +114,7 @@
             const cs = getComputedStyle(el);
             const r = el.getBoundingClientRect();
             out[id] = {
+                shown: el.style.opacity === '1',
                 style: {
                     left: el.style.left, top: el.style.top,
                     opacity: el.style.opacity, transform: el.style.transform
@@ -127,7 +150,7 @@
         }
         const li = el.closest ? el.closest('li') : null;
         const spec = {
-            target: { tag: e.target.tagName, id: e.target.id || '', cls: e.target.className },
+            target: { tag: e.target.tagName, id: e.target.id || '', cls: clsOf(e.target) },
             resolved: {
                 tag: el.tagName,
                 id: el.id || '',
@@ -171,6 +194,9 @@
             elapsedMs: Math.round(elapsed),
             macHoldRisk: os === 'mac' && elapsed >= 500
         });
+        seq.hasDown = false;
+        // 手势结束后清掉 seq, 之后无关的 FOCUSIN/CLICK 不再带上过期 seq 号。
+        setTimeout(() => { if (!seq.hasDown) seq.id = ''; }, 300);
     }, true);
     // Capture-phase: record BEFORE the extension's body handler runs.
     window.addEventListener('contextmenu', e => {
@@ -192,7 +218,7 @@
     // clearMenu triggers — a menu that opens then instantly vanishes is
     // usually one of these firing right after the right-click.
     window.addEventListener('click', e =>
-        rec('CLICK', { seq: seq.id, tag: e.target.tagName, cls: e.target.className }), true);
+        rec('CLICK', { seq: seq.id, tag: e.target.tagName, cls: clsOf(e.target) }), true);
     window.addEventListener('scroll', () => rec('SCROLL', { seq: seq.id }), true);
     window.addEventListener('focusin', e =>
         rec('FOCUSIN', { seq: seq.id, tag: e.target.tagName, id: e.target.id || '' }), true);
