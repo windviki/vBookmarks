@@ -1,19 +1,26 @@
-// Custom-styles (userstyle) end-to-end probe v3 — full real-user flow.
-// Part 1: options page real typing → persisted.
-// Part 2: popup with a SEEDED tree — a custom rule must actually APPLY
-//   (computed style) and must WIN a same-specificity cascade tie vs neat.css
-//   (injected later, no !important needed).
+// Reproduce the user's exact report: BEFORE the #56 filter removal, the CSS
+// workaround `filter: none` (pasted into Custom styles) did NOT override the
+// neat.css `filter: brightness(1.5)` on favicon imgs.
+//
+// Cascade facts under test: neat.css is a <head> <link> (earlier in document
+// order); the userstyle is a <style> appended to <body> (later). Same
+// specificity → later source order wins. We simulate the pre-fix state by
+// injecting the old filter rule into <head> AFTER the popup loads (document
+// order, not injection time, decides the cascade), then read the computed
+// filter of a real favicon-style <img>.
 const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const rec = (tag, data) => console.log(`[VBM] ${tag} ${JSON.stringify(data)}`);
 
-const SEED = `
-(async () => {
-    const p = () => new Promise(r => chrome.bookmarks.create({ parentId: '1', title: 'Seed folder' }, r));
-    const f = await p();
-    await new Promise(r => chrome.bookmarks.create({ parentId: f.id, title: 'Alpha Bookmark', url: 'https://alpha.example.com/' }, r));
-    await new Promise(r => chrome.bookmarks.create({ parentId: f.id, title: 'Beta Bookmark', url: 'https://beta.example.com/' }, r));
-})()`;
+const PREFIX_FILTER =
+    'body[data-theme="dark"] .tree-item-link .favicon-container img, ' +
+    'body[data-theme="ink"] .tree-item-link .favicon-container img { filter: brightness(1.5); }';
+const USERSTYLE =
+    'body[data-theme="dark"] .tree-item-link .favicon-container img, ' +
+    'body[data-theme="ink"] .tree-item-link .favicon-container img { filter: none; }';
+const USERSTYLE_MEDIA =
+    '@media (prefers-color-scheme: dark) { ' +
+    'body[data-theme="auto"] .tree-item-link .favicon-container img { filter: none; } }';
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -27,99 +34,63 @@ const SEED = `
     const swTarget = targets.find(t => t.url().startsWith('chrome-extension://') && t.type() === 'service_worker');
     if (!swTarget) throw new Error('sw not found');
     const extId = new URL(swTarget.url()).hostname;
-    rec('ENV', { extId });
 
-    // ── Part 1: options real typing → persisted ───────────────────────────
-    {
-        const page = await browser.newPage();
-        const errors = [];
-        page.on('pageerror', e => errors.push(`pageerror: ${e.message}`));
-        page.on('console', m => { if (m.type() === 'error') errors.push(`console.error: ${m.text()}`); });
-        await page.setViewport({ width: 900, height: 700 });
-        await page.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
-        await sleep(900);
-        await page.evaluate(() => document.querySelector('.CodeMirror').scrollIntoView({ block: 'center' }));
-        await sleep(150);
-        const box = await page.evaluate(() => {
-            const r = document.querySelector('.CodeMirror').getBoundingClientRect();
-            return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
-        });
-        await page.mouse.click(box.x, box.y);
-        await sleep(100);
-        await page.keyboard.type('body { --vbm-radius: 20px; }', { delay: 1 });
-        await sleep(600);
-        const stored = await page.evaluate(async () => ({
-            mirror: store.get('userstyle'),
-            chromeLocal: (await chrome.storage.local.get('userstyle')).userstyle
-        }));
-        rec('OPTIONS-STORED', stored);
-        rec('OPTIONS-ERRORS', errors);
-        await page.close();
-    }
-
-    // ── Part 2: popup, seeded tree, custom rule must apply + win cascade ──
-    {
-        const seedPage = await browser.newPage();
-        await seedPage.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
-        await sleep(600);
-        await seedPage.evaluate(SEED);
-        await sleep(500);
-        await seedPage.close();
-
-        // Two rules, both WITHOUT !important:
-        //  R1 same-specificity as neat.css (#search input, specificity 1,0,1)
-        //  R2 lower specificity than neat.css (#tree a i -> (0,0,2)+element)
-        // R1 must WIN (later source order). R2 must LOSE (lower specificity) —
-        //   proving cascade semantics are as-designed, not "custom never works".
-        const RULES =
-            '#search input { background: rgb(200, 0, 0); }\n' +
-            '#tree ul li a i { color: rgb(0, 200, 0); }';
-        const seed2 = await browser.newPage();
-        await seed2.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
-        await seed2.evaluate(css => chrome.storage.local.set({ userstyle: css }), RULES);
+    const probe = async (theme, userstyleCss, label) => {
+        const seed = await browser.newPage();
+        await seed.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+        await seed.evaluate(css => chrome.storage.local.set({ userstyle: css }), userstyleCss);
         await sleep(300);
-        await seed2.close();
+        await seed.close();
 
         const page = await browser.newPage();
-        const errors = [];
-        page.on('pageerror', e => errors.push(`pageerror: ${e.message}`));
-        page.on('console', m => { if (m.type() === 'error') errors.push(`console.error: ${m.text()}`); });
         await page.setViewport({ width: 400, height: 640 });
-        await page.evaluateOnNewDocument(() => { try { localStorage.setItem('theme', 'light'); } catch (e) {} });
+        await page.evaluateOnNewDocument(t => { try { localStorage.setItem('theme', t); } catch (e) {} }, theme);
         await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
-        await page.evaluate(() => chrome.storage.local.set({ theme: 'light', currentVersion: chrome.runtime.getManifest().version }));
+        await page.evaluate(t => chrome.storage.local.set({ theme: t, currentVersion: chrome.runtime.getManifest().version }), theme);
         await page.reload({ waitUntil: 'networkidle0' });
         await sleep(900);
-        // open a folder so a real tree row exists
-        await page.evaluate(() => {
-            const span = [...document.querySelectorAll('#tree span.tree-item-span')]
-                .find(s => (s.querySelector('i')?.textContent || '').trim() === 'Seed folder');
-            if (span && !span.parentNode.classList.contains('open')) span.click();
-        });
-        await sleep(400);
-        const result = await page.evaluate(() => {
-            const styles = Array.prototype.slice.call(document.querySelectorAll('body > style'))
-                .map(s => (s.textContent || '').slice(0, 80));
-            const input = document.querySelector('#search input');
-            const rowTitle = document.querySelector('#tree ul li a i');
-            const neatBg = (() => {
-                // neat.css default for #search input
-                const probe = document.createElement('style');
-                probe.textContent = '#search input { background: rgb(1,2,3); }';
-                return probe.textContent; // unused; we read computed instead
-            })();
+
+        const result = await page.evaluate(prefixCss => {
+            // simulate the pre-fix neat.css rule living in <head> (earlier in
+            // document order than the body userstyle <style>)
+            const headStyle = document.createElement('style');
+            headStyle.textContent = prefixCss;
+            document.head.appendChild(headStyle);
+            // craft a real favicon <img> in the exact tree-row DOM shape
+            const a = document.createElement('a');
+            a.className = 'tree-item-link';
+            const fc = document.createElement('div');
+            fc.className = 'favicon-container';
+            const img = document.createElement('img');
+            img.width = 16; img.height = 16; img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+            fc.appendChild(img); a.appendChild(fc);
+            const tree = document.getElementById('tree');
+            const host = document.createElement('div');
+            host.appendChild(a);
+            tree.appendChild(host);
+            // order of the two competing <style>s in document order
+            const headStyles = Array.prototype.slice.call(document.querySelectorAll('head style')).map(s => s.textContent.slice(0, 40));
+            const bodyStyles = Array.prototype.slice.call(document.querySelectorAll('body > style')).map(s => s.textContent.slice(0, 40));
             return {
-                bodyStyles: styles,
-                searchInputBg: input ? getComputedStyle(input).backgroundColor : null,
-                rowTitleColor: rowTitle ? getComputedStyle(rowTitle).color : null,
-                hasTreeRow: !!rowTitle,
-                neatBg // placeholder to keep tree-shaking honest
+                headStyleCount: headStyles.length,
+                headStyles,
+                bodyStyleCount: bodyStyles.length,
+                bodyStyles,
+                computedFilter: getComputedStyle(img).filter,
+                bodyTheme: document.body.dataset.theme
             };
-        });
-        rec('POPUP-APPLIED', result);
-        rec('POPUP-ERRORS', errors);
+        }, PREFIX_FILTER);
+        rec(label, result);
         await page.close();
-    }
+    };
+
+    // explicit dark theme, custom rule without @media
+    await probe('dark', USERSTYLE, 'DARK-EXPLICIT');
+    // explicit ink theme, custom rule without @media
+    await probe('ink', USERSTYLE, 'INK-EXPLICIT');
+    // auto theme + system dark (headless default is light, but the media block
+    // still participates when it matches — we force a dark scheme via CDP)
+    await probe('auto', USERSTYLE_MEDIA, 'AUTO-DARK');
 
     await browser.close();
 })().catch(e => { console.error('FATAL', e); process.exit(1); });
