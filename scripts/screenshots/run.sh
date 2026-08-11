@@ -9,9 +9,13 @@
 # browser-zoom × in-extension zoom sweep, no horizontal scrollbar on any pane),
 # then captures the screenshot suites (suites/):
 #   shots.js         — 11 interaction states, light + dark themes
-#   shots-themes.js  — view tab strip + full-state view rows on all 5 themes
-#                      (options/advanced keep ink + paper)
-#   shots-i18n.js    — tree/tabs/menus/edit-dialog/options per UI language (8x6)
+#   shots-matrix.js  — 4 themes (light/dark/ink/paper) × the full surface:
+#                      six views, bookmark/folder menus + their collapsed
+#                      flyouts, edit/new-folder/sort/confirm dialogs, wide
+#                      (640) + narrow (280) popup variants, options (top /
+#                      backup / styles), side panel — 21 shots per theme
+#   shots-i18n.js    — tree/tabs/menus/flyouts/dialogs/options per UI
+#                      language (7 × 15, light)
 #   shots-palette.js — the v4 view system: palette table + recent/stats/
 #                      dupes/dead views + live dead rescan
 #   shots-guide.js   — guide-only states (search dual zone with history,
@@ -22,7 +26,9 @@
 #                      forms the group / joins it (popup-closing-safe)
 # diag/ holds manual diagnostic probes (diag.js, diag-dead.js, diag-v4t3.js),
 # run on demand: docker run --rm vbm-smoke:local node /work/diag/diag.js
-# Screenshots land in tmp/shots/ (git-ignored).
+# Screenshots land in tmp/shots/ grouped by dimension (themes/ i18n/ states/
+# tabgroups/ guide/ smoke/ diag/) — see scripts/screenshots/README.md.
+# (git-ignored)
 #
 # Usage: scripts/screenshots/run.sh [--smoke-only]
 set -euo pipefail
@@ -66,7 +72,7 @@ docker run --rm "$IMAGE" node /work/verify-menu-collapse.js
 docker run --rm "$IMAGE" node /work/verify-menu-extreme.js
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
-for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do
+for suite in shots.js shots-matrix.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do
     name="vbm-shots-$$-${suite%.js}"
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/suites/$suite" >/dev/null

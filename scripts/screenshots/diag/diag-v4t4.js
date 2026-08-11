@@ -5,7 +5,7 @@
 // Run: docker run --rm vbm-smoke:local node /work/diag/diag-v4t4.js
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-fs.mkdirSync('/tmp/shots', { recursive: true });
+fs.mkdirSync('/tmp/shots/diag', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -202,7 +202,7 @@ const MEASURE = `(() => {
             if (cur.type === 'FOLDER' && parseInt(nxt.level) === parseInt(cur.level) + 1)
                 console.log(`${cur.title} (lv${cur.level} text ${cur.textLeft.toFixed(1)}) -> ${nxt.title} (lv${nxt.level} icon ${nxt.iconLeft?.toFixed(1)})  delta=${(nxt.iconLeft - cur.textLeft).toFixed(1)}px`);
         }
-        await page.screenshot({ path: '/tmp/shots/v4t4-tree-alignment.png' });
+        await page.screenshot({ path: '/tmp/shots/diag/v4t4-tree-alignment.png' });
         await page.close();
     }
 

@@ -1,8 +1,10 @@
-// vBookmarks UI/UX screenshot harness — seeds a realistic bookmark tree and
-// captures the main interaction states in light + dark themes.
-// Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots.
+// vBookmarks UI/UX interaction-state screenshot harness — seeds a realistic
+// bookmark tree and captures the interaction states in LIGHT theme only.
+// The theme axis (light/dark/ink/paper) is owned by shots-matrix.js
+// (themes/); the states/ dimension is uniformly light.
+// Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots/states.
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/states', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -60,10 +62,8 @@ const SEED = `
     const extId = new URL(swTarget.url()).hostname;
     console.log('extension id:', extId);
 
-    const dark = async page =>
-        page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-    const light = async page =>
-        page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'light' }]);
+    // Light is the default scheme (no prefers-color-scheme emulation), so
+    // every shot here renders light — the theme axis lives in shots-matrix.
 
     // --- seed -------------------------------------------------------------
     const seedPage = await browser.newPage();
@@ -79,7 +79,7 @@ const SEED = `
     watch(page, 'popup');
     await page.setViewport({ width: 400, height: 640 });
     // 第四轮项8: fudge getRecent dateAdded by index range (monotonic desc)
-    // so the recent view's coarse time groups all render in state 13.
+    // so the recent view's coarse time groups all render in state 08.
     await page.evaluateOnNewDocument(() => {
         const DAY = 86400e3;
         const orig = chrome.bookmarks.getRecent.bind(chrome.bookmarks);
@@ -89,7 +89,7 @@ const SEED = `
         });
     });
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
-    // Silence the donation ask until state 12 explicitly enables it (the
+    // Silence the donation ask until state 07 explicitly enables it (the
     // seed page's storage writes race this first open, so newOrUpgrade is
     // not deterministic otherwise).
     await page.evaluate(() => chrome.storage.local.set({
@@ -115,36 +115,31 @@ const SEED = `
     await clickFolder('开发参考');
     await sleep(400);
 
-    await light(page);
+    // 01 — expanded tree
     await sleep(300);
-    await page.screenshot({ path: '/tmp/shots/01-tree-light.png' });
-    await dark(page);
-    await sleep(300);
-    await page.screenshot({ path: '/tmp/shots/02-tree-dark.png' });
+    await page.screenshot({ path: '/tmp/shots/states/01-tree.png' });
 
-    // Search state (dark): fuzzy results with <mark> highlights
+    // 02 — search: fuzzy results with <mark> highlights
     await page.focus('#search-input');
     await page.type('#search-input', 'git', { delay: 40 });
     await sleep(700);
-    await page.screenshot({ path: '/tmp/shots/03-search-dark.png' });
+    await page.screenshot({ path: '/tmp/shots/states/02-search.png' });
     await page.evaluate(() => { document.querySelector('#search-input').value = ''; });
     await page.keyboard.press('Escape');
     await sleep(400);
 
-    // Command palette (dark): Ctrl+K, then filter folders
+    // 03 — command palette: Ctrl+K, then filter folders
     await page.keyboard.down('Control');
     await page.keyboard.press('k');
     await page.keyboard.up('Control');
     await sleep(500);
     await page.type('#palette-input', '工作', { delay: 60 }).catch(() => {});
     await sleep(500);
-    await page.screenshot({ path: '/tmp/shots/04-palette-dark.png' });
+    await page.screenshot({ path: '/tmp/shots/states/03-palette.png' });
     await page.keyboard.press('Escape');
     await sleep(400);
 
-    // Context menu (light): right-click the GitHub bookmark row
-    await light(page);
-    await sleep(300);
+    // 04 — context menu: right-click the GitHub bookmark row
     await page.evaluate(() => {
         const link = [...document.querySelectorAll('#tree a.tree-item-link')]
             .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
@@ -152,14 +147,12 @@ const SEED = `
         link.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 120, clientY: link.getBoundingClientRect().top + 8 }));
     });
     await sleep(500);
-    await page.screenshot({ path: '/tmp/shots/05-contextmenu-light.png' });
+    await page.screenshot({ path: '/tmp/shots/states/04-contextmenu.png' });
 
-    // Edit dialog (dark): Escape closes the menu, then F2 on the GitHub row.
-    // The menu was opened over the SEARCH view (states 03/04 left it active),
+    // 05 — edit dialog: Escape closes the menu, then F2 on the GitHub row.
+    // The menu was opened over the SEARCH view (states 02/03 left it active),
     // so the row it pointed at lives in the hidden tree — F2 reaches the
     // tree's keydown only from a focused, visible tree row: switch back first.
-    await dark(page);
-    await sleep(200);
     await page.keyboard.press('Escape');
     await sleep(400);
     await page.click('#view-tab-tree');
@@ -177,13 +170,11 @@ const SEED = `
         !document.querySelector('#edit-dialog').matches('[style*="opacity: 0"]') &&
         getComputedStyle(document.querySelector('#edit-dialog')).opacity === '1');
     console.log('edit dialog open:', dialogOpen);
-    await page.screenshot({ path: '/tmp/shots/06-dialog-dark.png' });
+    await page.screenshot({ path: '/tmp/shots/states/05-dialog.png' });
     await page.keyboard.press('Escape');
     await sleep(400);
 
-    // Undo toast (light): right-click another row, Escape, then Delete
-    await light(page);
-    await sleep(200);
+    // 06 — undo toast: right-click another row, Escape, then Delete
     await page.evaluate(() => {
         const link = [...document.querySelectorAll('#tree a.tree-item-link')]
             .find(a => (a.querySelector('i')?.textContent || '').includes('Planet Mozilla'));
@@ -200,9 +191,9 @@ const SEED = `
         return t && !t.hidden && getComputedStyle(t).display !== 'none';
     });
     console.log('undo toast visible:', toastVisible);
-    await page.screenshot({ path: '/tmp/shots/07-toast-light.png' });
+    await page.screenshot({ path: '/tmp/shots/states/06-toast.png' });
 
-    // Donation card (light): max the snooze counter so the gentle-ask card
+    // 07 — donation card: max the snooze counter so the gentle-ask card
     // shows on the next open (newOrUpgrade is false by now — the seed page
     // was the first open, so this run takes the donationFactor path).
     await page.evaluate(() => chrome.storage.local.set({ donationFactor: 100, donationKey: 30 }));
@@ -213,10 +204,10 @@ const SEED = `
         return d && getComputedStyle(d).display !== 'none';
     });
     console.log('donation card visible:', donationShown);
-    await page.screenshot({ path: '/tmp/shots/12-donation-light.png' });
+    await page.screenshot({ path: '/tmp/shots/states/07-donation.png' });
 
-    // Recent view (light): the in-tree recent section became its own tab in
-    // v4 task-2 slice B — state 13 now captures the view.
+    // 08 — recent view (light): the in-tree recent section became its own
+    // tab in v4 task-2 slice B.
     await page.evaluate(() => chrome.storage.local.set({ donationFactor: 1 }));
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(1200);
@@ -226,10 +217,10 @@ const SEED = `
         tab.click();
     });
     await sleep(500);
-    await page.screenshot({ path: '/tmp/shots/13-recent-view-light.png' });
+    await page.screenshot({ path: '/tmp/shots/states/08-recent.png' });
     await page.close();
 
-    // --- options page ------------------------------------------------------
+    // --- 09 options page ---------------------------------------------------
     // 1280 wide: exercises the round-6 multi-column group layout (the
     // single-column fallback below ~820px is what 760 used to pin).
     const opts = await browser.newPage();
@@ -237,26 +228,21 @@ const SEED = `
     await opts.setViewport({ width: 1280, height: 800 });
     await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
     await sleep(800);
-    await light(opts);
+    await opts.screenshot({ path: '/tmp/shots/states/09-options.png' });
+
+    // --- 10 options custom-styles block (CodeMirror) ----------------------
+    // options.html and advanced-options.html are merged (the latter is a
+    // redirect stub); the "advanced" surface is the merged options page
+    // scrolled to its custom-styles CodeMirror block.
+    await opts.evaluate(() => {
+        const cm = document.querySelector('.CodeMirror');
+        if (cm) cm.scrollIntoView({ block: 'center' });
+    });
     await sleep(300);
-    await opts.screenshot({ path: '/tmp/shots/08-options-light.png' });
-    await dark(opts);
-    await sleep(300);
-    await opts.screenshot({ path: '/tmp/shots/09-options-dark.png' });
+    await opts.screenshot({ path: '/tmp/shots/states/10-options-styles.png' });
     await opts.close();
 
-    // --- advanced sections of the merged options page (dark, CodeMirror) ---
-    const adv = await browser.newPage();
-    watch(adv, 'advanced');
-    await adv.setViewport({ width: 1280, height: 800 });
-    await adv.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
-    await sleep(800);
-    await dark(adv);
-    await sleep(300);
-    await adv.screenshot({ path: '/tmp/shots/10-advanced-dark.png' });
-    await adv.close();
-
-    // --- side panel (light) -------------------------------------------------
+    // --- 11 side panel -----------------------------------------------------
     const panel = await browser.newPage();
     watch(panel, 'panel');
     await panel.setViewport({ width: 360, height: 720 });
@@ -268,15 +254,13 @@ const SEED = `
     }));
     await panel.reload({ waitUntil: 'networkidle0' });
     await sleep(1200);
-    await light(panel);
-    await sleep(300);
     await panel.evaluate(() => {
         const span = [...document.querySelectorAll('#tree span.tree-item-span')]
             .find(s => (s.querySelector('i')?.textContent || '').trim() === 'Bookmarks bar');
         if (span) span.click();
     });
     await sleep(500);
-    await panel.screenshot({ path: '/tmp/shots/11-panel-light.png' });
+    await panel.screenshot({ path: '/tmp/shots/states/11-panel.png' });
     await panel.close();
 
     console.log(errors.length ? 'PAGE ERRORS:\n' + errors.join('\n') : 'NO PAGE ERRORS');

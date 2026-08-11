@@ -81,7 +81,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await seed.close();
 
     const out = { workId };
-    fs.mkdirSync('/tmp/shots', { recursive: true });
+    fs.mkdirSync('/tmp/shots/diag', { recursive: true });
 
     // --- session A: the palette ---------------------------------------------
     const a = await openPopup();
@@ -101,7 +101,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
             slash: last && (last.querySelector('.palette-slash') || {}).textContent
         };
     });
-    await a.screenshot({ path: '/tmp/shots/v4t4j-palette-custom.png' });
+    await a.screenshot({ path: '/tmp/shots/diag/v4t4j-palette-custom.png' });
     // execute the group (End selects the custom row)
     step('execute the group');
     await a.keyboard.press('End'); await sleep(150);
@@ -144,7 +144,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await a.keyboard.press('End'); await sleep(150);
     await a.keyboard.press('Enter'); await sleep(600);
     out.brokenShown = await a.evaluate(() => document.body.classList.contains('needConfirm'));
-    await a.screenshot({ path: '/tmp/shots/v4t4j-broken-confirm.png' });
+    await a.screenshot({ path: '/tmp/shots/diag/v4t4j-broken-confirm.png' });
     await a.evaluate(() => document.getElementById('confirm-dialog-button-1').click());
     await sleep(500);
     out.afterBrokenDelete = await a.evaluate(() =>
@@ -169,7 +169,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 !document.getElementById('palette-cmd-form').hidden,
             slash: (document.getElementById('pc-slash') || {}).value
         }));
-        await optPage.screenshot({ path: '/tmp/shots/v4t4j-options-prefill.png' });
+        await optPage.screenshot({ path: '/tmp/shots/diag/v4t4j-options-prefill.png' });
 
         // --- session B continues on the options page: management group ------
         optPage.on('dialog', d => d.accept()); // the delete button's confirm()
@@ -197,7 +197,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         await optPage.select('#pc-action', 'view-preset'); await sleep(200);
         await optPage.select('#pc-view', 'dead'); await sleep(200);
         out.rowsPresetDead = await rowVisibility();
-        await optPage.screenshot({ path: '/tmp/shots/v4t4j-options-form.png' });
+        await optPage.screenshot({ path: '/tmp/shots/diag/v4t4j-options-form.png' });
         // create through the form: an open-url command
         await optPage.select('#pc-action', 'open-url'); await sleep(200);
         await optPage.type('#pc-name', 'Console', { delay: 10 });
@@ -216,7 +216,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         await sleep(500);
         out.afterDelete = await optPage.evaluate(() =>
             JSON.parse(window.store.getSyncSetting('paletteCustomCommands', '[]')).map(c => c.slash));
-        await optPage.screenshot({ path: '/tmp/shots/v4t4j-options-list.png' });
+        await optPage.screenshot({ path: '/tmp/shots/diag/v4t4j-options-list.png' });
     }
     await a.close();
 

@@ -35,7 +35,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await sleep(300);
     await seed.close();
 
-    fs.mkdirSync('/tmp/shots', { recursive: true });
+    fs.mkdirSync('/tmp/shots/diag', { recursive: true });
     const out = {};
     for (const theme of ['dark', 'ink', 'light']) {
         const p = await openPopup();
@@ -64,7 +64,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
                 slotHtml: slot.innerHTML.slice(0, 140)
             };
         });
-        await p.screenshot({ path: `/tmp/shots/favicon-${theme}.png` });
+        await p.screenshot({ path: `/tmp/shots/diag/favicon-${theme}.png` });
         await p.close();
     }
     console.log(JSON.stringify(out, null, 2));

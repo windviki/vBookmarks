@@ -1,13 +1,15 @@
 // vBookmarks i18n screenshot harness — one browser launch per UI language
 // (--lang is process-wide), reseeding the same tree each time, capturing
 // the main localized surfaces: tree, view tab strip, bookmark context menu,
-// folder context menu, edit dialog, the options page and — seeded with
+// folder context menu, its three collapsed-submenu flyouts, the search-
+// history row menu, edit dialog, the options page and — seeded with
 // visit counts, a search-history MRU, a dead-scan cache and a duplicate
 // pair — the search/recent/dupes/dead/stats feature views (item 1). 'ar'
 // doubles as the RTL check — note the docker chromium ships en-US.pak
 // only, so locale negotiation silently falls back to en there; the ar
 // tab-strip mirroring assertion therefore emulates `direction: rtl` when
 // negotiation failed.
+// Light theme throughout (no prefers-color-scheme emulation).
 // Runs inside zenika/alpine-chrome:with-puppeteer; shots land in
 // /tmp/shots/i18n/<lang>-*.png.
 const puppeteer = require('puppeteer');
@@ -15,7 +17,7 @@ require('fs').mkdirSync('/tmp/shots/i18n', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const LANGS = (process.env.SHOT_LANGS || 'en,zh-CN,ja,ko,fr,de,es,ar').split(',');
+const LANGS = (process.env.SHOT_LANGS || 'en,ja,ko,ar,fr,de,ru').split(',');
 
 const SEED = `
 (async () => {
@@ -200,6 +202,54 @@ const watch = (page, tag) => {
             await page.keyboard.press('Escape');
             await sleep(400);
 
+            // Collapsed-submenu flyouts (issue #48 follow-up): the folder
+            // menu's sort flyout (collapseSortMenu default ON), then enable
+            // collapseTabGroupMenu and capture both the folder and the bookmark
+            // tab-group flyouts.
+            const rcFolder = () => page.evaluate(() => {
+                const span = [...document.querySelectorAll('#tree span.tree-item-span')]
+                    .find(s => (s.querySelector('i')?.textContent || '').trim() === '工作区');
+                if (!span) throw new Error('folder row not found');
+                span.dispatchEvent(new MouseEvent('contextmenu',
+                    { bubbles: true, cancelable: true, clientX: 120, clientY: span.getBoundingClientRect().top + 8 }));
+            });
+            const hoverMenuEntry = id => page.evaluate(elemId => {
+                const el = document.getElementById(elemId);
+                if (!el) throw new Error('menu entry not found: ' + elemId);
+                el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true, cancelable: true, view: window }));
+            }, id);
+
+            await rcFolder();
+            await sleep(500);
+            await hoverMenuEntry('folder-sort-collapse');
+            await sleep(300);
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-submenu-sort.png` });
+            await page.keyboard.press('Escape');
+            await sleep(400);
+
+            await page.evaluate(() => chrome.storage.local.set({ collapseTabGroupMenu: '1' }));
+            await rcFolder();
+            await sleep(500);
+            await hoverMenuEntry('folder-tab-group-collapse');
+            await sleep(300);
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-submenu-tabgroup.png` });
+            await page.keyboard.press('Escape');
+            await sleep(400);
+
+            await page.evaluate(() => {
+                const link = [...document.querySelectorAll('#tree a.tree-item-link')]
+                    .find(a => (a.querySelector('i')?.textContent || '').includes('GitHub'));
+                if (!link) throw new Error('GitHub row not found');
+                link.dispatchEvent(new MouseEvent('contextmenu',
+                    { bubbles: true, cancelable: true, clientX: 120, clientY: link.getBoundingClientRect().top + 8 }));
+            });
+            await sleep(500);
+            await hoverMenuEntry('bookmark-tab-group-collapse');
+            await sleep(300);
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-submenu-bookmark-tabgroup.png` });
+            await page.keyboard.press('Escape');
+            await sleep(400);
+
             // Edit dialog: focus the GitHub row, then F2
             await page.evaluate(() => {
                 const link = [...document.querySelectorAll('#tree a.tree-item-link')]
@@ -224,6 +274,19 @@ const watch = (page, tag) => {
                 await sleep(600);
             };
             await openView('search');
+            // Search-history row context menu (rerun/remove/clear) over the
+            // seeded MRU, then the plain empty-box + history view.
+            await page.evaluate(() => {
+                const a = document.querySelector('#search-history-area a[data-q]');
+                if (!a) throw new Error('search-history row not found');
+                const rect = a.getBoundingClientRect();
+                a.dispatchEvent(new MouseEvent('contextmenu',
+                    { bubbles: true, cancelable: true, clientX: rect.left + 20, clientY: rect.top + 8 }));
+            });
+            await sleep(500);
+            await page.screenshot({ path: `/tmp/shots/i18n/${lang}-search-history-menu.png` });
+            await page.keyboard.press('Escape');
+            await sleep(400);
             await page.screenshot({ path: `/tmp/shots/i18n/${lang}-search.png` });
 
             // Recent view: seeded opens + the history-permission banner (7a).
@@ -252,7 +315,7 @@ const watch = (page, tag) => {
             await opts.screenshot({ path: `/tmp/shots/i18n/${lang}-options.png` });
             await opts.close();
 
-            console.log(`${lang}: 11 shots done`);
+            console.log(`${lang}: 15 shots done`);
         } catch (e) {
             errors.push(`${lang}: ${e.message}`);
         }

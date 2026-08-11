@@ -2,7 +2,7 @@
 // Loads the extension from /ext, opens popup / panel / options pages,
 // collects page errors and captures light/dark screenshots.
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/smoke', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -50,7 +50,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         search: !!document.querySelector('#search')
     }));
     console.log('popup stats:', JSON.stringify(stats));
-    await page.screenshot({ path: '/tmp/shots/popup-light.png' });
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-light.png' });
 
     // 2b. v4 task-3 #6: rememberView — the popup reopens on the stored view
     // by default, and falls back to the tree when the option is off.
@@ -103,7 +103,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     console.log('v4 upgrade notice:', JSON.stringify(v4Notice));
     if (!v4Notice.donationShown || !v4Notice.noticeVisible || !v4Notice.href.includes('guide-v4'))
         errors.push(`v4 notice broken: ${JSON.stringify(v4Notice)}`);
-    await page.screenshot({ path: '/tmp/shots/popup-v4-upgrade.png' });
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-v4-upgrade.png' });
     await page.evaluate(() => chrome.storage.local.remove('currentVersion'));
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(900);
@@ -161,7 +161,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         errors.push(`#14: override reveal broken: ${JSON.stringify(revealState)}`);
     if (settingAfter.onlyShowBMBar !== '1')
         errors.push(`#14: onlyShowBMBar setting was rewritten: ${JSON.stringify(settingAfter)}`);
-    await page.screenshot({ path: '/tmp/shots/popup-outside-bar-reveal.png' });
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-outside-bar-reveal.png' });
     await page.evaluate(id => new Promise(resolve => chrome.bookmarks.remove(id, resolve)), outsideId);
     await page.evaluate(() => chrome.storage.local.remove('onlyShowBMBar'));
     await page.reload({ waitUntil: 'networkidle0' });
@@ -197,7 +197,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await sleep(400);
     const darkBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     console.log('dark body bg:', darkBg);
-    await page.screenshot({ path: '/tmp/shots/popup-dark.png' });
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-dark.png' });
 
     // 4. side panel page
     const panel = await browser.newPage();
@@ -218,7 +218,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     console.log('panel markers:', JSON.stringify(panelMarkers));
     if (panelMarkers.marker !== true || !(panelMarkers.beatAge >= 0 && panelMarkers.beatAge < 90000))
         errors.push(`#19: panel heartbeat missing: ${JSON.stringify(panelMarkers)}`);
-    await panel.screenshot({ path: '/tmp/shots/panel-dark.png' });
+    await panel.screenshot({ path: '/tmp/shots/smoke/panel-dark.png' });
 
     // 5. options page (v4 task-3 #17: merged single page — the old advanced
     // sections live here now, vendored CodeMirror included)
@@ -237,7 +237,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         groups: document.querySelectorAll('.options-group').length
     }));
     console.log('options stats:', JSON.stringify(optsStats));
-    await opts.screenshot({ path: '/tmp/shots/options.png' });
+    await opts.screenshot({ path: '/tmp/shots/smoke/options.png' });
 
     // 6. the legacy advanced-options URL must forward to the merged page
     const adv = await browser.newPage();
@@ -250,7 +250,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     }));
     console.log('advanced-options redirect:', JSON.stringify(advStats));
     if (!advStats.forwarded) errors.push('advanced-options.html did not redirect to options.html');
-    await adv.screenshot({ path: '/tmp/shots/advanced-options.png' });
+    await adv.screenshot({ path: '/tmp/shots/smoke/advanced-options.png' });
 
     console.log(errors.length ? 'PAGE ERRORS:\n' + errors.join('\n') : 'NO PAGE ERRORS');
     await browser.close();

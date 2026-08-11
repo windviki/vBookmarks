@@ -71,8 +71,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await a.click('#view-dead .dead-start');
     await sleep(2500); // SW: getTree → publish → first probes in flight
     out.a_afterStart = await state(a);
-    fs.mkdirSync('/tmp/shots', { recursive: true });
-    await a.screenshot({ path: '/tmp/shots/v4t4i-scanning.png' });
+    fs.mkdirSync('/tmp/shots/diag', { recursive: true });
+    await a.screenshot({ path: '/tmp/shots/diag/v4t4i-scanning.png' });
     await a.close(); // popup gone — the SW keeps the run alive
     await sleep(2000);
 
@@ -86,7 +86,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await b.click('#view-dead .dead-pause');
     await sleep(800);
     out.b_paused = await state(b);
-    await b.screenshot({ path: '/tmp/shots/v4t4i-paused.png' });
+    await b.screenshot({ path: '/tmp/shots/diag/v4t4i-paused.png' });
     await b.close();
     await sleep(1500);
 

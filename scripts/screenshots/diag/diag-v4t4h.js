@@ -64,8 +64,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         text: (document.querySelector('#view-dead .risk-banner i') || {}).textContent,
         href: (document.querySelector('#view-dead .risk-banner-help') || {}).href
     }));
-    require('fs').mkdirSync('/tmp/shots', { recursive: true });
-    await page.screenshot({ path: '/tmp/shots/v4t4-risk-banner.png' });
+    require('fs').mkdirSync('/tmp/shots/diag', { recursive: true });
+    await page.screenshot({ path: '/tmp/shots/diag/v4t4-risk-banner.png' });
 
     // Tab ring includes banner controls: from the active tab, Tab forward
     // should reach a banner control before the toolbar buttons.

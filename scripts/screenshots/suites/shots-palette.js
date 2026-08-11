@@ -1,12 +1,14 @@
 // vBookmarks view-system screenshot harness (v4 task-2) — the palette modes
-// retired in slice C became full views; this suite captures them.
+// retired in slice C became full views; this suite captures them in LIGHT
+// theme (the theme axis lives in shots-matrix.js → themes/).
 // Seeds duplicates, dead links, visit stats, dead marks and a cached dead
-// scan, then shoots: the palette command table, recent/stats/dupes/dead
-// views, a live dead rescan (progress + results) and the surviving palette
-// surfaces (/session, plain-query bridge row).
-// Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots.
+// scan, then shoots: the palette command table, stats/dupes/dead views, a
+// live dead rescan (progress + results) and the surviving palette surfaces
+// (/session, plain-query bridge row). Shots continue the states/ series
+// (12-19) after shots.js (01-11); the recent view lives in shots.js (08).
+// Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots/states.
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/states', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -110,9 +112,6 @@ const SEED = `
     const extId = new URL(swTarget.url()).hostname;
     console.log('extension id:', extId);
 
-    const dark = async page =>
-        page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-
     // --- Seed -------------------------------------------------------------
     const seedPage = await browser.newPage();
     watch(seedPage, 'seed');
@@ -140,57 +139,49 @@ const SEED = `
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
     await sleep(1600);
 
-    await dark(page);
-    await sleep(200);
-
     const activateView = id => page.evaluate(viewId => {
         const tab = document.querySelector(`#view-tab-${viewId}`);
         if (!tab) throw new Error('view tab not found: ' + viewId);
         tab.click();
     }, id);
 
-    // --- 14-palette-open: the unified command table (slash aliases) -------
+    // --- 12-palette-open: the unified command table (slash aliases) -------
     await page.keyboard.down('Control');
     await page.keyboard.press('k');
     await page.keyboard.up('Control');
     await sleep(500);
-    await page.screenshot({ path: '/tmp/shots/14-palette-open.png' });
+    await page.screenshot({ path: '/tmp/shots/states/12-palette-open.png' });
     await page.keyboard.press('Escape');
     await sleep(300);
 
-    // --- 15-view-recent: recently added with relative times ---------------
-    await activateView('recent');
-    await sleep(600);
-    await page.screenshot({ path: '/tmp/shots/15-view-recent.png' });
-
-    // --- 16-view-stats: count pills + relative times, count sort ----------
+    // --- 13-view-stats: count pills + relative times, count sort ----------
     await activateView('stats');
     await sleep(600);
-    await page.screenshot({ path: '/tmp/shots/16-view-stats.png' });
+    await page.screenshot({ path: '/tmp/shots/states/13-view-stats.png' });
 
-    // --- 17-view-dupes: groups, keeper radios, will-delete preview --------
+    // --- 14-view-dupes: groups, keeper radios, will-delete preview --------
     await activateView('dupes');
     await sleep(600);
-    await page.screenshot({ path: '/tmp/shots/17-view-dupes.png' });
+    await page.screenshot({ path: '/tmp/shots/states/14-view-dupes.png' });
 
-    // --- 18-view-dead: cached scan — status badges, marks, filter ---------
+    // --- 15-view-dead: cached scan — status badges, marks, filter ---------
     await activateView('dead');
     await sleep(600);
-    await page.screenshot({ path: '/tmp/shots/18-view-dead.png' });
+    await page.screenshot({ path: '/tmp/shots/states/15-view-dead.png' });
 
-    // --- 19/20-view-dead-rescan: live progress, then the fresh results ----
+    // --- 16/17-view-dead-rescan: live progress, then the fresh results ----
     await page.evaluate(() => {
         const btn = document.querySelector('.dead-rescan');
         if (!btn) throw new Error('dead rescan button not found');
         btn.click();
     });
     await sleep(1500);
-    await page.screenshot({ path: '/tmp/shots/19-view-dead-scanning.png' });
+    await page.screenshot({ path: '/tmp/shots/states/16-view-dead-scanning.png' });
     // bogus hosts burn the 8s direct timeout (+ GET retry); concurrency 4
     await sleep(45000);
-    await page.screenshot({ path: '/tmp/shots/20-view-dead-results.png' });
+    await page.screenshot({ path: '/tmp/shots/states/17-view-dead-results.png' });
 
-    // --- 21-palette-session: /session save (alert over the palette) -------
+    // --- 18-palette-session: /session save (alert over the palette) -------
     await page.keyboard.down('Control');
     await page.keyboard.press('k');
     await page.keyboard.up('Control');
@@ -199,7 +190,7 @@ const SEED = `
     await sleep(400);
     await page.keyboard.press('Enter');
     await sleep(800);
-    await page.screenshot({ path: '/tmp/shots/21-palette-session.png' });
+    await page.screenshot({ path: '/tmp/shots/states/18-palette-session.png' });
 
     // /session opened an alert over the (still-open, keepOpen) palette.
     // The palette's Escape handler stopPropagates, so the first Escape
@@ -209,14 +200,14 @@ const SEED = `
     await page.keyboard.press('Escape');
     await sleep(300);
 
-    // --- 22-palette-search: plain query + the search-view bridge row ------
+    // --- 19-palette-search: plain query + the search-view bridge row ------
     await page.keyboard.down('Control');
     await page.keyboard.press('k');
     await page.keyboard.up('Control');
     await sleep(500);
     await page.type('#palette-input', 'git', { delay: 60 });
     await sleep(500);
-    await page.screenshot({ path: '/tmp/shots/22-palette-search.png' });
+    await page.screenshot({ path: '/tmp/shots/states/19-palette-search.png' });
 
     console.log(errors.length ? 'PAGE ERRORS:\n' + errors.join('\n') : 'NO ERRORS (view shots)');
     await browser.close();

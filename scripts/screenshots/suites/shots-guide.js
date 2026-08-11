@@ -3,7 +3,7 @@
 // options page's Views group card (both used by docs/guide-v4*.md).
 // Runs inside zenika/alpine-chrome:with-puppeteer; shots land in /tmp/shots.
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/guide', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -110,7 +110,7 @@ const SEED = `
     console.log('dual zone state:', JSON.stringify(dual));
     if (!dual.searchVisible || dual.input !== 'figma' || !dual.histRows || !dual.resRows)
         errors.push(`dual zone not populated: ${JSON.stringify(dual)}`);
-    await page.screenshot({ path: '/tmp/shots/guide-search-dualzone.png' });
+    await page.screenshot({ path: '/tmp/shots/guide/guide-search-dualzone.png' });
 
     // --- 1b. dupes view: selection mode with one group ticked --------------
     // The batch bar (count + all/invert/clear/apply/exit) replaces the idle
@@ -146,7 +146,7 @@ const SEED = `
         }));
         if (!st.bar || !st.sel)
             errors.push(`dupes selection state wrong: ${JSON.stringify(st)}`);
-        await page.screenshot({ path: '/tmp/shots/guide-dupes-select.png' });
+        await page.screenshot({ path: '/tmp/shots/guide/guide-dupes-select.png' });
     }
 
     // --- 1c. dead view: selection mode with one row ticked ------------------
@@ -175,7 +175,7 @@ const SEED = `
         }));
         if (!st.bar || !st.sel)
             errors.push(`dead selection state wrong: ${JSON.stringify(st)}`);
-        await page.screenshot({ path: '/tmp/shots/guide-dead-select.png' });
+        await page.screenshot({ path: '/tmp/shots/guide/guide-dead-select.png' });
     }
 
     // --- 2. options page: the Views group card -------------------------------
@@ -189,7 +189,7 @@ const SEED = `
     await opts.evaluate(() =>
         document.getElementById('views-options').closest('section').scrollIntoView());
     await sleep(300);
-    await group.screenshot({ path: '/tmp/shots/guide-options-views.png' });
+    await group.screenshot({ path: '/tmp/shots/guide/guide-options-views.png' });
 
     console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'NO ERRORS (guide shots)');
     await browser.close();

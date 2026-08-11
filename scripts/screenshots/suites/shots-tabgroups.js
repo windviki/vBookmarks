@@ -14,7 +14,7 @@
 //   4. the bookmark context menu shows its three tab-group entries.
 // Shots land in /tmp/shots with the 30- series (the other suites use 01-29).
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/tabgroups', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -122,7 +122,7 @@ const SEED = `
     }, id);
 
     // --- 30-folder-tabgroup-menu: the folder menu with all three entries ----
-    const page = await openPopup(true);
+    const page = await openPopup();
     await rightClickFolder(page);
     await sleep(500);
     await page.evaluate(() => {
@@ -131,7 +131,7 @@ const SEED = `
             if (!document.getElementById(id))
                 throw new Error('folder menu item missing: ' + id);
     });
-    await page.screenshot({ path: '/tmp/shots/30-folder-tabgroup-menu.png' });
+    await page.screenshot({ path: '/tmp/shots/tabgroups/30-folder-tabgroup-menu.png' });
 
     // --- 31-tabgroup-dialog: named-setup dialog (title + 9 swatches) --------
     await clickMenuItem(page, 'open-bookmarks-in-group-setup');
@@ -145,7 +145,7 @@ const SEED = `
         if (!radios.length || ![...radios].some(r => r.checked))
             throw new Error('no color pre-selected');
     });
-    await page.screenshot({ path: '/tmp/shots/31-tabgroup-dialog.png' });
+    await page.screenshot({ path: '/tmp/shots/tabgroups/31-tabgroup-dialog.png' });
 
     // Functional: confirm with a custom title + orange; the SW must form a
     // group named/colored exactly as chosen and hold the folder's 3 tabs.
@@ -164,7 +164,7 @@ const SEED = `
         throw new Error(`expected 3 tabs in the setup group, got ${groupTabs.length}`);
 
     // --- 32-tabgroup-pick: existing-group picker now lists that group -------
-    const page2 = await openPopup(true);
+    const page2 = await openPopup();
     await rightClickFolder(page2);
     await sleep(300);
     await clickMenuItem(page2, 'folder-open-in-existing-group');
@@ -180,7 +180,7 @@ const SEED = `
         if (!bg || bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)')
             throw new Error('picker color dot is transparent: ' + bg);
     });
-    await page2.screenshot({ path: '/tmp/shots/32-tabgroup-pick.png' });
+    await page2.screenshot({ path: '/tmp/shots/tabgroups/32-tabgroup-pick.png' });
 
     // Functional: picking the row must open MORE tabs into the same group
     // (open-into-existing-group). Group 3 -> 6 tabs.
@@ -202,7 +202,7 @@ const SEED = `
     // --- 33-bookmark-tabgroup-menu: bookmark menu's three entries -----------
     // Use a top-level bookmark (Example Home, directly under the expanded
     // bookmarks bar root) so no subfolder needs expanding.
-    const page3 = await openPopup(true);
+    const page3 = await openPopup();
     await page3.evaluate(() => {
         const link = [...document.querySelectorAll('#tree a.tree-item-link')]
             .find(a => (a.querySelector('i')?.textContent || '').trim() === 'Example Home');
@@ -217,7 +217,7 @@ const SEED = `
             if (!document.getElementById(id))
                 throw new Error('bookmark menu item missing: ' + id);
     });
-    await page3.screenshot({ path: '/tmp/shots/33-bookmark-tabgroup-menu.png' });
+    await page3.screenshot({ path: '/tmp/shots/tabgroups/33-bookmark-tabgroup-menu.png' });
 
     await browser.close();
 

@@ -2,7 +2,7 @@
 // reveal the mark/delete buttons, and shoot the tree's dead/sync indicators
 // at 3x device scale to inspect their shapes.
 const puppeteer = require('puppeteer');
-require('fs').mkdirSync('/tmp/shots', { recursive: true });
+require('fs').mkdirSync('/tmp/shots/diag', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -103,7 +103,7 @@ const SEED = `
         }
     });
     await sleep(200);
-    await page.screenshot({ path: '/tmp/shots/diag-tree-indicators.png' });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-tree-indicators.png' });
     const treeClip = await page.evaluate(() => {
         const ind = document.querySelector('#tree .dead-indicator');
         if (!ind) return null;
@@ -112,25 +112,25 @@ const SEED = `
         return { x: 0, y: Math.max(0, r.y - 26), width: 260, height: r.height * 4 + 32 };
     });
     if (treeClip)
-        await page.screenshot({ path: '/tmp/shots/diag-tree-dead-row-zoom.png', clip: treeClip });
+        await page.screenshot({ path: '/tmp/shots/diag/diag-tree-dead-row-zoom.png', clip: treeClip });
 
     // --- dead view ---
     await page.evaluate(() => document.querySelector('#view-tab-dead').click());
     await sleep(800);
-    await page.screenshot({ path: '/tmp/shots/diag-dead-plain.png' });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-dead-plain.png' });
 
     // hover the first result row → mark/delete buttons reveal
     const rowSel = '#dead-list ul li.vbm-row';
     await page.waitForSelector(rowSel);
     await page.hover(rowSel);
     await sleep(400);
-    await page.screenshot({ path: '/tmp/shots/diag-dead-hover.png' });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-dead-hover.png' });
     const clip = await page.evaluate(sel => {
         const li = document.querySelector(sel);
         const r = li.getBoundingClientRect();
         return { x: 0, y: Math.max(0, r.y - 6), width: 400, height: r.height + 12 };
     }, rowSel);
-    await page.screenshot({ path: '/tmp/shots/diag-dead-hover-zoom.png', clip });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-dead-hover-zoom.png', clip });
 
     // layout probe: where do the buttons sit relative to the anchor?
     const probe = await page.evaluate(sel => {
@@ -157,13 +157,13 @@ const SEED = `
     await sleep(400);
     await page.hover(rowSel);
     await sleep(300);
-    await page.screenshot({ path: '/tmp/shots/diag-dead-hover-wide.png' });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-dead-hover-wide.png' });
     const clipWide = await page.evaluate(sel => {
         const li = document.querySelector(sel);
         const r = li.getBoundingClientRect();
         return { x: 0, y: Math.max(0, r.y - 6), width: 640, height: r.height + 12 };
     }, rowSel);
-    await page.screenshot({ path: '/tmp/shots/diag-dead-hover-wide-zoom.png', clip: clipWide });
+    await page.screenshot({ path: '/tmp/shots/diag/diag-dead-hover-wide-zoom.png', clip: clipWide });
     const probeWide = await page.evaluate(sel => {
         const li = document.querySelector(sel);
         const a = li.querySelector('a');
@@ -213,7 +213,7 @@ const SEED = `
             return { x: 0, y: Math.max(0, r.y - 26), width: 300, height: r.height * 4 + 32 };
         });
         if (clip)
-            await tp.screenshot({ path: `/tmp/shots/diag-tree-ind-${theme}.png`, clip });
+            await tp.screenshot({ path: `/tmp/shots/diag/diag-tree-ind-${theme}.png`, clip });
         await tp.close();
     };
     for (const theme of ['dark', 'ink', 'paper'])
