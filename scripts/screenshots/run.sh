@@ -38,7 +38,7 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/screenshots/suites "$CTX/suites"
 cp -r "$REPO_ROOT"/scripts/screenshots/diag "$CTX/diag"
 
@@ -60,6 +60,10 @@ docker run --rm "$IMAGE" node /work/verify-menu-overflow.js
 # folder menu, the flyout opens inside the viewport, dispatch works, and the
 # tab-group collapse applies to both menus. Blocking.
 docker run --rm "$IMAGE" node /work/verify-menu-collapse.js
+# Layer 2e — extreme zoom/resolution menu sweep (#48 follow-up): DPR × page
+# zoom × popup size; menus + flyouts must open, stay open and never clip or
+# cover their collapse entry. Blocking.
+docker run --rm "$IMAGE" node /work/verify-menu-extreme.js
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
 for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do

@@ -222,6 +222,12 @@ export function initContextMenu(ctx = {}) {
             ? (parseFloat(menuCs.paddingTop) || 0) + (parseFloat(menuCs.paddingBottom) || 0) +
               (parseFloat(menuCs.borderTopWidth) || 0) + (parseFloat(menuCs.borderBottomWidth) || 0)
             : 0;
+        // The horizontal chrome for the width cap below (padding-left/right +
+        // border-left/right; the base rule is `padding:5px 0` + 1px borders).
+        const menuChromeH = menuCs
+            ? (parseFloat(menuCs.paddingLeft) || 0) + (parseFloat(menuCs.paddingRight) || 0) +
+              (parseFloat(menuCs.borderLeftWidth) || 0) + (parseFloat(menuCs.borderRightWidth) || 0)
+            : 0;
         const maxMenuH = Math.max(80, viewportH - menuMinY - 8 - menuChrome);
         if (menu.offsetHeight > maxMenuH + menuChrome) {
             menu.style.maxHeight = `${maxMenuH}px`;
@@ -230,31 +236,50 @@ export function initContextMenu(ctx = {}) {
             menu.style.maxHeight = '';
             menu.style.overflowY = '';
         }
+        // Cap the menu to the VIEWPORT width: at extreme zoom the popup BODY
+        // can outgrow the window (content does not shrink with page zoom), and
+        // a menu wider than the window would be clipped by the window edge even
+        // though it fits the body — "max-width:100%" of the body is not 100vw.
+        // The max-width caps the CONTENT box, so subtract the menu's own
+        // padding+border chrome or the total box still overflows by it.
+        const winW = window.innerWidth;
+        if (menu.offsetWidth > winW)
+            menu.style.maxWidth = `${Math.max(0, winW - menuChromeH)}px`;
+        else
+            menu.style.maxWidth = '';
         const menuWidth = menu.offsetWidth;
         const menuHeight = menu.offsetHeight;
         let pageX, pageY;
         if (mode === 'entry') {
             const aw = anchor.width || 0;
-            // Flip against the VIEWPORT (window.innerWidth), not body.offsetWidth —
-            // the popup body can be narrower than the window, and a flyout that
-            // fits the window is visible even if the body is not that wide.
-            const winW = window.innerWidth;
+            // Flyout: open to the side (right under LTR / left under RTL),
+            // flip to the other side on overflow; when NEITHER side fits,
+            // stack it below the entry instead of covering it. Flip/clamp
+            // against the VIEWPORT — the popup body can be narrower than the
+            // window, and a flyout that fits the window is visible even if
+            // the body is not that wide.
+            const fitsRight = anchor.left + aw + menuWidth <= winW;
+            const fitsLeft = anchor.left - menuWidth >= 0;
+            let below = false;
             if (rtl) {
-                pageX = anchor.left - menuWidth;
-                if (pageX < 0)
-                    pageX = anchor.left + aw;
+                if (fitsLeft) pageX = anchor.left - menuWidth;
+                else if (fitsRight) pageX = anchor.left + aw;
+                else { below = true; pageX = anchor.left; }
             } else {
-                pageX = anchor.left + aw;
-                if (pageX + menuWidth > winW)
-                    pageX = anchor.left - menuWidth;
+                if (fitsRight) pageX = anchor.left + aw;
+                else if (fitsLeft) pageX = anchor.left - menuWidth;
+                else { below = true; pageX = anchor.left; }
             }
             pageX = Math.max(0, Math.min(pageX, Math.max(0, winW - menuWidth)));
-            pageY = Math.max(menuMinY, anchor.top);
+            pageY = below
+                ? Math.max(menuMinY, anchor.top + (anchor.height || 0))
+                : Math.max(menuMinY, anchor.top);
             if (pageY + menuHeight > viewportH)
                 pageY = Math.max(menuMinY, viewportH - menuHeight);
         } else {
-            pageX = rtl ? Math.max(0, anchor.left - menuWidth) :
-                Math.min(anchor.left, body.offsetWidth - menuWidth);
+            pageX = Math.max(0, Math.min(
+                rtl ? anchor.left - menuWidth : anchor.left,
+                winW - menuWidth));
             const boundY = viewportH - anchor.clientY;
             pageY = boundY > menuHeight
                 ? anchor.top
