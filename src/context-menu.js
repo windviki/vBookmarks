@@ -5,8 +5,10 @@
  * search-history): opening them from the tree or results pane (active-row
  * tracking, the hide-editables
  * / hide-sort toggles on root folders, rtl-aware position math, the Mac
- * right-click-hold-to-close quirk), clearing them on outside clicks, scrolls
- * and focus moves, hiding the add-* entries while search is active
+ * right-click-hold-to-close quirk + the right-click jitter scroll guard),
+ * clearing them on outside clicks, scrolls and focus moves (a short window
+ * after open tolerates the tiny scroll a Mac right-click's slide produces),
+ * hiding the add-* entries while search is active
  * (switchBookmarkMenu) and dispatching every menu-item click to the action
  * layer. currentContext (the row the menu was opened on) stays private.
  * v4 task-2 adds the view-row entries: "reveal in tree" on out-of-tree
@@ -259,6 +261,11 @@ export function initContextMenu(ctx = {}) {
         menu.style.top = `${pageY}px`;
         menu.style.opacity = '1';
         menu.style.transform = 'scale(1)';
+        // The menu is visible NOW — arm the scroll jitter guard so a scroll
+        // the opening gesture itself produces (Mac right-click slide) can't
+        // close it; menu.focus() below and the #48 overflow scroll land here
+        // too, both covered while the guard's window is open.
+        armJitterGuard();
     };
 
     // ── collapsed-group flyouts ─────────────────────────────────────────
@@ -430,18 +437,80 @@ export function initContextMenu(ctx = {}) {
         hideAllMenus();
     };
 
+    // ── Mac right-click jitter guard ──────────────────────────────────
+    // A macOS right-click is often a trackpad two-finger / Magic Mouse
+    // corner click, and the button press is frequently accompanied by a tiny
+    // slide of the fingers. The OS reports that slide as a SCROLL gesture,
+    // so a scroll event lands in the same instant the context menu opens.
+    // Every scroll container below is wired to dismiss the menu — the menu
+    // flashed open and closed at once ("right-click does nothing" on Mac).
+    // The guard arms when a menu becomes visible and IGNORES scroll-driven
+    // dismissals while BOTH hold: (a) still within a short grace window after
+    // open (the jitter is simultaneous with the click; a scroll the user
+    // intends comes after they have looked at the menu), and (b) the scrolling
+    // container has moved less than a small distance since open (a click's
+    // fingerprint scrolls a few px; a deliberate scroll moves further — the
+    // #48 overflow probe measured only 16px). Clicks and focus moves still
+    // dismiss immediately: a right-click fires no click and a slide moves no
+    // focus, so neither is ever jitter.
+    const SCROLL_JITTER_GRACE_MS = 500; // how long after open a scroll is suspect
+    const SCROLL_JITTER_MAX_PX = 32;    // accumulated scroll still tolerated
+    let menuOpenedAt = 0;               // Date.now() of the last menu show
+    // scroll position of every dismiss-on-scroll container at the open
+    // instant, keyed by element (the page/window scroll under the window key).
+    const scrollBaseline = new Map();
+    const WIN_KEY = window;
+    const scrollContainers = [];        // element scroll sources (wired below)
+    const pageScroll = () =>
+        window.scrollY || (document.documentElement && document.documentElement.scrollTop) ||
+        (document.body && document.body.scrollTop) || 0;
+    const scrollTopOf = el =>
+        (el && typeof el.scrollTop === 'number') ? el.scrollTop : 0;
+    const armJitterGuard = () => {
+        menuOpenedAt = Date.now();
+        scrollBaseline.clear();
+        for (const c of scrollContainers)
+            scrollBaseline.set(c, scrollTopOf(c));
+        scrollBaseline.set(WIN_KEY, pageScroll());
+    };
+    const isJitterScroll = e => {
+        if (Date.now() - menuOpenedAt > SCROLL_JITTER_GRACE_MS)
+            return false;
+        const t = e && e.target;
+        // Window / document scrolls (the page itself) key against the window
+        // baseline; element scrolls against their own.
+        const isPage = t === window || t === document ||
+            t === (document && document.documentElement) || t === (document && document.body);
+        const pos = isPage ? pageScroll() : scrollTopOf(t);
+        const base = isPage ? scrollBaseline.get(WIN_KEY) : scrollBaseline.get(t);
+        // A container the guard did not snapshot (a list created after init):
+        // keep the menu up during the window — conservative, expires fast.
+        if (base === undefined)
+            return true;
+        return Math.abs(pos - base) <= SCROLL_JITTER_MAX_PX;
+    };
+    const scrollDismiss = e => {
+        if (isJitterScroll(e))
+            return;
+        clearMenu(e);
+    };
+
     body.addEventListener('click', clearMenu);
     //body.addEventListener('scroll', clearMenu);
-    $tree.addEventListener('scroll', clearMenu);
+    $tree.addEventListener('scroll', scrollDismiss);
+    scrollContainers.push($tree);
     //invalid event handler?
-    window.addEventListener('scroll', clearMenu);
-    $results.addEventListener('scroll', clearMenu);
+    window.addEventListener('scroll', scrollDismiss);
+    $results.addEventListener('scroll', scrollDismiss);
+    scrollContainers.push($results);
     // Palette results (dead-link list etc.) scroll must also dismiss menus,
     // otherwise a right-click menu opened inside the palette stays frozen
     // while the list scrolls underneath it.
     const $paletteResults = $('palette-results');
-    if ($paletteResults)
-        $paletteResults.addEventListener('scroll', clearMenu);
+    if ($paletteResults) {
+        $paletteResults.addEventListener('scroll', scrollDismiss);
+        scrollContainers.push($paletteResults);
+    }
     $tree.addEventListener('focus', clearMenu, true);
     $results.addEventListener('focus', clearMenu, true);
     // Round-3 item 3: the feature-view lists follow the same contract —
@@ -450,8 +519,9 @@ export function initContextMenu(ctx = {}) {
     for (const id of ['recent-list', 'stats-list', 'dead-list', 'dupes-list', 'search-history-area']) {
         const listEl = $(id);
         if (listEl) {
-            listEl.addEventListener('scroll', clearMenu);
+            listEl.addEventListener('scroll', scrollDismiss);
             listEl.addEventListener('focus', clearMenu, true);
+            scrollContainers.push(listEl);
         }
     }
 

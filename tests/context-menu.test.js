@@ -64,6 +64,7 @@ const setup = (opts = {}) => {
             focused: false,
             offsetWidth: 0,
             offsetHeight: 0,
+            scrollTop: 0,
             _qs: {},
             _listeners: {},
             classList: {
@@ -921,6 +922,77 @@ describe('mac right-click hold', () => {
     });
 });
 
+// The Mac right-click jitter guard: a macOS right-click is often a trackpad
+// two-finger / Magic Mouse corner click whose tiny slide the OS reports as a
+// scroll gesture in the same instant the menu opens. The guard (in
+// context-menu.js) ignores SCROLL-driven dismissals for a short grace window
+// after open while the scrolling container has moved less than a small
+// threshold — a click's fingerprint scrolls a few px, a deliberate scroll
+// moves further. Clicks and focus moves are never guarded (a right-click
+// fires no click and a slide moves no focus). The window is time-based, so
+// these tests drive a fake clock by stubbing Date.now (the same
+// global-stub pattern as setTimeout above).
+describe('Mac right-click jitter scroll guard', () => {
+    const realDateNow = Date.now;
+    let now;
+    beforeAll(() => { globalThis.Date.now = () => now; });
+    afterAll(() => { globalThis.Date.now = realDateNow; });
+    beforeEach(() => { now = 1000; });
+
+    it('keeps a menu open through the tiny scroll a right-click slide produces', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a); // now = 1000, inside the 500ms grace window
+        ctx.tree.scrollTop = 8; // the slide's scroll: a few px
+        fire(ctx.tree, 'scroll', makeEvent({ target: ctx.tree }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1'); // still open
+        expect(ctx.bookmarkMenu.style.left).toBe('50px'); // positioned, not parked
+    });
+
+    it('closes the menu once the grace window has passed', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a); // now = 1000
+        now = 2000; // 1000ms later — the window expired
+        ctx.tree.scrollTop = 8;
+        fire(ctx.tree, 'scroll', makeEvent({ target: ctx.tree }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('0');
+    });
+
+    it('closes the menu even within the window when the scroll is too large to be jitter', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a); // now = 1000, inside the window
+        ctx.tree.scrollTop = 200; // a deliberate scroll, not a fingerprint
+        fire(ctx.tree, 'scroll', makeEvent({ target: ctx.tree }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('0');
+    });
+
+    it('guards a small page scroll and passes a large one through', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a); // now = 1000
+        globalThis.window.scrollY = 5; // the slide scrolled the page a hair
+        ctx.fireWindow('scroll', makeEvent({ target: globalThis.window }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1');
+        globalThis.window.scrollY = 100; // the page scrolled meaningfully
+        ctx.fireWindow('scroll', makeEvent({ target: globalThis.window }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('0');
+    });
+
+    it('does not guard clicks or focus moves — those are never jitter', () => {
+        const ctx = setup({});
+        const { a } = ctx.makeBookmarkRow('42');
+        ctx.openOn(a); // now = 1000
+        fire(ctx.body, 'click', makeEvent({ target: ctx.body }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('0');
+        // the focus-move path: reopen, then move focus into the tree
+        ctx.openOn(a);
+        fire(ctx.tree, 'focus', makeEvent({ target: ctx.tree }));
+        expect(ctx.bookmarkMenu.style.opacity).toBe('0');
+    });
+});
+
 describe('bookmarkContextHandler', () => {
     const openBookmarkMenu = ctx => {
         const { a } = ctx.makeBookmarkRow('42');
@@ -1701,6 +1773,9 @@ describe('search-history context menu (round-4 item 7)', () => {
         const { a } = makeHistoryRow('git');
         openOn(a);
         expect(searchHistoryMenu.style.opacity).toBe('1');
+        // A real dismissal scroll moves the list (a bare 0px scroll inside the
+        // right-click jitter grace window is tolerated — that is the guard).
+        viewLists['search-history-area'].scrollTop = 100;
         fire(viewLists['search-history-area'], 'scroll', makeEvent({ target: viewLists['search-history-area'] }));
         expect(searchHistoryMenu.style.opacity).toBe('0');
         expect(searchHistoryMenu.style.left).toBe('-999px');
