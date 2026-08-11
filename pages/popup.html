@@ -48,6 +48,7 @@
     <div id="bookmark-open-in-new-group" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="bookmark-open-in-new-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="bookmark-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="bookmark-tab-group-collapse" class="menu-item has-submenu" role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false" data-submenu="bookmark-tab-group-submenu"></div>
     <hr id="bookmark-context-menu-sep4">
     <div id="bookmark-edit" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="copy-title-and-url" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -69,6 +70,7 @@
     <div id="open-bookmarks-in-group" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="open-bookmarks-in-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="folder-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-tab-group-collapse" class="menu-item has-submenu" role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false" data-submenu="folder-tab-group-submenu"></div>
     <div id="folder-new-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="folder-new-incognito-window" class="menu-item" role="menuitem" tabindex="-1"></div>
     <hr id="folder-context-menu-sep1">
@@ -77,6 +79,7 @@
     <div id="sort-folder-by-name" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="sort-folder-by-date" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="sort-folder-contents" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="folder-sort-collapse" class="menu-item has-submenu" role="menuitem" tabindex="-1" aria-haspopup="true" aria-expanded="false" data-submenu="folder-sort-submenu"></div>
     <hr id="folder-context-menu-sep2">
     <div id="add-bookmark-top" class="menu-item" role="menuitem" tabindex="-1"></div>
     <div id="add-bookmark-bottom" class="menu-item" role="menuitem" tabindex="-1"></div>
@@ -91,6 +94,21 @@
     <div id="folder-delete" class="menu-item" role="menuitem" tabindex="-1"></div>
     <!--<hr>
 	<command id="copy-all-titles-and-urls" tabindex="-1">-->
+</menu>
+<menu id="folder-tab-group-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="folder-tab-group-collapse">
+    <div id="sub-open-bookmarks-in-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-open-bookmarks-in-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-folder-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="folder-sort-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="folder-sort-collapse">
+    <div id="sub-sort-folder-by-name" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-sort-folder-by-date" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-sort-folder-contents" class="menu-item" role="menuitem" tabindex="-1"></div>
+</menu>
+<menu id="bookmark-tab-group-submenu" class="submenu" type="context" role="menu" tabindex="-1" data-parent-entry="bookmark-tab-group-collapse">
+    <div id="sub-bookmark-open-in-new-group" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-bookmark-open-in-new-group-setup" class="menu-item" role="menuitem" tabindex="-1"></div>
+    <div id="sub-bookmark-open-in-existing-group" class="menu-item" role="menuitem" tabindex="-1"></div>
 </menu>
 <menu id="separator-context-menu" type="context" role="menu" tabindex="-1">
     <div id="remove-separator" class="menu-item" role="menuitem" tabindex="-1"></div>

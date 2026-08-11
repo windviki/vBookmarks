@@ -1431,6 +1431,75 @@ menu[type=context].hide-sort #sort-folder-by-date,
 menu[type=context].hide-sort #sort-folder-contents {
     display: none;
 }
+menu[type=context].hide-sort #folder-sort-collapse {
+    display: none; /* root folders have no sort at all, collapsed or not */
+}
+
+/* --- collapsed submenu groups (issue #48 follow-up) ---
+   The tab-group (bookmark + folder menus) and sort (folder menu) blocks
+   collapse into a single "Tab groups… ▸" / "Sort… ▸" entry with a flyout
+   submenu. Entries default hidden; the menu gains a collapse-* class at open
+   time; the raw items are hidden only while their group is collapsed. */
+menu[type=context] #bookmark-tab-group-collapse,
+menu[type=context] #folder-tab-group-collapse,
+menu[type=context] #folder-sort-collapse {
+    display: none;
+}
+menu[type=context].collapse-tab-group #bookmark-tab-group-collapse,
+menu[type=context].collapse-tab-group #folder-tab-group-collapse {
+    display: block;
+}
+menu[type=context].collapse-sort #folder-sort-collapse {
+    display: block;
+}
+menu[type=context].collapse-tab-group #open-bookmarks-in-group,
+menu[type=context].collapse-tab-group #open-bookmarks-in-group-setup,
+menu[type=context].collapse-tab-group #folder-open-in-existing-group,
+menu[type=context].collapse-tab-group #bookmark-open-in-new-group,
+menu[type=context].collapse-tab-group #bookmark-open-in-new-group-setup,
+menu[type=context].collapse-tab-group #bookmark-open-in-existing-group {
+    display: none;
+}
+menu[type=context].collapse-sort #folder-context-menu-sep7,
+menu[type=context].collapse-sort #sort-folder-by-name,
+menu[type=context].collapse-sort #sort-folder-by-date,
+menu[type=context].collapse-sort #sort-folder-contents {
+    display: none;
+}
+
+/* flyout-entry indicator — a right-pointing ▸ for the entry, mirrored ◂
+   under RTL (same glyph convention as the dupes-group chevron). */
+menu[type=context] .menu-item.has-submenu {
+    position: relative;
+    padding-right: 20px;
+}
+menu[type=context] .menu-item.has-submenu::after {
+    content: '▸';
+    position: absolute;
+    right: 6px;
+    top: 0;
+    line-height: 26px;
+    color: var(--vbm-muted);
+    pointer-events: none;
+}
+body.rtl menu[type=context] .menu-item.has-submenu {
+    padding-right: 12px;
+    padding-left: 20px;
+}
+body.rtl menu[type=context] .menu-item.has-submenu::after {
+    content: '◂';
+    right: auto;
+    left: 6px;
+}
+
+/* the flyout submenus are body-level siblings; keep them styled like the
+   parent menus (the base menu[type=context] rule already covers this) and
+   ensure they never appear inside the parent's scroll clip. */
+menu[type=context].submenu {
+    position: absolute;
+    left: -999px;
+    z-index: 301;
+}
 
 /* --- Phase 3: quick add bookmark star (issue #30) ---
    Star button inside the search row; hollow = not bookmarked, solid =
