@@ -10,9 +10,14 @@
  * inputs are lowercased first), which also covers scripts without case (CJK).
  *
  * rank(query, items): scores [{ id, title, url, dateAdded, isFolder }] items;
- * title hits weigh double, url hits single, the best of both wins. Results
- * are sorted by score desc, then dateAdded desc. Each result carries
- * `positions` (title hit positions) or null when only the url matched.
+ * title and url hits are scored and tiered independently; the more exact side
+ * wins. Each hit carries a precision tier — 0 exact, 1 prefix, 2 word-start,
+ * 3 subsequence — and results sort by tier asc, then score desc, then
+ * dateAdded desc (dateAdded is only a final tie-break, so a newer looser hit
+ * can never outrank an exact match). URL scoring strips the structural
+ * https:// and www. prefix so equivalent hosts rank alike; TLDs (.com) stay
+ * untouched. Each result carries `positions` (title hit positions) or null
+ * when only the url matched.
  */
 (window => {
     // Characters that start a new "word" when they precede a matched char.
@@ -84,6 +89,52 @@
         return scoreLower(query.toLowerCase(), text, text.toLowerCase());
     };
 
+    // Precision tier for ranking: 0 = exact equality, 1 = prefix, 2 = every
+    // matched char on a word boundary, 3 = plain subsequence. The tier is the
+    // primary sort key so an exact title/url hit always beats a looser one,
+    // regardless of dateAdded. An empty query is tier 3 for everything.
+    const tierOf = (q, field, positions) => {
+        if (!q)
+            return 3;
+        const f = field.toLowerCase();
+        if (f === q)
+            return 0;
+        if (f.indexOf(q) === 0)
+            return 1;
+        if (positions && positions.length) {
+            for (let i = 0, l = positions.length; i < l; i++)
+                if (!isBoundary(field, positions[i]))
+                    return 3;
+            return 2;
+        }
+        return 3;
+    };
+
+    // scheme:// and www. are pure structural noise — stripping them aligns
+    // the host start so https://github.com and https://www.github.com score
+    // identically. TLDs (.com) are real domain content and stay untouched.
+    // Both groups are optional (?:...)? — making www. optional lets a bare
+    // host (no www) still strip the scheme; the greedy alternation then peels
+    // scheme, or www, or both in one pass.
+    const URL_NOISE = /^(?:https?:\/\/)?(?:www\.)?/i;
+    const stripUrlNoise = url => url.replace(URL_NOISE, '');
+
+    // Score the URL against the noise-stripped form when it matches there
+    // (host-aligned), falling back to the raw URL so queries like "www" or
+    // "https" themselves still hit. `text` records which form scored, for the
+    // tier lookup; positions are relative to it and never used for highlight
+    // (url-only matches render plain).
+    const scoreUrl = (q, url) => {
+        const bare = stripUrlNoise(url);
+        if (bare !== url) {
+            const b = scoreLower(q, bare, bare.toLowerCase());
+            if (b)
+                return { score: b.score, positions: b.positions, text: bare };
+        }
+        const r = scoreLower(q, url, url.toLowerCase());
+        return r ? { score: r.score, positions: r.positions, text: url } : null;
+    };
+
     const rank = (query, items) => {
         const results = [];
         if (!items)
@@ -93,22 +144,53 @@
             const item = items[i];
             const title = item.title || '';
             const url = item.url || '';
-            let best = null;
+            // Title and URL are scored and tiered independently; the more
+            // exact side wins the combined tier (min), ties break on the
+            // higher score (title keeps its ×2 weight inside a tier).
+            // positions always come from the title for <mark> highlight;
+            // url-only matches render plain (as before).
+            let titleTier = null;
+            let titleScore = null;
             let positions = null;
             if (title) {
                 const t = scoreLower(q, title, title.toLowerCase());
                 if (t) {
-                    best = t.score * 2; // title hits weigh double
+                    titleTier = tierOf(q, title, t.positions);
+                    titleScore = t.score * 2; // title hits weigh double
                     positions = t.positions;
                 }
             }
+            let urlTier = null;
+            let urlScore = null;
             if (url) {
-                const u = scoreLower(q, url, url.toLowerCase());
-                if (u && (best === null || u.score > best))
-                    best = u.score;
+                const u = scoreUrl(q, url);
+                if (u) {
+                    urlTier = tierOf(q, u.text, u.positions);
+                    urlScore = u.score;
+                }
             }
-            if (best === null)
+            let tier;
+            let best;
+            if (titleTier !== null && urlTier !== null) {
+                if (urlTier < titleTier) {
+                    tier = urlTier;
+                    best = urlScore;
+                } else if (titleTier < urlTier) {
+                    tier = titleTier;
+                    best = titleScore;
+                } else {
+                    tier = titleTier;
+                    best = Math.max(titleScore, urlScore);
+                }
+            } else if (titleTier !== null) {
+                tier = titleTier;
+                best = titleScore;
+            } else if (urlTier !== null) {
+                tier = urlTier;
+                best = urlScore;
+            } else {
                 continue;
+            }
             results.push({
                 id: item.id,
                 parentId: item.parentId,
@@ -117,11 +199,18 @@
                 dateAdded: item.dateAdded || 0,
                 isFolder: !!item.isFolder,
                 score: best,
+                tier: tier,
                 // Highlight title hits only; url-only matches render plain.
                 positions: positions
             });
         }
-        results.sort((a, b) => (b.score - a.score) || (b.dateAdded - a.dateAdded));
+        // Precision tier first (exact > prefix > word-start > subsequence),
+        // then the raw score, dateAdded only as a last tie-break so a newer
+        // looser hit can never outrank an exact match.
+        results.sort((a, b) =>
+            (a.tier - b.tier) ||
+            (b.score - a.score) ||
+            (b.dateAdded - a.dateAdded));
         return results;
     };
 

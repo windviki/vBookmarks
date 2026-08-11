@@ -123,6 +123,91 @@ describe('fuzzy.js rank()', () => {
     });
 });
 
+describe('fuzzy.js rank precision tiers', () => {
+    it('ranks an exact title above a prefix title, ignoring dateAdded', () => {
+        const results = VBMFuzzy.rank('git', [
+            item('prefix', 'github', 'https://github.example/', 999),
+            item('exact', 'git', 'https://git.example/', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['exact', 'prefix']);
+        expect(results[0].tier).toBe(0);
+        expect(results[1].tier).toBe(1);
+    });
+
+    it('orders tiers 1 < 2 < 3 for the same query', () => {
+        const results = VBMFuzzy.rank('gb', [
+            item('subseq', 'agb', 'https://a.example/', 300),
+            item('wordstart', 'Git Bugs', 'https://b.example/', 200),
+            item('prefix', 'gb tool', 'https://c.example/', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['prefix', 'wordstart', 'subseq']);
+        expect(results.map(r => r.tier)).toEqual([1, 2, 3]);
+    });
+
+    it('lets an exact url hit outrank a loose title hit', () => {
+        const results = VBMFuzzy.rank('gmail', [
+            item('loose-title', 'foo gmail', 'https://example.com/', 200),
+            item('exact-url', 'mail archive', 'https://gmail.com/inbox', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['exact-url', 'loose-title']);
+        expect(results[0].tier).toBe(1); // bare-host prefix
+        expect(results[1].tier).toBe(3); // title subsequence
+    });
+});
+
+describe('fuzzy.js URL noise stripping (scheme + www)', () => {
+    it('scores equivalent hosts identically with and without www', () => {
+        const results = VBMFuzzy.rank('github', [
+            item('bare', '', 'https://github.com/', 100),
+            item('www', '', 'https://www.github.com/', 200)
+        ]);
+        expect(results).toHaveLength(2);
+        expect(results[0].score).toBe(results[1].score);
+        expect(results[0].tier).toBe(results[1].tier);
+    });
+
+    it('matches a bare scheme-less host', () => {
+        const results = VBMFuzzy.rank('github', [
+            item('host', '', 'www.github.com', 100),
+            item('other', '', 'https://example.com/', 50)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['host']);
+    });
+
+    it('falls back to the raw url so a www query still hits', () => {
+        const results = VBMFuzzy.rank('www', [
+            item('host', '', 'https://www.example.com/', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['host']);
+    });
+
+    it('falls back to the raw url so a scheme query still hits', () => {
+        const results = VBMFuzzy.rank('https', [
+            item('host', '', 'https://github.com/', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['host']);
+    });
+
+    it('keeps TLDs intact: a .com query matches the .com host exactly', () => {
+        const results = VBMFuzzy.rank('github.com', [
+            item('com', '', 'https://github.com', 100),
+            item('io', '', 'https://github.io', 200)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['com']);
+        expect(results[0].tier).toBe(0); // bare === query
+    });
+
+    it('ranks a host hit above a path hit', () => {
+        const results = VBMFuzzy.rank('github', [
+            item('path', '', 'https://example.com/github/', 200),
+            item('host', '', 'https://github.com/', 100)
+        ]);
+        expect(results.map(r => r.id)).toEqual(['host', 'path']);
+        expect(results[0].tier).toBe(1); // host prefix
+        expect(results[1].tier).toBe(3); // path subsequence
+    });
+});
+
 // Phase 2b CSS/wiring contract: panel-mode + empty-state styles exist,
 // popup.html loads fuzzy.js before neat.js.
 describe('phase 2b wiring', () => {
