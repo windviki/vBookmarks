@@ -70,6 +70,18 @@
   "optionQuickAddContextMenuHint": {
     "message": "与快速收藏星标按钮相互独立；“一键恢复经典界面”也会一并关闭该条目。"
   },
+  "optionCollapseTabGroupMenu": {
+    "message": "将标签页组条目折叠为一个“标签页组”子菜单"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "适用于文件夹和书签的右键菜单。默认关闭；在小屏或高缩放屏幕上可缩短菜单高度。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "将排序条目折叠为一个“排序”子菜单"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "适用于文件夹的右键菜单。默认开启。"
+  },
   "optionShowToolButton": {
     "message": "在搜索框旁显示工具按钮（⋮）"
   },
@@ -438,6 +450,12 @@
   },
   "openBookmarksInExistingGroup": {
     "message": "全部打开到已有标签组…"
+  },
+  "tabGroupOptions": {
+    "message": "标签页组"
+  },
+  "sortMenuOptions": {
+    "message": "排序"
   },
   "optionConfirmOpenFolder": {
     "message": "从文件夹打开大量书签时显示确认。"

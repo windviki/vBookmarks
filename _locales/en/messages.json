@@ -490,6 +490,14 @@
     "description": "Folder context-menu item: lets the user pick an existing browser tab group, then opens the folder's bookmarks into it.",
     "message": "Open all in existing tab group…"
   },
+  "tabGroupOptions": {
+    "description": "Collapsed folder/bookmark context-menu entry that opens the tab-group submenu (the three 'open all in a tab group' items). No ellipsis: it opens a submenu, not a dialog.",
+    "message": "Tab groups"
+  },
+  "sortMenuOptions": {
+    "description": "Collapsed folder context-menu entry that opens the sort submenu (sort by name / date / sort options). No ellipsis: it opens a submenu, not a dialog.",
+    "message": "Sort"
+  },
   "openBookmarksNewWindow": {
     "message": "Open All Bookmarks in New Window"
   },
@@ -828,6 +836,20 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independent from the quick-add star button; the classic-experience restore also turns this entry off."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Collapse the tab-group entries into one \"Tab groups\" submenu",
+    "description": "Options checkbox (issue #48 follow-up): folds the three tab-group items of the folder and bookmark context menus into a single submenu entry."
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Applies to both the folder and bookmark right-click menus. Off by default; keeps low-height menus shorter on small/high-zoom screens."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Collapse the sort entries into one \"Sort\" submenu",
+    "description": "Options checkbox (issue #48 follow-up): folds the three sort items of the folder context menu into a single submenu entry."
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Applies to the folder right-click menu. On by default."
   },
   "optionShowToolButton": {
     "message": "Show the tool button (⋮) next to the search box"

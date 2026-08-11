@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "เปิดทั้งหมดในกลุ่มแท็บเดิม…"
   },
+  "tabGroupOptions": {
+    "message": "กลุ่มแท็บ"
+  },
+  "sortMenuOptions": {
+    "message": "จัดเรียง"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "เปิดที่คั่นหน้าทั้งหมดในหน้าต่างนิรนาม"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "ไม่ขึ้นกับปุ่มดาวเพิ่มด่วน การคืนค่าประสบการณ์คลาสสิกจะปิดรายการนี้ด้วย"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "ยุบรวมรายการกลุ่มแท็บเป็นเมนูย่อย \"กลุ่มแท็บ\" เดียว"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "ใช้กับทั้งเมนูคลิกขวาของโฟลเดอร์และบุ๊กมาร์ก ปิดโดยค่าเริ่มต้น ช่วยให้เมนูสั้นลงบนหน้าจอขนาดเล็กหรือจอซูมสูง"
+  },
+  "optionCollapseSortMenu": {
+    "message": "ยุบรวมรายการจัดเรียงเป็นเมนูย่อย \"จัดเรียง\" เดียว"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "ใช้กับเมนูคลิกขวาของโฟลเดอร์ เปิดโดยค่าเริ่มต้น"
   },
   "optionShowToolButton": {
     "message": "แสดงปุ่มเครื่องมือ (⋮) ถัดจากช่องค้นหา"

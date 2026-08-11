@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Atidaryti visus esamoje skirtukų grupėje…"
   },
+  "tabGroupOptions": {
+    "message": "Skirtukų grupės"
+  },
+  "sortMenuOptions": {
+    "message": "Rūšiuoti"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Atidaryti žymeles inkognito lange"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Nepriklauso nuo greitosios žvaigždutės mygtuko; atkūrus klasikinę patirtį šis įrašas taip pat išjungiamas."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Suskleisti skirtukų grupių įrašus į vieną „Skirtukų grupės…“ submeniu"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Taikoma aplankų ir skirtukų kontekstiniams meniu. Pagal numatymą išjungta; mažo dydžio arba didelio priartinimo ekranuose meniu lieka žemesnis."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Suskleisti rūšiavimo įrašus į vieną „Rūšiuoti…“ submeniu"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Taikoma aplanko kontekstiniam meniu. Pagal numatymą įjungta."
   },
   "optionShowToolButton": {
     "message": "Rodyti įrankių mygtuką (⋮) šalia paieškos laukelio"

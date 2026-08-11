@@ -582,6 +582,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Abrir todos num grupo existente…"
   },
+  "tabGroupOptions": {
+    "message": "Grupos de separadores"
+  },
+  "sortMenuOptions": {
+    "message": "Ordenar"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir marcadores em janela privada"
   },
@@ -719,6 +725,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Colapsar as entradas de grupos de separadores num submenu \"Grupos de separadores\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Aplica-se aos menus de contexto de pastas e de marcadores. Desativado por predefinição; mantém os menus de altura reduzida mais curtos em ecrãs pequenos ou com zoom elevado."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Colapsar as entradas de ordenação num submenu \"Ordenar\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Aplica-se ao menu de contexto da pasta. Ativado por predefinição."
   },
   "optionShowToolButton": {
     "message": "Mostrar o botão de ferramentas (⋮) junto à caixa de pesquisa"

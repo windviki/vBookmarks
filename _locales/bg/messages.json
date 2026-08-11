@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Отвори всички в съществуваща група…"
   },
+  "tabGroupOptions": {
+    "message": "Групи раздели"
+  },
+  "sortMenuOptions": {
+    "message": "Сортиране"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Отвори всички в инкогнито"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Независимо от бутона със звезда за бързо добавяне; възстановяването на класическия режим също изключва този елемент."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Свиване на записите за групи раздели в подменю „Групи раздели…“"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Отнася се за контекстните менюта на папки и отметки. Изключено по подразбиране; запазва ниските менюта по-къси на малки/силно увеличени екрани."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Свиване на записите за сортиране в подменю „Сортиране…“"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Отнася се за контекстното меню на папката. Включено по подразбиране."
   },
   "optionShowToolButton": {
     "message": "Показване на бутона за инструменти (⋮) до полето за търсене"

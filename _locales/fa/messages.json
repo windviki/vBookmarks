@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "باز کردن همه در گروه برگه موجود…"
   },
+  "tabGroupOptions": {
+    "message": "گروههای برگه"
+  },
+  "sortMenuOptions": {
+    "message": "مرتبسازی"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "باز کردن همه نشانک‌ها در پنجره ناشناس"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "مستقل از دکمه ستاره افزودن سریع؛ بازیابی تجربه کلاسیک این ورودی را نیز غیرفعال می‌کند."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "جمع کردن آیتمهای گروه برگه در یک زیرمنوی «گروههای برگه…»"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "برای هر دو منوی راستکلیک پوشه و نشانکها اعمال میشود. بهطور پیشفرض غیرفعال است؛ منوهای کمارتفاع را در صفحههای کوچک/بزرگنمایی بالا کوتاهتر نگه میدارد."
+  },
+  "optionCollapseSortMenu": {
+    "message": "جمع کردن آیتمهای مرتبسازی در یک زیرمنوی «مرتبسازی…»"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "برای منوی راستکلیک پوشه اعمال میشود. بهطور پیشفرض فعال است."
   },
   "optionShowToolButton": {
     "message": "نمایش دکمه ابزار (⋮) در کنار کادر جستجو"

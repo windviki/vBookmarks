@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "기존 탭 그룹에 모두 열기…"
   },
+  "tabGroupOptions": {
+    "message": "탭 그룹"
+  },
+  "sortMenuOptions": {
+    "message": "정렬"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "시크릿 창에서 모든 북마크 열기"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "빠른 추가 별표 버튼과 독립적입니다. 클래식 환경 복원 시 이 항목도 꺼집니다."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "탭 그룹 항목을 하나의 \"탭 그룹…\" 하위 메뉴로 접기"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "폴더 및 북마크 오른쪽 클릭 메뉴 모두에 적용됩니다. 기본적으로 꺼져 있으며, 작은 화면이나 높은 확대/축소 화면에서 낮은 높이의 메뉴를 더 짧게 유지합니다."
+  },
+  "optionCollapseSortMenu": {
+    "message": "정렬 항목을 하나의 \"정렬…\" 하위 메뉴로 접기"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "폴더 오른쪽 클릭 메뉴에 적용됩니다. 기본적으로 켜져 있습니다."
   },
   "optionShowToolButton": {
     "message": "검색 상자 옆에 도구 버튼(⋮) 표시"

@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Abrir todo en grupo existente…"
   },
+  "tabGroupOptions": {
+    "message": "Grupos de pestañas"
+  },
+  "sortMenuOptions": {
+    "message": "Ordenar"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir marcadores en incógnito"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independiente del botón de estrella de añadido rápido; la restauración de la experiencia clásica también desactiva esta entrada."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Contraer los elementos de grupos de pestañas en un submenú \"Grupos de pestañas…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Se aplica a los menús contextuales de carpetas y marcadores. Desactivado por defecto; mantiene los menús de poca altura más cortos en pantallas pequeñas o con zoom alto."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Contraer las opciones de ordenación en un submenú \"Ordenar…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Se aplica al menú contextual de carpeta. Activado por defecto."
   },
   "optionShowToolButton": {
     "message": "Mostrar el botón de herramientas (⋮) junto al cuadro de búsqueda"

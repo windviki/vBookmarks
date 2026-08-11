@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Buka semua di grup tab yang ada…"
   },
+  "tabGroupOptions": {
+    "message": "Grup tab"
+  },
+  "sortMenuOptions": {
+    "message": "Urutkan"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Buka Semua Markah di Jendela Samaran"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Tidak tergantung pada tombol bintang tambah cepat; pemulihan pengalaman klasik juga akan mematikan entri ini."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Ciutkan entri grup tab menjadi satu submenu \"Grup tab…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Berlaku untuk menu klik kanan folder dan bookmark. Nonaktif secara default; menjaga tinggi menu tetap rendah pada layar kecil/zoom tinggi."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Ciutkan entri pengurutan menjadi satu submenu \"Urutkan…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Berlaku untuk menu klik kanan folder. Aktif secara default."
   },
   "optionShowToolButton": {
     "message": "Tampilkan tombol alat (⋮) di samping kolom pencarian"

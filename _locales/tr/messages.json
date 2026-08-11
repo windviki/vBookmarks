@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Tümünü mevcut sekme grubunda aç…"
   },
+  "tabGroupOptions": {
+    "message": "Sekme grupları"
+  },
+  "sortMenuOptions": {
+    "message": "Sırala"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Tüm yer imlerini gizli pencerede aç"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Hızlı ekleme yıldız düğmesinden bağımsızdır; klasik deneyim geri yükleme bu girişi de kapatır."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sekme grubu girdilerini tek bir \"Sekme grupları\" alt menüsünde birleştir"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Hem klasör hem de yer imi sağ tık menülerine uygulanır. Varsayılan olarak kapalıdır. Küçük veya yüksek yakınlaştırmalı ekranlarda menülerin daha kısa kalmasını sağlar."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sıralama girdilerini tek bir \"Sırala\" alt menüsünde birleştir"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Klasör sağ tık menüsüne uygulanır. Varsayılan olarak açıktır."
   },
   "optionShowToolButton": {
     "message": "Arama kutusunun yanında araç düğmesini (⋮) göster"

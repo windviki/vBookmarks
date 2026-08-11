@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "In vorhandener Tab-Gruppe öffnen…"
   },
+  "tabGroupOptions": {
+    "message": "Tab-Gruppen"
+  },
+  "sortMenuOptions": {
+    "message": "Sortieren"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Alle in Inkognito öffnen"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Unabhängig vom Stern-Button zum Schnellhinzufügen; die Wiederherstellung des klassischen Erlebnisses deaktiviert diesen Eintrag ebenfalls."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Die Tab-Gruppen-Einträge zu einem Untermenü „Tab-Gruppen…“ zusammenfassen"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Gilt für die Rechtsklick-Menüs von Ordnern und Lesezeichen. Standardmäßig deaktiviert; hält niedrige Menüs auf kleinen Bildschirmen mit hohem Zoomfaktor kürzer."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Die Sortiereinträge zu einem Untermenü „Sortieren…“ zusammenfassen"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Gilt für das Rechtsklick-Menü von Ordnern. Standardmäßig aktiviert."
   },
   "optionShowToolButton": {
     "message": "Werkzeug-Button (⋮) neben dem Suchfeld anzeigen"

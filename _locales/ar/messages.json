@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "فتح الكل في مجموعة تبويبات موجودة…"
   },
+  "tabGroupOptions": {
+    "message": "مجموعات التبويبات"
+  },
+  "sortMenuOptions": {
+    "message": "فرز"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "فتح العلامات في نافذة متخفية"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "مستقل عن زر الإضافة السريعة؛ استعادة التجربة الكلاسيكية تُعطِّل هذا الخيار أيضًا."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "طي عناصر مجموعات التبويبات في قائمة فرعية واحدة \"مجموعات التبويبات\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "ينطبق على قوائم النقر بزر الماوس الأيمن لكل من المجلدات والإشارات المرجعية. معطّل افتراضيًا؛ يجعل القوائم منخفضة الارتفاع أقصر على الشاشات الصغيرة أو ذات التكبير العالي."
+  },
+  "optionCollapseSortMenu": {
+    "message": "طي عناصر الفرز في قائمة فرعية واحدة \"فرز\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "ينطبق على قائمة النقر بزر الماوس الأيمن للمجلدات. مفعّل افتراضيًا."
   },
   "optionShowToolButton": {
     "message": "إظهار زر الأدوات (⋮) بجانب مربع البحث"

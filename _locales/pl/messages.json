@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Otwórz wszystko w istniejącej grupie kart…"
   },
+  "tabGroupOptions": {
+    "message": "Grupy kart"
+  },
+  "sortMenuOptions": {
+    "message": "Sortuj"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otwórz zakładki w incognito"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Niezależne od przycisku szybkiego dodawania (gwiazdki); przywrócenie klasycznego widoku również wyłącza ten wpis."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Zwiń wpisy grup kart do jednego podmenu „Grupy kart”"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Dotyczy menu kontekstowych folderów i zakładek. Domyślnie wyłączone; sprawia, że menu są niższe na małych ekranach i przy dużym powiększeniu."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Zwiń wpisy sortowania do jednego podmenu „Sortuj”"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Dotyczy menu kontekstowego folderu. Domyślnie włączone."
   },
   "optionShowToolButton": {
     "message": "Pokazuj przycisk narzędzi (⋮) obok pola wyszukiwania"

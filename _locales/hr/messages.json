@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Otvori sve u postojećoj grupi kartica…"
   },
+  "tabGroupOptions": {
+    "message": "Grupe kartica"
+  },
+  "sortMenuOptions": {
+    "message": "Sortiraj"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otvori oznake u inkognitu"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Neovisno o gumbu zvjezdice za brzo dodavanje; vraćanje klasičnog iskustva također isključuje ovaj unos."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sažmi unose grupa kartica u jedan podizbornik „Grupe kartica…“"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Odnosi se i na kontekstni izbornik mape i na kontekstni izbornik knjižne oznake. Isključeno prema zadanim postavkama; skraćuje niske izbornike na malim zaslonima ili onima s visokim zumom."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sažmi unose sortiranja u jedan podizbornik „Sortiraj…“"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Odnosi se na kontekstni izbornik mape. Uključeno prema zadanim postavkama."
   },
   "optionShowToolButton": {
     "message": "Prikaži alatni gumb (⋮) pored okvira za pretraživanje"

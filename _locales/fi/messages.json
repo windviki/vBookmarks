@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Avaa kaikki olemassa olevassa välilehtiryhmässä…"
   },
+  "tabGroupOptions": {
+    "message": "Välilehtiryhmät"
+  },
+  "sortMenuOptions": {
+    "message": "Lajittele"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Avaa kirjanmerkit incognitossa"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Riippumaton pikalisäyksen tähtipainikkeesta; klassisen kokemuksen palautus poistaa käytöstä myös tämän merkinnän."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Tiivistä välilehtiryhmämerkinnät yhdeksi \"Välilehtiryhmät…\"-alavalikoksi"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Koskee sekä kansio- että kirjanmerkkipikavalikoita. Oletuksena pois käytöstä; pitää matalat valikot lyhyempinä pienillä tai suuren zoomauksen näytöillä."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Tiivistä lajittelumerkinnät yhdeksi \"Lajittele…\"-alavalikoksi"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Koskee kansion pikavalikkoa. Oletuksena päällä."
   },
   "optionShowToolButton": {
     "message": "Näytä työkalu-painike (⋮) hakukentän vieressä"

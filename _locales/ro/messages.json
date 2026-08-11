@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Deschide tot în grup existent…"
   },
+  "tabGroupOptions": {
+    "message": "Grupuri de file"
+  },
+  "sortMenuOptions": {
+    "message": "Sortare"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Deschide în fereastră incognito"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independent de butonul stea de adăugare rapidă; restaurarea experienței clasice dezactivează și această intrare."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Comprimă intrările pentru grupuri de file într-un singur submeniu „Grupuri de file”."
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Se aplică atât meniului contextual pentru foldere, cât și celui pentru marcaje. Dezactivat implicit; păstrează meniurile cu înălțime mică mai scurte pe ecranele mici sau cu zoom mare."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Comprimă intrările de sortare într-un singur submeniu „Sortare”."
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Se aplică meniului contextual pentru foldere. Activat implicit."
   },
   "optionShowToolButton": {
     "message": "Afișează butonul de instrumente (⋮) lângă caseta de căutare"

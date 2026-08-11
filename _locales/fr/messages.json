@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Tout ouvrir dans un groupe existant…"
   },
+  "tabGroupOptions": {
+    "message": "Groupes d’onglets"
+  },
+  "sortMenuOptions": {
+    "message": "Trier"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Ouvrir en navigation privée"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Indépendant du bouton d'ajout rapide en étoile ; la restauration de l'expérience classique désactive également cette entrée."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Réduire les entrées des groupes d’onglets en un sous-menu «Groupes d’onglets…»"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "S’applique aux menus contextuels des dossiers et des favoris. Désactivé par défaut ; raccourcit les menus de faible hauteur sur les écrans petits ou fortement zoomés."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Réduire les entrées de tri en un sous-menu «Trier…»"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "S’applique au menu contextuel du dossier. Activé par défaut."
   },
   "optionShowToolButton": {
     "message": "Afficher le bouton d'outils (⋮) à côté du champ de recherche"

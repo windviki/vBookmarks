@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Odpri vse v obstoječi skupini zavihkov…"
   },
+  "tabGroupOptions": {
+    "message": "Skupine zavihkov"
+  },
+  "sortMenuOptions": {
+    "message": "Razvrsti"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Odpri vse zaznamke v incognito oknu"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Neodvisno od gumba za hitro dodajanje z zvezdico; obnovitev klasične izkušnje prav tako izklopi ta vnos."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Strni vnose skupin zavihkov v en podmeni \"Skupine zavihkov\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Velja za kontekstne menije map in zaznamkov. Privzeto izklopljeno; ohranja nizke menije krajše na majhnih/visoko povečanih zaslonih."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Strni vnose razvrščanja v en podmeni \"Razvrsti\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Velja za kontekstni meni mape. Privzeto vklopljeno."
   },
   "optionShowToolButton": {
     "message": "Prikaži gumb orodij (⋮) poleg iskalnega polja"

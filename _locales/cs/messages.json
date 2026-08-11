@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Otevřít vše v existující skupině…"
   },
+  "tabGroupOptions": {
+    "message": "Skupiny karet"
+  },
+  "sortMenuOptions": {
+    "message": "Seřadit"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Otevřít v anonymním okně"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Nezávisí na tlačítku hvězdičky pro rychlé přidání; obnovení klasického prostředí tuto položku také vypne."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sbalit položky skupin karet do jedné podnabídky \"Skupiny karet…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Platí pro místní nabídky složek i záložek. Ve výchozím nastavení vypnuto; zkracuje nabídky s nízkou výškou na malých obrazovkách nebo při velkém přiblížení."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sbalit položky řazení do jedné podnabídky \"Seřadit…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Platí pro místní nabídku složky. Ve výchozím nastavení zapnuto."
   },
   "optionShowToolButton": {
     "message": "Zobrazovat tlačítko nástrojů (⋮) vedle vyhledávacího pole"

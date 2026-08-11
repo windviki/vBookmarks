@@ -132,6 +132,8 @@ Status of the issues filed after the v4 release. All but #48 are resolved, and e
 
 **Fixed in a later build**: the menu is now clamped to the space below the search bar (`max-height` + internal `overflow-y: auto`, minus the menu's own padding/border chrome) so it always fits and `focus()` never scrolls the page. Reproduced and verified in the real-browser harness (`scripts/screenshots/verify-menu-overflow.js`: before the fix `docScrollY:16` and the menu closed; after, `docScrollY:0` and it stays open), plus two vitest regression cases.
 
+**后续优化（同一批）**：为低分辨率/高缩放用户新增两个选项——「折叠标签组菜单」（默认关，文件夹+书签菜单的标签组 3 项收进 "Tab groups ▸" 子菜单）与「折叠排序菜单」（默认开，文件夹菜单的排序 3 项收进 "Sort ▸" 子菜单），进一步缩短主菜单。子菜单为原生飞入（入口右侧/RTL 左侧、溢出翻转、复用 #48 clamp），悬停/点击/键盘 `→` 展开、`←`/Esc 两级关闭；`scripts/screenshots/verify-menu-collapse.js` 真实浏览器校验。
+
 ---
 
 ## 附：自动依赖 PR · Automated dependency PRs

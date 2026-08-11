@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Atvērt visus esošajā cilņu grupā…"
   },
+  "tabGroupOptions": {
+    "message": "Cilņu grupas"
+  },
+  "sortMenuOptions": {
+    "message": "Kārtot"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Atvērt visas incognito logā"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Neatkarīgs no ātrās pievienošanas zvaigznītes; klasiskās pieredzes atjaunošana arī izslēdz šo ierakstu."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Sakļaut cilņu grupu ierakstus vienā “Cilņu grupas…” apakšizvēlnē"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Attiecas gan uz mapju, gan grāmatzīmju konteksta izvēlnēm. Pēc noklusējuma izslēgts; mazos vai tuvinātos ekrānos izvēlnes paliek īsākas."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sakļaut kārtošanas ierakstus vienā “Kārtot…” apakšizvēlnē"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Attiecas uz mapes konteksta izvēlni. Pēc noklusējuma ieslēgts."
   },
   "optionShowToolButton": {
     "message": "Rādīt rīku pogu (⋮) blakus meklēšanas lodziņam"

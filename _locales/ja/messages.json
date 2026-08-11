@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "すべてを既存タブグループで開く…"
   },
+  "tabGroupOptions": {
+    "message": "タブグループ"
+  },
+  "sortMenuOptions": {
+    "message": "並べ替え"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "すべてをシークレットで開く"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "クイック追加スター ボタンとは独立しています。クラシック エクスペリエンスの復元時には、この項目もオフになります。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "タブグループの項目を1つの「タブグループ…」サブメニューに折りたたむ"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "フォルダーとブックマークの右クリックメニューの両方に適用されます。デフォルトではオフです。小さい画面や高ズームの画面で、メニューの高さを低く抑えられます。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "並べ替え項目を1つの「並べ替え…」サブメニューに折りたたむ"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "フォルダーの右クリックメニューに適用されます。デフォルトではオンです。"
   },
   "optionShowToolButton": {
     "message": "検索ボックスの横にツールボタン (⋮) を表示"

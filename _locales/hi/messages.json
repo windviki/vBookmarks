@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "मौजूदा टैब समूह में सभी खोलें…"
   },
+  "tabGroupOptions": {
+    "message": "टैब समूह"
+  },
+  "sortMenuOptions": {
+    "message": "क्रमबद्ध करें"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "इनकॉग्निटो में सभी बुकमार्क खोलें"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "क्विक-ऐड स्टार बटन से स्वतंत्र; क्लासिक अनुभव पुनर्स्थापना इस प्रविष्टि को भी बंद कर देती है।"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "टैब समूह की प्रविष्टियों को एक \"Tab groups…\" उपमेनू में संक्षिप्त करें"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "यह फ़ोल्डर और बुकमार्क दोनों के राइट-क्लिक मेनू पर लागू होता है। डिफ़ॉल्ट रूप से बंद; यह छोटी/उच्च-ज़ूम स्क्रीन पर कम ऊँचाई वाले मेनू को छोटा रखता है।"
+  },
+  "optionCollapseSortMenu": {
+    "message": "सॉर्ट प्रविष्टियों को एक \"Sort…\" उपमेनू में संक्षिप्त करें"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "यह फ़ोल्डर के राइट-क्लिक मेनू पर लागू होता है। डिफ़ॉल्ट रूप से चालू।"
   },
   "optionShowToolButton": {
     "message": "खोज बॉक्स के बगल में टूल बटन (⋮) दिखाएँ"

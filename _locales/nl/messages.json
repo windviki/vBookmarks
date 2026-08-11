@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Alles openen in bestaande tabgroep…"
   },
+  "tabGroupOptions": {
+    "message": "Tabgroepen"
+  },
+  "sortMenuOptions": {
+    "message": "Sorteren"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Incognito openen"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Onafhankelijk van de sneltoevoegen-sterknop; het herstel van de klassieke ervaring schakelt dit item ook uit."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Tabgroep-items samenvouwen tot één submenu \"Tabgroepen…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Geldt voor zowel de contextmenu's van mappen als bladwijzers. Standaard uit; houdt menu's korter op kleine/sterk ingezoomde schermen."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Sorteeritems samenvouwen tot één submenu \"Sorteren…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Geldt voor het contextmenu van mappen. Standaard aan."
   },
   "optionShowToolButton": {
     "message": "Toon de toolknop (⋮) naast het zoekvak"

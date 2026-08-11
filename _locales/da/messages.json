@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Åbn alle i eksisterende fanegruppe…"
   },
+  "tabGroupOptions": {
+    "message": "Fangrupper"
+  },
+  "sortMenuOptions": {
+    "message": "Sorter"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Åbn alle i inkognitovindue"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Uafhængig af stjerneknappen til hurtig tilføjelse; gendannelse af den klassiske oplevelse slår også denne indstilling fra."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Skjul fangruppe-punkterne i én \"Fangrupper…\"-undermenu"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Gælder for både mappens og bogmærkets højreklikmenu. Som standard fra; holder korte menuer kortere på små/højt zoomede skærme."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Skjul sorteringspunkterne i én \"Sorter…\"-undermenu"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Gælder for mappens højreklikmenu. Som standard til."
   },
   "optionShowToolButton": {
     "message": "Vis værktøjsknappen (⋮) ved siden af søgefeltet"

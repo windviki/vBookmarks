@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Відкрити все в наявній групі вкладок…"
   },
+  "tabGroupOptions": {
+    "message": "Групи вкладок"
+  },
+  "sortMenuOptions": {
+    "message": "Сортування"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Відкрити в інкогніто"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Не залежить від кнопки швидкого додавання із зіркою; відновлення класичного інтерфейсу також вимикає цей пункт."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Згортати елементи груп вкладок в одне підменю «Групи вкладок»"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Стосується як контекстних меню папок, так і закладок. Вимкнено за замовчуванням; робить меню коротшими на екранах із малим розміром або великим масштабом."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Згортати елементи сортування в одне підменю «Сортування»"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Стосується контекстного меню папки. Увімкнено за замовчуванням."
   },
   "optionShowToolButton": {
     "message": "Показувати кнопку інструментів (⋮) поруч із полем пошуку"

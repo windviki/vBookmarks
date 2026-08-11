@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Apri tutti in gruppo esistente…"
   },
+  "tabGroupOptions": {
+    "message": "Gruppi di schede"
+  },
+  "sortMenuOptions": {
+    "message": "Ordina"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Apri tutti in finestra anonima"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Indipendente dal pulsante stella di aggiunta rapida; il ripristino dell'esperienza classica disattiva anche questa voce."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Comprimi le voci dei gruppi di schede in un sottomenu \"Gruppi di schede…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Si applica sia ai menu contestuali delle cartelle che dei segnalibri. Disattivato per impostazione predefinita; mantiene i menu di altezza ridotta più corti su schermi piccoli/con zoom elevato."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Comprimi le voci di ordinamento in un sottomenu \"Ordina…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Si applica al menu contestuale delle cartelle. Attivo per impostazione predefinita."
   },
   "optionShowToolButton": {
     "message": "Mostra il pulsante strumenti (⋮) accanto alla casella di ricerca"

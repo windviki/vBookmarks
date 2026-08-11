@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Öppna alla i befintlig flikgrupp…"
   },
+  "tabGroupOptions": {
+    "message": "Flikgrupper"
+  },
+  "sortMenuOptions": {
+    "message": "Sortera"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Öppna alla i inkognito"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Fristående från stjärnknappen för snabbt tillägg; återställning av den klassiska upplevelsen stänger även av den här posten."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Fäll ihop flikgruppsposterna till en undermeny \"Flikgrupper\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Gäller högerklicksmenyerna för mappar och bokmärken. Av som standard; gör att menyer med låg höjd blir kortare på små skärmar eller vid hög zoom."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Fäll ihop sorteringsposterna till en undermeny \"Sortera\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Gäller högerklicksmenyn för mappar. Aktiverad som standard."
   },
   "optionShowToolButton": {
     "message": "Visa verktygsknappen (⋮) bredvid sökrutan"

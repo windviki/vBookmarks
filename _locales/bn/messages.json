@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "বিদ্যমান ট্যাব গ্রুপে সব খুলুন…"
   },
+  "tabGroupOptions": {
+    "message": "ট্যাব গ্রুপ"
+  },
+  "sortMenuOptions": {
+    "message": "সাজান"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "ইনকগনিটো উইন্ডোতে সব বুকমার্ক খুলুন"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "দ্রুত-যোগ তারকা বোতাম থেকে স্বাধীন; ক্লাসিক-অভিজ্ঞতা পুনরুদ্ধার এই এন্ট্রিটিও বন্ধ করে দেয়।"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "ট্যাব-গ্রুপ এন্ট্রিগুলোকে একটি \"ট্যাব গ্রুপ…\" সাবমেনুতে সংকুচিত করুন"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "ফোল্ডার এবং বুকমার্কের ডান-ক্লিক মেনু দুটির ক্ষেত্রেই প্রযোজ্য। ডিফল্টভাবে বন্ধ; ছোট/উচ্চ-জুম স্ক্রিনে কম-উচ্চতার মেনু আরও ছোট রাখে।"
+  },
+  "optionCollapseSortMenu": {
+    "message": "সর্ট এন্ট্রিগুলোকে একটি \"সাজান…\" সাবমেনুতে সংকুচিত করুন"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "ফোল্ডারের ডান-ক্লিক মেনুতে প্রযোজ্য। ডিফল্টভাবে চালু।"
   },
   "optionShowToolButton": {
     "message": "সার্চ বক্সের পাশে টুল বোতাম (⋮) দেখান"

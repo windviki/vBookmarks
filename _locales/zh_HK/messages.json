@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "全部開啟到現有分頁群組…"
   },
+  "tabGroupOptions": {
+    "message": "分頁群組"
+  },
+  "sortMenuOptions": {
+    "message": "排序"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "在隱身窗口中打開所有書籤"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "此選項與快速新增星號按鈕無關；還原經典體驗也會關閉此項目。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "將分頁群組項目摺疊成一個「分頁群組」子選單"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "適用於資料夾和書籤的右鍵選單。預設為關閉；讓較矮的選單在小型／高縮放螢幕上保持更短。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "將排序項目摺疊成一個「排序」子選單"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "適用於資料夾的右鍵選單。預設為開啟。"
   },
   "optionShowToolButton": {
     "message": "在搜尋框旁顯示工具按鈕 (⋮)"

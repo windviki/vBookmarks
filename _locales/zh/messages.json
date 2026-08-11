@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "在现有标签页组中全部打开…"
   },
+  "tabGroupOptions": {
+    "message": "标签页组"
+  },
+  "sortMenuOptions": {
+    "message": "排序"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "在隐身窗口中打开所有书签"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "与快速添加星标按钮相互独立；经典体验还原也会关闭此条目。"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "将标签页组条目折叠为“标签页组”子菜单"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "适用于文件夹和书签的右键菜单。默认关闭；在小屏幕或高缩放屏幕上可使菜单更短。"
+  },
+  "optionCollapseSortMenu": {
+    "message": "将排序条目折叠为“排序”子菜单"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "适用于文件夹的右键菜单。默认开启。"
   },
   "optionShowToolButton": {
     "message": "在搜索框旁显示工具按钮（⋮）"

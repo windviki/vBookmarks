@@ -584,6 +584,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Отвори сè во постоечка група јазичиња…"
   },
+  "tabGroupOptions": {
+    "message": "Групи на јазичиња"
+  },
+  "sortMenuOptions": {
+    "message": "Сортирање"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Отвори обележувачи во инкогнито"
   },
@@ -721,6 +727,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Независно од копчето со ѕвезда за брзо додавање; враќањето на класичното искуство исто така ја исклучува оваа ставка."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Собери ги записите за групите јазичиња во едно подмени „Групи на јазичиња“"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Се однесува и на менијата со десно копче за папки и за обележувачи. Исклучено по дифолт; ги прави менијата со мала висина пократки на екрани со мала големина/високо зумирање."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Собери ги записите за сортирање во едно подмени „Сортирање“"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Се однесува на менито со десно копче за папки. Вклучено по дифолт."
   },
   "optionShowToolButton": {
     "message": "Прикажувај го копчето за алатки (⋮) веднаш до полето за пребарување"

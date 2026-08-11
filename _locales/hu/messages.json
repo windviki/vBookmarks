@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Összes megnyitása meglévő lapcsoportban…"
   },
+  "tabGroupOptions": {
+    "message": "Lapcsoportok"
+  },
+  "sortMenuOptions": {
+    "message": "Rendezés"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Könyvjelzők Megnyitása Inkognitóban"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Független a gyors hozzáadás csillaggombjától; a klasszikus élmény visszaállítása ezt a bejegyzést is kikapcsolja."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "A lapcsoport-bejegyzések összecsukása egy „Lapcsoportok…” almenübe"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "A mappák és a könyvjelzők helyi menüire egyaránt vonatkozik. Alapértelmezésben kikapcsolt; kis méretű vagy nagy nagyítású képernyőkön a menük alacsonyabbak maradnak."
+  },
+  "optionCollapseSortMenu": {
+    "message": "A rendezési bejegyzések összecsukása egy „Rendezés…” almenübe"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "A mappa helyi menüjére vonatkozik. Alapértelmezésben bekapcsolt."
   },
   "optionShowToolButton": {
     "message": "Az eszközgomb (⋮) megjelenítése a keresőmező mellett"

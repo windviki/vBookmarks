@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Abrir tudo em grupo de abas existente…"
   },
+  "tabGroupOptions": {
+    "message": "Grupos de abas"
+  },
+  "sortMenuOptions": {
+    "message": "Classificar"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir favoritos em janela anônima"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada"
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Recolher as entradas de grupos de abas em um submenu \"Grupos de abas\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Aplica-se aos menus de contexto da pasta e dos favoritos. Desativado por padrão; mantém os menus de baixa altura mais curtos em telas pequenas/com zoom alto."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Recolher as entradas de classificação em um submenu \"Classificar\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Aplica-se ao menu de contexto da pasta. Ativado por padrão."
   },
   "optionShowToolButton": {
     "message": "Mostrar o botão de ferramentas (⋮) ao lado da caixa de pesquisa"

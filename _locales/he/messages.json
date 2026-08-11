@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "פתח הכל בקבוצת טאבים קיימת…"
   },
+  "tabGroupOptions": {
+    "message": "קבוצות כרטיסיות"
+  },
+  "sortMenuOptions": {
+    "message": "מיון"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "פתח סימניות בחלון פרטי"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "אינו תלוי בכפתור הכוכב להוספה מהירה; שחזור החוויה הקלאסית גם משבית פריט זה."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "כווץ את ערכי קבוצות הכרטיסיות לתפריט משנה אחד \"קבוצות כרטיסיות…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "חל על תפריטי ההקשר של תיקיות ושל סימניות. כבוי כברירת מחדל; מקצר תפריטים נמוכים במסכים קטנים או בעלי זום גבוה."
+  },
+  "optionCollapseSortMenu": {
+    "message": "כווץ את ערכי המיון לתפריט משנה אחד \"מיון…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "חל על תפריט ההקשר של תיקיות. מופעל כברירת מחדל."
   },
   "optionShowToolButton": {
     "message": "הצג את כפתור הכלים (⋮) לצד תיבת החיפוש"

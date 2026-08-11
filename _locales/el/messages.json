@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Άνοιγμα όλων σε υπάρχουσα ομάδα καρτελών…"
   },
+  "tabGroupOptions": {
+    "message": "Ομάδες καρτελών"
+  },
+  "sortMenuOptions": {
+    "message": "Ταξινόμηση"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Άνοιγμα σε ανώνυμη περιήγηση"
   },
@@ -728,6 +734,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Ανεξάρτητη από το κουμπί αστεριού γρήγορης προσθήκης· η επαναφορά της κλασικής εμπειρίας απενεργοποιεί επίσης αυτήν την επιλογή."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Συμπτύξτε τις καταχωρίσεις ομάδων καρτελών σε ένα υπομενού \"Tab groups…\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Ισχύει τόσο για τα μενού δεξιού κλικ φακέλων όσο και σελιδοδεικτών. Απενεργοποιημένο από προεπιλογή· διατηρεί τα μενού χαμηλού ύψους πιο σύντομα σε οθόνες μικρές/μεγάλης μεγέθυνσης."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Συμπτύξτε τις καταχωρίσεις ταξινόμησης σε ένα υπομενού \"Sort…\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Ισχύει για το μενού δεξιού κλικ φακέλων. Ενεργοποιημένο από προεπιλογή."
   },
   "optionShowToolButton": {
     "message": "Εμφάνιση του κουμπιού εργαλείων (⋮) δίπλα στο πεδίο αναζήτησης"

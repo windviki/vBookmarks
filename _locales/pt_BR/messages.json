@@ -582,6 +582,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Abrir todos num grupo existente…"
   },
+  "tabGroupOptions": {
+    "message": "Grupos de guias"
+  },
+  "sortMenuOptions": {
+    "message": "Classificar"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Abrir favoritos em janela anônima"
   },
@@ -719,6 +725,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Independente do botão de estrela de adição rápida; a restauração da experiência clássica também desativa esta entrada."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Recolher os itens dos grupos de guias em um submenu \"Grupos de guias\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Aplica-se aos menus de contexto de pastas e favoritos. Desativado por padrão; mantém os menus de baixa altura mais curtos em telas pequenas ou com zoom alto."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Recolher os itens de classificação em um submenu \"Classificar\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Aplica-se ao menu de contexto de pasta. Ativado por padrão."
   },
   "optionShowToolButton": {
     "message": "Mostrar o botão de ferramentas (⋮) ao lado da caixa de pesquisa"

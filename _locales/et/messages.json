@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Ava kõik olemasolevas vahekaardirühmas…"
   },
+  "tabGroupOptions": {
+    "message": "Vaheleherühmad"
+  },
+  "sortMenuOptions": {
+    "message": "Sorteeri"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Ava järjehoidjad inkognito aknas"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Sõltumatu kiirlisamise tähenupust; klassikalise kogemuse taastamine lülitab selle kirje ka välja."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Ahenda vaheleherühmade kirjed üheks \"Vaheleherühmad…\" alammenüüks"
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Rakendub nii kausta kui ka järjehoidja kontekstimenüüle. Vaikimisi on see välja lülitatud; muudab madalad menüüd väikestel või suure suumiga ekraanidel lühemaks."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Ahenda sorteerimiskirjed üheks \"Sorteeri…\" alammenüüks"
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Rakendub kausta kontekstimenüüle. Vaikimisi on see sisse lülitatud."
   },
   "optionShowToolButton": {
     "message": "Kuva töönupp (⋮) otsingukasti kõrval"

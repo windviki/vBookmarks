@@ -585,6 +585,12 @@
   "openBookmarksInExistingGroup": {
     "message": "Mở hết vào nhóm tab hiện có…"
   },
+  "tabGroupOptions": {
+    "message": "Nhóm tab"
+  },
+  "sortMenuOptions": {
+    "message": "Sắp xếp"
+  },
   "openBookmarksIncognitoWindow": {
     "message": "Mở tất cả trong cửa sổ ẩn danh"
   },
@@ -722,6 +728,18 @@
   },
   "optionQuickAddContextMenuHint": {
     "message": "Độc lập với nút ngôi sao thêm nhanh; khôi phục trải nghiệm cổ điển cũng tắt mục này."
+  },
+  "optionCollapseTabGroupMenu": {
+    "message": "Thu gọn các mục nhóm tab thành một menu con \"Nhóm tab\""
+  },
+  "optionCollapseTabGroupMenuHint": {
+    "message": "Áp dụng cho cả menu chuột phải của thư mục và dấu trang. Tắt theo mặc định; giúp menu ngắn hơn trên màn hình nhỏ hoặc khi phóng to."
+  },
+  "optionCollapseSortMenu": {
+    "message": "Thu gọn các mục sắp xếp thành một menu con \"Sắp xếp\""
+  },
+  "optionCollapseSortMenuHint": {
+    "message": "Áp dụng cho menu chuột phải của thư mục. Bật theo mặc định."
   },
   "optionShowToolButton": {
     "message": "Hiện nút công cụ (⋮) bên cạnh ô tìm kiếm"
