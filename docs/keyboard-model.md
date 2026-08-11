@@ -253,7 +253,13 @@ per press:
    even with a dialog or the palette open behind it.
 2. **Dialogs** open → close them.
 3. **Context menu** open → close it, focus returns to the owning row (a
-   palette-opened menu: to the palette's input box, §2.6).
+   palette-opened menu: to the palette's input box, §2.6). The collapsed
+   tab-group/sort **flyout** (issue #48 follow-up) is an *inner* layer of this
+   one: the first `Esc` closes only the flyout and refocuses its collapse
+   entry (the menu stays open and arrowable), the second `Esc` closes the
+   menu. `←` mirrors the same one-layer rule on any menu item — the flyout
+   first, then the menu — and arrowing away from the collapse entry inside
+   the parent menu closes the flyout (no stale flyout).
 4. **Banner** visible → dismiss it (the donation card uses the *Later*
    semantics — it snoozes, never unsubscribes; a dead/dupes **risk banner**
    (v4 task-4 #14) dismisses with its session × semantics).

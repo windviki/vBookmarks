@@ -380,6 +380,7 @@ const setup = (opts = {}) => {
     // (each entry may carry `_submenu`), closeSubmenu parks it, submenuOpen
     // reflects the state. `opts.submenu` pre-creates a stub flyout.
     let openSubmenuDouble = null;
+    let openSubmenuParentId = null;
     const submenuCalls = [];
     const submenuEl = opts.submenu ? el('MENU', 'sub-flyout') : null;
     if (submenuEl) {
@@ -393,13 +394,16 @@ const setup = (opts = {}) => {
     menus.openSubmenuFor = entry => {
         submenuCalls.push(['open', entry && entry.id]);
         openSubmenuDouble = (entry && entry._submenu) || submenuEl;
+        openSubmenuParentId = entry && entry.id;
         return openSubmenuDouble;
     };
     menus.closeSubmenu = refocus => {
         submenuCalls.push(['close', !!refocus]);
         openSubmenuDouble = null;
+        openSubmenuParentId = null;
     };
     menus.submenuOpen = () => !!openSubmenuDouble;
+    menus.submenuParentEntry = () => openSubmenuParentId;
     menus.toggleSubmenuFor = entry => {
         if (openSubmenuDouble)
             menus.closeSubmenu(true);
@@ -1870,6 +1874,73 @@ describe('contextKeyDown', () => {
         expect(submenuCalls).toContainEqual(['close', true]);
         expect(closeMenuCalls).toEqual([]);
         fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(closeMenuCalls).toEqual(['close']);
+    });
+
+    it('↑/↓ wrap inside a flyout (P1 all-platform wrap, same as any menu)', () => {
+        const { submenuEl, el, doc } = setup({ submenu: true });
+        const s1 = el('DIV', 's1');
+        s1.classList.add('menu-item');
+        const s2 = el('DIV', 's2');
+        s2.classList.add('menu-item');
+        s1.nextElementSibling = s2;
+        s2.previousElementSibling = s1;
+        submenuEl.firstElementChild = s1;
+        submenuEl.lastElementChild = s2;
+        doc.activeElement = s1;
+        fire(submenuEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(s2.focused).toBe(true); // ↑ at the top wraps to the last
+        doc.activeElement = s2;
+        fire(submenuEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(s1.focused).toBe(true); // ↓ at the bottom wraps to the first
+    });
+
+    it('arrowing away from a collapse entry closes its flyout (no stale flyout)', () => {
+        const { bookmarkMenu, submenuCalls, menus, el, doc } = setup({ submenu: true });
+        const entry = el('DIV', 'folder-sort-collapse');
+        entry.classList.add('menu-item', 'has-submenu');
+        const next = el('DIV', 'folder-new-window');
+        next.classList.add('menu-item');
+        entry.nextElementSibling = next;
+        next.previousElementSibling = entry;
+        bookmarkMenu.firstElementChild = entry;
+        bookmarkMenu.lastElementChild = next;
+        doc.activeElement = entry;
+        // hover-like state: flyout open, focus parked on the entry.
+        menus.openSubmenuFor(entry);
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(next.focused).toBe(true);
+        expect(submenuCalls).toContainEqual(['close', false]);
+        expect(menus.submenuOpen()).toBe(false);
+        // End jumps to the last item (away from the entry) — closes too.
+        menus.openSubmenuFor(entry);
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'End' }));
+        expect(next.focused).toBe(true);
+        expect(menus.submenuOpen()).toBe(false);
+        // Home focuses the FIRST item — the entry itself, which owns the
+        // flyout → the flyout correctly STAYS open.
+        menus.openSubmenuFor(entry);
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Home' }));
+        expect(entry.focused).toBe(true);
+        expect(menus.submenuOpen()).toBe(true);
+    });
+
+    it('← on a plain parent item peels the flyout first, then cancels the menu', () => {
+        const { bookmarkMenu, submenuEl, submenuCalls, closeMenuCalls, menus, el, doc } = setup({ submenu: true });
+        const entry = el('DIV', 'folder-sort-collapse');
+        entry.classList.add('menu-item', 'has-submenu');
+        const plain = el('DIV', 'folder-new-window');
+        plain.classList.add('menu-item');
+        entry.nextElementSibling = plain;
+        plain.previousElementSibling = entry;
+        bookmarkMenu.firstElementChild = entry;
+        bookmarkMenu.lastElementChild = plain;
+        doc.activeElement = plain;
+        menus.openSubmenuFor({ id: entry.id, _submenu: submenuEl });
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(submenuCalls).toContainEqual(['close', true]);
+        expect(closeMenuCalls).toEqual([]); // the menu itself stays open
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowLeft' }));
         expect(closeMenuCalls).toEqual(['close']);
     });
 });

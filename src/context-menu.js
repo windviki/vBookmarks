@@ -354,6 +354,10 @@ export function initContextMenu(ctx = {}) {
             openSubmenuFor(entry);
     };
     const submenuOpen = () => !!openSubmenu;
+    // The id of the collapse entry owning the currently open flyout (for the
+    // keyboard layer: walking away from that entry in the PARENT menu closes
+    // the flyout, mirroring how a mouseover on a plain item closes it).
+    const submenuParentEntry = () => openSubmenu ? (openSubmenu._parentEntryId || null) : null;
 
     // Collapsed-group visibility + the folder noURLS state, applied at open
     // time BEFORE positioning (the class toggles change the measured size).
@@ -1347,6 +1351,6 @@ export function initContextMenu(ctx = {}) {
         folderTabGroupSubmenu: $folderTabGroupSubmenu || null,
         folderSortSubmenu: $folderSortSubmenu || null,
         bookmarkTabGroupSubmenu: $bookmarkTabGroupSubmenu || null,
-        openSubmenuFor, closeSubmenu, toggleSubmenuFor, submenuOpen
+        openSubmenuFor, closeSubmenu, toggleSubmenuFor, submenuOpen, submenuParentEntry
     };
 }

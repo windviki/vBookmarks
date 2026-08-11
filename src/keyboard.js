@@ -667,6 +667,21 @@ export function initKeyboard(ctx = {}) {
         const menu = this;
         const item = document.activeElement;
         const metaKey = e.metaKey;
+        // Focus a walked menu item. Walking away from the open flyout's
+        // collapse entry — inside a PARENT menu — closes the flyout, mirroring
+        // how a mouseover on a plain parent item closes it (a hover-opened
+        // flyout would otherwise float stale over the next item). Inside the
+        // flyout itself the walk stays within it, so only parent menus.
+        const focusMenuTarget = t => {
+            if (!t)
+                return;
+            t.focus();
+            if (!menu.classList.contains('submenu')
+                && menus.submenuOpen && menus.submenuOpen()
+                && menus.submenuParentEntry && menus.submenuParentEntry() !== t.id) {
+                menus.closeSubmenu && menus.closeSubmenu(false);
+            }
+        };
         // 4.0.1 P2 confirm: run the focused ENABLED menu item through its
         // own mouseup handler (context-menu.js closes first and restores
         // focus itself). Focus on the menu container (no item) or on a
@@ -685,14 +700,12 @@ export function initKeyboard(ctx = {}) {
             case 'ArrowDown':
                 e.preventDefault();
                 if (metaKey) { // cmd + down (Mac): jump to the last ENABLED item
-                    nextMenuTarget(menu.lastElementChild, -1)?.focus();
+                    focusMenuTarget(nextMenuTarget(menu.lastElementChild, -1));
                 } else if (item.classList.contains('menu-item')) {
                     // 4.0.1 P1: ↑/↓ wrap on ALL platforms — the old mac
                     // dead-end exception is gone.
-                    const t = nextMenuTarget(item.nextElementSibling, 1)
-                        || nextMenuTarget(menu.firstElementChild, 1);
-                    if (t)
-                        t.focus();
+                    focusMenuTarget(nextMenuTarget(item.nextElementSibling, 1)
+                        || nextMenuTarget(menu.firstElementChild, 1));
                 } else {
                     // The menu container itself holds focus (freshly opened):
                     // enter through the same walkable rules as the item-to-
@@ -700,34 +713,28 @@ export function initKeyboard(ctx = {}) {
                     // (the bookmark menu's out-of-tree entries) or disabled
                     // (the root-folder greys), and focusing those strands ↓/↑
                     // on an unfocusable/invisible item (K1/K9).
-                    const t = nextMenuTarget(menu.firstElementChild, 1);
-                    if (t)
-                        t.focus();
+                    focusMenuTarget(nextMenuTarget(menu.firstElementChild, 1));
                 }
                 break;
             case 'ArrowUp':
                 e.preventDefault();
                 if (metaKey) { // cmd + up (Mac): jump to the first ENABLED item
-                    nextMenuTarget(menu.firstElementChild, 1)?.focus();
+                    focusMenuTarget(nextMenuTarget(menu.firstElementChild, 1));
                 } else if (item.classList.contains('menu-item')) {
                     // P1 wrap, same as ↓.
-                    const t = nextMenuTarget(item.previousElementSibling, -1)
-                        || nextMenuTarget(menu.lastElementChild, -1);
-                    if (t)
-                        t.focus();
+                    focusMenuTarget(nextMenuTarget(item.previousElementSibling, -1)
+                        || nextMenuTarget(menu.lastElementChild, -1));
                 } else {
-                    const t = nextMenuTarget(menu.lastElementChild, -1);
-                    if (t)
-                        t.focus();
+                    focusMenuTarget(nextMenuTarget(menu.lastElementChild, -1));
                 }
                 break;
             case 'Home': // P2: the first ENABLED item
                 e.preventDefault();
-                nextMenuTarget(menu.firstElementChild, 1)?.focus();
+                focusMenuTarget(nextMenuTarget(menu.firstElementChild, 1));
                 break;
             case 'End': // P2: the last ENABLED item
                 e.preventDefault();
-                nextMenuTarget(menu.lastElementChild, -1)?.focus();
+                focusMenuTarget(nextMenuTarget(menu.lastElementChild, -1));
                 break;
             case 'ArrowLeft':
             case 'ArrowRight':
@@ -760,7 +767,13 @@ export function initKeyboard(ctx = {}) {
                             }
                         }
                     } else if (back) {
-                        cancelOpenMenu();
+                        // ← on any parent item: peel the flyout first if one
+                        // is open, then cancel the whole menu — the same
+                        // one-layer-at-a-time rule as the collapse entry.
+                        if (menus.submenuOpen && menus.submenuOpen())
+                            menus.closeSubmenu && menus.closeSubmenu(true);
+                        else
+                            cancelOpenMenu();
                     } else {
                         confirmMenuItem();
                     }
