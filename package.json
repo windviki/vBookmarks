@@ -1,6 +1,6 @@
 {
   "name": "vbookmarks",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Chrome extension for bookmark management",
   "scripts": {
     "test": "vitest",

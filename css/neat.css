@@ -626,23 +626,12 @@ body.linux input {
     flex: none;
 }
 
-/* Dark-theme favicon lift: Chrome serves its default no-favicon globe as a
-   dark, light-background asset — on the near-black dark/ink backgrounds it
-   nearly vanishes (≈3:1, the reported "black, invisible" default bookmark
-   icon). A brightness lift makes the default globe clearly visible (≈5.5:1)
-   and only brightens real favicons — a filter never hides an icon, so
-   colorful / white-bg / dark-on-transparent favicons all stay readable. */
-body[data-theme="dark"] .tree-item-link .favicon-container img,
-body[data-theme="ink"] .tree-item-link .favicon-container img {
-    filter: brightness(1.5);
-}
-
-/* Auto theme: system dark preference → the same lift */
-@media (prefers-color-scheme: dark) {
-    body[data-theme="auto"] .tree-item-link .favicon-container img {
-        filter: brightness(1.5);
-    }
-}
+/* No dark-theme favicon brightness lift (issue #56): the 4.0.1 blanket
+   `filter: brightness(1.5)` over-brightened real favicons on dark/ink
+   ("ultra contrast/brightness, hurts my eyes"). The lift existed only for
+   Chrome's stock no-favicon globe; since favicon-fallback.js (4.0.2) swaps
+   that placeholder for the currentColor DEFAULT_BOOKMARK_ICON SVG, the lift's
+   target is gone and the filter only harms real favicons — removed outright. */
 
 /* sync-indicator 叠加在图标槽内，不挤压标题。sync-styles.css 已把它定位到
    图标的右下角，这里在 neat.css 侧再钉一次绝对定位作为防线：即使

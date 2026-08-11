@@ -76,29 +76,27 @@ describe('theme design tokens in neat.css', () => {
         expect(mediaBlock).toContain('body[data-theme="auto"]');
     });
 
-    // Dark-theme favicon lift: Chrome's default no-favicon globe is a dark,
-    // light-background asset that vanishes on the near-black dark/ink bg (the
-    // "default bookmark icon is black/invisible" report). The dark, ink AND
-    // auto-under-dark themes must all apply a brightness lift to the row
-    // favicon; light surfaces must NOT (a light theme favicon is already dark
-    // text and needs no filter). Regressions gate: deleting or de-scoping the
-    // rule re-breaks the default icon on dark themes.
-    it.each(['dark', 'ink'])('body[data-theme="%s"] lifts the row favicon brightness', name => {
-        // the selector group is comma-separated, so the rule ends at the `{`
+    // NO dark-theme favicon brightness lift (issue #56): the 4.0.1 blanket
+    // `filter: brightness(1.5)` over-brightened real favicons on dark/ink
+    // ("ultra contrast/brightness, hurts my eyes"). The lift existed only for
+    // Chrome's stock no-favicon globe; favicon-fallback.js (4.0.2) swaps that
+    // placeholder for the currentColor DEFAULT_BOOKMARK_ICON SVG, so the
+    // filter's target is gone and it only harms real favicons. Regression
+    // gate: no theme may apply a brightness(1.x) filter to row favicon imgs.
+    it.each(['dark', 'ink'])('body[data-theme="%s"] applies NO brightness filter to row favicons', name => {
         const rule = neatCss.match(
             new RegExp(`body\\[data-theme="${name}"\\] \\.tree-item-link \\.favicon-container img\\b[^{]*\\{[^}]*\\}`));
-        expect(rule, `dark-favicon rule for ${name}`).toBeTruthy();
-        expect(rule[0]).toMatch(/filter:\s*brightness\(1\.[0-9]+\)/);
+        expect(rule === null || !/filter:\s*brightness\(1\.[0-9]+\)/.test(rule[0]),
+            `no brightness(1.x) favicon filter for ${name}`).toBe(true);
     });
 
-    it('auto theme lifts the row favicon under a dark OS preference', () => {
-        // find the media block that owns the auto-theme favicon rule (the
-        // file has several prefers-color-scheme blocks; match the rule
-        // directly, then verify it sits inside such a block)
+    it('auto theme applies NO brightness filter to row favicons under a dark OS preference', () => {
+        // if any auto-theme favicon rule exists inside a dark media block,
+        // it must not carry a brightness lift
         const rule = neatCss.match(
             /@media \(prefers-color-scheme: dark\)\s*\{[^}]*body\[data-theme="auto"\] \.tree-item-link \.favicon-container img\b[^{]*\{[^}]*\}[^}]*\}/);
-        expect(rule, 'auto-theme favicon rule inside a dark media block').toBeTruthy();
-        expect(rule[0]).toMatch(/filter:\s*brightness\(1\.[0-9]+\)/);
+        expect(rule === null || !/filter:\s*brightness\(1\.[0-9]+\)/.test(rule[0]),
+            'no auto-theme brightness(1.x) favicon filter').toBe(true);
     });
 });
 
