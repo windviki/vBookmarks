@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# vBookmarks real-browser verify gate (Docker).
+#
+# Builds a Docker image with the extension baked in (bind mounts do not work
+# in some DinD setups, so the repo is tarred into the build context), then runs
+# the blocking hard-assertion checks in order. Visual capture is NOT part of
+# this gate — that is scripts/screenshots/run.sh (which builds the same image
+# and runs only the screenshot suites).
+#
+#   smoke.js              — zero console errors + v4 behavioral assertions
+#   verify-keyboard.js    — keyboard/view hard assertions (132)
+#   verify-scrollbars.js  — horizontal-scrollbar matrix probe (752)
+#   verify-menu-overflow.js — #48: tall menu stays open, no focus-scroll dismiss
+#   verify-menu-collapse.js — collapsed submenus open/dispatch/clamp
+#   verify-menu-extreme.js  — DPR × zoom × size sweep (menus never clip/dismiss)
+# diag/ holds manual diagnostic probes (run on demand, see rerun.sh).
+#
+# Usage: scripts/harness/run.sh
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+CTX="$(mktemp -d /tmp/vbm-harness-ctx.XXXXXX)"
+OUT="$REPO_ROOT/tmp/shots"
+IMAGE="vbm-smoke:local"
+
+cleanup() { rm -rf "$CTX"; }
+trap cleanup EXIT
+
+mkdir -p "$CTX/vBookmarks" "$OUT"
+(cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
+    | tar xf - -C "$CTX/vBookmarks"
+cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js} "$CTX/"
+cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
+
+docker build -q -t "$IMAGE" "$CTX" >/dev/null
+# Layer 1 — smoke (the image CMD): zero console errors + v4 behavior. It also
+# captures 7 diagnostic screenshots into /tmp/shots/smoke/ — run via the
+# create/start/cp pattern so they land in tmp/shots/smoke/ (a plain
+# `docker run --rm` would discard them with the container).
+smoke="vbm-smoke-$$"
+docker rm -f "$smoke" >/dev/null 2>&1 || true
+docker create --name "$smoke" "$IMAGE" >/dev/null
+docker start -a "$smoke"
+docker cp "$smoke":/tmp/shots/. "$OUT/" 2>/dev/null || true
+docker rm "$smoke" >/dev/null
+# Layer 2a — keyboard/view (blocking). Esc chains stay in vitest
+# (docs/cdp-escape-limitation.md).
+docker run --rm "$IMAGE" node /work/verify-keyboard.js
+# Layer 2b — scrollbar matrix (blocking, ~2-3 min).
+docker run --rm "$IMAGE" node /work/verify-scrollbars.js
+# Layer 2c — context-menu overflow (#48): tall menu stays open, not dismissed
+# by the focus-induced document scroll.
+docker run --rm "$IMAGE" node /work/verify-menu-overflow.js
+# Layer 2d — collapsed submenus: flyouts open inside the viewport, dispatch
+# works, tab-group collapse applies to both menus.
+docker run --rm "$IMAGE" node /work/verify-menu-collapse.js
+# Layer 2e — extreme zoom/resolution sweep: DPR × page zoom × popup size;
+# menus + flyouts must open, stay open and never clip or cover their entry.
+docker run --rm "$IMAGE" node /work/verify-menu-extreme.js
+echo "Harness gate: ALL PASS"

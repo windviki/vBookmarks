@@ -133,6 +133,6 @@ v4.0 全部落成，本任务包与任务包 2 合并收尾：
 - `npm run test:run`：1103 例全绿（37 个测试文件）。
 - `python3 scripts/i18n.py verify`：258 键 × 43 locale，0 错误（4 个既有警告）。
 - `python3 scripts/package.py`：96 文件，无 strays。
-- Docker harness 全绿（`scripts/screenshots/run.sh` 一把梭）：smoke 零 console 错误 → `verify-keyboard.js` 32 断言（焦点区域 / TabStrip 键盘 / 搜索双区重进 / 视图渲染）→ 五套截图（shots / shots-themes / shots-i18n / shots-palette / shots-guide）全部 NO ERRORS。
+- Docker harness 全绿（`scripts/harness/run.sh` 一把梭）：smoke 零 console 错误 → `verify-keyboard.js` 32 断言（焦点区域 / TabStrip 键盘 / 搜索双区重进 / 视图渲染）→ 五套截图（shots / shots-themes / shots-i18n / shots-palette / shots-guide）全部 NO ERRORS。
 
 **配套文档**：`docs/README.md` / `docs/README.zh.md` 已按 4.0 重写，开篇说明可直接用于商店介绍页；新特性上手指南 `docs/guide-v4.md` / `docs/guide-v4.zh.md`（全键盘操作、逐视图说明、命令面板、经典外观配方、备份与隐私），配 `docs/images/guide/` 下 8 张实拍截图。

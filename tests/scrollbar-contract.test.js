@@ -11,7 +11,7 @@ import fs from 'node:fs';
 // 同类隐形内容（tooltip、超长 URL 的 min-content）撑出横向滚动条。
 //
 // 本套件把"防横向滚动条"的不变量钉成 CSS 文本契约（jsdom 无布局，无法做真实
-// 测量——真实布局矩阵由 scripts/screenshots/verify-scrollbars.js 覆盖）：
+// 测量——真实布局矩阵由 scripts/harness/verify-scrollbars.js 覆盖）：
 //   1. 每个滚动容器都在 overflow-x:hidden 规则里（裁剪横向，纵向滚动保留）
 //   2. 行文本槽一律省略号截断（min-width:0 + ellipsis + nowrap，撑不出 min-content）
 //   3. 固定槽 flex:none（绝不参与弹性收缩/膨胀）

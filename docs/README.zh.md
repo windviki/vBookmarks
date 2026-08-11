@@ -160,19 +160,20 @@ vBookmarks
 npm install
 npm run test:run
 
-# 无头 harness（Docker；截图输出到 tmp/shots/）
-scripts/screenshots/run.sh                # 冒烟 + 键盘 + 滚动条检查 + 全部截图套件
-scripts/screenshots/run.sh --smoke-only   # 仅零控制台错误 + 键盘 + 滚动条检查
+# 无头 harness（Docker）
+scripts/harness/run.sh        # 校验门：冒烟 + 键盘 + 滚动条 + 菜单校验
+scripts/screenshots/run.sh    # 纯视觉拍照——套件输出到 tmp/shots/
 #   smoke.js             弹窗/侧栏/选项页零控制台错误
 #   verify-keyboard.js   tab 条键盘模型、焦点区域、逐视图渲染
 #   verify-scrollbars.js 屏幕×浏览器zoom×扩展内zoom 扫描：无横向滚动条
-#   suites/shots.js         交互状态（亮/暗主题）
-#   suites/shots-themes.js  五主题视图行
-#   suites/shots-i18n.js    树/tab 条/菜单/对话框/选项页 × 8 种界面语言
-#   suites/shots-palette.js 命令面板 + 四个功能视图
-#   suites/shots-guide.js   指南配图（搜索双区、选项页视图分组）
-#   suites/shots-tabgroups.js 标签组菜单与对话框全流程（service worker 侧验证）
-#   diag/                手动诊断探针，按需进入镜像运行
+#   verify-menu-*.js     #48 菜单溢出 / 折叠飞入 / 极端 zoom 扫描
+#   scripts/screenshots/shots.js         交互状态（亮/暗主题）
+#   scripts/screenshots/shots-matrix.js  4 主题 × 全表面（菜单+飞入+对话框）
+#   scripts/screenshots/shots-i18n.js    树/tab 条/菜单/对话框/选项页 × 8 种界面语言
+#   scripts/screenshots/shots-palette.js 命令面板 + 四个功能视图
+#   scripts/screenshots/shots-guide.js   指南配图（搜索双区、选项页视图分组）
+#   scripts/screenshots/shots-tabgroups.js 标签组菜单与对话框全流程（service worker 侧验证）
+#   scripts/console/      浏览器控制台探针；scripts/harness/diag/ node 诊断探针（按需）
 
 # 语言流水线（scripts/i18n.py，仅标准库）
 python3 scripts/i18n.py audit      # 代码中使用的键 vs 英文基准

@@ -124,15 +124,15 @@ Status of the issues filed after the v4 release. All but #48 are resolved, and e
 
 **根因**：context 菜单按内容渲染，在 Windows 150% 显示缩放 / 页面缩放 ≥ ~90% 下，19 项文件夹菜单高达 ~762px，**超过 popup 视口（~599px）**。菜单定位后 `menu.focus()` 触发浏览器"滚动到可见"，把文档滚出 ~16px——而 scroll 正是 `clearMenu` 的关闭触发点，于是菜单"闪开即关"，表现为"右键没反应"。低缩放时书签菜单（较短）恰好能放下所以正常，文件夹菜单（最长）始终溢出——与 brunoosti 的观察完全吻合。
 
-**修复**（后续版本）：打开菜单时先把高度 clamp 到搜索栏下方的可用空间（`max-height` + `overflow-y:auto` 内部滚动，并扣除菜单自身 padding/border 的 chrome），菜单永远装得下 → `menu.focus()` 不再滚动文档 → 不再被 scroll 关闭。真实浏览器复现/校验由 `scripts/screenshots/verify-menu-overflow.js` 覆盖（修复前 `docScrollY:16` 菜单被关、修复后 `docScrollY:0` 菜单保持），vitest 新增 2 例回归。
+**修复**（后续版本）：打开菜单时先把高度 clamp 到搜索栏下方的可用空间（`max-height` + `overflow-y:auto` 内部滚动，并扣除菜单自身 padding/border 的 chrome），菜单永远装得下 → `menu.focus()` 不再滚动文档 → 不再被 scroll 关闭。真实浏览器复现/校验由 `scripts/harness/verify-menu-overflow.js` 覆盖（修复前 `docScrollY:16` 菜单被关、修复后 `docScrollY:0` 菜单保持），vitest 新增 2 例回归。
 
 **Problem**: right-clicking a folder (and at higher zoom, any row) appeared to "do nothing".
 
 **Root cause** (via the diagnostic probe's logs): the context menu is sized to its content — at Windows 150% display scaling / page zoom ≥ ~90% the 19-item folder menu reaches ~762px, taller than the ~599px popup viewport. After positioning, `menu.focus()` scrolls the document to reveal the overflow; that scroll is one of the menu's dismiss triggers, so the menu closed the instant it opened. Short menus (bookmark) fit and worked; the tall folder menu always overflowed — matching both reporters' zoom observations.
 
-**Fixed in a later build**: the menu is now clamped to the space below the search bar (`max-height` + internal `overflow-y: auto`, minus the menu's own padding/border chrome) so it always fits and `focus()` never scrolls the page. Reproduced and verified in the real-browser harness (`scripts/screenshots/verify-menu-overflow.js`: before the fix `docScrollY:16` and the menu closed; after, `docScrollY:0` and it stays open), plus two vitest regression cases.
+**Fixed in a later build**: the menu is now clamped to the space below the search bar (`max-height` + internal `overflow-y: auto`, minus the menu's own padding/border chrome) so it always fits and `focus()` never scrolls the page. Reproduced and verified in the real-browser harness (`scripts/harness/verify-menu-overflow.js`: before the fix `docScrollY:16` and the menu closed; after, `docScrollY:0` and it stays open), plus two vitest regression cases.
 
-**后续优化（同一批）**：为低分辨率/高缩放用户新增两个选项——「折叠标签组菜单」（默认关，文件夹+书签菜单的标签组 3 项收进 "Tab groups ▸" 子菜单）与「折叠排序菜单」（默认开，文件夹菜单的排序 3 项收进 "Sort ▸" 子菜单），进一步缩短主菜单。子菜单为原生飞入（入口右侧/RTL 左侧、溢出翻转、复用 #48 clamp），悬停/点击/键盘 `→` 展开、`←`/Esc 两级关闭；`scripts/screenshots/verify-menu-collapse.js` 真实浏览器校验。
+**后续优化（同一批）**：为低分辨率/高缩放用户新增两个选项——「折叠标签组菜单」（默认关，文件夹+书签菜单的标签组 3 项收进 "Tab groups ▸" 子菜单）与「折叠排序菜单」（默认开，文件夹菜单的排序 3 项收进 "Sort ▸" 子菜单），进一步缩短主菜单。子菜单为原生飞入（入口右侧/RTL 左侧、溢出翻转、复用 #48 clamp），悬停/点击/键盘 `→` 展开、`←`/Esc 两级关闭；`scripts/harness/verify-menu-collapse.js` 真实浏览器校验。
 
 ---
 

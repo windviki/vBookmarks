@@ -486,7 +486,7 @@ en + zh_CN 实译，其余 41 locale 原位插 `[TODO:key]`，`python3 scripts/i
 
 | 项 | 变更 | 落点 |
 |---|---|---|
-| 1 | 死链行按钮/徽章双行布局对齐：宽布局/panel 下锚点两行高（标题 + `.row-sub` 路径），`align-items:center` 把 ⚑/× 按钮与错误码徽章停在两行接缝上——视觉即"书签下面新一行"。li 与锚点改 `flex-start`，按钮/徽章/图标钉在标题行（前 20px = 窄布局单行）；favicon-container 补 `min-height:1.67em` 跟踪标题行高，图标中心对齐标题行；docker 窄/宽双布局探针实证（按钮 top 10.03→0） | `css/neat.css`、`tests/view-dead.test.js`、`scripts/screenshots/diag-dead.js` |
+| 1 | 死链行按钮/徽章双行布局对齐：宽布局/panel 下锚点两行高（标题 + `.row-sub` 路径），`align-items:center` 把 ⚑/× 按钮与错误码徽章停在两行接缝上——视觉即"书签下面新一行"。li 与锚点改 `flex-start`，按钮/徽章/图标钉在标题行（前 20px = 窄布局单行）；favicon-container 补 `min-height:1.67em` 跟踪标题行高，图标中心对齐标题行；docker 窄/宽双布局探针实证（按钮 top 10.03→0） | `css/neat.css`、`tests/view-dead.test.js`、`diag-dead.js（2026-08 目录重组时删除）` |
 | 2 | 死链 × 椭圆根因修复 + dead/sync 标记统一重设计：`#tree ul li span` 通用行规则（display:flex + 1.67em 行高 + padding-inline-end:4px，特异性 1,0,3）渗漏进 overlay span，10px 圆被撑成 14×10 椭圆、× 被行高甩出中心（仅树视图命中，与用户报告一致）。双选择器 `#tree ul li span.dead-indicator`（1,1,3）压过通用规则，全部盒属性钉死（inline-flex 居中/padding:0/line-height:1/min-width）；统一光环语言：dead × 与 sync 点同戴 1.5px `var(--vbm-bg)` 光环（sync local 的 accent 发光退役，unsyncable 同步加环）——位置（右上/右下）+ 形状（徽章/圆点）+ 颜色三重区分，四主题 docker 3x 截图逐一人工复核 | `css/neat.css`、`css/sync-styles.css`、`tests/tree-alignment.test.js` |
 | 3 | 死链标记跨视图同步（首帧 + 全部列表）：根因链——① tree-view generateTree 在 innerHTML 替换【前】触发 onTreeGenerated，overlay 画在旧 DOM 上即被清空（预置标记首帧从不显示）；② 文件夹懒展开（getChildren+appendChild）完全绕过 onTreeGenerated；③ 搜索及各列表视图渲染无刷新钩子。修法：onTreeGenerated 移到 innerHTML 之后；新增统一 `onRowsRendered` ctx 钩子，tree-view 懒展开 / search renderResults / recent / dupes / stats 五个渲染出口全部调用，neat.js 统一接线到 deadOverlayRefresh（声明上移至 initSearch 前避 TDZ）；view-dead LISTS 扩展 dupes-list/stats-list | `src/tree-view.js`、`src/search.js`、`src/view-recent.js`、`src/view-dupes.js`、`src/view-stats.js`、`src/view-dead.js`、`src/neat.js`、六个测试文件 |
 | 4 | 死链"仅受限"过滤卡死修复：renderToolbar 以**过滤后**行数决定是否渲染过滤段——filter=blocked 且无 blocked 结果时过滤段消失，用户无法切回（除非重开 popup）。拆出 `allResultRows()` 未过滤集合供工具栏判定；过滤条件下无结果时空态文案区分 `deadNoneFiltered`（指引切回其他分段）与原 `deadNone` | `src/view-dead.js`、`tests/view-dead.test.js`、`_locales/*`（1 新键） |
@@ -515,7 +515,7 @@ view-system 分支（他人实现，与 master 同源 `5edc546`，28 提交）�
 | 项 | 变更 | 落点 |
 |---|---|---|
 | 1 | CDP Esc 限制分析文档吸收：CDP `Input.dispatchKeyEvent` 不达 document capture 阶段（上游未修 bug）——"为什么 Docker 层没有 Esc 测试"的定论；测试分层：Esc 归 vitest 真 handler，Docker 只测 bubble 可达键 | `docs/cdp-escape-limitation.md` |
-| 2 | Docker 键盘/视图硬断言验证移植（对方 verify-keyboard.js 适配 master DOM：hidden 属性语义、`#results` 直挂、class 选择器；新增 ↓ 入列表、历史落账、dupes 完整渲染断言）：tab 条 bubble 键盘流/roving tabindex、焦点区域拓扑、搜索双区重进留存、逐视图渲染共 32 断言；接入 run.sh 阻塞步骤 + Dockerfile | `scripts/screenshots/verify-keyboard.js`、`run.sh`、`Dockerfile` |
+| 2 | Docker 键盘/视图硬断言验证移植（对方 verify-keyboard.js 适配 master DOM：hidden 属性语义、`#results` 直挂、class 选择器；新增 ↓ 入列表、历史落账、dupes 完整渲染断言）：tab 条 bubble 键盘流/roving tabindex、焦点区域拓扑、搜索双区重进留存、逐视图渲染共 32 断言；接入 run.sh 阻塞步骤 + Dockerfile | `scripts/harness/verify-keyboard.js`、`run.sh`、`Dockerfile` |
 | 3 | 搜索历史上区高度上限：`max-height:40% + overflow-y:auto`——10 条历史在矮 popup 不再挤压结果区 | `css/neat.css` |
 | 4 | 行级整行 hover 底色 `.vbm-row:hover`：行尾路径/按钮区此前无 hover 反馈；锚点选中态仍优先（对方 bb7b62e 项3） | `css/neat.css` |
 | 5 | dupes 组头 URL 中段省略 `midTruncate`：组 key 区分度常在尾部路径，CSS 尾截恰好截掉它——去 scheme + head 55% + … + tail，完整 key 留 tooltip（对方唯一呈现亮点） | `src/view-dupes.js`、`tests/view-dupes.test.js`（2 新例） |
@@ -533,7 +533,7 @@ view-system 分支（他人实现，与 master 同源 `5edc546`，28 提交）�
 
 | 项 | 变更 | 落点 |
 |---|---|---|
-| 1 | 最近添加/统计视图横向滚动条常驻：行模板三处 flex basis 由固定值改 auto，内容不再撑溢出 | `css/neat.css`、`scripts/screenshots/diag-v4t3.js`（真实浏览器探针） |
+| 1 | 最近添加/统计视图横向滚动条常驻：行模板三处 flex basis 由固定值改 auto，内容不再撑溢出 | `css/neat.css`、`diag-v4t3.js（2026-08 目录重组时删除）`（真实浏览器探针） |
 | 2 | 统计视图排序段"看似无效"：根因是受控的书签统计区排在历史区之后，count 并列时切换无视觉变化——书签统计区提前到排序段正下方（受控列表紧贴控件），`.active` 高亮与 `statsSort` 持久化经探针实测 | `src/view-stats.js`、`tests/view-stats.test.js` |
 | 3 | 死链视图宽版双行时右侧标记/删除按钮垂直居中（原顶部对齐） | `css/neat.css` |
 | 4 | 死链视图选择模式：工具栏"选择"按钮进入/退出，全选/反选/取消全部，标记所选/取消标记所选；选中计数条幅 | `src/view-dead.js`、`tests/view-dead.test.js` |
@@ -611,7 +611,7 @@ v4task-3 落地后的整体抛光：通读 docs 下全部现代化计划对齐�
 
 ## 附录 J：第十轮——v4 最终抛光追加轮（2026-08-01，键盘模型定稿 + 方向键层级链 + 选项分组 + CSS 打磨）
 
-**1. scripts 整理**：根目录遗留的 `diagnose_alignment.js` / `diagnose_colors.js` 归入 `scripts/screenshots/diag/console/`（devtools console 手贴片段，与 Docker 探针分居），`scripts/screenshots/README.md` 目录树同步。
+**1. scripts 整理**：根目录遗留的 `diagnose_alignment.js` / `diagnose_colors.js` 现归入 `scripts/console/`（`probe-alignment.js` / `probe-colors.js`，devtools console 手贴片段，与 Docker 探针分居）。
 
 **2. 全键盘模型定稿（`docs/keyboard-model.md`）**：通读 keyboard/view-manager/search/各 view/菜单/对话框全部键盘路径后，把方向键、Esc、Tab 语义成文为"规则 + 理由 + 代码落点 + 测试锚点"的设计文档——区域视觉栈（头部行/横幅/tab 条/视图内容/覆盖层）、↑↓ 垂直链与 ←→ 行内语义、搜索双区例外、Esc 分层蛋糕、Tab 区域环、**选项组合适配矩阵**（showViewTabs/单视图禁用/quickAddEnabled/showToolButton/经典体验/rememberView/面板/RTL/横幅：每条规则在任意组合下重排不失效）、不变量（按键永不聚焦隐藏元素、可见控件必可 Tab 到达）。guide-v4 双语 §2 随之重写为用户手册并互链。
 
@@ -636,7 +636,7 @@ v4task-3 落地后的整体抛光：通读 docs 下全部现代化计划对齐�
 | 按钮 margin-left:1em 改 bidi 安全 margin-inline-start，且行首按钮（classic-experience/export/Use default）贴左边；checkbox 5px 间距 bidi 化 | `css/options.css` |
 | 分割线组 4 输入框 + 死链代理模板输入框改块级全宽（标签在上），input 包裹 label + 补 aria-labelledby | `pages/options.html`、`css/options.css` |
 | 对话框动作按钮间补 .5em 间距（此前仅靠空白文本节点约 4px） | `css/neat.css` |
-| shots.js 预存缺陷：06 号编辑对话框镜头此前在隐藏树视图上按 F2（焦点不可达，对话框从未打开，`edit dialog open: false` 被静默吞掉）——改为先切回树视图聚焦目标行再按 F2，现已出图 | `scripts/screenshots/suites/shots.js` |
+| shots.js 预存缺陷：06 号编辑对话框镜头此前在隐藏树视图上按 F2（焦点不可达，对话框从未打开，`edit dialog open: false` 被静默吞掉）——改为先切回树视图聚焦目标行再按 F2，现已出图 | `scripts/screenshots/scripts/screenshots/shots.js` |
 
 **6. 测试补足**：vitest 1229→1246（+17：header-row arrows 6、focusDown 2、box → 出框 4 情形、search-box ↓ focusDown 3、dupes 组头焦点重泊 2、横幅 Tab 环 2、横幅 Esc 层 2、历史区 ↑ focusTop 1、options 分割组归属 1 等）；verify-keyboard 43→89 断言全绿（§2.2c 各视图行导航/越顶 22、§2.1d 头部行方向链 7、§4.3b 双区焦点转移含历史区两段越顶 8、§7 横幅键盘可达 8；recent 段处理焦点记忆态——strip ↓ 恢复记忆行为设计行为，断言改 Home 归位后走查）。
 

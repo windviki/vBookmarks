@@ -160,19 +160,20 @@ No build step — **Load unpacked** the repo root in `chrome://extensions/`.
 npm install
 npm run test:run
 
-# Headless harness (Docker; shots land in tmp/shots/)
-scripts/screenshots/run.sh                # smoke + keyboard + scrollbar checks + all suites
-scripts/screenshots/run.sh --smoke-only   # zero-console-error + keyboard + scrollbar checks
+# Headless harness (Docker)
+scripts/harness/run.sh        # the verify gate: smoke + keyboard + scrollbars + menu verifies
+scripts/screenshots/run.sh    # visual capture ONLY — suites into tmp/shots/
 #   smoke.js               popup/panel/options raise zero console errors
 #   verify-keyboard.js     tab-strip keyboard model, focus zones, view rendering
 #   verify-scrollbars.js   screen×browser-zoom×in-extension-zoom sweep: no horizontal scrollbar
-#   suites/shots.js         interaction states (light/dark)
-#   suites/shots-themes.js  view rows on all 5 themes
-#   suites/shots-i18n.js    tree/tabs/menus/dialog/options × 8 UI languages
-#   suites/shots-palette.js palette + the four feature views
-#   suites/shots-guide.js   guide screenshots (search dual zone, options Views group)
-#   suites/shots-tabgroups.js tab-group menus & dialogs, verified from the service worker
-#   diag/                manual probes, run on demand inside the image
+#   verify-menu-*.js       #48 menu overflow / collapsed flyouts / extreme zoom sweep
+#   scripts/screenshots/shots.js         interaction states (light/dark)
+#   scripts/screenshots/shots-matrix.js  4 themes × full surface (menus + flyouts + dialogs)
+#   scripts/screenshots/shots-i18n.js    tree/tabs/menus/dialog/options × 8 UI languages
+#   scripts/screenshots/shots-palette.js palette + the four feature views
+#   scripts/screenshots/shots-guide.js   guide screenshots (search dual zone, options Views group)
+#   scripts/screenshots/shots-tabgroups.js tab-group menus & dialogs, verified from the service worker
+#   scripts/console/       browser-console probes; scripts/harness/diag/ node probes (on demand)
 
 # Locale pipeline (scripts/i18n.py, stdlib only)
 python3 scripts/i18n.py audit      # keys used in code vs en baseline

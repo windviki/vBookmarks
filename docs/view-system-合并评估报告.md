@@ -111,7 +111,7 @@ master 功能集是 view-system 的严格超集（见 §2 清单），且对方�
 | # | 项 | 来源 | 落点 | 状态 |
 |---|---|---|---|---|
 | 1 | CDP Esc 限制分析文档 | `docs/cdp-escape-limitation.md` | 同名文档（测试分层一节改写为 master 现状：Esc 归 keyboard.test.js 真 handler，Docker 只测 bubble 键） | ✅ 已落地 |
-| 2 | Docker 键盘/视图硬断言验证 | `scripts/screenshots/verify-keyboard.js` | 适配移植（hidden 属性语义、`#results` 直挂、class 选择器、无 data-view-id；新增 ↓ 入列表、历史落账、dupes 完整渲染断言）；接入 run.sh 阻塞步骤 + Dockerfile COPY | ✅ 已落地 |
+| 2 | Docker 键盘/视图硬断言验证 | `scripts/harness/verify-keyboard.js` | 适配移植（hidden 属性语义、`#results` 直挂、class 选择器、无 data-view-id；新增 ↓ 入列表、历史落账、dupes 完整渲染断言）；接入 run.sh 阻塞步骤 + Dockerfile COPY | ✅ 已落地 |
 | 3 | 搜索历史上区高度上限 | view-system neat.css | `#search-history-area` 加 `max-height:40%; overflow-y:auto`（10 条历史不再挤压结果区） | ✅ 已落地 |
 | 4 | 行级整行 hover 底色 | view-system bb7b62e 项3 | `.vbm-row:hover` 一条规则（行尾按钮区不再无反馈；锚点选中态仍然优先） | ✅ 已落地 |
 | 5 | dupes 组头 URL 中段省略 | view-system `midTruncate` | `src/view-dupes.js` 导出纯函数 + 组头渲染接入 + 2 个单测（去 scheme、head 55%+…+tail） | ✅ 已落地 |

@@ -18,7 +18,7 @@
   - README.md:101 / zh:101(4.0 Engineering 段):"**1416 unit tests** across **44** Vitest suites" / "1416 个单元测试,44 个" → 现 1563/49。
   - README.md:159 / zh:159(For developers 代码注释):"1262 cases across 39 suites" / "39 个测试文件共 1262 例" → 1563/49。同一文件两个旧数字互相也不一致。
   - README.md:103 / zh:103:"Baseline grew from 75 to **345 keys**" → 现 371。属 4.0 历史语境,建议至少改成 "345(4.0.1 起 371)" 或淡化具体数。
-- **dev 套件清单缺项——低**。README.md:169-174 / zh:169-174 列了 5 个 suite,缺 `suites/shots-tabgroups.js`(bef2d35 新增)。
+- **dev 套件清单缺项——低**。README.md:169-174 / zh:169-174 列了 5 个 suite,缺 `scripts/screenshots/shots-tabgroups.js`(bef2d35 新增)。
 - **4.0 What's-new 段残留模板表述——低**。README.md:66 "or a legacy relay URL template from the options page" 与 :86 "a **Dead scan** group (proxy template, concurrency, timeout)"(zh:66/:86 同)。属 4.0 版本史记,靠补 4.0.1 changelog 条目即可闭环,不必改历史段。
 - **开头特性列表——低(可选)**。README.md:12-20 与 Feature highlights(:110-121)无硬漂移(排序在 highlights #6,标签组在 Notes #3);4.0.1 的标签组对话框/死链批删未进卖点列表属编辑取舍。若要补,最小改动是 highlights 加一条死链批量删除、Notes #3 提一句新组对话框。
 - 微:83b08a2(搜索历史 ×→垃圾桶 SVG)、71331d0(Esc 优先关下拉)可分别并入"抛光"图标条与"新增"dropdown 条,不必须单列。
@@ -47,7 +47,7 @@
 - **行 48 dead-links 行——中**。"`checkUrlDual(url, { proxyServer, proxyTemplate, timeoutMs })` … or a legacy relay template with a `{url}` placeholder" → 现签名无 proxyServer 之外通道(dead-links.js:85-91)。
 - **行 25 actions 行——中**。"open-all as a color-coded tab group via `chrome.tabs.group`+`tabGroups` (P3.4…)" → 5df7631 已把建组/入组移入 SW(tab-groups-sw.js),并新增"…并设置"对话框与"打开到已有标签组"(tab-group-utils.js)。
 - **数字三处——中**。行 63 "345 keys" → 371;行 89 "Test files (**44** —" → 49;行 111 "the same 345 keys" → 371。
-- **行 123 harness 段——中**。"the merged options page's **10** groups" → 11;套件枚举缺 `suites/shots-tabgroups.js`;"a `<select>` keeps native ↑/↓" → 去重 strategy/scope 已是自绘下拉(verify-keyboard.js:366-376 现测 `.vbm-dropdown`)。
+- **行 123 harness 段——中**。"the merged options page's **10** groups" → 11;套件枚举缺 `scripts/screenshots/shots-tabgroups.js`;"a `<select>` keeps native ↑/↓" → 去重 strategy/scope 已是自绘下拉(verify-keyboard.js:366-376 现测 `.vbm-dropdown`)。
 - **行 20 background 行——低**。"`chrome.proxy` only exists once the **optional** `proxy` permission was granted" —— proxy 自 4.0 起是安装时权限(行 19 自己就写着 install-time),"optional" 为矛盾残留;同行 `vbm-quick-add` 菜单描述未提 dcc1f9e 的开关与 storage.onChanged 实时增删。
 - **行 ~73 "no CI configuration in the repo"——低**。`.github/workflows/ci.yml` 存在(4.0 起)。行 ~98 打包段未提 bef2d35 的递归 import 解析(package.py:202-206,`src/dropdown.js` 即靠它入包——显式清单里确实没有它)。
 - 微:行 113 "(no automated E2E exists)" 与下一节 Docker harness 并存,措辞可酌。
@@ -81,7 +81,7 @@
 | `search-dualzone.png` | 删除按钮 hover 才显现,静态图影响不大;清除按钮样式微调(f5bc7cb) | — | 低(基本可用) |
 | `tabs-themes.png`、`dupes-select.png` | 未见明显漂移 | dupes-select 的批量条(Dedup selected)4.0.1 未变 | 无 |
 
-重拍路径现成:`scripts/screenshots/run.sh`(shots-guide.js 覆盖 search-dualzone/dupes-select/dead-select/options-views 四张;shots.js、shots-palette.js 覆盖 view-dead/view-stats/view-dupes/view-recent/palette)。
+重拍路径现成:`scripts/harness/run.sh`(shots-guide.js 覆盖 search-dualzone/dupes-select/dead-select/options-views 四张;shots.js、shots-palette.js 覆盖 view-dead/view-stats/view-dupes/view-recent/palette)。
 
 ## 7. manifest description / appDesc
 
@@ -90,6 +90,6 @@
 ## 附带(代码注释级,超出文档区但顺手记录)
 
 - src/dead-links.js:104 注释 "…injects checkUrlDual with the configured proxy **template**" —— 模板已删,注释漂移。
-- scripts/screenshots/verify-keyboard.js:242 注释 "(a `<select>` keeps native ↑/↓)" —— 同上,机制已换自绘下拉。
+- scripts/harness/verify-keyboard.js:242 注释 "(a `<select>` keeps native ↑/↓)" —— 同上,机制已换自绘下拉。
 
 **优先级建议**:先补 README 双语 changelog 的 a38f916 条目 + zh:80 的 /dark 对等(发行门面);再改 guide §3.4/§7 的模板漂移与 AGENTS.md 的版本号/模块表/组数/键数/测试数(新协作者入口);Esc 下拉层进 keyboard-model §4;截图重拍可作为 4.0.1 发布前最后一道。

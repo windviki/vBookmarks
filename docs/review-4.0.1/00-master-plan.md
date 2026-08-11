@@ -143,7 +143,7 @@
 - 高:view-dead.png、view-stats.png
 - 中:options-views.png、palette.png、dead-select.png
 - 低-中:view-dupes.png;低:view-recent.png、search-dualzone.png
-- 路径:scripts/screenshots/run.sh(shots-guide.js / shots.js / shots-palette.js)
+- 路径:scripts/harness/run.sh(shots-guide.js / shots.js / shots-palette.js)
 
 ## 十、测试补强(随各修复批次)
 

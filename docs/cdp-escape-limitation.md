@@ -44,7 +44,7 @@ Chrome DevTools Protocol 的 `Input.dispatchKeyEvent` 方法**不会完整复制
    `defaultPrevented`、`stopImmediatePropagation` 与 keyup 安全网——测的是真
    handler，不是决策树副本。
 
-3. **Docker 只测 bubble 可达键**：`scripts/screenshots/verify-keyboard.js`
+3. **Docker 只测 bubble 可达键**：`scripts/harness/verify-keyboard.js`
    硬断言 tab 条方向键/Home/End/↑/↓（监听器挂在 `#view-tabs` 元素上，bubble
    阶段，CDP 能驱动）、焦点区域拓扑、搜索双区与各视图渲染，作为 run.sh 的
    阻塞步骤。**不要**在 Docker 侧给 Esc 加测试——它会永远红，且原因是平台

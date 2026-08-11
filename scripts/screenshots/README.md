@@ -1,64 +1,28 @@
-# Screenshot & diagnostics harness
+# Visual capture (screenshots)
 
-Headless Docker harness for vBookmarks. `run.sh` tars the repo into a build
-context (bind mounts do not work in some DinD setups), builds
-`zenika/alpine-chrome:with-puppeteer` with the extension baked in at `/ext`,
-and runs three layers:
+Pure screenshot capture for vBookmarks. `run.sh` builds the shared harness
+image (`scripts/harness/Dockerfile`) and runs ONLY the visual suites into
+`tmp/shots/` (git-ignored). The real-browser verify gate is separate —
+`scripts/harness/run.sh`.
 
-1. `smoke.js` (image CMD) — service worker registers; popup / side panel /
-   options raise zero console errors; v4 behavioral assertions (rememberView
-   boot, classic-experience chrome hiding, donation `#v4-notice`, palette
-   wake-up paths, options groups, …).
-2. `verify-keyboard.js` (blocking) — 100 hard assertions on the tab strip's
-   bubble-phase keyboard model, focus zones, the header-row arrow chain,
-   per-view ↑↓/past-top crossings (stats/dead/dupes stop at their in-list
-   toolbar rung first), the banner's Tab-ring reachability and
-   per-view rendering. Esc chains stay in vitest; see
-   `docs/cdp-escape-limitation.md`.
-3. `verify-scrollbars.js` (blocking) — the horizontal-scrollbar matrix probe:
-   sweeps screen resolution × browser zoom (stubbed `chrome.tabs.getZoom`) ×
-   in-extension zoom (`body[data-zoom]`) × popup size, and asserts every
-   scrollable pane computes `overflow-x: hidden` (no horizontal scrollbar),
-   the injected `.sync-indicator.synced` tooltips stay `display: none`
-   (commit 98e29b3 root-cause guard) and the non-tree panes keep
-   `scrollWidth <= clientWidth`. Vertical scrolling is expected and allowed.
-4. Screenshot suites into `tmp/shots/` (git-ignored).
-
-## Layout
+## Suites
 
 ```
 scripts/screenshots/
-├── run.sh              # entry point: build + smoke + keyboard + scrollbars + suites
-├── Dockerfile          # copies smoke/verify into /work, suites+diag into subdirs
-├── smoke.js            # layer 1 (image CMD)
-├── verify-keyboard.js  # layer 2 (blocking)
-├── verify-scrollbars.js# layer 3 (blocking) — scrollbar matrix probe
-├── suites/             # layer 4 — screenshot suites, run in order by run.sh
-│   ├── shots.js          # interaction states (palette/undo toast/donation/…)
-│   ├── shots-matrix.js   # 4 themes × full surface matrix (21 shots/theme)
-│   ├── shots-i18n.js     # 7 UI languages × 15 surfaces, light theme
-│   ├── shots-palette.js  # palette + recent/stats/dupes/dead views
-│   ├── shots-guide.js    # guide-only states for docs/guide-v4*.md
-│   └── shots-tabgroups.js# tab-group surface (menus, dialogs, SW verify)
-└── diag/               # manual probes, NOT run by run.sh
-    ├── diag.js           # generic page-state dump
-    ├── diag-dead.js      # dead-view row layout probes (hover, narrow/wide)
-    ├── diag-v4t3.js      # v4 task-3 layout probes
-    └── console/          # devtools-console snippets (paste into the popup's
-        ├── diagnose_alignment.js  # row twisty/icon/text alignment geometry
-        └── diagnose_colors.js     # recent-vs-tree computed text colors
+├── run.sh              # build + run all suites into tmp/shots/
+├── shots.js            # 11 interaction states (light + dark)
+├── shots-matrix.js     # 4 themes × the full surface (21 shots/theme)
+├── shots-i18n.js       # 7 UI languages × 15 surfaces, light theme
+├── shots-palette.js    # palette + recent/stats/dupes/dead views
+├── shots-guide.js      # guide-only states for docs/guide-v4*.md
+└── shots-tabgroups.js  # tab-group menus & dialogs, SW-side verified
 ```
 
 ## Usage
 
 ```bash
-scripts/screenshots/run.sh                # full run
-scripts/screenshots/run.sh --smoke-only   # layers 1+2 only
-
-# Run a single suite or a diag probe manually:
-docker build -t vbm-smoke:local -f scripts/screenshots/Dockerfile <ctx>
-docker run --rm vbm-smoke:local node /work/suites/shots.js
-docker run --rm vbm-smoke:local node /work/diag/diag.js
+scripts/screenshots/run.sh            # all suites
+scripts/harness/rerun.sh shots.js     # a single suite ad-hoc
 ```
 
 ## Output layout
@@ -73,9 +37,13 @@ tmp/shots/
 ├── states/NN-<name>.png                 # shots.js (01-13) + shots-palette (14-22)
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
 ├── guide/<name>.png                     # shots-guide
-├── smoke/                               # smoke.js diagnostic shots
-└── diag/                                # manual diag probes
+├── smoke/                               # harness smoke.js diagnostic shots
+└── diag/                                # harness diag probes (e.g. favicon-*)
 ```
+
+The `smoke/` and `diag/` subtrees are written by `scripts/harness/` (the verify
+gate + on-demand diag probes) — `scripts/harness/rerun.sh` copies them into
+`tmp/shots/` the same way `scripts/screenshots/run.sh` does for the suites.
 
 Naming conventions are uniform per dimension:
 
@@ -134,5 +102,4 @@ Rules:
 - **Naming**: matrix → `tmp/shots/theme-<theme>-<surface>.png`; i18n →
   `tmp/shots/i18n/<lang>-<surface>.png`.
 - Menu geometry across DPR/zoom/viewport extremes is covered functionally by
-  `verify-menu-overflow.js` / `verify-menu-collapse.js` / `verify-menu-extreme.js`
-  (blocking, not screenshots).
+  the verify gate (blocking, not screenshots) — `scripts/harness/run.sh`.

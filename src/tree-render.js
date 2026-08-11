@@ -45,7 +45,7 @@ const httpsPattern = /^https?:\/\//i;
 // dnd.js drop fixup). 24px is the exact step that lands a child row's icon
 // left edge on its parent folder's TITLE left edge (icon starts after the
 // 16px twisty slot; text starts after twisty+icon+gap = 40px — 24 = 40-16).
-// Measured in the real popup by scripts/screenshots/diag/diag-v4t4.js.
+// Measured in the real popup by scripts/console/probe-alignment.js.
 export const TREE_INDENT = 24;
 
 // v4 task-2 (docs/v4task-2.md §3.6): build the id → containing-folder path
