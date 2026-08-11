@@ -9,6 +9,11 @@ const $ = id => document.getElementById(id);
     async function initOptions() {
         document.title = `${_m('extName')} ${_m('options')}`;
 
+        // Toggle → boolean. Storage uses '1'/'true'/'' (and '0' as a fresh
+        // default fallback for collapseTabGroupMenu), so a bare !!value would
+        // read the string '0' as truthy and mis-tick the checkbox.
+        const toBool = value => value === true || value === '1' || value === 'true';
+
         // Theme: apply the pre-filled mirror value immediately, then refine
         // from chrome.storage.local (the source of truth)
         document.body.dataset.theme = store.get('theme', 'auto');
@@ -46,7 +51,7 @@ const $ = id => document.getElementById(id);
         for (const setting of generalSettings) {
             const element = $(setting.id);
             const value = await getSetting(setting.key, setting.defaultValue);
-            element.checked = setting.inverted ? !value : !!value;
+            element.checked = setting.inverted ? !toBool(value) : toBool(value);
             element.addEventListener('change', async () => {
                 const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
                 await setSetting(setting.key, newValue);
@@ -99,7 +104,7 @@ const $ = id => document.getElementById(id);
         for (const setting of viewSettings) {
             const element = $(setting.id);
             const value = await getSetting(setting.key, setting.defaultValue);
-            element.checked = setting.inverted ? !value : !!value;
+            element.checked = setting.inverted ? !toBool(value) : toBool(value);
             element.addEventListener('change', async () => {
                 const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
                 await setSetting(setting.key, newValue);

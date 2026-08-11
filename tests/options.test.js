@@ -537,3 +537,41 @@ describe('custom styles userstyle save', () => {
         expect(cmAt).toBeLessThan(optionsAt);
     });
 });
+
+describe('issue #48 collapse switches (tab-group default off, sort default on)', () => {
+    it('fresh storage: tab-group starts unchecked, sort starts checked', async () => {
+        const sb = createSandbox(); // no stored keys → defaults apply
+        await sb.start();
+        // default off ('0') must NOT read as truthy and mis-tick the box
+        expect(sb.elements['collapse-tab-group-menu'].checked).toBe(false);
+        expect(sb.elements['collapse-sort-menu'].checked).toBe(true);
+    });
+
+    it('toggles persist as 1 or empty like the other view switches', async () => {
+        const sb = createSandbox();
+        await sb.start();
+
+        sb.elements['collapse-tab-group-menu'].checked = true;
+        await sb.elements['collapse-tab-group-menu'].fire('change');
+        expect(sb.localData.collapseTabGroupMenu).toBe('1');
+
+        sb.elements['collapse-tab-group-menu'].checked = false;
+        await sb.elements['collapse-tab-group-menu'].fire('change');
+        expect(sb.localData.collapseTabGroupMenu).toBe('');
+
+        sb.elements['collapse-sort-menu'].checked = false;
+        await sb.elements['collapse-sort-menu'].fire('change');
+        expect(sb.localData.collapseSortMenu).toBe('');
+    });
+
+    it('restores a stored on/off state across every value convention', async () => {
+        for (const [stored, expected] of [
+            ['1', true], ['true', true], [true, true],
+            ['0', false], ['false', false], ['', false], [false, false]
+        ]) {
+            const sb = createSandbox({ chromeLocalData: { collapseTabGroupMenu: stored } });
+            await sb.start();
+            expect(sb.elements['collapse-tab-group-menu'].checked, `stored ${JSON.stringify(stored)}`).toBe(expected);
+        }
+    });
+});
