@@ -201,7 +201,7 @@ const measurePane = (page, paneSel) => page.evaluate(sel => {
 }, paneSel);
 
 // 单个扩展 zoom 下遍历全部视图并断言。tag 用于定位 FAIL 来源。
-const sweepViews = async (page, tag, { includePalette }) => {
+const sweepViews = async (page, tag, { includePalette, capture = false }) => {
     for (const view of VIEWS) {
         const tabClicked = await clickJS(page, `#view-tab-${view.id}`);
         check(tabClicked, `${tag} click #view-tab-${view.id}`);
@@ -264,6 +264,12 @@ const sweepViews = async (page, tag, { includePalette }) => {
                     `${tag} ${view.id} ${paneSel} no hidden overflow (scrollW=${m.scrollW} clientW=${m.clientW})`);
             }
             if (m.vOverflow) console.log(`      · ${view.id} ${paneSel} vertical scroll active (${m.scrollH}/${m.clientH}px) — expected`);
+        }
+        // Visual confirmation for the review pass: the horizontal-overflow-
+        // sensitive views at this combo — the tree and the long-URL lists.
+        if (capture && ['tree', 'dead', 'dupes'].includes(view.id)) {
+            require('fs').mkdirSync('/tmp/shots/verify-scrollbars', { recursive: true });
+            await page.screenshot({ path: `/tmp/shots/verify-scrollbars/${tag}-${view.id}.png` });
         }
     }
 
@@ -434,7 +440,7 @@ const sweepViews = async (page, tag, { includePalette }) => {
                 await page.evaluate(z => { document.body.dataset.zoom = z; }, z);
                 await sleep(150);
                 console.log(`\n--- ${tag} extZoom ${z}% ---`);
-                await sweepViews(page, `${tag} z${z}`, { includePalette: false });
+                await sweepViews(page, `${tag} z${z}`, { includePalette: false, capture: true });
             }
             await page.close();
         }

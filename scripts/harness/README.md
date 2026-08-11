@@ -75,6 +75,8 @@ scripts/harness/rerun.sh shots-matrix.js     # run a screenshot suite ad-hoc
 
 ## Output
 
-Diagnostic screenshots a diag/shot probe writes land under `tmp/shots/`
-(git-ignored); the screenshot suites' output layout is documented in
+Everything the harness captures lands under `tmp/shots/` (git-ignored) for
+review — `run.sh` copies `smoke/` + `verify-menu/` + `verify-menu-extreme/` +
+`verify-scrollbars/` out of the containers, and `rerun.sh` does the same for
+any diag/shot script. The screenshot suites' output layout is documented in
 `scripts/screenshots/README.md`.

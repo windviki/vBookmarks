@@ -173,6 +173,8 @@ const SEED = `
     check('sort collapse ON: folder menu stays open (no #48 dismissal)',
         collapsed.shown === '1');
     const collapsedH = collapsed.height;
+    require('fs').mkdirSync('/tmp/shots/verify-menu', { recursive: true });
+    await c1.page.screenshot({ path: '/tmp/shots/verify-menu/collapse-sort-on.png' });
     await c1.page.close();
 
     // ── 2) sort expanded (OFF): raw items back, menu taller ──
@@ -200,6 +202,8 @@ const SEED = `
         expanded.sortName !== 'none' && !expanded.entryVisible);
     check('collapsed menu is SHORTER than expanded', collapsedH < expanded.height,
         `${collapsedH} < ${expanded.height}`);
+    require('fs').mkdirSync('/tmp/shots/verify-menu', { recursive: true });
+    await c2.page.screenshot({ path: '/tmp/shots/verify-menu/collapse-sort-off.png' });
     await c2.page.close();
 
     // ── 3) hover → flyout opens, positioned inside the viewport ──
@@ -232,6 +236,8 @@ const SEED = `
     check('flyout is to the right of the entry and inside the viewport',
         flyout.rightOfEntry && flyout.right <= flyout.vw && flyout.bottom <= flyout.vh,
         `right=${flyout.right} vw=${flyout.vw} bottom=${flyout.bottom} vh=${flyout.vh}`);
+    require('fs').mkdirSync('/tmp/shots/verify-menu', { recursive: true });
+    await c3.page.screenshot({ path: '/tmp/shots/verify-menu/collapse-sort-flyout.png' });
 
     // ── 4) click a flyout item → action runs, menu closes ──
     const sortRan = await c3.$(async () => {

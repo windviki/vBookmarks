@@ -38,12 +38,17 @@ tmp/shots/
 ├── tabgroups/NN-<name>.png              # shots-tabgroups (30-33)
 ├── guide/<name>.png                     # shots-guide
 ├── smoke/                               # harness smoke.js diagnostic shots
+├── verify-menu/                         # verify-menu-overflow/collapse captures
+├── verify-menu-extreme/<combo>.png      # verify-menu-extreme: 1 shot per DPR×zoom×size combo
+├── verify-scrollbars/<tag>-<view>.png   # verify-scrollbars: tree/dead/dupes per Phase-C combo
 └── diag/                                # harness diag probes (e.g. favicon-*)
 ```
 
-The `smoke/` and `diag/` subtrees are written by `scripts/harness/` (the verify
-gate + on-demand diag probes) — `scripts/harness/rerun.sh` copies them into
-`tmp/shots/` the same way `scripts/screenshots/run.sh` does for the suites.
+The `smoke/`, `verify-*/` and `diag/` subtrees are written by `scripts/harness/`
+(the verify gate + on-demand diag probes) — `scripts/harness/run.sh` and
+`scripts/harness/rerun.sh` copy them into `tmp/shots/` the same way
+`scripts/screenshots/run.sh` does for the suites, so every capture the harness
+makes is reviewable in one place.
 
 Naming conventions are uniform per dimension:
 

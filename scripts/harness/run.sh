@@ -34,28 +34,35 @@ cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shot
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
 docker build -q -t "$IMAGE" "$CTX" >/dev/null
-# Layer 1 — smoke (the image CMD): zero console errors + v4 behavior. It also
-# captures 7 diagnostic screenshots into /tmp/shots/smoke/ — run via the
-# create/start/cp pattern so they land in tmp/shots/smoke/ (a plain
-# `docker run --rm` would discard them with the container).
-smoke="vbm-smoke-$$"
-docker rm -f "$smoke" >/dev/null 2>&1 || true
-docker create --name "$smoke" "$IMAGE" >/dev/null
-docker start -a "$smoke"
-docker cp "$smoke":/tmp/shots/. "$OUT/" 2>/dev/null || true
-docker rm "$smoke" >/dev/null
+
+# Run one /work script and copy anything it wrote under /tmp/shots/ into the
+# repo's tmp/shots/. Every verify step (and smoke) goes through here — a plain
+# `docker run --rm` would discard the screenshots with the container.
+run_verify() {
+    local script="$1"
+    local name="vbm-verify-$$-${script%.js}"
+    docker rm -f "$name" >/dev/null 2>&1 || true
+    docker create --name "$name" "$IMAGE" node "/work/$script" >/dev/null
+    docker start -a "$name"
+    docker cp "$name":/tmp/shots/. "$OUT/" 2>/dev/null || true
+    docker rm "$name" >/dev/null
+}
+
+# Layer 1 — smoke (zero console errors + v4 behavior; captures smoke/* shots).
+run_verify smoke.js
 # Layer 2a — keyboard/view (blocking). Esc chains stay in vitest
 # (docs/cdp-escape-limitation.md).
-docker run --rm "$IMAGE" node /work/verify-keyboard.js
-# Layer 2b — scrollbar matrix (blocking, ~2-3 min).
-docker run --rm "$IMAGE" node /work/verify-scrollbars.js
+run_verify verify-keyboard.js
+# Layer 2b — scrollbar matrix (blocking, ~2-3 min; captures verify-scrollbars/*).
+run_verify verify-scrollbars.js
 # Layer 2c — context-menu overflow (#48): tall menu stays open, not dismissed
-# by the focus-induced document scroll.
-docker run --rm "$IMAGE" node /work/verify-menu-overflow.js
+# by the focus-induced document scroll (captures verify-menu/*).
+run_verify verify-menu-overflow.js
 # Layer 2d — collapsed submenus: flyouts open inside the viewport, dispatch
-# works, tab-group collapse applies to both menus.
-docker run --rm "$IMAGE" node /work/verify-menu-collapse.js
+# works, tab-group collapse applies to both menus (captures verify-menu/*).
+run_verify verify-menu-collapse.js
 # Layer 2e — extreme zoom/resolution sweep: DPR × page zoom × popup size;
-# menus + flyouts must open, stay open and never clip or cover their entry.
-docker run --rm "$IMAGE" node /work/verify-menu-extreme.js
-echo "Harness gate: ALL PASS"
+# menus + flyouts must open, stay open and never clip or cover their entry
+# (captures verify-menu-extreme/*).
+run_verify verify-menu-extreme.js
+echo "Harness gate: ALL PASS — captures in $OUT"

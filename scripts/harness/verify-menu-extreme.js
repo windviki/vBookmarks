@@ -178,6 +178,12 @@ const SEED = `
                 }
             }
             check(`${label} no page JS errors`, ctx.pageErrors.length === 0, ctx.pageErrors.join('; '));
+            // Visual confirmation per combo: the open folder menu (+ flyout
+            // when collapsed) at that DPR × zoom × size.
+            require('fs').mkdirSync('/tmp/shots/verify-menu-extreme', { recursive: true });
+            await ctx.page.screenshot({
+                path: `/tmp/shots/verify-menu-extreme/${c.label}-${collapseSort ? 'collapsed' : 'expanded'}.png`
+            });
             await ctx.page.close();
         }
     }

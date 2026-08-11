@@ -147,6 +147,11 @@ const SEED = `
 
     check('no page JS errors during the gesture', pageErrors.length === 0, pageErrors.join('; '));
 
+    // Visual confirmation for the review pass: the clamped folder menu (internal
+    // scroll) open in the short viewport — must be fully inside, never dismissed.
+    require('fs').mkdirSync('/tmp/shots/verify-menu', { recursive: true });
+    await page.screenshot({ path: '/tmp/shots/verify-menu/overflow-folder-menu.png' });
+
     console.log(`\n${PASS.length} passed, ${FAIL.length} failed`);
     await browser.close();
     process.exit(FAIL.length ? 1 : 0);
