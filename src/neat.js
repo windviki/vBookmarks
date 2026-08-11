@@ -93,6 +93,11 @@ import { applyUserStyle } from './userstyle.js';
         'bookmark-open-in-new-group': 'bookmarkOpenInNewGroup',
         'bookmark-open-in-new-group-setup': 'bookmarkOpenInNewGroupSetup',
         'bookmark-open-in-existing-group': 'bookmarkOpenInExistingGroup',
+        // issue #48 follow-up: the collapsed tab-group submenu reuses the same
+        // labels (ids carry a `sub-` prefix, normalized at dispatch time)
+        'sub-bookmark-open-in-new-group': 'bookmarkOpenInNewGroup',
+        'sub-bookmark-open-in-new-group-setup': 'bookmarkOpenInNewGroupSetup',
+        'sub-bookmark-open-in-existing-group': 'bookmarkOpenInExistingGroup',
         'bookmark-edit': 'edit',
         'bookmark-delete': 'delete',
         'add-bookmark-top': 'addBookmarkTop',
@@ -117,6 +122,10 @@ import { applyUserStyle } from './userstyle.js';
         // P3.4: the named-setup + existing-group folder entries
         'open-bookmarks-in-group-setup': 'openBookmarksInGroupSetup',
         'folder-open-in-existing-group': 'openBookmarksInExistingGroup',
+        // issue #48 follow-up: the collapsed tab-group submenu (folder menu)
+        'sub-open-bookmarks-in-group': 'openBookmarksInGroup',
+        'sub-open-bookmarks-in-group-setup': 'openBookmarksInGroupSetup',
+        'sub-folder-open-in-existing-group': 'openBookmarksInExistingGroup',
         'folder-new-window': 'openBookmarksNewWindow',
         'folder-new-incognito-window': 'openBookmarksIncognitoWindow',
         'folder-edit': 'edit',
@@ -125,6 +134,10 @@ import { applyUserStyle } from './userstyle.js';
         'sort-folder-by-name': 'sortByName',
         'sort-folder-by-date': 'sortByDate',
         'sort-folder-contents': 'sortOptions',
+        // issue #48 follow-up: the collapsed sort submenu
+        'sub-sort-folder-by-name': 'sortByName',
+        'sub-sort-folder-by-date': 'sortByDate',
+        'sub-sort-folder-contents': 'sortOptions',
         'sort-dialog-text': 'sortFolderContents',
         'sort-by-title-label': 'sortByTitle',
         'sort-by-date-label': 'sortByDateAdded',
@@ -146,8 +159,8 @@ import { applyUserStyle } from './userstyle.js';
         'tab-group-pick-cancel-button': 'nope'
     }).forEach(([id, msg]) => {
         const el = $(id);
-        const m = _m(msg);
-        el.textContent = m;
+        if (el)
+            el.textContent = _m(msg);
     });
 
     // RTL indicator
@@ -312,7 +325,12 @@ import { applyUserStyle } from './userstyle.js';
         // sortFolderContents dispatcher. Both read lazily — context-menu inits
         // before sortFolderContents/undo are declared (TDZ-safe on user events).
         get sortOptions() { return readSortOptions(); },
-        get sortFolder() { return (id, opts) => sortFolderContents(id, opts); }
+        get sortFolder() { return (id, opts) => sortFolderContents(id, opts); },
+        // issue #48 follow-up: the tab-group / sort blocks may collapse into
+        // single submenu entries (read at open time; defaults tab-group off,
+        // sort on).
+        get collapseTabGroupMenu() { return store.get('collapseTabGroupMenu', '0') === '1'; },
+        get collapseSortMenu() { return store.get('collapseSortMenu', '1') === '1'; }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after
@@ -905,6 +923,15 @@ import { applyUserStyle } from './userstyle.js';
         menus.histRowMenu.addEventListener('mousemove', contextMouseMove);
     if (menus.dupesGroupMenu)
         menus.dupesGroupMenu.addEventListener('mousemove', contextMouseMove);
+    // issue #48 follow-up: the collapsed-group flyouts highlight/focus their
+    // items on hover too. contextMouseOut is deliberately NOT bound to them —
+    // a mouseout to a hidden flyout would strand focus there.
+    if (menus.folderTabGroupSubmenu)
+        menus.folderTabGroupSubmenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.folderSortSubmenu)
+        menus.folderSortSubmenu.addEventListener('mousemove', contextMouseMove);
+    if (menus.bookmarkTabGroupSubmenu)
+        menus.bookmarkTabGroupSubmenu.addEventListener('mousemove', contextMouseMove);
 
     const contextMouseOut = function () {
         if (parseInt(this.style.opacity, 10))

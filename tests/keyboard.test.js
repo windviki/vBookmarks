@@ -97,8 +97,8 @@ const setup = (opts = {}) => {
             _listeners: {},
             _dispatched: [],
             classList: {
-                add: c => classes.add(c),
-                remove: c => classes.delete(c),
+                add: (...cs) => cs.forEach(c => classes.add(c)),
+                remove: (...cs) => cs.forEach(c => classes.delete(c)),
                 contains: c => classes.has(c)
             },
             addEventListener(type, fn) {
@@ -375,6 +375,37 @@ const setup = (opts = {}) => {
         menus.searchHistoryMenu = searchHistoryMenu;
     if (paletteCmdMenu)
         menus.paletteCmdMenu = paletteCmdMenu;
+    // issue #48 follow-up: the collapsed-flyout API for the keyboard branches.
+    // Recording double — openSubmenuFor returns a settable flyout element
+    // (each entry may carry `_submenu`), closeSubmenu parks it, submenuOpen
+    // reflects the state. `opts.submenu` pre-creates a stub flyout.
+    let openSubmenuDouble = null;
+    const submenuCalls = [];
+    const submenuEl = opts.submenu ? el('MENU', 'sub-flyout') : null;
+    if (submenuEl) {
+        submenuEl.classList.add('submenu');
+        // Register it as the collapsed flyouts so initKeyboard binds the menu
+        // walker to it (the real menus object exposes the three submenu keys).
+        menus.folderTabGroupSubmenu = submenuEl;
+        menus.folderSortSubmenu = submenuEl;
+        menus.bookmarkTabGroupSubmenu = submenuEl;
+    }
+    menus.openSubmenuFor = entry => {
+        submenuCalls.push(['open', entry && entry.id]);
+        openSubmenuDouble = (entry && entry._submenu) || submenuEl;
+        return openSubmenuDouble;
+    };
+    menus.closeSubmenu = refocus => {
+        submenuCalls.push(['close', !!refocus]);
+        openSubmenuDouble = null;
+    };
+    menus.submenuOpen = () => !!openSubmenuDouble;
+    menus.toggleSubmenuFor = entry => {
+        if (openSubmenuDouble)
+            menus.closeSubmenu(true);
+        else
+            menus.openSubmenuFor(entry);
+    };
     const closeDialogsCalls = [];
     const dialogs = {
         anyOpen: () => flags.dialogOpen,
@@ -456,7 +487,8 @@ const setup = (opts = {}) => {
         treeUl, f1, b11, b12, b2, f3, b31, b4, f5, r1, r2,
         item1, hr, item2, marker,
         chrome: chromeStub, actionCalls, searchCalls, clearMenuCalls, closeMenuCalls,
-        closeDialogsCalls, flags, windowCloseCalls
+        closeDialogsCalls, flags, windowCloseCalls,
+        submenuEl, submenuCalls
     };
 };
 
@@ -1753,6 +1785,92 @@ describe('contextKeyDown', () => {
     it('init does not throw when the palette-cmd menu is absent', () => {
         const { paletteCmdMenu } = setup({ noPaletteCmdMenu: true });
         expect(paletteCmdMenu).toBe(null);
+    });
+
+    // issue #48 follow-up: the collapsed-group flyouts (→ opens + steps in,
+    // ← closes only the flyout, ↑/↓ walk the flyout, Enter toggles, and the
+    // two-level document Esc).
+    it('→ on a collapse entry opens the flyout and focuses its first item', () => {
+        const { bookmarkMenu, submenuEl, submenuCalls, el, doc } = setup({ submenu: true });
+        const entry = el('DIV', 'bookmark-tab-group-collapse');
+        entry.classList.add('menu-item', 'has-submenu');
+        const s1 = el('DIV', 'sub-bookmark-open-in-new-group');
+        s1.classList.add('menu-item');
+        submenuEl.firstElementChild = s1;
+        doc.activeElement = entry;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowRight' }));
+        expect(submenuCalls).toEqual([['open', 'bookmark-tab-group-collapse']]);
+        expect(s1.focused).toBe(true);
+    });
+
+    it('← inside a flyout closes only the flyout (no full-menu cancel)', () => {
+        const { submenuEl, submenuCalls, closeMenuCalls, menus, el, doc } = setup({ submenu: true });
+        const s1 = el('DIV', 'sub-s1');
+        s1.classList.add('menu-item');
+        submenuEl.firstElementChild = s1;
+        doc.activeElement = s1;
+        menus.openSubmenuFor({ id: 'folder-sort-collapse', _submenu: submenuEl });
+        fire(submenuEl, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(submenuCalls).toContainEqual(['close', true]);
+        expect(closeMenuCalls).toEqual([]);
+    });
+
+    it('← on a collapse entry closes the flyout first, then cancels the menu', () => {
+        const { bookmarkMenu, submenuEl, submenuCalls, closeMenuCalls, menus, el, doc } = setup({ submenu: true });
+        const entry = el('DIV', 'folder-sort-collapse');
+        entry.classList.add('menu-item', 'has-submenu');
+        doc.activeElement = entry;
+        menus.openSubmenuFor({ id: entry.id, _submenu: submenuEl });
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(submenuCalls).toContainEqual(['close', true]);
+        expect(closeMenuCalls).toEqual([]);
+        // no flyout open now → back cancels the whole menu
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowLeft' }));
+        expect(closeMenuCalls).toEqual(['close']);
+    });
+
+    it('↑/↓ inside a flyout walk its items', () => {
+        const { submenuEl, el, doc } = setup({ submenu: true });
+        const s1 = el('DIV', 's1');
+        s1.classList.add('menu-item');
+        const s2 = el('DIV', 's2');
+        s2.classList.add('menu-item');
+        s1.nextElementSibling = s2;
+        s2.previousElementSibling = s1;
+        submenuEl.firstElementChild = s1;
+        submenuEl.lastElementChild = s2;
+        doc.activeElement = s1;
+        fire(submenuEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(s2.focused).toBe(true);
+        doc.activeElement = s2;
+        fire(submenuEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(s1.focused).toBe(true);
+    });
+
+    it('Enter on a collapse entry toggles the flyout (open, then close)', () => {
+        const { bookmarkMenu, submenuEl, submenuCalls, menus, el, doc } = setup({ submenu: true });
+        const entry = el('DIV', 'folder-sort-collapse');
+        entry.classList.add('menu-item', 'has-submenu');
+        doc.activeElement = entry;
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Enter' }));
+        expect(submenuCalls).toContainEqual(['open', 'folder-sort-collapse']);
+        expect(menus.submenuOpen()).toBe(true);
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Enter' }));
+        expect(submenuCalls).toContainEqual(['close', true]);
+        expect(menus.submenuOpen()).toBe(false);
+    });
+
+    it('document Esc closes the flyout first, then the whole menu', () => {
+        const { bookmarkMenu, submenuEl, submenuCalls, closeMenuCalls, menus, row, fireDoc } = setup({ submenu: true });
+        const active = row('A', 'neat-tree-item-42');
+        active.link.classList.add('active');
+        bookmarkMenu.style.opacity = '1'; // a menu really is open
+        menus.openSubmenuFor({ id: 'folder-sort-collapse', _submenu: submenuEl });
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(submenuCalls).toContainEqual(['close', true]);
+        expect(closeMenuCalls).toEqual([]);
+        fireDoc('keydown', makeEvent({ key: 'Escape' }));
+        expect(closeMenuCalls).toEqual(['close']);
     });
 });
 

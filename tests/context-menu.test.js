@@ -67,15 +67,32 @@ const setup = (opts = {}) => {
             _qs: {},
             _listeners: {},
             classList: {
-                add: c => classes.add(c),
-                remove: c => classes.delete(c),
-                contains: c => classes.has(c)
+                add: (...cs) => cs.forEach(c => classes.add(c)),
+                remove: (...cs) => cs.forEach(c => classes.delete(c)),
+                contains: c => classes.has(c),
+                toggle: (c, force) => {
+                    const on = force === undefined ? !classes.has(c) : !!force;
+                    if (on) classes.add(c);
+                    else classes.delete(c);
+                    return on;
+                }
             },
             addEventListener(type, fn) {
                 (this._listeners[type] = this._listeners[type] || []).push(fn);
             },
             querySelector(sel) {
                 return sel in this._qs ? this._qs[sel] : null;
+            },
+            // issue #48 follow-up: the collapsed submenus filter their items
+            // with querySelectorAll('.menu-item') (applyCollapseState targets).
+            querySelectorAll(sel) {
+                if (sel === '.menu-item')
+                    return (this._children || []).filter(c => c.classList.contains('menu-item'));
+                return [];
+            },
+            getBoundingClientRect() {
+                // Tests configure the flyout-entry geometry via `rect`.
+                return this.rect || { left: 0, top: 0, width: 0, height: 0, right: 0, bottom: 0 };
             },
             // Minimal Element.closest: walks parentNode, matches tag names,
             // .classes and comma lists thereof ('li', 'a, span', '.active').
@@ -116,6 +133,44 @@ const setup = (opts = {}) => {
     const paletteCmdMenu = el('MENU', 'palette-cmd-context-menu');
     el('DIV', 'palette-cmd-edit');
     el('DIV', 'palette-cmd-delete');
+    // issue #48 follow-up: the collapsed tab-group / sort submenus + entries.
+    // Mirror the pages' markup: entries are .menu-item.has-submenu carrying a
+    // data-submenu id; the flyouts are sibling <menu class="submenu"> whose
+    // items use `sub-` prefixed ids (normalized at dispatch time).
+    const submenu = id => {
+        const m = el('MENU', id);
+        m.classList.add('submenu');
+        m.dataset.parentEntry = id === 'folder-tab-group-submenu' ? 'folder-tab-group-collapse'
+            : id === 'folder-sort-submenu' ? 'folder-sort-collapse'
+            : 'bookmark-tab-group-collapse';
+        return m;
+    };
+    const subEntry = (id, subId) => {
+        const e = el('DIV', id);
+        e.classList.add('menu-item', 'has-submenu');
+        e.dataset.submenu = subId;
+        return e;
+    };
+    const folderTabGroupSubmenu = submenu('folder-tab-group-submenu');
+    const folderSortSubmenu = submenu('folder-sort-submenu');
+    const bookmarkTabGroupSubmenu = submenu('bookmark-tab-group-submenu');
+    const folderTabGroupEntry = subEntry('folder-tab-group-collapse', 'folder-tab-group-submenu');
+    const folderSortEntry = subEntry('folder-sort-collapse', 'folder-sort-submenu');
+    const bookmarkTabGroupEntry = subEntry('bookmark-tab-group-collapse', 'bookmark-tab-group-submenu');
+    const subItems = {
+        'folder-tab-group-submenu': ['sub-open-bookmarks-in-group', 'sub-open-bookmarks-in-group-setup', 'sub-folder-open-in-existing-group'],
+        'folder-sort-submenu': ['sub-sort-folder-by-name', 'sub-sort-folder-by-date', 'sub-sort-folder-contents'],
+        'bookmark-tab-group-submenu': ['sub-bookmark-open-in-new-group', 'sub-bookmark-open-in-new-group-setup', 'sub-bookmark-open-in-existing-group']
+    };
+    for (const [menuId, ids] of Object.entries(subItems)) {
+        const m = byId[menuId];
+        m._children = ids.map(id => {
+            const it = el('DIV', id);
+            it.classList.add('menu-item');
+            it.parentNode = m;
+            return it;
+        });
+    }
     const results = el('DIV', 'results');
     for (const id of ['add-bookmark-before-bookmark', 'add-bookmark-after-bookmark',
         'bookmark-context-menu-sep1', 'add-folder-before-bookmark',
@@ -173,6 +228,8 @@ const setup = (opts = {}) => {
     const windowListeners = {};
     globalThis.window = {
         innerHeight: opts.innerHeight === undefined ? 600 : opts.innerHeight,
+        scrollX: 0,
+        scrollY: 0,
         addEventListener(type, fn) {
             (windowListeners[type] = windowListeners[type] || []).push(fn);
         }
@@ -247,7 +304,11 @@ const setup = (opts = {}) => {
         get deadMenu() { return opts.deadMenu; },
         get dupesMenu() { return opts.dupesMenu; },
         get sortOptions() { return opts.sortOptions; },
-        get sortFolder() { return (id, o) => sortFolderCalls.push([id, o]); }
+        get sortFolder() { return (id, o) => sortFolderCalls.push([id, o]); },
+        // issue #48 follow-up: collapse settings (defaults match production —
+        // tab-group off, sort on).
+        get collapseTabGroupMenu() { return !!opts.collapseTabGroupMenu; },
+        get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
@@ -332,6 +393,8 @@ const setup = (opts = {}) => {
         menus, byId, el, body, tree, results, viewLists,
         bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu, histRowMenu, dupesGroupMenu,
         paletteCmdMenu,
+        folderTabGroupSubmenu, folderSortSubmenu, bookmarkTabGroupSubmenu,
+        folderTabGroupEntry, folderSortEntry, bookmarkTabGroupEntry,
         chrome: chromeStub, actionCalls, sortCalls, sortFolderCalls, revealCalls,
         groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
@@ -360,8 +423,16 @@ describe('module API', () => {
         // v4 task-4 #6: the palette custom-command row menu (edit/delete)
         expect(menus.paletteCmdMenu).toBe(paletteCmdMenu);
         expect(Object.keys(menus).sort()).toEqual(
-            ['bookmarkMenu', 'clearMenu', 'closeMenu', 'dupesGroupMenu', 'folderMenu', 'histRowMenu',
-                'paletteCmdMenu', 'searchHistoryMenu', 'separatorMenu', 'switchBookmarkMenu']);
+            ['bookmarkMenu', 'bookmarkTabGroupSubmenu', 'clearMenu', 'closeMenu', 'closeSubmenu',
+                'dupesGroupMenu', 'folderMenu', 'folderSortSubmenu', 'folderTabGroupSubmenu',
+                'histRowMenu', 'openSubmenuFor', 'paletteCmdMenu', 'searchHistoryMenu',
+                'separatorMenu', 'submenuOpen', 'switchBookmarkMenu', 'toggleSubmenuFor']);
+        // issue #48 follow-up: the flyout API is callable
+        expect(typeof menus.openSubmenuFor).toBe('function');
+        expect(typeof menus.closeSubmenu).toBe('function');
+        expect(typeof menus.toggleSubmenuFor).toBe('function');
+        expect(typeof menus.submenuOpen).toBe('function');
+        expect(menus.submenuOpen()).toBe(false);
     });
 });
 
@@ -679,6 +750,148 @@ describe('contextmenu handler (opening a menu)', () => {
         for (const menu of [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu])
             expect(menu.style.opacity).not.toBe('1');
         expect(icon.classList.contains('active')).toBe(false);
+    });
+});
+
+describe('collapsed-group submenus (issue #48 follow-up)', () => {
+    it('applies collapse-sort to the folder menu by default and collapse-tab-group when enabled', () => {
+        const { folderMenu, bookmarkMenu, makeFolderRow, openOn } = setup({});
+        openOn(makeFolderRow().span);
+        expect(folderMenu.classList.contains('collapse-sort')).toBe(true); // default ON
+        expect(folderMenu.classList.contains('collapse-tab-group')).toBe(false); // default OFF
+        expect(bookmarkMenu.classList.contains('collapse-tab-group')).toBe(false);
+    });
+
+    it('collapse-sort off leaves the raw sort items visible', () => {
+        const { folderMenu, makeFolderRow, openOn } = setup({ collapseSortMenu: false });
+        openOn(makeFolderRow().span);
+        expect(folderMenu.classList.contains('collapse-sort')).toBe(false);
+    });
+
+    it('collapse-tab-group applies to BOTH the folder and bookmark menus', () => {
+        const { folderMenu, bookmarkMenu, makeFolderRow, makeBookmarkRow, openOn } =
+            setup({ collapseTabGroupMenu: true });
+        openOn(makeFolderRow().span);
+        expect(folderMenu.classList.contains('collapse-tab-group')).toBe(true);
+        openOn(makeBookmarkRow().a);
+        expect(bookmarkMenu.classList.contains('collapse-tab-group')).toBe(true);
+    });
+
+    it('a root folder keeps hide-sort while collapse-sort is on', () => {
+        const { folderMenu, makeFolderRow, openOn } = setup({});
+        openOn(makeFolderRow('7', '0').span); // parentid '0' = root folder
+        expect(folderMenu.classList.contains('hide-sort')).toBe(true);
+        expect(folderMenu.classList.contains('collapse-sort')).toBe(true);
+    });
+
+    it('disables the collapsed tab-group entry when the folder has no bookmark children', () => {
+        // getChildren resolves synchronously in the stub; a URL-less subfolder
+        // means there is nothing to tab-group.
+        const children = { 7: [{ id: '8', title: 'sub', url: undefined }] };
+        const { folderTabGroupEntry, makeFolderRow, openOn } =
+            setup({ collapseTabGroupMenu: true, children });
+        openOn(makeFolderRow().span);
+        expect(folderTabGroupEntry.classList.contains('disabled')).toBe(true);
+    });
+
+    it('keeps the collapsed tab-group entry enabled when the folder has bookmarks', () => {
+        const children = { 7: [{ id: '8', title: 'GitHub', url: 'https://github.com' }] };
+        const { folderTabGroupEntry, makeFolderRow, openOn } =
+            setup({ collapseTabGroupMenu: true, children });
+        openOn(makeFolderRow().span);
+        expect(folderTabGroupEntry.classList.contains('disabled')).toBe(false);
+    });
+
+    it('openSubmenuFor shows the linked flyout and closeSubmenu parks it', () => {
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({});
+        openOn(makeFolderRow().span);
+        folderSortEntry.rect = { left: 100, top: 100, width: 120, height: 26, right: 220, bottom: 126 };
+        expect(menus.openSubmenuFor(folderSortEntry)).toBe(folderSortSubmenu);
+        expect(folderSortSubmenu.style.opacity).toBe('1');
+        expect(menus.submenuOpen()).toBe(true);
+        menus.closeSubmenu(true);
+        expect(folderSortSubmenu.style.opacity).toBe('0');
+        expect(menus.submenuOpen()).toBe(false);
+    });
+
+    it('only one flyout is open at a time', () => {
+        const { menus, folderSortEntry, folderTabGroupEntry, folderSortSubmenu,
+            folderTabGroupSubmenu, makeFolderRow, openOn } =
+            setup({ collapseTabGroupMenu: true, children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
+        openOn(makeFolderRow().span);
+        menus.openSubmenuFor(folderSortEntry);
+        menus.openSubmenuFor(folderTabGroupEntry);
+        expect(folderSortSubmenu.style.opacity).toBe('0');
+        expect(folderTabGroupSubmenu.style.opacity).toBe('1');
+        expect(menus.submenuOpen()).toBe(true);
+    });
+
+    it('a disabled entry refuses to open its flyout', () => {
+        const { menus, folderSortEntry, makeFolderRow, openOn } = setup({});
+        openOn(makeFolderRow().span);
+        folderSortEntry.classList.add('disabled');
+        expect(menus.openSubmenuFor(folderSortEntry)).toBe(null);
+        expect(menus.submenuOpen()).toBe(false);
+    });
+
+    it('dispatches a collapsed sort submenu item through the folder handler and closes the menu', () => {
+        const { menus, folderSortEntry, folderMenu, folderSortSubmenu, byId, makeFolderRow, openOn, sortFolderCalls } = setup({});
+        const { span } = makeFolderRow();
+        openOn(span);
+        menus.openSubmenuFor(folderSortEntry);
+        const item = byId['sub-sort-folder-by-name'];
+        fire(folderSortSubmenu, 'mouseup', makeEvent({ target: item, button: 0 }));
+        expect(sortFolderCalls[0][0]).toBe('7');
+        expect(sortFolderCalls[0][1]).toEqual(expect.objectContaining({ by: 'title' }));
+        expect(folderMenu.style.opacity).toBe('0'); // menu closed first (focus law)
+        expect(menus.submenuOpen()).toBe(false);
+    });
+
+    it('dispatches a collapsed tab-group submenu item (sub- id normalize)', () => {
+        const { menus, folderTabGroupEntry, folderTabGroupSubmenu, byId, makeFolderRow, openOn, actionCalls } =
+            setup({ collapseTabGroupMenu: true, children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
+        const { span } = makeFolderRow();
+        openOn(span);
+        menus.openSubmenuFor(folderTabGroupEntry);
+        const item = byId['sub-open-bookmarks-in-group'];
+        fire(folderTabGroupSubmenu, 'mouseup', makeEvent({ target: item, button: 0 }));
+        // folder menu open → groupTitle '' → openBookmarksInGroup(urls, '')
+        expect(actionCalls.some(c => c[0] === 'openBookmarksInGroup')).toBe(true);
+    });
+
+    it('flips the flyout to the left when it would overflow the right edge', () => {
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({});
+        folderSortSubmenu.offsetWidth = 200;
+        folderSortSubmenu.offsetHeight = 100;
+        openOn(makeFolderRow().span);
+        folderSortEntry.rect = { left: 400, top: 100, width: 120, height: 26, right: 520, bottom: 126 };
+        menus.openSubmenuFor(folderSortEntry);
+        // 400+120+200=720 > body 500 → flips to 400-200=200
+        expect(folderSortSubmenu.style.left).toBe('200px');
+        expect(folderSortSubmenu.style.top).toBe('100px');
+    });
+
+    it('flips the flyout to the right at the left edge under rtl', () => {
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({ rtl: true });
+        folderSortSubmenu.offsetWidth = 200;
+        folderSortSubmenu.offsetHeight = 100;
+        openOn(makeFolderRow().span);
+        folderSortEntry.rect = { left: 100, top: 100, width: 120, height: 26, right: 220, bottom: 126 };
+        menus.openSubmenuFor(folderSortEntry);
+        // rtl: 100-200=-100 < 0 → flips to 100+120=220
+        expect(folderSortSubmenu.style.left).toBe('220px');
+    });
+
+    it('a click on the collapse entry toggles its flyout without closing the menu', () => {
+        const { menus, folderSortEntry, folderSortSubmenu, folderMenu, makeFolderRow, openOn } = setup({});
+        const { span } = makeFolderRow();
+        openOn(span);
+        fire(folderMenu, 'mouseup', makeEvent({ target: folderSortEntry, button: 0 }));
+        expect(folderSortSubmenu.style.opacity).toBe('1'); // opened
+        expect(folderMenu.style.opacity).toBe('1'); // parent still open
+        fire(folderMenu, 'mouseup', makeEvent({ target: folderSortEntry, button: 0 }));
+        expect(folderSortSubmenu.style.opacity).toBe('0'); // toggled closed
+        expect(folderMenu.style.opacity).toBe('1');
     });
 });
 

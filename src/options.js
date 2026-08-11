@@ -87,6 +87,10 @@ const $ = id => document.getElementById(id);
             // users drop it without losing the in-popup quick-add star.
             { id: 'quick-add-context-menu', key: 'quickAddContextMenu', defaultValue: '1', inverted: false },
             { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false },
+            // issue #48 follow-up: collapse the tab-group / sort blocks into
+            // single submenu entries (tab-group default off, sort default on).
+            { id: 'collapse-tab-group-menu', key: 'collapseTabGroupMenu', defaultValue: '0', inverted: false },
+            { id: 'collapse-sort-menu', key: 'collapseSortMenu', defaultValue: '1', inverted: false },
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
             // off means zero writes (collection stops immediately)
@@ -425,6 +429,11 @@ const $ = id => document.getElementById(id);
         // issue #49: the page right-click "Bookmark this page" entry toggle
         document.getElementById('option-quick-add-context-menu').innerText = __m('optionQuickAddContextMenu');
         document.getElementById('option-quick-add-context-menu-hint').innerText = __m('optionQuickAddContextMenuHint');
+        // issue #48 follow-up: the collapsed tab-group / sort menu switches
+        document.getElementById('option-collapse-tab-group-menu').innerText = __m('optionCollapseTabGroupMenu');
+        document.getElementById('option-collapse-tab-group-menu-hint').innerText = __m('optionCollapseTabGroupMenuHint');
+        document.getElementById('option-collapse-sort-menu').innerText = __m('optionCollapseSortMenu');
+        document.getElementById('option-collapse-sort-menu-hint').innerText = __m('optionCollapseSortMenuHint');
         document.getElementById('option-show-tool-button').innerText = __m('optionShowToolButton');
         document.getElementById('classic-experience').innerText = __m('optionClassicExperience');
         document.getElementById('classic-experience-hint').innerText = __m('optionClassicExperienceHint');

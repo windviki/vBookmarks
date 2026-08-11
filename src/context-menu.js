@@ -67,6 +67,20 @@ export function initContextMenu(ctx = {}) {
     // v4 task-4 #6: the palette custom-command row menu (edit / delete)
     const $paletteCmdContextMenu = $('palette-cmd-context-menu');
     const $results = $('results');
+    // Collapsed tab-group / sort submenus (issue #48 follow-up): body-level
+    // sibling menus whose items are dispatched by the same handlers as their
+    // parent-menu counterparts (their ids carry a `sub-` prefix, normalized at
+    // dispatch time). Absent in minimal test setups → null-check everywhere.
+    const $folderTabGroupSubmenu = $('folder-tab-group-submenu');
+    const $folderSortSubmenu = $('folder-sort-submenu');
+    const $bookmarkTabGroupSubmenu = $('bookmark-tab-group-submenu');
+    let openSubmenu = null;
+
+    // Collapse settings (lazy, read from ctx at open time): the tab-group
+    // block collapses on BOTH the folder and bookmark menus, the sort block on
+    // the folder menu only. Defaults — tab-group off, sort on.
+    const collapseTabGroup = () => !!ctx.collapseTabGroupMenu;
+    const collapseSort = () => ctx.collapseSortMenu !== false;
 
     // The row element (a/span) the open menu belongs to; cleared by clearMenu.
     let currentContext = null;
@@ -123,12 +137,18 @@ export function initContextMenu(ctx = {}) {
     const updateSortLabels = () => {
         const so = ctx.sortOptions || {};
         const suffix = so.recursive ? ` ${_m('sortRecursiveSuffix')}` : '';
-        const nameItem = $('sort-folder-by-name');
-        if (nameItem)
-            nameItem.textContent = _m('sortByName') + suffix;
-        const dateItem = $('sort-folder-by-date');
-        if (dateItem)
-            dateItem.textContent = _m('sortByDate') + suffix;
+        // The labels live in the main menu AND the collapsed sort submenu —
+        // whichever is visible must carry the current (recursive) suffix.
+        for (const id of ['sort-folder-by-name', 'sub-sort-folder-by-name']) {
+            const item = $(id);
+            if (item)
+                item.textContent = _m('sortByName') + suffix;
+        }
+        for (const id of ['sort-folder-by-date', 'sub-sort-folder-by-date']) {
+            const item = $(id);
+            if (item)
+                item.textContent = _m('sortByDate') + suffix;
+        }
     };
 
     const hideAllMenus = () => {
@@ -165,6 +185,170 @@ export function initContextMenu(ctx = {}) {
         // drop them all here so they can never leak across unrelated menu
         // opens.
         setRootDisabled(false);
+        // Park any open collapsed-group flyout and its expanded marker.
+        for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu]) {
+            if (!sub)
+                continue;
+            sub.style.left = '-999px';
+            sub.style.opacity = '0';
+            sub.style.transform = 'scale(.98)';
+        }
+        if (openSubmenu && openSubmenu._parentEntryId) {
+            const entry = $(openSubmenu._parentEntryId);
+            if (entry && entry.setAttribute)
+                entry.setAttribute('aria-expanded', 'false');
+        }
+        openSubmenu = null;
+    };
+
+    // Shared menu positioning (the issue #48 clamp + horizontal/vertical fit).
+    // mode 'cursor' = a main menu anchored at the pointer (never flips);
+    // mode 'entry'  = a collapsed-group flyout anchored at its entry, flipped
+    // to the other side when it would leave the popup. In both modes the menu
+    // is clamped to the space below the search bar and gets its own internal
+    // scrollbar when too tall, so focus() never scrolls the document.
+    const positionMenu = (menu, anchor, mode) => {
+        const searchBar = document.getElementById('search');
+        const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) : 0;
+        const viewportH = window.innerHeight;
+        // The menu's own padding/border sits OUTSIDE the max-height content
+        // box (default content-box sizing) — subtract that chrome from the
+        // available space, or the total box still overflows. getComputedStyle
+        // is absent in the unit-test DOM stub → chrome 0 (roomier clamp only).
+        const menuCs = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : null;
+        const menuChrome = menuCs
+            ? (parseFloat(menuCs.paddingTop) || 0) + (parseFloat(menuCs.paddingBottom) || 0) +
+              (parseFloat(menuCs.borderTopWidth) || 0) + (parseFloat(menuCs.borderBottomWidth) || 0)
+            : 0;
+        const maxMenuH = Math.max(80, viewportH - menuMinY - 8 - menuChrome);
+        if (menu.offsetHeight > maxMenuH + menuChrome) {
+            menu.style.maxHeight = `${maxMenuH}px`;
+            menu.style.overflowY = 'auto';
+        } else {
+            menu.style.maxHeight = '';
+            menu.style.overflowY = '';
+        }
+        const menuWidth = menu.offsetWidth;
+        const menuHeight = menu.offsetHeight;
+        let pageX, pageY;
+        if (mode === 'entry') {
+            const aw = anchor.width || 0;
+            if (rtl) {
+                pageX = anchor.left - menuWidth;
+                if (pageX < 0)
+                    pageX = anchor.left + aw;
+            } else {
+                pageX = anchor.left + aw;
+                if (pageX + menuWidth > body.offsetWidth)
+                    pageX = anchor.left - menuWidth;
+            }
+            pageX = Math.max(0, Math.min(pageX, Math.max(0, body.offsetWidth - menuWidth)));
+            pageY = Math.max(menuMinY, anchor.top);
+            if (pageY + menuHeight > viewportH)
+                pageY = Math.max(menuMinY, viewportH - menuHeight);
+        } else {
+            pageX = rtl ? Math.max(0, anchor.left - menuWidth) :
+                Math.min(anchor.left, body.offsetWidth - menuWidth);
+            const boundY = viewportH - anchor.clientY;
+            pageY = boundY > menuHeight
+                ? anchor.top
+                : Math.max(anchor.top - menuHeight, menuMinY);
+            pageY = Math.max(pageY, menuMinY);
+        }
+        menu.style.left = `${pageX}px`;
+        menu.style.top = `${pageY}px`;
+        menu.style.opacity = '1';
+        menu.style.transform = 'scale(1)';
+    };
+
+    // ── collapsed-group flyouts ─────────────────────────────────────────
+    const entryRect = entry => {
+        const r = entry.getBoundingClientRect();
+        return {
+            left: r.left + window.scrollX,
+            top: r.top + window.scrollY,
+            width: r.width,
+            height: r.height,
+            clientY: r.top
+        };
+    };
+    const openSubmenuFor = entry => {
+        if (!entry || !entry.classList || entry.classList.contains('disabled'))
+            return null;
+        const sub = entry.dataset && $(entry.dataset.submenu);
+        if (!sub)
+            return null;
+        if (openSubmenu && openSubmenu !== sub) {
+            openSubmenu.style.left = '-999px';
+            openSubmenu.style.opacity = '0';
+            openSubmenu.style.transform = 'scale(.98)';
+            if (openSubmenu._parentEntryId) {
+                const old = $(openSubmenu._parentEntryId);
+                if (old && old.setAttribute)
+                    old.setAttribute('aria-expanded', 'false');
+            }
+        }
+        openSubmenu = sub;
+        openSubmenu._parentEntryId = entry.id;
+        positionMenu(sub, entryRect(entry), 'entry');
+        if (entry.setAttribute)
+            entry.setAttribute('aria-expanded', 'true');
+        return sub;
+    };
+    const closeSubmenu = (refocus = false) => {
+        if (!openSubmenu)
+            return;
+        const parentId = openSubmenu._parentEntryId;
+        openSubmenu.style.left = '-999px';
+        openSubmenu.style.opacity = '0';
+        openSubmenu.style.transform = 'scale(.98)';
+        openSubmenu = null;
+        if (parentId) {
+            const entry = $(parentId);
+            if (entry && entry.setAttribute)
+                entry.setAttribute('aria-expanded', 'false');
+            if (refocus && entry && entry.focus)
+                entry.focus();
+        }
+    };
+    const toggleSubmenuFor = entry => {
+        if (openSubmenu && openSubmenu._parentEntryId === entry.id)
+            closeSubmenu(true);
+        else
+            openSubmenuFor(entry);
+    };
+    const submenuOpen = () => !!openSubmenu;
+
+    // Collapsed-group visibility + the folder noURLS state, applied at open
+    // time BEFORE positioning (the class toggles change the measured size).
+    const applyCollapseState = menu => {
+        const isFolder = menu === $folderContextMenu;
+        menu.classList.toggle('collapse-tab-group', collapseTabGroup());
+        if (isFolder)
+            menu.classList.toggle('collapse-sort', collapseSort());
+        // Reset the entry/submenu disabled state first (per-open, self-corrects).
+        const entry = isFolder ? $('folder-tab-group-collapse') : $('bookmark-tab-group-collapse');
+        const submenu = isFolder ? $folderTabGroupSubmenu : $bookmarkTabGroupSubmenu;
+        const targets = [entry];
+        if (submenu)
+            targets.push(...Array.from(submenu.querySelectorAll('.menu-item')));
+        targets.forEach(t => { if (t && t.classList) t.classList.remove('disabled'); });
+        // A folder whose children carry no URLs has nothing to tab-group: the
+        // collapsed entry and its submenu read disabled (all three actions are
+        // no-URL no-ops anyway). The async children read lands ~1 frame later.
+        if (isFolder && collapseTabGroup() && currentContext) {
+            const li = currentContext.closest ? currentContext.closest('li') : null;
+            const id = li ? rowId(li) : null;
+            if (id) {
+                chrome.bookmarks.getChildren(id, children => {
+                    const noURLS = !(children || []).some(c => c && c.url);
+                    targets.forEach(t => {
+                        if (t && t.classList)
+                            t.classList.toggle('disabled', noURLS);
+                    });
+                });
+            }
+        }
     };
 
     // Focus after a menu closes (4.0.1 focus law: a menu close must never
@@ -442,57 +626,10 @@ export function initContextMenu(ctx = {}) {
             if (active)
                 active.classList.remove('active');
             el.classList.add('active');
-            // The search bar (z-index:10) renders above context menus; the
-            // menu's top must never land inside the search row or the top
-            // entries will be unreadable / unreachable.
-            const searchBar = document.getElementById('search');
-            const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) : 0;
-            // Clamp the menu to the popup's visible area (issue #48). A menu
-            // taller than the space below the search bar used to overflow the
-            // popup; menu.focus() then scrolled the document to reveal it, and
-            // that scroll fired the scroll-dismiss listeners, closing the menu
-            // the instant it opened ("right-click does nothing" — seen at
-            // Windows 150% display scaling / page zoom ≥ ~90%, where the
-            // 19-entry folder menu can exceed the popup height, and in any
-            // short popup). Give it its own internal scrollbar instead, so it
-            // always fits and focus() never scrolls the page.
-            const viewportH = window.innerHeight;
-            // The menu's own padding/border sits OUTSIDE the max-height content
-            // box (default content-box sizing), so subtract that chrome from
-            // the available space — otherwise the total box still overflows.
-            // getComputedStyle is absent in the unit-test DOM stub — the chrome
-            // (padding+border) then defaults to 0, which only makes the clamp
-            // slightly roomier; the real-browser overflow protection is intact.
-            const menuCs = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : null;
-            const menuChrome = menuCs
-                ? (parseFloat(menuCs.paddingTop) || 0) + (parseFloat(menuCs.paddingBottom) || 0) +
-                  (parseFloat(menuCs.borderTopWidth) || 0) + (parseFloat(menuCs.borderBottomWidth) || 0)
-                : 0;
-            const maxMenuH = Math.max(80, viewportH - menuMinY - 8 - menuChrome);
-            if (menu.offsetHeight > maxMenuH + menuChrome) {
-                menu.style.maxHeight = `${maxMenuH}px`;
-                menu.style.overflowY = 'auto';
-            } else {
-                menu.style.maxHeight = '';
-                menu.style.overflowY = '';
-            }
-            const menuWidth = menu.offsetWidth;
-            const menuHeight = menu.offsetHeight;
-            const pageX = rtl ? Math.max(0, e.pageX - menuWidth) :
-                Math.min(e.pageX, body.offsetWidth - menuWidth);
-            let pageY;
-            const boundY = viewportH - e.clientY;
-            if (boundY > menuHeight) {
-                pageY = e.pageY;
-            } else {
-                pageY = Math.max(e.pageY - menuHeight, menuMinY);
-            }
-            // Clamp to the search-bar baseline regardless of the branch above
-            pageY = Math.max(pageY, menuMinY);
-            menu.style.left = `${pageX}px`;
-            menu.style.top = `${pageY}px`;
-            menu.style.opacity = '1';
-            menu.style.transform = 'scale(1)';
+            // Collapse the tab-group / sort blocks per the settings, then
+            // position (clamped to the popup — issue #48) and show the menu.
+            applyCollapseState(menu);
+            positionMenu(menu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
             menu.focus();
         }
     });
@@ -515,6 +652,13 @@ export function initContextMenu(ctx = {}) {
         const el = e.target;
         if (!el.classList.contains('menu-item'))
             return;
+        // A collapsed-group entry toggles its flyout instead of dispatching an
+        // action; submenu items carry a `sub-` id prefix, normalized below.
+        if (el.classList.contains('has-submenu')) {
+            toggleSubmenuFor(el);
+            return;
+        }
+        const caseId = el.id.replace(/^sub-/, '');
         const url = currentContext.href;
         const li = currentContext.parentNode;
         const id = rowId(li);
@@ -529,7 +673,7 @@ export function initContextMenu(ctx = {}) {
         // swap. Closing last used to strand focus on the hidden menu or
         // yank it out of a just-opened dialog.
         clearMenu();
-        switch (el.id) {
+        switch (caseId) {
             // ++++++++ modified by windviki@gmail.com ++++++++
             // P3.4: open the bookmark as a one-tab tab group. The open
             // itself is handed to the service worker (vbm-tab-group-open-*)
@@ -652,6 +796,14 @@ export function initContextMenu(ctx = {}) {
         // the greyed item is visual state, and the action is impossible.
         if (el.classList.contains('disabled'))
             return;
+        // A collapsed-group entry toggles its flyout instead of dispatching an
+        // action; submenu items carry a `sub-` id prefix, normalized to their
+        // parent-menu id below so the same switch handles both.
+        if (el.classList.contains('has-submenu')) {
+            toggleSubmenuFor(el);
+            return;
+        }
+        const caseId = el.id.replace(/^sub-/, '');
         // P3.4: capture the proposed group title BEFORE scheduling getChildren.
         // clearMenu() below nulls currentContext, and the group cases run
         // inside the async callback — reading the title there would see null
@@ -672,7 +824,7 @@ export function initContextMenu(ctx = {}) {
             const urls = children.map(c => c.url).filter(url => url != undefined);
             const urlsLen = urls.length;
             const noURLS = !urlsLen;
-            switch (el.id) {
+            switch (caseId) {
                 // ++++++++ modified by windviki@gmail.com ++++++++
                 case 'add-bookmark-top':
                     chrome.tabs.query({
@@ -810,6 +962,46 @@ export function initContextMenu(ctx = {}) {
     $folderContextMenu.addEventListener('click', e => {
         e.stopPropagation();
     });
+
+    // ── collapsed-group entries + flyouts (issue #48 follow-up) ──────
+    // Entry labels are set here (not neat.js's table): they only need the ▸
+    // indicator, and binding via _m() classifies these keys as menu items for
+    // the i18n length gate. The flyouts dispatch through the parent handlers
+    // (a `sub-` id prefix is normalized at dispatch time). Hover on the parent
+    // menu opens an entry's flyout and closes it over a plain item; entering
+    // the flyout — a body-level sibling — never fires the parent's mouseover,
+    // so the move into it can't wrongly close it.
+    const entryLabel = e => { if (e) e.textContent = _m(e.id === 'folder-sort-collapse' ? 'sortMenuOptions' : 'tabGroupOptions'); };
+    entryLabel($('folder-tab-group-collapse'));
+    entryLabel($('folder-sort-collapse'));
+    entryLabel($('bookmark-tab-group-collapse'));
+    const bindSubmenu = (sub, handler) => {
+        if (!sub)
+            return;
+        sub.addEventListener('mouseup', e => {
+            e.stopPropagation();
+            if (e.button === 0 || (os === 'mac' && e.button === 1))
+                handler(e);
+        });
+        sub.addEventListener('contextmenu', handler);
+        sub.addEventListener('click', e => { e.stopPropagation(); });
+    };
+    bindSubmenu($folderTabGroupSubmenu, folderContextHandler);
+    bindSubmenu($folderSortSubmenu, folderContextHandler);
+    bindSubmenu($bookmarkTabGroupSubmenu, bookmarkContextHandler);
+    const bindSubmenuHover = menu => {
+        menu.addEventListener('mouseover', e => {
+            const t = e.target;
+            if (!t || !t.classList || !t.classList.contains('menu-item'))
+                return;
+            if (t.classList.contains('has-submenu'))
+                openSubmenuFor(t);
+            else
+                closeSubmenu(false);
+        });
+    };
+    bindSubmenuHover($folderContextMenu);
+    bindSubmenuHover($bookmarkContextMenu);
 
 
     const separatorContextHandler = e => {
@@ -1049,6 +1241,13 @@ export function initContextMenu(ctx = {}) {
         histRowMenu: $histRowContextMenu || null,
         dupesGroupMenu: $dupesGroupContextMenu || null,
         // v4 task-4 #6: palette custom-command row menu
-        paletteCmdMenu: $paletteCmdContextMenu || null
+        paletteCmdMenu: $paletteCmdContextMenu || null,
+        // issue #48 follow-up: the collapsed-group flyouts (may be absent in
+        // minimal test setups — consumers null-check) and their open/close API
+        // (used by the keyboard layer for →/←/Enter and the two-level Esc).
+        folderTabGroupSubmenu: $folderTabGroupSubmenu || null,
+        folderSortSubmenu: $folderSortSubmenu || null,
+        bookmarkTabGroupSubmenu: $bookmarkTabGroupSubmenu || null,
+        openSubmenuFor, closeSubmenu, toggleSubmenuFor, submenuOpen
     };
 }

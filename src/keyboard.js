@@ -734,20 +734,64 @@ export function initKeyboard(ctx = {}) {
                 e.preventDefault();
                 // P2 confirm/cancel protocol (mirrors src/dropdown.js):
                 // cancel = ← under LTR, → under RTL; the opposite arrow
-                // confirms. Cancel returns focus to the view (closeMenu).
-                if ((e.key === 'ArrowLeft') !== rtl)
-                    cancelOpenMenu();
-                else
-                    confirmMenuItem();
+                // confirms. A collapse entry (has-submenu) turns the forward
+                // arrow into "open the flyout and step into it" and the back
+                // arrow into "close the flyout first, then cancel the menu";
+                // inside a flyout the back arrow closes only the flyout.
+                {
+                    const back = (e.key === 'ArrowLeft') !== rtl;
+                    if (menu.classList && menu.classList.contains('submenu')) {
+                        if (back)
+                            menus.closeSubmenu && menus.closeSubmenu(true);
+                        else
+                            confirmMenuItem();
+                    } else if (item.classList.contains('has-submenu')) {
+                        if (back) {
+                            if (menus.submenuOpen && menus.submenuOpen())
+                                menus.closeSubmenu && menus.closeSubmenu(true);
+                            else
+                                cancelOpenMenu();
+                        } else {
+                            const sub = menus.openSubmenuFor && menus.openSubmenuFor(item);
+                            if (sub) {
+                                const t = nextMenuTarget(sub.firstElementChild, 1);
+                                if (t)
+                                    t.focus();
+                            }
+                        }
+                    } else if (back) {
+                        cancelOpenMenu();
+                    } else {
+                        confirmMenuItem();
+                    }
+                }
                 break;
             case " ": // space
             case 'Enter': // enter
                 e.preventDefault();
-                confirmMenuItem(); // the same guard + dispatch as the confirm arrow
+                if (item.classList.contains('has-submenu')) {
+                    // Toggle the flyout: close if any is open, else open this
+                    // entry's and step into its first walkable item.
+                    if (menus.submenuOpen && menus.submenuOpen()) {
+                        menus.closeSubmenu && menus.closeSubmenu(true);
+                    } else {
+                        const sub = menus.openSubmenuFor && menus.openSubmenuFor(item);
+                        if (sub) {
+                            const t = nextMenuTarget(sub.firstElementChild, 1);
+                            if (t)
+                                t.focus();
+                        }
+                    }
+                } else {
+                    confirmMenuItem(); // the same guard + dispatch as the confirm arrow
+                }
                 break;
             case 'Escape': // esc
                 e.preventDefault();
-                cancelOpenMenu();
+                if (menus.submenuOpen && menus.submenuOpen())
+                    menus.closeSubmenu && menus.closeSubmenu(true);
+                else
+                    cancelOpenMenu();
                 break;
         }
     };
@@ -770,6 +814,14 @@ export function initKeyboard(ctx = {}) {
     // without it the edit/delete rows were unreachable by keys.
     if (menus.paletteCmdMenu)
         menus.paletteCmdMenu.addEventListener('keydown', contextKeyDown);
+    // issue #48 follow-up: the collapsed-group flyouts walk like any menu
+    // (their ←/→/Esc handling is the submenu branch of contextKeyDown).
+    if (menus.folderTabGroupSubmenu)
+        menus.folderTabGroupSubmenu.addEventListener('keydown', contextKeyDown);
+    if (menus.folderSortSubmenu)
+        menus.folderSortSubmenu.addEventListener('keydown', contextKeyDown);
+    if (menus.bookmarkTabGroupSubmenu)
+        menus.bookmarkTabGroupSubmenu.addEventListener('keydown', contextKeyDown);
 
     // Header-row arrows (final polish): the naive horizontal walk between
     // the search box and the header buttons (quick-add ⇄ tool) plus ↓ from
@@ -829,7 +881,11 @@ export function initKeyboard(ctx = {}) {
     const allMenus = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
-        menus.paletteCmdMenu
+        menus.paletteCmdMenu,
+        // issue #48 follow-up: the collapsed-group flyouts count as open menus
+        // for the document-level Escape / Tab layering.
+        menus.folderTabGroupSubmenu, menus.folderSortSubmenu,
+        menus.bookmarkTabGroupSubmenu
     ].filter(Boolean);
     const anyMenuVisible = () => {
         for (let i = 0, l = allMenus.length; i < l; i++) {
@@ -860,6 +916,13 @@ export function initKeyboard(ctx = {}) {
             // layer peeled, the panel kept open.
             if (palette && palette.isOpen && palette.isOpen() && palette.refocus) {
                 palette.refocus();
+                return;
+            }
+            // issue #48 follow-up: two-level cancel — the first Esc closes an
+            // open flyout and refocuses its entry; the second Esc closes the
+            // whole menu.
+            if (menus.submenuOpen && menus.submenuOpen()) {
+                menus.closeSubmenu && menus.closeSubmenu(true);
                 return;
             }
             // 4.0.1 P2: the same cancel semantics as the menu's own ←/Esc.
@@ -956,7 +1019,11 @@ export function initKeyboard(ctx = {}) {
     const menuContainers = [
         menus.bookmarkMenu, menus.folderMenu, menus.separatorMenu,
         menus.searchHistoryMenu, menus.histRowMenu, menus.dupesGroupMenu,
-        menus.paletteCmdMenu
+        menus.paletteCmdMenu,
+        // issue #48 follow-up: the collapsed-group flyouts keep Tab trapped
+        // too (their items are Tab stops only while the flyout is open).
+        menus.folderTabGroupSubmenu, menus.folderSortSubmenu,
+        menus.bookmarkTabGroupSubmenu
     ].filter(Boolean);
     const isWithin = (root, node) => {
         for (let n = node; n; n = n.parentNode) {
