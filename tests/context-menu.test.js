@@ -229,6 +229,9 @@ const setup = (opts = {}) => {
     const windowListeners = {};
     globalThis.window = {
         innerHeight: opts.innerHeight === undefined ? 600 : opts.innerHeight,
+        // issue #48 follow-up: the flyout's horizontal flip/clamp uses the
+        // VIEWPORT width (window.innerWidth), not body.offsetWidth.
+        innerWidth: opts.innerWidth === undefined ? 500 : opts.innerWidth,
         scrollX: 0,
         scrollY: 0,
         addEventListener(type, fn) {

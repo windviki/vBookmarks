@@ -101,26 +101,56 @@ const SEED = `
         return { page: p, $ };
     };
 
+    // The tree renders its root folders ("Bookmarks bar" / "Other bookmarks",
+    // data-parentid="0") COLLAPSED, so a real folder like 'Work' only exists in
+    // the DOM after the root is expanded. Expand the first root first.
+    const expandRoot = async ($) => {
+        return $(async () => {
+            const nap = ms => new Promise(r => setTimeout(r, ms));
+            let root = null;
+            for (let g = 0; g < 25 && !root; g++) {
+                root = document.querySelector('#tree li.parent > span.tree-item-span');
+                if (!root)
+                    await nap(100);
+            }
+            if (root) {
+                root.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+                await nap(300);
+            }
+            return !!root;
+        });
+    };
+
     const rightClickFolder = async ($) => {
-        const r = await $(() => {
-            const span = document.querySelector('#tree li.parent > span.tree-item-span');
+        await expandRoot($);
+        const r = await $(async () => {
+            const nap = ms => new Promise(r => setTimeout(r, ms));
+            // A NON-root folder: the bookmarks-bar root carries data-parentid="0"
+            // and can't sort — hide-sort would mask the collapse behavior.
+            let span = null;
+            for (let g = 0; g < 25 && !span; g++) {
+                span = document.querySelector(
+                    '#tree li.parent[data-parentid]:not([data-parentid="0"]) > span.tree-item-span');
+                if (!span)
+                    await nap(100);
+            }
+            if (!span)
+                return { missing: true };
             const rect = span.getBoundingClientRect();
             span.dispatchEvent(new MouseEvent('contextmenu', {
                 bubbles: true, cancelable: true, view: window,
                 clientX: rect.left + 20, clientY: rect.top + 12
             }));
-            return { y: Math.round(rect.top) };
+            const li = span.closest('li');
+            return { y: Math.round(rect.top), parentId: li.dataset.parentid, rowId: li.id };
         });
         return r;
     };
 
     // ── 1) sort collapse (default ON): shorter menu, raw items hidden ──
     const c1 = await openPopup({}); // defaults: collapseSortMenu '1'
-    await c1.$(async () => {
-        for (let g = 0; g < 20 && !document.querySelector('#tree li.parent > span.tree-item-span'); g++)
-            await new Promise(r => setTimeout(r, 100));
-    });
-    await rightClickFolder(c1.$);
+    const rc1 = await rightClickFolder(c1.$);
+    console.log('  right-clicked folder (c1):', JSON.stringify(rc1));
     await sleep(300);
     const collapsed = await c1.$(async () => {
         const m = document.getElementById('folder-context-menu');
@@ -147,11 +177,8 @@ const SEED = `
 
     // ── 2) sort expanded (OFF): raw items back, menu taller ──
     const c2 = await openPopup({ collapseSortMenu: '' });
-    await c2.$(async () => {
-        for (let g = 0; g < 20 && !document.querySelector('#tree li.parent > span.tree-item-span'); g++)
-            await new Promise(r => setTimeout(r, 100));
-    });
-    await rightClickFolder(c2.$);
+    const rc2 = await rightClickFolder(c2.$);
+    console.log('  right-clicked folder (c2):', JSON.stringify(rc2));
     await sleep(300);
     const expanded = await c2.$(async () => {
         const m = document.getElementById('folder-context-menu');
@@ -161,7 +188,11 @@ const SEED = `
             shown: m.style.opacity,
             height: Math.round(m.getBoundingClientRect().height),
             sortName: gs('sort-folder-by-name'),
-            entryVisible: entry && getComputedStyle(entry).display !== 'none'
+            entryVisible: entry && getComputedStyle(entry).display !== 'none',
+            // diagnostics
+            stored: await chrome.storage.local.get('collapseSortMenu'),
+            menuClass: m.className,
+            entryDisplay: entry ? getComputedStyle(entry).display : 'missing'
         };
     });
     console.log('  expanded state:', JSON.stringify(expanded));
@@ -173,11 +204,8 @@ const SEED = `
 
     // ── 3) hover → flyout opens, positioned inside the viewport ──
     const c3 = await openPopup({ collapseSortMenu: '1' });
-    await c3.$(async () => {
-        for (let g = 0; g < 20 && !document.querySelector('#tree li.parent > span.tree-item-span'); g++)
-            await new Promise(r => setTimeout(r, 100));
-    });
-    await rightClickFolder(c3.$);
+    const rc3 = await rightClickFolder(c3.$);
+    console.log('  right-clicked folder (c3):', JSON.stringify(rc3));
     await sleep(300);
     const flyout = await c3.$(async () => {
         const entry = document.getElementById('folder-sort-collapse');
@@ -191,7 +219,11 @@ const SEED = `
             x: Math.round(r.left), w: Math.round(r.width), right: Math.round(r.right),
             bottom: Math.round(r.bottom), vw: window.innerWidth, vh: window.innerHeight,
             rightOfEntry: r.left >= entryR.right - 1, // LTR: flyout opens to the right
-            items: sub.querySelectorAll('.menu-item').length
+            items: sub.querySelectorAll('.menu-item').length,
+            // diagnostics
+            entryLeft: Math.round(entryR.left), entryRight: Math.round(entryR.right), entryW: Math.round(entryR.width),
+            bodyW: document.body.offsetWidth, menuLeft: Math.round(document.getElementById('folder-context-menu').getBoundingClientRect().left),
+            subLeftStyle: sub.style.left
         };
     });
     console.log('  flyout state:', JSON.stringify(flyout));
@@ -254,12 +286,9 @@ const SEED = `
 
     // ── 6) tab-group collapse (ON) applies to folder AND bookmark menus ──
     const c4 = await openPopup({ collapseTabGroupMenu: '1', collapseSortMenu: '1' });
-    await c4.$(async () => {
-        for (let g = 0; g < 20 && !document.querySelector('#tree li.parent > span.tree-item-span'); g++)
-            await new Promise(r => setTimeout(r, 100));
-    });
     // folder menu
-    await rightClickFolder(c4.$);
+    const rc4 = await rightClickFolder(c4.$);
+    console.log('  right-clicked folder (c4):', JSON.stringify(rc4));
     await sleep(300);
     const folderTG = await c4.$(async () => {
         const gs = id => getComputedStyle(document.getElementById(id)).display;
@@ -272,10 +301,19 @@ const SEED = `
     });
     check('tab-group collapse: folder menu shows entry, hides raw items',
         folderTG.entryVisible && folderTG.raw1 === 'none');
-    // bookmark menu (right-click a bookmark row)
-    await c4.$(async () => {
-        for (let g = 0; g < 20 && !document.querySelector('#tree li.child a'); g++)
-            await new Promise(r => setTimeout(r, 100));
+    // bookmark menu (expand the Work folder, then right-click a bookmark row)
+    const bmClick = await c4.$(async () => {
+        const nap = ms => new Promise(r => setTimeout(r, ms));
+        let p = null;
+        for (let g = 0; g < 25 && !p; g++) {
+            p = document.querySelector(
+                '#tree li.parent[data-parentid]:not([data-parentid="0"]) > span.tree-item-span');
+            if (!p)
+                await nap(100);
+        }
+        if (p)
+            p.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+        await nap(300); // expand re-renders the child rows
         const a = document.querySelector('#tree li.child a');
         if (a) {
             const rect = a.getBoundingClientRect();
@@ -284,7 +322,9 @@ const SEED = `
                 clientX: rect.left + 20, clientY: rect.top + 8
             }));
         }
+        return { folderFound: !!p, bookmarkFound: !!a };
     });
+    console.log('  bookmark click:', JSON.stringify(bmClick));
     await sleep(300);
     const bookmarkTG = await c4.$(async () => {
         const gs = id => getComputedStyle(document.getElementById(id)).display;

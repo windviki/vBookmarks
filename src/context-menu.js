@@ -235,16 +235,20 @@ export function initContextMenu(ctx = {}) {
         let pageX, pageY;
         if (mode === 'entry') {
             const aw = anchor.width || 0;
+            // Flip against the VIEWPORT (window.innerWidth), not body.offsetWidth —
+            // the popup body can be narrower than the window, and a flyout that
+            // fits the window is visible even if the body is not that wide.
+            const winW = window.innerWidth;
             if (rtl) {
                 pageX = anchor.left - menuWidth;
                 if (pageX < 0)
                     pageX = anchor.left + aw;
             } else {
                 pageX = anchor.left + aw;
-                if (pageX + menuWidth > body.offsetWidth)
+                if (pageX + menuWidth > winW)
                     pageX = anchor.left - menuWidth;
             }
-            pageX = Math.max(0, Math.min(pageX, Math.max(0, body.offsetWidth - menuWidth)));
+            pageX = Math.max(0, Math.min(pageX, Math.max(0, winW - menuWidth)));
             pageY = Math.max(menuMinY, anchor.top);
             if (pageY + menuHeight > viewportH)
                 pageY = Math.max(menuMinY, viewportH - menuHeight);
