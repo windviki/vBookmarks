@@ -577,6 +577,31 @@ describe('contextmenu handler (opening a menu)', () => {
         expect(bookmarkMenu.style.top).toBe('0px');
     });
 
+    it('clamps a menu taller than the popup viewport (issue #48: overflow → scroll-dismiss)', () => {
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
+        bookmarkMenu.offsetWidth = 100;
+        // The 19-entry folder menu can exceed the popup height at Windows 150%
+        // scaling / page zoom ≥ ~90%. Before the clamp, menu.focus() scrolled
+        // the document to reveal the overflow, that scroll fired the
+        // scroll-dismiss listeners and the menu closed the instant it opened.
+        bookmarkMenu.offsetHeight = 700; // > 600-8 available
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageY: 60, clientY: 60 });
+        expect(bookmarkMenu.style.maxHeight).toBe('592px'); // 600 - 8 margin
+        expect(bookmarkMenu.style.overflowY).toBe('auto');
+        expect(bookmarkMenu.style.opacity).toBe('1');
+    });
+
+    it('leaves a menu that fits the viewport unclamped', () => {
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
+        bookmarkMenu.offsetWidth = 100;
+        bookmarkMenu.offsetHeight = 200; // fits comfortably
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageY: 60, clientY: 60 });
+        expect(bookmarkMenu.style.maxHeight).toBe('');
+        expect(bookmarkMenu.style.overflowY).toBe('');
+    });
+
     it('opens the separator menu on a separator row and hides editables at root', () => {
         const { bookmarkMenu, separatorMenu, makeSeparatorRow, openOn } = setup({});
         const { a } = makeSeparatorRow('30', '0'); // root folder (parentid '0')

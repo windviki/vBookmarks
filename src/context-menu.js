@@ -442,17 +442,46 @@ export function initContextMenu(ctx = {}) {
             if (active)
                 active.classList.remove('active');
             el.classList.add('active');
-            const menuWidth = menu.offsetWidth;
-            const menuHeight = menu.offsetHeight;
-            const pageX = rtl ? Math.max(0, e.pageX - menuWidth) :
-                Math.min(e.pageX, body.offsetWidth - menuWidth);
             // The search bar (z-index:10) renders above context menus; the
             // menu's top must never land inside the search row or the top
             // entries will be unreadable / unreachable.
             const searchBar = document.getElementById('search');
             const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) : 0;
+            // Clamp the menu to the popup's visible area (issue #48). A menu
+            // taller than the space below the search bar used to overflow the
+            // popup; menu.focus() then scrolled the document to reveal it, and
+            // that scroll fired the scroll-dismiss listeners, closing the menu
+            // the instant it opened ("right-click does nothing" — seen at
+            // Windows 150% display scaling / page zoom ≥ ~90%, where the
+            // 19-entry folder menu can exceed the popup height, and in any
+            // short popup). Give it its own internal scrollbar instead, so it
+            // always fits and focus() never scrolls the page.
+            const viewportH = window.innerHeight;
+            // The menu's own padding/border sits OUTSIDE the max-height content
+            // box (default content-box sizing), so subtract that chrome from
+            // the available space — otherwise the total box still overflows.
+            // getComputedStyle is absent in the unit-test DOM stub — the chrome
+            // (padding+border) then defaults to 0, which only makes the clamp
+            // slightly roomier; the real-browser overflow protection is intact.
+            const menuCs = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : null;
+            const menuChrome = menuCs
+                ? (parseFloat(menuCs.paddingTop) || 0) + (parseFloat(menuCs.paddingBottom) || 0) +
+                  (parseFloat(menuCs.borderTopWidth) || 0) + (parseFloat(menuCs.borderBottomWidth) || 0)
+                : 0;
+            const maxMenuH = Math.max(80, viewportH - menuMinY - 8 - menuChrome);
+            if (menu.offsetHeight > maxMenuH + menuChrome) {
+                menu.style.maxHeight = `${maxMenuH}px`;
+                menu.style.overflowY = 'auto';
+            } else {
+                menu.style.maxHeight = '';
+                menu.style.overflowY = '';
+            }
+            const menuWidth = menu.offsetWidth;
+            const menuHeight = menu.offsetHeight;
+            const pageX = rtl ? Math.max(0, e.pageX - menuWidth) :
+                Math.min(e.pageX, body.offsetWidth - menuWidth);
             let pageY;
-            const boundY = window.innerHeight - e.clientY;
+            const boundY = viewportH - e.clientY;
             if (boundY > menuHeight) {
                 pageY = e.pageY;
             } else {

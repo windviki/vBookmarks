@@ -7,7 +7,7 @@ ENV NODE_PATH=/usr/src/app/node_modules
 # and the run keeps the base CJK font.
 RUN apk add --no-cache font-noto-cjk || true
 COPY vBookmarks /ext
-COPY smoke.js verify-keyboard.js verify-scrollbars.js /work/
+COPY smoke.js verify-keyboard.js verify-scrollbars.js verify-menu-overflow.js /work/
 COPY suites /work/suites
 COPY diag /work/diag
 WORKDIR /work

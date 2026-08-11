@@ -116,15 +116,21 @@ Status of the issues filed after the v4 release. All but #48 are resolved, and e
 
 ---
 
-## 需要更多信息 · Needs more info（保持打开 · kept open）
+## 已解决（后续定位）· Resolved（later diagnosis）—— 原为"需更多信息"
 
-## #48 — Right-clicking a folder no longer brings up options ⚠️ 未复现，需要更多信息
+## #48 — Right-clicking a folder no longer brings up options ✅ 已解决 / Resolved（后续版本，非 4.0.1）
 
-在**当前代码**上做穷尽性真实浏览器测试，树视图 / 搜索结果 / 侧边栏（panel）下的右键文件夹菜单均正常弹出（含"在新窗口打开全部书签"等 15 项），全流程无页面 JS 报错。右键判定逻辑未发现回归（`context-menu.js` 用 `classList.contains('link-folder')` + `li` 祖先守卫，相对 3.x 是增强而非削弱）。
+**最初无法复现**，靠诊断探针（`scripts/console/probe-folder-menu.js`）收集报告者环境后定位。eamondaly 反馈"页面缩放高于 90% 就坏（实测 100% 必坏）"，brunoosti 反馈"降到 100% 以下右键书签能弹、文件夹不行"。eamondaly 的 probe 日志给出铁证：每次右键 `CTXMENU` verdict=FOLDER、处理器执行到 `menu.focus()`，**但紧随一条 `SCROLL` 事件，随后菜单 `shown:false` / `active:null`**——菜单被打开后**立即被滚动事件关闭**。
 
-**已请报告者补充**：具体场景（哪个视图 / popup 状态 / 是否特定文件夹）、是否设置了自定义 CSS、浏览器与系统版本、以及右键瞬间的截图/录屏。等待回复，issue 保持打开。
+**根因**：context 菜单按内容渲染，在 Windows 150% 显示缩放 / 页面缩放 ≥ ~90% 下，19 项文件夹菜单高达 ~762px，**超过 popup 视口（~599px）**。菜单定位后 `menu.focus()` 触发浏览器"滚动到可见"，把文档滚出 ~16px——而 scroll 正是 `clearMenu` 的关闭触发点，于是菜单"闪开即关"，表现为"右键没反应"。低缩放时书签菜单（较短）恰好能放下所以正常，文件夹菜单（最长）始终溢出——与 brunoosti 的观察完全吻合。
 
-Exhaustive real-browser testing on the current code could not reproduce this — right-clicking a folder opens the folder menu correctly in the tree, the search results and the side panel, with no page JS errors. The folder-detection logic shows no regression. The reporter has been asked for more detail (exact view/state, custom CSS, browser/OS, a screenshot). The issue stays open pending that.
+**修复**（后续版本）：打开菜单时先把高度 clamp 到搜索栏下方的可用空间（`max-height` + `overflow-y:auto` 内部滚动，并扣除菜单自身 padding/border 的 chrome），菜单永远装得下 → `menu.focus()` 不再滚动文档 → 不再被 scroll 关闭。真实浏览器复现/校验由 `scripts/screenshots/verify-menu-overflow.js` 覆盖（修复前 `docScrollY:16` 菜单被关、修复后 `docScrollY:0` 菜单保持），vitest 新增 2 例回归。
+
+**Problem**: right-clicking a folder (and at higher zoom, any row) appeared to "do nothing".
+
+**Root cause** (via the diagnostic probe's logs): the context menu is sized to its content — at Windows 150% display scaling / page zoom ≥ ~90% the 19-item folder menu reaches ~762px, taller than the ~599px popup viewport. After positioning, `menu.focus()` scrolls the document to reveal the overflow; that scroll is one of the menu's dismiss triggers, so the menu closed the instant it opened. Short menus (bookmark) fit and worked; the tall folder menu always overflowed — matching both reporters' zoom observations.
+
+**Fixed in a later build**: the menu is now clamped to the space below the search bar (`max-height` + internal `overflow-y: auto`, minus the menu's own padding/border chrome) so it always fits and `focus()` never scrolls the page. Reproduced and verified in the real-browser harness (`scripts/screenshots/verify-menu-overflow.js`: before the fix `docScrollY:16` and the menu closed; after, `docScrollY:0` and it stays open), plus two vitest regression cases.
 
 ---
 

@@ -38,7 +38,7 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/screenshots/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/screenshots/suites "$CTX/suites"
 cp -r "$REPO_ROOT"/scripts/screenshots/diag "$CTX/diag"
 
@@ -52,6 +52,10 @@ docker run --rm "$IMAGE" node /work/verify-keyboard.js
 # Layer 2b — scrollbar matrix (blocking): screen × browser-zoom × in-extension
 # zoom × popup-size sweep, no horizontal scrollbar on any pane. ~2-3 min.
 docker run --rm "$IMAGE" node /work/verify-scrollbars.js
+# Layer 2c — context-menu overflow (#48): a tall folder menu must stay open in
+# a short viewport (clamped with internal scroll), not be dismissed by the
+# focus-induced document scroll. Blocking.
+docker run --rm "$IMAGE" node /work/verify-menu-overflow.js
 [ "${1:-}" = "--smoke-only" ] && exit 0
 
 for suite in shots.js shots-themes.js shots-i18n.js shots-palette.js shots-guide.js shots-tabgroups.js; do
