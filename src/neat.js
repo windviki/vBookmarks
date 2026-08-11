@@ -19,6 +19,7 @@ import { initViewStats } from './view-stats.js';
 import { markPopupOpen } from './visit-stats-sw.js';
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 import { initFaviconFallback } from './favicon-fallback.js';
+import { applyUserStyle } from './userstyle.js';
 
 (window => {
     const store = window.store;
@@ -1150,11 +1151,10 @@ import { initFaviconFallback } from './favicon-fallback.js';
         }, 1500);
     }
 
-    if (store.get('userstyle')) {
-        const style = document.createElement('style');
-        style.textContent = store.get('userstyle');
-        document.body.appendChild(style);
-    }
+    // Custom styles (userstyle): apply the user's CSS as a <style> appended to
+    // <body> — later in the cascade than the <head> stylesheet links, so a
+    // same-specificity rule wins by source order (src/userstyle.js).
+    applyUserStyle(document, store.get('userstyle'));
 
     // document.addEventListener('DOMContentLoaded', () => {
 

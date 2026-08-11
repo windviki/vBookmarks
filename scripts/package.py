@@ -71,6 +71,7 @@ JS_FILES = [
     'src/tab-groups-sw.js',
     'src/session.js',
     'src/undo.js',
+    'src/userstyle.js',
     'src/icons.js',
     'src/view-manager.js',
     'src/view-recent.js',

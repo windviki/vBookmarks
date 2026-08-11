@@ -13,7 +13,8 @@ const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta
 
 const createSandbox = ({
     chromeLocalData = {},
-    chromeSyncData = {}
+    chromeSyncData = {},
+    windowExtras = {}
 } = {}) => {
     // chrome.storage areas, backed by plain objects (same shape as store.test.js)
     const localData = chromeLocalData;
@@ -103,7 +104,7 @@ const createSandbox = ({
         }
     };
 
-    const window = { document, chrome, addEventListener: () => {} };
+    const window = { document, chrome, addEventListener: () => {}, ...windowExtras };
 
     // 1. real store.js → window.store / window.getSetting / ...
     new Function('window', 'chrome', 'localStorage', 'document', storeSource)(
@@ -485,5 +486,54 @@ describe('Sorting group (issue #33)', () => {
         expect(sb.elements['sort-options-date'].checked).toBe(false);
         expect(sb.elements['sort-options-folders-first'].checked).toBe(true);
         expect(sb.elements['sort-options-recursive'].checked).toBe(false);
+    });
+});
+
+// Custom styles (userstyle) save contract — the options page binds the
+// #userstyle textarea. Two input paths must persist to store + storage:
+//  (1) CodeMirror onChange (primary, vendored editor), and
+//  (2) the native textarea change event (fallback when CodeMirror is absent —
+//      the fix for "custom CSS silently stops saving if CodeMirror fails to
+//      load"). The APPLY side (popup/panel injection) is src/userstyle.js.
+describe('custom styles userstyle save', () => {
+    it('pre-fills the userstyle textarea from storage', async () => {
+        const sb = createSandbox({ chromeLocalData: { userstyle: 'body { color: red; }' } });
+        await sb.start();
+        expect(sb.elements.userstyle.value).toBe('body { color: red; }');
+    });
+
+    it('saves via the native change fallback when CodeMirror is unavailable', async () => {
+        const sb = createSandbox(); // no window.CodeMirror → fallback path
+        await sb.start();
+        const ta = sb.elements.userstyle;
+        ta.value = 'body { color: red; }';
+        await ta.fire('change');
+        expect(sb.window.store.get('userstyle')).toBe('body { color: red; }');
+        sb.window.store.flush(); // force the debounced persist
+        expect(sb.localData.userstyle).toBe('body { color: red; }');
+    });
+
+    it('saves via CodeMirror onChange when the editor is present', async () => {
+        let fromTextAreaOpts = null;
+        const fakeCodeMirror = {
+            fromTextArea: vi.fn((ta, opts) => { fromTextAreaOpts = opts; return {}; })
+        };
+        const sb = createSandbox({ windowExtras: { CodeMirror: fakeCodeMirror } });
+        await sb.start();
+        expect(fakeCodeMirror.fromTextArea).toHaveBeenCalledTimes(1);
+        expect(fromTextAreaOpts).toBeTruthy();
+        // simulate an editor edit → the onChange handler persists
+        fromTextAreaOpts.onChange({ getValue: () => 'body { color: blue; }' });
+        expect(sb.window.store.get('userstyle')).toBe('body { color: blue; }');
+        sb.window.store.flush();
+        expect(sb.localData.userstyle).toBe('body { color: blue; }');
+    });
+
+    it('loads CodeMirror before options.js in the options page', () => {
+        const cmAt = optionsHtml.indexOf('<script src="/vendor/codemirror.js"></script>');
+        const optionsAt = optionsHtml.indexOf('<script src="/src/options.js"></script>');
+        expect(cmAt).toBeGreaterThan(-1);
+        expect(optionsAt).toBeGreaterThan(-1);
+        expect(cmAt).toBeLessThan(optionsAt);
     });
 });

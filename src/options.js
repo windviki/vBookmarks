@@ -349,13 +349,19 @@ const $ = id => document.getElementById(id);
         bindText('custom-separator-url', 'separatorURL', 'http://separatethis.com/');
         bindText('custom-separator-string', 'separatorString', 'separatethis.com;');
 
+        // Custom styles: saved on every edit. CodeMirror (vendored) is the
+        // primary input; if it fails to load, fall back to the native
+        // textarea's change event so the feature never silently stops
+        // persisting (the popup/panel apply side lives in src/userstyle.js).
         const textareaUserstyle = $('userstyle');
         if (store.get('userstyle')) textareaUserstyle.value = store.get('userstyle');
         if (window.CodeMirror) {
             window.CodeMirror.fromTextArea(textareaUserstyle, {
-                onChange: c => {
-                    store.set('userstyle', c.getValue());
-                }
+                onChange: c => store.set('userstyle', c.getValue())
+            });
+        } else {
+            textareaUserstyle.addEventListener('change', () => {
+                store.set('userstyle', textareaUserstyle.value);
             });
         }
 
