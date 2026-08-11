@@ -200,6 +200,33 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.0.2 · 2026-08
+
+#### New
+
+- **Collapsible context-menu blocks** ([#48](https://github.com/windviki/vBookmarks/issues/48) follow-up): the crowded *tab-group* block (bookmark & folder menus) and the *sort* block (folder menu) collapse into a single submenu entry with a ▸ indicator. Two new **Views** toggles control them — `collapseTabGroupMenu` (tab groups, **off** by default) and `collapseSortMenu` (sorting, **on** by default). The flyouts reuse the whole context-menu keyboard protocol: `→`/`Enter` open, `←`/`Esc` close one level at a time, `↑`/`↓` wrap inside the flyout on every platform.
+- **Menus hardened at extreme zoom/DPI** ([#48](https://github.com/windviki/vBookmarks/issues/48)): a right-click menu can no longer outgrow the popup — height clamps to the space below the search bar (overflow scrolls internally), width caps to the viewport, and a flyout that does not fit on one side flips or stacks below its entry. Menus stay usable at high browser zoom, high DPI and narrow popup widths.
+- **Precision-first search ranking**: results sort by match tier — exact > prefix > word-start > subsequence — with the added date demoted to a final tie-break, so an exact match can no longer be outranked by a newer, looser one. URL scoring strips the structural `https://` and `www.` prefixes first, so `https://github.com` and `https://www.github.com` rank alike.
+
+#### Fixed
+
+- [#48](https://github.com/windviki/vBookmarks/issues/48): a right-click menu taller than the popup closed the instant it opened — focusing it scrolled the document and tripped the scroll-close listener. Menus now clamp to the viewport and scroll internally.
+- On macOS the slight finger movement of a right-click (two-finger tap / corner click) read as a scroll gesture and closed the freshly opened menu — a short window now tolerates small jitter scrolling right after open; a real scroll still closes it.
+- [#56](https://github.com/windviki/vBookmarks/issues/56): the dark themes' blanket `brightness(1.5)` filter on every favicon is removed — the placeholder is already a fingerprint-replaced SVG, so the filter only overexposed real favicons.
+- Custom CSS no longer fails silently: when the CodeMirror editor does not load (CSP-blocked, etc.), a native `textarea` change event persists the edit.
+- Rapidly toggling the page right-click "Bookmark this page" switch no longer throws a "duplicate id" error — the remove→create cycle is serialized.
+- A collapsed flyout flipped to the wrong side when the popup body was narrower than the viewport — horizontal placement now keys off `window.innerWidth`.
+- The options-page tab-group collapse switch looked checked even though the feature is off by default (the stored `'0'` was read as truthy) — it now reflects the real state.
+
+#### Polish
+
+- The 6 new collapsed-submenu keys are translated across all 42 locales; the collapsed entries keep just the ▸ indicator.
+- Developer tooling: `scripts` reorganized into harness / console / screenshots, the screenshot suite became a 4-theme matrix plus a 7-locale light i18n pass, console probes gained browser/platform identification, and the verify gate now also captures human-eye confirmation shots.
+
+#### Changed
+
+- Version bumped to **4.0.2** in `manifest.json` / `package.json`; the design docs move on to the 4.1.0 slate.
+
 ### v4.0.1 · 2026-08
 
 #### New

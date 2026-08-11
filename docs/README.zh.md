@@ -200,6 +200,33 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 # 更新日志
 
+### v4.0.2 · 2026-08
+
+#### 新增
+
+- **右键菜单可折叠区块**（[#48](https://github.com/windviki/vBookmarks/issues/48) 后续）：书签/文件夹菜单里拥挤的**标签组**块、文件夹菜单的**排序**块可折叠成单个子菜单入口（▸ 指示器）。选项页"视图"分组新增两个开关——`collapseTabGroupMenu`（标签组，**默认关闭**）与 `collapseSortMenu`（排序，**默认开启**）。飞入子菜单完全复用右键菜单键盘协议：`→`/`Enter` 展开、`←`/`Esc` 逐层关闭、`↑`/`↓` 在飞入内全平台循环。
+- **菜单极端缩放硬化**（[#48](https://github.com/windviki/vBookmarks/issues/48)）：右键菜单不再超出弹窗——高度按搜索栏下方空间 clamp（超出内部滚动）、宽度按视口 cap；子菜单两侧放不下时翻转或层叠于入口下方。高浏览器缩放、高 DPI、窄弹窗下菜单依然可用。
+- **精准优先排序**：搜索结果改为按命中精确度分层——完全相等 > 前缀 > 词首 > 子序列，添加时间降为最末 tie-break，精准同名书签不再被更新的宽松命中压过；URL 评分先剥离结构前缀 `https://` 与 `www.`，`https://github.com` 与 `https://www.github.com` 同分。
+
+#### 修复
+
+- [#48](https://github.com/windviki/vBookmarks/issues/48)：右键菜单过高被立即关闭——打开菜单会滚动文档并触发 scroll 关闭监听。菜单现 clamp 到视口并内部滚动，不再闪开即关。
+- macOS 上右键（双指轻点/鼠标角点击）伴随的手指轻微滑动被识别为 scroll 手势而闪关刚打开的菜单——打开后短窗内容忍小幅抖动滚动（≤32px），真实滚动仍立即关闭。
+- [#56](https://github.com/windviki/vBookmarks/issues/56)：删除深色主题对所有 favicon 的 blanket `brightness(1.5)` 滤镜——占位图已由指纹替换为 SVG，该滤镜只剩过曝真实 favicon。
+- 自定义 CSS 不再静默保存失败：CodeMirror 编辑器加载失败（如被 CSP 拦截）时回退到原生 `textarea` change 事件持久化。
+- 快速反复切换页面右键"收藏此页"开关不再抛 "duplicate id" 报错——remove→create 链已序列化。
+- 折叠飞入在 popup body 比视口窄时翻转错误——水平定位改用 `window.innerWidth`。
+- 选项页"标签组折叠"开关默认显示勾选、与实际（折叠关闭）不符（存储值 `'0'` 被当 truthy 处理）——现在如实反映状态。
+
+#### 抛光
+
+- 折叠子菜单 6 个新 key 全量翻译（42 语种）；折叠入口统一只留 ▸ 指示器。
+- 开发者工具：`scripts` 重组为 harness / console / screenshots 三分离，截图套件改为 4 主题矩阵 + 7 语种 light 通扫，控制台探针增加浏览器/平台识别，verify 门禁新增人工视觉确认截图。
+
+#### 变更
+
+- 版本定为 **4.0.2**（`manifest.json`/`package.json`）；设计文档已转向 4.1.0 规划。
+
 ### v4.0.1 · 2026-08
 
 #### 新增
