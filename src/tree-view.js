@@ -185,38 +185,47 @@ export function initTreeView(ctx = {}) {
             $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
         }
 
-        const focusID = store.get('focusID');
-        if (typeof focusID !== 'undefined' && focusID !== null) {
-            const focusEl = document.getElementById(`neat-tree-item-${focusID}`);
-            if (focusEl) {
-                const oriOverflow = $tree.style.overflow;
-                $tree.style.overflow = 'hidden';
-                focusEl.style.width = '100%';
-                const focusTarget = focusEl.firstElementChild;
-                // A row without a focusable child (detached/mid-render) has
-                // no reveal target — skip the highlight; the cleanup timers
-                // below still run.
-                if (focusTarget) {
-                    focusTarget.classList.add('focus');
-                    // The blueFade class only paints the reveal highlight — the
-                    // row must ALSO take keyboard focus, or an "reveal in tree"
-                    // from another view strands the user with no way to continue
-                    // (arrow keys do nothing until they click). The tree rows are
-                    // tabindex="-1"; a programmatic focus() here is what makes
-                    // ArrowUp/Down/Right walk on from the revealed row. The focus
-                    // listener removes the .focus class on its event — re-apply it
-                    // after focus() so the reveal highlight is not wiped by the
-                    // very focus we just granted.
-                    if (focusTarget.focus)
-                        focusTarget.focus();
-                    focusTarget.classList.add('focus');
+        // issue #58: the focusID restore (refocus + .focus highlight-flash,
+        // which re-paints the last-focused row on every open) is part of
+        // "remember previous state" — gate it with the rest so the existing
+        // remember-prev-state option turns the whole restore off (scroll,
+        // opened folders AND the focus highlight), instead of only the first
+        // two. revealFolder/revealInTree force rememberState=true on purpose,
+        // so explicit "reveal in tree" keeps working with the option off.
+        if (getRememberState()) {
+            const focusID = store.get('focusID');
+            if (typeof focusID !== 'undefined' && focusID !== null) {
+                const focusEl = document.getElementById(`neat-tree-item-${focusID}`);
+                if (focusEl) {
+                    const oriOverflow = $tree.style.overflow;
+                    $tree.style.overflow = 'hidden';
+                    focusEl.style.width = '100%';
+                    const focusTarget = focusEl.firstElementChild;
+                    // A row without a focusable child (detached/mid-render) has
+                    // no reveal target — skip the highlight; the cleanup timers
+                    // below still run.
+                    if (focusTarget) {
+                        focusTarget.classList.add('focus');
+                        // The blueFade class only paints the reveal highlight — the
+                        // row must ALSO take keyboard focus, or an "reveal in tree"
+                        // from another view strands the user with no way to continue
+                        // (arrow keys do nothing until they click). The tree rows are
+                        // tabindex="-1"; a programmatic focus() here is what makes
+                        // ArrowUp/Down/Right walk on from the revealed row. The focus
+                        // listener removes the .focus class on its event — re-apply it
+                        // after focus() so the reveal highlight is not wiped by the
+                        // very focus we just granted.
+                        if (focusTarget.focus)
+                            focusTarget.focus();
+                        focusTarget.classList.add('focus');
+                    }
+                    setTimeout(() => {
+                        $tree.style.overflow = oriOverflow;
+                    }, 1);
+                    setTimeout(() => {
+                        store.remove('focusID');
+                    }, 4000);
                 }
-                setTimeout(() => {
-                    $tree.style.overflow = oriOverflow;
-                }, 1);
-                setTimeout(() => {
-                    store.remove('focusID');
-                }, 4000);
             }
         }
 

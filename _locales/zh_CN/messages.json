@@ -875,7 +875,7 @@
     "description": "Toast shown after a bookmark or separator was deleted; the toast offers an undo button. $title$ is the deleted row's title (empty for separators)."
   },
   "optionRememberPrevState": {
-    "message": "记住之前的状态（滚动位置和已打开的文件夹）。"
+    "message": "记住之前的状态（滚动位置、已打开的文件夹和上次聚焦的书签）。"
   },
   "optionAutoRefreshSync": {
     "message": "自动刷新同步状态"

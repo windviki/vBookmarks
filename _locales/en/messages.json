@@ -558,7 +558,7 @@
     "message": "Popup stays open when opening (left-clicking) bookmarks."
   },
   "optionRememberPrevState": {
-    "message": "Remember previous state (scroll position and opened folders)."
+    "message": "Remember previous state (scroll position, opened folders and the last focused item)."
   },
   "options": {
     "message": "Options"

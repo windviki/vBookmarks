@@ -487,7 +487,7 @@ describe('generateTree', () => {
     });
 
     it('focuses the stored focusID row, restores overflow after 1ms and clears focusID after 4s', () => {
-        const ctx = setup({ storeData: { focusID: '5' } });
+        const ctx = setup({ storeData: { focusID: '5' }, rememberState: true });
         const { li, span } = ctx.makeFolder('5');
         ctx.tree.style.overflow = 'auto';
         ctx.treeView.generateTree(['ROOT']);
@@ -505,8 +505,24 @@ describe('generateTree', () => {
         expect(ctx.store.removes).toEqual(['focusID']);
     });
 
+    it('skips the whole focus restore when rememberState is off (issue #58)', () => {
+        // issue #58: with "remember previous state" unchecked, the last-focused
+        // row must NOT be refocused/re-highlighted on open — no .focus class,
+        // no focus(), no overflow pinning, no focusID cleanup timers.
+        const ctx = setup({ storeData: { focusID: '5' }, rememberState: false });
+        const { span } = ctx.makeFolder('5');
+        ctx.tree.style.overflow = 'auto';
+        ctx.treeView.generateTree(['ROOT']);
+        expect(span.classList.contains('focus')).toBe(false);
+        expect(span.focused).toBe(false);
+        expect(ctx.tree.style.overflow).toBe('auto');
+        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        tickAll();
+        expect(ctx.store.removes).toEqual([]);
+    });
+
     it('schedules no focus timers when the focusID row is missing', () => {
-        const { treeView, store } = setup({ storeData: { focusID: '5' } });
+        const { treeView, store } = setup({ storeData: { focusID: '5' }, rememberState: true });
         treeView.generateTree(['ROOT']);
         expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
         tickAll();
@@ -516,7 +532,7 @@ describe('generateTree', () => {
     it('a focusID row without a focusable child skips the highlight but keeps the cleanup timers (K12)', () => {
         // A detached/mid-render row has firstElementChild === null — the reveal
         // must not throw, and the overflow/focusID cleanup must still run.
-        const ctx = setup({ storeData: { focusID: '5' } });
+        const ctx = setup({ storeData: { focusID: '5' }, rememberState: true });
         const { li } = ctx.makeFolder('5');
         li.firstElementChild = null;
         ctx.tree.style.overflow = 'auto';
