@@ -679,7 +679,7 @@
     "message": "Anzahl der anzuzeigenden kürzlich hinzugefügten Lesezeichen"
   },
   "optionRememberPrevState": {
-    "message": "Vorherigen Zustand merken (Scroll-Position und geöffnete Ordner)."
+    "message": "Vorherigen Zustand merken (Scrollposition, geöffnete Ordner und zuletzt fokussiertes Element)."
   },
   "optionSearchAfterEnter": {
     "message": "Lesezeichen nur bei Drücken von ENTER suchen (statt Sofortsuche)"

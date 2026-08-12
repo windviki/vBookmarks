@@ -679,7 +679,7 @@
     "message": "Número de marcadores añadidos recientemente para mostrar"
   },
   "optionRememberPrevState": {
-    "message": "Recordar estado anterior (posición de desplazamiento y carpetas abiertas)."
+    "message": "Recordar estado anterior (posición de desplazamiento, carpetas abiertas y el último elemento enfocado)."
   },
   "optionSearchAfterEnter": {
     "message": "Buscar marcadores solo cuando se presiona ENTER (en lugar de búsqueda instantánea)"

@@ -679,7 +679,7 @@
     "message": "Näidatavate hiljuti lisatud järjehoidjate arv"
   },
   "optionRememberPrevState": {
-    "message": "Jäta eelmine olek meelde (kerimise asend ja avatud kaustad)."
+    "message": "Jäta meelde eelmine olek (kerimisasend, avatud kaustad ja viimati fookustatud üksus)."
   },
   "optionSearchAfterEnter": {
     "message": "Otsi järjehoidjaid ainult ENTERi vajutamisel (mitte kohene otsing)"

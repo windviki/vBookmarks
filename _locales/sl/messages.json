@@ -679,7 +679,7 @@
     "message": "Število nedavno dodanih zaznamkov za prikaz"
   },
   "optionRememberPrevState": {
-    "message": "Zapomni si prejšnje stanje (položaj drsenja in odprte mape)."
+    "message": "Zapomni si prejšnje stanje (položaj drsnika, odprte mape in zadnji osredotočeni element)."
   },
   "optionSearchAfterEnter": {
     "message": "Išči zaznamke samo, ko je pritisnjen ENTER (namesto takojšnjega iskanja)"

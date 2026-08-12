@@ -679,7 +679,7 @@
     "message": "显示最近添加书签的数量"
   },
   "optionRememberPrevState": {
-    "message": "记住上次状态（滚动条位置、所打开文件夹）"
+    "message": "记住之前的状态（滚动位置、打开的文件夹和最后聚焦的项目）。"
   },
   "optionSearchAfterEnter": {
     "message": "仅当回车时候才进行书签搜索（否则输入字符立即搜索）"

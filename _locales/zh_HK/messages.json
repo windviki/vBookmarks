@@ -679,7 +679,7 @@
     "message": "顯示最近新增書籤的數量"
   },
   "optionRememberPrevState": {
-    "message": "記住上次狀態（滾動條位置、所打開文件夾）"
+    "message": "記住之前的狀態（滾動位置、已開啟的資料夾及最後聚焦的項目）。"
   },
   "optionSearchAfterEnter": {
     "message": "僅當回車之後才進行書籤搜索（否則輸入字符立即搜索）"

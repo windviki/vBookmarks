@@ -679,7 +679,7 @@
     "message": "Antall nylig lagt til bokmerker å vise"
   },
   "optionRememberPrevState": {
-    "message": "Husk forrige tilstand (rulleposisjon og åpne mapper)."
+    "message": "Husk forrige tilstand (rulleposisjon, åpnede mapper og sist fokuserte element)."
   },
   "optionSearchAfterEnter": {
     "message": "Søk bokmerker kun når ENTER trykkes (i stedet for øyeblikkelig søk)"

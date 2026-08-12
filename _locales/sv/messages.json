@@ -679,7 +679,7 @@
     "message": "Antal nyligen tillagda bokmärken att visa"
   },
   "optionRememberPrevState": {
-    "message": "Kom ihåg tidigare tillstånd (rullningsposition och öppna mappar)."
+    "message": "Kom ihåg föregående tillstånd (rullningsposition, öppnade mappar och senast fokuserade objekt)."
   },
   "optionSearchAfterEnter": {
     "message": "Sök bokmärken endast när ENTER trycks (istället för omedelbar sökning)"

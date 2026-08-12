@@ -679,7 +679,7 @@
     "message": "Numero di segnalibri aggiunti di recente da mostrare"
   },
   "optionRememberPrevState": {
-    "message": "Memorizza lo stato della finestra di Neater Bookmarks (posizione di scorrimento dell'elenco e cartelle aperte)."
+    "message": "Ricorda lo stato precedente (posizione di scorrimento, cartelle aperte e ultimo elemento selezionato)."
   },
   "optionSearchAfterEnter": {
     "message": "Cerca nei segnalibri solo quando si preme INVIO (invece della ricerca istantanea)"

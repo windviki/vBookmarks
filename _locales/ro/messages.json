@@ -679,7 +679,7 @@
     "message": "Numărul de marcaje recent adăugate de afișat"
   },
   "optionRememberPrevState": {
-    "message": "Memorează starea anterioară (poziția de scroll și dosarele deschise)."
+    "message": "Reține starea anterioară (poziția de derulare, folderele deschise și ultimul element focalizat)."
   },
   "optionSearchAfterEnter": {
     "message": "Caută semne de carte doar când este apăsat ENTER (în loc de căutare instantă)"

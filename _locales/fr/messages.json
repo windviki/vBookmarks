@@ -679,7 +679,7 @@
     "message": "Nombre de marque-pages récents à afficher"
   },
   "optionRememberPrevState": {
-    "message": "Se souvenir de l'état précédent (position de défilement et dossiers ouverts)."
+    "message": "Mémoriser l'état précédent (position de défilement, dossiers ouverts et dernier élément ciblé)."
   },
   "optionSearchAfterEnter": {
     "message": "Rechercher des signets uniquement lorsque vous appuyez sur ENTER (au lieu d'une recherche instantanée)"

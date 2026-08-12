@@ -679,7 +679,7 @@
     "message": "Rādāmo nesen pievienoto grāmatzīmju skaits"
   },
   "optionRememberPrevState": {
-    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju un atvērtās mapes)."
+    "message": "Atcerēties iepriekšējo stāvokli (ritināšanas pozīciju, atvērtās mapes un pēdējo fokusēto vienumu)."
   },
   "optionSearchAfterEnter": {
     "message": "Meklēt grāmatzīmes tikai, kad tiek nospiests ENTER (nevis tūlītēja meklēšana)"

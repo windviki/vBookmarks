@@ -679,7 +679,7 @@
     "message": "Số lượng bookmark mới thêm vào để hiển thị"
   },
   "optionRememberPrevState": {
-    "message": "Nhớ trạng thái trước đó (vị trí cuộn và các thư mục đã mở)."
+    "message": "Ghi nhớ trạng thái trước đó (vị trí cuộn, thư mục đã mở và mục được tập trung cuối cùng)."
   },
   "optionSearchAfterEnter": {
     "message": "Tìm kiếm dấu trang chỉ khi nhấn ENTER (thay vì tìm kiếm tức thì)"

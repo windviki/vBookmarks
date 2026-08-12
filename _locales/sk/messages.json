@@ -679,7 +679,7 @@
     "message": "Počet nedávno pridaných záložiek na zobrazenie"
   },
   "optionRememberPrevState": {
-    "message": "Pamätať si predchádzajúci stav (pozícia posuvu a otvorené priečinky)."
+    "message": "Zapamätať predchádzajúci stav (pozíciu posúvania, otvorené priečinky a poslednú zameranú položku)."
   },
   "optionSearchAfterEnter": {
     "message": "Hľadať záložky len pri stlačení ENTER (namiesto okamžitého hľadania)"

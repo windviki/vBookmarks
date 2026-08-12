@@ -679,7 +679,7 @@
     "message": "Antal nyligt tilføjede bogmærker, der skal vises"
   },
   "optionRememberPrevState": {
-    "message": "Husk forrige tilstand (rulleposition og åbne mapper)."
+    "message": "Husk tidligere tilstand (rulposition, åbnede mapper og det sidste fokuserede element)."
   },
   "optionSearchAfterEnter": {
     "message": "Søg bogmærker kun når ENTER trykkes (i stedet for øjeblikkelig søgning)"

@@ -679,7 +679,7 @@
     "message": "Liczba ostatnio dodanych zakładek do wyświetlenia"
   },
   "optionRememberPrevState": {
-    "message": "Pamiętaj poprzedni stan (pozycja przewijania i otwarte foldery)."
+    "message": "Zapamiętaj poprzedni stan (pozycję przewijania, otwarte foldery i ostatnio zaznaczony element)."
   },
   "optionSearchAfterEnter": {
     "message": "Szukaj zakładek tylko po naciśnięciu ENTER (zamiast natychmiastowego wyszukiwania)"

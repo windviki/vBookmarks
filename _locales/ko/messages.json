@@ -679,7 +679,7 @@
     "message": "최근 추가된 북마크 표시 개수"
   },
   "optionRememberPrevState": {
-    "message": "이전 상태 기억 (스크롤 위치와 열린 폴더)."
+    "message": "이전 상태 기억(스크롤 위치, 열린 폴더 및 마지막으로 포커스된 항목)"
   },
   "optionSearchAfterEnter": {
     "message": "Enter 키를 누를 때만 북마크 검색 (즉시 검색 대신)"

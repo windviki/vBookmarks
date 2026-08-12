@@ -679,7 +679,7 @@
     "message": "Äskettäin lisättyjen kirjanmerkkien määrä"
   },
   "optionRememberPrevState": {
-    "message": "Muista edellinen tila (vieritysasetus ja avatut kansiot)."
+    "message": "Muista edellinen tila (vierityssijainti, avatut kansiot ja viimeksi kohdistettu kohde)."
   },
   "optionSearchAfterEnter": {
     "message": "Etsi kirjanmerkkejä vain kun ENTERiä painetaan (sen sijaan että etsisi heti)"

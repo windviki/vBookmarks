@@ -679,7 +679,7 @@
     "message": "Megjelenítendő legutóbb hozzáadott könyvjelzők száma"
   },
   "optionRememberPrevState": {
-    "message": "Előző állapot megjegyzése (görgetési pozíció és nyitott mappák)."
+    "message": "Emlékezzen az előző állapotra (görgetési pozíció, megnyitott mappák és az utoljára fókuszált elem)."
   },
   "optionSearchAfterEnter": {
     "message": "Könyvjelzők keresése csak az ENTER lenyomásakor (azonnali keresés helyett)"

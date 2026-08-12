@@ -679,7 +679,7 @@
     "message": "表示する最近追加したブックマークの数"
   },
   "optionRememberPrevState": {
-    "message": "スクロール位置と開いたフォルダの情報を保持する"
+    "message": "前回の状態（スクロール位置、開いているフォルダー、最後にフォーカスした項目）を記憶する。"
   },
   "optionSearchAfterEnter": {
     "message": "Enter キーが押されたときにのみブックマークを検索する (インスタント検索ではなく)"

@@ -679,7 +679,7 @@
     "message": "Neseniai pridėtų žymių rodymo skaičius"
   },
   "optionRememberPrevState": {
-    "message": "Prisiminti ankstesnę būseną (slinkties poziciją ir atidarytus aplankus)."
+    "message": "Prisiminti ankstesnę būseną (slinkties padėtis, atidaryti aplankai ir paskutinis fokusuotas elementas)."
   },
   "optionSearchAfterEnter": {
     "message": "Ieškoti žymelių tik paspaudus ENTER (vietoj momentinės paieškos)"

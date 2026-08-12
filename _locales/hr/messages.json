@@ -679,7 +679,7 @@
     "message": "Broj nedavno dodanih oznaka za prikaz"
   },
   "optionRememberPrevState": {
-    "message": "Zapamti prethodno stanje (pozicija pomicanja i otvorene mape)."
+    "message": "Zapamti prethodno stanje (položaj pomicanja, otvorene mape i posljednju fokusiranu stavku)."
   },
   "optionSearchAfterEnter": {
     "message": "Traži oznake samo kada se pritisne ENTER (umjesto trenutnog pretraživanja)"

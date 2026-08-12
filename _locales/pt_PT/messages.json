@@ -676,7 +676,7 @@
     "message": "Número de marcadores adicionados recentemente a mostrar"
   },
   "optionRememberPrevState": {
-    "message": "Memoriza o estado anterior (posição vertical e pastas abertas)."
+    "message": "Lembrar o estado anterior (posição de scroll, pastas abertas e o último item focado)"
   },
   "optionSearchAfterEnter": {
     "message": "Pesquisar marcadores apenas ao pressionar ENTER (em vez de pesquisa instantânea)"

@@ -676,7 +676,7 @@
     "message": "Número de favoritos adicionados recentemente a exibir"
   },
   "optionRememberPrevState": {
-    "message": "Lembrar do estado anterior (posição e pastas abertas)."
+    "message": "Lembrar estado anterior (posição de rolagem, pastas abertas e o último item focado)."
   },
   "optionSearchAfterEnter": {
     "message": "Pesquisar favoritos apenas ao pressionar ENTER (em vez de pesquisa instantânea)"

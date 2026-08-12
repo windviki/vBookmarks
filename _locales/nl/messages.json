@@ -679,7 +679,7 @@
     "message": "Aantal recent toegevoegde bladwijzers om weer te geven"
   },
   "optionRememberPrevState": {
-    "message": "Vorige status onthouden (scrollpositie en open mappen)."
+    "message": "Onthoud vorige status (scrollpositie, geopende mappen en het laatst gefocuste item)."
   },
   "optionSearchAfterEnter": {
     "message": "Bladwijzers alleen zoeken wanneer ENTER wordt ingedrukt (in plaats van direct zoeken)"

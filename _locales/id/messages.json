@@ -679,7 +679,7 @@
     "message": "Jumlah bookmark yang baru ditambahkan untuk ditampilkan"
   },
   "optionRememberPrevState": {
-    "message": "Ingat keadaan sebelumnya (posisi gulir dan folder yang dibuka)."
+    "message": "Ingat keadaan sebelumnya (posisi gulir, folder yang dibuka, dan item terakhir yang difokuskan)."
   },
   "optionSearchAfterEnter": {
     "message": "Cari markah hanya saat ENTER ditekan (bukan pencarian instan)"

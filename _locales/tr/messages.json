@@ -679,7 +679,7 @@
     "message": "Gösterilecek yeni eklenen yer imi sayısı"
   },
   "optionRememberPrevState": {
-    "message": "Önceki durumu hatırla (kaydırma konumu ve açık klasörler)."
+    "message": "Önceki durumu hatırla (kaydırma konumu, açık klasörler ve son odaklanan öğe)."
   },
   "optionSearchAfterEnter": {
     "message": "Yer imlerini sadece ENTER basıldığında ara (anlık arama yerine)"
