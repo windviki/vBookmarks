@@ -227,6 +227,22 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - Version bumped to **4.0.2** in `manifest.json` / `package.json`; the design docs move on to the 4.1.0 slate.
 
+### v4.0.3 · 2026-08
+
+#### Fixed
+
+- **Drag-and-drop sorting misaligned in zoomed mode** ([#59](https://github.com/windviki/vBookmarks/issues/59), [#60](https://github.com/windviki/vBookmarks/issues/60)): with the popup zoomed, a dropped row landed in the wrong place — the drag overlay's coordinates and the mouse-release drop-target hit-test did not account for the zoom level. Both are zoom-corrected now, with regression tests covering overlay layout, drop-into-folder sizing and the zoom-level reset.
+- **The focus-restore highlight can be turned off** ([#58](https://github.com/windviki/vBookmarks/issues/58)): reopening the popup used to refocus and flash the last-focused row on every open. The focus restore now follows the existing **"Remember previous state"** option — unchecked, the popup starts fully fresh, with no remembered highlight (and no remembered scroll or opened folders either).
+
+#### Changed
+
+- **"Remember previous state" now covers the last-focused row** ([#58](https://github.com/windviki/vBookmarks/issues/58)): previously it only restored scroll position and opened folders; the focus restore is folded in, so a single switch controls the whole "where I was" restore. The option's description is updated in all 42 locales.
+
+#### Polish
+
+- **iGuge conflict documented** ([#53](https://github.com/windviki/vBookmarks/issues/53), [#57](https://github.com/windviki/vBookmarks/issues/57)): the iGuge proxy/acceleration extension actively disables any installed extension that declares the `proxy` permission and is not on its whitelist — so vBookmarks could be disabled on every Chrome restart when both are installed. Verified against the store-shipped CRX; the Dead-link section now explains the cause and what affected users can do, and we're coordinating whitelisting with iGuge. vBookmarks keeps its `proxy` permission (it is only ever used, temporarily and marker-only, during a dead-link scan).
+- Developer tooling: vitest bumped 1 → 3.2.7, clearing 6 Dependabot advisories (dev-only — no user impact); the modified-key i18n flow and the release process are documented in `AGENTS.md`.
+
 ### v4.0.1 · 2026-08
 
 #### New

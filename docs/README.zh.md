@@ -227,6 +227,22 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 版本定为 **4.0.2**（`manifest.json`/`package.json`）；设计文档已转向 4.1.0 规划。
 
+### v4.0.3 · 2026-08
+
+#### 修复
+
+- **缩放模式下拖拽排序错位**（[#59](https://github.com/windviki/vBookmarks/issues/59)、[#60](https://github.com/windviki/vBookmarks/issues/60)）：弹窗缩放时松手落点错位——拖拽 overlay 的坐标与鼠标松开 drop 目标命中判定未按缩放系数换算。两处均已做 zoom 修正，回归测试覆盖 overlay 布局、入夹尺寸与 zoomLevel 重置。
+- **焦点恢复高亮可关闭**（[#58](https://github.com/windviki/vBookmarks/issues/58)）：每次打开弹窗都会重聚焦并闪烁上次聚焦的行（此前不受任何设置控制）。焦点恢复现并入已有 **"记住之前的状态"** 选项——关闭后弹窗完全全新打开，不再记忆高亮（也不再记忆滚动位置与已展开文件夹）。
+
+#### 变更
+
+- **"记住之前的状态"现覆盖上次聚焦项**（[#58](https://github.com/windviki/vBookmarks/issues/58)）：此前只恢复滚动位置与已展开文件夹，现把焦点恢复并入同一开关，一个选项控制整套"我上次在哪"的恢复；该选项说明已在全部 42 语种同步更新。
+
+#### 抛光
+
+- **iGuge 冲突已核实并文档化**（[#53](https://github.com/windviki/vBookmarks/issues/53)、[#57](https://github.com/windviki/vBookmarks/issues/57)）：iGuge 代理/加速类扩展会主动禁用任何声明 `proxy` 权限、且不在其白名单中的已安装扩展——当两者同时安装时 vBookmarks 可能每次重启 Chrome 都被禁用。已对照商店在售 CRX 核实根因；死链章节现说明成因与受影响用户的处理办法，并已同步与 iGuge 协调白名单。vBookmarks 保留 `proxy` 权限（仅死链扫描期间临时、只路由带标记探测 URL 地使用）。
+- 开发者工具：vitest 1 → 3.2.7，清除 6 条 Dependabot 告警（仅开发期依赖，用户零影响）；`AGENTS.md` 补充改动 key 的 i18n 流程与发版流程。
+
 ### v4.0.1 · 2026-08
 
 #### 新增
