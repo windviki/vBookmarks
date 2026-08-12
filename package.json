@@ -7,7 +7,7 @@
     "test:run": "vitest run"
   },
   "devDependencies": {
-    "vitest": "^1.0.0",
-    "sinon": "^17.0.0"
+    "sinon": "^17.0.0",
+    "vitest": "^3.2.7"
   }
 }
