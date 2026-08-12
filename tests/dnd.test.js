@@ -167,7 +167,13 @@ const setup = (opts = {}) => {
 
     const sepCalls = [];
     const resetSeparator = () => sepCalls.push(1);
-    const store = { get: k => (k === 'zoom' ? opts.zoom : undefined) };
+    const store = {
+        _zoom: opts.zoom,
+        get: k => (k === 'zoom' ? store._zoom : undefined),
+        set: (k, v) => {
+            if (k === 'zoom') store._zoom = v;
+        }
+    };
 
     const dnd = initDnd({ tree, store, rtl: !!opts.rtl, resetSeparator });
 
@@ -208,7 +214,7 @@ const setup = (opts = {}) => {
 
     return {
         dnd, el, byId, doc, body, tree, bookmarkClone, dropOverlay,
-        chrome: chromeStub, sepCalls, resetSeparator,
+        chrome: chromeStub, sepCalls, resetSeparator, store,
         makeBookmark, makeFolder, startDrag, move, up
     };
 };
@@ -741,5 +747,83 @@ describe('drop bail-out and the no-open flag', () => {
         ctx.up(dragged.a, 50, 50); // released over itself, never dragged out
         expect(ctx.sepCalls).toHaveLength(1);
         expect(ctx.dnd.consumeNoOpen()).toBe(false);
+    });
+});
+
+describe('zoom-level drag positioning (issue #59)', () => {
+    it('positions the bookmark insert line in layout coords under zoom', () => {
+        const ctx = setup({ zoom: '120' });
+        const dragged = ctx.makeBookmark('11');
+        const target = ctx.makeBookmark('2');
+        // _rect is a viewport (post-zoom) rect; layout = _rect / 1.2
+        target.a._rect = { top: 120, bottom: 144, height: 24, width: 200 };
+        ctx.startDrag(dragged.a);
+        ctx.move(target.a, 60, 240); // layout cursor 50, 200 → past the row's layout midpoint
+        // layout midpoint = 100 + (24/1.2)/2 = 110 → line at the row bottom (layout 120),
+        // NOT the raw viewport bottom (144) a non-scaled elRect would produce
+        expect(ctx.dropOverlay.style.top).toBe('120px');
+        expect(ctx.dropOverlay.className).toBe('bookmark');
+    });
+
+    it('drops below a bookmark under zoom, matching the unzoomed behavior', () => {
+        const nodes = {
+            '11': { id: '11', parentId: '1', index: 0 },
+            '1': { id: '1', syncing: true },
+            '2': { id: '2', parentId: '1', index: 3 }
+        };
+        const ctx = setup({ zoom: '120', nodes });
+        const dragged = ctx.makeBookmark('11');
+        const target = ctx.makeBookmark('2');
+        target.a._rect = { top: 120, bottom: 144, height: 24, width: 200 };
+        ctx.startDrag(dragged.a);
+        // layout cursor 115 → bottom half (>= 100 + 24/1.2/2 = 110) → after the target
+        ctx.move(target.a, 60, 138);
+        ctx.up(target.a, 60, 138);
+        expect(ctx.chrome.bookmarks.moveCalls).toEqual([['11', { parentId: '1', index: 4 }]]);
+        expect(target.li._inserted).toEqual([['afterend', dragged.li]]);
+    });
+
+    it('sizes the folder drop overlay in layout coords and drops inside under zoom', () => {
+        const nodes = {
+            '11': { id: '11', parentId: '1', index: 0 },
+            '1': { id: '1', syncing: true },
+            '5': { id: '5', parentId: '1', index: 2 }
+        };
+        const ctx = setup({ zoom: '120', nodes });
+        const dragged = ctx.makeBookmark('11');
+        const folder = ctx.makeFolder('5');
+        folder.span._rect = { top: 120, bottom: 144, height: 24, width: 200 };
+        const wrapUl = ctx.el('UL'); // the list the folder row sits in
+        wrapUl.dataset.level = '0';
+        folder.li.parentNode = wrapUl;
+        ctx.startDrag(dragged.a);
+        ctx.move(folder.span, 60, 132); // layout cursor 110 → folder middle zone
+        // overlay covers the folder row in layout coords (viewport 200×24 → /1.2)
+        expect(ctx.dropOverlay.className).toBe('folder');
+        expect(ctx.dropOverlay.style.top).toBe('100px');
+        expect(ctx.dropOverlay.style.width).toBe(`${200 / 1.2}px`);
+        expect(ctx.dropOverlay.style.height).toBe('20px');
+        ctx.up(folder.span, 60, 132); // middle → move into the folder
+        expect(ctx.chrome.bookmarks.moveCalls).toEqual([['11', { parentId: '5' }]]);
+    });
+
+    it('re-reads the zoom level on every drag start (clearing zoom resets to 1)', () => {
+        const ctx = setup({ zoom: '120' });
+        const dragged = ctx.makeBookmark('11');
+        const target = ctx.makeBookmark('2');
+        target.a._rect = { top: 120, bottom: 144, height: 24, width: 200 };
+        ctx.startDrag(dragged.a);
+        ctx.move(target.a, 120, 240);
+        expect(ctx.bookmarkClone.style.left).toBe('100px'); // 120 / 1.2
+
+        // zoom cleared mid-session → the next drag must not reuse 1.2
+        ctx.store.set('zoom', undefined);
+        const dragged2 = ctx.makeBookmark('12');
+        const target2 = ctx.makeBookmark('3');
+        target2.a._rect = { top: 100, bottom: 120, height: 20, width: 200 };
+        ctx.startDrag(dragged2.a);
+        ctx.move(target2.a, 120, 240);
+        expect(ctx.bookmarkClone.style.left).toBe('120px'); // 120 / 1
+        expect(ctx.bookmarkClone.style.top).toBe('240px');
     });
 });
