@@ -827,3 +827,32 @@ describe('zoom-level drag positioning (issue #59)', () => {
         expect(ctx.bookmarkClone.style.top).toBe('240px');
     });
 });
+
+describe('zoom tree-edge checks (issue #59 audit)', () => {
+    it('judges the tree-edge check in layout coords under zoom', () => {
+        const ctx = setup({ zoom: '120' });
+        ctx.tree.offsetTop = 50; // layout offset — shown at 50*1.2 = 60 (viewport)
+        const dragged = ctx.makeBookmark('11');
+        ctx.startDrag(dragged.a);
+        // hover the tree itself ABOVE its layout top: viewport 55 → layout
+        // 45.8 < 50 — the drag must be invalidated (a row target would mask
+        // the check, exactly as in the unzoomed case)
+        ctx.move(ctx.tree, 30, 55);
+        expect(ctx.dropOverlay.style.left).toBe('-999px'); // invalidated
+    });
+
+    it('auto-scrolls at the tree bottom edge in layout coords under zoom', () => {
+        const ctx = setup({ zoom: '120' });
+        ctx.tree.scrollHeight = 1000;
+        ctx.tree.offsetHeight = 200;
+        ctx.tree.scrollTop = 50;
+        const dragged = ctx.makeBookmark('11');
+        const target = ctx.makeBookmark('2');
+        target.a._rect = { top: 100, bottom: 120, height: 20, width: 200 };
+        ctx.startDrag(dragged.a);
+        // viewport 590 → layout 491.7 → inside the bottom band (layout 490..500)
+        ctx.move(target.a, 50, 590);
+        expect(intervals).toHaveLength(1);
+        expect(intervals[0][1]).toBe(100);
+    });
+});

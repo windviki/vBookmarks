@@ -210,8 +210,13 @@ export function initContextMenu(ctx = {}) {
     // is clamped to the space below the search bar and gets its own internal
     // scrollbar when too tall, so focus() never scrolls the document.
     const positionMenu = (menu, anchor, mode) => {
+        // #search is a zoomed body> child while the menu container itself is
+        // zoom:1 (body[data-zoom]>*:not(menu)) — scale the search bar's LAYOUT
+        // clamp up to viewport space so it compares against window.innerHeight
+        // and the anchor's viewport clientY on the same scale (issue #59 audit).
+        const zoomLevel = ctx.zoomLevel || 1;
         const searchBar = document.getElementById('search');
-        const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) : 0;
+        const menuMinY = searchBar ? (searchBar.offsetTop + searchBar.offsetHeight) * zoomLevel : 0;
         const viewportH = window.innerHeight;
         // The menu's own padding/border sits OUTSIDE the max-height content
         // box (default content-box sizing) — subtract that chrome from the

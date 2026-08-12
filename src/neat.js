@@ -330,7 +330,11 @@ import { applyUserStyle } from './userstyle.js';
         // single submenu entries (read at open time; defaults tab-group off,
         // sort on).
         get collapseTabGroupMenu() { return store.get('collapseTabGroupMenu', '0') === '1'; },
-        get collapseSortMenu() { return store.get('collapseSortMenu', '1') === '1'; }
+        get collapseSortMenu() { return store.get('collapseSortMenu', '1') === '1'; },
+        // The extension zoom factor (body[data-zoom] CSS zoom): the menu
+        // container itself is zoom:1 while #search is a zoomed body> child,
+        // so positionMenu scales the search-bar clamp up to viewport space.
+        get zoomLevel() { return store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1; }
     });
 
     // v4 task-2 slice C: the dead view's × overlay re-lays itself after

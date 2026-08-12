@@ -312,7 +312,8 @@ const setup = (opts = {}) => {
         // issue #48 follow-up: collapse settings (defaults match production —
         // tab-group off, sort on).
         get collapseTabGroupMenu() { return !!opts.collapseTabGroupMenu; },
-        get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; }
+        get collapseSortMenu() { return opts.collapseSortMenu === undefined ? true : !!opts.collapseSortMenu; },
+        get zoomLevel() { return opts.zoomLevel || 1; }
     });
 
     // A bookmark row: <li id="neat-tree-item-42" data-parentid="1"><a href><i>title</i></a></li>
@@ -2042,5 +2043,19 @@ describe('dupes group-head context menu (v4 task-3 #16)', () => {
             for (const id of ['dupes-group-clean', 'dupes-group-menu-sep1', 'dupes-group-toggle'])
                 expect(html.includes(`id="${id}"`), `${page} ${id}`).toBe(true);
         }
+    });
+});
+
+describe('zoom-clamped menu under the search bar (issue #59 audit)', () => {
+    it('scales the search-bar clamp to viewport space', () => {
+        const { bookmarkMenu, byId, el, makeBookmarkRow, openOn } = setup({ innerHeight: 600, zoomLevel: 1.2 });
+        const search = el('DIV', 'search');
+        search.offsetTop = 0;
+        search.offsetHeight = 40; // layout 40 → viewport 48 at zoom 1.2
+        byId.search = search;
+        bookmarkMenu.offsetHeight = 700;
+        openOn(makeBookmarkRow().a);
+        // 600 - (40*1.2) - 8 margin = 544, not the raw layout 40 → 552
+        expect(bookmarkMenu.style.maxHeight).toBe('544px');
     });
 });

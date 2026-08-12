@@ -163,10 +163,15 @@ export function initDnd(ctx = {}) {
             return;
         }
         draggedOut = true;
-        //cursor moves outside the tree
+        //cursor moves outside the tree — compare in LAYOUT space so these
+        //edge checks share a coordinate system with the drop-target math
+        //below (clientX/Y are viewport here; the tree's offset* are pre-zoom).
+        //The auto-scroll bands use the same layout cursor.
         const treeTop = $tree.offsetTop,
-            treeBottom = window.innerHeight;
-        if (clientX < 0 || clientY < treeTop || clientX > $tree.offsetWidth || clientY > treeBottom) {
+            treeBottom = window.innerHeight / zoomLevel;
+        const lx = clientX / zoomLevel,
+            ly = clientY / zoomLevel;
+        if (lx < 0 || ly < treeTop || lx > $tree.offsetWidth || ly > treeBottom) {
             bookmarkClone.style.left = '-999px';
             dropOverlay.style.left = '-999px';
             canDrop = false;
@@ -177,7 +182,7 @@ export function initDnd(ctx = {}) {
             treeOffsetHeight = $tree.offsetHeight;
         if (treeScrollHeight > treeOffsetHeight) { // only scroll when it's scrollable
             const treeScrollTop = $tree.scrollTop;
-            if (clientY <= treeTop + scrollTreeSpot) {
+            if (ly <= treeTop + scrollTreeSpot) {
                 if (treeScrollTop === 0) {
                     stopScrollTree();
                 } else if (!scrollTree)
@@ -185,7 +190,7 @@ export function initDnd(ctx = {}) {
                         $tree.scrollBy(0, -scrollTreeSpot);
                         dropOverlay.style.left = '-999px';
                     }, scrollTreeInterval);
-            } else if (clientY >= treeBottom - scrollTreeSpot) {
+            } else if (ly >= treeBottom - scrollTreeSpot) {
                 if (treeScrollTop === (treeScrollHeight - treeOffsetHeight)) {
                     stopScrollTree();
                 } else if (!scrollTree)
