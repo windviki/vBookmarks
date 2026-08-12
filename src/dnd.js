@@ -122,8 +122,13 @@ export function initDnd(ctx = {}) {
             e.preventDefault();
             draggedOut = false;
             draggedBookmark = el; //a
-            if (store.get('zoom'))
-                zoomLevel = parseInt(store.get('zoom'), 10) / 100;
+            // body[data-zoom] applies CSS zoom to body>* (incl. #tree,
+            // #bookmark-clone, #drop-overlay). style.top/left on those nodes
+            // are pre-zoom layout coords; mouse client* and getBoundingClientRect
+            // are viewport (post-zoom). Convert both sides with / zoomLevel.
+            // Always re-read: clearing zoom (100%) must reset to 1, not keep
+            // the previous drag's level. Min/max live in options.html only.
+            zoomLevel = store.get('zoom') ? parseInt(store.get('zoom'), 10) / 100 : 1;
             bookmarkClone.innerHTML = el.innerHTML; //<a>..</a>
             el.focus();
         }
@@ -216,11 +221,11 @@ export function initDnd(ctx = {}) {
             bookmarkClone.style.top = `${clientY}px`;
             bookmarkClone.style.left = `${rtl ? (clientX - bookmarkClone.offsetWidth) : clientX}px`;
             elRect = el.getBoundingClientRect();
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            //fixed elRectBottom
-            elRectBottom = elRect.bottom + document.body.scrollTop;
-            top = (clientY >= elRectTop + elRect.height / 2) ? elRectBottom : elRectTop;
+            // Viewport (zoomed) → pre-zoom layout, matching clientY above.
+            elRectTop = (elRect.top + document.body.scrollTop) / zoomLevel;
+            elRectBottom = (elRect.bottom + document.body.scrollTop) / zoomLevel;
+            const elRectHeight = elRect.height / zoomLevel;
+            top = (clientY >= elRectTop + elRectHeight / 2) ? elRectBottom : elRectTop;
             dropOverlay.className = 'bookmark';
             dropOverlay.style.top = `${top}px`;
             dropOverlay.style.left = rtl ? '0px' : `${(parseInt(el.style.webkitPaddingStart, 10) || 0) + 16}px`;
@@ -232,11 +237,9 @@ export function initDnd(ctx = {}) {
             bookmarkClone.style.left = `${clientX}px`;
             elRect = el.getBoundingClientRect();
             top = null;
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            //fixed elRectBottom
-            elRectBottom = elRect.bottom + document.body.scrollTop;
-            const elRectHeight = elRect.height;
+            elRectTop = (elRect.top + document.body.scrollTop) / zoomLevel;
+            elRectBottom = (elRect.bottom + document.body.scrollTop) / zoomLevel;
+            const elRectHeight = elRect.height / zoomLevel;
             const elParent = el.parentNode;
             if (!isDOMElementRootFolder(elParent)) {
                 if (clientY < elRectTop + elRectHeight * .3) {
@@ -249,8 +252,8 @@ export function initDnd(ctx = {}) {
                 dropOverlay.className = 'folder';
                 dropOverlay.style.top = `${elRectTop}px`;
                 dropOverlay.style.left = '0px';
-                dropOverlay.style.width = `${elRect.width}px`;
-                dropOverlay.style.height = `${elRect.height}px`;
+                dropOverlay.style.width = `${elRect.width / zoomLevel}px`;
+                dropOverlay.style.height = `${elRectHeight}px`;
             } else {
                 dropOverlay.className = 'bookmark';
                 dropOverlay.style.top = `${top}px`;
@@ -306,13 +309,12 @@ export function initDnd(ctx = {}) {
             draggedBookmarkParent.setAttribute("data-parentid", elParent.getAttribute("data-parentid"));
             onDrop();
         }
-        //fixed clientY
+        // Viewport → pre-zoom layout (same space as mousemove hit-testing).
         const clientY = (e.clientY + document.body.scrollTop) / zoomLevel;
         if (el.tagName === 'A') { //dropped target is bookmark
             elRect = el.getBoundingClientRect();
-            //fixed elRectTop
-            elRectTop = elRect.top + document.body.scrollTop;
-            moveBottom = (clientY >= elRectTop + elRect.height / 2);
+            elRectTop = (elRect.top + document.body.scrollTop) / zoomLevel;
+            moveBottom = (clientY >= elRectTop + elRect.height / zoomLevel / 2);
             chrome.bookmarks.get(id, node => {
                 if (!node || !node.length)
                     return;
@@ -338,8 +340,8 @@ export function initDnd(ctx = {}) {
         } else if (el.tagName === 'SPAN') { //dropped target is directory
             elRect = el.getBoundingClientRect();
             let move = 0; // 0 = middle, 1 = top, 2 = bottom
-            elRectTop = elRect.top;
-            const elRectHeight = elRect.height;
+            elRectTop = (elRect.top + document.body.scrollTop) / zoomLevel;
+            const elRectHeight = elRect.height / zoomLevel;
             elParent = el.parentNode; //li
             if (!isDOMElementRootFolder(elParent)) {
                 if (clientY < elRectTop + elRectHeight * .3) {
