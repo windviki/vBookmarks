@@ -1909,3 +1909,95 @@ describe('refocus() — keyboard.js Esc-chain delegation (K2)', () => {
         expect(ctx.input.focused).toBe(true);
     });
 });
+
+describe('focused result row — keyboard still works (focus-ownership regression)', () => {
+    // Regression: a Tab-focusable row (pre-tabindex) or a context-menu
+    // refocus can leave REAL focus on a result row while the palette's
+    // keyboard model (moveSelection/.selected) stays wired to the input.
+    // An unguarded row then degrades ↑↓/Home/End/Space to Chrome's native
+    // link defaults: Space scrolls the list, the CSS :hover follows the mouse
+    // and the .selected highlight stays frozen. The $results keydown guard
+    // must keep the input's contract reachable from a focused row.
+    it('bookmark and folder row links are tabindex="-1", out of the Tab order', () => {
+        const { palette, results, type } = setup({});
+        palette.open();
+        type('gmail');
+        expect(results._appended[0]._innerHTML)
+            .toMatch(/<a href="https:\/\/mail\.google\.com\/" tabindex="-1"/);
+        type('dev');
+        const folderRow = results._appended.find(li => li.className === 'palette-row palette-folder');
+        expect(folderRow._innerHTML).toMatch(/<a href="" tabindex="-1"/);
+    });
+
+    it('↑↓ on a focused row still drive the .selected highlight', () => {
+        const { palette, results, doc, keydown, type, selectedIndex } = setup({});
+        palette.open();
+        type('gmail');
+        const row = results._appended[0];
+        doc.activeElement = row; // stray Tab / menu refocus landed focus on a row
+        keydown(results, { key: 'ArrowDown', target: row });
+        expect(selectedIndex()).toBe(0);
+        keydown(results, { key: 'ArrowDown', target: row });
+        expect(selectedIndex()).toBe(1);
+        keydown(results, { key: 'ArrowUp', target: row });
+        expect(selectedIndex()).toBe(0);
+    });
+
+    it('Home/End on a focused row jump the selection to the list edges', () => {
+        const { palette, results, doc, keydown, type, selectedIndex } = setup({});
+        palette.open();
+        type('gmail');
+        const row = results._appended[1];
+        doc.activeElement = row;
+        keydown(results, { key: 'End', target: row });
+        expect(selectedIndex()).toBe(results._appended.length - 1);
+        keydown(results, { key: 'Home', target: row });
+        expect(selectedIndex()).toBe(0);
+    });
+
+    it('Enter on a focused row executes THAT row (not the popup link navigation)', () => {
+        const { palette, results, doc, actions, keydown, type } = setup({});
+        palette.open();
+        type('gmail');
+        const row = results._appended[1]; // mail archive
+        doc.activeElement = row;
+        const ev = keydown(results, { key: 'Enter', target: row });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(actions.openBookmarkCalls).toEqual(['https://gmail.com/inbox']);
+        expect(palette.isOpen()).toBe(false);
+    });
+
+    it('Space on a focused row is preventDefaulted (no native scroll) and executes', () => {
+        const { palette, results, doc, actions, keydown, type } = setup({});
+        palette.open();
+        type('gmail');
+        const row = results._appended[0];
+        doc.activeElement = row;
+        const ev = keydown(results, { key: ' ', target: row });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(actions.openBookmarkCalls).toEqual(['https://mail.google.com/']);
+    });
+
+    it('Ctrl+Enter on a focused row opens a new foreground tab, like the input path', () => {
+        const { palette, results, doc, actions, keydown, type } = setup({});
+        palette.open();
+        type('gmail');
+        const row = results._appended[0];
+        doc.activeElement = row;
+        keydown(results, { key: 'Enter', ctrlKey: true, target: row });
+        expect(actions.openBookmarkNewTabCalls).toEqual([['https://mail.google.com/', true]]);
+        expect(actions.openBookmarkCalls).toEqual([]);
+    });
+
+    it('a keydown on a non-row (the input) is left alone — no interference', () => {
+        const { palette, input, keydown, type, selectedIndex } = setup({});
+        palette.open();
+        type('gmail');
+        // focus on the input, as normal: ↑↓ still move the selection, Enter
+        // still executes, and the row guard must not double-handle.
+        keydown(input, { key: 'ArrowDown' });
+        expect(selectedIndex()).toBe(0);
+        keydown(input, { key: 'ArrowDown' });
+        expect(selectedIndex()).toBe(1);
+    });
+});

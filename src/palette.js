@@ -351,6 +351,11 @@ export function initPalette(ctx = {}) {
         // existing context-menu.js handler (which walks up to nearest a/span and
         // strips the results-item- prefix) can open bookmark/folder context menus
         // on palette rows — no special-casing needed.
+        // The <a>s are tabindex="-1" like every other bookmark row in the app:
+        // the palette's keyboard model is anchored on the input, so a Tab-focusable
+        // row would strand the ↑↓/Space keys on a link (native scroll + a frozen
+        // .selected highlight). The $results keydown guard below is the safety net
+        // for any path that still focuses a row (context-menu refocus, future code).
         if (row.kind === 'command') {
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>` +
                 (row.slash ? `<span class="palette-slash">${row.slash}</span>` : '');
@@ -364,7 +369,7 @@ export function initPalette(ctx = {}) {
             li.id = row.id ? `results-item-${row.id}` : '';
             // match-char <mark> highlight, same as the search view (#results)
             const titleHtml = highlightTitlePositions(row.title, row.positions);
-            li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${titleHtml}</i></a>`;
+            li.innerHTML = `<a href="" tabindex="-1" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${titleHtml}</i></a>`;
         } else {
             // bookmark row: <a> tag so context-menu.js recognises it
             li.id = row.id ? `results-item-${row.id}` : '';
@@ -372,7 +377,7 @@ export function initPalette(ctx = {}) {
             const titleHtml = row.title
                 ? highlightTitlePositions(row.title, row.positions)
                 : htmlspecialchars(row.url);
-            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt="" loading="lazy"></div><i>${titleHtml}</i></a>`;
+            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" tabindex="-1" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt="" loading="lazy"></div><i>${titleHtml}</i></a>`;
         }
         const i = rows.length;
         // Keep the input focused through the click: preventing the mousedown
@@ -557,6 +562,51 @@ export function initPalette(ctx = {}) {
             selected = (selected + delta + rows.length) % rows.length;
         updateSelection();
     };
+
+    // Safety net for a focused result ROW (the input owns the keyboard model,
+    // but a context-menu refocus or future code can still put focus on a row —
+    // e.g. the pre-tabindex Tab path). Without this, ↑↓/Home/End and Space
+    // degrade to Chrome's native link defaults: arrow keys and Space scroll
+    // the list under the stationary mouse, so the CSS :hover follows the mouse
+    // while the .selected highlight (input-driven) stays frozen — the focus
+    // ownership bug. Delegated on the list so re-renders can't drop it.
+    $results.addEventListener('keydown', e => {
+        let li = e.target;
+        while (li && li.parentNode !== $results)
+            li = li.parentNode;
+        if (!li)
+            return; // focus on the input / a menu / a toolbar, not a row
+        const idx = rows.findIndex(r => r.el === li);
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                moveSelection(1);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                moveSelection(-1);
+                break;
+            case 'Home':
+                e.preventDefault();
+                if (rows.length) {
+                    selected = 0;
+                    updateSelection();
+                }
+                break;
+            case 'End':
+                e.preventDefault();
+                if (rows.length) {
+                    selected = rows.length - 1;
+                    updateSelection();
+                }
+                break;
+            case ' ':   // Chrome activates links on Enter only — kill the scroll
+            case 'Enter':
+                e.preventDefault();
+                execute(idx >= 0 ? idx : (selected >= 0 ? selected : 0), e.ctrlKey || e.metaKey);
+                break;
+        }
+    });
 
     $input.addEventListener('input', () => {
         // The × affordance appears only with a query (search box contract).
