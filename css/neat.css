@@ -1370,6 +1370,21 @@ body.panel-mode #resizer-y {
     color: inherit;
 }
 
+/* command-palette result rows share the same match-char highlight as search */
+#palette-results mark {
+    background-color: color-mix(in srgb, var(--vbm-accent) 18%, transparent);
+    color: var(--vbm-accent);
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 0 1px;
+    margin: 0 -1px;
+}
+
+#palette-results li.selected mark {
+    background-color: transparent;
+    color: inherit;
+}
+
 /* no-results row: text only, no focusable element inside, so keyboard
    navigation and clicks ignore it. v4 task-2: the same empty state serves
    the list views and the search-history area. */

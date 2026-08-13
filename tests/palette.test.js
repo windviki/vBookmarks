@@ -750,7 +750,7 @@ describe('result composition', () => {
         // bookmark rows.
         const firstBookmark = classes.indexOf('palette-row palette-bookmark');
         expect(firstBookmark).toBeGreaterThanOrEqual(2);
-        expect(results._appended[firstBookmark]._innerHTML).toContain('New bookmark ideas');
+        expect(results._appended[firstBookmark]._innerHTML).toContain('<mark>New</mark> bookmark ideas');
         const last = results._appended[results._appended.length - 1]._innerHTML;
         expect(last).toContain("Search 'new' in Search view");
     });
@@ -782,8 +782,9 @@ describe('result composition', () => {
         type('gmail');
         // two bookmark hits + the bridge row
         expect(results._appended).toHaveLength(3);
-        // bookmark rows now use <a> + <i> structure matching search results
-        expect(results._appended[0]._innerHTML).toContain('<i>Gmail</i>');
+        // bookmark rows now use <a> + <i> structure matching search results,
+        // with the matched chars wrapped in <mark> (same as the search view)
+        expect(results._appended[0]._innerHTML).toContain('<i><mark>Gmail</mark></i>');
         expect(results._appended[1]._innerHTML).toContain('<i>mail archive</i>');
         expect(results._appended[2]._innerHTML).toContain("Search 'gmail' in Search view");
     });

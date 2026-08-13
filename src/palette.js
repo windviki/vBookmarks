@@ -86,6 +86,7 @@ import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
 import { FOLDER_ICON } from './icons.js';
 import { loadCustomCommands, saveCustomCommands, sortCustoms, matchCustom, executeCustom, SLASH_RE } from './palette-commands.js';
 import { htmlspecialchars } from './escape.js';
+import { highlightTitlePositions } from './tree-render.js';
 
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -361,12 +362,17 @@ export function initPalette(ctx = {}) {
             }
         } else if (row.kind === 'folder') {
             li.id = row.id ? `results-item-${row.id}` : '';
-            li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${htmlspecialchars(row.title)}</i></a>`;
+            // match-char <mark> highlight, same as the search view (#results)
+            const titleHtml = highlightTitlePositions(row.title, row.positions);
+            li.innerHTML = `<a href="" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${titleHtml}</i></a>`;
         } else {
             // bookmark row: <a> tag so context-menu.js recognises it
-            const title = row.title || row.url;
             li.id = row.id ? `results-item-${row.id}` : '';
-            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt="" loading="lazy"></div><i>${htmlspecialchars(title)}</i></a>`;
+            // title hit positions get <mark>; a missing title falls back to the url
+            const titleHtml = row.title
+                ? highlightTitlePositions(row.title, row.positions)
+                : htmlspecialchars(row.url);
+            li.innerHTML = `<a href="${htmlspecialchars(row.url)}" class="tree-item-link"><div class="favicon-container"><img src="${faviconUrl(row.url)}" width="16" height="16" alt="" loading="lazy"></div><i>${titleHtml}</i></a>`;
         }
         const i = rows.length;
         // Keep the input focused through the click: preventing the mousedown
@@ -462,8 +468,8 @@ export function initPalette(ctx = {}) {
             for (let i = 0, l = hits.length; i < l; i++) {
                 const hit = hits[i];
                 addRow(hit.isFolder ?
-                    { kind: 'folder', id: hit.id, title: hit.title } :
-                    { kind: 'bookmark', id: hit.id, title: hit.title, url: hit.url });
+                    { kind: 'folder', id: hit.id, title: hit.title, positions: hit.positions } :
+                    { kind: 'bookmark', id: hit.id, title: hit.title, url: hit.url, positions: hit.positions });
             }
             // §4.4 bridge row: a non-empty plain query always ends with the
             // jump into the search view carrying the query — it doubles as

@@ -107,6 +107,32 @@ export const relTimeLabel = (ts, _m) => {
     return b.n ? _m(b.key, `${b.n}`) : _m(b.key);
 };
 
+// Escape a title and wrap the characters at the given (pre-escape) indices in
+// <mark> tags. Built one character at a time so escaping never shifts the
+// indices. Pure (only htmlspecialchars) so it is exported at top level for
+// other renderers (palette.js) to reuse the same match highlight.
+export const highlightTitlePositions = (title, positions) => {
+    if (!positions || !positions.length)
+        return htmlspecialchars(title);
+    const posSet = new Set(positions);
+    let html = '';
+    let inMark = false;
+    for (let i = 0; i < title.length; i++) {
+        const hit = posSet.has(i);
+        if (hit && !inMark) {
+            html += '<mark>';
+            inMark = true;
+        } else if (!hit && inMark) {
+            html += '</mark>';
+            inMark = false;
+        }
+        html += htmlspecialchars(title.charAt(i));
+    }
+    if (inMark)
+        html += '</mark>';
+    return html;
+};
+
 export function initTreeRender(ctx = {}) {
     const store = ctx.store;
     const separatorManager = ctx.separatorManager;
@@ -119,31 +145,6 @@ export function initTreeRender(ctx = {}) {
         favUrl.searchParams.set("pageUrl", url);
         favUrl.searchParams.set("size", "32");
         return favUrl.toString();
-    };
-
-    // Escape a title and wrap the characters at the given (pre-escape) indices
-    // in <mark> tags. Built one character at a time so escaping never shifts
-    // the indices. Used to highlight fuzzy-search matches (Phase 2b).
-    const highlightTitlePositions = (title, positions) => {
-        if (!positions || !positions.length)
-            return htmlspecialchars(title);
-        const posSet = new Set(positions);
-        let html = '';
-        let inMark = false;
-        for (let i = 0; i < title.length; i++) {
-            const hit = posSet.has(i);
-            if (hit && !inMark) {
-                html += '<mark>';
-                inMark = true;
-            } else if (!hit && inMark) {
-                html += '</mark>';
-                inMark = false;
-            }
-            html += htmlspecialchars(title.charAt(i));
-        }
-        if (inMark)
-            html += '</mark>';
-        return html;
     };
 
     const generateBookmarkHTML = (title, url, extras, bookmarkId, titlePositions, meta) => {
