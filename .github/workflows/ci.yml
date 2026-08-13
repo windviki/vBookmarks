@@ -33,3 +33,15 @@ jobs:
 
       - name: Package the extension zip
         run: python3 scripts/package.py
+
+  # Real-browser gate: loads the extension and asserts zero page/console
+  # errors. This is the ONLY gate that catches "the popup crashes on load" —
+  # the vitest suites never import src/neat.js (the app shell), so an
+  # init-time TDZ/ReferenceError slips past them (the v4.0.4 regression).
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Real-browser smoke (zero console errors)
+        run: scripts/harness/run.sh --smoke-only

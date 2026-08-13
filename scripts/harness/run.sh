@@ -15,7 +15,14 @@
 #   verify-menu-extreme.js  — DPR × zoom × size sweep (menus never clip/dismiss)
 # diag/ holds manual diagnostic probes (run on demand, see rerun.sh).
 #
-# Usage: scripts/harness/run.sh
+# Usage: scripts/harness/run.sh [--smoke-only]
+#   --smoke-only  run only smoke.js (zero console errors + v4 behavior) —
+#                 the release gate for "the extension loads without crashing".
+#                 The full run adds the keyboard/scrollbar/menu verify layers.
+SMOKE_ONLY=0
+if [[ "${1:-}" == "--smoke-only" ]]; then
+    SMOKE_ONLY=1
+fi
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -50,6 +57,10 @@ run_verify() {
 
 # Layer 1 — smoke (zero console errors + v4 behavior; captures smoke/* shots).
 run_verify smoke.js
+if [[ "$SMOKE_ONLY" == "1" ]]; then
+    echo "Harness gate (smoke-only): PASS — captures in $OUT"
+    exit 0
+fi
 # Layer 2a — keyboard/view (blocking). Esc chains stay in vitest
 # (docs/cdp-escape-limitation.md).
 run_verify verify-keyboard.js

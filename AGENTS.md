@@ -75,7 +75,7 @@ Supporting directories:
 - `donation/` — donation page assets
 - `assets/store/` — screenshots used only by the store listing / READMEs; `assets/design/` — design sources (`icon.psd`, `neat.xar`) and unused alternative icons. Both excluded from packaging.
 
-There is a `.gitignore` (ignores `node_modules/`), and an ESLint flat config (`eslint.config.js`, v8 via `ESLINT_USE_FLAT_CONFIG=true`, error-level gate: `no-undef` + `no-extra-boolean-cast` on `src/`, plus the vitest recommended rules on `tests/` — `vitest/valid-expect` is configured with `maxArgs: 2` because vitest's `expect(actual, message)` is valid, and `vitest/expect-expect` names the assertion helpers `assertProps`/`ruleBody`/`zIndexOf`/`extractBlock` that assert internally in the CSS contract suites). `npm run lint` runs it; a GitHub Actions CI at `.github/workflows/ci.yml` (since 4.0 — on push/PR it runs the vitest suites, the eslint lint gate, `i18n.py missing`/`verify`, and a `package.py` smoke build).
+There is a `.gitignore` (ignores `node_modules/`), and an ESLint flat config (`eslint.config.js`, v8 via `ESLINT_USE_FLAT_CONFIG=true`, error-level gate: `no-undef` + `no-extra-boolean-cast` on `src/`, plus the vitest recommended rules on `tests/` — `vitest/valid-expect` is configured with `maxArgs: 2` because vitest's `expect(actual, message)` is valid, and `vitest/expect-expect` names the assertion helpers `assertProps`/`ruleBody`/`zIndexOf`/`extractBlock` that assert internally in the CSS contract suites). `npm run lint` runs it; a GitHub Actions CI at `.github/workflows/ci.yml` (since 4.0 — on push/PR it runs the vitest suites, the eslint lint gate, `i18n.py missing`/`verify`, a `package.py` build, and a real-browser smoke job `scripts/harness/run.sh --smoke-only` that catches load-time crashes the unit suites cannot — see the Release process Step 0).
 
 ## Build, Test, and Development Commands
 
@@ -129,6 +129,14 @@ All 43 locales currently hold the same 379 keys as the `en` baseline — keys wi
 ### Release process (发布流程 = git发布 + 商店发布)
 
 The release is **one process with two sequential steps**. **git发布** prepares version / changelog / tag / package and pushes; **商店发布** uploads the packaged zip to the Chrome Web Store via the CWS API **V2** and submits it for review. Store publishing requires git发布 to have been executed for the same version — enforced automatically by the pre-check in `scripts/webstore/publish.js` (见 Step 2)。
+
+**Step 0 — 加载冒烟门禁 (release smoke, 发版前置必跑)**: the vitest suites never import `src/neat.js` (the app shell), so an init-time crash (e.g. a TDZ/ReferenceError) passes `npm run test:run` green and only surfaces when the extension actually loads. **Before tagging**, run the real-browser smoke — this is the gate for "the popup loads with zero console errors":
+
+```bash
+scripts/harness/run.sh --smoke-only   # Docker real-browser load + zero page/console errors
+```
+
+(Full harness `scripts/harness/run.sh` adds the keyboard/scrollbar/menu verify layers. The same smoke runs in CI on every push/PR.)
 
 **Step 1 — git发布**(repo-side: version bump → changelog → commit → tag → package → push):
 
