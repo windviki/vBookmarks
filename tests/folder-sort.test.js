@@ -67,6 +67,31 @@ afterEach(() => {
     delete globalThis.window;
 });
 
+describe('createFolderSorter — lazy undo/treeView access (TDZ gate)', () => {
+    // neat.js passes undo/treeView as GETTERS over consts declared further down;
+    // the sorter must not read them at construction (the getter would run in
+    // the temporal dead zone). This is the regression gate for the reported
+    // "Cannot access 'undo' before initialization" startup crash.
+    it('does not read undo/treeView at construction, only on the sort execution', async () => {
+        let undoReads = 0;
+        let treeViewReads = 0;
+        const sorter = createFolderSorter({
+            _m: key => key,
+            get undo() { undoReads++; return { toastAction: () => {} }; },
+            get treeView() { treeViewReads++; return { generateTree: () => {} }; }
+        });
+        // construction must not touch the getters
+        expect(undoReads).toBe(0);
+        expect(treeViewReads).toBe(0);
+
+        getSubTreeImpl = (id, cb) => cb(FOLDER);
+        sorter('5', { by: 'title', foldersFirst: true, recursive: false });
+        await flush();
+        expect(treeViewReads).toBeGreaterThan(0); // generateTree read on rebuild
+        expect(undoReads).toBeGreaterThan(0);      // toast wiring read after the chain
+    });
+});
+
 describe('createFolderSorter — the serial move chain', () => {
     it('sorts a folder’s children by title via one serial move per target index', async () => {
         getSubTreeImpl = (id, cb) => cb(FOLDER);

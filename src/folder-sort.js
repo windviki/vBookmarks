@@ -10,8 +10,14 @@
  *
  * deps: undo (or undefined — the toast branch is skipped then), treeView
  * (generateTree to rebuild after a sort / an undo replay), _m (i18n).
+ *
+ * undo / treeView are read LAZILY inside sortFolderContents, NOT destructured
+ * from ctx here — neat.js passes them as getters over consts declared further
+ * down, so destructuring at construction would evaluate the getters while
+ * `undo`/`treeView` are still in the temporal dead zone (ReferenceError).
  */
-export const createFolderSorter = ({ undo, treeView, _m }) => {
+export const createFolderSorter = (ctx) => {
+    const _m = ctx._m;
     const sortLock = window.VBMSort.createSortLock();
 
     // Move the ids of one level to their target index in ascending order —
@@ -28,6 +34,9 @@ export const createFolderSorter = ({ undo, treeView, _m }) => {
         chain.then(() => moveToIndex(ids)), Promise.resolve());
 
     const sortFolderContents = (folderId, opts) => {
+        // Read on first use — by then neat.js has initialised undo/treeView.
+        const undo = ctx.undo;
+        const treeView = ctx.treeView;
         if (!sortLock.acquire())
             return;
         chrome.bookmarks.getSubTree(folderId, nodes => {
