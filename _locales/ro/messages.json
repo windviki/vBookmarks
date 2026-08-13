@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Activează statisticile de vizită"
   },
+  "optionFaviconContrast": {
+    "message": "Inversează faviconurile cu contrast scăzut"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Faviconurile albe pe temele deschise și cele negre pe temele închise sunt inversate pentru a rămâne vizibile. Fiecare favicon este eșantionat o singură dată la încărcare — fără cost în timpul navigării."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval de actualizare"
   },

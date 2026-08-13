@@ -752,6 +752,12 @@
   "optionStatsEnabled": {
     "message": "Овозможи статистики за посети"
   },
+  "optionFaviconContrast": {
+    "message": "Инвертирај нискоконтрастни favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Белите икони на светли теми и црните икони на темни теми се инвертираат за да останат видливи. Секоја икона се анализира еднаш кога ќе се вчита — без трошок додека прелистувате."
+  },
   "optionSyncRefreshInterval": {
     "message": "Интервал на освежување"
   },

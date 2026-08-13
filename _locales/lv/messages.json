@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Iespējot apmeklējumu statistiku"
   },
+  "optionFaviconContrast": {
+    "message": "Apgriezt zema kontrasta favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Baltas ikonas gaišajos motīvos un melnas ikonas tumšajos motīvos tiek apgrieztas, lai tās paliktu redzamas. Katra ikona tiek paraugota vienu reizi, kad tā ielādējas — bez papildu slodzes pārlūkošanas laikā."
+  },
   "optionSyncRefreshInterval": {
     "message": "Atsvaidzināšanas intervāls"
   },

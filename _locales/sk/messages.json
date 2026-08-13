@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Povoliť štatistiky návštev"
   },
+  "optionFaviconContrast": {
+    "message": "Invertovať favikony s nízkym kontrastom"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Biele ikony vo svetlých témach a čierne ikony v tmavých témach sú invertované, aby zostali viditeľné. Každá ikona sa pri načítaní raz vzorkuje – počas prehliadania to nič nestojí."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval obnovenia"
   },

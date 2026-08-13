@@ -64,6 +64,8 @@
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme',
+        // v4.1: favicon 反色服务（默认开启）
+        'faviconContrast',
         // issue #33: folder-sort options JSON {by, foldersFirst, recursive}
         // (shared by the sort dialog and the options page Sorting group)
         'sortOptions',

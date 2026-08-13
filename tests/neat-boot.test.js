@@ -83,8 +83,12 @@ describe('neat.js boot wiring (pre-store.ready)', () => {
         const guards = body._listeners['contextmenu'] || [];
         expect(guards).toHaveLength(1);
 
-        // favicon fallback installed against the document
+        // favicon fallback installed against the document, wired with the
+        // v4.1 contrast-service context (lazy getters — no store access here)
         expect(initFaviconFallback).toHaveBeenCalledTimes(1);
-        expect(initFaviconFallback).toHaveBeenCalledWith(globalThis.window.document);
+        const [docArg, ctxArg] = initFaviconFallback.mock.calls[0];
+        expect(docArg).toBe(globalThis.window.document);
+        expect(typeof ctxArg.contrastEnabled).toBe('function');
+        expect(typeof ctxArg.themeIsDark).toBe('function');
     });
 });

@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Aktivera besöksstatistik"
   },
+  "optionFaviconContrast": {
+    "message": "Invertera kontrastsvaga favicons"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Vita ikoner på ljusa teman och svarta ikoner på mörka teman inverteras så att de förblir synliga. Varje ikon kontrolleras en gång vid inläsning – ingen påverkan på prestandan under surfning."
+  },
   "optionSyncRefreshInterval": {
     "message": "Uppdateringsintervall"
   },

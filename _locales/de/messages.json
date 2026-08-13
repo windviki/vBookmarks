@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Besuchsstatistik aktivieren"
   },
+  "optionFaviconContrast": {
+    "message": "Kontrastarme Favicons invertieren"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Weiße Favicons auf hellen Designs und schwarze Favicons auf dunklen Designs werden invertiert, damit sie sichtbar bleiben. Jedes Favicon wird beim Laden einmal erfasst – ohne Kosten beim Surfen."
+  },
   "optionSyncRefreshInterval": {
     "message": "Aktualisierungsintervall"
   },

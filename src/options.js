@@ -111,7 +111,10 @@ const $ = id => document.getElementById(id);
             { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
             // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
             // off means zero writes (collection stops immediately)
-            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false }
+            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
+            // v4.1: favicon 反色服务 —— 亮/暗主题下偏白/偏黑的单色 icon 反色，
+            // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
+            { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false }
         ];
         await bindSettingsList(viewSettings);
         // Turning search history off also wipes the stored history (the hint
@@ -442,6 +445,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-search-history-hint').innerText = __m('optionSearchHistoryHint');
         document.getElementById('option-stats-enabled').innerText = __m('optionStatsEnabled');
         document.getElementById('stats-clear').innerText = __m('statsClearData');
+        document.getElementById('option-favicon-contrast').innerText = __m('optionFaviconContrast');
+        document.getElementById('option-favicon-contrast-hint').innerText = __m('optionFaviconContrastHint');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
         document.getElementById('option-theme').innerText = __m('optionTheme');

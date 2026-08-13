@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Activer les statistiques de visites"
   },
+  "optionFaviconContrast": {
+    "message": "Inverser les favicons à faible contraste"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Les icônes blanches sur les thèmes clairs et les icônes noires sur les thèmes sombres sont inversées pour rester visibles. Chaque icône est échantillonnée une fois lors de son chargement, sans coût pendant la navigation."
+  },
   "optionSyncRefreshInterval": {
     "message": "Intervalle de rafraîchissement"
   },

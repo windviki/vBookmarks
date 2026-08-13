@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Włącz statystyki odwiedzin"
   },
+  "optionFaviconContrast": {
+    "message": "Odwracaj niskokontrastowe favicony"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Białe ikony na jasnych motywach i czarne na ciemnych są odwracane, by pozostały widoczne. Każda ikona jest próbkowana raz podczas wczytywania — bez wpływu na przeglądanie."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interwał odświeżania"
   },

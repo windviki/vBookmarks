@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "הפעל סטטיסטיקות ביקור"
   },
+  "optionFaviconContrast": {
+    "message": "הפוך אייקוני אתרים בעלי ניגודיות נמוכה"
+  },
+  "optionFaviconContrastHint": {
+    "message": "אייקונים לבנים בערכות נושא בהירות ואייקונים שחורים בערכות נושא כהות מופלים כדי שיישארו גלויים. כל אייקון נדגם פעם אחת בעת טעינתו — ללא עלות במהלך הגלישה."
+  },
   "optionSyncRefreshInterval": {
     "message": "מרווח רענון"
   },

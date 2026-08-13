@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Bezoekstatistieken inschakelen"
   },
+  "optionFaviconContrast": {
+    "message": "Contrastarme favicons omkeren"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Witte pictogrammen op lichte thema's en zwarte pictogrammen op donkere thema's worden omgekeerd, zodat ze zichtbaar blijven. Elk pictogram wordt bij het laden één keer gecontroleerd — zonder extra kosten tijdens het browsen."
+  },
   "optionSyncRefreshInterval": {
     "message": "Vernieuwingsinterval"
   },

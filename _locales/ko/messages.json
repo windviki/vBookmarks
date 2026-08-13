@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "방문 통계 활성화"
   },
+  "optionFaviconContrast": {
+    "message": "저대비 파비콘 반전"
+  },
+  "optionFaviconContrastHint": {
+    "message": "밝은 테마의 흰색 아이콘과 어두운 테마의 검은색 아이콘은 계속 보이도록 반전됩니다. 각 아이콘은 로드될 때 한 번만 샘플링되므로 브라우징 중에는 추가 비용이 없습니다."
+  },
   "optionSyncRefreshInterval": {
     "message": "새로고침 간격"
   },

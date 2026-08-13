@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Látogatási statisztikák engedélyezése"
   },
+  "optionFaviconContrast": {
+    "message": "Alacsony kontrasztú faviconok invertálása"
+  },
+  "optionFaviconContrastHint": {
+    "message": "A világos témák fehér ikonjai és a sötét témák fekete ikonjai invertálva lesznek, hogy láthatók maradjanak. Minden ikon a betöltésekor egyszer kerül mintavételezésre – böngészés közben nincs többletterhelés."
+  },
   "optionSyncRefreshInterval": {
     "message": "Frissítési időköz"
   },

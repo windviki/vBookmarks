@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Ziyaret istatistiklerini etkinleştir"
   },
+  "optionFaviconContrast": {
+    "message": "Düşük kontrastlı favicon'ları ters çevir"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Açık temalardaki beyaz simgeler ve koyu temalardaki siyah simgeler, görünür kalmaları için ters çevrilir. Her simge yüklendiğinde bir kez örneklenir; gezinme sırasında ek maliyet yoktur."
+  },
   "optionSyncRefreshInterval": {
     "message": "Yenileme aralığı"
   },

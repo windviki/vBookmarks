@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "تمكين إحصائيات الزيارة"
   },
+  "optionFaviconContrast": {
+    "message": "عكس الأيقونات منخفضة التباين"
+  },
+  "optionFaviconContrastHint": {
+    "message": "يتم عكس الأيقونات البيضاء في السمات الفاتحة والأيقونات السوداء في السمات الداكنة حتى تبقى مرئية. يتم تحليل كل أيقونة مرة واحدة عند تحميلها — دون أي تكلفة أثناء التصفح."
+  },
   "optionSyncRefreshInterval": {
     "message": "فترة التحديث"
   },

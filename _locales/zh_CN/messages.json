@@ -1213,6 +1213,12 @@
     "message": "启用访问统计",
     "description": "选项页复选框（视图分组）：访问统计采集的总开关。"
   },
+  "optionFaviconContrast": {
+    "message": "反转低对比度图标"
+  },
+  "optionFaviconContrastHint": {
+    "message": "浅色主题上的白色图标和深色主题上的黑色图标会被反转，以便保持可见。每个图标在加载时采样一次，浏览时不会产生额外开销。"
+  },
   "statsSortByCount": {
     "message": "按次数",
     "description": "统计视图排序段：按访问次数降序。"

@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Omogući statistiku posjeta"
   },
+  "optionFaviconContrast": {
+    "message": "Invertiraj ikone s niskim kontrastom"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Bijele ikone na svijetlim temama i crne ikone na tamnim temama se invertiraju kako bi ostale vidljive. Svaka se ikona uzorkuje samo jednom kad se učita — bez dodatnog opterećenja tijekom pregledavanja."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval osvježavanja"
   },

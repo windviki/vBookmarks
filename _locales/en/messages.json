@@ -1341,6 +1341,14 @@
     "message": "Enable visit statistics",
     "description": "Options checkbox (Views group): master switch for visit-statistics collection."
   },
+  "optionFaviconContrast": {
+    "message": "Invert low-contrast favicons",
+    "description": "Options checkbox (Views group): invert near-monochrome favicons that are invisible on the opposite background (white icons on light themes, black icons on dark themes). On by default."
+  },
+  "optionFaviconContrastHint": {
+    "message": "White icons on light themes and black icons on dark themes are inverted so they stay visible. Each icon is sampled once when it loads — no cost while browsing.",
+    "description": "Options hint under the favicon-contrast checkbox, explaining the low-overhead one-time-per-icon sampling."
+  },
   "statsSortByCount": {
     "message": "By count",
     "description": "Stats view sort segment: order rows by visit count, highest first."

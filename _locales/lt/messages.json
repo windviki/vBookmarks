@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Įjungti lankomumo statistiką"
   },
+  "optionFaviconContrast": {
+    "message": "Apversti žemo kontrasto svetainių piktogramas"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Baltos piktogramos šviesiose temose ir juodos piktogramos tamsiose temose yra apverčiamos, kad jos liktų matomos. Kiekviena piktograma yra imama vieną kartą, kai įkeliama – jokios papildomos apkrovos naršant."
+  },
   "optionSyncRefreshInterval": {
     "message": "Atnaujinimo intervalas"
   },

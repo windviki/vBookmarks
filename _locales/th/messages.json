@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "เปิดใช้งานสถิติการเข้าชม"
   },
+  "optionFaviconContrast": {
+    "message": "กลับสี favicon ที่ความคมชัดต่ำ"
+  },
+  "optionFaviconContrastHint": {
+    "message": "ไอคอนสีขาวบนธีมสีอ่อนและไอคอนสีดำบนธีมสีเข้มจะถูกกลับสีเพื่อให้มองเห็นได้ชัดเจน แต่ละไอคอนจะถูกสุ่มตัวอย่างหนึ่งครั้งเมื่อโหลด — ไม่มีค่าใช้จ่ายขณะท่องเว็บ"
+  },
   "optionSyncRefreshInterval": {
     "message": "ช่วงเวลารีเฟรช"
   },

@@ -690,6 +690,15 @@ body.linux input {
     font-style: normal;
 }
 
+/* v4.1 favicon contrast service: 亮色主题下偏白的单色 icon、暗色主题下偏黑
+   的单色 icon 反色，保证在相反背景上仍然可见。类名由 favicon-fallback.js 在
+   每 src 一次采样后按需加上；placeholder 已换成 currentColor SVG 随主题走，
+   不会落到这里。仅作用于真实 favicon <img>。 */
+.favicon-contrast-invert {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+}
+
 #results ul li a:hover i,
 #tree ul li a:hover i {
     text-decoration: underline;
@@ -2199,11 +2208,18 @@ body.no-view-tabs #view-tabs {
     }
     /* v4.1 visual fix: 双行布局（icon 槽 + 右侧两行文本）下，图标与文本块的
        间隙沿用单行树视图的 4px 读起来贴得太紧——两行文本块更高，同样间隙显得
-       更局促。参考树视图图标槽节奏（20px 槽 + 4px 距）适度加宽到 8px；用
-       :has(.row-sub) 精确命中真正的双行行，单行行保持与树一致的 4px，双行行
-       在所有视图（最近/搜索/死链/去重/统计）统一。 */
+       更局促。参考树视图图标槽节奏（20px 槽 + 4px 距）把间隙加宽到 8px，并把
+       图标 16→18px、槽 20→22px（保持 2px 边距比例）以适配两行行高。用
+       :has(.row-sub) 精确命中真正的双行行，单行行保持 16/20/4px 与树一致，
+       双行行在所有视图（最近/搜索/死链/去重/统计）统一。 */
     .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
+        width: 22px;
         margin-inline-end: 8px;
+    }
+    .vbm-row:has(.row-sub) .tree-item-link .favicon-container img,
+    .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -2217,7 +2233,14 @@ body.panel-mode .vbm-row .row-sub {
 
 /* 面板模式等价规则：panel-mode 与容器宽度无关，行始终是双行 */
 body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
+    width: 22px;
     margin-inline-end: 8px;
+}
+
+body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container img,
+body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
+    width: 18px;
+    height: 18px;
 }
 
 /* === v4 task-2 slice B: recent view + search history area ===
@@ -3275,14 +3298,35 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
     height: 10px;
 }
 
-/* Executable empty state (§3.5): the start row is clickable/focusable. */
+/* Executable empty state (§3.5): the start row is clickable/focusable.
+   v4.1 visual fix: 开始扫描是死链视图的主 CTA —— accent 填充药丸（复用
+   dupes-apply-all 的填充配方，padding/字号适度放大），不再是整行大块 muted
+   文字。width: fit-content + margin: auto 让药丸收缩并水平居中；hover 用亮度
+   提升而非变 accent（文字已是 accent-fg），focus 焦点环包裹药丸而非整行。 */
 #dead-list ul li.dead-start {
+    width: fit-content;
+    margin: 20px auto;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: var(--vbm-accent);
+    color: var(--vbm-accent-fg);
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
+    outline: 0;
+    max-width: calc(100% - 40px);
 }
 
-#dead-list ul li.dead-start:hover,
+#dead-list ul li.dead-start i {
+    font-style: normal;
+}
+
+#dead-list ul li.dead-start:hover {
+    -webkit-filter: brightness(1.08);
+    filter: brightness(1.08);
+}
+
 #dead-list ul li.dead-start:focus {
-    color: var(--vbm-accent);
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }

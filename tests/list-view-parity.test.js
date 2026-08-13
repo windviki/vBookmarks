@@ -127,12 +127,43 @@ describe('v4.1 visual consistency: 双行行图标→文本间隙', () => {
     it('宽容器下双行行把图标间隙加宽到 8px', () => {
         expect(neatCss).toContain(
             '.vbm-row:has(.row-sub) .tree-item-link .favicon-container {\n' +
+            '        width: 22px;\n' +
             '        margin-inline-end: 8px;');
     });
 
     it('panel 模式有等价的双行行间隙规则', () => {
         expect(neatCss).toContain(
             'body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {\n' +
+            '    width: 22px;\n' +
             '    margin-inline-end: 8px;');
+    });
+
+    // 双行行 icon 16→18px、槽 20→22px（保持 2px 边距比例），适配两行行高。
+    it('双行行图标放大到 18px 适配两行高度', () => {
+        expect(neatCss).toContain(
+            '    .vbm-row:has(.row-sub) .tree-item-link .favicon-container img,\n' +
+            '    .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {\n' +
+            '        width: 18px;\n' +
+            '        height: 18px;');
+        expect(neatCss).toContain(
+            'body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container img,\n' +
+            'body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {\n' +
+            '    width: 18px;\n' +
+            '    height: 18px;');
+    });
+});
+
+describe('v4.1 visual consistency: 死链开始扫描药丸 CTA + favicon 反色', () => {
+    it('开始扫描按钮是 accent 填充药丸（非整行大块文字）', () => {
+        const body = ruleBody(neatCss, '#dead-list ul li.dead-start {');
+        expect(body).toContain('width: fit-content');
+        expect(body).toContain('background: var(--vbm-accent)');
+        expect(body).toContain('color: var(--vbm-accent-fg)');
+        expect(body).toContain('border-radius: 999px');
+    });
+
+    it('favicon 反色类由 CSS 提供 invert 滤镜', () => {
+        const body = ruleBody(neatCss, '.favicon-contrast-invert {');
+        expect(body).toContain('filter: invert(1)');
     });
 });

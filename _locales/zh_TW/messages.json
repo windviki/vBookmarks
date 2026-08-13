@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "启用访问统计"
   },
+  "optionFaviconContrast": {
+    "message": "反轉低對比度的網站圖示"
+  },
+  "optionFaviconContrastHint": {
+    "message": "淺色主題上的白色圖示與深色主題上的黑色圖示會被反轉，以保持可見。每個圖示在載入時取樣一次——瀏覽時不耗費資源。"
+  },
   "optionSyncRefreshInterval": {
     "message": "刷新間隔"
   },

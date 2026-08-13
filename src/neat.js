@@ -51,7 +51,27 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
     // placeholder bitmap for the theme-following DEFAULT_BOOKMARK_ICON.
     // Installed before any rows render (the store.ready block below) so the
     // capture-phase load delegation catches every favicon <img>.
-    initFaviconFallback(window.document);
+    // v4.1: the same module also runs the favicon contrast service (invert
+    // low-contrast icons against the current background). Both getters read at
+    // decision time, so the options toggle and live palette theme switches
+    // take effect immediately. themeIsDark resolves the --vbm-bg token's
+    // luminance, covering light/dark/ink/paper/auto uniformly.
+    initFaviconFallback(window.document, {
+        contrastEnabled: () => window.store.get('faviconContrast', '1') === '1',
+        themeIsDark: () => {
+            const b = window.document.body;
+            if (!b)
+                return false;
+            const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(
+                getComputedStyle(b).getPropertyValue('--vbm-bg').trim());
+            if (!m)
+                return false;
+            const r = parseInt(m[1], 16) / 255;
+            const g = parseInt(m[2], 16) / 255;
+            const blue = parseInt(m[3], 16) / 255;
+            return 0.2126 * r + 0.7152 * g + 0.0722 * blue < 0.5;
+        }
+    });
 
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read

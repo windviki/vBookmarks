@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Luba külastusstatistika"
   },
+  "optionFaviconContrast": {
+    "message": "Pööra madala kontrastsusega faviconid"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Valged ikoonid heledatel teemadel ja mustad ikoonid tumedatel teemadel pööratakse ümber, et need nähtavaks jääksid. Iga ikooni proovitakse selle laadimisel üks kord — sirvimise ajal pole kulud."
+  },
   "optionSyncRefreshInterval": {
     "message": "Värskendamise intervall"
   },

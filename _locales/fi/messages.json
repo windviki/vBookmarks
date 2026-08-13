@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Ota käyttöön vierailutilastot"
   },
+  "optionFaviconContrast": {
+    "message": "Käännä matalakontrastiset faviconit"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Valkoiset kuvakkeet vaaleissa teemoissa ja mustat kuvakkeet tummissa teemoissa käännetään, jotta ne pysyvät näkyvinä. Jokainen kuvake analysoidaan kerran latauksen yhteydessä — ei lisäkuormitusta selauksen aikana."
+  },
   "optionSyncRefreshInterval": {
     "message": "Päivitysväli"
   },

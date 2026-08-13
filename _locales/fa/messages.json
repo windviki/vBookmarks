@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "فعال‌سازی آمار بازدید"
   },
+  "optionFaviconContrast": {
+    "message": "معکوس کردن آیکونهای کماست"
+  },
+  "optionFaviconContrastHint": {
+    "message": "آیکونهای سفید در تمهای روشن و آیکونهای سیاه در تمهای تیره معکوس میشوند تا قابل مشاهده بمانند. هر آیکون هنگام بارگذاری یکبار نمونهبرداری میشود—بدون هزینه اضافی در حین مرور."
+  },
   "optionSyncRefreshInterval": {
     "message": "فاصله به‌روزرسانی"
   },

@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Bật thống kê lượt truy cập"
   },
+  "optionFaviconContrast": {
+    "message": "Đảo ngược favicon có độ tương phản thấp"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Biểu tượng màu trắng trên nền sáng và màu đen trên nền tối sẽ được đảo ngược để luôn hiển thị rõ. Mỗi biểu tượng được lấy mẫu một lần khi tải — không tốn chi phí khi duyệt web."
+  },
   "optionSyncRefreshInterval": {
     "message": "Khoảng thời gian làm mới"
   },

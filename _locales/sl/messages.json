@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Omogoči statistiko obiskov"
   },
+  "optionFaviconContrast": {
+    "message": "Obrni favikone z nizkim kontrastom"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Beli favikoni na svetlih temah in črni favikoni na temnih temah se obrnejo, da ostanejo vidni. Vsak favikon se enkrat vzorči ob nalaganju — med brskanjem ni dodatnih obremenitev."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval osveževanja"
   },

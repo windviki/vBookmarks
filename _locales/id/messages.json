@@ -753,6 +753,12 @@
   "optionStatsEnabled": {
     "message": "Aktifkan statistik kunjungan"
   },
+  "optionFaviconContrast": {
+    "message": "Balik favicon kontras rendah"
+  },
+  "optionFaviconContrastHint": {
+    "message": "Ikon putih pada tema terang dan ikon hitam pada tema gelap dibalik agar tetap terlihat. Setiap ikon diambil sampelnya satu kali saat dimuat — tanpa beban saat menjelajah."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval penyegaran"
   },
