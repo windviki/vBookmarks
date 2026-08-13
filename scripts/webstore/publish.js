@@ -65,7 +65,10 @@ loadDotenv();
 // 出网代理(undici 不读代理环境变量,需显式安装 ProxyAgent)
 // ---------------------------------------------------------------------------
 
-if (process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy) {
+// 延迟到真正联网的 --yes 分支再安装:离线 check 不应装全局 dispatcher。
+async function installProxyIfNeeded() {
+    if (!(process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy))
+        return;
     const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
     try {
         const { ProxyAgent, setGlobalDispatcher } = await import('undici');
@@ -84,8 +87,11 @@ const PUBLISH_TYPES = new Set(['DEFAULT_PUBLISH', 'TRUSTED_TESTERS', 'STAGED_PUB
 
 function maxGitTag() {
     try {
-        return execSync('git tag --sort=-v:refname | head -1', { cwd: REPO_ROOT })
-            .toString().trim() || null;
+        const tags = execSync('git tag --sort=-v:refname', { cwd: REPO_ROOT })
+            .toString().trim().split('\n').filter(Boolean);
+        // Only semantic release tags count — a stray v5.0.0-alpha must not
+        // masquerade as the "latest" tag and trip the version comparison.
+        return tags.find(t => /^v\d+\.\d+\.\d+$/.test(t)) || null;
     } catch {
         return null;
     }
@@ -280,6 +286,8 @@ async function main() {
         return;
     }
 
+    await installProxyIfNeeded();
+
     try {
         if (cmd === 'status') {
             const res = await store.get();
@@ -328,4 +336,7 @@ async function helpText() {
 凭据申请与说明见 scripts/webstore/README.md。`;
 }
 
-main();
+main().catch(e => {
+    console.error('✖ 未捕获错误:', e);
+    process.exit(1);
+});

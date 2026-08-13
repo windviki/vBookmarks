@@ -100,6 +100,16 @@ NON_LATIN_LOCALES = {
     'ru', 'uk', 'bg', 'mk',
 }
 
+# Keys that legitimately stay byte-identical to en in every locale: brand
+# name, the word "URL" as a UI term, and a pure "$1 / $2" usage-count format.
+# They are NOT "suspect untranslated" and must not be flagged as such.
+SUSPECT_ALLOWLIST = {
+    'extName',
+    'url',
+    'paletteCustomUrl',
+    'paletteCustomUsage',
+}
+
 # locale -> language name used in the translation prompt
 LOCALE_NAMES = {
     'ar': '阿拉伯语（Arabic）',
@@ -370,7 +380,7 @@ def analyze_locale(en_data, data, locale):
     suspect = []
     if locale in NON_LATIN_LOCALES:
         for k in en_data:
-            if k in data and k not in todo:
+            if k in data and k not in todo and k not in SUSPECT_ALLOWLIST:
                 msg = data[k].get('message', '')
                 if msg and msg == en_data[k].get('message', ''):
                     suspect.append(k)

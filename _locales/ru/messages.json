@@ -788,7 +788,7 @@
   },
   "optionsFooterText": {
     "description": "Footer text for the Options page",
-    "message": "Built by $authorName$.",
+    "message": "Создано $authorName$.",
     "placeholders": {
       "authorName": {
         "content": "$1"
