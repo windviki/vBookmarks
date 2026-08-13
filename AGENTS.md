@@ -75,7 +75,7 @@ Supporting directories:
 - `donation/` — donation page assets
 - `assets/store/` — screenshots used only by the store listing / READMEs; `assets/design/` — design sources (`icon.psd`, `neat.xar`) and unused alternative icons. Both excluded from packaging.
 
-There is a `.gitignore` (ignores `node_modules/`), no lint config, and a GitHub Actions CI at `.github/workflows/ci.yml` (since 4.0 — on push/PR it runs the vitest suites, `i18n.py missing`/`verify`, and a `package.py` smoke build).
+There is a `.gitignore` (ignores `node_modules/`), and an ESLint flat config (`eslint.config.js`, v8 via `ESLINT_USE_FLAT_CONFIG=true`, error-level gate: `no-undef` + `no-extra-boolean-cast` on `src/`, plus the vitest recommended rules on `tests/` — `vitest/valid-expect` is configured with `maxArgs: 2` because vitest's `expect(actual, message)` is valid, and `vitest/expect-expect` names the assertion helpers `assertProps`/`ruleBody`/`zIndexOf`/`extractBlock` that assert internally in the CSS contract suites). `npm run lint` runs it; a GitHub Actions CI at `.github/workflows/ci.yml` (since 4.0 — on push/PR it runs the vitest suites, the eslint lint gate, `i18n.py missing`/`verify`, and a `package.py` smoke build).
 
 ## Build, Test, and Development Commands
 

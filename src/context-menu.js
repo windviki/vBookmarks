@@ -3,9 +3,9 @@
  *
  * Owns the four right-click menus (bookmark / folder / separator /
  * search-history): opening them from the tree or results pane (active-row
- * tracking, the hide-editables
- * / hide-sort toggles on root folders, rtl-aware position math, the Mac
- * right-click-hold-to-close quirk + the right-click jitter scroll guard),
+ * tracking, the hide-sort toggle on root folders, rtl-aware position math,
+ * the Mac right-click-hold-to-close quirk + the right-click jitter scroll
+ * guard),
  * clearing them on outside clicks, scrolls and focus moves (a short window
  * after open tolerates the tiny scroll a Mac right-click's slide produces),
  * hiding the add-* entries while search is active
@@ -653,11 +653,9 @@ export function initContextMenu(ctx = {}) {
                 setRootDisabled(false);
             } else if (el.querySelector('hr')) {
                 menu = $separatorContextMenu;
-                if (el.parentNode.dataset.parentid === '0') {
-                    menu.classList.add('hide-editables');
-                } else {
-                    menu.classList.remove('hide-editables');
-                }
+                // (the old hide-editables toggle here was dead: the CSS only
+                // hides hr / #folder-edit / #folder-delete, none of which live
+                // in the separator menu)
             } else {
                 menu = $bookmarkContextMenu;
                 // v4 task-3 #11: outside the tree view the positional add-*
@@ -985,9 +983,6 @@ export function initContextMenu(ctx = {}) {
                     break;
                 case 'add-folder-separator':
                     actions.addSeparator(id, 'after');
-                    break;
-                case 'copy-all-titles-and-urls':
-                    actions.copyAllTitlesAndUrls(id);
                     break;
                 // ++++++++ end ++++++++
                 case 'folder-window':

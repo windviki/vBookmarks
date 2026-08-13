@@ -22,6 +22,9 @@ jobs:
       - name: Unit tests
         run: npm run test:run
 
+      - name: Lint (eslint, error-level gate)
+        run: npm run lint
+
       - name: i18n key parity (en baseline)
         run: python3 scripts/i18n.py missing
 

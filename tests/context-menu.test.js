@@ -679,21 +679,12 @@ describe('contextmenu handler (opening a menu)', () => {
         expect(bookmarkMenu.style.overflowY).toBe('');
     });
 
-    it('opens the separator menu on a separator row and hides editables at root', () => {
+    it('opens the separator menu on a separator row (and never the bookmark menu)', () => {
         const { bookmarkMenu, separatorMenu, makeSeparatorRow, openOn } = setup({});
         const { a } = makeSeparatorRow('30', '0'); // root folder (parentid '0')
         openOn(a);
         expect(separatorMenu.style.opacity).toBe('1');
-        expect(separatorMenu.classList.contains('hide-editables')).toBe(true);
         expect(bookmarkMenu.style.opacity).not.toBe('1');
-    });
-
-    it('restores editables on a separator row inside a regular folder', () => {
-        const { separatorMenu, makeSeparatorRow, openOn } = setup({});
-        const { a } = makeSeparatorRow('30', '1');
-        separatorMenu.classList.add('hide-editables');
-        openOn(a);
-        expect(separatorMenu.classList.contains('hide-editables')).toBe(false);
     });
 
     it('opens the folder menu on a folder row and hides sort at root only', () => {

@@ -218,9 +218,9 @@ import { createToolButton } from './tool-button.js';
     });
 
     // Context menus live in src/context-menu.js (P1): the three menus, the
-    // body contextmenu handler (position math, hide-editables/hide-sort on
-    // root folders, the mac right-click-hold quirk) and every menu-item
-    // dispatch. This must init before initSearch, because search calls
+    // body contextmenu handler (position math, hide-sort on root folders,
+    // the mac right-click-hold quirk) and every menu-item dispatch. This
+    // must init before initSearch, because search calls
     // switchBookmarkMenu synchronously when it restores a saved query — but
     // actions/dialogs init further below (actions needs the search API), so
     // they reach the menus module through getters that only run at dispatch

@@ -5,10 +5,14 @@
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
-    "test:webstore": "node --test scripts/webstore/upload-test.js"
+    "test:webstore": "node --test scripts/webstore/upload-test.js",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint src tests"
   },
   "devDependencies": {
     "chrome-webstore-upload": "^6.0.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vitest": "^0.5.4",
+    "globals": "^17.11.0",
     "sinon": "^17.0.0",
     "undici": "^8.10.0",
     "vitest": "^3.2.7",

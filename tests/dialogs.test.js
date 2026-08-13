@@ -586,18 +586,16 @@ describe('K15: closing a dialog hands focus back to its invoker', () => {
             d => d.GroupPickDialog.open({ groups: [] }),
             () => els['tab-group-pick-cancel-button'].trigger('click')]
     ];
-    for (const [label, open, cancel] of cases) {
-        it(label, () => {
-            const d = freshDialogs();
-            const from = invoker();
-            open(d);
-            expect(d.anyOpen()).toBe(true);
-            expect(from.focused).toBe(false); // the dialog's control owns focus now
-            cancel();
-            expect(d.anyOpen()).toBe(false);
-            expect(from.focused).toBe(true); // handed back — arrows live again
-        });
-    }
+    it.each(cases)('%s', (label, open, cancel) => {
+        const d = freshDialogs();
+        const from = invoker();
+        open(d);
+        expect(d.anyOpen()).toBe(true);
+        expect(from.focused).toBe(false); // the dialog's control owns focus now
+        cancel();
+        expect(d.anyOpen()).toBe(false);
+        expect(from.focused).toBe(true); // handed back — arrows live again
+    });
 
     it('closeDialogs (the Esc layer\'s path) restores focus too', () => {
         const d = freshDialogs();

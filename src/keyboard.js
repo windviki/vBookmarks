@@ -811,8 +811,7 @@ export function initKeyboard(ctx = {}) {
     menus.bookmarkMenu.addEventListener('keydown', contextKeyDown);
     menus.folderMenu.addEventListener('keydown', contextKeyDown);
     // 4.0.1: the separator menu is bound too — while it stayed unbound its
-    // only entry (remove-separator) was unreachable by keyboard. (Its
-    // hide-editables CSS never applied to this menu, so the walk is safe.)
+    // only entry (remove-separator) was unreachable by keyboard.
     menus.separatorMenu.addEventListener('keydown', contextKeyDown);
     // fourth-round item 7: search-history menu gets full ↑↓/Enter/Esc support
     if (menus.searchHistoryMenu)

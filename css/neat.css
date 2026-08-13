@@ -894,12 +894,6 @@ menu[type=context] hr {
     pointer-events: none;
 }
 
-menu[type=context].hide-editables hr,
-menu[type=context].hide-editables #folder-edit,
-menu[type=context].hide-editables #folder-delete {
-    display: none;
-}
-
 #resizer-x {
     position: absolute;
     width: 4px;

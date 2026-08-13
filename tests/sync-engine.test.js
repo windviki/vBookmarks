@@ -293,7 +293,9 @@ describe('createSyncEngine', () => {
             engine.start();
             await engine.recomputeAll();
             vi.advanceTimersByTime(1000);
-            // No throw, no write — nothing else to assert
+            // the flush's try/catch swallows the missing-session write: nothing
+            // may be published anywhere (a throw or a stray write fails here)
+            expect(double.calls.sessionSet).toHaveLength(0);
         });
     });
 
