@@ -1,15 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import fs from 'node:fs';
 import { createFolderSorter } from '../src/folder-sort.js';
+import { loadClassicFromFile } from './helpers/classic.js';
 
 // The folder-sort executor (issue #33): all planning lives in the pure
 // window.VBMSort helpers (tested separately in tests/sort-folder.test.js);
 // this suite drives the REAL executor — the serial chrome.bookmarks.move
 // chain, the re-entrancy lock and the toast Undo replay — with a
 // chrome.bookmarks double. sort-utils.js is a classic script evaluated onto
-// a window stub (same recipe as dialogs.test.js).
-const sortUtilsSource = fs.readFileSync(new URL('../src/sort-utils.js', import.meta.url), 'utf8');
-
+// a window stub via the shared classic-script helper (tests/helpers/classic.js).
 const flush = async (rounds = 12) => {
     for (let i = 0; i < rounds; i++)
         await Promise.resolve();
@@ -45,7 +43,7 @@ const makeSorter = (undo) => createFolderSorter({ undo, treeView, _m });
 
 beforeEach(() => {
     globalThis.window = {};
-    new Function('window', sortUtilsSource)(globalThis.window);
+    loadClassicFromFile('src/sort-utils.js', { window: globalThis.window });
 
     moves = [];
     getTreeCalls = 0;

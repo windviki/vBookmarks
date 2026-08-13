@@ -1,12 +1,14 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { makeEl, makeStoreDouble } from './helpers/dom.js';
+import { bootWithStubs } from './helpers/boot.js';
 
 // options-palette-commands.js is the options page's custom-command manager
 // (v4 task-4 #6). It is an ES module loaded after store.js; at import it runs
 // init() (per document.readyState) against page globals (document/chrome/
 // store/location/history/confirm/alert). The real module imports cleanly in
 // node once those are stubbed — same pattern as dialogs.test.js. Module-level
-// `list`/`editingId` state is reset per test via vi.resetModules() + a fresh
-// import (dynamic import of the same specifier re-runs after a reset).
+// `list`/`editingId` state is reset per test via bootWithStubs() (which wraps
+// vi.resetModules() + the location-global trap + one import + a flush).
 
 const MAX_CUSTOM_COMMANDS = 100;
 
@@ -15,50 +17,6 @@ const MAX_CUSTOM_COMMANDS = 100;
 let els;           // id → element stub
 let pcForRows;     // the .pc-for parameter rows (dataset.types / pc-for-* classes)
 let doc;           // globalThis.document
-
-const makeEl = (id = '', tagName = '') => {
-    const classes = new Set();
-    let text = '';
-    return {
-        id, tagName: tagName.toUpperCase(),
-        value: '', checked: false, _innerHTML: '',
-        hidden: false, disabled: false, focused: false,
-        dataset: {},
-        style: {},
-        children: [],
-        parentNode: null,
-        _listeners: {},
-        // textContent and innerText are aliases — the module writes innerText
-        // for labels and textContent for dynamic text; tests read either.
-        get textContent() { return text; },
-        set textContent(v) { text = v; },
-        get innerText() { return text; },
-        set innerText(v) { text = v; },
-        get innerHTML() { return this._innerHTML; },
-        set innerHTML(v) {
-            this._innerHTML = v;
-            if (v === '') this.children = [];
-        },
-        classList: {
-            add: (...cs) => cs.forEach(c => classes.add(c)),
-            remove: (...cs) => cs.forEach(c => classes.delete(c)),
-            contains: c => classes.has(c),
-            toggle(c, on) { on ? classes.add(c) : classes.delete(c); }
-        },
-        addEventListener(type, fn) {
-            (this._listeners[type] = this._listeners[type] || []).push(fn);
-        },
-        fire(type, event = {}) {
-            (this._listeners[type] || []).forEach(fn => fn(event));
-        },
-        appendChild(child) {
-            this.children.push(child);
-            child.parentNode = this;
-        },
-        focus() { this.focused = true; },
-        select() {}
-    };
-};
 
 const IDS = [
     'palette-cmd-options', 'palette-cmd-hint', 'palette-cmd-add',
@@ -72,18 +30,6 @@ const IDS = [
 ];
 
 // ---- chrome / store / location doubles ---------------------------------------
-
-const makeStoreDouble = (seedCommands = []) => {
-    const syncData = {};
-    if (seedCommands.length)
-        syncData.paletteCustomCommands = JSON.stringify(seedCommands);
-    return {
-        syncData,
-        ready: Promise.resolve(),
-        getSyncSetting: (key, dflt) => (key in syncData ? syncData[key] : dflt),
-        setSyncSetting: (key, value) => { syncData[key] = value; }
-    };
-};
 
 let store;
 let location;
@@ -104,7 +50,6 @@ const FOLDER_TREE = [
 ];
 
 beforeEach(async () => {
-    vi.resetModules();
     els = Object.fromEntries(IDS.map(id => [id, makeEl(id)]));
     const row = (types, cls = '') => {
         const r = makeEl('', 'LI');
@@ -149,24 +94,23 @@ beforeEach(async () => {
     globalThis.history = historyDouble;
     globalThis.confirm = msg => { confirms.push(msg); return confirmResult; };
     globalThis.alert = msg => alerts.push(msg);
-    globalThis.location = location;
+    // globalThis.location is re-applied by bootWithStubs (resetModules wipes it)
 });
 
-// boot() imports the real module exactly once per test against the doubles —
-// importing a second time would double-register the init() listeners on the
-// shared DOM stubs (both instances would fire on one trigger).
+// boot() imports the real module exactly once per test against the doubles via
+// bootWithStubs — which also re-applies the `location` global (resetModules
+// wipes it) and flushes init()'s microtask chain. Importing a second time in
+// one test would double-register the init() listeners on the shared DOM stubs.
 const boot = async ({ seed = [], hash = '' } = {}) => {
-    vi.resetModules();
-    store = makeStoreDouble(seed);
-    location.hash = hash;
-    globalThis.store = store;
-    // vi.resetModules() wipes the special `location` global (unlike
-    // document/chrome) — re-apply it so the module's init sees the hash.
-    globalThis.location = location;
-    await import('../src/options-palette-commands.js');
-    // init() awaits store.ready then renders — flush the microtask chain
-    for (let i = 0; i < 8; i++)
-        await new Promise(r => setTimeout(r, 0));
+    await bootWithStubs({
+        modulePath: '../../src/options-palette-commands.js', // relative to tests/helpers/boot.js
+        locationImpl: location,
+        hash,
+        setupGlobals: () => {
+            store = makeStoreDouble(seed.length ? { paletteCustomCommands: JSON.stringify(seed) } : {});
+            globalThis.store = store;
+        }
+    });
 };
 
 afterEach(() => {
@@ -192,7 +136,7 @@ const fillNewCommand = ({ slash = 'work', name = 'Work', type = 'open-url',
 };
 
 const storedCommands = () => {
-    const raw = store.syncData.paletteCustomCommands;
+    const raw = store.getSyncSetting('paletteCustomCommands', '');
     return raw ? JSON.parse(raw) : [];
 };
 

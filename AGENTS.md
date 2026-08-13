@@ -95,6 +95,15 @@ Test files (60+ — one per module/feature, plus the CSS/HTML contract suites; t
 
 The test-audit (2026-08) extraction round added the module suites for the formerly neat.js-only operations — `folder-sort` (the sort executor), `quick-add` (star + Ctrl+D), `donation` (card rules + wiring), `tool-button`, `wake-up` (palette global wake-up), `option-behavior` (the option-switch → action differential contract), plus the shared stubs in `tests/helpers/` (`dom`/`i18n`/`chrome`) and the options-page command manager suite `options-palette-commands`. The resize kernels live in `tests/autoresize.test.js` but drive the REAL `src/resize-core.js` (decideHeight/decideWidthMax/clampDragWidth/nextZoomLevel + the drag math), not a copied kernel.
 
+**Test infrastructure (2026-08 audit round — use these in NEW tests):**
+
+- `tests/helpers/dom.js` — `makeEl`/`makeClassList`/`makeStoreDouble`. The stub's initial state must mirror the real HTML/CSS defaults (a `hidden` attribute, `#donation { display:none }`): a mismatch produces false positives/negatives.
+- `tests/helpers/i18n.js` — `makeI18n()` reads the REAL `_locales/en/messages.json` and substitutes `$1/$2`, so parameterized copy (confirm dialogs, toasts) is assertable; `makeI18nEcho()` keeps the key-echo form. Existing suites still use `key => key` echo doubles — migrating their assertions to real English copy is a deliberate, file-by-file task.
+- `tests/helpers/chrome.js` — `makeStorageArea`/`makeBookmarksDouble` factories that record calls.
+- `tests/helpers/boot.js` — `bootWithStubs()` for modules that auto-run `init()` at import (e.g. `options-palette-commands.js`). Trap: `vi.resetModules()` **wipes the special `location` global** (document/chrome/store survive) and a second import double-registers listeners on shared DOM stubs — import exactly once per test through this helper, which re-applies `location` and flushes.
+- `tests/helpers/classic.js` — `loadClassicScript(source, window)` wraps the sandbox-eval `new Function` path for classic scripts (store/fuzzy/sort-utils/sync-manager), so a new suite doesn't hand-roll the eval.
+- **Never copy the implementation under test into a test** — drive the real module; extract pure logic into a real module when it can't be imported (see "操作即模块" in Code Style).
+
 ### Packaging (deployment)
 
 ```bash
@@ -157,6 +166,7 @@ Two harness gotchas learned the hard way (v4 task-4): ① once a script opens ta
 
 - **4-space indentation**, ES6+ in newer code (`const`/`let`, arrow functions, `async`/`await`) — match the surrounding style of the file you edit.
 - Page scripts are wrapped in an IIFE: `(window => { ... })(window)`; `src/background.js` uses `(() => { ... })()`. The extracted `src/*.js` P1 modules are plain ES modules exporting `initX(ctx)`.
+- **操作即模块(2026-08 测试审计确立的规范)**:任何新的弹窗用户操作,第一步把**纯逻辑**提到 `src/` 下可导入的 ES 模块(参照 P1 模式),neat.js 只做薄接线——依赖在 neat.js 下方声明的值用 lazy getter(`get undo() { return undo; }`)解决 TDZ。每提取一个模块必须带测试;禁止在 neat.js 里堆内联闭包(那会让操作重新变成"复制内核"伪测试)。现有提取示例:`resize-core`(尺寸/缩放内核)、`folder-sort`(排序执行器)、`quick-add`(星标+Ctrl+D)、`donation`(捐赠卡)、`tool-button`、`wake-up`(面板全局唤醒)。
 - i18n alias at the top of each page script: `const _m = chrome.i18n.getMessage;` — use `_m('key')` for all user-visible strings; add new strings to `_locales/en/messages.json` first and follow the Locale management flow (`scripts/i18n.py`).
 - `src/neatools.js` is retired (P1): no prototype extensions, no global helpers anywhere. Element lookup uses `document.getElementById` — files that need it repeatedly declare a local `const $ = id => document.getElementById(id);` (see `src/neat.js`, `src/keyboard.js`, `src/options.js`); `htmlspecialchars`/`escapeRegExp`/`colorHex`/`uuidFast` live as module-private pure functions or named exports (`uuidFast` is exported from `src/separators.js`). UI labels are assigned in `initXxx()` functions on `DOMContentLoaded`, not in HTML.
 - Sections in `src/neat.js` are delimited by `// Section` comments; historical author changes are wrapped in `// ++++++++ added/modified by windviki@gmail.com ++++++++` markers.
