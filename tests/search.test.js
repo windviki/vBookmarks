@@ -396,6 +396,19 @@ describe('search execution + rendering', () => {
         expect(viewHooks.search.onKey({ key: 'r', preventDefault: () => {} })).toBe(false);
         expect(revealCalls).toEqual(['11', '7']);
     });
+
+    it('R records the query into history — R counts as completing the search (§4.3)', () => {
+        const { viewHooks, els, store } = setup({});
+        els['search-input'].value = 'git';
+        globalThis.document.activeElement = { parentNode: { dataset: { nodeId: '11' }, id: 'results-item-11' } };
+        viewHooks.search.onKey({ key: 'r', preventDefault: () => {} });
+        const history = JSON.parse(store.get('searchHistory') || '[]');
+        expect(history.map(h => h.q)).toContain('git');
+        // the record happens BEFORE revealInTree — the out-of-bar branch
+        // (onlyShowBMBar: toast instead of a view switch) records too, since
+        // the view never leaves and deactivate would not fire
+        expect(els['search-input'].value).toBe('git');
+    });
 });
 
 describe('flat index lifecycle', () => {

@@ -484,6 +484,11 @@ export function initSearch(ctx = {}) {
         // Consumed before the type-ahead gate, like the other views' letter
         // keys; the search input itself never reaches this hook (it is not
         // a list row), so typing 'r' in the box is unaffected.
+        //
+        // §4.3 record timing: R counts as "completing" the search — the query
+        // is consumed by an explicit locate-in-tree. Recorded HERE (not via the
+        // view-leave deactivate hook) so the out-of-bar branch (onlyShowBMBar:
+        // revealInTree shows a toast instead of leaving the view) records too.
         onKey: e => {
             if (e.key !== 'r' && e.key !== 'R')
                 return false;
@@ -493,6 +498,7 @@ export function initSearch(ctx = {}) {
             if (!id)
                 return false;
             e.preventDefault();
+            recordHistory(searchInput.value);
             revealInTree(id);
             return true;
         }
