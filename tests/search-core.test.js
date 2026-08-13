@@ -1,58 +1,50 @@
 import { describe, it, expect } from 'vitest';
 import { rankBookmarks, xmlEncode, matcher } from '../src/search-core.js';
 
-const bm = (title, dateAdded, url = 'https://example.com/') => ({ title, url, dateAdded });
+const bm = (id, title, dateAdded, url = 'https://example.com/') => ({ id, title, url, dateAdded });
 
 describe('rankBookmarks', () => {
     it('produces stable ordering across repeated sorts with the same query', () => {
-        // Regression test for the old `g`-flagged vPattern: RegExp#test with
-        // the global flag mutates lastIndex, making the comparator
-        // inconsistent across calls.
         const make = () => [
-            bm('git gud guide', 1),
-            bm('GitHub', 2),
-            bm('gitlab snippets', 3),
-            bm('hub git tools', 4),
-            bm('GitHub Gist', 5)
+            bm('1', 'git gud guide', 1),
+            bm('2', 'GitHub', 2),
+            bm('3', 'gitlab snippets', 3),
+            bm('4', 'hub git tools', 4),
+            bm('5', 'GitHub Gist', 5)
         ];
-        const first = rankBookmarks('git hub', make()).map(r => r.title);
-        const second = rankBookmarks('git hub', make()).map(r => r.title);
+        const first = rankBookmarks('git', make()).map(r => r.title);
+        const second = rankBookmarks('git', make()).map(r => r.title);
         expect(second).toEqual(first);
     });
 
-    it('prefers titles where the query hits earlier', () => {
+    it('prefers a prefix title hit over a word-boundary hit', () => {
         const results = rankBookmarks('git', [
-            bm('a git client', 10),
-            bm('GitHub', 1)
+            bm('1', 'a git client', 10),
+            bm('2', 'GitHub', 1)
         ]);
         expect(results[0].title).toBe('GitHub');
     });
 
-    it('ranks pattern-matching titles above non-matching ones', () => {
-        // 'git hub' is not a literal substring anywhere; the `^git.*hub`
-        // pattern only matches 'GitHub'
-        const results = rankBookmarks('git hub', [
-            bm('git gud guide', 100),
-            bm('GitHub', 1)
-        ]);
-        expect(results[0].title).toBe('GitHub');
+    it('maps ranked hits back to the original objects (keeping extra fields)', () => {
+        const original = { id: '42', title: 'GitHub', url: 'https://github.com', dateAdded: 1, syncing: true };
+        const results = rankBookmarks('git', [original, bm('2', 'zzz', 2)]);
+        expect(results).toHaveLength(1);
+        expect(results[0]).toBe(original); // 原始引用,保留 syncing 等字段
     });
 
-    it('falls back to dateAdded (newest first) when nothing matches', () => {
+    it('filters out bookmarks the query does not match', () => {
         const results = rankBookmarks('zzz', [
-            bm('old bookmark', 1),
-            bm('new bookmark', 200),
-            bm('mid bookmark', 100)
+            bm('1', 'old bookmark', 1),
+            bm('2', 'new bookmark', 200),
+            bm('3', 'mid bookmark', 100)
         ]);
-        expect(results.map(r => r.title)).toEqual([
-            'new bookmark', 'mid bookmark', 'old bookmark'
-        ]);
+        expect(results).toEqual([]);
     });
 
     it('returns at most 6 results', () => {
         const results = rankBookmarks('a', [
-            bm('a1', 1), bm('a2', 2), bm('a3', 3), bm('a4', 4),
-            bm('a5', 5), bm('a6', 6), bm('a7', 7), bm('a8', 8)
+            bm('1', 'a1', 1), bm('2', 'a2', 2), bm('3', 'a3', 3), bm('4', 'a4', 4),
+            bm('5', 'a5', 5), bm('6', 'a6', 6), bm('7', 'a7', 7), bm('8', 'a8', 8)
         ]);
         expect(results).toHaveLength(6);
     });

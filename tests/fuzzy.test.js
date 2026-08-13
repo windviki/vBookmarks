@@ -1,68 +1,64 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
-
-// Load the real fuzzy.js source and evaluate it in a sandbox with a bare
-// window global — the same way a classic script would run inside popup.html.
-const fuzzySource = fs.readFileSync(new URL('../src/fuzzy.js', import.meta.url), 'utf8');
-const window = {};
-new Function('window', fuzzySource)(window);
-const VBMFuzzy = window.VBMFuzzy;
+// The implementation lives in fuzzy-core.js (shared with search-core.js);
+// fuzzy.js is now just a thin module that re-exposes it as window.VBMFuzzy.
+import { score, rank } from '../src/fuzzy-core.js';
 
 const item = (id, title, url, dateAdded, isFolder = false) =>
     ({ id, parentId: '0', title, url, dateAdded, isFolder });
 
 describe('fuzzy.js score()', () => {
     it('matches a subsequence and reports its positions', () => {
-        const res = VBMFuzzy.score('vbm', 'vBookmarks');
+        const res = score('vbm', 'vBookmarks');
         expect(res).not.toBeNull();
         expect(res.positions).toEqual([0, 1, 5]);
         expect(typeof res.score).toBe('number');
     });
 
     it('is case-insensitive', () => {
-        expect(VBMFuzzy.score('GM', 'gmail')).not.toBeNull();
-        expect(VBMFuzzy.score('gm', 'GMail')).not.toBeNull();
+        expect(score('GM', 'gmail')).not.toBeNull();
+        expect(score('gm', 'GMail')).not.toBeNull();
     });
 
     it('returns null when the query is not a subsequence', () => {
-        expect(VBMFuzzy.score('xyz', 'gmail')).toBeNull();
-        expect(VBMFuzzy.score('gmaill', 'gmail')).toBeNull();
+        expect(score('xyz', 'gmail')).toBeNull();
+        expect(score('gmaill', 'gmail')).toBeNull();
     });
 
     it('matches CJK strings', () => {
-        const res = VBMFuzzy.score('书签', '我的书签收藏');
+        const res = score('书签', '我的书签收藏');
         expect(res).not.toBeNull();
         expect(res.positions).toEqual([2, 3]);
     });
 
     it('treats an empty query as matching everything with score 0', () => {
-        expect(VBMFuzzy.score('', 'anything')).toEqual({ score: 0, positions: [] });
+        expect(score('', 'anything')).toEqual({ score: 0, positions: [] });
     });
 
     it('rewards consecutive runs over scattered hits', () => {
-        const consecutive = VBMFuzzy.score('abc', 'abc');
-        const scattered = VBMFuzzy.score('abc', 'a-b-c');
+        const consecutive = score('abc', 'abc');
+        const scattered = score('abc', 'a-b-c');
         expect(consecutive.score).toBeGreaterThan(scattered.score);
     });
 
     it('rewards word-start / camelCase hits over mid-word hits', () => {
-        const wordStart = VBMFuzzy.score('bar', 'Foo Bar');
-        const midWord = VBMFuzzy.score('bar', 'zebar');
+        const wordStart = score('bar', 'Foo Bar');
+        const midWord = score('bar', 'zebar');
         expect(wordStart.score).toBeGreaterThan(midWord.score);
-        const camel = VBMFuzzy.score('bm', 'BookMark');
+        const camel = score('bm', 'BookMark');
         expect(camel.positions).toEqual([0, 4]);
     });
 
     it('prefers matches that start earlier', () => {
-        const early = VBMFuzzy.score('gm', 'gmx');
-        const late = VBMFuzzy.score('gm', 'xxgm');
+        const early = score('gm', 'gmx');
+        const late = score('gm', 'xxgm');
         expect(early.score).toBeGreaterThan(late.score);
     });
 });
 
 describe('fuzzy.js rank()', () => {
     it('weighs title hits above url hits', () => {
-        const results = VBMFuzzy.rank('gmail', [
+        const results = rank('gmail', [
             item('1', 'mail archive', 'https://gmail.com/inbox', 100),
             item('2', 'Gmail', 'https://example.com', 50)
         ]);
@@ -70,7 +66,7 @@ describe('fuzzy.js rank()', () => {
     });
 
     it('exposes title positions for highlighting, null for url-only hits', () => {
-        const results = VBMFuzzy.rank('gmail', [
+        const results = rank('gmail', [
             item('1', 'zzz', 'https://gmail.com/', 100),
             item('2', 'Gmail', 'https://example.com/', 50)
         ]);
@@ -80,7 +76,7 @@ describe('fuzzy.js rank()', () => {
     });
 
     it('drops non-matching items and keeps folders', () => {
-        const results = VBMFuzzy.rank('zzz', [
+        const results = rank('zzz', [
             item('1', 'Gmail', 'https://gmail.com/', 100),
             item('2', 'Zazzle folder', '', 90, true)
         ]);
@@ -89,7 +85,7 @@ describe('fuzzy.js rank()', () => {
     });
 
     it('sorts by score desc, then dateAdded desc for ties', () => {
-        const results = VBMFuzzy.rank('gmail', [
+        const results = rank('gmail', [
             item('1', 'Gmail', 'https://a.example/', 100),
             item('2', 'Gmail', 'https://b.example/', 300),
             item('3', 'Gmail', 'https://c.example/', 200)
@@ -98,7 +94,7 @@ describe('fuzzy.js rank()', () => {
     });
 
     it('returns every item for an empty query, ordered by dateAdded desc', () => {
-        const results = VBMFuzzy.rank('', [
+        const results = rank('', [
             item('1', 'a', 'https://a.example/', 100),
             item('2', 'b', 'https://b.example/', 200)
         ]);
@@ -112,7 +108,7 @@ describe('fuzzy.js rank()', () => {
                 `https://example.com/some/page/${i}`, i));
         }
         const start = performance.now();
-        const results = VBMFuzzy.rank('bmk', items);
+        const results = rank('bmk', items);
         const elapsed = performance.now() - start;
         expect(results.length).toBeGreaterThan(0);
         // Wall-clock guard against algorithmic regression only: local dev
@@ -125,7 +121,7 @@ describe('fuzzy.js rank()', () => {
 
 describe('fuzzy.js rank precision tiers', () => {
     it('ranks an exact title above a prefix title, ignoring dateAdded', () => {
-        const results = VBMFuzzy.rank('git', [
+        const results = rank('git', [
             item('prefix', 'github', 'https://github.example/', 999),
             item('exact', 'git', 'https://git.example/', 100)
         ]);
@@ -135,7 +131,7 @@ describe('fuzzy.js rank precision tiers', () => {
     });
 
     it('orders tiers 1 < 2 < 3 for the same query', () => {
-        const results = VBMFuzzy.rank('gb', [
+        const results = rank('gb', [
             item('subseq', 'agb', 'https://a.example/', 300),
             item('wordstart', 'Git Bugs', 'https://b.example/', 200),
             item('prefix', 'gb tool', 'https://c.example/', 100)
@@ -145,7 +141,7 @@ describe('fuzzy.js rank precision tiers', () => {
     });
 
     it('lets an exact url hit outrank a loose title hit', () => {
-        const results = VBMFuzzy.rank('gmail', [
+        const results = rank('gmail', [
             item('loose-title', 'foo gmail', 'https://example.com/', 200),
             item('exact-url', 'mail archive', 'https://gmail.com/inbox', 100)
         ]);
@@ -157,7 +153,7 @@ describe('fuzzy.js rank precision tiers', () => {
 
 describe('fuzzy.js URL noise stripping (scheme + www)', () => {
     it('scores equivalent hosts identically with and without www', () => {
-        const results = VBMFuzzy.rank('github', [
+        const results = rank('github', [
             item('bare', '', 'https://github.com/', 100),
             item('www', '', 'https://www.github.com/', 200)
         ]);
@@ -167,7 +163,7 @@ describe('fuzzy.js URL noise stripping (scheme + www)', () => {
     });
 
     it('matches a bare scheme-less host', () => {
-        const results = VBMFuzzy.rank('github', [
+        const results = rank('github', [
             item('host', '', 'www.github.com', 100),
             item('other', '', 'https://example.com/', 50)
         ]);
@@ -175,21 +171,21 @@ describe('fuzzy.js URL noise stripping (scheme + www)', () => {
     });
 
     it('falls back to the raw url so a www query still hits', () => {
-        const results = VBMFuzzy.rank('www', [
+        const results = rank('www', [
             item('host', '', 'https://www.example.com/', 100)
         ]);
         expect(results.map(r => r.id)).toEqual(['host']);
     });
 
     it('falls back to the raw url so a scheme query still hits', () => {
-        const results = VBMFuzzy.rank('https', [
+        const results = rank('https', [
             item('host', '', 'https://github.com/', 100)
         ]);
         expect(results.map(r => r.id)).toEqual(['host']);
     });
 
     it('keeps TLDs intact: a .com query matches the .com host exactly', () => {
-        const results = VBMFuzzy.rank('github.com', [
+        const results = rank('github.com', [
             item('com', '', 'https://github.com', 100),
             item('io', '', 'https://github.io', 200)
         ]);
@@ -198,7 +194,7 @@ describe('fuzzy.js URL noise stripping (scheme + www)', () => {
     });
 
     it('ranks a host hit above a path hit', () => {
-        const results = VBMFuzzy.rank('github', [
+        const results = rank('github', [
             item('path', '', 'https://example.com/github/', 200),
             item('host', '', 'https://github.com/', 100)
         ]);
@@ -221,8 +217,8 @@ describe('phase 2b wiring', () => {
         expect(neatCss).toContain('#results mark');
     });
 
-    it('popup.html loads fuzzy.js before neat.js', () => {
-        const fuzzyAt = popupHtml.indexOf('<script src="/src/fuzzy.js"></script>');
+    it('popup.html loads fuzzy.js (as a module) before neat.js', () => {
+        const fuzzyAt = popupHtml.indexOf('<script type="module" src="/src/fuzzy.js"></script>');
         const neatAt = popupHtml.indexOf('<script type="module" src="/src/neat.js"></script>');
         expect(fuzzyAt).toBeGreaterThan(-1);
         expect(neatAt).toBeGreaterThan(-1);

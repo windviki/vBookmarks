@@ -2,31 +2,29 @@
  * vBookmarks search core
  * Pure search/ranking helpers shared by background.js (omnibox) and the
  * vitest suites. No chrome.* references — safe to import anywhere.
+ *
+ * Ranking reuses src/fuzzy-core.js (the same fzf-style sort the popup uses)
+ * so the omnibox and the popup agree on "best match".
  */
 
-// Rank bookmarks based on query
+import { rank } from './fuzzy-core.js';
+
+// Rank bookmarks by fzf-style subsequence score (see fuzzy-core.js), mapped
+// back to the original objects so callers keep .syncing/.folderType etc.
 export const rankBookmarks = (query, results) => {
-    if (results.length <= 1) return results;
-    const v = query.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-    const vPattern = new RegExp(`^${v.replace(/\s+/g, '.*')}`, 'i');
-    results.sort((a, b) => {
-        const aTitle = a.title.toLowerCase();
-        const bTitle = b.title.toLowerCase();
-        const queryLower = query.toLowerCase();
-        let aIndexTitle = aTitle.indexOf(queryLower);
-        let bIndexTitle = bTitle.indexOf(queryLower);
-        if (aIndexTitle >= 0 || bIndexTitle >= 0) {
-            if (aIndexTitle < 0) aIndexTitle = Infinity;
-            if (bIndexTitle < 0) bIndexTitle = Infinity;
-            return aIndexTitle - bIndexTitle;
-        }
-        const aTestTitle = vPattern.test(aTitle);
-        const bTestTitle = vPattern.test(bTitle);
-        if (aTestTitle && !bTestTitle) return -1;
-        if (!aTestTitle && bTestTitle) return 1;
-        return b.dateAdded - a.dateAdded;
-    });
-    return results.slice(0, 6);
+    if (!results || results.length <= 1)
+        return results;
+    const ranked = rank(query, results);
+    const byId = new Map();
+    for (const r of results)
+        byId.set(r.id, r);
+    const ordered = [];
+    for (const hit of ranked) {
+        const original = byId.get(hit.id);
+        if (original)
+            ordered.push(original);
+    }
+    return ordered.slice(0, 6);
 };
 
 export const xmlEncode = text => text.replace(/&/g, '&amp;')
