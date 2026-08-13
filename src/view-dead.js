@@ -118,6 +118,7 @@ import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
+import { parkRowFocus, unparkRowFocus } from './list-focus.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -478,60 +479,7 @@ export function initViewDead(ctx = {}) {
             c.focus();
     };
 
-    // --- Row focus park/restore (4.0.1 focus law) --------------------------
-    // The list-row twin of the toolbar pair above: the render's innerHTML
-    // swap replaces every row, so a focused row drops to <body> and the ↓
-    // walk dies (every filter click, mark toggle and scan tick repaints).
-    // Park the focused row before the swap, restore it after — by row id
-    // when the row carries one (dead-item-<id>), else by its index among the
-    // list's <li>s, clamped on restore so a vanished row lands on the row
-    // that took its place; an emptied list parks on the container itself.
-    const parkRowFocus = () => {
-        let li = document.activeElement;
-        while (li && li.tagName !== 'LI')
-            li = li.parentNode;
-        // the row must belong to THIS list — another view's row does not count
-        for (let p = li; p; p = p.parentNode) {
-            if (p !== $list)
-                continue;
-            if (typeof $list.querySelectorAll !== 'function')
-                return null;
-            const lis = $list.querySelectorAll('li');
-            for (let i = 0, l = lis.length; i < l; i++)
-                if (lis[i] === li)
-                    return { id: li.id || '', idx: i };
-            return null;
-        }
-        return null;
-    };
-    const unparkRowFocus = parked => {
-        if (!parked)
-            return;
-        let li = parked.id ? document.getElementById(parked.id) : null;
-        if (!li) {
-            if (typeof $list.querySelectorAll !== 'function')
-                return;
-            const lis = $list.querySelectorAll('li');
-            if (!lis.length) {
-                // no rows at all — park focus on the list container itself
-                if ($list.focus)
-                    $list.focus();
-                return;
-            }
-            li = lis[Math.min(parked.idx, lis.length - 1)];
-        }
-        if (!li)
-            return;
-        // A row carrying tabindex takes the focus itself (the executable
-        // start-hint row); plain rows hand it to their anchor/span — the
-        // same element keyboard.js's row walk focuses. (getAttribute is
-        // guarded: test doubles may lack it.)
-        const target = (li.getAttribute && li.getAttribute('tabindex') !== null)
-            ? li
-            : (li.querySelector ? li.querySelector('a, span') : null);
-        if (target && target.focus)
-            target.focus();
-    };
+    // --- Row focus park/restore: see src/list-focus.js (4.0.1 focus law).
 
     const render = () => {
         if (selecting) {
@@ -564,7 +512,7 @@ export function initViewDead(ctx = {}) {
         // keep a focused toolbar control focused across the swap (see above)
         const tbIdx = toolbarFocusIndex();
         // 4.0.1 focus law: a focused list ROW rides the same swap
-        const parkedRow = parkRowFocus();
+        const parkedRow = parkRowFocus($list);
         // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
         // position survives the innerHTML swap (idle interactions keep the
         // old reset-to-top behavior).
@@ -575,7 +523,7 @@ export function initViewDead(ctx = {}) {
         restoreToolbarFocus(tbIdx);
         // …restored BEFORE the pendingRowFocus block below, so that explicit
         // override still wins when set (v4 task-4 #8).
-        unparkRowFocus(parkedRow);
+        unparkRowFocus($list, parkedRow);
         // v4 task-4 #8: select-mode Space toggle — restore the row's anchor.
         if (pendingRowFocus) {
             const id = pendingRowFocus;
