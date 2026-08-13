@@ -622,6 +622,12 @@ export function initSearch(ctx = {}) {
     searchClearBtn.addEventListener('click', () => {
         searchInput.value = '';
         updateClearBtn();
+        // Abandoning the search: clear the results pane too, so an
+        // UNCONSUMED query leaves no trace (it was not recorded, so the
+        // history area has no entry — the results pane must not contradict
+        // that with a lingering list). Esc is the "complete + keep" path,
+        // the × button is the "abandon + clear" path.
+        $results.innerHTML = '';
         quitSearchMode(true);
         searchInput.focus();
     });

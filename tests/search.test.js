@@ -541,6 +541,9 @@ describe('input listeners', () => {
         expect(store.get('searchQuery')).toBe('');
         expect(s.isActive()).toBe(false);
         expect(els.search.classList.contains('has-query')).toBe(false);
+        // abandoning the search clears the results pane too — an unconsumed
+        // query (never recorded) must not leave a lingering result list
+        expect(els.results.innerHTML).toBe('');
         expect(viewCalls).toEqual([
             ['search', { keepFocus: true }],
             ['tree', { keepFocus: true }]

@@ -169,4 +169,25 @@ describe('search-history record timing — REAL view-manager + search wiring', (
             ctx.cleanup();
         }
     });
+
+    it('the × button ABANDONS the search — clears the results pane, records nothing (no ghost list)', () => {
+        const ctx = setup();
+        try {
+            const { views, store, byId } = ctx;
+            views.activate('search');
+            byId['search-input'].value = 'git';
+            byId['search-input'].trigger('input');
+            // the unconsumed query rendered into the results pane
+            byId['search-clear'].trigger('click');
+            expect(byId.results.innerHTML).toBe('');          // pane cleared
+            expect(store.get('searchHistory') || '[]').toBe('[]'); // never consumed
+            // re-entering the view shows NO ghost: empty pane + no history row
+            views.activate('tree');
+            views.activate('search');
+            expect(byId.results.innerHTML).toBe('');
+            expect(byId['search-history-area'].innerHTML).not.toContain('data-q="git"');
+        } finally {
+            ctx.cleanup();
+        }
+    });
 });
