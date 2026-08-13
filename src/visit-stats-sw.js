@@ -104,7 +104,9 @@ export function createVisitStatsCollector() {
                 entry.t = rec.t;
                 stats[id] = entry;
             }
-            chrome.storage.local.set({ visitStats: JSON.stringify(stats) });
+            chrome.storage.local.set({ visitStats: JSON.stringify(stats) }, () => {
+                void chrome.runtime.lastError; // quota/area failure is best-effort
+            });
         });
     };
 
@@ -136,7 +138,7 @@ export function createVisitStatsCollector() {
         });
     };
 
-    const onUpdated = (tabId, changeInfo, tab) => {
+    const onUpdated = (tabId, changeInfo) => {
         // URL-change events only; status/favicon/title flips are not opens.
         const url = changeInfo && changeInfo.url;
         if (url)

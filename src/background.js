@@ -92,6 +92,11 @@ chrome.runtime.onInstalled.addListener(restoreCustomIcon);
 
         let omniboxValue = null;
         let firstResult = null;
+        // Monotonic token: two debounced searches can overlap across a fast
+        // input burst (a slow bookmarks.search for an earlier query may
+        // resolve AFTER a faster later one). The stale result must not clobber
+        // firstResult/omniboxValue, or Enter opens the wrong bookmark.
+        let omniboxToken = 0;
         const resetSuggest = () => {
             omniboxValue = null;
             firstResult = null;
@@ -111,11 +116,15 @@ chrome.runtime.onInstalled.addListener(restoreCustomIcon);
                 resetSuggest();
                 return;
             }
+            const token = ++omniboxToken;
             omniboxValue = value;
             try {
                 const results = await new Promise((resolve) => {
                     chrome.bookmarks.search(value, resolve);
                 });
+                if (token !== omniboxToken) {
+                    return; // a newer input already took over — drop this stale result
+                }
                 if (!results.length) {
                     resetSuggest();
                     return;

@@ -36,7 +36,15 @@ module.exports = [
         },
         rules: {
             'no-undef': 'error',
-            'no-extra-boolean-cast': 'error'
+            'no-extra-boolean-cast': 'error',
+            'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            'no-unreachable': 'error',
+            'no-constant-condition': 'error',
+            'no-dupe-keys': 'error',
+            'no-func-assign': 'error',
+            'no-redeclare': 'error',
+            'no-import-assign': 'error',
+            'no-dupe-args': 'error'
         }
     },
     // Tests: node + vitest globals, plus the vitest recommended practices.

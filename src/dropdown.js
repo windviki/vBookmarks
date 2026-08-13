@@ -93,7 +93,6 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
     };
 
     const pick = dd => {
-        const { trigger, list } = find(dd);
         const cur = currentOf(dd);
         if (!cur || cur.classList.contains('greyed'))
             return; // a greyed option is unpickable — keep the list open

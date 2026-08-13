@@ -106,7 +106,7 @@
             hasBatch = true;
         }
         if (hasBatch) {
-            chrome.storage.local.set(batch);
+            chrome.storage.local.set(batch).catch(() => {});
         }
     };
 
@@ -117,7 +117,7 @@
             const v = pendingWrites[key];
             delete pendingWrites[key];
             delete timers[key];
-            chrome.storage.local.set({ [key]: v });
+            chrome.storage.local.set({ [key]: v }).catch(() => {});
         }, 200);
     };
 
@@ -137,7 +137,7 @@
             hasBatch = true;
         }
         if (hasBatch) {
-            chrome.storage.sync.set(batch);
+            chrome.storage.sync.set(batch).catch(() => {});
         }
     };
 
@@ -148,7 +148,7 @@
             const v = syncPendingWrites[key];
             delete syncPendingWrites[key];
             delete syncTimers[key];
-            chrome.storage.sync.set({ [key]: v });
+            chrome.storage.sync.set({ [key]: v }).catch(() => {});
         }, 500);
     };
 

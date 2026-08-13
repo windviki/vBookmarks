@@ -605,7 +605,7 @@ export function initSearch(ctx = {}) {
         }
     };
 
-    searchInput.addEventListener('input', e => {
+    searchInput.addEventListener('input', () => {
         updateClearBtn();
         if (!searchInput.value.length) {
             // keep focus on input

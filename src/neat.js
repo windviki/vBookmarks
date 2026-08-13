@@ -17,7 +17,6 @@ import { initViewDead } from './view-dead.js';
 import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
 import { markPopupOpen } from './visit-stats-sw.js';
-import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 import { initFaviconFallback } from './favicon-fallback.js';
 import { applyUserStyle } from './userstyle.js';
 import {

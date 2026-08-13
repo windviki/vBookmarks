@@ -156,6 +156,12 @@ EXCLUDE_FILES = {
 # exclude any that should not ship.
 EXCLUDE_LOCALES = set()
 
+# Accumulates files the explicit lists reference but that do not exist, and
+# JS imports that cannot be resolved. Non-empty at the end of a run means the
+# produced zip would be missing runtime files — main() refuses to ship it
+# (unless --allow-missing is passed) instead of the old warn-and-continue.
+_missing_files = []
+
 
 def get_repo_root():
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
@@ -179,13 +185,15 @@ def collect_files(root, manifest):
         if os.path.isfile(path):
             included[name] = path
         else:
-            print(f'WARNING: file not found, skipping: {name}')
+            print(f'ERROR: file not found: {name}')
+            _missing_files.append(name)
 
     def add_dir(name):
         """Add all files under a directory recursively."""
         dirpath = os.path.join(root, name)
         if not os.path.isdir(dirpath):
-            print(f'WARNING: directory not found, skipping: {name}')
+            print(f'ERROR: directory not found: {name}')
+            _missing_files.append(name)
             return
         for dirpath2, _, filenames in os.walk(dirpath):
             for fn in filenames:
@@ -280,7 +288,8 @@ def resolve_js_imports(root, included):
                     arcnames.add(resolved)
                     changed = True
                 else:
-                    print(f'WARNING: import target not found: {arc} -> {resolved}')
+                    print(f'ERROR: import target not found: {arc} -> {resolved}')
+                    _missing_files.append(resolved)
 
 
 def verify_no_strays(root, included):
@@ -328,6 +337,11 @@ def main():
         default='chrome',
         help='Target browser (default: chrome). See docs/browser-compat.md.'
     )
+    parser.add_argument(
+        '--allow-missing',
+        action='store_true',
+        help='Continue even when referenced files/imports are missing (produces an incomplete zip).'
+    )
     args = parser.parse_args()
 
     if args.target == 'firefox':
@@ -371,6 +385,16 @@ def main():
 
     # Warn about stray files
     verify_no_strays(root, included)
+
+    if _missing_files:
+        if args.allow_missing:
+            print(f'\nWARNING: {len(_missing_files)} missing file(s) — zip is incomplete.')
+        else:
+            print(f'\nERROR: {len(_missing_files)} referenced file(s)/import(s) are missing — refusing to ship a broken zip.')
+            for m in sorted(set(_missing_files)):
+                print(f'  {m}')
+            print('Fix the lists in scripts/package.py, or pass --allow-missing to override.')
+            sys.exit(1)
 
 
 if __name__ == '__main__':
