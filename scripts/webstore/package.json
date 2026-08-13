@@ -1,0 +1,7 @@
+{
+  "name": "vbookmarks-webstore-publish",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "商店发布(Chrome Web Store API V2)工具: 发布流程中的「商店发布」步骤。依赖声明在仓库根 package.json。"
+}

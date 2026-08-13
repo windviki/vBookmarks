@@ -1,0 +1,125 @@
+# scripts/webstore — 商店发布(Chrome Web Store API V2)
+
+本目录实现发布流程中的「**商店发布**」步骤:通过 **Chrome Web Store API V2** 把打包产物
+上传并提交发布到 Chrome Web Store。不包含任何真实凭据。
+
+## 发布流程概念(两步)
+
+```
+发布流程 = git发布 + 商店发布
+```
+
+| 步骤 | 内容 | 入口 |
+|---|---|---|
+| **git发布** | 版本跃进 → 双语 changelog → commit → `git tag v<version>` → `python3 scripts/package.py` 本地打包 → push | AGENTS.md「Release process」 |
+| **商店发布** | 上传 `tmp/vBookmarks_<version>.zip` 到 CWS + 提交发布审核 | `scripts/webstore/publish.js` |
+
+**商店发布前置校验(默认强制)**:执行前自动检查 git发布 是否已完成——
+
+1. `git` 最大 tag 必须为 `v<manifest.version>`(当前版本已打 tag);
+2. 待上传 zip 存在,且其内嵌 `manifest.json` 版本与仓库一致(已重新打包)。
+
+校验不通过即中止(加 `--skip-check` 可跳过,仅用于显式上传草稿等场景)。先 `check` 可离线确认。
+
+> 底层: [chrome-webstore-upload@6](https://www.npmjs.com/package/chrome-webstore-upload) 是 CWS API **V2** 原生封装。
+> Google 于 2025-10-15 发布 V2,旧 V1.1 API 将于 **2026-10-15 后移除**;本项目只走 V2,无 V1 存量负担。
+
+## 依赖与运行环境
+
+- Node.js ≥ 20(依赖库要求;仓库当前用 Node 24)。
+- 依赖声明在**仓库根** `package.json`(devDependencies: `chrome-webstore-upload` / `undici` / `yauzl`),先执行:
+  ```bash
+  npm install
+  ```
+- `scripts/webstore/package.json` 仅声明 `"type": "module"`,把 ESM 作用域限定在本目录
+  (根目录的 harness/screenshots 脚本仍是 CommonJS,不受影响)。
+
+## 凭据准备(一次性)
+
+`publish.js` 读取(优先级从高到低):**真实环境变量** → **仓库根 `.env`**(git-ignored)。
+
+需要在 `.env` 追加(git-ignored,绝不入库;`.env.example` 只放占位):
+
+```bash
+# 商店发布(CWS V2)凭据 — 见 scripts/webstore/README.md「凭据准备」
+CWS_PUBLISHER_ID=            # 开发者账号 ID:Dashboard → Publisher → Settings
+CWS_CLIENT_ID=               # GCP OAuth Client(Web application)ID
+CWS_CLIENT_SECRET=           # 上述 Client 的 Secret(可留空)
+CWS_REFRESH_TOKEN=           # OAuth Playground 换取(scope: chromewebstore)
+```
+
+获取步骤(详见 [官方教程 Use the Chrome Web Store API](https://developer.chrome.com/docs/webstore/using-api)):
+
+1. **GCP 项目 + 启用 API**: [Google Cloud Console](https://console.cloud.google.com/) 建项目 →
+   APIs & Services → Library → 启用 **Chrome Web Store API**。
+2. **OAuth 同意屏**: APIs & Services → OAuth consent screen → External,把**自己的 Google 邮箱**
+   加进 Test users → Publish app。
+3. **OAuth Client ID**: Credentials → Create credentials → **OAuth client ID** →
+   Application type **Web application**,Authorized redirect URIs 加 `https://developers.google.com/oauthplayground`。
+4. **换 refresh_token**: [OAuth 2.0 Playground](https://developers.google.com/oauthplayground)
+   → 齿轮勾选 *Use your own OAuth credentials* 填入上面 → Input your own scopes 填
+   `https://www.googleapis.com/auth/chromewebstore` → Authorize → Exchange → 复制 **refresh_token**。
+5. **publisherId**: [Developer Dashboard](https://chrome.google.com/webstore/devconsole/)
+   → Publisher → Settings(多发布者先切到目标 publisher)。
+6. **账号要求**: 必须**开启两步验证**;首次需完成开发者注册(一次性 $5)。
+
+`extensionId` 无需填,`publish.js` 从 `manifest.json` 的 `homepage_url` 自动推导。
+
+## 用法
+
+```bash
+# 1) git发布 前置校验(离线,不需凭据)
+node scripts/webstore/publish.js check
+
+# 2) 查询当前已发布/待审状态
+node scripts/webstore/publish.js status
+
+# 3) 上传(不发布)—— dry-run 默认,加 --yes 执行
+node scripts/webstore/publish.js upload --yes
+node scripts/webstore/publish.js upload --file tmp/vBookmarks_4.0.2.zip --yes   # 指定包
+
+# 4) 发布(DEFAULT_PUBLISH 提交审核;审核通过自动全量)
+node scripts/webstore/publish.js publish --yes
+
+# 5) 上传 + 发布(共用一次 access_token)
+node scripts/webstore/publish.js all --yes
+```
+
+参数:
+
+| 参数 | 说明 |
+|---|---|
+| `--file 路径` | 指定要上传的 zip(默认自动选 `tmp/vBookmarks_<version>.zip`;可传相对仓库根或绝对路径) |
+| `--type T` | `DEFAULT_PUBLISH`(默认)· `TRUSTED_TESTERS` · `STAGED_PUBLISH` |
+| `--deploy N` | 灰度百分比(需 >10000 周活用户,V2 免重新审核) |
+| `--skip-check` | 跳过 git发布 前置校验(仅限显式上传草稿等场景) |
+| `--yes` | 真正执行;否则只 dry-run 打印将执行的请求 |
+
+> **审核注意**: `host_permissions: <all_urls>` + `proxy` 权限是审核高风险点,须在
+> Developer Dashboard 的 listing 里说明用途(死链检测需探测任意书签 URL;proxy 是用户自配的
+> 死链扫描代理)。2025-08-01 起隐私政策为强制项。详见 `tmp/webstore-publish-plan.md`(调研存档,
+> git-ignored)或按需回查官方 [Prepare your extension](https://developer.chrome.com/docs/webstore/prepare)。
+
+## 网络代理
+
+Node 全局 fetch(undici)默认**不读** `HTTP(S)_PROXY` 环境变量。本环境直连 Google API 被墙,
+脚本在启动时自动复用 `HTTP(S)_PROXY` 安装 undici `ProxyAgent` 作全局 dispatcher,
+`chrome-webstore-upload` 内部的 fetch 即自动走代理(与 `curl` 行为一致)。
+
+## 测试
+
+```bash
+npm run test:webstore          # 等价于: node --test scripts/webstore/upload-test.js
+```
+
+`upload-test.js` 全离线(mock 全局 fetch),验证:
+- v6 库对 CWS V2 端点的请求契约(upload/publish/fetchStatus/setDeployPercentage、token 刷新、
+  IN_PROGRESS 轮询、`publish('default')` 兼容);
+- 打包产物 CWS 结构合规(zip 根含 manifest.json、version 一致、icons 齐全、description ≤ 132);
+- 权限清单快照(供审核自查)。
+
+## 安全与版本控制约定
+
+- 仓库内所有文件**不得出现真实凭据**;凭据只放 git-ignored 的 `.env` 或 CI secrets。
+- `scripts/` 在 `scripts/package.py` 的排除列表中,本目录**不会被打进扩展 zip**。
+- 发版流程、命名与更多背景见 AGENTS.md「Release process」与记忆 `release-process.md`。

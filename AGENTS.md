@@ -115,9 +115,13 @@ python3 scripts/i18n.py verify                # gate: key-set alignment + no [TO
 
 All 43 locales currently hold the same 379 keys as the `en` baseline — keys without a real translation carry `[TODO:key]` placeholder messages. When adding keys: translate `en` + `zh_CN` for real, insert `[TODO:key]` placeholders **in place** (right after their `en` neighbor) into the other locales — do NOT reorder keys — then check with `python3 scripts/i18n.py missing`. **When modifying the text of an existing key** the same sync is required — update `en` + `zh_CN` for real, then force re-translation in the other locales by overwriting the key's `message` with the `[TODO:key]` placeholder in each of them (already-translated text is invisible to `translate`: it only fills missing/`[TODO:]` keys, so a stale-but-translated key would silently keep its old wording) — then run the same `translate --apply` + `verify` flow below. **TODO placeholders are only an intermediate state, never a deliverable one**: before every commit/packaging run `python3 scripts/i18n.py translate --apply` to fill them (LLM endpoint from the git-ignored `.env`), and the release gate is `python3 scripts/i18n.py verify` at 0 errors — do not treat a verify failure caused by leftover `[TODO:]` as expected, and do not mistake `audit` (code-reference check, blind to translation state) for this gate. `translate` fills every pending key of a locale in one batched run (40 keys/request) against a chat LLM — configure via env or a git-ignored repo-root `.env`: `VBM_LLM_API_KEY` required, `VBM_LLM_BASE_URL` (default `https://api.moonshot.cn/v1`), `VBM_LLM_MODEL` (default `kimi-k2-0905-preview`) and `VBM_LLM_API_TYPE` (`openai` default, or `anthropic_messages` for Anthropic-style endpoints like DeepSeek's) optional. The built-in Chinese prompt explains the bookmark-manager context and per-category constraints (menu items stay short, options may be long, `$placeholder$` tokens must survive); dry-run is the default, `--apply` writes back preserving each file's key order and `placeholders` structure. `verify` also warns about over-long menu strings (35 chars / 18 CJK) and supports `--fix` for auto-shortening via the LLM.
 
-### Release process
+### Release process (发布流程 = git发布 + 商店发布)
 
-1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.2`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
+The release is **one process with two sequential steps**. **git发布** prepares version / changelog / tag / package and pushes; **商店发布** uploads the packaged zip to the Chrome Web Store via the CWS API **V2** and submits it for review. Store publishing requires git发布 to have been executed for the same version — enforced automatically by the pre-check in `scripts/webstore/publish.js` (见 Step 2)。
+
+**Step 1 — git发布**(repo-side: version bump → changelog → commit → tag → package → push):
+
+1. **Version check**: `git tag --sort=-v:refname | head -1` gives the highest tag (format `v<version>`, e.g. `v4.0.3`). The current version — authoritative source is `manifest.json`, mirrored in `package.json` — must be **greater** than the highest tag; if development did not bump it, bump it first.
 2. **Changelog basis**: every commit between the current version and the previous version tag.
 3. **Bilingual changelog**: update `docs/README.md` (English) + `docs/README.zh.md` (Chinese) — the repo convention is symmetric bilingual entries.
 4. **Gap-fill, don't rewrite**: if the working version already has changelog entries accumulated during development, reconcile them against the commit list rather than rewriting from scratch.
@@ -125,6 +129,13 @@ All 43 locales currently hold the same 379 keys as the `en` baseline — keys wi
 6. **Tag**: `git tag v<version>` (e.g. `v4.0.3`).
 7. **Package**: `python3 scripts/package.py` (version read from `manifest.json`; produces `tmp/vBookmarks_<version>.zip`).
 8. **Push** commits + tag.
+
+**Step 2 — 商店发布**(store publish via `scripts/webstore/publish.js`): uploads `tmp/vBookmarks_<version>.zip` and submits for review.
+
+- **前置校验(默认强制)**: `check` 子命令离线验证 git发布 已完成 — git 最大 tag 必须为 `v<version>` 且 zip 内嵌版本与仓库一致;校验失败即中止(`--skip-check` 仅用于显式上传草稿)。发布前先 `node scripts/webstore/publish.js check`。
+- **凭据**: 只存于 git-ignored 的仓库根 `.env`(`CWS_PUBLISHER_ID` / `CWS_CLIENT_ID` / `CWS_CLIENT_SECRET` / `CWS_REFRESH_TOKEN`;`extensionId` 自动从 manifest 推导),真实环境变量优先;获取步骤见 `scripts/webstore/README.md`。仓库内文件不得出现真实凭据。
+- **流程**: `upload --yes` → `publish --yes`(或 `all --yes` 一次完成);`--file` 指定 zip,`--type STAGED_PUBLISH`/`TRUSTED_TESTERS` 走分阶段/预发布,`--deploy N` 灰度。全部 dry-run 默认,`--yes` 才联网执行。
+- **测试**: `npm run test:webstore`(全离线,验证 V2 请求契约 + 打包产物 CWS 结构合规)。
 
 ### Manual testing checklist (no full E2E — the Docker harness above covers the automated smoke/keyboard/scrollbar gates)
 
