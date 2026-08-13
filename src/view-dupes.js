@@ -76,10 +76,7 @@ import { findDupes, pickKeeper, planDeletion } from './dupes.js';
 import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON } from './icons.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
-
-// Same escape recipe as the other render modules (self-contained modules).
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+import { htmlspecialchars } from './escape.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS

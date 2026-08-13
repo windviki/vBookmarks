@@ -1,4 +1,5 @@
 import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from './icons.js';
+import { htmlspecialchars } from './escape.js';
 
 /**
  * Tree HTML generation + tree data helpers (P1 module extracted from neat.js,
@@ -31,13 +32,6 @@ import { FOLDER_ICON, DOCUMENT_CODE_ICON, CHEVRON_ICON } from './icons.js';
  * inject → appendChild, destroy → remove.
  */
 
-// neatools' String.prototype.htmlspecialchars as a pure function: escape
-// >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-
-// neat.js keeps its own copy for the actions ctx; generateBookmarkHTML uses
-// this module-local one.
 const httpsPattern = /^https?:\/\//i;
 
 // v4 task-4 #2: per-level tree indent, shared by every place that computes a

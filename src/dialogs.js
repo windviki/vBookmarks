@@ -13,17 +13,11 @@
  * document/window/chrome remain page globals, as in the rest of the popup.
  */
 import { pickGroupColor } from './tab-group-utils.js';
+import { htmlspecialchars } from './escape.js';
 
 // Replaces neatools' String.prototype.widont with a pure function: keeps the
 // last two words of a dialog message on one line.
 export const widont = str => `${str}`.replace(/\s([^\s]+)$/i, '&nbsp;$1');
-
-// neatools' String.prototype.htmlspecialchars as a pure function (same local
-// copy as tree-render.js / palette.js): escape >, then <, then " — order
-// matters, ">" first so "&gt;" is not re-escaped. Used for the existing-tab-
-// group picker rows, whose titles are user data from other extensions.
-const htmlspecialchars = s =>
-    `${s}`.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 export function initDialogs(ctx = {}) {
     const $ = id => document.getElementById(id);

@@ -117,10 +117,7 @@ import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermi
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
-
-// Same escape recipe as the other render modules (self-contained modules).
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+import { htmlspecialchars } from './escape.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);

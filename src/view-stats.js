@@ -94,10 +94,7 @@
 
 import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED } from './icons.js';
-
-// Same escape recipe as the other render modules (self-contained modules).
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+import { htmlspecialchars } from './escape.js';
 
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);

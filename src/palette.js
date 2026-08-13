@@ -85,11 +85,7 @@
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
 import { FOLDER_ICON } from './icons.js';
 import { loadCustomCommands, saveCustomCommands, sortCustoms, matchCustom, executeCustom, SLASH_RE } from './palette-commands.js';
-
-// neatools' String.prototype.htmlspecialchars as a pure function: escape
-// >, then <, then " (order matters, ">" first so "&gt;" is not re-escaped).
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+import { htmlspecialchars } from './escape.js';
 
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);

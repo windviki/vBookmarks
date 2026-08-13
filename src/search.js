@@ -52,11 +52,7 @@
  */
 import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON } from './icons.js';
 import { relTimeLabel } from './tree-render.js';
-
-// Same escape recipe as tree-render.js's module-private copy (modules stay
-// self-contained): escape >, then <, then ".
-const htmlspecialchars = s =>
-    s.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+import { htmlspecialchars } from './escape.js';
 
 // §4.3: the search-history MRU as a pure function — trim, drop empties,
 // dedupe by exact query, newest first, capped at `limit`. Entries are

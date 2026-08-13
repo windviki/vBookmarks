@@ -29,6 +29,8 @@
  *   url-template   { template, where }       exactly one %s, https? only
  */
 
+import { htmlspecialchars } from './escape.js';
+
 // v4 task-4 #5: every built-in slash name and alias (src/palette.js's
 // command table). palette.test.js pins the table and this list in sync.
 export const PALETTE_RESERVED = [
@@ -49,13 +51,6 @@ export const WHERES_GROUP = ['tab', 'window', 'background'];
 export const PRESET_VIEWS = ['dupes', 'dead'];
 
 export const slashNamesOf = cmd => [cmd.slash].concat(cmd.aliases || []);
-
-// Escape user-controlled text before it enters an innerHTML-rendered dialog
-// message (ConfirmDialog renders opts.dialog as HTML). cmd.name is free text
-// (only trim()ed by validateCommand), so the delete/broken-folder dialogs in
-// executeCustom escape it here.
-const htmlspecialchars = s =>
-    `${s}`.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 // --- Validation ---------------------------------------------------------------
 // validateCommand(draft, existing, selfId) → { ok:true, command } — the
