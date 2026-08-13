@@ -862,7 +862,11 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
         const item = byId['sub-open-bookmarks-in-group'];
         fire(folderTabGroupSubmenu, 'mouseup', makeEvent({ target: item, button: 0 }));
         // folder menu open → groupTitle '' → openBookmarksInGroup(urls, '')
-        expect(actionCalls.some(c => c[0] === 'openBookmarksInGroup')).toBe(true);
+        // a bare "was called at all" check would pass with wrong urls or a
+        // stale groupTitle — pin the exact arguments
+        expect(actionCalls).toEqual([
+            ['openBookmarksInGroup', ['https://x.example'], '']
+        ]);
     });
 
     it('flips the flyout to the left when it would overflow the right edge', () => {

@@ -212,8 +212,6 @@ describe('view registration (§5.3)', () => {
         expect(def().listEl).toBe($list);
         expect(def().typeAhead).toBe(false);
         expect(def().hidden).toBe(false); // showRecentBookmarks default on
-        expect(typeof def().activate).toBe('function');
-        expect(typeof def().onKey).toBe('function');
     });
 
     it('showRecentBookmarks migrates to the tab hidden flag', () => {

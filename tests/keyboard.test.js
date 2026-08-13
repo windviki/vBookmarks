@@ -1079,7 +1079,11 @@ describe('treeKeyDown — End/Home', () => {
         delete results._qs['li:last-child a'];
         doc.activeElement = r1.link;
         fire(results, 'keydown', makeEvent({ key: 'End' }));
+        // r2 is a deleted target — its not-being-focused is trivially true.
+        // "does nothing" must mean the focus is left completely untouched.
         expect(r2.link.focused).toBe(false);
+        expect(doc.activeElement).toBe(r1.link);
+        expect(r1.link.focusCount).toBe(0);
     });
 
     it('Home on the results pane focuses the first result', () => {
@@ -1787,8 +1791,21 @@ describe('contextKeyDown', () => {
     });
 
     it('init does not throw when the palette-cmd menu is absent', () => {
-        const { paletteCmdMenu } = setup({ noPaletteCmdMenu: true });
-        expect(paletteCmdMenu).toBe(null);
+        // setup() runs initKeyboard — if the missing-menu guard crashed, this
+        // whole test would throw. The assertion must verify real behavior, not
+        // setup's own stub output (paletteCmdMenu is null by construction):
+        // the OTHER menus stay keyboard-bound when the palette menu is gone.
+        const { bookmarkMenu, doc, el } = setup({ noPaletteCmdMenu: true });
+        const bmItem = el('DIV', 'bookmark-new-tab');
+        bmItem.classList.add('menu-item');
+        bmItem.parentNode = bookmarkMenu;
+        bookmarkMenu.firstElementChild = bmItem;
+        bookmarkMenu.lastElementChild = bmItem;
+        doc.activeElement = bookmarkMenu; // freshly opened: container focus
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(bmItem.focused).toBe(true);
+        fire(bookmarkMenu, 'keydown', makeEvent({ key: 'Enter' }));
+        expect(bmItem._dispatched).toHaveLength(1);
     });
 
     // issue #48 follow-up: the collapsed-group flyouts (→ opens + steps in,

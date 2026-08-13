@@ -521,7 +521,9 @@ describe('custom styles userstyle save', () => {
         const sb = createSandbox({ windowExtras: { CodeMirror: fakeCodeMirror } });
         await sb.start();
         expect(fakeCodeMirror.fromTextArea).toHaveBeenCalledTimes(1);
-        expect(fromTextAreaOpts).toBeTruthy();
+        // the editor wiring hands over an onChange handler (the persistence path
+        // asserted right below) — a bare truthiness check would pass for any stub
+        expect(typeof fromTextAreaOpts.onChange).toBe('function');
         // simulate an editor edit → the onChange handler persists
         fromTextAreaOpts.onChange({ getValue: () => 'body { color: blue; }' });
         expect(sb.window.store.get('userstyle')).toBe('body { color: blue; }');

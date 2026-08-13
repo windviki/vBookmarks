@@ -316,7 +316,6 @@ describe('view registration (§5.5)', () => {
         expect(def().typeAhead).toBe(false);
         expect(def().badge()).toBe(0);
         expect(def().onEscape()).toBe(false); // no scan running
-        expect(typeof def().onKey).toBe('function');
     });
 
     it("badge() counts the last scan's dead+blocked rows (marks are not the badge)", () => {

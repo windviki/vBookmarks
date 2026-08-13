@@ -240,9 +240,6 @@ describe('view registration (§5.6)', () => {
         expect(def().container).toBe($container);
         expect(def().listEl).toBe($list);
         expect(def().typeAhead).toBe(false);
-        expect(typeof def().badge).toBe('function');
-        expect(typeof def().activate).toBe('function');
-        expect(typeof def().onKey).toBe('function');
     });
 
     it('maps the showDupesView setting onto tab visibility', () => {

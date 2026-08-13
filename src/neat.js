@@ -20,6 +20,8 @@ import { markPopupOpen } from './visit-stats-sw.js';
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 import { initFaviconFallback } from './favicon-fallback.js';
 import { applyUserStyle } from './userstyle.js';
+import { decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel } from './resize-core.js';
+import { createFolderSorter } from './folder-sort.js';
 
 (window => {
     const store = window.store;
@@ -427,26 +429,18 @@ import { applyUserStyle } from './userstyle.js';
             // zoom<1 时 `600/zoomFactor-1`（如 0.9 → 666）高估 Chrome 视口的
             // 双滚动条问题（commit 7fea4d1）。
             const maxH = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1, 600);
-            const clampedContent = Math.max(minH, Math.min(contentH, maxH));
-
-            let targetH;
-            if (clampedContent > currentH) {
-                // Content outgrew the popup: grow with it.
-                targetH = clampedContent;
-                body.style.transitionDuration = '.3s';
-            } else if (allowShrink && clampedContent <= currentH &&
-                       contentH <= maxH && clampedContent < currentH * 0.7) {
-                // Only shrink when explicitly allowed AND the full tree fits
-                // within the max height without scroll AND there's real waste.
-                targetH = clampedContent;
-                body.style.transitionDuration = '.15s';
-            } else {
-                // Stay put: content is shorter but the popup is a comfortable
-                // size. Never shrink on folder toggle events.
+            // The grow / stay / shrink decision is pure — see resize-core.js
+            // (tests drive the real kernel). Stay put when the content is
+            // shorter but the popup is a comfortable size: never shrink on
+            // folder toggle events.
+            const decision = decideHeight({
+                contentH, currentH, minH, maxH, allowShrink, userResized: userResizedHeight
+            });
+            if (decision.action === 'stay')
                 return;
-            }
-            body.style.height = `${targetH}px`;
-            store.set('popupHeight', targetH);
+            body.style.transitionDuration = decision.action === 'grow' ? '.3s' : '.15s';
+            body.style.height = `${decision.target}px`;
+            store.set('popupHeight', decision.target);
         });
     };
 
@@ -465,57 +459,16 @@ import { applyUserStyle } from './userstyle.js';
 
     // Reorder the children of folderId with serial bookmarks.move calls, then
     // rebuild the tree (the opens memory restores the expanded state). The
-    // pre-sort order of EVERY level is captured (VBMSort.snapshotOrder) so
-    // the toast's Undo replays each level back to its original positions (a
-    // reorder — the deletion undo's recreate-by-copy would swap node ids, so
-    // it restores positions instead). All planning lives in sort-utils.js
-    // (pure); this is the thin chrome executor. One chain at a time: the
-    // lock refuses re-triggers while a sort (or an Undo replay) is in
-    // flight — the direct menu items and the sort dialog share this
-    // executor, so one lock covers both entries.
-    const sortLock = window.VBMSort.createSortLock();
-    const sortFolderContents = (folderId, opts) => {
-        if (!sortLock.acquire())
-            return;
-        chrome.bookmarks.getSubTree(folderId, nodes => {
-            if (!nodes || !nodes.length) {
-                sortLock.release();
-                return;
-            }
-            const children = nodes[0].children || [];
-            const snapshot = window.VBMSort.snapshotOrder(folderId, children);
-            const sorted = window.VBMSort.sortNodes(children, opts);
-            // Moving every id to its target index in ascending order leaves the
-            // parent sorted, because positions before i are already final.
-            const moveToIndex = ids => ids.reduce((chain, id, i) =>
-                chain.then(() => new Promise(resolve => {
-                    chrome.bookmarks.move(id, { index: i }, () => {
-                        void chrome.runtime.lastError; // read per 793e336
-                        resolve();
-                    });
-                })), Promise.resolve());
-            const runLevels = levels => levels.reduce((chain, ids) =>
-                chain.then(() => moveToIndex(ids)), Promise.resolve());
-            runLevels(window.VBMSort.planSortMoves(sorted, !!opts.recursive)).then(() => {
-                // treeView 在下方声明；此调用只在排序动作的异步回调里执行，TDZ 安全
-                chrome.bookmarks.getTree(treeView.generateTree);
-                // issue #33: toast undo — Undo replays every level the sort
-                // touched back to its snapshot order, recursive sorts
-                // included (undo 在下方声明,同样 TDZ 安全)。The lock is
-                // re-held for the replay so a new sort can't interleave
-                // (best-effort acquire: a chain already in flight holds it).
-                if (undo && undo.toastAction) {
-                    undo.toastAction(_m('sortDone'), _m('undoAction'), () => {
-                        sortLock.acquire();
-                        runLevels(window.VBMSort.planUndoMoves(snapshot, !!opts.recursive))
-                            .then(() => chrome.bookmarks.getTree(treeView.generateTree))
-                            .then(() => sortLock.release());
-                    });
-                }
-                sortLock.release();
-            });
-        });
-    };
+    // executor (src/folder-sort.js) holds the re-entrancy lock, captures the
+    // pre-sort order of EVERY level and wires the toast Undo replay — the
+    // direct menu items and the sort dialog share this executor, so one lock
+    // covers both entries. undo / treeView are declared below; the sorter only
+    // touches them on user events (TDZ-safe via the lazy getters).
+    const sortFolderContents = createFolderSorter({
+        _m,
+        get undo() { return undo; },
+        get treeView() { return treeView; }
+    });
 
     // Dialogs live in src/dialogs.js (P1); onSort reorders a folder's children,
     // and store lets the sort dialog persist its options (issue #33).
@@ -1027,7 +980,7 @@ import { applyUserStyle } from './userstyle.js';
         const rightRoom = (window.screen && screen.availWidth)
             ? Math.max(0, screen.availWidth - ((window.screenX || 0) + curW) - RESIZE_EDGE_MARGIN)
             : 0;
-        return Math.min(640, bodyWidth + Math.max(leftRoom, rightRoom));
+        return decideWidthMax({ bodyWidth, leftRoom, rightRoom });
     };
     let currentMaxHeight = 0;
     function pointerDragHandler(e) {
@@ -1042,7 +995,7 @@ import { applyUserStyle } from './userstyle.js';
             let width = bodyWidth + changedWidth;
             // 320 < width < 640, and never wider than the screen leaves room
             // for (a wider popup pushes its resize handle off-screen).
-            width = Math.min(maxResizeWidth, Math.max(320, width));
+            width = clampDragWidth(width, maxResizeWidth);
             // if (!rtl && e.screenX < 640 || rtl && e.screenX > 640) {
             //     $resizerx.style.cursor = 'not-allowed';
             // } else {
@@ -1122,14 +1075,14 @@ import { applyUserStyle } from './userstyle.js';
             return; // prevent zooming when drag-n-dropping
         const dataZoom = body.dataset.zoom;
         const currentZoom = dataZoom ? parseInt(dataZoom, 10) : 100;
-        if (val === 0) {
+        // the ±10-step / [90,150] clamp / reset decision lives in resize-core.js
+        const level = nextZoomLevel(currentZoom, val);
+        if (level === null) {
             delete body.dataset.zoom;
             store.remove('zoom');
         } else {
-            let z = (val > 0) ? currentZoom + 10 : currentZoom - 10;
-            z = Math.min(150, Math.max(90, z));
-            body.dataset.zoom = `${z}`;
-            store.set('zoom', z);
+            body.dataset.zoom = `${level}`;
+            store.set('zoom', level);
         }
         body.classList.add('dummy'); // force redraw
         body.classList.remove('dummy');

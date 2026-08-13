@@ -147,13 +147,19 @@ describe('initFaviconFallback', () => {
     });
 
     it('ignores non-favicon imgs and non-img targets', async () => {
-        initFaviconFallback(globalThis.document);
+        const api = initFaviconFallback(globalThis.document);
         const other = makeImage(PLACEHOLDER_BYTES);
-        other.src = 'https://example.com/icon.png';
+        other.src = 'https://example.com/icon.png'; // a page image, not a _favicon
+        // Sentinel: if the module ever tried to swap a non-favicon img, this
+        // replaceChild would throw and the test fails.
+        const parent = { replaceChild() { throw new Error('must not swap'); } };
+        other.parentNode = parent;
         loadHandler({ target: other });
-        loadHandler({ target: { tagName: 'DIV' } });
+        loadHandler({ target: { tagName: 'DIV' } }); // non-IMG: never reaches handle
         await flush(); await flush();
-        // no verdict recorded, no crash
+        // no verdict recorded for the non-favicon src, and nothing was swapped
+        expect(api.verdicts.has(other.src)).toBe(false);
+        expect(api.verdicts.size).toBe(0);
     });
 
     it('swapped icon is the currentColor document glyph from icons.js', () => {

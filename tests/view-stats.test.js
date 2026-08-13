@@ -212,7 +212,7 @@ describe('registration', () => {
         expect(def().typeAhead).toBe(false);
         expect(def().container).toBe($container);
         expect(def().listEl).toBe($list);
-        expect(typeof def().icon).toBe('string');
+        expect(def().icon).toContain('<svg'); // inline-SVG icon (bitmaps retired in P4)
     });
 
     it('maps the showStatsView setting onto tab visibility', () => {

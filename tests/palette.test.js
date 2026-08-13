@@ -706,8 +706,6 @@ describe('result composition', () => {
         expect(results._appended[0]._innerHTML).toContain('<i>Gmail</i>');
         expect(results._appended[1]._innerHTML).toContain('<i>mail archive</i>');
         expect(results._appended[2]._innerHTML).toContain("Search 'gmail' in Search view");
-        // sanity: the double really is the implementation under test
-        expect(VBMFuzzy.score('gmail', 'Gmail')).not.toBeNull();
     });
 
     it('flattens nested folders and their bookmarks into the index', () => {

@@ -485,9 +485,19 @@ describe('openBookmarksInGroup', () => {
         const { actions, chrome } = setup({});
         actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
         const msg = chrome.runtime.sent[0];
+        // pickGroupColor('Dev Stuff') = charCode sum 839 % 9 = index 2. A bare
+        // palette-membership check would pass even if the picker degenerated
+        // to a constant color — pin the deterministic value.
         expect(palette).toContain(msg.color);
+        expect(msg.color).toBe('red');
         actions.openBookmarksInGroup(urls(2), 'Dev Stuff');
         expect(chrome.runtime.sent[1].color).toBe(msg.color); // same title → same color
+        // different titles must NOT all land on one color: 'a' → 97 % 9 = cyan,
+        // 'b' → 98 % 9 = orange (a constant picker would fail here)
+        actions.openBookmarksInGroup(urls(1), 'a');
+        expect(chrome.runtime.sent[2].color).toBe('cyan');
+        actions.openBookmarksInGroup(urls(1), 'b');
+        expect(chrome.runtime.sent[3].color).toBe('orange');
     });
 
     it('keeps the color inside the tabGroups palette for any title (including empty)', () => {

@@ -370,8 +370,14 @@ describe('GroupDialog (P3.4: new tab group title + color)', () => {
     it('derives a default color from the title via the hash picker when none is passed', () => {
         const d = freshDialogs();
         d.GroupDialog.open({ title: 'Dev Stuff', onConfirm: () => {} });
-        // pickGroupColor('Dev Stuff') — inside the 9-color palette
-        expect(PALETTE).toContain(checkedColor().value);
+        // pickGroupColor('Dev Stuff') = charCode sum 839 % 9 = index 2 = 'red'.
+        // A palette-membership assertion would pass even if the picker
+        // degenerated to a constant color — pin the deterministic result.
+        expect(checkedColor().value).toBe('red');
+        // same title → same color across reopens (stable, not a random pick)
+        const d2 = freshDialogs();
+        d2.GroupDialog.open({ title: 'Dev Stuff', onConfirm: () => {} });
+        expect(checkedColor().value).toBe('red');
     });
 
     it('falls back to the first radio when no title-derived color exists (empty title)', () => {
