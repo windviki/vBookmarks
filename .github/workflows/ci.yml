@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Unit tests
-        run: npm run test:run
+      - name: Unit tests (+ test count for docs)
+        run: npm run test:ci
 
       - name: Lint (eslint, error-level gate)
         run: npm run lint

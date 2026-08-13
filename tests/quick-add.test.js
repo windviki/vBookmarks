@@ -170,6 +170,26 @@ describe('refreshQuickAddState — the star mirrors the current tab', () => {
     });
 });
 
+describe('quickAddEnabled — the star visibility switch (v4 task-3 #20)', () => {
+    it('is hidden when the setting is off', () => {
+        const star = quickAddBtn;
+        const qa = createQuickAdd({
+            store: { get: (k, dflt) => (k === 'quickAddEnabled' ? '' : dflt) },
+            document: doc, body, chrome, quickAddBtn: star, quickAddToast, _m: () => {}
+        });
+        expect(star.classList.contains('hidden')).toBe(true);
+    });
+
+    it('is visible by default (quickAddEnabled defaults on)', () => {
+        const star = quickAddBtn;
+        const qa = createQuickAdd({
+            store: { get: (k, dflt) => dflt },
+            document: doc, body, chrome, quickAddBtn: star, quickAddToast, _m: () => {}
+        });
+        expect(star.classList.contains('hidden')).toBe(false);
+    });
+});
+
 describe('showQuickAddToast — auto-hides after 1800ms', () => {
     it('removes the .show class after the timeout', () => {
         vi.useFakeTimers();

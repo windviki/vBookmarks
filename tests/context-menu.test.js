@@ -750,6 +750,76 @@ describe('contextmenu handler (opening a menu)', () => {
     });
 });
 
+describe('empty-folder menu greying (content-dependent items)', () => {
+    // applyContentDisabled: open / tab-group entries need URL children, the
+    // sort entries need any child; only the add-type entries stay enabled
+    // for an empty folder (root greying is a separate ROOT_DISABLED_IDS rule).
+    // The menu items are created on demand (menuItem), so a test ensures the
+    // ones applyContentDisabled toggles exist before the folder menu opens.
+    const CONTENT_IDS = ['folder-window', 'open-bookmarks-in-group',
+        'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+        'folder-new-window', 'folder-new-incognito-window',
+        'sort-folder-by-name', 'sort-folder-by-date', 'sort-folder-contents',
+        'add-bookmark-top', 'add-bookmark-bottom', 'add-new-folder', 'add-folder-separator'];
+
+    const ensureItems = menuItem => {
+        for (const id of CONTENT_IDS)
+            menuItem(id);
+    };
+
+    it('an empty folder disables every open/tab-group/sort entry and keeps the add-type ones', () => {
+        const { byId, menuItem, makeFolderRow, openOn } = setup({ children: { 7: [] } });
+        ensureItems(menuItem);
+        openOn(makeFolderRow().span); // folder 7, empty
+        for (const id of ['folder-window', 'open-bookmarks-in-group',
+            'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+            'folder-new-window', 'folder-new-incognito-window'])
+            expect(byId[id].classList.contains('disabled'), id).toBe(true);
+        for (const id of ['sort-folder-by-name', 'sort-folder-by-date', 'sort-folder-contents'])
+            expect(byId[id].classList.contains('disabled'), id).toBe(true);
+        // add-type entries stay usable
+        for (const id of ['add-bookmark-top', 'add-bookmark-bottom', 'add-new-folder', 'add-folder-separator'])
+            expect(byId[id].classList.contains('disabled'), id).toBe(false);
+    });
+
+    it('a folder with only subfolders (no URL children) disables the open entries but keeps sort', () => {
+        const { byId, menuItem, makeFolderRow, openOn } = setup({ children: { 7: [{ id: '8', title: 'sub' }] } });
+        ensureItems(menuItem);
+        openOn(makeFolderRow().span);
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(true);   // no URL → open dead
+        expect(byId['sort-folder-by-name'].classList.contains('disabled')).toBe(false); // has children → sort alive
+    });
+
+    it('a folder with bookmarks keeps everything enabled', () => {
+        const { byId, menuItem, makeFolderRow, openOn } =
+            setup({ children: { 7: [{ id: '8', title: 'GitHub', url: 'https://github.com' }] } });
+        ensureItems(menuItem);
+        openOn(makeFolderRow().span);
+        for (const id of ['folder-window', 'open-bookmarks-in-group',
+            'folder-new-window', 'sort-folder-by-name', 'sort-folder-contents'])
+            expect(byId[id].classList.contains('disabled'), id).toBe(false);
+    });
+
+    it('the collapsed tab-group submenu greys too when the folder has no URL children', () => {
+        const { folderTabGroupSubmenu, makeFolderRow, openOn } =
+            setup({ collapseTabGroupMenu: true, children: { 7: [{ id: '8', title: 'sub' }] } });
+        openOn(makeFolderRow().span);
+        const subItems = folderTabGroupSubmenu.querySelectorAll('.menu-item');
+        for (const item of subItems)
+            expect(item.classList.contains('disabled')).toBe(true);
+    });
+
+    it('a disabled open entry refuses to dispatch (the shared .disabled guard)', () => {
+        const { folderMenu, byId, menuItem, makeFolderRow, openOn, actionCalls } =
+            setup({ children: { 7: [] } });
+        ensureItems(menuItem);
+        openOn(makeFolderRow().span);
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(true);
+        fire(folderMenu, 'mouseup', makeEvent({ target: byId['folder-window'], button: 0 }));
+        expect(actionCalls.filter(c => c[0] === 'openBookmarks')).toHaveLength(0);
+    });
+});
+
 describe('collapsed-group submenus (issue #48 follow-up)', () => {
     it('applies collapse-sort to the folder menu by default and collapse-tab-group when enabled', () => {
         const { folderMenu, bookmarkMenu, makeFolderRow, openOn } = setup({});
@@ -800,7 +870,8 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 
     it('openSubmenuFor shows the linked flyout and closeSubmenu parks it', () => {
-        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({});
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } =
+            setup({ children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
         openOn(makeFolderRow().span);
         folderSortEntry.rect = { left: 100, top: 100, width: 120, height: 26, right: 220, bottom: 126 };
         expect(menus.openSubmenuFor(folderSortEntry)).toBe(folderSortSubmenu);
@@ -832,7 +903,8 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 
     it('dispatches a collapsed sort submenu item through the folder handler and closes the menu', () => {
-        const { menus, folderSortEntry, folderMenu, folderSortSubmenu, byId, makeFolderRow, openOn, sortFolderCalls } = setup({});
+        const { menus, folderSortEntry, folderMenu, folderSortSubmenu, byId, makeFolderRow, openOn, sortFolderCalls } =
+            setup({ children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
         const { span } = makeFolderRow();
         openOn(span);
         menus.openSubmenuFor(folderSortEntry);
@@ -861,7 +933,8 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 
     it('flips the flyout to the left when it would overflow the right edge', () => {
-        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({});
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } =
+            setup({ children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
         folderSortSubmenu.offsetWidth = 200;
         folderSortSubmenu.offsetHeight = 100;
         openOn(makeFolderRow().span);
@@ -873,7 +946,8 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 
     it('flips the flyout to the right at the left edge under rtl', () => {
-        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } = setup({ rtl: true });
+        const { menus, folderSortEntry, folderSortSubmenu, makeFolderRow, openOn } =
+            setup({ rtl: true, children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
         folderSortSubmenu.offsetWidth = 200;
         folderSortSubmenu.offsetHeight = 100;
         openOn(makeFolderRow().span);
@@ -884,7 +958,8 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 
     it('a click on the collapse entry toggles its flyout without closing the menu', () => {
-        const { menus, folderSortEntry, folderSortSubmenu, folderMenu, makeFolderRow, openOn } = setup({});
+        const { menus, folderSortEntry, folderSortSubmenu, folderMenu, makeFolderRow, openOn } =
+            setup({ children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
         const { span } = makeFolderRow();
         openOn(span);
         fire(folderMenu, 'mouseup', makeEvent({ target: folderSortEntry, button: 0 }));

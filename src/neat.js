@@ -29,6 +29,7 @@ import { createQuickAdd } from './quick-add.js';
 import { createDonation } from './donation.js';
 import { createToolButton } from './tool-button.js';
 import { initWakeUp } from './wake-up.js';
+import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } from './settings.js';
 
 (window => {
     const store = window.store;
@@ -179,12 +180,13 @@ import { initWakeUp } from './wake-up.js';
 
     // highlightUnsynced setting (dead toggle revived): dim local-only
     // subtrees via the unsynced-subtree rows tree-render marks. Default on.
+    // The boolean judgment lives in src/settings.js (testable).
     body.classList.toggle('highlight-unsynced',
-        store.getSyncSetting('highlightUnsynced', 'true') === 'true');
+        shouldHighlightUnsynced(store.getSyncSetting('highlightUnsynced', 'true')));
 
     // Init some variables
     let opens = store.get('opens') ? JSON.parse(store.get('opens')) : [];
-    let rememberState = !store.get('dontRememberState');
+    let rememberState = shouldRememberState(store.get('dontRememberState'));
     const httpsPattern = /^https?:\/\//i;
     // onlyShowBMBar 与 adaptBookmarkTooltips 已剥离至 src/tree-view.js（P1，8b）
 
@@ -307,7 +309,7 @@ import { initWakeUp } from './wake-up.js';
         generateBookmarkHTML: treeRender.generateBookmarkHTML,
         highlightTitlePositions: treeRender.highlightTitlePositions,
         // 与上方 rememberState 初值相同的确定性推导（search 只读取启动初值）
-        rememberState: !store.get('dontRememberState'),
+        rememberState: shouldRememberState(store.get('dontRememberState')),
         // v4 task-2: search mode rides the view state machine
         views,
         // v4 task-3 #15: the history rows' menu key mirrors the tree's rtl rule
@@ -325,7 +327,7 @@ import { initWakeUp } from './wake-up.js';
     // height only shrinks on the initial load (fresh viewport);
     // interaction-triggered calls only grow. When autoResizePopup is off
     // the popup keeps its saved / default height unconditionally.
-    const autoResizeEnabled = () => store.get('autoResizePopup') !== 'false';
+    const autoResizeEnabled = () => isAutoResizeEnabled(store.get('autoResizePopup'));
     const $views = $('views');
     // issue #51: the user dragging the popup's bottom edge is an explicit size
     // intent. Auto-height must then step back — otherwise the next tree click
@@ -602,12 +604,10 @@ import { initWakeUp } from './wake-up.js';
 
     // Phase 3 (issue #30): quick-add star button — one click bookmarks the
     // current tab; when the page is already bookmarked the star is solid and
-    // clicking removes it (mirrors Chrome's native star). v4 task-3 #20:
-    // quickAddEnabled (default on) hides it outright. The flow + the
-    // Ctrl/Cmd+D binding live in src/quick-add.js (tested directly).
+    // clicking removes it (mirrors Chrome's native star). The flow + the
+    // Ctrl/Cmd+D binding + the quickAddEnabled visibility all live in
+    // src/quick-add.js (tested directly).
     const quickAddBtn = $('quick-add-btn');
-    if (!store.get('quickAddEnabled', '1'))
-        quickAddBtn.classList.add('hidden');
     const quickAddToast = $('quick-add-toast');
     const quickAdd = createQuickAdd({
         store, document, body, chrome,

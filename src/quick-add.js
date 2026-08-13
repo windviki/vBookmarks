@@ -13,6 +13,10 @@ export const createQuickAdd = ({ store, document, body, chrome, quickAddBtn, qui
     const TOAST_MS = 1800;
     let quickAddToastTimer = null;
 
+    // v4 task-3 #20: quickAddEnabled (default on) hides the star outright.
+    if (!store.get('quickAddEnabled', '1'))
+        quickAddBtn.classList.add('hidden');
+
     const showQuickAddToast = (msgKey, sub) => {
         quickAddToast.textContent = _m(msgKey, sub ? [sub] : undefined);
         quickAddToast.classList.add('show');

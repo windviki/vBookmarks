@@ -17,7 +17,7 @@
  * i18n.getUILanguage), _m, openNewTab — a lazy callable resolving to
  * actions.openBookmarkNewTab (declared later in neat.js, TDZ-safe).
  */
-import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
+import { applyVersionGate, bumpOpenCount } from './startup-flags.js';
 
 export const DONATION_GRACE_OPENS = 30;   // new installs: first ask after ~30 opens
 export const DONATION_MAX_KEY = 3200;     // snooze cap
@@ -45,32 +45,11 @@ export const guideV4UrlFor = lang =>
         (lang || '').startsWith('zh') ? '.zh' : ''}.md`;
 
 export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
-    // Version gate (shared module, src/version.js): a patch bump (4.0 → 4.0.1)
-    // is a SILENT fix release and must not re-arm the card; a 3.x → 4.x
-    // crossing pins the v4 notice onto the card.
+    // Version gate + open-count live in the shared src/startup-flags.js (a
+    // second banner consumer must not re-implement them).
     const mf = chrome.runtime.getManifest();
-    const currentVer = parseVersion(mf['version']);
-    const V4 = parseVersion('4.0');
-    let newOrUpgrade = true;
-    let upgradedToV4 = false;
-    if (!store.get('currentVersion')) {
-        store.set('currentVersion', mf['version']);
-    } else {
-        const recordVer = parseVersion(store.get('currentVersion'));
-        store.set('currentVersion', mf['version']);
-        if (recordVer && currentVer) {
-            if (sameOrNewerMinor(recordVer, currentVer)) {
-                newOrUpgrade = false;
-            } else if (crossedInto(recordVer, currentVer, V4)) {
-                upgradedToV4 = true;
-            }
-        }
-    }
-    if (!store.get('openCount')) {
-        store.set('openCount', 1);
-    } else {
-        store.set('openCount', parseInt(store.get('openCount'), 10) + 1);
-    }
+    const { newOrUpgrade, upgradedToV4 } = applyVersionGate(store, mf['version']);
+    bumpOpenCount(store);
     if (!store.get('donationKey')) {
         // New installs get a grace window of ~30 popup opens before the first
         // ask, so the request comes after real usage value.

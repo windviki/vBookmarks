@@ -132,6 +132,55 @@ export function initContextMenu(ctx = {}) {
         }
     };
 
+    // Content-dependent folder-menu items: grey out when the folder has
+    // nothing to act on — the OPEN / tab-group entries need bookmark (URL)
+    // children, the SORT entries need any child at all. Only the add-type
+    // entries (bookmark/folder/separator inserts) stay enabled for an empty
+    // folder. Independent of the root-folder ROOT_DISABLED_IDS greying.
+    const OPEN_CONTENT_IDS = [
+        'folder-window', 'open-bookmarks-in-group',
+        'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+        'folder-new-window', 'folder-new-incognito-window',
+        'sub-open-bookmarks-in-group', 'sub-bookmark-open-in-new-group-setup',
+        'sub-folder-open-in-existing-group'
+    ];
+    const SORT_CONTENT_IDS = [
+        'sort-folder-by-name', 'sort-folder-by-date', 'sort-folder-contents',
+        'sub-sort-folder-by-name', 'sub-sort-folder-by-date', 'sub-sort-folder-contents',
+        'folder-sort-collapse'
+    ];
+
+    // Apply the content-dependent greying for the folder under the menu.
+    // The async children read lands ~1 frame later, same mechanism as the
+    // collapsed tab-group entry. `toggle` is self-correcting per open — no
+    // explicit reset needed.
+    const applyContentDisabled = id => {
+        if (!id)
+            return;
+        chrome.bookmarks.getChildren(id, children => {
+            children = children || [];
+            const hasUrls = children.some(c => c && c.url);
+            const hasChildren = children.length > 0;
+            const toggle = (itemId, on) => {
+                const item = $(itemId);
+                if (item && item.classList)
+                    item.classList.toggle('disabled', on);
+            };
+            OPEN_CONTENT_IDS.forEach(itemId => toggle(itemId, !hasUrls));
+            SORT_CONTENT_IDS.forEach(itemId => toggle(itemId, !hasChildren));
+            // The collapsed tab-group entry + its submenu read disabled under
+            // the same no-URL rule as the open entries.
+            const collapseTargets = [$('folder-tab-group-collapse')];
+            const submenu = $folderTabGroupSubmenu;
+            if (submenu)
+                collapseTargets.push(...Array.from(submenu.querySelectorAll('.menu-item')));
+            collapseTargets.forEach(t => {
+                if (t && t.classList)
+                    t.classList.toggle('disabled', !hasUrls);
+            });
+        });
+    };
+
     // issue #33: the direct sort items (by name / by date) run with the
     // persisted sortOptions, so their labels reflect the recursive flag —
     // the action's scope is visible before the click. "Sort options…" (the
@@ -371,29 +420,9 @@ export function initContextMenu(ctx = {}) {
         menu.classList.toggle('collapse-tab-group', collapseTabGroup());
         if (isFolder)
             menu.classList.toggle('collapse-sort', collapseSort());
-        // Reset the entry/submenu disabled state first (per-open, self-corrects).
-        const entry = isFolder ? $('folder-tab-group-collapse') : $('bookmark-tab-group-collapse');
-        const submenu = isFolder ? $folderTabGroupSubmenu : $bookmarkTabGroupSubmenu;
-        const targets = [entry];
-        if (submenu)
-            targets.push(...Array.from(submenu.querySelectorAll('.menu-item')));
-        targets.forEach(t => { if (t && t.classList) t.classList.remove('disabled'); });
-        // A folder whose children carry no URLs has nothing to tab-group: the
-        // collapsed entry and its submenu read disabled (all three actions are
-        // no-URL no-ops anyway). The async children read lands ~1 frame later.
-        if (isFolder && collapseTabGroup() && currentContext) {
-            const li = currentContext.closest ? currentContext.closest('li') : null;
-            const id = li ? rowId(li) : null;
-            if (id) {
-                chrome.bookmarks.getChildren(id, children => {
-                    const noURLS = !(children || []).some(c => c && c.url);
-                    targets.forEach(t => {
-                        if (t && t.classList)
-                            t.classList.toggle('disabled', noURLS);
-                    });
-                });
-            }
-        }
+        // The folder menu's content-dependent greying (open/tab-group entries
+        // need URL children, sort needs any child) is applied by
+        // applyContentDisabled at the folder-open branch.
     };
 
     // Focus after a menu closes (4.0.1 focus law: a menu close must never
@@ -711,6 +740,11 @@ export function initContextMenu(ctx = {}) {
             } else {
                 menu.classList.remove('hide-sort');
             }
+            // Empty / URL-less folders grey out their content-dependent
+            // entries (open / tab-group / sort); only the add-type entries
+            // stay enabled. Async children read, same mechanism as the
+            // collapsed tab-group entry.
+            applyContentDisabled(rowId(el.parentNode));
         } else {
         }
         // issue #33: refresh the direct sort items' labels when the folder
