@@ -136,6 +136,7 @@ export function initPalette(ctx = {}) {
     let plainQuery = '';     // last rendered plain (non-slash) query
     let plainHitCount = 0;   // bookmark+folder hit rows of that query
     let customs = [];        // v4 task-4 #6: paletteCustomCommands, loaded per open
+    let opener = null;       // element that owned focus before the panel opened
 
     // Flatten a bookmark tree: a node with children is a folder, everything
     // else a bookmark; the synthetic root ('0') is skipped.
@@ -663,7 +664,7 @@ export function initPalette(ctx = {}) {
                     clearMenu();
                     return;
                 }
-                close();
+                close({ back: true });
                 break;
         }
     });
@@ -689,7 +690,7 @@ export function initPalette(ctx = {}) {
     $close.addEventListener('mousedown', e => e.preventDefault());
     $close.addEventListener('click', e => {
         e.preventDefault();
-        close();
+        close({ back: true });
     });
 
     // --- Open / close -----------------------------------------------------------
@@ -744,6 +745,17 @@ export function initPalette(ctx = {}) {
         // the Ctrl/Cmd+K path needs this.
         if (clearMenu)
             clearMenu();
+        // Remember the element that owned focus before the panel opened, so a
+        // keyboard dismiss (Esc / close button / Ctrl+K) can hand it back —
+        // the keyboard-only continuity contract: open from the search box or
+        // a header tool button, dismiss, and the keys resume there instead of
+        // landing on the view's first/remembered row. Skipped for body, the
+        // input itself and anything inside a context menu (the menu just
+        // closed, its items sit hidden and must never be refocused).
+        const ae = document.activeElement;
+        opener = (ae && ae !== document.body && ae !== $input
+            && !(ae.closest && ae.closest('menu[type=context]'))
+            && typeof ae.focus === 'function') ? ae : null;
         openState = true;
         document.addEventListener('keydown', onDocKey, true);
         $palette.hidden = false;
@@ -769,12 +781,25 @@ export function initPalette(ctx = {}) {
         return true;
     };
 
-    const close = () => {
+    // close(opts): dismiss the panel. A `back: true` close (Esc / close
+    // button / Ctrl+K) returns focus to the element that owned it before the
+    // open — the search box or a header tool button stay where keyboard-only
+    // users left them. Pointer and command paths close without `back`: the
+    // click target or the running command decides where focus goes, so the
+    // tree/view handback below is theirs. A gone or hidden opener falls
+    // through to that same handback.
+    const close = (opts = {}) => {
         if (!openState)
             return;
         openState = false;
         document.removeEventListener('keydown', onDocKey, true);
         $palette.hidden = true;
+        const back = opts.back ? opener : null;
+        opener = null;
+        if (back && back.isConnected !== false && isVisible(back)) {
+            back.focus();
+            return;
+        }
         // Hand focus back to the tree: the focused row, else its first row.
         // The palette opens over ANY view, though — outside the tree view the
         // #tree section is hidden and focus() into it is a no-op that strands
@@ -826,7 +851,7 @@ export function initPalette(ctx = {}) {
             return;
         e.preventDefault();
         if (openState)
-            close();
+            close({ back: true });
         else
             open();
     }, true);

@@ -189,9 +189,13 @@ const setup = (opts = {}) => {
             },
             focus() {
                 this.focused = true;
+                if (doc)
+                    doc.activeElement = this;
             },
             blur() {
                 this.blurred = true;
+                if (doc && doc.activeElement === this)
+                    doc.activeElement = null;
             },
             scrollIntoView(arg) {
                 this._scrolledIntoView = (this._scrolledIntoView || 0) + 1;
@@ -241,6 +245,7 @@ const setup = (opts = {}) => {
     const qsTable = opts.qs || {};
     const doc = {
         _listeners: {},
+        activeElement: null, // tracked by the el() stub's focus()/blur()
         body,
         getElementById: id => byId[id] || null,
         createElement: tag => el(tag.toUpperCase()),
@@ -561,6 +566,81 @@ describe('module API + open/close state machine', () => {
         palette.open();
         palette.close();
         expect(input.blurred).toBe(true);
+    });
+});
+
+// Opener restore — the keyboard-only continuity contract: a keyboard dismiss
+// (Esc / Ctrl+K toggle / the footer close button) hands focus back to the
+// element that owned it before the panel opened — the search box or a header
+// tool button — so the keys resume there instead of the view's
+// first/remembered row. Plain close() (command execution, pointer paths)
+// keeps the tree/view handback: the running action or the click target
+// decides where focus goes.
+describe('dismiss hands focus back to the opener', () => {
+    it('Esc on the input returns focus to the element that owned it before the open', () => {
+        const { palette, input, doc, keydown, el } = setup({});
+        const searchBox = el('INPUT', 'search-input');
+        searchBox.focus(); // the user was typing in the search box
+        palette.open();
+        expect(doc.activeElement).toBe(input); // the panel owns the keys now
+        keydown(input, { key: 'Escape' });
+        expect(palette.isOpen()).toBe(false);
+        expect(doc.activeElement).toBe(searchBox); // back where the user was
+    });
+
+    it('the footer close button (click) hands focus back to the opener', () => {
+        const { palette, closeBtn, doc, el } = setup({});
+        const toolBtn = el('BUTTON', 'tool-btn');
+        toolBtn.focus();
+        palette.open();
+        fire(closeBtn, 'click', makeEvent({}));
+        expect(palette.isOpen()).toBe(false);
+        expect(doc.activeElement).toBe(toolBtn);
+    });
+
+    it('Ctrl+K while open (toggle-back) returns focus to the opener', () => {
+        const { palette, doc, keydown, el } = setup({});
+        const searchBox = el('INPUT', 'search-input');
+        searchBox.focus();
+        keydown(doc, { ctrlKey: true, key: 'k' }); // open
+        expect(palette.isOpen()).toBe(true);
+        keydown(doc, { ctrlKey: true, key: 'k' }); // close — toggle-back
+        expect(palette.isOpen()).toBe(false);
+        expect(doc.activeElement).toBe(searchBox);
+    });
+
+    it('a gone opener (removed from the DOM) falls back to the tree handback', () => {
+        const row = setup({}).el('A');
+        const { palette, doc, el } = setup({ qs: { '#tree .focus': row } });
+        const searchBox = el('INPUT', 'search-input');
+        searchBox.focus();
+        palette.open();
+        searchBox.isConnected = false; // the element vanished while the panel was up
+        palette.close({ back: true });
+        expect(doc.activeElement).not.toBe(searchBox);
+        expect(row.focused).toBe(true); // the tree handback ran instead
+    });
+
+    it('a hidden opener falls back to the ACTIVE view anchor (K13)', () => {
+        const { palette, doc, el, views } = setup({ withFocusActive: true });
+        const toolBtn = el('BUTTON', 'tool-btn');
+        toolBtn.hidden = true;
+        toolBtn.focus();
+        palette.open();
+        palette.close({ back: true });
+        expect(doc.activeElement).not.toBe(toolBtn); // invisible targets are never focused
+        expect(views.focusActiveCalls).toBe(1);
+    });
+
+    it('plain close() — command/pointer paths — keeps the tree handback, never the opener', () => {
+        const { palette, input, doc, el } = setup({});
+        const searchBox = el('INPUT', 'search-input');
+        searchBox.focus();
+        palette.open();
+        palette.close(); // no `back`: a command executed / a click landed elsewhere
+        expect(palette.isOpen()).toBe(false);
+        expect(doc.activeElement).not.toBe(searchBox); // the opener is NOT yanked back
+        expect(input.blurred).toBe(true); // no tree row in the stub: blur fallback
     });
 });
 

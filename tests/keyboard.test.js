@@ -2843,12 +2843,14 @@ describe('Esc layering — full document chain (item 2)', () => {
 
     it('the palette rung closes the panel before the view/search rungs', () => {
         const calls = [];
-        const palette = { isOpen: () => true, close: () => calls.push('close') };
+        const palette = { isOpen: () => true, close: (opts) => calls.push(['close', opts]) };
         const ctx = setup({ palette, searchActive: true });
         ctx.searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         ctx.fireDoc('keydown', ev);
-        expect(calls).toEqual(['close']);
+        // Esc is the keyboard dismiss: the panel closes with back:true so its
+        // own close() returns focus to the element that owned it before open.
+        expect(calls).toEqual([['close', { back: true }]]);
         expect(ctx.searchCalls).toEqual([]);
         expect(ctx.searchInput.value).toBe('query');
         expect(ctx.windowCloseCalls).toEqual([]);

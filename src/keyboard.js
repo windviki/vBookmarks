@@ -966,7 +966,11 @@ export function initKeyboard(ctx = {}) {
             }
         }
         if (palette && palette.isOpen()) {
-            palette.close();
+            // Esc is the keyboard dismiss: hand focus back to the element
+            // that owned it before the panel opened (the search box / a
+            // header tool button) — palette.close({ back: true }). Plain
+            // close() keeps the tree/view handback for command/pointer paths.
+            palette.close({ back: true });
             return;
         }
         // v4 task-2 §3.4 Esc layering: the active view's own consumer first
