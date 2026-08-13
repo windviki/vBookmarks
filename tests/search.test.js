@@ -1231,3 +1231,20 @@ describe('history-row focus park/restore (4.0.1 focus law)', () => {
         expect(els['search-input'].focused).toBe(false);
     });
 });
+
+describe('search-history record timing: leaving the view (§4.3 timing ③)', () => {
+    it('records a live query into history when the view deactivates (R back to tree path)', () => {
+        const { els, store, viewHooks } = setup({});
+        els['search-input'].value = 'git';
+        viewHooks.search.deactivate();
+        const history = JSON.parse(store.get('searchHistory') || '[]');
+        expect(history.map(h => h.q)).toContain('git');
+    });
+
+    it('does NOT record a whitespace-only box on deactivate', () => {
+        const { els, store, viewHooks } = setup({});
+        els['search-input'].value = '   ';
+        viewHooks.search.deactivate();
+        expect(store.get('searchHistory') || '[]').toBe('[]');
+    });
+});
