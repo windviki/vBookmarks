@@ -139,9 +139,9 @@ export function initContextMenu(ctx = {}) {
     // folder. Independent of the root-folder ROOT_DISABLED_IDS greying.
     const OPEN_CONTENT_IDS = [
         'folder-window', 'open-bookmarks-in-group',
-        'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+        'open-bookmarks-in-group-setup', 'folder-open-in-existing-group',
         'folder-new-window', 'folder-new-incognito-window',
-        'sub-open-bookmarks-in-group', 'sub-bookmark-open-in-new-group-setup',
+        'sub-open-bookmarks-in-group', 'sub-open-bookmarks-in-group-setup',
         'sub-folder-open-in-existing-group'
     ];
     const SORT_CONTENT_IDS = [

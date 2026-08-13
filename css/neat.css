@@ -867,11 +867,15 @@ menu[type=context] #folder-delete {
 /* A disabled menu item (root-folder delete) sheds the danger cue, greys out
    and stops receiving the pointer — the same muted read as a disabled
    toolbar button. #folder-delete.disabled outranks the danger rule above
-   (element+id+class beats element+id), so a disabled delete reads muted. */
+   (element+id+class beats element+id), so a disabled delete reads muted.
+   The half opacity is the cross-theme "unpickable" cue: a colour-only mute
+   (--vbm-muted vs --vbm-fg) is too subtle on the light theme, where the two
+   greys read as "black vs dark grey" at 11px. */
 menu[type=context] .menu-item.disabled,
 menu[type=context] #folder-delete.disabled {
     color: var(--vbm-muted);
     pointer-events: none;
+    opacity: 0.5;
 }
 
 

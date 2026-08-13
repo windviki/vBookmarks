@@ -757,7 +757,7 @@ describe('empty-folder menu greying (content-dependent items)', () => {
     // The menu items are created on demand (menuItem), so a test ensures the
     // ones applyContentDisabled toggles exist before the folder menu opens.
     const CONTENT_IDS = ['folder-window', 'open-bookmarks-in-group',
-        'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+        'open-bookmarks-in-group-setup', 'folder-open-in-existing-group',
         'folder-new-window', 'folder-new-incognito-window',
         'sort-folder-by-name', 'sort-folder-by-date', 'sort-folder-contents',
         'add-bookmark-top', 'add-bookmark-bottom', 'add-new-folder', 'add-folder-separator'];
@@ -772,7 +772,7 @@ describe('empty-folder menu greying (content-dependent items)', () => {
         ensureItems(menuItem);
         openOn(makeFolderRow().span); // folder 7, empty
         for (const id of ['folder-window', 'open-bookmarks-in-group',
-            'bookmark-open-in-new-group-setup', 'folder-open-in-existing-group',
+            'open-bookmarks-in-group-setup', 'folder-open-in-existing-group',
             'folder-new-window', 'folder-new-incognito-window'])
             expect(byId[id].classList.contains('disabled'), id).toBe(true);
         for (const id of ['sort-folder-by-name', 'sort-folder-by-date', 'sort-folder-contents'])
