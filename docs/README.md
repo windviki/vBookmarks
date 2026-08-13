@@ -204,7 +204,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 #### New
 
-- **Empty-folder menu greying**: folder context-menu items that depend on folder content (open-all, open-as-tab-group, new window / incognito, sort) grey out on empty or URL-less folders — only the add-type entries (bookmark / folder / separator inserts) stay enabled.
+- **Empty-folder menu greying**: folder context-menu items that depend on folder content (open-all, open-as-tab-group, new window / incognito, sort) grey out on empty or URL-less folders — only the add-type entries (bookmark / folder / separator inserts) stay enabled. Disabled entries are dimmed at half opacity so they read clearly as unavailable across every theme.
 - **Unified focus restoration on popup reopen (focusSpot)**: the search bar, header buttons, in-view toolbar controls, view tabs and list rows restore their focus across a popup reopen through one model, gated by the "remember previous state" option.
 - **Command palette returns focus on keyboard dismiss**: closing the palette with Esc / Ctrl+K / the close button returns focus to the element that opened it (the search bar / tool button).
 
@@ -222,6 +222,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Test suite strengthened substantially: rewrote 11 pseudo-tests (copied-kernel / tautological / zero-assertion), filled 3 file-level coverage gaps, and extracted the resize / folder-sort / quick-add / donation / tool-button / wake-up / startup-flags / settings logic into testable modules.
 - New option-switch → behavior differential contract, parameterized-copy contract (`tests/i18n-copy`) and shared test-infrastructure helpers.
 - Introduced an ESLint progressive gate (error-level, in CI).
+- Added a real-browser smoke gate (zero console errors) to CI and the release pre-check, so an extension that crashes on load is caught before tagging.
 - Dead-code cleanup (the unused `copy-all-titles-and-urls` handler, the ineffective `hide-editables` toggle).
 
 ### v4.0.2 · 2026-08
