@@ -83,3 +83,39 @@ describe('list-view hover/selected parity (item 7b)', () => {
             expect(neatCss, `${sel} is part of the focus-ring rule`).toContain(sel);
     });
 });
+
+describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', () => {
+    // 去重视图的组头/成员行用 8px padding-inline-start 提供左缘留白
+    // （该设计系统的通用内联槽），避免 chevron / keeper-radio 贴容器左缘。
+    it('dupes 组头与成员行共享左侧 8px 留白', () => {
+        expect(ruleBody(neatCss, '.dupes-group .group-head {'))
+            .toContain('padding-inline-start: 8px');
+        expect(ruleBody(neatCss, '#dupes-list ul li.dupes-member {'))
+            .toContain('padding-inline-start: 8px');
+    });
+
+    // 选择模式复选框同样离开左缘：死链侧在选中态行上加同值内边距，去重侧
+    // 复用组头内边距——两个视图的复选框左缘对齐。
+    it('死链/去重选择模式复选框不贴左缘', () => {
+        expect(ruleBody(neatCss, '#dead-list ul.selecting li.vbm-row {'))
+            .toContain('padding-inline-start: 8px');
+    });
+
+    // 信息删除类操作统一 danger 语义（主题由 danger/danger-fg token 差异化）：
+    // 主删除动作用红色填充，次要删除用红色文字。
+    it('去重全部应用/应用所选为红色填充主按钮', () => {
+        for (const sel of ['.dupes-toolbar .dupes-apply-all {',
+            '.dupes-toolbar .dupes-apply-selected {']) {
+            const body = ruleBody(neatCss, sel);
+            expect(body).toContain('background: var(--vbm-danger)');
+            expect(body).toContain('color: var(--vbm-danger-fg)');
+        }
+    });
+
+    it('搜索清除全部/死链代理移除为红色文字', () => {
+        expect(ruleBody(neatCss, '#search-history-clear {'))
+            .toContain('color: var(--vbm-danger)');
+        expect(ruleBody(neatCss, '.dead-proxy-strip button.dead-proxy-remove {'))
+            .toContain('color: var(--vbm-danger)');
+    });
+});

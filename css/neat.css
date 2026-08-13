@@ -2387,22 +2387,24 @@ body.panel-mode .vbm-row .row-sub {
     white-space: nowrap;
 }
 
-/* The clear-all is styled as a toolbar action button (same flat-accent
-   recipe as the dead/dupes toolbar buttons), not a text link — the search
-   history header reads as a toolbar row, so its one control matches. */
+/* The clear-all is styled as a toolbar action button (same flat-danger
+   recipe as the dead/dupes delete buttons), not a text link — the search
+   history header reads as a toolbar row, so its one control matches.
+   v4.1 visual fix: 清除搜索历史是信息删除，由 accent 改为 danger 语义；
+   hover 用 danger 淡色而不是通用 bg-hover，让删除性质一目了然。 */
 #search-history-clear {
     flex: none;
     border: 0;
     border-radius: var(--vbm-radius);
     background: transparent;
-    color: var(--vbm-accent);
+    color: var(--vbm-danger);
     font-size: 11px;
     padding: 1px 6px;
     cursor: pointer;
 }
 
 #search-history-clear:hover {
-    background: var(--vbm-bg-hover);
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 /* History-permission banner (recent view): one-line ask with an enable
@@ -2781,11 +2783,19 @@ body.panel-mode .vbm-row .row-sub {
 .dupes-toolbar .dupes-apply-all {
     border: 0;
     border-radius: var(--vbm-radius);
-    background: var(--vbm-accent);
-    color: var(--vbm-accent-fg);
+    /* v4.1 visual fix: 全部应用 = 按当前策略删除重复项，是信息删除操作，改用
+       danger 填充（红色语义 + 主次保留：主删除动作仍为填充按钮）。各主题的
+       danger/danger-fg token 天然提供主题化差异。 */
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
     font-size: 11px;
     padding: 2px 8px;
     cursor: pointer;
+}
+
+.dupes-toolbar .dupes-apply-all:hover {
+    -webkit-filter: brightness(1.08);
+    filter: brightness(1.08);
 }
 
 .dupes-toolbar .dupes-apply-all:disabled {
@@ -2834,6 +2844,14 @@ body.panel-mode .vbm-row .row-sub {
     box-sizing: border-box;
 }
 
+/* v4.1 visual fix: 选择模式复选框不贴容器左缘。与去重侧同法——在行容器上补
+   8px padding-inline-start（死链行正常态由 a::before 的 16px 引导槽提供留白，
+   这里只作用于选中态的行）。复选框/成员内容随之右移 8px，与去重复选框左缘
+   对齐，也与其他视图的引导留白一致。 */
+#dead-list ul.selecting li.vbm-row {
+    padding-inline-start: 8px;
+}
+
 #dead-list ul.selecting li.vbm-row.sel::before,
 #dupes-list ul.selecting li.dupes-group.sel .group-head::before {
     content: '✓';
@@ -2865,11 +2883,17 @@ body.panel-mode .vbm-row .row-sub {
 .dupes-toolbar .dupes-apply-selected {
     border: 0;
     border-radius: var(--vbm-radius);
-    background: var(--vbm-accent);
-    color: var(--vbm-accent-fg);
+    /* v4.1 visual fix: 与 apply-all 同一红色语义（删除信息），保持填充主按钮层级 */
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
     font-size: 11px;
     padding: 2px 8px;
     cursor: pointer;
+}
+
+.dupes-toolbar .dupes-apply-selected:hover {
+    -webkit-filter: brightness(1.08);
+    filter: brightness(1.08);
 }
 
 .dupes-toolbar .dupes-apply-selected:disabled,
@@ -2885,6 +2909,11 @@ body.panel-mode .vbm-row .row-sub {
     display: flex;
     align-items: center;
     height: var(--vbm-row-h);
+    /* v4.1 visual fix: 组头左侧留白——其他视图（树/搜索结果/历史头）的首个
+       槽位自带 16px 引导留白，去重组的 chevron 一直贴着容器左缘，读起来拥挤。
+       8px 是该设计系统工具栏/历史头的通用内联槽（padding: 4px 8px），这里让
+       chevron 与成员行、选择模式复选框共享同一左缘节奏。 */
+    padding-inline-start: 8px;
     cursor: pointer;
     outline: 0;
 }
@@ -2973,6 +3002,9 @@ body.panel-mode .vbm-row .row-sub {
 #dupes-list ul li.dupes-member {
     display: flex;
     align-items: center;
+    /* v4.1 visual fix: 成员行与组头共用左侧 8px 留白（见 .group-head），
+       keeper-radio 不再贴着容器左缘。hover 背景在 li 上，覆盖整个留白区。 */
+    padding-inline-start: 8px;
 }
 
 #dupes-list ul li.dupes-member a {
@@ -3185,6 +3217,16 @@ body.panel-mode .vbm-row .row-sub {
 
 .dead-proxy-strip button:hover {
     background: var(--vbm-bg-hover);
+}
+
+/* v4.1 visual fix: 移除代理配置是信息删除，与死链删除/搜索清除全部统一为
+   danger 语义（红字 + 危险淡色 hover），Change 按钮保持 accent 不变。 */
+.dead-proxy-strip button.dead-proxy-remove {
+    color: var(--vbm-danger);
+}
+
+.dead-proxy-strip button.dead-proxy-remove:hover {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 .dead-proxy-strip button:disabled {
