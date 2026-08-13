@@ -186,7 +186,9 @@ const setup = (opts = {}) => {
         revealCalls: [],
         revealInTree(id) { this.revealCalls.push(id); },
         handlerCalls: 0,
-        bookmarkHandler: () => { treeView.handlerCalls++; }
+        bookmarkHandler: () => { treeView.handlerCalls++; },
+        generateTreeCalls: 0,
+        generateTree: () => { treeView.generateTreeCalls++; }
     };
     const dialogs = {
         ConfirmDialog: {
@@ -714,7 +716,7 @@ describe('member-row keys (final polish, v4task-2-list §2.3/§3.6)', () => {
 describe('batch deletion (§5.6a)', () => {
     it('clean-the-rest confirms, captures+removes the doomed copies serially and toasts once', async () => {
         const ctx = setup({});
-        const { chrome, dialogs, undo, clickOn } = ctx;
+        const { chrome, dialogs, undo, treeView, clickOn } = ctx;
         ctx.def().activate();
         clickOn({
             closest: sel => (sel === '.dupes-clean-rest'
@@ -729,11 +731,16 @@ describe('batch deletion (§5.6a)', () => {
         expect(undo.captureCalls).toEqual(['15', '21']); // capture before remove
         expect(chrome.bookmarks.removeCalls).toEqual(['15', '21']); // keeper 11 stays
         expect(undo.toastCalls).toEqual(['dupesDone[2]']); // one toast, not two
+        // the batch removal must rebuild the tree — it bypasses the tree's
+        // (absent) onRemoved listener, so the rows would linger until the
+        // popup reopens otherwise (reported bug)
+        expect(chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
+        expect(treeView.generateTreeCalls).toBeGreaterThan(0);
     });
 
     it('apply-all confirms with the cross-group totals and removes every doomed copy', async () => {
         const ctx = setup({ storeData: { dupesIgnoreScheme: '1' } });
-        const { chrome, dialogs, undo, clickOn } = ctx;
+        const { chrome, dialogs, undo, treeView, clickOn } = ctx;
         ctx.def().activate();
         clickOn({ closest: sel => (sel === '.dupes-apply-all' ? {} : null) });
         expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmAll[3|2]');
@@ -741,6 +748,8 @@ describe('batch deletion (§5.6a)', () => {
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['15', '21', '24']);
         expect(undo.toastCalls).toEqual(['dupesDone[3]']);
+        expect(chrome.bookmarks.getTreeCalls).toBeGreaterThan(0); // tree rebuilt after deletion
+        expect(treeView.generateTreeCalls).toBeGreaterThan(0);
     });
 
     it('cancelling the dialog removes nothing', async () => {

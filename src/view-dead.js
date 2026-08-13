@@ -722,6 +722,11 @@ export function initViewDead(ctx = {}) {
                     undo.showToast(_m('deadDeleted', `${removed}`));
                     for (const id of doomed)
                         treeItems.delete(id);
+                    // Rebuild the tree: the batch removal goes straight to
+                    // chrome.bookmarks.remove and the tree has no onRemoved
+                    // listener of its own — without this the deleted rows
+                    // linger in the tree until the popup reopens.
+                    chrome.bookmarks.getTree(treeView.generateTree);
                     if (done)
                         done();
                     else if (views.isActive('dead'))

@@ -243,7 +243,9 @@ const setup = (opts = {}) => {
         revealCalls: [],
         revealInTree(id) { this.revealCalls.push(id); },
         handlerCalls: 0,
-        bookmarkHandler: () => { treeView.handlerCalls++; }
+        bookmarkHandler: () => { treeView.handlerCalls++; },
+        generateTreeCalls: 0,
+        generateTree: () => { treeView.generateTreeCalls++; }
     };
     const actions = {
         deleteCalls: [],
@@ -780,7 +782,7 @@ describe('batch deletion (delete all / delete selected)', () => {
 
     it('confirming delete-all removes every filtered row serially, then toasts once', async () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE } });
-        const { dialogs, chrome, undo } = ctx;
+        const { dialogs, chrome, undo, treeView } = ctx;
         ctx.def().activate();
         clickDeleteAll(ctx);
         dialogs.ConfirmDialog.openCalls[0].fn1();
@@ -791,6 +793,11 @@ describe('batch deletion (delete all / delete selected)', () => {
         expect(undo.captureCalls).toEqual(['12', '13']);
         expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']);
         expect(undo.toastCalls).toEqual(['deadDeleted[2]']);
+        // the batch removal must rebuild the tree — it bypasses the tree's
+        // (absent) onRemoved listener, so the rows would linger until the
+        // popup reopens otherwise (the reported dupes bug's twin)
+        expect(chrome.bookmarks.getTreeCalls).toBeGreaterThan(0);
+        expect(treeView.generateTreeCalls).toBeGreaterThan(0);
     });
 
     it('delete-all hides when the active filter matches no rows (no inert danger button)', () => {

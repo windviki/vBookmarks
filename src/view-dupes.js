@@ -543,8 +543,14 @@ export function initViewDupes(ctx = {}) {
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
-                removeSequentially(doomed).then(() =>
-                    undo.showToast(_m('dupesDone', `${doomed.length}`)));
+                removeSequentially(doomed).then(() => {
+                    undo.showToast(_m('dupesDone', `${doomed.length}`));
+                    // Rebuild the tree: the serial removal goes straight to
+                    // chrome.bookmarks.remove and the tree has no onRemoved
+                    // listener of its own — without this the deleted rows
+                    // linger in the tree until the popup reopens.
+                    chrome.bookmarks.getTree(treeView.generateTree);
+                });
                 // the onRemoved listener replays the regroup by itself
             }
         });
