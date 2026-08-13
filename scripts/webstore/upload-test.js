@@ -5,10 +5,10 @@
  * 全部离线运行:mock 全局 fetch,不触碰真实 CWS API,也不需要真实凭据。
  * 同时校验 vBookmarks 现有打包产物 tmp/vBookmarks_<ver>.zip 是否符合 CWS 上传要求。
  *
- * 运行:  node tmp/webstore/upload-test.js
+ * 运行:  npm run test:webstore
  *
- * 说明: 本文件位于 git-ignored 的 tmp/ 下,机制不进入 repo。
- *       真实发布用 publish.js(需 CWS_V2_* 环境变量),见 webstore-publish-plan.md。
+ * 说明: 仓库内离线契约测试,CI 在 package.py 之后跑它校验打包产物。
+ *       真实发布用 publish.js(需 CWS_* 环境变量),见 scripts/webstore/README.md。
  */
 
 import assert from 'node:assert/strict';
@@ -18,7 +18,7 @@ import { createReadStream } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import chromeWebstoreUpload from 'chrome-webstore-upload';
 
-/** 仓库根 = 本文件 (tmp/webstore/upload-test.js) 上溯两级 */
+/** 仓库根 = 本文件 (scripts/webstore/upload-test.js) 上溯两级 */
 const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
 // ---------------------------------------------------------------------------

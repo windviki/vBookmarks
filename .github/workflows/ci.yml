@@ -4,6 +4,7 @@ on:
   push:
     branches: [main, master]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -34,6 +35,9 @@ jobs:
       - name: Package the extension zip
         run: python3 scripts/package.py
 
+      - name: Validate packaged zip (CWS contract)
+        run: npm run test:webstore
+
   # Real-browser gate: loads the extension and asserts zero page/console
   # errors. This is the ONLY gate that catches "the popup crashes on load" —
   # the vitest suites never import src/neat.js (the app shell), so an
@@ -45,3 +49,14 @@ jobs:
 
       - name: Real-browser smoke (zero console errors)
         run: scripts/harness/run.sh --smoke-only
+
+  # Full browser harness (keyboard + scrollbar + menu layers). Manual trigger
+  # only — slower than the push/PR smoke gate, so it stays off the default path.
+  harness-full:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Full browser verification (keyboard/scrollbar/menu)
+        run: scripts/harness/run.sh
