@@ -138,12 +138,17 @@ EXCLUDE_FILES = {
     # Screenshots for store listing / README (assets/store/)
     'assets/store/vbookmarks.png',
     'assets/store/vbookmarks-menu.png',
+    'assets/store/vBookmarks-v4.png',
+    'assets/store/vBookmarks-v4-options.png',
+    'assets/store/vBookmarks-v4-sidepanel.png',
     # Dev/tooling files
     'AGENTS.md',
     'package.json',
     'package-lock.json',
     '.gitignore',
     '.env',  # local LLM credentials, git-ignored
+    '.env.example',
+    'eslint.config.js',
 }
 
 # Locale directories to exclude (not in the supported set)
