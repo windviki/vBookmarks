@@ -2001,3 +2001,47 @@ describe('focused result row — keyboard still works (focus-ownership regressio
         expect(selectedIndex()).toBe(1);
     });
 });
+
+describe('Tab ring: input ↔ Esc/close button', () => {
+    it('Tab from the input moves focus to the close button, then back', () => {
+        const { palette, paletteEl, input, closeBtn, doc, keydown } = setup({});
+        palette.open();
+        expect(doc.activeElement).toBe(input);
+        keydown(paletteEl, { key: 'Tab' });
+        expect(doc.activeElement).toBe(closeBtn);
+        expect(palette.isOpen()).toBe(true); // both stops inside the panel
+        keydown(paletteEl, { key: 'Tab' });
+        expect(doc.activeElement).toBe(input);
+    });
+
+    it('Shift+Tab walks the same two-stop ring backwards', () => {
+        const { palette, paletteEl, input, closeBtn, doc, keydown } = setup({});
+        palette.open();
+        keydown(paletteEl, { key: 'Tab', shiftKey: true });
+        expect(doc.activeElement).toBe(closeBtn);
+        keydown(paletteEl, { key: 'Tab', shiftKey: true });
+        expect(doc.activeElement).toBe(input);
+    });
+
+    it('result rows and the × stay out of the ring', () => {
+        const { palette, paletteEl, input, closeBtn, type, doc, keydown } = setup({});
+        palette.open();
+        type('gmail'); // rows render — they must not join the Tab order
+        input.focus();
+        keydown(paletteEl, { key: 'Tab' });
+        expect(doc.activeElement).toBe(closeBtn); // straight to the close, never a row
+    });
+
+    it('non-Tab keys are left alone', () => {
+        const { palette, paletteEl, keydown } = setup({});
+        palette.open();
+        const ev = keydown(paletteEl, { key: 'a' });
+        expect(ev.defaultPrevented).toBe(false);
+    });
+
+    it('Tab does nothing while the palette is closed', () => {
+        const { paletteEl, keydown } = setup({});
+        const ev = keydown(paletteEl, { key: 'Tab' });
+        expect(ev.defaultPrevented).toBe(false);
+    });
+});

@@ -745,6 +745,23 @@ export function initPalette(ctx = {}) {
         close({ back: true });
     });
 
+    // Tab cycles inside a two-stop ring: input ↔ footer Esc/close (Shift+Tab
+    // mirrors — a two-loop goes the other way from either stop). Rows and the
+    // × stay out of the Tab order; without this the palette's only tabbable
+    // element was the input, so Tab escaped the panel and the focusout guard
+    // auto-closed it (rows were just made tabindex="-1"). preventDefault keeps
+    // document-level tabCycle's native Tab from leaving the ring, and both
+    // stops are inside $palette so the focusout guard keeps the panel open.
+    $palette.addEventListener('keydown', e => {
+        if (e.key !== 'Tab' || !openState)
+            return;
+        const ae = document.activeElement;
+        if (ae === $input || ae === $close) {
+            e.preventDefault();
+            (ae === $input ? $close : $input).focus();
+        }
+    });
+
     // --- Open / close -----------------------------------------------------------
     // A context menu opened over the palette (ArrowRight / right-click) steals
     // focus to the menu; closing it (← / Esc) hands focus back to the .active
