@@ -2197,6 +2197,14 @@ body.no-view-tabs #view-tabs {
     .vbm-row .row-sub {
         display: block;
     }
+    /* v4.1 visual fix: 双行布局（icon 槽 + 右侧两行文本）下，图标与文本块的
+       间隙沿用单行树视图的 4px 读起来贴得太紧——两行文本块更高，同样间隙显得
+       更局促。参考树视图图标槽节奏（20px 槽 + 4px 距）适度加宽到 8px；用
+       :has(.row-sub) 精确命中真正的双行行，单行行保持与树一致的 4px，双行行
+       在所有视图（最近/搜索/死链/去重/统计）统一。 */
+    .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
+        margin-inline-end: 8px;
+    }
 }
 
 body.panel-mode .vbm-row .row-path {
@@ -2205,6 +2213,11 @@ body.panel-mode .vbm-row .row-path {
 
 body.panel-mode .vbm-row .row-sub {
     display: block;
+}
+
+/* 面板模式等价规则：panel-mode 与容器宽度无关，行始终是双行 */
+body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
+    margin-inline-end: 8px;
 }
 
 /* === v4 task-2 slice B: recent view + search history area ===

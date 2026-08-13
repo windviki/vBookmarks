@@ -119,3 +119,20 @@ describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', 
             .toContain('color: var(--vbm-danger)');
     });
 });
+
+describe('v4.1 visual consistency: 双行行图标→文本间隙', () => {
+    // 超宽/面板模式下 .row-sub 显示为第二行，图标与双行文本块的间隙从树视图
+    // 单行的 4px 加宽到 8px。用 :has(.row-sub) 精确命中真正的双行行，所有
+    // 双行视图（最近/搜索/死链/去重/统计）共享同一规则；单行行保持 4px。
+    it('宽容器下双行行把图标间隙加宽到 8px', () => {
+        expect(neatCss).toContain(
+            '.vbm-row:has(.row-sub) .tree-item-link .favicon-container {\n' +
+            '        margin-inline-end: 8px;');
+    });
+
+    it('panel 模式有等价的双行行间隙规则', () => {
+        expect(neatCss).toContain(
+            'body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {\n' +
+            '    margin-inline-end: 8px;');
+    });
+});
