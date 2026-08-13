@@ -652,12 +652,13 @@ describe('K15: closing a dialog hands focus back to its invoker', () => {
     });
 });
 
-describe('Ctrl/Cmd+D quick-add guard (neat.js)', () => {
-    // neat.js is the page bootstrap with no unit-test mount point, so the
-    // quick-add guard list is asserted on its source — same recipe as
-    // context-menu.test.js.
+describe('Ctrl/Cmd+D quick-add guard (quick-add.js)', () => {
+    // The Ctrl/Cmd+D capture handler lives in src/quick-add.js (extracted
+    // from neat.js); its dialog-open guard list is asserted on the source —
+    // the behavioral side (suppression while a dialog is open) is covered by
+    // tests/quick-add.test.js's bindQuickAddKey cases.
     it('skips quick-add while either tab-group dialog is open', () => {
-        const src = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+        const src = fs.readFileSync(new URL('../src/quick-add.js', import.meta.url), 'utf8');
         const start = src.indexOf('if (!(e.metaKey || e.ctrlKey)');
         const end = src.indexOf('quickAddCurrentTab();', start);
         expect(start).toBeGreaterThan(-1);

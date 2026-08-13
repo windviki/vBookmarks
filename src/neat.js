@@ -22,6 +22,9 @@ import { initFaviconFallback } from './favicon-fallback.js';
 import { applyUserStyle } from './userstyle.js';
 import { decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel } from './resize-core.js';
 import { createFolderSorter } from './folder-sort.js';
+import { createQuickAdd } from './quick-add.js';
+import { createDonation } from './donation.js';
+import { createToolButton } from './tool-button.js';
 
 (window => {
     const store = window.store;
@@ -200,88 +203,19 @@ import { createFolderSorter } from './folder-sort.js';
     // chrome.bookmarks.getTree）已剥离至 src/tree-view.js（P1，8b），
     // 在 actions/dnd 初始化之后经 initTreeView 装配（见下方）。
 
-    // Donation (v4 gentle-ask model): no countdown, no forced navigation,
-    // no focus stealing. The card reappears on every popup open until the
-    // user makes an explicit choice — closing the popup never counts as an
-    // answer, so the ask cannot be ignored away, but it never blocks usage
-    // either. Choices: Donate (opens the page, long snooze), Later (short
-    // snooze), Don't show again (permanent opt-out).
-    let newOrUpgrade = true;
-    // v4 task-3 #9: crossing into 4.x from a 3.x (or older) install — the
-    // donation card then carries the "what's new in v4" notice + guide link.
-    let upgradedToV4 = false;
-    const mf = chrome.runtime.getManifest();
-    const currentVer = parseVersion(mf["version"]);
-    // Version gate semantics (shared module, src/version.js):
-    // - sameOrNewerMinor: the recorded version is not older than current at
-    //   the major.minor granularity — a patch bump (4.0 → 4.0.1) is a SILENT
-    //   fix release and must not re-arm the donation "new version" card.
-    // - crossedInto(…, V4): a 3.x → 4.x crossing pins the v4 notice onto the
-    //   card; the same helper serves any future "announce this version"
-    //   banner with its own threshold.
-    const V4 = parseVersion('4.0');
-    if (!store.get('currentVersion')) {
-        store.set('currentVersion', mf["version"]);
-    } else {
-        const recordVer = parseVersion(store.get('currentVersion'));
-        store.set('currentVersion', mf["version"]);
-        if (recordVer && currentVer) {
-            if (sameOrNewerMinor(recordVer, currentVer)) {
-                newOrUpgrade = false;
-            } else if (crossedInto(recordVer, currentVer, V4)) {
-                upgradedToV4 = true;
-            }
-        }
-    }
-    if (!store.get('openCount')) {
-        store.set('openCount', 1);
-    } else {
-        store.set('openCount', parseInt(store.get('openCount'), 10) + 1);
-    }
-    if (!store.get('donationKey')) {
-        // New installs get a grace window of ~30 popup opens before the
-        // first ask, so the request comes after real usage value.
-        store.set('donationKey', 30);
-    }
-    store.remove('donationCountDown'); // retired in v4 (was the 10s timer)
-
-    const $donation = $('donation');
-    // The v4 guide lives in the repo docs; pick the file by UI language.
-    const guideV4Url = `https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4${
-        (chrome.i18n.getUILanguage() || '').startsWith('zh') ? '.zh' : ''}.md`;
-    const showDonation = (show) => {
-        if (show) {
-            if (newOrUpgrade) {
-                $('new-version-text').innerHTML = _m('versionMessage', 
-                    [mf["version"], 'Github']);
-            }
-            // v4 task-3 #9: on the 3.x→4.x upgrade the card also surfaces the
-            // v4 changes notice + the online guide (locale-picked).
-            const v4Notice = $('v4-notice');
-            if (upgradedToV4) {
-                $('v4-notice-text').textContent = _m('donationV4Notice');
-                const guideLink = $('v4-guide-link');
-                guideLink.textContent = _m('donationV4GuideLink');
-                guideLink.href = guideV4Url;
-                v4Notice.hidden = false;
-            } else {
-                v4Notice.hidden = true;
-            }
-            $('donation-text').innerHTML = _m('donationMessage');
-            $('donation-go').innerHTML = _m('donationGo');
-            $('donation-later').innerHTML = _m('donationLater');
-            $('donation-never').innerHTML = _m('donationNever');
-        }
-        $donation.style.display = show ? 'block' : 'none';
-    }
-
-    if (!store.get('donationDisabled')
-        && (newOrUpgrade || !store.get('donationFactor')
-            || parseInt(store.get('donationFactor'), 10) >= parseInt(store.get('donationKey'), 10))) {
-        showDonation(true);
-    } else {
-        store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
-    }
+    // Donation (v4 gentle-ask model) — the whole card lives in src/donation.js:
+    // version gating, open-count / grace-key bookkeeping, the three answer
+    // buttons, the v4 upgrade notice and the visibility rule. actions is
+    // declared below; the button handlers only run on user events, so
+    // openNewTab resolves lazily (TDZ-safe, same as the inline closure it
+    // replaced).
+    createDonation({
+        store,
+        $,
+        chrome,
+        _m,
+        get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
+    });
 
     // Context menus live in src/context-menu.js (P1): the three menus, the
     // body contextmenu handler (position math, hide-editables/hide-sort on
@@ -662,129 +596,23 @@ import { createFolderSorter } from './folder-sort.js';
     viewStats.refresh();
     viewDupes.refresh();
 
-    // donation: three explicit answers to the ask (see the v4 model above)
-    const donationSnooze = step => {
-        showDonation(false);
-        store.set('donationFactor', 1);
-        const key = parseInt(store.get('donationKey'), 10);
-        store.set('donationKey', Math.min(key + step, 3200));
-    };
-    $('donation-go').addEventListener('click', () => {
-        donationSnooze(800); // donors get the longest quiet period
-        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks/blob/master/donation/donation.md", true, true);
-    });
-    $('donation-later').addEventListener('click', () => donationSnooze(120));
-    $('donation-never').addEventListener('click', () => {
-        showDonation(false);
-        store.set('donationDisabled', '1');
-    });
-
-    $('new-version-text').addEventListener('click', () => {
-        actions.openBookmarkNewTab("https://github.com/windviki/vBookmarks#changelogs", true, true);
-    });
-
-    // v4 task-3 #9: the guide link on the upgrade notice (middle-click and
-    // the context menu use the href; left-click goes through actions so the
-    // popup-respecting open semantics stay uniform).
-    $('v4-guide-link').addEventListener('click', e => {
-        e.preventDefault();
-        actions.openBookmarkNewTab(guideV4Url, true, true);
-    });
-
     // Phase 3 (issue #30): quick-add star button — one click bookmarks the
     // current tab; when the page is already bookmarked the star is solid and
-    // clicking opens the edit dialog for the existing bookmark.
-    // v4 task-3 #20: quickAddEnabled (default on) hides it outright.
+    // clicking removes it (mirrors Chrome's native star). v4 task-3 #20:
+    // quickAddEnabled (default on) hides it outright. The flow + the
+    // Ctrl/Cmd+D binding live in src/quick-add.js (tested directly).
     const quickAddBtn = $('quick-add-btn');
     if (!store.get('quickAddEnabled', '1'))
         quickAddBtn.classList.add('hidden');
     const quickAddToast = $('quick-add-toast');
-    let quickAddToastTimer = null;
-    const showQuickAddToast = (msgKey, sub) => {
-        quickAddToast.textContent = _m(msgKey, sub ? [sub] : undefined);
-        quickAddToast.classList.add('show');
-        clearTimeout(quickAddToastTimer);
-        quickAddToastTimer = setTimeout(() => {
-            quickAddToast.classList.remove('show');
-        }, 1800);
-    };
-    const withCurrentTabBookmark = callback => {
-        chrome.tabs.query({
-            'active': true,
-            'windowId': chrome.windows.WINDOW_ID_CURRENT
-        }, tabs => {
-            const tab = tabs[0];
-            if (!tab || !tab.url) {
-                callback(null, null);
-                return;
-            }
-            chrome.bookmarks.search({ url: tab.url }, results => {
-                callback(tab, (results && results.length) ? results[0] : null);
-            });
-        });
-    };
-    const refreshQuickAddState = () => {
-        withCurrentTabBookmark((tab, bookmark) => {
-            if (bookmark) {
-                quickAddBtn.classList.add('starred');
-                quickAddBtn.title = _m('quickRemoveBookmark');
-            } else {
-                quickAddBtn.classList.remove('starred');
-                quickAddBtn.title = _m('quickAddBookmark');
-            }
-        });
-    };
-    const quickAddCurrentTab = () => {
-        withCurrentTabBookmark((tab, bookmark) => {
-            if (!tab)
-                return;
-            if (bookmark) {
-                // Already bookmarked: remove it (mirrors Chrome's native star).
-                // Track the id we're removing so the star refresh won't re-add it.
-                const rmId = bookmark.id;
-                chrome.bookmarks.remove(rmId, () => {
-                    // The bookmark vanished between the search and this
-                    // remove (synced away) — suppress the warning and skip.
-                    if (chrome.runtime.lastError)
-                        return;
-                    quickAddBtn.classList.remove('starred');
-                    quickAddBtn.title = _m('quickAddBookmark');
-                    showQuickAddToast('quickRemoved');
-                });
-            } else {
-                const parentId = store.get('quickAddFolderId', '1');
-                chrome.bookmarks.create({
-                    title: tab.title || tab.url,
-                    url: tab.url,
-                    parentId
-                }, () => {
-                    quickAddBtn.classList.add('starred');
-                    quickAddBtn.title = _m('quickRemoveBookmark');
-                    // Show target folder name for discoverability
-                    chrome.bookmarks.get(parentId, nodes => {
-                        const folderName = (nodes && nodes.length) ? (nodes[0].title || '') : '';
-                        showQuickAddToast('quickAddedTo', folderName);
-                    });
-                });
-            }
-        });
-    };
+    const quickAdd = createQuickAdd({
+        store, document, body, chrome,
+        quickAddBtn, quickAddToast, _m
+    });
+    const quickAddCurrentTab = quickAdd.quickAddCurrentTab;
     quickAddBtn.addEventListener('click', quickAddCurrentTab);
-    refreshQuickAddState();
-    // Ctrl/Cmd+D inside the popup does the same. Capture phase + stopPropagation
-    // so the tree's type-ahead never sees the 'd'; skip while a dialog is open.
-    document.addEventListener('keydown', e => {
-        if (!(e.metaKey || e.ctrlKey) || (e.key !== 'd' && e.key !== 'D'))
-            return;
-        if (body.classList.contains('needConfirm') || body.classList.contains('needEdit') ||
-            body.classList.contains('needAlert') || body.classList.contains('needInputName') ||
-            body.classList.contains('needSort') || body.classList.contains('needTabGroup') ||
-            body.classList.contains('needGroupPick'))
-            return;
-        e.preventDefault();
-        e.stopPropagation();
-        quickAddCurrentTab();
-    }, true);
+    quickAdd.refreshQuickAddState();
+    quickAdd.bindQuickAddKey();
 
     // Command palette (P2): Ctrl/Cmd+K overlay unifying bookmark/folder
     // search, folder jump and a small command set — see src/palette.js.
@@ -812,14 +640,9 @@ import { createFolderSorter } from './folder-sort.js';
     // Tool button (⋮): opens the command palette for feature discovery —
     // dead-link scan, duplicate cleanup, session save, and all slash commands.
     // v4 task-3 #20: hidden when showToolButton is off, or when the palette
-    // itself is disabled (the button's only job is opening it).
-    const toolBtn = $('tool-btn');
-    if (toolBtn) {
-        if (!store.get('showToolButton', '1') || !store.get('paletteEnabled', '1'))
-            toolBtn.classList.add('hidden');
-        toolBtn.title = _m('toolButtonTitle');
-        toolBtn.addEventListener('click', () => palette.open());
-    }
+    // itself is disabled (the button's only job is opening it). Visibility
+    // rule + click wiring live in src/tool-button.js.
+    createToolButton({ store, toolBtn: $('tool-btn'), palette, _m });
 
     // Global wake-up (background.js's open-command-palette command): the
     // fallback popup window carries ?palette=1; the chrome.action.openPopup
