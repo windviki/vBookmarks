@@ -238,7 +238,10 @@ export function initTreeRender(ctx = {}) {
 
         // Handle dual storage folders - localized suffix marks which root a
         // folder belongs to (both roots are named alike by Chrome)
-        let displayTitle = title || _m('noTitle');
+        // Escape the user-controlled title here (single responsibility): both
+        // callers — generateHTML (main render) and actions.js add-node — pass
+        // raw titles, matching generateBookmarkHTML's internal escaping.
+        let displayTitle = title ? htmlspecialchars(title) : _m('noTitle');
         if (folderNode && folderNode.folderType) {
             if (folderNode.syncing === false) {
                 displayTitle += ` ${_m('syncSuffixLocal') || '(Local)'}`;
@@ -302,7 +305,10 @@ export function initTreeRender(ctx = {}) {
         for (let i = 0, l = data.length; i < l; i++) {
             const d = data[i];
             const children = d.children;
-            const title = htmlspecialchars(d.title);
+            // Raw title: generateFolderHTML/generateBookmarkHTML escape their
+            // own titles (single responsibility — see generateFolderHTML).
+            // isSeparator below also needs the RAW title, not an escaped one.
+            const title = d.title;
             const url = d.url;
             const id = d.id;
             const parentID = d.parentId;

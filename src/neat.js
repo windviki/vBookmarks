@@ -932,7 +932,6 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
     // passive event listener" and silently ignores the cancellation, leaving
     // the native scroll gesture running alongside the zoom.
     document.addEventListener('wheel', wheelHandler, { passive: false });
-    document.addEventListener('mousewheel', wheelHandler);
     document.addEventListener('keydown', e => {
         if (!e.metaKey && !e.ctrlKey)
             return;
@@ -971,28 +970,6 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
     // same-specificity rule wins by source order (src/userstyle.js).
     applyUserStyle(document, store.get('userstyle'));
 
-    // document.addEventListener('DOMContentLoaded', () => {
-
-    //     const reportError = (msg, url, line) => {
-    //         const manifest = chrome.runtime.getManifest();
-    //         const version = manifest.version;
-    //         const txt = `_s=84615e81d50c4ddabff522aee3c4b734&_r=img&Msg=${escape(msg)}&URL=${escape(url)}&Line=${line}&Platform=${escape(navigator.platform)}&Version=${escape(version)}&UserAgent=${escape(navigator.userAgent)}`;
-    //         const i = document.createElement('img');
-    //         i.setAttribute('src', `${('https:' === document.location.protocol) ? 'https://errorstack.appspot.com'
-    //             : 'http://www.errorstack.com'}/submit?${txt}`);
-    //         document.body.appendChild(i);
-    //         i.onload = () => {
-    //             document.body.removeChild(i);
-    //         };
-    //     };
-
-    //     window.onerror = reportError;
-
-    //     chrome.extension.onRequest.addListener(request => {
-    //         if (request.error) reportError.apply(null, request.error);
-    //     });
-    // });
-    
     if (store.get('customIcon')) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');

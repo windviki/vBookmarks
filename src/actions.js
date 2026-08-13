@@ -312,9 +312,12 @@ export function initActions(ctx = {}) {
 
                     if (/^javascript:.*/i.test(url)) {
                         // bookmarklet: run the code in the target page's main world
+                        // (bookmarklets expect the page's own globals — isolated
+                        // world would hide them)
                         const bookmarkletCode = decodedUrl.replace(/^javascript:/i, '');
                         chrome.scripting.executeScript({
                             target: {tabId: tab.id},
+                            world: 'MAIN',
                             func: code => {
                                 try {
                                     (0, eval)(code);

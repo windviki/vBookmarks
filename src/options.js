@@ -14,6 +14,27 @@ const $ = id => document.getElementById(id);
         // read the string '0' as truthy and mis-tick the checkbox.
         const toBool = value => value === true || value === '1' || value === 'true';
 
+        // Bind a data-driven settings list to its checkboxes. Local toggles
+        // persist '1'/'' (or ''/'1' when inverted); sync toggles persist
+        // 'true'/'false'. Both read back through getSetting/setSetting.
+        const bindSettingsList = async (list, useSync = false) => {
+            for (const setting of list) {
+                const element = $(setting.id);
+                if (!element)
+                    continue;
+                const value = await getSetting(setting.key, setting.defaultValue, useSync);
+                element.checked = useSync
+                    ? (value !== 'false' && value !== false)
+                    : (setting.inverted ? !toBool(value) : toBool(value));
+                element.addEventListener('change', async () => {
+                    const newValue = useSync
+                        ? (element.checked ? 'true' : 'false')
+                        : (setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : ''));
+                    await setSetting(setting.key, newValue, useSync);
+                });
+            }
+        };
+
         // Theme: apply the pre-filled mirror value immediately, then refine
         // from chrome.storage.local (the source of truth)
         document.body.dataset.theme = store.get('theme', 'auto');
@@ -25,9 +46,8 @@ const $ = id => document.getElementById(id);
         themeSelect.addEventListener('change', async () => {
             const newTheme = themeSelect.value;
             document.body.dataset.theme = newTheme;
-            // chrome.storage.local is the source of truth; the localStorage
-            // copy lets store.js synchronously pre-fill it in the popup
-            localStorage.setItem('theme', newTheme);
+            // chrome.storage.local is the single source of truth — store.js
+            // overlays its mirror with it, so a localStorage copy is redundant.
             await setSetting('theme', newTheme);
         });
 
@@ -48,15 +68,7 @@ const $ = id => document.getElementById(id);
         ];
 
         // Initialize general settings
-        for (const setting of generalSettings) {
-            const element = $(setting.id);
-            const value = await getSetting(setting.key, setting.defaultValue);
-            element.checked = setting.inverted ? !toBool(value) : toBool(value);
-            element.addEventListener('change', async () => {
-                const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
-                await setSetting(setting.key, newValue);
-            });
-        }
+        await bindSettingsList(generalSettings);
 
         // Configuration for sync settings
         const syncSettings = [
@@ -101,15 +113,7 @@ const $ = id => document.getElementById(id);
             // off means zero writes (collection stops immediately)
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false }
         ];
-        for (const setting of viewSettings) {
-            const element = $(setting.id);
-            const value = await getSetting(setting.key, setting.defaultValue);
-            element.checked = setting.inverted ? !toBool(value) : toBool(value);
-            element.addEventListener('change', async () => {
-                const newValue = setting.inverted ? (element.checked ? '' : '1') : (element.checked ? '1' : '');
-                await setSetting(setting.key, newValue);
-            });
-        }
+        await bindSettingsList(viewSettings);
         // Turning search history off also wipes the stored history (the hint
         // under the checkbox tells the user so).
         $('search-history-enabled').addEventListener('change', async () => {
@@ -185,16 +189,7 @@ const $ = id => document.getElementById(id);
         // service worker (src/sync-engine.js) observes chrome.storage.sync
         // and reschedules its refresh alarm itself, and the popup mirrors
         // status via storage.session — no page-side direct calls needed.
-        for (const setting of syncSettings) {
-            const element = $(setting.id);
-            const value = await getSetting(setting.key, setting.defaultValue, true);
-            // Toggles may be stored as 'true'/'false' strings or booleans
-            element.checked = value !== 'false' && value !== false;
-            element.addEventListener('change', async () => {
-                const newValue = element.checked ? 'true' : 'false';
-                await setSetting(setting.key, newValue, true);
-            });
-        }
+        await bindSettingsList(syncSettings, true);
 
         const syncRefreshInterval = $('sync-refresh-interval');
         syncRefreshInterval.value = await getSetting('syncRefreshInterval', 60, true);

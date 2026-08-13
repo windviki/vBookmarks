@@ -50,6 +50,13 @@ export const PRESET_VIEWS = ['dupes', 'dead'];
 
 export const slashNamesOf = cmd => [cmd.slash].concat(cmd.aliases || []);
 
+// Escape user-controlled text before it enters an innerHTML-rendered dialog
+// message (ConfirmDialog renders opts.dialog as HTML). cmd.name is free text
+// (only trim()ed by validateCommand), so the delete/broken-folder dialogs in
+// executeCustom escape it here.
+const htmlspecialchars = s =>
+    `${s}`.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
 // --- Validation ---------------------------------------------------------------
 // validateCommand(draft, existing, selfId) → { ok:true, command } — the
 // normalized entry (name falls back to the slash, aliases deduped) — or
@@ -240,7 +247,7 @@ export const executeCustom = (cmd, rest, deps) => {
                 if (chrome.runtime.lastError || !children) {
                     if (dialogs && dialogs.ConfirmDialog)
                         dialogs.ConfirmDialog.open({
-                            dialog: _m('paletteCustomBroken', cmd.name),
+                            dialog: _m('paletteCustomBroken', htmlspecialchars(cmd.name)),
                             button1: `<strong>${_m('delete')}</strong>`,
                             button2: _m('nope'),
                             fn1: () => {

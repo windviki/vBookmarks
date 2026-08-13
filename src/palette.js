@@ -331,7 +331,7 @@ export function initPalette(ctx = {}) {
         if (!cmd)
             return;
         dialogs.ConfirmDialog.open({
-            dialog: _m('paletteCustomDeleteConfirm', cmd.name),
+            dialog: _m('paletteCustomDeleteConfirm', htmlspecialchars(cmd.name)),
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
