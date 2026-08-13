@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import {
     decideHeight, decideWidthMax, clampDragWidth,
-    nextZoomLevel, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP
+    nextZoomLevel, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP,
+    dragWidthDelta, popupMaxHeight, clampDragHeight
 } from '../src/resize-core.js';
 
 /**
@@ -169,6 +170,32 @@ describe('popup WIDTH resize (4.0.1 regression gate)', () => {
 
     it('a custom hardMax cap is honored (the kernel is the single clamp)', () => {
         expect(decideWidthMax({ bodyWidth: 320, leftRoom: 500, rightRoom: 500, hardMax: 480 })).toBe(480);
+    });
+});
+
+describe('resize DRAG math (pointerDragHandler kernels)', () => {
+    it('dragWidthDelta mirrors the sign for rtl layouts', () => {
+        // ltr: dragging left of the start shrinks the width
+        expect(dragWidthDelta(200, 300, false)).toBe(100);
+        expect(dragWidthDelta(350, 300, false)).toBe(-50);
+        // rtl: the sign flips (the popup grows the other way)
+        expect(dragWidthDelta(200, 300, true)).toBe(-100);
+        expect(dragWidthDelta(350, 300, true)).toBe(50);
+    });
+
+    it('popupMaxHeight is shared by resetHeight and the vertical drag', () => {
+        // the 600/zoom-1 term caps at 599 at zoom=1 when the screen has room
+        expect(popupMaxHeight(1, 900, 100)).toBe(599);
+        // the screen room below the top edge caps it
+        expect(popupMaxHeight(1, 700, 300)).toBe(350);
+        // browser zoom>1 scales the ceiling down (600/zoom - 1)
+        expect(popupMaxHeight(2, 900, 100)).toBe(299);
+    });
+
+    it('clampDragHeight holds the drag within [max/2, max]', () => {
+        expect(clampDragHeight(700, 600)).toBe(600);
+        expect(clampDragHeight(100, 600)).toBe(300); // floor at max/2
+        expect(clampDragHeight(400, 600)).toBe(400); // in range
     });
 });
 

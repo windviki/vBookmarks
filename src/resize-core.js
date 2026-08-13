@@ -52,3 +52,19 @@ export const nextZoomLevel = (currentZoom, val) => {
     const z = (val > 0) ? currentZoom + ZOOM_STEP : currentZoom - ZOOM_STEP;
     return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z));
 };
+
+// rtl-aware horizontal drag delta (pointerDragHandler in neat.js). The popup
+// grows away from its toolbar anchor; an rtl layout mirrors the sign.
+export const dragWidthDelta = (screenX, startScreenX, rtl) =>
+    rtl ? (screenX - startScreenX) : (startScreenX - screenX);
+
+// The popup's max height: the physical 600px cap (Chrome's action-popup
+// viewport), the screen room below the top edge, and a browser-zoom-scaled
+// ceiling — shared by resetHeight and the vertical resize drag (a wrong
+// shrink must not pin maxH to the shrunken height).
+export const popupMaxHeight = (zoomFactor, screenHeight, windowScreenY) =>
+    Math.min((600 / zoomFactor) - 1, screenHeight - windowScreenY - 50, 600);
+
+// Clamp the dragged height to [maxHeight/2, maxHeight] (pointerDragHandler).
+export const clampDragHeight = (height, maxHeight) =>
+    Math.min(maxHeight, Math.max(maxHeight / 2, height));

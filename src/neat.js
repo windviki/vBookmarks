@@ -20,11 +20,15 @@ import { markPopupOpen } from './visit-stats-sw.js';
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 import { initFaviconFallback } from './favicon-fallback.js';
 import { applyUserStyle } from './userstyle.js';
-import { decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel } from './resize-core.js';
+import {
+    decideHeight, decideWidthMax, clampDragWidth, nextZoomLevel,
+    dragWidthDelta, popupMaxHeight, clampDragHeight
+} from './resize-core.js';
 import { createFolderSorter } from './folder-sort.js';
 import { createQuickAdd } from './quick-add.js';
 import { createDonation } from './donation.js';
 import { createToolButton } from './tool-button.js';
+import { initWakeUp } from './wake-up.js';
 
 (window => {
     const store = window.store;
@@ -362,7 +366,7 @@ import { createToolButton } from './tool-button.js';
             // 在 300（300 锁）。常量 600 不随当前高度收缩，同时兜住浏览器
             // zoom<1 时 `600/zoomFactor-1`（如 0.9 → 666）高估 Chrome 视口的
             // 双滚动条问题（commit 7fea4d1）。
-            const maxH = Math.min(screen.height - window.screenY - 50, (600 / zoomFactor) - 1, 600);
+            const maxH = popupMaxHeight(zoomFactor, screen.height, window.screenY);
             // The grow / stay / shrink decision is pure — see resize-core.js
             // (tests drive the real kernel). Stay put when the content is
             // shorter but the popup is a comfortable size: never shrink on
@@ -646,19 +650,12 @@ import { createToolButton } from './tool-button.js';
 
     // Global wake-up (background.js's open-command-palette command): the
     // fallback popup window carries ?palette=1; the chrome.action.openPopup
-    // path sets a session-storage flag instead.
-    if (new URLSearchParams(window.location.search).has('palette')) {
-        palette.open();
-        // Consume a stale flag too, so the next plain popup open stays clean.
-        chrome.storage.session.remove('pendingPaletteOpen');
-    } else {
-        chrome.storage.session.get('pendingPaletteOpen', v => {
-            if (v && v.pendingPaletteOpen) {
-                palette.open();
-                chrome.storage.session.remove('pendingPaletteOpen');
-            }
-        });
-    }
+    // path sets a session-storage flag instead. Lives in src/wake-up.js.
+    initWakeUp({
+        palette,
+        chrome,
+        hasPaletteQuery: new URLSearchParams(window.location.search).has('palette')
+    });
 
     // Disable Chrome auto-scroll feature
     window.addEventListener('mousedown', e => {
@@ -813,8 +810,8 @@ import { createToolButton } from './tool-button.js';
         const isX = resizerXDown;
         const isDragEnd = e.type === 'pointerup' || e.type === 'pointercancel';
         if (isX) {
-            // record current width
-            const changedWidth = rtl ? (e.screenX - screenX) : (screenX - e.screenX);
+            // record current width (rtl-aware delta — resize-core.js)
+            const changedWidth = dragWidthDelta(e.screenX, screenX, rtl);
             let width = bodyWidth + changedWidth;
             // 320 < width < 640, and never wider than the screen leaves room
             // for (a wider popup pushes its resize handle off-screen).
@@ -850,8 +847,8 @@ import { createToolButton } from './tool-button.js';
                     // 同 resetHeight：上限是 popup 物理上限(常量 600)与屏幕余量，
                     // 而非 window.innerHeight（当前视口高会随一次错误的 shrink 变小，
                     // 把拖拽上限也锁死在收缩后的高度上）。
-                    currentMaxHeight = Math.min((600 / zoomFactor) - 1, screen.height - window.screenY - 50, 600);
-                    height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
+                    currentMaxHeight = popupMaxHeight(zoomFactor, screen.height, window.screenY);
+                    height = clampDragHeight(height, currentMaxHeight);
                     body.style.height = `${height}px`;
                     store.set('popupHeight', height);
                     store.flush(); // commit before the popup can close
@@ -859,7 +856,7 @@ import { createToolButton } from './tool-button.js';
                     menus.clearMenu();
                 });
             } else {
-                height = Math.min(currentMaxHeight, Math.max(currentMaxHeight / 2, height));
+                height = clampDragHeight(height, currentMaxHeight);
                 body.style.height = `${height}px`;
                 store.set('popupHeight', height);
                 resetSeparator(); // Reset separators
