@@ -166,7 +166,13 @@ const setup = (opts = {}) => {
     };
 
     // --- real view-manager (registers tree/search itself) ------------------
-    const views = initViewManagerMod({ store, isPanel: !!opts.isPanel, rtl: !!opts.rtl });
+    // getRememberState mirrors neat.js's wiring: off when dontRememberState='1'.
+    const views = initViewManagerMod({
+        store,
+        isPanel: !!opts.isPanel,
+        rtl: !!opts.rtl,
+        getRememberState: () => !storeData.dontRememberState
+    });
 
     // --- real palette (with stubbed helpers) -------------------------------
     const actions = {};
@@ -357,5 +363,48 @@ describe('E — K13/K17: hidden-view + row-less-container landings', () => {
         ctx.doc.activeElement = ctx.tree;
         ctx.keyOn(ctx.tree, 'ArrowDown');
         expect(ctx.doc.activeElement).toBe(ctx.tree); // rows not rendered yet
+    });
+});
+
+// E — popup reopen focus restore (focusSpot): the unified "where I was" gate.
+// The live classifier persists the last keyboard location under `focusSpot`
+// (gated by the remember option); restoreFocusSpot() returns focus there once
+// at startup. Cross-module: real view-manager + real palette + real keyboard.
+describe('E — popup reopen focus restore (focusSpot)', () => {
+    it('captures a header spot live and restores it on the next boot', () => {
+        // session 1: the user focuses the tool button → the live focusin
+        // classifier persists the spot
+        const s1 = setup({});
+        const tool = s1.el('BUTTON', 'tool-btn');
+        for (const fn of (s1.doc._listeners.focusin || []))
+            fn.call(s1.doc, { target: tool });
+        expect(JSON.parse(s1.store.get('focusSpot'))).toEqual({ zone: 'header', key: 'tool-btn' });
+        // session 2: a fresh boot reads the stored spot and lands on it
+        const s2 = setup({ storeData: { focusSpot: s1.store.get('focusSpot') } });
+        const tool2 = s2.el('BUTTON', 'tool-btn');
+        s2.views.restoreFocusSpot();
+        expect(s2.doc.activeElement).toBe(tool2);
+    });
+
+    it('restores a remembered header spot from a seeded store on boot', () => {
+        const ctx = setup({
+            storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' }) }
+        });
+        const tool = ctx.el('BUTTON', 'tool-btn');
+        ctx.views.restoreFocusSpot();
+        expect(ctx.doc.activeElement).toBe(tool);
+    });
+
+    it('the remember option off clears the spot and never restores it', () => {
+        const ctx = setup({
+            storeData: {
+                dontRememberState: '1',
+                focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' })
+            }
+        });
+        const tool = ctx.el('BUTTON', 'tool-btn');
+        ctx.views.restoreFocusSpot();
+        expect(ctx.doc.activeElement).toBe(null);
+        expect(ctx.store.get('focusSpot')).toBe(null);
     });
 });

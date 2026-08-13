@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { initViewManager } from '../src/view-manager.js';
 
 // view-manager.js uses real DOM APIs (createElement/appendChild/classList/
@@ -130,6 +130,9 @@ const setup = (opts = {}) => {
                     if (sel.startsWith('.')) {
                         if (n.classList.contains(sel.slice(1)))
                             return n;
+                    } else if (sel.startsWith('#')) {
+                        if (n.id === sel.slice(1))
+                            return n;
                     } else if (n.tagName === sel.toUpperCase()) {
                         return n;
                     }
@@ -171,6 +174,9 @@ const setup = (opts = {}) => {
         getElementById: id => byId[id] || null,
         addEventListener(type, fn, capture) {
             this._listeners.push({ type, fn, capture: !!capture });
+        },
+        removeEventListener(type, fn) {
+            this._listeners = this._listeners.filter(l => !(l.type === type && l.fn === fn));
         }
     };
     globalThis.document = doc;
@@ -199,7 +205,8 @@ const setup = (opts = {}) => {
         store,
         isPanel: !!opts.isPanel,
         rtl: !!opts.rtl,
-        clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1)
+        clearMenu: opts.noClearMenu ? undefined : () => clearMenuCalls.push(1),
+        getRememberState: opts.getRememberState
     });
 
     const fireDoc = (type, ev) => {
@@ -1077,5 +1084,242 @@ describe('settings', () => {
     it('showItemPath defaults to on', () => {
         expect(setup({}).views.showItemPath()).toBe(true);
         expect(setup({ storeData: { showItemPath: '' } }).views.showItemPath()).toBe(false);
+    });
+});
+
+// FocusSpot — the unified "where I was" popup-reopen memory: one classifier
+// tags the current keyboard location, persists it under `focusSpot` (deduped,
+// gated by the remember option), and restoreFocusSpot() returns focus there
+// once at startup. Rows / header buttons / view tabs restore exactly; toolbar
+// controls restore by (bar, class, position-within-class), degrading to the
+// bar's first enabled control when the exact one is gone. Scope: popup reopen
+// only — intra-session view switches keep the per-view `.focus` row memory.
+describe('focusSpot — unified popup-reopen focus memory', () => {
+    describe('capture + persist', () => {
+        it('classifies and persists a header button focus', () => {
+            const { store, makeEl, fireDoc } = setup({});
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            fireDoc('focusin', { target: tool });
+            expect(store._data.focusSpot).toBe(JSON.stringify({ zone: 'header', key: 'tool-btn' }));
+        });
+
+        it('classifies and persists a view tab focus', () => {
+            const { store, makeEl, fireDoc } = setup({});
+            const tab = makeEl('button');
+            tab.id = 'view-tab-tree'; // the tree view is active at startup
+            tab.classList.add('view-tab');
+            fireDoc('focusin', { target: tab });
+            expect(store._data.focusSpot).toBe(JSON.stringify({ zone: 'tab', view: 'tree', key: 'tree' }));
+        });
+
+        it('classifies and persists a toolbar control by (bar, class, position)', () => {
+            const { views, store, makeEl, fireDoc, addRecent } = setup({});
+            const container = makeEl('div');
+            const bar = makeEl('div');
+            bar.className = 'stats-toolbar vbm-toolbar';
+            const b1 = makeEl('button');
+            b1.className = 'seg-btn';
+            const b2 = makeEl('button');
+            b2.className = 'seg-btn';
+            bar.appendChild(b1);
+            bar.appendChild(b2);
+            container.appendChild(bar);
+            addRecent({ container, listEl: makeEl() });
+            views.activate('recent', { keepFocus: true });
+            fireDoc('focusin', { target: b2 }); // the second same-class control
+            expect(store._data.focusSpot).toBe(JSON.stringify({
+                zone: 'toolbar', view: 'recent', bar: 'stats-toolbar', cls: 'seg-btn', idx: 1
+            }));
+        });
+
+        it('classifies and persists a list row in the active view', () => {
+            const { views, store, makeEl, fireDoc, addRecent } = setup({});
+            const listEl = makeEl('ul');
+            const li = makeEl('li');
+            li.id = 'recent-item-5';
+            const a = makeEl('a');
+            li.appendChild(a);
+            listEl.appendChild(li);
+            addRecent({ container: makeEl(), listEl });
+            views.activate('recent', { keepFocus: true });
+            fireDoc('focusin', { target: a });
+            expect(store._data.focusSpot).toBe(JSON.stringify({ zone: 'row', view: 'recent', key: 'recent-item-5' }));
+        });
+
+        it('a transient location (body / palette / plain element) never displaces the remembered spot', () => {
+            const { store, doc, makeEl, fireDoc } = setup({});
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            fireDoc('focusin', { target: tool });
+            const before = store._data.focusSpot;
+            fireDoc('focusin', { target: doc.body });
+            fireDoc('focusin', { target: makeEl('span') });
+            const palette = makeEl('div');
+            palette.id = 'command-palette';
+            const input = makeEl('input');
+            palette.appendChild(input);
+            fireDoc('focusin', { target: input });
+            expect(store._data.focusSpot).toBe(before); // unchanged
+        });
+
+        it('dedupes store writes when the spot identity is unchanged', () => {
+            const { store, makeEl, fireDoc } = setup({});
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            fireDoc('focusin', { target: tool });
+            fireDoc('focusin', { target: tool });
+            expect(store.setCalls.filter(([k]) => k === 'focusSpot')).toHaveLength(1);
+        });
+
+        it('does not persist when the remember option is off', () => {
+            const { store, makeEl, fireDoc } = setup({ getRememberState: () => false });
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            fireDoc('focusin', { target: tool });
+            expect(store._data.focusSpot).toBeUndefined();
+        });
+    });
+
+    describe('restore', () => {
+        it('returns focus to a remembered header button', () => {
+            const { views, doc, byId, makeEl } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'tool-btn' }) }
+            });
+            const tool = makeEl('button');
+            tool.id = 'tool-btn';
+            byId['tool-btn'] = tool;
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(tool);
+        });
+
+        it('returns focus to the exact remembered toolbar control', () => {
+            const { views, doc, makeEl, addRecent } = setup({
+                storeData: {
+                    focusSpot: JSON.stringify({
+                        zone: 'toolbar', view: 'recent', bar: 'stats-toolbar', cls: 'seg-btn', idx: 1
+                    })
+                }
+            });
+            const container = makeEl('div');
+            const bar = makeEl('div');
+            bar.className = 'stats-toolbar vbm-toolbar';
+            const b1 = makeEl('button');
+            b1.className = 'seg-btn';
+            const b2 = makeEl('button');
+            b2.className = 'seg-btn';
+            bar.appendChild(b1);
+            bar.appendChild(b2);
+            container.appendChild(bar);
+            addRecent({ container, listEl: makeEl() });
+            views.activate('recent', { keepFocus: true });
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(b2);
+        });
+
+        it('degrades to the bar\'s first enabled control when the exact one is disabled', () => {
+            const { views, doc, makeEl, addRecent } = setup({
+                storeData: {
+                    focusSpot: JSON.stringify({
+                        zone: 'toolbar', view: 'recent', bar: 'stats-toolbar', cls: 'seg-btn', idx: 1
+                    })
+                }
+            });
+            const container = makeEl('div');
+            const bar = makeEl('div');
+            bar.className = 'stats-toolbar vbm-toolbar';
+            const b1 = makeEl('button');
+            b1.className = 'seg-btn';
+            const b2 = makeEl('button');
+            b2.className = 'seg-btn';
+            b2.disabled = true;
+            bar.appendChild(b1);
+            bar.appendChild(b2);
+            container.appendChild(bar);
+            addRecent({ container, listEl: makeEl() });
+            views.activate('recent', { keepFocus: true });
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(b1);
+        });
+
+        it('returns focus to a remembered view tab', () => {
+            const { views, doc, byId, makeEl, addRecent } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'tab', view: 'recent', key: 'recent' }) }
+            });
+            addRecent({ container: makeEl(), listEl: makeEl() });
+            views.activate('recent', { keepFocus: true }); // the tab's view is active
+            const tab = makeEl('button');
+            tab.id = 'view-tab-recent';
+            tab.classList.add('view-tab');
+            byId['view-tab-recent'] = tab;
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(tab);
+        });
+
+        it('returns focus to a remembered list row', () => {
+            const { views, doc, makeEl, addRecent } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'row', view: 'recent', key: 'recent-item-5' }) }
+            });
+            const listEl = makeEl('ul');
+            const li = makeEl('li');
+            li.id = 'recent-item-5';
+            const a = makeEl('a');
+            li.appendChild(a);
+            listEl.appendChild(li);
+            addRecent({ container: makeEl(), listEl });
+            views.activate('recent', { keepFocus: true });
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(a);
+        });
+
+        it('skips a spot whose view did not come up (rememberView off)', () => {
+            const { views, doc } = setup({
+                storeData: {
+                    focusSpot: JSON.stringify({
+                        zone: 'toolbar', view: 'stats', bar: 'stats-toolbar', cls: 'x', idx: 0
+                    })
+                }
+            });
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(null); // active view is the tree — no restore
+        });
+
+        it('clears the spot and does nothing when the remember option is off', () => {
+            const { views, store } = setup({
+                getRememberState: () => false,
+                storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'search-input' }) }
+            });
+            views.restoreFocusSpot();
+            expect(store.get('focusSpot')).toBe(null);
+        });
+
+        it('gives up on a phantom target and lands on the view default', async () => {
+            vi.useFakeTimers();
+            try {
+                const { views, doc, byId } = setup({
+                    storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'no-such-id' }) }
+                });
+                views.restoreFocusSpot();
+                await vi.advanceTimersByTimeAsync(2200); // the 20×100ms retry window
+                expect(doc.activeElement).toBe(byId['tree']); // focusDefault → the tree container
+            } finally {
+                vi.useRealTimers();
+            }
+        });
+
+        it('never steals focus from a user who starts interacting mid-retry', async () => {
+            vi.useFakeTimers();
+            try {
+                const { views, doc, fireDoc } = setup({
+                    storeData: { focusSpot: JSON.stringify({ zone: 'header', key: 'no-such-id' }) }
+                });
+                views.restoreFocusSpot();
+                fireDoc('keydown', {}); // the user presses a key during the retry window
+                await vi.advanceTimersByTimeAsync(2200);
+                expect(doc.activeElement).toBe(null); // no phantom got focused
+            } finally {
+                vi.useRealTimers();
+            }
+        });
     });
 });

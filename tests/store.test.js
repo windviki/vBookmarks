@@ -98,6 +98,15 @@ describe('store.js', () => {
             expect(sb.lsData.get('donationKey')).toBe('801');
         });
 
+        it('registers the focusSpot popup-state key for migration', async () => {
+            const sb = createSandbox({
+                localStorageData: { focusSpot: '{"zone":"header","key":"tool-btn"}' }
+            });
+            await sb.window.store.ready;
+            expect(sb.localData.focusSpot).toBe('{"zone":"header","key":"tool-btn"}');
+            expect(sb.window.store.get('focusSpot')).toBe('{"zone":"header","key":"tool-btn"}');
+        });
+
         it('is idempotent: a second init does not write again', async () => {
             const first = createSandbox({
                 localStorageData: { popupHeight: '400' }

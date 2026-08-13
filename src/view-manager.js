@@ -67,6 +67,10 @@ export function initViewManager(ctx = {}) {
     // context-menu.js's clearMenu (optional; neat.js injects it): switching
     // views must not leave a menu floating over the outgoing view's rows.
     const clearMenu = ctx.clearMenu || (() => {});
+    // The "记住之前的状态" option (neat.js holds the live flag): gates the
+    // focusSpot capture/persist/restore below, the same way it gates the
+    // tree's focusID and scroll restore.
+    const remember = ctx.getRememberState || (() => true);
 
     const $tabs = $('view-tabs');
     const $announce = $('view-announce');
@@ -455,6 +459,205 @@ export function initViewManager(ctx = {}) {
         tryMark();
     };
 
+    // --- Unified focus-spot memory (popup reopen "where I was") ---------------
+    // One classifier tags the current keyboard location into a `focusSpot`
+    // { zone, view, key, ... } record, persisted live (deduped, gated by the
+    // remember option) and restored once at startup by restoreFocusSpot().
+    // Rows / header buttons / view tabs restore exactly; toolbar controls
+    // restore by (bar, class, position-within-class) — degrading to the bar's
+    // first enabled control when the exact one is gone (stateful re-renders:
+    // the dead scan toolbar, the dupes selection bar). Scope is popup REOPEN
+    // only: intra-session view switches keep the existing per-view `.focus`
+    // row memory (restoreFocusRow above).
+    const HEADER_IDS = ['search-input', 'quick-add-btn', 'tool-btn'];
+    let currentSpot = null;   // last memorable spot, as its JSON identity
+    let userInteracted = false;
+    // Snapshot the stored spot at init: the startup focus moves (search-input
+    // autofocus, the saved-query select, the tree's focusID refocus) fire
+    // focusin AFTER the classifier registers and would otherwise overwrite
+    // last session's spot before restoreFocusSpot() ever reads it. The restore
+    // consumes this snapshot; the classifier owns the key from then on.
+    let pendingSpot = null;
+    try {
+        pendingSpot = JSON.parse(store.get('focusSpot') || 'null');
+    } catch (e) { /* corrupt record — treat as none */ }
+
+    const isInside = (root, node) => {
+        for (let n = node; n; n = n.parentNode)
+            if (n === root)
+                return true;
+        return false;
+    };
+
+    // Classify a focused element into a spot, or null for a transient
+    // location (menus / palette / dialogs / listbox options / body) whose
+    // focus must never displace the remembered "where I was".
+    const classifyFocus = el => {
+        if (!el || el === body || el === document)
+            return null;
+        if (el.closest && el.closest('menu[type=context]'))
+            return null; // a context menu's own row
+        if (el.closest && el.closest('#command-palette'))
+            return null; // the command palette owns its input
+        if (el.closest && el.closest('.vbm-dropdown-list'))
+            return null; // a toolbar dropdown's listbox option
+        // Header buttons are global (visible from every view).
+        if (el.id && HEADER_IDS.indexOf(el.id) >= 0)
+            return { zone: 'header', key: el.id };
+        // A view tab (only the ACTIVE view's tab is roving-focusable, so the
+        // spot's view is the tab's own view).
+        if (el.classList && el.classList.contains('view-tab'))
+            return { zone: 'tab', view: activeId, key: (el.id || '').replace('view-tab-', '') };
+        // A toolbar control — keyed by its bar's identifying class, the
+        // control's first class and its position among same-class controls.
+        if (/^(BUTTON|SELECT|INPUT)$/.test(el.tagName) && el.closest) {
+            const bar = el.closest('.vbm-toolbar');
+            if (bar) {
+                const own = (el.className || '').split(/\s+/)[0] || '';
+                let idx = -1, same = 0;
+                const all = bar.querySelectorAll ? bar.querySelectorAll('button, select, input') : [];
+                for (let i = 0, l = all.length; i < l; i++) {
+                    if ((all[i].className || '').split(/\s+/)[0] === own) {
+                        if (all[i] === el) { idx = same; break; }
+                        same++;
+                    }
+                }
+                if (idx < 0)
+                    return null; // not among the walkable controls — transient
+                const barCls = (bar.className || '').split(/\s+/)
+                    .filter(c => c && c !== 'vbm-toolbar')[0] || 'vbm-toolbar';
+                return { zone: 'toolbar', view: activeId, bar: barCls, cls: own, idx };
+            }
+        }
+        // A list row inside the active view (the tree's nested li rows resolve
+        // to their innermost li, whose id is the row id).
+        const def = byId[activeId];
+        if (def && def.listEl && isInside(def.listEl, el)) {
+            const li = el.closest ? el.closest('li') : null;
+            if (li && li.id)
+                return { zone: 'row', view: activeId, key: li.id };
+        }
+        return null;
+    };
+
+    // Live capture: one document-level focusin listener persists the spot as
+    // the user moves around. A transient location keeps the last memorable
+    // spot (clicking empty space or opening the palette does not erase it).
+    const onFocusIn = e => {
+        const spot = classifyFocus(e.target);
+        if (!spot)
+            return;
+        const id = JSON.stringify(spot);
+        if (id === currentSpot)
+            return; // identity unchanged — no store churn
+        currentSpot = id;
+        if (remember())
+            store.set('focusSpot', id);
+    };
+    document.addEventListener('focusin', onFocusIn, true);
+
+    // Resolve a stored spot to its DOM element (or null when it no longer
+    // exists in the active view).
+    const focusSpotTarget = spot => {
+        if (spot.zone === 'header')
+            return document.getElementById(spot.key);
+        if (spot.zone === 'tab')
+            return document.getElementById(`view-tab-${spot.key}`);
+        const def = byId[activeId];
+        if (!def)
+            return null;
+        if (spot.zone === 'toolbar') {
+            if (!def.container || !def.container.querySelector)
+                return null;
+            const bar = def.container.querySelector(`.${spot.bar}`);
+            if (!bar)
+                return null;
+            const controls = bar.querySelectorAll ? bar.querySelectorAll('button, select, input') : [];
+            const same = [];
+            for (let i = 0, l = controls.length; i < l; i++)
+                if ((controls[i].className || '').split(/\s+/)[0] === spot.cls)
+                    same.push(controls[i]);
+            const exact = same[spot.idx || 0];
+            if (exact && !exact.disabled)
+                return exact;
+            // Degrade: the bar's first enabled control (stateful re-renders).
+            for (let i = 0, l = controls.length; i < l; i++)
+                if (!controls[i].disabled)
+                    return controls[i];
+            return null;
+        }
+        if (spot.zone === 'row' && def.listEl) {
+            const li = findRowById(def.listEl, spot.key);
+            if (!li)
+                return null;
+            const inner = li.firstElementChild;
+            return (inner && /^(A|SPAN)$/.test(inner.tagName)) ? inner : li;
+        }
+        return null;
+    };
+
+    // A hidden/removed restore target must never take focus: class-hidden
+    // (option-off header buttons), inline display:none, or no layout boxes.
+    const spotVisible = el => {
+        if (!el)
+            return false;
+        if (el.classList && el.classList.contains('hidden'))
+            return false;
+        if (el.style && el.style.display === 'none')
+            return false;
+        if (typeof el.getClientRects === 'function' && el.getClientRects().length === 0)
+            return false;
+        return true;
+    };
+
+    const onUserInput = () => { userInteracted = true; };
+
+    // Popup reopen restore — the single entry for "where I was". Gated by
+    // the remember option; header zones apply on any view, the other zones
+    // only when the spot's view actually came up. Unlike the tree's focusID
+    // startup refocus, this never steals focus from a user who already began
+    // typing or clicking (keydown/mousedown bail mid-retry).
+    const restoreFocusSpot = () => {
+        if (!remember()) {
+            store.set('focusSpot', null);
+            pendingSpot = null;
+            return;
+        }
+        const spot = pendingSpot;
+        pendingSpot = null; // consumed — the live classifier owns the key now
+        if (!spot)
+            return;
+        if (spot.zone !== 'header' && spot.view !== activeId)
+            return; // the spot's view didn't come up (rememberView off) — default
+        document.addEventListener('keydown', onUserInput, true);
+        document.addEventListener('mousedown', onUserInput, true);
+        let attempts = 0;
+        const tryRestore = () => {
+            if (userInteracted) {
+                // The user took over — give up silently and drop the guards.
+                document.removeEventListener('keydown', onUserInput, true);
+                document.removeEventListener('mousedown', onUserInput, true);
+                return;
+            }
+            const target = focusSpotTarget(spot);
+            if (target && spotVisible(target) && !target.disabled) {
+                target.focus();
+                document.removeEventListener('keydown', onUserInput, true);
+                document.removeEventListener('mousedown', onUserInput, true);
+                return;
+            }
+            // The target may render asynchronously (rows, toolbar state).
+            if (++attempts < 20) {
+                setTimeout(tryRestore, 100);
+                return;
+            }
+            document.removeEventListener('keydown', onUserInput, true);
+            document.removeEventListener('mousedown', onUserInput, true);
+            focusDefault(byId[activeId]); // give up on the exact spot
+        };
+        tryRestore();
+    };
+
     const scrollOf = entry => typeof entry === 'number' ? entry
         : (entry && typeof entry === 'object' ? (entry.scroll | 0) : 0);
 
@@ -717,6 +920,7 @@ export function initViewManager(ctx = {}) {
         focusToolbar,
         focusListExit,
         focusEdgeRow,
+        restoreFocusSpot,
         buildPathMap,
         pathOf,
         updateBadges,

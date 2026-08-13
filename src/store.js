@@ -43,6 +43,8 @@
     const KNOWN_KEYS = [
         // popup state
         'opens', 'popupHeight', 'popupWidth', 'zoom', 'searchQuery', 'scrollTop', 'focusID',
+        // unified "where I was" focus spot (view-manager, popup reopen restore)
+        'focusSpot',
         // general options
         'leftClickNewTab', 'middleClickBgTab', 'closeUnusedFolders', 'bookmarkClickStayOpen',
         'dontConfirmOpenFolder', 'dontRememberState', 'onlyShowBMBar', 'searchAfterEnter',

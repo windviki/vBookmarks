@@ -294,7 +294,10 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
         store,
         isPanel: IS_PANEL,
         rtl,
-        clearMenu: menus.clearMenu
+        clearMenu: menus.clearMenu,
+        // The "记住之前的状态" flag: view-manager's focusSpot capture/persist/
+        // restore follow it, the same way tree-view's focusID restore does.
+        getRememberState: () => rememberState
     });
 
     // Search lives in src/search.js (P1): it owns searchMode, the flat fuzzy
@@ -601,6 +604,14 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
     // push the count through views.updateBadges).
     viewStats.refresh();
     viewDupes.refresh();
+
+    // Popup reopen "where I was": restore the last focus spot (a list row /
+    // header button / toolbar control / view tab) once all views are
+    // registered. Gated by the remember option; its internal retry + the
+    // user-interaction guard keep it from fighting a user who already began
+    // typing or clicking. The tree's focusID refocus (generateTree) and the
+    // search-query restore stay the owners of their own zones.
+    views.restoreFocusSpot();
 
     // Phase 3 (issue #30): quick-add star button — one click bookmarks the
     // current tab; when the page is already bookmarked the star is solid and
