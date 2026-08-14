@@ -43,11 +43,12 @@ export const hashPixels = bytes => {
 };
 
 // v4.1 favicon contrast service: from the SAME getImageData buffer the
-// placeholder check already samples, derive three stats — the fraction of
+// placeholder check already samples, derive four stats — the fraction of
 // opaque pixels sitting on the DARK extreme (lum < 0.30), on the LIGHT
-// extreme (lum > 0.70), and the opaque coverage. No extra canvas, no extra
-// decode: the contrast decision reuses one read. Transparent pixels are
-// skipped; a fully transparent icon yields cover 0.
+// extreme (lum > 0.70), on the COLORED extreme (sat > 0.15), and the opaque
+// coverage. No extra canvas, no extra decode: the contrast decision reuses
+// one read. Transparent pixels are skipped; a fully transparent icon yields
+// cover 0.
 //
 // Why extreme-tone FRACTIONS instead of mean luminance (the 4.0.5 approach):
 // a mean is fooled by plate-style icons — x.com's white-X-on-black-plate
@@ -61,21 +62,27 @@ export const hashPixels = bytes => {
 // stackoverflow, docker, bilibili, …) rendered on all four theme
 // backgrounds — see tmp/favicon-lab for the harness.
 export const contrastStats = data => {
-    let dark = 0, light = 0, cover = 0;
+    let dark = 0, light = 0, colored = 0, cover = 0;
     const total = data.length / 4;
     for (let i = 0; i < data.length; i += 4) {
         if (data[i + 3] / 255 < 0.5)
             continue;
-        const lum = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
         if (lum < 77)
             dark++;
         else if (lum > 179)
             light++;
+        // A pixel counts as colored when it carries enough chroma — the
+        // hue-preserving flip (invert + hue-rotate) is only faithful for
+        // near-monochrome marks, so a colorful logo must be shielded.
+        if ((Math.max(r, g, b) - Math.min(r, g, b)) > 38)
+            colored++;
         cover++;
     }
     if (!cover)
-        return { dark: 0, light: 0, cover: 0 };
-    return { dark: dark / cover, light: light / cover, cover: cover / total };
+        return { dark: 0, light: 0, colored: 0, cover: 0 };
+    return { dark: dark / cover, light: light / cover, colored: colored / cover, cover: cover / total };
 };
 
 // Flip decision. Dark background: flip only a PREDOMINANTLY dark mark with
@@ -84,17 +91,25 @@ export const contrastStats = data => {
 // light glyph (x.com: light ≈ 0.10) already reads correctly and stays.
 // Light background mirrors it with a looser glyph guard: a light plate with
 // a dark glyph (a white card with black text) is perfectly readable as-is,
-// so the flip needs light > 0.60 with dark < 0.15. Mid-tone and two-tone
-// icons fall between the guards and are never flipped — a lightness flip
-// (L→1−L) buys them no contrast either way. No saturation term: the CSS
-// flip preserves hue (see .favicon-contrast-invert), so a dark-but-colorful
-// mark like the netflix red keeps its hue and only gets lighter.
+// so the flip needs light > 0.60 with dark < 0.15 AND the mark near-
+// monochrome (colored < 0.30). The colored guard is what keeps a colorful
+// logo from being flipped on a light theme: devconsole's white-card-with-
+// chrome-color-block icon (colored ≈ 0.42) is perfectly legible on white —
+// inverting it would turn the white card black and shift every hue, wrecking
+// the brand mark. yabook's pure-white glyph (colored 0) still flips. The
+// dark branch deliberately has NO colored guard: a dark-but-colorful mark
+// (netflix red N) is the whole point of the hue-preserving filter — flip its
+// LIGHTNESS, keep its hue, and it reads better on a dark theme. Mid-tone and
+// two-tone icons fall between the guards and are never flipped — a lightness
+// flip (L→1−L) buys them no contrast either way. (`?? 0` keeps callers that
+// hand a stats object without the colored field working — treated as
+// monochrome.)
 export const needsContrast = (stats, darkBg) => {
     if (!stats || !stats.cover)
         return false;
     if (darkBg)
         return stats.dark > 0.55 && stats.light < 0.05;
-    return stats.light > 0.60 && stats.dark < 0.15;
+    return stats.light > 0.60 && stats.dark < 0.15 && (stats.colored ?? 0) < 0.30;
 };
 
 export function initFaviconFallback(doc = document, ctx = {}) {
@@ -208,7 +223,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
                 swapForDefaultIcon(img);
             } else {
                 // Real favicon: cache its stats and decide contrast once.
-                statsBySrc.set(src, fp || { dark: 0, light: 0, cover: 0 });
+                statsBySrc.set(src, fp || { dark: 0, light: 0, colored: 0, cover: 0 });
                 applyContrast(img);
             }
         });

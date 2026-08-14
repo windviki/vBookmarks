@@ -102,45 +102,48 @@ describe('contrastStats', () => {
     const transparent = () => new Uint8ClampedArray([255, 255, 255, 0, 0, 0, 0, 0]);
 
     it('a white icon is fully light-extreme, fully covered', () => {
-        expect(contrastStats(white())).toEqual({ dark: 0, light: 1, cover: 1 });
+        expect(contrastStats(white())).toEqual({ dark: 0, light: 1, colored: 0, cover: 1 });
     });
 
     it('a black icon is fully dark-extreme, fully covered', () => {
-        expect(contrastStats(black())).toEqual({ dark: 1, light: 0, cover: 1 });
+        expect(contrastStats(black())).toEqual({ dark: 1, light: 0, colored: 0, cover: 1 });
     });
 
     it('transparent pixels are skipped; a fully transparent icon has cover 0', () => {
-        expect(contrastStats(transparent())).toEqual({ dark: 0, light: 0, cover: 0 });
+        expect(contrastStats(transparent())).toEqual({ dark: 0, light: 0, colored: 0, cover: 0 });
     });
 
     it('a mid-tone colorful icon lands in neither extreme bucket', () => {
-        // (29,99,237) docker blue → lum ≈ 94, between the 77/179 bucket edges
-        expect(contrastStats(REAL_BYTES)).toEqual({ dark: 0, light: 0, cover: 1 });
+        // (29,99,237) docker blue → lum ≈ 94, between the 77/179 bucket edges;
+        // sat = 237−29 = 208 > 38 → counted colored (the brand hue must shield it)
+        expect(contrastStats(REAL_BYTES)).toEqual({ dark: 0, light: 0, colored: 1, cover: 1 });
     });
 
-    it('a dark-but-colorful icon counts as dark (netflix red N)', () => {
-        // #E50914 → lum ≈ 56 < 77: saturation no longer shields a dark mark
+    it('a dark-but-colorful icon counts as dark AND colored (netflix red N)', () => {
+        // #E50914 → lum ≈ 56 < 77 and sat = 220 > 38
         const netflixRed = new Uint8ClampedArray([229, 9, 20, 255, 229, 9, 20, 255]);
-        expect(contrastStats(netflixRed)).toEqual({ dark: 1, light: 0, cover: 1 });
+        expect(contrastStats(netflixRed)).toEqual({ dark: 1, light: 0, colored: 1, cover: 1 });
     });
 
-    it('half dark + half light reads as both fractions (two-tone)', () => {
+    it('half dark + half light reads as both fractions, neither colored (two-tone)', () => {
         const twoTone = new Uint8ClampedArray([0, 0, 0, 255, 255, 255, 255, 255]);
-        expect(contrastStats(twoTone)).toEqual({ dark: 0.5, light: 0.5, cover: 1 });
+        expect(contrastStats(twoTone)).toEqual({ dark: 0.5, light: 0.5, colored: 0, cover: 1 });
     });
 });
 
 describe('needsContrast', () => {
-    const white = { dark: 0, light: 1, cover: 1 };
-    const black = { dark: 1, light: 0, cover: 1 };
-    const nearWhite = { dark: 0, light: 0.9, cover: 0.94 };   // yabook: 偏白浅灰，远非纯白
-    const nearBlack = { dark: 0.9, light: 0, cover: 0.6 };    // 偏黑深色 logo，透明底
-    const midGray = { dark: 0, light: 0, cover: 1 };
-    const darkColorful = { dark: 1, light: 0, cover: 0.49 };  // netflix: 暗而饱和
-    const darkPlateLightGlyph = { dark: 0.82, light: 0.1, cover: 1 }; // x.com: 黑盘白字
-    const lightPlateDarkGlyph = { dark: 0.2, light: 0.75, cover: 1 }; // 白盘黑字
-    const twoTone = { dark: 0.5, light: 0.5, cover: 1 };      // 均衡双色：翻转无收益
-    const empty = { dark: 0, light: 0, cover: 0 };
+    const white = { dark: 0, light: 1, colored: 0, cover: 1 };
+    const black = { dark: 1, light: 0, colored: 0, cover: 1 };
+    const nearWhite = { dark: 0, light: 0.9, colored: 0, cover: 0.94 };   // yabook: 偏白浅灰，远非纯白
+    const nearBlack = { dark: 0.9, light: 0, colored: 0, cover: 0.6 };    // 偏黑深色 logo，透明底
+    const midGray = { dark: 0, light: 0, colored: 0, cover: 1 };
+    const darkColorful = { dark: 1, light: 0, colored: 1, cover: 0.49 };  // netflix: 暗而饱和
+    const lightColorful = { dark: 0, light: 0.66, colored: 0.42, cover: 1 }; // devconsole: 白底彩色 logo
+    const lightSlightlyColored = { dark: 0, light: 0.8, colored: 0.25, cover: 1 }; // 浅底 + 少量彩: 仍翻
+    const darkPlateLightGlyph = { dark: 0.82, light: 0.1, colored: 0, cover: 1 }; // x.com: 黑盘白字
+    const lightPlateDarkGlyph = { dark: 0.2, light: 0.75, colored: 0, cover: 1 }; // 白盘黑字
+    const twoTone = { dark: 0.5, light: 0.5, colored: 0, cover: 1 };      // 均衡双色：翻转无收益
+    const empty = { dark: 0, light: 0, colored: 0, cover: 0 };
 
     it('flips icons on the wrong side of the background', () => {
         expect(needsContrast(white, false)).toBe(true);   // white on light bg
@@ -159,6 +162,17 @@ describe('needsContrast', () => {
     it('flips a dark-but-colorful mark on dark — the hue-preserving filter keeps its hue', () => {
         expect(needsContrast(darkColorful, true)).toBe(true);   // netflix 红 N → 浅红
         expect(needsContrast(darkColorful, false)).toBe(false);
+    });
+
+    it('leaves a light-but-colorful logo alone on light — the white card would go black (devconsole)', () => {
+        // devconsole's chrome-color-block icon is legible on white; inverting
+        // would black the card and shift every hue. The colored guard stops it.
+        expect(needsContrast(lightColorful, false)).toBe(false);
+        expect(needsContrast(lightColorful, true)).toBe(false);
+    });
+
+    it('still flips a light mark with only a little color (guard threshold 0.30)', () => {
+        expect(needsContrast(lightSlightlyColored, false)).toBe(true);
     });
 
     it('leaves a self-inverting dark plate with a light glyph alone (x.com)', () => {
