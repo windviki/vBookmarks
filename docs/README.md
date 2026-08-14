@@ -100,7 +100,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 - **Unit tests** across 50+ Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
 - **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 132 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**379** as of 4.0.1), all 43 locales aligned.
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**388** as of 4.0.5), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -200,6 +200,36 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.0.5 · 2026-08
+
+#### New
+
+- **Low-contrast favicon inversion**: a new `faviconContrast` option (Views group, on by default) detects favicons that sink into the active theme — dark glyphs on dark surfaces, light glyphs on light ones — and flips their brightness **while preserving hue** (`invert(1) hue-rotate(180deg)`), so brand colors survive. The detector keys off extreme-tone pixel shares rather than average brightness (which misread small dark marks on transparent backgrounds, e.g. thepaper.cn and GitHub) and deliberately spares self-inverting icons like x.com's white-on-black disc. It re-judges on OS light/dark flips under the auto theme, applies live in the always-on side panel, and was tuned against a 13-real-favicon × 4-theme render matrix.
+- **Dead-link view empty state gains a "start scan" pill CTA** — the first scan is one click from the empty view instead of a toolbar hunt.
+- **Command palette result highlighting**: matched characters are wrapped in `<mark>` again, so a row shows why it ranked.
+
+#### Fixed
+
+- **Palette keyboard traps**: result rows no longer sit in the Tab order (they degraded ↑↓/Space into native scrolling and froze the highlight), and Tab now cycles a two-stop loop between the input and the Esc close button instead of escaping the palette and auto-closing it.
+- **Stale `.active` marker swallowed keys**: a leftover active class on a closed menu made the palette keep treating it as open.
+- **Batch deletions report the real count**: duplicate-cleaner removals that fail mid-batch are skipped and the summary toast counts only actual deletions (the dead-link side already did); applying a selection now exits selection mode.
+- **Dead-link view robustness**: bookmarks created mid-session (or restored by Undo) re-join the rows; the tab badge derives from the tree-joined result rows and can no longer resurrect a stale count on popup reopen; mark-all / selection entries key off the filtered row set like delete-all does.
+- **Escaping gaps closed**: an untitled bookmark's protocol-stripped URL fallback rendered unescaped (a pre-v4.0 leftover), and the shared escaper now covers `&` after a full caller audit proved no double-escaping path remains.
+- **Folder menus in search results / the palette** grey out content-dependent entries (open-all, tab group, sort) for empty folders, matching the tree — and a greyed state never leaks into the next menu.
+- **Visual consistency**: two-line row icons align with the tree's slot rhythm (search view included); delete affordances are uniformly red (search-history inline/menu deletes, remove-separator, the palette delete command, dupes clean) with a shared danger hover; sync dots and dead-link × badges use logical `inset-inline-end`, so RTL mirrors correctly.
+
+#### Changed
+
+- **Three shared-module consolidations**: nine verbatim `htmlspecialchars` copies → `src/escape.js`; the four list views' park/restore focus copies → `src/list-focus.js` (plus a unified row focus-target contract and the toolbar focus trio); omnibox and popup fuzzy ranking → `src/fuzzy-core.js` (one fzf-style implementation, with a fix for highlight offsets on characters like `İ` whose lowercase form changes length).
+- **Focus memory obeys "Remember previous state"**: the remembered row is gated by the option and cleared at startup when off; the visible undo toast joined the Tab ring; dropdown-list rows are skipped by the row stops.
+- **Batch confirmations name the stakes**: duplicate-cleanup confirms name the keeper ("Keep ‹title› and remove the other N copies?"), and every batch delete/clean confirm across the dead-link and duplicates views appends the one-step-undo note (new key `undoSingleStepNote`, translated across all 43 locales).
+- Version bumped to **4.0.5** in `manifest.json` / `package.json`.
+
+#### Engineering
+
+- Independent audit of the full v4.0 → 4.0.5 delta (139 commits, ~32 code findings + 9 doc gaps) — findings, fixes and the keep-as-is decisions are archived in `docs/review-4.0.5.md`; documentation (AGENTS.md, keyboard-model, the v4 guide) re-synced to the implementation.
+- Test suite at **66 files / 2028 cases**, all green — new `list-focus` suite, rewritten favicon-contrast strategy tests, and new contracts for the deletion chains, menu greying, escaping and the i18n copy changes.
+
 ### v4.0.4 · 2026-08
 
 #### New
@@ -224,6 +254,22 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Introduced an ESLint progressive gate (error-level, in CI).
 - Added a real-browser smoke gate (zero console errors) to CI and the release pre-check, so an extension that crashes on load is caught before tagging.
 - Dead-code cleanup (the unused `copy-all-titles-and-urls` handler, the ineffective `hide-editables` toggle).
+
+### v4.0.3 · 2026-08
+
+#### Fixed
+
+- **Drag-and-drop sorting misaligned in zoomed mode** ([#59](https://github.com/windviki/vBookmarks/issues/59), [#60](https://github.com/windviki/vBookmarks/issues/60)): with the popup zoomed, a dropped row landed in the wrong place — the drag overlay's coordinates and the mouse-release drop-target hit-test did not account for the zoom level. Both are zoom-corrected now, with regression tests covering overlay layout, drop-into-folder sizing and the zoom-level reset.
+- **The focus-restore highlight can be turned off** ([#58](https://github.com/windviki/vBookmarks/issues/58)): reopening the popup used to refocus and flash the last-focused row on every open. The focus restore now follows the existing **"Remember previous state"** option — unchecked, the popup starts fully fresh, with no remembered highlight (and no remembered scroll or opened folders either).
+
+#### Changed
+
+- **"Remember previous state" now covers the last-focused row** ([#58](https://github.com/windviki/vBookmarks/issues/58)): previously it only restored scroll position and opened folders; the focus restore is folded in, so a single switch controls the whole "where I was" restore. The option's description is updated in all 42 locales.
+
+#### Polish
+
+- **iGuge conflict documented** ([#53](https://github.com/windviki/vBookmarks/issues/53), [#57](https://github.com/windviki/vBookmarks/issues/57)): the iGuge proxy/acceleration extension actively disables any installed extension that declares the `proxy` permission and is not on its whitelist — so vBookmarks could be disabled on every Chrome restart when both are installed. Verified against the store-shipped CRX; the Dead-link section now explains the cause and what affected users can do, and we're coordinating whitelisting with iGuge. vBookmarks keeps its `proxy` permission (it is only ever used, temporarily and marker-only, during a dead-link scan).
+- Developer tooling: vitest bumped 1 → 3.2.7, clearing 6 Dependabot advisories (dev-only — no user impact); the modified-key i18n flow and the release process are documented in `AGENTS.md`.
 
 ### v4.0.2 · 2026-08
 
@@ -251,22 +297,6 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 #### Changed
 
 - Version bumped to **4.0.2** in `manifest.json` / `package.json`; the design docs move on to the 4.1.0 slate.
-
-### v4.0.3 · 2026-08
-
-#### Fixed
-
-- **Drag-and-drop sorting misaligned in zoomed mode** ([#59](https://github.com/windviki/vBookmarks/issues/59), [#60](https://github.com/windviki/vBookmarks/issues/60)): with the popup zoomed, a dropped row landed in the wrong place — the drag overlay's coordinates and the mouse-release drop-target hit-test did not account for the zoom level. Both are zoom-corrected now, with regression tests covering overlay layout, drop-into-folder sizing and the zoom-level reset.
-- **The focus-restore highlight can be turned off** ([#58](https://github.com/windviki/vBookmarks/issues/58)): reopening the popup used to refocus and flash the last-focused row on every open. The focus restore now follows the existing **"Remember previous state"** option — unchecked, the popup starts fully fresh, with no remembered highlight (and no remembered scroll or opened folders either).
-
-#### Changed
-
-- **"Remember previous state" now covers the last-focused row** ([#58](https://github.com/windviki/vBookmarks/issues/58)): previously it only restored scroll position and opened folders; the focus restore is folded in, so a single switch controls the whole "where I was" restore. The option's description is updated in all 42 locales.
-
-#### Polish
-
-- **iGuge conflict documented** ([#53](https://github.com/windviki/vBookmarks/issues/53), [#57](https://github.com/windviki/vBookmarks/issues/57)): the iGuge proxy/acceleration extension actively disables any installed extension that declares the `proxy` permission and is not on its whitelist — so vBookmarks could be disabled on every Chrome restart when both are installed. Verified against the store-shipped CRX; the Dead-link section now explains the cause and what affected users can do, and we're coordinating whitelisting with iGuge. vBookmarks keeps its `proxy` permission (it is only ever used, temporarily and marker-only, during a dead-link scan).
-- Developer tooling: vitest bumped 1 → 3.2.7, clearing 6 Dependabot advisories (dev-only — no user impact); the modified-key i18n flow and the release process are documented in `AGENTS.md`.
 
 ### v4.0.1 · 2026-08
 

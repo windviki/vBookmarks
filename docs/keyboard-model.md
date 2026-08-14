@@ -186,8 +186,11 @@ without an enabled control is skipped transparently:
   option `<li role="option" tabindex="-1">` — those are listbox chrome, not
   rows, and a marker parked on a HIDDEN option dead-ended the rung's `↓`
   (the 4.0.1 regression: after opening the strategy dropdown, the button
-  area could no longer enter the rows). The rung's ↓ also skips a
-  listbox-resident marker defensively. *(view-manager `bindFocusMarker`,
+  area could no longer enter the rows). The rung's ↓ skips a
+  listbox-resident marker defensively — and since 4.0.5 the §5 row stop and
+  `focusDefault` skip it too (the same 5421968 lesson: a marker inside
+  `.vbm-dropdown-list` is a hidden option, never a row, never a Tab stop).
+  *(view-manager `bindFocusMarker`,
   keyboard.js rung ↓; gate in verify-keyboard.js + tests/view-manager and
   tests/keyboard)*
 - **Inline row controls** (the dupes keeper radio, the dead ⚑/× buttons)
@@ -283,7 +286,7 @@ sequence.
 ```
 search box → quick-add → tools → [banner controls] → active tab
 → [risk-banner controls] → [in-list toolbar controls] → remembered/first row
-→ (wrap)
+→ [undo-toast button] → (wrap)
 ```
 
 - A stop counts only when **actually rendered**: the `.hidden` class, an
@@ -294,9 +297,36 @@ search box → quick-add → tools → [banner controls] → active tab
   or out of a list, and it lands on the remembered row (focus memory).
 - **Dialogs** trap `Tab` among their own enabled controls (aria-modal
   contract); open **menus** and the **palette** keep their local `Tab`.
+  The palette's local `Tab` is a **two-stop cycle** — input box ⇄ the
+  footer's Esc **close button** (4.0.5): the panel traps `Tab`/`Shift+Tab`
+  on its own keydown and swaps focus between the two (a two-stop ring walks
+  the same pair in either direction), `preventDefault` keeping the document
+  ring's native `Tab` from leaving the panel — both stops live inside
+  `#command-palette`, so the focusout auto-close guard no longer fires.
+  Result-row anchors carry `tabindex="-1"` and never join the order (a
+  tabbed-onto row used to degrade `↑`/`↓`/`Space` into native scrolling
+  with the highlight frozen); the close button itself keeps
+  `tabindex="-1"` in the markup and is reachable only through this trap.
+- The **undo toast**'s button joins the ring as its **last stop** while the
+  bar is up (4.0.5 — the bar is fixed to the bottom edge; the `hidden`
+  attribute is the visibility signal, and the 8 s auto-hide drops the stop
+  again). Never an arrow rung — the arrow chain stays stable either way.
 - Focus memory is symmetric: leaving a list for the strip/header and coming
   back — by `Tab`, by arrows, or by view switch — lands on the row left
   behind, restored even across the views' async re-renders.
+- Focus memory also survives a **popup reopen** (the `focusSpot` record,
+  4.0.4 — one model for every zone): a classifier tags the current keyboard
+  location — search box, header button, view tab, toolbar control, list
+  row — into a persisted `{ zone, view, key, … }` record, restored once at
+  startup (retrying against async view re-renders, giving up silently the
+  moment the user types or clicks). Rows, header buttons and view tabs
+  restore exactly; toolbar controls restore by (bar, class,
+  position-within-class), degrading to the bar's first enabled control when
+  the exact one is gone. The whole mechanism is gated by the
+  *remember previous state* option: with it off the popup starts completely
+  fresh — the stored record is dropped at startup and nothing is written
+  live. Scope is the reopen only; intra-session view switches keep the
+  per-view `.focus` row memory above.
 
 ## 6. Jump and action keys
 
@@ -323,6 +353,7 @@ endpoint moves to the next surviving rung.
 | `showToolButton` off (or palette off, which hides it) | `→` from quick-add is a no-op; Tab cycle skips it. |
 | Classic experience (all three off at once) | Header is the bare box: `→` inert, `↓` straight into the list — the v3 chain, exactly what the option promises. |
 | `rememberView` off | Startup is always the tree; no other law changes. |
+| *Remember previous state* off | Completely fresh startup: no `focusSpot` restore (the stored record is dropped at startup), no per-view `viewState` scroll/row restore (4.0.5: now under the same gate), no tree focusID/scroll restore, no saved-query restore. Within-session focus memory is unaffected. |
 | Side panel mode | Identical model; startup always restores the last view. |
 | RTL locale | Every horizontal law mirrors (`←`/`→` swap) on the strip, the header chain, tree folders, menus, history rows. |
 | Banner visible | Joins the `Tab` ring between header and strip; `Esc` dismisses (Later). Never an arrow rung — the arrow chain stays stable whether or not the banner happens to be up. |
@@ -347,5 +378,6 @@ unreachable by `Tab`.
 | Dual zone (§3) | `search.js` box/history keydown | `tests/search.test.js`, verify §4.3/§4.3b |
 | Esc cake (§4) | `keyboard.js` document capture handlers + `view-manager.js` onEscapeActive/escapeToTree + view `onEscape` hooks | `tests/keyboard.test.js` (Esc layering), view suites; Chrome-side popup-close suppression documented in `docs/cdp-escape-limitation.md` |
 | Tab ring (§5) | `keyboard.js` tabCycle | `tests/keyboard.test.js` (Tab region cycle), verify §2.1 |
+| Reopen focus restore (§5) | `view-manager.js` focusSpot classifier + restoreFocusSpot | `tests/view-manager.test.js` (focusSpot describe), `tests/focus-regression.test.js` |
 | Matrix (§7) | visibility checks in `tabCycle`/headerArrow/`focusTop`/`focusDown` | verify-keyboard option seeds + `tests/keyboard.test.js` hidden-button cases |
 | Cross-module focus transfers (§2.1/§4/§5) | the real `view-manager.js` + `palette.js` + `keyboard.js` wired together (the per-module suites mock each other) | `tests/focus-regression.test.js` — the mandatory gate: view-jump keys land focus, dialogs/palette own their keys, the layered Esc order holds end-to-end |

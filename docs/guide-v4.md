@@ -36,7 +36,7 @@
 
 - **Badges**: the count on a tab tracks that view's pressing items (dead marks, dupe groups, tracked pages), refreshed live; turn them off with *Show count badges on the view tabs* (`showTabBadges`).
 - **Visibility**: Settings → the *Views* group hides Stats/Dead/Duplicates individually, or the whole strip — see [§5](#5-getting-the-classic-look-and-feel-back).
-- **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace. Closing the side panel via the toolbar toggle hands control straight back to the popup — the service worker learns of the close instantly (Chrome 142+) or probes with an alarm (114–141).
+- **Popup vs side panel**: both reopen on the view you left — the popup because *Remember the last active view* (`rememberView`) is on by default (turn it off to always boot on the tree), the side panel (opt-in via `openInSidePanel`, `Alt+Shift+B`) always, ready to be an always-on workspace. Closing the side panel via the toolbar toggle hands control straight back to the popup — the service worker learns of the close instantly (Chrome 142+) or probes with an alarm (114–141). Reopening also restores **where the focus was** — the search box, a header button, a view tab, a toolbar control or the exact list row (gated by *Remember previous state*: with that option off every open starts completely fresh).
 
 ## 2. Full keyboard reference
 
@@ -116,7 +116,7 @@ Example: one `Esc` during a dead-link scan pauses it (press again to resume) —
 
 ### 2.5 Palette keyboard
 
-`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows (on a custom command row it opens the command's own edit/delete menu); keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically. Closing that menu (`←`/`Esc`) returns focus to the input.
+`↑↓` select; `Enter` executes; `→` opens the context menu on bookmark rows (on a custom command row it opens the command's own edit/delete menu); keep typing to narrow; `Esc` closes. Clicking elsewhere closes it automatically. Closing that menu (`←`/`Esc`) returns focus to the input. `Tab` is trapped inside the panel as a **two-stop cycle** — input box ⇄ the bottom close bar — so focus can't wander out and dismiss the panel; result rows carry `tabindex="-1"` and never join the `Tab` order.
 
 ## 3. The views, one by one
 
@@ -200,7 +200,7 @@ The classic hierarchical tree (startup view). It is where most organizing happen
 - **Command table** (aliases in parentheses): `/add` (`/star`) quick-add the current page · `/new` bookmark the current tab · `/folder` (`/mkdir`) new folder · `/session` (`/save`) save the window's tabs as a folder · `/tree` (`/home`) · `/search` (`/find`) · `/recent` (`/latest`) · `/stats` (`/visits`) · `/dead` (`/broken`) · `/dupes` (`/dedup`) — one Go command per view · `/theme` + a theme name (`/theme dark`; a unique prefix like `/theme d` works; bare `/theme` shows the usage) — or the direct switches `/dark` `/light` `/ink` `/paper` · `/tabs` toggles the tab strip · `/options` (`/settings`).
 - **Custom commands**: define your own in the options page's *Commands* group — open a URL, fill a **URL template** from the rest words (`/g kimi code` → `…q=kimi%20code`), open a whole bookmark **folder as tabs**, or jump to a **view with a preset** (e.g. Duplicates pinned to keep-newest, or a dead-link scan started on entry). The fastest way to start one: type a fresh `/name` the table doesn't know and use the *Save as a command* row — the editor opens with the slash prefilled. Custom rows join slash matching (most-used first, aliases included), wear a *custom* tag, sync across devices, and `→` on one opens its edit/delete menu.
 - **Bridge row**: a plain query offers "Search in the search view for …" at the bottom — Enter runs it in the full search view.
-- **Chrome around the box**: a × button inside the field clears the query (mouse-only, like the search box); a full-width close bar sits at the bottom center for mouse users — the keyboard way out is `Esc`.
+- **Chrome around the box**: a × button inside the field clears the query (mouse-only, like the search box); a full-width close bar sits at the bottom center — no longer mouse-only: `Tab` cycles between the input and the close bar (§2.5), and `Esc` still closes from anywhere.
 - The palette closes itself when it loses focus; `Esc` peels layers as usual.
 
 ## 5. Getting the classic look and feel back
@@ -217,6 +217,7 @@ Every new surface in 4.0 can be switched off. **The fastest route**: the *Restor
 | Always open on the tree | Turn off **Remember the last active view** (`rememberView`) |
 | No count badges on the tabs | Turn off **Show count badges on the view tabs** (`showTabBadges`) |
 | Classic colors | General → theme: **Light** or **Dark** (Ink/Paper are the new 4.0 faces; Auto follows the OS) |
+| No favicon auto-inversion | Turn off **Invert low-contrast favicons** (`faviconContrast`, on by default) — a monochrome favicon that would vanish on the theme's background (white glyph on a light theme, black on dark) is lightness-flipped so it stays visible |
 | No search history | Turn off **Search history** (`searchHistoryEnabled`) — recording stops and stored entries are **wiped** |
 | No visit statistics | Turn off **Visit statistics** (`statsEnabled`) — recording stops; *Clear statistics* erases what's stored |
 | No path labels on rows | Turn off **Show item path** (`showItemPath`) |
