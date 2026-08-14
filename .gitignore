@@ -5,3 +5,4 @@ __pycache__/
 tmp/
 .idea/
 .claude/
+.qoder/
