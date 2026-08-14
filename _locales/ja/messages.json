@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Allフィルターでは、ブロックされたブックマーク（プロキシ経由で到達可能、おそらくまだ有効）も含まれます。元に戻せるのは直近の削除のみです。",
+    "message": "すべてのフィルターでは、ブロックされたブックマーク（プロキシ経由でアクセス可能、おそらく有効）も含まれます。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "元に戻せるのは最後の削除のみです。"
   },
   "deadDeleteAllBtn": {
     "message": "すべて削除"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$groups$ グループ内の $count$ 個の重複を削除しますか？最も古いエントリが保持されます。",
+    "message": "$groups$ グループ内の重複コピー $count$ 件を削除しますか？各グループで選択されたキーパーは保持されます。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "最も古いものを残し、他の $count$ 個を削除しますか？",
+    "message": "「$title$」を保持し、他のコピー $count$ 件を削除しますか？",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

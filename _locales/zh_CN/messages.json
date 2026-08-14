@@ -165,7 +165,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留最早添加项。",
+    "message": "删除 $groups$ 组共 $count$ 条多余副本？每组保留当前选定的保留项。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -174,7 +174,7 @@
         "content": "$2"
       }
     },
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark)."
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick)."
   },
   "dupesConfirmSelected": {
     "message": "从所选的 $groups$ 个重复组中删除 $count$ 条重复书签？",
@@ -279,8 +279,12 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)。撤销只能恢复最近一次删除。",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
+    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)。",
+    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
+  },
+  "undoSingleStepNote": {
+    "message": "撤销只能恢复最近一次删除。",
+    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch."
   },
   "deadDeleteAllBtn": {
     "message": "删除全部"
@@ -910,13 +914,17 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "保留最早添加项，删除其余 $count$ 条？",
+    "message": "保留“$title$”，删除其余 $count$ 条副本？",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "示例书签"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."
+    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint)."
   },
   "reportedToDeveloper": {
     "message": "已向开发者报告。"

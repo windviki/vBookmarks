@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy của bạn, có thể vẫn còn hoạt động). Hoàn tác chỉ có thể khôi phục lần xóa gần nhất.",
+    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy, có thể vẫn còn hoạt động).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Hoàn tác chỉ có thể khôi phục thao tác xóa gần nhất."
   },
   "deadDeleteAllBtn": {
     "message": "Xóa tất cả"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Giữ lại mục cũ nhất.",
+    "message": "Xóa $count$ bản sao thừa trong $groups$ nhóm? Bản giữ lại được chọn trong mỗi nhóm sẽ được giữ.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Giữ lại bản cũ nhất và xóa $count$ bản sao còn lại?",
+    "message": "Giữ \"$title$\" và xóa $count$ bản sao khác?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

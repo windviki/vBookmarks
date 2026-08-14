@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "În filtrul Toate, aceasta include marcajele blocate (accesibile prin proxy-ul dvs., probabil încă active). Undo poate restaura doar ultima ștergere.",
+    "message": "Sub filtrul „Toate”, aceasta include marcajele blocate (accesibile prin proxy, probabil încă active).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Anularea poate restaura doar cea mai recentă ștergere."
   },
   "deadDeleteAllBtn": {
     "message": "Ștergeți tot"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Se păstrează cele mai vechi.",
+    "message": "Eliminați $count$ copii suplimentare din $groups$ grupuri? Copia selectată în fiecare grup este păstrată.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Păstrați cea mai veche și eliminați celelalte $count$ copii?",
+    "message": "Păstrează \"$title$\" și elimină celelalte $count$ copii?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

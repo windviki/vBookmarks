@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pod filtrom Vsi so vključeni tudi blokirani zaznamki (dostopni prek vašega posrednika, verjetno še vedno aktivni). Razveljavi lahko obnovi samo zadnji izbris.",
+    "message": "Pri filtru Vsi to vključuje blokirane zaznamke (dostopne prek vašega proxyja, verjetno še žive).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Razveljavitev lahko obnovi samo zadnji izbris."
   },
   "deadDeleteAllBtn": {
     "message": "Izbriši vse"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Odstranim $count$ dodatnih kopij v $groups$ skupinah? Najstarejši vnosi se ohranijo.",
+    "message": "Odstranim $count$ dodatnih kopij v $groups$ skupinah? V vsaki skupini ostane izbrani ohranjeni zaznamek.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Ohranim najstarejšega in odstranim ostalih $count$ kopij?",
+    "message": "Ohranim \"$title$\" in odstranim $count$ dodatnih kopij?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

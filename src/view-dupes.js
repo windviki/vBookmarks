@@ -77,7 +77,7 @@ import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON } from './icons.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus, TOOLBAR_SEL_RISK } from './list-focus.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -367,32 +367,9 @@ export function initViewDupes(ctx = {}) {
         return html;
     };
 
-    // --- Toolbar focus restore (final polish) --------------------------------
-    // The toolbar re-renders together with the groups (strategy/scope/scheme
-    // changes, every regroup, selection-mode toggles). Without a restore, a
-    // keyboard user holding focus on a control loses it to <body> on every
-    // repaint. The controls are positionally stable across re-renders, so an
-    // index suffices.
-    // v4 task-4 #14: the risk banner's controls join the park/restore.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input, .risk-banner button, .risk-banner a[href]';
-    const toolbarFocusIndex = () => {
-        if (typeof $list.querySelectorAll !== 'function')
-            return -1;
-        const controls = $list.querySelectorAll(TOOLBAR_SEL);
-        for (let i = 0, l = controls.length; i < l; i++)
-            if (controls[i] === document.activeElement)
-                return i;
-        return -1;
-    };
-    const restoreToolbarFocus = idx => {
-        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
-            return;
-        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
-        if (c && c.focus)
-            c.focus();
-    };
-
-    // --- Row focus park/restore: see src/list-focus.js (4.0.1 focus law).
+    // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
+    // (final polish / 4.0.1 focus law). v4 task-4 #14: the risk banner's
+    // controls join the park/restore (TOOLBAR_SEL_RISK).
 
     const render = () => {
         if (selecting) {
@@ -413,11 +390,11 @@ export function initViewDupes(ctx = {}) {
             html += '</ul>';
         }
         // keep a focused toolbar control focused across the swap (see above)
-        const tbIdx = toolbarFocusIndex();
+        const tbIdx = toolbarFocusIndex($list, TOOLBAR_SEL_RISK);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         $list.innerHTML = html;
-        restoreToolbarFocus(tbIdx);
+        restoreToolbarFocus($list, tbIdx, TOOLBAR_SEL_RISK);
         // …restored BEFORE the pending* blocks below, so an explicit
         // head/member park still wins when one is set.
         unparkRowFocus($list, parkedRow);
@@ -473,36 +450,61 @@ export function initViewDupes(ctx = {}) {
     // --- Batch deletion ------------------------------------------------------------
     // Serial chain so the backend (and the undo stack) sees one deletion at
     // a time; a single toast reports at the end (N rows, not N toasts).
-    const removeSequentially = items =>
-        items.reduce((chain, item) => chain.then(() => new Promise(resolve => {
+    // A doomed id can vanish mid-batch (sync, another page): the remove
+    // callback reads lastError so that failure neither logs an "Unchecked
+    // runtime.lastError" nor counts toward the toast — the promise resolves
+    // with the number of rows ACTUALLY deleted (the dead view's recipe).
+    const removeSequentially = items => {
+        let removed = 0;
+        return items.reduce((chain, item) => chain.then(() => new Promise(resolve => {
             undo.capture(item.id);
-            chrome.bookmarks.remove(item.id, resolve);
-        })), Promise.resolve());
+            chrome.bookmarks.remove(item.id, () => {
+                if (!chrome.runtime.lastError)
+                    removed++;
+                resolve();
+            });
+        })), Promise.resolve()).then(() => removed);
+    };
 
-    const confirmDeletion = (doomed, message) => {
+    // Shared batch-delete gate: ConfirmDialog, then the serial chain, then a
+    // single toast reporting the actual deletions. Every batch delete
+    // appends the undo-granularity note (undo() restores only the most
+    // recent deletion). `done` is the caller-specific finish (applySelected
+    // leaves the selection mode — the dead view's deleteSelected recipe).
+    const confirmDeletion = (doomed, message, done) => {
         if (!doomed.length)
             return;
         dialogs.ConfirmDialog.open({
-            dialog: message,
+            dialog: `${message}<br>${_m('undoSingleStepNote')}`,
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
-                removeSequentially(doomed).then(() => {
-                    undo.showToast(_m('dupesDone', `${doomed.length}`));
+                removeSequentially(doomed).then(removed => {
+                    undo.showToast(_m('dupesDone', `${removed}`));
                     // Rebuild the tree: the serial removal goes straight to
                     // chrome.bookmarks.remove and the tree has no onRemoved
                     // listener of its own — without this the deleted rows
                     // linger in the tree until the popup reopens.
                     chrome.bookmarks.getTree(treeView.generateTree);
+                    if (done)
+                        done();
                 });
                 // the onRemoved listener replays the regroup by itself
             }
         });
     };
 
-    const cleanGroup = group =>
-        confirmDeletion(planDeletion(group, keeperOf(group)),
-            _m('dupesConfirmGroup', `${planDeletion(group, keeperOf(group)).length}`));
+    const cleanGroup = group => {
+        const keeper = keeperOf(group);
+        const doomed = planDeletion(group, keeper);
+        // The confirm names the group's CURRENT keeper (the strategy default
+        // or a manual radio pick) — the same wording the head ✓ button
+        // carries as its hint. The title is user data landing in an
+        // innerHTML dialog, so the assembled message takes the hint's
+        // escape pass (view-dead's confirms only substitute counts).
+        confirmDeletion(doomed, htmlspecialchars(_m('dupesConfirmGroup',
+            [keeper.title || _m('noTitle'), `${doomed.length}`])));
+    };
 
     const cleanAll = () => {
         const doomed = groups.reduce((all, g) => all.concat(planDeletion(g, keeperOf(g))), []);
@@ -520,7 +522,9 @@ export function initViewDupes(ctx = {}) {
     // Dedup the selected groups: one confirm, one serial deletion chain, one
     // toast — the doomed rows of every selected group join a single plan
     // (each group's own keeper still applies). Stale keys prune at render
-    // after the regroup lands.
+    // after the regroup lands. A finished apply LEAVES the mode (same rule
+    // as the dead view's deleteSelected): the selection's doomed rows are
+    // gone, so a zero-count selection bar would be dead weight.
     const applySelected = () => {
         const doomed = [];
         let groupCount = 0;
@@ -532,7 +536,8 @@ export function initViewDupes(ctx = {}) {
         }
         if (!doomed.length)
             return;
-        confirmDeletion(doomed, _m('dupesConfirmSelected', [`${doomed.length}`, `${groupCount}`]));
+        confirmDeletion(doomed, _m('dupesConfirmSelected', [`${doomed.length}`, `${groupCount}`]),
+            () => setSelecting(false));
     };
 
     const setKeeper = id => {

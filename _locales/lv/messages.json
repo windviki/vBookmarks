@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Filtrā Visi šis ietver bloķētās grāmatzīmes (sasniedzamas caur jūsu starpniekserveri, visticamāk, joprojām aktīvas). Atsaukt var tikai pēdējo dzēšanu.",
+    "message": "Filtrā “Visi” tas ietver bloķētas grāmatzīmes (sasniedzamas caur jūsu starpniekserveri, visticamāk, joprojām darbojas).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Atsaukšana var atjaunot tikai pēdējo dzēšanu."
   },
   "deadDeleteAllBtn": {
     "message": "Dzēst visas"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Noņemt $count$ papildu kopijas no $groups$ grupām? Tiek saglabāti vecākie ieraksti.",
+    "message": "Dzēst $count$ papildu kopijas $groups$ grupās? Katrā grupā izvēlētais eksemplārs tiek paturēts.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Saglabāt vecāko un noņemt pārējās $count$ kopijas?",
+    "message": "Saglabāt \"$title$\" un dzēst pārējās $count$ kopijas?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

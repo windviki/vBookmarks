@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "במסנן 'הכל', זה כולל סימניות חסומות (נגישות דרך הפרוקסי שלך, ככל הנראה עדיין פעילות). ביטול יכול לשחזר רק את המחיקה האחרונה.",
+    "message": "תחת מסנן 'הכל' זה כולל סימניות חסומות (נגישות דרך הפרוקסי, כנראה עדיין פעילות).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "הביטול משחזר רק את המחיקה האחרונה."
   },
   "deadDeleteAllBtn": {
     "message": "מחק הכל"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "להסיר $count$ עותקים מיותרים ב-$groups$ קבוצות? הערכים הישנים נשמרים.",
+    "message": "להסיר $count$ עותקים נוספים בין $groups$ קבוצות? הפריט שנבחר בכל קבוצה יישמר.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "לשמור את הישן ביותר ולהסיר את $count$ העותקים האחרים?",
+    "message": "להשאיר את \"$title$\" ולהסיר את $count$ העותקים האחרים?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

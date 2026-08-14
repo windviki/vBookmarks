@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Con il filtro Tutti sono inclusi i segnalibri bloccati (raggiungibili tramite il proxy, probabilmente ancora attivi). Annulla può ripristinare solo l'ultima eliminazione.",
+    "message": "Con il filtro Tutti vengono inclusi i segnalibri bloccati (raggiungibili tramite il proxy, probabilmente ancora attivi).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "L'annullamento può ripristinare solo l'eliminazione più recente."
   },
   "deadDeleteAllBtn": {
     "message": "Elimina tutto"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Rimuovere $count$ copie extra da $groups$ gruppi? Vengono conservate le voci più vecchie.",
+    "message": "Rimuovere $count$ copie extra in $groups$ gruppi? Il segnalibro scelto in ogni gruppo viene mantenuto.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Conservare la più vecchia e rimuovere le altre $count$ copie?",
+    "message": "Mantenere \"$title$\" e rimuovere le altre $count$ copie?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

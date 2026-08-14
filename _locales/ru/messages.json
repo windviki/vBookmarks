@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "В фильтре «Все» сюда входят заблокированные закладки (доступные через прокси, вероятно, ещё живые). Отмена может восстановить только последнее удаление.",
+    "message": "В фильтре «Все» это включает заблокированные закладки (доступны через прокси, вероятно, ещё действуют).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Отмена может восстановить только последнее удаление."
   },
   "deadDeleteAllBtn": {
     "message": "Удалить все"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Удалить $count$ лишних копий в $groups$ группах? Останутся самые старые записи.",
+    "message": "Удалить $count$ лишних копий в $groups$ группах? Выбранный экземпляр в каждой группе будет сохранён.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Оставить самую старую и удалить остальные $count$ копий?",
+    "message": "Оставить «$title$» и удалить остальные $count$ копий?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "在「全部」篩選下，這包括被封鎖的書籤（可透過代理存取，可能仍然有效）。復原只能還原最近一次刪除。",
+    "message": "在「全部」篩選下，這包括被封鎖的書籤（可透過你的代理伺服器存取，很可能仍有效）。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "復原只能還原最近一次的刪除。"
   },
   "deadDeleteAllBtn": {
     "message": "刪除全部"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "要移除 $groups$ 組中的 $count$ 個多餘副本嗎？會保留最舊的項目。",
+    "message": "是否在 $groups$ 個群組中移除 $count$ 個額外副本？每個群組中選取的保留項目會被保留。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "保留最舊的，移除其他 $count$ 個副本？",
+    "message": "保留「$title$」並移除其他 $count$ 個副本？",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "সব ফিল্টারে এতে ব্লক করা বুকমার্ক অন্তর্ভুক্ত (আপনার প্রক্সির মাধ্যমে অ্যাক্সেসযোগ্য, সম্ভবত এখনও সক্রিয়)। পূর্বাবস্থায় ফেরানো কেবলমাত্র সবচেয়ে সাম্প্রতিক মুছে ফেলা পুনরুদ্ধার করতে পারে।",
+    "message": "সব ফিল্টারের অধীনে এতে অবরুদ্ধ বুকমার্কও অন্তর্ভুক্ত (আপনার প্রক্সির মাধ্যমে অ্যাক্সেসযোগ্য, সম্ভবত এখনও সচল)।",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "পূর্বাবস্থায় ফেরানো কেবল সর্বশেষ মুছে ফেলা আইটেমটি পুনরুদ্ধার করতে পারে।"
   },
   "deadDeleteAllBtn": {
     "message": "সব মুছুন"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$groups$ গ্রুপ জুড়ে $count$ অতিরিক্ত কপি সরিয়ে ফেলবেন? পুরনো এন্ট্রিগুলো রাখা হবে।",
+    "message": "$count$টি অতিরিক্ত কপি, $groups$টি গ্রুপ জুড়ে মুছে ফেলা হবে? প্রতিটি গ্রুপে নির্বাচিত কপিটি রাখা হবে।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "সবচেয়ে পুরনোটি রেখে বাকি $count$ কপি সরিয়ে ফেলবেন?",
+    "message": "\"$title$\" রাখবেন এবং বাকি $count$টি কপি মুছে ফেলবেন?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

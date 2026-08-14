@@ -176,6 +176,7 @@ const setup = (opts = {}) => {
                 this.removeCalls.push(id);
                 cb();
             },
+            onCreated: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
             onRemoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
             onChanged: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
             onMoved: { addListener(fn) { (this.fns = this.fns || []).push(fn); } },
@@ -364,22 +365,30 @@ describe('view registration (§5.5)', () => {
         expect(ctx.views.badgeCalls).toBeGreaterThan(bumps);
     });
 
-    it('preloads the stored lastScan at init — the badge lights without opening the tab', () => {
-        // Popup reopened on another view: dead never activates, so the badge
-        // must come from an init-time storage read, not the activate hook.
+    it('the badge derives from the tree-joined rows — a stale cache cannot revive it', () => {
+        // Popup reopened after dead bookmarks were deleted elsewhere: the
+        // persisted cache still holds their verdicts, but the badge counts
+        // the tree-JOINED row set (allResultRows), not the raw cache. Before
+        // any activation there is no join at all → the badge stays dark
+        // instead of lighting the stale count (the revival regression).
         const cache = JSON.stringify({
             ts: 1, scannedCount: 3,
             results: {
                 '11': { status: 'dead', code: 404 },
                 '12': { status: 'blocked', code: 404 },
-                '13': { status: 'ok', code: 200 }
+                '99': { status: 'dead', code: 404 } // deleted while the popup was closed
             }
         });
         const ctx = setup({ storeData: { deadLastScan: cache } });
-        expect(ctx.def().badge()).toBe(2); // dead + blocked, ok excluded
-        // the init preload bumped the badges right after registration
-        expect(ctx.views.badgeCalls).toBeGreaterThan(0);
-        // without a stored scan the cold badge stays hidden (0)
+        expect(ctx.def().badge()).toBe(0); // no tree join yet → dark
+        ctx.def().activate();
+        // after the join the badge tracks the rows the list shows: 99's
+        // bookmark is gone from the tree, so it drops out of the count
+        expect(ctx.def().badge()).toBe(2);
+        expect(ctx.$list.innerHTML).toContain('id="dead-item-11"');
+        expect(ctx.$list.innerHTML).toContain('id="dead-item-12"');
+        expect(ctx.$list.innerHTML).not.toContain('dead-item-99');
+        // without a stored scan the badge stays hidden (0)
         const none = setup({});
         expect(none.def().badge()).toBe(0);
     });
@@ -774,7 +783,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         ctx.def().activate();
         clickDeleteAll(ctx);
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote undoSingleStepNote');
         expect(dialogs.ConfirmDialog.openCalls[0].button1).toBe('<strong>delete</strong>');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         expect(undo.captureCalls).toEqual([]);
@@ -817,13 +826,38 @@ describe('batch deletion (delete all / delete selected)', () => {
         expect($list.innerHTML).toContain('deadFilterAll'); // segment still reachable
     });
 
+    it('mark-all / select-mode hide with the empty filtered segment too (no inert buttons)', () => {
+        // markAll() and the selection mode both act on the FILTERED
+        // resultRows() — under a segment matching nothing they would click
+        // into nothing, so they follow delete-all's visibility gate while
+        // the filter segment itself stays reachable.
+        const blockedOnly = JSON.stringify({
+            ts: 1, scannedCount: 1,
+            results: { '13': { status: 'blocked', code: 404 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: blockedOnly } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-mark-all'); // filter=all → shown
+        expect($list.innerHTML).toContain('dead-select-mode');
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        expect($list.innerHTML).not.toContain('dead-mark-all');
+        expect($list.innerHTML).not.toContain('dead-delete-all');
+        expect($list.innerHTML).not.toContain('dead-select-mode');
+        expect($list.innerHTML).toContain('deadFilterAll'); // the way back stays
+        // …and switching back to all restores them
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'all' } } : null) });
+        expect($list.innerHTML).toContain('dead-mark-all');
+        expect($list.innerHTML).toContain('dead-select-mode');
+    });
+
     it('delete-all follows the active filter: 仅死链 deletes only the dead row', async () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE } });
         const { dialogs, chrome } = ctx;
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
         clickDeleteAll(ctx);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[1]<br>deadDeleteAllNote');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[1]<br>deadDeleteAllNote undoSingleStepNote');
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['12']); // blocked 13 stays
@@ -844,7 +878,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         const { dialogs, chrome, undo } = ctx;
         ctx.def().activate(); // default filter is all
         clickDeleteAll(ctx);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadDeleteAll[2]<br>deadDeleteAllNote undoSingleStepNote');
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']); // blocked included
@@ -915,7 +949,7 @@ describe('batch deletion (delete all / delete selected)', () => {
         rowClick(ctx, '13');
         expect($list.innerHTML).not.toContain('class="dead-delete-selected" disabled');
         ctx.clickOn({ closest: sel => (sel === '.dead-delete-selected' ? {} : null) });
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadConfirmDeleteSelected[2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadConfirmDeleteSelected[2]<br>undoSingleStepNote');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
@@ -1009,9 +1043,11 @@ describe('marks + overlay (§5.5c)', () => {
     });
 
     it('removing a bookmark prunes its scan verdict too — the badge stays in step with the rows', () => {
-        // badge() counts lastScan.results without a tree join, so onRemoved
-        // must drop the id there as well (in-memory only — the persisted
-        // deadLastScan is the SW's to rewrite on the next scan).
+        // badge() derives from the tree-joined rows, so onRemoved drops the
+        // cached verdict immediately (in-memory only — the persisted
+        // deadLastScan is the SW's to rewrite on the next scan): neither the
+        // row nor the badge outlives the bookmark until the debounced
+        // re-join prunes treeItems.
         const cache = JSON.stringify({
             ts: 1700000000000, scannedCount: 3,
             results: {
@@ -1029,6 +1065,29 @@ describe('marks + overlay (§5.5c)', () => {
         chrome.bookmarks.fire('onRemoved', '11'); // a healthy row: no-op
         expect(def().badge()).toBe(1);
         expect(store.get('deadLastScan')).toBe(cache); // storage untouched
+    });
+
+    it('a bookmark created mid-session re-joins the rows (onCreated listener)', () => {
+        // The dupes view listens to all four bookmark events; the dead view
+        // missed onCreated — a mid-session add (e.g. an undo restore) left
+        // the rows' tree join stale until the popup reopened.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 1,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({ storeData: { deadLastScan: cache } });
+        const { chrome, $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        // backend truth changes (the bookmark re-created with a new title);
+        // the onCreated debounce re-joins treeItems and repaints
+        ctx.treeData[0].children[0].children[1] =
+            { id: '12', parentId: '1', title: 'Gone (restored)', url: 'https://gone.example/page', dateAdded: 500 };
+        const getTreeCalls = chrome.bookmarks.getTreeCalls;
+        chrome.bookmarks.fire('onCreated', { id: '12', title: 'Gone (restored)' });
+        tick(300);
+        expect(chrome.bookmarks.getTreeCalls).toBeGreaterThan(getTreeCalls);
+        expect($list.innerHTML).toContain('Gone (restored)');
     });
 });
 

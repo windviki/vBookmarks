@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "在“全部”筛选器下，此操作包括被屏蔽的书签（可通过代理访问，可能仍然有效）。撤消只能恢复最近一次的删除操作。",
+    "message": "在“全部”过滤器下，这包括被阻止的书签（可通过代理访问，可能仍然有效）。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "撤销只能恢复最近一次删除的内容。"
   },
   "deadDeleteAllBtn": {
     "message": "删除全部"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "是否移除 $groups$ 组中的 $count$ 个多余副本？将保留最早的条目。",
+    "message": "要跨 $groups$ 个组删除 $count$ 个多余副本吗？将保留每组中选定的保留项。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "保留最早的，移除其他 $count$ 个副本？",
+    "message": "保留“$title$”并删除其他 $count$ 个副本？",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

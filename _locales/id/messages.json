@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pada filter Semua, ini mencakup bookmark yang diblokir (dapat dijangkau melalui proxy Anda, kemungkinan masih aktif). Urungkan hanya dapat memulihkan penghapusan terbaru.",
+    "message": "Pada filter Semua, ini mencakup bookmark yang diblokir (dapat diakses melalui proxy Anda, kemungkinan masih aktif).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Pembatalan hanya dapat mengembalikan penghapusan terbaru."
   },
   "deadDeleteAllBtn": {
     "message": "Hapus semua"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Hapus $count$ salinan ekstra di $groups$ grup? Entri tertua akan disimpan.",
+    "message": "Hapus $count$ salinan tambahan di $groups$ grup? Pemilih di setiap grup akan dipertahankan.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Simpan yang tertua dan hapus $count$ salinan lainnya?",
+    "message": "Simpan \"$title$\" dan hapus $count$ salinan lainnya?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

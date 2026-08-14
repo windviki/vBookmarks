@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Tümü filtresinde bu, engellenen yer imlerini de içerir (proxy'niz üzerinden erişilebilir, büyük olasılıkla hâlâ geçerli). Geri al yalnızca en son silme işlemini geri getirebilir.",
+    "message": "Tüm filtresinde bu, engellenmiş yer imlerini içerir (proxy üzerinden erişilebilir, büyük olasılıkla hâlâ etkin).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Geri alma yalnızca en son silmeyi geri getirebilir."
   },
   "deadDeleteAllBtn": {
     "message": "Tümünü sil"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$groups$ gruptaki $count$ fazla kopya silinsin mi? En eski girişler korunur.",
+    "message": "$count$ fazla kopya, $groups$ grup genelinde kaldırılsın mı? Her grupta seçilen korunan saklanır.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "En eski kalsın, diğer $count$ kopya silinsin mi?",
+    "message": "\"$title$\" kalsın ve diğer $count$ kopya kaldırılsın mı?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

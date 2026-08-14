@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "All फ़िल्टर के अंतर्गत इसमें ब्लॉक किए गए बुकमार्क शामिल हैं (आपके प्रॉक्सी के माध्यम से पहुंच योग्य, संभवतः अभी भी सक्रिय)। Undo केवल सबसे हालिया विलोपन को पुनर्स्थापित कर सकता है।",
+    "message": "सभी फ़िल्टर के अंतर्गत, इसमें अवरुद्ध बुकमार्क शामिल हैं (आपके प्रॉक्सी के माध्यम से पहुंच योग्य, संभवतः अभी भी सक्रिय)।",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "पूर्ववत केवल सबसे हालिया विलोपन को पुनर्स्थापित कर सकता है।"
   },
   "deadDeleteAllBtn": {
     "message": "सभी हटाएँ"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$groups$ समूहों में $count$ अतिरिक्त प्रतियाँ हटाएँ? सबसे पुरानी प्रविष्टियाँ रखी जाएँगी।",
+    "message": "क्या $groups$ समूहों में $count$ अतिरिक्त प्रतियाँ हटाई जाएँ? प्रत्येक समूह में रखने के लिए चुनी गई प्रति रखी जाती है।",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "सबसे पुरानी रखें और अन्य $count$ प्रतियाँ हटाएँ?",
+    "message": "क्या \"$title$\" रखें और अन्य $count$ प्रतियाँ हटाएँ?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

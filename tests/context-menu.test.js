@@ -240,6 +240,7 @@ const setup = (opts = {}) => {
     };
     const chromeStub = {
         i18n: { getMessage: opts.i18n || (key => key) },
+        runtime: { lastError: undefined },
         windows: { WINDOW_ID_CURRENT: -1 },
         tabs: {
             current: { id: 7, url: 'https://current.example/page', title: 'Current Tab' },
@@ -348,6 +349,19 @@ const setup = (opts = {}) => {
         row.a._qs.hr = el('HR');
         return row;
     };
+    // A search/palette folder-result row:
+    // <li id="results-item-7" data-node-id="7"><a class="link-folder"><i>title</i></a></li>
+    const makeLinkFolderRow = (id = '7', title = '') => {
+        const li = el('LI', `results-item-${id}`);
+        li.dataset.nodeId = id;
+        const a = el('A');
+        a.classList.add('link-folder');
+        a.parentNode = li;
+        const i = el('I');
+        i.textContent = title;
+        a._qs.i = i;
+        return { li, a, i };
+    };
     // A search-history row: <li class="search-history-row"><a href data-q="q">…</a></li>
     const makeHistoryRow = (q = 'git') => {
         const li = el('LI');
@@ -403,7 +417,7 @@ const setup = (opts = {}) => {
         chrome: chromeStub, actionCalls, sortCalls, sortFolderCalls, revealCalls,
         groupDialogCalls, groupPickCalls,
         makeBookmarkRow, makeFolderRow, makeSeparatorRow, makeHistoryRow,
-        makeStatsHistRow, makeDupesGroupHead, menuItem, openOn,
+        makeStatsHistRow, makeDupesGroupHead, makeLinkFolderRow, menuItem, openOn,
         fireWindow: (type, ev) => {
             for (const fn of (windowListeners[type] || []))
                 fn(ev);
@@ -817,6 +831,60 @@ describe('empty-folder menu greying (content-dependent items)', () => {
         expect(byId['folder-window'].classList.contains('disabled')).toBe(true);
         fire(folderMenu, 'mouseup', makeEvent({ target: byId['folder-window'], button: 0 }));
         expect(actionCalls.filter(c => c[0] === 'openBookmarks')).toHaveLength(0);
+    });
+
+    it('the link-folder (search/palette) branch applies the same content greying', () => {
+        const { byId, menuItem, makeLinkFolderRow, openOn } = setup({
+            children: { 7: [], 8: [{ id: '9', title: 'GitHub', url: 'https://github.com' }] }
+        });
+        ensureItems(menuItem);
+        openOn(makeLinkFolderRow('7').a); // an empty folder's result row
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(true);
+        expect(byId['sort-folder-by-name'].classList.contains('disabled')).toBe(true);
+        // …then a folder WITH content: the greying must flip back (the
+        // reported leak — this branch used to skip applyContentDisabled, so
+        // the empty folder's disabled classes lingered).
+        openOn(makeLinkFolderRow('8').a);
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(false);
+        expect(byId['sort-folder-by-name'].classList.contains('disabled')).toBe(false);
+    });
+
+    it('greying from a tree-folder open does not leak into a link-folder menu', () => {
+        const { byId, menuItem, makeFolderRow, makeLinkFolderRow, openOn } = setup({
+            children: { 7: [], 8: [{ id: '9', title: 'GitHub', url: 'https://github.com' }] }
+        });
+        ensureItems(menuItem);
+        openOn(makeFolderRow('7').span); // empty tree folder → greys out
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(true);
+        openOn(makeLinkFolderRow('8').a); // search-result folder with bookmarks
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(false);
+    });
+
+    it('closing the menu resets the content greying (no stale state on the next open)', () => {
+        const { byId, menuItem, makeFolderRow, openOn, menus } = setup({ children: { 7: [] } });
+        ensureItems(menuItem);
+        openOn(makeFolderRow('7').span);
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(true);
+        menus.clearMenu();
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(false);
+        expect(byId['sort-folder-by-name'].classList.contains('disabled')).toBe(false);
+    });
+
+    it('a failed getChildren (lastError) keeps the all-enabled state without throwing', () => {
+        const ctx = setup({});
+        const { byId, menuItem, makeFolderRow, openOn, chrome } = ctx;
+        ensureItems(menuItem);
+        // A folder deleted/synced away between right-click and the callback:
+        // getChildren fails with lastError (same guard as tree-view's lazy
+        // expand) — no greying applied, no "unchecked lastError" log.
+        chrome.bookmarks.getChildren = (id, cb) => {
+            chrome.runtime.lastError = { message: 'Bookmark id is invalid' };
+            cb(undefined);
+            chrome.runtime.lastError = undefined;
+        };
+        openOn(makeFolderRow('7').span);
+        expect(byId['folder-window'].classList.contains('disabled')).toBe(false);
+        expect(byId['sort-folder-by-name'].classList.contains('disabled')).toBe(false);
     });
 });
 

@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under filtret Alla inkluderar detta blockerade bokmärken (nåbara via din proxy, troligen fortfarande aktiva). Ångra kan bara återställa den senaste borttagningen.",
+    "message": "Under filtret Alla ingår blockerade bokmärken (nåbara via din proxy, troligtvis fortfarande aktiva).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Ångra kan endast återställa den senaste borttagningen."
   },
   "deadDeleteAllBtn": {
     "message": "Ta bort alla"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Ta bort $count$ extra kopior i $groups$ grupper? Äldsta posterna behålls.",
+    "message": "Ta bort $count$ extrakopior i $groups$ grupper? Det valda exemplaret i varje grupp behålls.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Behåll den äldsta och ta bort de andra $count$ kopiorna?",
+    "message": "Behåll \"$title$\" och ta bort de andra $count$ kopiorna?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

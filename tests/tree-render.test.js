@@ -129,6 +129,13 @@ describe('highlightTitlePositions', () => {
     it('escapes special chars inside <mark> without shifting indices', () => {
         expect(tr.highlightTitlePositions('a<b', [1, 2])).toBe('a<mark>&lt;b</mark>');
     });
+
+    it('escapes & — first in the chain, so the entity output stays intact', () => {
+        // escape.js completes the quartet (& < > "); a double-feed would
+        // show as &amp;lt; here.
+        expect(tr.highlightTitlePositions('a&b<c', null)).toBe('a&amp;b&lt;c');
+        expect(tr.highlightTitlePositions('a&b', [1])).toBe('a<mark>&amp;</mark>b');
+    });
 });
 
 describe('generateBookmarkHTML', () => {
@@ -154,12 +161,32 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('<i>&lt;b&gt;&quot;x&quot;</i>');
     });
 
+    it('escapes & in href, tooltip and name (escape.js covers the full quartet)', () => {
+        const tr = setup();
+        const html = tr.generateBookmarkHTML('R&D', 'http://e.com/?a=1&b=2', '', '1');
+        expect(html).toContain('href="http://e.com/?a=1&amp;b=2"');
+        expect(html).toContain('title="http://e.com/?a=1&amp;b=2"');
+        expect(html).toContain('<i>R&amp;D</i>');
+    });
+
     it('falls back to the protocol-stripped url when the title is empty', () => {
         const tr = setup();
         expect(tr.generateBookmarkHTML('', 'http://e.com/path', '', '1'))
             .toContain('<i>e.com/path</i>');
         expect(tr.generateBookmarkHTML('', 'https://e.com/', '', '1'))
             .toContain('<i>e.com/</i>');
+    });
+
+    it('escapes the protocol-stripped url fallback of an untitled bookmark', () => {
+        // Regression (v4.0 leftover): the display-name fallback fed the raw
+        // scheme-stripped URL into innerHTML while the tooltip escaped the
+        // same expression — a < > " & URL injected markup into the row.
+        const tr = setup();
+        const html = tr.generateBookmarkHTML('', 'https://e.com/<b>?q="1"&r=2', '', '1');
+        expect(html).toContain('<i>e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2</i>');
+        expect(html).not.toContain('<i>e.com/<b>');
+        // the tooltip escapes the same expression (whole url, scheme kept)
+        expect(html).toContain('title="https://e.com/&lt;b&gt;?q=&quot;1&quot;&amp;r=2"');
     });
 
     it('falls back to the noTitle message for non-http(s) urls', () => {

@@ -53,8 +53,9 @@
  * 项3). Marks prune on bookmark removal, and ids that came back
  * ok/skipped after a rescan drop out automatically. Batch "mark all"
  * (every dead+blocked row of the result set) and "clear all marks" are
- * ConfirmDialog-gated. badge() = the last scan's dead+blocked count (see
- * the badge hook at registration — NOT the marks count).
+ * ConfirmDialog-gated. badge() = the last scan's dead+blocked count after
+ * the tree join (see the badge hook at registration — NOT the marks count,
+ * and NOT the raw cached verdicts: bookmarks gone from the tree drop out).
  *
  * §5.5d lifecycle (v4 task-4 #16 — the scan runs in the service worker):
  * the scan engine lives in src/dead-scan-sw.js so a popup close NEVER
@@ -118,7 +119,7 @@ import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus, TOOLBAR_SEL_RISK } from './list-focus.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -401,7 +402,16 @@ export function initViewDead(ctx = {}) {
                 ])
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
-                html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
+                // mark-all / select-mode act on the FILTERED row set
+                // (markAll reads resultRows(), the selection prunes against
+                // it), so like delete-all they key off the filtered count:
+                // under a filter segment matching no rows a button that
+                // clicks into nothing must not render. The filter segment
+                // itself stays keyed off the UNFILTERED count above, so the
+                // way back remains reachable.
+                const filteredN = resultRows().length;
+                if (filteredN)
+                    html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
                 if (deadMarks.size)
                     html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
                 // Batch delete-all: removes every row of the ACTIVE filter
@@ -409,10 +419,12 @@ export function initViewDead(ctx = {}) {
                 // to dead rows only). Rendered only when that set is
                 // non-empty — a danger button that clicks into nothing
                 // under a filter matching no rows must not appear.
-                if (resultRows().length)
+                if (filteredN)
                     html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
-                // v4 task-3 #4: selection mode entry — only with results on screen
-                html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
+                // v4 task-3 #4: selection mode entry — only with filtered
+                // results on screen (same gate as mark-all/delete-all)
+                if (filteredN)
+                    html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
             }
         }
         html += '</div>';
@@ -433,6 +445,11 @@ export function initViewDead(ctx = {}) {
                 `data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
+                    // Intentional exception: the path labels are NOT gated
+                    // by showItemPath here (the dupes/recent rows are) —
+                    // locating a dead bookmark needs its containing folder
+                    // to be visible (docs/v4task-2-list.md §3.5 row spec:
+                    // "[icon][title ……] [×dead | ⇄直连×] [path]").
                     rightText: path,
                     subText: path,
                     badge: {
@@ -453,33 +470,10 @@ export function initViewDead(ctx = {}) {
         return html + '</ul>';
     };
 
-    // --- Toolbar focus restore (final polish) --------------------------------
-    // The toolbar re-renders together with the rows (filter clicks, pause/
-    // resume, every scan-progress tick). Without a restore, a keyboard user
-    // holding focus on a control loses it to <body> on every repaint. The
-    // controls are positionally stable across re-renders, so an index
-    // suffices.
-    // v4 task-4 #14: the risk banner's controls join the park/restore so
-    // a scan tick can't drop focus off a banner button either.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input, .risk-banner button, .risk-banner a[href]';
-    const toolbarFocusIndex = () => {
-        if (typeof $list.querySelectorAll !== 'function')
-            return -1;
-        const controls = $list.querySelectorAll(TOOLBAR_SEL);
-        for (let i = 0, l = controls.length; i < l; i++)
-            if (controls[i] === document.activeElement)
-                return i;
-        return -1;
-    };
-    const restoreToolbarFocus = idx => {
-        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
-            return;
-        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
-        if (c && c.focus)
-            c.focus();
-    };
-
-    // --- Row focus park/restore: see src/list-focus.js (4.0.1 focus law).
+    // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
+    // (final polish / 4.0.1 focus law). v4 task-4 #14: the risk banner's
+    // controls join the park/restore (TOOLBAR_SEL_RISK) so a scan tick can't
+    // drop focus off a banner button either.
 
     const render = () => {
         if (selecting) {
@@ -510,7 +504,7 @@ export function initViewDead(ctx = {}) {
                 : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
         }
         // keep a focused toolbar control focused across the swap (see above)
-        const tbIdx = toolbarFocusIndex();
+        const tbIdx = toolbarFocusIndex($list, TOOLBAR_SEL_RISK);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
@@ -520,7 +514,7 @@ export function initViewDead(ctx = {}) {
         $list.innerHTML = html;
         if (live && scroll)
             $list.scrollTop = scroll;
-        restoreToolbarFocus(tbIdx);
+        restoreToolbarFocus($list, tbIdx, TOOLBAR_SEL_RISK);
         // …restored BEFORE the pendingRowFocus block below, so that explicit
         // override still wins when set (v4 task-4 #8).
         unparkRowFocus($list, parkedRow);
@@ -653,13 +647,16 @@ export function initViewDead(ctx = {}) {
     // so they vanish immediately instead of lingering until the
     // onRemoved→scheduleRender 300ms re-join (a stale list would let a fast
     // second click re-target deleted ids). `done` is the caller-specific
-    // finish (deleteSelected exits the mode); `noteKey` appends a second
-    // line to the dialog (delete-all's blocked/undo-granularity warning).
+    // finish (deleteSelected exits the mode). Every batch delete's dialog
+    // carries the undo-granularity note on its second line (undo() restores
+    // only the most recent deletion); `noteKey` prepends delete-all's
+    // All-filter blocked-rows warning to that same line.
     const confirmDeletion = (doomed, dialogKey, done, noteKey) => {
         if (!doomed.length)
             return;
         dialogs.ConfirmDialog.open({
-            dialog: _m(dialogKey, `${doomed.length}`) + (noteKey ? `<br>${_m(noteKey)}` : ''),
+            dialog: _m(dialogKey, `${doomed.length}`) +
+                `<br>${noteKey ? `${_m(noteKey)} ` : ''}${_m('undoSingleStepNote')}`,
             button1: `<strong>${_m('delete')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
@@ -935,11 +932,11 @@ export function initViewDead(ctx = {}) {
             persistMarks();
             refreshOverlays();
         }
-        // The badge counts the cached scan's dead+blocked verdicts without a
-        // tree join — drop the removed id there too, or the count stays
-        // higher than the rows on screen (and a cold-start preload would
-        // "revive" it). In-memory only: the persisted deadLastScan is the
-        // SW's to rewrite on the next scan.
+        // Drop the removed id from the cached verdicts too — otherwise the
+        // row (and the tree-joined badge derived from it) outlives the
+        // bookmark until the debounced re-join below prunes treeItems.
+        // In-memory only: the persisted deadLastScan is the SW's to rewrite
+        // on the next scan.
         if (lastScan && lastScan.results && id in lastScan.results) {
             delete lastScan.results[id];
             views.updateBadges();
@@ -958,6 +955,10 @@ export function initViewDead(ctx = {}) {
             }
         }, 300);
     };
+    // All four bookmark events (the dupes view's set): onCreated covers a
+    // bookmark appearing mid-session — e.g. an undo restore — so the rows'
+    // tree join never goes stale while the view sits open.
+    chrome.bookmarks.onCreated.addListener(scheduleRender);
     chrome.bookmarks.onRemoved.addListener(scheduleRender);
     chrome.bookmarks.onChanged.addListener(scheduleRender);
     chrome.bookmarks.onMoved.addListener(scheduleRender);
@@ -1236,19 +1237,13 @@ export function initViewDead(ctx = {}) {
         typeAhead: false,
         // Tab badge = the last scan's discovered dead+blocked rows (not the
         // manual marks count) — the same "discovered count" semantics as the
-        // dupes (groups) and stats (rows) badges. No scan yet → 0 → hidden.
-        badge: () => {
-            const r = lastScan && lastScan.results ? lastScan.results : null;
-            if (!r)
-                return 0;
-            let n = 0;
-            for (const id in r) {
-                const res = r[id];
-                if (res.status === 'dead' || res.status === 'blocked')
-                    n++;
-            }
-            return n;
-        },
+        // dupes (groups) and stats (rows) badges. The count derives from the
+        // TREE-JOINED row set (allResultRows), not the raw cached verdicts:
+        // a bookmark deleted after the scan drops out of the join, so a
+        // stale persisted cache can never revive the old count above the
+        // rows the list would actually show. No scan yet (or no join yet —
+        // the view never activated this session) → 0 → hidden.
+        badge: () => allResultRows().length,
         activate: ({ preset } = {}) => {
             // v4 task-4 #16: sync straight from chrome.storage.local — the
             // store mirror only overlays at page init, but a scan may have
@@ -1312,23 +1307,6 @@ export function initViewDead(ctx = {}) {
         },
         onKey
     });
-
-    // Cold-start badge: the dead tab's count comes from the stored lastScan,
-    // which activate() only reads once the tab is opened. Reopening the popup
-    // on another view left the badge dark until a switch — preload the cache
-    // right after registration (registration's own renderTabs → updateBadges
-    // ran with lastScan still null) so the count lights immediately.
-    const coldLocal = chrome.storage && chrome.storage.local;
-    if (coldLocal && coldLocal.get) {
-        coldLocal.get([DEAD_LAST_KEY], data => {
-            try {
-                lastScan = data[DEAD_LAST_KEY] ? JSON.parse(data[DEAD_LAST_KEY]) : null;
-            } catch (e) {
-                lastScan = null;
-            }
-            views.updateBadges();
-        });
-    }
 
     return { refresh: render, refreshOverlays, isMarked, toggleMark };
 }

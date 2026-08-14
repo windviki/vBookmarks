@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Kõik-filtri all hõlmab see blokeeritud järjehoidjaid (teie proksi kaudu kättesaadavad, tõenäoliselt endiselt elus). Tagasi võtta saab ainult kõige viimase kustutamise.",
+    "message": "Kõik-filtri all hõlmab see blokeeritud järjehoidjaid (kättesaadavad teie puhverserveri kaudu, tõenäoliselt endiselt aktiivsed).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Tühista saab taastada ainult viimase kustutamise."
   },
   "deadDeleteAllBtn": {
     "message": "Kustuta kõik"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Eemaldada $count$ lisakoopiat $groups$ grupist? Vanimad kirjed jäetakse alles.",
+    "message": "Kustutada $count$ lisa-koopiat $groups$ rühmast? Igast rühmast valitud säilitatav koopia jäetakse alles.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Jätta vanim ja eemaldada ülejäänud $count$ koopiat?",
+    "message": "Jätta alles \"$title$\" ja kustutada ülejäänud $count$ koopiat?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

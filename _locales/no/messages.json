@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under Alle-filteret inkluderer dette blokkerte bokmerker (tilgjengelige via proxyen din, sannsynligvis fortsatt aktive). Angre kan bare gjenopprette den siste slettingen.",
+    "message": "Under filteret Alle inkluderer dette blokkerte bokmerker (tilgjengelige via proxyen din, sannsynligvis fortsatt aktive).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Angre kan bare gjenopprette den siste slettingen."
   },
   "deadDeleteAllBtn": {
     "message": "Slett alle"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Fjern $count$ ekstra kopier i $groups$ grupper? Eldste oppføringer beholdes.",
+    "message": "Fjerne $count$ ekstra kopier på tvers av $groups$ grupper? Den valgte beholderen i hver gruppe beholdes.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Behold den eldste og fjern de andre $count$ kopiene?",
+    "message": "Beholde \"$title$\" og fjerne de andre $count$ kopiene?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

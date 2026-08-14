@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pagal filtrą „Viskas“ tai apima užblokuotas žymes (pasiekiamas per jūsų tarpinį serverį, tikriausiai vis dar veikiančias). Atšaukti galima tik paskutinį ištrynimą.",
+    "message": "Taikant filtrą „Visi“, tai apima užblokuotas žymes (pasiekiamas per tarpinį serverį, tikriausiai vis dar veikiančias).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Atšaukti galima tik paskutinį ištrynimą."
   },
   "deadDeleteAllBtn": {
     "message": "Ištrinti visus"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Išsaugomi seniausi įrašai.",
+    "message": "Pašalinti $count$ papildomų kopijų iš $groups$ grupių? Kiekvienoje grupėje pasirinkta kopija bus išsaugota.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Išlaikyti seniausią ir pašalinti kitas $count$ kopijas?",
+    "message": "Išsaugoti „$title$“ ir pašalinti kitas $count$ kopijas?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

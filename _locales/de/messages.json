@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Unter dem Filter „Alle“ umfasst dies auch blockierte Lesezeichen (über Ihren Proxy erreichbar, wahrscheinlich noch vorhanden). Über „Rückgängig“ kann nur die letzte Löschung wiederhergestellt werden.",
+    "message": "Unter dem Filter „Alle“ sind darin auch blockierte Lesezeichen enthalten (über Ihren Proxy erreichbar, wahrscheinlich noch aktiv).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Rückgängig stellt nur den zuletzt gelöschten Eintrag wieder her."
   },
   "deadDeleteAllBtn": {
     "message": "Alle löschen"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$count$ zusätzliche Kopien in $groups$ Gruppen entfernen? Die ältesten Einträge bleiben erhalten.",
+    "message": "$count$ zusätzliche Kopien in $groups$ Gruppen entfernen? Der in jeder Gruppe ausgewählte Eintrag wird behalten.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Die älteste Kopie behalten und die anderen $count$ Kopien entfernen?",
+    "message": "„$title$“ behalten und die anderen $count$ Kopien entfernen?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

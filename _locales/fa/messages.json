@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "در فیلتر «همه»، این شامل نشانک‌های مسدودشده نیز می‌شود (که از طریق پروکسی قابل دسترسی هستند و احتمالاً هنوز فعال‌اند). واگرد فقط می‌تواند آخرین حذف را بازیابی کند.",
+    "message": "در فیلتر «همه»، این شامل نشانکهای مسدودشده نیز میشود (که از طریق پروکسی شما در دسترس هستند و احتمالاً هنوز فعالاند).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "واگردانی فقط آخرین حذف را بازیابی میکند."
   },
   "deadDeleteAllBtn": {
     "message": "حذف همه"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$count$ نسخه اضافی در $groups$ گروه حذف شود؟ قدیمی‌ترین‌ها نگه داشته می‌شوند.",
+    "message": "آیا $count$ نسخه اضافی در $groups$ گروه حذف شود؟ نسخه اصلی انتخابشده در هر گروه حفظ میشود.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "قدیمی‌ترین نگه داشته و $count$ نسخه دیگر حذف شود؟",
+    "message": "«$title$» نگه داشته شود و $count$ نسخه دیگر حذف شوند؟",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

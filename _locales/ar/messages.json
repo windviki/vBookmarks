@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "في فلتر الكل، يتضمن ذلك الإشارات المرجعية المحظورة (يمكن الوصول إليها عبر الوكيل، وقد لا تزال حية). يمكن للتراجع استعادة أحدث عملية حذف فقط.",
+    "message": "ضمن عامل التصفية الكل، يشمل ذلك الإشارات المرجعية المحجوبة (التي يمكن الوصول إليها عبر وكيلك، وقد تكون لا تزال نشطة).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "يمكن للتراجع استعادة آخر عملية حذف فقط."
   },
   "deadDeleteAllBtn": {
     "message": "حذف الكل"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ يتم الاحتفاظ بأقدم الإدخالات.",
+    "message": "إزالة $count$ نسخ إضافية عبر $groups$ مجموعات؟ سيتم الاحتفاظ بالعنصر المحدد في كل مجموعة.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "الاحتفاظ بالأقدم وإزالة $count$ نسخ الأخرى؟",
+    "message": "الاحتفاظ بـ \"$title$\" وإزالة النسخ $count$ الأخرى؟",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

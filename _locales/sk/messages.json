@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "V rámci filtra Všetko to zahŕňa blokované záložky (dostupné cez váš proxy, pravdepodobne stále funkčné). Späť môže obnoviť iba posledné odstránenie.",
+    "message": "Pri filtri Všetko to zahŕňa blokované záložky (dostupné cez váš proxy, pravdepodobne stále živé).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Späť môže obnoviť iba posledné odstránenie."
   },
   "deadDeleteAllBtn": {
     "message": "Odstrániť všetky"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Odstrániť $count$ extra kópií v $groups$ skupinách? Najstaršie položky sa zachovajú.",
+    "message": "Odstrániť $count$ nadbytočných kópií v rámci $groups$ skupín? Vybraný zástupca v každej skupine sa zachová.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Zachovať najstaršiu a odstrániť ostatných $count$ kópií?",
+    "message": "Ponechať „$title$“ a odstrániť zvyšných $count$ kópií?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

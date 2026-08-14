@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Onder het filter Alles omvat dit geblokkeerde bladwijzers (bereikbaar via je proxy, waarschijnlijk nog actief). Ongedaan maken herstelt alleen de meest recente verwijdering.",
+    "message": "Onder het filter Alles omvat dit ook geblokkeerde bladwijzers (bereikbaar via je proxy, waarschijnlijk nog actief).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Ongedaan maken kan alleen de meest recente verwijdering herstellen."
   },
   "deadDeleteAllBtn": {
     "message": "Alles verwijderen"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "$count$ extra kopieën in $groups$ groepen verwijderen? Oudste items blijven behouden.",
+    "message": "$count$ extra kopieën in $groups$ groepen verwijderen? De in elke groep geselecteerde versie blijft behouden.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "De oudste behouden en de andere $count$ kopieën verwijderen?",
+    "message": "Bewaar \"$title$\" en verwijder de andere $count$ kopieën?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

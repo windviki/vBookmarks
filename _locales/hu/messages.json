@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Az Összes szűrő alatt ez magában foglalja a blokkolt könyvjelzőket is (amelyek proxyn keresztül elérhetők, valószínűleg még élnek). A visszavonás csak a legutóbbi törlést tudja visszaállítani.",
+    "message": "Az Összes szűrő alatt ez tartalmazza a blokkolt könyvjelzőket is (amelyek a proxy-n keresztül elérhetők, valószínűleg még élnek).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "A visszavonás csak a legutóbbi törlést tudja visszaállítani."
   },
   "deadDeleteAllBtn": {
     "message": "Összes törlése"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Eltávolítja $count$ másolatot $groups$ csoportból? A legrégebbiek megmaradnak.",
+    "message": "Eltávolítja a(z) $count$ extra másolatot $groups$ csoportból? Minden csoportban a kiválasztott példány megmarad.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Megtartja a legrégebbit és eltávolítja a többi $count$ másolatot?",
+    "message": "Megtartsa a(z) \"$title$\" elemet, és törölje a többi $count$ másolatot?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

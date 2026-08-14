@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Con el filtro Todos, esto incluye los marcadores bloqueados (accesibles a través de tu proxy, probablemente aún activos). Deshacer solo puede restaurar la eliminación más reciente.",
+    "message": "Con el filtro Todos, esto incluye marcadores bloqueados (accesibles a través de su proxy, probablemente aún activos).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Deshacer solo puede restaurar la eliminación más reciente."
   },
   "deadDeleteAllBtn": {
     "message": "Eliminar todos"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "¿Eliminar $count$ copias extra en $groups$ grupos? Se conservan las entradas más antiguas.",
+    "message": "¿Eliminar $count$ copias adicionales en $groups$ grupos? Se conserva el elemento elegido en cada grupo.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "¿Conservar la más antigua y eliminar las otras $count$ copias?",
+    "message": "¿Conservar \"$title$\" y eliminar las otras $count$ copias?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

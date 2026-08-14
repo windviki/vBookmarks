@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "При филтъра „Всички“ това включва блокирани отметки (достъпни чрез вашия прокси, вероятно все още активни). Отмяната може да възстанови само последното изтриване.",
+    "message": "При филтъра Всички това включва блокирани отметки (достъпни чрез прокси, вероятно все още активни).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Отмяната може да възстанови само последното изтриване."
   },
   "deadDeleteAllBtn": {
     "message": "Изтрий всички"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Премахване на $count$ допълнителни копия от $groups$ групи? Запазват се най-старите записи.",
+    "message": "Да се премахнат $count$ допълнителни копия в $groups$ групи? Запазената отметка във всяка група се пази.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Запазване на най-старото и премахване на останалите $count$ копия?",
+    "message": "Да се запази \"$title$\" и да се премахнат останалите $count$ копия?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

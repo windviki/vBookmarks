@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Kaikki-suodattimessa tämä sisältää myös estetyt kirjanmerkit (saavutettavissa välityspalvelimen kautta, todennäköisesti edelleen toimivia). Kumoa voi palauttaa vain viimeisimmän poiston.",
+    "message": "Kaikki-suodattimella tämä sisältää estetyt kirjanmerkit (välityspalvelimen kautta tavoitettavissa, todennäköisesti edelleen toimivat).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Kumoaminen palauttaa vain viimeisimmän poiston."
   },
   "deadDeleteAllBtn": {
     "message": "Poista kaikki"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Poistetaanko $count$ ylimääräistä kopiota $groups$ ryhmästä? Vanhimmat säilytetään.",
+    "message": "Poistetaanko $count$ ylimääräistä kopiota $groups$ ryhmästä? Kussakin ryhmässä valittu kohde säilytetään.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Säilytetäänkö vanhin ja poistetaan muut $count$ kopiota?",
+    "message": "Säilytetäänkö \"$title$\" ja poistetaan muut $count$ kopiota?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

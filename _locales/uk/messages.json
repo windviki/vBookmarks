@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "У фільтрі «Усі» це включає заблоковані закладки (доступні через ваш проксі, імовірно, ще живі). Скасування може відновити лише останнє видалення.",
+    "message": "У фільтрі «Усі» це включає заблоковані закладки (доступні через ваш проксі, ймовірно, ще живі).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Скасування може відновити лише останнє видалення."
   },
   "deadDeleteAllBtn": {
     "message": "Видалити всі"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Видалити $count$ зайвих копій у $groups$ групах? Найстаріші записи залишаються.",
+    "message": "Видалити зайві копії ($count$) у $groups$ групах? У кожній групі зберігається вибраний екземпляр.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Залишити найстарішу та видалити інші $count$ копій?",
+    "message": "Залишити «$title$» і видалити інші копії ($count$)?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

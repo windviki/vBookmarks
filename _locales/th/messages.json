@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "ภายใต้ตัวกรองทั้งหมด สิ่งนี้รวมถึงบุ๊กมาร์กที่ถูกบล็อก (สามารถเข้าถึงได้ผ่านพร็อกซี ซึ่งอาจยังใช้งานได้) เลิกทำได้เฉพาะการลบครั้งล่าสุดเท่านั้น",
+    "message": "ภายใต้ตัวกรองทั้งหมดนี้รวมถึงบุ๊กมาร์กที่ถูกบล็อก (เข้าถึงได้ผ่านพร็อกซี อาจยังใช้งานได้)",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "การเลิกทำจะกู้คืนได้เฉพาะการลบล่าสุดเท่านั้น"
   },
   "deadDeleteAllBtn": {
     "message": "ลบทั้งหมด"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "ลบ $count$ สำเนาเกินใน $groups$ กลุ่ม? รายการที่เก่าที่สุดจะถูกเก็บไว้",
+    "message": "ลบสำเนาส่วนเกิน $count$ รายการใน $groups$ กลุ่มหรือไม่ จะเก็บรายการที่เลือกไว้ในแต่ละกลุ่ม",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "เก็บรายการที่เก่าที่สุดและลบ $count$ สำเนาอื่น?",
+    "message": "เก็บ \"$title$\" และลบสำเนาอื่นอีก $count$ รายการหรือไม่",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

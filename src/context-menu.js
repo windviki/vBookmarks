@@ -152,12 +152,20 @@ export function initContextMenu(ctx = {}) {
 
     // Apply the content-dependent greying for the folder under the menu.
     // The async children read lands ~1 frame later, same mechanism as the
-    // collapsed tab-group entry. `toggle` is self-correcting per open — no
-    // explicit reset needed.
+    // collapsed tab-group entry. Every folder-menu open (tree row or
+    // link-folder result row) re-applies it, and hideAllMenus clears the
+    // classes on close, so a stale state can neither leak into the next
+    // open nor linger when the read fails.
     const applyContentDisabled = id => {
         if (!id)
             return;
         chrome.bookmarks.getChildren(id, children => {
+            // A folder deleted/synced away between the right-click and this
+            // callback fails getChildren with lastError — read it (same as
+            // the folder-open handler below and tree-view's lazy expand) and
+            // keep the hideAllMenus-cleared all-enabled state.
+            if (chrome.runtime.lastError)
+                return;
             children = children || [];
             const hasUrls = children.some(c => c && c.url);
             const hasChildren = children.length > 0;
@@ -236,6 +244,22 @@ export function initContextMenu(ctx = {}) {
         // drop them all here so they can never leak across unrelated menu
         // opens.
         setRootDisabled(false);
+        // The content-dependent greying (applyContentDisabled's open/sort/
+        // tab-group entries) is per-open too — clear it on close so the
+        // next open starts enabled instead of showing the previous folder's
+        // state until the async children read lands (or keeping it forever
+        // when that read fails).
+        for (const itemId of OPEN_CONTENT_IDS.concat(SORT_CONTENT_IDS, ['folder-tab-group-collapse'])) {
+            const item = $(itemId);
+            if (item)
+                item.classList.remove('disabled');
+        }
+        if ($folderTabGroupSubmenu) {
+            $folderTabGroupSubmenu.querySelectorAll('.menu-item').forEach(t => {
+                if (t && t.classList)
+                    t.classList.remove('disabled');
+            });
+        }
         // Park any open collapsed-group flyout and its expanded marker.
         for (const sub of [$folderTabGroupSubmenu, $folderSortSubmenu, $bookmarkTabGroupSubmenu]) {
             if (!sub)
@@ -680,6 +704,11 @@ export function initContextMenu(ctx = {}) {
                 menu = $folderContextMenu;
                 menu.classList.remove('hide-sort');
                 setRootDisabled(false);
+                // Same content greying as the in-tree folder branch below:
+                // without it an empty folder's open/sort entries stayed
+                // clickable-dead, and a previous open's disabled classes
+                // lingered on a folder that does have content.
+                applyContentDisabled(rowId(el.parentNode));
             } else if (el.querySelector('hr')) {
                 menu = $separatorContextMenu;
                 // (the old hide-editables toggle here was dead: the CSS only

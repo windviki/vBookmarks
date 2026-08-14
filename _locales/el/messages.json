@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Στο φίλτρο «Όλα», αυτό περιλαμβάνει αποκλεισμένους σελιδοδείκτες (προσβάσιμους μέσω του διακομιστή μεσολάβησης, πιθανόν ακόμη ενεργούς). Η αναίρεση μπορεί να επαναφέρει μόνο την πιο πρόσφατη διαγραφή.",
+    "message": "Στο φίλτρο Όλα, αυτό περιλαμβάνει αποκλεισμένους σελιδοδείκτες (προσβάσιμους μέσω του proxy, πιθανόν ακόμη ζωντανούς).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Η αναίρεση μπορεί να επαναφέρει μόνο την πιο πρόσφατη διαγραφή."
   },
   "deadDeleteAllBtn": {
     "message": "Διαγραφή όλων"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Αφαίρεση $count$ επιπλέον αντιγράφων σε $groups$ ομάδες; Διατηρούνται οι παλαιότερες εγγραφές.",
+    "message": "Να αφαιρεθούν $count$ επιπλέον αντίγραφα από $groups$ ομάδες; Το επιλεγμένο στοιχείο σε κάθε ομάδα διατηρείται.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Διατήρηση του παλαιότερου και αφαίρεση των άλλων $count$ αντιγράφων;",
+    "message": "Να διατηρηθεί το \"$title$\" και να αφαιρεθούν τα άλλα $count$ αντίγραφα;",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

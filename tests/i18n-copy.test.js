@@ -64,6 +64,22 @@ describe('参数化 i18n 文案的真实替换结果 (en)', () => {
             .toBe('Keep "A oldest" and remove the other 2');
     });
 
+    it('去重确认: 组清理点名当前 keeper, 全量确认策略中立 ($title$/$count$/$groups$)', () => {
+        expect(_m('dupesConfirmGroup', ['A oldest', '2']))
+            .toBe('Keep "A oldest" and remove the other 2 copies?');
+        expect(_m('dupesConfirmAll', ['5', '2']))
+            .toBe('Remove 5 extra copies across 2 groups? The keeper selected in each group is kept.');
+    });
+
+    it('批量删除确认的 undo 粒度提示 (undoSingleStepNote 拆分)', () => {
+        expect(_m('undoSingleStepNote'))
+            .toBe('Undo can only restore the most recent deletion.');
+        // 死链 delete-all 的第二行 = All 筛选警告 + undo 提示 (代码拼接)
+        expect(_m('deadDeleteAllNote'))
+            .toBe('Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive).');
+        expect(_m('deadDeleteAllNote')).not.toContain('Undo');
+    });
+
     it('选项页命令: 删除确认/文件夹消失 (裸 $1$ 数字占位符)', () => {
         expect(_m('paletteCustomDeleteConfirm', 'work'))
             .toBe('Delete the command "work"? The change syncs to all your devices.');

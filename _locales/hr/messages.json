@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "U filtru 'Sve' ovo uključuje blokirane oznake (dostupne putem proxyja, vjerojatno još uvijek aktivne). Poništi može vratiti samo posljednje brisanje.",
+    "message": "Pod filtrom Sve ovo uključuje blokirane oznake (dostupne putem vašeg proxyja, vjerojatno još uvijek aktivne).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Poništavanje može vratiti samo posljednje brisanje."
   },
   "deadDeleteAllBtn": {
     "message": "Izbriši sve"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Ukloniti $count$ dodatnih kopija iz $groups$ grupa? Najstariji unosi se zadržavaju.",
+    "message": "Ukloniti $count$ dodatnih kopija unutar $groups$ grupa? Odabrani primjerak u svakoj grupi se zadržava.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Zadržati najstariju i ukloniti ostalih $count$ kopija?",
+    "message": "Zadržati \"$title$\" i ukloniti ostalih $count$ kopija?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

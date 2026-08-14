@@ -182,8 +182,11 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under filteret Alle omfatter dette blokerede bogmærker (tilgængelige via din proxy, sandsynligvis stadig aktive). Fortryd kan kun gendanne den seneste sletning.",
+    "message": "Under filteret \"Alle\" omfatter dette blokerede bogmærker (tilgængelige via din proxy, sandsynligvis stadig aktive).",
     "description": "Second line of the delete-all confirmation in the Dead links view."
+  },
+  "undoSingleStepNote": {
+    "message": "Fortryd kan kun gendanne den seneste sletning."
   },
   "deadDeleteAllBtn": {
     "message": "Slet alle"
@@ -422,7 +425,7 @@
     }
   },
   "dupesConfirmAll": {
-    "message": "Fjern $count$ ekstra kopier på tværs af $groups$ grupper? De ældste poster bevares.",
+    "message": "Fjern $count$ ekstra kopier fordelt på $groups$ grupper? Den valgte i hver gruppe beholdes.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -445,10 +448,14 @@
     }
   },
   "dupesConfirmGroup": {
-    "message": "Behold den ældste og fjern de andre $count$ kopier?",
+    "message": "Behold \"$title$\" og fjern de andre $count$ kopier?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     },
     "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept)."

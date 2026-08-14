@@ -181,8 +181,12 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive). Undo can only restore the most recent deletion.",
-    "description": "Second line of the delete-all confirmation in the Dead links view."
+    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive).",
+    "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
+  },
+  "undoSingleStepNote": {
+    "message": "Undo can only restore the most recent deletion.",
+    "description": "Appended to every batch-deletion confirmation (dead links view, duplicates view): undo() restores only the most recent deletion, not a whole batch."
   },
   "deadDeleteAllBtn": {
     "message": "Delete all"
@@ -330,8 +334,8 @@
     }
   },
   "dupesConfirmAll": {
-    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps its oldest bookmark).",
-    "message": "Remove $count$ extra copies across $groups$ groups? Oldest entries are kept.",
+    "description": "Confirmation before deleting every redundant copy across all duplicate groups (each group keeps the bookmark its keeper radio selected — the strategy default or a manual pick).",
+    "message": "Remove $count$ extra copies across $groups$ groups? The keeper selected in each group is kept.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -354,11 +358,15 @@
     }
   },
   "dupesConfirmGroup": {
-    "description": "Confirmation before deleting the redundant copies of one duplicate group (the oldest bookmark is kept).",
-    "message": "Keep the oldest and remove the other $count$ copies?",
+    "description": "Confirmation before deleting the redundant copies of one duplicate group; $title$ is the group's current keeper (the strategy default or a manual radio pick — same wording as the group header's ✓ hint dupesCleanRestHint).",
+    "message": "Keep \"$title$\" and remove the other $count$ copies?",
     "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Example bookmark"
+      },
       "count": {
-        "content": "$1"
+        "content": "$2"
       }
     }
   },

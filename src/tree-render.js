@@ -27,9 +27,10 @@ import { htmlspecialchars } from './escape.js';
  * getParentPath, findFolderByType, getEffectiveSubTree, isRootFolder }.
  * chrome.i18n.getMessage, chrome.runtime.getURL, chrome.bookmarks.getChildren,
  * window.syncManager, window.innerWidth and document remain page globals.
- * No neatools helpers: String.prototype.htmlspecialchars/colorHex became the
- * module-private pure functions below, Array.contains → includes,
- * inject → appendChild, destroy → remove.
+ * No neatools helpers: htmlspecialchars is the shared src/escape.js import
+ * (see top), Array.contains → includes, inject → appendChild, destroy →
+ * remove; the old colorHex helper is gone (separator color is theme CSS —
+ * see generateSeparatorHTML).
  */
 
 const httpsPattern = /^https?:\/\//i;
@@ -161,9 +162,12 @@ export function initTreeRender(ctx = {}) {
         if (isBookmarklet && url.length > 140)
             tooltipURL = `${url.slice(0, 140)}...`;
         tooltipURL = htmlspecialchars(tooltipURL);
+        // The untitled fallback shows the scheme-stripped URL — escape it
+        // too (the tooltip below escapes the same expression): a URL with
+        // < > " would otherwise land raw in the innerHTML (v4.0 leftover).
         const name = (title && titlePositions && titlePositions.length)
             ? highlightTitlePositions(title, titlePositions)
-            : (htmlspecialchars(title) || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')));
+            : (htmlspecialchars(title) || (httpsPattern.test(url) ? htmlspecialchars(url.replace(httpsPattern, '')) : _m('noTitle')));
 
         // v4 task-2 §3.6: list views (search/recent/…) pass meta.path — the
         // bookmark's containing-folder path from buildPathMap. The tooltip

@@ -143,7 +143,8 @@ const setup = (opts = {}) => {
             onRemoved: { addListener(fn) { this.fn = fn; } },
             onChanged: { addListener(fn) { this.fn = fn; } },
             onMoved: { addListener(fn) { this.fn = fn; } }
-        }
+        },
+        runtime: { lastError: undefined }
     };
     globalThis.chrome = chromeStub;
 
@@ -724,7 +725,9 @@ describe('batch deletion (§5.6a)', () => {
                 : null)
         });
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmGroup[2]');
+        // the confirm names the group's current keeper (A oldest) and every
+        // batch delete carries the undo-granularity note
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmGroup[A oldest|2]<br>undoSingleStepNote');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
@@ -743,7 +746,7 @@ describe('batch deletion (§5.6a)', () => {
         const { chrome, dialogs, undo, treeView, clickOn } = ctx;
         ctx.def().activate();
         clickOn({ closest: sel => (sel === '.dupes-apply-all' ? {} : null) });
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmAll[3|2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmAll[3|2]<br>undoSingleStepNote');
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['15', '21', '24']);
@@ -761,6 +764,33 @@ describe('batch deletion (§5.6a)', () => {
         expect(chrome.bookmarks.removeCalls).toEqual([]);
         expect(undo.captureCalls).toEqual([]);
         expect(undo.toastCalls).toEqual([]);
+    });
+
+    it('a removal failing mid-batch is skipped and the toast counts only real deletions', async () => {
+        // The dead view's robustness recipe: a doomed id vanishing mid-batch
+        // (sync / another page) sets runtime.lastError in the remove
+        // callback — read it, skip the count, toast the ACTUAL deletions
+        // instead of the planned number.
+        const ctx = setup({});
+        const { chrome, dialogs, undo, clickOn } = ctx;
+        ctx.def().activate();
+        const stub = chrome.bookmarks;
+        const realRemove = stub.remove.bind(stub);
+        stub.remove = (id, cb) => {
+            if (id === '15') {
+                stub.removeCalls.push(id); // attempted, but already gone
+                chrome.runtime.lastError = { message: 'Bookmark id is invalid' };
+                cb();
+                chrome.runtime.lastError = undefined;
+                return;
+            }
+            realRemove(id, cb);
+        };
+        clickOn({ closest: sel => (sel === '.dupes-apply-all' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['15', '21']); // both attempted in order
+        expect(undo.toastCalls).toEqual(['dupesDone[1]']); // only one really deleted
     });
 
     it('the regroup replays itself through the debounced onRemoved listener', async () => {
@@ -993,7 +1023,7 @@ describe('group-head menu API (v4 task-3 #16)', () => {
         ctx.def().activate();
         viewDupes.cleanGroup('https://a.com');
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmGroup[2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmGroup[A oldest|2]<br>undoSingleStepNote');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
@@ -1119,12 +1149,29 @@ describe('selection mode (v4 task-3 #5)', () => {
         groupClick(ctx, '//c.com');
         ctx.clickOn({ closest: sel => (sel === '.dupes-apply-selected' ? {} : null) });
         expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
-        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmSelected[3|2]');
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('dupesConfirmSelected[3|2]<br>undoSingleStepNote');
         expect(chrome.bookmarks.removeCalls).toEqual([]); // gated until fn1
         dialogs.ConfirmDialog.openCalls[0].fn1();
         await flush();
         expect(chrome.bookmarks.removeCalls).toEqual(['15', '21', '24']); // keepers 11 + 23 stay
         expect(undo.toastCalls).toEqual(['dupesDone[3]']);
+    });
+
+    it('a finished apply exits the selection mode (dead-view deleteSelected parity)', async () => {
+        const ctx = setup({});
+        const { chrome, dialogs, $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dupes-select-mode' ? {} : null) });
+        groupClick(ctx);
+        ctx.clickOn({ closest: sel => (sel === '.dupes-apply-selected' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['15', '21']);
+        // the selection's doomed rows are gone — the mode exits and the idle
+        // toolbar comes back (a zero-count selection bar would be dead weight)
+        expect($list.innerHTML).not.toContain('class="selecting"');
+        expect($list.innerHTML).not.toContain('selectCount');
+        expect($list.innerHTML).toContain('dupes-select-mode');
     });
 
     it('a fully-kept selection (nothing doomed) never opens the dialog', () => {
