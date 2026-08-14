@@ -56,6 +56,7 @@
 
 import { VIEW_ICONS } from './icons.js';
 import { buildPathMap as computePathMap } from './tree-render.js';
+import { rowFocusTarget } from './list-focus.js';
 
 export function initViewManager(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -253,8 +254,14 @@ export function initViewManager(ctx = {}) {
         }
         if (!def.listEl)
             return;
-        const row = def.listEl.querySelector('.focus')
-            || def.listEl.querySelector(ROW_SEL);
+        // 5421968 regression lesson (keyboard.js's toolbar ↓ path carries the
+        // same guard): a `.focus` marker parked inside a toolbar dropdown's
+        // listbox (.vbm-dropdown-list lives inside the same container) is a
+        // hidden option, not a row — .focus() on it silently dead-ends.
+        const marked = def.listEl.querySelector('.focus');
+        const row = (marked && !(marked.closest && marked.closest('.vbm-dropdown-list')))
+            ? marked
+            : def.listEl.querySelector(ROW_SEL);
         if (row) {
             row.focus();
             return;
@@ -434,8 +441,10 @@ export function initViewManager(ctx = {}) {
     // probe → fetch → innerHTML swap), which wipes a synchronously restored
     // marker — so this watches for a short window and re-marks as needed.
     // A live marker always wins: once the user moves focus, nothing is done.
+    // Gated by the same remember option as the focusSpot memory (off: the
+    // stored viewState rows are neither written nor restored).
     const restoreFocusRow = def => {
-        if (!def.listEl)
+        if (!def.listEl || !remember())
             return;
         const entry = readViewState()[def.id];
         const rowId = (entry && typeof entry === 'object') ? entry.focus : null;
@@ -448,9 +457,10 @@ export function initViewManager(ctx = {}) {
             if (!def.listEl.querySelector('.focus')) {
                 const li = findRowById(def.listEl, rowId);
                 if (li) {
-                    const inner = li.firstElementChild;
-                    const target = (inner && /^(A|SPAN)$/.test(inner.tagName)) ? inner : li;
-                    target.classList.add('focus');
+                    // The shared row contract (list-focus.js): the anchor/span,
+                    // or the tabindex row container — never the bare li of a
+                    // button-led row (the dupes keeper radio).
+                    (rowFocusTarget(li) || li).classList.add('focus');
                 }
             }
             if (++attempts < 20)
@@ -481,6 +491,14 @@ export function initViewManager(ctx = {}) {
     try {
         pendingSpot = JSON.parse(store.get('focusSpot') || 'null');
     } catch (e) { /* corrupt record — treat as none */ }
+    // The remember option gates `viewState` (per-view scroll + remembered
+    // row) exactly like `focusSpot` — off means never written on view
+    // switches and never restored on activate, symmetric with the tree's
+    // focusID/scroll gating. The stale record from a remember-on session is
+    // dropped once, here at startup (restoreFocusSpot clears focusSpot the
+    // same way when the option is off).
+    if (!remember())
+        store.set('viewState', null);
 
     const isInside = (root, node) => {
         for (let n = node; n; n = n.parentNode)
@@ -590,8 +608,11 @@ export function initViewManager(ctx = {}) {
             const li = findRowById(def.listEl, spot.key);
             if (!li)
                 return null;
-            const inner = li.firstElementChild;
-            return (inner && /^(A|SPAN)$/.test(inner.tagName)) ? inner : li;
+            // The shared row contract (list-focus.js): the anchor/span, or
+            // the tabindex row container — a button-led row (the dupes
+            // keeper radio) must resolve to its anchor, else .focus() on
+            // the tabindex-less li is a silent no-op.
+            return rowFocusTarget(li) || li;
         }
         return null;
     };
@@ -697,7 +718,9 @@ export function initViewManager(ctx = {}) {
         if (prev) {
             if (prev.deactivate)
                 prev.deactivate();
-            if (prev.listEl) {
+            // viewState (scroll + remembered row) persists only under the
+            // remember option — the same gate as the focusSpot capture.
+            if (prev.listEl && remember()) {
                 const state = readViewState();
                 state[prev.id] = {
                     scroll: prev.persistScroll ? prev.listEl.scrollTop : scrollOf(state[prev.id]),
@@ -718,7 +741,7 @@ export function initViewManager(ctx = {}) {
         }
         activeId = id;
         def.container.hidden = false;
-        if (def.persistScroll && def.listEl) {
+        if (def.persistScroll && def.listEl && remember()) {
             const scroll = scrollOf(readViewState()[id]);
             if (scroll)
                 def.listEl.scrollTop = scroll;

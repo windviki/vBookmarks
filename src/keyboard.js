@@ -1149,11 +1149,28 @@ export function initKeyboard(ctx = {}) {
             }
         }
         const listEl = (def && def.listEl) || $tree;
+        // 5421968 regression lesson (the toolbar ↓ path above carries the
+        // same guard): a `.focus` marker parked inside a toolbar dropdown's
+        // listbox is a hidden option, not a row — never a Tab stop.
+        const marked = listEl ? listEl.querySelector('.focus') : null;
         const rowStop = listEl
-            ? (listEl.querySelector('.focus') || listEl.querySelector(ROW_SEL))
+            ? ((marked && !(marked.closest && marked.closest('.vbm-dropdown-list')))
+                ? marked
+                : listEl.querySelector(ROW_SEL))
             : null;
         if (rowStop)
             stops.push(rowStop);
+        // keyboard-model §7: the undo toast (undo.js showToast/toastAction)
+        // is a transient bar fixed to the bottom edge — its button joins the
+        // ring as the last stop while the bar is up (the `hidden` attribute
+        // is the visibility signal; the 8s auto-hide drops the stop again).
+        // Never an arrow rung: the arrow chain stays stable either way.
+        const toast = $('undo-toast');
+        if (toast && !toast.hidden) {
+            const toastBtn = $('undo-toast-button');
+            if (toastBtn && !toastBtn.disabled && tabVisible(toastBtn))
+                stops.push(toastBtn);
+        }
         if (!stops.length)
             return;
         let i = stops.indexOf(ae);

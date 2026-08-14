@@ -46,13 +46,18 @@
  *                                (tree-view inits after search; called only
  *                                on the R keypress, docs/v4task-2-list.md §2.3)
  *
- * window.VBMFuzzy is loaded by fuzzy.js (classic script) before neat.js.
+ * window.VBMFuzzy is exposed by fuzzy.js — an ES-module shim over
+ * fuzzy-core.js, loaded with <script type="module"> before neat.js.
  * document/window/chrome remain page globals, as in the rest of the popup.
  * No neatools helpers here: plain getElementById/classList/loops only.
  */
 import { FOLDER_ICON, VIEW_ICONS, TRASH_ICON } from './icons.js';
 import { relTimeLabel } from './tree-render.js';
 import { htmlspecialchars } from './escape.js';
+import {
+    parkRowFocus as sharedParkRowFocus,
+    unparkRowFocus as sharedUnparkRowFocus
+} from './list-focus.js';
 
 // §4.3: the search-history MRU as a pure function — trim, drop empties,
 // dedupe by exact query, newest first, capped at `limit`. Entries are
@@ -228,58 +233,16 @@ export function initSearch(ctx = {}) {
     // #results list keeps the last search's output between searches.
     const $historyArea = $('search-history-area');
     // --- Row focus park/restore (4.0.1 focus law) --------------------------
-    // The history-area twin of the list views' row park: renderHistoryArea's
-    // innerHTML swap replaces every row, so a focused row drops to <body>
-    // and the ↓ walk dies (the Delete key removes a row; the context menu's
-    // remove/clear-all re-renders). Park the focused row before the swap,
-    // restore it after — history rows carry no id, so the park is its index
-    // among the area's <li>s, clamped on restore; with no rows left the
-    // search box takes the focus back (not the area container).
-    const parkRowFocus = () => {
-        let li = document.activeElement;
-        while (li && li.tagName !== 'LI')
-            li = li.parentNode;
-        // the row must belong to the history area — a results row does not count
-        for (let p = li; p; p = p.parentNode) {
-            if (p !== $historyArea)
-                continue;
-            if (typeof $historyArea.querySelectorAll !== 'function')
-                return null;
-            const lis = $historyArea.querySelectorAll('li');
-            for (let i = 0, l = lis.length; i < l; i++)
-                if (lis[i] === li)
-                    return { id: li.id || '', idx: i };
-            return null;
-        }
-        return null;
-    };
-    const unparkRowFocus = parked => {
-        if (!parked)
-            return;
-        let li = parked.id ? document.getElementById(parked.id) : null;
-        if (!li) {
-            if (typeof $historyArea.querySelectorAll !== 'function')
-                return;
-            const lis = $historyArea.querySelectorAll('li');
-            if (!lis.length) {
-                // no rows at all — hand focus back to the search box
-                if (searchInput.focus)
-                    searchInput.focus();
-                return;
-            }
-            li = lis[Math.min(parked.idx, lis.length - 1)];
-        }
-        if (!li)
-            return;
-        // A row carrying tabindex takes the focus itself; plain rows hand it
-        // to their anchor/span — the same element the area's ↓ walk focuses.
-        // (getAttribute is guarded: test doubles may lack it.)
-        const target = (li.getAttribute && li.getAttribute('tabindex') !== null)
-            ? li
-            : (li.querySelector ? li.querySelector('a, span') : null);
-        if (target && target.focus)
-            target.focus();
-    };
+    // The history-area park rides the shared list views' implementation
+    // (src/list-focus.js): renderHistoryArea's innerHTML swap replaces every
+    // row, so a focused row drops to <body> and the ↓ walk dies (the Delete
+    // key removes a row; the context menu's remove/clear-all re-renders).
+    // Park the focused row before the swap, restore it after — history rows
+    // carry no id, so the park is its index among the area's <li>s, clamped
+    // on restore; with no rows left the search box takes the focus back (not
+    // the area container — the `emptyFocus` fallback).
+    const parkRowFocus = () => sharedParkRowFocus($historyArea);
+    const unparkRowFocus = parked => sharedUnparkRowFocus($historyArea, parked, searchInput);
     const renderHistoryArea = () => {
         if (!$historyArea)
             return;

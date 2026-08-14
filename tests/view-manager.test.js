@@ -486,6 +486,78 @@ describe('activate', () => {
         expect(li.classList.contains('focus')).toBe(true);
     });
 
+    it('marks the anchor of a button-led row, never the bare li (dupes member shape)', () => {
+        // Regression: the dupes member rows lead with <button.keeper-radio>,
+        // so a firstElementChild heuristic resolves the row target to the
+        // tabindex-less li — the marker landed where no focus walk ever
+        // looks. The shared contract (list-focus.js) finds the anchor.
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const li = makeEl('li');
+        li.id = 'dupes-item-5';
+        li.appendChild(makeEl('button')); // the keeper radio leads the row
+        const a = makeEl('a');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        a.focus(); // the user arrows onto the row
+        views.activate('tree', { keepFocus: true });
+        views.activate('recent', { keepFocus: true });
+        expect(a.classList.contains('focus')).toBe(true);
+        expect(li.classList.contains('focus')).toBe(false);
+    });
+
+    it('remember off: viewState is neither written nor restored (stale key cleared)', () => {
+        // The same gate the focusSpot memory and the tree's focusID/scroll
+        // restore live under: with 记住之前的状态 off, the per-view scroll +
+        // remembered row must not cross sessions — nor be written mid-session.
+        const { views, store, addRecent, makeEl } = setup({
+            getRememberState: () => false,
+            storeData: { viewState: '{"recent":{"scroll":30,"focus":"recent-item-2"}}' }
+        });
+        expect(store.get('viewState')).toBe(null); // stale record dropped at startup
+        const recent = addRecent({ persistScroll: true });
+        const li = makeEl('li');
+        li.id = 'recent-item-2';
+        const a = makeEl('a');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent', { keepFocus: true });
+        expect(recent.listEl.scrollTop).toBe(0); // no scroll restore
+        expect(a.classList.contains('focus')).toBe(false); // no row re-mark
+        a.focus();
+        recent.listEl.scrollTop = 42;
+        views.activate('tree', { keepFocus: true });
+        expect(store.get('viewState')).toBe(null); // nothing written on switch-away
+        views.activate('recent', { keepFocus: true });
+        expect(recent.listEl.scrollTop).toBe(42); // untouched — nothing was persisted to restore
+        expect(a.classList.contains('focus')).toBe(false);
+    });
+
+    it('a .focus marker inside a dropdown listbox is skipped by focusDefault (5421968)', () => {
+        // keyboard.js's toolbar ↓ path carries the same guard: a marker
+        // parked on a hidden listbox option is not a row — focusing it
+        // silently dead-ends; fall through to the first real row.
+        const { views, addRecent, makeEl } = setup({});
+        const recent = addRecent();
+        const dropdown = makeEl('div');
+        dropdown.classList.add('vbm-dropdown');
+        const listbox = makeEl('ul');
+        listbox.classList.add('vbm-dropdown-list');
+        const option = makeEl('li');
+        option.classList.add('focus'); // the stale marker parked on the option
+        dropdown.appendChild(listbox);
+        listbox.appendChild(option);
+        recent.listEl.appendChild(dropdown);
+        const li = makeEl('li');
+        const a = makeEl('a');
+        li.appendChild(a);
+        recent.listEl.appendChild(li);
+        views.activate('recent');
+        expect(option.focused).toBe(false); // never the hidden option
+        expect(a.focused).toBe(true); // the first real row instead
+    });
+
     it('reads legacy numeric viewState entries as scroll-only', () => {
         const { views, addRecent } = setup({ storeData: { viewState: '{"recent": 30}' } });
         const recent = addRecent({ persistScroll: true });
@@ -1263,6 +1335,26 @@ describe('focusSpot — unified popup-reopen focus memory', () => {
             const listEl = makeEl('ul');
             const li = makeEl('li');
             li.id = 'recent-item-5';
+            const a = makeEl('a');
+            li.appendChild(a);
+            listEl.appendChild(li);
+            addRecent({ container: makeEl(), listEl });
+            views.activate('recent', { keepFocus: true });
+            views.restoreFocusSpot();
+            expect(doc.activeElement).toBe(a);
+        });
+
+        it('restores the anchor of a button-led row (the dupes member shape)', () => {
+            // Regression: the dupes member row leads with <button.keeper-radio>;
+            // resolving the spot to the bare li made .focus() a silent no-op
+            // while restoreFocusSpot believed it had succeeded.
+            const { views, doc, makeEl, addRecent } = setup({
+                storeData: { focusSpot: JSON.stringify({ zone: 'row', view: 'recent', key: 'dupes-item-7' }) }
+            });
+            const listEl = makeEl('ul');
+            const li = makeEl('li');
+            li.id = 'dupes-item-7';
+            li.appendChild(makeEl('button')); // the keeper radio leads the row
             const a = makeEl('a');
             li.appendChild(a);
             listEl.appendChild(li);

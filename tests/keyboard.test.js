@@ -661,6 +661,96 @@ describe('Tab region cycle (§2.1)', () => {
         expect(doc.activeElement).toBe(tabBtn);
     });
 
+    // keyboard-model §7: the transient undo toast (undo.js showToast/
+    // toastAction) joins the ring at its visual spot — the fixed bottom bar,
+    // after the list rows — whenever it is up (`hidden` off is the visibility
+    // signal; the 8s auto-hide drops the stop again).
+    const toastEnv = hidden => {
+        const refs = {};
+        const env = setup({
+            views: ({ tree, el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                const toast = el('DIV', 'undo-toast');
+                toast.hidden = hidden;
+                refs.toastBtn = el('BUTTON', 'undo-toast-button');
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-tree');
+                refs.tabBtn.parentNode = refs.tabs;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree, tabEl: refs.tabBtn }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ...env, ...refs };
+    };
+
+    it('a visible undo toast contributes its button as the ring\'s last stop', () => {
+        const { doc, fireDoc, searchInput, toastBtn, tree, f1 } = toastEnv(false);
+        tree._qs[ROW_SEL] = f1.link;
+        f1.link.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(toastBtn); // after the list rows
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // wraps to the header
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(toastBtn); // backwards: the last stop
+    });
+
+    it('a hidden undo toast stays out of the ring', () => {
+        const { doc, fireDoc, searchInput, tree, f1 } = toastEnv(true);
+        tree._qs[ROW_SEL] = f1.link;
+        f1.link.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(searchInput); // straight wrap-around
+    });
+
+    it('a .focus marker inside a dropdown listbox is never the row stop (5421968)', () => {
+        // The same guard the toolbar ↓ path carries: a marker parked on a
+        // hidden listbox option is not a row — the ring stop falls through
+        // to the first real row instead of dead-ending on the option.
+        const refs = {};
+        const env = setup({
+            views: ({ el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-dupes');
+                refs.tabBtn.parentNode = refs.tabs;
+                const listEl = el('DIV', 'dupes-list');
+                // the custom dropdown's hidden listbox holds the stale marker
+                const listbox = el('UL');
+                listbox.classList.add('vbm-dropdown-list');
+                const option = el('LI');
+                option.parentNode = listbox;
+                option.closest = sel => (sel === '.vbm-dropdown-list' ? listbox : null);
+                listEl._qs['.focus'] = option;
+                const li = el('LI', 'dupes-item-1');
+                const a = el('A');
+                a.parentNode = li;
+                li.parentNode = listEl;
+                listEl._qs['li a, li span, li[tabindex]'] = a;
+                Object.assign(refs, { listEl, option, rowA: a });
+                return {
+                    lists: () => [{ id: 'dupes', el: listEl, typeAhead: false }],
+                    activeDef: () => ({ listEl, tabEl: refs.tabBtn }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        refs.tabBtn.focus();
+        env.fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(env.doc.activeElement).toBe(refs.rowA); // the real row, not the option
+    });
+
     it('continues from the list region when focus is inside the list but not on its stop', () => {
         const { doc, fireDoc, searchInput, tabBtn, tree, f1, b11 } = tabEnv();
         tree._qs[ROW_SEL] = f1.link;

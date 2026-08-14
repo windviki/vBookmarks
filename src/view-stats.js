@@ -95,7 +95,7 @@
 import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED } from './icons.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus } from './list-focus.js';
 
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -377,30 +377,9 @@ export function initViewStats(ctx = {}) {
         return html;
     };
 
-    // --- Toolbar focus restore (final polish) --------------------------------
-    // The toolbar re-renders together with the rows (a sort switch, a clear,
-    // every scan-progress tick). Without a restore, a keyboard user holding
-    // focus on a control loses it to <body> on every repaint. The controls
-    // are positionally stable across re-renders, so an index suffices.
-    const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
-    const toolbarFocusIndex = () => {
-        if (typeof $list.querySelectorAll !== 'function')
-            return -1;
-        const controls = $list.querySelectorAll(TOOLBAR_SEL);
-        for (let i = 0, l = controls.length; i < l; i++)
-            if (controls[i] === document.activeElement)
-                return i;
-        return -1;
-    };
-    const restoreToolbarFocus = idx => {
-        if (idx < 0 || typeof $list.querySelectorAll !== 'function')
-            return;
-        const c = $list.querySelectorAll(TOOLBAR_SEL)[idx];
-        if (c && c.focus)
-            c.focus();
-    };
-
-    // --- Row focus park/restore: see src/list-focus.js (4.0.1 focus law).
+    // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
+    // (final polish / 4.0.1 focus law). Stats has no risk banner, so the
+    // shared helpers' base TOOLBAR_SEL default is the right control set here.
 
     const render = () => {
         let html = renderToolbar();
@@ -422,11 +401,11 @@ export function initViewStats(ctx = {}) {
         // Final polish: keep a focused toolbar control focused across the
         // innerHTML swap (sort switch re-renders the bar) — positionally
         // stable index, or the keyboard rung dies on every refresh.
-        const tbIdx = toolbarFocusIndex();
+        const tbIdx = toolbarFocusIndex($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         $list.innerHTML = html;
-        restoreToolbarFocus(tbIdx);
+        restoreToolbarFocus($list, tbIdx);
         unparkRowFocus($list, parkedRow);
         onRowsRendered();
     };
