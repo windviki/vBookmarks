@@ -66,7 +66,8 @@
  *                    (neat.js passes store.get('quickAddFolderId', '1'))
  * ctx.dialogs      — dialogs.js API (AlertDialog/ConfirmDialog): the
  *                    session-save alerts, the /theme usage alert and the
- *                    custom-command delete confirm
+ *                    custom-command delete confirm; its anyOpen() gates the
+ *                    panel off the modal dialog layer
  * ctx.onChanged    — re-pulls the bookmark tree into the tree view after a
  *                    session save added a folder
  *
@@ -78,8 +79,8 @@
  *
  * chrome.bookmarks/tabs/runtime, chrome.i18n.getMessage, document and
  * window.VBMFuzzy remain page globals. No neatools helpers: getElementById/
- * classList and the module-private htmlspecialchars below (same
- * implementation as tree-render.js's, modules stay self-contained).
+ * classList, and htmlspecialchars comes from src/escape.js (the single
+ * shared implementation, also imported by tree-render.js).
  */
 
 import { sessionFolderName, tabsToBookmarks, saveSession } from './session.js';
@@ -87,6 +88,7 @@ import { FOLDER_ICON } from './icons.js';
 import { loadCustomCommands, saveCustomCommands, sortCustoms, matchCustom, executeCustom, SLASH_RE } from './palette-commands.js';
 import { htmlspecialchars } from './escape.js';
 import { highlightTitlePositions } from './tree-render.js';
+import { SeparatorManager } from './separators.js';
 
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -119,11 +121,33 @@ export function initPalette(ctx = {}) {
 
     // A dialog (confirm/edit/alert/new-folder/sort/tab-group/group-pick)
     // owns the popup's modal layer; the palette must not open over or steal
-    // keys from it. Mirrors dialogs.js's anyOpen() class set (T3).
-    const DIALOG_CLASSES = ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort',
-        'needTabGroup', 'needGroupPick'];
+    // keys from it. dialogs.js's anyOpen() is the single source of truth for
+    // the dialog class set; a partial ctx double without it reads as "no
+    // dialog" (the optional-member guard keyboard.js uses).
     const anyDialogOpen = () =>
-        DIALOG_CLASSES.some(c => document.body.classList.contains(c));
+        !!(dialogs && typeof dialogs.anyOpen === 'function' && dialogs.anyOpen());
+
+    // "A context menu is open over the palette" = a row carries .active AND
+    // some menu element is actually VISIBLE — keyboard.js's K6 contract:
+    // clearMenu() (no arg — view switches, menu-item picks) keeps the
+    // .active marker while hiding every menu (inline opacity:0; the show
+    // path sets opacity '1'), so the marker alone is stale state: treating
+    // it as "menu open" swallows ←/Esc for a menu that is not there. The
+    // menus are the document's menu[type=context] elements (context-menu.js
+    // owns them all); keyboard.js builds the same check from its injected
+    // menus object.
+    const menuOpen = () => {
+        if (!document.body.querySelector('.active'))
+            return false;
+        if (typeof document.querySelectorAll !== 'function')
+            return false; // minimal test doubles without menu plumbing
+        const menus = document.querySelectorAll('menu[type=context]');
+        for (let i = 0, l = menus.length; i < l; i++) {
+            if (menus[i].style && menus[i].style.opacity === '1')
+                return true;
+        }
+        return false;
+    };
 
     // --- State --------------------------------------------------------------
     let openState = false;
@@ -135,8 +159,15 @@ export function initPalette(ctx = {}) {
     let customs = [];        // v4 task-4 #6: paletteCustomCommands, loaded per open
     let opener = null;       // element that owned focus before the panel opened
 
+    // Separators never enter the palette index — search.js's buildSearchIndex
+    // excludes them through the same SeparatorManager check. A local instance
+    // reads the same settings keys (the constructor only reads the store), so
+    // no ctx injection is needed; guarded so a store-less ctx still works.
+    const separatorManager = store ? new SeparatorManager(store) : null;
+
     // Flatten a bookmark tree: a node with children is a folder, everything
-    // else a bookmark; the synthetic root ('0') is skipped.
+    // else a bookmark; the synthetic root ('0') is skipped, and separator
+    // bookmarks are tree chrome, not jump targets.
     const flattenTree = tree => {
         const items = [];
         const walk = nodes => {
@@ -153,7 +184,7 @@ export function initPalette(ctx = {}) {
                         });
                     }
                     walk(node.children);
-                } else {
+                } else if (!(separatorManager && separatorManager.isSeparator(node.title || '', node.url || ''))) {
                     items.push({
                         id: node.id,
                         title: node.title || '',
@@ -367,8 +398,12 @@ export function initPalette(ctx = {}) {
             }
         } else if (row.kind === 'folder') {
             li.id = row.id ? `results-item-${row.id}` : '';
-            // match-char <mark> highlight, same as the search view (#results)
-            const titleHtml = highlightTitlePositions(row.title, row.positions);
+            // match-char <mark> highlight, same as the search view (#results);
+            // an untitled folder falls back to the noTitle label — the search
+            // view's folder-row contract (search.js)
+            const titleHtml = row.title
+                ? highlightTitlePositions(row.title, row.positions)
+                : _m('noTitle');
             li.innerHTML = `<a href="" tabindex="-1" class="link-folder tree-item-link"><div class="favicon-container">${FOLDER_ICON}</div><i>${titleHtml}</i></a>`;
         } else {
             // bookmark row: <a> tag so context-menu.js recognises it
@@ -647,7 +682,7 @@ export function initPalette(ctx = {}) {
             case 'ArrowLeft':
                 e.preventDefault();
                 // Close the context menu if one is open over the palette.
-                if (clearMenu && document.body.querySelector('.active'))
+                if (clearMenu && menuOpen())
                     clearMenu();
                 break;
             case 'Home':
@@ -712,7 +747,7 @@ export function initPalette(ctx = {}) {
                 e.stopImmediatePropagation();
                 // If a context menu is open over the palette (e.g. right-clicked
                 // a result row), just dismiss the menu — don't close the panel.
-                if (clearMenu && document.body.querySelector('.active')) {
+                if (clearMenu && menuOpen()) {
                     clearMenu();
                     return;
                 }
@@ -773,7 +808,7 @@ export function initPalette(ctx = {}) {
         const closeKey = document.body.classList.contains('rtl') ? 'ArrowRight' : 'ArrowLeft';
         if (e.key !== closeKey && e.key !== 'Escape')
             return;
-        if (!clearMenu || !document.body.querySelector('.active'))
+        if (!clearMenu || !menuOpen())
             return;
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -906,7 +941,7 @@ export function initPalette(ctx = {}) {
         if (!openState) return;
         if (e.relatedTarget && $palette.contains(e.relatedTarget)) return;
         if (anyDialogOpen()) return;
-        if (clearMenu && document.body.querySelector('.active')) return;
+        if (menuOpen()) return;
         close();
     });
 

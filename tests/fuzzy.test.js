@@ -56,6 +56,39 @@ describe('fuzzy.js score()', () => {
     });
 });
 
+describe('fuzzy.js case folding that changes the string length', () => {
+    // 'İ'.toLowerCase() is TWO chars ('i' + U+0307): positions computed on
+    // the lowercased copy used to shift every later index, so the <mark>
+    // highlight (tree-render.js's highlightTitlePositions) silently dropped
+    // or misplaced hits. positions must index into the ORIGINAL string.
+    it('reports original-string indices for score(\'x\', \'İx\')', () => {
+        const res = score('x', 'İx');
+        expect(res).not.toBeNull();
+        expect(res.positions).toEqual([1]);
+    });
+
+    it('keeps multi-char matches consecutive in original indices', () => {
+        const res = score('ix', 'İx'); // fold: 'i̇x' — 'i'@0, 'x'@2 → originals 0, 1
+        expect(res).not.toBeNull();
+        expect(res.positions).toEqual([0, 1]);
+    });
+
+    it('rank() exposes original indices for titles with length-shifting folds', () => {
+        const results = rank('x', [
+            item('folded', 'İx', 'https://a.example/', 100),
+            item('plain', 'zx', 'https://b.example/', 50)
+        ]);
+        const byId = Object.fromEntries(results.map(r => [r.id, r]));
+        expect(byId.folded.positions).toEqual([1]); // highlightTitlePositions-safe
+        expect(byId.plain.positions).toEqual([1]);
+    });
+
+    it('same-length folds keep the fast path (identical behavior)', () => {
+        expect(score('ab', 'AB').positions).toEqual([0, 1]);
+        expect(score('ss', 'SS').positions).toEqual([0, 1]);
+    });
+});
+
 describe('fuzzy.js rank()', () => {
     it('weighs title hits above url hits', () => {
         const results = rank('gmail', [

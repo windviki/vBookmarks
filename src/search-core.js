@@ -4,7 +4,11 @@
  * vitest suites. No chrome.* references — safe to import anywhere.
  *
  * Ranking reuses src/fuzzy-core.js (the same fzf-style sort the popup uses)
- * so the omnibox and the popup agree on "best match".
+ * so the omnibox and the popup agree on "best match". The ranking is shared;
+ * the candidate sets are not: the omnibox ranks chrome.bookmarks.search's
+ * word-match results (sliced to 6 in rankBookmarks below), while the popup
+ * ranks the full flattened tree index (folders included, separators
+ * excluded).
  */
 
 import { rank } from './fuzzy-core.js';

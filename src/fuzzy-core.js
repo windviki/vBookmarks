@@ -21,7 +21,7 @@
  */
 
 // Characters that start a new "word" when they precede a matched char.
-const WORD_SEPARATORS = ' -_./\\:;|~@#%&*+=()[]{}<>!?,;\'"`';
+const WORD_SEPARATORS = ' -_./\\:;|~@#%&*+=()[]{}<>!?,\'"`';
 
 // A matched char at index i earns a boundary bonus when it starts the
 // string, follows a separator, or sits on a camelCase transition.
@@ -66,6 +66,24 @@ const scoreLower = (query, text, textLower) => {
             k--;
         positions[j] = k;
         limit = k;
+    }
+    // Case folding can change the string length ('İ'.toLowerCase() is 'i'
+    // + U+0307): the passes above index into textLower, but callers use
+    // positions on the ORIGINAL string (the <mark> highlight in
+    // tree-render.js's highlightTitlePositions, tierOf's boundary checks).
+    // Remap to original indices — per-char fold lengths sum to the
+    // whole-string fold (the one context-sensitive mapping, Greek final
+    // sigma, is length-preserving). Same-length strings (the common case)
+    // skip the map entirely.
+    if (tlen !== text.length) {
+        const lowerToOriginal = [];
+        for (let i = 0, l = text.length; i < l; i++) {
+            const folded = text.charAt(i).toLowerCase();
+            for (let k = 0, kl = folded.length; k < kl; k++)
+                lowerToOriginal.push(i);
+        }
+        for (let j = 0; j < qlen; j++)
+            positions[j] = lowerToOriginal[positions[j]];
     }
     // Score: base per matched char, bonuses for consecutive runs and
     // word-boundary hits, and a small penalty for matches that start

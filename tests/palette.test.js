@@ -91,7 +91,8 @@ const MSGS = {
     sessionSaved: 'Saved $1 tabs to a new folder',
     sessionEmpty: 'No tabs to save',
     palettePlaceholder: 'Search bookmarks, folders, commands…',
-    paletteNoResults: 'No matching results'
+    paletteNoResults: 'No matching results',
+    noTitle: '(no title)'
 };
 
 // The full command table in order (v4 task-4 #5's cleanup — 17 entries after
@@ -250,6 +251,12 @@ const setup = (opts = {}) => {
         getElementById: id => byId[id] || null,
         createElement: tag => el(tag.toUpperCase()),
         querySelector: sel => (sel in qsTable ? qsTable[sel] : null),
+        // context-menu.js's menus are the menu[type=context] elements; the
+        // palette's menu-visibility check (the K6 contract) scans them
+        querySelectorAll: sel =>
+            sel === 'menu[type=context]'
+                ? allEls.filter(n => n.tagName === 'MENU' && n.getAttribute('type') === 'context')
+                : [],
         addEventListener(type, fn) {
             (this._listeners[type] = this._listeners[type] || []).push(fn);
         },
@@ -420,6 +427,10 @@ const setup = (opts = {}) => {
     };
     const quickAddCalls = [];
     const dialogs = {
+        // dialogs.js's anyOpen() contract over the body class set — the
+        // palette delegates the modal-layer question to it (no local copy).
+        anyOpen: () => ['needConfirm', 'needEdit', 'needAlert', 'needInputName', 'needSort',
+            'needTabGroup', 'needGroupPick'].some(c => body.classList.contains(c)),
         AlertDialog: {
             openCalls: [],
             open(msg) {
@@ -454,6 +465,16 @@ const setup = (opts = {}) => {
         fire(target, 'keydown', ev);
         return ev;
     };
+    // A visible context menu: context-menu.js shows a menu by setting inline
+    // opacity '1' on its menu[type=context] element — the K6 visibility
+    // contract the palette's menu guards key off (a bare .active marker is
+    // stale state once the menu is gone).
+    const showMenu = () => {
+        const m = el('MENU');
+        m.setAttribute('type', 'context');
+        m.style.opacity = '1';
+        return m;
+    };
     const type = q => {
         input.value = q;
         fire(input, 'input', makeEvent({}));
@@ -464,7 +485,7 @@ const setup = (opts = {}) => {
     return {
         palette, doc, body, chrome: chromeStub, actions, treeView, views, search,
         quickAddCalls, paletteEl, input, results, clearBtn, closeBtn, tree, el, treeData, dialogs,
-        onChangedCalls, keydown, type, rowClasses, selectedIndex, store, storageData
+        onChangedCalls, keydown, type, rowClasses, selectedIndex, store, storageData, showMenu
     };
 };
 
@@ -705,14 +726,26 @@ describe('focusout dismissal (round-3 item 1)', () => {
 
     it('a context menu open over the panel holds it (focus went to the menu)', () => {
         const clearMenuCalls = [];
-        const { palette, paletteEl, el } = setup({ clearMenu: () => clearMenuCalls.push(1) });
+        const { palette, paletteEl, el, showMenu } = setup({ clearMenu: () => clearMenuCalls.push(1) });
         palette.open();
         clearMenuCalls.length = 0; // open() itself clears menus first
         const menuRow = el('A');
-        menuRow.classList.add('active'); // the menu-open signal
+        menuRow.classList.add('active'); // the menu-open marker…
+        showMenu(); // …plus a VISIBLE menu — both halves of the K6 contract
         fireFocusout(paletteEl, menuRow);
         expect(palette.isOpen()).toBe(true);
         expect(clearMenuCalls).toEqual([]); // the menu is left alone
+    });
+
+    it('a stale .active marker (menu already gone) no longer holds the panel (K6 parity)', () => {
+        // Regression: clearMenu() (no arg) keeps the .active marker while
+        // hiding every menu — the marker alone must not read as "menu open".
+        const { palette, paletteEl, el } = setup({ clearMenu: () => {} });
+        palette.open();
+        const row = el('A');
+        row.classList.add('active'); // stale marker, no visible menu
+        fireFocusout(paletteEl, el('DIV')); // focus left for real
+        expect(palette.isOpen()).toBe(false);
     });
 
     it('a dialog owning the modal layer holds the panel', () => {
@@ -809,6 +842,38 @@ describe('result composition', () => {
         const folderRow = results._appended.find(li => li.className === 'palette-row palette-folder');
         expect(folderRow._innerHTML).toContain('Bookmarks bar');
         expect(folderRow._innerHTML).not.toContain('Other bookmarks');
+    });
+
+    it('an untitled folder row falls back to the noTitle label (search-view parity)', () => {
+        // A folder hit with an empty title is unreachable through the real
+        // rank() (no title and no url never matches a query), so a one-shot
+        // rank double stands in for this render pass — the row must not
+        // render an empty <i></i>.
+        const { palette, results, type } = setup({});
+        palette.open();
+        const realRank = VBMFuzzy.rank;
+        VBMFuzzy.rank = () => [
+            { id: '14', title: '', url: '', dateAdded: 1, isFolder: true, score: 1, tier: 3, positions: null }
+        ];
+        try {
+            type('zz');
+        } finally {
+            VBMFuzzy.rank = realRank;
+        }
+        const folderRow = results._appended.find(li => li.className === 'palette-row palette-folder');
+        expect(folderRow._innerHTML).toContain(`<i>${MSGS.noTitle}</i>`);
+    });
+
+    it('keeps separator bookmarks out of the fuzzy index (search.js parity)', () => {
+        const { palette, results, treeData, type } = setup({});
+        // default separator settings: the http://separatethis.com/ url prefix
+        treeData[0].children[0].children.push(
+            { id: '16', title: 'gmail separator', url: 'http://separatethis.com/?---', dateAdded: 600 });
+        palette.open();
+        type('gmail'); // the separator's TITLE would match if it were indexed
+        const bookmarkRows = results._appended.filter(li => li.className === 'palette-row palette-bookmark');
+        expect(bookmarkRows).toHaveLength(2); // the two real gmail hits only
+        expect(bookmarkRows.every(li => !li._innerHTML.includes('separatethis'))).toBe(true);
     });
 
     it('a hitless plain query ends with the bridge row + the save-as-command closure (v4 task-4 #6)', () => {
@@ -1829,6 +1894,7 @@ describe('closing a context menu over the palette (← / Esc) — focus returns 
         const ctx = setup({ clearMenu: () => clearCalls.push(1) });
         ctx.palette.open();
         ctx.body.classList.add('active'); // a context menu is open on a result row
+        ctx.showMenu(); // …and the menu element is actually visible (K6)
         const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
         expect(ev.defaultPrevented).toBe(true);
         expect(ctx.body.classList.contains('active')).toBe(false); // marker dropped
@@ -1842,6 +1908,7 @@ describe('closing a context menu over the palette (← / Esc) — focus returns 
         const ctx = setup({ clearMenu: () => clearCalls.push(1) });
         ctx.palette.open();
         ctx.body.classList.add('active');
+        ctx.showMenu(); // the menu element is actually visible (K6)
         const ev = ctx.keydown(ctx.doc, { key: 'Escape' });
         expect(ev.defaultPrevented).toBe(true);
         expect(ctx.body.classList.contains('active')).toBe(false);
@@ -1857,6 +1924,55 @@ describe('closing a context menu over the palette (← / Esc) — focus returns 
         expect(ev.defaultPrevented).toBe(false);
         expect(ctx.palette.isOpen()).toBe(true);
         expect(clearCalls).toHaveLength(1); // only the open() clear
+    });
+
+    it('a stale .active marker without a VISIBLE menu does not swallow ← (K6 parity)', () => {
+        // Regression: a menu-item pick / view switch ends in clearMenu()
+        // (no arg), which keeps the .active marker while hiding every menu.
+        // The next Ctrl+K open then ate the first ← (preventDefault +
+        // stopImmediatePropagation on the capture handler) for a menu that
+        // was not there.
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active'); // stale marker, no menu visible
+        const ev = ctx.keydown(ctx.doc, { key: 'ArrowLeft' });
+        expect(ev.defaultPrevented).toBe(false);
+        expect(ev.immediatePropagationStopped).toBe(false);
+        expect(clearCalls).toHaveLength(1); // only the open() clear
+        expect(ctx.palette.isOpen()).toBe(true);
+    });
+
+    it('a stale .active marker without a VISIBLE menu does not swallow Esc either', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active'); // stale marker, no menu visible
+        const ev = ctx.keydown(ctx.doc, { key: 'Escape' });
+        expect(ev.defaultPrevented).toBe(false);
+        expect(clearCalls).toHaveLength(1); // only the open() clear
+        expect(ctx.palette.isOpen()).toBe(true); // onDocKey bowed out
+    });
+
+    it('input ← with a stale marker does not clear a menu that is not there', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active'); // stale marker, no menu visible
+        const ev = ctx.keydown(ctx.input, { key: 'ArrowLeft' });
+        expect(ev.defaultPrevented).toBe(true); // the input's own ← handling stays
+        expect(clearCalls).toHaveLength(1); // no phantom menu close
+    });
+
+    it('input Esc with a stale marker closes the panel (no menu to dismiss)', () => {
+        const clearCalls = [];
+        const ctx = setup({ clearMenu: () => clearCalls.push(1) });
+        ctx.palette.open();
+        ctx.body.classList.add('active'); // stale marker, no menu visible
+        const ev = ctx.keydown(ctx.input, { key: 'Escape' });
+        expect(ev.defaultPrevented).toBe(true);
+        expect(clearCalls).toHaveLength(1); // no menu was cleared…
+        expect(ctx.palette.isOpen()).toBe(false); // …so Esc reaches the panel close
     });
 
     it('unbinds the guard when the palette closes', () => {
