@@ -1762,6 +1762,30 @@ describe('custom commands (v4 task-4 #6)', () => {
         expect(customs[1]._innerHTML).toContain('/g');
     });
 
+    it('custom row slash markup never renders raw (load filter + row escape)', () => {
+        // Two layers: loadCustomCommands drops the invalid alias, and the
+        // row template escapes row.slash anyway (defense in depth — the
+        // same injection face 43442a6 closed for cmd.name). Either way the
+        // payload must not reach the palette DOM.
+        const { palette, results, type } = setupCustoms({
+            storeSeed: {
+                paletteCustomCommands: JSON.stringify([{
+                    id: 'cc_x', name: 'Esc', slash: 'esc',
+                    aliases: ['</span><img src=x onerror=alert(1)>'],
+                    action: { type: 'open-url', url: 'https://example.com/', where: 'tab' }
+                }])
+            }
+        });
+        palette.open();
+        type('/esc');
+        const customs = results._appended.filter(li => li.className.includes('palette-command-custom'));
+        expect(customs).toHaveLength(1);
+        expect(customs[0]._innerHTML).not.toContain('<img ');
+        expect(customs[0]._innerHTML).not.toContain('onerror');
+        expect(customs[0]._innerHTML).toContain('<span class="palette-slash">/esc</span>');
+        palette.close();
+    });
+
     it('slash mode prefix-matches a custom slash name and its aliases', () => {
         const { palette, results, type } = setupCustoms({});
         palette.open();

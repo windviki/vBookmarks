@@ -77,7 +77,7 @@ import { VIEW_ICONS, CHECK_ICON, CHEVRON_ICON } from './icons.js';
 import { initDropdowns } from './dropdown.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus, TOOLBAR_SEL_RISK } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
 // Group-head URL display (view-system absorption): the normalized key's
 // discriminating part usually sits in the tail path, where CSS
@@ -368,8 +368,8 @@ export function initViewDupes(ctx = {}) {
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
-    // (final polish / 4.0.1 focus law). v4 task-4 #14: the risk banner's
-    // controls join the park/restore (TOOLBAR_SEL_RISK).
+    // (final polish / 4.0.1 focus law). v4 task-4 #14: the shared toolbar
+    // selector includes the risk banner's controls.
 
     const render = () => {
         if (selecting) {
@@ -390,11 +390,11 @@ export function initViewDupes(ctx = {}) {
             html += '</ul>';
         }
         // keep a focused toolbar control focused across the swap (see above)
-        const tbIdx = toolbarFocusIndex($list, TOOLBAR_SEL_RISK);
+        const parkedToolbar = parkToolbarFocus($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         $list.innerHTML = html;
-        restoreToolbarFocus($list, tbIdx, TOOLBAR_SEL_RISK);
+        restoreToolbarFocus($list, parkedToolbar);
         // …restored BEFORE the pending* blocks below, so an explicit
         // head/member park still wins when one is set.
         unparkRowFocus($list, parkedRow);

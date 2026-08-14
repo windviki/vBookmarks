@@ -144,6 +144,18 @@ describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', 
     });
 });
 
+describe('v4.1 visual consistency: 死链视图焦点环 + 选择模式同轴', () => {
+    it('开始扫描药丸的键盘环是 :focus-visible,鼠标点击不显环 (B6)', () => {
+        expect(neatCss).toContain('#dead-list ul li.dead-start:focus-visible {');
+        expect(neatCss).not.toContain('#dead-list ul li.dead-start:focus {');
+    });
+
+    it('死链选择模式抑制锚点 16px 引导槽,与去重选择态同轴 (B7)', () => {
+        expect(ruleBody(neatCss, '#dead-list ul.selecting li.vbm-row > a::before {'))
+            .toContain('content: none');
+    });
+});
+
 describe('v4.1 visual consistency: 双行行图标→文本间隙', () => {
     // 超宽/面板模式下 .row-sub 显示为第二行，图标与双行文本块的间隙从树视图
     // 单行的 4px 加宽到 8px。用 :has(.row-sub) 精确命中真正的双行行，所有

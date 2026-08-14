@@ -388,8 +388,12 @@ export function initPalette(ctx = {}) {
         // .selected highlight). The $results keydown guard below is the safety net
         // for any path that still focuses a row (context-menu refocus, future code).
         if (row.kind === 'command') {
+            // row.slash is composed from slash + aliases; aliases come from
+            // the sync-storage blob and only the slash is load-validated,
+            // so escape here regardless (defense in depth, same class as
+            // the 43442a6 cmd.name fix).
             li.innerHTML = `<span class="palette-kind">▸</span><span class="palette-title">${htmlspecialchars(row.name)}</span>` +
-                (row.slash ? `<span class="palette-slash">${row.slash}</span>` : '');
+                (row.slash ? `<span class="palette-slash">${htmlspecialchars(row.slash)}</span>` : '');
             // v4 task-4 #6: custom commands carry the "custom" tag and their
             // id (the → / right-click context menu's edit/delete act on it).
             if (row.custom) {

@@ -65,6 +65,8 @@
  * module-private pure function below (same implementation as tree-render.js's).
  */
 
+import { parkRowFocus, unparkRowFocus } from './list-focus.js';
+
 export function initTreeView(ctx = {}) {
     const store = ctx.store;
     const $tree = ctx.tree;
@@ -165,6 +167,12 @@ export function initTreeView(ctx = {}) {
         // Keep the fuzzy-search index in sync with the freshly loaded tree
         search.updateIndex(tree);
 
+        // 4.0.1 focus law: the innerHTML swap below replaces every row, so a
+        // focused row would drop to <body> and the ↓ walk would die. Park it
+        // before the swap, restore after — unconditionally: by row id when
+        // the bookmark survives, else the clamped index of the row that took
+        // its place.
+        const parked = parkRowFocus($tree);
         $tree.innerHTML = html;
 
         // v4 task-2 §3.6: the view layer rebuilds its shared id→parent-path
@@ -184,6 +192,9 @@ export function initTreeView(ctx = {}) {
         if (getRememberState()) {
             $tree.scrollTop = store.get('scrollTop') ? store.get('scrollTop') : 0;
         }
+        // after the scroll baseline is back, so focus() only scrolls the
+        // minimal distance to reveal the restored row.
+        unparkRowFocus($tree, parked);
 
         // issue #58: the focusID restore (refocus + .focus highlight-flash,
         // which re-paints the last-focused row on every open) is part of
@@ -194,7 +205,13 @@ export function initTreeView(ctx = {}) {
         // so explicit "reveal in tree" keeps working with the option off.
         if (getRememberState()) {
             const focusID = store.get('focusID');
-            if (typeof focusID !== 'undefined' && focusID !== null) {
+            // The park/restore law above may already have re-focused a live
+            // row. The reveal treatment (width/overflow + .focus flash) is
+            // for the reopen case — skip it when the restored row IS the
+            // focusID row; a DIFFERENT focusID means an explicit reveal
+            // (revealFolder ran while a tree row still held focus) and wins.
+            const parkedId = parked ? `${parked.id || ''}`.replace('neat-tree-item-', '') : '';
+            if (typeof focusID !== 'undefined' && focusID !== null && `${focusID}` !== parkedId) {
                 const focusEl = document.getElementById(`neat-tree-item-${focusID}`);
                 if (focusEl) {
                     const oriOverflow = $tree.style.overflow;

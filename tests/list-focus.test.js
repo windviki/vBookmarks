@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
     parkRowFocus, unparkRowFocus, rowFocusTarget,
-    toolbarFocusIndex, restoreToolbarFocus, TOOLBAR_SEL, TOOLBAR_SEL_RISK
+    parkToolbarFocus, restoreToolbarFocus, TOOLBAR_CONTROLS_SEL
 } from '../src/list-focus.js';
 
 // list-focus.js owns the shared focus contracts of the list views: the row
 // park/restore (4.0.1 focus law), the row's focus-target rule (rowFocusTarget)
-// and the toolbar park/restore trio. The doubles model just the DOM shape the
+// and the toolbar park/restore. The doubles model just the DOM shape the
 // module queries — li sets, a/span targets, tabindex rows, button-led rows —
 // and assertions go through document.activeElement / the focused flags.
 
@@ -150,43 +150,99 @@ describe('parkRowFocus / unparkRowFocus', () => {
     });
 });
 
-describe('toolbarFocusIndex / restoreToolbarFocus (final polish trio)', () => {
-    it('TOOLBAR_SEL_RISK extends the base selector with the risk-banner controls', () => {
-        expect(TOOLBAR_SEL_RISK).toContain(TOOLBAR_SEL);
-        expect(TOOLBAR_SEL_RISK).toContain('.risk-banner button');
-        expect(TOOLBAR_SEL_RISK).toContain('.risk-banner a[href]');
+// Toolbar park/restore (B2): keyed by control class + same-class index — the
+// focusSpot identity — so a re-render that inserts/removes a differently
+// classed button never drifts (a bare positional index would).
+const makeControl = (tagName, className) => ({
+    tagName,
+    className: className || '',
+    parentNode: null,
+    focused: false,
+    focus() { this.focused = true; }
+});
+
+const makeToolbarList = controls => ({
+    tagName: 'DIV',
+    _controls: controls,
+    querySelectorAll(sel) {
+        return sel === TOOLBAR_CONTROLS_SEL ? this._controls.slice() : [];
+    },
+    focus() { this.focused = true; }
+});
+
+const setFocus = el => { globalThis.document.activeElement = el; };
+
+describe('parkToolbarFocus / restoreToolbarFocus (B2)', () => {
+    it('captures and restores the focused control among same-class siblings', () => {
+        const list = makeToolbarList([
+            makeControl('BUTTON', 'filter-btn'),
+            makeControl('BUTTON', 'scan-btn'),
+            makeControl('BUTTON', 'filter-btn')   // the focused one: cls idx 1
+        ]);
+        setFocus(list._controls[2]);
+        const parked = parkToolbarFocus(list);
+        expect(parked).toEqual({ cls: 'filter-btn', idx: 1 });
+        restoreToolbarFocus(list, parked);
+        expect(list._controls[2].focused).toBe(true);
     });
 
-    it('reports the focused control\'s index, -1 when focus is elsewhere', () => {
-        const doc = globalThis.document;
-        const controls = [makeButton(doc), makeButton(doc), makeButton(doc)];
-        const root = { querySelectorAll: sel => (sel === TOOLBAR_SEL ? controls : []) };
-        doc.activeElement = controls[1];
-        expect(toolbarFocusIndex(root)).toBe(1);
-        doc.activeElement = makeButton(doc); // not in the set
-        expect(toolbarFocusIndex(root)).toBe(-1);
-        // doubles without querySelectorAll park nothing (the guard)
-        expect(toolbarFocusIndex({})).toBe(-1);
+    it('an inserted differently-classed button does not drift the restore', () => {
+        // a bare positional index would now point one slot past the target
+        const before = makeToolbarList([
+            makeControl('BUTTON', 'filter-btn'),
+            makeControl('BUTTON', 'filter-btn')
+        ]);
+        setFocus(before._controls[1]);
+        const parked = parkToolbarFocus(before);
+        expect(parked.idx).toBe(1);
+        const after = makeToolbarList([
+            makeControl('BUTTON', 'brand-new-btn'), // inserted ahead
+            makeControl('BUTTON', 'filter-btn'),
+            makeControl('BUTTON', 'filter-btn')
+        ]);
+        restoreToolbarFocus(after, parked);
+        expect(after._controls[2].focused).toBe(true); // still the second filter-btn
+        expect(after._controls[0].focused).toBe(false);
     });
 
-    it('restores the idx-th control after the re-render; custom selector honored', () => {
-        const doc = globalThis.document;
-        const controls = [makeButton(doc), makeButton(doc)];
-        const riskControls = [makeButton(doc)];
-        const root = {
-            querySelectorAll: sel =>
-                sel === TOOLBAR_SEL_RISK ? [...controls, ...riskControls]
-                    : sel === TOOLBAR_SEL ? controls : []
-        };
-        restoreToolbarFocus(root, 1);
-        expect(doc.activeElement).toBe(controls[1]);
-        restoreToolbarFocus(root, 2, TOOLBAR_SEL_RISK); // the banner button
-        expect(doc.activeElement).toBe(riskControls[0]);
-        doc.activeElement = null;
-        restoreToolbarFocus(root, -1); // nothing parked → no-op
-        restoreToolbarFocus(root, 9);  // out of range → no-op
-        expect(doc.activeElement).toBe(null);
-        restoreToolbarFocus({}, 0);    // the no-querySelectorAll guard
-        expect(doc.activeElement).toBe(null);
+    it('a removed same-class predecessor degrades to the first same-class control', () => {
+        const before = makeToolbarList([
+            makeControl('BUTTON', 'filter-btn'),
+            makeControl('BUTTON', 'filter-btn')
+        ]);
+        setFocus(before._controls[1]);
+        const parked = parkToolbarFocus(before);
+        const after = makeToolbarList([makeControl('BUTTON', 'filter-btn')]); // one removed
+        restoreToolbarFocus(after, parked);
+        expect(after._controls[0].focused).toBe(true);
+    });
+
+    it('the risk banner\'s controls ride the same park/restore', () => {
+        const bannerLink = makeControl('A', 'risk-banner-help');
+        const list = makeToolbarList([bannerLink]);
+        setFocus(bannerLink);
+        const parked = parkToolbarFocus(list);
+        expect(parked).toEqual({ cls: 'risk-banner-help', idx: 0 });
+        bannerLink.focused = false;
+        restoreToolbarFocus(list, parked);
+        expect(bannerLink.focused).toBe(true);
+    });
+
+    it('focus outside the toolbar parks null and restores nothing', () => {
+        const list = makeToolbarList([makeControl('BUTTON', 'filter-btn')]);
+        const row = { tagName: 'A', parentNode: null };
+        setFocus(row);
+        expect(parkToolbarFocus(list)).toBeNull();
+        expect(() => restoreToolbarFocus(list, null)).not.toThrow();
+        expect(list._controls[0].focused).toBe(false);
+    });
+
+    it('a control without a class still parks and restores (empty-class cohort)', () => {
+        const list = makeToolbarList([makeControl('SELECT', ''), makeControl('BUTTON', 'x')]);
+        setFocus(list._controls[0]);
+        const parked = parkToolbarFocus(list);
+        expect(parked).toEqual({ cls: '', idx: 0 });
+        restoreToolbarFocus(list, parked);
+        expect(list._controls[0].focused).toBe(true);
     });
 });

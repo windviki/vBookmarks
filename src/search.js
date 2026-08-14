@@ -255,7 +255,7 @@ export function initSearch(ctx = {}) {
             return;
         }
         let html = `<div class="search-history-head"><i>${htmlspecialchars(_m('searchHistoryTitle'))}</i>` +
-            `<button type="button" id="search-history-clear" tabindex="-1">${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
+            `<button type="button" id="search-history-clear" class="search-history-clear" tabindex="-1">${htmlspecialchars(_m('searchHistoryClear'))}</button></div>` +
             '<ul role="list">';
         for (let i = 0, l = list.length; i < l; i++) {
             const entry = list[i];

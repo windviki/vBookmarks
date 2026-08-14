@@ -544,6 +544,68 @@ describe('generateTree', () => {
         expect(ctx.store.removes).toEqual(['focusID']);
     });
 
+    // --- live focus law (A4): an in-page re-render parks/restores the
+    // focused row like every list view; the focusID reveal stays a
+    // reopen-only mechanism. -------------------------------------------
+    const focusRowInTree = (ctx, bm) => {
+        bm.li._qs['a, span'] = bm.a;   // unpark's querySelector('a, span')
+        bm.li.parentNode = ctx.tree;
+        ctx.tree._qsa['li'] = [bm.li]; // park's membership check
+        ctx.doc.activeElement = bm.a;
+    };
+
+    it('re-renders keep the focused tree row even with rememberState off (A4)', () => {
+        const ctx = setup({ rememberState: false });
+        const bm = ctx.makeBookmark('7');
+        focusRowInTree(ctx, bm);
+        ctx.treeView.generateTree(['ROOT']);
+        // the surviving row is re-focused by id — no focusID, no reveal
+        expect(bm.a.focused).toBe(true);
+        expect(bm.li.style.width).toBeUndefined();
+        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+    });
+
+    it('a live restored row skips the reopen reveal (no width/overflow flash)', () => {
+        const ctx = setup({
+            rememberState: true,
+            storeData: { focusID: '7', scrollTop: 10 }
+        });
+        const bm = ctx.makeBookmark('7');
+        focusRowInTree(ctx, bm);
+        ctx.tree.style.overflow = 'auto';
+        ctx.treeView.generateTree(['ROOT']);
+        expect(bm.a.focused).toBe(true);
+        // the reveal treatment belongs to the REOPEN path only
+        expect(bm.li.style.width).toBeUndefined();
+        expect(ctx.tree.style.overflow).toBe('auto');
+        expect(timeouts.filter(t => t[1] === 1 || t[1] === 4000)).toEqual([]);
+        tickAll();
+        expect(ctx.store.removes).toEqual([]); // focusID left alone
+    });
+
+    it('an explicit reveal target still wins over the restored live row', () => {
+        // revealFolder can run while a tree row still holds focus — the
+        // focusID it stamps must take the reveal, not the parked row.
+        const ctx = setup({ rememberState: true, storeData: { focusID: '9' } });
+        const bm = ctx.makeBookmark('7');
+        focusRowInTree(ctx, bm);
+        const target = ctx.makeFolder('9');
+        ctx.treeView.generateTree(['ROOT']);
+        expect(target.span.classList.contains('focus')).toBe(true);
+        expect(target.span.focused).toBe(true);
+        expect(bm.a.focused).toBe(true); // unpark ran first, reveal re-focused
+        tick(4000);
+        expect(ctx.store.removes).toEqual(['focusID']);
+    });
+
+    it('focus outside the tree parks nothing and changes nothing', () => {
+        const ctx = setup({ rememberState: false });
+        const outside = ctx.el('INPUT', 'search-input');
+        ctx.doc.activeElement = outside;
+        expect(() => ctx.treeView.generateTree(['ROOT'])).not.toThrow();
+        expect(outside.focused).toBe(false); // unpark must not steal focus
+    });
+
     it('migrates legacy local separators through actions.addSeparator, then clears and saves', () => {
         const { treeView, actions, smInstances, store } = setup({ legacySeps: ['s1', null, 's2'] });
         treeView.generateTree(['ROOT']);

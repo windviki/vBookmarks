@@ -9,7 +9,7 @@
  * took its place; an emptied list parks on the container itself (or the
  * caller's `emptyFocus` fallback). Also shared here: the row's focus-target
  * contract (rowFocusTarget — the anchor/span, or the tabindex row container)
- * and the list views' toolbar focus park/restore trio.
+ * and the list views' toolbar focus park/restore.
  */
 
 // Capture the list row that currently owns focus (or null when focus is not
@@ -72,32 +72,52 @@ export const unparkRowFocus = (list, parked, emptyFocus) => {
         target.focus();
 };
 
-// --- Toolbar focus park/restore (final polish) ------------------------------
-// Shared by the stats/dead/dupes views: the toolbar re-renders together with
-// the rows (a sort switch, a clear, every scan-progress tick), and without a
-// restore a keyboard user holding focus on a control loses it to <body> on
-// every repaint. The controls are positionally stable across re-renders, so
-// an index suffices. The selector is the caller's: dead/dupes pass
-// TOOLBAR_SEL_RISK so their risk banner's controls ride along (v4 task-4 #14).
-export const TOOLBAR_SEL = '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input';
-export const TOOLBAR_SEL_RISK = `${TOOLBAR_SEL}, .risk-banner button, .risk-banner a[href]`;
+// --- Toolbar focus park/restore (B2, shared by stats/dead/dupes) -------------
+// Their toolbars re-render together with the rows on every interaction/scan
+// tick, and without a restore a keyboard user holding focus on a control
+// loses it to <body> on every repaint. The control identity is its first
+// class + index among same-class controls — the same key focusSpot uses — so
+// a re-render that adds or removes a different kind of button still lands on
+// the right control (a bare position index drifts when the button set
+// changes). The selector includes risk-banner controls so dead/dupes' risk
+// banner rides along (v4 task-4 #14).
+export const TOOLBAR_CONTROLS_SEL =
+    '.vbm-toolbar button, .vbm-toolbar select, .vbm-toolbar input, .risk-banner button, .risk-banner a[href]';
 
-// Index of the focused control within root's `sel` set (-1: focus elsewhere).
-export const toolbarFocusIndex = (root, sel = TOOLBAR_SEL) => {
-    if (typeof root.querySelectorAll !== 'function')
-        return -1;
-    const controls = root.querySelectorAll(sel);
+// Capture the focused toolbar control as { cls, idx }: its first class token
+// and its position among same-class controls (null when focus is elsewhere).
+export const parkToolbarFocus = root => {
+    const el = document.activeElement;
+    if (!el || !root || typeof root.querySelectorAll !== 'function')
+        return null;
+    const controls = root.querySelectorAll(TOOLBAR_CONTROLS_SEL);
+    let found = -1;
     for (let i = 0, l = controls.length; i < l; i++)
-        if (controls[i] === document.activeElement)
-            return i;
-    return -1;
+        if (controls[i] === el) { found = i; break; }
+    if (found < 0)
+        return null;
+    const own = (el.className || '').split(/\s+/)[0] || '';
+    let idx = -1, same = 0;
+    for (let i = 0, l = controls.length; i < l; i++) {
+        if ((controls[i].className || '').split(/\s+/)[0] !== own)
+            continue;
+        if (controls[i] === el) { idx = same; break; }
+        same++;
+    }
+    return idx < 0 ? null : { cls: own, idx };
 };
 
-// Focus back the `idx`-th control of root's `sel` set after the re-render.
-export const restoreToolbarFocus = (root, idx, sel = TOOLBAR_SEL) => {
-    if (idx < 0 || typeof root.querySelectorAll !== 'function')
+// Focus back the parked control after the re-render: exact same-class index,
+// degrading to the first same-class control when the re-render removed some.
+export const restoreToolbarFocus = (root, parked) => {
+    if (!parked || !root || typeof root.querySelectorAll !== 'function')
         return;
-    const c = root.querySelectorAll(sel)[idx];
-    if (c && c.focus)
-        c.focus();
+    const controls = root.querySelectorAll(TOOLBAR_CONTROLS_SEL);
+    const same = [];
+    for (let i = 0, l = controls.length; i < l; i++)
+        if ((controls[i].className || '').split(/\s+/)[0] === parked.cls)
+            same.push(controls[i]);
+    const target = same[parked.idx || 0] || same[0];
+    if (target && target.focus)
+        target.focus();
 };

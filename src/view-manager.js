@@ -522,6 +522,12 @@ export function initViewManager(ctx = {}) {
         // Header buttons are global (visible from every view).
         if (el.id && HEADER_IDS.indexOf(el.id) >= 0)
             return { zone: 'header', key: el.id };
+        // B1: the search view's history head is not a .vbm-toolbar rung (the
+        // search view has no in-list toolbar), but its clear button carries
+        // the same spot semantics — bar class + control class + index — and
+        // resolves through the regular toolbar path on restore.
+        if (el.id === 'search-history-clear')
+            return { zone: 'toolbar', view: 'search', bar: 'search-history-head', cls: 'search-history-clear', idx: 0 };
         // A view tab (only the ACTIVE view's tab is roving-focusable, so the
         // spot's view is the tab's own view).
         if (el.classList && el.classList.contains('view-tab'))
@@ -546,6 +552,24 @@ export function initViewManager(ctx = {}) {
                     .filter(c => c && c !== 'vbm-toolbar')[0] || 'vbm-toolbar';
                 return { zone: 'toolbar', view: activeId, bar: barCls, cls: own, idx };
             }
+        }
+        // B1: the search view's history rows live in #search-history-area —
+        // inside the view container but OUTSIDE the #results listEl, and the
+        // rows carry no element id. Key them by their data-q query (a
+        // 'hist:' prefix keeps them apart from tree/list row ids).
+        const histRow = el.closest ? el.closest('.search-history-row') : null;
+        if (histRow) {
+            let a = (el.tagName === 'A' && el.dataset && typeof el.dataset.q !== 'undefined')
+                ? el : null;
+            if (!a && histRow.querySelectorAll) {
+                const anchors = histRow.querySelectorAll('a');
+                for (let i = 0, l = anchors.length; i < l; i++)
+                    if (anchors[i].dataset && typeof anchors[i].dataset.q !== 'undefined') {
+                        a = anchors[i];
+                        break;
+                    }
+            }
+            return { zone: 'row', view: 'search', key: `hist:${(a && a.dataset && a.dataset.q) || ''}` };
         }
         // A list row inside the active view (the tree's nested li rows resolve
         // to their innermost li, whose id is the row id).
@@ -605,6 +629,21 @@ export function initViewManager(ctx = {}) {
             return null;
         }
         if (spot.zone === 'row' && def.listEl) {
+            // B1: a 'hist:' key resolves inside #search-history-area — the
+            // area's anchors ARE the history rows (matched by dataset.q,
+            // never by interpolated selector), degrading to the first row.
+            if (spot.key.indexOf('hist:') === 0) {
+                const area = document.getElementById('search-history-area');
+                const anchors = area && area.querySelectorAll ? area.querySelectorAll('a') : [];
+                const rows = [];
+                for (let i = 0, l = anchors.length; i < l; i++)
+                    if (anchors[i].dataset && typeof anchors[i].dataset.q !== 'undefined')
+                        rows.push(anchors[i]);
+                for (let i = 0, l = rows.length; i < l; i++)
+                    if (rows[i].dataset.q === spot.key.slice(5))
+                        return rows[i];
+                return rows[0] || null;
+            }
             const li = findRowById(def.listEl, spot.key);
             if (!li)
                 return null;

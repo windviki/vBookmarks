@@ -253,6 +253,15 @@ describe('storage', () => {
         expect(list[0].slash).toBe('ok');
     });
 
+    it('loadCustomCommands drops invalid aliases (sync-blob injection face)', () => {
+        const blob = JSON.stringify([openUrlCmd({
+            aliases: ['ok-alias', '<img src=x onerror=alert(1)>', 'fine2']
+        })]);
+        const list = loadCustomCommands(makeStore({ [CUSTOM_COMMANDS_KEY]: blob }));
+        expect(list).toHaveLength(1);
+        expect(list[0].aliases).toEqual(['ok-alias', 'fine2']);
+    });
+
     it('saveCustomCommands writes a JSON string capped at 100 entries', () => {
         const store = makeStore();
         const many = Array.from({ length: 105 }, (_, i) => openUrlCmd({ id: `cc_${i}` }));

@@ -228,8 +228,13 @@ export function initFaviconFallback(doc = document, ctx = {}) {
             return;
         doc.querySelectorAll('img[src*="/_favicon/"]').forEach(applyContrast);
     };
+    // The body[data-theme] mutation covers explicit palette switches. The
+    // guard installs the observer only when MutationObserver exists AND a
+    // body node is present (the observer is a property of the instance, not
+    // of doc.body — the old `typeof doc.body.observe === 'function'` check
+    // was always false, so no observer was ever created).
     let themeObserver = null;
-    if (typeof MutationObserver !== 'undefined' && doc.body && typeof doc.body.observe === 'function') {
+    if (typeof MutationObserver === 'function' && doc.body) {
         themeObserver = new MutationObserver(ms => {
             if (ms.some(m => m.attributeName === 'data-theme'))
                 reapplyContrast();
@@ -243,13 +248,19 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     // side panel would keep the stale invert state. Re-decide from the same
     // cached stats on every scheme change. Subscribing unconditionally is
     // harmless on explicit themes: the background token didn't change, so
-    // the re-decision is a no-op.
+    // the re-decision is a no-op. The query is resolved through
+    // doc.defaultView when available (injectable in tests); a global
+    // matchMedia is the fallback.
     let schemeMedia = null;
-    if (typeof matchMedia === 'function') {
-        schemeMedia = matchMedia('(prefers-color-scheme: dark)');
-        if (schemeMedia && typeof schemeMedia.addEventListener === 'function')
-            schemeMedia.addEventListener('change', reapplyContrast);
+    let themeMedia = null;
+    const media = (doc.defaultView && typeof doc.defaultView.matchMedia === 'function')
+        ? doc.defaultView.matchMedia('(prefers-color-scheme: dark)')
+        : (typeof matchMedia === 'function' ? matchMedia('(prefers-color-scheme: dark)') : null);
+    if (media && typeof media.addEventListener === 'function') {
+        themeMedia = () => reapplyContrast();
+        schemeMedia = media;
+        media.addEventListener('change', themeMedia);
     }
 
-    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast, themeObserver, schemeMedia };
+    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast, themeObserver, schemeMedia, themeMedia };
 }

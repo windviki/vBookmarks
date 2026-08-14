@@ -160,10 +160,15 @@ export const loadCustomCommands = store => {
         list = [];
     }
     // Defensive: a hand-edited/sync-merged blob degrades to the entries
-    // that still look like commands.
+    // that still look like commands. Aliases ride the same blob and reach
+    // palette row HTML (row.slash), so each one is validated too — an
+    // invalid alias is dropped, not the command.
     return [].concat(list || []).filter(c =>
         c && typeof c === 'object' && SLASH_RE.test(c.slash || '') &&
-        c.action && ACTION_TYPES.indexOf(c.action.type) !== -1);
+        c.action && ACTION_TYPES.indexOf(c.action.type) !== -1)
+        .map(c => Object.assign({}, c, {
+            aliases: [].concat(c.aliases || []).filter(a => SLASH_RE.test(String(a)))
+        }));
 };
 
 export const saveCustomCommands = (store, list) =>

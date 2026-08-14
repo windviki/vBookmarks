@@ -119,7 +119,7 @@ import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
 import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus, TOOLBAR_SEL_RISK } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -471,8 +471,8 @@ export function initViewDead(ctx = {}) {
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
-    // (final polish / 4.0.1 focus law). v4 task-4 #14: the risk banner's
-    // controls join the park/restore (TOOLBAR_SEL_RISK) so a scan tick can't
+    // (final polish / 4.0.1 focus law). v4 task-4 #14: the shared toolbar
+    // selector includes the risk banner's controls so a scan tick can't
     // drop focus off a banner button either.
 
     const render = () => {
@@ -504,7 +504,7 @@ export function initViewDead(ctx = {}) {
                 : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
         }
         // keep a focused toolbar control focused across the swap (see above)
-        const tbIdx = toolbarFocusIndex($list, TOOLBAR_SEL_RISK);
+        const parkedToolbar = parkToolbarFocus($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         // v4 task-4 #17: mid-scan repaints are silent — the list's scroll
@@ -514,7 +514,7 @@ export function initViewDead(ctx = {}) {
         $list.innerHTML = html;
         if (live && scroll)
             $list.scrollTop = scroll;
-        restoreToolbarFocus($list, tbIdx, TOOLBAR_SEL_RISK);
+        restoreToolbarFocus($list, parkedToolbar);
         // …restored BEFORE the pendingRowFocus block below, so that explicit
         // override still wins when set (v4 task-4 #8).
         unparkRowFocus($list, parkedRow);

@@ -131,25 +131,25 @@ chrome.runtime.onInstalled.addListener(restoreCustomIcon);
                 }
                 const rankedResults = rankBookmarks(value, results);
                 firstResult = rankedResults.shift();
-                const v = value.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-                const firstTitle = matcher(xmlEncode(firstResult.title), v);
+                // matcher owns its regex escaping (search-core) — raw query in
+                const firstTitle = matcher(xmlEncode(firstResult.title), value);
                 const firstSyncStatus = getSyncStatusText(firstResult);
                 let firstURL = {
                     text: xmlEncode(firstResult.url)
                 };
-                if (!firstTitle.matched) firstURL = matcher(firstURL.text, v);
+                if (!firstTitle.matched) firstURL = matcher(firstURL.text, value);
                 setSuggest(`${firstTitle.text} ${firstSyncStatus} <dim>-</dim> <url>${firstURL.text}</url>`);
                 let suggestions = [];
                 let i = 0, l = rankedResults.length;
                 for (; i < l; i++) {
                     const result = rankedResults[i];
-                    const title = matcher(xmlEncode(result.title), v);
+                    const title = matcher(xmlEncode(result.title), value);
                     const syncStatus = getSyncStatusText(result);
                     const URL = result.url;
                     let url = {
                         text: xmlEncode(URL)
                     };
-                    if (!title.matched) url = matcher(url.text, v);
+                    if (!title.matched) url = matcher(url.text, value);
                     suggestions.push({
                         content: URL,
                         description: `${title.text} ${syncStatus} <dim>-</dim> <url>${url.text}</url>`

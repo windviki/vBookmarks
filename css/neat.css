@@ -2940,6 +2940,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding-inline-start: 8px;
 }
 
+/* v4.1 fix: 正常态的引导留白由 a::before 的 16px 槽提供;选择模式下该槽
+   与行容器的 8px padding + 14px 复选框叠算(内容右移 ~38px,favicon 落在
+   ~44px),与去重侧(~28px)不同轴。选择模式抑制锚点原槽,复选框即引导。 */
+#dead-list ul.selecting li.vbm-row > a::before {
+    content: none;
+}
+
 #dead-list ul.selecting li.vbm-row.sel::before,
 #dupes-list ul.selecting li.dupes-group.sel .group-head::before {
     content: '✓';
@@ -3273,10 +3280,6 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     max-width: 260px;
 }
 
-.dead-proxy-strip .dead-proxy-chip.template {
-    border-style: dashed;
-}
-
 .dead-proxy-strip .dead-proxy-hint,
 .dead-proxy-strip .dead-proxy-error,
 .dead-proxy-strip .dead-proxy-nudge {
@@ -3393,7 +3396,7 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     filter: brightness(1.08);
 }
 
-#dead-list ul li.dead-start:focus {
+#dead-list ul li.dead-start:focus-visible {
     outline: 2px solid var(--vbm-focus-ring);
     outline-offset: -2px;
 }
@@ -3649,7 +3652,6 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
 }
 
 #stats-list .stats-add-btn:hover {
-    color: var(--vbm-danger);
     background: var(--vbm-bg-hover);
 }
 

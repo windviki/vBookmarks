@@ -449,4 +449,109 @@ describe('initFaviconFallback', () => {
         api.reapplyContrast();
         expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
     });
+
+    // --- live theme-change wiring (A2+A3 regression) ------------------------
+    // The re-decide path must be WIRED, not just callable: a body[data-theme]
+    // MutationObserver (explicit palette switches) and a prefers-color-scheme
+    // matchMedia listener (the auto theme, where data-theme stays "auto")
+    // both drive reapplyContrast. Regression: the old guard installed the
+    // observer on `doc.body.observe` (a method that never exists), so NO
+    // observer was ever created and a theme switch left stale invert classes.
+    it('observes body[data-theme] and re-decides invert classes on the switch (A2)', async () => {
+        const saved = globalThis.MutationObserver;
+        globalThis.MutationObserver = class {
+            constructor(cb) { this.cb = cb; }
+            observe(target, opts) { this.target = target; this.opts = opts; }
+        };
+        try {
+            let dark = false;
+            const imgs = [];
+            const doc = Object.assign(Object.create(globalThis.document), {
+                body: { tagName: 'BODY' },
+                querySelectorAll: () => imgs
+            });
+            const api = initFaviconFallback(doc, {
+                contrastEnabled: () => true,
+                themeIsDark: () => dark
+            });
+            expect(api.themeObserver).toBeTruthy();
+            expect(api.themeObserver.target).toBe(doc.body);
+            expect(api.themeObserver.opts).toEqual({ attributes: true, attributeFilter: ['data-theme'] });
+
+            const img = makeClassImg(WHITE_ICON(),
+                'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fmo.example&size=32');
+            imgs.push(img);
+            loadHandler({ target: img });
+            await flush(); await flush();
+            expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
+
+            // palette flips to dark → the observer must drop the stale class
+            dark = true;
+            api.themeObserver.cb([{ attributeName: 'data-theme' }]);
+            expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
+
+            // a non-theme body attribute must NOT re-decide
+            img.classList.add('favicon-contrast-invert');
+            api.themeObserver.cb([{ attributeName: 'class' }]);
+            expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
+        } finally {
+            if (saved) globalThis.MutationObserver = saved;
+            else delete globalThis.MutationObserver;
+        }
+    });
+
+    it('listens to prefers-color-scheme via doc.defaultView.matchMedia (auto theme)', async () => {
+        let dark = false;
+        const imgs = [];
+        const listeners = [];
+        const doc = Object.assign(Object.create(globalThis.document), {
+            querySelectorAll: () => imgs,
+            defaultView: {
+                matchMedia: q => ({
+                    query: q,
+                    addEventListener(type, fn) { listeners.push({ type, fn }); }
+                })
+            }
+        });
+        const api = initFaviconFallback(doc, {
+            contrastEnabled: () => true,
+            themeIsDark: () => dark
+        });
+        expect(api.themeMedia).toBeTypeOf('function');
+        expect(api.schemeMedia).toBeTruthy();
+        expect(api.schemeMedia.query).toBe('(prefers-color-scheme: dark)');
+        expect(listeners).toHaveLength(1);
+        expect(listeners[0].type).toBe('change');
+
+        const img = makeClassImg(BLACK_ICON(),
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fauto.example&size=32');
+        imgs.push(img);
+        loadHandler({ target: img });
+        await flush(); await flush();
+        // black icon, currently light bg → not inverted yet
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
+        dark = true;
+        listeners[0].fn();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
+    });
+
+    it('degrades gracefully with no MutationObserver / no matchMedia', () => {
+        const saved = globalThis.MutationObserver;
+        if (saved)
+            delete globalThis.MutationObserver;
+        try {
+            const api = initFaviconFallback(globalThis.document, {
+                contrastEnabled: () => true,
+                themeIsDark: () => false
+            });
+            expect(api).toBeTruthy();
+            expect(api.themeObserver).toBeNull(); // no body in the shared stub
+            expect(api.schemeMedia).toBeNull();   // no defaultView.matchMedia, no global
+            expect(api.themeMedia).toBeNull();
+            // manual re-decide still works — only the auto-wiring is absent
+            expect(() => api.reapplyContrast()).not.toThrow();
+        } finally {
+            if (saved) globalThis.MutationObserver = saved;
+        }
+    });
 });

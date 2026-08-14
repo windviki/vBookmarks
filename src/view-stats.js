@@ -95,7 +95,7 @@
 import { relTimeLabel } from './tree-render.js';
 import { VIEW_ICONS, STAR_ICON, STAR_ICON_FILLED } from './icons.js';
 import { htmlspecialchars } from './escape.js';
-import { parkRowFocus, unparkRowFocus, toolbarFocusIndex, restoreToolbarFocus } from './list-focus.js';
+import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
 export function initViewStats(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -378,8 +378,9 @@ export function initViewStats(ctx = {}) {
     };
 
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
-    // (final polish / 4.0.1 focus law). Stats has no risk banner, so the
-    // shared helpers' base TOOLBAR_SEL default is the right control set here.
+    // (final polish / 4.0.1 focus law). Stats has no risk banner, but the
+    // shared toolbar selector's extra risk-banner terms simply match nothing
+    // here — the same cls+idx restore works unchanged.
 
     const render = () => {
         let html = renderToolbar();
@@ -399,13 +400,13 @@ export function initViewStats(ctx = {}) {
             }
         }
         // Final polish: keep a focused toolbar control focused across the
-        // innerHTML swap (sort switch re-renders the bar) — positionally
-        // stable index, or the keyboard rung dies on every refresh.
-        const tbIdx = toolbarFocusIndex($list);
+        // innerHTML swap (sort switch re-renders the bar) — cls+idx key, or
+        // the keyboard rung dies on every refresh.
+        const parkedToolbar = parkToolbarFocus($list);
         // 4.0.1 focus law: a focused list ROW rides the same swap
         const parkedRow = parkRowFocus($list);
         $list.innerHTML = html;
-        restoreToolbarFocus($list, tbIdx);
+        restoreToolbarFocus($list, parkedToolbar);
         unparkRowFocus($list, parkedRow);
         onRowsRendered();
     };
