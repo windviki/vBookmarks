@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "मृत पंक्तियाँ चिह्नित"
   },
+  "deadMarkedCount": {
+    "message": "$count$ बुकमार्क चिह्नित किए गए",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "चयनित को चिह्नित करें"
   },

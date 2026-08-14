@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Νεκρές γραμμές επισημάνθηκαν"
   },
+  "deadMarkedCount": {
+    "message": "Σημειώθηκαν $count$ σελιδοδείκτες",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Σήμανση επιλεγμένων"
   },

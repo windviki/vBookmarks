@@ -3401,6 +3401,19 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline-offset: -2px;
 }
 
+/* Marks that outlived a cancelled scan (or one that found nothing): the ids
+   still carry the tree-view ×, and no scan result list is on screen to unmark
+   on — this section header introduces the manually-marked rows (each still
+   individually unmarkable) that stand in for the missing result list. */
+#dead-list .dead-marked-head {
+    color: var(--vbm-muted);
+    font-size: 11px;
+    text-align: center;
+    padding: 6px 8px 2px;
+    margin: 8px auto 0;
+    max-width: calc(100% - 40px);
+}
+
 /* 第四轮项10: result rows carry inline .row-btn actions (mark ⚑ / delete ×);
    without flex the buttons wrapped onto a line below the anchor. Same recipe
    as .dupes-member / .stats-hist-row: the li goes flex, the anchor flexes

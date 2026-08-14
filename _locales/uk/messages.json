@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Позначено мертві рядки"
   },
+  "deadMarkedCount": {
+    "message": "Позначено $count$ закладок",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Позначити вибране"
   },

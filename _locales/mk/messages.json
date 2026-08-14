@@ -237,6 +237,14 @@
   "deadMarked": {
     "message": "Означени мртви редови"
   },
+  "deadMarkedCount": {
+    "message": "Означени $count$ обележувачи",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Означи ги избраните"
   },

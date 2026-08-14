@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Baris yang ditandai mati"
   },
+  "deadMarkedCount": {
+    "message": "$count$ bookmark ditandai",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Tandai yang dipilih"
   },

@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Ölü satırlar işaretlendi"
   },
+  "deadMarkedCount": {
+    "message": "İşaretlenmiş $count$ yer imi",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Seçilenleri işaretle"
   },

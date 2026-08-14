@@ -374,6 +374,13 @@ export function initViewDead(ctx = {}) {
                 html += '</div>';
                 return html;
             }
+            // Unmark-all is NOT gated on a result list: marks are the user's
+            // persistent intent (survive a cancelled scan — the run's abort
+            // must not wipe them), so the clearing entry has to exist even
+            // when no scan results are on screen (a first scan cancelled
+            // before finishing leaves marked ids with no row to unmark on).
+            if (deadMarks.size)
+                html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>`;
@@ -412,8 +419,6 @@ export function initViewDead(ctx = {}) {
                 const filteredN = resultRows().length;
                 if (filteredN)
                     html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
-                if (deadMarks.size)
-                    html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
                 // Batch delete-all: removes every row of the ACTIVE filter
                 // segment (the same scope as mark-all, so 仅死链 narrows it
                 // to dead rows only). Rendered only when that set is
@@ -470,6 +475,37 @@ export function initViewDead(ctx = {}) {
         return html + '</ul>';
     };
 
+    // Rows of the user's manual marks, joined against the tree — shown when
+    // no scan result list is on screen (a cancelled scan, or one that found
+    // nothing). Marks are persistent intent, so they must stay reachable
+    // and individually clearable even without a scan to host them: each row
+    // carries the same mark-toggle (unmarks just that one) and delete as the
+    // scan rows, and the toolbar's Clear-all handles the batch.
+    const renderMarkedRows = () => {
+        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${deadMarks.size}`)}</div>`;
+        html += '<ul role="list">';
+        for (const id of deadMarks) {
+            const item = treeItems.get(id);
+            if (!item)
+                continue; // the bookmark was deleted since the mark
+            const path = views.pathOf(id);
+            html += `<li class="vbm-row" id="dead-item-${id}" role="listitem" ` +
+                `data-node-id="${id}">` +
+                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', id, null, {
+                    path,
+                    rightText: path,
+                    subText: path,
+                    badge: { text: _m('deadMarked'), cls: 'dead' }
+                }) +
+                `<button class="row-btn dead-mark-btn marked" ` +
+                `aria-label="${_m('deadUnmark')}" title="${_m('deadUnmark')}">${FLAG_ICON}</button>` +
+                `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
+                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
+                '</li>';
+        }
+        return html + '</ul>';
+    };
+
     // --- Toolbar + row focus park/restore: see src/list-focus.js -----------
     // (final polish / 4.0.1 focus law). v4 task-4 #14: the shared toolbar
     // selector includes the risk banner's controls so a scan tick can't
@@ -491,6 +527,12 @@ export function initViewDead(ctx = {}) {
             // scan keeps running.
             html += renderRows(liveRows());
         } else if (!lastScan) {
+            // Marks survive a cancelled scan — they are the user's persistent
+            // intent, so aborting a run must not strand them without a list.
+            // Surface the marked rows (each individually unmarkable) ahead of
+            // the executable start row, which stays as the way back into a run.
+            if (deadMarks.size)
+                html += renderMarkedRows();
             // §3.5: the empty state itself is the executable start row.
             html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                 `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;

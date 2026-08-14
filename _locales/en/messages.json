@@ -1056,6 +1056,15 @@
     "message": "Dead rows marked",
     "description": "Toast shown after the \"mark all\" batch action finished."
   },
+  "deadMarkedCount": {
+    "message": "Marked $count$ bookmarks",
+    "description": "Dead view: count of user-marked bookmarks shown when no scan result list is on screen (a cancelled scan keeps the marks).",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Mark selected",
     "description": "Dead view selection mode: mark every selected row as dead."

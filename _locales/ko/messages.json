@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "깨진 행이 표시됨"
   },
+  "deadMarkedCount": {
+    "message": "북마크 $count$개를 표시했습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "선택 항목 표시"
   },

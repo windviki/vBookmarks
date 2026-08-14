@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "マークされたデッド行"
   },
+  "deadMarkedCount": {
+    "message": "マーク済みブックマーク $count$ 件",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "選択済みをマーク"
   },

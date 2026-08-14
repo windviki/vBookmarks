@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Linhas mortas marcadas"
   },
+  "deadMarkedCount": {
+    "message": "$count$ bookmarks marcados",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Marcar selecionados"
   },

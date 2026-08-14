@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Mirušās rindas atzīmētas"
   },
+  "deadMarkedCount": {
+    "message": "Atzīmētas $count$ grāmatzīmes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Atzīmēt atlasītos"
   },

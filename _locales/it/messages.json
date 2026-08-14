@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Righe morte segnate"
   },
+  "deadMarkedCount": {
+    "message": "Contrassegnati $count$ segnalibri",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Contrassegna selezionati"
   },

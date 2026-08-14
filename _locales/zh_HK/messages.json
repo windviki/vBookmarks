@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "已標記失效行"
   },
+  "deadMarkedCount": {
+    "message": "已標記 $count$ 個書籤",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "標記所選項目"
   },

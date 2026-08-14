@@ -408,6 +408,34 @@ describe('empty state + cached results (§5.5a)', () => {
         expect($list.innerHTML).toContain('deadStartHint[3]'); // 3 scannable, sep out
     });
 
+    it('no scan yet but marks exist: the marked rows stay listable and individually unmarkable', () => {
+        // A first scan cancelled before finishing leaves deadMarks with no
+        // result list to host them — they must still render (joined to the
+        // tree), each with its own unmark toggle, so the user is never
+        // stranded with no way to clear a single mark.
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        const { $list, store } = ctx;
+        ctx.def().activate(); // no deadLastScan → lastScan null
+        const html = $list.innerHTML;
+        // the marked rows are listable with their marks
+        expect(html).toContain('deadMarkedCount[2]');
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).toContain('deadMarked'); // the per-row badge
+        // each row carries the marked-state toggle (unmark just that one)
+        expect(html).toContain('class="row-btn dead-mark-btn marked"');
+        // …and the executable start row still offers the way back into a scan
+        expect(html).toContain('class="empty-state dead-start"');
+        // toggling one row's mark unmarks ONLY that id
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-mark-btn'
+                ? { closest: () => ({ dataset: { nodeId: '12' } }) }
+                : null)
+        });
+        expect(JSON.parse(store.get('deadMarks', '[]'))).toEqual(['13']);
+    });
+
+
     it('the start row sends the start message on click and on Enter', () => {
         const ctx = setup({});
         ctx.def().activate();

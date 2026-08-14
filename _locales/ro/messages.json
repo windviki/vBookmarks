@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Rânduri moarte marcate"
   },
+  "deadMarkedCount": {
+    "message": "$count$ semne de carte marcate",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Marcați selectatele"
   },

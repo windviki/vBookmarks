@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Mrtvi redovi označeni"
   },
+  "deadMarkedCount": {
+    "message": "Označeno $count$ zabilježaka",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Označi odabrano"
   },

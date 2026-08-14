@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Mrtvé řádky označeny"
   },
+  "deadMarkedCount": {
+    "message": "Počet označených záložek: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Označit vybrané"
   },

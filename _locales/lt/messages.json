@@ -238,6 +238,14 @@
   "deadMarked": {
     "message": "Negyvos eilutės pažymėtos"
   },
+  "deadMarkedCount": {
+    "message": "Pažymėta žymių: $count$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "Pažymėti pasirinktus"
   },

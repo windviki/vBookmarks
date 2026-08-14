@@ -984,6 +984,14 @@
   "deadMarked": {
     "message": "死链行已全部标记"
   },
+  "deadMarkedCount": {
+    "message": "已标记 $count$ 个书签",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "deadMarkSelected": {
     "message": "标记所选",
     "description": "Dead view selection mode: mark every selected row as dead."
