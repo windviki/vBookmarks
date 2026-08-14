@@ -8,9 +8,9 @@ import {
 
 /**
  * Popup auto-resize decision logic — drives the REAL kernels extracted to
- * src/resize-core.js (neat.js imports and calls them), so a change to the
- * production logic is caught here. Previously this suite re-implemented the
- * decision as a local copy ("verify-only") and tested the copy — the real
+ * src/resize-core.js (src/resize.js imports and calls them), so a change to
+ * the production logic is caught here. Previously this suite re-implemented
+ * the decision as a local copy ("verify-only") and tested the copy — the real
  * resetHeight could drift freely and the 25 cases stayed green.
  *
  * resetHeight call-site semantics:
@@ -253,7 +253,8 @@ describe('popup WIDTH drag clamp (pointerDragHandler)', () => {
 
 // Source-contract gate: the resizer must use pointer capture + the on-screen
 // clamp — a regression that drops either re-breaks the reported width bug.
-const neatJs = fs.readFileSync(new URL('../src/neat.js', import.meta.url), 'utf8');
+// The wiring lives in src/resize.js since the extraction from neat.js.
+const resizeJs = fs.readFileSync(new URL('../src/resize.js', import.meta.url), 'utf8');
 
 describe('resizer source contract (4.0.1 width regression gate)', () => {
     it('drives the drag with POINTER events + capture, not mouse (pointer leaves the popup window)', () => {
@@ -261,36 +262,37 @@ describe('resizer source contract (4.0.1 width regression gate)', () => {
         // anchor, pushing the pointer out of the window mid-drag; document
         // mousemove/mouseup stop at the window edge and a lost mouseup wedges
         // resizerXDown (the "can't narrow after widening" bug).
-        expect(neatJs).toMatch(/setPointerCapture\(e\.pointerId\)/);
-        expect(neatJs).toMatch(/addEventListener\('pointermove', pointerDragHandler\)/);
-        expect(neatJs).toMatch(/addEventListener\('pointerup', pointerDragHandler\)/);
-        expect(neatJs).toMatch(/addEventListener\('pointercancel', pointerDragHandler\)/);
+        expect(resizeJs).toMatch(/setPointerCapture\(e\.pointerId\)/);
+        expect(resizeJs).toMatch(/addEventListener\('pointermove', pointerDragHandler\)/);
+        expect(resizeJs).toMatch(/addEventListener\('pointerup', pointerDragHandler\)/);
+        expect(resizeJs).toMatch(/addEventListener\('pointercancel', pointerDragHandler\)/);
         // both resizers capture the pointer on their own pointerdown
-        const pds = (neatJs.match(/addEventListener\('pointerdown', e => \{/g) || []).length;
+        const pds = (resizeJs.match(/addEventListener\('pointerdown', e => \{/g) || []).length;
         expect(pds).toBe(2);
         // a cancelled drag or a focus loss clears the state (no stale hijack)
-        expect(neatJs).toMatch(/addEventListener\('blur', resetDragState\)/);
+        expect(resizeJs).toMatch(/addEventListener\('blur', resetDragState\)/);
     });
 
     it('clamps width to the on-screen bound leaving a grabbable margin, not a bare 640', () => {
-        // the decision kernels live in resize-core.js; neat.js must call them
-        expect(neatJs).toContain('decideWidthMax({ bodyWidth, leftRoom, rightRoom })');
-        expect(neatJs).toContain('clampDragWidth(width, maxResizeWidth)');
-        expect(neatJs).toContain('onScreenMaxWidth');
-        expect(neatJs).toContain('RESIZE_EDGE_MARGIN');
+        // the decision kernels live in resize-core.js; resize.js must call them
+        expect(resizeJs).toContain('decideWidthMax({ bodyWidth, leftRoom, rightRoom })');
+        expect(resizeJs).toContain('clampDragWidth(width, maxResizeWidth)');
+        expect(resizeJs).toContain('onScreenMaxWidth');
+        expect(resizeJs).toContain('RESIZE_EDGE_MARGIN');
         // the margin means the handle never sits flush at screen x=0
-        expect(neatJs).toMatch(/RESIZE_EDGE_MARGIN\s*=\s*24/);
+        expect(resizeJs).toMatch(/RESIZE_EDGE_MARGIN\s*=\s*24/);
     });
 
     it('zoom delegates the level math to the shared kernel (resize-core)', () => {
-        expect(neatJs).toContain('nextZoomLevel(currentZoom, val)');
-        // the drag guard (a drag in progress refuses to zoom) stays in neat.js
-        expect(neatJs).toMatch(/if \(dnd\.isDragging\(\)\)/);
+        expect(resizeJs).toContain('nextZoomLevel(currentZoom, val)');
+        // the drag guard (a drag in progress refuses to zoom) rides the ctx
+        // lazy getter (dnd inits after initResize in neat.js)
+        expect(resizeJs).toMatch(/if \(ctx\.isDragging && ctx\.isDragging\(\)\)/);
     });
 
     it('persists synchronously on drag end (popup pagehide is not guaranteed)', () => {
-        expect(neatJs).toMatch(/store\.flush\(\)/);
-        expect(neatJs).toMatch(/resetDragState = \(\) => \{[\s\S]*?store\.flush\(\)/);
+        expect(resizeJs).toMatch(/store\.flush\(\)/);
+        expect(resizeJs).toMatch(/resetDragState = \(\) => \{[\s\S]*?store\.flush\(\)/);
     });
 
     it('sizes the ROOT element, not just body — the popup window follows <html> width', () => {
@@ -299,17 +301,17 @@ describe('resizer source contract (4.0.1 width regression gate)', () => {
         // widen the root sticks at the widest width and the window can never
         // narrow (body shrank, innerWidth stayed pinned). The drag must write
         // documentElement's width alongside body's or narrowing is dead.
-        expect(neatJs).toMatch(/document\.documentElement\.style\.width = `\$\{width\}px`/);
+        expect(resizeJs).toMatch(/document\.documentElement\.style\.width = `\$\{width\}px`/);
     });
 
     it('flushes AFTER the final width write on drag end, not before', () => {
         // resetDragState() contains store.flush(); if it ran before the final
         // store.set('popupWidth'), the definitive width would fall back to the
         // 200ms debounce and be lost on a fast popup close.
-        const finalWrite = neatJs.indexOf("store.set('popupWidth', width)");
-        const dragEndFlush = neatJs.indexOf('if (isDragEnd)');
+        const finalWrite = resizeJs.indexOf("store.set('popupWidth', width)");
+        const dragEndFlush = resizeJs.indexOf('if (isDragEnd)');
         expect(finalWrite).toBeGreaterThan(-1);
         expect(dragEndFlush).toBeGreaterThan(finalWrite);
-        expect(neatJs.slice(dragEndFlush, dragEndFlush + 80)).toMatch(/resetDragState\(\)/);
+        expect(resizeJs.slice(dragEndFlush, dragEndFlush + 80)).toMatch(/resetDragState\(\)/);
     });
 });
