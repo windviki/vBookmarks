@@ -475,6 +475,38 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(html).not.toMatch(/dead-del-btn"[^>]*>×/);
     });
 
+    it('a cached scan + marks: uncovered marks render as their own list, each unmarkable', () => {
+        // The cancelled-rescan scenario: lastScan holds id 12 (dead), and the
+        // user ALSO marked ids 11 and 13 — 12 is covered by the result rows,
+        // but 11/13 were never probed by that cached run. 12 must stay in the
+        // result list (not duplicated), while 11/13 need a list of their own
+        // or they'd have no per-mark clear entry at all.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 1,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({
+            storeData: { deadLastScan: cache, deadMarks: '["11","12","13"]' }
+        });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        const html = $list.innerHTML;
+        // the covered mark rides the result row only (no duplicate row id)
+        expect(html).toContain('id="dead-item-12"');
+        expect(html.match(/id="dead-item-12"/g)).toHaveLength(1);
+        // the uncovered marks get their own list with the count header
+        expect(html).toContain('deadMarkedCount[2]'); // 11 + 13
+        expect(html).toContain('id="dead-item-11"');
+        expect(html).toContain('id="dead-item-13"');
+        // unmarking ONE uncovered mark clears just that id
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-mark-btn'
+                ? { closest: () => ({ dataset: { nodeId: '13' } }) }
+                : null)
+        });
+        expect(JSON.parse(store.get('deadMarks', '[]')).sort()).toEqual(['11', '12']);
+    });
+
     it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {
         const ctx = setup({});
         ctx.def().activate({ preset: { scan: true } });

@@ -477,14 +477,16 @@ export function initViewDead(ctx = {}) {
 
     // Rows of the user's manual marks, joined against the tree — shown when
     // no scan result list is on screen (a cancelled scan, or one that found
-    // nothing). Marks are persistent intent, so they must stay reachable
-    // and individually clearable even without a scan to host them: each row
-    // carries the same mark-toggle (unmarks just that one) and delete as the
-    // scan rows, and the toolbar's Clear-all handles the batch.
-    const renderMarkedRows = () => {
-        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${deadMarks.size}`)}</div>`;
+    // nothing), or for the marks the current result list does NOT cover (a
+    // marked id the last scan never probed). Marks are persistent intent, so
+    // they must stay reachable and individually clearable even without a
+    // scan to host them: each row carries the same mark-toggle (unmarks just
+    // that one) and delete as the scan rows, and the toolbar's Clear-all
+    // handles the batch.
+    const renderMarkedRows = (ids = deadMarks) => {
+        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${ids.size}`)}</div>`;
         html += '<ul role="list">';
-        for (const id of deadMarks) {
+        for (const id of ids) {
             const item = treeItems.get(id);
             if (!item)
                 continue; // the bookmark was deleted since the mark
@@ -538,6 +540,16 @@ export function initViewDead(ctx = {}) {
                 `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
         } else {
             const rows = resultRows();
+            // Marks the current result list does not cover: a marked id that
+            // the last scan never probed (a manual mark that predates the
+            // run, or one added after it) has no row on screen to unmark on
+            // — surface just those as their own list, so a cached scan never
+            // strands a mark either. Marks that ARE in the result rows carry
+            // the toggle there, so they are not repeated here.
+            const rowIds = new Set(rows.map(r => r.item.id));
+            const uncovered = new Set([...deadMarks].filter(id => !rowIds.has(id)));
+            if (uncovered.size)
+                html += renderMarkedRows(uncovered);
             // Distinguish "the scan found nothing" from "the active filter
             // matches nothing" — the latter tells the user the other
             // segments (still visible above) are where the rows went.
