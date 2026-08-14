@@ -10,7 +10,7 @@ import { DEFAULT_BOOKMARK_ICON } from '../src/icons.js';
 // records the capture-phase load listener.
 
 const PLACEHOLDER_BYTES = new Uint8ClampedArray([95, 99, 104, 255, 95, 99, 104, 255]);
-const REAL_BYTES = new Uint8ClampedArray([200, 30, 30, 255, 30, 200, 30, 255]);
+const REAL_BYTES = new Uint8ClampedArray([29, 99, 237, 255, 29, 99, 237, 255]); // docker blue: mid-tone
 
 const makeImage = (bytes, w = 2, h = 2) => ({
     tagName: 'IMG',
@@ -75,6 +75,9 @@ beforeAll(() => {
 beforeEach(() => {
     loadHandler = null;
     lastDocImages = [];
+    // Per-test stubs installed by the runtime-gap tests below must not leak.
+    delete globalThis.matchMedia;
+    delete globalThis.document.querySelectorAll;
 });
 
 afterAll(() => {
@@ -98,36 +101,48 @@ describe('contrastStats', () => {
     const black = () => new Uint8ClampedArray([0, 0, 0, 255, 0, 0, 0, 255]);
     const transparent = () => new Uint8ClampedArray([255, 255, 255, 0, 0, 0, 0, 0]);
 
-    it('a white icon is full-luminance, zero-saturation, fully covered', () => {
-        expect(contrastStats(white())).toEqual({ lum: 1, sat: 0, cover: 1 });
+    it('a white icon is fully light-extreme, fully covered', () => {
+        expect(contrastStats(white())).toEqual({ dark: 0, light: 1, cover: 1 });
     });
 
-    it('a black icon is zero-luminance, zero-saturation, fully covered', () => {
-        expect(contrastStats(black())).toEqual({ lum: 0, sat: 0, cover: 1 });
+    it('a black icon is fully dark-extreme, fully covered', () => {
+        expect(contrastStats(black())).toEqual({ dark: 1, light: 0, cover: 1 });
     });
 
     it('transparent pixels are skipped; a fully transparent icon has cover 0', () => {
-        expect(contrastStats(transparent())).toEqual({ lum: 0, sat: 0, cover: 0 });
+        expect(contrastStats(transparent())).toEqual({ dark: 0, light: 0, cover: 0 });
     });
 
-    it('a colorful icon keeps its saturation', () => {
-        const s = contrastStats(REAL_BYTES);
-        expect(s.lum).toBeCloseTo(0.427, 2);
-        expect(s.sat).toBeCloseTo(0.667, 2);
-        expect(s.cover).toBe(1);
+    it('a mid-tone colorful icon lands in neither extreme bucket', () => {
+        // (29,99,237) docker blue → lum ≈ 94, between the 77/179 bucket edges
+        expect(contrastStats(REAL_BYTES)).toEqual({ dark: 0, light: 0, cover: 1 });
+    });
+
+    it('a dark-but-colorful icon counts as dark (netflix red N)', () => {
+        // #E50914 → lum ≈ 56 < 77: saturation no longer shields a dark mark
+        const netflixRed = new Uint8ClampedArray([229, 9, 20, 255, 229, 9, 20, 255]);
+        expect(contrastStats(netflixRed)).toEqual({ dark: 1, light: 0, cover: 1 });
+    });
+
+    it('half dark + half light reads as both fractions (two-tone)', () => {
+        const twoTone = new Uint8ClampedArray([0, 0, 0, 255, 255, 255, 255, 255]);
+        expect(contrastStats(twoTone)).toEqual({ dark: 0.5, light: 0.5, cover: 1 });
     });
 });
 
 describe('needsContrast', () => {
-    const white = { lum: 1, sat: 0, cover: 1 };
-    const black = { lum: 0, sat: 0, cover: 1 };
-    const nearWhite = { lum: 0.75, sat: 0.05, cover: 1 };   // #bfbfbf — 偏白，非纯白
-    const nearBlack = { lum: 0.25, sat: 0.05, cover: 1 };   // #404040 — 偏黑，非纯黑
-    const midGray = { lum: 0.5, sat: 0, cover: 1 };
-    const colorfulLight = { lum: 0.9, sat: 0.5, cover: 1 };
-    const empty = { lum: 0, sat: 0, cover: 0 };
+    const white = { dark: 0, light: 1, cover: 1 };
+    const black = { dark: 1, light: 0, cover: 1 };
+    const nearWhite = { dark: 0, light: 0.9, cover: 0.94 };   // yabook: 偏白浅灰，远非纯白
+    const nearBlack = { dark: 0.9, light: 0, cover: 0.6 };    // 偏黑深色 logo，透明底
+    const midGray = { dark: 0, light: 0, cover: 1 };
+    const darkColorful = { dark: 1, light: 0, cover: 0.49 };  // netflix: 暗而饱和
+    const darkPlateLightGlyph = { dark: 0.82, light: 0.1, cover: 1 }; // x.com: 黑盘白字
+    const lightPlateDarkGlyph = { dark: 0.2, light: 0.75, cover: 1 }; // 白盘黑字
+    const twoTone = { dark: 0.5, light: 0.5, cover: 1 };      // 均衡双色：翻转无收益
+    const empty = { dark: 0, light: 0, cover: 0 };
 
-    it('flips icons on the wrong side of the background luminance', () => {
+    it('flips icons on the wrong side of the background', () => {
         expect(needsContrast(white, false)).toBe(true);   // white on light bg
         expect(needsContrast(white, true)).toBe(false);   // white is fine on dark
         expect(needsContrast(black, true)).toBe(true);    // black on dark bg
@@ -141,11 +156,28 @@ describe('needsContrast', () => {
         expect(needsContrast(nearBlack, false)).toBe(false);
     });
 
-    it('leaves mid-gray and colorful icons alone', () => {
-        // mid-gray 反色后仍是 mid-gray（invert 映射 L→1−L），无对比收益
+    it('flips a dark-but-colorful mark on dark — the hue-preserving filter keeps its hue', () => {
+        expect(needsContrast(darkColorful, true)).toBe(true);   // netflix 红 N → 浅红
+        expect(needsContrast(darkColorful, false)).toBe(false);
+    });
+
+    it('leaves a self-inverting dark plate with a light glyph alone (x.com)', () => {
+        // 黑盘在暗背景上隐形、白字自然浮现——翻转只会得到刺眼白盘
+        expect(needsContrast(darkPlateLightGlyph, true)).toBe(false);
+        expect(needsContrast(darkPlateLightGlyph, false)).toBe(false);
+    });
+
+    it('leaves a readable light plate with a dark glyph alone on light', () => {
+        expect(needsContrast(lightPlateDarkGlyph, false)).toBe(false);
+        expect(needsContrast(lightPlateDarkGlyph, true)).toBe(false);
+    });
+
+    it('leaves mid-gray and balanced two-tone icons alone', () => {
+        // 明度翻转映射 L→1−L：中间调与均衡双色翻转后对比度无收益
         expect(needsContrast(midGray, false)).toBe(false);
         expect(needsContrast(midGray, true)).toBe(false);
-        expect(needsContrast(colorfulLight, false)).toBe(false); // saturated → not inverted
+        expect(needsContrast(twoTone, false)).toBe(false);
+        expect(needsContrast(twoTone, true)).toBe(false);
     });
 
     it('an icon with no opaque pixels is never flipped', () => {
@@ -274,7 +306,7 @@ describe('initFaviconFallback', () => {
     });
 
     it('inverts a light-gray (not pure-white) icon on a light background', async () => {
-        // #bfbfbf → lum 0.75, sat 0：偏白但远非纯白，正是「偏白色图标」的实际场景
+        // #bfbfbf → lum ≈ 0.749 > 0.70 light 桶：偏白但远非纯白，正是「偏白色图标」的实际场景
         const LIGHT_GRAY_ICON = () => new Uint8ClampedArray([191, 191, 191, 255, 191, 191, 191, 255]);
         initFaviconFallback(globalThis.document, {
             contrastEnabled: () => true,
@@ -311,7 +343,7 @@ describe('initFaviconFallback', () => {
         expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
     });
 
-    it('the contrast service stays inert when disabled (no classList access)', async () => {
+    it('the contrast service stays inert when disabled (never adds the invert class)', async () => {
         initFaviconFallback(globalThis.document, {
             contrastEnabled: () => false,
             themeIsDark: () => false
@@ -338,5 +370,83 @@ describe('initFaviconFallback', () => {
         dark = true;
         api.applyContrast(img);
         expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
+    });
+
+    // --- v4.0.5 runtime gaps -------------------------------------------------
+    // (a) auto 主题下 OS 级明暗切换不动 body[data-theme]，只有
+    // prefers-color-scheme 媒体查询发声——模块订阅它的 change 事件做同样的
+    // 重判。(b) options 页翻转 faviconContrast 后，neat.js 的
+    // chrome.storage.onChanged wiring 把新值推进 getter 并调
+    // reapplyContrast()——这里钉住这条路径依赖的两个原语。
+    it('re-decides on a prefers-color-scheme change (auto theme OS switch)', async () => {
+        let dark = false;
+        let schemeListener = null;
+        globalThis.matchMedia = query => ({
+            media: query,
+            addEventListener: (type, fn) => {
+                if (type === 'change')
+                    schemeListener = fn;
+            }
+        });
+        const img = makeClassImg(WHITE_ICON(),
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fos-flip.example&size=32');
+        globalThis.document.querySelectorAll = () => [img];
+        const api = initFaviconFallback(globalThis.document, {
+            contrastEnabled: () => true,
+            themeIsDark: () => dark
+        });
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(true); // white on light
+        expect(api.schemeMedia).toBeTruthy();
+        expect(api.schemeMedia.media).toBe('(prefers-color-scheme: dark)');
+        expect(schemeListener).toBeTruthy();
+        // OS flips to dark under the auto theme: no attribute mutation, only
+        // the media-query change event — the cached stats are re-decided
+        dark = true;
+        schemeListener();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
+    });
+
+    it('no matchMedia in the environment → schemeMedia stays null (inert)', () => {
+        const api = initFaviconFallback(globalThis.document);
+        expect(api.schemeMedia).toBeNull();
+    });
+
+    it('toggling the setting off sweeps previously applied invert classes', async () => {
+        let on = true;
+        const img = makeClassImg(WHITE_ICON(),
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Ftoggle-off.example&size=32');
+        globalThis.document.querySelectorAll = () => [img];
+        const api = initFaviconFallback(globalThis.document, {
+            contrastEnabled: () => on,
+            themeIsDark: () => false
+        });
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
+        // the neat.js storage.onChanged wiring: push the new value into the
+        // getter, then reapplyContrast() — the stale class must not outlive
+        // the setting
+        on = false;
+        api.reapplyContrast();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
+    });
+
+    it('toggling the setting on re-applies invert from the cached stats', async () => {
+        let on = false;
+        const img = makeClassImg(WHITE_ICON(),
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Ftoggle-on.example&size=32');
+        globalThis.document.querySelectorAll = () => [img];
+        const api = initFaviconFallback(globalThis.document, {
+            contrastEnabled: () => on,
+            themeIsDark: () => false
+        });
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(false); // disabled at load
+        on = true;
+        api.reapplyContrast();
+        expect(img.classList.set.has('favicon-contrast-invert')).toBe(true);
     });
 });

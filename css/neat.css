@@ -640,7 +640,7 @@ body.linux input {
 #results ul li .favicon-container .sync-indicator {
     position: absolute;
     bottom: 1px;
-    right: 1px;
+    inset-inline-end: 1px; /* logical: mirrors to the left corner under RTL */
     flex: none;
 }
 
@@ -690,13 +690,16 @@ body.linux input {
     font-style: normal;
 }
 
-/* v4.1 favicon contrast service: 亮色主题下偏白的单色 icon、暗色主题下偏黑
-   的单色 icon 反色，保证在相反背景上仍然可见。类名由 favicon-fallback.js 在
-   每 src 一次采样后按需加上；placeholder 已换成 currentColor SVG 随主题走，
-   不会落到这里。仅作用于真实 favicon <img>。 */
+/* v4.1 favicon contrast service: 暗色主题下以黑色为主体的 icon、亮色主题下
+   以白色为主体的 icon 做明度翻转，保证在相反背景上仍然可见。类名由
+   favicon-fallback.js 在每 src 一次采样后按极端色占比判定加上；placeholder
+   已换成 currentColor SVG 随主题走，不会落到这里。仅作用于真实 favicon <img>。
+   invert(1) 单独使用会把颜色翻成补色（netflix 红 N → 青），追加
+   hue-rotate(180deg) 把色相转回——净效果是只翻明度、保留色相与饱和度，
+   对黑白单色图标与纯 invert 完全等价。 */
 .favicon-contrast-invert {
-    -webkit-filter: invert(1);
-    filter: invert(1);
+    -webkit-filter: invert(1) hue-rotate(180deg);
+    filter: invert(1) hue-rotate(180deg);
 }
 
 #results ul li a:hover i,
@@ -867,9 +870,17 @@ menu[type=context] .menu-item:hover {
     background-color: var(--vbm-bg-hover);
 }
 
-/* destructive entries read as danger even before hover */
+/* destructive entries read as danger even before hover — every delete /
+   remove / clear / clean menu item speaks the same red=delete language
+   (1b01345), not just the bookmark/folder ones. The collapsed sub-* menus
+   carry no destructive entries, so nothing there needs the cue. */
 menu[type=context] #bookmark-delete,
-menu[type=context] #folder-delete {
+menu[type=context] #folder-delete,
+menu[type=context] #remove-separator,
+menu[type=context] #search-history-menu-remove,
+menu[type=context] #search-history-menu-clear,
+menu[type=context] #dupes-group-clean,
+menu[type=context] #palette-cmd-delete {
     color: var(--vbm-danger);
 }
 
@@ -2221,6 +2232,20 @@ body.no-view-tabs #view-tabs {
         width: 18px;
         height: 18px;
     }
+    /* #results-scoped twin: search rows are the same li.vbm-row >
+       a.tree-item-link structure, but the base icon-slot rule
+       `#results ul li a .favicon-container` (1,1,3) always outranks the bare
+       class rules above (0,3,0) — without this ID-level version the search
+       view's two-line rows kept the single-line 16px/4px spec. */
+    #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container {
+        width: 22px;
+        margin-inline-end: 8px;
+    }
+    #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container img,
+    #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 body.panel-mode .vbm-row .row-path {
@@ -2239,6 +2264,18 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container {
 
 body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container img,
 body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* panel-mode twin of the #results-scoped rule above (same specificity gap) */
+body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container {
+    width: 22px;
+    margin-inline-end: 8px;
+}
+
+body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container img,
+body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container svg {
     width: 18px;
     height: 18px;
 }
@@ -2440,6 +2477,20 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
 }
 
 #search-history-clear:hover {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
+}
+
+/* The per-row remove button gets the same danger treatment as the header's
+   clear-all above and the dead view's .dead-del-btn: deleting a history
+   entry is information deletion, so it reads red at rest and hovers with
+   the danger tint instead of the generic bg-hover. The #search-history-area
+   scope (1,2,0) keeps the red against the generic .row-btn:hover fg (0,2,0)
+   that is declared later in the file. */
+#search-history-area .row-btn.search-history-remove {
+    color: var(--vbm-danger);
+}
+
+#search-history-area .row-btn.search-history-remove:hover {
     background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
@@ -2843,10 +2894,11 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
    buttons (select-mode entry, the selecting bar's all/invert/clear/exit)
    wore NATIVE button chrome while the dead toolbar's were flat accent text
    buttons. Same recipe as .dead-toolbar button below, scoped away from the
-   two filled accent pills (apply-all / apply-selected keep their primary
-   look — :not() also keeps their hover from going flat). The dropdown
-   trigger is its own bordered control, so it joins the exclusion list (its
-   (0,2,0) rules would otherwise lose to this (0,3,1) one). */
+   two filled pills (apply-all / apply-selected are danger fills since
+   1b01345 and keep their primary look — :not() also keeps their hover from
+   going flat). The dropdown trigger is its own bordered control, so it
+   joins the exclusion list (its (0,2,0) rules would otherwise lose to this
+   (0,3,1) one). */
 .dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger) {
     border: 0;
     border-radius: var(--vbm-radius);
@@ -3025,6 +3077,9 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
     visibility: visible;
 }
 
+/* Deliberate boundary case of the 1b01345 red=delete language (v4 task-4
+   #9): the group-level ✓ stays accent because it reads as "apply this
+   group's dedup", not as a delete — even though applying removes the rest. */
 .dupes-clean-rest {
     color: var(--vbm-accent);
 }
@@ -3172,12 +3227,19 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
 
 /* Destructive batch actions (delete all / delete selected) read as danger —
    the same cue as the context-menu delete entries, so the irreversible
-   control stands out from the mark/unmark pills. A disabled batch action
-   (empty selection) sheds the danger cue and its hover — it must read
-   inert, not urgent. */
+   control stands out from the mark/unmark pills. The hover is the danger
+   tint (same recipe as #search-history-clear / .dead-proxy-remove), not the
+   generic bg-hover the other flat toolbar buttons use. A disabled batch
+   action (empty selection) sheds the danger cue and its hover — it must
+   read inert, not urgent. */
 .dead-toolbar .dead-delete-all,
 .dead-toolbar .dead-delete-selected {
     color: var(--vbm-danger);
+}
+
+.dead-toolbar .dead-delete-all:hover,
+.dead-toolbar .dead-delete-selected:hover {
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 .dead-toolbar .dead-delete-selected:disabled {
@@ -3299,10 +3361,15 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
 }
 
 /* Executable empty state (§3.5): the start row is clickable/focusable.
-   v4.1 visual fix: 开始扫描是死链视图的主 CTA —— accent 填充药丸（复用
-   dupes-apply-all 的填充配方，padding/字号适度放大），不再是整行大块 muted
-   文字。width: fit-content + margin: auto 让药丸收缩并水平居中；hover 用亮度
-   提升而非变 accent（文字已是 accent-fg），focus 焦点环包裹药丸而非整行。 */
+   v4.1 visual fix: the start-scan CTA is an accent-filled pill — same filled
+   shape as dupes-apply-all but in accent/accent-fg, NOT that button's
+   current recipe (1b01345 recolored apply-all to a danger fill; starting a
+   scan deletes nothing, so it stays accent) — replacing the old row-wide
+   block of muted text. width: fit-content + margin: auto shrink-wrap and
+   center the pill; hover is a brightness lift rather than an accent shift
+   (the text is already accent-fg); the focus ring is inset
+   (outline-offset:-2px), drawn just inside the pill's edge instead of
+   wrapping the whole row. */
 #dead-list ul li.dead-start {
     width: fit-content;
     margin: 20px auto;
@@ -3370,8 +3437,9 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
     color: var(--vbm-danger);
 }
 
-/* §5.5c overlay: red × on the favicon's top-right corner in every list
-   (the sync dot owns the bottom-right, so they never collide).
+/* §5.5c overlay: red × on the favicon's top trailing corner in every list
+   (top-right in LTR; inset-inline-end mirrors it under RTL — the sync dot
+   owns the bottom trailing corner, so they never collide).
    第五轮项2 — the generic `#tree ul li span` row rule (display/line-height/
    padding-inline-end, specificity 1,0,3) used to leak into this span: the
    4px end padding stretched the 10px circle into a 14×10 ellipse and the
@@ -3388,7 +3456,7 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
 #tree ul li span.dead-indicator {
     position: absolute;
     top: -3px;
-    right: -3px;
+    inset-inline-end: -3px; /* logical: mirrors to the left corner under RTL */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3467,7 +3535,9 @@ body.panel-mode .vbm-row:has(.row-sub) .tree-item-link .favicon-container svg {
 }
 
 .stats-toolbar .stats-clear:hover {
-    background: var(--vbm-bg-hover);
+    /* same danger-tint hover as the other red text deletes
+       (#search-history-clear, .dead-proxy-remove, .dead-delete-*) */
+    background: color-mix(in srgb, var(--vbm-danger) 12%, transparent);
 }
 
 .stats-toolbar .stats-clear:disabled {
@@ -3565,7 +3635,9 @@ body.panel-mode #stats-list ul li.vbm-row > a.tree-item-link .row-badge.time {
    as the filled ★ (STAR_ICON_FILLED) — the two icon columns align across
    rows. Hollow + danger red reads as the "not yet bookmarked" counterpart to
    ★'s solid accent; one shared star path keeps both in a single design
-   language. No box — the previous bordered square never centered the glyph. */
+   language. No box — the previous bordered square never centered the glyph.
+   The red here is the star-as-favorite convention, a deliberate exception
+   to the 1b01345 red=delete language: adding a bookmark deletes nothing. */
 #stats-list .stats-add-btn {
     display: flex;
     align-items: center;

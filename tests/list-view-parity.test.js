@@ -118,6 +118,30 @@ describe('v4.1 visual consistency: 左侧留白 + 删除类操作红色语义', 
         expect(ruleBody(neatCss, '.dead-proxy-strip button.dead-proxy-remove {'))
             .toContain('color: var(--vbm-danger)');
     });
+
+    it('搜索历史行内删除按钮同样染红（与清除全部同一待遇）', () => {
+        expect(ruleBody(neatCss, '#search-history-area .row-btn.search-history-remove {'))
+            .toContain('color: var(--vbm-danger)');
+        expect(ruleBody(neatCss, '#search-history-area .row-btn.search-history-remove:hover {'))
+            .toContain('color-mix(in srgb, var(--vbm-danger) 12%, transparent)');
+    });
+
+    it('右键菜单所有删除/清除语义项都读作 danger 红', () => {
+        for (const id of ['#bookmark-delete', '#folder-delete', '#remove-separator',
+            '#search-history-menu-remove', '#search-history-menu-clear',
+            '#dupes-group-clean', '#palette-cmd-delete'])
+            expect(neatCss).toContain(`menu[type=context] ${id}`);
+        expect(ruleBody(neatCss, 'menu[type=context] #bookmark-delete,'))
+            .toContain('color: var(--vbm-danger)');
+    });
+
+    it('红色文字删除按钮统一 danger 淡色 hover', () => {
+        for (const sel of ['.dead-toolbar .dead-delete-all:hover,',
+            '.dead-toolbar .dead-delete-selected:hover {',
+            '.stats-toolbar .stats-clear:hover {'])
+            expect(ruleBody(neatCss, sel))
+                .toContain('color-mix(in srgb, var(--vbm-danger) 12%, transparent)');
+    });
 });
 
 describe('v4.1 visual consistency: 双行行图标→文本间隙', () => {
@@ -151,6 +175,31 @@ describe('v4.1 visual consistency: 双行行图标→文本间隙', () => {
             '    width: 18px;\n' +
             '    height: 18px;');
     });
+
+    // 搜索行同样是 li.vbm-row > a.tree-item-link 结构，但基础图标槽规则
+    // `#results ul li a .favicon-container`（1,1,3）恒胜上面的裸类双行规则
+    // （0,3,0）——搜索视图需要同规格的 ID 级提权版本，否则双行行仍吃
+    // 16px/4px 的单行规格。
+    it('搜索视图（#results）双行行有 ID 级提权规则', () => {
+        expect(neatCss).toContain(
+            '#results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container {\n' +
+            '        width: 22px;\n' +
+            '        margin-inline-end: 8px;');
+        expect(neatCss).toContain(
+            '#results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container img,\n' +
+            '    #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container svg {\n' +
+            '        width: 18px;\n' +
+            '        height: 18px;');
+        expect(neatCss).toContain(
+            'body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container {\n' +
+            '    width: 22px;\n' +
+            '    margin-inline-end: 8px;');
+        expect(neatCss).toContain(
+            'body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container img,\n' +
+            'body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-container svg {\n' +
+            '    width: 18px;\n' +
+            '    height: 18px;');
+    });
 });
 
 describe('v4.1 visual consistency: 死链开始扫描药丸 CTA + favicon 反色', () => {
@@ -162,8 +211,8 @@ describe('v4.1 visual consistency: 死链开始扫描药丸 CTA + favicon 反色
         expect(body).toContain('border-radius: 999px');
     });
 
-    it('favicon 反色类由 CSS 提供 invert 滤镜', () => {
+    it('favicon 反色类由 CSS 提供保色相的明度翻转滤镜', () => {
         const body = ruleBody(neatCss, '.favicon-contrast-invert {');
-        expect(body).toContain('filter: invert(1)');
+        expect(body).toContain('filter: invert(1) hue-rotate(180deg)');
     });
 });

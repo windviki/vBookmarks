@@ -21,9 +21,10 @@
     border-radius: 50%;
     cursor: help;
     position: absolute;
-    /* Position over favicon bottom right */
+    /* Position over the favicon's bottom trailing corner (bottom-right in
+       LTR; inset-inline-end mirrors it to the bottom-left under RTL) */
     bottom: 1px;
-    right: 1px;
+    inset-inline-end: 1px;
     z-index: 10;
     /* Reset positioning context */
     margin: 0;
@@ -105,12 +106,12 @@
     position: relative;
 }
 
-/* Position sync indicator over favicon — the dot sits at bottom-right of
-   the 16×16 icon area. */
+/* Position sync indicator over favicon — the dot sits at the bottom
+   inline-end corner of the 16×16 icon area. */
 .favicon-container .sync-indicator {
     position: absolute;
     bottom: 1px;
-    right: 1px;
+    inset-inline-end: 1px;
 }
 
 /* Image/SVG margin reset inside favicon container — override any browser

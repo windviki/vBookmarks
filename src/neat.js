@@ -56,8 +56,11 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
     // decision time, so the options toggle and live palette theme switches
     // take effect immediately. themeIsDark resolves the --vbm-bg token's
     // luminance, covering light/dark/ink/paper/auto uniformly.
-    initFaviconFallback(window.document, {
-        contrastEnabled: () => window.store.get('faviconContrast', '1') === '1',
+    // faviconContrastLive is the options-page value pushed through the
+    // chrome.storage.onChanged listener below; null = trust the store mirror.
+    let faviconContrastLive = null;
+    const faviconService = initFaviconFallback(window.document, {
+        contrastEnabled: () => (faviconContrastLive ?? store.get('faviconContrast', '1')) === '1',
         themeIsDark: () => {
             const b = window.document.body;
             if (!b)
@@ -72,6 +75,23 @@ import { isAutoResizeEnabled, shouldHighlightUnsynced, shouldRememberState } fro
             return 0.2126 * r + 0.7152 * g + 0.0722 * blue < 0.5;
         }
     });
+
+    // The store mirror has no onChanged forwarding, so an options-page
+    // faviconContrast flip never reaches an already-open side panel (the
+    // popup simply reloads on each open and never needed this). Listen
+    // directly: remember the pushed value for the getter above and re-decide
+    // every cached icon — turning the service off also sweeps the invert
+    // classes it previously applied.
+    const wc = window.chrome;
+    if (faviconService && wc && wc.storage && wc.storage.onChanged) {
+        wc.storage.onChanged.addListener((changes, area) => {
+            if (area !== 'local' || !changes
+                || !Object.prototype.hasOwnProperty.call(changes, 'faviconContrast'))
+                return;
+            faviconContrastLive = changes.faviconContrast.newValue ?? '1';
+            faviconService.reapplyContrast();
+        });
+    }
 
     // Storage mirror must be ready (chrome.storage.local loaded + migrated)
     // before any of the settings below are read

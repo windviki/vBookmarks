@@ -43,42 +43,58 @@ export const hashPixels = bytes => {
 };
 
 // v4.1 favicon contrast service: from the SAME getImageData buffer the
-// placeholder check already samples, derive three stats — mean relative
-// luminance, mean saturation (max−min), and the fraction of opaque pixels.
-// No extra canvas, no extra decode: the contrast decision reuses one read.
-// Transparent pixels are skipped; a fully transparent icon yields cover 0.
+// placeholder check already samples, derive three stats — the fraction of
+// opaque pixels sitting on the DARK extreme (lum < 0.30), on the LIGHT
+// extreme (lum > 0.70), and the opaque coverage. No extra canvas, no extra
+// decode: the contrast decision reuses one read. Transparent pixels are
+// skipped; a fully transparent icon yields cover 0.
+//
+// Why extreme-tone FRACTIONS instead of mean luminance (the 4.0.5 approach):
+// a mean is fooled by plate-style icons — x.com's white-X-on-black-plate
+// averages to "very dark" (0.14), so a mean rule flips it on a dark theme
+// and turns the elegant self-inverting design (black plate vanishes, white
+// X remains) into a glaring white plate. The fractions see the design
+// directly: predominantly dark pixels PLUS a meaningful light minority =
+// the icon already handles dark backgrounds, leave it alone. Thresholds and
+// the flip filter were tuned against a 13-real-favicon matrix (thepaper,
+// github, x, netflix, youtube, yabook, ccav1, spotify, zhihu,
+// stackoverflow, docker, bilibili, …) rendered on all four theme
+// backgrounds — see tmp/favicon-lab for the harness.
 export const contrastStats = data => {
-    let lumSum = 0, satSum = 0, cover = 0;
+    let dark = 0, light = 0, cover = 0;
     const total = data.length / 4;
     for (let i = 0; i < data.length; i += 4) {
         if (data[i + 3] / 255 < 0.5)
             continue;
-        const r = data[i] / 255, g = data[i + 1] / 255, b = data[i + 2] / 255;
-        lumSum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-        satSum += mx - mn;
+        const lum = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+        if (lum < 77)
+            dark++;
+        else if (lum > 179)
+            light++;
         cover++;
     }
     if (!cover)
-        return { lum: 0, sat: 0, cover: 0 };
-    return { lum: lumSum / cover, sat: satSum / cover, cover: cover / total };
+        return { dark: 0, light: 0, cover: 0 };
+    return { dark: dark / cover, light: light / cover, cover: cover / total };
 };
 
-// Invert decision: only flip icons that are BOTH on the wrong side of the
-// background luminance AND near-monochrome (low saturation) — a white or
-// black single-color logo, not a colorful brand mark that invert would
-// distort. The luminance thresholds are deliberately NOT near the extremes
-// (pure white/black would have no practical value): a white-ish icon down to
-// lum 0.70 inverts to ≤0.30 (≈3:1 contrast on the light bg), and a black-ish
-// icon up to lum 0.30 inverts to ≥0.70 on a dark bg. Mid-gray is left alone
-// because invert() maps L→1−L, so flipping a mid-tone buys no contrast.
-// Light background → flip too-light icons; dark → flip too-dark.
+// Flip decision. Dark background: flip only a PREDOMINANTLY dark mark with
+// essentially no light pixels (thepaper/github/netflix — dark glyphs on
+// transparency, dark > 0.55 & light ≈ 0). A dark plate carrying a real
+// light glyph (x.com: light ≈ 0.10) already reads correctly and stays.
+// Light background mirrors it with a looser glyph guard: a light plate with
+// a dark glyph (a white card with black text) is perfectly readable as-is,
+// so the flip needs light > 0.60 with dark < 0.15. Mid-tone and two-tone
+// icons fall between the guards and are never flipped — a lightness flip
+// (L→1−L) buys them no contrast either way. No saturation term: the CSS
+// flip preserves hue (see .favicon-contrast-invert), so a dark-but-colorful
+// mark like the netflix red keeps its hue and only gets lighter.
 export const needsContrast = (stats, darkBg) => {
     if (!stats || !stats.cover)
         return false;
     if (darkBg)
-        return stats.lum < 0.30 && stats.sat < 0.25;
-    return stats.lum > 0.70 && stats.sat < 0.25;
+        return stats.dark > 0.55 && stats.light < 0.05;
+    return stats.light > 0.60 && stats.dark < 0.15;
 };
 
 export function initFaviconFallback(doc = document, ctx = {}) {
@@ -134,10 +150,17 @@ export function initFaviconFallback(doc = document, ctx = {}) {
 
     // Toggle the invert class from the cached stats for this src. The class
     // sits on the <img>; CSS (neat.css .favicon-contrast-invert) applies the
-    // filter. Guarded so stubbed imgs without classList never throw.
+    // filter. Guarded so stubbed imgs without classList never throw. A
+    // disabled service SWEEPS the class instead of bailing out: the options
+    // toggle can flip off after icons were already inverted, and the stale
+    // class must not outlive the setting.
     const applyContrast = img => {
-        if (!contrastEnabled() || !img || !img.classList)
+        if (!img || !img.classList)
             return;
+        if (!contrastEnabled()) {
+            img.classList.remove('favicon-contrast-invert');
+            return;
+        }
         const stats = statsBySrc.get(img.src);
         if (!stats)
             return;
@@ -185,7 +208,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
                 swapForDefaultIcon(img);
             } else {
                 // Real favicon: cache its stats and decide contrast once.
-                statsBySrc.set(src, fp || { lum: 0, sat: 0, cover: 0 });
+                statsBySrc.set(src, fp || { dark: 0, light: 0, cover: 0 });
                 applyContrast(img);
             }
         });
@@ -214,5 +237,19 @@ export function initFaviconFallback(doc = document, ctx = {}) {
         themeObserver.observe(doc.body, { attributes: true, attributeFilter: ['data-theme'] });
     }
 
-    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast, themeObserver };
+    // Under the auto theme an OS-level light/dark flip resolves through the
+    // prefers-color-scheme media query without ever touching
+    // body[data-theme], so the observer above can't see it and a resident
+    // side panel would keep the stale invert state. Re-decide from the same
+    // cached stats on every scheme change. Subscribing unconditionally is
+    // harmless on explicit themes: the background token didn't change, so
+    // the re-decision is a no-op.
+    let schemeMedia = null;
+    if (typeof matchMedia === 'function') {
+        schemeMedia = matchMedia('(prefers-color-scheme: dark)');
+        if (schemeMedia && typeof schemeMedia.addEventListener === 'function')
+            schemeMedia.addEventListener('change', reapplyContrast);
+    }
+
+    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast, themeObserver, schemeMedia };
 }
