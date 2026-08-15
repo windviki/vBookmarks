@@ -926,10 +926,12 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         const html = $list.innerHTML;
         // auto-switched to 上次标注: the segment is highlighted
         expect(html).toContain('data-filter="marked" aria-pressed="true"');
-        // …the marked-only view: no result <ul>, the whole marked set listed
+        // …the marked-only view: no result <ul>, the residue of the marked set
+        // listed (12 already rides its result row from the cached scan, so only
+        // the uncovered 11 stays in 过去标注)
         expect(html.match(/<ul role="list"/g)).toHaveLength(1);
         expect(html).toContain('<ul role="list" class="dead-marked-list">');
-        expect(html).toContain('deadMarkedCount[2]');
+        expect(html).toContain('deadMarkedCount[1]');
         // …and the banner is up, offering the rescan way back
         expect(html).toContain('class="risk-banner dead-marked-banner"');
         expect(html).toContain('deadMarkedBanner');
@@ -1036,8 +1038,11 @@ describe('filter + batch marks (§5.5c)', () => {
     it("the '上次标注' segment switches to the marked-only view (results hidden)", () => {
         // The user's new mental model: "上次标注" is not a third result
         // filter, it is a VIEW of the persistent marks — the scan results
-        // disappear and the whole marked set becomes the list, with the
-        // banner explaining that a rescan (top toolbar) is the way back.
+        // disappear and the marked set becomes the list. Marks the cached run
+        // already verdicts dead/blocked ride their result rows (12/13) and are
+        // NOT echoed here; only the uncovered mark (11) is the 过去标注 residue,
+        // with the banner explaining that a rescan (top toolbar) is the way
+        // back into a run.
         const ctx = setup({
             storeData: { deadLastScan: CACHE, deadMarks: '["11","12","13"]' }
         });
@@ -1053,7 +1058,7 @@ describe('filter + batch marks (§5.5c)', () => {
         });
         const html = $list.innerHTML;
         expect(html).toContain('data-filter="marked" aria-pressed="true"');
-        expect(html).toContain('deadMarkedCount[3]'); // the whole marked set
+        expect(html).toContain('deadMarkedCount[1]'); // the residue (uncovered 11)
         // no result <ul> at all — the marked list is the only list on screen
         expect(html.match(/<ul role="list"/g)).toHaveLength(1);
         expect(html).toContain('<ul role="list" class="dead-marked-list">');
@@ -1070,23 +1075,57 @@ describe('filter + batch marks (§5.5c)', () => {
 
     it('the 全部 count sums 仅死链 + 仅受限 + 上次标注 (not just this scan)', () => {
         // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅仅是本次扫描
-        // 之后的计数" — 全部 = 死链 + 受限 + 标注 = 本次扫描结果行 + 标注全量。
+        // 之后的计数" — 全部 = 死链 + 受限 + 标注。一个 id 只算一次: 被结果覆盖
+        // 的标注 (12/13) 只算结果, 标注只算未被覆盖的残留 (11)。
         const ctx = setup({
             storeData: { deadLastScan: CACHE, deadMarks: '["11","12","13"]' }
         });
         const { $list } = ctx;
         ctx.def().activate();
-        // CACHE: 12 dead + 13 blocked → 死链 1, 受限 1, 标注 3 → 全部 5
-        expect($list.innerHTML).toContain('deadFilterAll 5');
+        // CACHE: 12 dead + 13 blocked → 死链 1, 受限 1, 未覆盖标注 1 → 全部 3
+        expect($list.innerHTML).toContain('deadFilterAll 3');
         expect($list.innerHTML).toContain('deadFilterDead 1');
         expect($list.innerHTML).toContain('deadFilterBlocked 1');
-        expect($list.innerHTML).toContain('deadFilterMarked 3');
+        expect($list.innerHTML).toContain('deadFilterMarked 1');
         // the sum rule holds in the marked-only view too (segments stay)
         ctx.clickOn({
             closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null)
         });
-        expect($list.innerHTML).toContain('deadFilterAll 5');
-        expect($list.innerHTML).toContain('deadFilterMarked 3');
+        expect($list.innerHTML).toContain('deadFilterAll 3');
+        expect($list.innerHTML).toContain('deadFilterMarked 1');
+    });
+
+    it('imported marks covered by the scan result count once, not twice (regression)', () => {
+        // 用户报告: 导入记录后 "过去标注" 把所有已标注算一遍, 仅死链/仅受限
+        // 再算, "全部" 变成实际的两倍. 根因: 分段计数用 deadMarks.size(全量),
+        // 而导入的标注 id 大多已被 deadLastScan 判为死链/受限(在结果行里) —
+        // 同一批 id 在结果里算一次、在标注里又算一次.
+        // 去重后: 被结果覆盖的标注只算结果, "过去标注" 只剩未被覆盖的残留.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 2,
+            results: {
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const ctx = setup({
+            storeData: { deadLastScan: cache, deadMarks: '["12","13"]' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // 结果 2 行; 标注 12/13 已被结果覆盖 → 过去标注 0 → 全部 = 2, 不是 4
+        expect($list.innerHTML).toContain('deadFilterAll 2');
+        expect($list.innerHTML).toContain('deadFilterMarked 0');
+        expect($list.innerHTML).not.toContain('deadFilterAll 4');
+        // 过去标注视图: 无未覆盖残留 → 无标注列表, 结果行隐藏, 回退到可执行
+        // 的 start 空态; 分段计数仍为 0
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
+        const html = $list.innerHTML;
+        expect(html).toContain('data-filter="marked" aria-pressed="true"');
+        expect(html).toContain('deadFilterMarked 0');
+        expect(html).not.toContain('id="dead-item-12"');
+        expect(html).not.toContain('id="dead-item-13"');
+        expect(html).toContain('class="empty-state dead-start"');
     });
 
     it('a filter matching nothing keeps the segment bar reachable (item: filter lock-up)', () => {
