@@ -363,27 +363,22 @@ export function initContextMenu(ctx = {}) {
                 ? anchor.top
                 : Math.max(anchor.top - menuHeight, menuMinY);
             // The "flip up" above can land the menu ON the trigger row when
-            // the menu is taller than the space below the trigger (zoom 放大时
-            // 菜单项被 body[data-zoom] 缩放, 菜单整体变高——zoom120 的菜单
-            // 562px 而触发点下方只有 ~528px, 菜单被顶到 menuMinY 后覆盖了用户
-            // 右键的那一行). A follow-up right-click on the covered row hits
-            // the menu and dismisses it — the zoom alternation bug (显示-消失
-            // 交替). When the flipped-up menu would cover the trigger AND it
-            // was NOT already scrollable (the viewport-level clamp above left
-            // it unscrolled), clamp its height to the space below the trigger
-            // and anchor it there instead.
+            // the menu is taller than the space below the trigger: zoom 放大时
+            // 菜单项被 body[data-zoom] 缩放, 菜单整体变高 (zoom120 的菜单 562px
+            // 而触发点下方只有 ~528px), 菜单被顶到 menuMinY 后覆盖了用户右键的
+            // 那一行, 后续右键落在菜单上被浏览器分发到菜单而非行, 只关闭不重开
+            // (显示-消失交替 bug). This applies EQUALLY when the viewport-level
+            // clamp above already made the menu scrollable — in a real 600px
+            // action popup a zoomed menu is always that tall, so skipping the
+            // scrollable case leaves the first re-right-click eaten (it used to
+            // self-heal only by accident, via the residual maxHeight leaking
+            // into the next open). Clamp the height to the space below the
+            // trigger and anchor it there instead, so the menu never covers
+            // the right-clicked row and every right-click lands outside the
+            // menu and reopens it.
             const triggerY = anchor.clientY;
-            const alreadyScrollable = menu.style.overflowY === 'auto';
-            if (!alreadyScrollable
-                && pageY <= triggerY && triggerY <= pageY + menuHeight
+            if (pageY <= triggerY && triggerY <= pageY + menuHeight
                 && boundY > 80) {
-                // The menu is taller than the space below the trigger AND the
-                // flip-up above lands ON the triggered row — zoom 放大时菜单项
-                // 被 body[data-zoom] 缩放, 菜单整体变高, 被顶到 menuMinY 后覆盖
-                // 了用户右键的那一行, 后续右键落在菜单上被浏览器分发到菜单而
-                // 非行, 只关闭不重开 (zoom 交替 bug). Clamp 高度并让菜单顶部
-                // 落到触发行下方 (ROW_GUESS = 行高), 使菜单永不覆盖用户右键的
-                // 行, 每次右键都在菜单外、都能重开。
                 const ROW_GUESS = 20;
                 const fitH = Math.max(80, boundY - ROW_GUESS - 8 - menuChrome);
                 if (fitH < menuHeight) {

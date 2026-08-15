@@ -675,11 +675,15 @@ describe('contextmenu handler (opening a menu)', () => {
         // scaling / page zoom ≥ ~90%. Before the clamp, menu.focus() scrolled
         // the document to reveal the overflow, that scroll fired the
         // scroll-dismiss listeners and the menu closed the instant it opened.
+        // The flipped-up 700px menu would cover the trigger row (cursor at
+        // y=60), so the zoom-alternation fix re-clamps it to the space below
+        // the row (540 - 20 row - 8 margin) and anchors it under the row.
         bookmarkMenu.offsetHeight = 700; // > 600-8 available
         const { a } = makeBookmarkRow();
         openOn(a, { pageY: 60, clientY: 60 });
-        expect(bookmarkMenu.style.maxHeight).toBe('592px'); // 600 - 8 margin
+        expect(bookmarkMenu.style.maxHeight).toBe('512px'); // 540 - 20 row - 8 margin
         expect(bookmarkMenu.style.overflowY).toBe('auto');
+        expect(bookmarkMenu.style.top).toBe('80px'); // pageY 60 + ROW_GUESS 20
         expect(bookmarkMenu.style.opacity).toBe('1');
     });
 
@@ -708,6 +712,23 @@ describe('contextmenu handler (opening a menu)', () => {
         expect(bookmarkMenu.style.maxHeight).toBe('472px'); // 500 - 20 row - 8 margin
         expect(bookmarkMenu.style.overflowY).toBe('auto');
         expect(bookmarkMenu.style.top).toBe('120px'); // pageY 100 + ROW_GUESS 20
+        expect(bookmarkMenu.style.opacity).toBe('1');
+    });
+
+    it('re-clamps an already viewport-scrollable menu below the trigger row too', () => {
+        // 真实 600px action popup 里 zoom 放大的菜单必然先吃视口级 clamp
+        // (成为 scrollable)——若跳过该情形, 上翻的菜单仍覆盖触发行, 首次
+        // 重复右键仍被菜单吃掉一次 (只靠残留 maxHeight 偶然自愈)。菜单 620
+        // 高 > maxMenuH 592 → 先 scrollable; 翻转到 y=0 后仍覆盖触发点
+        // (clientY 92), 于是再 clamp 到触发点下方 (508-20-8=480) 并锚到
+        // 行下 (92+20=112)。
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
+        bookmarkMenu.offsetHeight = 620; // > maxMenuH(592): viewport-clamped first
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageY: 92, clientY: 92 });
+        expect(bookmarkMenu.style.maxHeight).toBe('480px'); // 508 - 20 row - 8 margin
+        expect(bookmarkMenu.style.overflowY).toBe('auto');
+        expect(bookmarkMenu.style.top).toBe('112px'); // pageY 92 + ROW_GUESS 20
         expect(bookmarkMenu.style.opacity).toBe('1');
     });
 
@@ -2224,7 +2245,10 @@ describe('zoom-clamped menu under the search bar (issue #59 audit)', () => {
         search.offsetHeight = 40; // layout 40 → viewport 48 at zoom 1.2
         byId.search = search;
         bookmarkMenu.offsetHeight = 700;
-        openOn(makeBookmarkRow().a);
+        // Trigger in the bottom band (boundY = 10 ≤ 80): the flipped-up menu
+        // stays viewport-clamped — the zoom-alternation fix deliberately does
+        // not pin a ≤80px sliver below such a row.
+        openOn(makeBookmarkRow().a, { pageY: 590, clientY: 590 });
         // 600 - (40*1.2) - 8 margin = 544, not the raw layout 40 → 552
         expect(bookmarkMenu.style.maxHeight).toBe('544px');
     });
