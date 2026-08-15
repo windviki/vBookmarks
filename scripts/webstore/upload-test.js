@@ -17,7 +17,7 @@ import fs from 'node:fs';
 import { createReadStream } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import chromeWebstoreUpload from 'chrome-webstore-upload';
-import { loadTesters, DEFAULT_TESTERS } from './publish.js';
+import { loadTesters, DEFAULT_TESTERS, stripDotenvComment } from './publish.js';
 
 /** 仓库根 = 本文件 (scripts/webstore/upload-test.js) 上溯两级 */
 const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -283,6 +283,26 @@ describe('测试用户灰度(publish.js loadTesters)', () => {
         const a = loadTesters();
         a.push('extra@x.com');
         assert.deepEqual(loadTesters(), ['windviki@gmail.com']);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// .env 行内注释清理(stripDotenvComment:loadDotenv 的取值清理)
+// ---------------------------------------------------------------------------
+
+describe('.env 行内注释清理(stripDotenvComment)', () => {
+    test('值末尾带 "# 注释" 时截断', () => {
+        assert.equal(stripDotenvComment('windviki@gmail.com   # 测试用户邮箱'), 'windviki@gmail.com');
+        assert.equal(stripDotenvComment('a@x.com#c'), 'a@x.com#c'); // 无空格不视为注释
+    });
+
+    test('值本身以 # 开头(等号后仅注释)置空', () => {
+        assert.equal(stripDotenvComment('# 整行占位'), '');
+    });
+
+    test('无注释时原样保留(已 trim)', () => {
+        assert.equal(stripDotenvComment('value-no-comment'), 'value-no-comment');
+        assert.equal(stripDotenvComment('  "quoted"  '), '"quoted"');
     });
 });
 

@@ -46,6 +46,11 @@ const version = manifest.version;
 // .env 加载(与 scripts/i18n.py#load_dotenv 同规则:真实环境变量优先)
 // ---------------------------------------------------------------------------
 
+/** 去掉 .env 值的行内注释(.env.example 同款 "KEY=value # 说明";值以 # 开头或 # 前有空白即截断)。 */
+export function stripDotenvComment(value) {
+    return value.replace(/(^|\s)#.*$/, '').trim();
+}
+
 function loadDotenv() {
     try {
         const text = fs.readFileSync(`${REPO_ROOT}.env`, 'utf8');
@@ -54,7 +59,7 @@ function loadDotenv() {
             if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
             const idx = trimmed.indexOf('=');
             const key = trimmed.slice(0, idx).trim();
-            const value = trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
+            const value = stripDotenvComment(trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, ''));
             if (key && !(key in process.env)) process.env[key] = value;
         }
     } catch { /* .env 不存在时静默 */ }
