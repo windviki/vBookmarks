@@ -231,46 +231,106 @@ const $ = id => document.getElementById(id);
         // its in-memory map; next render re-fetches (docs/favicon-补全设计.md
         // §5.4).
         // The storage-usage bar (below the button) refreshes after a clear so
-        // the freed space is immediately visible.
+        // the freed space is immediately visible, and tracks icon fetches
+        // live while the page is open (chrome.storage.onChanged below).
+        const isFavKey = k => k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:');
+        const isBookmarkDataKey = k => k === 'deadLastScan' || k === 'vbmDeadScan' || k === 'visitStats';
+        const storageUsageCats = [
+            { id: 'icon', label: () => __m('storageUsageIcon') },
+            { id: 'bookmarks', label: () => __m('storageUsageBookmarks') },
+            { id: 'other', label: () => __m('storageUsageOther') },
+            { id: 'free', label: () => __m('storageUsageFree') }
+        ];
+        const fmtBytes = n => {
+            if (n >= 1024 * 1024) return (n / (1024 * 1024)).toFixed(1) + ' MB';
+            if (n >= 1024) return (n / 1024).toFixed(0) + ' KB';
+            return n + ' B';
+        };
         const refreshStorageUsage = async () => {
             const all = await chrome.storage.local.get(null);
-            const isFav = k => k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:');
-            const isBookmarkData = k => k === 'deadLastScan' || k === 'vbmDeadScan' || k === 'visitStats';
             let icon = 0, bookmarks = 0, other = 0;
             for (const [k, v] of Object.entries(all)) {
                 const n = JSON.stringify(v).length;
-                if (isFav(k)) icon += n;
-                else if (isBookmarkData(k)) bookmarks += n;
+                if (isFavKey(k)) icon += n;
+                else if (isBookmarkDataKey(k)) bookmarks += n;
                 else other += n;
             }
             const used = icon + bookmarks + other;
             const quota = chrome.storage.local.QUOTA_BYTES || 10 * 1024 * 1024;
             const free = Math.max(0, quota - used);
             const pct = n => (quota ? Math.round((n / quota) * 1000) / 10 : 0);
-            const seg = (label, n) => {
-                const el = document.getElementById('usage-' + label);
-                if (el) el.style.width = pct(n) + '%';
-            };
-            seg('icon', icon);
-            seg('bookmarks', bookmarks);
-            seg('other', other);
-            seg('free', free);
-            const fmt = n => {
-                if (n >= 1024 * 1024) return (n / (1024 * 1024)).toFixed(1) + ' MB';
-                if (n >= 1024) return (n / 1024).toFixed(0) + ' KB';
-                return n + ' B';
-            };
-            const legend = [
-                `${__m('storageUsageIcon')} ${fmt(icon)}`,
-                `${__m('storageUsageBookmarks')} ${fmt(bookmarks)}`,
-                `${__m('storageUsageOther')} ${fmt(other)}`,
-                `${__m('storageUsageFree')} ${fmt(free)}`
-            ].join(' · ');
+            const sizes = { icon, bookmarks, other, free };
+            // Segments: width + per-segment accessible label + tooltip data.
+            // The tooltip reads _usageText/_usagePct off the segment, so the
+            // handlers (wired once below) always show the current figures.
+            for (const c of storageUsageCats) {
+                const el = document.getElementById('usage-' + c.id);
+                if (!el) continue;
+                const text = `${c.label()} ${fmtBytes(sizes[c.id])}`;
+                el.style.width = pct(sizes[c.id]) + '%';
+                el.setAttribute('aria-label', text);
+                el.setAttribute('title', text);
+                el._usageText = text;
+                el._usagePct = pct(sizes[c.id]);
+            }
+            // Legend: one item per category with a color swatch matching the
+            // segment (the label is i18n text, escaped for the innerHTML).
             const legendEl = document.getElementById('storage-usage-legend');
-            legendEl.innerText = legend;
+            if (legendEl) {
+                const esc = s => String(s).replace(/[&<>"']/g,
+                    c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+                legendEl.innerHTML = storageUsageCats.map(c =>
+                    `<span class="legend-item" role="listitem">` +
+                    `<span class="legend-swatch usage-${c.id}"></span>` +
+                    `<span class="legend-label">${esc(c.label())} ${esc(fmtBytes(sizes[c.id]))}</span>` +
+                    `</span>`
+                ).join('');
+            }
             const bar = document.getElementById('storage-usage-bar');
-            if (bar) bar.setAttribute('aria-label', legend);
+            if (bar) bar.setAttribute('aria-label',
+                storageUsageCats.map(c => `${c.label()} ${fmtBytes(sizes[c.id])}`).join(', '));
         };
+
+        // Segment tooltip: hovering or focusing a segment shows its category,
+        // size and share in a small tag floating above the bar. Wired once —
+        // the refresh above keeps the figures on the segment current.
+        const usageTooltip = () => {
+            const li = $('storage-usage');
+            const tooltip = $('usage-tooltip');
+            if (!li || !tooltip) return;
+            const show = seg => {
+                if (!seg._usageText) return;
+                tooltip.innerText = `${seg._usageText} (${seg._usagePct}%)`;
+                tooltip.hidden = false;
+                if (typeof seg.getBoundingClientRect !== 'function') return;
+                const liRect = li.getBoundingClientRect();
+                const segRect = seg.getBoundingClientRect();
+                tooltip.style.left = (segRect.left - liRect.left + segRect.width / 2) + 'px';
+                tooltip.style.top = (segRect.top - liRect.top - 6) + 'px';
+            };
+            const hide = () => { tooltip.hidden = true; };
+            for (const c of storageUsageCats) {
+                const seg = document.getElementById('usage-' + c.id);
+                if (!seg) continue;
+                seg.addEventListener('mouseenter', () => show(seg));
+                seg.addEventListener('mouseleave', hide);
+                seg.addEventListener('focus', () => show(seg));
+                seg.addEventListener('blur', hide);
+            }
+        };
+        usageTooltip();
+
+        // Live updates: the background keeps fetching icons (vbmFavicon:*
+        // writes into storage.local) while the page is open, so re-measure the
+        // bar whenever a key that feeds it changes.
+        if (chrome.storage.onChanged && chrome.storage.onChanged.addListener) {
+            chrome.storage.onChanged.addListener((changes, area) => {
+                if (area !== 'local') return;
+                const touched = Object.keys(changes || {});
+                if (touched.some(k => isFavKey(k) || isBookmarkDataKey(k)))
+                    refreshStorageUsage();
+            });
+        }
         $('favicon-cache-clear').addEventListener('click', async () => {
             let all = {};
             try { all = await chrome.storage.local.get(null); } catch (_) { /* noop */ }

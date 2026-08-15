@@ -41,6 +41,7 @@ const createSandbox = ({
         }
     });
 
+    const onChangedListeners = [];
     const chrome = {
         // no locale messages loaded: getMessage echoes the key so label and
         // alert assertions target the i18n contract
@@ -48,7 +49,7 @@ const createSandbox = ({
         storage: {
             local: makeArea(localData),
             sync: makeArea(syncData),
-            onChanged: { addListener: () => {} }
+            onChanged: { addListener: fn => onChangedListeners.push(fn) }
         },
         runtime: {
             sendMessage: () => {},
@@ -152,6 +153,7 @@ const createSandbox = ({
     return {
         window, chrome, document, elements, created, localData, syncData,
         location, alerts, confirms, URLStub, objectURLs, start,
+        onChangedListeners,
         setConfirm: v => { confirmResult = v; }
     };
 };
@@ -429,14 +431,17 @@ describe('options.js settings backup', () => {
 
 // Storage-usage bar (v4 Task C): a percentage bar in the Icons group splits
 // chrome.storage.local into icon cache / bookmark data / other / free so the
-// user can decide when to clear the icon cache.
+// user can decide when to clear the icon cache. 4.0.8 refactor: each segment
+// carries an accessible size label + tooltip data, the legend shows color
+// swatches, and the bar re-measures live on storage.onChanged.
 describe('storage usage bar', () => {
-    const iconBytes = label => {
-        const m = label.match(/storageUsageIcon (\d+(?:\.\d+)?) (B|KB|MB)/);
+    const iconBytes = sb => {
+        const m = (sb.elements['usage-icon']._attributes['aria-label'] || '').match(/storageUsageIcon (\d+(?:\.\d+)?) (B|KB|MB)/);
         return m ? Number(m[1]) : -1;
     };
+    const legendText = sb => sb.elements['storage-usage-legend'].innerHTML;
 
-    it('categorizes stored bytes and renders each legend segment + a width', async () => {
+    it('categorizes stored bytes and renders a swatch legend + per-segment widths', async () => {
         const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
         const sb = createSandbox({
             chromeLocalData: {
@@ -449,14 +454,35 @@ describe('storage usage bar', () => {
             }
         });
         await sb.start();
-        const legend = sb.elements['storage-usage-legend'].innerText;
+        // legend: one swatched item per category, colors mirroring the segments
+        const legend = legendText(sb);
         for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
             expect(legend).toContain(key);
-        expect(legend).toContain(' · ');
-        // every segment got a percentage width (10MB quota in the sandbox)
-        for (const id of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+        for (const sw of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+            expect(legend).toContain(`legend-swatch ${sw}`);
+        // every segment got a percentage width + an accessible label (10MB quota)
+        for (const id of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free']) {
             expect(sb.elements[id].style.width).toMatch(/^\d+(?:\.\d+)?%$/);
-        expect(sb.elements['storage-usage-bar']._attributes['aria-label']).toBe(legend);
+            expect(sb.elements[id]._attributes['aria-label']).toMatch(/(B|KB|MB)$/);
+            expect(sb.elements[id]._attributes['title']).toBe(sb.elements[id]._attributes['aria-label']);
+        }
+        // the bar's aria-label summarizes all four categories
+        const barLabel = sb.elements['storage-usage-bar']._attributes['aria-label'];
+        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+            expect(barLabel).toContain(key);
+    });
+
+    it('shows a size tooltip while a segment is hovered and hides on leave', async () => {
+        const sb = createSandbox({
+            chromeLocalData: { 'vbmFavicon:github.com': 'data:image/png;base64,AAAA' }
+        });
+        await sb.start();
+        const seg = sb.elements['usage-icon'];
+        await seg.fire('mouseenter');
+        expect(sb.elements['usage-tooltip'].innerText).toMatch(/storageUsageIcon \d+ B \(\d+(?:\.\d+)?%\)/);
+        expect(sb.elements['usage-tooltip'].hidden).toBe(false);
+        await seg.fire('mouseleave');
+        expect(sb.elements['usage-tooltip'].hidden).toBe(true);
     });
 
     it('drops the icons segment after clearing the icon cache', async () => {
@@ -468,14 +494,29 @@ describe('storage usage bar', () => {
             }
         });
         await sb.start();
-        const before = sb.elements['storage-usage-legend'].innerText;
-        expect(iconBytes(before)).toBeGreaterThan(0);
+        expect(iconBytes(sb)).toBeGreaterThan(0);
         await sb.elements['favicon-cache-clear'].fire('click');
         for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
         expect(sb.alerts).toEqual(['optionFaviconCacheCleared']);
         expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
         expect(sb.localData.vbmFaviconIdx).toBeUndefined();
-        expect(iconBytes(sb.elements['storage-usage-legend'].innerText)).toBe(0);
+        expect(iconBytes(sb)).toBe(0);
+    });
+
+    it('re-measures live when the background writes icon-cache keys', async () => {
+        const sb = createSandbox({ chromeLocalData: { theme: 'dark' } });
+        await sb.start();
+        expect(sb.elements['usage-icon']._attributes['aria-label']).toBe('storageUsageIcon 0 B');
+        // the background stores an enriched favicon while the page is open
+        await sb.chrome.storage.local.set({ 'vbmFavicon:github.com': 'data:image/png;base64,AAAA' });
+        for (const fn of sb.onChangedListeners)
+            fn({ 'vbmFavicon:github.com': { newValue: 'data:image/png;base64,AAAA' } }, 'local');
+        for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
+        // unrelated local changes (theme via sync never fires local) are ignored
+        for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
+        for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
     });
 });
 

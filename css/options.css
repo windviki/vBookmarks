@@ -150,6 +150,15 @@ h1 img{
 h1 small{
 	color: var(--vbm-muted);
 }
+/* Text children get tight line boxes so flex align-items:center centers the
+   GLYPHS too — with line-height:normal the 28px title and the .85em links/
+   version sit their glyphs at different offsets (3px here), reading as a
+   broken vertical center. line-height:1 makes box-center == glyph-center. */
+h1 > img,
+h1 > span,
+h1 > small{
+	line-height: 1;
+}
 /* Header meta: the project links + version, pinned to the top-right */
 #header-links{
 	margin-inline-start: auto;
@@ -220,14 +229,16 @@ h2{
 .options-list>li small{
 	opacity: .5;
 }
-/* A trailing hint (after <br>, under a checkbox/button) sits on its own row;
-   the row's 30px line-height would otherwise push it far below its control.
-   `small:first-child` is an independent hint paragraph (palette-cmd-hint)
-   and keeps the normal flow. */
+/* A trailing hint (under a checkbox label or button) sits on its own row;
+   the small is display:block so it flows directly below the control with a
+   small positive gap (the rows no longer carry a <br>, whose 30px line box
+   used to leave a 24px hole under checkboxes and a -6px overlap under
+   buttons). `small:first-child` is an independent hint paragraph
+   (palette-cmd-hint) and keeps the normal flow. */
 .options-list>li small:not(:first-child){
 	display: block;
 	line-height: 1.4;
-	margin-top: -6px;
+	margin-top: 4px;
 }
 .options-list li button{
 	font-weight: 600; /* light emphasis — padding inherits the base .3em 1.2em */
@@ -245,13 +256,17 @@ h2{
 .options-list li label{
 	display: block;
 }
-/* Hanging indent: wrapped checkbox text aligns with the label text, not
-   under the checkbox (1.4em ≈ the 13px box + its 5px end margin). */
-.options-list li label:has(> input[type=checkbox]:first-child){
+/* Hanging indent: wrapped checkbox/radio text aligns with the label text,
+   not under the box (1.4em ≈ the 13px box + its 5px end margin). Radios must
+   share the rule or the sort group's radio rows sit 5px right of the
+   checkbox rows on the same card. */
+.options-list li label:has(> input[type=checkbox]:first-child),
+.options-list li label:has(> input[type=radio]:first-child){
 	padding-__MSG_@@bidi_start_edge__: 1.4em;
 	text-indent: -1.4em;
 }
-.options-list li input[type=checkbox]{
+.options-list li input[type=checkbox],
+.options-list li input[type=radio]{
 	margin: 0;
 	margin-__MSG_@@bidi_end_edge__: 5px;
 }
@@ -491,12 +506,10 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 }
 /* --- Storage usage bar (Icons group) ----------------------------------
    Icon cache / bookmark data / other / free, so the user can judge whether
-   the icon cache is worth clearing. */
-.storage-usage small{
-	display: block;
-	opacity: .7;
-	line-height: 1.4;
-	margin-top: 2px;
+   the icon cache is worth clearing. Hover a segment for a size tooltip; the
+   legend below mirrors the segment colors with swatches. */
+.storage-usage{
+	position: relative;
 }
 .usage-bar{
 	display: flex;
@@ -510,12 +523,68 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	display: block;
 	height: 100%;
 	width: 0;
-	transition: width .35s ease;
+	cursor: help;
+	transition: width .35s ease, opacity .15s ease, filter .15s ease;
+}
+/* Hover: the pointer's segment stays full while its siblings dim, so the
+   category reads as highlighted (a focus effect, not a click target). */
+.usage-bar:hover .usage-seg{
+	opacity: .65;
+}
+.usage-bar:hover .usage-seg:hover{
+	opacity: 1;
+	filter: brightness(1.08);
 }
 .usage-icon{ background: var(--vbm-accent); }
 .usage-bookmarks{ background: #4a7df0; }
 .usage-other{ background: #d98a2b; }
 .usage-free{ background: transparent; }
+
+/* Segment tooltip: a floating tag above the hovered category with its size
+   and share. [hidden] is overridden because the div is position:absolute. */
+.usage-tooltip{
+	position: absolute;
+	z-index: 5;
+	padding: 4px 8px;
+	border-radius: 6px;
+	background: var(--vbm-fg);
+	color: var(--vbm-bg);
+	font-size: 11px;
+	line-height: 1.3;
+	white-space: nowrap;
+	pointer-events: none;
+	box-shadow: 0 2px 6px var(--vbm-shadow);
+	transform: translate(-50%, -100%);
+}
+.usage-tooltip[hidden]{
+	display: none;
+}
+
+/* Legend: one item per category, its swatch matching the segment color. */
+.usage-legend{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px 14px;
+	margin-top: 4px;
+	opacity: .75;
+	font-size: 12px;
+	line-height: 1.5;
+}
+.usage-legend .legend-item{
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+.usage-legend .legend-swatch{
+	width: 9px;
+	height: 9px;
+	border-radius: 2px;
+	display: inline-block;
+}
+.legend-swatch.usage-icon{ background: var(--vbm-accent); }
+.legend-swatch.usage-bookmarks{ background: #4a7df0; }
+.legend-swatch.usage-other{ background: #d98a2b; }
+.legend-swatch.usage-free{ background: var(--vbm-border); }
 
 
 /* --- v4 UX pass: native buttons & text inputs follow the tokens ---
