@@ -126,7 +126,53 @@ faviconService.setEnrichEnabled(true) → 下次渲染占位图时正常触发
 
 ---
 
-## 6. 视图刷新（回答「一边获取一边保证视图刷新」）
+## 6. 已有 icon 的感知 + 刷新控制（回答「哪些站需补全 / icon 过时怎么办」）
+
+### 6.1 感知「哪些站已有 icon、哪些需要补全」——**天然分界已存在，零成本**
+
+`_favicon` API 每次 popup 打开都会重新请求（`calibrate` + `handle`），`verdicts` 判定 src → 真实/占位图：
+
+| `_favicon` 返回 | `verdicts` | 含义 | 补全动作 |
+|---|---|---|---|
+| 真实图标（Chrome 缓存命中） | `false` | **已有 icon** | **跳过**（不补全） |
+| 占位图（Chrome 未缓存） | `true` | **需要补全** | 入队补全链 |
+
+**这就是分界**：`_favicon` 返回真实图标 = 已有 icon（Chrome 自己的缓存覆盖到了），不需补全。只有占位图才走补全链。**无需额外「感知」机制**——`_favicon` 的判定就是感知。
+
+**避免重复获取**（用户核心关切）：
+- `_favicon` 判定是**本地 API**（无网络），每次 popup 重跑成本低，不是「重复获取」。
+- **补全链的网络请求**（favicon.ico/页面/DDG）按 host 缓存（§4）——命中即用，不重复 fetch。
+- **失败免重试**（24h 标记）——避免对无 favicon 站点反复请求。
+
+### 6.2 强制缓存刷新（icon 会过时：站点换图标 / Chrome 缓存更新）
+
+icon 过时的场景：
+1. **站点更换了 favicon**（改版、换 logo）——补全缓存里的旧 data URL 需要失效。
+2. **Chrome `_favicon` 缓存更新**——Chrome 自己会刷新（站点访问后缓存建立），`verdicts` 从 true→false，自然用新图标。
+3. **补全的图标失效**（CDN 换了、路径变了）——需重试。
+
+**三层刷新策略**：
+
+| 层 | 机制 | 何时刷新 |
+|---|---|---|
+| Chrome `_favicon` | 每次 popup 重跑 `calibrate+handle`，Chrome 自己缓存更新 | 每次打开自动 |
+| 补全缓存（data URL） | **TTL**（如 30 天）+ LRU 淘汰 | 到期重新补全 |
+| 失败标记（failed） | 24h 免重试 | 到期允许重试 |
+
+**手动强制刷新入口**：
+- **选项页 favicon 组**：加「清除 favicon 缓存并重新补全」按钮 → 清空 `vbmFaviconCache` + `failed` 标记 → 下次渲染重新补全。
+- **palette 命令**（可选）：`/favicon-refresh` → 同上，且触发当前视图重渲染。
+
+**刷新实现**：
+```js
+// favicon-enrich.js
+export const refreshFaviconCache = () => {
+    // 清空补全缓存 + 失败标记 (storage.local)
+    // 返回一个版本号, 渲染时比对 —— 或直接触发视图重渲染
+};
+```
+
+### 6.3 视图刷新（回答「一边获取一边保证视图刷新」）
 
 ### 热更新机制：复用 favicon-fallback 的 img 引用
 `favicon-fallback` 的 `handle(img)` 已持有每个占位图 `<img>` 的引用。补全成功后：
@@ -227,8 +273,9 @@ favicon 补全独立跑（popup 生命周期）:
 | `src/favicon-enrich.js`（新） | 纯逻辑：发现链（L1/L2/L3）、队列、限流器、缓存读写、AbortController 取消——可单测 |
 | `src/favicon-fallback.js` | 占位图识别后：查缓存注入 / 登记队列（不直接换默认）；暴露 `enrich` 钩子；补全成功热更新 |
 | `src/neat.js` | 初始化 favicon-enrich + storage.onChanged 监听开关 |
-| `src/options.js` + `pages/options.html` | `faviconEnrich` 开关 |
-| `src/store.js` | 注册 `faviconEnrich` 键（sync 区）+ `vbmFaviconCache` 键（local 区） |
+| `src/options.js` + `pages/options.html` | `faviconEnrich` 开关 + 「清除缓存重新补全」按钮 |
+| `src/palette.js`（可选） | `/favicon-refresh` 命令（清缓存 + 重渲染） |
+| `src/store.js` | 注册 `faviconEnrich` 键（sync 区）+ `vbmFaviconCache` 键（local 区）+ `vbmFaviconVersion`（刷新版本号） |
 | `src/favicon-enrich.js` | 导入 `addProxyMarker`（dead-proxy.js）走代理通道 |
 | `src/dead-scan-sw.js`（代理会话共享） | 会话窗口通知 favicon-enrich「代理可用」；可选：响应阶段解析 `<link rel=icon>` → 写 favicon URL 缓存 |
 | `_locales/*` | `optionFaviconEnrich` / `optionFaviconEnrichHint` 等新 key |
@@ -246,6 +293,8 @@ favicon 补全独立跑（popup 生命周期）:
 | 缓存配额 | 全量 / LRU 500 | **LRU 500 + 只存成功**，防超 5MB |
 | 并发 | 4 / 6 / 8 | **6**，平衡速度与站点压力 |
 | 失败免重试 | 24h / 7d | **24h**，允许站点后来加 favicon |
+| 补全缓存 TTL | 30d / 90d / 永不过期 | **30d**——icon 会过时（站点换图标），TTL 到期重新补全 |
+| 刷新入口 | 选项按钮 / palette 命令 / 两者 | **选项按钮为主** + palette `/favicon-refresh` 可选 |
 | 补全执行位置 | 前端 / SW | **前端**（就地热更新需要 DOM 引用） |
 | 死链会话内走代理 | 做 / 不做 | **做**（用户洞察: 直连取不到的 icon, 代理通道能补齐）——独立补全的 L1/L2 直连失败后, 若死链会话在且配了代理, 加 `addProxyMarker` 重试 |
 | 死链顺带解析 `<link>` | 做 / 不做 | **后做**（需改 HEAD→GET+读 body, 增加带宽; 独立补全 + 代理通道先落地） |
