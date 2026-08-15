@@ -401,6 +401,10 @@ describe('view registration (§5.5)', () => {
 });
 
 describe('empty state + cached results (§5.5a)', () => {
+    const rowClick = (ctx, id) => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
+    });
+
     it('renders the executable start hint with the scannable count (separators excluded)', () => {
         const { $list, def } = setup({});
         def().activate();
@@ -428,8 +432,13 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(html).toContain('class="row-btn dead-mark-btn marked"');
         // the toolbar's batch clear-all is NOT gated on a result list
         expect(html).toContain('dead-unmark-all');
-        // …and the executable start row still offers the way back into a scan
-        expect(html).toContain('class="empty-state dead-start"');
+        // …the bottom start row is gone once marks fill the list — the top
+        // toolbar's rescan is the way back into a run, and the tooltip
+        // banner above the toolbar says the same in words
+        expect(html).not.toContain('class="empty-state dead-start"');
+        expect(html).toContain('class="dead-rescan"');
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+        expect(html).toContain('deadMarkedBanner');
         // toggling one row's mark unmarks ONLY that id
         ctx.clickOn({
             closest: sel => (sel === '.dead-mark-btn'
@@ -511,11 +520,10 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(JSON.parse(store.get('deadMarks', '[]')).sort()).toEqual(['11', '12']);
     });
 
-    it('selection mode renders the uncovered-marks list without inert row buttons', () => {
-        // While selecting, the row-click branch swallows every click on the
-        // supplementary marked rows (they are not selectable members), so the
-        // mark/delete buttons would be visible-but-dead controls — they must
-        // not render at all in this mode.
+    it('selection mode: the uncovered-marks rows are selectable members (no inert buttons)', () => {
+        // The marked rows joined the selection mode: they get checkboxes
+        // (their <ul> carries .selecting), the row-click branch toggles them
+        // instead of opening, and the row buttons are not rendered at all.
         const cache = JSON.stringify({
             ts: 1700000000000, scannedCount: 1,
             results: { '12': { status: 'dead', code: 404 } }
@@ -526,15 +534,53 @@ describe('empty state + cached results (§5.5a)', () => {
         const { $list } = ctx;
         ctx.def().activate();
         ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
-        const marked = $list.innerHTML.match(/<ul role="list" class="dead-marked-list">[\s\S]*?<\/ul>/);
+        const marked = $list.innerHTML.match(/<ul role="list" class="dead-marked-list[^"]*">[\s\S]*?<\/ul>/);
         expect(marked).not.toBeNull(); // the marks stay listed in this mode
+        expect(marked[0]).toContain('class="dead-marked-list selecting"');
         expect(marked[0]).toContain('id="dead-item-11"');
         expect(marked[0]).toContain('id="dead-item-13"');
         expect(marked[0]).not.toContain('row-btn'); // no dead controls
+        // a click on an uncovered-mark row toggles membership (.sel)
+        rowClick(ctx, '11');
+        expect($list.innerHTML).toContain('class="dead-marked-list selecting"');
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-11"');
+        // the covered mark (12) rides the RESULT list, selectable there too
+        rowClick(ctx, '12');
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-12"');
+        expect($list.innerHTML).toContain('selectCount[2]');
         // …and out of selection mode the toggles come back
         ctx.clickOn({ closest: sel => (sel === '.dead-select-exit' ? {} : null) });
-        const restored = $list.innerHTML.match(/<ul role="list" class="dead-marked-list">[\s\S]*?<\/ul>/);
+        const restored = $list.innerHTML.match(/<ul role="list" class="dead-marked-list[^"]*">[\s\S]*?<\/ul>/);
         expect(restored[0]).toContain('row-btn dead-mark-btn marked');
+    });
+
+    it('the marked-view banner rescan starts a fresh run', () => {
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } }); // no scan
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('class="risk-banner dead-marked-banner"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-marked-banner-rescan' ? {} : null) });
+        expect(ctx.chrome.runtime.sent).toEqual([{ type: 'vbm-dead-scan-start' }]);
+    });
+
+    it('the marked-view banner × hides it for the session; Esc does too', () => {
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } }); // no scan
+        const { $list, def } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-marked-banner-dismiss' ? {} : null) });
+        expect($list.innerHTML).not.toContain('class="risk-banner dead-marked-banner"');
+        expect($list.innerHTML).toContain('deadMarkedCount[2]'); // list still there
+        // session semantics: a re-render (filter toggle) does NOT bring it back
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'all' } } : null) });
+        expect($list.innerHTML).not.toContain('dead-marked-banner');
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
+        expect($list.innerHTML).not.toContain('dead-marked-banner');
+        // Esc dismisses the same way in a fresh session
+        const ctx2 = setup({ storeData: { deadMarks: '["12"]' } });
+        ctx2.def().activate();
+        expect(ctx2.$list.innerHTML).toContain('class="risk-banner dead-marked-banner"');
+        expect(ctx2.def().onEscape()).toBe(true); // consumed by the banner
+        expect(ctx2.$list.innerHTML).not.toContain('dead-marked-banner');
     });
 
     it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {
@@ -639,7 +685,8 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
         const { $list, store, def, views } = ctx;
         def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        // marks exist with no scan → the top rescan is the start (no bottom row)
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
         publishBlob(ctx, blobOf({
             done: 2, results: { '12': { status: 'dead', code: 404 } }
         }));
@@ -681,6 +728,35 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
             ['vbm-dead-scan-start', 'vbm-dead-scan-cancel']);
         expect($list.innerHTML).toContain('deadLastScanAt');
         expect($list.innerHTML).toContain('id="dead-item-12"');
+    });
+
+    it('mid-scan: a mark re-verified as a problem row moves into the results; unchecked marks stay below', () => {
+        // The redesign's core rule: during a run, a mark the CURRENT scan has
+        // already settled as a problem row rides the live result list (its
+        // marked state kept on the row) and drops OUT of the marked list, so
+        // the same id never shows twice. Marks the run has not re-checked yet
+        // keep their own marked rows beneath.
+        const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
+        const { $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        publishBlob(ctx, blobOf({
+            done: 1, results: { '12': { status: 'dead', code: 404 } }
+        }));
+        const html = $list.innerHTML;
+        // 12 is live + marked: exactly one row, carrying the marked toggle
+        expect(html).toContain('id="dead-item-12"');
+        expect(html.match(/id="dead-item-12"/g)).toHaveLength(1);
+        expect(html).toMatch(/id="dead-item-12"[^>]*>[\s\S]*?class="row-btn dead-mark-btn marked"/);
+        // 11 is still unchecked → it alone stays in the marked list below
+        expect(html).toContain('<ul role="list" class="dead-marked-list">');
+        expect(html).toContain('deadMarkedCount[1]');
+        const marked = html.match(/<ul role="list" class="dead-marked-list[^"]*">[\s\S]*?<\/ul>/)[0];
+        expect(marked).toContain('id="dead-item-11"');
+        expect(marked).not.toContain('id="dead-item-12"');
+        // the banner stays away mid-scan (the list is the live run, not a
+        // marked-only view)
+        expect(html).not.toContain('dead-marked-banner');
     });
 
     it('re-entering the view mid-scan renders the blob from storage (even paused)', () => {
@@ -789,7 +865,7 @@ describe('filter + batch marks (§5.5c)', () => {
         const { $list } = ctx;
         ctx.def().activate();
         const markedBlock = html => {
-            const m = html.match(/<ul role="list" class="dead-marked-list">[\s\S]*?<\/ul>/);
+            const m = html.match(/<ul role="list" class="dead-marked-list[^"]*">[\s\S]*?<\/ul>/);
             return m ? m[0] : '';
         };
         // filter=all: 12+13 ride the result rows, only 11 (an ok row) is extra
@@ -806,6 +882,41 @@ describe('filter + batch marks (§5.5c)', () => {
         // the marked list renders AFTER the result rows (results are primary)
         expect($list.innerHTML.indexOf('id="dead-item-12"'))
             .toBeLessThan($list.innerHTML.indexOf('dead-marked-list'));
+    });
+
+    it("the '上次标注' segment switches to the marked-only view (results hidden)", () => {
+        // The user's new mental model: "上次标注" is not a third result
+        // filter, it is a VIEW of the persistent marks — the scan results
+        // disappear and the whole marked set becomes the list, with the
+        // banner explaining that a rescan (top toolbar) is the way back.
+        const ctx = setup({
+            storeData: { deadLastScan: CACHE, deadMarks: '["11","12","13"]' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // idle all: results host 12+13, the marked list holds only the
+        // uncovered 11 (a covered mark never duplicates)
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
+        // clicking 上次标注 → marked-only view
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null)
+        });
+        const html = $list.innerHTML;
+        expect(html).toContain('data-filter="marked" aria-pressed="true"');
+        expect(html).toContain('deadMarkedCount[3]'); // the whole marked set
+        // no result <ul> at all — the marked list is the only list on screen
+        expect(html.match(/<ul role="list"/g)).toHaveLength(1);
+        expect(html).toContain('<ul role="list" class="dead-marked-list">');
+        // the banner names the view and the way back
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+        expect(html).toContain('deadMarkedBanner');
+        // …and clicking 全部 returns to the results + uncovered-marks layout
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'all' } } : null)
+        });
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
     });
 
     it('a filter matching nothing keeps the segment bar reachable (item: filter lock-up)', () => {
@@ -1141,7 +1252,8 @@ describe('marks + overlay (§5.5c)', () => {
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
         const { store, def } = ctx;
         def().activate();
-        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        // marks exist with no scan → the top rescan starts the run
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
         finishScan(ctx, { // the SW comes back with an all-healthy verdict
             '11': { status: 'ok', code: 200 },
             '12': { status: 'ok', code: 200 },
@@ -1372,6 +1484,26 @@ describe('selection mode (v4 task-3 #4)', () => {
         expect(undo.toastCalls).toEqual(['deadMarked']);
         ctx.clickOn({ closest: sel => (sel === '.dead-unmark-selected' ? {} : null) });
         expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+    });
+
+    it('selection mode: marked rows are selectable members — batch-unmark clears just them', () => {
+        // The batch bar's scope extends to the marked rows (they joined the
+        // selectable set), so a cancelled scan with marks stays batch-editable:
+        // select a marked row, unmark-selected clears exactly that mark.
+        const ctx = setup({ storeData: { deadMarks: '["11","13"]' } }); // no scan yet
+        const { $list, store, viewDead } = ctx;
+        ctx.def().activate();
+        // marked-only view: no result rows, but the select entry is there
+        expect($list.innerHTML).toContain('dead-select-mode');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '11');
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-11"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-selected' ? {} : null) });
+        expect(JSON.parse(store.get('deadMarks'))).toEqual(['13']);
+        expect(viewDead.isMarked('11')).toBe(false);
+        // the unmarked row left the list; 13 still shows in the marked list
+        expect($list.innerHTML).not.toContain('id="dead-item-11"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
     });
 
     it('Esc exits the mode (selection cleared, idle toolbar back)', () => {

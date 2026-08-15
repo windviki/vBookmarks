@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "仅失效"
   },
+  "deadFilterMarked": {
+    "message": "已标记"
+  },
   "deadLastScanAt": {
     "message": "上次扫描：$time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "标记所选"
+  },
+  "deadMarkedBanner": {
+    "message": "你正在查看已标记的书签。点击“重新扫描”开始新检查。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "关闭"
   },
   "deadNone": {
     "message": "未发现失效链接"

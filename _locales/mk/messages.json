@@ -220,6 +220,9 @@
   "deadFilterDead": {
     "message": "Само мртви"
   },
+  "deadFilterMarked": {
+    "message": "Означени"
+  },
   "deadLastScanAt": {
     "message": "Последно скенирање: $time$",
     "placeholders": {
@@ -250,6 +253,12 @@
   },
   "deadMarkSelected": {
     "message": "Означи ги избраните"
+  },
+  "deadMarkedBanner": {
+    "message": "Ги прегледувате вашите означени обележувачи. Кликнете на Rescan за да започнете нова проверка."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Затвори"
   },
   "deadNone": {
     "message": "Нема пронајдени мртви врски"

@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "デッドのみ"
   },
+  "deadFilterMarked": {
+    "message": "マーク済み"
+  },
   "deadLastScanAt": {
     "message": "最終スキャン: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "選択済みをマーク"
+  },
+  "deadMarkedBanner": {
+    "message": "マーク済みのブックマークを表示中です。新しいチェックを開始するには再スキャンをクリックしてください。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "閉じる"
   },
   "deadNone": {
     "message": "無効なリンクは見つかりませんでした"

@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Tik negyvi"
   },
+  "deadFilterMarked": {
+    "message": "Pažymėtos"
+  },
   "deadLastScanAt": {
     "message": "Paskutinis nuskaitymas: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Pažymėti pasirinktus"
+  },
+  "deadMarkedBanner": {
+    "message": "Jūs peržiūrite savo pažymėtas žymes. Spustelėkite „Nuskaityti iš naujo“, kad pradėtumėte naują patikrą."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Atmesti"
   },
   "deadNone": {
     "message": "Nerasta neveikiančių nuorodų"

@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Только неработающие"
   },
+  "deadFilterMarked": {
+    "message": "Отмеченные"
+  },
   "deadLastScanAt": {
     "message": "Последняя проверка: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Отметить выбранные"
+  },
+  "deadMarkedBanner": {
+    "message": "Вы просматриваете свои отмеченные закладки. Нажмите «Пересканировать», чтобы начать новую проверку."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Закрыть"
   },
   "deadNone": {
     "message": "Неработающих ссылок не найдено"

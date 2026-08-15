@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Nur tote"
   },
+  "deadFilterMarked": {
+    "message": "Markiert"
+  },
   "deadLastScanAt": {
     "message": "Letzter Scan: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Ausgewählte markieren"
+  },
+  "deadMarkedBanner": {
+    "message": "Sie betrachten Ihre markierten Lesezeichen. Klicken Sie auf „Erneut scannen“, um einen neuen Check zu starten."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Schließen"
   },
   "deadNone": {
     "message": "Keine defekten Links gefunden"

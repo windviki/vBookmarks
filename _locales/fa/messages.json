@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "فقط خراب"
   },
+  "deadFilterMarked": {
+    "message": "نشان‌شده"
+  },
   "deadLastScanAt": {
     "message": "آخرین اسکن: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "علامت‌گذاری انتخاب‌شده"
+  },
+  "deadMarkedBanner": {
+    "message": "شما در حال مشاهده نشانک‌های نشان‌شده خود هستید. برای شروع بررسی جدید، روی «اسکن مجدد» کلیک کنید."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "رد کردن"
   },
   "deadNone": {
     "message": "پیوند مرده‌ای یافت نشد"

@@ -2605,6 +2605,42 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline-offset: -2px;
 }
 
+/* 死链"已标注"视图的工具条横幅 (deadMarkedBanner): 复用 .risk-banner 布局
+   (flex/边框/底色), 只需补 rescan/dismiss 两个按钮自身的样式。rescan 走
+   accent 文本链接风 (与 .risk-banner-help 同级), dismiss 复用 × 按钮规范。 */
+.dead-marked-banner .dead-marked-banner-rescan {
+    flex: none;
+    color: var(--vbm-accent);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 1px 6px;
+}
+
+.dead-marked-banner .dead-marked-banner-rescan:hover {
+    text-decoration: underline;
+}
+
+.dead-marked-banner .dead-marked-banner-dismiss {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-inline-start: auto; /* 与 risk-banner 的 × 同列: 第二行最右 */
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.dead-marked-banner .dead-marked-banner-dismiss:hover {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg);
+}
+
 /* Row: anchor (clock + query + count + time) plus a hover-revealed × */
 .search-history-row {
     display: flex;
@@ -3412,6 +3448,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     padding: 6px 8px 2px;
     margin: 8px auto 0;
     max-width: calc(100% - 40px);
+}
+
+/* 已标注列表的斜体标题: 与上方扫描结果行区分(用户方案)。通用规则
+   `.tree-item-link i` 在 (0,2,0) 强制 font-style:normal, 这里用更高优先级
+   只在已标注列表内覆盖——结果行标题保持正体。 */
+#dead-list ul.dead-marked-list li.vbm-row .tree-item-link i {
+    font-style: italic;
 }
 
 /* 第四轮项10: result rows carry inline .row-btn actions (mark ⚑ / delete ×);

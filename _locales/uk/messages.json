@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Лише мертві"
   },
+  "deadFilterMarked": {
+    "message": "Позначені"
+  },
   "deadLastScanAt": {
     "message": "Останнє сканування: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Позначити вибране"
+  },
+  "deadMarkedBanner": {
+    "message": "Ви переглядаєте свої позначені закладки. Натисніть «Пересканувати», щоб розпочати нову перевірку."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Закрити"
   },
   "deadNone": {
     "message": "Мертвих посилань не знайдено"

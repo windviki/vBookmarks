@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Csak halott"
   },
+  "deadFilterMarked": {
+    "message": "Megjelölt"
+  },
   "deadLastScanAt": {
     "message": "Utolsó vizsgálat: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Kijelöltek megjelölése"
+  },
+  "deadMarkedBanner": {
+    "message": "A megjelölt könyvjelzőket tekinti meg. Kattintson az Újraellenőrzés gombra új ellenőrzés indításához."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Elvetés"
   },
   "deadNone": {
     "message": "Nincs hibás hivatkozás"

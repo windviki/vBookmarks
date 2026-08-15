@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Morts uniquement"
   },
+  "deadFilterMarked": {
+    "message": "Marqués"
+  },
   "deadLastScanAt": {
     "message": "Dernière analyse : $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Marquer la sélection"
+  },
+  "deadMarkedBanner": {
+    "message": "Vous consultez vos signets marqués. Cliquez sur Analyser à nouveau pour lancer une nouvelle vérification."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Fermer"
   },
   "deadNone": {
     "message": "Aucun lien mort trouvé"

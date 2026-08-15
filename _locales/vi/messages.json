@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Chỉ hỏng"
   },
+  "deadFilterMarked": {
+    "message": "Đã đánh dấu"
+  },
   "deadLastScanAt": {
     "message": "Lần quét cuối: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Đánh dấu mục đã chọn"
+  },
+  "deadMarkedBanner": {
+    "message": "Bạn đang xem các dấu trang đã đánh dấu. Nhấn Quét lại để bắt đầu kiểm tra mới."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Bỏ qua"
   },
   "deadNone": {
     "message": "Không tìm thấy liên kết hỏng"

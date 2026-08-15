@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Kun døde"
   },
+  "deadFilterMarked": {
+    "message": "Merket"
+  },
   "deadLastScanAt": {
     "message": "Siste skanning: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Merk valgte"
+  },
+  "deadMarkedBanner": {
+    "message": "Du ser på de merkede bokmerkene dine. Klikk Skann på nytt for å starte en ny kontroll."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Lukk"
   },
   "deadNone": {
     "message": "Ingen døde lenker funnet"

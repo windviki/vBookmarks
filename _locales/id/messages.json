@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Hanya yang mati"
   },
+  "deadFilterMarked": {
+    "message": "Ditandai"
+  },
   "deadLastScanAt": {
     "message": "Pemindaian terakhir: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Tandai yang dipilih"
+  },
+  "deadMarkedBanner": {
+    "message": "Anda sedang melihat penanda yang ditandai. Klik Pindai Ulang untuk memulai pemeriksaan baru."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Tutup"
   },
   "deadNone": {
     "message": "Tidak ada tautan mati ditemukan"

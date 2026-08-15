@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "깨짐만"
   },
+  "deadFilterMarked": {
+    "message": "표시됨"
+  },
   "deadLastScanAt": {
     "message": "마지막 검사: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "선택 항목 표시"
+  },
+  "deadMarkedBanner": {
+    "message": "표시된 북마크를 보고 있습니다. 새 검사를 시작하려면 재검색을 클릭하세요."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "닫기"
   },
   "deadNone": {
     "message": "끊긴 링크 없음"

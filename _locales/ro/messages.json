@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Doar moarte"
   },
+  "deadFilterMarked": {
+    "message": "Marcate"
+  },
   "deadLastScanAt": {
     "message": "Ultima scanare: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Marcați selectatele"
+  },
+  "deadMarkedBanner": {
+    "message": "Vizualizați marcajele dvs. marcate. Faceți clic pe Rescanare pentru a începe o nouă verificare."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Respinge"
   },
   "deadNone": {
     "message": "Nicio legătură moartă găsită"

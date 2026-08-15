@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Vain kuolleet"
   },
+  "deadFilterMarked": {
+    "message": "Merkityt"
+  },
   "deadLastScanAt": {
     "message": "Viimeisin skannaus: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Merkitse valitut"
+  },
+  "deadMarkedBanner": {
+    "message": "Näet merkittyjä kirjanmerkkejäsi. Aloita uusi tarkistus napsauttamalla Rescan."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Sulje"
   },
   "deadNone": {
     "message": "Ei rikkinäisiä linkkejä"

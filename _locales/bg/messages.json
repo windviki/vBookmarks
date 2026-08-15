@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Само мъртви"
   },
+  "deadFilterMarked": {
+    "message": "Маркирани"
+  },
   "deadLastScanAt": {
     "message": "Последно сканиране: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Маркиране на избраните"
+  },
+  "deadMarkedBanner": {
+    "message": "Преглеждате маркираните си отметки. Щракнете върху Rescan, за да започнете нова проверка."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Затвори"
   },
   "deadNone": {
     "message": "Няма открити мъртви връзки"

@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Endast döda"
   },
+  "deadFilterMarked": {
+    "message": "Märkta"
+  },
   "deadLastScanAt": {
     "message": "Senaste skanning: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Markera valda"
+  },
+  "deadMarkedBanner": {
+    "message": "Du tittar på dina märkta bokmärken. Klicka på Skanna om för att starta en ny kontroll."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Stäng"
   },
   "deadNone": {
     "message": "Inga döda länkar hittades"

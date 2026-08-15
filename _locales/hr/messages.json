@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Samo mrtve"
   },
+  "deadFilterMarked": {
+    "message": "Označeno"
+  },
   "deadLastScanAt": {
     "message": "Posljednje skeniranje: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Označi odabrano"
+  },
+  "deadMarkedBanner": {
+    "message": "Pregledavate svoje označene zabilješke. Kliknite Ponovno skeniranje za pokretanje nove provjere."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Odbaci"
   },
   "deadNone": {
     "message": "Nema pronađenih mrtvih poveznica"

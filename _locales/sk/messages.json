@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Iba mŕtve"
   },
+  "deadFilterMarked": {
+    "message": "Označené"
+  },
   "deadLastScanAt": {
     "message": "Posledná kontrola: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Označiť vybrané"
+  },
+  "deadMarkedBanner": {
+    "message": "Prezeráte si svoje označené záložky. Kliknutím na tlačidlo Znova skontrolovať spustíte novú kontrolu."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Zavrieť"
   },
   "deadNone": {
     "message": "Nenašli sa žiadne nefunkčné odkazy"

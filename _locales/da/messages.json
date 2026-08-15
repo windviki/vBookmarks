@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Kun døde"
   },
+  "deadFilterMarked": {
+    "message": "Markeret"
+  },
   "deadLastScanAt": {
     "message": "Seneste scanning: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Markér valgte"
+  },
+  "deadMarkedBanner": {
+    "message": "Du ser dine markerede bogmærker. Klik på Scan igen for at starte en ny kontrol."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Luk"
   },
   "deadNone": {
     "message": "Ingen døde links fundet"

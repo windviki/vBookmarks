@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "केवल मृत"
   },
+  "deadFilterMarked": {
+    "message": "चिह्नित"
+  },
   "deadLastScanAt": {
     "message": "अंतिम स्कैन: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "चयनित को चिह्नित करें"
+  },
+  "deadMarkedBanner": {
+    "message": "आप अपने चिह्नित बुकमार्क देख रहे हैं। नई जाँच शुरू करने के लिए Rescan पर क्लिक करें।"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "खारिज करें"
   },
   "deadNone": {
     "message": "कोई मृत लिंक नहीं मिला"

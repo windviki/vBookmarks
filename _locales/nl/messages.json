@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Alleen dode"
   },
+  "deadFilterMarked": {
+    "message": "Gemarkeerd"
+  },
   "deadLastScanAt": {
     "message": "Laatste scan: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Markeer geselecteerde"
+  },
+  "deadMarkedBanner": {
+    "message": "U bekijkt uw gemarkeerde bladwijzers. Klik op 'Opnieuw scannen' om een nieuwe controle te starten."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Sluiten"
   },
   "deadNone": {
     "message": "Geen dode links gevonden"

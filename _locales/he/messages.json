@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "רק מתים"
   },
+  "deadFilterMarked": {
+    "message": "מסומנים"
+  },
   "deadLastScanAt": {
     "message": "סריקה אחרונה: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "סמן נבחרים"
+  },
+  "deadMarkedBanner": {
+    "message": "אתה צופה בסימניות המסומנות שלך. לחץ על 'סריקה חוזרת' כדי להתחיל בדיקה חדשה."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "סגור"
   },
   "deadNone": {
     "message": "לא נמצאו קישורים מתים"

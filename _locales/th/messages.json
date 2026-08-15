@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "ตายเท่านั้น"
   },
+  "deadFilterMarked": {
+    "message": "ที่ทำเครื่องหมาย"
+  },
   "deadLastScanAt": {
     "message": "สแกนล่าสุด: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "ทำเครื่องหมายรายการที่เลือก"
+  },
+  "deadMarkedBanner": {
+    "message": "คุณกำลังดูบุ๊กมาร์กที่ทำเครื่องหมายไว้ คลิก Rescan เพื่อเริ่มการตรวจสอบใหม่"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "ปิด"
   },
   "deadNone": {
     "message": "ไม่พบลิงก์เสีย"

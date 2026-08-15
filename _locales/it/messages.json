@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Solo morti"
   },
+  "deadFilterMarked": {
+    "message": "Contrassegnati"
+  },
   "deadLastScanAt": {
     "message": "Ultima scansione: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Contrassegna selezionati"
+  },
+  "deadMarkedBanner": {
+    "message": "Stai visualizzando i tuoi segnalibri contrassegnati. Fai clic su Nuova scansione per iniziare una nuova verifica."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Ignora"
   },
   "deadNone": {
     "message": "Nessun collegamento interrotto trovato"

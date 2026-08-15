@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Ainult surnud"
   },
+  "deadFilterMarked": {
+    "message": "Märgitud"
+  },
   "deadLastScanAt": {
     "message": "Viimane skänn: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Märgi valitud"
+  },
+  "deadMarkedBanner": {
+    "message": "Vaatate oma märgitud järjehoidjaid. Uue kontrolli alustamiseks klõpsake nuppu Skanni uuesti."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Sule"
   },
   "deadNone": {
     "message": "Surnud linke ei leitud"

@@ -221,6 +221,9 @@
   "deadFilterDead": {
     "message": "Yalnızca Ölü"
   },
+  "deadFilterMarked": {
+    "message": "İşaretli"
+  },
   "deadLastScanAt": {
     "message": "Son tarama: $time$",
     "placeholders": {
@@ -251,6 +254,12 @@
   },
   "deadMarkSelected": {
     "message": "Seçilenleri işaretle"
+  },
+  "deadMarkedBanner": {
+    "message": "İşaretli yer imlerinizi görüntülüyorsunuz. Yeni bir denetim başlatmak için Rescan'a tıklayın."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Kapat"
   },
   "deadNone": {
     "message": "Ölü bağlantı bulunamadı"
