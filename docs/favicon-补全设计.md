@@ -52,8 +52,10 @@ favicon-fallback 识别占位图 + 未缓存
       L1 fetch https://host/favicon.ico (3s) → ok? 缓存 + 热更新 img
       L2 fetch 页面 HTML (5s) → 解析 <link rel=icon> → fetch 图标 → 缓存 + 热更新
       L3 fetch DDG (3s) → ok? 缓存 + 热更新
-      → 全失败: 缓存 {host, failed: true, ts} (24h 免重试)
+      → 全失败: 若死链扫描会话在 + 配了代理 → addProxyMarker(url) 走代理重试 (L1/L2)
+      → 仍失败: 缓存 {host, failed: true, ts} (24h 免重试)
 ```
+- **代理通道**（§7）：直连 L1/L2/L3 失败后，若死链扫描的 PAC 会话在（`dead-scan-sw` 已 `startProxySession`）、且用户配了代理，给 URL 加 `addProxyMarker`（`__vbm_px=1`）重试——覆盖「直连不可达但代理可达」的站点（用户洞察）。
 - **为什么前端而非 SW**：favicon 补全需要**就地更新已渲染的 `<img>`**（视图热更新），前端有直接的 DOM 引用；SW 拿不到。死链扫描是「结果集中展示」才适合 SW。favicon 的「结果」是散落在各行的图标，前端做更自然。
 - 队列生命周期：popup 打开期间。popup 关闭队列自然丢弃（缓存已持久化，下次打开不再触发）。
 
@@ -148,27 +150,57 @@ applyContrast(img);            // 复用现有反色服务
 
 ## 7. 与死链扫描结合（回答「可以在死链扫描时顺便补全吗」）
 
-### 设计判断：**不耦合，但可共享「顺带」触发**
+### 核心洞察（用户补充）：死链扫描的**代理通道**是 favicon 补全直连通道不具备的
 
-死链扫描是**一次全量会话**（SW + blob + 进度条 + 结果列表），favicon 是**按需惰性补全**（前端 + 就地热更新）。两者生命周期不同，**强行耦合会互相拖累**：
-- 死链扫描关注「连通性」，favicon 关注「图标」，语义不同。
-- 死链扫描可能被暂停/取消，favicon 补全不应随之中断。
+- favicon 补全的 L1/L2/L3 是**直接 fetch**（`fetch(host/favicon.ico)`）——**对「直连不可达」的站点（被墙/区域限制/ISP 阻断）无效**。
+- 死链扫描的双通道 `checkUrlDual` 在直连失败后，**走用户配置的代理**（marker-PAC：`addProxyMarker(url)` 加 `__vbm_px=1` 参数 → PAC 路由到代理，`dead-proxy.js`）——**直连取不到的 icon，代理通道能取到并补齐**。
+- 这就是用户的洞察：**「即使不是一个过程，开关开启时，死链扫描可以做更多额外工作」**。
 
-**但是**，有一个自然的「顺带」点：**死链扫描已经 fetch 了每个书签的 URL**（检查死链时拿到响应）。可以在死链扫描的**响应阶段顺手解析 `<link rel=icon>`**（复用同一响应，零额外请求），把发现的图标 URL 写进缓存——下次渲染 favicon 直接命中。
+### 机制确认
 
+```
+死链扫描会话（dead-scan-sw.js）:
+  startProxySession(server)  ← 扫描开始时安装 PAC, 带 marker 的 URL 走代理
+    → checkUrlDual: 直连失败 → addProxyMarker(url) 走代理 → blocked(可达)/dead(双失败)
+  endProxySession()  ← 扫描结束/取消/页面关闭时拆除
+```
+
+**代理会话生命周期 = 死链扫描会话**。所以 favicon 补全要利用代理，**必须与死链扫描的会话窗口对齐**。
+
+### 双通道 favicon 补全（新设计）
+
+favicon 补全本身就有两条腿，与死链扫描是「共享代理通道」而非「顺带」：
+
+```
+favicon 补全独立跑（popup 生命周期）:
+  L1/L2/L3 直接 fetch (覆盖: Chrome 未缓存 + 直连可达站点)
+
+死链扫描会话期间（开关 faviconEnrich 开启 + 有代理）:
+  favicon 补全的请求加 addProxyMarker(url) 走代理
+    (覆盖: 直连不可达但代理可达的站点——L1/L2 直连失败的二次机会)
+  → 扫描到 blocked(代理可达) 的站点, favicon 顺带取到
+```
+
+### 死链扫描响应阶段的「顺带」（补充，非依赖）
+
+死链扫描**已 fetch** 书签 URL。在**响应阶段顺手解析 `<link rel=icon>/manifest`**（复用响应，零额外请求）：
 ```
 死链扫描 fetch 书签 URL（检查死链）
   → 响应 200 → 顺手解析 <link rel=icon>/manifest → 发现图标 URL
-  → 写入 favicon 缓存（不立即 fetch 图标，只存 URL）
+  → 写入 favicon 缓存（存 URL, 不立即 fetch 图标）
   → 下次 favicon 渲染占位图 → 缓存命中 URL → fetch 图标 → 注入
 ```
+**代价**：死链扫描现在是 HEAD 请求（HEAD 拒绝才 GET），不读 body。要解析 `<link>` 需改为 GET + 读 body——增加带宽。所以顺带解析是**可选项**，权衡：只对 `blocked`（代理可达）站点做 GET+解析（这些正是直连补全不到的），直连 ok 的站点靠 L1/L2 即可。
 
-**价值**：
-- 零额外网络请求（复用死链扫描的响应体）。
-- 覆盖「扫描过的站点」，避免 favicon 补全再 fetch 一遍页面。
-- 但**不阻塞**死链扫描（解析是同步读响应，代价极小）。
+### 分层结论
 
-**结论**：favicon 补全独立运行；死链扫描「顺带」产出 favicon URL 缓存是**增强**，非依赖。实施顺序：先独立补全，再加死链顺带。
+| 通道 | 覆盖 | 触发 |
+|---|---|---|
+| favicon 补全 L1/L2/L3 直连 | Chrome 未缓存 + 直连可达 | 渲染占位图时（popup 生命周期） |
+| favicon 补全走代理（会话内） | 直连不可达 + 代理可达 | 死链扫描会话期间 |
+| 死链扫描顺带解析 `<link>` | 同上 + 零额外请求 | 死链扫描响应阶段（可选） |
+
+**实施顺序**：先独立补全（直连 L1/L2/L3）→ 再加「死链会话内走代理」→ 最后加「死链顺带解析」。三者正交，逐步叠加。
 
 ---
 
@@ -197,7 +229,8 @@ applyContrast(img);            // 复用现有反色服务
 | `src/neat.js` | 初始化 favicon-enrich + storage.onChanged 监听开关 |
 | `src/options.js` + `pages/options.html` | `faviconEnrich` 开关 |
 | `src/store.js` | 注册 `faviconEnrich` 键（sync 区）+ `vbmFaviconCache` 键（local 区） |
-| `src/dead-scan-sw.js`（顺带） | 响应阶段解析 `<link rel=icon>` → 写 favicon URL 缓存 |
+| `src/favicon-enrich.js` | 导入 `addProxyMarker`（dead-proxy.js）走代理通道 |
+| `src/dead-scan-sw.js`（代理会话共享） | 会话窗口通知 favicon-enrich「代理可用」；可选：响应阶段解析 `<link rel=icon>` → 写 favicon URL 缓存 |
 | `_locales/*` | `optionFaviconEnrich` / `optionFaviconEnrichHint` 等新 key |
 | `tests/favicon-enrich.test.js`（新） | 发现链/缓存/限流/取消/降级 |
 | `tests/favicon-fallback.test.js` | 占位图→补全触发路径 + 热更新 |
@@ -214,18 +247,20 @@ applyContrast(img);            // 复用现有反色服务
 | 并发 | 4 / 6 / 8 | **6**，平衡速度与站点压力 |
 | 失败免重试 | 24h / 7d | **24h**，允许站点后来加 favicon |
 | 补全执行位置 | 前端 / SW | **前端**（就地热更新需要 DOM 引用） |
-| 死链顺带 | 做 / 不做 | **后做**（独立补全先落地，顺带是增强） |
+| 死链会话内走代理 | 做 / 不做 | **做**（用户洞察: 直连取不到的 icon, 代理通道能补齐）——独立补全的 L1/L2 直连失败后, 若死链会话在且配了代理, 加 `addProxyMarker` 重试 |
+| 死链顺带解析 `<link>` | 做 / 不做 | **后做**（需改 HEAD→GET+读 body, 增加带宽; 独立补全 + 代理通道先落地） |
 | 补全中视觉 | 有 / 无 | **有**（轻量 CSS loading），提升感知 |
 
 ---
 
 ## 11. 实施顺序（每步独立提交 + 全绿）
 
-1. **S1**：`favicon-enrich.js` 纯逻辑（发现链 + 缓存读写 + LRU + 限流器）+ 单测
+1. **S1**：`favicon-enrich.js` 纯逻辑（发现链 L1/L2/L3 + 缓存读写 + LRU + 限流器）+ 单测
 2. **S2**：`favicon-fallback` 接入——占位图登记队列、补全成功热更新 + 单测
 3. **S3**：`neat.js` 接线 + 开关（options/store/i18n）
-4. **S4**：死链扫描顺带解析 `<link>`（增强）
-5. **S5**：harness 验证（真实 Chromium 补全 → 图标变真实）+ 文档同步
+4. **S4**：**代理通道**——`favicon-enrich` 导入 `addProxyMarker`，直连失败 + 死链会话在 + 有代理 → 走代理重试（用户洞察：直连取不到的 icon 代理能补齐）
+5. **S5**：死链扫描顺带解析 `<link>`（增强，需 HEAD→GET+读 body 权衡）
+6. **S6**：harness 验证（真实 Chromium 补全 → 图标变真实）+ 文档同步
 
 ---
 
