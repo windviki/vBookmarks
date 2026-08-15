@@ -100,7 +100,7 @@ Licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.
 
 - **Unit tests** across 50+ Vitest suites, covering every module — including contract tests that pin the row-alignment geometry, the z-index layering table, per-theme badge contrast and the horizontal-scrollbar protection contract (every scrollable pane clips `overflow-x`, text slots ellipsis, fixed slots `flex: none`, zoom rules never alter geometry). The live count is `npm run test:run` output (and the CI badge).
 - **Docker harness**: zero-console-error smoke, a real-browser keyboard/view verification suite (tab-strip keyboard model, focus zones, header-row arrow chain, per-view ↑↓/past-top crossings with the in-list toolbar rungs — the dead view stacks two, custom palette commands end-to-end, banner keyboard reachability, search dual-zone, per-view rendering — 132 hard assertions), a scrollbar matrix probe (screen resolution × browser zoom × in-extension zoom × popup size sweep, no horizontal scrollbar on any pane — 752 assertions), and screenshot suites across 5 themes and 8 UI languages (with an RTL mirroring check).
-- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**388** as of 4.0.5), all 43 locales aligned.
+- Unified locale tooling (`scripts/i18n.py`): audit, missing-key reports, LLM batch translation, verify gate. Baseline grew from 75 to **345 keys** at 4.0 (**390** as of 4.0.5), all 43 locales aligned.
 - **CI**: GitHub Actions runs the unit suites, the i18n gates and the release packaging on every push and PR.
 - Repository organized for the v4 era: `src/`, `pages/`, `css/`, `assets/`, `scripts/`; obsolete artifacts (old `release/*.crx`, MV2 leftovers) live on in git history.
 
@@ -204,7 +204,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 #### New
 
-- **Low-contrast favicon inversion**: a new `faviconContrast` option (Views group, on by default) detects favicons that sink into the active theme — dark glyphs on dark surfaces, light glyphs on light ones — and flips their brightness **while preserving hue** (`invert(1) hue-rotate(180deg)`), so brand colors survive. The detector keys off extreme-tone pixel shares rather than average brightness (which misread small dark marks on transparent backgrounds, e.g. thepaper.cn and GitHub) and deliberately spares self-inverting icons like x.com's white-on-black disc. It re-judges on OS light/dark flips under the auto theme, applies live in the always-on side panel, and was tuned against a 13-real-favicon × 4-theme render matrix.
+- **Low-contrast favicon inversion**: a new `faviconContrast` option (Views group, on by default) detects favicons that sink into the active theme — dark glyphs on dark surfaces, light glyphs on light ones — and flips their brightness **while preserving hue** (`invert(1) hue-rotate(180deg)`), so brand colors survive. The detector keys off extreme-tone pixel shares rather than average brightness (which misread small dark marks on transparent backgrounds, e.g. thepaper.cn and GitHub) and deliberately spares self-inverting icons like x.com's white-on-black disc. It re-judges on OS light/dark flips under the auto theme, applies live in the always-on side panel, and was tuned against a 14-real-favicon × 4-theme render matrix.
 - **Dead-link view empty state gains a "start scan" pill CTA** — the first scan is one click from the empty view instead of a toolbar hunt.
 - **Command palette result highlighting**: matched characters are wrapped in `<mark>` again, so a row shows why it ranked.
 
@@ -217,6 +217,10 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Escaping gaps closed**: an untitled bookmark's protocol-stripped URL fallback rendered unescaped (a pre-v4.0 leftover), and the shared escaper now covers `&` after a full caller audit proved no double-escaping path remains.
 - **Folder menus in search results / the palette** grey out content-dependent entries (open-all, tab group, sort) for empty folders, matching the tree — and a greyed state never leaks into the next menu.
 - **Visual consistency**: two-line row icons align with the tree's slot rhythm (search view included); delete affordances are uniformly red (search-history inline/menu deletes, remove-separator, the palette delete command, dupes clean) with a shared danger hover; sync dots and dead-link × badges use logical `inset-inline-end`, so RTL mirrors correctly.
+- **Second-pass audit merge**: the palette's custom-command rows now escape and validate `slash`/`aliases` (closing a sync-storage injection path); tree rebuilds park/restore the focused row and the `focusID` restore is guarded, so a rebuild no longer drops keyboard focus to the page body; popup focus memory covers the search-history area; the omnibox highlighter self-escapes regex metacharacters (a query like `c++` no longer breaks highlighting) and highlights subsequence matches, so highlight and ranking agree; toolbar focus restore survives button-set changes (class+index instead of a bare position); the dead-link start row shows its focus ring only for keyboard focus (`:focus-visible`); dead-link selection rows drop the leftover ghost icon slot.
+- **Colorful logos are no longer mis-inverted on light themes**: a chroma guard keeps brand-color icons (e.g. the Chrome Web Store devconsole mark) from being flipped into a black-card wreck — the tuning matrix grew to 14 real favicons × 4 themes.
+- **Dead-link marks survive a cancelled scan**: with no result list on screen, marked bookmarks render as their own list (each individually unmarkable, plus a batch clear-all), and a cached result list surfaces the marks it doesn't cover — a cancelled run never strands a mark with no way to clear it.
+- **Zoomed context menus never cover the right-clicked row**: above 100% zoom an over-tall menu used to flip up over the trigger row, so the next right-click hit the menu itself and dismissed it (show/hide alternation) — the menu now clamps to the space below the row, including the viewport-scrollable case.
 
 #### Changed
 
@@ -227,8 +231,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 #### Engineering
 
-- Independent audit of the full v4.0 → 4.0.5 delta (139 commits, ~32 code findings + 9 doc gaps) — findings, fixes and the keep-as-is decisions are archived in `docs/review-4.0.5.md`; documentation (AGENTS.md, keyboard-model, the v4 guide) re-synced to the implementation.
-- Test suite at **66 files / 2028 cases**, all green — new `list-focus` suite, rewritten favicon-contrast strategy tests, and new contracts for the deletion chains, menu greying, escaping and the i18n copy changes.
+- Two independent audits of the full v4.0 → 4.0.5 delta plus their merge (the second pass caught what the first missed: a favicon theme observer that never installed, the palette injection path, tree focus park/restore) — both reports, the comparison/merge plan and the fused 4.1.0 design are archived in `docs/review-4.0.5/`; documentation (AGENTS.md, keyboard-model, the v4 guide) re-synced to the implementation.
+- The popup resize/zoom layer was extracted from `neat.js` into `src/resize.js` (pure decision kernels stay in `src/resize-core.js`), closing a stale drag-ceiling leak between drags.
+- Test suite at **67 files / 2078 cases**, all green — new `list-focus` suite, rewritten favicon-contrast strategy tests, and new contracts for the deletion chains, menu greying, escaping and the i18n copy changes.
 
 ### v4.0.4 · 2026-08
 
