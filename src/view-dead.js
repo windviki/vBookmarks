@@ -290,22 +290,20 @@ export function initViewDead(ctx = {}) {
     };
 
     // The user's manual marks, joined against the tree, in display order.
-    // The marked list is the persistent intent, so it always renders (below
-    // the result rows, or as the whole list in the marked-only view):
-    //   - mid-scan: a mark the CURRENT run already re-verified as a problem
-    //     row moves into the result list (keep its marked state there) and
-    //     drops out here — the still-unchecked marks stay.
-    //   - cached results (filter all/dead/blocked): a mark the last scan's
-    //     problem rows cover rides its result row, so only the UNCOVERED
-    //     marks (never probed / added after the run) append below.
-    //   - marked-only view (filter 'marked' or no scan): the whole set.
+    // "过去标注" is the set of marks the CURRENT run has not yet re-verdict as
+    // a problem row — a mark the scan judges dead/blocked rides its result row
+    // (⚑ kept there) and is NEVER counted here again (double-count regression).
+    //   - before any scan cache (!lastScan): the whole marked set.
+    //   - mid-scan / cached results: only the UNCOVERED marks (a healthy-but-
+    //     previously-marked link, or a mark added after the run) — the residue
+    //     the doc (docs/dead-过去标注语义.md) calls the only remaining source.
     const markedRows = () => {
         let covered = null;
         if (live)
             covered = new Set(liveRows().map(r => r.item.id));
         else if (lastScan)
             covered = new Set(allResultRows().map(r => r.item.id));
-        const showAll = !live && (filter === 'marked' || !lastScan);
+        const showAll = !live && !lastScan;
         const out = [];
         for (const id of deadMarks) {
             if (!showAll && covered && covered.has(id))
@@ -448,6 +446,11 @@ export function initViewDead(ctx = {}) {
             // the UNFILTERED count, so the way back remains reachable.
             const markedOnly = filter === 'marked' || !lastScan;
             const filteredN = resultRows().length;
+            // The marked segment counts the UNCOVERED marks (markedRows), not
+            // the raw deadMarks set: a mark the scan verdicts dead/blocked
+            // already rides its result row, so using deadMarks.size would
+            // double-count it in 全部 (= result rows + marks).
+            const markedCount = markedRows().length;
             if (lastScan && (rows.length || deadMarks.size)) {
                 // dead-filter and the old dead-summary merge: each segment
                 // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0 ·
@@ -460,16 +463,19 @@ export function initViewDead(ctx = {}) {
                 // v4 task-4 #1: pressed state = aria-pressed only (the
                 // 'active' class is context-menu.js's menu-open marker —
                 // clearMenu strips it body-wide on click/focus).
-                // 全部 = 本次扫描结果 (死链 + 受限) + 上次标注 三者之和 —
+                // 全部 = 本次扫描结果 (死链 + 受限) + 未覆盖标注 三者之和 —
                 // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅是
-                // 本次扫描之后的计数", 即 全部 = 死链 + 受限 + 标注。
+                // 本次扫描之后的计数", 即 全部 = 死链 + 受限 + 标注。标注只算
+                // 未被本次结果覆盖的残留 (markedCount), 一个 id 不会既算结果
+                // 又算标注。
                 for (const [value, key, count] of [
-                    ['all', 'deadFilterAll', rows.length + deadMarks.size],
+                    ['all', 'deadFilterAll', rows.length + markedCount],
                     ['dead', 'deadFilterDead', deadN],
                     ['blocked', 'deadFilterBlocked', rows.length - deadN],
-                    // "上次标注": the whole marked set — clicking it switches
-                    // to the marked-only view (results hidden).
-                    ['marked', 'deadFilterMarked', deadMarks.size]
+                    // "上次标注": the uncovered marks — a mark the scan verdicts
+                    // dead/blocked rides its result row and is never counted
+                    // here again; the residue is what the segment shows.
+                    ['marked', 'deadFilterMarked', markedCount]
                 ])
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
@@ -484,7 +490,7 @@ export function initViewDead(ctx = {}) {
             // scan / 过去标注 filter) deletes the marked bookmarks instead.
             // Rendered only when the target set is non-empty — a danger
             // button that clicks into nothing must not appear.
-            if (filteredN || (markedOnly && deadMarks.size))
+            if (filteredN || (markedOnly && markedCount))
                 html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
             // block, so the marked-only view (a cancelled scan with marks,
@@ -590,15 +596,17 @@ export function initViewDead(ctx = {}) {
     const markedBannerVisible = () => {
         if (markedBannerDismissed || live || selecting)
             return false;
-        if (!deadMarks.size)
+        // 有可看的标注行才提示: 标注列表为空 (全部标注已被本次结果覆盖 /
+        // 从未标记) 时, 列表本身已给出去路 (dead-start / 结果行), 横幅无意义。
+        if (!markedRows().length)
             return false;
         // marked-only 视图 (取消扫描 / "过去标注"筛选 / 无扫描): 有标记就提示。
         if (filter === 'marked' || !lastScan)
             return true;
-        // "全部"视图 + 扫描正常完成但仍有过去标注: 本次扫描不再判为问题行的
-        // 标记 (现在可访问、过去被标注) 追加于结果下方 — 同样提示用户检查
-        // "过去标注"分类。仅死链/仅受限视图不渲染标注列表, 也不提示。
-        return filter === 'all' && markedRows().length > 0;
+        // "全部"视图 + 扫描正常完成: 本次扫描不再判为问题行的标记 (现在可
+        // 访问、过去被标注) 追加于结果下方 — 同样提示用户检查"过去标注"分类。
+        // 仅死链/仅受限视图不渲染标注列表, 也不提示。
+        return filter === 'all';
     };
     const markedBannerHtml = () => {
         if (!markedBannerVisible())
