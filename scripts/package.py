@@ -153,6 +153,8 @@ EXCLUDE_FILES = {
     '.env',  # local LLM credentials, git-ignored
     '.env.example',
     'eslint.config.js',
+    '.python-version',  # dev toolchain pin (pyenv), not a runtime file
+    'vitest.config.js',  # dev test-runner config, not a runtime file
 }
 
 # Locale directories to exclude (not in the supported set)
