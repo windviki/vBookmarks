@@ -857,4 +857,84 @@ describe('index parse + rebuild', () => {
         // The rebuilt index was persisted.
         expect(storage.data[FAVICON_IDX_KEY]).toContain('github.com');
     });
+
+    it('quota write rejection → emergency eviction of the oldest half, then the new entry survives', async () => {
+        // Seed enough old entries (with their data keys — hydrate reconciles
+        // index↔data) that evicting half frees room; the write path hits a
+        // quota error once, evicts, retries successfully.
+        const hosts = {};
+        const seedData = {};
+        const DATA = 'data:image/png;base64,AAAA';   // a tiny stand-in
+        for (let i = 0; i < 60; i++) {
+            const h = `q${i}.example`;
+            hosts[h] = { t: 1700000000000 + i * 1000, s: DATA.length };
+            seedData[`${FAVICON_DATA_PREFIX}${h}`] = DATA;
+        }
+        seedData[FAVICON_IDX_KEY] = JSON.stringify({ v: 1, ddgDownUntil: 0, hosts });
+        const base = makeStorageArea(seedData);
+        // Wrap set to throw a quota error on the first data-key write.
+        let quotaThrown = false;
+        const storage = {
+            data: base.data,
+            calls: base.calls,
+            get: base.get.bind(base),
+            remove: base.remove.bind(base),
+            clear: base.clear.bind(base),
+            set: (obj, cb) => {
+                if (!quotaThrown && Object.keys(obj).some(k => k.startsWith(FAVICON_DATA_PREFIX))) {
+                    quotaThrown = true;
+                    const err = new Error('QUOTA_BYTES quota exceeded');
+                    if (cb) { cb(err); return undefined; }
+                    return Promise.reject(err);
+                }
+                return base.set(obj, cb);
+            }
+        };
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            ddgEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => 1700000000000 + 80 * 1000
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://new.example/'));
+        await tick(); await tick();
+        // The new entry survives in the session map (degraded), and the
+        // emergency eviction freed the oldest ~half.
+        expect(en.getCache().has('new.example')).toBe(true);
+        expect(en.getCache().size).toBeLessThanOrEqual(40);
+        expect(en.getCache().has('q0.example')).toBe(false);   // oldest evicted
+        expect(quotaThrown).toBe(true);
+    });
+
+    it('reconciles index↔data-key drift: stale index entry dropped, orphan data key re-added', async () => {
+        // Index says success for a host whose data key is gone → drop.
+        // A data key with no index entry → re-add on hydrate.
+        const hosts = { 'stale.example': { t: 1700000000000, s: 100 } };
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}orphan.example`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts })
+        });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            ddgEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        const cache = en.getCache();
+        expect(cache.has('stale.example')).toBe(false);   // stale index entry dropped
+        expect(cache.has('orphan.example')).toBe(true);   // orphan data key re-added
+        // The reconciled index dropped the stale host.
+        expect(en.getIdx().hosts['stale.example']).toBeUndefined();
+    });
 });

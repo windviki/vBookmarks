@@ -264,11 +264,13 @@ export function initFaviconEnrich(ctx = {}) {
         evictIfOverBudget();
         const setObj = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl };
         idxData.hosts[host] = { t: now(), s: bytes };
-        try {
-            chromeImpl.storage.local.set({ ...setObj, [FAVICON_IDX_KEY]: JSON.stringify(idxData) });
-        } catch (_) {
-            // Quota error → emergency eviction (see evictIfOverBudget path).
-            emergencyEvict(host, dataUrl);
+        const p = chromeImpl.storage.local.set({ ...setObj, [FAVICON_IDX_KEY]: JSON.stringify(idxData) });
+        if (p && typeof p.catch === 'function') {
+            // chrome.storage rejects async on quota error (try/catch can't see
+            // it) — trigger the emergency eviction via .catch.
+            p.catch(() => emergencyEvict(host, dataUrl));
+        } else {
+            try { p; } catch (_) { emergencyEvict(host, dataUrl); }
         }
         persistIdxDebounced();
     };
@@ -298,7 +300,8 @@ export function initFaviconEnrich(ctx = {}) {
     };
 
     const emergencyEvict = (host, dataUrl) => {
-        // Quota error on write: cut the oldest half, retry once, else session.
+        // Quota error on write: cut the oldest half, retry once; if the retry
+        // also fails (other data squeezed the budget), degrade to session-only.
         const entries = [...cache.entries()].filter(([, e]) => e.d && e.persist !== false)
             .sort((a, b) => a[1].t - b[1].t);
         const half = Math.ceil(entries.length / 2);
@@ -311,7 +314,18 @@ export function initFaviconEnrich(ctx = {}) {
                     chromeImpl.storage.local.remove(`${FAVICON_DATA_PREFIX}${h}`);
             } catch (_) { /* best effort */ }
         }
-        cache.set(host, { d: dataUrl, t: now(), persist: false });
+        idxData.hosts[host] = { t: now(), s: dataUrl.length };
+        const retry = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl, [FAVICON_IDX_KEY]: JSON.stringify(idxData) };
+        const rp = chromeImpl.storage.local.set(retry);
+        if (rp && typeof rp.catch === 'function') {
+            // Still over budget → degrade this entry to session-only.
+            rp.catch(() => {
+                cache.set(host, { d: dataUrl, t: now(), persist: false });
+                delete idxData.hosts[host];   // keep the index honest
+            });
+        } else {
+            cache.set(host, { d: dataUrl, t: now() });
+        }
     };
 
     // --- Hydrate + self-heal ---------------------------------------------------
