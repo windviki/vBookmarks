@@ -200,6 +200,33 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.0.8 · 2026-08-15
+
+#### New
+
+- **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback", and a "Clear icon cache" action.
+- **Options page regrouped into 15 sections**: the overloaded Views group split into View display / Icons / Context menus / Tools / Statistics, so every area has breathing room.
+- **Storage usage bar**: the Icons group now shows how much of the storage quota icons, bookmarks, settings and the free space each take (with a byte-formatted legend), updating live as data changes.
+- **Header GitHub / Homepage links and version number** in the top-right corner of the options page.
+- **Backup can include the icon cache**: a new "Include icon cache in backups" option packs the enriched per-site icon cache into settings export/import — off keeps backups small, and icons are re-fetched automatically.
+
+#### Fixed
+
+- **Favicon cache quota race**: the byte budget is now enforced asynchronously, so a burst of concurrent fetches can no longer push the cache past the limit before the eviction runs.
+
+#### Changed
+
+- **In-product announcement banner**: the version-gate banner was replaced by a fetch-based "What's new" banner (toggled by the new "Show in-product announcements" option, content pulled from the project's GitHub repository at most every 6 hours) — the v4.0.8 banner announces this favicon-enhanced release and links the v4 guide and the changelog.
+- **Options-page polish**: trailing hints no longer sit far below their controls, and list buttons share one visual weight with the page's other buttons.
+
+#### Engineering
+
+- Favicon enrichment module: discovery chain, built-in provider list with per-provider circuit breaker + failover, cache + queue.
+- Store publishing supports a trusted-tester grey release (`TRUSTED_TESTERS`); `DEFAULT_PUBLISH` restores a full rollout.
+- `loadDotenv` accepts inline comments (`KEY=value # note`).
+- Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
+- Test suite at **69 files / 2192 cases**, all green.
+
 ### v4.0.7 · 2026-08-15
 
 #### Fixed
