@@ -19,7 +19,8 @@
  *     number + Image decode (naturalWidth > 0). Bad data never cached.
  *   - Cache: per-host key `vbmFavicon:<host>` = data URL + one index key
  *     `vbmFaviconIdx` = { v, down, hosts: { host: {t,s}|{f,t} } }.
- *     Double-axis LRU budget (500 entries / 2MB) with batch eviction;
+ *     Dynamic byte budget = (quota − other features' bytes) × 0.8 (floored,
+ *     capped at the real free space), halving eviction when exceeded;
  *     >96KB icons session-only; quota-error emergency eviction.
  *   - Queue: ≤6 concurrent, per-host dedup, AbortController cancel on
  *     setEnabled(false). Renders block only on the in-memory Map read.
@@ -38,10 +39,10 @@ export const FAVICON_IDX_KEY = 'vbmFaviconIdx';
 export const SUCCESS_TTL_MS = 30 * 24 * 60 * 60 * 1000;   // 30d
 export const FAILED_TTL_MS = 24 * 60 * 60 * 1000;         // 24h
 export const BREAKER_TTL_MS = 6 * 60 * 60 * 1000;         // 6h
-export const MAX_ENTRIES = 500;
-export const EVICT_TO_ENTRIES = 400;
-export const MAX_BYTES = 2 * 1024 * 1024;                 // 2MB
-export const EVICT_TO_BYTES = 1.6 * 1024 * 1024;          // 1.6MB
+export const STORAGE_QUOTA_BYTES = 10 * 1024 * 1024;      // chrome.storage.local default quota
+export const BUDGET_FACTOR = 0.8;                          // ceiling = free × factor
+export const MIN_BUDGET = 512 * 1024;                      // ceiling floor (512KB)
+export const BUDGET_REFRESH_MS = 60 * 1000;                // recompute ceiling at most /min
 export const MAX_ICON_BYTES = 96 * 1024;                  // >96KB → session only
 export const MAX_FETCH_BYTES = 200 * 1024;                // fetch cap
 export const CONCURRENCY = 6;
@@ -280,10 +281,13 @@ export function initFaviconEnrich(ctx = {}) {
         return now() - e.t >= ttlMs;
     };
 
-    const totalBytes = () => {
+    // Bytes actually persisted (data URLs of persisted entries; session-only
+    // icons are excluded — they cost nothing in storage). This is what the
+    // byte ceiling governs.
+    const persistedBytes = () => {
         let sum = 0;
         for (const e of cache.values())
-            if (e.d)
+            if (e.d && e.persist !== false)
                 sum += e.d.length;
         return sum;
     };
@@ -324,6 +328,7 @@ export function initFaviconEnrich(ctx = {}) {
             return;
         }
         cache.set(host, { d: dataUrl, t: now() });
+        maybeRefreshBudget();
         evictIfOverBudget();
         const setObj = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl };
         idxData.hosts[host] = { t: now(), s: bytes };
@@ -343,40 +348,77 @@ export function initFaviconEnrich(ctx = {}) {
         persistIdxDebounced();
     };
 
-    // --- LRU / budget eviction ----------------------------------------------
-    const evictIfOverBudget = () => {
-        let entries = [...cache.entries()].filter(([, e]) => e.d && e.persist !== false);
-        let bytes = totalBytes();
-        const byOldest = () => entries.sort((a, b) => a[1].t - b[1].t);
-        while ((entries.length > MAX_ENTRIES || bytes > MAX_BYTES) && entries.length > 0) {
-            const evicted = entries.length > MAX_ENTRIES || bytes > MAX_BYTES;
-            if (!evicted)
-                break;
-            byOldest();
-            const [host, e] = entries.shift();
-            cache.delete(host);
-            bytes -= e.d.length;
-            delete idxData.hosts[host];
-            if (chromeImpl && chromeImpl.storage && chromeImpl.storage.local)
-                chromeImpl.storage.local.remove(`${FAVICON_DATA_PREFIX}${host}`);
+    // --- Byte budget + halving eviction --------------------------------------
+    // Dynamic ceiling: how much room the cache may occupy =
+    // (quota − bytes used by OTHER features) × BUDGET_FACTOR, floored at
+    // MIN_BUDGET and capped at the actual free space. Recomputing needs an
+    // async getBytesInUse round-trip, so it runs on a 60s cadence; between
+    // refreshes the cached value drives the (sync) eviction check.
+    let budgetBytes = 0;
+    let budgetRefreshedAt = 0;
+
+    const refreshBudget = async () => {
+        const local = chromeImpl && chromeImpl.storage && chromeImpl.storage.local;
+        let quota = STORAGE_QUOTA_BYTES;
+        if (local && Number.isFinite(local.QUOTA_BYTES))
+            quota = local.QUOTA_BYTES;
+        let used = null;
+        if (local && typeof local.getBytesInUse === 'function') {
+            try {
+                used = await local.getBytesInUse(null);
+            } catch (_) { used = null; }
         }
+        if (typeof used === 'number' && Number.isFinite(used)) {
+            // "Other features' bytes" = everything in storage except this
+            // cache's own persisted data → the ceiling adapts to what the
+            // rest of the extension actually uses.
+            const other = Math.max(0, used - persistedBytes());
+            const avail = Math.max(0, quota - other);
+            budgetBytes = Math.min(avail, Math.max(MIN_BUDGET, avail * BUDGET_FACTOR));
+        } else {
+            budgetBytes = Math.max(MIN_BUDGET, quota * BUDGET_FACTOR);
+        }
+        budgetRefreshedAt = now();
+    };
+
+    // Refresh the ceiling when it goes stale; the post-refresh re-check catches
+    // the case where a fresh, lower ceiling is already below the cache size.
+    const maybeRefreshBudget = () => {
+        if (now() - budgetRefreshedAt >= BUDGET_REFRESH_MS)
+            refreshBudget().then(() => {
+                if (budgetBytes > 0 && persistedBytes() > budgetBytes)
+                    evictToHalve();
+            });
+    };
+
+    // The halving strategy: cut the oldest half of persisted entries. Reused
+    // both by the budget ceiling and by the quota-error emergency path.
+    const evictToHalve = () => {
+        const entries = [...cache.entries()]
+            .filter(([, e]) => e.d && e.persist !== false)
+            .sort((a, b) => a[1].t - b[1].t);
+        const half = Math.ceil(entries.length / 2);
+        for (let i = 0; i < half && i < entries.length; i++) {
+            const [host] = entries[i];
+            cache.delete(host);
+            delete idxData.hosts[host];
+            try {
+                if (chromeImpl && chromeImpl.storage && chromeImpl.storage.local)
+                    chromeImpl.storage.local.remove(`${FAVICON_DATA_PREFIX}${host}`);
+            } catch (_) { /* best effort */ }
+        }
+        persistIdxDebounced();
+    };
+
+    const evictIfOverBudget = () => {
+        if (budgetBytes > 0 && persistedBytes() > budgetBytes)
+            evictToHalve();
     };
 
     const emergencyEvict = (host, dataUrl) => {
         // Quota error on write: cut the oldest half, retry once; if the retry
         // also fails (other data squeezed the budget), degrade to session-only.
-        const entries = [...cache.entries()].filter(([, e]) => e.d && e.persist !== false)
-            .sort((a, b) => a[1].t - b[1].t);
-        const half = Math.ceil(entries.length / 2);
-        for (let i = 0; i < half && i < entries.length; i++) {
-            const [h] = entries[i];
-            cache.delete(h);
-            delete idxData.hosts[h];
-            try {
-                if (chromeImpl && chromeImpl.storage && chromeImpl.storage.local)
-                    chromeImpl.storage.local.remove(`${FAVICON_DATA_PREFIX}${h}`);
-            } catch (_) { /* best effort */ }
-        }
+        evictToHalve();
         idxData.hosts[host] = { t: now(), s: dataUrl.length };
         const retry = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl, [FAVICON_IDX_KEY]: JSON.stringify(idxData) };
         const rp = chromeImpl.storage.local.set(retry);
@@ -446,6 +488,9 @@ export function initFaviconEnrich(ctx = {}) {
         }
         hydrated = true;
         persistIdxDebounced();
+        // Seed the byte ceiling from the current storage state so the first
+        // eviction check uses a real number (not the 0 default).
+        await refreshBudget();
     };
 
     // --- fetchWithTimeout ------------------------------------------------------
@@ -851,6 +896,8 @@ export function initFaviconEnrich(ctx = {}) {
                 cache.clear();
                 idxData = emptyIdx();
                 hydrated = true;
+                // Storage just got lighter — recompute the ceiling on next write.
+                budgetRefreshedAt = 0;
             }
         });
     }
@@ -867,6 +914,7 @@ export function initFaviconEnrich(ctx = {}) {
         // Test/audit surface.
         getCache: () => cache,
         getIdx: () => idxData,
+        getBudgetBytes: () => budgetBytes,
         _hydrateDone: hydrateDone,
         _hydrated: () => hydrated
     };

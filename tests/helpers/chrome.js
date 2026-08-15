@@ -7,9 +7,13 @@
 // or the whole area, callback-style like the real API (plus promise style).
 export const makeStorageArea = (data = {}) => {
     const calls = { set: [], remove: [] };
+    // Serialized-bytes approximation for getBytesInUse: the JSON string length
+    // of the requested subset, mirroring how the real API measures storage.
+    const bytesOf = obj => JSON.stringify(obj).length;
     return {
         data,
         calls,
+        QUOTA_BYTES: 10 * 1024 * 1024,   // chrome.storage.local default
         get: (keys, cb) => {
             let out;
             if (keys === null || keys === undefined)
@@ -39,7 +43,21 @@ export const makeStorageArea = (data = {}) => {
             if (cb) { cb(); return undefined; }
             return Promise.resolve();
         },
-        clear: async () => { for (const k in data) delete data[k]; }
+        clear: async () => { for (const k in data) delete data[k]; },
+        getBytesInUse: (keys, cb) => {
+            let out = 0;
+            if (keys === null || keys === undefined)
+                out = bytesOf(data);
+            else if (typeof keys === 'string')
+                out = keys in data ? bytesOf({ [keys]: data[keys] }) : 0;
+            else if (Array.isArray(keys)) {
+                for (const k of keys) if (k in data) out += bytesOf({ [k]: data[k] });
+            } else {
+                for (const k of Object.keys(keys)) if (k in data) out += bytesOf({ [k]: data[k] });
+            }
+            if (cb) { cb(out); return undefined; }
+            return Promise.resolve(out);
+        }
     };
 };
 

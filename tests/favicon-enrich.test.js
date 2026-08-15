@@ -9,7 +9,9 @@ import {
     FAVICON_DATA_PREFIX,
     FAVICON_IDX_KEY,
     CONCURRENCY,
-    MAX_ENTRIES,
+    STORAGE_QUOTA_BYTES,
+    BUDGET_FACTOR,
+    MIN_BUDGET,
     BREAKER_TTL_MS,
     AGG_PROVIDERS,
     providerUrl,
@@ -864,13 +866,21 @@ describe('initFaviconEnrich — queue + eviction', () => {
         expect(favCalls.length).toBe(1);
     });
 
-    it('evicts by byte budget (2MB → 1.6MB)', async () => {
-        // Seed entries summing just over 2MB; add one → eviction to ≤1.6MB.
+    it('evicts the OLDEST HALF when persisted bytes exceed the dynamic budget', async () => {
+        // 45 × 20KB data keys ≈ 900KB. With QUOTA_BYTES=1MB the ceiling is
+        // free×0.8 = 800KB; adding a 46th entry pushes persisted bytes past it
+        // → the halving strategy cuts the oldest half.
         const bigData = 'x'.repeat(20 * 1024);   // 20KB each
         const hosts = {};
-        for (let i = 0; i < 110; i++)  // 110 × 20KB = 2.2MB
-            hosts[`big${i}.example`] = { t: 1700000000000 + i * 1000, s: bigData.length };
-        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: idxV3(hosts) });
+        const seedData = {};
+        for (let i = 0; i < 45; i++) {
+            const h = `big${i}.example`;
+            hosts[h] = { t: 1700000000000 + i * 1000, s: bigData.length };
+            seedData[`${FAVICON_DATA_PREFIX}${h}`] = bigData;
+        }
+        seedData[FAVICON_IDX_KEY] = idxV3(hosts);
+        const storage = makeStorageArea(seedData);
+        storage.QUOTA_BYTES = 1024 * 1024;   // 1MB → ceiling ≈ 800KB
         const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
@@ -880,19 +890,24 @@ describe('initFaviconEnrich — queue + eviction', () => {
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
-            now: () => 1700000000000 + 200 * 1000
+            now: () => 1700000000000 + 200 * 1000   // after every seeded timestamp
         });
         await en._hydrateDone;
+        // Ceiling = (1MB − ~900KB cache) free ×0.8 ≈ 800KB — never 0 or the default.
+        expect(en.getBudgetBytes()).toBeGreaterThan(512 * 1024);
+        expect(en.getBudgetBytes()).toBeLessThanOrEqual(1024 * 1024);
         en.onPlaceholder(makePlaceholderImg('https://new2.example/'));
         await tick();
         await tick();
+        en.flushIndex();
         const cache = en.getCache();
-        let bytes = 0;
-        for (const e of cache.values())
-            if (e.d) bytes += e.d.length;
-        expect(bytes).toBeLessThanOrEqual(1.6 * 1024 * 1024);
-        expect(cache.has('big0.example')).toBe(false);   // oldest evicted first
+        // 45 seeded + 1 new = 46 persisted → halving evicts the oldest 23.
+        expect(cache.size).toBeLessThanOrEqual(24);
+        // The oldest seeded hosts were evicted; the new entry survives.
+        expect(cache.has('big0.example')).toBe(false);
         expect(cache.has('new2.example')).toBe(true);
+        // The evicted hosts' data keys were removed from storage too.
+        expect(storage.data[`${FAVICON_DATA_PREFIX}big0.example`]).toBeUndefined();
     });
 
     it('an oversized icon (>96KB) stays session-only (no data key persisted)', async () => {
@@ -920,33 +935,62 @@ describe('initFaviconEnrich — queue + eviction', () => {
         expect(storage.data[`${FAVICON_DATA_PREFIX}big.example`]).toBeUndefined();
     });
 
-    it('evicts the oldest entry over the 500-entry budget', async () => {
-        // Seed 500 cached entries + one new host → eviction to 400.
-        const hosts = {};
-        for (let i = 0; i < MAX_ENTRIES; i++)
-            hosts[`h${i}.example`] = { t: 1700000000000 + i * 1000, s: 100 };
-        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: idxV3(hosts) });
-        const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
+    it('ceiling = (quota − other features) × BUDGET_FACTOR', async () => {
+        // 4MB of unrelated data → other=4MB → ceiling ≈ (10MB − 4MB) × 0.8 ≈ 4.8MB.
+        const storage = makeStorageArea({ otherData: 'y'.repeat(4 * 1024 * 1024) });
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
             fallbackEnabled: () => false,
-            fetchImpl,
+            fetchImpl: makeFetch([]),
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
-            now: () => 1700000000000 + MAX_ENTRIES * 1000 + 5000
+            now: nextNow
         });
         await en._hydrateDone;
-        en.onPlaceholder(makePlaceholderImg('https://new.example/'));
-        await tick();
-        await tick();
-        const cache = en.getCache();
-        // 500 seeded + 1 new → evict to 400.
-        expect(cache.size).toBeLessThanOrEqual(400);
-        // The oldest seeded hosts were evicted first.
-        expect(cache.has('h0.example')).toBe(false);
-        expect(cache.has('new.example')).toBe(true);
+        const budget = en.getBudgetBytes();
+        expect(budget).toBeGreaterThan(4.5 * 1024 * 1024);
+        expect(budget).toBeLessThan(5 * 1024 * 1024);
+        expect(budget).toBeCloseTo((STORAGE_QUOTA_BYTES - 4 * 1024 * 1024) * BUDGET_FACTOR, -4);
+    });
+
+    it('nearly-full storage caps the ceiling at the real free space (not the floor)', async () => {
+        // 9.8MB used → only ~0.2MB free → the ceiling must NOT fall to the
+        // 512KB floor (that would exceed the actual free space); the cap wins.
+        const storage = makeStorageArea({ otherData: 'y'.repeat(9.8 * 1024 * 1024) });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        const budget = en.getBudgetBytes();
+        expect(budget).toBeLessThan(MIN_BUDGET);             // floor overridden
+        expect(budget).toBeGreaterThan(100 * 1024);          // ≈ the remaining free space
+        expect(budget).toBeLessThan(0.25 * 1024 * 1024);
+    });
+
+    it('ceiling falls back to quota×BUDGET_FACTOR when getBytesInUse is unavailable', async () => {
+        const storage = makeStorageArea({ otherData: 'y'.repeat(1024) });
+        delete storage.getBytesInUse;   // older/partial chrome double
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        expect(en.getBudgetBytes()).toBeCloseTo(STORAGE_QUOTA_BYTES * BUDGET_FACTOR, -4);
     });
 });
 
