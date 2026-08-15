@@ -598,4 +598,101 @@ describe('initFaviconFallback', () => {
             if (saved) globalThis.MutationObserver = saved;
         }
     });
+
+    // --- 4.0.5 favicon enrichment hook (§4.1) --------------------------------
+    it('onPlaceholder returning true suppresses the default swap', async () => {
+        let called = 0;
+        const api = initFaviconFallback(globalThis.document, {
+            onPlaceholder: img => { called++; return true; }   // "I handled it"
+        });
+        const parent = { replaced: null, replaceChild() { this.replaced = true; } };
+        const img = makeImage(PLACEHOLDER_BYTES);
+        img.src = 'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fhook-true.example&size=32';
+        img.parentNode = parent;
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(called).toBe(1);
+        expect(parent.replaced).toBeNull();   // no default swap
+        expect(api.verdicts.get(img.src)).toBe(true);  // still marked placeholder
+    });
+
+    it('onPlaceholder returning false falls through to the default swap', async () => {
+        let called = 0;
+        const api = initFaviconFallback(globalThis.document, {
+            onPlaceholder: () => { called++; return false; }   // "enqueue, fall back"
+        });
+        const parent = { replaced: null, replaceChild(svg) { this.replaced = svg; } };
+        const img = makeImage(PLACEHOLDER_BYTES);
+        img.src = 'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fhook-false.example&size=32';
+        img.parentNode = parent;
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(called).toBe(1);
+        expect(parent.replaced).toBeTruthy();  // default SVG swapped in
+    });
+
+    it('onPlaceholder is also consulted on the cached-placeholder re-render path', async () => {
+        const api = initFaviconFallback(globalThis.document, {
+            onPlaceholder: () => true
+        });
+        // First paint: mark as placeholder, hook suppresses swap.
+        const parent = { replaced: null, replaceChild() { this.replaced = true; } };
+        const img = makeImage(PLACEHOLDER_BYTES);
+        img.src = 'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fhook-re.example&size=32';
+        img.parentNode = parent;
+        loadHandler({ target: img });
+        await flush(); await flush();
+        expect(parent.replaced).toBeNull();
+        // Re-render: verdicts already true → the cached branch must consult the
+        // hook again (a re-render after the enricher cached an icon).
+        let hookCalls = 0;
+        api.reapplyContrast = () => {};
+        // Patch the hook reference? It's closure-captured at init — instead
+        // verify the cached branch calls onPlaceholder by re-dispatching and
+        // checking the swap is still suppressed (same hook → returns true).
+        const img2 = makeImage(PLACEHOLDER_BYTES);
+        img2.src = img.src;
+        img2.parentNode = { replaced: false, replaceChild() { this.replaced = true; } };
+        loadHandler({ target: img2 });
+        await flush();
+        expect(img2.parentNode.replaced).toBe(false);   // hook still suppresses
+        void hookCalls;
+    });
+
+    it('exposes sampleIcon (the internal fingerprint) on the API', () => {
+        const api = initFaviconFallback(globalThis.document);
+        expect(typeof api.sampleIcon).toBe('function');
+        const img = makeImage(PLACEHOLDER_BYTES);
+        const fp = api.sampleIcon(img);
+        expect(fp).toBeTruthy();
+        expect(typeof fp.hash).toBe('number');
+        expect(fp.cover).toBeGreaterThan(0);
+    });
+
+    it('reapplyContrast covers enriched imgs (img.favicon-enriched)', async () => {
+        // The extended selector must reach injected icons on theme switches.
+        const called = [];
+        const api = initFaviconFallback(globalThis.document, {
+            contrastEnabled: () => true,
+            themeIsDark: () => false
+        });
+        const enriched = makeClassImg(WHITE_ICON(),
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fenr.example&size=32');
+        enriched.classList.add('favicon-enriched');
+        // Override the querySelectorAll to capture what reapplyContrast selects.
+        const origQSA = globalThis.document.querySelectorAll;
+        globalThis.document.querySelectorAll = sel => {
+            called.push(sel);
+            return sel === 'img[src*="/_favicon/"], img.favicon-enriched' ? [enriched] : [];
+        };
+        try {
+            api.reapplyContrast();
+        } finally {
+            globalThis.document.querySelectorAll = origQSA;
+        }
+        expect(called).toContain('img[src*="/_favicon/"], img.favicon-enriched');
+        // A themed enriched icon (white on light) would get the invert class —
+        // but without cached stats it's a no-op; the selector reach is the point.
+        expect(enriched.classList.set.has('favicon-contrast-invert')).toBe(false);
+    });
 });

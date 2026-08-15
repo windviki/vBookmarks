@@ -127,6 +127,10 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     // page that doesn't opt in).
     const themeIsDark = ctx.themeIsDark || (() => false);
     const contrastEnabled = ctx.contrastEnabled || (() => false);
+    // 4.0.5 favicon enrichment hook: when a placeholder is identified, ask the
+    // enricher first — it may inject a real icon (returns true) or enqueue the
+    // host for async fetching (returns false → fall through to the default SVG).
+    const onPlaceholder = typeof ctx.onPlaceholder === 'function' ? ctx.onPlaceholder : null;
 
     const fingerprint = img => {
         const w = img.naturalWidth | 0, h = img.naturalHeight | 0;
@@ -209,7 +213,11 @@ export function initFaviconFallback(doc = document, ctx = {}) {
             return;
         }
         if (cached === true) {
-            swapForDefaultIcon(img);
+            // The enricher may have a cached real icon for this host (it
+            // hot-swaps immediately and returns true); otherwise fall back to
+            // the default SVG as before.
+            if (!onPlaceholder || !onPlaceholder(img))
+                swapForDefaultIcon(img);
             return;
         }
         calibrate.then(() => {
@@ -222,7 +230,8 @@ export function initFaviconFallback(doc = document, ctx = {}) {
                 && fp.hash === placeholder.hash;
             verdicts.set(src, isPlaceholder);
             if (isPlaceholder) {
-                swapForDefaultIcon(img);
+                if (!onPlaceholder || !onPlaceholder(img))
+                    swapForDefaultIcon(img);
             } else {
                 // Real favicon: cache its stats and decide contrast once.
                 statsBySrc.set(src, fp || { dark: 0, light: 0, colored: 0, cover: 0 });
@@ -243,7 +252,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     const reapplyContrast = () => {
         if (typeof doc.querySelectorAll !== 'function')
             return;
-        doc.querySelectorAll('img[src*="/_favicon/"]').forEach(applyContrast);
+        doc.querySelectorAll('img[src*="/_favicon/"], img.favicon-enriched').forEach(applyContrast);
     };
     // The body[data-theme] mutation covers explicit palette switches. The
     // guard installs the observer only when MutationObserver exists AND a
@@ -279,5 +288,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
         media.addEventListener('change', themeMedia);
     }
 
-    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast, themeObserver, schemeMedia, themeMedia };
+    return { verdicts, handle, statsBySrc, applyContrast, reapplyContrast,
+        sampleIcon: fingerprint,   // img → {w,h,hash,dark,light,colored,cover} | null
+        themeObserver, schemeMedia, themeMedia };
 }
