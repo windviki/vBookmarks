@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "चिह्नित"
+  },
   "deadMarkSelected": {
     "message": "चयनित को चिह्नित करें"
   },

@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Отмечено"
+  },
   "deadMarkSelected": {
     "message": "Отметить выбранные"
   },

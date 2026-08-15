@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "نشان‌شده"
+  },
   "deadMarkSelected": {
     "message": "علامت‌گذاری انتخاب‌شده"
   },

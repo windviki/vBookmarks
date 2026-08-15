@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "표시됨"
+  },
   "deadMarkSelected": {
     "message": "선택 항목 표시"
   },

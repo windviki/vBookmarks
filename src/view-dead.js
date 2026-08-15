@@ -395,8 +395,9 @@ export function initViewDead(ctx = {}) {
                 // dead-filter and the old dead-summary merge: each segment
                 // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0"),
                 // so the two situations read at a glance instead of as a
-                // separate summary line. Order: scan-time → rescan → filter →
-                // mark-all → unmark-all → delete-all → select-mode.
+                // separate summary line. Order: unmark-all (whenever marks
+                // exist) → scan-time → rescan → filter → mark-all →
+                // delete-all → select-mode.
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
                 html += '<span class="dead-filter" role="group">';
                 // v4 task-4 #1: pressed state = aria-pressed only (the
@@ -478,14 +479,17 @@ export function initViewDead(ctx = {}) {
     // Rows of the user's manual marks, joined against the tree — shown when
     // no scan result list is on screen (a cancelled scan, or one that found
     // nothing), or for the marks the current result list does NOT cover (a
-    // marked id the last scan never probed). Marks are persistent intent, so
-    // they must stay reachable and individually clearable even without a
-    // scan to host them: each row carries the same mark-toggle (unmarks just
-    // that one) and delete as the scan rows, and the toolbar's Clear-all
-    // handles the batch.
+    // marked id the last scan never probed, or one the active filter segment
+    // hides). Marks are persistent intent, so they must stay reachable and
+    // individually clearable even without a scan to host them: each row
+    // carries the same mark-toggle (unmarks just that one) and delete as the
+    // scan rows, and the toolbar's Clear-all handles the batch. While
+    // selecting, the row buttons are inert (the row-click branch swallows
+    // them and these supplementary rows aren't selectable members), so they
+    // are not rendered at all — no dead controls on screen.
     const renderMarkedRows = (ids = deadMarks) => {
         let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${ids.size}`)}</div>`;
-        html += '<ul role="list">';
+        html += '<ul role="list" class="dead-marked-list">';
         for (const id of ids) {
             const item = treeItems.get(id);
             if (!item)
@@ -497,12 +501,13 @@ export function initViewDead(ctx = {}) {
                     path,
                     rightText: path,
                     subText: path,
-                    badge: { text: _m('deadMarked'), cls: 'dead' }
+                    badge: { text: _m('deadMarkedRow'), cls: 'dead' }
                 }) +
-                `<button class="row-btn dead-mark-btn marked" ` +
-                `aria-label="${_m('deadUnmark')}" title="${_m('deadUnmark')}">${FLAG_ICON}</button>` +
-                `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
+                (selecting ? '' :
+                    `<button class="row-btn dead-mark-btn marked" ` +
+                    `aria-label="${_m('deadUnmark')}" title="${_m('deadUnmark')}">${FLAG_ICON}</button>` +
+                    `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
+                    `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>`) +
                 '</li>';
         }
         return html + '</ul>';
@@ -540,12 +545,13 @@ export function initViewDead(ctx = {}) {
                 `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
         } else {
             const rows = resultRows();
-            // Marks the current result list does not cover: a marked id that
+            // Marks the SHOWN result rows do not cover: a marked id that
             // the last scan never probed (a manual mark that predates the
-            // run, or one added after it) has no row on screen to unmark on
-            // — surface just those as their own list, so a cached scan never
-            // strands a mark either. Marks that ARE in the result rows carry
-            // the toggle there, so they are not repeated here.
+            // run, or one added after it), or one the active filter segment
+            // hides, has no row on screen to unmark on — surface just those
+            // as their own list, so neither a cached scan nor a filter ever
+            // strands a mark. Marks that ARE in the shown rows carry the
+            // toggle there, so they are not repeated here.
             const rowIds = new Set(rows.map(r => r.item.id));
             const uncovered = new Set([...deadMarks].filter(id => !rowIds.has(id)));
             if (uncovered.size)

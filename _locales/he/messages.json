@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "מסומן"
+  },
   "deadMarkSelected": {
     "message": "סמן נבחרים"
   },

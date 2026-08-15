@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Đã đánh dấu"
+  },
   "deadMarkSelected": {
     "message": "Đánh dấu mục đã chọn"
   },

@@ -421,9 +421,13 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(html).toContain('deadMarkedCount[2]');
         expect(html).toContain('id="dead-item-12"');
         expect(html).toContain('id="dead-item-13"');
-        expect(html).toContain('deadMarked'); // the per-row badge
+        // the per-row badge (the treeRender double renders no pill into html)
+        expect(ctx.treeRender.calls.find(c => c.id === '12').meta.badge)
+            .toEqual({ text: 'deadMarkedRow', cls: 'dead' });
         // each row carries the marked-state toggle (unmark just that one)
         expect(html).toContain('class="row-btn dead-mark-btn marked"');
+        // the toolbar's batch clear-all is NOT gated on a result list
+        expect(html).toContain('dead-unmark-all');
         // …and the executable start row still offers the way back into a scan
         expect(html).toContain('class="empty-state dead-start"');
         // toggling one row's mark unmarks ONLY that id
@@ -505,6 +509,32 @@ describe('empty state + cached results (§5.5a)', () => {
                 : null)
         });
         expect(JSON.parse(store.get('deadMarks', '[]')).sort()).toEqual(['11', '12']);
+    });
+
+    it('selection mode renders the uncovered-marks list without inert row buttons', () => {
+        // While selecting, the row-click branch swallows every click on the
+        // supplementary marked rows (they are not selectable members), so the
+        // mark/delete buttons would be visible-but-dead controls — they must
+        // not render at all in this mode.
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 1,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({
+            storeData: { deadLastScan: cache, deadMarks: '["11","12","13"]' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        const marked = $list.innerHTML.match(/<ul role="list" class="dead-marked-list">[\s\S]*?<\/ul>/);
+        expect(marked).not.toBeNull(); // the marks stay listed in this mode
+        expect(marked[0]).toContain('id="dead-item-11"');
+        expect(marked[0]).toContain('id="dead-item-13"');
+        expect(marked[0]).not.toContain('row-btn'); // no dead controls
+        // …and out of selection mode the toggles come back
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-exit' ? {} : null) });
+        const restored = $list.innerHTML.match(/<ul role="list" class="dead-marked-list">[\s\S]*?<\/ul>/);
+        expect(restored[0]).toContain('row-btn dead-mark-btn marked');
     });
 
     it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {

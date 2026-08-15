@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Merkitty"
+  },
   "deadMarkSelected": {
     "message": "Merkitse valitut"
   },

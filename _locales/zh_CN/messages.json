@@ -992,6 +992,10 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "已标记",
+    "description": "死链视图：独立标记列表中用户标记书签的行内徽标（无扫描结果行承载该标记时显示）。"
+  },
   "deadMarkSelected": {
     "message": "标记所选",
     "description": "Dead view selection mode: mark every selected row as dead."

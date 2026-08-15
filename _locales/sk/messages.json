@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Označené"
+  },
   "deadMarkSelected": {
     "message": "Označiť vybrané"
   },

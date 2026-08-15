@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "চিহ্নিত"
+  },
   "deadMarkSelected": {
     "message": "নির্বাচিত চিহ্নিত করুন"
   },

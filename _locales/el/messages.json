@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Σημειωμένο"
+  },
   "deadMarkSelected": {
     "message": "Σήμανση επιλεγμένων"
   },

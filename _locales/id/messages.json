@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Ditandai"
+  },
   "deadMarkSelected": {
     "message": "Tandai yang dipilih"
   },

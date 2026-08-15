@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Маркирани"
+  },
   "deadMarkSelected": {
     "message": "Маркиране на избраните"
   },

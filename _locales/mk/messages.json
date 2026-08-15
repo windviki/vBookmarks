@@ -245,6 +245,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Означено"
+  },
   "deadMarkSelected": {
     "message": "Означи ги избраните"
   },

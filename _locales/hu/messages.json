@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Megjelölve"
+  },
   "deadMarkSelected": {
     "message": "Kijelöltek megjelölése"
   },

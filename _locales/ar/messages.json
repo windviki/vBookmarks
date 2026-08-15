@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "مُعلَّم"
+  },
   "deadMarkSelected": {
     "message": "وضع علامة على المحدد"
   },

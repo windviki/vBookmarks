@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Marqué"
+  },
   "deadMarkSelected": {
     "message": "Marquer la sélection"
   },

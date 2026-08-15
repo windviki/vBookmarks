@@ -246,6 +246,9 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "已標記"
+  },
   "deadMarkSelected": {
     "message": "標記選取項目"
   },

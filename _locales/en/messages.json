@@ -1065,6 +1065,10 @@
       }
     }
   },
+  "deadMarkedRow": {
+    "message": "Marked",
+    "description": "Dead view: per-row badge on a user-marked bookmark in the standalone marked-rows list (shown when no scan result row hosts the mark)."
+  },
   "deadMarkSelected": {
     "message": "Mark selected",
     "description": "Dead view selection mode: mark every selected row as dead."
