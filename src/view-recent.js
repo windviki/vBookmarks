@@ -1,11 +1,11 @@
 /**
- * Recent bookmarks view (v4 task-2, slice B — docs/v4task-2.md §5.3).
+ * Recent bookmarks view (v4 task-2, slice B — docs/plan-4.0.0/v4task-2.md §5.3).
  *
  * The virtual "recently added" section that used to be pinned on top of the
  * tree (tree-view.js, pre-slice-B) becomes its own tab. Data comes from
  * chrome.bookmarks.getRecent(N) with N setting-driven (`recentCount`,
  * default 20); rows reuse tree-render's generateBookmarkHTML with the recent
- * meta slots (docs/v4task-2-list.md §3.3): the narrow right slot shows the
+ * meta slots (docs/plan-4.0.0/v4task-2-list.md §3.3): the narrow right slot shows the
  * relative time, the wide second line `路径 · 绝对时间`; the unified
  * 标题+URL+路径 tooltip comes free via meta.path. Rows keep the old
  * semantics: data-virtual="1" (drag-and-drop rejects them), real bookmark
@@ -177,7 +177,7 @@ export function initViewRecent(ctx = {}) {
         });
     };
 
-    // docs/v4task-2-list.md §3.3 bucket → label: imported from tree-render.js
+    // docs/plan-4.0.0/v4task-2-list.md §3.3 bucket → label: imported from tree-render.js
     // (shared with search.js's history timestamps and view-stats).
 
     // --- Coarse time sections (第四轮项8) -----------------------------------
@@ -313,7 +313,7 @@ export function initViewRecent(ctx = {}) {
     });
     $list.addEventListener('auxclick', treeView.bookmarkHandler);
 
-    // R — reveal the focused row in the tree (docs/v4task-2-list.md §2.3).
+    // R — reveal the focused row in the tree (docs/plan-4.0.0/v4task-2-list.md §2.3).
     // Consumed by keyboard.js before the type-ahead gate; recent registers
     // typeAhead:false, so letters never reach the keyBuffer here.
     const onKey = e => {

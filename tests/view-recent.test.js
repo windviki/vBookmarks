@@ -225,7 +225,7 @@ describe('view registration (§5.3)', () => {
     });
 });
 
-describe('render (docs/v4task-2-list.md §3.3)', () => {
+describe('render (docs/plan-4.0.0/v4task-2-list.md §3.3)', () => {
     it('renders getRecent rows with the unified row ids, skipping separators and url-less items', () => {
         const { $list, treeRender, separatorManager, chrome, def } = setup({
             recentItems: ITEMS,

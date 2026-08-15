@@ -6,7 +6,7 @@ import { initViewManager } from '../src/view-manager.js';
 // elements record listeners/children and implement the handful of selectors
 // the module queries ('.tab-indicator', '.tab-badge', '.focus',
 // 'li a, li span'). Assertions target the ViewDef contract of
-// docs/v4task-2.md §3 — tab strip ARIA + roving tabindex, activation
+// docs/plan-4.0.0/v4task-2.md §3 — tab strip ARIA + roving tabindex, activation
 // lifecycle (hooks, scroll persistence, focus restore), the Escape levels,
 // the tab-strip keyboard model and the Ctrl/Cmd+number jump.
 

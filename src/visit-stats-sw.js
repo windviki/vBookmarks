@@ -1,5 +1,5 @@
 /**
- * Visit-stats service-worker collector (v4 task-2, slice E — docs/v4task-2.md
+ * Visit-stats service-worker collector (v4 task-2, slice E — docs/plan-4.0.0/v4task-2.md
  * §5.4 采集点二).
  *
  * The page-side hook (tree-view's onOpenBookmark → visit-stats.js) only sees

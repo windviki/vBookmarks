@@ -290,7 +290,7 @@ describe('generateBookmarkHTML', () => {
             .not.toContain('row-path');
     });
 
-    // v4 task-2 slice B (docs/v4task-2-list.md §3.3): meta.rightText/subText
+    // v4 task-2 slice B (docs/plan-4.0.0/v4task-2-list.md §3.3): meta.rightText/subText
     // override the two label slots wholesale (recent view's custom meta).
     it('meta.rightText/subText override the path labels and are escaped', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
@@ -322,7 +322,7 @@ describe('generateBookmarkHTML', () => {
         expect(html).not.toContain('row-path');
     });
 
-    // v4 task-2 slice C (docs/v4task-2-list.md §3.5): meta.badge renders a
+    // v4 task-2 slice C (docs/plan-4.0.0/v4task-2-list.md §3.5): meta.badge renders a
     // status pill (dead/blocked) between the main slot and the right slot.
     it('meta.badge renders the pill between row-main and row-path', () => {
         const tr = setup({ store: makeStore({ showItemPath: '1' }) });
@@ -434,7 +434,7 @@ describe('relativeTimeBucket (v4 task-2 slice B)', () => {
     const MIN = 60000, HOUR = 60 * MIN, DAY = 24 * HOUR;
     const bucket = ageMs => relativeTimeBucket(NOW - ageMs, NOW);
 
-    it('buckets the boundary ages per docs/v4task-2-list.md §3.3', () => {
+    it('buckets the boundary ages per docs/plan-4.0.0/v4task-2-list.md §3.3', () => {
         expect(bucket(0)).toEqual({ key: 'timeJustNow' });
         expect(bucket(MIN - 1)).toEqual({ key: 'timeJustNow' });
         expect(bucket(MIN)).toEqual({ key: 'timeMinutesAgo', n: 1 });

@@ -77,7 +77,7 @@ const SEED = `
     // --- 1. search dual zone -------------------------------------------------
     // Drive the real UI: two queries recorded via the leave-view timing, then
     // re-enter — the guide's "box kept as-is + history top zone + results
-    // bottom zone retained" state (docs/v4task-2.md appendix B item 5). The
+    // bottom zone retained" state (docs/plan-4.0.0/v4task-2.md appendix B item 5). The
     // empty-box variant is NOT reachable here: every clear path except the
     // capture-phase Esc (which CDP cannot dispatch — docs/cdp-escape-limitation.md)
     // quits back to the tree.

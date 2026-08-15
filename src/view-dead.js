@@ -1,6 +1,6 @@
 /**
- * Dead-link scan view (v4 task-2, slice C — docs/v4task-2.md §5.5, row spec
- * docs/v4task-2-list.md §3.5).
+ * Dead-link scan view (v4 task-2, slice C — docs/plan-4.0.0/v4task-2.md §5.5, row spec
+ * docs/plan-4.0.0/v4task-2-list.md §3.5).
  *
  * Migrates the palette's old mode='dead' panel into its own tab and extends
  * it with the v3 additions: a persisted last-scan cache, the dual-channel
@@ -453,7 +453,7 @@ export function initViewDead(ctx = {}) {
                     // Intentional exception: the path labels are NOT gated
                     // by showItemPath here (the dupes/recent rows are) —
                     // locating a dead bookmark needs its containing folder
-                    // to be visible (docs/v4task-2-list.md §3.5 row spec:
+                    // to be visible (docs/plan-4.0.0/v4task-2-list.md §3.5 row spec:
                     // "[icon][title ……] [×dead | ⇄直连×] [path]").
                     rightText: path,
                     subText: path,
@@ -1262,7 +1262,7 @@ export function initViewDead(ctx = {}) {
     // view-local filter-seg walker would double-step.)
 
     // M — toggle the focused row's dead mark; R — reveal it in the tree
-    // (docs/v4task-2-list.md §3.5). Consumed by keyboard.js before the
+    // (docs/plan-4.0.0/v4task-2-list.md §3.5). Consumed by keyboard.js before the
     // type-ahead gate; dead registers typeAhead:false.
     const onKey = e => {
         const k = e.key;

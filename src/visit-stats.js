@@ -1,5 +1,5 @@
 /**
- * Visit statistics store (v4 task-2, slice D — docs/v4task-2.md §5.4).
+ * Visit statistics store (v4 task-2, slice D — docs/plan-4.0.0/v4task-2.md §5.4).
  *
  * The extension's own lightweight visit counter — chrome.history stays an
  * OPTIONAL permission (the install warning is a trust disaster, §5.4);

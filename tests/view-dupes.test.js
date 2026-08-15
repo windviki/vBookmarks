@@ -73,7 +73,7 @@ const tick = ms => {
 
 const flush = () => new Promise(resolve => realSetTimeout(resolve, 0));
 
-// Dupe landscape (docs/v4task-2.md §5.6): a.com has three copies — the
+// Dupe landscape (docs/plan-4.0.0/v4task-2.md §5.6): a.com has three copies — the
 // oldest in the bar root, one in a bar subfolder, the newest in Other;
 // c.com exists as an http and an https copy (ignoreScheme terrain); b.com
 // is unique. getTree hands out `treeData` by reference so tests can mutate
@@ -282,7 +282,7 @@ describe('view registration (§5.6)', () => {
     });
 });
 
-describe('render (docs/v4task-2-list.md §3.6)', () => {
+describe('render (docs/plan-4.0.0/v4task-2-list.md §3.6)', () => {
     it('calls onRowsRendered after every render with the rows in the DOM (item: dead-mark overlays)', () => {
         const seen = [];
         const { def, $list } = setup({

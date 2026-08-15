@@ -386,7 +386,7 @@ export function initTreeView(ctx = {}) {
         chrome.bookmarks.getTree(generateTreeForTarget);
     };
 
-    // v4 task-2 (docs/v4task-2-list.md §2.3): "Reveal in tree" from any list
+    // v4 task-2 (docs/plan-4.0.0/v4task-2-list.md §2.3): "Reveal in tree" from any list
     // view (recent/search R key + context-menu item) — activate the tree
     // view, then run the same reveal chain (works for bookmark ids too: the
     // row is focused via focusID, its ancestors opened).

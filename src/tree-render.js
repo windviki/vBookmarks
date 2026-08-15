@@ -43,7 +43,7 @@ const httpsPattern = /^https?:\/\//i;
 // Measured in the real popup by scripts/console/probe-alignment.js.
 export const TREE_INDENT = 24;
 
-// v4 task-2 (docs/v4task-2.md §3.6): build the id → containing-folder path
+// v4 task-2 (docs/plan-4.0.0/v4task-2.md §3.6): build the id → containing-folder path
 // map every list view shares for its row path labels. For each node the map
 // holds the titles of its ancestor folders (top-down, untitled folders
 // skipped) joined by ' / ' — for a bookmark that reads as "where it lives",
@@ -72,7 +72,7 @@ export const buildPathMap = tree => {
     return paths;
 };
 
-// v4 task-2 (docs/v4task-2-list.md §3.3): relative-time buckets for the
+// v4 task-2 (docs/plan-4.0.0/v4task-2-list.md §3.3): relative-time buckets for the
 // recent view's right slot and the search-history rows — 刚刚 / N 分钟 /
 // N 小时 / 昨天 / N 天, past 7 days the caller shows the absolute date
 // (key === null). Pure: ts/now in ms, out a {key, n} bucket, so vitest
@@ -177,10 +177,10 @@ export function initTreeRender(ctx = {}) {
         // a second muted line `.row-sub` at ≥480px / in panel mode (CSS
         // container query picks the form). Views with a custom meta slot
         // (recent: relative time on the right, `path · absolute time` as the
-        // second line — docs/v4task-2-list.md §3.3) override the two label
+        // second line — docs/plan-4.0.0/v4task-2-list.md §3.3) override the two label
         // slots wholesale via meta.rightText / meta.subText; both slots are
         // escaped here, so callers compose them from raw text. A view badge
-        // (dead/blocked status pill, docs/v4task-2-list.md §3.5) comes via
+        // (dead/blocked status pill, docs/plan-4.0.0/v4task-2-list.md §3.5) comes via
         // meta.badge = { text, cls } and sits left of the right slot; slice D
         // adds meta.badge.aria for pills whose bare text isn't self-explanatory
         // (the stats ×N count pill gets "Visited N times").

@@ -1,6 +1,6 @@
 /**
  * Visit-statistics + recent-history view (v4 task-2, slice D —
- * docs/v4task-2.md §5.4, docs/v4task-2-list.md §3.4; upgraded by 第四轮项9
+ * docs/plan-4.0.0/v4task-2.md §5.4, docs/plan-4.0.0/v4task-2-list.md §3.4; upgraded by 第四轮项9
  * into a "history + statistics" hybrid meant to replace Chrome's native
  * history page).
  *
@@ -120,7 +120,7 @@ export function initViewStats(ctx = {}) {
     const enabled = () => visitStats.enabled();
     const sort = () => store.get('statsSort', 'count') === 'recent' ? 'recent' : 'count';
 
-    // Bucket → label recipe imported from tree-render.js (docs/v4task-2-list.md §3.3).
+    // Bucket → label recipe imported from tree-render.js (docs/plan-4.0.0/v4task-2-list.md §3.3).
 
     // History normalizes bare hosts to a trailing slash while bookmarks keep
     // whatever was saved; matching on the slash-folded key pairs those up

@@ -59,7 +59,7 @@
 - **§8 引用了不存在的测试文件——低**。行 287 "`tests/search-history.test.js`" —— tests/ 下无此文件(搜索历史用例在 tests/search.test.js)。
 - 微:§8 可为 `tests/focus-regression.test.js`(241c860,跨视图焦点移交必过 gate)补一行挂载点(§2.1/§5 焦点记忆相关行)。
 
-## 5. docs/issues-46-48-feedback.md
+## 5. docs/issues/issues-46-48-feedback.md
 
 - **修复状态全部一致**:#46 ✅(94604e2)、#47 ✅(94604e2)、#48 ⚠️ 待报告者补充(其后无任何修复提交,仍为开放态)、#49 ✅(dcc1f9e,含选项页开关+经典预设+2 个 i18n 键)。无需改状态。
 - 微:行 1 标题"# Issues #46 / #47 / #48 反馈"与行 3"三个 issue"未跟随 86757ae 补入的 #49 章节与版本决定——内容对、名不副实。

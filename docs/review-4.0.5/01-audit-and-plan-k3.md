@@ -98,6 +98,6 @@
 
 ## 六、附带产物
 
-- `docs/v4.1.0task-1-k3.md`——基于 v4.1.0task-1.md 基准的 v4.1.0 独立设计方案（K1–K10 全部决策定案，「Calm Instrument」视觉体系，切片 S1–S16）。
+- `docs/plan-4.1.0/v4.1.0task-1-k3.md`——基于 v4.1.0task-1.md 基准的 v4.1.0 独立设计方案（K1–K10 全部决策定案，「Calm Instrument」视觉体系，切片 S1–S16）。
 - README 双语 v4.0.5 changelog（含修正 4.0.2/4.0.3 顺序颠倒）——已同步。
 - `tmp/favicon-lab/`——favicon 实验脚手架（gitignored，可随时删）。

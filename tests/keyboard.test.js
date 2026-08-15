@@ -516,7 +516,7 @@ describe('module API', () => {
     });
 });
 
-// v4 task-3 #7 (docs/v4task-2-list.md §2.1): Tab / Shift+Tab cycles the three
+// v4 task-3 #7 (docs/plan-4.0.0/v4task-2-list.md §2.1): Tab / Shift+Tab cycles the three
 // regions — header controls → tab strip (one stop) → the active view's list
 // (its `.focus` row, else first row). Rows are tabindex="-1"; the cycle is
 // the only Tab path. Dialogs, open menus and the palette keep local Tab.

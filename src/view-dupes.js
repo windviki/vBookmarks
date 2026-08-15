@@ -1,6 +1,6 @@
 /**
- * Duplicate-bookmark cleanup view (v4 task-2, slice C — docs/v4task-2.md
- * §5.6, row spec docs/v4task-2-list.md §3.6).
+ * Duplicate-bookmark cleanup view (v4 task-2, slice C — docs/plan-4.0.0/v4task-2.md
+ * §5.6, row spec docs/plan-4.0.0/v4task-2-list.md §3.6).
  *
  * Migrates the palette's old mode='dupes' panel into its own tab. Groups
  * come from dupes.js's findDupes over the flattened tree (normalized-URL
@@ -871,7 +871,7 @@ export function initViewDupes(ctx = {}) {
     }, true);
 
     // K — pin the focused member as its group's keeper; R — reveal it in the
-    // tree (docs/v4task-2-list.md §3.6). Consumed by keyboard.js before the
+    // tree (docs/plan-4.0.0/v4task-2-list.md §3.6). Consumed by keyboard.js before the
     // type-ahead gate; dupes registers typeAhead:false.
     const onKey = e => {
         const k = e.key;

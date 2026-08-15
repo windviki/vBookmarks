@@ -98,7 +98,7 @@ export const CHEVRON_ICON =
     '<polyline points="6.25 4.25 10 8 6.25 11.75"/>' +
     '</svg>';
 
-// v4 task-2: one 16px line icon per view tab (docs/v4task-2.md §3.2). Same
+// v4 task-2: one 16px line icon per view tab (docs/plan-4.0.0/v4task-2.md §3.2). Same
 // grid/stroke recipe as the tile icons above; colored by the tab's CSS
 // `color` (muted normally, accent when selected). The search glyph matches
 // the header search box on purpose — same search, two entry points.

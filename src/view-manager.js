@@ -8,7 +8,7 @@
  * its section, shows and activates the new one (activate hook + scroll/focus
  * restore), and persists `activeView`.
  *
- * ViewDef (docs/v4task-2.md §3.1):
+ * ViewDef (docs/plan-4.0.0/v4task-2.md §3.1):
  *   id          — 'tree' | 'search' | 'recent' | 'stats' | 'dead' | 'dupes'
  *   titleKey    — i18n key for the tab label / aria-label
  *   icon        — inline SVG (src/icons.js VIEW_ICONS)
@@ -28,7 +28,7 @@
  *   onEscape()    — optional view-local Escape consumer; return true when
  *                   the key was consumed (dead scan abort, …)
  *   onKey(e)      — optional view-local letter-key consumer (M/R/K,
- *                   docs/v4task-2-list.md §2.3); keyboard.js consults it in
+ *                   docs/plan-4.0.0/v4task-2-list.md §2.3); keyboard.js consults it in
  *                   the treeKeyDown default branch, before the type-ahead
  *                   gate. Return true when the key was consumed.
  *   focus()       — optional default focus target (search focuses the input)
@@ -89,7 +89,7 @@ export function initViewManager(ctx = {}) {
     // --- Tab strip -----------------------------------------------------------
     // showViewTabs (default on): hiding the strip is the quiet-mode escape
     // hatch — views stay reachable through palette slash commands and
-    // Ctrl/Cmd+number (docs/v4task-2.md §3.2 v3).
+    // Ctrl/Cmd+number (docs/plan-4.0.0/v4task-2.md §3.2 v3).
     const tabsVisible = () => !!store.get('showViewTabs', '1');
     body.classList.toggle('no-view-tabs', !tabsVisible());
 
@@ -818,7 +818,7 @@ export function initViewManager(ctx = {}) {
         return true;
     };
 
-    // --- Escape levels (docs/v4task-2.md §3.4) --------------------------------
+    // --- Escape levels (docs/plan-4.0.0/v4task-2.md §3.4) --------------------------------
     // keyboard.js's document Escape chain calls, in order:
     //   dialogs → context menu → palette → onEscapeActive (view hook, e.g.
     //   dead scan abort) → search query clear → escapeToTree → window.close.
@@ -836,7 +836,7 @@ export function initViewManager(ctx = {}) {
     // --- Keyboard registration ------------------------------------------------
     // List views the keyboard layer binds its navigation handlers to; each
     // entry carries its type-ahead capability (tree/search only per spec) and
-    // the view-local key consumer (M/R/K — docs/v4task-2-list.md §2.3),
+    // the view-local key consumer (M/R/K — docs/plan-4.0.0/v4task-2-list.md §2.3),
     // which keyboard.js consults before the type-ahead branch.
     const lists = () => visibleViews()
         .filter(v => v.listEl)
@@ -891,7 +891,7 @@ export function initViewManager(ctx = {}) {
         }
     });
 
-    // Ctrl/Cmd+1…9 jumps straight to a view (docs/v4task-2.md §3.4), with
+    // Ctrl/Cmd+1…9 jumps straight to a view (docs/plan-4.0.0/v4task-2.md §3.4), with
     // Alt+1…9 as the portable twin (v4 task-4 #10): Edge reserves Ctrl+1…8
     // for browser-tab switching so the page never sees the keystroke there
     // (Chrome lets it through inside the popup/side panel). Alt+digit is
@@ -930,7 +930,7 @@ export function initViewManager(ctx = {}) {
         activate(def.id);
     }, true);
 
-    // --- Shared parent-path map (docs/v4task-2.md §3.6) -------------------------
+    // --- Shared parent-path map (docs/plan-4.0.0/v4task-2.md §3.6) -------------------------
     // Rebuilt from every tree regeneration (neat.js hooks it into tree-view's
     // generateTree); list rows read it synchronously through pathOf.
     const buildPathMap = tree => {

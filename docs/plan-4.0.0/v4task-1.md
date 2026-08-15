@@ -125,8 +125,8 @@ AI 自动打标（优先 Chrome 内置 Prompt API，默认关闭）、封面缩�
 v4.0 全部落成，本任务包与任务包 2 合并收尾：
 
 - **任务包 1（P1–P4 地基）**：状态见 §3，收官前无新增变更。
-- **任务包 2（视图系统）**：切片 A–E + 七轮修订全部完成，逐轮细节在 `docs/v4task-2.md`（附录 B–G）；附录 G 即 view-system 分支合并评估的吸收记录。
-- **view-system 分支合并评估**（2026-07-28/29）：对他人实现的同名分支（与 master 同源 `5edc546`）逐项对比——master 全面领先，吸收 8 小项 + 2 项自查修复（共享 relTimeLabel、dupes 中段截断、搜索历史区限高、行 hover 底色、package.py 漏登记 panel-behavior.js 等），对方 10 个实锤 bug 存档不吸收。完整回执表见 `docs/view-system-合并评估报告.md`。
+- **任务包 2（视图系统）**：切片 A–E + 七轮修订全部完成，逐轮细节在 `docs/plan-4.0.0/v4task-2.md`（附录 B–G）；附录 G 即 view-system 分支合并评估的吸收记录。
+- **view-system 分支合并评估**（2026-07-28/29）：对他人实现的同名分支（与 master 同源 `5edc546`）逐项对比——master 全面领先，吸收 8 小项 + 2 项自查修复（共享 relTimeLabel、dupes 中段截断、搜索历史区限高、行 hover 底色、package.py 漏登记 panel-behavior.js 等），对方 10 个实锤 bug 存档不吸收。完整回执表见 `docs/review-4.0.0/view-system-合并评估报告.md`。
 
 **最终验收状态**：
 

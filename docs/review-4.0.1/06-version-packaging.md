@@ -7,7 +7,7 @@
 **1. version.js 语义** — 与 changelog 声明一致:
 - 4.0→4.0.1:`sameOrNewerMinor({4,0,0},{4,0,1})` = true → `newOrUpgrade=false` → 不弹卡 ✓(`tests/version.test.js:74` 锁定)
 - 3.x→4.0.1:`crossedInto(3.x, 4.0.1, V4)` = true → `#v4-notice` 钉上卡片 ✓(`src/neat.js:208`)
-- 4.0→4.1:patch 静默、minor 晋升弹"新版本"卡(无 v4 notice)——与 docs/issues-46-48-feedback.md:151 声明一致
+- 4.0→4.1:patch 静默、minor 晋升弹"新版本"卡(无 v4 notice)——与 docs/issues/issues-46-48-feedback.md:151 声明一致
 - 边界:空存储走 `neat.js:200` fresh 分支只记录不比较;garbage → `parseVersion` 返 null → 跳过比较;`"4.0.1.99"` 第 4 段丢弃(有测试)。旧比较点迁移干净——全 src grep 无残留手写扩展版本比较(`neat.js:58` 是 Chrome 浏览器 UA 版本,`options.js:242` 仅备份元数据,均正确不迁移)。
 
 **2. risk-banner MAJOR 门** — "4.0 已 dismiss → 4.0.1 不重弹 ✓、5.0 重弹 ✓" 成立;但 **4.1 不重弹**(见问题 1)。

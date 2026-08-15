@@ -51,7 +51,7 @@
 | C2 | `docs/README.md` + `.zh.md` | 缺 4.0.5 changelog;"379 as of 4.0.1"→387;"50+ suites"→65;palette 失焦自动关闭措辞(现为 Tab 两停,仅点击外部关闭) |
 | C3 | `docs/guide-v4.md` + `.zh.md` | palette 章节补 mark 高亮 + Tab 两停;搜索章节补高亮;失焦关闭措辞同 C2 |
 | C4 | `docs/keyboard-model.md` | §5 Tab 环补 palette 两停循环;实现映射表补 palette.js 行 |
-| C5 | `docs/v4.1.0task-1.md` + `-ds.md` | 基线 commit 标注过期;§一.3/§一.4/§一.11 与 ds A3/A13 的「已落地」版本号 4.0.4→4.0.5(9866ab9/1b01345/1f06606 均在未发布区间);§一.6 现状结论仍成立仅行号漂移 |
+| C5 | `docs/plan-4.1.0/v4.1.0task-1.md` + `-ds.md` | 基线 commit 标注过期;§一.3/§一.4/§一.11 与 ds A3/A13 的「已落地」版本号 4.0.4→4.0.5(9866ab9/1b01345/1f06606 均在未发布区间);§一.6 现状结论仍成立仅行号漂移 |
 | C6 | `scripts/package.py` | JS 种子清单缺 escape/list-focus/fuzzy-core(import 图可达,无打包风险,但违背 "keep in sync" 指引) |
 
 ### D. 核实后接受(记录决策,不改)
@@ -130,4 +130,4 @@
 - [x] P4-13 B8 死规则
 - [x] P5-14..19 文档同步(README 双语 changelog、AGENTS、guide-v4 双语、keyboard-model、v4.1.0 task/ds 基线、package.py 种子清单)
 - [x] 验证全绿(test:run 66 套件/2003 用例全过;lint 0 error;i18n audit/verify 通过,0 新 key;Docker 冒烟因环境不可用未跑,CI push 门禁含同一冒烟)
-  - 注：本报告为 glm53 独立审计视角。合流 master（k3）后终态为 66 套件 / 2047 用例 / 388 i18n 键全绿，lint 0 error；本报告的 P1–P4 修复与 k3 的批次 A–D 互补合流，见 `docs/v4.1.0task-1-final.md` 与 `tmp/4.0.5-两分支审计对比与合并方案.md`。
+  - 注：本报告为 glm53 独立审计视角。合流 master（k3）后终态为 66 套件 / 2047 用例 / 388 i18n 键全绿，lint 0 error；本报告的 P1–P4 修复与 k3 的批次 A–D 互补合流，见 `docs/plan-4.1.0/v4.1.0task-1-final.md` 与 `tmp/4.0.5-两分支审计对比与合并方案.md`。

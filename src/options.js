@@ -77,7 +77,7 @@ const $ = id => document.getElementById(id);
             { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
         ];
 
-        // v4 task-2: the "Views" group (docs/v4task-2.md §7). Tab strip,
+        // v4 task-2: the "Views" group (docs/plan-4.0.0/v4task-2.md §7). Tab strip,
         // list-row path labels, the recent tab and search history — all on
         // by default. (showRecentBookmarks moved here from General when the
         // in-tree recent section became a view; recentBookmarksCollapsed is

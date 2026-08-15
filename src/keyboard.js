@@ -14,7 +14,7 @@
  * LTR ← and Escape cancel through menus.closeMenu(); RTL flips the
  * arrows), the document-
  * level Escape (close dialogs, quit search) / Ctrl+F (focus search) handler
- * and the Tab region cycle (docs/v4task-2-list.md §2.1: header controls →
+ * and the Tab region cycle (docs/plan-4.0.0/v4task-2-list.md §2.1: header controls →
  * tab strip → active list's remembered row, Shift+Tab backwards; rows are
  * tabindex="-1" so the cycle is the only Tab path into a list).
  *
@@ -510,9 +510,9 @@ export function initKeyboard(ctx = {}) {
             default: {
                 if (keyValue.length > 1)
                     return;
-                // View-local letter keys (M/R/K — docs/v4task-2-list.md
+                // View-local letter keys (M/R/K — docs/plan-4.0.0/v4task-2-list.md
                 // §2.3) are consumed before the type-ahead gate; type-ahead
-                // itself lives on tree/search only (docs/v4task-2.md §3.4):
+                // itself lives on tree/search only (docs/plan-4.0.0/v4task-2.md §3.4):
                 // other list views consume letter keys through onKey.
                 const listView = views.listOf(this);
                 if (listView && listView.onKey && listView.onKey(e))
@@ -975,7 +975,7 @@ export function initKeyboard(ctx = {}) {
         }
         // v4 task-2 §3.4 Esc layering: the active view's own consumer first
         // (e.g. aborting a dead-link scan), then the search query clear
-        // (two-level in the search view, docs/v4task-2-list.md §2.3), then
+        // (two-level in the search view, docs/plan-4.0.0/v4task-2-list.md §2.3), then
         // the browser-style "back to tree", then window.close.
         if (views.onEscapeActive()) {
             return;
@@ -1024,7 +1024,7 @@ export function initKeyboard(ctx = {}) {
         }
     });
 
-    // --- Tab region cycle (docs/v4task-2-list.md §2.1) -------------------------
+    // --- Tab region cycle (docs/plan-4.0.0/v4task-2-list.md §2.1) -------------------------
     // Three regions in a ring: the header controls (search box → quick-add →
     // tool button), the tab strip (one stop — roving tabindex inside), and
     // the active view's list (its remembered `.focus` row, else first row).

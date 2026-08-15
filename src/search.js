@@ -9,13 +9,13 @@
  * API returned at the bottom.
  *
  * v4 task-2: the old #tree/#results display swap is retired — search mode
- * is mapped onto the view layer (docs/v4task-2.md §4): typing in the header
+ * is mapped onto the view layer (docs/plan-4.0.0/v4task-2.md §4): typing in the header
  * box activates the search view (the source view is remembered for the quit
  * path), `views.pathOf` feeds the §3.6 parent-path row labels and the
  * unified 标题+URL+路径 tooltips (the async per-row parent-folder tooltip
  * fetch is retired — the path map covers it in one tree walk).
  *
- * Slice B (docs/v4task-2.md §4.3 + docs/v4task-2-list.md §3.2):
+ * Slice B (docs/plan-4.0.0/v4task-2.md §4.3 + docs/plan-4.0.0/v4task-2-list.md §3.2):
  * - `searchHistory` — MRU of {q, ts, n}, limit 10, trim-deduped (the pure
  *   pushSearchHistory below is vitest-covered). Recorded on Enter in
  *   searchAfterEnter mode, on result open (reset), on view leave / popup
@@ -44,7 +44,7 @@
  * ctx.views                    — view-manager API (activate/attach/pathOf/isActive)
  * ctx.revealInTree(id)         — treeView.revealInTree via a lazy closure
  *                                (tree-view inits after search; called only
- *                                on the R keypress, docs/v4task-2-list.md §2.3)
+ *                                on the R keypress, docs/plan-4.0.0/v4task-2-list.md §2.3)
  *
  * window.VBMFuzzy is exposed by fuzzy.js — an ES-module shim over
  * fuzzy-core.js, loaded with <script type="module"> before neat.js.
@@ -386,7 +386,7 @@ export function initSearch(ctx = {}) {
         });
     }
 
-    // Two-level Esc (docs/v4task-2-list.md §2.3/§3.2): the first Esc records
+    // Two-level Esc (docs/plan-4.0.0/v4task-2-list.md §2.3/§3.2): the first Esc records
     // the query into the history, clears the box and keeps the results in
     // place — the search view stays put for the next search. With an empty
     // box it declines, letting the view layer walk back to the tree.

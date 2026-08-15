@@ -134,7 +134,7 @@
 - guide-v4.md/zh:§3.4 代理模板→代理服务器改写(含 options 入口、× 关闭/恢复);§7 隐私段同改;§2.1 下拉协议补全(Enter/Space 开、Tab 应用);§2.4 Esc 链加下拉层;§5 经典预设补页面右键项;§3.1 ×→垃圾桶图标;§3.4 过滤带计数;头部 "Applies to 4.0"→4.0.x
 - AGENTS.md:版本 4.0.1;布局表补 dropdown/options-proxy/tab-groups-sw/tab-group-utils/version.js 五行 + focus-regression 测试;options 11 组(排序组、死链组代理现状、Views 组 quickAddContextMenu、经典预设 4+1);view-dead/dead-links/actions 行订正;数字 371/49/1563;harness 段 11 组+shots-tabgroups+dropdown;background 行 proxy 表述;CI 存在;打包递归解析
 - keyboard-model.md:§4 Esc 蛋糕加下拉层;§6 Alt+1…9 表述更新(9888f8a);§2.6 菜单绑定现状;§8 测试文件引用订正 + focus-regression 挂载
-- issues-46-48-feedback.md:标题含 #49
+- issues/issues-46-48-feedback.md:标题含 #49
 - docs/review-4.0.1/:补 README 索引(本目录说明)
 - 代码注释漂移:dead-links.js:104、verify-keyboard.js:242(随 W1 各批顺手)
 
