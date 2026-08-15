@@ -152,12 +152,16 @@ export function initKeyboard(ctx = {}) {
                             // a toolbar dropdown's hidden listbox (a marker
                             // restored from storage or left behind before the
                             // focusin guard) would target a hidden option and
-                            // silently dead-end the crossing.
+                            // silently dead-end the crossing. The fallback
+                            // also matches a focusable row CONTAINER
+                            // (li[tabindex]) so the dead view's executable
+                            // dead-start row stays reachable from the rung.
                             const focused = this.querySelector('.focus');
                             const target = (focused
                                     && !(focused.closest && focused.closest('.vbm-dropdown-list')))
                                 ? focused
-                                : this.querySelector('li a, li span');
+                                : (this.querySelector('li a, li span') ||
+                                   this.querySelector('li a, li span, li[tabindex]'));
                             if (target)
                                 target.focus();
                         } else {
