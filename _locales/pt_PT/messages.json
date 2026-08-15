@@ -263,6 +263,27 @@
   "deadMarkSelected": {
     "message": "Marcar selecionados"
   },
+  "deadMarkStatusAll": {
+    "message": "Todos"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marcados"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Não marcados"
+  },
+  "deadSortLabel": {
+    "message": "Ordenar por"
+  },
+  "deadSortByDetected": {
+    "message": "Data de deteção"
+  },
+  "deadSortByPath": {
+    "message": "Caminho da pasta"
+  },
+  "deadSortByMarked": {
+    "message": "Data de marcação"
+  },
   "deadMarkedBanner": {
     "message": "A apresentar marcadores marcados anteriormente. Clique em Repetir verificação para iniciar uma nova verificação, ou trate-os na lista abaixo."
   },

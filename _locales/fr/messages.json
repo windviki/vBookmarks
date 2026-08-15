@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Marquer la sélection"
   },
+  "deadMarkStatusAll": {
+    "message": "Tous"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marqués"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Non marqués"
+  },
+  "deadSortLabel": {
+    "message": "Trier par"
+  },
+  "deadSortByDetected": {
+    "message": "Date de détection"
+  },
+  "deadSortByPath": {
+    "message": "Chemin du dossier"
+  },
+  "deadSortByMarked": {
+    "message": "Date de marquage"
+  },
   "deadMarkedBanner": {
     "message": "Affichage des signets déjà marqués. Cliquez sur Relancer l'analyse pour démarrer une nouvelle vérification, ou traitez-les dans la liste ci-dessous."
   },

@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Merk valgte"
   },
+  "deadMarkStatusAll": {
+    "message": "Alle"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Merket"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Umerket"
+  },
+  "deadSortLabel": {
+    "message": "Sorter etter"
+  },
+  "deadSortByDetected": {
+    "message": "Deteksjonstid"
+  },
+  "deadSortByPath": {
+    "message": "Mappesti"
+  },
+  "deadSortByMarked": {
+    "message": "Merketid"
+  },
   "deadMarkedBanner": {
     "message": "Viser bokmerker som er merket tidligere. Klikk på Skann på nytt for å starte en ny kontroll, eller håndter dem i listen nedenfor."
   },

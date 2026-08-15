@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "ทำเครื่องหมายรายการที่เลือก"
   },
+  "deadMarkStatusAll": {
+    "message": "ทั้งหมด"
+  },
+  "deadMarkStatusMarked": {
+    "message": "ถูกทำเครื่องหมาย"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "ไม่ถูกทำเครื่องหมาย"
+  },
+  "deadSortLabel": {
+    "message": "จัดเรียงตาม"
+  },
+  "deadSortByDetected": {
+    "message": "เวลาตรวจพบ"
+  },
+  "deadSortByPath": {
+    "message": "เส้นทางโฟลเดอร์"
+  },
+  "deadSortByMarked": {
+    "message": "เวลาทำเครื่องหมาย"
+  },
   "deadMarkedBanner": {
     "message": "กำลังแสดงบุ๊กมาร์กที่เคยทำเครื่องหมายไว้ คลิกสแกนใหม่เพื่อเริ่มการตรวจสอบใหม่ หรือจัดการรายการด้านล่าง"
   },

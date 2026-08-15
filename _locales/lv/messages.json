@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Atzīmēt atlasītos"
   },
+  "deadMarkStatusAll": {
+    "message": "Visi"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Atzīmēti"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Neatzīmēti"
+  },
+  "deadSortLabel": {
+    "message": "Kārtot pēc"
+  },
+  "deadSortByDetected": {
+    "message": "Noteikšanas laiks"
+  },
+  "deadSortByPath": {
+    "message": "Mapes ceļš"
+  },
+  "deadSortByMarked": {
+    "message": "Atzīmēšanas laiks"
+  },
   "deadMarkedBanner": {
     "message": "Tiek rādītas iepriekš atzīmētās grāmatzīmes. Noklikšķiniet uz Pārskenēt, lai sāktu jaunu pārbaudi, vai apstrādājiet tās zemāk esošajā sarakstā."
   },

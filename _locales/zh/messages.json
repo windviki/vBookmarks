@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "标记所选"
   },
+  "deadMarkStatusAll": {
+    "message": "全部"
+  },
+  "deadMarkStatusMarked": {
+    "message": "已标记"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "未标记"
+  },
+  "deadSortLabel": {
+    "message": "排序方式"
+  },
+  "deadSortByDetected": {
+    "message": "检测时间"
+  },
+  "deadSortByPath": {
+    "message": "文件夹路径"
+  },
+  "deadSortByMarked": {
+    "message": "标记时间"
+  },
   "deadMarkedBanner": {
     "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。"
   },

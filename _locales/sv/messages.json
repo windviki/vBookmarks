@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Markera valda"
   },
+  "deadMarkStatusAll": {
+    "message": "Alla"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Markerade"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Omarkerade"
+  },
+  "deadSortLabel": {
+    "message": "Sortera efter"
+  },
+  "deadSortByDetected": {
+    "message": "Identifieringstid"
+  },
+  "deadSortByPath": {
+    "message": "Mappssökväg"
+  },
+  "deadSortByMarked": {
+    "message": "Markeringstid"
+  },
   "deadMarkedBanner": {
     "message": "Visar bokmärken som markerats tidigare. Klicka på Rescan för att starta en ny kontroll, eller hantera dem i listan nedan."
   },

@@ -263,6 +263,27 @@
   "deadMarkSelected": {
     "message": "Marcar selecionados"
   },
+  "deadMarkStatusAll": {
+    "message": "Todos"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marcados"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Não marcados"
+  },
+  "deadSortLabel": {
+    "message": "Ordenar por"
+  },
+  "deadSortByDetected": {
+    "message": "Horário da detecção"
+  },
+  "deadSortByPath": {
+    "message": "Caminho da pasta"
+  },
+  "deadSortByMarked": {
+    "message": "Horário da marcação"
+  },
   "deadMarkedBanner": {
     "message": "Exibindo favoritos marcados anteriormente. Clique em Reverificar para iniciar uma nova verificação ou gerencie-os na lista abaixo."
   },

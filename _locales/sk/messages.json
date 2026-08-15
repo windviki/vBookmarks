@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Označiť vybrané"
   },
+  "deadMarkStatusAll": {
+    "message": "Všetky"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Označené"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Neoznačené"
+  },
+  "deadSortLabel": {
+    "message": "Zoradiť podľa"
+  },
+  "deadSortByDetected": {
+    "message": "Čas detekcie"
+  },
+  "deadSortByPath": {
+    "message": "Cesta priečinka"
+  },
+  "deadSortByMarked": {
+    "message": "Čas označenia"
+  },
   "deadMarkedBanner": {
     "message": "Zobrazujú sa záložky označené predtým. Kliknutím na Znova skenovať spustíte novú kontrolu, alebo ich spracujte v zozname nižšie."
   },

@@ -263,6 +263,27 @@
   "deadMarkSelected": {
     "message": "Означи ги избраните"
   },
+  "deadMarkStatusAll": {
+    "message": "Сите"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Обележани"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Необележани"
+  },
+  "deadSortLabel": {
+    "message": "Сортирај по"
+  },
+  "deadSortByDetected": {
+    "message": "Време на откривање"
+  },
+  "deadSortByPath": {
+    "message": "Патека на папка"
+  },
+  "deadSortByMarked": {
+    "message": "Време на обележување"
+  },
   "deadMarkedBanner": {
     "message": "Прикажани се претходно означени обележувачи. Кликнете на Rescan за да започнете нова проверка, или обработете ги во списокот подолу."
   },

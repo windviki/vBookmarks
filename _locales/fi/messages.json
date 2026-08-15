@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Merkitse valitut"
   },
+  "deadMarkStatusAll": {
+    "message": "Kaikki"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Merkitty"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Merkitsemätön"
+  },
+  "deadSortLabel": {
+    "message": "Lajitteluperuste"
+  },
+  "deadSortByDetected": {
+    "message": "Havaitsemisaika"
+  },
+  "deadSortByPath": {
+    "message": "Kansiopolku"
+  },
+  "deadSortByMarked": {
+    "message": "Merkintäaika"
+  },
   "deadMarkedBanner": {
     "message": "Näytetään aiemmin merkityt kirjanmerkit. Aloita uusi tarkistus napsauttamalla Skannaa uudelleen tai käsittele ne alla olevassa luettelossa."
   },

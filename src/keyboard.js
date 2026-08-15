@@ -76,6 +76,33 @@ export function initKeyboard(ctx = {}) {
     // neatools' String.prototype.escapeRegExp, kept as a pure function
     const escapeRegExp = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+    // Cross-sibling-<ul> row walk (dead view): the scan result list and the
+    // residue marked list are sibling <ul>s with a `.dead-marked-head` div
+    // between them. The in-<ul> sibling walk and the tree up-walk both fail
+    // to cross two sibling lists — walk the current row's <ul> along its
+    // element siblings (skipping non-<ul> separators and any dropdown
+    // listbox), landing on the neighbouring list's first/last row. Returns a
+    // focusable row, or null for the tree up-walk / focusListExit to take
+    // over (single-top-level-<ul> views always get null → unchanged).
+    const crossRowUl = (li, dir) => {
+        const ul = li.parentNode;
+        if (!ul || ul.tagName !== 'UL' || ul.classList.contains('vbm-dropdown-list'))
+            return null;
+        for (let n = ul; (n = dir > 0 ? n.nextElementSibling : n.previousElementSibling);) {
+            if (n.tagName !== 'UL' || n.classList.contains('vbm-dropdown-list'))
+                continue; // 跳过 .dead-marked-head 等分隔 div 与下拉 listbox
+            const row = n.querySelector(dir > 0 ? 'li:first-child' : 'li:last-child');
+            if (!row)
+                continue;
+            // 与 Home/End 的 li[tabindex] 聚焦规则一致 (4.0.1 P4)。
+            const focus = row.getAttribute && row.getAttribute('tabindex') !== null
+                ? row : row.querySelector('span, a');
+            if (focus)
+                return focus;
+        }
+        return null;
+    };
+
     // Keyboard navigation
     let keyBuffer = '';
     let keyBufferTimer = null;
@@ -216,12 +243,21 @@ export function initKeyboard(ctx = {}) {
                     const target = sib && sib.querySelector ? sib.querySelector('a, span') : null;
                     if (target) {
                         target.focus();
-                    } else if (keyValue === 'ArrowUp') {
-                        // Owning row was the top row: the §2.1/§2.5 crossing.
-                        if (views.focusListExit)
-                            views.focusListExit();
-                        else
-                            views.focusTop();
+                    } else {
+                        // 行内控件跨列表：死链视图末行结果行的 ⚑/× 按钮 ↓ → 残留
+                        // 首行，残留首行按钮 ↑ → 结果末行。同 <ul> 无后续行（或
+                        // 兄弟是 .dead-marked-head 分隔 div）时先试兄弟 <ul> 跨越；
+                        // 落空再由 ↑ 的 §2.1/§2.5 顶部跨越接管。
+                        const crossed = crossRowUl(ownLi, keyValue === 'ArrowDown' ? 1 : -1);
+                        if (crossed) {
+                            crossed.focus();
+                        } else if (keyValue === 'ArrowUp') {
+                            // Owning row was the top row: the §2.1/§2.5 crossing.
+                            if (views.focusListExit)
+                                views.focusListExit();
+                            else
+                                views.focusTop();
+                        }
                     }
                     return;
                 }
@@ -266,17 +302,26 @@ export function initKeyboard(ctx = {}) {
                             nextLiSpan.focus();
                         }
                     } else if (!search.isActive()) {
-                        nextLi = null;
-                        do {
-                            if (li)
-                                li = li.parentNode.parentNode;
-                            if (li)
-                                nextLi = li.nextElementSibling;
-                            if (nextLi)
-                                nextLiSpan = nextLi.querySelector('a, span');
-                            if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
-                                nextLiSpan.focus();
-                        } while (li && !nextLi);
+                        // 兄弟 <ul> 跨越优先（死链视图双列表）；落空再走原
+                        // tree up-walk（树文件夹 / 单列表视图行为不变）。
+                        const crossed = crossRowUl(li, 1);
+                        if (crossed) {
+                            crossed.focus();
+                        } else {
+                            nextLi = null;
+                            do {
+                                // 双跳越到祖父层；祖先链在 body/html/document 处
+                                // parentNode 为 null（真实 DOM 末行 ↓ 会走到顶层），
+                                // 判空后 li 归 null 终止循环，而不是踩 null 抛错。
+                                li = li && li.parentNode && li.parentNode.parentNode;
+                                if (li)
+                                    nextLi = li.nextElementSibling;
+                                if (nextLi)
+                                    nextLiSpan = nextLi.querySelector('a, span');
+                                if (nextLiSpan) //fixed: pushed down "DOWN" when the focus was at the last node
+                                    nextLiSpan.focus();
+                            } while (li && !nextLi);
+                        }
                     }
                 }
                 break;
@@ -284,6 +329,11 @@ export function initKeyboard(ctx = {}) {
             {
                 e.preventDefault();
                 let prevLi = li.previousElementSibling;
+                // 非 <li> 的兄弟（死链视图的 .dead-marked-head 分隔 div）不是行：
+                // 归 null，落到 else 分支做兄弟 <ul> 跨越。树视图 <ul> 子元素恒为
+                // <li>，此处不会误伤。
+                if (prevLi && prevLi.tagName !== 'LI')
+                    prevLi = null;
                 if (prevLi) {
                     while (prevLi.classList.contains('open') && prevLi.querySelector('ul>li:last-child')) {
                         const lis = prevLi.querySelectorAll('ul>li:last-child');
@@ -300,18 +350,25 @@ export function initKeyboard(ctx = {}) {
                             markerParentLi.querySelector('a, span').focus();
                     }
                 } else {
-                    const parentPrevLi = li.parentNode.parentNode;
-                    if (parentPrevLi && parentPrevLi.tagName === 'LI') {
-                        parentPrevLi.querySelector('a, span').focus();
+                    // 兄弟 <ul> 跨越优先（残留首行 ↑ → 结果列表末行）；落空再走
+                    // 原 parent-folder / focusListExit（树/单列表行为不变）。
+                    const crossed = crossRowUl(li, -1);
+                    if (crossed) {
+                        crossed.focus();
                     } else {
-                        // v4task-2-list §2.1 + §2.5 (final polish): ↑ past
-                        // the first row crosses into the in-list toolbar when
-                        // the active view has one, else the tab strip (or the
-                        // search box when the strip is hidden).
-                        if (views.focusListExit)
-                            views.focusListExit();
-                        else
-                            views.focusTop();
+                        const parentPrevLi = li.parentNode.parentNode;
+                        if (parentPrevLi && parentPrevLi.tagName === 'LI') {
+                            parentPrevLi.querySelector('a, span').focus();
+                        } else {
+                            // v4task-2-list §2.1 + §2.5 (final polish): ↑ past
+                            // the first row crosses into the in-list toolbar when
+                            // the active view has one, else the tab strip (or the
+                            // search box when the strip is hidden).
+                            if (views.focusListExit)
+                                views.focusListExit();
+                            else
+                                views.focusTop();
+                        }
                     }
                 }
             }

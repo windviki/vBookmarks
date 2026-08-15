@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Contrassegna selezionati"
   },
+  "deadMarkStatusAll": {
+    "message": "Tutti"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Contrassegnati"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Non contrassegnati"
+  },
+  "deadSortLabel": {
+    "message": "Ordina per"
+  },
+  "deadSortByDetected": {
+    "message": "Ora di rilevamento"
+  },
+  "deadSortByPath": {
+    "message": "Percorso cartella"
+  },
+  "deadSortByMarked": {
+    "message": "Data contrassegno"
+  },
   "deadMarkedBanner": {
     "message": "Vengono mostrati i segnalibri contrassegnati in precedenza. Fai clic su Riscansiona per avviare un nuovo controllo, oppure gestiscili nell'elenco sottostante."
   },

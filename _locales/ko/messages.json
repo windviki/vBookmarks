@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "선택 항목 표시"
   },
+  "deadMarkStatusAll": {
+    "message": "전체"
+  },
+  "deadMarkStatusMarked": {
+    "message": "표시됨"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "표시 안 됨"
+  },
+  "deadSortLabel": {
+    "message": "정렬 기준"
+  },
+  "deadSortByDetected": {
+    "message": "감지 시간"
+  },
+  "deadSortByPath": {
+    "message": "폴더 경로"
+  },
+  "deadSortByMarked": {
+    "message": "표시 시간"
+  },
   "deadMarkedBanner": {
     "message": "이전에 표시된 북마크를 보여줍니다. 새 검사를 시작하려면 Rescan을 클릭하거나 아래 목록에서 처리하세요."
   },

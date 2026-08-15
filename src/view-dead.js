@@ -118,14 +118,27 @@
 import { filterScannable, collectDead, statusLabel } from './dead-links.js';
 import { parseProxyServer, formatProxyServer, DEFAULT_PROXY_TEST_URL, proxyPermission, requestProxyPermission, proxyControllable, testProxyReachable } from './dead-proxy.js';
 import { DEAD_SCAN_KEY, DEAD_LAST_KEY, DEAD_SCAN_MSG } from './dead-scan-sw.js';
-import { VIEW_ICONS, FLAG_ICON, TRASH_ICON } from './icons.js';
+import { VIEW_ICONS, FLAG_ICON, TRASH_ICON, CHEVRON_ICON } from './icons.js';
 import { makeRiskBanner, RISK_HELP_URL } from './risk-banner.js';
+import { initDropdowns } from './dropdown.js';
 import { htmlspecialchars } from './escape.js';
 import { parkRowFocus, unparkRowFocus, parkToolbarFocus, restoreToolbarFocus } from './list-focus.js';
 
 export function initViewDead(ctx = {}) {
     const $ = id => document.getElementById(id);
     const _m = chrome.i18n.getMessage;
+    // 标注状态筛选（第二工具条）与排序下拉的选项表。两者均为空闲态控制：
+    // 扫描中（live）渐进展示不受影响。
+    const MARK_FILTERS = [
+        ['', 'deadMarkStatusAll'],
+        ['marked', 'deadMarkStatusMarked'],
+        ['unmarked', 'deadMarkStatusUnmarked']
+    ];
+    const DEAD_SORT_OPTS = [
+        ['detected', 'deadSortByDetected'],
+        ['path', 'deadSortByPath'],
+        ['marked', 'deadSortByMarked']
+    ];
     const store = ctx.store;
     const views = ctx.views;
     const treeRender = ctx.treeRender;
@@ -150,6 +163,17 @@ export function initViewDead(ctx = {}) {
         }
     };
     let deadMarks = loadMarks();
+    // 标记时间（id → Date.now() 毫秒）：与 deadMarks 并行持久化的 map，供
+    // "标记时间"排序使用。老备份无此 key 时为空 map → 排序回退到稳定序
+    // （deadMarks 插入序），与"回退 key 顺序"语义一致。
+    const loadMarkTimes = () => {
+        try {
+            return new Map(Object.entries(JSON.parse(store.get('deadMarkTimes', '{}') || '{}')));
+        } catch (e) {
+            return new Map();
+        }
+    };
+    let deadMarkTimes = loadMarkTimes();
     // v4 task-4 #16 scan mirror (idle/scanning/paused, header docs): the SW
     // owns the run; `live` mirrors the published vbmDeadScan blob while one
     // exists (live.state splits scanning/paused). scanStarting guards the
@@ -163,6 +187,14 @@ export function initViewDead(ctx = {}) {
     // statsSort (supersedes the in-memory choice of §5.5c).
     let filter = ['all', 'dead', 'blocked', 'marked'].indexOf(store.get('deadFilter', 'all')) !== -1
         ? store.get('deadFilter', 'all') : 'all';
+    // 标注状态筛选（第二工具条）: '' | 'marked' | 'unmarked'，持久化 deadMarkFilter。
+    // 与 filter（分类筛选）正交：filter 分段计数保持描述整次扫描，markFilter
+    // 只作用于可见行（结果 + 残留标注列表一起过滤）。
+    let markFilter = ['', 'marked', 'unmarked'].indexOf(store.get('deadMarkFilter', '')) !== -1
+        ? store.get('deadMarkFilter', '') : '';
+    // 结果排序（空闲态）: 'detected' | 'path' | 'marked'，持久化 deadSort。
+    let deadSort = ['detected', 'path', 'marked'].indexOf(store.get('deadSort', 'detected')) !== -1
+        ? store.get('deadSort', 'detected') : 'detected';
     // v4 task-3 #4 selection mode: the toolbar's 选择 button swaps the idle
     // controls for a batch bar (all/invert/clear + mark/unmark selected);
     // row clicks toggle membership instead of opening, Esc exits. Members
@@ -196,6 +228,9 @@ export function initViewDead(ctx = {}) {
 
     const persistMarks = () => {
         store.set('deadMarks', JSON.stringify([...deadMarks]));
+        // Mark times ride every marks mutation: one persistence path covers
+        // toggle/mark-all/clear/mark-selected/onRemoved prune.
+        store.set('deadMarkTimes', JSON.stringify(Object.fromEntries(deadMarkTimes)));
         // Refresh the tab badge on every marks mutation (toggle/mark-all/
         // clear/scan prune/onRemoved prune). badge() itself counts the last
         // scan's dead+blocked rows, not the marks.
@@ -249,25 +284,36 @@ export function initViewDead(ctx = {}) {
                 status: r.status,
                 ok: r.status === 'ok' || r.status === 'skipped',
                 code: r.code,
-                error: r.error
+                error: r.error,
+                ts: r.ts    // per-row scan time (deadSort 'detected'); absent on old backups
             };
             if (!result.ok) {
                 items.push(item);
                 results.set(id, result);
             }
         }
-        return collectDead(items, results).map(item => ({
+        const rows = collectDead(items, results).map(item => ({
             item,
             result: results.get(item.id)
         }));
+        // idle 排序（deadSort）：仅结果行；老备份全 tie 时稳定排序保持 key 序。
+        if (rows.length > 1)
+            rows.sort(compareRows);
+        return rows;
     };
 
-    // …and the three-state segment on top of it.
+    // …and the three-state segment on top of it, PLUS the mark-status filter
+    // (已标注/未标注 second toolbar): markFilter narrows the already category-
+    // filtered set. resultRows() is the scope source for mark-all / selectable
+    // / delete-all, so the second toolbar's filter flows through all of them.
     const resultRows = () => {
         const rows = allResultRows();
-        if (filter === 'all')
-            return rows;
-        return rows.filter(row => row.result.status === filter);
+        const byFilter = filter === 'all' ? rows : rows.filter(row => row.result.status === filter);
+        if (markFilter === 'marked')
+            return byFilter.filter(r => deadMarks.has(r.item.id));
+        if (markFilter === 'unmarked')
+            return byFilter.filter(r => !deadMarks.has(r.item.id));
+        return byFilter;
     };
 
     // v4 task-4 #16: progressive rows come from the SW blob's journal —
@@ -314,8 +360,36 @@ export function initViewDead(ctx = {}) {
             if (item)
                 out.push({ item });
         }
+        if (out.length > 1)
+            out.sort(compareRows);
         return out;
     };
+
+    // 残留标注列表的可见集：'unmarked' 下整个残留列表隐藏（残留全是已标注的，
+    // "未标注"筛选下它们不该出现在视野里）；其余状态原样透出。
+    const visibleMarkedRows = () => markFilter === 'unmarked' ? [] : markedRows();
+
+    // 空闲态排序（deadSort）：结果行与残留标注列表共用同一比较器，全视图视觉
+    // 一致。'detected' 用扫描的 per-row ts（老备份无 ts → 0 → 全 tie → 稳定
+    // 排序回退 Object.entries 的 key 序）；'path' 用 views.pathOf；'marked' 用
+    // deadMarkTimes（未标注行排最后）。live 不经过此路径（liveRows 走 tree 序）。
+    const rowSortKey = row => {
+        switch (deadSort) {
+            case 'path':
+                return views.pathOf(row.item.id) || '';
+            case 'marked':
+                return deadMarkTimes.get(row.item.id) ?? Number.MAX_SAFE_INTEGER;
+            default: {  // 'detected'
+                const r = row.result
+                    || (lastScan && lastScan.results && lastScan.results[row.item.id])
+                    || {};
+                return typeof r.ts === 'number' ? r.ts : 0;
+            }
+        }
+    };
+    const compareRows = (a, b) => deadSort === 'path'
+        ? (rowSortKey(a) || '').localeCompare(rowSortKey(b) || '')
+        : rowSortKey(a) - rowSortKey(b);
 
     // The rows the batch/selection toolbar acts on while idle: the active
     // result segment when results are on screen, PLUS the marked rows that
@@ -326,8 +400,8 @@ export function initViewDead(ctx = {}) {
     // filter hides the marked list, so its rows are not selectable there.
     const selectableRows = () => {
         if (filter === 'marked' || !lastScan)
-            return markedRows();
-        return filter === 'all' ? resultRows().concat(markedRows()) : resultRows();
+            return visibleMarkedRows();
+        return filter === 'all' ? resultRows().concat(visibleMarkedRows()) : resultRows();
     };
 
     // --- Proxy strip (dead-proxy.js quick add/manage) -------------------------
@@ -403,6 +477,10 @@ export function initViewDead(ctx = {}) {
                 `<span class="dead-progress-label" title="${htmlspecialchars(full)}" aria-label="${htmlspecialchars(full)}">${live.done}/${live.total}</span>` +
                 `<button class="dead-pause">${_m(paused ? 'deadResume' : 'deadPause')}</button>` +
                 `<button class="dead-cancel">${_m('deadCancel')}</button>`;
+            html += '</div>';
+            // 扫描中不渲染第二工具条：标记状态过滤与排序都是完成态（idle）控制，
+            // live 的渐进树序不参与 deadSort，过滤器也不作用于 liveRows。
+            return html;
         } else {
             if (selecting) {
                 // v4 task-3 #4: the batch bar replaces every idle control
@@ -491,8 +569,10 @@ export function initViewDead(ctx = {}) {
             // narrows it to dead rows only); the marked-only view (cancelled
             // scan / 过去标注 filter) deletes the marked bookmarks instead.
             // Rendered only when the target set is non-empty — a danger
-            // button that clicks into nothing must not appear.
-            if (filteredN || (markedOnly && markedCount))
+            // button that clicks into nothing must not appear. The marked-only
+            // branch keys off the VISIBLE residue (markFilter hides it under
+            // 'unmarked'), so the button never clicks into an empty set.
+            if (filteredN || (markedOnly && visibleMarkedRows().length))
                 html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
             // block, so the marked-only view (a cancelled scan with marks,
@@ -505,7 +585,34 @@ export function initViewDead(ctx = {}) {
                 html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
         }
         html += '</div>';
+        // 标注状态筛选 + 排序（第二工具条，独立 .vbm-toolbar = 独立键盘 rung，
+        // 与主工具条并列）。仅空闲态：selecting / live 已在上方 early-return。
+        // 全新空态（无扫描无标记）不渲染，保持首启引导纯净。
+        if (lastScan || deadMarks.size) {
+            html += '<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">';
+            html += '<span class="dead-mark-filter" role="group">';
+            for (const [value, key] of MARK_FILTERS)
+                html += `<button class="dead-mark-filter-btn" data-markfilter="${value}" aria-pressed="${markFilter === value}">${_m(key)}</button>`;
+            html += '</span>';
+            html += dropdownHtml('dead-sort', 'deadSortLabel', DEAD_SORT_OPTS, deadSort);
+            html += '</div>';
+        }
         return html;
+    };
+
+    // 排序下拉的标记（镜像 view-dupes.js 的 dropdownHtml）：自定义下拉以遵循
+    // 弹出窗口的箭头协议（↑ 离开 rung、↓ 打开、→ 选择、← 取消，见 dropdown.js）。
+    const dropdownHtml = (cls, labelKey, options, current) => {
+        const curKey = (options.find(o => o[0] === current) || [])[1] || options[0][1];
+        let opts = '';
+        for (const [value, key] of options)
+            opts += `<li role="option" tabindex="-1" data-value="${value}"` +
+                ` aria-selected="${value === current ? 'true' : 'false'}">${_m(key)}</li>`;
+        return `<div class="vbm-dropdown ${cls}">` +
+            `<button type="button" class="vbm-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false"` +
+            ` aria-controls="${cls}-listbox" aria-label="${_m(labelKey)}">` +
+            `<span class="vbm-dropdown-value">${_m(curKey)}</span>${CHEVRON_ICON}</button>` +
+            `<ul id="${cls}-listbox" class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
     };
 
     // One <ul> of result rows — shared by the cached result set and the
@@ -518,8 +625,8 @@ export function initViewDead(ctx = {}) {
             const path = views.pathOf(item.id);
             const marked = deadMarks.has(item.id);
             const sel = selecting && selected.has(item.id);
-            html += `<li class="vbm-row${sel ? ' sel' : ''}" id="dead-item-${item.id}" role="listitem" ` +
-                `data-node-id="${item.id}">` +
+            html += `<li class="vbm-row${sel ? ' sel' : ''}${blocked ? ' blocked' : ''}" ` +
+                `id="dead-item-${item.id}" role="listitem" data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     // Intentional exception: the path labels are NOT gated
@@ -599,8 +706,9 @@ export function initViewDead(ctx = {}) {
         if (markedBannerDismissed || live || selecting)
             return false;
         // 有可看的标注行才提示: 标注列表为空 (全部标注已被本次结果覆盖 /
-        // 从未标记) 时, 列表本身已给出去路 (dead-start / 结果行), 横幅无意义。
-        if (!markedRows().length)
+        // 从未标记, 或 'unmarked' 筛选隐藏了残留) 时, 列表本身已给出去路
+        // (dead-start / 结果行), 横幅无意义。
+        if (!visibleMarkedRows().length)
             return false;
         // marked-only 视图 (取消扫描 / "过去标注"筛选 / 无扫描): 有标记就提示。
         if (filter === 'marked' || !lastScan)
@@ -648,11 +756,12 @@ export function initViewDead(ctx = {}) {
             // start row is still the empty state (§3.5); once marks exist the
             // bottom start row is gone — the toolbar's rescan (or the banner
             // above) is the way back into a run.
-            const marks = markedRows();
+            const marks = visibleMarkedRows();
             // A marked-only view with marks gone (clear-all / delete-all just
-            // ran, or the segment has none) falls back to the executable start
-            // row — the empty `<ul class="dead-marked-list">` shell must not
-            // linger where there is nothing left to show.
+            // ran, or the segment has none — incl. 'unmarked' 筛选下残留全隐藏)
+            // falls back to the executable start row — the empty
+            // `<ul class="dead-marked-list">` shell must not linger where
+            // there is nothing left to show.
             if (marks.length)
                 html += renderMarkedRows(marks);
             else
@@ -681,7 +790,7 @@ export function initViewDead(ctx = {}) {
             // by its own row once the segment switches back, so echoing it
             // here read as "the toolbar filter is swapped / the list shows
             // everything" — the toolbar/list mismatch report).
-            const marks = markedRows();
+            const marks = visibleMarkedRows();
             if (filter === 'all' && marks.length)
                 html += renderMarkedRows(marks);
         }
@@ -773,10 +882,13 @@ export function initViewDead(ctx = {}) {
     const toggleMark = id => {
         if (!id)
             return;
-        if (deadMarks.has(id))
+        if (deadMarks.has(id)) {
             deadMarks.delete(id);
-        else
+            deadMarkTimes.delete(id);
+        } else {
             deadMarks.add(id);
+            deadMarkTimes.set(id, Date.now());
+        }
         persistMarks();
         refreshOverlays();
         if (views.isActive('dead'))
@@ -792,8 +904,11 @@ export function initViewDead(ctx = {}) {
             button1: `<strong>${_m('deadMarkAll')}</strong>`,
             button2: _m('nope'),
             fn1: () => {
-                for (const { item } of rows)
+                const now = Date.now();   // 一次动作 = 同一标记时间（批量语义）
+                for (const { item } of rows) {
                     deadMarks.add(item.id);
+                    deadMarkTimes.set(item.id, now);
+                }
                 persistMarks();
                 refreshOverlays();
                 undo.showToast(_m('deadMarked'));
@@ -812,6 +927,7 @@ export function initViewDead(ctx = {}) {
             button2: _m('nope'),
             fn1: () => {
                 deadMarks.clear();
+                deadMarkTimes.clear();
                 persistMarks();
                 refreshOverlays();
                 if (views.isActive('dead'))
@@ -888,7 +1004,7 @@ export function initViewDead(ctx = {}) {
     const deleteAll = () => {
         const markedOnly = filter === 'marked' || !lastScan;
         const ids = markedOnly
-            ? markedRows().map(({ item }) => item.id)
+            ? visibleMarkedRows().map(({ item }) => item.id)
             : resultRows().map(({ item }) => item.id);
         confirmDeletion(ids, 'deadDeleteAll', null, markedOnly ? null : 'deadDeleteAllNote');
     };
@@ -916,11 +1032,15 @@ export function initViewDead(ctx = {}) {
     const markSelected = mark => {
         if (!selected.size)
             return;
+        const now = Date.now();   // 一次动作 = 同一标记时间
         for (const id of selected) {
-            if (mark)
+            if (mark) {
                 deadMarks.add(id);
-            else
+                deadMarkTimes.set(id, now);
+            } else {
                 deadMarks.delete(id);
+                deadMarkTimes.delete(id);
+            }
         }
         persistMarks();
         refreshOverlays();
@@ -1142,7 +1262,12 @@ export function initViewDead(ctx = {}) {
     // --- Events ------------------------------------------------------------------
     // Prune marks of removed bookmarks; path changes may reshuffle rows.
     chrome.bookmarks.onRemoved.addListener(id => {
-        if (deadMarks.delete(id)) {
+        // Both sets are pruned unconditionally: the `||` short-circuit must
+        // not skip the mark-time delete when the id WAS in deadMarks (a stale
+        // deadMarkTimes entry would outlive the mark and skew 'marked' sort).
+        const had = deadMarks.delete(id);
+        const hadTime = deadMarkTimes.delete(id);
+        if (had || hadTime) {
             persistMarks();
             refreshOverlays();
         }
@@ -1179,6 +1304,13 @@ export function initViewDead(ctx = {}) {
 
     $list.addEventListener('click', e => {
         const closest = (e.target && e.target.closest) ? e.target.closest.bind(e.target) : () => null;
+        // Sort dropdown (second toolbar) owns its own click handling in
+        // dropdown.js — trigger toggles / option picks must not fall through
+        // to the row/bookmark handler below.
+        if (closest('.vbm-dropdown')) {
+            e.preventDefault();
+            return;
+        }
         // v4 task-4 #14 risk banner: ack (per major version), session
         // dismiss, and the backup-help link (popup-respecting open).
         if (closest('.risk-banner-never')) {
@@ -1261,6 +1393,16 @@ export function initViewDead(ctx = {}) {
             // Hide the add/nudge strip for good — the options page keeps a
             // full proxy add/test/clear entry (src/options-proxy.js).
             store.set('hideDeadProxyStrip', '1');
+            render();
+            return;
+        }
+        // 第二工具条的标注状态筛选（类名独立于 .dead-filter-btn，避免被上方
+        // 主工具条的 filter 处理器截获）。
+        const markFilterBtn = closest('.dead-mark-filter-btn');
+        if (markFilterBtn) {
+            e.preventDefault();
+            markFilter = markFilterBtn.dataset.markFilter || '';
+            store.set('deadMarkFilter', markFilter);
             render();
             return;
         }
@@ -1540,6 +1682,24 @@ export function initViewDead(ctx = {}) {
             return true;
         },
         onKey
+    });
+
+    // Sort dropdown wiring (see dropdown.js for the protocol). Delegated on
+    // $list, so it survives the innerHTML swap on every render — the onSelect
+    // re-renders synchronously, which detaches the old trigger before
+    // dropdown.js's pick→close can focus it, so we re-focus the fresh trigger.
+    initDropdowns($list, {
+        onSelect: (dd, value) => {
+            if (!dd.classList.contains('dead-sort'))
+                return;
+            deadSort = ['detected', 'path', 'marked'].indexOf(value) !== -1 ? value : 'detected';
+            store.set('deadSort', deadSort);
+            render();
+            const t = $list.querySelector('.dead-sort .vbm-dropdown-trigger');
+            if (t && t.focus)
+                t.focus();
+        },
+        rtl: !!(document.body && document.body.classList && document.body.classList.contains('rtl'))
     });
 
     return { refresh: render, refreshOverlays, isMarked, toggleMark };

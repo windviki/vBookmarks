@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Markér valgte"
   },
+  "deadMarkStatusAll": {
+    "message": "Alle"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Markeret"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Umarkeret"
+  },
+  "deadSortLabel": {
+    "message": "Sorter efter"
+  },
+  "deadSortByDetected": {
+    "message": "Registreringstidspunkt"
+  },
+  "deadSortByPath": {
+    "message": "Mappesti"
+  },
+  "deadSortByMarked": {
+    "message": "Markeringstidspunkt"
+  },
   "deadMarkedBanner": {
     "message": "Viser bogmærker, der tidligere er markeret. Klik på Scan igen for at starte en ny kontrol, eller håndter dem på listen nedenfor."
   },

@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "סמן נבחרים"
   },
+  "deadMarkStatusAll": {
+    "message": "הכל"
+  },
+  "deadMarkStatusMarked": {
+    "message": "מסומן"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "לא מסומן"
+  },
+  "deadSortLabel": {
+    "message": "מיין לפי"
+  },
+  "deadSortByDetected": {
+    "message": "זמן גילוי"
+  },
+  "deadSortByPath": {
+    "message": "נתיב תיקייה"
+  },
+  "deadSortByMarked": {
+    "message": "זמן סימון"
+  },
   "deadMarkedBanner": {
     "message": "מציג סימניות שסומנו בעבר. לחץ על 'סריקה מחדש' כדי להתחיל בדיקה חדשה, או טפל בהן ברשימה למטה."
   },

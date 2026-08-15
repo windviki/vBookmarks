@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "Đánh dấu mục đã chọn"
   },
+  "deadMarkStatusAll": {
+    "message": "Tất cả"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Đã đánh dấu"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Chưa đánh dấu"
+  },
+  "deadSortLabel": {
+    "message": "Sắp xếp theo"
+  },
+  "deadSortByDetected": {
+    "message": "Thời gian phát hiện"
+  },
+  "deadSortByPath": {
+    "message": "Đường dẫn thư mục"
+  },
+  "deadSortByMarked": {
+    "message": "Thời gian đánh dấu"
+  },
   "deadMarkedBanner": {
     "message": "Đang hiển thị các bookmark đã được đánh dấu trước đó. Nhấp Rescan để bắt đầu kiểm tra mới hoặc xử lý chúng trong danh sách bên dưới."
   },

@@ -264,6 +264,27 @@
   "deadMarkSelected": {
     "message": "وضع علامة على المحدد"
   },
+  "deadMarkStatusAll": {
+    "message": "الكل"
+  },
+  "deadMarkStatusMarked": {
+    "message": "موسوم"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "غير موسوم"
+  },
+  "deadSortLabel": {
+    "message": "ترتيب حسب"
+  },
+  "deadSortByDetected": {
+    "message": "وقت الاكتشاف"
+  },
+  "deadSortByPath": {
+    "message": "مسار المجلد"
+  },
+  "deadSortByMarked": {
+    "message": "وقت الوسم"
+  },
   "deadMarkedBanner": {
     "message": "يتم عرض الإشارات المرجعية المعلّمة سابقًا. انقر فوق 'إعادة الفحص' لبدء فحص جديد، أو عالجها في القائمة أدناه."
   },
