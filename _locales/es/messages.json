@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opciones avanzadas"
   },
+  "announceV408Title": {
+    "message": "Novedades de v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 es la versión mejorada con favicons: los iconos reales de los sitios se obtienen automáticamente para los marcadores que Chrome aún no ha almacenado en caché."
+  },
+  "announceDismiss": {
+    "message": "Descartar"
+  },
   "confirmDeleteFolder": {
     "message": "Esta carpeta contiene $count$ elemento(s). Puede deshacer la eliminación.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "En pausa"
+  },
+  "whatsNewChangelog": {
+    "message": "Registro de cambios"
   },
   "deadProxyAdd": {
     "message": "Añadir un servidor proxy para comprobar enlaces rotos"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Abrir panel lateral de vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Notas de la versión y consejos del repositorio de GitHub del proyecto (se obtienen como máximo cada 6 horas). Al desactivarlo, también se detiene la consulta de red."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Mostrar anuncios del producto"
+  },
   "optionAutoRefreshSync": {
     "message": "Actualizar automáticamente estado de sincronización"
   },
@@ -766,7 +784,7 @@
     "message": "Restaurar el encabezado clásico"
   },
   "optionClassicExperienceHint": {
-    "message": "Desactiva la paleta de comandos, la estrella de añadido rápido, su entrada en el menú contextual de la página, el botón de herramienta y las pestañas de vista. Cada uno puede volver a habilitarse individualmente arriba."
+    "message": "Desactiva la paleta de comandos, la estrella de agregado rápido, su entrada en el menú contextual de la página, el botón de herramienta y las pestañas de vista. Cada elemento se puede volver a activar individualmente en su sección."
   },
   "optionStatsEnabled": {
     "message": "Habilitar estadísticas de visitas"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Copia de seguridad"
   },
+  "optionsGroupIcons": {
+    "message": "Iconos"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menús contextuales"
+  },
   "optionsGroupViews": {
     "message": "Vistas"
   },
   "optionsGroupSort": {
     "message": "Ordenación"
+  },
+  "optionsGroupTools": {
+    "message": "Herramientas"
+  },
+  "optionsGroupStats": {
+    "message": "Estadísticas"
   },
   "paletteCmdDead": {
     "message": "Buscar enlaces rotos"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opsi Lanjutan"
   },
+  "announceV408Title": {
+    "message": "Apa yang baru di v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 adalah rilis dengan peningkatan favicon: ikon situs asli diambil otomatis untuk bookmark yang belum di-cache oleh Chrome."
+  },
+  "announceDismiss": {
+    "message": "Tutup"
+  },
   "confirmDeleteFolder": {
     "message": "Folder ini berisi $count$ item. Anda dapat membatalkan penghapusan.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Dijeda"
+  },
+  "whatsNewChangelog": {
+    "message": "Catatan perubahan"
   },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Buka panel samping vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Catatan rilis dan tips dari repositori GitHub proyek (diambil paling sering setiap 6 jam). Nonaktif juga menghentikan pengambilan jaringan."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Tampilkan pengumuman dalam produk"
+  },
   "optionAutoRefreshSync": {
     "message": "Segarkan status sinkronisasi otomatis"
   },
@@ -766,7 +784,7 @@
     "message": "Kembalikan header klasik"
   },
   "optionClassicExperienceHint": {
-    "message": "Menonaktifkan palet perintah, bintang tambah cepat, entri klik kanan halamannya, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di atas."
+    "message": "Menonaktifkan palet perintah, bintang tambah cepat, entri klik kanan di halamannya, tombol alat, dan tab tampilan. Masing-masing dapat diaktifkan kembali secara individual di bagiannya."
   },
   "optionStatsEnabled": {
     "message": "Aktifkan statistik kunjungan"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Cadangan"
   },
+  "optionsGroupIcons": {
+    "message": "Ikon"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu konteks"
+  },
   "optionsGroupViews": {
     "message": "Tampilan"
   },
   "optionsGroupSort": {
     "message": "Pengurutan"
+  },
+  "optionsGroupTools": {
+    "message": "Alat"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
   },
   "paletteCmdDead": {
     "message": "Cari tautan mati"

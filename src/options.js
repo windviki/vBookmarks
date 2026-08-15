@@ -64,7 +64,10 @@ const $ = id => document.getElementById(id);
             { id: 'only-show-bmbar', key: 'onlyShowBMBar', defaultValue: '', inverted: false },
             { id: 'search-after-enter', key: 'searchAfterEnter', defaultValue: '', inverted: false },
             { id: 'auto-resize-popup', key: 'autoResizePopup', defaultValue: 'true', inverted: false },
-            { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false }
+            { id: 'open-in-side-panel', key: 'openInSidePanel', defaultValue: '', inverted: false },
+            // 4.0.8: remote announcements (docs/announce.json) — on by default;
+            // off disables the banner AND its network fetch (privacy switch)
+            { id: 'announce-enabled', key: 'announceEnabled', defaultValue: '1', inverted: false }
         ];
 
         // Initialize general settings
@@ -77,11 +80,11 @@ const $ = id => document.getElementById(id);
             { id: 'auto-refresh-sync', key: 'autoRefreshSync', defaultValue: 'true', inverted: false }
         ];
 
-        // v4 task-2: the "Views" group (docs/plan-4.0.0/v4task-2.md §7). Tab strip,
-        // list-row path labels, the recent tab and search history — all on
-        // by default. (showRecentBookmarks moved here from General when the
-        // in-tree recent section became a view; recentBookmarksCollapsed is
-        // now a dead key — stored value kept, UI removed.)
+        // v4 task-2: the "Views" group (docs/plan-4.0.0/v4task-2.md §7). Tab
+        // strip, list-row path labels, the recent tab — all on by default.
+        // 4.0.8 split the one overstuffed group into five (views / icons /
+        // context menu / tools / stats), mirroring how the dead-link feature
+        // keeps behavior (dead scan) separate from display (show-dead-view).
         const viewSettings = [
             { id: 'show-view-tabs', key: 'showViewTabs', defaultValue: '1', inverted: false },
             // v4 task-3 #6: reopen on the view the popup was left on
@@ -95,23 +98,11 @@ const $ = id => document.getElementById(id);
             // tab and every entry point (Ctrl+number, palette) until re-enabled
             { id: 'show-stats-view', key: 'showStatsView', defaultValue: '1', inverted: false },
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
-            { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false },
-            // v4 task-3 #20: the v4 chrome is individually switchable…
-            { id: 'palette-enabled', key: 'paletteEnabled', defaultValue: '1', inverted: false },
-            { id: 'quick-add-enabled', key: 'quickAddEnabled', defaultValue: '1', inverted: false },
-            // issue #49: the "Bookmark this page with vBookmarks" PAGE
-            // context-menu entry is v4-only; its own switch (default on) lets
-            // users drop it without losing the in-popup quick-add star.
-            { id: 'quick-add-context-menu', key: 'quickAddContextMenu', defaultValue: '1', inverted: false },
-            { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false },
-            // issue #48 follow-up: collapse the tab-group / sort blocks into
-            // single submenu entries (tab-group default off, sort default on).
-            { id: 'collapse-tab-group-menu', key: 'collapseTabGroupMenu', defaultValue: '0', inverted: false },
-            { id: 'collapse-sort-menu', key: 'collapseSortMenu', defaultValue: '1', inverted: false },
-            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false },
-            // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
-            // off means zero writes (collection stops immediately)
-            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
+            { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
+        ];
+        // Icons: favicon contrast service + favicon enrichment (4.0.6) — the
+        // per-site icon pipeline, one group.
+        const iconsSettings = [
             // v4.1: favicon 反色服务 —— 亮/暗主题下偏白/偏黑的单色 icon 反色，
             // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
             { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false },
@@ -120,7 +111,38 @@ const $ = id => document.getElementById(id);
             { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
             { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '', inverted: false }
         ];
+        // Context menus: the page right-click entry + the collapsed submenu
+        // switches (issue #48 follow-up).
+        const contextMenuSettings = [
+            // issue #49: the "Bookmark this page with vBookmarks" PAGE
+            // context-menu entry is v4-only; its own switch (default on) lets
+            // users drop it without losing the in-popup quick-add star.
+            { id: 'quick-add-context-menu', key: 'quickAddContextMenu', defaultValue: '1', inverted: false },
+            // issue #48 follow-up: collapse the tab-group / sort blocks into
+            // single submenu entries (tab-group default off, sort default on).
+            { id: 'collapse-tab-group-menu', key: 'collapseTabGroupMenu', defaultValue: '0', inverted: false },
+            { id: 'collapse-sort-menu', key: 'collapseSortMenu', defaultValue: '1', inverted: false }
+        ];
+        // Tools: the v4 chrome — palette, quick-add star, tool button and the
+        // one-click classic-experience preset (v4 task-3 #20).
+        const toolsSettings = [
+            { id: 'palette-enabled', key: 'paletteEnabled', defaultValue: '1', inverted: false },
+            { id: 'quick-add-enabled', key: 'quickAddEnabled', defaultValue: '1', inverted: false },
+            { id: 'show-tool-button', key: 'showToolButton', defaultValue: '1', inverted: false }
+        ];
+        // Statistics: the visit-stats master switch + search history (the two
+        // data-collection surfaces stay side by side, like dead scan).
+        const statsSettings = [
+            // v4 task-2 slice D (§5.4/§7): master switch for visit stats —
+            // off means zero writes (collection stops immediately)
+            { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
+            { id: 'search-history-enabled', key: 'searchHistoryEnabled', defaultValue: '1', inverted: false }
+        ];
         await bindSettingsList(viewSettings);
+        await bindSettingsList(iconsSettings);
+        await bindSettingsList(contextMenuSettings);
+        await bindSettingsList(toolsSettings);
+        await bindSettingsList(statsSettings);
         // v4.1 favicon enrich: the aggregate-fallback sub-switch only makes
         // sense while the master is on — grey it out when the master is off
         // (visual demotion, no ambiguous "child on, parent off" state).
@@ -452,8 +474,15 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-search-after-enter').innerText = __m('optionSearchAfterEnter');
         document.getElementById('option-auto-resize-popup').innerText = __m('optionAutoResizePopup');
         document.getElementById('option-open-in-side-panel').innerText = __m('optionOpenInSidePanel');
-        // Views group (v4 task-2)
+        // 4.0.8: remote announcements (docs/announce.json) privacy switch
+        document.getElementById('option-announce-enabled').innerText = __m('optionAnnounceEnabled');
+        document.getElementById('option-announce-enabled-hint').innerText = __m('optionAnnounceEnabledHint');
+        // View groups (4.0.8: the one Views group split into five)
         document.getElementById('views-options').innerText = __m('optionsGroupViews');
+        document.getElementById('icons-options').innerText = __m('optionsGroupIcons');
+        document.getElementById('context-menu-options').innerText = __m('optionsGroupContextMenu');
+        document.getElementById('tools-options').innerText = __m('optionsGroupTools');
+        document.getElementById('stats-options').innerText = __m('optionsGroupStats');
         document.getElementById('option-show-view-tabs').innerText = __m('optionShowViewTabs');
         document.getElementById('option-remember-view').innerText = __m('optionRememberView');
         document.getElementById('option-show-tab-badges').innerText = __m('optionShowTabBadges');

@@ -2,7 +2,7 @@
 
 > 2026-08-15 · 实施版，所有决策已定稿（§15），无开放项。
 > v2 打磨：DDG 服务级熔断与代理兜底（§3.3/§3.4）；存储改为按 host 分键 + 索引，写开放大、爆炸边缘 case、淘汰管理全部明确（§5）。
-> v3/v4 更新（4.0.6，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
+> v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
 > 前置：[`docs/favicon-补全方案.md`](favicon-补全方案.md)（根因 + 真实 Chromium 实测 + 同类扩展调研）。
 > 本文是「补全缺失的网站图标」作为 vBookmarks **原生功能**的唯一实施依据：模块边界、代码契约、存储形状、选项 UI、测试与提交步骤均精确到文件与函数。
 
@@ -18,7 +18,7 @@
 
 - **零新权限、零 manifest 改动**：`connect-src *` + `host_permissions <all_urls>` 已覆盖 fetch；`img-src 'self' data:` 已覆盖 data URL 注入。
 - **零默认第三方依赖**：主链路只向用户已收藏的站点发请求（等同于访问该站）；第三方聚合兜底（内置服务商列表，§3.4）做成独立子开关、默认关（§6），且带按服务商熔断 + 故障转移。
-- **复用现有基建**：`favicon-fallback` 的占位图识别与反色采样、`dead-proxy.js` 的 marker-PAC 代理通道、options 页 Views 组的开关模式、`tests/helpers/` 测试桩。
+- **复用现有基建**：`favicon-fallback` 的占位图识别与反色采样、`dead-proxy.js` 的 marker-PAC 代理通道、options 页 Icons 组的开关模式、`tests/helpers/` 测试桩。
 - **遵循「操作即模块」**：纯逻辑全部进 `src/favicon-enrich.js`（ES 模块、可单测），`neat.js` 只做薄接线。
 
 ---
@@ -87,7 +87,7 @@ tree-render / search / palette / recent 渲染 <img _favicon>
 | `src/favicon-enrich.js`（新，ES 模块） | 发现链 L1-L4、服务商列表与按服务商熔断、图标校验与解码、data URL 编码、缓存层（按 host 分键 + 索引 + LRU/字节预算/自愈）、队列与限流、AbortController 取消、热替换与反色登记。页面依赖（`fetch`/`Image`/`chrome.storage`）全部可注入，node 下可单测 |
 | `src/favicon-fallback.js`（改，3 处小改） | 新增 `ctx.onPlaceholder` 钩子；返回 API 增加 `sampleIcon`；`reapplyContrast` 选择器扩展（§4.1） |
 | `src/neat.js`（薄接线） | 实例化 enricher，接进 faviconService；扩展现有 `storage.onChanged` 监听（faviconEnrich / faviconEnrichAgg 两键） |
-| `src/options.js` + `pages/options.html`（改） | Views 组加两个开关 + 一个清除缓存按钮；备份导出按前缀排除缓存键 |
+| `src/options.js` + `pages/options.html`（改） | Icons 组加两个开关 + 一个清除缓存按钮；备份导出按前缀排除缓存键 |
 | `src/store.js`（改 1 行） | `KNOWN_KEYS` 注册 `faviconEnrich`、`faviconEnrichAgg`（仅两个开关键；缓存的动态 host 键不入 KNOWN_KEYS） |
 
 钩子挂在 `favicon-fallback` 的 capture-phase 委托上，意味着**树、搜索结果、palette 行、recent 视图——所有走 `_favicon` 的 `<img>` 自动获得补全**，无需逐视图接入。
@@ -370,13 +370,13 @@ chrome.storage.local:
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `faviconEnrich` | **开** | 主开关：占位图触发 L1/L2（+L3 代理接力 + L4 第三方聚合兜底）补全 |
-| `faviconEnrichAgg` | **关** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.6 首发，无历史包袱） |
+| `faviconEnrichAgg` | **关** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.8 首发，无历史包袱） |
 
 - 入 `store.js` 的 `KNOWN_KEYS`（**不进 SYNC_KEYS**——与 faviconContrast 同区同模型；是否联网取图标是设备级网络偏好，不跨设备同步）。缓存的动态 host 键与索引键**不入** KNOWN_KEYS（它们不是设置，且由 enricher 自管）。
 - **主开关默认开的理由**：请求只发往用户自己收藏的网站（等同于访问），无第三方，用户已明确反馈「很多默认图标」——开箱即受益。
 - **聚合兜底默认关的理由**：与项目退役第三方 relay 模板、改用用户自有代理的隐私姿态一致（dead-proxy.js 头注释）；服务商列表会把域名发给 favicon.run / DuckDuckGo 等第三方，必须显式 opt-in。
 
-### 6.2 选项页 UI（Views 组，`favicon-contrast` 行之后）
+### 6.2 选项页 UI（Icons 组，`favicon-contrast` 行之后）
 
 ```html
 <li><label><input type="checkbox" id="favicon-enrich" aria-labelledby="option-favicon-enrich"><span id="option-favicon-enrich"></span></label><br><small id="option-favicon-enrich-hint"></small></li>
@@ -455,13 +455,13 @@ chrome.storage.local:
 | `src/favicon-fallback.js` | §4.1 三处：`ctx.onPlaceholder` 两个分支调用；返回 API 加 `sampleIcon: fingerprint`；`reapplyContrast` 选择器加 `, img.favicon-enriched` |
 | `src/neat.js` | `import { initFaviconEnrich } from './favicon-enrich.js'`；在 faviconService 创建后立即实例化 enricher。实例化顺序有环：fallback 必须先于行渲染安装并拿到钩子，enricher 又依赖 faviconService 的 sampleIcon/statsBySrc——解法是 `ctx.onPlaceholder` 传惰性包装 `img => enricher && enricher.onPlaceholder(img)`（`let enricher = null`，建完赋值；钩子的首次调用发生在行渲染时，必然已就绪），同 neat.js 的 lazy getter 惯例；现有 storage.onChanged listener 加 `faviconEnrich`/`faviconEnrichAgg` 分支 → `enricher.setEnabled(...)` |
 | `src/options.js` | viewSettings +2 项；5 个 label 赋值；聚合兜底复选框 disabled 联动；`favicon-cache-clear` handler（前缀收集 + remove）；备份导出按前缀剔除 `vbmFaviconIdx`/`vbmFavicon:*` |
-| `pages/options.html` | Views 组 favicon-contrast 行后 +3 个 `<li>`（§6.2） |
+| `pages/options.html` | Icons 组 favicon-contrast 行后 +3 个 `<li>`（§6.2） |
 | `src/store.js` | `KNOWN_KEYS` + `'faviconEnrich'`、`'faviconEnrichAgg'`（紧跟 `'faviconContrast'` 注释行；缓存键不入列） |
 | `css/neat.css` | `.favicon-enriching` 规则（2 行） |
 | `_locales/{en,zh_CN,…}/messages.json` | 6 个新 key（§6.3 流程） |
 | `tests/favicon-enrich.test.js`（新） | §12 |
 | `tests/favicon-fallback.test.js` | 扩：钩子契约 + sampleIcon + enriched 选择器 |
-| `AGENTS.md` | `src/favicon-enrich.js` 新行；`src/favicon-fallback.js` 行补 onPlaceholder/sampleIcon；store.js 行补两键；options 行补 Views 组新开关与备份排除；测试段落补新套件 |
+| `AGENTS.md` | `src/favicon-enrich.js` 新行；`src/favicon-fallback.js` 行补 onPlaceholder/sampleIcon；store.js 行补两键；options 行补 Icons 组新开关与备份排除；测试段落补新套件 |
 
 ---
 

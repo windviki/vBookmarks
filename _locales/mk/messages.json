@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Напредни опции"
   },
+  "announceV408Title": {
+    "message": "Што е ново во v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 е изданието со подобрени favicon-и: вистинските икони на сајтовите автоматски се преземаат за обележувачите што Chrome сè уште не ги кеширал."
+  },
+  "announceDismiss": {
+    "message": "Затвори"
+  },
   "confirmDeleteFolder": {
     "message": "Оваа папка содржи $count$ ставка(и). Можете да го отповикнете бришењето.",
     "placeholders": {
@@ -262,6 +271,9 @@
   },
   "deadPaused": {
     "message": "Паузирано"
+  },
+  "whatsNewChangelog": {
+    "message": "Евиденција на промени"
   },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
@@ -638,6 +650,12 @@
   "openSidePanelCommand": {
     "message": "Отвори страничен панел на vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Белешки за изданија и совети од GitHub складиштето на проектот (се преземаат најмногу еднаш на секои 6 часа). Исклучувањето исто така го запира мрежното преземање."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Прикажувај известувања во производот"
+  },
   "optionAutoRefreshSync": {
     "message": "Автоматско освежување на статусот на синхронизација"
   },
@@ -765,7 +783,7 @@
     "message": "Врати го класичното заглавие"
   },
   "optionClassicExperienceHint": {
-    "message": "Ги исклучува командната палета, ѕвездата за брзо додавање, нејзината ставка во контекстното мени на страницата, копчето на алатката и јазичињата за приказ. Секое од нив може поединечно повторно да се овозможи погоре."
+    "message": "Ги исклучува командната палета, ѕвездичката за брзо додавање, ставката во контекстното мени на страницата, копчето за алатки и јазичињата за преглед. Секоја од нив може повторно да се вклучи поединечно во својот дел."
   },
   "optionStatsEnabled": {
     "message": "Овозможи статистики за посети"
@@ -839,11 +857,23 @@
   "optionsGroupBackup": {
     "message": "Резервна копија"
   },
+  "optionsGroupIcons": {
+    "message": "Икони"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Контекстни менија"
+  },
   "optionsGroupViews": {
     "message": "Прикази"
   },
   "optionsGroupSort": {
     "message": "Сортирање"
+  },
+  "optionsGroupTools": {
+    "message": "Алатки"
+  },
+  "optionsGroupStats": {
+    "message": "Статистика"
   },
   "paletteCmdDead": {
     "message": "Најди мртви врски"

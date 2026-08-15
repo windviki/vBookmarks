@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opções avançadas"
   },
+  "announceV408Title": {
+    "message": "Novidades na v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 é a versão com favicons aprimorados: os ícones reais dos sites são obtidos automaticamente para favoritos que o Chrome ainda não armazenou em cache."
+  },
+  "announceDismiss": {
+    "message": "Dispensar"
+  },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Você pode desfazer a exclusão.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pausado"
+  },
+  "whatsNewChangelog": {
+    "message": "Registro de alterações"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Abrir painel lateral do vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Notas de versão e dicas do repositório GitHub do projeto (buscadas no máximo a cada 6 horas). Desativar também interrompe a busca na rede."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Exibir anúncios no produto"
+  },
   "optionAutoRefreshSync": {
     "message": "Atualizar automaticamente estado de sincronização"
   },
@@ -766,7 +784,7 @@
     "message": "Restaurar o cabeçalho clássico"
   },
   "optionClassicExperienceHint": {
-    "message": "Desativa a paleta de comandos, a estrela de adição rápida, sua entrada no menu de contexto da página, o botão de ferramentas e as abas de visualização. Cada um pode ser reativado individualmente acima."
+    "message": "Desativa a paleta de comandos, a estrela de adição rápida, sua entrada no menu de contexto da página, o botão de ferramenta e as abas de exibição. Cada um pode ser reativado individualmente em sua seção."
   },
   "optionStatsEnabled": {
     "message": "Ativar estatísticas de visitas"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Cópia de segurança"
   },
+  "optionsGroupIcons": {
+    "message": "Ícones"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menus de contexto"
+  },
   "optionsGroupViews": {
     "message": "Exibições"
   },
   "optionsGroupSort": {
     "message": "Ordenação"
+  },
+  "optionsGroupTools": {
+    "message": "Ferramentas"
+  },
+  "optionsGroupStats": {
+    "message": "Estatísticas"
   },
   "paletteCmdDead": {
     "message": "Encontrar links quebrados"

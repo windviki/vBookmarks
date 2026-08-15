@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "messages": [{
+    "id": "v408-whats-new",
+    "minVersion": "4.0.8",
+    "maxVersion": "",
+    "channel": "all",
+    "once": true,
+    "display": "banner",
+    "kind": "tip",
+    "titleKey": "announceV408Title",
+    "textKey": "announceV408Text",
+    "textFallback": {
+      "en": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
+    },
+    "link": [
+      { "labelKey": "donationV4GuideLink", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" },
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#changelogs" }
+    ]
+  }]
+}

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Napredne opcije"
   },
+  "announceV408Title": {
+    "message": "Novosti u v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je izdanje s poboljšanim faviconima: stvarne ikone web stranica automatski se dohvaćaju za knjižne oznake koje Chrome još nije predmemorirao."
+  },
+  "announceDismiss": {
+    "message": "Zatvori"
+  },
   "confirmDeleteFolder": {
     "message": "Ova mapa sadrži $count$ stavku(i). Možete poništiti brisanje.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pauzirano"
+  },
+  "whatsNewChangelog": {
+    "message": "Popis promjena"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Otvori vBookmarks bočnu ploču"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Bilješke o izdanjima i savjeti iz GitHub spremišta projekta (dohvaćaju se najviše svakih 6 sati). Isključivanje također zaustavlja mrežno dohvaćanje."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Prikaži najave u aplikaciji"
+  },
   "optionAutoRefreshSync": {
     "message": "Automatski osvježi status sinkronizacije"
   },
@@ -766,7 +784,7 @@
     "message": "Vrati klasično zaglavlje"
   },
   "optionClassicExperienceHint": {
-    "message": "Isključuje paletu naredbi, zvjezdicu za brzo dodavanje, njezin unos u kontekstnom izborniku stranice, alatni gumb i kartice prikaza. Svaka se stavka može ponovno omogućiti pojedinačno iznad."
+    "message": "Isključuje paletu naredbi, zvijezdu za brzo dodavanje, njezin unos u kontekstnom izborniku stranice, alatni gumb i kartice prikaza. Svaka se može ponovno omogućiti pojedinačno u svom odjeljku."
   },
   "optionStatsEnabled": {
     "message": "Omogući statistiku posjeta"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Sigurnosna kopija"
   },
+  "optionsGroupIcons": {
+    "message": "Ikone"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstni izbornici"
+  },
   "optionsGroupViews": {
     "message": "Prikazi"
   },
   "optionsGroupSort": {
     "message": "Sortiranje"
+  },
+  "optionsGroupTools": {
+    "message": "Alati"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
   },
   "paletteCmdDead": {
     "message": "Pronađi mrtve poveznice"

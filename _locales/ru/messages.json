@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Расширенные настройки"
   },
+  "announceV408Title": {
+    "message": "Что нового в v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 — это выпуск с улучшенными фавиконками: настоящие значки сайтов автоматически загружаются для закладок, которые Chrome ещё не кэшировал."
+  },
+  "announceDismiss": {
+    "message": "Закрыть"
+  },
   "confirmDeleteFolder": {
     "message": "Эта папка содержит $count$ элемент(ов). Вы можете отменить удаление.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Приостановлено"
+  },
+  "whatsNewChangelog": {
+    "message": "Журнал изменений"
   },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Открыть боковую панель vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Примечания к выпускам и советы из репозитория проекта на GitHub (загружаются не чаще, чем каждые 6 часов). Если отключено, сетевая загрузка не выполняется."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Показывать анонсы в продукте"
+  },
   "optionAutoRefreshSync": {
     "message": "Автоматически обновлять статус синхронизации"
   },
@@ -766,7 +784,7 @@
     "message": "Восстановить классическую шапку"
   },
   "optionClassicExperienceHint": {
-    "message": "Отключает палитру команд, кнопку быстрого добавления в виде звезды, её пункт в контекстном меню страницы, кнопку на панели инструментов и вкладки просмотра. Каждый из них можно снова включить по отдельности выше."
+    "message": "Отключает палитру команд, звезду быстрого добавления, её пункт в контекстном меню страницы, кнопку панели и вкладки просмотра. Каждый элемент можно повторно включить отдельно в соответствующем разделе."
   },
   "optionStatsEnabled": {
     "message": "Включить статистику посещений"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Резервное копирование"
   },
+  "optionsGroupIcons": {
+    "message": "Значки"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Контекстные меню"
+  },
   "optionsGroupViews": {
     "message": "Вид"
   },
   "optionsGroupSort": {
     "message": "Сортировка"
+  },
+  "optionsGroupTools": {
+    "message": "Инструменты"
+  },
+  "optionsGroupStats": {
+    "message": "Статистика"
   },
   "paletteCmdDead": {
     "message": "Найти неработающие ссылки"

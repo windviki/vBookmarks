@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "拡張オプション"
   },
+  "announceV408Title": {
+    "message": "v4.0.8の新機能"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8はファビコン強化版です。Chromeがまだキャッシュしていないブックマークの実サイトアイコンを自動的に取得します。"
+  },
+  "announceDismiss": {
+    "message": "閉じる"
+  },
   "confirmDeleteFolder": {
     "message": "このフォルダには$count$個のアイテムが含まれています。削除は元に戻せます。",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "一時停止中"
+  },
+  "whatsNewChangelog": {
+    "message": "変更履歴"
   },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks サイドパネルを開く"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "プロジェクトのGitHubリポジトリからのリリースノートとヒント（最大6時間ごとに取得）。オフにするとネットワーク取得も停止します。"
+  },
+  "optionAnnounceEnabled": {
+    "message": "製品内のお知らせを表示"
+  },
   "optionAutoRefreshSync": {
     "message": "同期ステータスを自動更新"
   },
@@ -766,7 +784,7 @@
     "message": "クラシックヘッダーを復元"
   },
   "optionClassicExperienceHint": {
-    "message": "コマンド パレット、クイック追加スター、そのページの右クリック項目、ツール ボタン、ビュー タブをオフにします。それぞれは上記で個別に再度有効にできます。"
+    "message": "コマンドパレット、クイック追加スターとそのページの右クリックエントリ、ツールボタン、ビュータブをオフにします。各項目はそれぞれのセクションで個別に再び有効にできます。"
   },
   "optionStatsEnabled": {
     "message": "訪問統計を有効にする"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "バックアップ"
   },
+  "optionsGroupIcons": {
+    "message": "アイコン"
+  },
+  "optionsGroupContextMenu": {
+    "message": "コンテキストメニュー"
+  },
   "optionsGroupViews": {
     "message": "ビュー"
   },
   "optionsGroupSort": {
     "message": "並べ替え"
+  },
+  "optionsGroupTools": {
+    "message": "ツール"
+  },
+  "optionsGroupStats": {
+    "message": "統計"
   },
   "paletteCmdDead": {
     "message": "無効なリンクを検索"

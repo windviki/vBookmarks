@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Erweiterte Optionen"
   },
+  "announceV408Title": {
+    "message": "Neu in v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 ist das Release mit verbesserten Favicons: Echte Website-Symbole werden automatisch für Lesezeichen abgerufen, die Chrome noch nicht im Cache hat."
+  },
+  "announceDismiss": {
+    "message": "Schließen"
+  },
   "confirmDeleteFolder": {
     "message": "Dieser Ordner enthält $count$ Element(e). Sie können das Löschen rückgängig machen.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pausiert"
+  },
+  "whatsNewChangelog": {
+    "message": "Änderungsprotokoll"
   },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks-Seitenpanel öffnen"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Versionshinweise und Tipps aus dem GitHub-Repository des Projekts (höchstens alle 6 Stunden abgerufen). Bei Deaktivierung wird auch der Netzwerkabruf gestoppt."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Produktinterne Ankündigungen anzeigen"
+  },
   "optionAutoRefreshSync": {
     "message": "Synchronisierungsstatus automatisch aktualisieren"
   },
@@ -766,7 +784,7 @@
     "message": "Klassische Kopfzeile wiederherstellen"
   },
   "optionClassicExperienceHint": {
-    "message": "Deaktiviert die Befehlspalette, den Schnellhinzufügen-Stern, seinen Rechtsklick-Eintrag im Kontextmenü der Seite, die Tool-Schaltfläche und die Ansichts-Tabs. Jede Option kann oben einzeln wieder aktiviert werden."
+    "message": "Deaktiviert die Befehlspalette, den Schnellhinzufügen-Stern, seinen Rechtsklick-Eintrag auf der Seite, die Werkzeugschaltfläche und die Ansichts-Tabs. Jede Funktion kann in ihrem Abschnitt einzeln wieder aktiviert werden."
   },
   "optionStatsEnabled": {
     "message": "Besuchsstatistik aktivieren"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Sicherung"
   },
+  "optionsGroupIcons": {
+    "message": "Symbole"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontextmenüs"
+  },
   "optionsGroupViews": {
     "message": "Ansichten"
   },
   "optionsGroupSort": {
     "message": "Sortierung"
+  },
+  "optionsGroupTools": {
+    "message": "Werkzeuge"
+  },
+  "optionsGroupStats": {
+    "message": "Statistiken"
   },
   "paletteCmdDead": {
     "message": "Defekte Links suchen"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Tùy Chọn Nâng Cao"
   },
+  "announceV408Title": {
+    "message": "Có gì mới trong v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 là bản phát hành tăng cường favicon: biểu tượng trang web thực được tự động tải cho các dấu trang mà Chrome chưa lưu vào bộ nhớ cache."
+  },
+  "announceDismiss": {
+    "message": "Bỏ qua"
+  },
   "confirmDeleteFolder": {
     "message": "Thư mục này chứa $count$ (mục). Bạn có thể hoàn tác việc xóa.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Đã tạm dừng"
+  },
+  "whatsNewChangelog": {
+    "message": "Nhật ký thay đổi"
   },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Mở bảng điều khiển bên vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Ghi chú phát hành và mẹo từ kho GitHub của dự án (tìm nạp tối đa mỗi 6 giờ). Tắt cũng ngừng tìm nạp từ mạng."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Hiển thị thông báo trong sản phẩm"
+  },
   "optionAutoRefreshSync": {
     "message": "Tự động làm mới trạng thái đồng bộ"
   },
@@ -766,7 +784,7 @@
     "message": "Khôi phục thanh tiêu đề cổ điển"
   },
   "optionClassicExperienceHint": {
-    "message": "Tắt bảng lệnh, ngôi sao thêm nhanh, mục chuột phải trên trang của nó, nút công cụ và các tab xem. Từng mục có thể được bật lại riêng lẻ ở trên."
+    "message": "Tắt bảng lệnh, ngôi sao thêm nhanh, mục chuột phải trên trang, nút công cụ và các tab xem. Từng mục có thể được bật lại riêng lẻ trong mục của nó."
   },
   "optionStatsEnabled": {
     "message": "Bật thống kê lượt truy cập"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Sao lưu"
   },
+  "optionsGroupIcons": {
+    "message": "Biểu tượng"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu ngữ cảnh"
+  },
   "optionsGroupViews": {
     "message": "Chế độ xem"
   },
   "optionsGroupSort": {
     "message": "Sắp xếp"
+  },
+  "optionsGroupTools": {
+    "message": "Công cụ"
+  },
+  "optionsGroupStats": {
+    "message": "Thống kê"
   },
   "paletteCmdDead": {
     "message": "Tìm liên kết hỏng"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "אפשרויות מתקדמות"
   },
+  "announceV408Title": {
+    "message": "מה חדש ב-v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 היא המהדורה עם שיפור ה-favicon: סמלי אתרים אמיתיים נשלפים אוטומטית עבור סימניות ש-Chrome טרם שמר במטמון."
+  },
+  "announceDismiss": {
+    "message": "סגור"
+  },
   "confirmDeleteFolder": {
     "message": "תיקייה זו מכילה $count$ פריט(ים). ניתן לבטל את המחיקה.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "מושהה"
+  },
+  "whatsNewChangelog": {
+    "message": "יומן שינויים"
   },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "פתח חלונית צד של vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "הערות שחרור וטיפים ממאגר GitHub של הפרויקט (נשלפים לכל היותר כל 6 שעות). כיבוי גם עוצר את הבאת הנתונים מהרשת."
+  },
+  "optionAnnounceEnabled": {
+    "message": "הצג הודעות בתוך המוצר"
+  },
   "optionAutoRefreshSync": {
     "message": "רענן מצב סנכרון אוטומטית"
   },
@@ -766,7 +784,7 @@
     "message": "שחזר את הכותרת הקלאסית"
   },
   "optionClassicExperienceHint": {
-    "message": "משבית את לוח הפקודות, את כוכב ההוספה המהירה, את פריט תפריט ההקשר שלו, את כפתור הכלים ואת לשוניות התצוגה. ניתן להפעיל כל אחד מחדש בנפרד למעלה."
+    "message": "מכבה את פלטת הפקודות, את כוכב ההוספה המהירה, את פריט תפריט ההקשר שלו בדף, את כפתור הכלי ואת כרטיסיות התצוגה. ניתן להפעיל כל אחד מחדש בנפרד בסעיף שלו."
   },
   "optionStatsEnabled": {
     "message": "הפעל סטטיסטיקות ביקור"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "גיבוי"
   },
+  "optionsGroupIcons": {
+    "message": "סמלים"
+  },
+  "optionsGroupContextMenu": {
+    "message": "תפריטי הקשר"
+  },
   "optionsGroupViews": {
     "message": "תצוגות"
   },
   "optionsGroupSort": {
     "message": "מיון"
+  },
+  "optionsGroupTools": {
+    "message": "כלים"
+  },
+  "optionsGroupStats": {
+    "message": "סטטיסטיקות"
   },
   "paletteCmdDead": {
     "message": "מצא קישורים מתים"

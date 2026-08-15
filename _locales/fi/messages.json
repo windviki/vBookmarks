@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Lisäasetukset"
   },
+  "announceV408Title": {
+    "message": "Mitä uutta v4.0.8:ssa"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 on favicon-parannettu versio: oikeat sivustokuvakkeet haetaan automaattisesti kirjanmerkeille, joita Chrome ei ole vielä tallentanut välimuistiin."
+  },
+  "announceDismiss": {
+    "message": "Sulje"
+  },
   "confirmDeleteFolder": {
     "message": "Tämä kansio sisältää $count$ kohdetta. Voit peruuttaa poiston.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Keskeytetty"
+  },
+  "whatsNewChangelog": {
+    "message": "Muutosloki"
   },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Avaa vBookmarks-sivupaneeli"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Julkaisutiedotteet ja vinkit projektin GitHub-arkistosta (haetaan enintään 6 tunnin välein). Pois päältä -tila estää myös verkkohaun."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Näytä sovelluksen sisäiset ilmoitukset"
+  },
   "optionAutoRefreshSync": {
     "message": "Päivitä synkronointitila automaattisesti"
   },
@@ -766,7 +784,7 @@
     "message": "Palauta klassinen ylätunniste"
   },
   "optionClassicExperienceHint": {
-    "message": "Poistaa käytöstä komentopaletin, pikalisäystähden, sen sivun pikavalikkokohdan, työkalupainikkeen ja näkymä-välilehdet. Kukin voidaan ottaa uudelleen käyttöön erikseen yllä."
+    "message": "Kytkee pois komentopaletin, pikalisäys-tähden, sen sivun kontekstivalikkokohdan, työkalupainikkeen ja näkymävälilehdet. Jokainen voidaan ottaa käyttöön erikseen omassa osiossaan."
   },
   "optionStatsEnabled": {
     "message": "Ota käyttöön vierailutilastot"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Varmuuskopio"
   },
+  "optionsGroupIcons": {
+    "message": "Kuvakkeet"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstivalikot"
+  },
   "optionsGroupViews": {
     "message": "Näkymät"
   },
   "optionsGroupSort": {
     "message": "Lajittelu"
+  },
+  "optionsGroupTools": {
+    "message": "Työkalut"
+  },
+  "optionsGroupStats": {
+    "message": "Tilastot"
   },
   "paletteCmdDead": {
     "message": "Etsi rikkinäiset linkit"

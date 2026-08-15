@@ -114,6 +114,51 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(900);
 
+    // 2d2. 4.0.8 announce banner: the remote announcement layer renders a
+    // cached message offline (the fetch fails silently in DinD), links go to
+    // the guide + changelog, and dismiss records the id in vbmAnnounceSeen.
+    // donationDisabled pins the donation card off so it can't defer the banner.
+    await page.evaluate(() => chrome.storage.local.set({
+        donationDisabled: '1',
+        vbmAnnounce: {
+            ts: Date.now(), etag: null,
+            data: { version: 1, messages: [{
+                id: 'v408-whats-new', minVersion: '4.0.8', maxVersion: '', channel: 'all',
+                once: true, display: 'banner', kind: 'tip',
+                titleKey: 'announceV408Title', textKey: 'announceV408Text',
+                textFallback: { en: 'favicon-enhanced release' },
+                links: [
+                    { labelKey: 'donationV4GuideLink', url: 'https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md' },
+                    { labelKey: 'whatsNewChangelog', url: 'https://github.com/windviki/vBookmarks#changelogs' }
+                ]
+            }] }
+        }
+    }));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+    const announce = await page.evaluate(() => ({
+        shown: !document.getElementById('announce').hidden,
+        text: document.getElementById('announce').textContent,
+        guide: [...document.querySelectorAll('#announce .announce-link')]
+            .map(a => a.href).find(h => h.includes('guide-v4')) || '',
+        changelog: [...document.querySelectorAll('#announce .announce-link')]
+            .map(a => a.href).find(h => h.includes('changelog')) || ''
+    }));
+    console.log('announce banner:', JSON.stringify(announce));
+    if (!announce.shown || !announce.guide || !announce.changelog)
+        errors.push(`announce banner broken: ${JSON.stringify(announce)}`);
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-announce.png' });
+    await page.evaluate(() => document.querySelector('#announce .announce-dismiss').click());
+    await sleep(400);
+    const seen = await page.evaluate(() => new Promise(res =>
+        chrome.storage.local.get('vbmAnnounceSeen', v => res(v.vbmAnnounceSeen))));
+    if (!seen || !seen.includes('v408-whats-new'))
+        errors.push(`announce dismiss not recorded: ${JSON.stringify(seen)}`);
+    await page.evaluate(() => chrome.storage.local.remove(
+        ['donationDisabled', 'vbmAnnounce', 'vbmAnnounceSeen']));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+
     // 2e. v4 task-3 #14: with onlyShowBMBar on, "reveal in tree" on a target
     // OUTSIDE the bar toasts a hint instead of silently failing; the toast
     // action shows the full tree (session only) and completes the reveal.

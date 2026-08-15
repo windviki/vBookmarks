@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Išplėstiniai parametrai"
   },
+  "announceV408Title": {
+    "message": "Kas naujo v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 yra patobulintų favicon'ų leidimas: tikros svetainių piktogramos automatiškai gaunamos žymėms, kurių Chrome dar nėra įrašęs į talpyklą."
+  },
+  "announceDismiss": {
+    "message": "Atmesti"
+  },
   "confirmDeleteFolder": {
     "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pristabdyta"
+  },
+  "whatsNewChangelog": {
+    "message": "Pakeitimų istorija"
   },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Atidaryti vBookmarks šoninį skydelį"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Leidimo pastabos ir patarimai iš projekto GitHub saugyklos (gaunami ne dažniau kaip kas 6 valandas). Išjungus taip pat sustabdoma tinklo užklausa."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Rodyti pranešimus produkto viduje"
+  },
   "optionAutoRefreshSync": {
     "message": "Automatiškai atnaujinti sinchronizavimo būklę"
   },
@@ -766,7 +784,7 @@
     "message": "Atkurti klasikinę antraštę"
   },
   "optionClassicExperienceHint": {
-    "message": "Išjungia komandų paletę, greitosios žvaigždutės mygtuką, jo įrašą puslapio dešiniojo pelės mygtuko meniu, įrankių mygtuką ir rodymo skirtukus. Kiekvieną iš jų galima vėl įjungti atskirai aukščiau."
+    "message": "Išjungia komandų paletę, greitojo pridėjimo žvaigždutę, jos dešiniojo pelės mygtuko įrašą puslapyje, įrankių mygtuką ir skirtukus. Kiekvieną iš jų galima atskirai vėl įjungti atitinkamame skyriuje."
   },
   "optionStatsEnabled": {
     "message": "Įjungti lankomumo statistiką"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Atsarginė kopija"
   },
+  "optionsGroupIcons": {
+    "message": "Piktogramos"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstiniai meniu"
+  },
   "optionsGroupViews": {
     "message": "Rodiniai"
   },
   "optionsGroupSort": {
     "message": "Rūšiavimas"
+  },
+  "optionsGroupTools": {
+    "message": "Įrankiai"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
   },
   "paletteCmdDead": {
     "message": "Rasti neveikiančias nuorodas"

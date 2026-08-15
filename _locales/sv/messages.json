@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Avancerade alternativ"
   },
+  "announceV408Title": {
+    "message": "Nyheter i v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 är den favicon-förbättrade utgåvan: riktiga webbplatsikoner hämtas automatiskt för bokmärken som Chrome ännu inte har cachat."
+  },
+  "announceDismiss": {
+    "message": "Stäng"
+  },
   "confirmDeleteFolder": {
     "message": "Den här mappen innehåller $count$ objekt. Du kan ångra borttagningen.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pausad"
+  },
+  "whatsNewChangelog": {
+    "message": "Ändringslogg"
   },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Öppna vBookmarks sidopanel"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Versionsinformation och tips från projektets GitHub-repository (hämtas högst var 6:e timme). Avaktivering stoppar även nätverkshämtningen."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Visa meddelanden i produkten"
+  },
   "optionAutoRefreshSync": {
     "message": "Uppdatera synkroniseringsstatus automatiskt"
   },
@@ -766,7 +784,7 @@
     "message": "Återställ den klassiska rubriken"
   },
   "optionClassicExperienceHint": {
-    "message": "Stänger av kommandopaletten, stjärnknappen för snabbt tillägg, dess högerklickspost på sidan, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt ovan."
+    "message": "Stänger av kommandopaletten, snabbstjärnan, dess snabbmenypost på sidor, verktygsknappen och vyflikarna. Var och en kan återaktiveras individuellt i sitt avsnitt."
   },
   "optionStatsEnabled": {
     "message": "Aktivera besöksstatistik"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Säkerhetskopiering"
   },
+  "optionsGroupIcons": {
+    "message": "Ikoner"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Snabbmenyer"
+  },
   "optionsGroupViews": {
     "message": "Vyer"
   },
   "optionsGroupSort": {
     "message": "Sortering"
+  },
+  "optionsGroupTools": {
+    "message": "Verktyg"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
   },
   "paletteCmdDead": {
     "message": "Hitta döda länkar"

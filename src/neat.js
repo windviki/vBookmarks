@@ -24,6 +24,7 @@ import { initResize } from './resize.js';
 import { createFolderSorter } from './folder-sort.js';
 import { createQuickAdd } from './quick-add.js';
 import { createDonation } from './donation.js';
+import { initAnnounce } from './announce.js';
 import { createToolButton } from './tool-button.js';
 import { initWakeUp } from './wake-up.js';
 import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
@@ -278,11 +279,24 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // declared below; the button handlers only run on user events, so
     // openNewTab resolves lazily (TDZ-safe, same as the inline closure it
     // replaced).
-    createDonation({
+    const donation = createDonation({
         store,
         $,
         chrome,
         _m,
+        get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
+    });
+    // 4.0.8: the remote announcement layer (docs/announce.json + src/announce.js)
+    // — the what's-new banner. Fire-and-forget: the 6h cache avoids network,
+    // every fetch failure is silent, and when the donation card claims this
+    // open the announcement defers to the next one (4.1.0 §4.3 priority).
+    initAnnounce({
+        store,
+        $,
+        chrome,
+        _m,
+        channel: IS_PANEL ? 'sidepanel' : 'popup',
+        donationShowing: donation.shouldShow,
         get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
     });
 

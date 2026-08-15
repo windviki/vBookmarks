@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Pokročilé Možnosti"
   },
+  "announceV408Title": {
+    "message": "Co je nového ve v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je vydání s vylepšenými faviconami: skutečné ikony webů se automaticky načítají pro záložky, které Chrome ještě nemá v mezipaměti."
+  },
+  "announceDismiss": {
+    "message": "Zavřít"
+  },
   "confirmDeleteFolder": {
     "message": "Tato složka obsahuje $count$ položek. Smazání můžete vrátit.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pozastaveno"
+  },
+  "whatsNewChangelog": {
+    "message": "Seznam změn"
   },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Otevřít postranní panel vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Poznámky k vydání a tipy z repozitáře projektu na GitHubu (načítají se nejvýše každých 6 hodin). Vypnutí také zastaví síťové načítání."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Zobrazovat oznámení v aplikaci"
+  },
   "optionAutoRefreshSync": {
     "message": "Automaticky obnovovat stav synchronizace"
   },
@@ -766,7 +784,7 @@
     "message": "Obnovit klasické záhlaví"
   },
   "optionClassicExperienceHint": {
-    "message": "Vypíná paletu příkazů, hvězdičku pro rychlé přidání, její položku v místní nabídce stránky, tlačítko na panelu nástrojů a karty zobrazení. Každou z nich lze výše znovu povolit jednotlivě."
+    "message": "Vypne paletu příkazů, hvězdičku pro rychlé přidání, její položku v kontextové nabídce stránky, tlačítko nástroje a karty zobrazení. Každou položku lze znovu povolit jednotlivě v její sekci."
   },
   "optionStatsEnabled": {
     "message": "Povolit statistiky návštěv"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Záloha"
   },
+  "optionsGroupIcons": {
+    "message": "Ikony"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontextové nabídky"
+  },
   "optionsGroupViews": {
     "message": "Zobrazení"
   },
   "optionsGroupSort": {
     "message": "Řazení"
+  },
+  "optionsGroupTools": {
+    "message": "Nástroje"
+  },
+  "optionsGroupStats": {
+    "message": "Statistiky"
   },
   "paletteCmdDead": {
     "message": "Najít nefunkční odkazy"

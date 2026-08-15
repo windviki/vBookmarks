@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Geavanceerde opties"
   },
+  "announceV408Title": {
+    "message": "Wat is er nieuw in v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 is de release met verbeterde favicons: echte site-iconen worden automatisch opgehaald voor bladwijzers die Chrome nog niet heeft gecachet."
+  },
+  "announceDismiss": {
+    "message": "Sluiten"
+  },
   "confirmDeleteFolder": {
     "message": "Deze map bevat $count$ item(s). U kunt het verwijderen ongedaan maken.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Gepauzeerd"
+  },
+  "whatsNewChangelog": {
+    "message": "Wijzigingslogboek"
   },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks zijpaneel openen"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Releaseopmerkingen en tips uit de GitHub-repository van het project (maximaal elke 6 uur opgehaald). Uitschakelen stopt ook het ophalen via het netwerk."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Toon in-product aankondigingen"
+  },
   "optionAutoRefreshSync": {
     "message": "Synchronisatiestatus automatisch vernieuwen"
   },
@@ -766,7 +784,7 @@
     "message": "Herstel de klassieke koptekst"
   },
   "optionClassicExperienceHint": {
-    "message": "Schakelt het opdrachtenpalet, de sneltoevoegen-ster, het bijbehorende item in het rechtsklikmenu van de pagina, de werkbalkknop en de weergavetabbladen uit. Elk kan hierboven afzonderlijk opnieuw worden ingeschakeld."
+    "message": "Schakelt het opdrachtenpalet, de ster voor snel toevoegen, de rechtsklikoptie op de pagina, de toolknop en de weergavetabbladen uit. Elk kan afzonderlijk worden ingeschakeld in de bijbehorende sectie."
   },
   "optionStatsEnabled": {
     "message": "Bezoekstatistieken inschakelen"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Back-up"
   },
+  "optionsGroupIcons": {
+    "message": "Iconen"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Contextmenu's"
+  },
   "optionsGroupViews": {
     "message": "Weergaven"
   },
   "optionsGroupSort": {
     "message": "Sortering"
+  },
+  "optionsGroupTools": {
+    "message": "Hulpmiddelen"
+  },
+  "optionsGroupStats": {
+    "message": "Statistieken"
   },
   "paletteCmdDead": {
     "message": "Dode links vinden"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "خيارات متقدمة"
   },
+  "announceV408Title": {
+    "message": "ما الجديد في v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 هو إصدار محسّن للأيقونات: يتم جلب أيقونات المواقع الحقيقية تلقائيًا للإشارات المرجعية التي لم يقم Chrome بتخزينها مؤقتًا بعد."
+  },
+  "announceDismiss": {
+    "message": "إغلاق"
+  },
   "confirmDeleteFolder": {
     "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "متوقف مؤقتًا"
+  },
+  "whatsNewChangelog": {
+    "message": "سجل التغييرات"
   },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "فتح اللوحة الجانبية لـ vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "ملاحظات الإصدار والنصائح من مستودع GitHub الخاص بالمشروع (يتم جلبها كل 6 ساعات كحد أقصى). إيقاف التشغيل يوقف أيضًا جلب الشبكة."
+  },
+  "optionAnnounceEnabled": {
+    "message": "عرض الإعلانات داخل المنتج"
+  },
   "optionAutoRefreshSync": {
     "message": "تحديث حالة المزامنة تلقائياً"
   },
@@ -766,7 +784,7 @@
     "message": "استعادة الترويسة الكلاسيكية"
   },
   "optionClassicExperienceHint": {
-    "message": "يُعطِّل لوحة الأوامر، وزر الإضافة السريعة، ومدخل الصفحة في قائمة النقر بزر الماوس الأيمن، وزر الأداة، وعلامات التبويب. يمكن إعادة تفعيل كل عنصر على حدة أعلاه."
+    "message": "يُوقف تشغيل لوحة الأوامر، ونجمة الإضافة السريعة، ومدخل الصفحة في قائمة النقر بزر الماوس الأيمن، وزر الأداة، وعلامات التبويب. يمكن إعادة تمكين كل منها على حدة في قسمها."
   },
   "optionStatsEnabled": {
     "message": "تمكين إحصائيات الزيارة"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "نسخ احتياطي"
   },
+  "optionsGroupIcons": {
+    "message": "الأيقونات"
+  },
+  "optionsGroupContextMenu": {
+    "message": "قوائم السياق"
+  },
   "optionsGroupViews": {
     "message": "العروض"
   },
   "optionsGroupSort": {
     "message": "الفرز"
+  },
+  "optionsGroupTools": {
+    "message": "الأدوات"
+  },
+  "optionsGroupStats": {
+    "message": "الإحصائيات"
   },
   "paletteCmdDead": {
     "message": "البحث عن الروابط المعطلة"

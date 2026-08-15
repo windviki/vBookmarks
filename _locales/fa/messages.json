@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "گزینه‌های پیشرفته"
   },
+  "announceV408Title": {
+    "message": "تازههای v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 نسخهای با بهبود favicon است: آیکونهای واقعی سایتها بهطور خودکار برای نشانکهایی که Chrome هنوز کش نکرده است، دریافت میشوند."
+  },
+  "announceDismiss": {
+    "message": "رد کردن"
+  },
   "confirmDeleteFolder": {
     "message": "این پوشه شامل $count$ آیتم است. می‌توانید حذف را لغو کنید.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "متوقف شده"
+  },
+  "whatsNewChangelog": {
+    "message": "تاریخچه تغییرات"
   },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "باز کردن پنل کناری vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "یادداشتهای انتشار و نکات از مخزن GitHub پروژه (حداکثر هر ۶ ساعت یکبار دریافت میشود). خاموش کردن نیز دریافت شبکهای را متوقف میکند."
+  },
+  "optionAnnounceEnabled": {
+    "message": "نمایش اطلاعیههای درونمحصول"
+  },
   "optionAutoRefreshSync": {
     "message": "به‌روزرسانی خودکار وضعیت همگام‌سازی"
   },
@@ -766,7 +784,7 @@
     "message": "بازیابی سربرگ کلاسیک"
   },
   "optionClassicExperienceHint": {
-    "message": "پالت فرمان، ستاره افزودن سریع، ورودی راست‌کلیک صفحه، دکمه ابزار و برگه‌های نمایش را خاموش می‌کند. هر مورد را می‌توان در بالا به‌صورت جداگانه فعال کرد."
+    "message": "پالت فرمان، ستاره افزودن سریع، ورودی کلیک راست آن در صفحه، دکمه ابزار و برگههای نما را خاموش میکند. هر کدام را میتوان بهصورت جداگانه در بخش خود دوباره فعال کرد."
   },
   "optionStatsEnabled": {
     "message": "فعال‌سازی آمار بازدید"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "پشتیبان‌گیری"
   },
+  "optionsGroupIcons": {
+    "message": "آیکونها"
+  },
+  "optionsGroupContextMenu": {
+    "message": "منوهای زمینه"
+  },
   "optionsGroupViews": {
     "message": "نماها"
   },
   "optionsGroupSort": {
     "message": "مرتب‌سازی"
+  },
+  "optionsGroupTools": {
+    "message": "ابزارها"
+  },
+  "optionsGroupStats": {
+    "message": "آمار"
   },
   "paletteCmdDead": {
     "message": "یافتن پیوندهای مرده"

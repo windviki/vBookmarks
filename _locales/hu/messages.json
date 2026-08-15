@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Haladó Beállítások"
   },
+  "announceV408Title": {
+    "message": "Újdonságok a v4.0.8-ban"
+  },
+  "announceV408Text": {
+    "message": "A v4.0.8 a favicon-támogatással bővített kiadás: a valódi webhelyikonok automatikusan letöltődnek azokhoz a könyvjelzőkhöz, amelyeket a Chrome még nem gyorsítótárazott."
+  },
+  "announceDismiss": {
+    "message": "Bezárás"
+  },
   "confirmDeleteFolder": {
     "message": "Ez a mappa $count$ elemet tartalmaz. A törlés visszavonható.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Szüneteltetve"
+  },
+  "whatsNewChangelog": {
+    "message": "Változásnapló"
   },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks oldalsáv megnyitása"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Kiadási megjegyzések és tippek a projekt GitHub-tárházából (legfeljebb 6 óránként lekérve). A kikapcsolás a hálózati lekérést is leállítja."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Alkalmazáson belüli bejelentések megjelenítése"
+  },
   "optionAutoRefreshSync": {
     "message": "Szinkronizálási állapot automatikus frissítése"
   },
@@ -766,7 +784,7 @@
     "message": "A klasszikus fejléc visszaállítása"
   },
   "optionClassicExperienceHint": {
-    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, annak jobb gombos menüpontját, az eszközgombot és a nézetfüleket. Mindegyik egyenként újra engedélyezhető a fenti beállításokban."
+    "message": "Kikapcsolja a parancspalettát, a gyors hozzáadás csillagot, annak jobb gombos menübejegyzését az oldalakon, az eszközgombot és a nézetfüleket. Mindegyik külön-külön újra engedélyezhető a saját szakaszában."
   },
   "optionStatsEnabled": {
     "message": "Látogatási statisztikák engedélyezése"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Biztonsági mentés"
   },
+  "optionsGroupIcons": {
+    "message": "Ikonok"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Helyi menük"
+  },
   "optionsGroupViews": {
     "message": "Nézetek"
   },
   "optionsGroupSort": {
     "message": "Rendezés"
+  },
+  "optionsGroupTools": {
+    "message": "Eszközök"
+  },
+  "optionsGroupStats": {
+    "message": "Statisztikák"
   },
   "paletteCmdDead": {
     "message": "Hibás hivatkozások keresése"

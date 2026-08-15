@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Pokročilé možnosti"
   },
+  "announceV408Title": {
+    "message": "Čo je nové vo v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je verzia s vylepšenými favikonami: skutočné ikony stránok sa automaticky načítavajú pre záložky, ktoré Chrome ešte neuložil do vyrovnávacej pamäte."
+  },
+  "announceDismiss": {
+    "message": "Zavrieť"
+  },
   "confirmDeleteFolder": {
     "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pozastavené"
+  },
+  "whatsNewChangelog": {
+    "message": "Zoznam zmien"
   },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Otvoriť bočný panel vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Poznámky k vydaniu a tipy z GitHub repozitára projektu (načítavajú sa maximálne každých 6 hodín). Vypnutím sa zastaví aj sieťové načítavanie."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Zobrazovať oznámenia v produkte"
+  },
   "optionAutoRefreshSync": {
     "message": "Automaticky obnovovať stav synchronizácie"
   },
@@ -766,7 +784,7 @@
     "message": "Obnoviť klasickú hlavičku"
   },
   "optionClassicExperienceHint": {
-    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, jej položku v kontextovej ponuke stránky, tlačidlo na paneli nástrojov a karty zobrazenia. Každú z nich je možné vyššie znova povoliť jednotlivo."
+    "message": "Vypne paletu príkazov, hviezdičku rýchleho pridania, jej položku v kontextovej ponuke stránky, tlačidlo nástroja a karty zobrazenia. Každú položku je možné znova povoliť jednotlivo v jej sekcii."
   },
   "optionStatsEnabled": {
     "message": "Povoliť štatistiky návštev"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Záloha"
   },
+  "optionsGroupIcons": {
+    "message": "Ikony"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontextové ponuky"
+  },
   "optionsGroupViews": {
     "message": "Zobrazenia"
   },
   "optionsGroupSort": {
     "message": "Triedenie"
+  },
+  "optionsGroupTools": {
+    "message": "Nástroje"
+  },
+  "optionsGroupStats": {
+    "message": "Štatistiky"
   },
   "paletteCmdDead": {
     "message": "Nájsť nefunkčné odkazy"

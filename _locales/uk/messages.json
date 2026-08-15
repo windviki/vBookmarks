@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Розширені опції"
   },
+  "announceV408Title": {
+    "message": "Що нового у v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 — це реліз із покращеними фавіконами: справжні іконки сайтів автоматично завантажуються для закладок, які Chrome ще не закешував."
+  },
+  "announceDismiss": {
+    "message": "Закрити"
+  },
   "confirmDeleteFolder": {
     "message": "Ця папка містить $count$ елемент(ів). Ви можете скасувати видалення.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Призупинено"
+  },
+  "whatsNewChangelog": {
+    "message": "Журнал змін"
   },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Відкрити бічну панель vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Примітки до релізів і поради з GitHub-репозиторію проєкту (завантажуються не частіше ніж раз на 6 годин). Вимкнення також припиняє завантаження з мережі."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Показувати оголошення в продукті"
+  },
   "optionAutoRefreshSync": {
     "message": "Автоматично оновлювати стан синхронізації"
   },
@@ -766,7 +784,7 @@
     "message": "Відновити класичний заголовок"
   },
   "optionClassicExperienceHint": {
-    "message": "Вимикає палітру команд, зірку швидкого додавання, пункт у контекстному меню сторінки, кнопку на панелі інструментів і вкладки перегляду. Кожен з них можна ввімкнути окремо вище."
+    "message": "Вимикає палітру команд, зірочку швидкого додавання, її пункт у контекстному меню сторінки, кнопку інструмента та вкладки перегляду. Кожен елемент можна ввімкнути окремо у відповідному розділі."
   },
   "optionStatsEnabled": {
     "message": "Увімкнути статистику відвідувань"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Резервне копіювання"
   },
+  "optionsGroupIcons": {
+    "message": "Значки"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Контекстні меню"
+  },
   "optionsGroupViews": {
     "message": "Види"
   },
   "optionsGroupSort": {
     "message": "Сортування"
+  },
+  "optionsGroupTools": {
+    "message": "Інструменти"
+  },
+  "optionsGroupStats": {
+    "message": "Статистика"
   },
   "paletteCmdDead": {
     "message": "Знайти мертві посилання"

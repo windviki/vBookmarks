@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Gelişmiş Seçenekler"
   },
+  "announceV408Title": {
+    "message": "v4.0.8'deki yenilikler"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8, favicon geliştirmeli sürümdür: Chrome'un henüz önbelleğine almadığı yer imleri için gerçek site simgeleri otomatik olarak alınır."
+  },
+  "announceDismiss": {
+    "message": "Kapat"
+  },
   "confirmDeleteFolder": {
     "message": "Bu klasörde $count$ öğe bulunuyor. Silme işlemini geri alabilirsiniz.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Duraklatıldı"
+  },
+  "whatsNewChangelog": {
+    "message": "Değişiklik günlüğü"
   },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks yan panelini aç"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Projenin GitHub deposundaki sürüm notları ve ipuçları (en fazla 6 saatte bir getirilir). Kapalı olması ağ isteğini de durdurur."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Ürün içi duyuruları göster"
+  },
   "optionAutoRefreshSync": {
     "message": "Senkronizasyon durumunu otomatik yenile"
   },
@@ -766,7 +784,7 @@
     "message": "Klasik başlığı geri yükle"
   },
   "optionClassicExperienceHint": {
-    "message": "Komut paletini, hızlı ekleme yıldızını, sayfa sağ tıklama girişini, araç düğmesini ve görünüm sekmelerini kapatır. Her biri yukarıda ayrı ayrı yeniden etkinleştirilebilir."
+    "message": "Komut paletini, hızlı ekleme yıldızını, sayfa sağ tıklama öğesini, araç düğmesini ve görünüm sekmelerini kapatır. Her biri kendi bölümünden ayrı ayrı yeniden etkinleştirilebilir."
   },
   "optionStatsEnabled": {
     "message": "Ziyaret istatistiklerini etkinleştir"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Yedekle"
   },
+  "optionsGroupIcons": {
+    "message": "Simgeler"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Bağlam menüleri"
+  },
   "optionsGroupViews": {
     "message": "Görünümler"
   },
   "optionsGroupSort": {
     "message": "Sıralama"
+  },
+  "optionsGroupTools": {
+    "message": "Araçlar"
+  },
+  "optionsGroupStats": {
+    "message": "İstatistikler"
   },
   "paletteCmdDead": {
     "message": "Ölü bağlantıları bul"

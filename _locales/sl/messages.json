@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Napredne možnosti"
   },
+  "announceV408Title": {
+    "message": "Kaj je novega v v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 je različica z izboljšanimi ikonami: prave ikone spletnih mest se samodejno pridobijo za zaznamke, ki jih Chrome še ni predpomnil."
+  },
+  "announceDismiss": {
+    "message": "Zapri"
+  },
   "confirmDeleteFolder": {
     "message": "Ta mapa vsebuje $count$ element(-e). Brisanje lahko razveljavite.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Zaustavljeno"
+  },
+  "whatsNewChangelog": {
+    "message": "Dnevnik sprememb"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Odpri stransko ploščo vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Opombe ob izdaji in nasveti iz GitHub repozitorija projekta (pridobljeno največ vsakih 6 ur). Če je izklopljeno, se prepreči tudi omrežno pridobivanje."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Prikaži objave v aplikaciji"
+  },
   "optionAutoRefreshSync": {
     "message": "Samodejno osveži stanje sinhronizacije"
   },
@@ -766,7 +784,7 @@
     "message": "Obnovi klasično glavo"
   },
   "optionClassicExperienceHint": {
-    "message": "Izklopi ukazno paleto, zvezdico za hitro dodajanje, njen vnos v kontekstnem meniju strani, orodni gumb in zavihke pogleda. Vsakega od teh je mogoče zgoraj posamično znova omogočiti."
+    "message": "Izklopi ukazno paleto, hitro dodajanje z zvezdico, njen vnos v kontekstnem meniju strani, gumb orodja in zavihke pogleda. Vsako od teh je mogoče znova omogočiti posamično v svojem razdelku."
   },
   "optionStatsEnabled": {
     "message": "Omogoči statistiko obiskov"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Varnostna kopija"
   },
+  "optionsGroupIcons": {
+    "message": "Ikone"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstni meniji"
+  },
   "optionsGroupViews": {
     "message": "Pogledi"
   },
   "optionsGroupSort": {
     "message": "Razvrščanje"
+  },
+  "optionsGroupTools": {
+    "message": "Orodja"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
   },
   "paletteCmdDead": {
     "message": "Poišči mrtve povezave"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opțiuni Avansate"
   },
+  "announceV408Title": {
+    "message": "Ce este nou în v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 aduce îmbunătățiri favicon: pictogramele reale ale site-urilor sunt preluate automat pentru marcajele pe care Chrome nu le-a salvat încă în cache."
+  },
+  "announceDismiss": {
+    "message": "Închide"
+  },
   "confirmDeleteFolder": {
     "message": "Acest dosar conține $count$ element(e). Puteți anula ștergerea.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "În pauză"
+  },
+  "whatsNewChangelog": {
+    "message": "Jurnal de modificări"
   },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Deschide panoul lateral vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Note de lansare și sfaturi din depozitul GitHub al proiectului (preluate cel mult o dată la 6 ore). Dacă este dezactivat, se oprește și preluarea din rețea."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Afișează anunțurile din produs"
+  },
   "optionAutoRefreshSync": {
     "message": "Actualizare automată a stării sincronizării"
   },
@@ -766,7 +784,7 @@
     "message": "Restabiliți antetul clasic"
   },
   "optionClassicExperienceHint": {
-    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, intrarea acesteia din meniul cu clic dreapta al paginii, butonul de instrumente și filele de vizualizare. Fiecare poate fi reactivată individual mai sus."
+    "message": "Dezactivează paleta de comenzi, steaua de adăugare rapidă, intrarea acesteia din meniul contextual al paginii, butonul de instrumente și filele de vizualizare. Fiecare poate fi reactivată individual în secțiunea sa."
   },
   "optionStatsEnabled": {
     "message": "Activează statisticile de vizită"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Copie de rezervă"
   },
+  "optionsGroupIcons": {
+    "message": "Pictograme"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Meniuri contextuale"
+  },
   "optionsGroupViews": {
     "message": "Vizualizări"
   },
   "optionsGroupSort": {
     "message": "Sortare"
+  },
+  "optionsGroupTools": {
+    "message": "Unelte"
+  },
+  "optionsGroupStats": {
+    "message": "Statistici"
   },
   "paletteCmdDead": {
     "message": "Găsește legături moarte"

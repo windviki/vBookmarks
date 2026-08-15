@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Advanced Options"
   },
+  "announceV408Title": {
+    "message": "Novità nella v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 è la versione con favicon migliorate: le icone reali dei siti vengono recuperate automaticamente per i segnalibri che Chrome non ha ancora memorizzato nella cache."
+  },
+  "announceDismiss": {
+    "message": "Chiudi"
+  },
   "confirmDeleteFolder": {
     "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "In pausa"
+  },
+  "whatsNewChangelog": {
+    "message": "Changelog"
   },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Apri pannello laterale vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Note di rilascio e suggerimenti dal repository GitHub del progetto (recuperati al massimo ogni 6 ore). La disattivazione interrompe anche il recupero dalla rete."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Mostra gli annunci nel prodotto"
+  },
   "optionAutoRefreshSync": {
     "message": "Aggiorna automaticamente stato sincronizzazione"
   },
@@ -766,7 +784,7 @@
     "message": "Ripristina l'intestazione classica"
   },
   "optionClassicExperienceHint": {
-    "message": "Disattiva la tavolozza dei comandi, la stella di aggiunta rapida, la relativa voce nel menu contestuale della pagina, il pulsante della barra degli strumenti e le schede di visualizzazione. Ciascuna può essere riattivata singolarmente qui sopra."
+    "message": "Disattiva la palette dei comandi, la stella per l'aggiunta rapida, la relativa voce del menu contestuale della pagina, il pulsante dello strumento e le schede di visualizzazione. Ognuna può essere riattivata singolarmente nella propria sezione."
   },
   "optionStatsEnabled": {
     "message": "Abilita statistiche di visita"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Backup"
   },
+  "optionsGroupIcons": {
+    "message": "Icone"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu contestuali"
+  },
   "optionsGroupViews": {
     "message": "Viste"
   },
   "optionsGroupSort": {
     "message": "Ordinamento"
+  },
+  "optionsGroupTools": {
+    "message": "Strumenti"
+  },
+  "optionsGroupStats": {
+    "message": "Statistiche"
   },
   "paletteCmdDead": {
     "message": "Trova collegamenti interrotti"

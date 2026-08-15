@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Options avancées"
   },
+  "announceV408Title": {
+    "message": "Nouveautés de v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 est la version avec favicons améliorés : les vraies icônes des sites sont récupérées automatiquement pour les favoris que Chrome n'a pas encore mis en cache."
+  },
+  "announceDismiss": {
+    "message": "Fermer"
+  },
   "confirmDeleteFolder": {
     "message": "Ce dossier contient $count$ élément(s). Vous pouvez annuler la suppression.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "En pause"
+  },
+  "whatsNewChangelog": {
+    "message": "Journal des modifications"
   },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Ouvrir le panneau latéral vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Notes de version et astuces issues du dépôt GitHub du projet (récupérées au maximum toutes les 6 heures). Désactiver cette option arrête également l'appel réseau."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Afficher les annonces dans le produit"
+  },
   "optionAutoRefreshSync": {
     "message": "Actualiser automatiquement l'état de synchronisation"
   },
@@ -766,7 +784,7 @@
     "message": "Restaurer l'en-tête classique"
   },
   "optionClassicExperienceHint": {
-    "message": "Désactive la palette de commandes, l'ajout rapide en étoile, son entrée dans le menu contextuel de la page, le bouton d'outil et les onglets de vue. Chacun peut être réactivé individuellement ci-dessus."
+    "message": "Désactive la palette de commandes, l'étoile d'ajout rapide, son entrée dans le menu contextuel de la page, le bouton d'outil et les onglets d'affichage. Chacun peut être réactivé individuellement dans sa section."
   },
   "optionStatsEnabled": {
     "message": "Activer les statistiques de visites"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Sauvegarde"
   },
+  "optionsGroupIcons": {
+    "message": "Icônes"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menus contextuels"
+  },
   "optionsGroupViews": {
     "message": "Vues"
   },
   "optionsGroupSort": {
     "message": "Tri"
+  },
+  "optionsGroupTools": {
+    "message": "Outils"
+  },
+  "optionsGroupStats": {
+    "message": "Statistiques"
   },
   "paletteCmdDead": {
     "message": "Trouver les liens morts"

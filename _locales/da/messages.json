@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Avancerede Indstillinger"
   },
+  "announceV408Title": {
+    "message": "Nyt i v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 er udgivelsen med de forbedrede favicons: rigtige webstedsikoner hentes automatisk for bogmærker, som Chrome endnu ikke har cachelagret."
+  },
+  "announceDismiss": {
+    "message": "Afvis"
+  },
   "confirmDeleteFolder": {
     "message": "Denne mappe indeholder $count$ emne(r). Du kan fortryde sletningen.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Pauseret"
+  },
+  "whatsNewChangelog": {
+    "message": "Ændringslog"
   },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Åbn vBookmarks sidepanel"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Udgivelsesnoter og tips fra projektets GitHub-lager (hentes højst hver 6. time). Slået fra stopper også netværkshentningen."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Vis meddelelser i produktet"
+  },
   "optionAutoRefreshSync": {
     "message": "Opdater synkroniseringsstatus automatisk"
   },
@@ -766,7 +784,7 @@
     "message": "Gendan den klassiske header"
   },
   "optionClassicExperienceHint": {
-    "message": "Slår kommandopaletten, stjerneknappen til hurtig tilføjelse, dens punkt i sidens højreklikmenu, værktøjsknappen og visningsfanerne fra. Hver enkelt kan genaktiveres individuelt ovenfor."
+    "message": "Slår kommandopaletten, hurtigtilføj-stjernen, dens højrekliksindgang på siden, værktøjsknappen og visningsfanerne fra. Hver enkelt kan genaktiveres individuelt i sin sektion."
   },
   "optionStatsEnabled": {
     "message": "Aktivér besøgsstatistik"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Sikkerhedskopi"
   },
+  "optionsGroupIcons": {
+    "message": "Ikoner"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstmenuer"
+  },
   "optionsGroupViews": {
     "message": "Visninger"
   },
   "optionsGroupSort": {
     "message": "Sortering"
+  },
+  "optionsGroupTools": {
+    "message": "Værktøjer"
+  },
+  "optionsGroupStats": {
+    "message": "Statistik"
   },
   "paletteCmdDead": {
     "message": "Find døde links"

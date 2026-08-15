@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opcje zaawansowane"
   },
+  "announceV408Title": {
+    "message": "Co nowego w v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 to wydanie wzbogacone o ikony favicon: prawdziwe ikony witryn są automatycznie pobierane dla zakładek, których Chrome jeszcze nie zapisał w pamięci podręcznej."
+  },
+  "announceDismiss": {
+    "message": "Zamknij"
+  },
   "confirmDeleteFolder": {
     "message": "Ten folder zawiera $count$ element(y). Możesz cofnąć usunięcie.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Wstrzymane"
+  },
+  "whatsNewChangelog": {
+    "message": "Dziennik zmian"
   },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Otwórz panel boczny vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Informacje o wydaniach i wskazówki z repozytorium GitHub projektu (pobierane co najwyżej co 6 godzin). Wyłączenie zatrzymuje również pobieranie sieciowe."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Pokaż ogłoszenia w produkcie"
+  },
   "optionAutoRefreshSync": {
     "message": "Automatycznie odświeżaj status synchronizacji"
   },
@@ -766,7 +784,7 @@
     "message": "Przywróć klasyczny nagłówek"
   },
   "optionClassicExperienceHint": {
-    "message": "Wyłącza paletę poleceń, gwiazdkę szybkiego dodawania, jej pozycję w menu kontekstowym strony, przycisk narzędziowy oraz karty widoku. Każdy z tych elementów można ponownie włączyć indywidualnie powyżej."
+    "message": "Wyłącza paletę poleceń, gwiazdkę szybkiego dodawania, jej pozycję w menu kontekstowym strony, przycisk narzędzi i zakładki widoku. Każdą z nich można ponownie włączyć indywidualnie w swojej sekcji."
   },
   "optionStatsEnabled": {
     "message": "Włącz statystyki odwiedzin"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Kopia zapasowa"
   },
+  "optionsGroupIcons": {
+    "message": "Ikony"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Menu kontekstowe"
+  },
   "optionsGroupViews": {
     "message": "Widoki"
   },
   "optionsGroupSort": {
     "message": "Sortowanie"
+  },
+  "optionsGroupTools": {
+    "message": "Narzędzia"
+  },
+  "optionsGroupStats": {
+    "message": "Statystyki"
   },
   "paletteCmdDead": {
     "message": "Znajdź martwe linki"

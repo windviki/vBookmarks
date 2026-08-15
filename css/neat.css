@@ -2613,6 +2613,73 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     outline-offset: -2px;
 }
 
+/* Remote announcement banner (4.0.8, src/announce.js — docs/announce.json).
+   A compact accent-framed inline banner in the popup top area; a Tab-ring
+   stop like the risk banner, links + × all focusable. `#announce[hidden]`
+   is required: the flex layout would otherwise override the UA's hidden. */
+#announce[hidden] {
+    display: none;
+}
+
+.announce-banner {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    margin: 4px 8px 6px;
+    padding: 5px 8px;
+    border: 1px solid var(--vbm-accent);
+    border-radius: var(--vbm-radius);
+    background: var(--vbm-bg-elev);
+    color: var(--vbm-fg);
+    font: menu;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.announce-banner .announce-title {
+    font-weight: 600;
+}
+
+.announce-banner .announce-text {
+    min-width: 0;
+}
+
+.announce-banner .announce-link {
+    color: var(--vbm-accent);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.announce-banner .announce-link:hover {
+    text-decoration: underline;
+}
+
+.announce-banner .announce-dismiss {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-inline-start: auto;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--vbm-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.announce-banner .announce-dismiss:hover {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg);
+}
+
+.announce-banner button:focus-visible,
+.announce-banner a:focus-visible {
+    outline: 2px solid var(--vbm-focus-ring);
+    outline-offset: -2px;
+}
+
 /* Row: anchor (clock + query + count + time) plus a hover-revealed × */
 .search-history-row {
     display: flex;

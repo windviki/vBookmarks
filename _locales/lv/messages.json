@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Paplašinātās opcijas"
   },
+  "announceV408Title": {
+    "message": "Jaunumi v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 ir favicon uzlabojumu laidiens: reālās vietņu ikonas tiek automātiski iegūtas grāmatzīmēm, kuras Chrome vēl nav kešojis."
+  },
+  "announceDismiss": {
+    "message": "Aizvērt"
+  },
   "confirmDeleteFolder": {
     "message": "Šajā mapē ir $count$ vienums(-i). Dzēšanu var atsaukt.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Apturēts"
+  },
+  "whatsNewChangelog": {
+    "message": "Izmaiņu žurnāls"
   },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Atvērt vBookmarks sānu paneli"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Laidienu piezīmes un padomi no projekta GitHub krātuves (tiek ielādēti ne biežāk kā ik pēc 6 stundām). Izslēgšana arī pārtrauc tīkla pieprasījumus."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Rādīt paziņojumus produktā"
+  },
   "optionAutoRefreshSync": {
     "message": "Automātiski atsvaidzināt sinhronizācijas statusu"
   },
@@ -766,7 +784,7 @@
     "message": "Atjaunot klasisko galveni"
   },
   "optionClassicExperienceHint": {
-    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigznīti, tās lapas ar peles labo pogu izvēlni, rīka pogu un skata cilnes. Katru no tām var atkārtoti iespējot atsevišķi iepriekš."
+    "message": "Izslēdz komandu paleti, ātrās pievienošanas zvaigznīti, tās ierakstu lapas kontekstizvēlnē, rīku pogu un skata cilnes. Katru var atkārtoti iespējot atsevišķi attiecīgajā sadaļā."
   },
   "optionStatsEnabled": {
     "message": "Iespējot apmeklējumu statistiku"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Dublējums"
   },
+  "optionsGroupIcons": {
+    "message": "Ikonas"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstizvēlnes"
+  },
   "optionsGroupViews": {
     "message": "Skati"
   },
   "optionsGroupSort": {
     "message": "Kārtošana"
+  },
+  "optionsGroupTools": {
+    "message": "Rīki"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
   },
   "paletteCmdDead": {
     "message": "Atrast bojātas saites"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Täpsemad valikud"
   },
+  "announceV408Title": {
+    "message": "Mis on uut versioonis v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 on favicon-täiustusega väljalase: päris saidi ikoonid laaditakse automaatselt järjehoidjatele, mida Chrome pole veel vahemällu salvestanud."
+  },
+  "announceDismiss": {
+    "message": "Sule"
+  },
   "confirmDeleteFolder": {
     "message": "See kaust sisaldab $count$ kirje(t). Saate kustutamise tagasi võtta.",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "Peatatud"
+  },
+  "whatsNewChangelog": {
+    "message": "Muudatuslogi"
   },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "Ava vBookmarks külgpaneel"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "Väljalaske märkmed ja näpunäited projekti GitHubi hoidlast (hangitakse mitte sagedamini kui iga 6 tunni järel). Väljalülitamine peatab ka võrgupäringud."
+  },
+  "optionAnnounceEnabled": {
+    "message": "Kuva tootesisesed teadaanded"
+  },
   "optionAutoRefreshSync": {
     "message": "Automaatselt värskenda sünkroniseerimise olekut"
   },
@@ -766,7 +784,7 @@
     "message": "Taasta klassikaline päis"
   },
   "optionClassicExperienceHint": {
-    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, selle lehe paremklõpsu kirje, tööriistanupu ja vahekaardid. Igaühte saab ülal eraldi uuesti lubada."
+    "message": "Lülitab välja käsupaleti, kiirlisamise tähe, selle lehe paremklõpsu kirje, tööriista nupu ja vaatevahelehed. Igaüht neist saab oma jaotises eraldi uuesti sisse lülitada."
   },
   "optionStatsEnabled": {
     "message": "Luba külastusstatistika"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "Varundus"
   },
+  "optionsGroupIcons": {
+    "message": "Ikoonid"
+  },
+  "optionsGroupContextMenu": {
+    "message": "Kontekstimenüüd"
+  },
   "optionsGroupViews": {
     "message": "Vaated"
   },
   "optionsGroupSort": {
     "message": "Sorteerimine"
+  },
+  "optionsGroupTools": {
+    "message": "Tööriistad"
+  },
+  "optionsGroupStats": {
+    "message": "Statistika"
   },
   "paletteCmdDead": {
     "message": "Otsi surnud linke"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "ตัวเลือกขั้นสูง"
   },
+  "announceV408Title": {
+    "message": "มีอะไรใหม่ใน v4.0.8"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 เป็นรุ่นที่ปรับปรุง favicon: ไอคอนเว็บไซต์จริงจะถูกดึงมาโดยอัตโนมัติสำหรับบุ๊กมาร์กที่ Chrome ยังไม่ได้แคชไว้"
+  },
+  "announceDismiss": {
+    "message": "ปิด"
+  },
   "confirmDeleteFolder": {
     "message": "โฟลเดอร์นี้มี $count$ รายการ คุณสามารถยกเลิกการลบได้",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "หยุดชั่วคราว"
+  },
+  "whatsNewChangelog": {
+    "message": "บันทึกการเปลี่ยนแปลง"
   },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "เปิดแผงด้านข้าง vBookmarks"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "หมายเหตุรุ่นและเคล็ดลับจากที่เก็บ GitHub ของโครงการ (ดึงข้อมูลอย่างมากทุก 6 ชั่วโมง) การปิดจะหยุดการดึงข้อมูลจากเครือข่ายด้วย"
+  },
+  "optionAnnounceEnabled": {
+    "message": "แสดงประกาศภายในผลิตภัณฑ์"
+  },
   "optionAutoRefreshSync": {
     "message": "รีเฟรชสถานะการซิงค์อัตโนมัติ"
   },
@@ -766,7 +784,7 @@
     "message": "กู้คืนส่วนหัวแบบคลาสสิก"
   },
   "optionClassicExperienceHint": {
-    "message": "ปิดใช้งานแผงคำสั่ง ปุ่มดาวเพิ่มด่วน รายการคลิกขวาบนหน้า ปุ่มเครื่องมือ และแท็บมุมมอง แต่ละรายการสามารถเปิดใช้งานใหม่ได้ด้านบนเป็นรายบุคคล"
+    "message": "ปิดใช้งาน command palette, ปุ่มดาวเพิ่มด่วน, รายการคลิกขวาบนหน้าเว็บ, ปุ่มเครื่องมือ และแท็บมุมมอง แต่ละรายการสามารถเปิดใช้งานใหม่ได้เป็นรายบุคคลในส่วนของมัน"
   },
   "optionStatsEnabled": {
     "message": "เปิดใช้งานสถิติการเข้าชม"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "สำรองข้อมูล"
   },
+  "optionsGroupIcons": {
+    "message": "ไอคอน"
+  },
+  "optionsGroupContextMenu": {
+    "message": "เมนูบริบท"
+  },
   "optionsGroupViews": {
     "message": "มุมมอง"
   },
   "optionsGroupSort": {
     "message": "การจัดเรียง"
+  },
+  "optionsGroupTools": {
+    "message": "เครื่องมือ"
+  },
+  "optionsGroupStats": {
+    "message": "สถิติ"
   },
   "paletteCmdDead": {
     "message": "ค้นหาลิงก์เสีย"

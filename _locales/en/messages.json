@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Advanced Options"
   },
+  "announceDismiss": {
+    "message": "Dismiss"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
+  },
+  "announceV408Title": {
+    "message": "What's new in v4.0.8"
+  },
   "confirmDeleteFolder": {
     "message": "This folder contains $count$ item(s). You can undo the deletion.",
     "placeholders": {
@@ -538,6 +547,12 @@
     "description": "Description of the keyboard shortcut command that opens the side panel.",
     "message": "Open vBookmarks side panel"
   },
+  "optionAnnounceEnabled": {
+    "message": "Show in-product announcements"
+  },
+  "optionAnnounceEnabledHint": {
+    "message": "Release notes and tips from the project's GitHub repository (fetched at most every 6 hours). Off also stops the network fetch."
+  },
   "optionClickNewTab": {
     "message": "Left-click opens bookmark in new tab."
   },
@@ -823,6 +838,12 @@
     "message": "Sorting",
     "description": "Options group (issue #33): default folder-content sort preferences, shared with the popup sort dialog."
   },
+  "optionsGroupStats": {
+    "message": "Statistics"
+  },
+  "optionsGroupTools": {
+    "message": "Tools"
+  },
   "optionShowViewTabs": {
     "message": "Show view tabs below the search box"
   },
@@ -866,7 +887,7 @@
     "message": "Restore the classic header"
   },
   "optionClassicExperienceHint": {
-    "message": "Turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view tabs. Each can be re-enabled individually above."
+    "message": "Turns off the command palette, the quick-add star, its page right-click entry, the tool button and the view tabs. Each can be re-enabled individually in its section."
   },
   "optionShowItemPath": {
     "message": "Show the parent folder path on list rows"
@@ -1600,6 +1621,12 @@
   "optionsGroupBackup": {
     "message": "Backup"
   },
+  "optionsGroupContextMenu": {
+    "message": "Context menus"
+  },
+  "optionsGroupIcons": {
+    "message": "Icons"
+  },
   "settingsExport": {
     "message": "Export settings"
   },
@@ -1644,5 +1671,8 @@
   },
   "deadPaused": {
     "message": "Paused"
+  },
+  "whatsNewChangelog": {
+    "message": "Changelog"
   }
 }

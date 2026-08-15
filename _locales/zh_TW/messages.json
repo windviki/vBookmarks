@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "進階設定"
   },
+  "announceV408Title": {
+    "message": "v4.0.8 的新功能"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 是網站圖示強化版：會自動為 Chrome 尚未快取的書籤擷取真實網站圖示。"
+  },
+  "announceDismiss": {
+    "message": "關閉"
+  },
   "confirmDeleteFolder": {
     "message": "此資料夾包含 $count$ 個項目。您可以復原刪除。",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "已暫停"
+  },
+  "whatsNewChangelog": {
+    "message": "變更紀錄"
   },
   "deadProxyAdd": {
     "message": "為失效連結檢查新增代理伺服器"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "開啟 vBookmarks 側邊面板"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "來自專案 GitHub 儲存庫的版本說明與提示（每 6 小時最多擷取一次）。關閉也會停止網路擷取。"
+  },
+  "optionAnnounceEnabled": {
+    "message": "顯示產品內公告"
+  },
   "optionAutoRefreshSync": {
     "message": "自動刷新同步狀態"
   },
@@ -766,7 +784,7 @@
     "message": "還原傳統頁首"
   },
   "optionClassicExperienceHint": {
-    "message": "關閉指令面板、快速新增星號、其頁面右鍵項目、工具按鈕及檢視分頁。以上項目皆可於上方個別重新啟用。"
+    "message": "關閉指令面板、快速新增星號、其頁面右鍵選單項目、工具按鈕與檢視分頁。每個項目都可以在其區段中個別重新啟用。"
   },
   "optionStatsEnabled": {
     "message": "启用访问统计"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "備份"
   },
+  "optionsGroupIcons": {
+    "message": "圖示"
+  },
+  "optionsGroupContextMenu": {
+    "message": "右鍵選單"
+  },
   "optionsGroupViews": {
     "message": "檢視"
   },
   "optionsGroupSort": {
     "message": "排序"
+  },
+  "optionsGroupTools": {
+    "message": "工具"
+  },
+  "optionsGroupStats": {
+    "message": "統計資料"
   },
   "paletteCmdDead": {
     "message": "尋找失效連結"

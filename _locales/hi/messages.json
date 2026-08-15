@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "उन्नत विकल्प"
   },
+  "announceV408Title": {
+    "message": "v4.0.8 में नया क्या है"
+  },
+  "announceV408Text": {
+    "message": "v4.0.8 एक favicon-वर्धित रिलीज़ है: Chrome द्वारा अभी तक कैश न किए गए बुकमार्क के लिए वास्तविक साइट आइकन स्वचालित रूप से लाए जाते हैं।"
+  },
+  "announceDismiss": {
+    "message": "खारिज करें"
+  },
   "confirmDeleteFolder": {
     "message": "इस फ़ोल्डर में $count$ आइटम हैं। आप हटाने को पूर्ववत कर सकते हैं।",
     "placeholders": {
@@ -263,6 +272,9 @@
   },
   "deadPaused": {
     "message": "रुका हुआ"
+  },
+  "whatsNewChangelog": {
+    "message": "परिवर्तन लॉग"
   },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
@@ -639,6 +651,12 @@
   "openSidePanelCommand": {
     "message": "vBookmarks साइड पैनल खोलें"
   },
+  "optionAnnounceEnabledHint": {
+    "message": "प्रोजेक्ट के GitHub रिपॉज़िटरी से रिलीज़ नोट्स और टिप्स (हर 6 घंटे में अधिकतम एक बार प्राप्त होते हैं)। बंद करने पर नेटवर्क से लाना भी बंद हो जाता है।"
+  },
+  "optionAnnounceEnabled": {
+    "message": "उत्पाद में घोषणाएँ दिखाएँ"
+  },
   "optionAutoRefreshSync": {
     "message": "सिंक स्थिति ऑटो-रिफ्रेश करें"
   },
@@ -766,7 +784,7 @@
     "message": "क्लासिक हेडर पुनर्स्थापित करें"
   },
   "optionClassicExperienceHint": {
-    "message": "कमांड पैलेट, क्विक-ऐड स्टार, उसका पृष्ठ राइट-क्लिक प्रविष्टि, टूल बटन और व्यू टैब बंद कर देता है। प्रत्येक को ऊपर व्यक्तिगत रूप से पुनः सक्षम किया जा सकता है।"
+    "message": "कमांड पैलेट, त्वरित-जोड़ स्टार, इसका पेज राइट-क्लिक प्रविष्टि, टूल बटन और व्यू टैब बंद कर देता है। प्रत्येक को उसके अनुभाग में अलग से फिर से सक्षम किया जा सकता है।"
   },
   "optionStatsEnabled": {
     "message": "विज़िट आँकड़े सक्षम करें"
@@ -840,11 +858,23 @@
   "optionsGroupBackup": {
     "message": "बैकअप"
   },
+  "optionsGroupIcons": {
+    "message": "आइकन"
+  },
+  "optionsGroupContextMenu": {
+    "message": "संदर्भ मेनू"
+  },
   "optionsGroupViews": {
     "message": "दृश्य"
   },
   "optionsGroupSort": {
     "message": "क्रमबद्धता"
+  },
+  "optionsGroupTools": {
+    "message": "उपकरण"
+  },
+  "optionsGroupStats": {
+    "message": "आँकड़े"
   },
   "paletteCmdDead": {
     "message": "मृत लिंक खोजें"
