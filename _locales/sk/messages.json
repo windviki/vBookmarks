@@ -784,10 +784,10 @@
     "message": "Pre záložky, pre ktoré Chrome nemá v medzipamäti ikonu, načíta skutočnú ikonu priamo zo stránky (/favicon.ico, potom deklarované ikony stránky). Požiadavky smerujú iba na stránky, ktoré máte v záložkách."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Náhradná ikona DuckDuckGo"
+    "message": "Záložné ikony tretích strán"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Keď priame načítanie zlyhá, vyhľadá ikonu podľa domény v službe ikon DuckDuckGo (tým sa doména zverejní tretej strane). Nedostupné služby sa nebudú znova skúšať počas 6 hodín."
+    "message": "Keď priame načítanie zlyhá, ikona sa vyhľadá podľa domény vo vstavanom zozname služieb tretích strán na vyhľadávanie ikon (najprv favicon.run, potom DuckDuckGo). Ak je služba nedostupná, preskočí sa a skúsi sa ďalšia – takáto služba sa znova neskúša 6 hodín."
   },
   "optionFaviconCacheClear": {
     "message": "Vyčistiť medzipamäť ikon"

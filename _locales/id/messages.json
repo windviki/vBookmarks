@@ -784,10 +784,10 @@
     "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Cadangan ikon DuckDuckGo"
+    "message": "Cadangan ikon pihak ketiga"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Jika pengambilan langsung gagal, cari ikon berdasarkan domain dari layanan ikon DuckDuckGo (ini mengungkapkan domain kepada pihak ketiga). Layanan yang tidak dapat dijangkau tidak akan dicoba lagi selama 6 jam."
+    "message": "Saat pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga (favicon.run, lalu DuckDuckGo). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak akan dicoba ulang selama 6 jam."
   },
   "optionFaviconCacheClear": {
     "message": "Bersihkan cache ikon"

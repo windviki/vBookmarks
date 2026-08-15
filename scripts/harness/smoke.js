@@ -23,7 +23,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const watch = (page, tag) => {
         page.on('pageerror', e => errors.push(`${tag} pageerror: ${e.message}`));
         page.on('console', m => {
-            if (m.type() === 'error') errors.push(`${tag} console.error: ${m.text()}`);
+            if (m.type() !== 'error') return;
+            // Chromium auto-logs failed network loads ("Failed to load resource:
+            // net::ERR_NAME_NOT_RESOLVED") — noise from DinD's offline sandbox, not
+            // extension console.error calls. Favicon fallback is designed to fail
+            // silently offline, so this must not fail the gate.
+            if (m.text().startsWith('Failed to load resource:')) return;
+            errors.push(`${tag} console.error: ${m.text()}`);
         });
     };
 

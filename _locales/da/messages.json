@@ -784,10 +784,10 @@
     "message": "For bogmærkede websteder, som Chrome ikke har et cachelagret ikon for, hentes det faktiske ikon direkte fra webstedet (/favicon.ico, derefter sidens erklærede ikoner). Forespørgsler går kun til websteder, du har bogmærket."
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo som ikon-fallback"
+    "message": "Tredjepartsikon-fallback"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Når direkte hentning fejler, slås ikonet op via domænet i DuckDuckGos ikontjeneste (hvilket videregiver domænet til en tredjepart). Utilgængelige tjenester forsøges ikke igen i 6 timer."
+    "message": "Når direkte hentning mislykkes, slås ikonet op via domænet fra en indbygget liste over ikontjenester fra tredjeparter (favicon.run, derefter DuckDuckGo). En tjeneste, der ikke kan nås, springes over, og den næste prøves — den forsøges ikke igen i 6 timer."
   },
   "optionFaviconCacheClear": {
     "message": "Ryd ikoncache"

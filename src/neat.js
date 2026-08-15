@@ -84,10 +84,11 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
 
     // 4.0.6 favicon enrichment: fetch real icons for hosts Chrome has no
     // cached favicon for. Live getters read the options at decision time.
-    enricher = initFaviconEnrich(window.document, {
+    enricher = initFaviconEnrich({
+        doc: window.document,
         faviconService,
         isEnabled: () => store.get('faviconEnrich', '1') === '1',
-        ddgEnabled: () => store.get('faviconEnrichAgg', '') === '1'
+        fallbackEnabled: () => store.get('faviconEnrichAgg', '') === '1'
     });
 
     // The store mirror has no onChanged forwarding, so an options-page

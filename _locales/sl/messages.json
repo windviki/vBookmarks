@@ -784,10 +784,10 @@
     "message": "Za zaznamovana spletišča, za katera Chrome nima predpomnjene ikone, pridobi dejansko ikono neposredno s spletišča (/favicon.ico, nato deklarirane ikone strani). Zahteve gredo le na spletišča, ki ste jih dodali med zaznamke."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Nadomestna ikona DuckDuckGo"
+    "message": "Rezervne ikone tretjih oseb"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Ko neposredno pridobivanje ne uspe, poišči ikono po domeni prek DuckDuckGojeve storitve za ikone (domena se razkrije tretji osebi). Nedosegljive storitve se ne poskušajo znova 6 ur."
+    "message": "Ko neposredno pridobivanje ne uspe, poiščite ikono po domeni iz vgrajenega seznama storitev tretjih oseb (favicon.run, nato DuckDuckGo). Nedosegljiva storitev se preskoči in poskusi se naslednja — ne ponovi se 6 ur."
   },
   "optionFaviconCacheClear": {
     "message": "Počisti predpomnilnik ikon"

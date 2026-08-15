@@ -784,10 +784,10 @@
     "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo ikooni varuallikas"
+    "message": "Kolmanda osapoole ikooni varu"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kui otsene laadimine ebaõnnestub, otsi ikoon domeeni järgi DuckDuckGo ikooniteenusest (avaldab domeeni kolmandale osapoolele). Kättesaamatuid teenuseid ei proovita uuesti 6 tunni jooksul."
+    "message": "Kui otsene laadimine ebaõnnestub, otsitakse ikooni domeeni järgi sisseehitatud kolmanda osapoole ikooniteenuste loendist (favicon.run, seejärel DuckDuckGo). Kättesaamatuks osutunud teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul."
   },
   "optionFaviconCacheClear": {
     "message": "Tühjenda ikoonide vahemälu"

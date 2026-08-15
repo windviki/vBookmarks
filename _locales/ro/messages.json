@@ -784,10 +784,10 @@
     "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Fallback pentru pictograme DuckDuckGo"
+    "message": "Fallback pentru pictograme de la terți"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Când preluarea directă eșuează, caută pictograma după domeniu în serviciul de pictograme DuckDuckGo (dezvăluie domeniul unei terțe părți). Serviciile inaccesibile nu sunt reîncercate timp de 6 ore."
+    "message": "Când preluarea directă eșuează, caută pictograma după domeniu într-o listă încorporată de servicii terțe de pictograme (favicon.run, apoi DuckDuckGo). Un serviciu găsit inaccesibil este omis și se încearcă următorul — nu este reîncercat timp de 6 ore."
   },
   "optionFaviconCacheClear": {
     "message": "Șterge cache-ul pictogramelor"

@@ -784,10 +784,10 @@
     "message": "对于 Chrome 没有缓存图标的书签网站，直接从网站获取真实图标（先尝试 /favicon.ico，再尝试页面声明的图标）。请求仅发送到您收藏的网站。"
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo 图标回退"
+    "message": "第三方图标备用"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "当直接获取失败时，通过域名从 DuckDuckGo 的图标服务查找图标（会将域名披露给第三方）。无法访问的服务 6 小时内不会重试。"
+    "message": "当直接获取图标失败时，将按域名从内置的第三方图标服务列表中查找。优先使用 favicon.run，其次为 DuckDuckGo。无法访问的服务会被跳过，转而尝试下一个；该服务在 6 小时内不会被重试。"
   },
   "optionFaviconCacheClear": {
     "message": "清除图标缓存"

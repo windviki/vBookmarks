@@ -784,10 +784,10 @@
     "message": "Pour les sites mis en favoris pour lesquels Chrome n'a pas d'icône en cache, récupérer l'icône réelle directement depuis le site (/favicon.ico, puis les icônes déclarées par la page). Les requêtes ne sont envoyées qu'aux sites que vous avez mis en favoris."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Repli sur les icônes DuckDuckGo"
+    "message": "Repli vers icône tierce"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Lorsque la récupération directe échoue, rechercher l'icône par domaine auprès du service d'icônes de DuckDuckGo (divulgue le domaine à un tiers). Les services inaccessibles ne sont pas réessayés pendant 6 heures."
+    "message": "Lorsque la récupération directe échoue, rechercher l'icône par domaine dans une liste intégrée de services d'icônes tiers (favicon.run, puis DuckDuckGo). Un service injoignable est ignoré et le suivant est tenté — il ne sera pas réessayé pendant 6 heures."
   },
   "optionFaviconCacheClear": {
     "message": "Vider le cache d'icônes"

@@ -784,10 +784,10 @@
     "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo-kuvakkeen varavaihtoehto"
+    "message": "Kolmannen osapuolen varakuvakkeet"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kun suora haku epäonnistuu, hae kuvaketta verkkotunnuksen perusteella DuckDuckGon kuvakepalvelusta (paljastaa verkkotunnuksen kolmannelle osapuolelle). Tavoittamattomia palveluita ei yritetä uudelleen 6 tuntiin."
+    "message": "Kun suora nouto epäonnistuu, hae kuvake verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta (favicon.run, sitten DuckDuckGo). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin."
   },
   "optionFaviconCacheClear": {
     "message": "Tyhjennä kuvakevälimuisti"

@@ -6,17 +6,19 @@
  * favicon-fallback.js swaps for the default SVG. This module fetches the
  * REAL icon from the user's own bookmarked site (the same origin the user
  * already bookmarked), validates it, caches it per host, and hot-swaps the
- * default SVG back to a real `<img>`. A DuckDuckGo domain lookup is an
- * opt-in, breaker-guarded LAST resort; a dead-scan proxy session (when one
- * is live) relays the direct attempts for region-limited sites.
+ * default SVG back to a real `<img>`. An opt-in, breaker-guarded LAST resort
+ * is a built-in list of third-party aggregators (favicon.run → DuckDuckGo),
+ * each with an independent breaker and automatic failover; a dead-scan proxy
+ * session (when one is live) relays the direct attempts for region-limited
+ * sites.
  *
  * Design contract (docs/favicon-补全设计.md):
  *   - Discovery chain L1-L4: /favicon.ico → page <link> → proxy relay →
- *     DDG fallback. Any layer producing a valid icon short-circuits.
+ *     provider-list fallback. Any layer producing a valid icon short-circuits.
  *   - Icon validation: res.ok + byteLength ≤ 200KB + type sniff by magic
  *     number + Image decode (naturalWidth > 0). Bad data never cached.
  *   - Cache: per-host key `vbmFavicon:<host>` = data URL + one index key
- *     `vbmFaviconIdx` = { v, ddgDownUntil, hosts: { host: {t,s}|{f,t} } }.
+ *     `vbmFaviconIdx` = { v, down, hosts: { host: {t,s}|{f,t} } }.
  *     Double-axis LRU budget (500 entries / 2MB) with batch eviction;
  *     >96KB icons session-only; quota-error emergency eviction.
  *   - Queue: ≤6 concurrent, per-host dedup, AbortController cancel on
@@ -43,7 +45,50 @@ export const EVICT_TO_BYTES = 1.6 * 1024 * 1024;          // 1.6MB
 export const MAX_ICON_BYTES = 96 * 1024;                  // >96KB → session only
 export const MAX_FETCH_BYTES = 200 * 1024;                // fetch cap
 export const CONCURRENCY = 6;
-export const DDG_URL = host => `https://icons.duckduckgo.com/ip3/${host}.ico`;
+
+// --- Third-party aggregator providers (L4, docs §3.4) ------------------------
+// Consistent per-provider interface: url(host) builds the lookup URL, and
+// interpret(res, networkOk) normalizes each provider's quirks into one of
+// three outcomes the chain acts on:
+//   'icon'        — provider thinks this host has an icon → run shared
+//                   validation; success short-circuits, failure is treated
+//                   as 'no-icon' and we continue.
+//   'no-icon'     — provider reachable but no icon for this host → fail over
+//                   to the next provider.
+//   'unreachable' — the request never reached the provider (network error /
+//                   timeout) → trip that provider's breaker for 6h, fail over.
+export const interpretFaviconRun = (res, networkOk) => {
+    if (!networkOk)
+        return 'unreachable';
+    // 2xx with an image content-type is a definitive icon; anything else
+    // (500/404, or a 2xx non-image) is a clean, decidable no-icon — favicon.run
+    // answers unknown hosts with HTTP 500, so there is no false success.
+    if (res && res.ok && isImageContentType(res.headers ? res.headers.get('content-type') : null))
+        return 'icon';
+    return 'no-icon';
+};
+
+export const interpretDuckDuckGo = (res, networkOk) => {
+    if (!networkOk)
+        return 'unreachable';
+    // DDG answers unknown domains with 200 + its own placeholder — undecidable,
+    // so any 2xx is accepted as 'icon' (the list's last resort).
+    if (res && res.ok)
+        return 'icon';
+    return 'no-icon';
+};
+
+export const AGG_PROVIDERS = [
+    { id: 'favicon-run', url: h => `https://favicon.run/favicon?domain=${h}&sz=32`, interpret: interpretFaviconRun },
+    { id: 'duckduckgo',  url: h => `https://icons.duckduckgo.com/ip3/${h}.ico`,      interpret: interpretDuckDuckGo },
+];
+
+// Resolve a provider's lookup URL by id (tests/audit use it instead of
+// re-deriving the URL strings — mirrors the provider list, no copy).
+export const providerUrl = (id, host) => {
+    const p = AGG_PROVIDERS.find(p => p.id === id);
+    return p ? p.url(host) : null;
+};
 
 const HTTP_URL = /^https?:\/\//i;
 const LINK_RE = /<link\b[^>]*>/gi;
@@ -169,14 +214,32 @@ export const extractLinkIcons = (html, pageUrl) => {
 };
 
 // --- Index shape helpers -----------------------------------------------------
-export const emptyIdx = () => ({ v: 1, ddgDownUntil: 0, hosts: {} });
+const emptyDown = () => Object.fromEntries(AGG_PROVIDERS.map(p => [p.id, 0]));
+
+export const emptyIdx = () => ({ v: 3, down: emptyDown(), hosts: {} });
 
 export const parseIdx = raw => {
     try {
         const idx = JSON.parse(raw);
-        if (!idx || idx.v !== 1 || !idx.hosts || typeof idx.hosts !== 'object')
+        if (!idx || !idx.hosts || typeof idx.hosts !== 'object')
             return null;
-        return idx;
+        if (idx.v === 3) {
+            // Normalize: a provider added after this index was written must
+            // default to 0 (not tripped); a provider removed drops its stale
+            // breaker row.
+            const down = {};
+            for (const p of AGG_PROVIDERS)
+                down[p.id] = idx.down && idx.down[p.id] ? idx.down[p.id] : 0;
+            return { v: 3, down, hosts: idx.hosts };
+        }
+        if (idx.v === 1) {
+            // Legacy single-DDG index → v3: adopt the hosts (success + failed
+            // markers) as-is, reset the per-provider breakers. Icon data keys
+            // and failed markers are preserved; only the stale breaker window
+            // is dropped (docs §5.1).
+            return { v: 3, down: emptyDown(), hosts: idx.hosts };
+        }
+        return null;
     } catch (_) {
         return null;
     }
@@ -187,7 +250,7 @@ export const parseIdx = raw => {
  *   doc              — document (createElement for the hot-swap img)
  *   faviconService   — favicon-fallback API (sampleIcon / statsBySrc / applyContrast)
  *   isEnabled()      — live getter for the master switch (decide-time read)
- *   ddgEnabled()     — live getter for the DuckDuckGo sub-switch
+ *   fallbackEnabled()— live getter for the aggregator-list sub-switch
  *   fetchImpl        — fetch to use (injectable for tests; defaults to global)
  *   ImageCtor        — Image constructor (injectable; defaults to global)
  *   chromeImpl       — chrome (injectable; defaults to global chrome)
@@ -197,7 +260,7 @@ export function initFaviconEnrich(ctx = {}) {
     const doc = ctx.doc;
     const faviconService = ctx.faviconService;
     const isEnabled = ctx.isEnabled || (() => false);
-    const ddgEnabled = ctx.ddgEnabled || (() => false);
+    const fallbackEnabled = ctx.fallbackEnabled || (() => false);
     const fetchImpl = ctx.fetchImpl || (typeof fetch === 'function' ? fetch.bind(globalThis) : null);
     const ImageCtor = ctx.ImageCtor || (typeof Image === 'function' ? Image : null);
     const chromeImpl = ctx.chromeImpl || (typeof chrome !== 'undefined' ? chrome : null);
@@ -468,9 +531,10 @@ export function initFaviconEnrich(ctx = {}) {
         } catch (_) { return false; }
     };
 
-    // Retry L1 / L2 (and a breaker-tripped L4) through the proxy. The direct
-    // attempts already failed, so a proxied success is equivalent to a direct
-    // one — same validation, same cache write. Returns a valid icon or null.
+    // Retry L1 / L2 (and breaker-tripped L4 providers) through the proxy. The
+    // direct attempts already failed, so a proxied success is equivalent to a
+    // direct one — same validation, same cache write. Returns a valid icon or
+    // null.
     const tryL3 = async (host, pageUrl, signal) => {
         if (!await proxyRelayAvailable())
             return null;
@@ -482,14 +546,18 @@ export function initFaviconEnrich(ctx = {}) {
         const proxiedL2 = await tryL2Proxy(pageUrl, signal);
         if (proxiedL2)
             return proxiedL2;
-        // A breaker-tripped DDG gets ONE proxied retry (covers "DDG direct is
-        // region-blocked but the proxy reaches it"). Only when DDG is opted in
-        // AND the breaker is currently tripped — L4 direct normal = no point
-        // double-fetching through the proxy.
-        if (ddgEnabled() && now() < idxData.ddgDownUntil) {
-            const proxiedL4 = await tryL4Proxy(host, signal);
-            if (proxiedL4)
-                return proxiedL4;
+        // Each breaker-tripped aggregator gets ONE proxied retry (covers "the
+        // provider is direct-unreachable but the proxy reaches it"). Only when
+        // the fallback is opted in AND the provider is currently tripped — L4
+        // direct normal = no point double-fetching through the proxy.
+        if (fallbackEnabled()) {
+            for (const p of AGG_PROVIDERS) {
+                if (now() < idxData.down[p.id]) {
+                    const proxiedL4 = await tryL4Proxy(p, host, signal);
+                    if (proxiedL4)
+                        return proxiedL4;
+                }
+            }
         }
         return null;
     };
@@ -532,36 +600,50 @@ export function initFaviconEnrich(ctx = {}) {
         return null;
     };
 
-    // One proxied DDG retry for a breaker-tripped state (does NOT clear the
+    // One proxied retry for a breaker-tripped provider (does NOT clear the
     // breaker — that describes direct reachability and heals on its own).
-    const tryL4Proxy = async (host, signal) => {
+    const tryL4Proxy = async (provider, host, signal) => {
         try {
-            const res = await fetchMarked(DDG_URL(host), 3000, signal);
+            const res = await fetchMarked(provider.url(host), 3000, signal);
             return await validateAndEncode(res, { Image: ImageCtor });
         } catch (_) { return null; }
     };
 
-    // L4: DuckDuckGo (final means, breaker-guarded)
+    // L4: built-in third-party aggregator list (final means, per-provider
+    // breaker + failover, docs §3.4).
     const tryL4 = async (host, signal) => {
-        if (!ddgEnabled())
-            return { skipped: true };
-        if (now() < idxData.ddgDownUntil)
-            return { skipped: true };  // breaker tripped
-        const url = DDG_URL(host);
-        try {
-            const res = await fetchWithTimeout(url, 3000, signal);
-            const valid = await validateAndEncode(res, { Image: ImageCtor });
-            if (valid)
-                return valid;
-            // HTTP response arrived (any status) = service reachable → not a
-            // network outage; the host just has no DDG icon.
+        if (!fallbackEnabled())
             return null;
-        } catch (e) {
-            // Network error / timeout = service unreachable → trip the breaker.
-            idxData.ddgDownUntil = now() + BREAKER_TTL_MS;
-            persistIdxDebounced();
-            return null;
+        for (const p of AGG_PROVIDERS) {
+            if (now() < idxData.down[p.id])
+                continue;   // this provider's breaker is tripped — skip it
+            let res = null;
+            let networkOk = false;
+            try {
+                res = await fetchWithTimeout(p.url(host), 3000, signal);
+                networkOk = true;
+            } catch (_) {
+                networkOk = false;
+            }
+            const outcome = p.interpret(res, networkOk);
+            if (outcome === 'unreachable') {
+                // Network-level failure = the provider itself is unreachable →
+                // trip it now, then fail over to the next provider.
+                idxData.down[p.id] = now() + BREAKER_TTL_MS;
+                persistIdxDebounced();
+                continue;
+            }
+            if (outcome === 'icon') {
+                // Provider says there is an icon: run the shared validation —
+                // success short-circuits the chain; failure counts as a
+                // no-icon for this provider and we fail over.
+                const valid = res ? await validateAndEncode(res, { Image: ImageCtor }) : null;
+                if (valid)
+                    return valid;
+            }
+            // outcome === 'no-icon' (or a validation failure) → fail over.
         }
+        return null;   // every provider skipped / no-icon → caller writes failed
     };
 
     // --- Queue + concurrency -----------------------------------------------------
@@ -601,7 +683,7 @@ export function initFaviconEnrich(ctx = {}) {
         }
     };
 
-    // The chain: L1 direct → L2 direct → L3 proxy relay → L4 DDG (final).
+    // The chain: L1 direct → L2 direct → L3 proxy relay → L4 provider list.
     const discover = async (host, pageUrl, signal) => {
         const l1 = await tryL1(host, signal);
         if (l1)
@@ -613,7 +695,7 @@ export function initFaviconEnrich(ctx = {}) {
         if (l3)
             return l3;
         const l4 = await tryL4(host, signal);
-        return l4 && l4.dataUrl ? l4 : null;
+        return l4 || null;
     };
 
     // --- Hot swap + contrast registration ---------------------------------------

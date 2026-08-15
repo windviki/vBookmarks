@@ -784,10 +784,10 @@
     "message": "對於 Chrome 沒有快取圖示的書籤網站，直接從網站擷取真實圖示（/favicon.ico，然後是頁面宣告的圖示）。要求只會傳送到您已書籤的網站。"
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo 圖示後備"
+    "message": "第三方圖示後備方案"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "當直接擷取失敗時，從 DuckDuckGo 的圖示服務按網域查找圖示（會將網域透露給第三方）。無法連線的服務在 6 小時內不會重試。"
+    "message": "當直接擷取失敗時，會從內建的第三方圖示服務清單（favicon.run，接著是 DuckDuckGo）按網域查詢圖示。無法連線的服務會被略過並嘗試下一個——六小時內不會重新嘗試該服務。"
   },
   "optionFaviconCacheClear": {
     "message": "清除圖示快取"

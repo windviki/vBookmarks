@@ -784,10 +784,10 @@
     "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo piktogramų atsarginė parinktis"
+    "message": "Trečiosios šalies atsarginis piktogramų šaltinis"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Kai tiesioginis gavimas nepavyksta, ieškokite piktogramos pagal domeną DuckDuckGo piktogramų tarnyboje (domenas atskleidžiamas trečiajai šaliai). Nepasiekiamos tarnybos nebandomos iš naujo 6 valandas."
+    "message": "Kai tiesioginis nuskaitymas nepavyksta, piktogramos ieškomos pagal domeną iš integruoto trečiųjų šalių piktogramų paslaugų sąrašo (favicon.run, tada DuckDuckGo). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas."
   },
   "optionFaviconCacheClear": {
     "message": "Išvalyti piktogramų talpyklą"

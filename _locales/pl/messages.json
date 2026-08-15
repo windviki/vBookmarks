@@ -784,10 +784,10 @@
     "message": "W przypadku zakładek, dla których Chrome nie ma ikony w pamięci podręcznej, pobierz prawdziwą ikonę bezpośrednio z witryny (/favicon.ico, a następnie ikony zadeklarowane na stronie). Żądania trafiają tylko do witryn, które dodałeś do zakładek."
   },
   "optionFaviconEnrichAgg": {
-    "message": "Ikony zapasowe DuckDuckGo"
+    "message": "Awaryjne ikony z zewnętrznych usług"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "Gdy bezpośrednie pobieranie nie powiedzie się, ikona jest wyszukiwana według domeny w usłudze ikon DuckDuckGo (co ujawnia domenę podmiotowi trzeciemu). Niedostępne usługi nie są ponawiane przez 6 godzin."
+    "message": "Gdy bezpośrednie pobieranie ikony się nie powiedzie, ikona jest wyszukiwana po domenie na wbudowanej liście zewnętrznych usług ikon (najpierw favicon.run, potem DuckDuckGo). Usługa nieosiągalna jest pomijana, a następna jest próbowana — przez 6 godzin nie będzie ponawiana."
   },
   "optionFaviconCacheClear": {
     "message": "Wyczyść pamięć podręczną ikon"

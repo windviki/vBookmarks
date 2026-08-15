@@ -784,10 +784,10 @@
     "message": "För bokmärkta webbplatser där Chrome inte har någon cachad ikon, hämta den faktiska ikonen direkt från webbplatsen (/favicon.ico, sedan sidans deklarerade ikoner). Förfrågningar skickas endast till webbplatser du har bokmärkt."
   },
   "optionFaviconEnrichAgg": {
-    "message": "DuckDuckGo-ikon som reserv"
+    "message": "Tredjepartsikon som reserv"
   },
   "optionFaviconEnrichAggHint": {
-    "message": "När direkt hämtning misslyckas, slå upp ikonen efter domän hos DuckDuckGos ikontjänst (avslöjar domänen för en tredje part). Oåtkomliga tjänster görs inga nya försök på 6 timmar."
+    "message": "Om direkt hämtning misslyckas, slås ikonen upp per domän från en inbyggd lista över tredjeparts-ikontjänster (favicon.run, sedan DuckDuckGo). En tjänst som inte går att nå hoppas över och nästa testas — den onåbara tjänsten kontaktas inte igen på 6 timmar."
   },
   "optionFaviconCacheClear": {
     "message": "Rensa ikoncachen"

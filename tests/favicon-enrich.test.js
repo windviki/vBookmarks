@@ -10,11 +10,11 @@ import {
     FAVICON_IDX_KEY,
     CONCURRENCY,
     MAX_ENTRIES,
-    MAX_BYTES,
-    FAILED_TTL_MS,
-    SUCCESS_TTL_MS,
     BREAKER_TTL_MS,
-    DDG_URL
+    AGG_PROVIDERS,
+    providerUrl,
+    interpretFaviconRun,
+    interpretDuckDuckGo
 } from '../src/favicon-enrich.js';
 import { makeStorageArea } from './helpers/chrome.js';
 
@@ -30,6 +30,10 @@ const ICO_BYTES = new Uint8Array([0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 16, 0, 0, 
     32, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
 
 const PNG_DATA_URL = `data:image/png;base64,${bytesToBase64(PNG_BYTES)}`;
+
+// Provider lookup helpers (mirror the provider list — no copied URL strings).
+const FR = host => providerUrl('favicon-run', host);
+const DDG = host => providerUrl('duckduckgo', host);
 
 // A fake Image constructor that "loads" any data URL (naturalWidth = 1).
 const makeFakeImage = () => class {
@@ -67,6 +71,8 @@ const pngResponse = bytes => ({
     arrayBuffer: async () => (bytes || PNG_BYTES).buffer.slice((bytes || PNG_BYTES).byteOffset, (bytes || PNG_BYTES).byteOffset + (bytes || PNG_BYTES).byteLength),
     headers: { get: () => 'image/png' }
 });
+
+const notFound = () => ({ ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } });
 
 // A fake faviconService (fallback API) the enricher hot-swaps against.
 const makeFavService = () => {
@@ -123,6 +129,13 @@ const makeDoc = () => ({
         addEventListener(type, fn) { this._once = { type, fn }; },
         dispatchLoad() { if (this._once && this._once.type === 'load') this._once.fn(); }
     })
+});
+
+// A v3 index fixture (the current shape: per-provider down table + hosts).
+const idxV3 = (hosts = {}, down = {}) => JSON.stringify({
+    v: 3,
+    down: { 'favicon-run': 0, 'duckduckgo': 0, ...down },
+    hosts
 });
 
 const tick = () => new Promise(r => setTimeout(r, 0));
@@ -206,6 +219,48 @@ describe('validateAndEncode', () => {
     });
 });
 
+describe('provider interpret contracts', () => {
+    it('AGG_PROVIDERS order is favicon-run first, duckduckgo last', () => {
+        expect(AGG_PROVIDERS.map(p => p.id)).toEqual(['favicon-run', 'duckduckgo']);
+    });
+
+    it('providerUrl resolves each id to its lookup URL', () => {
+        expect(FR('example.com')).toBe('https://favicon.run/favicon?domain=example.com&sz=32');
+        expect(DDG('example.com')).toBe('https://icons.duckduckgo.com/ip3/example.com.ico');
+        expect(providerUrl('nope', 'example.com')).toBeNull();
+    });
+
+    it('favicon-run: network error/timeout → unreachable', () => {
+        expect(interpretFaviconRun(null, false)).toBe('unreachable');
+    });
+
+    it('favicon-run: 2xx + image content-type → icon', () => {
+        expect(interpretFaviconRun({ ok: true, headers: { get: () => 'image/png' } }, true)).toBe('icon');
+    });
+
+    it('favicon-run: 2xx + text/html → no-icon (clean, decidable)', () => {
+        expect(interpretFaviconRun({ ok: true, headers: { get: () => 'text/html' } }, true)).toBe('no-icon');
+    });
+
+    it('favicon-run: HTTP 500/404 → no-icon (never a false success)', () => {
+        expect(interpretFaviconRun({ ok: false, status: 500, headers: { get: () => null } }, true)).toBe('no-icon');
+        expect(interpretFaviconRun({ ok: false, status: 404, headers: { get: () => null } }, true)).toBe('no-icon');
+    });
+
+    it('duckduckgo: network error/timeout → unreachable', () => {
+        expect(interpretDuckDuckGo(null, false)).toBe('unreachable');
+    });
+
+    it('duckduckgo: any 2xx → icon (accepts the unknown-domain placeholder)', () => {
+        expect(interpretDuckDuckGo({ ok: true, headers: { get: () => 'image/x-icon' } }, true)).toBe('icon');
+        expect(interpretDuckDuckGo({ ok: true, headers: { get: () => null } }, true)).toBe('icon');
+    });
+
+    it('duckduckgo: non-2xx → no-icon', () => {
+        expect(interpretDuckDuckGo({ ok: false, status: 404, headers: { get: () => null } }, true)).toBe('no-icon');
+    });
+});
+
 describe('initFaviconEnrich — discovery chain', () => {
     beforeEach(() => { seq = 0; });
 
@@ -217,7 +272,7 @@ describe('initFaviconEnrich — discovery chain', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -226,21 +281,21 @@ describe('initFaviconEnrich — discovery chain', () => {
         await en._hydrateDone;
         const img = makePlaceholderImg('https://github.com/');
         const handled = en.onPlaceholder(img);
-        // L1 hit → the hook returns true (it replaced the placeholder inline? No —
-        // L1 runs async through the queue; onPlaceholder enqueues and returns false).
+        // L1 hit → the hook enqueues and returns false (discovery runs async).
         expect(handled).toBe(false);
         await tick();
         await tick();
         const favCall = fetchImpl.calls.find(c => /favicon\.ico$/.test(c.url));
         expect(favCall).toBeTruthy();
-        // L2/L4 were never attempted.
+        // L2 and neither provider were ever attempted.
         expect(fetchImpl.calls.some(c => c.url === 'https://github.com/')).toBe(false);
-        expect(fetchImpl.calls.some(c => DDG_URL('github.com') === c.url)).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === FR('github.com'))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === DDG('github.com'))).toBe(false);
     });
 
     it('L1 404 → L2 parses <link> and fetches the icon', async () => {
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/\/favicon\.ico$/, notFound()],
             [/^https:\/\/example\.com\/$/, {
                 ok: true,
                 text: async () => '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">',
@@ -252,7 +307,7 @@ describe('initFaviconEnrich — discovery chain', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -264,20 +319,21 @@ describe('initFaviconEnrich — discovery chain', () => {
         await tick();
         await tick();
         expect(fetchImpl.calls.some(c => /favicon-32x32\.png$/.test(c.url))).toBe(true);
-        expect(fetchImpl.calls.some(c => c.url === DDG_URL('example.com'))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === FR('example.com'))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(false);
     });
 
-    it('L1/L2 fail → L4 (DDG) attempted only when ddgEnabled', async () => {
+    it('L1/L2 fail → L4 reached; favicon-run 200+PNG short-circuits (duckduckgo not called)', async () => {
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/\/favicon\.ico$/, notFound()],
             [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/duckduckgo/, pngResponse()]
+            [/favicon\.run/, pngResponse()]
         ]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -287,14 +343,123 @@ describe('initFaviconEnrich — discovery chain', () => {
         en.onPlaceholder(makePlaceholderImg('https://example.com/'));
         await tick();
         await tick();
-        expect(fetchImpl.calls.some(c => c.url === DDG_URL('example.com'))).toBe(true);
+        expect(fetchImpl.calls.some(c => c.url === FR('example.com'))).toBe(true);
+        expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(false);
+    });
+
+    it('fallbackEnabled=false → L4 skipped entirely (neither provider touched)', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.some(c => c.url === FR('example.com'))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(false);
+    });
+
+    it('L4 failover: favicon-run clean 500 → duckduckgo succeeds; favicon-run NOT tripped', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/favicon\.run/, { ok: false, status: 500, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/duckduckgo/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.filter(c => c.url === FR('example.com')).length).toBe(1);
+        expect(fetchImpl.calls.filter(c => c.url === DDG('example.com')).length).toBe(1);
+        // A clean 500 means favicon.run was reachable → no breaker trip.
+        expect(en.getIdx().down['favicon-run']).toBe(0);
+        expect(en.getIdx().down['duckduckgo']).toBe(0);
+    });
+
+    it('L4 failover: favicon-run network error → favicon-run tripped, duckduckgo succeeds', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/favicon\.run/, () => { throw new TypeError('network down'); }],
+            [/duckduckgo/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        // The icon came from duckduckgo (favicon-run failed over to it).
+        expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(true);
+        expect(en.getIdx().down['favicon-run']).toBeGreaterThan(0);   // tripped
+        expect(en.getIdx().down['duckduckgo']).toBe(0);               // untouched
+    });
+
+    it('favicon-run 200+text/html → validation rejects → fail over to duckduckgo', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/favicon\.run/, {
+                ok: true,
+                status: 200,
+                arrayBuffer: async () => new TextEncoder().encode('<html></html>').buffer,
+                headers: { get: () => 'text/html' }
+            }],
+            [/duckduckgo/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        // Non-image bytes from favicon.run are not accepted; duckduckgo is tried.
+        expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(true);
     });
 
     it('L1/L2 direct fail + proxy session live → L3 relays via addProxyMarker', async () => {
         const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
         const session = makeStorageArea({ vbmProxySession: { active: true } });
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/\/favicon\.ico$/, notFound()],
             [/^https:\/\/proxy\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
             [/favicon\.ico.*__vbm_px=1/, pngResponse()]   // the PROXIED L1 succeeds
         ]);
@@ -302,7 +467,7 @@ describe('initFaviconEnrich — discovery chain', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local, session } },
@@ -315,23 +480,25 @@ describe('initFaviconEnrich — discovery chain', () => {
         // The proxied L1 (with the __vbm_px marker) was attempted and won.
         const proxied = fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url) && /favicon\.ico/.test(c.url));
         expect(proxied).toBe(true);
-        // DDG was not attempted (not opted in).
-        expect(fetchImpl.calls.some(c => c.url === DDG_URL('proxy.example'))).toBe(false);
+        // No provider was reached (L3 won before L4; fallback also off).
+        expect(fetchImpl.calls.some(c => c.url === FR('proxy.example'))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === DDG('proxy.example'))).toBe(false);
     });
 
     it('proxy session NOT live → L3 skipped, chain falls to L4', async () => {
         const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
         const session = makeStorageArea({});   // no vbmProxySession marker
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/\/favicon\.ico$/, notFound()],
             [/^https:\/\/proxy\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/favicon\.run/, { ok: false, status: 500, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
             [/duckduckgo/, pngResponse()]
         ]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local, session } },
@@ -341,109 +508,62 @@ describe('initFaviconEnrich — discovery chain', () => {
         en.onPlaceholder(makePlaceholderImg('https://proxy.example/'));
         await tick();
         await tick();
-        // No proxied attempt (session absent) → L4 DDG reached.
+        // No proxied attempt (session absent) → L4 reached; favicon-run 500
+        // (no-icon) → failover to duckduckgo, which wins.
         expect(fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url))).toBe(false);
-        expect(fetchImpl.calls.some(c => c.url === DDG_URL('proxy.example'))).toBe(true);
-    });
-
-    it('breaker-tripped DDG gets one proxied retry when the proxy is live', async () => {
-        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
-        const session = makeStorageArea({ vbmProxySession: { active: true } });
-        let ddgProxied = 0;
-        const fetchImpl = makeFetch([
-            [/duckduckgo.*__vbm_px=1/, () => { ddgProxied++; return pngResponse(); }],  // proxied DDG succeeds
-            [/duckduckgo/, () => { throw new TypeError('down'); }],   // direct DDG unreachable
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/^https:\/\/noicon\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
-        ]);
-        const en = initFaviconEnrich({
-            doc: makeDoc(),
-            faviconService: makeFavService(),
-            isEnabled: () => true,
-            ddgEnabled: () => true,
-            fetchImpl,
-            ImageCtor: makeFakeImage(),
-            chromeImpl: { storage: { local, session } },
-            now: nextNow
-        });
-        await en._hydrateDone;
-        // Pre-trip the breaker (as if a prior host's DDG direct network-failed).
-        en.getIdx().ddgDownUntil = nextNow() + BREAKER_TTL_MS;
-        // L1/L2 direct fail → L3: proxied L1/L2 fail, but the breaker is
-        // tripped so L3's proxied-DDG-retry branch fires and wins.
-        en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
-        await tick();
-        await tick();
-        expect(ddgProxied).toBeGreaterThanOrEqual(1);   // proxied DDG retry won
-    });
-
-    it('ddgEnabled=false skips L4 (never hits DuckDuckGo)', async () => {
-        const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
-        ]);
-        const en = initFaviconEnrich({
-            doc: makeDoc(),
-            faviconService: makeFavService(),
-            isEnabled: () => true,
-            ddgEnabled: () => false,
-            fetchImpl,
-            ImageCtor: makeFakeImage(),
-            chromeImpl: { storage: { local: makeStorageArea() } },
-            now: nextNow
-        });
-        await en._hydrateDone;
-        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
-        await tick();
-        await tick();
-        expect(fetchImpl.calls.some(c => DDG_URL('example.com') === c.url)).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === FR('proxy.example'))).toBe(true);
+        expect(fetchImpl.calls.some(c => c.url === DDG('proxy.example'))).toBe(true);
     });
 });
 
-describe('initFaviconEnrich — DDG breaker', () => {
+describe('initFaviconEnrich — per-provider breaker + failover', () => {
     beforeEach(() => { seq = 0; });
 
-    it('an HTTP 403 from DDG does NOT trip the breaker (service reachable, host not found)', async () => {
-        let ddgCalls = 0;
+    it('a provider network error trips ITS breaker; subsequent hosts skip it', async () => {
+        let frCalls = 0, ddgCalls = 0;
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/duckduckgo/, () => { ddgCalls++; return { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }; }]
+            [/\/favicon\.ico$/, notFound()],
+            [/favicon\.run/, () => { frCalls++; throw new TypeError('down'); }],
+            [/duckduckgo/, () => { ddgCalls++; return pngResponse(); }]
         ]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
             now: nextNow
         });
         await en._hydrateDone;
-        // Two hosts → two DDG attempts, both 403 (host-not-found) → NO breaker trip.
+        // Host a: favicon-run unreachable → tripped, duckduckgo wins.
         en.onPlaceholder(makePlaceholderImg('https://a.example/'));
         await tick();
         await tick();
+        // Host b: favicon-run breaker tripped → skipped, straight to duckduckgo.
         en.onPlaceholder(makePlaceholderImg('https://b.example/'));
         await tick();
         await tick();
-        expect(ddgCalls).toBe(2);              // both attempted — service reachable
-        expect(en.getIdx().ddgDownUntil).toBe(0);  // never tripped
+        expect(frCalls).toBe(1);               // only the first host probed it
+        expect(ddgCalls).toBe(2);              // both hosts fell through to DDG
+        expect(en.getIdx().down['favicon-run']).toBeGreaterThan(0);
+        expect(en.getIdx().down['duckduckgo']).toBe(0);
     });
 
-    it('breaker auto-heals after 6h and allows a probe', async () => {
-        let ddgCalls = 0;
+    it('breaker auto-heals after 6h and allows one probe; still failing → re-tripped', async () => {
+        let frCalls = 0;
         let nowVal = 1700000000000;
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/^https:\/\/x\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/duckduckgo/, () => { ddgCalls++; throw new TypeError('down'); }]
+            [/\/favicon\.ico$/, notFound()],
+            [/favicon\.run/, () => { frCalls++; throw new TypeError('down'); }],
+            [/duckduckgo/, pngResponse()]
         ]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -451,44 +571,175 @@ describe('initFaviconEnrich — DDG breaker', () => {
         });
         await en._hydrateDone;
         en.onPlaceholder(makePlaceholderImg('https://x.example/'));
-        await tick(); await tick();
-        expect(ddgCalls).toBe(1);
-        expect(en.getIdx().ddgDownUntil).toBeGreaterThan(0);
-        // Advance past the 6h breaker → a new host gets one L4 probe.
+        await tick();
+        await tick();
+        expect(frCalls).toBe(1);
+        expect(en.getIdx().down['favicon-run']).toBeGreaterThan(0);
+        // Advance past the 6h breaker → the next host gets one L4 probe.
         nowVal += BREAKER_TTL_MS + 1;
         en.onPlaceholder(makePlaceholderImg('https://y.example/'));
-        await tick(); await tick();
-        expect(ddgCalls).toBe(2);   // probe allowed after heal
+        await tick();
+        await tick();
+        expect(frCalls).toBe(2);   // probe allowed after heal — and it re-tripped
+        expect(en.getIdx().down['favicon-run']).toBeGreaterThan(nowVal);
     });
 
-    it('a network error on L4 trips the breaker; subsequent hosts skip L4', async () => {
+    it('breakers are independent (favicon-run down does not affect duckduckgo)', async () => {
         let ddgCalls = 0;
         const fetchImpl = makeFetch([
-            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/^https:\/\/example\.com\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
-            [/duckduckgo/, () => { ddgCalls++; throw new TypeError('network down'); }]
+            [/\/favicon\.ico$/, notFound()],
+            [/favicon\.run/, () => { throw new TypeError('down'); }],
+            [/duckduckgo/, () => { ddgCalls++; return pngResponse(); }]
         ]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => true,
+            fallbackEnabled: () => true,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
             now: nextNow
         });
         await en._hydrateDone;
-        // Two hosts, both fail L1/L2, both would hit L4 → breaker trips on the first.
         en.onPlaceholder(makePlaceholderImg('https://a.example/'));
         await tick();
         await tick();
         en.onPlaceholder(makePlaceholderImg('https://b.example/'));
         await tick();
         await tick();
-        // First DDG attempt tripped the breaker; second must NOT reach DDG again.
-        expect(ddgCalls).toBe(1);
-        expect(en.getIdx().ddgDownUntil).toBeGreaterThan(0);
+        // duckduckgo served every host even while favicon-run was down.
+        expect(ddgCalls).toBe(2);
+        expect(en.getIdx().down['duckduckgo']).toBe(0);
+    });
+
+    it('breaker state survives re-hydrate from storage (skipped across sessions)', async () => {
+        const future = 1700000000000 + BREAKER_TTL_MS + 5000;
+        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: idxV3({}, { 'favicon-run': future }) });
+        let frCalls = 0;
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/favicon\.run/, () => { frCalls++; return pngResponse(); }],
+            [/duckduckgo/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => 1700000000000
+        });
+        await en._hydrateDone;
+        expect(en.getIdx().down['favicon-run']).toBe(future);   // preserved
+        en.onPlaceholder(makePlaceholderImg('https://a.example/'));
+        await tick();
+        await tick();
+        expect(frCalls).toBe(0);   // skipped in-session
+        // A fresh enricher hydrating the same storage also skips it.
+        const en2 = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: () => 1700000000000
+        });
+        await en2._hydrateDone;
+        expect(en2.getIdx().down['favicon-run']).toBe(future);
+    });
+
+    it('a breaker-tripped provider gets one PROXIED retry when the proxy is live', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({ vbmProxySession: { active: true } });
+        let frProxied = 0;
+        const fetchImpl = makeFetch([
+            [/favicon\.run.*__vbm_px=1/, () => { frProxied++; return pngResponse(); }],
+            [/favicon\.run/, () => { throw new TypeError('down'); }],   // direct unreachable
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/noicon\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        // Pre-trip favicon-run's breaker (as if a prior host's direct attempt failed).
+        en.getIdx().down['favicon-run'] = nextNow() + BREAKER_TTL_MS;
+        en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+        await tick();
+        await tick();
+        expect(frProxied).toBeGreaterThanOrEqual(1);   // proxied retry won
+    });
+
+    it('proxied retry walks EVERY tripped provider (favicon-run fails → duckduckgo succeeds)', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({ vbmProxySession: { active: true } });
+        let frProxied = 0, ddgProxied = 0;
+        const fetchImpl = makeFetch([
+            [/favicon\.run.*__vbm_px=1/, () => { frProxied++; return notFound(); }],  // proxied FR fails
+            [/duckduckgo.*__vbm_px=1/, () => { ddgProxied++; return pngResponse(); }], // proxied DDG wins
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/noicon\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        // Pre-trip BOTH providers.
+        en.getIdx().down['favicon-run'] = nextNow() + BREAKER_TTL_MS;
+        en.getIdx().down['duckduckgo'] = nextNow() + BREAKER_TTL_MS;
+        en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+        await tick();
+        await tick();
+        expect(frProxied).toBe(1);
+        expect(ddgProxied).toBe(1);
+    });
+
+    it('a breaker-tripped provider with NO proxy is skipped in L4 (next provider used)', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({});   // no proxy session
+        let frCalls = 0, ddgCalls = 0;
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/favicon\.run/, () => { frCalls++; return pngResponse(); }],
+            [/duckduckgo/, () => { ddgCalls++; return pngResponse(); }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.getIdx().down['favicon-run'] = nextNow() + BREAKER_TTL_MS;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url))).toBe(false);  // no proxy
+        expect(frCalls).toBe(0);       // skipped
+        expect(ddgCalls).toBe(1);      // next provider used
     });
 });
 
@@ -502,7 +753,7 @@ describe('initFaviconEnrich — cache layer', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -524,7 +775,7 @@ describe('initFaviconEnrich — cache layer', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -541,13 +792,16 @@ describe('initFaviconEnrich — cache layer', () => {
 
     it('a cached success hot-swaps immediately (no network)', async () => {
         let fetches = 0;
-        const storage = makeStorageArea({ [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL, [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts: { 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } } }) });
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } })
+        });
         const fetchImpl = makeFetch([[/.*/, () => { fetches++; return { ok: false, status: 404 }; }]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -562,13 +816,15 @@ describe('initFaviconEnrich — cache layer', () => {
 
     it('a failed marker (within 24h) suppresses requests', async () => {
         let fetches = 0;
-        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts: { 'noicon.example': { f: 1, t: Date.now() } } }) });
+        const storage = makeStorageArea({
+            [FAVICON_IDX_KEY]: idxV3({ 'noicon.example': { f: 1, t: Date.now() } })
+        });
         const fetchImpl = makeFetch([[/.*/, () => { fetches++; return { ok: false, status: 404 }; }]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -592,7 +848,7 @@ describe('initFaviconEnrich — queue + eviction', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -614,13 +870,13 @@ describe('initFaviconEnrich — queue + eviction', () => {
         const hosts = {};
         for (let i = 0; i < 110; i++)  // 110 × 20KB = 2.2MB
             hosts[`big${i}.example`] = { t: 1700000000000 + i * 1000, s: bigData.length };
-        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts }) });
+        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: idxV3(hosts) });
         const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -650,7 +906,7 @@ describe('initFaviconEnrich — queue + eviction', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -669,13 +925,13 @@ describe('initFaviconEnrich — queue + eviction', () => {
         const hosts = {};
         for (let i = 0; i < MAX_ENTRIES; i++)
             hosts[`h${i}.example`] = { t: 1700000000000 + i * 1000, s: 100 };
-        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts }) });
+        const storage = makeStorageArea({ [FAVICON_IDX_KEY]: idxV3(hosts) });
         const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -703,7 +959,7 @@ describe('initFaviconEnrich — hot swap', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -727,7 +983,7 @@ describe('initFaviconEnrich — hot swap', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -758,7 +1014,7 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -777,7 +1033,7 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: makeStorageArea() } },
@@ -795,13 +1051,13 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
     it('clears the in-memory cache when the index is removed (options cache clear)', async () => {
         const storage = makeStorageArea({
             [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
-            [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts: { 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } } })
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: Date.now(), s: PNG_DATA_URL.length } })
         });
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl: makeFetch([]),
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -818,7 +1074,7 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl: makeFetch([]),
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -834,10 +1090,33 @@ describe('index parse + rebuild', () => {
         expect(parseIdx('not json')).toBeNull();
     });
 
-    it('emptyIdx has the shape version', () => {
-        expect(emptyIdx().v).toBe(1);
-        expect(emptyIdx().ddgDownUntil).toBe(0);
+    it('emptyIdx has the v3 shape (per-provider down table)', () => {
+        expect(emptyIdx().v).toBe(3);
+        expect(emptyIdx().down).toEqual({ 'favicon-run': 0, 'duckduckgo': 0 });
         expect(emptyIdx().hosts).toEqual({});
+    });
+
+    it('parseIdx normalizes a v3 index: missing provider defaults to 0, stale provider dropped', () => {
+        const idx = parseIdx(JSON.stringify({ v: 3, down: { 'duckduckgo': 123, 'ghost': 456 }, hosts: { 'a.example': { t: 1, s: 2 } } }));
+        expect(idx).not.toBeNull();
+        expect(idx.down).toEqual({ 'favicon-run': 0, 'duckduckgo': 123 });   // missing→0, ghost dropped
+        expect(idx.hosts['a.example']).toEqual({ t: 1, s: 2 });
+    });
+
+    it('parseIdx migrates a legacy v1 index → v3 (hosts preserved, breaker reset)', () => {
+        const idx = parseIdx(JSON.stringify({ v: 1, ddgDownUntil: 999, hosts: { 'ok.example': { t: 1, s: 2 }, 'no.example': { f: 1, t: 3 } } }));
+        expect(idx).not.toBeNull();
+        expect(idx.v).toBe(3);
+        expect(idx.down).toEqual({ 'favicon-run': 0, 'duckduckgo': 0 });     // breaker window reset
+        // Both success and failed markers survive the migration.
+        expect(idx.hosts['ok.example']).toEqual({ t: 1, s: 2 });
+        expect(idx.hosts['no.example']).toEqual({ f: 1, t: 3 });
+    });
+
+    it('parseIdx rejects unknown shapes', () => {
+        expect(parseIdx(JSON.stringify({ v: 2, hosts: {} }))).toBeNull();
+        expect(parseIdx(JSON.stringify({ hosts: {} }))).toBeNull();
+        expect(parseIdx(JSON.stringify({ v: 3 }))).toBeNull();   // no hosts
     });
 
     it('hydrate rebuilds the index from surviving data keys when the index is corrupt', async () => {
@@ -846,7 +1125,7 @@ describe('index parse + rebuild', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl: makeFetch([]),
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -854,8 +1133,30 @@ describe('index parse + rebuild', () => {
         });
         await en._hydrateDone;
         expect(en.getCache().has('github.com')).toBe(true);
-        // The rebuilt index was persisted.
+        // The rebuilt index was persisted (v3).
         expect(storage.data[FAVICON_IDX_KEY]).toContain('github.com');
+        expect(JSON.parse(storage.data[FAVICON_IDX_KEY]).v).toBe(3);
+    });
+
+    it('hydrate migrates a v1 index in place (hosts + failed markers preserved, breaker reset)', async () => {
+        const v1 = JSON.stringify({ v: 1, ddgDownUntil: 123456, hosts: { 'ok.example': { t: 1700000000000, s: 10 }, 'no.example': { f: 1, t: 1700000000000 } } });
+        const storage = makeStorageArea({ [`${FAVICON_DATA_PREFIX}ok.example`]: PNG_DATA_URL, [FAVICON_IDX_KEY]: v1 });
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        expect(en.getCache().has('ok.example')).toBe(true);     // success preserved
+        expect(en.getCache().get('no.example')).toEqual({ f: 1, t: 1700000000000 });   // failed marker preserved
+        expect(en.getIdx().v).toBe(3);
+        expect(en.getIdx().down['favicon-run']).toBe(0);        // breaker reset
+        expect(en.getIdx().down['duckduckgo']).toBe(0);
     });
 
     it('quota write rejection → emergency eviction of the oldest half, then the new entry survives', async () => {
@@ -870,7 +1171,7 @@ describe('index parse + rebuild', () => {
             hosts[h] = { t: 1700000000000 + i * 1000, s: DATA.length };
             seedData[`${FAVICON_DATA_PREFIX}${h}`] = DATA;
         }
-        seedData[FAVICON_IDX_KEY] = JSON.stringify({ v: 1, ddgDownUntil: 0, hosts });
+        seedData[FAVICON_IDX_KEY] = idxV3(hosts);
         const base = makeStorageArea(seedData);
         // Wrap set to throw a quota error on the first data-key write.
         let quotaThrown = false;
@@ -895,7 +1196,7 @@ describe('index parse + rebuild', () => {
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl,
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
@@ -918,13 +1219,13 @@ describe('index parse + rebuild', () => {
         const hosts = { 'stale.example': { t: 1700000000000, s: 100 } };
         const storage = makeStorageArea({
             [`${FAVICON_DATA_PREFIX}orphan.example`]: PNG_DATA_URL,
-            [FAVICON_IDX_KEY]: JSON.stringify({ v: 1, ddgDownUntil: 0, hosts })
+            [FAVICON_IDX_KEY]: idxV3(hosts)
         });
         const en = initFaviconEnrich({
             doc: makeDoc(),
             faviconService: makeFavService(),
             isEnabled: () => true,
-            ddgEnabled: () => false,
+            fallbackEnabled: () => false,
             fetchImpl: makeFetch([]),
             ImageCtor: makeFakeImage(),
             chromeImpl: { storage: { local: storage } },
