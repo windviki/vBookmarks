@@ -167,6 +167,7 @@ scripts/harness/run.sh --smoke-only   # Docker real-browser load + zero page/con
 
 - **前置校验(默认强制)**: `check` 子命令离线验证 git发布 已完成 — git 最大 tag 必须为 `v<version>` 且 zip 内嵌版本与仓库一致;校验失败即中止(`--skip-check` 仅用于显式上传草稿)。发布前先 `node scripts/webstore/publish.js check`。
 - **凭据**: 只存于 git-ignored 的仓库根 `.env`(`CWS_PUBLISHER_ID` / `CWS_CLIENT_ID` / `CWS_CLIENT_SECRET` / `CWS_REFRESH_TOKEN`;`extensionId` 自动从 manifest 推导),真实环境变量优先;获取步骤见 `scripts/webstore/README.md`。仓库内文件不得出现真实凭据。
+- **测试用户灰度**: `publish --type TRUSTED_TESTERS --yes` 只发布给指定测试者,`publish --type DEFAULT_PUBLISH --yes` 恢复全量;测试用户列表取 `CWS_TRUSTED_TESTERS`(逗号分隔,留空默认 `windviki@gmail.com`),发布时脚本打印列表供核对 — CWS API 无法代管测试者邮箱,列表须在 Dashboard → Users and permissions → Testers 手动维护。
 - **流程**: `upload --yes` → `publish --yes`(或 `all --yes` 一次完成);`--file` 指定 zip,`--type STAGED_PUBLISH`/`TRUSTED_TESTERS` 走分阶段/预发布,`--deploy N` 灰度。全部 dry-run 默认,`--yes` 才联网执行。
 - **测试**: `npm run test:webstore`(全离线,验证 V2 请求契约 + 打包产物 CWS 结构合规)。
 
