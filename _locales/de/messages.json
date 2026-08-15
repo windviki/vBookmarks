@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Von Lesezeichen, Symbol-Cache und Einstellungen belegter Speicherplatz. Der freie Speicherplatz wird nach dem Leeren des Symbol-Caches aktualisiert."
   },
+  "optionsDonate": {
+    "message": "Spenden"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Startseite"
+  },
+  "optionsSince": {
+    "message": "Von Neat Bookmarks abgespalten, $days$ Tage lang gepflegt.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks-Version"

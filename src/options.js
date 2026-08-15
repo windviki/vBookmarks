@@ -689,12 +689,21 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-sync-refresh-interval').innerText = __m('optionSyncRefreshInterval');
         document.getElementById('option-sync-refresh-interval-seconds').innerText = __m('optionSyncRefreshIntervalSeconds');
         document.getElementById('storage-usage-hint').innerText = __m('storageUsageHint');
-        // Header meta (top-right): project links + the full version number.
-        document.getElementById('header-github').innerText = __m('optionsGithubLink');
-        document.getElementById('header-homepage').innerText = __m('optionsHomepageLink');
+        // Header meta (top-right): donate / GitHub / homepage buttons + the
+        // full version, which links to the changelog. Text lives in label spans
+        // so the inline SVG icons stay as the leading glyph.
+        document.getElementById('header-donate-label').innerText = __m('optionsDonate');
+        document.getElementById('header-github-label').innerText = __m('optionsGithubLink');
+        document.getElementById('header-homepage-label').innerText = __m('optionsHomepageLink');
         const versionEl = document.getElementById('options-version');
-        versionEl.innerText = 'v' + chrome.runtime.getManifest().version;
+        versionEl.href = 'https://github.com/windviki/vBookmarks#changelogs';
         versionEl.title = __m('optionsVersion');
+        document.getElementById('options-version-text').innerText = 'v' + chrome.runtime.getManifest().version;
+        // Subtitle under the title row: since the 1.0 fork from Neat
+        // Bookmarks (2011-11-15) the extension has been maintained.
+        const sinceEl = document.getElementById('header-since');
+        const days = Math.floor((Date.now() - Date.UTC(2011, 10, 15)) / 86400000);
+        sinceEl.innerText = __m('optionsSince', [String(days)]);
         // Seed the storage-usage bar once the page is up.
         refreshStorageUsage();
     }

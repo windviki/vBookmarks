@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "พื้นที่จัดเก็บที่ใช้โดยบุ๊กมาร์ก แคชไอคอน และการตั้งค่า พื้นที่ว่างจะอัปเดตหลังจากการล้างแคชไอคอน"
   },
+  "optionsDonate": {
+    "message": "บริจาค"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "หน้าหลัก"
+  },
+  "optionsSince": {
+    "message": "ต่อยอดจาก Neat Bookmarks และดูแลมาแล้ว $days$ วัน",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "เวอร์ชัน vBookmarks"

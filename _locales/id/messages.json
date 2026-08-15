@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Ruang penyimpanan yang digunakan oleh penanda, cache ikon, dan pengaturan. Ruang kosong diperbarui setelah membersihkan cache ikon."
   },
+  "optionsDonate": {
+    "message": "Donasi"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Beranda"
+  },
+  "optionsSince": {
+    "message": "Fork dari Neat Bookmarks, dikelola selama $days$ hari.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Versi vBookmarks"

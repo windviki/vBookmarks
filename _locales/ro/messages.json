@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Spațiul de stocare utilizat de marcaje, cache-ul de icoane și setări. Spațiul liber se actualizează după golirea cache-ului de icoane."
   },
+  "optionsDonate": {
+    "message": "Donează"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Pagina principală"
+  },
+  "optionsSince": {
+    "message": "Derivat din Neat Bookmarks, menținut timp de $days$ de zile.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Versiunea vBookmarks"

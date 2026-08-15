@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Lagringsplads brugt af bogmærker, ikon-cachen og indstillinger. Ledig plads opdateres efter rydning af ikon-cachen."
   },
+  "optionsDonate": {
+    "message": "Donér"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Hjemmeside"
+  },
+  "optionsSince": {
+    "message": "Forket fra Neat Bookmarks, vedligeholdt i $days$ dage.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks version"

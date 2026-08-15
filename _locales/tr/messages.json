@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Yer imlerinin, simge önbelleğinin ve ayarların kullandığı depolama alanı. Simge önbelleği temizlendikten sonra boş alan güncellenir."
   },
+  "optionsDonate": {
+    "message": "Bağış Yap"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Ana sayfa"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks'tan çatallanmıştır; $days$ gündür bakımı yapılmaktadır.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks sürümü"

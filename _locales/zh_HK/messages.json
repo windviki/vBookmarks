@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "書籤、圖示快取和設定所使用的儲存空間。清除圖示快取後，可用空間會更新。"
   },
+  "optionsDonate": {
+    "message": "捐贈"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "首頁"
+  },
+  "optionsSince": {
+    "message": "衍生自 Neat Bookmarks，已維護 $days$ 天。",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks 版本"

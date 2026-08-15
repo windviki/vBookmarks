@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "فضای ذخیرهسازی مصرفشده توسط نشانکها، کش آیکونها و تنظیمات. فضای آزاد پس از پاکسازی کش آیکونها بهروزرسانی میشود."
   },
+  "optionsDonate": {
+    "message": "اهدا"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "صفحهٔ اصلی"
+  },
+  "optionsSince": {
+    "message": "فورکشده از Neat Bookmarks، به مدت $days$ روز نگهداری میشود.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "نسخهٔ vBookmarks"

@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Krātuves vieta, ko aizņem grāmatzīmes, ikonu kešatmiņa un iestatījumi. Brīvā vieta tiek atjaunināta pēc ikonu kešatmiņas notīrīšanas."
   },
+  "optionsDonate": {
+    "message": "Ziedot"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Mājaslapa"
+  },
+  "optionsSince": {
+    "message": "Atdalīts no Neat Bookmarks, uzturēts $days$ dienas.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks versija"

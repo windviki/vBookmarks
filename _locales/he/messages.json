@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "שטח אחסון המשמש את הסימניות, מטמון האייקונים וההגדרות. השטח הפנוי מתעדכן לאחר ניקוי מטמון האייקונים."
   },
+  "optionsDonate": {
+    "message": "תרומה"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "דף הבית"
+  },
+  "optionsSince": {
+    "message": "נוצר מתוך Neat Bookmarks, ומתוחזק במשך $days$ ימים.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "גרסת vBookmarks"

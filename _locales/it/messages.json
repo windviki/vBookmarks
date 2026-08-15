@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Spazio di archiviazione utilizzato da segnalibri, cache delle icone e impostazioni. Lo spazio libero si aggiorna dopo aver svuotato la cache delle icone."
   },
+  "optionsDonate": {
+    "message": "Dona"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Homepage"
+  },
+  "optionsSince": {
+    "message": "Derivato da Neat Bookmarks, mantenuto per $days$ giorni.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Versione vBookmarks"

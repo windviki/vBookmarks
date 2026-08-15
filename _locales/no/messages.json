@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Lagringsplass brukt av bokmerker, ikonbufferen og innstillinger. Ledig plass oppdateres etter at ikonbufferen tømmes."
   },
+  "optionsDonate": {
+    "message": "Doner"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Hjemmeside"
+  },
+  "optionsSince": {
+    "message": "Basert på Neat Bookmarks, vedlikeholdt i $days$ dager.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks-versjon"

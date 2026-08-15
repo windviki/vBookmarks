@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "المساحة التخزينية المستخدمة بواسطة الإشارات المرجعية وذاكرة التخزين المؤقت للأيقونات والإعدادات. يتم تحديث المساحة الحرة بعد مسح ذاكرة التخزين المؤقت للأيقونات."
   },
+  "optionsDonate": {
+    "message": "تبرع"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "الصفحة الرئيسية"
+  },
+  "optionsSince": {
+    "message": "متفرع من Neat Bookmarks، تمت صيانته لمدة $days$ يومًا.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "إصدار vBookmarks"

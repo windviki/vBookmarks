@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "बुकमार्क, आइकन कैश और सेटिंग्स द्वारा उपयोग किया गया संग्रहण स्थान। आइकन कैश साफ़ करने के बाद खाली स्थान अपडेट होता है।"
   },
+  "optionsDonate": {
+    "message": "दान करें"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "होमपेज"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks से फोर्क किया गया, $days$ दिनों से अनुरक्षित।",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks संस्करण"

@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Место, используемое закладками, кэшем значков и настройками. Свободное место обновляется после очистки кэша значков."
   },
+  "optionsDonate": {
+    "message": "Пожертвовать"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Домашняя страница"
+  },
+  "optionsSince": {
+    "message": "Форк из Neat Bookmarks, поддерживается $days$ дней.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Версия vBookmarks"

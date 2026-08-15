@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "ブックマーク、アイコンキャッシュ、設定によって使用されるストレージ容量。アイコンキャッシュをクリアすると空き容量が更新されます。"
   },
+  "optionsDonate": {
+    "message": "寄付"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "ホームページ"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks からフォークして、$days$ 日間メンテナンスしています。",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks バージョン"

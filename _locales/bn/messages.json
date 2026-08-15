@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "বুকমার্ক, আইকন ক্যাশ এবং সেটিংস দ্বারা ব্যবহৃত স্টোরেজ স্থান। আইকন ক্যাশ মুছে ফেলার পরে মুক্ত স্থান আপডেট হয়।"
   },
+  "optionsDonate": {
+    "message": "অনুদান করুন"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "হোমপেজ"
+  },
+  "optionsSince": {
+    "message": "Neat Bookmarks থেকে ফর্ক করা হয়েছে এবং $days$ দিন ধরে রক্ষণাবেক্ষিত।",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks সংস্করণ"

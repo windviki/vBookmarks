@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "A könyvjelzők, az ikongyorsítótár és a beállítások által használt tárhely. A szabad hely az ikongyorsítótár törlése után frissül."
   },
+  "optionsDonate": {
+    "message": "Adomány"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Kezdőlap"
+  },
+  "optionsSince": {
+    "message": "A Neat Bookmarks forkja, $days$ napja karbantartva.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks verzió"

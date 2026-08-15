@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Пространство, използвано от отметки, кеша за икони и настройки. Свободното пространство се обновява след изчистване на кеша за икони."
   },
+  "optionsDonate": {
+    "message": "Дарете"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Начална страница"
+  },
+  "optionsSince": {
+    "message": "Разклонено от Neat Bookmarks, поддържано в продължение на $days$ дни.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Версия на vBookmarks"

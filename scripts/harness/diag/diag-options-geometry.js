@@ -22,7 +22,16 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         const rect = el => { const r = el.getBoundingClientRect(); return { c: +((r.top + r.bottom) / 2).toFixed(1) }; };
         const sortSec = document.querySelector('.options-group:has(> h2#sort-options)');
         const out = {
-            header: ['#ext-name', '#small-options', '#header-links', '#options-version'].map(s => ({ s, ...rect(q(s)) })),
+            header: ['#ext-name', '#small-options', '#header-links', '#header-donate',
+                '#header-github', '#header-homepage', '#options-version-text'].map(s => ({ s, ...rect(q(s)) })),
+            since: (() => {
+                const r = q('#header-since').getBoundingClientRect();
+                return { s: '#header-since', ...rect(q('#header-since')),
+                    cx: +((r.left + r.right) / 2).toFixed(1),
+                    vpCenter: +(window.innerWidth / 2).toFixed(1),
+                    leftMargin: +r.left.toFixed(1),
+                    rightMargin: +((window.innerWidth - r.right)).toFixed(1) };
+            })(),
             sort: [...sortSec.querySelectorAll(':scope > .options-list > li')].map(li => {
                 const inp = li.querySelector('input');
                 return { type: inp.type, left: +inp.getBoundingClientRect().left.toFixed(1), id: inp.id };

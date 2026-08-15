@@ -180,13 +180,20 @@ describe('options.js settings backup', () => {
                 expect(optionsHtml).toContain(`id="${id}"`);
             expect(optionsHtml).toMatch(/<input type="file" id="import-settings-file"[^>]*hidden/);
             expect(optionsHtml.indexOf('id="accessibility"')).toBeLessThan(optionsHtml.indexOf('id="backup-options"'));
-            // 4.0.8: the bottom footer was replaced by header meta — GitHub +
-            // homepage links and the version live top-right next to the title.
+            // 4.0.8: the bottom footer was replaced by header meta — donate /
+            // GitHub / homepage buttons + the version (linking to the changelog)
+            // live top-right next to the title, with a since-subtitle below.
             expect(optionsHtml).not.toContain('id="footer"');
             expect(optionsHtml).not.toContain('Thanks');
-            for (const id of ['header-github', 'header-homepage', 'options-version'])
+            for (const id of ['header-donate', 'header-github', 'header-homepage',
+                'options-version', 'header-donate-label', 'header-github-label',
+                'header-homepage-label', 'options-version-text', 'header-since'])
                 expect(optionsHtml).toContain(`id="${id}"`);
             expect(optionsHtml.indexOf('id="header-links"')).toBeGreaterThan(optionsHtml.indexOf('id="ext-name"'));
+            expect(optionsHtml.indexOf('id="header-since"')).toBeGreaterThan(optionsHtml.indexOf('</h1>'));
+            // Static hrefs: donate → donation page, version → changelog.
+            expect(optionsHtml).toContain('id="header-donate" href="https://github.com/windviki/vBookmarks/blob/master/donation/donation.md"');
+            expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks#changelogs"');
             // The storage-usage bar lives in the Icons group, next to the
             // clear-icon-cache button (before the group's closing </ul>).
             expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
@@ -520,16 +527,25 @@ describe('storage usage bar', () => {
     });
 });
 
-// Options page header meta (v4 Task D): the footer "thanks" block is gone and
-// the project links + full version live at the top-right of the page title.
+// Options page header meta (v4 Task D + 4.0.8 redesign): the footer "thanks"
+// block is gone; the top-right row is donate/GitHub/homepage pill buttons and
+// the full version linking to the changelog, with a since-subtitle below.
 describe('options page header meta', () => {
-    it('fills the GitHub/homepage links and the full version number', async () => {
+    it('fills the header buttons, the version button and the since subtitle', async () => {
         const sb = createSandbox({ chromeLocalData: {} });
         await sb.start();
-        expect(sb.elements['header-github'].innerText).toBe('optionsGithubLink');
-        expect(sb.elements['header-homepage'].innerText).toBe('optionsHomepageLink');
-        expect(sb.elements['options-version'].innerText).toBe('v4.0.1');
+        // Text lands in the label spans so the inline SVG icons stay leading.
+        expect(sb.elements['header-donate-label'].innerText).toBe('optionsDonate');
+        expect(sb.elements['header-github-label'].innerText).toBe('optionsGithubLink');
+        expect(sb.elements['header-homepage-label'].innerText).toBe('optionsHomepageLink');
+        // Version button points at the changelog (the donate anchor's href is
+        // static HTML, asserted in the structure test above).
+        expect(sb.elements['options-version'].href).toContain('changelogs');
+        expect(sb.elements['options-version-text'].innerText).toBe('v4.0.1');
         expect(sb.elements['options-version'].title).toBe('optionsVersion');
+        // Subtitle: forked-from + days since 1.0 (2011-11-15), i18n key only
+        // in the sandbox — substitution args are ignored by the echo stub.
+        expect(sb.elements['header-since'].innerText).toBe('optionsSince');
     });
 });
 

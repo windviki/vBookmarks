@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Priestor využívaný záložkami, vyrovnávacou pamäťou ikon a nastaveniami. Voľný priestor sa aktualizuje po vymazaní vyrovnávacej pamäte ikon."
   },
+  "optionsDonate": {
+    "message": "Prispieť"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Domovská stránka"
+  },
+  "optionsSince": {
+    "message": "Odvodené z Neat Bookmarks, udržiavané už $days$ dní.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks verzia"

@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Prostor za pohranu koji koriste oznake, predmemorija ikona i postavke. Slobodni prostor ažurira se nakon čišćenja predmemorije ikona."
   },
+  "optionsDonate": {
+    "message": "Doniraj"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Početna stranica"
+  },
+  "optionsSince": {
+    "message": "Forkano od Neat Bookmarks, održavano $days$ dana.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Verzija vBookmarks"

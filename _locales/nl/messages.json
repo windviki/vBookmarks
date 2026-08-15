@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Opslagruimte die wordt gebruikt door bladwijzers, de pictogramcache en instellingen. De vrije ruimte wordt bijgewerkt na het wissen van de pictogramcache."
   },
+  "optionsDonate": {
+    "message": "Doneren"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Startpagina"
+  },
+  "optionsSince": {
+    "message": "Geforkt van Neat Bookmarks, al $days$ dagen onderhouden.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks-versie"

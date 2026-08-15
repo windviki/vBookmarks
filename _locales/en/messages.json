@@ -1455,6 +1455,10 @@
     "message": "Storage space used by bookmarks, the icon cache and settings. Free space updates after clearing the icon cache.",
     "description": "Hint under the storage usage bar in the Icons group."
   },
+  "optionsDonate": {
+    "message": "Donate",
+    "description": "Options page header button linking to the donation page."
+  },
   "optionsGithubLink": {
     "message": "GitHub",
     "description": "Options page header link to the GitHub profile/repository."
@@ -1462,6 +1466,15 @@
   "optionsHomepageLink": {
     "message": "Homepage",
     "description": "Options page header link to the plugin homepage."
+  },
+  "optionsSince": {
+    "message": "Forked from Neat Bookmarks, maintained for $days$ days.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    },
+    "description": "Subtitle under the options page title: days since the 1.0 fork from Neat Bookmarks."
   },
   "optionsVersion": {
     "message": "vBookmarks version",

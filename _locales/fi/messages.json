@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Kirjanmerkkien, kuvakevälimuistin ja asetusten käyttämä tallennustila. Vapaa tila päivittyy kuvakevälimuistin tyhjentämisen jälkeen."
   },
+  "optionsDonate": {
+    "message": "Lahjoita"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Kotisivu"
+  },
+  "optionsSince": {
+    "message": "Haarautettu Neat Bookmarksista, ylläpidetty $days$ päivää.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks-versio"

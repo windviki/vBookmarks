@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Lagringsutrymme som används av bokmärken, ikoncachen och inställningar. Ledigt utrymme uppdateras efter att ikoncachen rensas."
   },
+  "optionsDonate": {
+    "message": "Donera"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Hemsida"
+  },
+  "optionsSince": {
+    "message": "Underhålls i $days$ dagar, baserat på Neat Bookmarks.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks version"

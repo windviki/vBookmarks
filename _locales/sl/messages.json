@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Prostor za shranjevanje, ki ga uporabljajo zaznamki, predpomnilnik ikon in nastavitve. Prosti prostor se posodobi po čiščenju predpomnilnika ikon."
   },
+  "optionsDonate": {
+    "message": "Doniraj"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Domača stran"
+  },
+  "optionsSince": {
+    "message": "Izpeljana iz Neat Bookmarks, vzdrževana že $days$ dni.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Različica vBookmarks"

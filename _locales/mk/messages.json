@@ -842,11 +842,22 @@
   "storageUsageHint": {
     "message": "Простор за складирање што го користат обележувачите, кешот за икони и поставките. Слободниот простор се ажурира по чистењето на кешот за икони."
   },
+  "optionsDonate": {
+    "message": "Донирај"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Почетна страница"
+  },
+  "optionsSince": {
+    "message": "Форк од Neat Bookmarks, одржуван $days$ дена.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Верзија на vBookmarks"

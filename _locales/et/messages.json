@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Salvestusruum, mida kasutavad järjehoidjad, ikoonivahemälu ja seaded. Vaba ruum uueneb pärast ikoonivahemälu tühjendamist."
   },
+  "optionsDonate": {
+    "message": "Anneta"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Koduleht"
+  },
+  "optionsSince": {
+    "message": "Forkitud Neat Bookmarksist, hooldatud $days$ päeva.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarksi versioon"

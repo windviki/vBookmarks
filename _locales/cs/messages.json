@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Úložný prostor používaný záložkami, mezipamětí ikon a nastavením. Volné místo se aktualizuje po vymazání mezipaměti ikon."
   },
+  "optionsDonate": {
+    "message": "Přispět"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Domovská stránka"
+  },
+  "optionsSince": {
+    "message": "Odvozeno z Neat Bookmarks, udržováno po dobu $days$ dní.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Verze vBookmarks"

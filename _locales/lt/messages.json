@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Saugyklos vietos kiekis, kurį naudoja adresynas, piktogramų talpykla ir nustatymai. Laisvos vietos kiekis atnaujinamas išvalius piktogramų talpyklą."
   },
+  "optionsDonate": {
+    "message": "Paremkite"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Pagrindinis puslapis"
+  },
+  "optionsSince": {
+    "message": "Išsišakojęs iš Neat Bookmarks, palaikomas $days$ dienas.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks versija"

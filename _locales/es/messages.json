@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Espacio de almacenamiento utilizado por marcadores, la caché de iconos y la configuración. El espacio libre se actualiza después de borrar la caché de iconos."
   },
+  "optionsDonate": {
+    "message": "Donar"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Página de inicio"
+  },
+  "optionsSince": {
+    "message": "Bifurcado de Neat Bookmarks, mantenido durante $days$ días.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Versión de vBookmarks"

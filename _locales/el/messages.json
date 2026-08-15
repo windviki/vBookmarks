@@ -849,11 +849,22 @@
   "storageUsageHint": {
     "message": "Αποθηκευτικός χώρος που χρησιμοποιείται από σελιδοδείκτες, προσωρινή μνήμη εικονιδίων και ρυθμίσεις. Ο ελεύθερος χώρος ενημερώνεται μετά την εκκαθάριση της προσωρινής μνήμης εικονιδίων."
   },
+  "optionsDonate": {
+    "message": "Δωρεά"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Αρχική σελίδα"
+  },
+  "optionsSince": {
+    "message": "Προέρχεται από το Neat Bookmarks, συντηρείται για $days$ ημέρες.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Έκδοση vBookmarks"

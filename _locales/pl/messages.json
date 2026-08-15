@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Miejsce na dysku zajmowane przez zakładki, pamięć podręczną ikon i ustawienia. Wolne miejsce aktualizuje się po wyczyszczeniu pamięci podręcznej ikon."
   },
+  "optionsDonate": {
+    "message": "Przekaż darowiznę"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Strona główna"
+  },
+  "optionsSince": {
+    "message": "Fork z Neat Bookmarks, utrzymywany przez $days$ dni.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Wersja vBookmarks"

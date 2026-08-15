@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Không gian lưu trữ được sử dụng bởi dấu trang, bộ nhớ đệm biểu tượng và cài đặt. Không gian trống được cập nhật sau khi xóa bộ nhớ đệm biểu tượng."
   },
+  "optionsDonate": {
+    "message": "Quyên góp"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Trang chủ"
+  },
+  "optionsSince": {
+    "message": "Được fork từ Neat Bookmarks, duy trì trong $days$ ngày.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Phiên bản vBookmarks"

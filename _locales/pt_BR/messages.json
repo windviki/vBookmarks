@@ -840,11 +840,22 @@
   "storageUsageHint": {
     "message": "Espaço de armazenamento usado por favoritos, cache de ícones e configurações. O espaço livre é atualizado após limpar o cache de ícones."
   },
+  "optionsDonate": {
+    "message": "Doar"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Página inicial"
+  },
+  "optionsSince": {
+    "message": "Derivado do Neat Bookmarks, mantido por $days$ dias.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Versão do vBookmarks"

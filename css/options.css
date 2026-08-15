@@ -159,26 +159,63 @@ h1 > span,
 h1 > small{
 	line-height: 1;
 }
-/* Header meta: the project links + version, pinned to the top-right */
+/* Header meta: donate / GitHub / homepage / version as pill buttons, pinned
+   to the top-right of the title row. All four share one shape so the row
+   reads as a single control group; the donate button gets the accent fill. */
 #header-links{
 	margin-inline-start: auto;
 	display: flex;
 	align-items: center;
-	gap: 1em;
+	gap: .5em;
 	font-size: .85em;
 }
-#header-links a{
-	color: var(--vbm-accent);
-	text-decoration: none;
-	font-weight: 600;
-}
-#header-links a:hover{
+#header-links a.header-btn{
+	display: inline-flex;
+	align-items: center;
+	gap: .35em;
+	padding: .28em .7em;
+	border: 1px solid var(--vbm-border);
+	border-radius: 999px;
+	background: var(--vbm-bg-elev);
 	color: var(--vbm-fg);
-	text-decoration: underline;
+	text-decoration: none;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
 }
-#options-version{
-	color: var(--vbm-muted);
+#header-links a.header-btn:hover{
+	border-color: var(--vbm-accent);
+	color: var(--vbm-accent);
+	background: var(--vbm-bg-hover);
+}
+#header-links a.header-btn svg{
+	width: 14px;
+	height: 14px;
+	flex: none;
+	fill: currentColor;
+}
+#header-links a.header-btn-accent{
+	background: var(--vbm-accent);
+	border-color: var(--vbm-accent);
+	color: var(--vbm-accent-fg);
+}
+#header-links a.header-btn-accent:hover{
+	background: var(--vbm-accent);
+	border-color: var(--vbm-accent);
+	color: var(--vbm-accent-fg);
+	filter: brightness(1.08);
+}
+#options-version-text{
 	font-variant-numeric: tabular-nums;
+}
+/* Subtitle under the title row: fork origin + days-maintained, centered. */
+#header-since{
+	margin: .35em 0 0;
+	text-align: center;
+	color: var(--vbm-muted);
+	font-size: .8em;
+	line-height: 1.4;
 }
 h2{
 	font-size: .85em;

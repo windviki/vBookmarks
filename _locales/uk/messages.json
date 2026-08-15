@@ -843,11 +843,22 @@
   "storageUsageHint": {
     "message": "Обсяг пам'яті, який використовують закладки, кеш значків і налаштування. Вільне місце оновлюється після очищення кешу значків."
   },
+  "optionsDonate": {
+    "message": "Пожертвувати"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "Домашня сторінка"
+  },
+  "optionsSince": {
+    "message": "Форк від Neat Bookmarks, підтримується $days$ днів.",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "Версія vBookmarks"

@@ -1310,11 +1310,22 @@
   "storageUsageHint": {
     "message": "书签、图标缓存与设置所占用的存储空间。清空图标缓存后剩余空间会即时更新。"
   },
+  "optionsDonate": {
+    "message": "捐赠"
+  },
   "optionsGithubLink": {
     "message": "GitHub"
   },
   "optionsHomepageLink": {
     "message": "主页"
+  },
+  "optionsSince": {
+    "message": "自 Neat Bookmarks 分支而来，已持续维护 $days$ 天。",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
   },
   "optionsVersion": {
     "message": "vBookmarks 版本号"
