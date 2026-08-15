@@ -272,7 +272,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await panel.screenshot({ path: '/tmp/shots/smoke/panel-dark.png' });
 
     // 5. options page (v4 task-3 #17: merged single page — the old advanced
-    // sections live here now, vendored CodeMirror included)
+    // sections live here now, vendored CodeMirror included). The page is a tall
+    // multi-column layout, so a viewport-only shot would show just the top-left
+    // corner — capture the FULL page at the common display resolutions.
     const opts = await browser.newPage();
     watch(opts, 'options');
     await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
@@ -288,7 +290,16 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         groups: document.querySelectorAll('.options-group').length
     }));
     console.log('options stats:', JSON.stringify(optsStats));
-    await opts.screenshot({ path: '/tmp/shots/smoke/options.png' });
+    for (const res of [
+        { name: '1080p', width: 1920, height: 1080 },
+        { name: '2k', width: 2560, height: 1440 },
+        { name: '4k', width: 3840, height: 2160 }
+    ]) {
+        await opts.setViewport({ width: res.width, height: res.height });
+        await opts.goto(`chrome-extension://${extId}/pages/options.html`, { waitUntil: 'networkidle0' });
+        await sleep(600);
+        await opts.screenshot({ path: `/tmp/shots/smoke/options-${res.name}.png`, fullPage: true });
+    }
 
     // 6. the legacy advanced-options URL must forward to the merged page
     const adv = await browser.newPage();

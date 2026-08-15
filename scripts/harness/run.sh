@@ -51,8 +51,12 @@ run_verify() {
     docker rm -f "$name" >/dev/null 2>&1 || true
     docker create --name "$name" "$IMAGE" node "/work/$script" >/dev/null
     docker start -a "$name"
+    local code=$?
+    # Always copy the captures — a failing gate is exactly when you need the
+    # debugging screenshots — then propagate the gate's exit code (set -e).
     docker cp "$name":/tmp/shots/. "$OUT/" 2>/dev/null || true
     docker rm "$name" >/dev/null
+    return "$code"
 }
 
 # Layer 1 — smoke (zero console errors + v4 behavior; captures smoke/* shots).
