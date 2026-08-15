@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "Tikai mirušie"
   },
+  "deadFilterMarked": {
+    "message": "Iepriekš atzīmētās"
+  },
   "deadLastScanAt": {
     "message": "Pēdējā skenēšana: $time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "Atzīmēt atlasītos"
+  },
+  "deadMarkedBanner": {
+    "message": "Tiek rādītas iepriekš atzīmētās grāmatzīmes. Noklikšķiniet uz Pārskenēt, lai sāktu jaunu pārbaudi, vai apstrādājiet tās zemāk esošajā sarakstā."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Aizvērt"
   },
   "deadNone": {
     "message": "Nav atrastas bojātas saites"

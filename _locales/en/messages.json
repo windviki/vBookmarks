@@ -1056,6 +1056,10 @@
     "message": "Dead only",
     "description": "Dead-link view filter segment: show only rows dead on every channel."
   },
+  "deadFilterMarked": {
+    "message": "Previously marked",
+    "description": "Dead-link view filter segment: show only the user's manually marked bookmarks from before (the marked-only view, results hidden)."
+  },
   "deadLastScanAt": {
     "message": "Last scan: $time$",
     "description": "Info row on top of the dead-link view when cached scan results exist; $time$ is the localized scan timestamp.",
@@ -1093,6 +1097,14 @@
   "deadMarkSelected": {
     "message": "Mark selected",
     "description": "Dead view selection mode: mark every selected row as dead."
+  },
+  "deadMarkedBanner": {
+    "message": "Showing bookmarks marked previously. Click Rescan to start a new check, or handle them in the list below.",
+    "description": "Dead view tooltip banner above the toolbar when the previously-marked list is on screen (marked-only view after a cancelled scan / the 'Previously marked' filter, or the appended list under 全部 when a finished scan left marks that are now reachable): points to the rescan action and the handleable list below."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Dismiss",
+    "description": "Dead view marked-list tooltip banner: aria-label/title of the × that hides the hint for the session."
   },
   "deadProxyAdd": {
     "message": "Add a proxy server for dead-link checks",

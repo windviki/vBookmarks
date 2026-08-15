@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "Pouze mrtvé"
   },
+  "deadFilterMarked": {
+    "message": "Dříve označené"
+  },
   "deadLastScanAt": {
     "message": "Poslední sken: $time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "Označit vybrané"
+  },
+  "deadMarkedBanner": {
+    "message": "Zobrazují se dříve označené záložky. Kliknutím na tlačítko „Znovu prohledat“ zahájíte novou kontrolu, nebo je zpracujte v seznamu níže."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Zavřít"
   },
   "deadNone": {
     "message": "Nenalezeny žádné nefunkční odkazy"

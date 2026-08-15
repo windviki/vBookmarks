@@ -200,7 +200,24 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.0.7 · 2026-08-15
+
+#### Fixed
+
+- **Zoomed context menus always show at full height**: the 4.0.5-era fix compressed the menu down to the space below the trigger row, so at zoom > 100 a below-midline right-click showed a shrunken menu. The menu now keeps its full height — clamped to a viewport-level scrollable box only when even the whole popup cannot fit it — and a right-click on an open menu's background re-opens it at the pointer instead of dismissing it, so consecutive right-clicks on a row always show the menu again (no more show/hide alternation).
+- **Dead-marked list stays in sync with the toolbar filter**: switching the toolbar between 全部 / 受限 / 死链 (All / Blocked / Dead) filters the result rows correctly again (仅受限 / 仅死链 used to be swapped), the marked list no longer echoes rows the active filter hides, and it renders after the result rows.
+
+#### Added
+
+- **Dead-check view redesigned around a "Previously marked" category**: the toolbar filter gains a *Previously marked* segment that switches to a marks-only view; in the default *All* view the marked list is appended below the scan results (italic heading to tell it apart), and items this scan still flags as broken move out of the marked list into the results keeping their ⚑ mark. The *All* counter now sums all three categories (dead + blocked + previously marked), not just this scan's result rows. Cancelling an in-flight scan switches to the Previously-marked view and raises a session-scoped, dismissible tooltip banner — prompting you to click **Rescan** to start a new check and to handle the bookmarks in the list below; the same banner appears after a finished scan when past marks this scan no longer flags as broken (reachable again, but marked before) remain below the results. The selection toolbar now applies to the marked list too, so marks can be batch-deselected.
+
+### v4.0.6 · 2026-08-15
+
+Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, and the dead-marked list out of sync with the toolbar filter); its changes were recalled and reworked into 4.0.7.
+
 ### v4.0.5 · 2026-08-15
+
+> **⚠ Recalled / deprecated** — superseded by 4.0.6 (rollback to 4.0.4); properly re-fixed in 4.0.7.
 
 #### New
 

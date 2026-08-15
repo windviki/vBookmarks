@@ -988,6 +988,9 @@
   "deadFilterDead": {
     "message": "仅死链"
   },
+  "deadFilterMarked": {
+    "message": "过去标注"
+  },
   "deadLastScanAt": {
     "message": "上次扫描：$time$",
     "placeholders": {
@@ -1020,6 +1023,14 @@
   "deadMarkSelected": {
     "message": "标记所选",
     "description": "Dead view selection mode: mark every selected row as dead."
+  },
+  "deadMarkedBanner": {
+    "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。",
+    "description": "死链视图：显示过去标注列表时工具栏上方的提示横幅（取消扫描或\"过去标注\"筛选的仅标注视图，以及\"全部\"视图下扫描完成后仍有过去标注追加于下方时），说明当前列表、指向重新扫描，并提示可在下方处理书签。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "关闭提示",
+    "description": "死链已标注列表横幅：× 按钮的 aria-label/title（会话级隐藏）。"
   },
   "deadProxyAdd": {
     "message": "添加代理服务器用于死链检测"

@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "Μόνο νεκρά"
   },
+  "deadFilterMarked": {
+    "message": "Προηγουμένως επισημασμένα"
+  },
   "deadLastScanAt": {
     "message": "Τελευταία σάρωση: $time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "Σήμανση επιλεγμένων"
+  },
+  "deadMarkedBanner": {
+    "message": "Εμφάνιση σελιδοδεικτών που επισημάνθηκαν προηγουμένως. Κάντε κλικ στην Επανασάρωση για νέο έλεγχο ή διαχειριστείτε τους στην παρακάτω λίστα."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Κλείσιμο"
   },
   "deadNone": {
     "message": "Δεν βρέθηκαν νεκροί σύνδεσμοι"

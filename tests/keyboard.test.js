@@ -2644,6 +2644,46 @@ describe('in-list toolbar controls (item 7b + §2.5 rung)', () => {
         expect(b1.focused).toBe(false);
     });
 
+    it('↓ from the lowest rung lands on a focusable row CONTAINER (the dead-start pill)', () => {
+        // The dead view's fresh/empty state shows the executable dead-start
+        // row — an <li class="empty-state dead-start" tabindex="-1"> with no
+        // inner span/a. The rung's ↓-into-rows crossing must land on the
+        // li[tabindex] itself; the old 'li a, li span' query matched nothing
+        // and the crossing silently dead-ended (start scan unreachable).
+        const bag = { rec: { focusTopCalls: 0 } };
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'dead-list');
+                const bar = el('DIV');
+                bar.classList.add('vbm-toolbar');
+                const b = el('BUTTON', 'dead-proxy-add');
+                bar._qsa['button, select, input'] = [b];
+                b.closest = sel => (sel === '.vbm-toolbar' ? bar : null);
+                listEl._qsa['.vbm-toolbar'] = [bar];
+                const start = el('LI', 'dead-start');
+                start.classList.add('empty-state', 'dead-start');
+                start.getAttribute = k => (k === 'tabindex' ? '-1' : null);
+                start.parentNode = listEl;
+                listEl._qs['li a, li span, li[tabindex]'] = start;
+                Object.assign(bag, { listEl, b, start });
+                const deadEntry = { id: 'dead', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, deadEntry],
+                    listOf: el2 => (el2 === listEl ? deadEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => { bag.rec.focusTopCalls++; },
+                    activate: () => {}
+                };
+            }
+        });
+        ctx.doc.activeElement = bag.b;
+        const down = makeEvent({ key: 'ArrowDown' });
+        fire(bag.listEl, 'keydown', down);
+        expect(down.defaultPrevented).toBe(true);
+        expect(bag.start.focused).toBe(true); // the li[tabindex] pill itself
+    });
+
     // K17: f5903c8 parks focus on the container while an async view renders —
     // with no .focus marker and no rows at all the old early-return killed ↑
     // too. ↑ takes the §2.1/§2.5 crossing; 4.0.1 P4 gives Home/End the same

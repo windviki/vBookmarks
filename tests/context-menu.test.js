@@ -222,8 +222,14 @@ const setup = (opts = {}) => {
     body.querySelector = sel =>
         sel === '.active' ? (allEls.find(n => n.classList.contains('active')) || null) : null;
 
+    // All the <menu> elements (parent menus + submenu flyouts) for the
+    // document.querySelectorAll('menu[type=context]') walk in visibleMenu().
+    const allMenus = [bookmarkMenu, folderMenu, separatorMenu, searchHistoryMenu,
+        histRowMenu, dupesGroupMenu, paletteCmdMenu, folderTabGroupSubmenu,
+        folderSortSubmenu, bookmarkTabGroupSubmenu];
     globalThis.document = {
         getElementById: id => byId[id] || null,
+        querySelectorAll: sel => (sel === 'menu[type=context]' ? allMenus : []),
         body
     };
     const windowListeners = {};
@@ -675,15 +681,16 @@ describe('contextmenu handler (opening a menu)', () => {
         // scaling / page zoom ≥ ~90%. Before the clamp, menu.focus() scrolled
         // the document to reveal the overflow, that scroll fired the
         // scroll-dismiss listeners and the menu closed the instant it opened.
-        // The flipped-up 700px menu would cover the trigger row (cursor at
-        // y=60), so the zoom-alternation fix re-clamps it to the space below
-        // the row (540 - 20 row - 8 margin) and anchors it under the row.
+        // The clamp keeps the whole menu inside the popup as a scrollable box
+        // (the zoom-alternation re-clamp below the row is gone — the menu
+        // shows as complete as the popup allows; a right-click on the covered
+        // row re-opens it via menuBackgroundReposition).
         bookmarkMenu.offsetHeight = 700; // > 600-8 available
         const { a } = makeBookmarkRow();
         openOn(a, { pageY: 60, clientY: 60 });
-        expect(bookmarkMenu.style.maxHeight).toBe('512px'); // 540 - 20 row - 8 margin
+        expect(bookmarkMenu.style.maxHeight).toBe('592px'); // 600 - 8 margin
         expect(bookmarkMenu.style.overflowY).toBe('auto');
-        expect(bookmarkMenu.style.top).toBe('80px'); // pageY 60 + ROW_GUESS 20
+        expect(bookmarkMenu.style.top).toBe('0px'); // flipped up to the floor
         expect(bookmarkMenu.style.opacity).toBe('1');
     });
 
@@ -697,39 +704,61 @@ describe('contextmenu handler (opening a menu)', () => {
         expect(bookmarkMenu.style.overflowY).toBe('');
     });
 
-    it('drops a too-tall menu below the triggered row instead of covering it (zoom alternation)', () => {
-        // zoom 放大时菜单项被 body[data-zoom] 缩放, 菜单整体变高 —— 这里模拟
-        // 菜单 560 高, 小于视口级 clamp 上限 (600-0-8=592, 不触发开头 maxHeight,
-        // 即未 scrollable), 但触发点下方空间 (600-100=500) 不够、上方空间
-        // (100-0=100) 也不够 —— 翻上去会顶到 menuMinY 覆盖用户右键的那一行,
-        // 后续右键落在菜单上被分发到菜单而只关闭不重开 (zoom 交替 bug)。
-        // 修复: clamp 到触发点下方 (500-20-8=472) 并把顶部放到触发行下方
-        // (pageY 100 + ROW_GUESS 20 = 120), 使菜单不覆盖触发行。
+    it('shows a too-tall menu at full height, flipping up instead of shrinking below the trigger', () => {
+        // 菜单必须尽可能完整显示 —— 这里模拟菜单 560 高, 小于视口级 clamp 上限
+        // (600-0-8=592, 不触发开头 maxHeight, 即未 scrollable), 但触发点下方
+        // 空间 (600-100=500) 不够。旧修复把菜单压到 472 并锚到触发行下方;
+        // 回退后菜单不再压缩, 而是整体上翻贴到 menuMinY (0), 完整展示全部
+        // 条目 —— 覆盖触发行由 menuBackgroundReposition 重新定位处理。
         const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
         bookmarkMenu.offsetHeight = 560; // > boundY(500), < maxMenuH(592)
         const { a } = makeBookmarkRow();
         openOn(a, { pageY: 100, clientY: 100 });
-        expect(bookmarkMenu.style.maxHeight).toBe('472px'); // 500 - 20 row - 8 margin
-        expect(bookmarkMenu.style.overflowY).toBe('auto');
-        expect(bookmarkMenu.style.top).toBe('120px'); // pageY 100 + ROW_GUESS 20
+        expect(bookmarkMenu.style.maxHeight).toBe('');
+        expect(bookmarkMenu.style.overflowY).toBe('');
+        expect(bookmarkMenu.style.top).toBe('0px'); // 100 - 560, clamped to the floor
         expect(bookmarkMenu.style.opacity).toBe('1');
     });
 
-    it('re-clamps an already viewport-scrollable menu below the trigger row too', () => {
-        // 真实 600px action popup 里 zoom 放大的菜单必然先吃视口级 clamp
-        // (成为 scrollable)——若跳过该情形, 上翻的菜单仍覆盖触发行, 首次
-        // 重复右键仍被菜单吃掉一次 (只靠残留 maxHeight 偶然自愈)。菜单 620
-        // 高 > maxMenuH 592 → 先 scrollable; 翻转到 y=0 后仍覆盖触发点
-        // (clientY 92), 于是再 clamp 到触发点下方 (508-20-8=480) 并锚到
-        // 行下 (92+20=112)。
+    it('does not re-clamp an already viewport-scrollable menu below the trigger row', () => {
+        // 视口级 clamp 已使菜单成为 scrollable (620 > 592) 时, 旧修复仍会再
+        // 一次把它压到触发点下方; 回退后菜单保持视口级完整高度 (592), 不再
+        // 二次压缩 —— 上翻贴到 menuMinY (0)。
         const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
-        bookmarkMenu.offsetHeight = 620; // > maxMenuH(592): viewport-clamped first
+        bookmarkMenu.offsetHeight = 620; // > maxMenuH(592): viewport-clamped
         const { a } = makeBookmarkRow();
         openOn(a, { pageY: 92, clientY: 92 });
-        expect(bookmarkMenu.style.maxHeight).toBe('480px'); // 508 - 20 row - 8 margin
+        expect(bookmarkMenu.style.maxHeight).toBe('592px'); // 600 - 8 margin, not 480
         expect(bookmarkMenu.style.overflowY).toBe('auto');
-        expect(bookmarkMenu.style.top).toBe('112px'); // pageY 92 + ROW_GUESS 20
+        expect(bookmarkMenu.style.top).toBe('0px'); // not 112px
         expect(bookmarkMenu.style.opacity).toBe('1');
+    });
+
+    it('right-clicking an open menu background re-positions it at the pointer instead of hiding it', () => {
+        // zoom>100 交替 bug 的回归: 菜单上翻覆盖触发行后, 用户在菜单背景上
+        // 再右键 —— 事件落到菜单自身 (target 非 .menu-item), 必须保留菜单并
+        // 在光标处重新定位, 而不是冒泡到 body 触发 clearMenu (显示-消失交替)。
+        const { bookmarkMenu, makeBookmarkRow, openOn, actionCalls, menuItem } = setup({ innerHeight: 600 });
+        bookmarkMenu.offsetWidth = 100;
+        bookmarkMenu.offsetHeight = 560; // taller than the space below the row
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageY: 100, clientY: 100 });
+        expect(bookmarkMenu.style.opacity).toBe('1');
+        // The menu flipped up and covers the row; the next right-click lands on
+        // the menu background (target === the menu element) at a new pointer.
+        const ev = makeEvent({ target: bookmarkMenu, pageX: 120, pageY: 180, clientY: 180 });
+        fire(bookmarkMenu, 'contextmenu', ev);
+        expect(ev.propagationStopped).toBe(true); // the body handler must not clear
+        expect(ev.defaultPrevented).toBe(true);
+        // Re-positioned at the new pointer: 420 below (600-180) does not fit
+        // 560 → flips up to the menuMinY floor again; horizontally 120 fits the
+        // viewport (menu 100 wide, window 500) so it stays under the pointer.
+        expect(bookmarkMenu.style.top).toBe('0px');
+        expect(bookmarkMenu.style.left).toBe('120px');
+        expect(bookmarkMenu.style.opacity).toBe('1');
+        // Context intact: the menu still dispatches its items.
+        fire(bookmarkMenu, 'mouseup', makeEvent({ button: 0, target: menuItem('bookmark-new-tab') }));
+        expect(actionCalls).toEqual([['openBookmarkNewTab', 'https://bm-42.example/']]);
     });
 
     it('opens the separator menu on a separator row (and never the bookmark menu)', () => {
@@ -1275,13 +1304,85 @@ describe('bookmarkContextHandler', () => {
         expect(mac.actionCalls).toEqual([['openBookmarkNewTab', 'https://bm-42.example/']]);
     });
 
-    it('also dispatches on a contextmenu event over the menu', () => {
+    it('right-clicking an open menu ITEM re-positions it and never dispatches the action', () => {
+        // zoom>100 交替 bug 的核心: 菜单放大后覆盖触发行, 用户再次右键落在
+        // 一个 .menu-item 上 —— 旧逻辑会把该 item 的动作 dispatch 掉 (关闭
+        // 菜单), 表现为「菜单消失」. 新契约: 对打开菜单的任意部分右键都只在
+        // 光标处重新定位, 绝不 dispatch (动作只由左键 mousedown 触发)。
         const ctx = setup({});
+        ctx.bookmarkMenu.offsetWidth = 100;
+        ctx.bookmarkMenu.offsetHeight = 140;
         openBookmarkMenu(ctx);
-        const ev = makeEvent({ target: ctx.menuItem('bookmark-new-tab') });
+        const ev = makeEvent({ target: ctx.menuItem('bookmark-new-tab'),
+            pageX: 120, pageY: 180, clientY: 180 });
         fire(ctx.bookmarkMenu, 'contextmenu', ev);
-        expect(ev.propagationStopped).toBe(true);
+        expect(ev.propagationStopped).toBe(true); // the body handler must not clear
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.actionCalls).toEqual([]); // right-click NEVER dispatches
+        // Re-positioned at the new pointer (120,180): below has room (600-180
+        // > 140) so it stays under the pointer.
+        expect(ctx.bookmarkMenu.style.top).toBe('180px');
+        expect(ctx.bookmarkMenu.style.left).toBe('120px');
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1');
+        // Left-click dispatch still works afterwards.
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-new-tab') }));
         expect(ctx.actionCalls).toEqual([['openBookmarkNewTab', 'https://bm-42.example/']]);
+    });
+
+    it('right-click inside the open menu VISUAL box re-opens it at the pointer even on a non-row hit', () => {
+        // body-handler 坐标规则: 当 hit-test 因 CSS zoom 错位把事件解析到菜单
+        // 下方 row / 错位元素 (而非菜单自身) 时, 只要点击落在打开菜单的视觉
+        // 框内, 就在光标处重新定位而不是 clearMenu。 模拟 target 是一个与菜单
+        // 无关的元素 (菜单下方被覆盖的 row), 但坐标落在菜单框内。
+        const ctx = setup({});
+        ctx.bookmarkMenu.offsetWidth = 100;
+        ctx.bookmarkMenu.offsetHeight = 140;
+        openBookmarkMenu(ctx);
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1');
+        // 菜单视觉框 = (50,60)~(150,200); 在框内 (90,160) 再次右键, 命中一个
+        // 非菜单元素 (row), body handler 必须重新定位而非关闭。
+        ctx.bookmarkMenu.rect = { left: 50, top: 60, width: 100, height: 140, right: 150, bottom: 200 };
+        const { a } = ctx.makeBookmarkRow('43');
+        const ev = makeEvent({ target: a, pageX: 90, pageY: 160, clientX: 90, clientY: 160 });
+        fire(ctx.body, 'contextmenu', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1'); // 没有 clearMenu
+        expect(ctx.bookmarkMenu.style.top).toBe('160px'); // 重新定位到光标处
+        expect(ctx.bookmarkMenu.style.left).toBe('90px');
+    });
+
+    it('right-click on a non-row element outside the box re-opens the open menu at the pointer', () => {
+        // body-handler 兜底规则: CSS zoom 会把指针 hit-test 错位到菜单框外的
+        // 非 row 元素 (tab 条 / 搜索框 / 分割条) —— 此时没有 row 可开菜单, 但
+        // 只要已有一个菜单开着, 就在光标处重新定位它, 而不是 dismiss。它的
+        // 上下文必须保留, 否则重新定位后的菜单无法 dispatch。
+        const ctx = setup({});
+        ctx.bookmarkMenu.offsetWidth = 100;
+        ctx.bookmarkMenu.offsetHeight = 140;
+        openBookmarkMenu(ctx);
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1');
+        // 菜单框很小且在左上角; 在框外 (100,300) 命中 body (非 row)。
+        ctx.bookmarkMenu.rect = { left: 0, top: 0, width: 20, height: 20, right: 20, bottom: 20 };
+        const ev = makeEvent({ target: ctx.body, pageX: 100, pageY: 300, clientX: 100, clientY: 300 });
+        fire(ctx.body, 'contextmenu', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.bookmarkMenu.style.opacity).toBe('1'); // 没有 clearMenu
+        expect(ctx.bookmarkMenu.style.top).toBe('300px'); // 重新定位到光标处
+        expect(ctx.bookmarkMenu.style.left).toBe('100px');
+        // 上下文保留: 重新定位后左键点击仍能 dispatch。
+        fire(ctx.bookmarkMenu, 'mouseup',
+            makeEvent({ button: 0, target: ctx.menuItem('bookmark-new-tab') }));
+        expect(ctx.actionCalls).toEqual([['openBookmarkNewTab', 'https://bm-42.example/']]);
+    });
+
+    it('right-click on a non-row element with NO menu open still dismisses and eats the event', () => {
+        const ctx = setup({});
+        const ev = makeEvent({ target: ctx.body, pageX: 100, pageY: 300, clientX: 100, clientY: 300 });
+        fire(ctx.body, 'contextmenu', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(ctx.bookmarkMenu.style.opacity).not.toBe('1');
+        expect(ctx.folderMenu.style.opacity).not.toBe('1');
     });
 
     it('a plain click on the menu only stops propagation', () => {

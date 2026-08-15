@@ -159,7 +159,7 @@ export function initViewDead(ctx = {}) {
     // v4 task-4 #1: the filter persists (deadFilter) — reopening the view
     // restores the active segment, same contract as the stats view's
     // statsSort (supersedes the in-memory choice of §5.5c).
-    let filter = ['all', 'dead', 'blocked'].indexOf(store.get('deadFilter', 'all')) !== -1
+    let filter = ['all', 'dead', 'blocked', 'marked'].indexOf(store.get('deadFilter', 'all')) !== -1
         ? store.get('deadFilter', 'all') : 'all';
     // v4 task-3 #4 selection mode: the toolbar's 选择 button swaps the idle
     // controls for a batch bar (all/invert/clear + mark/unmark selected);
@@ -170,6 +170,10 @@ export function initViewDead(ctx = {}) {
     // v4 task-4 #8: select-mode Space toggles the focused row and render()
     // swaps the list — park the row id so focus returns to it afterwards.
     let pendingRowFocus = null;
+    // The marked-view tooltip banner (markedBannerHtml): a session-level
+    // dismiss (×) — same semantics as the risk banner's ×, the hint
+    // reappears on the next popup open / re-entry into the marked-only view.
+    let markedBannerDismissed = false;
 
     // Real-proxy support (dead-proxy.js): the quick add/manage strip above
     // the scan toolbar. proxyPanelOpen toggles the inline add panel;
@@ -285,6 +289,47 @@ export function initViewDead(ctx = {}) {
         return rows;
     };
 
+    // The user's manual marks, joined against the tree, in display order.
+    // The marked list is the persistent intent, so it always renders (below
+    // the result rows, or as the whole list in the marked-only view):
+    //   - mid-scan: a mark the CURRENT run already re-verified as a problem
+    //     row moves into the result list (keep its marked state there) and
+    //     drops out here — the still-unchecked marks stay.
+    //   - cached results (filter all/dead/blocked): a mark the last scan's
+    //     problem rows cover rides its result row, so only the UNCOVERED
+    //     marks (never probed / added after the run) append below.
+    //   - marked-only view (filter 'marked' or no scan): the whole set.
+    const markedRows = () => {
+        let covered = null;
+        if (live)
+            covered = new Set(liveRows().map(r => r.item.id));
+        else if (lastScan)
+            covered = new Set(allResultRows().map(r => r.item.id));
+        const showAll = !live && (filter === 'marked' || !lastScan);
+        const out = [];
+        for (const id of deadMarks) {
+            if (!showAll && covered && covered.has(id))
+                continue;
+            const item = treeItems.get(id);
+            if (item)
+                out.push({ item });
+        }
+        return out;
+    };
+
+    // The rows the batch/selection toolbar acts on while idle: the active
+    // result segment when results are on screen, PLUS the marked rows that
+    // aren't duplicated by a result row. The marked rows only join in the
+    // "全部" view (where the marked list renders below the results) and in
+    // the marked-only view (filter 'marked' or no scan, marks alone). Under
+    // 仅死链/仅受限 only that category's results are on screen — a category
+    // filter hides the marked list, so its rows are not selectable there.
+    const selectableRows = () => {
+        if (filter === 'marked' || !lastScan)
+            return markedRows();
+        return filter === 'all' ? resultRows().concat(markedRows()) : resultRows();
+    };
+
     // --- Proxy strip (dead-proxy.js quick add/manage) -------------------------
     // Sits above the scan toolbar in every state (idle/scanning/selecting);
     // its controls disable mid-scan so a reachability test can never clobber
@@ -388,50 +433,68 @@ export function initViewDead(ctx = {}) {
                 // scan (zero dead rows) must still offer the way back into
                 // a fresh run (f5bc7cb had stranded the button inside the
                 // rows branch, leaving no in-view rescan after a clean scan).
-                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
             }
+            // …and the same way back has to exist for a cancelled scan whose
+            // marks now fill the list (the bottom start row is gone there, so
+            // the toolbar's rescan is the only entry into a fresh run).
+            if (lastScan || deadMarks.size)
+                html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
             const rows = allResultRows();
-            if (lastScan && rows.length) {
+            // mark-all / select-mode act on the FILTERED row set (markAll
+            // reads resultRows(), the selection prunes against it), so they
+            // key off the filtered count; delete-all additionally covers the
+            // marked-only view (no result rows there — it deletes the marked
+            // bookmarks, see deleteAll()). The filter segment stays keyed off
+            // the UNFILTERED count, so the way back remains reachable.
+            const markedOnly = filter === 'marked' || !lastScan;
+            const filteredN = resultRows().length;
+            if (lastScan && (rows.length || deadMarks.size)) {
                 // dead-filter and the old dead-summary merge: each segment
-                // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0"),
-                // so the two situations read at a glance instead of as a
-                // separate summary line. Order: unmark-all (whenever marks
-                // exist) → scan-time → rescan → filter → mark-all →
+                // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0 ·
+                // 上次标注 5"), so the two situations read at a glance instead
+                // of as a separate summary line. Order: unmark-all (whenever
+                // marks exist) → scan-time → rescan → filter → mark-all →
                 // delete-all → select-mode.
                 const deadN = rows.filter(r => r.result.status === 'dead').length;
                 html += '<span class="dead-filter" role="group">';
                 // v4 task-4 #1: pressed state = aria-pressed only (the
                 // 'active' class is context-menu.js's menu-open marker —
                 // clearMenu strips it body-wide on click/focus).
+                // 全部 = 本次扫描结果 (死链 + 受限) + 上次标注 三者之和 —
+                // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅是
+                // 本次扫描之后的计数", 即 全部 = 死链 + 受限 + 标注。
                 for (const [value, key, count] of [
-                    ['all', 'deadFilterAll', rows.length],
+                    ['all', 'deadFilterAll', rows.length + deadMarks.size],
                     ['dead', 'deadFilterDead', deadN],
-                    ['blocked', 'deadFilterBlocked', rows.length - deadN]
+                    ['blocked', 'deadFilterBlocked', rows.length - deadN],
+                    // "上次标注": the whole marked set — clicking it switches
+                    // to the marked-only view (results hidden).
+                    ['marked', 'deadFilterMarked', deadMarks.size]
                 ])
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
-                // mark-all / select-mode act on the FILTERED row set
-                // (markAll reads resultRows(), the selection prunes against
-                // it), so like delete-all they key off the filtered count:
-                // under a filter segment matching no rows a button that
-                // clicks into nothing must not render. The filter segment
-                // itself stays keyed off the UNFILTERED count above, so the
-                // way back remains reachable.
-                const filteredN = resultRows().length;
+                // mark-all: result rows only — a marked-only view has none to
+                // batch-mark (the batch bar handles those).
                 if (filteredN)
                     html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
-                // Batch delete-all: removes every row of the ACTIVE filter
-                // segment (the same scope as mark-all, so 仅死链 narrows it
-                // to dead rows only). Rendered only when that set is
-                // non-empty — a danger button that clicks into nothing
-                // under a filter matching no rows must not appear.
-                if (filteredN)
-                    html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
-                // v4 task-3 #4: selection mode entry — only with filtered
-                // results on screen (same gate as mark-all/delete-all)
-                if (filteredN)
-                    html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
             }
+            // Batch delete-all: the result view removes every row of the
+            // ACTIVE filter segment (the same scope as mark-all, so 仅死链
+            // narrows it to dead rows only); the marked-only view (cancelled
+            // scan / 过去标注 filter) deletes the marked bookmarks instead.
+            // Rendered only when the target set is non-empty — a danger
+            // button that clicks into nothing must not appear.
+            if (filteredN || (markedOnly && deadMarks.size))
+                html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
+            // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
+            // block, so the marked-only view (a cancelled scan with marks,
+            // or the 上次标注 filter) still gets the batch bar: the marked
+            // rows are selectable members there and the batch mark/unmark/
+            // delete ops are the only way to work them in bulk. Mark-all/
+            // delete-all stay gated on the filtered RESULT count above
+            // (marked-only view hides them).
+            if (selectableRows().length)
+                html += `<button class="dead-select-mode">${_m('selectModeEnter')}</button>`;
         }
         html += '</div>';
         return html;
@@ -476,28 +539,28 @@ export function initViewDead(ctx = {}) {
         return html + '</ul>';
     };
 
-    // Rows of the user's manual marks, joined against the tree — shown when
-    // no scan result list is on screen (a cancelled scan, or one that found
-    // nothing), or for the marks the current result list does NOT cover (a
-    // marked id the last scan never probed, or one the active filter segment
-    // hides). Marks are persistent intent, so they must stay reachable and
-    // individually clearable even without a scan to host them: each row
-    // carries the same mark-toggle (unmarks just that one) and delete as the
-    // scan rows, and the toolbar's Clear-all handles the batch. While
-    // selecting, the row buttons are inert (the row-click branch swallows
-    // them and these supplementary rows aren't selectable members), so they
-    // are not rendered at all — no dead controls on screen.
-    const renderMarkedRows = (ids = deadMarks) => {
-        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${ids.size}`)}</div>`;
-        html += '<ul role="list" class="dead-marked-list">';
-        for (const id of ids) {
-            const item = treeItems.get(id);
-            if (!item)
-                continue; // the bookmark was deleted since the mark
-            const path = views.pathOf(id);
-            html += `<li class="vbm-row" id="dead-item-${id}" role="listitem" ` +
-                `data-node-id="${id}">` +
-                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', id, null, {
+    // Rows of the user's manual marks, joined against the tree. They always
+    // render — appended below the result rows (for the marks the current
+    // result list does NOT cover: a marked id the scan never probed, or one
+    // added after the run), or as the whole list in the marked-only view
+    // (filter '上次标注', or a cancelled scan with no cache). Marks are
+    // persistent intent, so they stay reachable and individually clearable
+    // even without a scan to host them: each row carries the same mark-toggle
+    // (unmarks just that one) and delete as the scan rows. Unlike the scan
+    // rows they are SELECTABLE members too — the selection bar's
+    // mark/unmark/delete work on them exactly like on the results (the shared
+    // row-click branch swallows the row buttons while selecting, so they are
+    // not rendered in that mode — no dead controls on screen).
+    const renderMarkedRows = rows => {
+        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${rows.length}`)}</div>`;
+        html += `<ul role="list" class="dead-marked-list${selecting ? ' selecting' : ''}">`;
+        for (let i = 0, l = rows.length; i < l; i++) {
+            const { item } = rows[i];
+            const sel = selecting && selected.has(item.id);
+            const path = views.pathOf(item.id);
+            html += `<li class="vbm-row${sel ? ' sel' : ''}" id="dead-item-${item.id}" ` +
+                `role="listitem" data-node-id="${item.id}">` +
+                treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     rightText: path,
                     subText: path,
@@ -518,50 +581,96 @@ export function initViewDead(ctx = {}) {
     // selector includes the risk banner's controls so a scan tick can't
     // drop focus off a banner button either.
 
+    // Marked-view tooltip banner: shown above the toolbar whenever the list
+    // is the marked-only view (filter 上次标注, or a cancelled scan with no
+    // cache) and there are marks to look at. Session-dismissible (×) — same
+    // contract as the risk banner's ×: the hint reappears on the next popup
+    // open / re-entry into the marked view. Its rescan button is the "way
+    // back into a run" the removed bottom start row used to be.
+    const markedBannerVisible = () => {
+        if (markedBannerDismissed || live || selecting)
+            return false;
+        if (!deadMarks.size)
+            return false;
+        // marked-only 视图 (取消扫描 / "过去标注"筛选 / 无扫描): 有标记就提示。
+        if (filter === 'marked' || !lastScan)
+            return true;
+        // "全部"视图 + 扫描正常完成但仍有过去标注: 本次扫描不再判为问题行的
+        // 标记 (现在可访问、过去被标注) 追加于结果下方 — 同样提示用户检查
+        // "过去标注"分类。仅死链/仅受限视图不渲染标注列表, 也不提示。
+        return filter === 'all' && markedRows().length > 0;
+    };
+    const markedBannerHtml = () => {
+        if (!markedBannerVisible())
+            return '';
+        return `<div class="risk-banner dead-marked-banner" role="note">` +
+            `<i>${_m('deadMarkedBanner')}</i>` +
+            `<button type="button" class="dead-marked-banner-rescan" tabindex="-1">${_m('deadRescan')}</button>` +
+            `<button type="button" class="dead-marked-banner-dismiss" tabindex="-1" ` +
+            `aria-label="${_m('deadMarkedBannerDismiss')}" title="${_m('deadMarkedBannerDismiss')}">×</button>` +
+            '</div>';
+    };
+
     const render = () => {
         if (selecting) {
             // prune members whose rows vanished (tree change / filter) BEFORE
-            // the toolbar reads selected.size for its count
-            const alive = new Set(resultRows().map(r => r.item.id));
+            // the toolbar reads selected.size for its count — the marked rows
+            // are selectable now, so the alive set spans results AND marks
+            const alive = new Set(selectableRows().map(r => r.item.id));
             for (const id of [...selected])
                 if (!alive.has(id))
                     selected.delete(id);
         }
-        let html = riskBanner.html() + renderProxyStrip() + renderToolbar();
+        let html = riskBanner.html() + markedBannerHtml() + renderProxyStrip() + renderToolbar();
         if (live) {
             // Progressive rendering (v4 task-4 #16): the blob journal's
             // settled dead/blocked checks are already rows while the SW's
-            // scan keeps running.
+            // scan keeps running. A mark the run re-verifies as a problem row
+            // moves into the result list here (its marked state kept on the
+            // row); the still-unchecked marks append below.
             html += renderRows(liveRows());
-        } else if (!lastScan) {
-            // Marks survive a cancelled scan — they are the user's persistent
-            // intent, so aborting a run must not strand them without a list.
-            // Surface the marked rows (each individually unmarkable) ahead of
-            // the executable start row, which stays as the way back into a run.
-            if (deadMarks.size)
-                html += renderMarkedRows();
-            // §3.5: the empty state itself is the executable start row.
-            html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
-                `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
+            const marks = markedRows();
+            if (marks.length)
+                html += renderMarkedRows(marks);
+        } else if (filter === 'marked' || !lastScan) {
+            // Marked-only view: the whole marked set, no result rows. With no
+            // scan at all AND no marks (a fresh first run) the executable
+            // start row is still the empty state (§3.5); once marks exist the
+            // bottom start row is gone — the toolbar's rescan (or the banner
+            // above) is the way back into a run.
+            const marks = markedRows();
+            // A marked-only view with marks gone (clear-all / delete-all just
+            // ran, or the segment has none) falls back to the executable start
+            // row — the empty `<ul class="dead-marked-list">` shell must not
+            // linger where there is nothing left to show.
+            if (marks.length)
+                html += renderMarkedRows(marks);
+            else
+                html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
+                    `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
         } else {
+            const allRows = allResultRows();
             const rows = resultRows();
-            // Marks the SHOWN result rows do not cover: a marked id that
-            // the last scan never probed (a manual mark that predates the
-            // run, or one added after it), or one the active filter segment
-            // hides, has no row on screen to unmark on — surface just those
-            // as their own list, so neither a cached scan nor a filter ever
-            // strands a mark. Marks that ARE in the shown rows carry the
-            // toggle there, so they are not repeated here.
-            const rowIds = new Set(rows.map(r => r.item.id));
-            const uncovered = new Set([...deadMarks].filter(id => !rowIds.has(id)));
-            if (uncovered.size)
-                html += renderMarkedRows(uncovered);
             // Distinguish "the scan found nothing" from "the active filter
             // matches nothing" — the latter tells the user the other
             // segments (still visible above) are where the rows went.
             html += rows.length
                 ? renderRows(rows)
-                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+            // The marked list renders ONLY under "全部" (the default view),
+            // when any mark exists — it is the "上次标注" record appended
+            // below the full result set. Content: marks the result rows do
+            // NOT cover (a marked id the last scan never probed, or one added
+            // after it) — marks among the scan's problem rows carry the
+            // toggle in the result rows, so they are not repeated here. Under
+            // 仅死链/仅受限 only that category's rows are on screen: a
+            // category filter hides the marked list entirely (a mark the
+            // category hides is covered by its own row once the segment
+            // switches back, so echoing it here read as "the toolbar filter
+            // is swapped / the list shows everything" — the toolbar/list
+            // mismatch report).
+            if (filter === 'all' && deadMarks.size)
+                html += renderMarkedRows(markedRows());
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);
@@ -586,6 +695,24 @@ export function initViewDead(ctx = {}) {
             const a = row && row.querySelector('a');
             if (a)
                 a.focus();
+        }
+        // Cancelling a scan re-renders the toolbar from live (pause/cancel)
+        // to idle: the parked control (e.g. .dead-cancel) no longer exists,
+        // restoreToolbarFocus fails silently and focus falls out of the list
+        // to <body> — the ↓ walk then dies until the user clicks back in.
+        // The banner itself must not trap focus, but the keyboard must not
+        // lose it either: when the focus was IN this list before the swap and
+        // ends up outside it after (nothing to restore to), land on the dead
+        // view's tab instead of <body>.
+        if (parkedToolbar || parkedRow) {
+            let ae = document.activeElement;
+            while (ae && ae !== $list)
+                ae = ae.parentNode;
+            if (!ae) {
+                const tab = document.getElementById('view-tab-dead');
+                if (tab && tab.focus)
+                    tab.focus();
+            }
         }
     };
 
@@ -739,12 +866,19 @@ export function initViewDead(ctx = {}) {
     };
 
     // Toolbar "delete all": removes every row of the ACTIVE filter segment
-    // (all / dead / blocked — mirrors markAll). The dialog names the
-    // current-filter scope (the old text lumped everything under "dead
-    // bookmarks" while All also deletes blocked rows) and carries the note
-    // about blocked rows and the one-step undo granularity.
-    const deleteAll = () =>
-        confirmDeletion(resultRows().map(({ item }) => item.id), 'deadDeleteAll', null, 'deadDeleteAllNote');
+    // (all / dead / blocked — mirrors markAll); under the marked-only view
+    // (cancelled scan / 过去标注 filter) it deletes the marked bookmarks
+    // instead. The dialog names the current-filter scope (the old text
+    // lumped everything under "dead bookmarks" while All also deletes
+    // blocked rows); the blocked-rows note only applies to the All filter,
+    // so the marked-only path drops it.
+    const deleteAll = () => {
+        const markedOnly = filter === 'marked' || !lastScan;
+        const ids = markedOnly
+            ? markedRows().map(({ item }) => item.id)
+            : resultRows().map(({ item }) => item.id);
+        confirmDeletion(ids, 'deadDeleteAll', null, markedOnly ? null : 'deadDeleteAllNote');
+    };
 
     // Selection-mode "delete selected": removes the selected rows after a
     // confirm, then LEAVES the mode — the selection's rows are all gone, so
@@ -975,11 +1109,21 @@ export function initViewDead(ctx = {}) {
     // Cancel (item 10): the run never happened — the mirror drops, the SW
     // discards the partial results and the view falls back to the previous
     // persisted cache (or the start hint).
+    // 用户方案: 取消进行中的扫描 → 自动切到"上次标注"分类并显示 tooltip
+    // (标注是持久意图, 取消后只剩它们可看; 横幅提示可点重新检测回到新扫描)。
+    // 没有任何标注时切过去只会看到空分类, 保持原视图 (回缓存/start 药丸)
+    // 更自然。暂停/扫描完成不受此影响 (它们不经过 cancelScan)。
     const cancelScan = () => {
         if (!live && !scanStarting)
             return;
         live = null;
         scanStarting = false;
+        if (deadMarks.size) {
+            // 仅内存切换, 不写 deadFilter: 取消是程序性临时动作, 下次打开
+            // 仍回持久化的分类 (通常默认"全部")。
+            filter = 'marked';
+            markedBannerDismissed = false;
+        }
         sendScan(DEAD_SCAN_MSG.cancel);
         if (views.isActive('dead'))
             render();
@@ -1043,6 +1187,19 @@ export function initViewDead(ctx = {}) {
             e.preventDefault();
             if (actions && actions.openBookmarkNewTab)
                 actions.openBookmarkNewTab(RISK_HELP_URL, true, true);
+            return;
+        }
+        // marked-view tooltip banner: its rescan starts a fresh run, the ×
+        // hides the hint for the session (reappears on the next entry).
+        if (closest('.dead-marked-banner-rescan')) {
+            e.preventDefault();
+            startScan();
+            return;
+        }
+        if (closest('.dead-marked-banner-dismiss')) {
+            e.preventDefault();
+            markedBannerDismissed = true;
+            render();
             return;
         }
         if (closest('.dead-start') || closest('.dead-rescan')) {
@@ -1133,14 +1290,14 @@ export function initViewDead(ctx = {}) {
         }
         if (closest('.dead-select-all')) {
             e.preventDefault();
-            for (const { item } of resultRows())
+            for (const { item } of selectableRows())
                 selected.add(item.id);
             render();
             return;
         }
         if (closest('.dead-select-invert')) {
             e.preventDefault();
-            for (const { item } of resultRows()) {
+            for (const { item } of selectableRows()) {
                 if (selected.has(item.id))
                     selected.delete(item.id);
                 else
@@ -1358,6 +1515,13 @@ export function initViewDead(ctx = {}) {
             // selection goes with it) — before any scan semantics.
             if (selecting) {
                 setSelecting(false);
+                return true;
+            }
+            // The marked-view tooltip banner is transient too — Esc dismisses
+            // it (session semantics, same as its ×).
+            if (markedBannerVisible()) {
+                markedBannerDismissed = true;
+                render();
                 return true;
             }
             if (!live)

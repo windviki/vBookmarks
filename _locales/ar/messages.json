@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "معطلة فقط"
   },
+  "deadFilterMarked": {
+    "message": "معلَّمة سابقًا"
+  },
   "deadLastScanAt": {
     "message": "آخر فحص: $time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "وضع علامة على المحدد"
+  },
+  "deadMarkedBanner": {
+    "message": "يتم عرض الإشارات المرجعية المعلّمة سابقًا. انقر فوق 'إعادة الفحص' لبدء فحص جديد، أو عالجها في القائمة أدناه."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "إغلاق"
   },
   "deadNone": {
     "message": "لم يتم العثور على روابط معطلة"

@@ -229,6 +229,9 @@
   "deadFilterDead": {
     "message": "Mortos apenas"
   },
+  "deadFilterMarked": {
+    "message": "Marcados anteriormente"
+  },
   "deadLastScanAt": {
     "message": "Última verificação: $time$",
     "placeholders": {
@@ -259,6 +262,12 @@
   },
   "deadMarkSelected": {
     "message": "Marcar selecionados"
+  },
+  "deadMarkedBanner": {
+    "message": "A apresentar marcadores marcados anteriormente. Clique em Repetir verificação para iniciar uma nova verificação, ou trate-os na lista abaixo."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Dispensar"
   },
   "deadNone": {
     "message": "Nenhum link quebrado encontrado"

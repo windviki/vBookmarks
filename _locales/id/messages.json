@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "Hanya yang mati"
   },
+  "deadFilterMarked": {
+    "message": "Ditandai sebelumnya"
+  },
   "deadLastScanAt": {
     "message": "Pemindaian terakhir: $time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "Tandai yang dipilih"
+  },
+  "deadMarkedBanner": {
+    "message": "Menampilkan bookmark yang ditandai sebelumnya. Klik Rescan untuk memulai pemeriksaan baru, atau kelola di daftar di bawah ini."
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "Tutup"
   },
   "deadNone": {
     "message": "Tidak ada tautan mati ditemukan"

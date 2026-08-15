@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "仅失效"
   },
+  "deadFilterMarked": {
+    "message": "过去标注"
+  },
   "deadLastScanAt": {
     "message": "上次扫描：$time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "标记所选"
+  },
+  "deadMarkedBanner": {
+    "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "关闭"
   },
   "deadNone": {
     "message": "未发现失效链接"

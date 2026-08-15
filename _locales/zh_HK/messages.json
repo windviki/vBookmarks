@@ -230,6 +230,9 @@
   "deadFilterDead": {
     "message": "僅失效"
   },
+  "deadFilterMarked": {
+    "message": "過去標註"
+  },
   "deadLastScanAt": {
     "message": "上次掃描：$time$",
     "placeholders": {
@@ -260,6 +263,12 @@
   },
   "deadMarkSelected": {
     "message": "標記所選項目"
+  },
+  "deadMarkedBanner": {
+    "message": "正在顯示過去標註的書籤。按一下「重新掃描」即可開始新一輪檢查，亦可在下方清單中處理這些書籤。"
+  },
+  "deadMarkedBannerDismiss": {
+    "message": "關閉"
   },
   "deadNone": {
     "message": "找不到失效連結"
