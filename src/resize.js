@@ -125,6 +125,10 @@ export function initResize(ctx = {}) {
     const $resizery = document.getElementById('resizer-y');
     let resizerXDown = false;
     let resizerYDown = false;
+    // The drag's viewport-zoom-adjusted height ceiling, resolved lazily on
+    // the first Y move (async getZoom) and cleared at every drag end by
+    // resetDragState — a stale ceiling must never leak into the next drag.
+    let currentMaxHeight = 0;
     let bodyWidth = 0,
         bodyHeight = 0,
         screenX = 0,
@@ -142,6 +146,7 @@ export function initResize(ctx = {}) {
     const resetDragState = () => {
         resizerXDown = false;
         resizerYDown = false;
+        currentMaxHeight = 0; // a cancelled/ended drag's ceiling must not leak
         // Commit the final size synchronously: popup pagehide is NOT
         // guaranteed on close, so the debounced store write could be lost if
         // the popup closes right after the drag (the "widened but next open is
@@ -194,7 +199,6 @@ export function initResize(ctx = {}) {
             : 0;
         return decideWidthMax({ bodyWidth, leftRoom, rightRoom });
     };
-    let currentMaxHeight = 0;
     function pointerDragHandler(e) {
         if (!resizerXDown && !resizerYDown)
             return;
@@ -235,6 +239,12 @@ export function initResize(ctx = {}) {
             // 240 < height < 600
             if (currentMaxHeight <= 0) {
                 chrome.tabs.getZoom(zoomFactor => {
+                    // The drag may have ended (or been cancelled) while this
+                    // answer was in flight — applying a clamp now would write
+                    // AFTER resetDragState's final flush and leave a stale
+                    // ceiling behind for the next drag.
+                    if (!resizerYDown)
+                        return;
                     // 同 resetHeight：上限是 popup 物理上限(常量 600)与屏幕余量，
                     // 而非 window.innerHeight（当前视口高会随一次错误的 shrink 变小，
                     // 把拖拽上限也锁死在收缩后的高度上）。
@@ -250,9 +260,6 @@ export function initResize(ctx = {}) {
                 body.style.height = `${height}px`;
                 store.set('popupHeight', height);
                 clearMenu();
-                if (e.type === 'pointerup' || e.type === 'pointercancel') {
-                    currentMaxHeight = 0;
-                }
             }
         }
         // Drag-end bookkeeping runs AFTER the final size write above:

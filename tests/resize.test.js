@@ -206,6 +206,29 @@ describe('height drag (resizer-y)', () => {
         expect(m.body.style.height).toBe('450px');
         expect(m.store.map.get('popupHeight')).toBe(450);
     });
+
+    it('a drag ended while getZoom is in flight leaves no stale ceiling behind', () => {
+        // searchActive skips the startup auto-height measure, so every getZoom
+        // call below belongs to a drag branch.
+        const m = mount({ bodyHeight: 400, searchActive: true });
+        // Defer the zoom answers until the test releases them.
+        const pending = [];
+        m.getZoom.mockImplementation(cb => { pending.push(cb); });
+        m.pointerdown(m.resizerY, { screenY: 500 });
+        m.fireDoc('pointermove', { screenY: 550 }); // async branch: answer pending
+        m.fireDoc('pointerup', { screenY: 560 });   // drag ends before it arrives
+        expect(m.store.flush).toHaveBeenCalled();   // drag-end bookkeeping ran
+        // The late answers must not write after the drag nor set the ceiling…
+        const heightAtEnd = m.body.style.height;
+        pending.forEach(cb => cb(1));
+        expect(m.body.style.height).toBe(heightAtEnd);
+        // …so the next drag RESOLVES the ceiling fresh instead of reusing a
+        // stale one (a leaked currentMaxHeight would take the sync branch and
+        // never call getZoom).
+        m.pointerdown(m.resizerY, { screenY: 500 });
+        m.fireDoc('pointermove', { screenY: 550 });
+        expect(m.getZoom).toHaveBeenCalledTimes(3); // 2 dropped + 1 fresh
+    });
 });
 
 describe('width drag (resizer-x)', () => {
