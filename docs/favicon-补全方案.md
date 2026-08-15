@@ -1,7 +1,7 @@
 # favicon 默认图标补全方案
 
 > 2026-08-15 · 真实 Chromium 实测 + 三个同类扩展解包调研 + 业界方案调研
-> 状态：分析定稿 → **已实施（4.0.5）**；2026-08 v3 起聚合兜底源更新为 **favicon.run**（替换 DDG，实施定稿见 [`docs/favicon-补全设计.md`](favicon-补全设计.md) §3.4）
+> 状态：分析定稿 → **已实施（4.0.5）**；2026-08 v3/v4 起第三方聚合兜底改为**内置服务商列表**（favicon.run 首选 → DuckDuckGo 兜底，按服务商独立熔断 + 故障转移，实施定稿见 [`docs/favicon-补全设计.md`](favicon-补全设计.md) §3.4）
 > 背景：用户反馈「很多网站没被墙、非 404 却显示默认 favicon」，询问是否有优化空间，提及 get-favicon 类扩展。
 
 ---
@@ -10,7 +10,7 @@
 
 1. **根因**：Chrome `_favicon` API 依赖 Chrome 自己的 favicon 缓存，**不是实时抓取**。对 Chrome 未访问过（缓存未建立）的站点一律返回占位图 → `favicon-fallback` 识别占位图 → 换默认图标。**不是站点问题**。
 2. **可补全**：技术路径已验证——`fetch` 外部 favicon → **blob URL** 注入 `<img>` 成功（无需改 CSP，`connect-src *` + `host_permissions <all_urls>` 已覆盖）。
-3. **补全来源分层**：① 直连 `https://host/favicon.ico`（主，实测可行）→ ② 页面 HTML 解析 `<link rel=icon>`（覆盖非标准路径）→ ③ favicon.run 聚合兜底（兜底 403/反爬；2026-08 实测未知/无图标域名返回 HTTP 500 干净失败）。**无需第三方隐私依赖即可覆盖多数场景**。
+3. **补全来源分层**：① 直连 `https://host/favicon.ico`（主，实测可行）→ ② 页面 HTML 解析 `<link rel=icon>`（覆盖非标准路径）→ ③ 内置第三方服务商列表聚合兜底（favicon.run → DuckDuckGo 按序尝试，按服务商独立熔断 + 自动故障转移；兜底 403/反爬；2026-08 实测 favicon.run 未知/无图标域名返回 HTTP 500 干净失败）。**无需第三方隐私依赖即可覆盖多数场景**。
 4. **值得做**：显著减少「可访问但 Chrome 未缓存」站点的默认图标，选项开关 + 缓存 + 限流控制成本。
 
 ---
@@ -108,8 +108,8 @@ bookmark URL → tree-render.getFaviconUrl → chrome-extension://ID/_favicon/?p
 | 来源 | 实测结果 | 评价 |
 |---|---|---|
 | 直连 `https://host/favicon.ico` | github/MDN/cloudflare 200+真实 ICO；example.com 404（正确）；stackoverflow 403 | **主来源**，同源隐私好 |
-| favicon.run `/favicon?domain=X&sz=32` | 2026-08 实测：github/stackoverflow/wikipedia/iana.org 200+真实 PNG（`sz` 精确控尺寸）；**未知或无图标域名（example.com 等）→ HTTP 500 干净失败**；CORS 开放 + Cloudflare CDN 缓存 + 30 并发无限流 | **聚合兜底首选**（v3 已替换 DDG，见设计文档 §3.4） |
-| DDG `icons.duckduckgo.com/ip3/X.ico` | 可用，返回真实 ICO（与 github 一致） | 旧兜底（v3 起被 favicon.run 替换：未知域名返回 200+自家占位，不可判定） |
+| favicon.run `/favicon?domain=X&sz=32` | 2026-08 实测：github/stackoverflow/wikipedia/iana.org 200+真实 PNG（`sz` 精确控尺寸）；**未知或无图标域名（example.com 等）→ HTTP 500 干净失败**；CORS 开放 + Cloudflare CDN 缓存 + 30 并发无限流 | **聚合兜底首选**（内置服务商列表第一位，见设计文档 §3.4） |
+| DDG `icons.duckduckgo.com/ip3/X.ico` | 可用，返回真实 ICO（与 github 一致） | 聚合兜底第二位（favicon.run 不可用/无图标时切换；未知域名返回 200+自家占位，不可判定） |
 | Google s2 `s2/favicons?domain=X` | 返回小 PNG（~519B） | 备选 |
 | plus.google.com/_/favicon | 返回 HTML（不可用） | 弃用 |
 
@@ -126,7 +126,7 @@ _favicon 返回占位图 (识别出真实 favicon 缺失)
   → [L2] fetch 页面 HTML → 解析 <link rel=icon>/apple-touch-icon/manifest (timeout 5s)
       → 命中? fetch 该图标 URL → blob URL 注入 ✓ (覆盖非标准路径)
       → 全失败?
-  → [L3] fetch favicon.run /favicon?domain=<host>&sz=32 (可选, 需选项开关) (timeout 3s) — 覆盖 403/反爬
+  → [L3] 第三方服务商列表逐一尝试 (内置列表: favicon-run → duckduckgo; 可选, 需选项开关) (timeout 3s) — 覆盖 403/反爬; 检测到某服务商不可达 → 熔断该家 + 切换下一候选
       → 成功? 注入 ✓
   → 都失败? 换 DEFAULT_BOOKMARK_ICON (现状兜底)
 ```
@@ -136,7 +136,7 @@ _favicon 返回占位图 (识别出真实 favicon 缺失)
 1. **blob URL 注入**（实测可行，无需改 CSP）：`fetch → blob → URL.createObjectURL`，图标加载后 revoke。
 2. **按 host 缓存**：成功/失败都缓存（`storage.local`），失败短期（如 24h）免重试，避免每次渲染重复 fetch。
 3. **并发限流**：大书签库首次渲染会并发，需限流（如 6-8 并发 + 队列），避免打爆站点。
-4. **选项开关**：`faviconEnrich`（默认开？或默认关，需评估隐私观感）——书签管理器对已知站点 fetch favicon.ico 属合理行为，favicon.run 作为 L3 需在选项说明。
+4. **选项开关**：`faviconEnrich`（默认开？或默认关，需评估隐私观感）——书签管理器对已知站点 fetch favicon.ico 属合理行为，第三方服务商列表（favicon.run → DuckDuckGo）作为 L3 需在选项说明。
 5. **只对占位图触发**：Chrome 缓存命中的真实 favicon 不触碰（现状路径不变）。
 6. **图标校验**：fetch 后校验 Content-Type 是图片 + blob 大小合理（如 <200KB），避免 HTML 页面误注入。
 7. **ICO 多尺寸**：`<img>` 加载 ICO 时 Chrome 自动选帧，直接注入即可。
@@ -155,9 +155,9 @@ _favicon 返回占位图 (识别出真实 favicon 缺失)
 | 风险 | 缓解 |
 |---|---|
 | 大书签库首次并发 | 限流 + 队列 + 缓存 |
-| 站点 403/反爬 | L2 页面解析 + L3 favicon.run 兜底 |
+| 站点 403/反爬 | L2 页面解析 + L3 服务商列表兜底（favicon.run → DuckDuckGo 故障转移） |
 | SVG favicon / 非标准路径 | L2 解析 `<link>` |
-| 隐私（外部请求） | 直连同源为主；L3 favicon.run 加选项说明 |
+| 隐私（外部请求） | 直连同源为主；L3 服务商列表加选项说明 |
 | CSP | 已验证 blob URL 可行，无需改 |
 | 误注入 HTML | 校验 Content-Type + 大小 |
 
@@ -170,7 +170,7 @@ _favicon 返回占位图 (识别出真实 favicon 缺失)
 | 默认图标来源 | 仅 Chrome `_favicon` 缓存 | + 直连 / 页面解析 / 聚合服务 |
 | 未访问站点 | 全部默认图标 | 多数补全真实图标 |
 | 非标准路径 favicon | 无法覆盖 | L2 页面解析覆盖 |
-| 第三方依赖 | 无 | 直连为主（无第三方）；favicon.run 可选 |
+| 第三方依赖 | 无 | 直连为主（无第三方）；服务商列表可选（favicon.run → DuckDuckGo） |
 | 性能 | 无额外请求 | 缓存 + 限流控制 |
 
 ---
@@ -179,7 +179,7 @@ _favicon 返回占位图 (识别出真实 favicon 缺失)
 
 1. **先实施 L1（直连 favicon.ico）+ 缓存 + 限流**——覆盖最大多数、零第三方依赖、改动可控。
 2. **再加 L2（页面 `<link>` 解析）**——覆盖非标准路径，FaviGrab 策略可参考。
-3. **L3（favicon.run）作为可选增强**——需选项开关 + 隐私说明，评估后决定是否默认（设计文档 v3 已定为默认关，替换 DDG）。
+3. **L3（内置服务商列表）作为可选增强**——favicon.run → DuckDuckGo 按序尝试 + 按服务商独立熔断 + 自动故障转移；需选项开关 + 隐私说明，评估后决定是否默认（设计文档已定为默认关）。
 4. **harness 验证**：参考 `tmp/favicon-补全分析.md` 的实测方法，加一个真实 Chromium 补全验证脚本。
 
 ---
