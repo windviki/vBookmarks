@@ -788,7 +788,7 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         expect($list.innerHTML).toContain('dead-start');
     });
 
-    it('a finish (cache write + blob removal) renders the cache and prunes healthy marks', () => {
+    it('a finish (cache write + blob removal) renders the cache and keeps the healthy mark as residue', () => {
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
         const { $list, store, def, views } = ctx;
         def().activate();
@@ -799,7 +799,7 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         }));
         expect($list.innerHTML).toContain('deadChecking'); // mid-scan render
         // a finish ALWAYS re-evaluates the scan-count badge, even when no
-        // mark was pruned (id 11 is healthy but NOT marked)
+        // mark was affected (id 11 is healthy but marked)
         const badgeBumps = views.badgeCalls;
         finishScan(ctx, {
             '11': { status: 'ok', code: 200 },
@@ -809,13 +809,21 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         expect(views.badgeCalls).toBeGreaterThan(badgeBumps);
         const html = $list.innerHTML;
         expect(html).toContain('deadLastScanAt');
+        // results host the problem rows: 12 dead + 13 blocked
         expect(html).toContain('id="dead-item-12"');
         expect(html).toContain('id="dead-item-13"');
-        expect(html).not.toContain('id="dead-item-11"');
-        // §5.5c: ids that came back healthy lose their mark
-        expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
+        // §2.4 residue: 11 came back healthy but is still marked → it is NOT
+        // pruned, and it appears ONCE, appended below the results in the
+        // "上次标注" record (its own row, not duplicated in the results)
+        expect(html.match(/id="dead-item-11"/g)).toHaveLength(1);
+        expect(html).toContain('deadMarkedCount[1]');
+        expect(html).toContain('class="dead-marked-list"');
+        expect(html.indexOf('id="dead-item-12"'))
+            .toBeLessThan(html.indexOf('id="dead-item-11"'));
+        // the mark record survives — only the user / bookmark removal clears it
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12']);
         // the badge is the scan's dead+blocked count (12 dead + 13 blocked),
-        // not the marks — unchanged by the prune
+        // not the marks — unaffected by the residue
         expect(def().badge()).toBe(2);
     });
 
@@ -1189,6 +1197,189 @@ describe('filter + batch marks (§5.5c)', () => {
     });
 });
 
+describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§2.4 + §4 counts)', () => {
+    const rowClick = (ctx, id) => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
+    });
+    const clickFilter = (ctx, f) => ctx.clickOn({
+        closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: f } } : null)
+    });
+    const clickScan = ctx =>
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+    // 前一次"标注了很多": 11/12/13 全部被用户标记过
+    const MARKED_ALL = '["11","12","13"]';
+    const FULL = { // 全覆盖判定: 三者都是死链/受限
+        '11': { status: 'dead', code: 404 },
+        '12': { status: 'dead', code: 404 },
+        '13': { status: 'blocked', code: 404 }
+    };
+    const SORT = arr => arr.sort();
+
+    it('§2.1 开始新检测: 过去标注 = 全量标注 (无扫描缓存时)', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        ctx.def().activate(); // no deadLastScan → marked-only view
+        const html = ctx.$list.innerHTML;
+        // 全量标注可看, 计数 = 3 (列表头), 底部无 start 药丸 (顶部 rescan 是入口)
+        expect(html).toContain('deadMarkedCount[3]');
+        expect(html).toContain('id="dead-item-11"');
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).not.toContain('class="empty-state dead-start"');
+        expect(html).toContain('class="dead-rescan"');
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+    });
+
+    it('§2.3 全覆盖扫描: 过去标注 = 0, 分段计数与结果行正确, 无残留壳/横幅', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        clickScan(ctx);
+        finishScan(ctx, FULL);
+        const html = $list.innerHTML;
+        // §4 计数: 全部 = 死链 2 + 受限 1 + 未覆盖标注 0 = 3
+        expect(html).toContain('deadFilterAll 3');
+        expect(html).toContain('deadFilterDead 2');
+        expect(html).toContain('deadFilterBlocked 1');
+        expect(html).toContain('deadFilterMarked 0');
+        // 三个结果行都在, 标记状态 ⚑ 保留在结果行上 (不再重复成标注)
+        expect(html).toContain('id="dead-item-11"');
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html.match(/dead-mark-btn marked/g)).toHaveLength(3);
+        // 过去标注空 → 不渲染空标注列表, 无横幅
+        expect(html).not.toContain('class="dead-marked-list"');
+        expect(html).not.toContain('dead-marked-banner');
+        // 标注记录原样保留 (全覆盖不清除任何标注)
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12', '13']);
+        // "上次标注"视图: 0 → 可执行 start 空态, 分段计数仍在
+        clickFilter(ctx, 'marked');
+        const markedHtml = $list.innerHTML;
+        expect(markedHtml).toContain('data-filter="marked" aria-pressed="true"');
+        expect(markedHtml).toContain('deadFilterMarked 0');
+        expect(markedHtml).toContain('class="empty-state dead-start"');
+        expect(markedHtml).not.toContain('id="dead-item-11"');
+        expect(markedHtml).not.toContain('id="dead-item-12"');
+    });
+
+    it('§2.4 下一次扫描不再判死链 (ok): 标注不清除, 残留为"过去标注"并追加于结果下方', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        // 第一轮: 全覆盖 (过去标注 0)
+        clickScan(ctx);
+        finishScan(ctx, FULL);
+        expect($list.innerHTML).toContain('deadFilterMarked 0');
+        // 第二轮: 11 不再是死链 (ok)
+        clickScan(ctx);
+        finishScan(ctx, {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        });
+        const html = $list.innerHTML;
+        // 计数: 全部 = 死链 1 + 受限 1 + 残留 1 = 3; 上次标注 = 残留 1
+        expect(html).toContain('deadFilterAll 3');
+        expect(html).toContain('deadFilterDead 1');
+        expect(html).toContain('deadFilterBlocked 1');
+        expect(html).toContain('deadFilterMarked 1');
+        // 结果行 12/13; 11 只出现一次 — 作为残留追加于结果下方
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html.match(/id="dead-item-11"/g)).toHaveLength(1);
+        expect(html).toContain('deadMarkedCount[1]');
+        expect(html).toContain('class="dead-marked-list"');
+        expect(html.indexOf('id="dead-item-12"'))
+            .toBeLessThan(html.indexOf('id="dead-item-11"'));
+        // 横幅提示"过去标注"分类
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+        // 残留记录保留 — 用户不手工清除, 健康判定不清除标记
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12', '13']);
+        // "上次标注"视图 = 残留 11, 无结果行
+        clickFilter(ctx, 'marked');
+        const markedHtml = $list.innerHTML;
+        expect(markedHtml).toContain('deadMarkedCount[1]');
+        expect(markedHtml).toContain('id="dead-item-11"');
+        expect(markedHtml).not.toContain('id="dead-item-12"');
+        expect(markedHtml).not.toContain('id="dead-item-13"');
+    });
+
+    it('§2.4 未探测的标注也残留: 只覆盖 12, 11/13 未覆盖 → 残留 2', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        clickScan(ctx);
+        finishScan(ctx, { '12': { status: 'dead', code: 404 } });
+        const html = $list.innerHTML;
+        // 全部 = 死链 1 + 受限 0 + 残留 2 = 3
+        expect(html).toContain('deadFilterAll 3');
+        expect(html).toContain('deadFilterDead 1');
+        expect(html).toContain('deadFilterBlocked 0');
+        expect(html).toContain('deadFilterMarked 2');
+        expect(html).toContain('deadMarkedCount[2]');
+        expect(html).toContain('id="dead-item-12"'); // 结果行
+        expect(html).toContain('id="dead-item-11"'); // 残留
+        expect(html).toContain('id="dead-item-13"'); // 残留
+        expect(html.match(/id="dead-item-11"/g)).toHaveLength(1);
+    });
+
+    it('残留态展示要素完整: 工具栏全在, 选择模式覆盖结果行 + 残留行', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        clickScan(ctx);
+        finishScan(ctx, {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        });
+        const html = $list.innerHTML;
+        // 顶部空闲工具栏: unmark-all / rescan / 分段 / mark-all / delete-all / 选择
+        expect(html).toContain('class="dead-unmark-all"');
+        expect(html).toContain('class="dead-rescan"');
+        expect(html).toContain('class="dead-mark-all"');
+        expect(html).toContain('class="dead-delete-all"');
+        expect(html).toContain('class="dead-select-mode"');
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+        // 选择模式下残留行的 <ul> 携带 .selecting, 行按钮隐藏
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        const selHtml = $list.innerHTML;
+        expect(selHtml).toContain('class="dead-marked-list selecting"');
+        expect(selHtml).toContain('class="dead-select-exit"');
+        // 残留行 11 与结果行同为可选成员: 勾选 11 → .sel + 计数 1
+        rowClick(ctx, '11');
+        expect($list.innerHTML).toContain('class="vbm-row sel" id="dead-item-11"');
+        expect($list.innerHTML).toContain('selectCount[1]');
+        rowClick(ctx, '12'); // 结果行同样可勾选
+        expect($list.innerHTML).toContain('selectCount[2]');
+    });
+
+    it('§2.2 第二次扫描进行中: 已判死链的过去标注实时流入结果, 未判定的留在残留', () => {
+        const ctx = setup({ storeData: { deadMarks: MARKED_ALL } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        clickScan(ctx);
+        finishScan(ctx, FULL); // 第一轮全覆盖
+        expect($list.innerHTML).toContain('deadFilterMarked 0');
+        // 第二轮开始, 先判 12 为死链 → 12 进入 live 结果, 11/13 尚未判定 → 残留
+        clickScan(ctx);
+        publishBlob(ctx, blobOf({ done: 1, results: { '12': { status: 'dead', code: 404 } } }));
+        const html = $list.innerHTML;
+        expect(html).toContain('id="dead-item-12"');
+        expect(html.match(/id="dead-item-12"/g)).toHaveLength(1);
+        expect(html).toContain('deadMarkedCount[2]');
+        expect(html).toContain('id="dead-item-11"');
+        expect(html).toContain('id="dead-item-13"');
+        // 全部 12 也判定完 (仍死链) → 残留只剩 11/13 里未覆盖者
+        publishBlob(ctx, blobOf({
+            done: 3,
+            results: { '12': { status: 'dead', code: 404 }, '13': { status: 'blocked', code: 404 } }
+        }));
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
+        expect($list.innerHTML).toContain('id="dead-item-11"');
+        expect($list.innerHTML).not.toContain('class="dead-marked-list selecting"');
+    });
+});
+
 describe('batch deletion (delete all / delete selected)', () => {
     const CACHE = JSON.stringify({
         ts: 1700000000000, scannedCount: 3,
@@ -1476,9 +1667,11 @@ describe('marks + overlay (§5.5c)', () => {
         expect(liDupes._fav.children).toEqual([]);
     });
 
-    it('a healthy rescan prunes the mark automatically', () => {
+    it('an all-healthy rescan keeps every past mark as residue (过去标注, §2.4)', () => {
+        // 用户定义: 前一次标注了很多, 下一次扫描全部不再是死链 → 这些标注不
+        // 被清除, 而是成为"过去标注"残留 (追加于结果下方 / 上次标注分类).
         const ctx = setup({ storeData: { deadMarks: '["11","12"]' } });
-        const { store, def } = ctx;
+        const { $list, store, def } = ctx;
         def().activate();
         // marks exist with no scan → the top rescan starts the run
         ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
@@ -1487,7 +1680,15 @@ describe('marks + overlay (§5.5c)', () => {
             '12': { status: 'ok', code: 200 },
             '13': { status: 'ok', code: 200 }
         });
-        expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
+        // 全部结果无问题行 → 结果区为空态; 标注全部残留
+        expect($list.innerHTML).toContain('deadNone');
+        expect($list.innerHTML).toContain('deadMarkedCount[2]');
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12']);
+        // 仅死链/仅受限 0, 全部 = 残留 2, 上次标注 2
+        expect($list.innerHTML).toContain('deadFilterAll 2');
+        expect($list.innerHTML).toContain('deadFilterDead 0');
+        expect($list.innerHTML).toContain('deadFilterBlocked 0');
+        expect($list.innerHTML).toContain('deadFilterMarked 2');
         expect(def().badge()).toBe(0);
     });
 
