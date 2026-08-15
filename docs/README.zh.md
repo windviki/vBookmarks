@@ -200,7 +200,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 # 更新日志
 
-### v4.0.5 · 2026-08
+### v4.0.5 · 2026-08-15
 
 #### 新增
 
@@ -235,7 +235,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 弹窗 resize/zoom 层从 `neat.js` 拆出至 `src/resize.js`（纯决策内核在 `src/resize-core.js`），并修掉拖拽上限在两次拖拽间残留的泄漏。
 - 测试达 **67 文件 / 2078 例**全绿——新增 list-focus 套件、重写 favicon 反色策略测试、为删除链/菜单置灰/转义/i18n 文案改动新增契约。
 
-### v4.0.4 · 2026-08
+### v4.0.4 · 2026-08-13
 
 #### 新增
 
@@ -260,7 +260,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - CI 与发版前置新增真实浏览器加载冒烟门禁（零控制台错误）——加载即崩溃的错误在打 tag 前被拦截。
 - 死代码清理（无效的 `copy-all-titles-and-urls` handler、无效果的 `hide-editables` 开关）。
 
-### v4.0.3 · 2026-08
+### v4.0.3 · 2026-08-12
 
 #### 修复
 
@@ -276,7 +276,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **iGuge 冲突已核实并文档化**（[#53](https://github.com/windviki/vBookmarks/issues/53)、[#57](https://github.com/windviki/vBookmarks/issues/57)）：iGuge 代理/加速类扩展会主动禁用任何声明 `proxy` 权限、且不在其白名单中的已安装扩展——当两者同时安装时 vBookmarks 可能每次重启 Chrome 都被禁用。已对照商店在售 CRX 核实根因；死链章节现说明成因与受影响用户的处理办法，并已同步与 iGuge 协调白名单。vBookmarks 保留 `proxy` 权限（仅死链扫描期间临时、只路由带标记探测 URL 地使用）。
 - 开发者工具：vitest 1 → 3.2.7，清除 6 条 Dependabot 告警（仅开发期依赖，用户零影响）；`AGENTS.md` 补充改动 key 的 i18n 流程与发版流程。
 
-### v4.0.2 · 2026-08
+### v4.0.2 · 2026-08-11
 
 #### 新增
 
@@ -303,7 +303,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 版本定为 **4.0.2**（`manifest.json`/`package.json`）；设计文档已转向 4.1.0 规划。
 
-### v4.0.1 · 2026-08
+### v4.0.1 · 2026-08-08
 
 #### 新增
 
@@ -360,7 +360,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **风险横幅重弹门**改为 major.minor 粒度（原先只认大版本）：patch 晋升（4.0.0 → 4.0.1）静默，4.0 → 4.1 或 4 → 5 会重弹一次。
 - **死链代理整合**：退役旧的中转 URL 模板（`deadProxyTemplate`）——老版本存下的值在升级时自动从存储中清理。选项页"死链扫描"分组现在可以就地管理你的代理服务器（添加 / 测试 / 保存 / 清除；保存前依次过 解析 → 权限 → 可控性 → 可达性探测，不可达拒收）；视图内的"添加代理"提示条可用 × 关闭，并在"死链扫描"分组的复选框恢复（`hideDeadProxyStrip`）。
 
-### v4.0 · 2026/07
+### v4.0 · 2026-08-02
 
 #### 新增
 
@@ -402,244 +402,271 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - `proxy` 权限为安装时声明（Chrome 不允许列为可选权限），仅在配置了代理且扫描运行中（或添加流程的可达性探测时）使用——不设置代理服务器或不使用死链功能时完全不触发。
 
 
-### v3.7 · 2026/05/10
+### v3.7 · 2026-05-10
+
+#### 新增
 
 - 新增：[#36](https://github.com/windviki/vBookmarks/issues/36)：弹窗高度自动调整开关（常规设置）。
+- 新增：自 cc-dev 分支同步的 42 语言支持，全部对齐英文基准（75 键）：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
+
+#### 修复
 
 - 修复：[#42](https://github.com/windviki/vBookmarks/issues/42)：Chrome 148 弃用 `<command>` 元素导致扩展失效，改用 `<div>` 完全兼容。
 
-- 新增：自 cc-dev 分支同步的 42 语言支持，全部对齐英文基准（75 键）：ar, bg, bn, cs, da, de, el, en, es, et, fa, fi, fr, he, hi, hr, hu, id, it, ja, ko, lt, lv, mk, nl, no, pl, pt, pt_BR, pt_PT, ro, ru, sk, sl, sv, th, tr, uk, vi, zh, zh_HK, zh_TW。
+### v3.6 · 2024-01-08
 
-
-### v3.6 · 2024/01/08
+#### 修复
 
 - 修复：[#31](https://github.com/windviki/vBookmarks/issues/31)：自定义图标失效。
 
+### v3.5 · 2023-09-04
 
-### v3.5 · 2023/09/04
+#### 修复
 
 - 修复：[#29](https://github.com/windviki/vBookmarks/issues/29)：清除搜索文本后光标焦点不保留在搜索框。
-
 - 修复 manifest 快捷键。默认快捷键现为 Ctrl+Shift+V（Ctrl+Shift+B 在新版 Chrome 不可用）。
 
+### v3.4 · 2023-02-14
 
-### v3.4 · 2023/02/14
-
-- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：后台打开文件夹。
+#### 新增
 
 - 新增：方向键右键打开上下文菜单（焦点在已打开文件夹或书签上时），左键关闭菜单。
 
+#### 抛光
+
 - 移除高度重置延时，加快弹窗速度。
 
+#### 修复
 
-### v3.3 · 2023/02/02
+- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：后台打开文件夹。
 
-- 修复：[#23](https://github.com/windviki/vBookmarks/issues/23)：选项页链接错误。
+### v3.3 · 2023-02-02
 
-- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：Chrome 107 中中键/Ctrl 点击不再后台打开书签。
+#### 新增
 
 - 新增：[#24](https://github.com/windviki/vBookmarks/issues/24)：新增关闭即时搜索的选项（按 ENTER 搜索）。
 
+#### 修复
+
+- 修复：[#23](https://github.com/windviki/vBookmarks/issues/23)：选项页链接错误。
+- 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：Chrome 107 中中键/Ctrl 点击不再后台打开书签。
 - 修复：愚蠢的双滚动条（终于）。
-
 - 修复：退出搜索模式时焦点丢失。
-
 - 修复：搜索模式下方向键下报错。
-
 - 修复若干 undefined 错误。
+
+#### 变更
 
 - 升级至 Manifest V3，minimum_chrome_version = 88。
 
+### v3.2 · 2020-09-12
 
-### v3.2 · 2020/09/12
-
-- 修复：[#19](https://github.com/windviki/vBookmarks/issues/19)：「添加到文件夹末尾」功能失效。
+#### 新增
 
 - 新增：[#15](https://github.com/windviki/vBookmarks/issues/15)：搜索栏支持搜索文件夹。
-
 - 新增：弹窗高度调整。
-
 - 新增：意大利语。
-
 - 新增：俄语，感谢 @Stanislav。
 
+#### 修复
+
+- 修复：[#19](https://github.com/windviki/vBookmarks/issues/19)：「添加到文件夹末尾」功能失效。
 - 修复若干 undefined 错误。
+
+#### 变更
 
 - 升级至 ECMAScript 6，minimum_chrome_version = 61。
 
+### v3.1 · 2020-07-03
 
-
-### v3.1 · 2020/07/03
-
-- 修复：[#12](https://github.com/windviki/vBookmarks/issues/12)：清除菜单时焦点丢失。
-
-- 修复：[#18](https://github.com/windviki/vBookmarks/issues/18)：拖拽到顶部/底部时树不滚动。
-
-- 修复按下方向键时的 undefined 错误。
-
-- 修复 bookmarklet 支持，感谢 @ZG-nico。
+#### 新增
 
 - 新增：法语，感谢 @Fab-fr。
-
 - 新增：中文（香港）。
 
+#### 修复
 
-### v3.0 · 2019/08/22
+- 修复：[#12](https://github.com/windviki/vBookmarks/issues/12)：清除菜单时焦点丢失。
+- 修复：[#18](https://github.com/windviki/vBookmarks/issues/18)：拖拽到顶部/底部时树不滚动。
+- 修复按下方向键时的 undefined 错误。
+- 修复 bookmarklet 支持，感谢 @ZG-nico。
+
+### v3.0 · 2019-08-22
+
+#### 修复
 
 - 修复：新图标。
 
+### v2.9 · 2019-08-22
 
-### v2.9 · 2019/08/22
+#### 修复
 
 - 修复：Chrome 77+ 双滚动条。
 
+### v2.8 · 2019-05-06
 
-### v2.8 · 2019/05/06
-
-- 修复：中键点击重复打开 URL。https://github.com/windviki/vBookmarks/issues/9
-
-- 修复：搜索偶发失败。https://github.com/windviki/vBookmarks/issues/7
-
-- 修复：右键菜单位置。
-
-- 改进：滚动条 CSS。
+#### 新增
 
 - 新增：书签 URL 占位符 "\_\_VBM_CURRENT_TAB_URL\_\_"，让部分 bookmarklet 可用（Chrome 不允许 bookmarklet 中的 _document.location.href_）。从 vBookmarks 点击时会替换为当前活动标签页 URL。
 
+#### 抛光
 
-### v2.6 · 2013/10/21
+- 改进：滚动条 CSS。
+
+#### 修复
+
+- 修复：中键点击重复打开 URL。https://github.com/windviki/vBookmarks/issues/9
+- 修复：搜索偶发失败。https://github.com/windviki/vBookmarks/issues/7
+- 修复：右键菜单位置。
+
+### v2.6 · 2013-10-21
+
+#### 修复
 
 - 修复：移除双滚动条。
 
+### v2.5 · 2013-08-30
 
-### v2.5 · 2013/08/30
+#### 修复
 
 - 修复：移除 HTML 通知（已不可用）。https://bugs.webkit.org/show_bug.cgi?id=98388
 
+### v2.4 · 2013-08-29
 
-### v2.4 · 2013/08/29
+#### 修复
 
 - 修复：js 中 "Unexpected end of input"。
 
+### v2.3 · 2013-04-09
 
-### v2.3 · 2013/04/09
+#### 修复
 
 - 修复：上下滚动时右键菜单未关闭（上一版回归）。
-
 - 修复：滚动条位置记忆（上一版回归）。
 
+### v2.2 · 2013-04-02
 
-### v2.2 · 2013/04/02
+#### 修复
 
 - 修复：Chrome 26+ 滚动条失效（测试不足）。
 
+### v2.1 · 2012-12-12
 
-### v2.1 · 2012/12/12
-
-- 修复：正确记忆并恢复滚动条位置。
-
-- 改进：右键菜单位置；上下滚动时菜单会关闭。
+#### 新增
 
 - 新增：对话框取消按钮。
 
+#### 抛光
 
-### v2.0 · 2012/11/01
+- 改进：右键菜单位置；上下滚动时菜单会关闭。
 
-- 修复：background.js 版本检查。
+#### 修复
 
-- 改进：可同步的分隔线。
+- 修复：正确记忆并恢复滚动条位置。
+
+### v2.0 · 2012-11-01
+
+#### 新增
 
 - 新增：分隔线高级选项。
 
+#### 抛光
 
+- 改进：可同步的分隔线。
+
+#### 修复
+
+- 修复：background.js 版本检查。
 - 「作为分隔线显示的书签的真实标题」：默认为 "|"。即你在 vBookmarks 中添加的分隔线，在 Chrome 书签管理器或书签菜单中会以该标题显示为普通书签。可改为 "------------"，这样在 Chrome 书签菜单中也能起到分隔作用。
-
-
 - 「作为分隔线显示的书签的真实 URL」：默认为 "http://separatethis.com/"。即"在线分隔线"。
-
-
 - 「URL 包含此字符串的书签将显示为分隔线」：可设置多个 URL 以 ";" 连接，所有 URL 包含其中任一字符串的书签都会在 vBookmarks 中显示为分隔线。例如设为 google.com，所有 Google 服务都会显示为分隔线。
 
+### v1.9 · 2012-08-19
 
-### v1.9 · 2012/08/19
+#### 修复
 
 - 修复：Neat Bookmarks 缺陷：打开弹窗并向下滚动后滚动条会回到顶部。
-
 - 更新：图标颜色。
-
 - 更新：分隔线样式。
 
+### v1.8 · 2012-08-01
 
-### v1.8 · 2012/08/01
+#### 新增
 
 - 新增：书签/文件夹分隔线。本地记录，暂不支持多设备同步，见 https://github.com/windviki/vBookmarks/issues/3
+- 新增：图标颜色改为红色。
+- 新增：简单的更新检查与桌面通知。
+
+#### 修复
 
 - 修复：Neat Bookmarks 缺陷：滚动条向下滚动后拖拽书签位置错误（Chrome18 起）。
 
-- 新增：图标颜色改为红色。
-
-- 新增：简单的更新检查与桌面通知。
+#### 变更
 
 - 移除：部分语言，仅保留 4 个 locale：en, ja, zh, zh_TW。无力维护更多翻译。
 
+### v1.7 · 2012-06-26
 
-### v1.7 · 2012/06/26
+#### 修复
 
 - 修复：Chrome 19 双滚动条。为之前未经测试的发布抱歉，我没有多个版本的 Chrome :)
-
 - 修复：展开根文件夹时宽度重置。https://github.com/windviki/vBookmarks/issues/2
 
+### v1.6 · 2012-06-24
 
-### v1.6 · 2012/06/24
+#### 修复
 
 - 修复：地址栏无法搜索书签（*+空格）。[内容安全策略]
-
 - 修复：恢复弹窗宽度。[内容安全策略]
-
 - 修复：对话框无法提交表单。[内容安全策略]
 
+### v1.5 · 2012-06-21
 
-### v1.5 · 2012/06/21
+#### 修复
 
 - 修复：Chrome 20+ manifest 问题。
-
 - 修复：独立脚本文件替代内联脚本，见内容安全策略 http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
+### v1.4 · 2012-06-20
 
-### v1.4 · 2012/06/20
+#### 修复
 
 - 修复：Chrome 18、19 滚动条问题。https://github.com/windviki/vBookmarks/issues/2
 
+### v1.3 · 2012-05-25
 
-### v1.3 · 2012/05/25
+#### 修复
 
 - 修复：滚动条故障。https://github.com/windviki/vBookmarks/issues/1
 
+### v1.2 · 2011-11-30
 
-### v1.2 · 2011/11/30
+#### 新增
 
 - 新增：用当前 URL 更新选中书签。
-
 - 新增：复制选中书签的标题和 URL 到剪贴板。
 
-- 修复：向关闭的文件夹添加新书签或文件夹后，原有子项无法正确显示。
+#### 修复
 
+- 修复：向关闭的文件夹添加新书签或文件夹后，原有子项无法正确显示。
 - 修复：补齐 cs（捷克语）缺失的翻译。
 
+### v1.1 · 2011-11-16
 
-### v1.1 · 2011/11/16
+#### 新增
 
 - 新增：只显示书签栏书签的选项。
-
 - 新增：在书签/文件夹前后添加文件夹的右键菜单。
+
+#### 修复
 
 - 修复：多语言支持中的部分翻译。
 
+### v1.0 · 2011-11-15
 
-### v1.0 · 2011/11/15
+#### 新增
 
 - 首个版本。
-
 
 # 注意事项
 
