@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import { createReadStream } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import chromeWebstoreUpload from 'chrome-webstore-upload';
+import { loadTesters, DEFAULT_TESTERS } from './publish.js';
 
 /** 仓库根 = 本文件 (scripts/webstore/upload-test.js) 上溯两级 */
 const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -244,6 +245,44 @@ describe('发布流程', () => {
         const client = makeClient();
         await client.publish('DEFAULT_PUBLISH', undefined, 25);
         assert.match(requests.at(-1).body, /"deployInfos":\[\{"deployPercentage":25\}\]/);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// 测试用户灰度(publish.js loadTesters:灰度给指定测试者)
+// ---------------------------------------------------------------------------
+
+describe('测试用户灰度(publish.js loadTesters)', () => {
+    const orig = process.env.CWS_TRUSTED_TESTERS;
+
+    after(() => {
+        if (orig === undefined) delete process.env.CWS_TRUSTED_TESTERS;
+        else process.env.CWS_TRUSTED_TESTERS = orig;
+    });
+
+    test('默认测试用户包含 windviki@gmail.com(未配置 CWS_TRUSTED_TESTERS 时)', () => {
+        delete process.env.CWS_TRUSTED_TESTERS;
+        assert.deepEqual(DEFAULT_TESTERS, ['windviki@gmail.com']);
+        assert.deepEqual(loadTesters(), ['windviki@gmail.com']);
+    });
+
+    test('空串/纯空白回退默认', () => {
+        process.env.CWS_TRUSTED_TESTERS = '';
+        assert.deepEqual(loadTesters(), ['windviki@gmail.com']);
+        process.env.CWS_TRUSTED_TESTERS = '   ,  , ';
+        assert.deepEqual(loadTesters(), ['windviki@gmail.com']);
+    });
+
+    test('逗号分隔解析并去空白/空项', () => {
+        process.env.CWS_TRUSTED_TESTERS = ' a@x.com ,b@y.com, ,c@z.com ';
+        assert.deepEqual(loadTesters(), ['a@x.com', 'b@y.com', 'c@z.com']);
+    });
+
+    test('返回副本,不污染内部默认数组', () => {
+        delete process.env.CWS_TRUSTED_TESTERS;
+        const a = loadTesters();
+        a.push('extra@x.com');
+        assert.deepEqual(loadTesters(), ['windviki@gmail.com']);
     });
 });
 

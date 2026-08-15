@@ -35,7 +35,7 @@
 
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import chromeWebstoreUpload from 'chrome-webstore-upload';
 
 const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -60,6 +60,44 @@ function loadDotenv() {
     } catch { /* .env 不存在时静默 */ }
 }
 loadDotenv();
+
+// ---------------------------------------------------------------------------
+// 测试用户(灰度给指定测试者用)
+// ---------------------------------------------------------------------------
+
+/** 未配置 CWS_TRUSTED_TESTERS 时的默认测试用户(owner 邮箱)。 */
+export const DEFAULT_TESTERS = ['windviki@gmail.com'];
+
+/**
+ * 读取测试用户列表。来源:CWS_TRUSTED_TESTERS(逗号分隔邮箱,可空/空串)。
+ * 未配置时回退到默认 [windviki@gmail.com]。
+ *
+ * 注意:CWS API 无法代管测试者邮箱列表,只能发布到「已配置的测试者」;邮箱列表
+ * 须在 Developer Dashboard → Users and permissions → Testers 手动维护(Editor
+ * 角色可管理)。本脚本仅负责展示列表供核对。
+ */
+export function loadTesters() {
+    const raw = process.env.CWS_TRUSTED_TESTERS;
+    if (!raw || !raw.trim()) return [...DEFAULT_TESTERS];
+    const testers = raw.split(',').map(s => s.trim()).filter(Boolean);
+    return testers.length ? testers : [...DEFAULT_TESTERS];
+}
+
+/** 发布目标的中文说明(TRUSTED_TESTERS 灰度测试者 / DEFAULT_PUBLISH 全量)。 */
+function publishTargetNote(type) {
+    const target = type ?? 'DEFAULT_PUBLISH';
+    if (target === 'TRUSTED_TESTERS') return '灰度给测试用户(TRUSTED_TESTERS) — 测试者列表须在 Dashboard → Users and permissions → Testers 维护';
+    if (target === 'DEFAULT_PUBLISH') return '发布给所有人(DEFAULT_PUBLISH) — 若此前是测试用户灰度,此命令即恢复到全量';
+    return `分阶段发布(${target})`;
+}
+
+/** 打印测试用户列表 + Dashboard 核对指引(发布目标为 TRUSTED_TESTERS 时)。 */
+function printTestersHint() {
+    const testers = loadTesters();
+    console.log(`\n本次将灰度给测试用户(${testers.length}): ${testers.join(', ')}`);
+    console.log('  ⚠ CWS API 无法代管测试者邮箱列表,请到 Developer Dashboard →');
+    console.log('    Users and permissions → Testers 核对已包含以上邮箱(Editor 角色可管理)。');
+}
 
 // ---------------------------------------------------------------------------
 // 出网代理(undici 不读代理环境变量,需显式安装 ProxyAgent)
@@ -253,9 +291,10 @@ async function main() {
         return;
     }
 
-    // 变更类命令(上传/发布/全部)与 check 都要跑 git发布 前置校验
+    // 变更类命令(上传/发布/全部)与 check 都要跑 git发布 前置校验;
+    // --skip-check 时跳过整个校验(仅限显式上传草稿等场景,check 命令本身不受影响)。
     const needsCheck = ['upload', 'publish', 'all', 'check'].includes(cmd);
-    if (needsCheck) {
+    if (needsCheck && !skipCheck) {
         const zip = cmd === 'check' ? checkZipPath() : findZip(file);
         const { issues, warnings } = await gitReleaseCheck(zip);
         for (const w of warnings) console.error(`[warn] ${w}`);
@@ -280,7 +319,12 @@ async function main() {
 
     if (!yes) {
         console.log(`\n[dry-run] 将执行: ${METHODS[cmd].desc}`);
-        if (cmd === 'publish') console.log(`          publishType=${type ?? 'DEFAULT_PUBLISH'}${deploy ? `, deploy=${deploy}` : ''}`);
+        if (cmd === 'publish') {
+            const target = type ?? 'DEFAULT_PUBLISH';
+            console.log(`          publishType=${target}${deploy ? `, deploy=${deploy}` : ''}`);
+            console.log(`          ${publishTargetNote(type)}`);
+            if (target === 'TRUSTED_TESTERS') printTestersHint();
+        }
         if (cmd === 'all') console.log('          上传 zip → 发布(共用一次 access_token)');
         console.log('加 --yes 真正执行。');
         return;
@@ -296,13 +340,17 @@ async function main() {
             const res = await store.uploadExisting(zip, undefined, 120);
             console.log('\n上传结果:', JSON.stringify(res, null, 2));
         } else if (cmd === 'publish') {
-            const res = await store.publish(type ?? 'DEFAULT_PUBLISH', undefined, deploy);
+            const target = type ?? 'DEFAULT_PUBLISH';
+            if (target === 'TRUSTED_TESTERS') printTestersHint();
+            const res = await store.publish(target, undefined, deploy);
             console.log('\n发布结果:', JSON.stringify(res, null, 2));
         } else if (cmd === 'all') {
             const token = await store.fetchToken();
             const up = await store.uploadExisting(zip, token, 120);
             console.log('\n上传结果:', JSON.stringify(up, null, 2));
-            const pub = await store.publish(type ?? 'DEFAULT_PUBLISH', token, deploy);
+            const target = type ?? 'DEFAULT_PUBLISH';
+            if (target === 'TRUSTED_TESTERS') printTestersHint();
+            const pub = await store.publish(target, token, deploy);
             console.log('\n发布结果:', JSON.stringify(pub, null, 2));
         }
         console.log('\n完成。下一次发版记得先 git发布(打新 tag)再商店发布。');
@@ -325,10 +373,17 @@ async function helpText() {
 
 参数:
   --file 路径  指定要上传的 zip(默认自动选 tmp/vBookmarks_<version>.zip)
-  --type T     DEFAULT_PUBLISH(默认) | TRUSTED_TESTERS | STAGED_PUBLISH
-  --deploy N   灰度百分比(需 >10000 周活,V2 免重新审核)
+  --type T     DEFAULT_PUBLISH(默认·发布给所有人) | TRUSTED_TESTERS(灰度给测试用户)
+               | STAGED_PUBLISH(分阶段发布)
+  --deploy N   灰度百分比(需 >10000 周活,V2 免重新审核;仅配 STAGED_PUBLISH)
   --skip-check 跳过 git发布 前置校验(仅限显式上传草稿等场景)
   --yes        真正执行(否则 dry-run)
+
+测试用户灰度:
+  publish --type TRUSTED_TESTERS  只发布给测试用户(恢复所有人用 --type DEFAULT_PUBLISH)
+  测试用户列表来自 CWS_TRUSTED_TESTERS(逗号分隔邮箱),未配置时默认 windviki@gmail.com;
+  发布时脚本打印列表供核对 —— CWS API 无法代管测试者邮箱,列表须在 Dashboard
+  → Users and permissions → Testers 手动维护(Editor 角色可管理)。
 
 凭据: 环境变量 CWS_* 优先,否则读仓库根 .env(git-ignored):
   CWS_PUBLISHER_ID CWS_CLIENT_ID CWS_CLIENT_SECRET CWS_REFRESH_TOKEN
@@ -336,7 +391,10 @@ async function helpText() {
 凭据申请与说明见 scripts/webstore/README.md。`;
 }
 
-main().catch(e => {
-    console.error('✖ 未捕获错误:', e);
-    process.exit(1);
-});
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+    main().catch(e => {
+        console.error('✖ 未捕获错误:', e);
+        process.exit(1);
+    });
+}

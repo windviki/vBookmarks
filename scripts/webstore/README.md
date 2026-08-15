@@ -46,6 +46,7 @@ CWS_PUBLISHER_ID=            # 开发者账号 ID:Dashboard → Publisher → Se
 CWS_CLIENT_ID=               # GCP OAuth Client(Web application)ID
 CWS_CLIENT_SECRET=           # 上述 Client 的 Secret(可留空)
 CWS_REFRESH_TOKEN=           # OAuth Playground 换取(scope: chromewebstore)
+CWS_TRUSTED_TESTERS=         # 测试用户邮箱,逗号分隔(TRUSTED_TESTERS 灰度用;留空默认 windviki@gmail.com)
 ```
 
 获取步骤(详见 [官方教程 Use the Chrome Web Store API](https://developer.chrome.com/docs/webstore/using-api)):
@@ -83,6 +84,15 @@ node scripts/webstore/publish.js publish --yes
 
 # 5) 上传 + 发布(共用一次 access_token)
 node scripts/webstore/publish.js all --yes
+
+# 6) 灰度给测试用户(TRUSTED_TESTERS)—— 版本先给指定测试者,验证通过再恢复全量
+node scripts/webstore/publish.js publish --type TRUSTED_TESTERS --yes
+#    发布时脚本打印测试用户列表(默认 windviki@gmail.com,可用 CWS_TRUSTED_TESTERS 覆盖)
+#    ⚠ 测试者邮箱列表 CWS API 无法代管,须在 Dashboard → Users and permissions
+#      → Testers 手动维护(Editor 角色可管理),脚本仅展示列表供核对。
+
+# 7) 从测试用户恢复到所有人(再发一次 DEFAULT_PUBLISH 全量)
+node scripts/webstore/publish.js publish --type DEFAULT_PUBLISH --yes
 ```
 
 参数:
@@ -90,7 +100,7 @@ node scripts/webstore/publish.js all --yes
 | 参数 | 说明 |
 |---|---|
 | `--file 路径` | 指定要上传的 zip(默认自动选 `tmp/vBookmarks_<version>.zip`;可传相对仓库根或绝对路径) |
-| `--type T` | `DEFAULT_PUBLISH`(默认)· `TRUSTED_TESTERS` · `STAGED_PUBLISH` |
+| `--type T` | `DEFAULT_PUBLISH`(默认·发布给所有人)· `TRUSTED_TESTERS`(灰度给测试用户)· `STAGED_PUBLISH`(分阶段) |
 | `--deploy N` | 灰度百分比(需 >10000 周活用户,V2 免重新审核) |
 | `--skip-check` | 跳过 git发布 前置校验(仅限显式上传草稿等场景) |
 | `--yes` | 真正执行;否则只 dry-run 打印将执行的请求 |
