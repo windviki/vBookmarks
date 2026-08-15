@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Märgi valitud"
   },
+  "deadMarkStatusAll": {
+    "message": "Kõik"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Märgitud"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Märkimata"
+  },
+  "deadSortLabel": {
+    "message": "Sorteeri"
+  },
+  "deadSortByDetected": {
+    "message": "Tuvastamise aeg"
+  },
+  "deadSortByPath": {
+    "message": "Kausta tee"
+  },
+  "deadSortByMarked": {
+    "message": "Märkimise aeg"
+  },
   "deadMarkedBanner": {
     "message": "Kuvatakse varem märgitud järjehoidjaid. Klõpsake Rescan, et alustada uut kontrolli, või haldage neid allolevas loendis."
   },

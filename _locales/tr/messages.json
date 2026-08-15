@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Seçilenleri işaretle"
   },
+  "deadMarkStatusAll": {
+    "message": "Tümü"
+  },
+  "deadMarkStatusMarked": {
+    "message": "İşaretli"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "İşaretsiz"
+  },
+  "deadSortLabel": {
+    "message": "Sıralama ölçütü"
+  },
+  "deadSortByDetected": {
+    "message": "Algılama zamanı"
+  },
+  "deadSortByPath": {
+    "message": "Klasör yolu"
+  },
+  "deadSortByMarked": {
+    "message": "İşaretleme zamanı"
+  },
   "deadMarkedBanner": {
     "message": "Daha önce işaretlenmiş yer imleri gösteriliyor. Yeni bir kontrol başlatmak için Rescan'a tıklayın veya aşağıdaki listede bunları işleyin."
   },

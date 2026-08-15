@@ -2774,12 +2774,14 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* Custom dropdowns (dropdown.js) replace the native selects — the same
    toolbar look, plus the arrow protocol (↑ leaves, ↓ opens, → picks, ←
    cancels). The trigger is a rung button; the list pops below it. */
-.dupes-toolbar .vbm-dropdown {
+.dupes-toolbar .vbm-dropdown,
+.dead-toolbar .vbm-dropdown {
     position: relative;
     display: inline-block;
 }
 
-.dupes-toolbar .vbm-dropdown-trigger {
+.dupes-toolbar .vbm-dropdown-trigger,
+.dead-toolbar .vbm-dropdown-trigger {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -2793,18 +2795,21 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     white-space: nowrap;
 }
 
-.dupes-toolbar .vbm-dropdown-trigger:hover {
+.dupes-toolbar .vbm-dropdown-trigger:hover,
+.dead-toolbar .vbm-dropdown-trigger:hover {
     background: var(--vbm-bg-hover);
 }
 
 /* The open dropdown reads as an active control: accent border + text,
    chevron flipped to point up — the trigger becomes the menu's anchor. */
-.dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger {
+.dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger,
+.dead-toolbar .vbm-dropdown.open .vbm-dropdown-trigger {
     border-color: var(--vbm-accent);
     color: var(--vbm-accent);
 }
 
-.dupes-toolbar .vbm-dropdown-trigger .vbm-icon {
+.dupes-toolbar .vbm-dropdown-trigger .vbm-icon,
+.dead-toolbar .vbm-dropdown-trigger .vbm-icon {
     width: 12px;
     height: 12px;
     flex: none;
@@ -2812,7 +2817,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     transform: rotate(90deg); /* right chevron → down */
 }
 
-.dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger .vbm-icon {
+.dupes-toolbar .vbm-dropdown.open .vbm-dropdown-trigger .vbm-icon,
+.dead-toolbar .vbm-dropdown.open .vbm-dropdown-trigger .vbm-icon {
     color: var(--vbm-accent);
     transform: rotate(270deg);
 }
@@ -2828,7 +2834,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    (ID specificity) would otherwise squash the listbox's own 8px option
    padding — which is exactly what makes the option text line up with the
    trigger text — and its vertical breathing room. */
-.dupes-toolbar .vbm-dropdown-list {
+.dupes-toolbar .vbm-dropdown-list,
+.dead-toolbar .vbm-dropdown-list {
     position: absolute;
     top: 100%;
     inset-inline-start: 0; /* auto-flips with the popup's RTL direction */
@@ -2845,7 +2852,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     box-shadow: 0 8px 24px var(--vbm-shadow);
 }
 
-.dupes-toolbar .vbm-dropdown-list li {
+.dupes-toolbar .vbm-dropdown-list li,
+.dead-toolbar .vbm-dropdown-list li {
     padding: 0 8px !important;
     line-height: 26px;
     cursor: pointer;
@@ -2859,11 +2867,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
    navigation is actually visible, dark/ink included. The committed pick
    ([aria-selected="true"] below) is text-only, so the two states stack
    readably. */
-.dupes-toolbar .vbm-dropdown-list li:hover {
+.dupes-toolbar .vbm-dropdown-list li:hover,
+.dead-toolbar .vbm-dropdown-list li:hover {
     background: var(--vbm-bg-hover);
 }
 
-.dupes-toolbar .vbm-dropdown-list li:focus {
+.dupes-toolbar .vbm-dropdown-list li:focus,
+.dead-toolbar .vbm-dropdown-list li:focus {
     background: var(--vbm-bg-selected);
     color: var(--vbm-fg-selected);
     outline: 0;
@@ -2872,20 +2882,23 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 /* forced-colors takes over the themed backgrounds, erasing the focus tint —
    hand the focused option a real outline so keyboard position stays visible. */
 @media (forced-colors: active) {
-    .dupes-toolbar .vbm-dropdown-list li:focus {
+    .dupes-toolbar .vbm-dropdown-list li:focus,
+    .dead-toolbar .vbm-dropdown-list li:focus {
         outline: 2px solid Highlight;
     }
 }
 
 /* The current pick: accent text + weight only (no background — hover and
    focus own the background, so the states never fight). */
-.dupes-toolbar .vbm-dropdown-list li[aria-selected="true"] {
+.dupes-toolbar .vbm-dropdown-list li[aria-selected="true"],
+.dead-toolbar .vbm-dropdown-list li[aria-selected="true"] {
     color: var(--vbm-accent);
     font-weight: 600;
 }
 
 /* An unpickable option reads like a disabled menu item. */
-.dupes-toolbar .vbm-dropdown-list li.greyed {
+.dupes-toolbar .vbm-dropdown-list li.greyed,
+.dead-toolbar .vbm-dropdown-list li.greyed {
     color: var(--vbm-muted);
     pointer-events: none;
 }
@@ -3280,6 +3293,30 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-fg-selected);
 }
 
+/* 标注状态筛选（第二工具条）：与主工具条并列的独立 .vbm-toolbar（独立键盘
+   rung）。分段外观复用 dead-filter 的 segmented-recipe；第二工具条再压一层
+   上边距，与主工具条的下边框拉开呼吸空间。 */
+.dead-toolbar.dead-mark-toolbar {
+    margin-top: 6px;
+}
+
+.dead-toolbar .dead-mark-filter {
+    display: inline-flex;
+    border: 1px solid var(--vbm-border);
+    border-radius: var(--vbm-radius);
+    overflow: hidden;
+}
+
+.dead-toolbar .dead-mark-filter-btn {
+    color: var(--vbm-muted);
+    border-radius: 0;
+}
+
+.dead-toolbar .dead-mark-filter-btn[aria-pressed="true"] {
+    background: var(--vbm-bg-selected);
+    color: var(--vbm-fg-selected);
+}
+
 /* Destructive batch actions (delete all / delete selected) read as danger —
    the same cue as the context-menu delete entries, so the irreversible
    control stands out from the mark/unmark pills. The hover is the danger
@@ -3498,12 +3535,18 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-end: 4px;
 }
 
-/* Dead-view row actions: the mark toggle is a flag in the theme accent
-   (danger once the row is marked and stays lit), the delete is a trash can
-   always in danger red — destructive reads red, everything else follows the
-   accent token, per the original color intent. */
+/* Dead-view row actions: the mark toggle is a flag in the theme accent, lit
+   in warning amber once the row is marked OR its scan verdict is blocked
+   (受限) — the same amber as the blocked pill, so marked/blocked read as
+   "restricted" apart from a dead-only row (4.1.0 task-1 A6/D1: 死链 × 覆盖层
+   按场景着色，blocked 读琥珀). The delete is a trash can always in danger red —
+   destructive reads red, everything else follows the accent token. */
 #dead-list .row-btn.dead-mark-btn {
     color: var(--vbm-accent);
+}
+
+#dead-list li.blocked .row-btn.dead-mark-btn {
+    color: var(--vbm-warning);
 }
 
 #dead-list .row-btn.dead-del-btn {
@@ -3512,18 +3555,21 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 #dead-list .row-btn.dead-mark-btn.marked {
     visibility: visible;
-    color: var(--vbm-danger);
+    color: var(--vbm-warning);
 }
 
-/* §5.5c overlay: red × on the favicon's top trailing corner in every list
+/* §5.5c overlay: amber × on the favicon's top trailing corner in every list
    (top-right in LTR; inset-inline-end mirrors it under RTL — the sync dot
-   owns the bottom trailing corner, so they never collide).
+   owns the bottom trailing corner, so they never collide). Amber = the
+   blocked/受限 reading (4.1.0 task-1 A6/D1): a manual mark flags a link as
+   "restricted", which reads warning, distinct from the danger-red destructive
+   actions (delete), and stands out against the favicon in any theme.
    第五轮项2 — the generic `#tree ul li span` row rule (display/line-height/
    padding-inline-end, specificity 1,0,3) used to leak into this span: the
    4px end padding stretched the 10px circle into a 14×10 ellipse and the
    1.67em line-height threw the × off center. The doubled selector beats
    that rule inside the tree and every box property is pinned explicitly.
-   Design language: danger disc + bg-colored halo (reads on any favicon in
+   Design language: warning disc + bg-colored halo (reads on any favicon in
    any theme), the × rigorously centered via inline-flex + line-height:1 —
    the sync dot wears the same halo ring (sync-styles.css). */
 .favicon-container {
@@ -3547,8 +3593,8 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin: 0;
     padding: 0;
     border-radius: 50%;
-    background: var(--vbm-danger);
-    color: var(--vbm-danger-fg);
+    background: var(--vbm-warning);
+    color: var(--vbm-warning-fg);
     font-size: 8px;
     line-height: 1;
     text-align: center;

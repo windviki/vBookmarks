@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Markeer geselecteerde"
   },
+  "deadMarkStatusAll": {
+    "message": "Alles"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Gemarkeerd"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Ongemarkeerd"
+  },
+  "deadSortLabel": {
+    "message": "Sorteer op"
+  },
+  "deadSortByDetected": {
+    "message": "Detectietijd"
+  },
+  "deadSortByPath": {
+    "message": "Mappad"
+  },
+  "deadSortByMarked": {
+    "message": "Markeertijd"
+  },
   "deadMarkedBanner": {
     "message": "Toont eerder gemarkeerde bladwijzers. Klik op Opnieuw scannen om een nieuwe controle te starten, of verwerk ze in de onderstaande lijst."
   },

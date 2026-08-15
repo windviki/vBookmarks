@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Marcar seleccionados"
   },
+  "deadMarkStatusAll": {
+    "message": "Todos"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marcados"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Sin marcar"
+  },
+  "deadSortLabel": {
+    "message": "Ordenar por"
+  },
+  "deadSortByDetected": {
+    "message": "Tiempo de detección"
+  },
+  "deadSortByPath": {
+    "message": "Ruta de carpeta"
+  },
+  "deadSortByMarked": {
+    "message": "Tiempo de marcado"
+  },
   "deadMarkedBanner": {
     "message": "Mostrando marcadores marcados anteriormente. Haga clic en Volver a escanear para iniciar una nueva comprobación, o adminístrelos en la lista de abajo."
   },

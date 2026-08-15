@@ -78,7 +78,7 @@ export function createDeadScanRunner() {
         results: (() => {
             const plain = {};
             results.forEach((r, id) => {
-                plain[id] = { status: r.status, code: r.code, error: r.error };
+                plain[id] = { status: r.status, code: r.code, error: r.error, ts: r.ts };
             });
             return plain;
         })(),
@@ -192,7 +192,10 @@ export function createDeadScanRunner() {
                 proxyServer: proxyOn
             }),
             onResult: (id, result, done) => {
-                results.set(id, result);
+                // per-row scan time (idle sort 'detected'): stamped at settle,
+                // spread keeps the verdict fields intact. Old blobs/backups
+                // lack ts — the view falls back to key order there.
+                results.set(id, { ...result, ts: Date.now() });
                 doneCount = priorResults.size + done;
                 publishTick();
             }
@@ -211,7 +214,7 @@ export function createDeadScanRunner() {
         stopProxy();
         const plain = {};
         results.forEach((r, id) => {
-            plain[id] = { status: r.status, code: r.code, error: r.error };
+            plain[id] = { status: r.status, code: r.code, error: r.error, ts: r.ts };
         });
         storageSet({
             [DEAD_LAST_KEY]: JSON.stringify({

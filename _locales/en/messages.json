@@ -1077,6 +1077,34 @@
     "message": "Mark selected",
     "description": "Dead view selection mode: mark every selected row as dead."
   },
+  "deadMarkStatusAll": {
+    "message": "All",
+    "description": "Dead view second toolbar (mark-status filter): show both marked and unmarked rows."
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marked",
+    "description": "Dead view second toolbar (mark-status filter): show only rows carrying the user's dead mark."
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Unmarked",
+    "description": "Dead view second toolbar (mark-status filter): show only rows without the user's dead mark."
+  },
+  "deadSortLabel": {
+    "message": "Sort by",
+    "description": "Dead view sort dropdown: aria-label of the trigger and the listbox."
+  },
+  "deadSortByDetected": {
+    "message": "Detection time",
+    "description": "Dead view sort dropdown option: order rows by when the scan checked them."
+  },
+  "deadSortByPath": {
+    "message": "Folder path",
+    "description": "Dead view sort dropdown option: order rows by their folder path."
+  },
+  "deadSortByMarked": {
+    "message": "Mark time",
+    "description": "Dead view sort dropdown option: order rows by when they were marked dead."
+  },
   "deadMarkedBanner": {
     "message": "Showing bookmarks marked previously. Click Rescan to start a new check, or handle them in the list below.",
     "description": "Dead view tooltip banner above the toolbar when the previously-marked list is on screen (marked-only view after a cancelled scan / the 'Previously marked' filter, or the appended list under 全部 when a finished scan left marks that are now reachable): points to the rescan action and the handleable list below."

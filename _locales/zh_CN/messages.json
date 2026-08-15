@@ -1003,6 +1003,34 @@
     "message": "标记所选",
     "description": "Dead view selection mode: mark every selected row as dead."
   },
+  "deadMarkStatusAll": {
+    "message": "全部",
+    "description": "死链视图第二工具条（标注状态筛选）：显示已标注与未标注两类行。"
+  },
+  "deadMarkStatusMarked": {
+    "message": "已标注",
+    "description": "死链视图第二工具条（标注状态筛选）：只显示带死链标注的行。"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "未标注",
+    "description": "死链视图第二工具条（标注状态筛选）：只显示未带死链标注的行。"
+  },
+  "deadSortLabel": {
+    "message": "排序方式",
+    "description": "死链视图排序下拉：触发器与列表框的 aria-label。"
+  },
+  "deadSortByDetected": {
+    "message": "检测时间",
+    "description": "死链视图排序下拉选项：按扫描判定先后排列。"
+  },
+  "deadSortByPath": {
+    "message": "路径顺序",
+    "description": "死链视图排序下拉选项：按书签所在文件夹路径排列。"
+  },
+  "deadSortByMarked": {
+    "message": "标记时间",
+    "description": "死链视图排序下拉选项：按标注为死链的时间排列。"
+  },
   "deadMarkedBanner": {
     "message": "正在显示过去标注的书签。点击\"重新扫描\"可开始新一轮检测，也可在下方列表中处理这些书签。",
     "description": "死链视图：显示过去标注列表时工具栏上方的提示横幅（取消扫描或\"过去标注\"筛选的仅标注视图，以及\"全部\"视图下扫描完成后仍有过去标注追加于下方时），说明当前列表、指向重新扫描，并提示可在下方处理书签。"

@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "নির্বাচিত চিহ্নিত করুন"
   },
+  "deadMarkStatusAll": {
+    "message": "সব"
+  },
+  "deadMarkStatusMarked": {
+    "message": "চিহ্নিত"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "অচিহ্নিত"
+  },
+  "deadSortLabel": {
+    "message": "সাজান"
+  },
+  "deadSortByDetected": {
+    "message": "শনাক্তকরণ সময়"
+  },
+  "deadSortByPath": {
+    "message": "ফোল্ডার পাথ"
+  },
+  "deadSortByMarked": {
+    "message": "চিহ্নিত করার সময়"
+  },
   "deadMarkedBanner": {
     "message": "পূর্বে চিহ্নিত বুকমার্ক দেখানো হচ্ছে। নতুন পরীক্ষা শুরু করতে পুনরায় স্ক্যান-এ ক্লিক করুন, অথবা নিচের তালিকায় সেগুলি পরিচালনা করুন।"
   },

@@ -264,3 +264,72 @@ describe('dead-scan SW runner (v4 task-4 #16)', () => {
         expect(local[DEAD_LAST_KEY]).toBeDefined();
     });
 });
+
+describe('dead-scan per-row ts (检测时间, 4.0.7 idle sort)', () => {
+    it('finish 落盘 deadLastScan 每行带 ts（number）', async () => {
+        const { chrome, local } = makeChrome();
+        globalThis.chrome = chrome;
+        globalThis.fetch = url => Promise.resolve({ status: url.includes('b.example') ? 404 : 200 });
+        const runner = createDeadScanRunner();
+        runner.start();
+        chrome.runtime.onMessage.fns[0]({ type: DEAD_SCAN_MSG.start });
+        await flush();
+        const last = JSON.parse(local[DEAD_LAST_KEY]);
+        expect(Object.keys(last.results).sort()).toEqual(['11', '12', '13']);
+        for (const id of ['11', '12', '13'])
+            expect(typeof last.results[id].ts).toBe('number');
+    });
+
+    it('live blob 的 results 每行带 ts（number）', async () => {
+        const { chrome, local } = makeChrome();
+        globalThis.chrome = chrome;
+        let release;
+        globalThis.fetch = () => new Promise(r => { release = r; }); // hang all probes
+        const runner = createDeadScanRunner();
+        runner.start();
+        chrome.runtime.onMessage.fns[0]({ type: DEAD_SCAN_MSG.start });
+        await flush();
+        release({ status: 200 });
+        await flush();
+        firePublishTimer();
+        await flush();
+        const after = blobOf(local);
+        expect(Object.keys(after.results)).toHaveLength(1);
+        expect(typeof Object.values(after.results)[0].ts).toBe('number');
+        runner.onMessage({ type: DEAD_SCAN_MSG.cancel });
+    });
+
+    it('冷启动 resume：已结算行保留 prior 的 ts，新扫行带 ts', async () => {
+        const prior = {
+            state: 'scanning', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200, ts: 1700000000000 } },
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({ storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) } });
+        globalThis.chrome = chrome;
+        globalThis.fetch = () => Promise.resolve({ status: 200 });
+        createDeadScanRunner().start(); // module start → resumeIfNeeded
+        await flush();
+        const last = JSON.parse(local[DEAD_LAST_KEY]);
+        expect(last.results['11'].ts).toBe(1700000000000); // prior 原样保留
+        expect(typeof last.results['12'].ts).toBe('number'); // 新扫行带 ts
+    });
+
+    it('冷启动 resume：老 blob 无 ts 的行不补 ts，新扫行带 ts', async () => {
+        const prior = {
+            state: 'scanning', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200 } }, // 老格式：无 ts
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({ storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) } });
+        globalThis.chrome = chrome;
+        globalThis.fetch = () => Promise.resolve({ status: 200 });
+        createDeadScanRunner().start(); // module start → resumeIfNeeded
+        await flush();
+        const last = JSON.parse(local[DEAD_LAST_KEY]);
+        expect(last.results['11'].ts).toBeUndefined(); // 老行无 ts
+        expect(typeof last.results['12'].ts).toBe('number'); // 新扫行带 ts
+    });
+});

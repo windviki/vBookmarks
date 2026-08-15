@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Tandai yang dipilih"
   },
+  "deadMarkStatusAll": {
+    "message": "Semua"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Ditandai"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Tidak ditandai"
+  },
+  "deadSortLabel": {
+    "message": "Urutkan berdasarkan"
+  },
+  "deadSortByDetected": {
+    "message": "Waktu deteksi"
+  },
+  "deadSortByPath": {
+    "message": "Jalur folder"
+  },
+  "deadSortByMarked": {
+    "message": "Waktu penandaan"
+  },
   "deadMarkedBanner": {
     "message": "Menampilkan bookmark yang ditandai sebelumnya. Klik Rescan untuk memulai pemeriksaan baru, atau kelola di daftar di bawah ini."
   },

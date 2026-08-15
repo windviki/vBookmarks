@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Kijelöltek megjelölése"
   },
+  "deadMarkStatusAll": {
+    "message": "Összes"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Megjelölve"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Jelöletlen"
+  },
+  "deadSortLabel": {
+    "message": "Rendezés"
+  },
+  "deadSortByDetected": {
+    "message": "Észlelés ideje"
+  },
+  "deadSortByPath": {
+    "message": "Mappa útvonala"
+  },
+  "deadSortByMarked": {
+    "message": "Megjelölés ideje"
+  },
   "deadMarkedBanner": {
     "message": "A korábban megjelölt könyvjelzők láthatók. Kattintson az Újraellenőrzés gombra egy új ellenőrzés indításához, vagy kezelje őket az alábbi listában."
   },

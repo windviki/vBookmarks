@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Ausgewählte markieren"
   },
+  "deadMarkStatusAll": {
+    "message": "Alle"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Markiert"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nicht markiert"
+  },
+  "deadSortLabel": {
+    "message": "Sortieren nach"
+  },
+  "deadSortByDetected": {
+    "message": "Erkennungszeit"
+  },
+  "deadSortByPath": {
+    "message": "Ordnerpfad"
+  },
+  "deadSortByMarked": {
+    "message": "Markierungszeit"
+  },
   "deadMarkedBanner": {
     "message": "Zeige zuvor markierte Lesezeichen. Klicken Sie auf „Erneut scannen“, um eine neue Prüfung zu starten, oder bearbeiten Sie sie in der Liste unten."
   },

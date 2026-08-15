@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Позначити вибране"
   },
+  "deadMarkStatusAll": {
+    "message": "Усі"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Позначені"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Непозначені"
+  },
+  "deadSortLabel": {
+    "message": "Сортувати за"
+  },
+  "deadSortByDetected": {
+    "message": "Час виявлення"
+  },
+  "deadSortByPath": {
+    "message": "Шлях до папки"
+  },
+  "deadSortByMarked": {
+    "message": "Час позначення"
+  },
   "deadMarkedBanner": {
     "message": "Показано закладки, позначені раніше. Натисніть «Повторне сканування», щоб розпочати нову перевірку, або обробіть їх у списку нижче."
   },

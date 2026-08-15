@@ -3273,3 +3273,151 @@ describe('header-row arrows (final polish)', () => {
         expect(searchInput.focused).toBe(true);
     });
 });
+
+// 死链视图堆叠两个兄弟 <ul>（结果列表 + 残留标注，中间夹 .dead-marked-head
+// 分隔 div）：同 <ul> 的 sibling walk 与 tree up-walk 都跨不过兄弟 <ul>，所以
+// crossRowUl 沿当前行所在 <ul> 的 element sibling 走（跳过非 <ul> 分隔与下拉
+// listbox），落在相邻列表首/末行（view-dead 导入历史 + 已标注后 ↑/↓ 无法跨区
+// 的修复）。单一顶层 <ul> 的视图（树/搜索/最近/统计/去重）不受影响。
+describe('dead view cross-<ul> navigation (跨区修复)', () => {
+    // #dead-list: 一个 .vbm-toolbar rung + 结果列表 <ul>（两行 r1,r2）→
+    // .dead-marked-head div → <ul class="dead-marked-list">（残留一行 m1）。
+    // opts.noMarks 不建残留 <ul>/分隔 div；opts.dropdown 在分隔与残留之间插一个
+    // .vbm-dropdown-list（跨区必须跳过它）。
+    const setupDeadCross = (opts = {}) => {
+        const bag = { rec: { focusTopCalls: 0 } };
+        const ctx = setup({
+            views: ({ tree, el }) => {
+                const listEl = el('DIV', 'dead-list');
+                const toolbar = el('DIV');
+                toolbar.classList.add('vbm-toolbar');
+                const btn = el('BUTTON', 'dead-rescan');
+                toolbar._qsa['button, select, input'] = [btn];
+                btn.closest = sel => (sel === '.vbm-toolbar' ? toolbar : null);
+                listEl._qsa['.vbm-toolbar'] = [toolbar];
+                const resultUl = el('UL');
+                const mkRow = (id, ul, withBtn) => {
+                    const li = el('LI', `dead-item-${id}`);
+                    li.dataset.nodeId = id;
+                    const a = el('A');
+                    a.parentNode = li;
+                    a.parentElement = li;
+                    li.firstElementChild = a;
+                    li._qs['a, span'] = a;
+                    li._qs['span, a'] = a;
+                    li.parentNode = ul;
+                    li.parentElement = ul;
+                    let inner = { li, a };
+                    if (withBtn) {
+                        const rowBtn = el('BUTTON');
+                        rowBtn.parentNode = li;
+                        rowBtn.closest = sel => (sel === 'li' ? li : null);
+                        inner = { li, a, btn: rowBtn };
+                    }
+                    return inner;
+                };
+                const r1 = mkRow('r1', resultUl);
+                const r2 = mkRow('r2', resultUl, true);
+                r1.li.nextElementSibling = r2.li;
+                r2.li.previousElementSibling = r1.li;
+                resultUl.firstElementChild = r1.li;
+                resultUl.lastElementChild = r2.li;
+                resultUl._qs['li:first-child'] = r1.li;
+                resultUl._qs['li:last-child'] = r2.li;
+                toolbar.parentNode = listEl;
+                resultUl.parentNode = listEl;
+                toolbar.nextElementSibling = resultUl;
+                resultUl.previousElementSibling = toolbar;
+                const pieces = [toolbar, resultUl];
+                if (!opts.noMarks) {
+                    const head = el('DIV');
+                    head.classList.add('dead-marked-head');
+                    head.parentNode = listEl;
+                    resultUl.nextElementSibling = head;
+                    head.previousElementSibling = resultUl;
+                    pieces.push(head);
+                    let nextUl = head;
+                    if (opts.dropdown) {
+                        const ddUl = el('UL');
+                        ddUl.classList.add('vbm-dropdown-list');
+                        ddUl.parentNode = listEl;
+                        nextUl.nextElementSibling = ddUl;
+                        ddUl.previousElementSibling = nextUl;
+                        nextUl = ddUl;
+                    }
+                    const markUl = el('UL');
+                    markUl.classList.add('dead-marked-list');
+                    const m1 = mkRow('m1', markUl, true);
+                    markUl._qs['li:first-child'] = m1.li;
+                    markUl._qs['li:last-child'] = m1.li;
+                    markUl.parentNode = listEl;
+                    nextUl.nextElementSibling = markUl;
+                    markUl.previousElementSibling = nextUl;
+                    pieces.push(markUl);
+                    Object.assign(bag, { head, markUl, m1 });
+                }
+                // parent 链在 listEl 处终止（listEl.parentNode 恒 null，与 tree/stats
+                // 夹具一致）：up-walk 双跳在顶层判空归 null，安全结束，不踩 null。
+                Object.assign(bag, { listEl, toolbar, resultUl, r1, r2 });
+                const deadEntry = { id: 'dead', el: listEl, typeAhead: false };
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }, deadEntry],
+                    listOf: el2 => (el2 === listEl ? deadEntry : null),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => { bag.rec.focusTopCalls++; },
+                    activate: () => {}
+                };
+            }
+        });
+        return { ctx, ...bag };
+    };
+
+    it('↓ 结果末行跨过 .dead-marked-head → 残留首行', () => {
+        const { ctx, listEl, r2, m1 } = setupDeadCross();
+        ctx.doc.activeElement = r2.a;
+        const ev = makeEvent({ key: 'ArrowDown' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(m1.a.focused).toBe(true);
+        expect(r2.a.focused).toBe(false);
+    });
+
+    it('↑ 残留首行 → 结果末行', () => {
+        const { ctx, listEl, r2, m1 } = setupDeadCross();
+        ctx.doc.activeElement = m1.a;
+        const ev = makeEvent({ key: 'ArrowUp' });
+        fire(listEl, 'keydown', ev);
+        expect(ev.defaultPrevented).toBe(true);
+        expect(r2.a.focused).toBe(true);
+        expect(m1.a.focused).toBe(false);
+    });
+
+    it('结果末行行内控件 ↓ → 残留首行；残留首行行内控件 ↑ → 结果末行', () => {
+        const { ctx, listEl, r2, m1 } = setupDeadCross();
+        ctx.doc.activeElement = r2.btn;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(m1.a.focused).toBe(true);
+        ctx.doc.activeElement = m1.btn;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowUp' }));
+        expect(r2.a.focused).toBe(true);
+    });
+
+    it('跨区跳过 .vbm-dropdown-list（排序下拉的隐藏 listbox 不是行）', () => {
+        const { ctx, listEl, r2, m1 } = setupDeadCross({ dropdown: true });
+        ctx.doc.activeElement = r2.a;
+        fire(listEl, 'keydown', makeEvent({ key: 'ArrowDown' }));
+        expect(m1.a.focused).toBe(true);
+    });
+
+    it('无残留 <ul> 时末行 ↓ 不抛错（crossRowUl null → up-walk no-op）', () => {
+        const { ctx, listEl, r2 } = setupDeadCross({ noMarks: true });
+        ctx.doc.activeElement = r2.a;
+        const ev = makeEvent({ key: 'ArrowDown' });
+        expect(() => fire(listEl, 'keydown', ev)).not.toThrow();
+        expect(ev.defaultPrevented).toBe(true);
+        // 无相邻列表可跨：焦点留在原行，不进树、不越出
+        expect(ctx.doc.activeElement).toBe(r2.a);
+        expect(ctx.f1.link.focused).toBe(false);
+    });
+});

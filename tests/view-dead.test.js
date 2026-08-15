@@ -1197,6 +1197,303 @@ describe('filter + batch marks (§5.5c)', () => {
     });
 });
 
+describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
+    // 11 ok · 12 dead · 13 blocked；marks 11+12 → 残留标注只有 11（12 骑结果行）。
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 3,
+        results: {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+    const rowClick = (ctx, id) => ctx.clickOn({
+        closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
+    });
+    const markFilterClick = (ctx, v) => ctx.clickOn({
+        closest: sel => (sel === '.dead-mark-filter-btn' ? { dataset: { markFilter: v } } : null)
+    });
+
+    it('第二工具条仅 idle 渲染：状态按钮 + 排序下拉；live/selecting/全新空态不渲染', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
+        const { $list, def } = ctx;
+        def().activate();
+        let html = $list.innerHTML;
+        expect(html.match(/class="dead-mark-filter-btn"/g)).toHaveLength(3);
+        // 默认"全部"按下；排序下拉携带三个选项与当前值
+        expect(html).toContain('data-markfilter="" aria-pressed="true"');
+        expect(html).toContain('deadMarkStatusAll');
+        expect(html).toContain('deadMarkStatusMarked');
+        expect(html).toContain('deadMarkStatusUnmarked');
+        expect(html).toContain('class="vbm-dropdown dead-sort"');
+        expect(html).toContain('data-value="detected" aria-selected="true"');
+        expect(html).toContain('data-value="path"');
+        expect(html).toContain('data-value="marked"');
+        // 全新空态（无扫描无标记）：无第二工具条
+        const empty = setup({});
+        empty.def().activate();
+        expect(empty.$list.innerHTML).not.toContain('dead-mark-filter-btn');
+        expect(empty.$list.innerHTML).not.toContain('dead-sort');
+        // live：扫描中不渲染（渐进展示，过滤器/排序不作用）
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        publishBlob(ctx, blobOf({ done: 1, results: { '12': { status: 'dead', code: 404 } } }));
+        expect($list.innerHTML).not.toContain('dead-mark-filter-btn');
+        expect($list.innerHTML).not.toContain('dead-sort');
+        publishBlob(ctx, null);
+        // selecting：batch bar early-return，第二工具条随之消失
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).not.toContain('dead-mark-filter-btn');
+        expect($list.innerHTML).not.toContain('dead-sort');
+    });
+
+    it('已标注过滤结果行+残留一起：只留已标注结果行，残留仍在；未标注只留未标注行，残留整块隐藏', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
+        const { $list, store } = ctx;
+        ctx.def().activate();
+        // 已标注：结果行 12（未标注的 13 隐藏），残留 11 仍在
+        markFilterClick(ctx, 'marked');
+        let html = $list.innerHTML;
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).not.toContain('id="dead-item-13"');
+        expect(html).toContain('deadMarkedCount[1]');
+        expect(html).toContain('id="dead-item-11"');
+        expect(store._data.deadMarkFilter).toBe('marked');
+        expect(html).toContain('data-markfilter="marked" aria-pressed="true"');
+        // 未标注：结果行只剩 13，残留列表（全为已标注）整体不渲染
+        markFilterClick(ctx, 'unmarked');
+        html = $list.innerHTML;
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).not.toContain('id="dead-item-12"');
+        expect(html).not.toContain('dead-marked-head');
+        expect(html).not.toContain('dead-marked-list');
+        expect(html).not.toContain('id="dead-item-11"');
+        // 全部恢复
+        markFilterClick(ctx, '');
+        html = $list.innerHTML;
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).toContain('id="dead-item-11"');
+    });
+
+    it('filter=marked 叠加 unmarked 回退空态；markFilter 跨会话持久化', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // 主工具条切"上次标注" → 只显示残留列表
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
+        // 叠加"未标注"：残留全为已标注 → 无可见行，回退可执行的 start 空态
+        markFilterClick(ctx, 'unmarked');
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+        expect($list.innerHTML).not.toContain('id="dead-item-11"');
+        // 持久化：reload 后仍是 unmarked 并生效
+        const ctx2 = setup({
+            storeData: { deadLastScan: CACHE, deadMarkFilter: 'unmarked', deadMarks: '["11","12"]' }
+        });
+        ctx2.def().activate();
+        expect(ctx2.$list.innerHTML).toContain('data-markfilter="unmarked" aria-pressed="true"');
+        expect(ctx2.$list.innerHTML).not.toContain('id="dead-item-12"');
+    });
+
+    it('select-all/invert 只作用于可见集（unmarked 下不含残留/已标注行）', () => {
+        const ctx = setup({
+            storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]', deadMarkFilter: 'unmarked' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+        // 可见集 = 结果行 13（未标注）+ 残留隐藏 → 全选只选 13
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-all' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[1]');
+        // 反选 → 0（13 被反选，11/12 不在可见集内）
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-invert' ? {} : null) });
+        expect($list.innerHTML).toContain('selectCount[0]');
+        rowClick(ctx, '13');
+        expect($list.innerHTML).toContain('selectCount[1]');
+    });
+
+    it('delete-all 门随可见集：unmarked 下只删未标注结果行，不删残留', () => {
+        const ctx = setup({
+            storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]', deadMarkFilter: 'unmarked' }
+        });
+        const { $list, dialogs } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-delete-all' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        // 待删集 = resultRows() = [13]（filter='all' 且 lastScan 存在），非标记视图分支
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toContain('deadDeleteAll[1]');
+    });
+
+    it('detected 排序按每行扫描 ts，老备份无 ts 回退 key 序', () => {
+        // 三条非 ok 行；ts 与 key 序（JSON 解析后数字键恒升序 11,12,13）相反 →
+        // 检测时间序 13,12,11，证明排序真的按 ts 走而不是按 key
+        const ctx = setup({ storeData: { deadSort: 'detected' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        finishScan(ctx, {
+            '13': { status: 'blocked', code: 404, ts: 100 },
+            '12': { status: 'dead', code: 404, ts: 200 },
+            '11': { status: 'dead', code: 404, ts: 300 }
+        });
+        let html = $list.innerHTML;
+        expect(html.indexOf('id="dead-item-13"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-11"'));
+        // 老备份（无 ts）：全 tie → 稳定排序保持 key 序（数字键 JSON 解析后
+        // 恒升序）11,12,13
+        const legacy = setup({ storeData: { deadSort: 'detected' } });
+        legacy.def().activate();
+        finishScan(legacy, {
+            '13': { status: 'blocked', code: 404 },
+            '12': { status: 'dead', code: 404 },
+            '11': { status: 'dead', code: 404 }
+        });
+        html = legacy.$list.innerHTML;
+        expect(html.indexOf('id="dead-item-11"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-13"'));
+    });
+
+    it('path 排序按 views.pathOf；marked 排序按 deadMarkTimes（未标注排最后），残留列表同序', () => {
+        const path = id => ({ '11': '/Bar/a', '12': '/Bar/b', '13': '/Bar/a' }[id] || '');
+        const ctx = setup({ storeData: { deadSort: 'path' }, pathOf: path });
+        const { $list } = ctx;
+        ctx.def().activate();
+        finishScan(ctx, {
+            '13': { status: 'blocked', code: 404, ts: 300 },
+            '12': { status: 'dead', code: 404, ts: 200 },
+            '11': { status: 'dead', code: 404, ts: 100 }
+        });
+        // path：/Bar/a (11,13) 在 /Bar/b (12) 前；11/13 tie 保持 key 序
+        let html = $list.innerHTML;
+        expect(html.indexOf('id="dead-item-11"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-13"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        // marked：按标记时间，未标注（13）排最后 → 11(100),12(200),13(MAX)
+        const m = setup({
+            storeData: {
+                deadSort: 'marked',
+                deadMarkTimes: '{"11":100,"12":200}',
+                deadLastScan: JSON.stringify({ ts: 1, scannedCount: 3, results: {
+                    '13': { status: 'blocked', code: 404 },
+                    '12': { status: 'dead', code: 404 },
+                    '11': { status: 'dead', code: 404 }
+                }})
+            }
+        });
+        m.def().activate();
+        html = m.$list.innerHTML;
+        expect(html.indexOf('id="dead-item-11"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-13"'));
+        // 残留标注也按标记时间排：mark 11(ok)+13(未扫)，time 13<11 → 残留 13,11
+        const r = setup({
+            storeData: {
+                deadSort: 'marked',
+                deadMarkTimes: '{"11":100,"13":50}',
+                deadMarks: '["11","13"]',
+                deadLastScan: JSON.stringify({ ts: 1, scannedCount: 2, results: {
+                    '12': { status: 'dead', code: 404 },
+                    '11': { status: 'ok', code: 200 }
+                }})
+            }
+        });
+        r.def().activate();
+        html = r.$list.innerHTML;
+        expect(html).toContain('id="dead-item-13"');
+        expect(html).toContain('id="dead-item-11"');
+        expect(html.indexOf('id="dead-item-13"')).toBeLessThan(html.indexOf('id="dead-item-11"'));
+    });
+
+    it('非法 deadSort 值回退 detected；live 行序不受 deadSort 影响', () => {
+        const bogus = setup({ storeData: { deadLastScan: CACHE, deadSort: 'bogus' } });
+        bogus.def().activate();
+        expect(bogus.$list.innerHTML).toContain('data-value="detected" aria-selected="true"');
+        // live：渐进树序 13,12,11，即使 deadSort=detected 且 ts 相反
+        const ctx = setup({ storeData: { deadSort: 'detected' } });
+        const { $list, def } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-start' ? {} : null) });
+        publishBlob(ctx, blobOf({
+            items: ['13', '12', '11'],
+            results: {
+                '13': { status: 'blocked', code: 404, ts: 100 },
+                '12': { status: 'dead', code: 404, ts: 300 },
+                '11': { status: 'dead', code: 404, ts: 200 }
+            }
+        }));
+        const html = $list.innerHTML;
+        expect(html.indexOf('id="dead-item-13"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-11"'));
+    });
+
+    it('toggleMark 记录/清除 deadMarkTimes；markAll 单批次同一 ts；unmarkAll 清空', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { def, doc, store } = ctx;
+        def().activate();
+        doc.activeElement = {
+            closest: sel => (sel === '[data-node-id]' ? { dataset: { nodeId: '12' } } : null)
+        };
+        def().onKey({ key: 'm', preventDefault: () => {} });
+        let times = JSON.parse(store.get('deadMarkTimes'));
+        expect(Object.keys(times)).toEqual(['12']);
+        expect(typeof times['12']).toBe('number');
+        def().onKey({ key: 'M', preventDefault: () => {} });
+        expect(store.get('deadMarkTimes', '{}')).toBe('{}');
+        // mark-all：批内共享同一 ts
+        ctx.clickOn({ closest: sel => (sel === '.dead-mark-all' ? {} : null) });
+        ctx.dialogs.ConfirmDialog.openCalls[0].fn1();
+        times = JSON.parse(store.get('deadMarkTimes'));
+        expect(Object.keys(times).sort()).toEqual(['12', '13']);
+        expect(times['12']).toBe(times['13']);
+        // unmark-all：清空（openCalls 上一条是 mark-all 的确认，取最后一条）
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
+        ctx.dialogs.ConfirmDialog.openCalls.at(-1).fn1();
+        expect(JSON.parse(store.get('deadMarkTimes'))).toEqual({});
+    });
+
+    it('markSelected 批量同一 ts；onRemoved 连带清理 deadMarkTimes', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { store } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        rowClick(ctx, '12');
+        rowClick(ctx, '13');
+        ctx.clickOn({ closest: sel => (sel === '.dead-mark-selected' ? {} : null) });
+        const times = JSON.parse(store.get('deadMarkTimes'));
+        expect(Object.keys(times).sort()).toEqual(['12', '13']);
+        expect(times['12']).toBe(times['13']);
+        // onRemoved：标记 + 时间一起清
+        const del = setup({
+            storeData: {
+                deadLastScan: CACHE, deadMarks: '["11","12"]',
+                deadMarkTimes: '{"11":100,"12":200}'
+            }
+        });
+        del.def().activate();
+        del.chrome.bookmarks.fire('onRemoved', '11');
+        expect(JSON.parse(del.store.get('deadMarkTimes'))).toEqual({ '12': 200 });
+        expect(JSON.parse(del.store.get('deadMarks'))).toEqual(['12']);
+    });
+
+    it('deadMarkTimes 从 storage 载入并驱动 marked 排序（与 key 序相反）', () => {
+        const ctx = setup({
+            storeData: {
+                deadSort: 'marked',
+                deadMarkTimes: '{"12":200,"13":100}',
+                deadLastScan: JSON.stringify({ ts: 1, scannedCount: 2, results: {
+                    '13': { status: 'blocked', code: 404 },
+                    '12': { status: 'dead', code: 404 }
+                }})
+            }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // key 序（数字键恒升序）12,13；标记时间序 13(100),12(200) → DOM 序 13,12，
+        // 证明排序由载入的 deadMarkTimes 驱动而非 key 序
+        expect($list.innerHTML.indexOf('id="dead-item-13"')).toBeLessThan(
+            $list.innerHTML.indexOf('id="dead-item-12"'));
+    });
+});
+
 describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§2.4 + §4 counts)', () => {
     const rowClick = (ctx, id) => ctx.clickOn({
         closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)

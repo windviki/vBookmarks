@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Σήμανση επιλεγμένων"
   },
+  "deadMarkStatusAll": {
+    "message": "Όλα"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Σημειωμένα"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Μη σημειωμένα"
+  },
+  "deadSortLabel": {
+    "message": "Ταξινόμηση κατά"
+  },
+  "deadSortByDetected": {
+    "message": "Χρόνος ανίχνευσης"
+  },
+  "deadSortByPath": {
+    "message": "Διαδρομή φακέλου"
+  },
+  "deadSortByMarked": {
+    "message": "Χρόνος σημείωσης"
+  },
   "deadMarkedBanner": {
     "message": "Εμφάνιση σελιδοδεικτών που επισημάνθηκαν προηγουμένως. Κάντε κλικ στην Επανασάρωση για νέο έλεγχο ή διαχειριστείτε τους στην παρακάτω λίστα."
   },

@@ -142,7 +142,7 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
     };
 
     container.addEventListener('click', e => {
-        const dd = e.target.closest('.vbm-dropdown');
+        const dd = e.target && e.target.closest ? e.target.closest('.vbm-dropdown') : null;
         if (!dd) {
             // Clicking the toolbar outside an open dropdown closes it — a
             // pick closes its own; this covers changing your mind and hitting
@@ -164,7 +164,7 @@ export function initDropdowns(container, { onSelect, rtl } = {}) {
     // Capture: the trigger's ↓ must win over the toolbar-rung arrow handler,
     // and the open list's ↑↓ must not re-enter the rung.
     container.addEventListener('keydown', e => {
-        const dd = e.target.closest('.vbm-dropdown');
+        const dd = e.target && e.target.closest ? e.target.closest('.vbm-dropdown') : null;
         if (!dd)
             return;
         const { trigger, list } = find(dd);

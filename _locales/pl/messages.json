@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Oznacz zaznaczone"
   },
+  "deadMarkStatusAll": {
+    "message": "Wszystkie"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Oznaczone"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nieoznaczone"
+  },
+  "deadSortLabel": {
+    "message": "Sortuj według"
+  },
+  "deadSortByDetected": {
+    "message": "Czas wykrycia"
+  },
+  "deadSortByPath": {
+    "message": "Ścieżka folderu"
+  },
+  "deadSortByMarked": {
+    "message": "Czas oznaczenia"
+  },
   "deadMarkedBanner": {
     "message": "Wyświetlanie zakładek oznaczonych wcześniej. Kliknij „Zeskanuj ponownie”, aby rozpocząć nowe sprawdzanie, lub obsłuż je na poniższej liście."
   },

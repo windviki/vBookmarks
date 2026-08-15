@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Pažymėti pasirinktus"
   },
+  "deadMarkStatusAll": {
+    "message": "Visi"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Pažymėti"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nepažymėti"
+  },
+  "deadSortLabel": {
+    "message": "Rūšiuoti pagal"
+  },
+  "deadSortByDetected": {
+    "message": "Aptikimo laikas"
+  },
+  "deadSortByPath": {
+    "message": "Aplanko kelias"
+  },
+  "deadSortByMarked": {
+    "message": "Pažymėjimo laikas"
+  },
   "deadMarkedBanner": {
     "message": "Rodomi anksčiau pažymėti žymės. Spustelėkite „Rescan“, kad pradėtumėte naują patikrą, arba tvarkykite juos žemiau esančiame sąraše."
   },

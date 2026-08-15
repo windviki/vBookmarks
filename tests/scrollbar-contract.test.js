@@ -249,11 +249,28 @@ describe('scrollbar-contract: sync-tooltip 回归守卫 98e29b3 (G)', () => {
         // span` 后代规则而不受影响）。
         const guard = ruleBody(neatCss, '#tree ul li span.dead-indicator {');
         expect(guard).toContain('display: inline-flex');
-        expect(guard).toContain('color: var(--vbm-danger-fg)');
+        expect(guard).toContain('color: var(--vbm-warning-fg)');
         expect(guard).toContain('line-height: 1');
         expect(guard).toContain('padding: 0');
         expect(guard).toContain('width: 10px');
         expect(guard).toContain('height: 10px');
+    });
+
+    it('dead-mark amber semantics: marked/blocked flags read warning, not danger', () => {
+        // 4.1.0 task-1 A6/D1: 死链 × 覆盖层按场景着色——手动标记 + 受限(blocked)
+        // 读琥珀(--vbm-warning)，与仅死链(danger/红)区分。覆盖三处：已标注按钮、
+        // 受限行的标记按钮、favicon 上的 dead × 底色。
+        const marked = ruleBody(neatCss, '#dead-list .row-btn.dead-mark-btn.marked {');
+        expect(marked).toContain('color: var(--vbm-warning)');
+        expect(marked).not.toContain('var(--vbm-danger)');
+        const blockedBtn = ruleBody(neatCss, '#dead-list li.blocked .row-btn.dead-mark-btn {');
+        expect(blockedBtn).toContain('color: var(--vbm-warning)');
+        const base = ruleBody(neatCss, '#dead-list .row-btn.dead-mark-btn {');
+        expect(base).toContain('color: var(--vbm-accent)');
+        expect(base).not.toContain('var(--vbm-warning)');
+        const indicator = ruleBody(neatCss, '.favicon-container .dead-indicator,');
+        expect(indicator).toContain('background: var(--vbm-warning)');
+        expect(indicator).toContain('color: var(--vbm-warning-fg)');
     });
 
     it('the stats "by recent" time badge undoes the shared pill geometry (issue #47)', () => {

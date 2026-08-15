@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Маркиране на избраните"
   },
+  "deadMarkStatusAll": {
+    "message": "Всички"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Маркирани"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Немаркирани"
+  },
+  "deadSortLabel": {
+    "message": "Сортиране по"
+  },
+  "deadSortByDetected": {
+    "message": "Време на откриване"
+  },
+  "deadSortByPath": {
+    "message": "Път на папката"
+  },
+  "deadSortByMarked": {
+    "message": "Време на маркиране"
+  },
   "deadMarkedBanner": {
     "message": "Показване на отметки, маркирани преди това. Щракнете върху „Сканиране отново“, за да започнете нова проверка, или ги обработете в списъка по-долу."
   },

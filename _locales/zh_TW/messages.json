@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "標記選取項目"
   },
+  "deadMarkStatusAll": {
+    "message": "全部"
+  },
+  "deadMarkStatusMarked": {
+    "message": "已標記"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "未標記"
+  },
+  "deadSortLabel": {
+    "message": "排序依據"
+  },
+  "deadSortByDetected": {
+    "message": "偵測時間"
+  },
+  "deadSortByPath": {
+    "message": "資料夾路徑"
+  },
+  "deadSortByMarked": {
+    "message": "標記時間"
+  },
   "deadMarkedBanner": {
     "message": "正在顯示過去標註的書籤。按一下「重新掃描」即可開始新一輪檢查，亦可在下方清單中處理這些書籤。"
   },

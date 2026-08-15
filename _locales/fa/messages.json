@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "علامت‌گذاری انتخاب‌شده"
   },
+  "deadMarkStatusAll": {
+    "message": "همه"
+  },
+  "deadMarkStatusMarked": {
+    "message": "علامت‌خورده"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "علامت‌نخورده"
+  },
+  "deadSortLabel": {
+    "message": "مرتب‌سازی بر اساس"
+  },
+  "deadSortByDetected": {
+    "message": "زمان شناسایی"
+  },
+  "deadSortByPath": {
+    "message": "مسیر پوشه"
+  },
+  "deadSortByMarked": {
+    "message": "زمان علامت‌گذاری"
+  },
   "deadMarkedBanner": {
     "message": "در حال نمایش نشانک‌هایی که قبلاً علامت‌گذاری شده‌اند. برای شروع بررسی جدید روی «بازرسی مجدد» کلیک کنید، یا آن‌ها را در فهرست زیر مدیریت کنید."
   },

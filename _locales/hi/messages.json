@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "चयनित को चिह्नित करें"
   },
+  "deadMarkStatusAll": {
+    "message": "सभी"
+  },
+  "deadMarkStatusMarked": {
+    "message": "चिह्नित"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "अचिह्नित"
+  },
+  "deadSortLabel": {
+    "message": "क्रमबद्ध करें"
+  },
+  "deadSortByDetected": {
+    "message": "पता लगाने का समय"
+  },
+  "deadSortByPath": {
+    "message": "फ़ोल्डर पथ"
+  },
+  "deadSortByMarked": {
+    "message": "चिह्नित समय"
+  },
   "deadMarkedBanner": {
     "message": "पहले चिह्नित किए गए बुकमार्क दिखाए जा रहे हैं। नई जाँच शुरू करने के लिए Rescan पर क्लिक करें, या नीचे सूची में उन्हें संभालें।"
   },

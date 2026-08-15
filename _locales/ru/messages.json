@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Отметить выбранные"
   },
+  "deadMarkStatusAll": {
+    "message": "Все"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Отмеченные"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Неотмеченные"
+  },
+  "deadSortLabel": {
+    "message": "Сортировать по"
+  },
+  "deadSortByDetected": {
+    "message": "Время обнаружения"
+  },
+  "deadSortByPath": {
+    "message": "Путь к папке"
+  },
+  "deadSortByMarked": {
+    "message": "Время отметки"
+  },
   "deadMarkedBanner": {
     "message": "Отображаются ранее отмеченные закладки. Нажмите «Пересканировать», чтобы начать новую проверку, или обработайте их в списке ниже."
   },

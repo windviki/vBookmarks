@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "選択済みをマーク"
   },
+  "deadMarkStatusAll": {
+    "message": "すべて"
+  },
+  "deadMarkStatusMarked": {
+    "message": "マーク済み"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "未マーク"
+  },
+  "deadSortLabel": {
+    "message": "並べ替え"
+  },
+  "deadSortByDetected": {
+    "message": "検出日時"
+  },
+  "deadSortByPath": {
+    "message": "フォルダパス"
+  },
+  "deadSortByMarked": {
+    "message": "マーク日時"
+  },
   "deadMarkedBanner": {
     "message": "以前マークしたブックマークを表示しています。「再スキャン」をクリックして新しいチェックを開始するか、以下のリストで処理してください。"
   },

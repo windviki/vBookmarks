@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Označi odabrano"
   },
+  "deadMarkStatusAll": {
+    "message": "Sve"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Označeno"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Neoznačeno"
+  },
+  "deadSortLabel": {
+    "message": "Sortiraj po"
+  },
+  "deadSortByDetected": {
+    "message": "Vrijeme otkrivanja"
+  },
+  "deadSortByPath": {
+    "message": "Put mape"
+  },
+  "deadSortByMarked": {
+    "message": "Vrijeme oznake"
+  },
   "deadMarkedBanner": {
     "message": "Prikazuju se prethodno označene knjižne oznake. Kliknite na Ponovno skeniranje za pokretanje nove provjere ili ih obradite na donjem popisu."
   },

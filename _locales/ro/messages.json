@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Marcați selectatele"
   },
+  "deadMarkStatusAll": {
+    "message": "Toate"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Marcate"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Nemarcate"
+  },
+  "deadSortLabel": {
+    "message": "Sortează după"
+  },
+  "deadSortByDetected": {
+    "message": "Timp de detectare"
+  },
+  "deadSortByPath": {
+    "message": "Cale folder"
+  },
+  "deadSortByMarked": {
+    "message": "Timp de marcare"
+  },
   "deadMarkedBanner": {
     "message": "Se afișează marcajele marcate anterior. Faceți clic pe Rescan pentru a începe o nouă verificare sau gestionați-le în lista de mai jos."
   },

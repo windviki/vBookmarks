@@ -255,6 +255,27 @@
   "deadMarkSelected": {
     "message": "Označi izbrane"
   },
+  "deadMarkStatusAll": {
+    "message": "Vsi"
+  },
+  "deadMarkStatusMarked": {
+    "message": "Označeno"
+  },
+  "deadMarkStatusUnmarked": {
+    "message": "Neoznačeno"
+  },
+  "deadSortLabel": {
+    "message": "Razvrsti po"
+  },
+  "deadSortByDetected": {
+    "message": "Čas zaznavanja"
+  },
+  "deadSortByPath": {
+    "message": "Pot mape"
+  },
+  "deadSortByMarked": {
+    "message": "Čas označitve"
+  },
   "deadMarkedBanner": {
     "message": "Prikazani so zaznamki, označeni prej. Kliknite Znova preglej za novo preverjanje ali jih obdelajte na spodnjem seznamu."
   },
