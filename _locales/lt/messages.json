@@ -222,7 +222,7 @@
     "message": "Tik negyvi"
   },
   "deadFilterMarked": {
-    "message": "Pažymėtos"
+    "message": "Anksčiau pažymėti"
   },
   "deadLastScanAt": {
     "message": "Paskutinis nuskaitymas: $time$",
@@ -256,7 +256,7 @@
     "message": "Pažymėti pasirinktus"
   },
   "deadMarkedBanner": {
-    "message": "Jūs peržiūrite savo pažymėtas žymes. Spustelėkite „Nuskaityti iš naujo“, kad pradėtumėte naują patikrą."
+    "message": "Rodomi anksčiau pažymėti žymės. Spustelėkite „Rescan“, kad pradėtumėte naują patikrą, arba tvarkykite juos žemiau esančiame sąraše."
   },
   "deadMarkedBannerDismiss": {
     "message": "Atmesti"

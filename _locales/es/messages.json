@@ -222,7 +222,7 @@
     "message": "Solo muertos"
   },
   "deadFilterMarked": {
-    "message": "Marcados"
+    "message": "Marcados anteriormente"
   },
   "deadLastScanAt": {
     "message": "Último escaneo: $time$",
@@ -256,7 +256,7 @@
     "message": "Marcar seleccionados"
   },
   "deadMarkedBanner": {
-    "message": "Estás viendo tus marcadores marcados. Haz clic en Volver a escanear para iniciar una nueva verificación."
+    "message": "Mostrando marcadores marcados anteriormente. Haga clic en Volver a escanear para iniciar una nueva comprobación, o adminístrelos en la lista de abajo."
   },
   "deadMarkedBannerDismiss": {
     "message": "Descartar"

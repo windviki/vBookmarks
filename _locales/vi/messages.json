@@ -222,7 +222,7 @@
     "message": "Chỉ hỏng"
   },
   "deadFilterMarked": {
-    "message": "Đã đánh dấu"
+    "message": "Đã đánh dấu trước đó"
   },
   "deadLastScanAt": {
     "message": "Lần quét cuối: $time$",
@@ -256,7 +256,7 @@
     "message": "Đánh dấu mục đã chọn"
   },
   "deadMarkedBanner": {
-    "message": "Bạn đang xem các dấu trang đã đánh dấu. Nhấn Quét lại để bắt đầu kiểm tra mới."
+    "message": "Đang hiển thị các bookmark đã được đánh dấu trước đó. Nhấp Rescan để bắt đầu kiểm tra mới hoặc xử lý chúng trong danh sách bên dưới."
   },
   "deadMarkedBannerDismiss": {
     "message": "Bỏ qua"

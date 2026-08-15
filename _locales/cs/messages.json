@@ -222,7 +222,7 @@
     "message": "Pouze mrtvé"
   },
   "deadFilterMarked": {
-    "message": "Označené"
+    "message": "Dříve označené"
   },
   "deadLastScanAt": {
     "message": "Poslední sken: $time$",
@@ -256,7 +256,7 @@
     "message": "Označit vybrané"
   },
   "deadMarkedBanner": {
-    "message": "Prohlížíte si své označené záložky. Kliknutím na Znovu prohledat spustíte novou kontrolu."
+    "message": "Zobrazují se dříve označené záložky. Kliknutím na tlačítko „Znovu prohledat“ zahájíte novou kontrolu, nebo je zpracujte v seznamu níže."
   },
   "deadMarkedBannerDismiss": {
     "message": "Zavřít"

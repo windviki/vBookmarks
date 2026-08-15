@@ -222,7 +222,7 @@
     "message": "Morts uniquement"
   },
   "deadFilterMarked": {
-    "message": "Marqués"
+    "message": "Déjà marqués"
   },
   "deadLastScanAt": {
     "message": "Dernière analyse : $time$",
@@ -256,7 +256,7 @@
     "message": "Marquer la sélection"
   },
   "deadMarkedBanner": {
-    "message": "Vous consultez vos signets marqués. Cliquez sur Analyser à nouveau pour lancer une nouvelle vérification."
+    "message": "Affichage des signets déjà marqués. Cliquez sur Relancer l'analyse pour démarrer une nouvelle vérification, ou traitez-les dans la liste ci-dessous."
   },
   "deadMarkedBannerDismiss": {
     "message": "Fermer"

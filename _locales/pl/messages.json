@@ -222,7 +222,7 @@
     "message": "Tylko martwe"
   },
   "deadFilterMarked": {
-    "message": "Oznaczone"
+    "message": "Wcześniej oznaczone"
   },
   "deadLastScanAt": {
     "message": "Ostatnie skanowanie: $time$",
@@ -256,7 +256,7 @@
     "message": "Oznacz zaznaczone"
   },
   "deadMarkedBanner": {
-    "message": "Wyświetlasz swoje oznaczone zakładki. Kliknij Skanuj ponownie, aby rozpocząć nowe sprawdzanie."
+    "message": "Wyświetlanie zakładek oznaczonych wcześniej. Kliknij „Zeskanuj ponownie”, aby rozpocząć nowe sprawdzanie, lub obsłuż je na poniższej liście."
   },
   "deadMarkedBannerDismiss": {
     "message": "Zamknij"

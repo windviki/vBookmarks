@@ -222,7 +222,7 @@
     "message": "Vain kuolleet"
   },
   "deadFilterMarked": {
-    "message": "Merkityt"
+    "message": "Aiemmin merkityt"
   },
   "deadLastScanAt": {
     "message": "Viimeisin skannaus: $time$",
@@ -256,7 +256,7 @@
     "message": "Merkitse valitut"
   },
   "deadMarkedBanner": {
-    "message": "Näet merkittyjä kirjanmerkkejäsi. Aloita uusi tarkistus napsauttamalla Rescan."
+    "message": "Näytetään aiemmin merkityt kirjanmerkit. Aloita uusi tarkistus napsauttamalla Skannaa uudelleen tai käsittele ne alla olevassa luettelossa."
   },
   "deadMarkedBannerDismiss": {
     "message": "Sulje"

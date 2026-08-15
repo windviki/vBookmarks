@@ -222,7 +222,7 @@
     "message": "רק מתים"
   },
   "deadFilterMarked": {
-    "message": "מסומנים"
+    "message": "סומנו בעבר"
   },
   "deadLastScanAt": {
     "message": "סריקה אחרונה: $time$",
@@ -256,7 +256,7 @@
     "message": "סמן נבחרים"
   },
   "deadMarkedBanner": {
-    "message": "אתה צופה בסימניות המסומנות שלך. לחץ על 'סריקה חוזרת' כדי להתחיל בדיקה חדשה."
+    "message": "מציג סימניות שסומנו בעבר. לחץ על 'סריקה מחדש' כדי להתחיל בדיקה חדשה, או טפל בהן ברשימה למטה."
   },
   "deadMarkedBannerDismiss": {
     "message": "סגור"

@@ -222,7 +222,7 @@
     "message": "デッドのみ"
   },
   "deadFilterMarked": {
-    "message": "マーク済み"
+    "message": "以前マーク済み"
   },
   "deadLastScanAt": {
     "message": "最終スキャン: $time$",
@@ -256,7 +256,7 @@
     "message": "選択済みをマーク"
   },
   "deadMarkedBanner": {
-    "message": "マーク済みのブックマークを表示中です。新しいチェックを開始するには再スキャンをクリックしてください。"
+    "message": "以前マークしたブックマークを表示しています。「再スキャン」をクリックして新しいチェックを開始するか、以下のリストで処理してください。"
   },
   "deadMarkedBannerDismiss": {
     "message": "閉じる"

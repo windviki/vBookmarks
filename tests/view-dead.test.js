@@ -583,6 +583,37 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(ctx2.$list.innerHTML).not.toContain('dead-marked-banner');
     });
 
+    it('a finished scan with past marks now reachable shows the banner under 全部', () => {
+        // 用户方案: 扫描正常完成但仍存在"过去标注"分类时 (标记过去被标注,
+        // 本次扫描不再判为问题行 → 现在可访问/未探测), "全部"视图下追加的
+        // 标注列表上方也要显示横幅, 提示用户检查"过去标注"分类。
+        const cache = JSON.stringify({
+            ts: 1700000000000, scannedCount: 3,
+            results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'dead', code: 404 },
+                '13': { status: 'blocked', code: 404 }
+            }
+        });
+        const ctx = setup({
+            storeData: { deadLastScan: cache, deadMarks: '["11","12","13"]' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // 11 (ok — 过去标注、现在可访问) 未覆盖 → 追加于下方 → 横幅显示
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
+        expect($list.innerHTML).toContain('class="risk-banner dead-marked-banner"');
+        // 全部标记都被本次扫描覆盖 (无"过去标注现在可访问"的情况) → 无横幅
+        const ctx2 = setup({
+            storeData: { deadLastScan: cache, deadMarks: '["12","13"]' }
+        });
+        ctx2.def().activate();
+        expect(ctx2.$list.innerHTML).not.toContain('dead-marked-banner');
+        // 切到仅死链 (标注列表隐藏) → 横幅也不显示
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        expect($list.innerHTML).not.toContain('dead-marked-banner');
+    });
+
     it('activate({ preset: { scan:true } }) kicks the scan off on entry (v4 task-4 #6)', () => {
         const ctx = setup({});
         ctx.def().activate({ preset: { scan: true } });
@@ -804,9 +835,11 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         });
         const { $list, chrome } = ctx;
         ctx.def().activate();
-        // idle all: results host 12, the marked list holds the uncovered 11
+        // idle all: results host 12, the marked list holds the uncovered 11 —
+        // and because an uncovered past mark exists, the banner is already up
+        // (finished-scan scenario: points at the 过去标注 category)
         expect($list.innerHTML).toContain('id="dead-item-12"');
-        expect($list.innerHTML).not.toContain('dead-marked-banner');
+        expect($list.innerHTML).toContain('class="risk-banner dead-marked-banner"');
         // start a run, then cancel it mid-flight
         ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
         publishBlob(ctx, blobOf({ done: 1 }));

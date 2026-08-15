@@ -222,7 +222,7 @@
     "message": "Kun døde"
   },
   "deadFilterMarked": {
-    "message": "Markeret"
+    "message": "Tidligere markeret"
   },
   "deadLastScanAt": {
     "message": "Seneste scanning: $time$",
@@ -256,7 +256,7 @@
     "message": "Markér valgte"
   },
   "deadMarkedBanner": {
-    "message": "Du ser dine markerede bogmærker. Klik på Scan igen for at starte en ny kontrol."
+    "message": "Viser bogmærker, der tidligere er markeret. Klik på Scan igen for at starte en ny kontrol, eller håndter dem på listen nedenfor."
   },
   "deadMarkedBannerDismiss": {
     "message": "Luk"

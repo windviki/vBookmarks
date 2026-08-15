@@ -222,7 +222,7 @@
     "message": "Csak halott"
   },
   "deadFilterMarked": {
-    "message": "Megjelölt"
+    "message": "Korábban megjelöltek"
   },
   "deadLastScanAt": {
     "message": "Utolsó vizsgálat: $time$",
@@ -256,7 +256,7 @@
     "message": "Kijelöltek megjelölése"
   },
   "deadMarkedBanner": {
-    "message": "A megjelölt könyvjelzőket tekinti meg. Kattintson az Újraellenőrzés gombra új ellenőrzés indításához."
+    "message": "A korábban megjelölt könyvjelzők láthatók. Kattintson az Újraellenőrzés gombra egy új ellenőrzés indításához, vagy kezelje őket az alábbi listában."
   },
   "deadMarkedBannerDismiss": {
     "message": "Elvetés"

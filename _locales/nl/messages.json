@@ -222,7 +222,7 @@
     "message": "Alleen dode"
   },
   "deadFilterMarked": {
-    "message": "Gemarkeerd"
+    "message": "Eerder gemarkeerd"
   },
   "deadLastScanAt": {
     "message": "Laatste scan: $time$",
@@ -256,7 +256,7 @@
     "message": "Markeer geselecteerde"
   },
   "deadMarkedBanner": {
-    "message": "U bekijkt uw gemarkeerde bladwijzers. Klik op 'Opnieuw scannen' om een nieuwe controle te starten."
+    "message": "Toont eerder gemarkeerde bladwijzers. Klik op Opnieuw scannen om een nieuwe controle te starten, of verwerk ze in de onderstaande lijst."
   },
   "deadMarkedBannerDismiss": {
     "message": "Sluiten"

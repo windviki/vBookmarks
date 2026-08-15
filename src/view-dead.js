@@ -587,9 +587,15 @@ export function initViewDead(ctx = {}) {
     const markedBannerVisible = () => {
         if (markedBannerDismissed || live || selecting)
             return false;
-        if (!(filter === 'marked' || !lastScan) || !deadMarks.size)
+        if (!deadMarks.size)
             return false;
-        return true;
+        // marked-only 视图 (取消扫描 / "过去标注"筛选 / 无扫描): 有标记就提示。
+        if (filter === 'marked' || !lastScan)
+            return true;
+        // "全部"视图 + 扫描正常完成但仍有过去标注: 本次扫描不再判为问题行的
+        // 标记 (现在可访问、过去被标注) 追加于结果下方 — 同样提示用户检查
+        // "过去标注"分类。仅死链/仅受限视图不渲染标注列表, 也不提示。
+        return filter === 'all' && markedRows().length > 0;
     };
     const markedBannerHtml = () => {
         if (!markedBannerVisible())

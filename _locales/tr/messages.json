@@ -222,7 +222,7 @@
     "message": "Yalnızca Ölü"
   },
   "deadFilterMarked": {
-    "message": "İşaretli"
+    "message": "Önceden işaretlenmiş"
   },
   "deadLastScanAt": {
     "message": "Son tarama: $time$",
@@ -256,7 +256,7 @@
     "message": "Seçilenleri işaretle"
   },
   "deadMarkedBanner": {
-    "message": "İşaretli yer imlerinizi görüntülüyorsunuz. Yeni bir denetim başlatmak için Rescan'a tıklayın."
+    "message": "Daha önce işaretlenmiş yer imleri gösteriliyor. Yeni bir kontrol başlatmak için Rescan'a tıklayın veya aşağıdaki listede bunları işleyin."
   },
   "deadMarkedBannerDismiss": {
     "message": "Kapat"

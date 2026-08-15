@@ -222,7 +222,7 @@
     "message": "Nur tote"
   },
   "deadFilterMarked": {
-    "message": "Markiert"
+    "message": "Zuvor markiert"
   },
   "deadLastScanAt": {
     "message": "Letzter Scan: $time$",
@@ -256,7 +256,7 @@
     "message": "Ausgewählte markieren"
   },
   "deadMarkedBanner": {
-    "message": "Sie betrachten Ihre markierten Lesezeichen. Klicken Sie auf „Erneut scannen“, um einen neuen Check zu starten."
+    "message": "Zeige zuvor markierte Lesezeichen. Klicken Sie auf „Erneut scannen“, um eine neue Prüfung zu starten, oder bearbeiten Sie sie in der Liste unten."
   },
   "deadMarkedBannerDismiss": {
     "message": "Schließen"

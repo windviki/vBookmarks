@@ -221,7 +221,7 @@
     "message": "Mortos apenas"
   },
   "deadFilterMarked": {
-    "message": "Marcados"
+    "message": "Marcados anteriormente"
   },
   "deadLastScanAt": {
     "message": "Última verificação: $time$",
@@ -255,7 +255,7 @@
     "message": "Marcar selecionados"
   },
   "deadMarkedBanner": {
-    "message": "Está a ver os seus favoritos marcados. Clique em Repetir verificação para iniciar uma nova verificação."
+    "message": "A apresentar marcadores marcados anteriormente. Clique em Repetir verificação para iniciar uma nova verificação, ou trate-os na lista abaixo."
   },
   "deadMarkedBannerDismiss": {
     "message": "Dispensar"

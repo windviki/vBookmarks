@@ -222,7 +222,7 @@
     "message": "Solo morti"
   },
   "deadFilterMarked": {
-    "message": "Contrassegnati"
+    "message": "Contrassegnati in precedenza"
   },
   "deadLastScanAt": {
     "message": "Ultima scansione: $time$",
@@ -256,7 +256,7 @@
     "message": "Contrassegna selezionati"
   },
   "deadMarkedBanner": {
-    "message": "Stai visualizzando i tuoi segnalibri contrassegnati. Fai clic su Nuova scansione per iniziare una nuova verifica."
+    "message": "Vengono mostrati i segnalibri contrassegnati in precedenza. Fai clic su Riscansiona per avviare un nuovo controllo, oppure gestiscili nell'elenco sottostante."
   },
   "deadMarkedBannerDismiss": {
     "message": "Ignora"

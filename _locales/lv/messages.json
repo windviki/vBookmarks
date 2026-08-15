@@ -222,7 +222,7 @@
     "message": "Tikai mirušie"
   },
   "deadFilterMarked": {
-    "message": "Atzīmētās"
+    "message": "Iepriekš atzīmētās"
   },
   "deadLastScanAt": {
     "message": "Pēdējā skenēšana: $time$",
@@ -256,7 +256,7 @@
     "message": "Atzīmēt atlasītos"
   },
   "deadMarkedBanner": {
-    "message": "Jūs skatāt savas atzīmētās grāmatzīmes. Noklikšķiniet uz Pārskenēt, lai sāktu jaunu pārbaudi."
+    "message": "Tiek rādītas iepriekš atzīmētās grāmatzīmes. Noklikšķiniet uz Pārskenēt, lai sāktu jaunu pārbaudi, vai apstrādājiet tās zemāk esošajā sarakstā."
   },
   "deadMarkedBannerDismiss": {
     "message": "Aizvērt"

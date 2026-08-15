@@ -222,7 +222,7 @@
     "message": "Ainult surnud"
   },
   "deadFilterMarked": {
-    "message": "Märgitud"
+    "message": "Varem märgitud"
   },
   "deadLastScanAt": {
     "message": "Viimane skänn: $time$",
@@ -256,7 +256,7 @@
     "message": "Märgi valitud"
   },
   "deadMarkedBanner": {
-    "message": "Vaatate oma märgitud järjehoidjaid. Uue kontrolli alustamiseks klõpsake nuppu Skanni uuesti."
+    "message": "Kuvatakse varem märgitud järjehoidjaid. Klõpsake Rescan, et alustada uut kontrolli, või haldage neid allolevas loendis."
   },
   "deadMarkedBannerDismiss": {
     "message": "Sule"

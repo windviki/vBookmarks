@@ -222,7 +222,7 @@
     "message": "Doar moarte"
   },
   "deadFilterMarked": {
-    "message": "Marcate"
+    "message": "Marcate anterior"
   },
   "deadLastScanAt": {
     "message": "Ultima scanare: $time$",
@@ -256,7 +256,7 @@
     "message": "Marcați selectatele"
   },
   "deadMarkedBanner": {
-    "message": "Vizualizați marcajele dvs. marcate. Faceți clic pe Rescanare pentru a începe o nouă verificare."
+    "message": "Se afișează marcajele marcate anterior. Faceți clic pe Rescan pentru a începe o nouă verificare sau gestionați-le în lista de mai jos."
   },
   "deadMarkedBannerDismiss": {
     "message": "Respinge"

@@ -222,7 +222,7 @@
     "message": "Samo mrtvi"
   },
   "deadFilterMarked": {
-    "message": "Označeno"
+    "message": "Prej označeno"
   },
   "deadLastScanAt": {
     "message": "Zadnje skeniranje: $time$",
@@ -256,7 +256,7 @@
     "message": "Označi izbrane"
   },
   "deadMarkedBanner": {
-    "message": "Ogledujete si svoje označene zaznamke. Kliknite Rescan, da začnete novo preverjanje."
+    "message": "Prikazani so zaznamki, označeni prej. Kliknite Znova preglej za novo preverjanje ali jih obdelajte na spodnjem seznamu."
   },
   "deadMarkedBannerDismiss": {
     "message": "Zapri"

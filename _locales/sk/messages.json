@@ -222,7 +222,7 @@
     "message": "Iba mŕtve"
   },
   "deadFilterMarked": {
-    "message": "Označené"
+    "message": "Predtým označené"
   },
   "deadLastScanAt": {
     "message": "Posledná kontrola: $time$",
@@ -256,7 +256,7 @@
     "message": "Označiť vybrané"
   },
   "deadMarkedBanner": {
-    "message": "Prezeráte si svoje označené záložky. Kliknutím na tlačidlo Znova skontrolovať spustíte novú kontrolu."
+    "message": "Zobrazujú sa záložky označené predtým. Kliknutím na Znova skenovať spustíte novú kontrolu, alebo ich spracujte v zozname nižšie."
   },
   "deadMarkedBannerDismiss": {
     "message": "Zavrieť"
