@@ -253,6 +253,15 @@ describe('initAnnounce wiring', () => {
         expect(store.get(ANN_SEEN_KEY)).toBeUndefined();
     });
 
+    it('defers to the local what\'s-new banner (no double-banner on the 4.0.8 upgrade)', async () => {
+        const { store, bannerEl, $, openNewTab } = boot({
+            [ANN_CACHE_KEY]: { ts: 1000, data: cacheWith(sampleMsg) }
+        });
+        await initAnnounce({ store, $, chrome: { runtime: { getManifest: () => ({ version: '4.0.8' }) } }, _m, channel: 'popup', donationShowing: false, localBannerShowing: true, openNewTab, now });
+        expect(bannerEl.hidden).toBe(true);
+        expect(store.get(ANN_SEEN_KEY)).toBeUndefined(); // deferred, not dismissed
+    });
+
     it('falls back to a stale cache when the fetch fails', async () => {
         const { store, bannerEl, $, openNewTab } = boot({
             [ANN_CACHE_KEY]: { ts: -ANN_TTL_MS, data: cacheWith(sampleMsg) } // expired vs the fixed now()=2000

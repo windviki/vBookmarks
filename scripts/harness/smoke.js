@@ -6,6 +6,24 @@ require('fs').mkdirSync('/tmp/shots/smoke', { recursive: true });
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// Poll for the palette to be open + focused instead of a single fixed sleep:
+// the wake-up runs synchronously in neat.js init, but under DinD load the
+// popup scripts can land a beat late, which turned a robust open into a
+// spurious gate failure at the 900ms mark. Polling keeps the assertion (the
+// palette MUST open) while tolerating load timing.
+const waitForPalette = async (page, ms = 6000) => {
+    const t0 = Date.now();
+    while (Date.now() - t0 < ms) {
+        const s = await page.evaluate(() => ({
+            open: !document.getElementById('command-palette').hidden,
+            focused: document.activeElement && document.activeElement.id === 'palette-input'
+        }));
+        if (s.open && s.focused) return { ...s, waited: Date.now() - t0 };
+        await sleep(200);
+    }
+    return { open: false, focused: false, waited: Date.now() - t0 };
+};
+
 (async () => {
     const browser = await puppeteer.launch({
         executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser',
@@ -159,6 +177,28 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(900);
 
+    // 2d3. 4.0.8 local what's-new banner: the network-independent twin of the
+    // remote announce — a 4.x → 4.0.8 crossing (version gate, fires once) shows
+    // it even when the raw.githubusercontent.com fetch fails (offline DinD, or
+    // a proxy that blocks it). Guide + changelog links point at the repo docs.
+    await page.evaluate(() => chrome.storage.local.set({ currentVersion: '4.0.6' }));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+    const whatsNew = await page.evaluate(() => ({
+        shown: !document.getElementById('whats-new').hidden,
+        text: document.getElementById('whats-new-text').textContent,
+        guide: document.getElementById('whats-new-guide').href,
+        changelog: document.getElementById('whats-new-changelog').href
+    }));
+    console.log('whats-new 4.0.8 banner:', JSON.stringify(whatsNew));
+    if (!whatsNew.shown || !whatsNew.text.includes('favicon')
+        || !whatsNew.guide.includes('guide-v4') || !whatsNew.changelog.includes('changelog'))
+        errors.push(`whats-new banner broken: ${JSON.stringify(whatsNew)}`);
+    await page.screenshot({ path: '/tmp/shots/smoke/popup-whats-new.png' });
+    await page.evaluate(() => chrome.storage.local.remove('currentVersion'));
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+
     // 2e. v4 task-3 #14: with onlyShowBMBar on, "reveal in tree" on a target
     // OUTSIDE the bar toasts a hint instead of silently failing; the toast
     // action shows the full tree (session only) and completes the reveal.
@@ -222,24 +262,18 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     // ?palette=1 query (fallback popup window) and the pendingPaletteOpen
     // session flag (chrome.action.openPopup path) both auto-open the palette.
     await page.goto(`chrome-extension://${extId}/pages/popup.html?palette=1`, { waitUntil: 'networkidle0' });
-    await sleep(900);
-    const paletteViaQuery = await page.evaluate(() => ({
-        open: !document.getElementById('command-palette').hidden,
-        focused: document.activeElement && document.activeElement.id === 'palette-input'
-    }));
+    const paletteViaQuery = await waitForPalette(page);
     console.log('palette via ?palette=1:', JSON.stringify(paletteViaQuery));
     if (!paletteViaQuery.open || !paletteViaQuery.focused)
         errors.push(`palette=1 wake-up broken: ${JSON.stringify(paletteViaQuery)}`);
     await page.evaluate(() => chrome.storage.session.set({ pendingPaletteOpen: true }));
     await page.goto(`chrome-extension://${extId}/pages/popup.html`, { waitUntil: 'networkidle0' });
-    await sleep(900);
-    const paletteViaFlag = await page.evaluate(async () => ({
-        open: !document.getElementById('command-palette').hidden,
-        flagConsumed: !(await chrome.storage.session.get('pendingPaletteOpen')).pendingPaletteOpen
-    }));
-    console.log('palette via session flag:', JSON.stringify(paletteViaFlag));
-    if (!paletteViaFlag.open || !paletteViaFlag.flagConsumed)
-        errors.push(`pendingPaletteOpen wake-up broken: ${JSON.stringify(paletteViaFlag)}`);
+    const paletteViaFlag = await waitForPalette(page);
+    const flagConsumed = await page.evaluate(async () =>
+        !(await chrome.storage.session.get('pendingPaletteOpen')).pendingPaletteOpen);
+    console.log('palette via session flag:', JSON.stringify({ ...paletteViaFlag, flagConsumed }));
+    if (!paletteViaFlag.open || !paletteViaFlag.focused || !flagConsumed)
+        errors.push(`pendingPaletteOpen wake-up broken: ${JSON.stringify({ ...paletteViaFlag, flagConsumed })}`);
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(900);
 

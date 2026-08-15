@@ -211,7 +211,7 @@ const fetchAnnounce = async ({ url, etag, fetchImpl }) => {
     }
 };
 
-export const initAnnounce = async ({ store, $, chrome, _m, channel, donationShowing, openNewTab, fetchImpl, now }) => {
+export const initAnnounce = async ({ store, $, chrome, _m, channel, donationShowing, localBannerShowing = false, openNewTab, fetchImpl, now }) => {
     // Privacy switch: on by default, only an explicit '0' disables it (and
     // the network fetch with it).
     if (store.get('announceEnabled') === '0')
@@ -240,8 +240,10 @@ export const initAnnounce = async ({ store, $, chrome, _m, channel, donationShow
     if (!msg)
         return;
     // The donation card wins the frame — this announcement defers to the next
-    // open (not marked seen, so it still shows then).
-    if (donationShowing)
+    // open (not marked seen, so it still shows then). Same for the local
+    // what's-new banner (4.0.8 version crossing): it claims the upgrade open,
+    // so the remote twin defers rather than double-bannering the same release.
+    if (donationShowing || localBannerShowing)
         return;
     const bannerEl = $('announce');
     if (!bannerEl)

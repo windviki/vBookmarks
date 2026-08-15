@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "יומן שינויים"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ היא הגרסה המשופרת ל-favicon: אייקוני אתרים שלא נשמרו במטמון על ידי Chrome מובאים כעת אוטומטית.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "או"
+  },
+  "customIconPick": {
+    "message": "בחר קובץ…"
   },
   "delete": {
     "message": "מחק"

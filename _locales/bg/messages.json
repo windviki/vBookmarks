@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Дневник на промените"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ е версията с подобрени икони на сайтове: иконите, които Chrome не е кеширал, вече се извличат автоматично.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Добавяне на прокси сървър за проверки за мъртви връзки"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "или"
+  },
+  "customIconPick": {
+    "message": "Изберете файл…"
   },
   "delete": {
     "message": "Изтриване"

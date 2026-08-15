@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Journal des modifications"
   },
+  "whatsNewFavicon": {
+    "message": "La version v$1$ améliore les favicons : les icônes de sites que Chrome n'a pas encore mises en cache sont désormais récupérées automatiquement.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Ajouter un serveur proxy pour les vérifications de liens morts"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "ou"
+  },
+  "customIconPick": {
+    "message": "Choisir un fichier…"
   },
   "delete": {
     "message": "Supprimer"

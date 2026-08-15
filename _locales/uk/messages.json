@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Журнал змін"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ — це версія з покращеною підтримкою favicon: значки сайтів, які Chrome ще не кешував, тепер завантажуються автоматично.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Додати проксі-сервер для перевірки мертвих посилань"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "або"
+  },
+  "customIconPick": {
+    "message": "Вибрати файл…"
   },
   "delete": {
     "message": "Видалити"

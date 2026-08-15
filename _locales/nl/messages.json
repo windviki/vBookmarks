@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Wijzigingslogboek"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ is de favicon-verbeterde release: site-icoontjes die Chrome nog niet heeft gecached, worden nu automatisch opgehaald.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "of"
+  },
+  "customIconPick": {
+    "message": "Kies bestand…"
   },
   "delete": {
     "message": "Verwijderen"

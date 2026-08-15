@@ -297,6 +297,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         _m,
         channel: IS_PANEL ? 'sidepanel' : 'popup',
         donationShowing: donation.shouldShow,
+        // The 4.0.8 local what's-new banner claims the upgrade open — the
+        // remote announce defers (no double-banner for the same release).
+        localBannerShowing: donation.whatsNewShown,
         get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
     });
 

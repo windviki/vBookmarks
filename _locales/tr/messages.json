@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Değişiklik günlüğü"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ favicon geliştirmeli sürümdür: Chrome'un önbelleğe almadığı site simgeleri artık otomatik olarak getirilir.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Ölü bağlantı kontrolleri için bir proxy sunucusu ekle"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "veya"
+  },
+  "customIconPick": {
+    "message": "Dosya seç…"
   },
   "delete": {
     "message": "Sil"

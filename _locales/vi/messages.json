@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Nhật ký thay đổi"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ là bản phát hành tăng cường favicon: các biểu tượng trang web mà Chrome chưa lưu vào bộ nhớ đệm giờ sẽ được tự động tải.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "hoặc"
+  },
+  "customIconPick": {
+    "message": "Chọn tệp…"
   },
   "delete": {
     "message": "Xóa"

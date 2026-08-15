@@ -349,6 +349,9 @@
   "defaultIconButtonOr": {
     "message": "或"
   },
+  "customIconPick": {
+    "message": "选择文件…"
+  },
   "optionSyncRefreshIntervalSeconds": {
     "message": "秒"
   },
@@ -1589,6 +1592,14 @@
   },
   "whatsNewChangelog": {
     "message": "更新日志"
+  },
+  "whatsNewFavicon": {
+    "message": "v$1$ 图标加强版：自动为 Chrome 未缓存的收藏网站拉取真实图标。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   },
   "deadProxyNeverShow": {
     "message": "不再显示"

@@ -48,7 +48,7 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
     // Version gate + open-count live in the shared src/startup-flags.js (a
     // second banner consumer must not re-implement them).
     const mf = chrome.runtime.getManifest();
-    const { newOrUpgrade, upgradedToV4 } = applyVersionGate(store, mf['version']);
+    const { newOrUpgrade, upgradedToV4, upgradedToAnnounced } = applyVersionGate(store, mf['version']);
     bumpOpenCount(store);
     if (!store.get('donationKey')) {
         // New installs get a grace window of ~30 popup opens before the first
@@ -126,5 +126,40 @@ export const createDonation = ({ store, $, chrome, _m, openNewTab }) => {
         store.set('donationFactor', parseInt(store.get('donationFactor'), 10) + 1);
     }
 
-    return { shouldShow, showDonation, donationSnooze, donationNever };
+    // 4.0.8 local what's-new banner (#whats-new): the network-independent twin
+    // of the remote announce — the version gate fires it exactly once on the
+    // 4.x → 4.0.8 crossing (recorded currentVersion keeps it from re-firing),
+    // so it needs no dismiss and no network, and stays decoupled from the
+    // donation card (donationDisabled never hides it). A 3.x → 4.x upgrade is
+    // excluded: the v4 notice on the card already owns that story.
+    const whatsNew = $('whats-new');
+    const whatsNewShown = !!whatsNew && upgradedToAnnounced && !upgradedToV4;
+    if (whatsNew) {
+        if (whatsNewShown) {
+            $('whats-new-text').textContent = _m('whatsNewFavicon', [mf['version']]);
+            const guideLink = $('whats-new-guide');
+            guideLink.textContent = _m('donationV4GuideLink');
+            guideLink.href = guideV4Url;
+            const changelogLink = $('whats-new-changelog');
+            changelogLink.textContent = _m('whatsNewChangelog');
+            changelogLink.href = CHANGELOG_URL;
+        }
+        whatsNew.hidden = !whatsNewShown;
+        // Left-click routes through actions so the popup-respecting open
+        // semantics stay uniform (same as the v4-guide-link handler).
+        const guide = $('whats-new-guide');
+        if (guide)
+            guide.addEventListener('click', e => {
+                e.preventDefault();
+                openNewTab(guideV4Url, true, true);
+            });
+        const changelog = $('whats-new-changelog');
+        if (changelog)
+            changelog.addEventListener('click', e => {
+                e.preventDefault();
+                openNewTab(CHANGELOG_URL, true, true);
+            });
+    }
+
+    return { shouldShow, showDonation, donationSnooze, donationNever, whatsNewShown };
 };

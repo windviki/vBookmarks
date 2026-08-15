@@ -59,6 +59,7 @@ describe('options page group structure (round-6 item 5, v4 task-3 #17 merge)', (
 
     it('absorbed the advanced controls (icon, separators, userstyle, dead scan, reset)', () => {
         for (const id of ['custom-icon-preview', 'custom-icon-file', 'default-icon-button',
+                'custom-icon-pick',
                 'custom-separator-color', 'custom-separator-title', 'custom-separator-url',
                 'custom-separator-string', 'userstyle',
                 // the retired relay-template input is gone; the proxy server row
@@ -138,5 +139,36 @@ describe('options page responsive layout rules (v4 task-3 #17)', () => {
     it('CodeMirror fits its column instead of forcing 40em', () => {
         const cm = ruleBody(optionsCss, '.CodeMirror{');
         expect(cm).toContain('width: min(40em, 100%)');
+    });
+});
+
+describe('options page header responsive wrap (narrow widths)', () => {
+    // The header's three element groups — the title block (icon+name+small),
+    // the centered #header-since subtitle and the right #header-links pills —
+    // must wrap onto their own lines instead of being flex-crushed into
+    // truncation/overlap when the viewport gets narrow (flex-shrink would
+    // otherwise compress the nowrap pills against the title).
+
+    it('the title row wraps the pills below instead of crushing them', () => {
+        const h1 = ruleBody(optionsCss, 'h1{');
+        expect(h1).toContain('flex-wrap: wrap');
+        expect(h1).toContain('display: flex');
+    });
+
+    it('the header-link pills wrap among themselves at ultra-narrow widths, still right-pinned', () => {
+        const links = ruleBody(optionsCss, '#header-links{');
+        expect(links).toContain('flex-wrap: wrap');
+        expect(links).toContain('margin-inline-start: auto');
+    });
+
+    it('each pill keeps its own label nowrap — only the pill group wraps', () => {
+        const btn = ruleBody(optionsCss, '#header-links a.header-btn{');
+        expect(btn).toContain('white-space: nowrap');
+    });
+
+    it('the since subtitle is a centered block on its own line, never sharing the title row', () => {
+        const since = ruleBody(optionsCss, '#header-since{');
+        expect(since).toContain('text-align: center');
+        expect(since).toContain('margin: .35em 0 0');
     });
 });

@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "變更紀錄"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ 為 favicon 增強版：Chrome 尚未快取的網站圖示現在會自動取得。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "為失效連結檢查新增代理伺服器"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": " 或者 "
+  },
+  "customIconPick": {
+    "message": "選擇檔案…"
   },
   "delete": {
     "message": "刪除"

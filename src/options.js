@@ -512,6 +512,12 @@ const $ = id => document.getElementById(id);
                     }
                 }
             });
+            // The pick button is the styled stand-in for the (hidden) file
+            // input — the engine won't style ::file-selector-button, so the
+            // native input can't be made to match the adjacent button.
+            $('custom-icon-pick').addEventListener('click', () => {
+                $('custom-icon-file').click();
+            });
             $('default-icon-button').addEventListener('click', () => {
                 store.remove('customIcon');
                 chrome.action.setIcon({
@@ -661,6 +667,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('custom-icon-description').innerText = __m('customIconDescription');
         document.getElementById('default-icon-button').innerText = __m('defaultIconButton');
         document.getElementById('default-icon-button-or').innerText = __m('defaultIconButtonOr');
+        document.getElementById('custom-icon-pick').innerText = __m('customIconPick');
         document.getElementById('custom-styles').innerText = __m('customStyles');
         document.getElementById('separator-options').innerText = __m('separatorOptions');
         document.getElementById('custom-separator-color-description').innerText = __m('customSeparatorColorDescription');

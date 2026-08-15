@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Változásnapló"
   },
+  "whatsNewFavicon": {
+    "message": "A v$1$ a továbbfejlesztett favicon-kiadás: a Chrome által nem gyorsítótárazott webhelyikonok mostantól automatikusan letöltődnek.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "vagy"
+  },
+  "customIconPick": {
+    "message": "Fájl kiválasztása…"
   },
   "delete": {
     "message": "Törlés"

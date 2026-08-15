@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "परिवर्तन लॉग"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ फ़ेविकॉन-वर्धित रिलीज़ है: Chrome द्वारा कैश नहीं किए गए साइट आइकन अब स्वचालित रूप से प्राप्त किए जाते हैं।",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "डेड-लिंक जाँच के लिए प्रॉक्सी सर्वर जोड़ें"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "या"
+  },
+  "customIconPick": {
+    "message": "फ़ाइल चुनें…"
   },
   "delete": {
     "message": "हटाएं"

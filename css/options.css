@@ -141,6 +141,8 @@ h1{
 	margin: 0;
 	padding: 0;
 	display: flex;
+	flex-wrap: wrap;   /* narrow: the title block and the right pills each claim
+	                      their own line instead of being crushed/overlapping */
 	align-items: center;
 	gap: .5em;
 }
@@ -165,8 +167,10 @@ h1 > small{
 #header-links{
 	margin-inline-start: auto;
 	display: flex;
+	flex-wrap: wrap;   /* ultra-narrow: the four pills wrap among themselves
+	                      instead of clipping past the page edge */
 	align-items: center;
-	gap: .5em;
+	gap: .4em .5em;
 	font-size: .85em;
 }
 #header-links a.header-btn{
@@ -209,12 +213,14 @@ h1 > small{
 #options-version-text{
 	font-variant-numeric: tabular-nums;
 }
-/* Subtitle under the title row: fork origin + days-maintained, centered. */
+/* Subtitle under the title row: fork origin + days-maintained, centered on
+   the title block (icon..version pill). .9em reads clearly next to the 28px
+   title and the .85em header pills without stealing the header's weight. */
 #header-since{
 	margin: .35em 0 0;
 	text-align: center;
 	color: var(--vbm-muted);
-	font-size: .8em;
+	font-size: .9em;
 	line-height: 1.4;
 }
 h2{
@@ -287,6 +293,26 @@ h2{
 .options-list li button:first-child{
 	margin-__MSG_@@bidi_start_edge__: 0;
 }
+/* Rows that lead with a label or description and end in an action button
+   (stats-clear, backup's Reset, palette "Add command") lay out as a flex
+   row: the text side fills and the button pins to the card's right edge.
+   Otherwise the button trailed the label wherever its wrap happened to
+   leave it — mid-row, ragged across cards. Standalone buttons stay flush
+   left, aligning with the checkbox column. */
+.options-list li:has(> label:first-child + button),
+.options-list li:has(> span:first-child + button){
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+.options-list li:has(> label:first-child + button) > :first-child,
+.options-list li:has(> span:first-child + button) > :first-child{
+	flex: 1;
+}
+.options-list li:has(> label:first-child + button) > button,
+.options-list li:has(> span:first-child + button) > button{
+	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+}
 .options-list li button span{
 	font-weight: normal;
 }
@@ -306,6 +332,23 @@ h2{
 .options-list li input[type=radio]{
 	margin: 0;
 	margin-__MSG_@@bidi_end_edge__: 5px;
+}
+/* Custom-icon row: the two buttons + "or" divider sit on one flex line so
+   they share a vertical center and wrap cleanly on narrow cards. The file
+   input is hidden and opened by #custom-icon-pick (the engine won't style
+   ::file-selector-button, so a native input can't match the button here). */
+.options-list li > div:has(> #default-icon-button){
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 .5em;
+}
+.options-list li > div:has(> #default-icon-button) button{
+	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+}
+.options-list li #default-icon-button-or{
+	color: var(--vbm-muted);
+	white-space: nowrap;
 }
 /* Separator group: label text above, the text field below on its own line
    spanning the card — the label+input-inline mix wrapped raggedly. */
@@ -346,6 +389,22 @@ h2{
 	vertical-align: middle;
 	margin: 0;
 	margin-__MSG_@@bidi_start_edge__: 2em;
+}
+/* Dead-link quota rows: the label text on the left, the number input pinned
+   to the card's right edge so both quota boxes share one right column (their
+   natural widths would leave the right edges ragged as the labels differ in
+   length). Only rows whose last control is a number input match — the sync
+   interval and zoom rows keep their inline flow. */
+.options-list li label:has(> input[type=number]:last-child){
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+.options-list li label:has(> input[type=number]:last-child) > span{
+	margin-__MSG_@@bidi_end_edge__: auto;
+}
+.options-list li label:has(> input[type=number]:last-child) > input[type=number]{
+	margin-__MSG_@@bidi_start_edge__: 0;
 }
 .options-list li select{
 	background: var(--vbm-bg-elev);
@@ -550,8 +609,8 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 }
 .usage-bar{
 	display: flex;
-	height: 10px;
-	border-radius: 5px;
+	height: 16px;
+	border-radius: 8px;
 	overflow: hidden;
 	background: var(--vbm-bg);
 	border: 1px solid var(--vbm-border);
@@ -613,9 +672,9 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	gap: 5px;
 }
 .usage-legend .legend-swatch{
-	width: 9px;
-	height: 9px;
-	border-radius: 2px;
+	width: 11px;
+	height: 11px;
+	border-radius: 3px;
 	display: inline-block;
 }
 .legend-swatch.usage-icon{ background: var(--vbm-accent); }

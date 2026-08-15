@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Muudatuslogi"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ on favicon-täiustatud väljaanne: saidi ikoonid, mida Chrome pole vahemällu salvestanud, laaditakse nüüd automaatselt.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "või"
+  },
+  "customIconPick": {
+    "message": "Vali fail…"
   },
   "delete": {
     "message": "Kustuta"

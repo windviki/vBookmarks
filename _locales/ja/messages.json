@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "変更履歴"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ はファビコン強化版です。Chromeがキャッシュしていないサイトアイコンは自動的に取得されるようになりました。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": " または "
+  },
+  "customIconPick": {
+    "message": "ファイルを選択…"
   },
   "delete": {
     "message": "削除"

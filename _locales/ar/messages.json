@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "سجل التغييرات"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ هو الإصدار المحسّن لأيقونات المواقع: يتم الآن جلب أيقونات المواقع التي لم يخزنها Chrome مؤقتًا تلقائيًا.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "أو"
+  },
+  "customIconPick": {
+    "message": "اختيار ملف…"
   },
   "delete": {
     "message": "حذف"

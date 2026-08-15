@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Журнал изменений"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ — это выпуск с улучшенной поддержкой фавиконок: значки сайтов, отсутствующие в кэше Chrome, теперь подгружаются автоматически.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Добавить прокси-сервер для проверки битых ссылок"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": " или "
+  },
+  "customIconPick": {
+    "message": "Выбрать файл…"
   },
   "delete": {
     "message": "Удалить"

@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "পরিবর্তন লগ"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ হল ফেভিকন-উন্নত সংস্করণ: Chrome-এর ক্যাশে নেই এমন সাইট আইকন এখন স্বয়ংক্রিয়ভাবে আনা হয়।",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "ডেড-লিংক পরীক্ষার জন্য একটি প্রক্সি সার্ভার যোগ করুন"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "অথবা"
+  },
+  "customIconPick": {
+    "message": "ফাইল নির্বাচন করুন…"
   },
   "delete": {
     "message": "মুছে ফেলুন"

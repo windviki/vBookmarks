@@ -284,6 +284,14 @@
   "whatsNewChangelog": {
     "message": "Евиденција на промени"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ е издание со подобрени фавикони: иконите на сајтовите што Chrome не ги има кеширано сега автоматски се вчитуваат.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Додај прокси сервер за проверка на мртви врски"
   },
@@ -368,6 +376,9 @@
   },
   "defaultIconButtonOr": {
     "message": "или"
+  },
+  "customIconPick": {
+    "message": "Избери датотека…"
   },
   "delete": {
     "message": "Избришете"

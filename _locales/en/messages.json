@@ -151,6 +151,9 @@
   "defaultIconButtonOr": {
     "message": "or"
   },
+  "customIconPick": {
+    "message": "Choose file…"
+  },
   "deadChecking": {
     "description": "Progress line of the palette's dead-link scan mode; $done$ bookmarks checked out of $total$.",
     "message": "Checking $done$ / $total$…",
@@ -1739,5 +1742,13 @@
   },
   "whatsNewChangelog": {
     "message": "Changelog"
+  },
+  "whatsNewFavicon": {
+    "message": "v$1$ is the favicon-enhanced release: site icons Chrome hasn't cached are now fetched automatically.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   }
 }

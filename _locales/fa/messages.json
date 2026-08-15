@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "تاریخچه تغییرات"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ نسخهی بهبودیافتهی فاوآیکون است: آیکونهای سایتهایی که Chrome کش نکرده است، اکنون بهطور خودکار دریافت میشوند.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "یا"
+  },
+  "customIconPick": {
+    "message": "انتخاب فایل…"
   },
   "delete": {
     "message": "حذف"

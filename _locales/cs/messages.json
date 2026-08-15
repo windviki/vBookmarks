@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Seznam změn"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ je verze s vylepšenými faviconami: ikony webů, které Chrome ještě nemá v mezipaměti, se nyní načítají automaticky.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "nebo"
+  },
+  "customIconPick": {
+    "message": "Vybrat soubor…"
   },
   "delete": {
     "message": "Smazat"

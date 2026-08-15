@@ -80,6 +80,10 @@ const createSandbox = ({
         clicked: 0,
         style: {},
         _attributes: {},
+        // the custom-icon <img> preview lives inside the preview div; the
+        // stub lets options.js's custom-icon block run (registering the
+        // pick/file listeners) instead of being skipped by the null guard
+        firstElementChild: { onload: null, src: '' },
         setAttribute(name, val) { this._attributes[name] = val; },
         _listeners: {},
         addEventListener(type, fn) {
@@ -100,6 +104,7 @@ const createSandbox = ({
         getElementById: id => elements[id] || (elements[id] = makeEl(id)),
         createElement: tag => {
             const el = makeEl('', tag);
+            if (tag === 'canvas') el.getContext = () => ({}); // 2d ctx only used inside the onload path
             created.push(el);
             return el;
         },
@@ -524,6 +529,27 @@ describe('storage usage bar', () => {
         for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
         for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
+    });
+});
+
+// Custom icon row (task: hidden file input + styled pick button): the engine
+// won't style ::file-selector-button, so options.html hides the native input
+// and the pick button is the clickable stand-in that forwards to it.
+describe('custom icon row pick button', () => {
+    it('the pick button forwards the click to the hidden file input', async () => {
+        const sb = createSandbox();
+        await sb.start();
+        const file = sb.elements['custom-icon-file'];
+        file.clicked = 0;
+        await sb.elements['custom-icon-pick'].fire('click');
+        expect(file.clicked).toBe(1);
+    });
+
+    it('the file input is hidden in the markup (native styling can be skipped)', async () => {
+        // options-layout.test.js asserts the id + button presence; here the
+        // markup contract: the input carries `hidden` so no file-selector
+        // styling is ever attempted.
+        expect(optionsHtml).toMatch(/<input type="file" id="custom-icon-file" hidden>/);
     });
 });
 

@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Jurnal de modificări"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ este versiunea cu favicon îmbunătățit: pictogramele site-urilor pe care Chrome nu le-a pus în cache sunt acum preluate automat.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "sau"
+  },
+  "customIconPick": {
+    "message": "Alege fișier…"
   },
   "delete": {
     "message": "Șterge"

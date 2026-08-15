@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Izmaiņu žurnāls"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ ir favikonu uzlabotais laidiens: vietņu ikonas, kuras Chrome nav saglabājis kešatmiņā, tagad tiek ielādētas automātiski.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "vai"
+  },
+  "customIconPick": {
+    "message": "Izvēlēties failu…"
   },
   "delete": {
     "message": "Dzēst"

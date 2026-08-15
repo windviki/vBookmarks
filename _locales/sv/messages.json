@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Ändringslogg"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ är den favicon-förbättrade versionen: webbplatsikoner som Chrome inte har cachat hämtas nu automatiskt.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "eller"
+  },
+  "customIconPick": {
+    "message": "Välj fil…"
   },
   "delete": {
     "message": "Ta bort"

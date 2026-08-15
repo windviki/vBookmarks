@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Änderungsprotokoll"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ ist die Version mit verbesserten Favicons: Websymbole, die Chrome nicht gecacht hat, werden nun automatisch abgerufen.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Proxyserver für Tote-Links-Prüfungen hinzufügen"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "oder"
+  },
+  "customIconPick": {
+    "message": "Datei wählen…"
   },
   "delete": {
     "message": "Löschen"

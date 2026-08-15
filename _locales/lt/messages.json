@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Pakeitimų istorija"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ yra leidimas su patobulintomis favicon: svetainių piktogramos, kurių nebuvo Chrome talpykloje, dabar atsisiunčiamos automatiškai.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "arba"
+  },
+  "customIconPick": {
+    "message": "Pasirinkti failą…"
   },
   "delete": {
     "message": "Ištrinti"

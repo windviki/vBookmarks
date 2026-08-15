@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "변경 로그"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$는 파비콘 강화 버전입니다. Chrome이 캐시하지 않은 사이트 아이콘은 이제 자동으로 가져옵니다.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "죽은 링크 확인용 프록시 서버 추가"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "또는"
+  },
+  "customIconPick": {
+    "message": "파일 선택…"
   },
   "delete": {
     "message": "삭제"

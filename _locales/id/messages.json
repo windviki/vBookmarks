@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Catatan perubahan"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ adalah rilis peningkatan favicon: ikon situs yang belum di-cache oleh Chrome kini diambil secara otomatis.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "atau"
+  },
+  "customIconPick": {
+    "message": "Pilih berkas…"
   },
   "delete": {
     "message": "Hapus"

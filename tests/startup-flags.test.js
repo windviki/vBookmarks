@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyVersionGate, bumpOpenCount, V4_THRESHOLD } from '../src/startup-flags.js';
+import { applyVersionGate, bumpOpenCount, V4_THRESHOLD, ANNOUNCED_THRESHOLD } from '../src/startup-flags.js';
 import { makeStoreDouble } from './helpers/dom.js';
 
 // Startup version gate + open-count (extracted from the donation card so a
@@ -11,7 +11,7 @@ describe('applyVersionGate', () => {
         const store = makeStoreDouble();
         const flags = applyVersionGate(store, '4.0.1');
         expect(store.get('currentVersion')).toBe('4.0.1');
-        expect(flags).toEqual({ newOrUpgrade: true, upgradedToV4: false });
+        expect(flags).toEqual({ newOrUpgrade: true, upgradedToV4: false, upgradedToAnnounced: false });
     });
 
     it('the same version (same or newer minor) is NOT an upgrade — silent', () => {
@@ -19,6 +19,7 @@ describe('applyVersionGate', () => {
         const flags = applyVersionGate(store, '4.0.1');
         expect(flags.newOrUpgrade).toBe(false);
         expect(flags.upgradedToV4).toBe(false);
+        expect(flags.upgradedToAnnounced).toBe(false);
     });
 
     it('a patch bump (4.0 → 4.0.1) stays silent (sameOrNewerMinor)', () => {
@@ -26,6 +27,7 @@ describe('applyVersionGate', () => {
         const flags = applyVersionGate(store, '4.0.1');
         expect(flags.newOrUpgrade).toBe(false);
         expect(flags.upgradedToV4).toBe(false);
+        expect(flags.upgradedToAnnounced).toBe(false);
     });
 
     it('a 3.x → 4.x crossing pins the v4 flag', () => {
@@ -33,6 +35,7 @@ describe('applyVersionGate', () => {
         const flags = applyVersionGate(store, '4.0.1');
         expect(flags.upgradedToV4).toBe(true);
         expect(flags.newOrUpgrade).toBe(true); // crossed → still "new" for the card
+        expect(flags.upgradedToAnnounced).toBe(false); // below the 4.0.8 threshold
     });
 
     it('a major bump re-arms the upgrade flag', () => {
@@ -40,6 +43,7 @@ describe('applyVersionGate', () => {
         const flags = applyVersionGate(store, '5.0.0');
         expect(flags.newOrUpgrade).toBe(true);
         expect(flags.upgradedToV4).toBe(false); // already on 4.x — not the v4 crossing
+        expect(flags.upgradedToAnnounced).toBe(false); // 4.9.9 is already past 4.0.8
     });
 
     it('a downgrade reads as same-or-newer (no re-ask)', () => {
@@ -55,6 +59,31 @@ describe('applyVersionGate', () => {
         // newOrUpgrade stays its true default
         expect(flags.newOrUpgrade).toBe(true);
         expect(store.get('currentVersion')).toBe('4.0.1');
+    });
+
+    it('a 4.x → 4.0.8 crossing arms the what\'s-new announce flag', () => {
+        const store = makeStoreDouble({ currentVersion: '4.0.6' });
+        const flags = applyVersionGate(store, '4.0.8');
+        // a patch bump — sameOrNewerMinor(4.0.6, 4.0.8) is true, so it's not an
+        // upgrade and not the v4 crossing, but it DID cross the 4.0.8 threshold
+        expect(flags.newOrUpgrade).toBe(false);
+        expect(flags.upgradedToV4).toBe(false);
+        expect(flags.upgradedToAnnounced).toBe(true);
+        expect(store.get('currentVersion')).toBe('4.0.8'); // recorded → fires once
+    });
+
+    it('a 3.x → 4.0.8 crossing arms both the v4 flag and the announce flag', () => {
+        const store = makeStoreDouble({ currentVersion: '3.3.0' });
+        const flags = applyVersionGate(store, '4.0.8');
+        expect(flags.upgradedToV4).toBe(true);
+        expect(flags.upgradedToAnnounced).toBe(true);
+    });
+
+    it('once recorded as 4.0.8, later opens never re-arm the announce flag', () => {
+        const store = makeStoreDouble({ currentVersion: '4.0.8' });
+        const flags = applyVersionGate(store, '4.0.8');
+        expect(flags.upgradedToAnnounced).toBe(false);
+        expect(flags.newOrUpgrade).toBe(false);
     });
 });
 
@@ -76,5 +105,11 @@ describe('bumpOpenCount', () => {
 describe('V4_THRESHOLD', () => {
     it('is the 4.0 crossing threshold', () => {
         expect(V4_THRESHOLD).toEqual({ major: 4, minor: 0, patch: 0 });
+    });
+});
+
+describe('ANNOUNCED_THRESHOLD', () => {
+    it('is the 4.0.8 announce threshold', () => {
+        expect(ANNOUNCED_THRESHOLD).toEqual({ major: 4, minor: 0, patch: 8 });
     });
 });

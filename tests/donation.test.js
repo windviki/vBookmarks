@@ -31,7 +31,8 @@ const makeEl = (id) => ({
 });
 
 const DOM_IDS = ['donation', 'new-version-text', 'v4-notice', 'v4-notice-text',
-    'v4-guide-link', 'donation-text', 'donation-go', 'donation-later', 'donation-never'];
+    'v4-guide-link', 'donation-text', 'donation-go', 'donation-later', 'donation-never',
+    'whats-new', 'whats-new-text', 'whats-new-guide', 'whats-new-changelog'];
 
 const _m = (key, subs) => key + (subs ? `[${subs.join(',')}]` : '');
 
@@ -88,9 +89,11 @@ describe('createDonation wiring', () => {
         store = makeStore(storeData);
         ({ els, $ } = (() => {
             const elMap = Object.fromEntries(DOM_IDS.map(id => [id, makeEl(id)]));
-            // match popup.html: v4-notice carries `hidden`, #donation is
-            // display:none via CSS until showDonation(true) reveals it
+            // match popup.html: v4-notice and whats-new carry `hidden`,
+            // #donation is display:none via CSS until showDonation(true)
+            // reveals it
             elMap['v4-notice'].hidden = true;
+            elMap['whats-new'].hidden = true;
             elMap.donation.style.display = 'none';
             return { els: elMap, $: id => elMap[id] || null };
         })());
@@ -174,5 +177,49 @@ describe('createDonation wiring', () => {
         boot({});
         els['new-version-text'].fire('click');
         expect(openNewTab).toHaveBeenCalledWith(CHANGELOG_URL, true, true);
+    });
+
+    describe('whats-new (4.0.8 local banner)', () => {
+        it('a 4.x → 4.0.8 crossing shows the banner with version + guide + changelog links', () => {
+            boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'zh-CN' });
+            expect(donation.whatsNewShown).toBe(true);
+            expect(els['whats-new'].hidden).toBe(false);
+            expect(els['whats-new-text'].textContent).toBe('whatsNewFavicon[4.0.8]');
+            expect(els['whats-new-guide'].textContent).toBe('donationV4GuideLink');
+            expect(els['whats-new-guide'].href).toBe(guideV4UrlFor('zh-CN'));
+            expect(els['whats-new-changelog'].textContent).toBe('whatsNewChangelog');
+            expect(els['whats-new-changelog'].href).toBe(CHANGELOG_URL);
+        });
+
+        it('a 3.x → 4.0.8 upgrade keeps whats-new hidden (the v4 notice owns it)', () => {
+            boot({ currentVersion: '3.3.0' }, { version: '4.0.8' });
+            expect(donation.whatsNewShown).toBe(false);
+            expect(els['whats-new'].hidden).toBe(true);
+            expect(els['v4-notice'].hidden).toBe(false); // the card carries the story
+        });
+
+        it('the same version stays hidden', () => {
+            boot({ currentVersion: '4.0.8' }, { version: '4.0.8' });
+            expect(donation.whatsNewShown).toBe(false);
+            expect(els['whats-new'].hidden).toBe(true);
+        });
+
+        it('a fresh install (no recorded version) stays hidden', () => {
+            boot({}, { version: '4.0.8' });
+            expect(donation.whatsNewShown).toBe(false);
+            expect(els['whats-new'].hidden).toBe(true);
+        });
+
+        it('the guide and changelog links route through openNewTab (popup semantics)', () => {
+            boot({ currentVersion: '4.0.6' }, { version: '4.0.8', lang: 'en' });
+            const guideEv = { preventDefault: vi.fn() };
+            els['whats-new-guide'].fire('click', guideEv);
+            expect(guideEv.preventDefault).toHaveBeenCalled();
+            expect(openNewTab).toHaveBeenCalledWith(guideV4UrlFor('en'), true, true);
+            const changelogEv = { preventDefault: vi.fn() };
+            els['whats-new-changelog'].fire('click', changelogEv);
+            expect(changelogEv.preventDefault).toHaveBeenCalled();
+            expect(openNewTab).toHaveBeenCalledWith(CHANGELOG_URL, true, true);
+        });
     });
 });

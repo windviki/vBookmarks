@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Αρχείο αλλαγών"
   },
+  "whatsNewFavicon": {
+    "message": "Η έκδοση v$1$ είναι η έκδοση με βελτιωμένα favicon: τα εικονίδια ιστοτόπων που δεν είχε αποθηκεύσει το Chrome στην κρυφή μνήμη ανακτώνται πλέον αυτόματα.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Προσθήκη διακομιστή μεσολάβησης για ελέγχους νεκρών συνδέσμων"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "ή"
+  },
+  "customIconPick": {
+    "message": "Επιλογή αρχείου…"
   },
   "delete": {
     "message": "Διαγραφή"

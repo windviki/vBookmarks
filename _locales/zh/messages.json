@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "更新日志"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ 是网站图标增强版：Chrome 未缓存的站点图标现在会自动获取。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "为死链检查添加代理"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": " 或者 "
+  },
+  "customIconPick": {
+    "message": "选择文件…"
   },
   "delete": {
     "message": "删除"

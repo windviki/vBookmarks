@@ -6,9 +6,11 @@
  *
  * applyVersionGate: records `currentVersion` and derives the flags for THIS
  * open — newOrUpgrade (a fresh install, or a version jump the same-or-newer-
- * minor check treats as an upgrade) and upgradedToV4 (a 3.x → 4.x crossing
- * that pins the v4 notice onto the card). Patch bumps (4.0 → 4.0.1) stay
- * silent (sameOrNewerMinor), a major/minor bump re-arms.
+ * minor check treats as an upgrade), upgradedToV4 (a 3.x → 4.x crossing
+ * that pins the v4 notice onto the card) and upgradedToAnnounced (a crossing
+ * into the 4.0.8 announce threshold — the local what's-new banner). Patch
+ * bumps (4.0 → 4.0.1) stay silent (sameOrNewerMinor), a major/minor bump
+ * re-arms.
  *
  * bumpOpenCount: the running popup-open counter (donationFactor advances
  * against it toward the next ask).
@@ -16,10 +18,12 @@
 import { parseVersion, sameOrNewerMinor, crossedInto } from './version.js';
 
 export const V4_THRESHOLD = parseVersion('4.0');
+export const ANNOUNCED_THRESHOLD = parseVersion('4.0.8');
 
 export const applyVersionGate = (store, currentVersion) => {
     let newOrUpgrade = true;
     let upgradedToV4 = false;
+    let upgradedToAnnounced = false;
     if (!store.get('currentVersion')) {
         store.set('currentVersion', currentVersion);
     } else {
@@ -32,9 +36,10 @@ export const applyVersionGate = (store, currentVersion) => {
             } else if (crossedInto(recordVer, currentVer, V4_THRESHOLD)) {
                 upgradedToV4 = true;
             }
+            upgradedToAnnounced = crossedInto(recordVer, currentVer, ANNOUNCED_THRESHOLD);
         }
     }
-    return { newOrUpgrade, upgradedToV4 };
+    return { newOrUpgrade, upgradedToV4, upgradedToAnnounced };
 };
 
 export const bumpOpenCount = (store) => {

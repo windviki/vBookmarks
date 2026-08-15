@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Muutosloki"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ on favicon-tehostettu versio: Chrome ei ole välimuistiin tallentanut sivustokuvakkeet haetaan nyt automaattisesti.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "tai"
+  },
+  "customIconPick": {
+    "message": "Valitse tiedosto…"
   },
   "delete": {
     "message": "Poista"

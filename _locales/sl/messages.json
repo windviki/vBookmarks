@@ -285,6 +285,14 @@
   "whatsNewChangelog": {
     "message": "Dnevnik sprememb"
   },
+  "whatsNewFavicon": {
+    "message": "v$1$ je izdaja z izboljšanimi faviconi: ikone spletnih mest, ki jih Chrome ni predpomnil, se zdaj samodejno pridobijo.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
   "deadProxyAdd": {
     "message": "Dodaj proxy strežnik za preverjanje mrtvih povezav"
   },
@@ -369,6 +377,9 @@
   },
   "defaultIconButtonOr": {
     "message": "ali"
+  },
+  "customIconPick": {
+    "message": "Izberi datoteko…"
   },
   "delete": {
     "message": "Izbriši"
