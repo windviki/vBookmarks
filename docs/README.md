@@ -200,7 +200,20 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
+### v4.0.7 · 2026-08
+
+#### Fixed
+
+- **Zoomed context menus always show at full height**: the 4.0.5-era fix compressed the menu down to the space below the trigger row, so at zoom > 100 a below-midline right-click showed a shrunken menu. The menu now keeps its full height — clamped to a viewport-level scrollable box only when even the whole popup cannot fit it — and a right-click on an open menu's background re-opens it at the pointer instead of dismissing it, so consecutive right-clicks on a row always show the menu again (no more show/hide alternation).
+- **Dead-marked list stays in sync with the toolbar filter**: switching the toolbar between 全部 / 受限 / 死链 (All / Blocked / Dead) filters the result rows correctly again (仅受限 / 仅死链 used to be swapped), the marked list no longer echoes rows the active filter hides, and it renders after the result rows.
+
+### v4.0.6 · 2026-08
+
+Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, and the dead-marked list out of sync with the toolbar filter); its changes were recalled and reworked into 4.0.7.
+
 ### v4.0.5 · 2026-08
+
+> **⚠ Recalled / deprecated** — superseded by 4.0.6 (rollback to 4.0.4); properly re-fixed in 4.0.7.
 
 #### New
 

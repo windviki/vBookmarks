@@ -544,24 +544,29 @@ export function initViewDead(ctx = {}) {
             html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                 `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
         } else {
+            const allRows = allResultRows();
             const rows = resultRows();
-            // Marks the SHOWN result rows do not cover: a marked id that
-            // the last scan never probed (a manual mark that predates the
-            // run, or one added after it), or one the active filter segment
-            // hides, has no row on screen to unmark on — surface just those
-            // as their own list, so neither a cached scan nor a filter ever
-            // strands a mark. Marks that ARE in the shown rows carry the
-            // toggle there, so they are not repeated here.
-            const rowIds = new Set(rows.map(r => r.item.id));
-            const uncovered = new Set([...deadMarks].filter(id => !rowIds.has(id)));
-            if (uncovered.size)
-                html += renderMarkedRows(uncovered);
             // Distinguish "the scan found nothing" from "the active filter
             // matches nothing" — the latter tells the user the other
             // segments (still visible above) are where the rows went.
             html += rows.length
                 ? renderRows(rows)
-                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allResultRows().length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+                : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
+            // Marks the RESULT rows do not cover: a marked id the last scan
+            // never probed (a manual mark that predates the run, or one added
+            // after it) has no row to unmark on under ANY filter — surface
+            // just those as their own list, after the result rows. A mark the
+            // ACTIVE filter hides is covered by its own row once the segment
+            // switches back, so it must NOT reappear here — doing so made the
+            // marked list echo the filtered-out category and read as "the
+            // toolbar filter is swapped / the list shows everything" (the
+            // toolbar/list mismatch report). Marks that ARE among the scan's
+            // problem rows carry the toggle in the result rows, so they are
+            // not repeated here either.
+            const rowIds = new Set(allRows.map(r => r.item.id));
+            const uncovered = new Set([...deadMarks].filter(id => !rowIds.has(id)));
+            if (uncovered.size)
+                html += renderMarkedRows(uncovered);
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);
