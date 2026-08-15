@@ -599,7 +599,7 @@ describe('initFaviconFallback', () => {
         }
     });
 
-    // --- 4.0.5 favicon enrichment hook (§4.1) --------------------------------
+    // --- 4.0.6 favicon enrichment hook (§4.1) --------------------------------
     it('onPlaceholder returning true suppresses the default swap', async () => {
         let called = 0;
         const api = initFaviconFallback(globalThis.document, {

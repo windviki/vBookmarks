@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Para sitios marcados de los que Chrome no tiene icono en caché, obtén el icono real directamente del sitio (/favicon.ico, luego los iconos declarados de la página). Las solicitudes solo van a los sitios que marcaste."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Respaldo de iconos de DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Cuando la descarga directa falla, busca el icono por dominio en el servicio de iconos de DuckDuckGo (revela el dominio a un tercero). Los servicios inaccesibles no se reintentan durante 6 horas."
   },
   "optionFaviconCacheClear": {

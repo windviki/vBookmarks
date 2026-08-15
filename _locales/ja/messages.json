@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo アイコンのフォールバック"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "直接取得に失敗した場合、DuckDuckGo のアイコンサービスからドメインでアイコンを検索します（ドメインが第三者に開示されます）。アクセスできないサービスは6時間再試行されません。"
   },
   "optionFaviconCacheClear": {

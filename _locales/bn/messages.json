@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "যে বুকমার্ক করা সাইটগুলির জন্য Chrome-এ কোনো ক্যাশ করা আইকন নেই, সাইট থেকে সরাসরি আসল আইকন আনুন (/favicon.ico, তারপর পেজের ঘোষিত আইকন)। অনুরোধ শুধুমাত্র আপনার বুকমার্ক করা সাইটগুলিতে যায়।"
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo আইকন ফলব্যাক"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "সরাসরি আনা ব্যর্থ হলে, DuckDuckGo-এর আইকন সার্ভিস থেকে ডোমেইন অনুযায়ী আইকনটি খুঁজুন (তৃতীয় পক্ষের কাছে ডোমেইন প্রকাশ করা হয়)। অপ্রাপ্য সার্ভিসগুলির জন্য ৬ ঘণ্টা পুনরায় চেষ্টা করা হয় না।"
   },
   "optionFaviconCacheClear": {

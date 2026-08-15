@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome에 캐시된 아이콘이 없는 북마크 사이트의 경우 사이트에서 실제 아이콘을 직접 가져옵니다(/favicon.ico, 이어서 페이지에 선언된 아이콘). 요청은 사용자가 북마크한 사이트에만 전송됩니다."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo 아이콘 대체"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "직접 가져오기가 실패하면 DuckDuckGo의 아이콘 서비스에서 도메인으로 아이콘을 조회합니다(도메인이 제3자에게 공개됨). 연결할 수 없는 서비스는 6시간 동안 재시도하지 않습니다."
   },
   "optionFaviconCacheClear": {

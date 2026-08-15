@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "針對 Chrome 沒有快取圖示的書籤網站，直接從網站取得實際圖示（依序嘗試 /favicon.ico 與網頁宣告的圖示）。請求只會傳送至您已加入書籤的網站。"
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo 圖示備援"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "當直接取得失敗時，透過 DuckDuckGo 的圖示服務依網域查詢圖示（會將網域揭露給第三方）。無法連線的服務 6 小時內不會重試。"
   },
   "optionFaviconCacheClear": {

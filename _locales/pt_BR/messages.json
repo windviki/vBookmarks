@@ -780,10 +780,10 @@
   "optionFaviconEnrichHint": {
     "message": "Para sites favoritados sem ícone em cache no Chrome, busque o ícone real diretamente do site (/favicon.ico e, em seguida, os ícones declarados na página). As solicitações vão apenas para sites que você marcou."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Fallback de ícones do DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Quando a busca direta falhar, procure o ícone pelo domínio no serviço de ícones do DuckDuckGo (isso divulga o domínio a terceiros). Serviços inacessíveis não são tentados novamente por 6 horas."
   },
   "optionFaviconCacheClear": {

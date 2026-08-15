@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Per i siti preferiti di cui Chrome non ha un'icona in cache, recupera l'icona reale direttamente dal sito (/favicon.ico, poi le icone dichiarate nella pagina). Le richieste vanno solo ai siti che hai salvato."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Fallback icone DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Quando il recupero diretto fallisce, cerca l'icona per dominio tramite il servizio icone di DuckDuckGo (il dominio viene rivelato a terzi). I servizi non raggiungibili non vengono ritentati per 6 ore."
   },
   "optionFaviconCacheClear": {

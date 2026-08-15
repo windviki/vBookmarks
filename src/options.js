@@ -116,15 +116,15 @@ const $ = id => document.getElementById(id);
             // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
             { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false },
             // v4.1: favicon 补全 —— 为 Chrome 未缓存图标的收藏站点拉取真实图标，
-            // 默认开启；DDG 兜底默认关（第三方，opt-in）。
+            // 默认开启；聚合兜底默认关（第三方服务，opt-in）。
             { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
-            { id: 'favicon-enrich-ddg', key: 'faviconEnrichDdg', defaultValue: '', inverted: false }
+            { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '', inverted: false }
         ];
         await bindSettingsList(viewSettings);
-        // v4.1 favicon enrich: the DDG sub-switch only makes sense while the
-        // master is on — grey it out when the master is off (visual demotion,
-        // no ambiguous "child on, parent off" state). Applied on change and
-        // once at init.
+        // v4.1 favicon enrich: the aggregate-fallback sub-switch only makes
+        // sense while the master is on — grey it out when the master is off
+        // (visual demotion, no ambiguous "child on, parent off" state).
+        // Applied on change and once at init.
         const syncDdgDisabled = () => {
             $('favicon-enrich-ddg').disabled = !$('favicon-enrich').checked;
         };
@@ -484,8 +484,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-favicon-contrast-hint').innerText = __m('optionFaviconContrastHint');
         document.getElementById('option-favicon-enrich').innerText = __m('optionFaviconEnrich');
         document.getElementById('option-favicon-enrich-hint').innerText = __m('optionFaviconEnrichHint');
-        document.getElementById('option-favicon-enrich-ddg').innerText = __m('optionFaviconEnrichDdg');
-        document.getElementById('option-favicon-enrich-ddg-hint').innerText = __m('optionFaviconEnrichDdgHint');
+        document.getElementById('option-favicon-enrich-ddg').innerText = __m('optionFaviconEnrichAgg');
+        document.getElementById('option-favicon-enrich-ddg-hint').innerText = __m('optionFaviconEnrichAggHint');
         document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.

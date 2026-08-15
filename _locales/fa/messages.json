@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "برای سایت‌های بوکمارک‌شده‌ای که کروم آیکونی از آن‌ها در حافظه پنهان ندارد، آیکون واقعی را مستقیماً از سایت دریافت کنید (/favicon.ico، سپس آیکون‌های اعلام‌شده در صفحه). درخواست‌ها فقط به سایت‌هایی که بوکمارک کرده‌اید ارسال می‌شوند."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "بازگشت به آیکون DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "اگر دریافت مستقیم ناموفق بود، آیکون را بر اساس دامنه از سرویس آیکون DuckDuckGo جستجو کنید (این کار دامنه را در اختیار شخص ثالث قرار می‌دهد). سرویس‌های غیرقابل دسترس به مدت ۶ ساعت دوباره تلاش نمی‌شوند."
   },
   "optionFaviconCacheClear": {

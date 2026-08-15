@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo rezervni izvor ikona"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Kada izravno dohvaćanje ne uspije, potražite ikonu po domeni pomoću DuckDuckGoove usluge ikona (domena se otkriva trećoj strani). Nedostupne usluge neće se ponovno pozivati tijekom 6 sati."
   },
   "optionFaviconCacheClear": {

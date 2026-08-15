@@ -1,5 +1,5 @@
 /**
- * Missing-favicon enrichment (4.0.5, docs/favicon-补全设计.md).
+ * Missing-favicon enrichment (4.0.6, docs/favicon-补全设计.md).
  *
  * Chrome's `_favicon` API only serves icons Chrome itself has cached — for
  * bookmarks imported / never visited, it answers with a placeholder that

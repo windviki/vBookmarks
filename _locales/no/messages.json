@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "For bokmerkede nettsteder uten bufret ikon i Chrome, hent det faktiske ikonet direkte fra nettstedet (/favicon.ico, deretter sidens deklarerte ikoner). Forespørsler går bare til nettsteder du har bokmerket."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Ikonfallback via DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Når direkte henting mislykkes, slå opp ikonet etter domenenavn fra DuckDuckGos ikontjeneste (avslører domenet for en tredjepart). Utilgjengelige tjenester forsøkes ikke på nytt i 6 timer."
   },
   "optionFaviconCacheClear": {

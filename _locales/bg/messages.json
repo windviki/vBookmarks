@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "За отбелязани сайтове, за които Chrome няма кеширана икона, извлича действителната икона директно от сайта (/favicon.ico, а след това и обявените от страницата икони). Заявките отиват само към сайтове, които сте отбелязали."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Резервен вариант за икони от DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Когато директното извличане не успее, потърси иконата по домейн в услугата за икони на DuckDuckGo (разкрива домейна пред трета страна). Недостъпните услуги не се опитват отново в продължение на 6 часа."
   },
   "optionFaviconCacheClear": {

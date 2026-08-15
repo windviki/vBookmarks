@@ -57,7 +57,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // faviconContrastLive is the options-page value pushed through the
     // chrome.storage.onChanged listener below; null = trust the store mirror.
     let faviconContrastLive = null;
-    // 4.0.5 favicon enrichment: enricher is instantiated AFTER faviconService
+    // 4.0.6 favicon enrichment: enricher is instantiated AFTER faviconService
     // (it needs sampleIcon/statsBySrc), but the onPlaceholder hook must be in
     // place before any row renders — a lazy wrapper defers to `enricher` which
     // is assigned right after construction (first hook call happens at row
@@ -82,12 +82,12 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         }
     });
 
-    // 4.0.5 favicon enrichment: fetch real icons for hosts Chrome has no
+    // 4.0.6 favicon enrichment: fetch real icons for hosts Chrome has no
     // cached favicon for. Live getters read the options at decision time.
     enricher = initFaviconEnrich(window.document, {
         faviconService,
         isEnabled: () => store.get('faviconEnrich', '1') === '1',
-        ddgEnabled: () => store.get('faviconEnrichDdg', '') === '1'
+        ddgEnabled: () => store.get('faviconEnrichAgg', '') === '1'
     });
 
     // The store mirror has no onChanged forwarding, so an options-page
@@ -105,12 +105,12 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
                 faviconContrastLive = changes.faviconContrast.newValue ?? '1';
                 faviconService.reapplyContrast();
             }
-            // 4.0.5 favicon enrichment switches are live: off cancels in-flight
+            // 4.0.6 favicon enrichment switches are live: off cancels in-flight
             // fetches and stops new enqueues; on lets the next placeholder
             // render trigger again. No re-render sweep on enable (avoid a
             // whole-tree scan) — the user reopens or scrolls to refresh.
             if (enricher && (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrich')
-                || Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichDdg'))) {
+                || Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichAgg'))) {
                 enricher.setEnabled(store.get('faviconEnrich', '1') === '1');
             }
         });

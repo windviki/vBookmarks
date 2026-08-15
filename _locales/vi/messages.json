@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Dự phòng biểu tượng bằng DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Khi tải trực tiếp thất bại, hãy tra cứu biểu tượng theo tên miền từ dịch vụ biểu tượng của DuckDuckGo (tiết lộ tên miền cho bên thứ ba). Các dịch vụ không truy cập được sẽ không được thử lại trong 6 giờ."
   },
   "optionFaviconCacheClear": {

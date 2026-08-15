@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Pokud Chrome nemá pro webovou stránku ikonu v mezipaměti, načte skutečnou ikonu přímo z webu (/favicon.ico, pak deklarované ikony stránky). Požadavky jsou odesílány pouze na weby, které máte v záložkách."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Náhradní ikony DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Když přímé načtení selže, vyhledá se ikona podle domény ve službě DuckDuckGo (tím je doména odhalena třetí straně). Nedostupné služby se po dobu 6 hodin znovu nezkoušejí."
   },
   "optionFaviconCacheClear": {

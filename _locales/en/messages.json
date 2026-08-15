@@ -1378,13 +1378,13 @@
     "message": "For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). Requests only go to sites you bookmarked.",
     "description": "Hint under the favicon enrich checkbox."
   },
-  "optionFaviconEnrichDdg": {
-    "message": "DuckDuckGo icon fallback",
-    "description": "Options checkbox (Views group): sub-switch enabling the DuckDuckGo icon service as a last-resort fallback when direct fetching fails."
+  "optionFaviconEnrichAgg": {
+    "message": "Third-party icon fallback",
+    "description": "Options checkbox (Views group): sub-switch enabling the built-in list of third-party icon services (favicon.run, then DuckDuckGo) as a last-resort fallback when direct fetching fails."
   },
-  "optionFaviconEnrichDdgHint": {
-    "message": "When direct fetching fails, look the icon up by domain from DuckDuckGo’s icon service (discloses the domain to a third party). Unreachable services are not retried for 6 hours.",
-    "description": "Hint under the DDG fallback checkbox."
+  "optionFaviconEnrichAggHint": {
+    "message": "When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services (favicon.run, then DuckDuckGo). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours.",
+    "description": "Hint under the third-party icon fallback checkbox."
   },
   "optionFaviconCacheClear": {
     "message": "Clear icon cache",

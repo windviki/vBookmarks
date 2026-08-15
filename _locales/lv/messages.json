@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Grāmatzīmētām vietnēm, kurām Chrome nav kešotu ikonu, iegūstiet īsto ikonu tieši no vietnes (/favicon.ico, pēc tam lapas deklarētās ikonas). Pieprasījumi tiek nosūtīti tikai uz vietnēm, kuras esat atzīmējis grāmatzīmēs."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo ikonu rezerves avots"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Ja tiešā iegūšana neizdodas, meklējiet ikonu pēc domēna DuckDuckGo ikonu pakalpojumā (domēns tiek atklāts trešajai pusei). Nepieejamie pakalpojumi netiek atkārtoti mēģināti 6 stundu laikā."
   },
   "optionFaviconCacheClear": {

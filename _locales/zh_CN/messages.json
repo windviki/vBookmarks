@@ -1245,10 +1245,10 @@
   "optionFaviconEnrichHint": {
     "message": "对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。"
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "用 DuckDuckGo 图标服务兜底"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "直连获取失败时，改为从 DuckDuckGo 图标服务按域名取图（会向第三方透露网站域名）。服务不可达时 6 小时内不再重试。"
   },
   "optionFaviconCacheClear": {

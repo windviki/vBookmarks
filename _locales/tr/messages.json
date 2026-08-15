@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Chrome'un önbelleğinde simgesi olmayan yer imlerindeki siteler için gerçek simgeyi doğrudan siteden alın (/favicon.ico, ardından sayfanın bildirdiği simgeler). İstekler yalnızca yer imlerinize eklediğiniz sitelere gönderilir."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo simge yedeği"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Doğrudan alma başarısız olduğunda, simgeyi DuckDuckGo'nun simge hizmetinden alan adına göre arayın (alan adını üçüncü bir tarafa bildirir). Erişilemeyen hizmetler 6 saat boyunca yeniden denenmez."
   },
   "optionFaviconCacheClear": {

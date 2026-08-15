@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "גיבוי אייקון מ-DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "כאשר האחזור הישיר נכשל, חפש את האייקון לפי דומיין בשירות האייקונים של DuckDuckGo (חושף את הדומיין לצד שלישי). עבור שירותים בלתי נגישים, לא יבוצע ניסיון חוזר במשך 6 שעות."
   },
   "optionFaviconCacheClear": {

@@ -127,7 +127,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     // page that doesn't opt in).
     const themeIsDark = ctx.themeIsDark || (() => false);
     const contrastEnabled = ctx.contrastEnabled || (() => false);
-    // 4.0.5 favicon enrichment hook: when a placeholder is identified, ask the
+    // 4.0.6 favicon enrichment hook: when a placeholder is identified, ask the
     // enricher first — it may inject a real icon (returns true) or enqueue the
     // host for async fetching (returns false → fall through to the default SVG).
     const onPlaceholder = typeof ctx.onPlaceholder === 'function' ? ctx.onPlaceholder : null;

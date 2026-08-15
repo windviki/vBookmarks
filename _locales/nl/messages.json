@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Voor gebookmarkte sites waarvoor Chrome geen gecachet pictogram heeft, wordt het echte pictogram rechtstreeks van de site opgehaald (/favicon.ico, daarna de gedeclareerde pictogrammen van de pagina). Verzoeken gaan alleen naar sites die u hebt gebookmarkt."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo-pictogram als terugval"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Wanneer rechtstreeks ophalen mislukt, wordt het pictogram per domein opgezocht via DuckDuckGo's pictogramdienst (het domein wordt aan een derde partij bekendgemaakt). Onbereikbare diensten worden 6 uur lang niet opnieuw geprobeerd."
   },
   "optionFaviconCacheClear": {

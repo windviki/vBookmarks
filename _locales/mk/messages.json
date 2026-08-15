@@ -782,10 +782,10 @@
   "optionFaviconEnrichHint": {
     "message": "За обележани сајтови за кои Chrome нема кеширана икона, преземете ја вистинската икона директно од сајтот (/favicon.ico, а потоа и декларираните икони на страницата). Барањата одат само до сајтовите што сте ги обележале."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Резервна икона од DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Кога директното преземање не успее, побарајте ја иконата по домен од услугата за икони на DuckDuckGo (го открива доменот на трета страна). Недостапните услуги не се обидуваат повторно 6 часа."
   },
   "optionFaviconCacheClear": {

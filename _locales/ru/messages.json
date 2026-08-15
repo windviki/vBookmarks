@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Для сайтов из закладок, для которых Chrome не имеет кэшированного значка, загружать настоящий значок напрямую с сайта (/favicon.ico, затем объявленные страницей значки). Запросы отправляются только на сайты из ваших закладок."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "Резервное получение значков через DuckDuckGo"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Когда прямое получение не удаётся, выполняется поиск значка по домену в сервисе значков DuckDuckGo (домен при этом передаётся третьей стороне). Недоступные сервисы не запрашиваются повторно в течение 6 часов."
   },
   "optionFaviconCacheClear": {

@@ -783,10 +783,10 @@
   "optionFaviconEnrichHint": {
     "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
   },
-  "optionFaviconEnrichDdg": {
+  "optionFaviconEnrichAgg": {
     "message": "DuckDuckGo ikon tartalék"
   },
-  "optionFaviconEnrichDdgHint": {
+  "optionFaviconEnrichAggHint": {
     "message": "Ha a közvetlen lekérés sikertelen, keresse meg az ikont a domain alapján a DuckDuckGo ikonszolgáltatásában (ez felfedi a domaint egy harmadik fél előtt). Az elérhetetlen szolgáltatások 6 órán keresztül nem kerülnek újrapróbálásra."
   },
   "optionFaviconCacheClear": {
