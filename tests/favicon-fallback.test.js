@@ -345,6 +345,36 @@ describe('initFaviconFallback', () => {
         expect(img.classList.set.has('favicon-contrast-invert')).toBe(false);
     });
 
+    it('the colored guard shields a light-plate colorful logo end to end (devconsole case)', async () => {
+        // A white card carrying colorful blocks: light 5/8 = 0.625 > 0.60 and
+        // dark 0 < 0.15 would flip it WITHOUT the guard — colored 3/8 = 0.375
+        // ≥ 0.30 is what saves the brand mark (the devconsole regression).
+        // Drives real bytes through the load handler → contrastStats →
+        // statsBySrc → applyContrast, not a hand-written stats fixture.
+        const plate = (block) => new Uint8ClampedArray([
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, ...block, ...block, ...block
+        ]);
+        const COLORFUL = plate([29, 99, 237, 255]);   // chroma 208 > 38 → colored
+        const MONO = plate([200, 200, 200, 255]);     // chroma 0 → monochrome
+        initFaviconFallback(globalThis.document, {
+            contrastEnabled: () => true,
+            themeIsDark: () => false
+        });
+        const colorful = makeClassImg(COLORFUL,
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fdevconsole.example&size=32');
+        loadHandler({ target: colorful });
+        await flush(); await flush();
+        expect(colorful.classList.set.has('favicon-contrast-invert')).toBe(false);
+        // the same plate shape in monochrome still flips — the guard reads
+        // chroma, not geometry
+        const mono = makeClassImg(MONO,
+            'chrome-extension://test/_favicon/?pageUrl=http%3A%2F%2Fmonoplate.example&size=32');
+        loadHandler({ target: mono });
+        await flush(); await flush();
+        expect(mono.classList.set.has('favicon-contrast-invert')).toBe(true);
+    });
+
     it('a white icon is not inverted on a dark background', async () => {
         initFaviconFallback(globalThis.document, {
             contrastEnabled: () => true,

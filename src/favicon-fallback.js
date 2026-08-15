@@ -45,10 +45,11 @@ export const hashPixels = bytes => {
 // v4.1 favicon contrast service: from the SAME getImageData buffer the
 // placeholder check already samples, derive four stats — the fraction of
 // opaque pixels sitting on the DARK extreme (lum < 0.30), on the LIGHT
-// extreme (lum > 0.70), on the COLORED extreme (sat > 0.15), and the opaque
-// coverage. No extra canvas, no extra decode: the contrast decision reuses
-// one read. Transparent pixels are skipped; a fully transparent icon yields
-// cover 0.
+// extreme (lum > 0.70), the COLORED share (chroma — max−min of the RGB
+// channels — > 38 of 255; a chroma measure, not HSL saturation, so pale
+// tints are not misread as colorful), and the opaque coverage. No extra
+// canvas, no extra decode: the contrast decision reuses one read.
+// Transparent pixels are skipped; a fully transparent icon yields cover 0.
 //
 // Why extreme-tone FRACTIONS instead of mean luminance (the earlier
 // pre-release 4.0.5-cycle approach):
