@@ -693,6 +693,24 @@ describe('contextmenu handler (opening a menu)', () => {
         expect(bookmarkMenu.style.overflowY).toBe('');
     });
 
+    it('drops a too-tall menu below the triggered row instead of covering it (zoom alternation)', () => {
+        // zoom 放大时菜单项被 body[data-zoom] 缩放, 菜单整体变高 —— 这里模拟
+        // 菜单 560 高, 小于视口级 clamp 上限 (600-0-8=592, 不触发开头 maxHeight,
+        // 即未 scrollable), 但触发点下方空间 (600-100=500) 不够、上方空间
+        // (100-0=100) 也不够 —— 翻上去会顶到 menuMinY 覆盖用户右键的那一行,
+        // 后续右键落在菜单上被分发到菜单而只关闭不重开 (zoom 交替 bug)。
+        // 修复: clamp 到触发点下方 (500-20-8=472) 并把顶部放到触发行下方
+        // (pageY 100 + ROW_GUESS 20 = 120), 使菜单不覆盖触发行。
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerHeight: 600 });
+        bookmarkMenu.offsetHeight = 560; // > boundY(500), < maxMenuH(592)
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageY: 100, clientY: 100 });
+        expect(bookmarkMenu.style.maxHeight).toBe('472px'); // 500 - 20 row - 8 margin
+        expect(bookmarkMenu.style.overflowY).toBe('auto');
+        expect(bookmarkMenu.style.top).toBe('120px'); // pageY 100 + ROW_GUESS 20
+        expect(bookmarkMenu.style.opacity).toBe('1');
+    });
+
     it('opens the separator menu on a separator row (and never the bookmark menu)', () => {
         const { bookmarkMenu, separatorMenu, makeSeparatorRow, openOn } = setup({});
         const { a } = makeSeparatorRow('30', '0'); // root folder (parentid '0')
@@ -730,6 +748,20 @@ describe('contextmenu handler (opening a menu)', () => {
         openOn(second.a);
         expect(first.a.classList.contains('active')).toBe(false);
         expect(second.a.classList.contains('active')).toBe(true);
+    });
+
+    it('right-click right after a left click still opens the menu (4.0.5 regression)', () => {
+        // 4.0.5 回归: 左键点击展开一个文件夹后立即右键, 首次右键不弹菜单
+        // (需再右击一次). 这里模拟「左键点击(body click → clearMenu) → 右键」,
+        // 验证首次右键仍能打开菜单。
+        const { body, bookmarkMenu, folderMenu, makeFolderRow } = setup({});
+        const row = makeFolderRow('7', '1'); // 非 root 文件夹
+        // 左键点击(冒泡到 body → clearMenu)
+        fire(body, 'click', makeEvent({ target: row.span }));
+        // 立即右键
+        fire(body, 'contextmenu', makeEvent({ target: row.span, pageX: 50, pageY: 60, clientY: 60 }));
+        expect(row.span.classList.contains('active')).toBe(true);
+        expect(folderMenu.style.opacity).toBe('1');
     });
 
     it('opens nothing on a non-row target but still eats the event', () => {
