@@ -791,6 +791,40 @@ describe('scan mirror — the SW runs the scan (v4 task-4 #16 + #17)', () => {
         }));
         expect($list.scrollTop).toBe(42); // the double resets it on swap — the view restored it
     });
+
+    it('cancel jumps the view to 上次标注 and shows the banner (marks exist)', () => {
+        // 用户方案: 取消进行中的扫描 → 自动切到"仅标注"分类 + 显示 tooltip。
+        // 标注是持久意图, 取消后只剩它们可看; 横幅的 rescan 是回新扫描的入口。
+        const CACHE = JSON.stringify({
+            ts: 1700000000000, scannedCount: 1,
+            results: { '12': { status: 'dead', code: 404 } }
+        });
+        const ctx = setup({
+            storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' }
+        });
+        const { $list, chrome } = ctx;
+        ctx.def().activate();
+        // idle all: results host 12, the marked list holds the uncovered 11
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('dead-marked-banner');
+        // start a run, then cancel it mid-flight
+        ctx.clickOn({ closest: sel => (sel === '.dead-rescan' ? {} : null) });
+        publishBlob(ctx, blobOf({ done: 1 }));
+        expect($list.innerHTML).toContain('deadPause');
+        ctx.clickOn({ closest: sel => (sel === '.dead-cancel' ? {} : null) });
+        expect(chrome.runtime.sent.map(m => m.type)).toEqual(
+            ['vbm-dead-scan-start', 'vbm-dead-scan-cancel']);
+        const html = $list.innerHTML;
+        // auto-switched to 上次标注: the segment is highlighted
+        expect(html).toContain('data-filter="marked" aria-pressed="true"');
+        // …the marked-only view: no result <ul>, the whole marked set listed
+        expect(html.match(/<ul role="list"/g)).toHaveLength(1);
+        expect(html).toContain('<ul role="list" class="dead-marked-list">');
+        expect(html).toContain('deadMarkedCount[2]');
+        // …and the banner is up, offering the rescan way back
+        expect(html).toContain('class="risk-banner dead-marked-banner"');
+        expect(html).toContain('deadMarkedBanner');
+    });
 });
 
 describe('item 10: row layout CSS contract', () => {
@@ -923,6 +957,27 @@ describe('filter + batch marks (§5.5c)', () => {
         });
         expect($list.innerHTML).toContain('id="dead-item-12"');
         expect($list.innerHTML).toContain('deadMarkedCount[1]');
+    });
+
+    it('the 全部 count sums 仅死链 + 仅受限 + 上次标注 (not just this scan)', () => {
+        // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅仅是本次扫描
+        // 之后的计数" — 全部 = 死链 + 受限 + 标注 = 本次扫描结果行 + 标注全量。
+        const ctx = setup({
+            storeData: { deadLastScan: CACHE, deadMarks: '["11","12","13"]' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // CACHE: 12 dead + 13 blocked → 死链 1, 受限 1, 标注 3 → 全部 5
+        expect($list.innerHTML).toContain('deadFilterAll 5');
+        expect($list.innerHTML).toContain('deadFilterDead 1');
+        expect($list.innerHTML).toContain('deadFilterBlocked 1');
+        expect($list.innerHTML).toContain('deadFilterMarked 3');
+        // the sum rule holds in the marked-only view too (segments stay)
+        ctx.clickOn({
+            closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null)
+        });
+        expect($list.innerHTML).toContain('deadFilterAll 5');
+        expect($list.innerHTML).toContain('deadFilterMarked 3');
     });
 
     it('a filter matching nothing keeps the segment bar reachable (item: filter lock-up)', () => {

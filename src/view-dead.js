@@ -452,8 +452,11 @@ export function initViewDead(ctx = {}) {
                 // v4 task-4 #1: pressed state = aria-pressed only (the
                 // 'active' class is context-menu.js's menu-open marker —
                 // clearMenu strips it body-wide on click/focus).
+                // 全部 = 本次扫描结果 (死链 + 受限) + 上次标注 三者之和 —
+                // 用户方案: "全部的计数应该包含以上三个分类的和, 而不仅是
+                // 本次扫描之后的计数", 即 全部 = 死链 + 受限 + 标注。
                 for (const [value, key, count] of [
-                    ['all', 'deadFilterAll', rows.length],
+                    ['all', 'deadFilterAll', rows.length + deadMarks.size],
                     ['dead', 'deadFilterDead', deadN],
                     ['blocked', 'deadFilterBlocked', rows.length - deadN],
                     // "上次标注": the whole marked set — clicking it switches
@@ -1068,11 +1071,21 @@ export function initViewDead(ctx = {}) {
     // Cancel (item 10): the run never happened — the mirror drops, the SW
     // discards the partial results and the view falls back to the previous
     // persisted cache (or the start hint).
+    // 用户方案: 取消进行中的扫描 → 自动切到"上次标注"分类并显示 tooltip
+    // (标注是持久意图, 取消后只剩它们可看; 横幅提示可点重新检测回到新扫描)。
+    // 没有任何标注时切过去只会看到空分类, 保持原视图 (回缓存/start 药丸)
+    // 更自然。暂停/扫描完成不受此影响 (它们不经过 cancelScan)。
     const cancelScan = () => {
         if (!live && !scanStarting)
             return;
         live = null;
         scanStarting = false;
+        if (deadMarks.size) {
+            // 仅内存切换, 不写 deadFilter: 取消是程序性临时动作, 下次打开
+            // 仍回持久化的分类 (通常默认"全部")。
+            filter = 'marked';
+            markedBannerDismissed = false;
+        }
         sendScan(DEAD_SCAN_MSG.cancel);
         if (views.isActive('dead'))
             render();
