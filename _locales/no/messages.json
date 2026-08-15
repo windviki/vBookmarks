@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Hvite ikoner på lyse temaer og svarte ikoner på mørke temaer inverteres slik at de forblir synlige. Hvert ikon prøvetas én gang når det lastes inn — ingen ekstra kostnad mens du surfer."
   },
+  "optionFaviconEnrich": {
+    "message": "Hent manglende nettstedsikoner"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "For bokmerkede nettsteder uten bufret ikon i Chrome, hent det faktiske ikonet direkte fra nettstedet (/favicon.ico, deretter sidens deklarerte ikoner). Forespørsler går bare til nettsteder du har bokmerket."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Ikonfallback via DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Når direkte henting mislykkes, slå opp ikonet etter domenenavn fra DuckDuckGos ikontjeneste (avslører domenet for en tredjepart). Utilgjengelige tjenester forsøkes ikke på nytt i 6 timer."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Tøm ikonbufferen"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikonbufferen er tømt. Ikoner hentes på nytt ved neste åpning."
+  },
   "optionSyncRefreshInterval": {
     "message": "Oppdateringsintervall"
   },

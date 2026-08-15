@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "हल्के थीम पर सफेद आइकन और गहरे थीम पर काले आइकन उल्टे कर दिए जाते हैं ताकि वे दिखाई देते रहें। प्रत्येक आइकन लोड होने पर एक बार सैंपल किया जाता है — ब्राउज़िंग के दौरान कोई खर्च नहीं।"
   },
+  "optionFaviconEnrich": {
+    "message": "गुम साइट आइकन लाएँ"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "उन बुकमार्क की गई साइटों के लिए जिनका आइकन Chrome कैश में नहीं है, साइट से सीधे असली आइकन लाएँ (/favicon.ico, फिर पृष्ठ द्वारा घोषित आइकन)। अनुरोध केवल आपकी बुकमार्क की गई साइटों को भेजे जाते हैं।"
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo आइकन फ़ॉलबैक"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "जब सीधे लाना विफल हो, तो DuckDuckGo की आइकन सेवा से डोमेन द्वारा आइकन खोजें (डोमेन तीसरे पक्ष को दिखाई देता है)। अगम्य सेवाओं को 6 घंटे तक दोबारा प्रयास नहीं किया जाता।"
+  },
+  "optionFaviconCacheClear": {
+    "message": "आइकन कैश साफ़ करें"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "आइकन कैश साफ़ हो गया। अगली बार खोलने पर आइकन फिर से लाए जाएँगे।"
+  },
   "optionSyncRefreshInterval": {
     "message": "रिफ्रेश अंतराल"
   },

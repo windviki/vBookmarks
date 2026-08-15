@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "淺色主題上的白色圖示與深色主題上的黑色圖示會被反轉，以保持可見。每個圖示在載入時取樣一次——瀏覽時不耗費資源。"
   },
+  "optionFaviconEnrich": {
+    "message": "取得遺失的網站圖示"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "針對 Chrome 沒有快取圖示的書籤網站，直接從網站取得實際圖示（依序嘗試 /favicon.ico 與網頁宣告的圖示）。請求只會傳送至您已加入書籤的網站。"
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo 圖示備援"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "當直接取得失敗時，透過 DuckDuckGo 的圖示服務依網域查詢圖示（會將網域揭露給第三方）。無法連線的服務 6 小時內不會重試。"
+  },
+  "optionFaviconCacheClear": {
+    "message": "清除圖示快取"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "圖示快取已清除。下次開啟時將重新取得圖示。"
+  },
   "optionSyncRefreshInterval": {
     "message": "刷新間隔"
   },

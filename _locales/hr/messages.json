@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Bijele ikone na svijetlim temama i crne ikone na tamnim temama se invertiraju kako bi ostale vidljive. Svaka se ikona uzorkuje samo jednom kad se učita — bez dodatnog opterećenja tijekom pregledavanja."
   },
+  "optionFaviconEnrich": {
+    "message": "Dohvati nedostajuće ikone web stranica"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Za web stranice dodane u zabilješke za koje Chrome nema predmemoriranu ikonu, dohvati stvarnu ikonu izravno s web stranice (/favicon.ico, zatim deklarirane ikone stranice). Zahtjevi se šalju samo na web stranice dodane u zabilješke."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo rezervni izvor ikona"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Kada izravno dohvaćanje ne uspije, potražite ikonu po domeni pomoću DuckDuckGoove usluge ikona (domena se otkriva trećoj strani). Nedostupne usluge neće se ponovno pozivati tijekom 6 sati."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Očisti predmemoriju ikona"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Predmemorija ikona je očišćena. Ikone će se ponovno dohvatiti pri sljedećem otvaranju."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval osvježavanja"
   },

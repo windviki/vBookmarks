@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "אייקונים לבנים בערכות נושא בהירות ואייקונים שחורים בערכות נושא כהות מופלים כדי שיישארו גלויים. כל אייקון נדגם פעם אחת בעת טעינתו — ללא עלות במהלך הגלישה."
   },
+  "optionFaviconEnrich": {
+    "message": "אחזר אייקוני אתרים חסרים"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "עבור אתרים בסימניות שאין ל-Chrome אייקון שמור עבורם, אחזר את האייקון האמיתי ישירות מהאתר (/favicon.ico, ולאחר מכן האייקונים המוצהרים של הדף). בקשות נשלחות רק לאתרים שבסימניות."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "גיבוי אייקון מ-DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "כאשר האחזור הישיר נכשל, חפש את האייקון לפי דומיין בשירות האייקונים של DuckDuckGo (חושף את הדומיין לצד שלישי). עבור שירותים בלתי נגישים, לא יבוצע ניסיון חוזר במשך 6 שעות."
+  },
+  "optionFaviconCacheClear": {
+    "message": "נקה מטמון אייקונים"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "מטמון האייקונים נוקה. האייקונים יאוחזרו מחדש בפתיחה הבאה."
+  },
   "optionSyncRefreshInterval": {
     "message": "מרווח רענון"
   },

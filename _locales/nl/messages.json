@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Witte pictogrammen op lichte thema's en zwarte pictogrammen op donkere thema's worden omgekeerd, zodat ze zichtbaar blijven. Elk pictogram wordt bij het laden één keer gecontroleerd — zonder extra kosten tijdens het browsen."
   },
+  "optionFaviconEnrich": {
+    "message": "Ontbrekende site-iconen ophalen"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Voor gebookmarkte sites waarvoor Chrome geen gecachet pictogram heeft, wordt het echte pictogram rechtstreeks van de site opgehaald (/favicon.ico, daarna de gedeclareerde pictogrammen van de pagina). Verzoeken gaan alleen naar sites die u hebt gebookmarkt."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo-pictogram als terugval"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Wanneer rechtstreeks ophalen mislukt, wordt het pictogram per domein opgezocht via DuckDuckGo's pictogramdienst (het domein wordt aan een derde partij bekendgemaakt). Onbereikbare diensten worden 6 uur lang niet opnieuw geprobeerd."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Pictogramcache wissen"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Pictogramcache gewist. Pictogrammen worden bij de volgende opening opnieuw opgehaald."
+  },
   "optionSyncRefreshInterval": {
     "message": "Vernieuwingsinterval"
   },

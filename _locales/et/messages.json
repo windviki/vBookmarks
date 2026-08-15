@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Valged ikoonid heledatel teemadel ja mustad ikoonid tumedatel teemadel pööratakse ümber, et need nähtavaks jääksid. Iga ikooni proovitakse selle laadimisel üks kord — sirvimise ajal pole kulud."
   },
+  "optionFaviconEnrich": {
+    "message": "Laadi puuduvad saidiikoonid"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Järjehoidjatesse lisatud saitide puhul, mille jaoks Chrome'il pole vahemällu salvestatud ikooni, laadi tegelik ikoon otse saidilt (/favicon.ico, seejärel lehel deklareeritud ikoonid). Päringud lähevad ainult teie järjehoidjatesse lisatud saitidele."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo ikooni varuallikas"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Kui otsene laadimine ebaõnnestub, otsi ikoon domeeni järgi DuckDuckGo ikooniteenusest (avaldab domeeni kolmandale osapoolele). Kättesaamatuid teenuseid ei proovita uuesti 6 tunni jooksul."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Tühjenda ikoonide vahemälu"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Ikoonide vahemälu on tühjendatud. Ikoonid laaditakse järgmisel avamisel uuesti."
+  },
   "optionSyncRefreshInterval": {
     "message": "Värskendamise intervall"
   },

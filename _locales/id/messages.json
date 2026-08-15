@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Ikon putih pada tema terang dan ikon hitam pada tema gelap dibalik agar tetap terlihat. Setiap ikon diambil sampelnya satu kali saat dimuat — tanpa beban saat menjelajah."
   },
+  "optionFaviconEnrich": {
+    "message": "Ambil ikon situs yang hilang"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Untuk situs yang ditandai yang tidak memiliki ikon cache di Chrome, ambil ikon asli langsung dari situs (/favicon.ico, lalu ikon yang dideklarasikan halaman). Permintaan hanya dikirim ke situs yang Anda tandai."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Cadangan ikon DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Jika pengambilan langsung gagal, cari ikon berdasarkan domain dari layanan ikon DuckDuckGo (ini mengungkapkan domain kepada pihak ketiga). Layanan yang tidak dapat dijangkau tidak akan dicoba lagi selama 6 jam."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Bersihkan cache ikon"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval penyegaran"
   },

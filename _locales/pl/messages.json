@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Białe ikony na jasnych motywach i czarne na ciemnych są odwracane, by pozostały widoczne. Każda ikona jest próbkowana raz podczas wczytywania — bez wpływu na przeglądanie."
   },
+  "optionFaviconEnrich": {
+    "message": "Pobierz brakujące ikony witryn"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "W przypadku zakładek, dla których Chrome nie ma ikony w pamięci podręcznej, pobierz prawdziwą ikonę bezpośrednio z witryny (/favicon.ico, a następnie ikony zadeklarowane na stronie). Żądania trafiają tylko do witryn, które dodałeś do zakładek."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Ikony zapasowe DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Gdy bezpośrednie pobieranie nie powiedzie się, ikona jest wyszukiwana według domeny w usłudze ikon DuckDuckGo (co ujawnia domenę podmiotowi trzeciemu). Niedostępne usługi nie są ponawiane przez 6 godzin."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Wyczyść pamięć podręczną ikon"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Pamięć podręczna ikon wyczyszczona. Ikony zostaną pobrane ponownie przy następnym otwarciu."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interwał odświeżania"
   },

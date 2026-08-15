@@ -18,6 +18,7 @@ import { initVisitStats } from './visit-stats.js';
 import { initViewStats } from './view-stats.js';
 import { markPopupOpen } from './visit-stats-sw.js';
 import { initFaviconFallback } from './favicon-fallback.js';
+import { initFaviconEnrich } from './favicon-enrich.js';
 import { applyUserStyle } from './userstyle.js';
 import { initResize } from './resize.js';
 import { createFolderSorter } from './folder-sort.js';
@@ -56,8 +57,16 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // faviconContrastLive is the options-page value pushed through the
     // chrome.storage.onChanged listener below; null = trust the store mirror.
     let faviconContrastLive = null;
+    // 4.0.5 favicon enrichment: enricher is instantiated AFTER faviconService
+    // (it needs sampleIcon/statsBySrc), but the onPlaceholder hook must be in
+    // place before any row renders — a lazy wrapper defers to `enricher` which
+    // is assigned right after construction (first hook call happens at row
+    // render time, long after). Same lazy-getter convention as the rest of
+    // neat.js.
+    let enricher = null;
     const faviconService = initFaviconFallback(window.document, {
         contrastEnabled: () => (faviconContrastLive ?? store.get('faviconContrast', '1')) === '1',
+        onPlaceholder: img => !!enricher && enricher.onPlaceholder(img),
         themeIsDark: () => {
             const b = window.document.body;
             if (!b)
@@ -73,6 +82,14 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         }
     });
 
+    // 4.0.5 favicon enrichment: fetch real icons for hosts Chrome has no
+    // cached favicon for. Live getters read the options at decision time.
+    enricher = initFaviconEnrich(window.document, {
+        faviconService,
+        isEnabled: () => store.get('faviconEnrich', '1') === '1',
+        ddgEnabled: () => store.get('faviconEnrichDdg', '') === '1'
+    });
+
     // The store mirror has no onChanged forwarding, so an options-page
     // faviconContrast flip never reaches an already-open side panel (the
     // popup simply reloads on each open and never needed this). Listen
@@ -82,11 +99,20 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     const wc = window.chrome;
     if (faviconService && wc && wc.storage && wc.storage.onChanged) {
         wc.storage.onChanged.addListener((changes, area) => {
-            if (area !== 'local' || !changes
-                || !Object.prototype.hasOwnProperty.call(changes, 'faviconContrast'))
+            if (area !== 'local' || !changes)
                 return;
-            faviconContrastLive = changes.faviconContrast.newValue ?? '1';
-            faviconService.reapplyContrast();
+            if (Object.prototype.hasOwnProperty.call(changes, 'faviconContrast')) {
+                faviconContrastLive = changes.faviconContrast.newValue ?? '1';
+                faviconService.reapplyContrast();
+            }
+            // 4.0.5 favicon enrichment switches are live: off cancels in-flight
+            // fetches and stops new enqueues; on lets the next placeholder
+            // render trigger again. No re-render sweep on enable (avoid a
+            // whole-tree scan) — the user reopens or scrolls to refresh.
+            if (enricher && (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrich')
+                || Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichDdg'))) {
+                enricher.setEnabled(store.get('faviconEnrich', '1') === '1');
+            }
         });
     }
 

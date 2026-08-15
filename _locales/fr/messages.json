@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Les icônes blanches sur les thèmes clairs et les icônes noires sur les thèmes sombres sont inversées pour rester visibles. Chaque icône est échantillonnée une fois lors de son chargement, sans coût pendant la navigation."
   },
+  "optionFaviconEnrich": {
+    "message": "Récupérer les icônes de site manquantes"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Pour les sites mis en favoris pour lesquels Chrome n'a pas d'icône en cache, récupérer l'icône réelle directement depuis le site (/favicon.ico, puis les icônes déclarées par la page). Les requêtes ne sont envoyées qu'aux sites que vous avez mis en favoris."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Repli sur les icônes DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Lorsque la récupération directe échoue, rechercher l'icône par domaine auprès du service d'icônes de DuckDuckGo (divulgue le domaine à un tiers). Les services inaccessibles ne sont pas réessayés pendant 6 heures."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Vider le cache d'icônes"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache d'icônes vidé. Les icônes seront récupérées à la prochaine ouverture."
+  },
   "optionSyncRefreshInterval": {
     "message": "Intervalle de rafraîchissement"
   },

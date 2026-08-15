@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Biele ikony vo svetlých témach a čierne ikony v tmavých témach sú invertované, aby zostali viditeľné. Každá ikona sa pri načítaní raz vzorkuje – počas prehliadania to nič nestojí."
   },
+  "optionFaviconEnrich": {
+    "message": "Načítať chýbajúce ikony stránok"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Pre záložky, pre ktoré Chrome nemá v medzipamäti ikonu, načíta skutočnú ikonu priamo zo stránky (/favicon.ico, potom deklarované ikony stránky). Požiadavky smerujú iba na stránky, ktoré máte v záložkách."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Náhradná ikona DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Keď priame načítanie zlyhá, vyhľadá ikonu podľa domény v službe ikon DuckDuckGo (tým sa doména zverejní tretej strane). Nedostupné služby sa nebudú znova skúšať počas 6 hodín."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Vyčistiť medzipamäť ikon"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval obnovenia"
   },

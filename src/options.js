@@ -114,9 +114,22 @@ const $ = id => document.getElementById(id);
             { id: 'stats-enabled', key: 'statsEnabled', defaultValue: '1', inverted: false },
             // v4.1: favicon 反色服务 —— 亮/暗主题下偏白/偏黑的单色 icon 反色，
             // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
-            { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false }
+            { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false },
+            // v4.1: favicon 补全 —— 为 Chrome 未缓存图标的收藏站点拉取真实图标，
+            // 默认开启；DDG 兜底默认关（第三方，opt-in）。
+            { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
+            { id: 'favicon-enrich-ddg', key: 'faviconEnrichDdg', defaultValue: '', inverted: false }
         ];
         await bindSettingsList(viewSettings);
+        // v4.1 favicon enrich: the DDG sub-switch only makes sense while the
+        // master is on — grey it out when the master is off (visual demotion,
+        // no ambiguous "child on, parent off" state). Applied on change and
+        // once at init.
+        const syncDdgDisabled = () => {
+            $('favicon-enrich-ddg').disabled = !$('favicon-enrich').checked;
+        };
+        $('favicon-enrich').addEventListener('change', syncDdgDisabled);
+        syncDdgDisabled();
         // Turning search history off also wipes the stored history (the hint
         // under the checkbox tells the user so).
         $('search-history-enabled').addEventListener('change', async () => {
@@ -188,6 +201,21 @@ const $ = id => document.getElementById(id);
                 await setSetting('visitStats', '{}');
         });
 
+        // Clear the favicon cache (per-host data keys + the index). The open
+        // popup/panel hears the index removal via storage.onChanged and drops
+        // its in-memory map; next render re-fetches (docs/favicon-补全设计.md
+        // §5.4).
+        $('favicon-cache-clear').addEventListener('click', async () => {
+            let all = {};
+            try { all = await chrome.storage.local.get(null); } catch (_) { /* noop */ }
+            const keys = Object.keys(all).filter(k =>
+                k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'));
+            if (!keys.length)
+                return;
+            await chrome.storage.local.remove(keys);
+            alert(_m('optionFaviconCacheCleared'));
+        });
+
         // Initialize sync settings. One write per change is enough: the
         // service worker (src/sync-engine.js) observes chrome.storage.sync
         // and reschedules its refresh alarm itself, and the popup mirrors
@@ -239,6 +267,13 @@ const $ = id => document.getElementById(id);
                 chrome.storage.local.get(null),
                 chrome.storage.sync.get(store.syncKeys)
             ]);
+            // The favicon cache (per-host data keys + the index) is local,
+            // MB-scale base64 — never ship it in a settings backup (design
+            // docs/favicon-补全设计.md §5.4).
+            for (const k of Object.keys(localData)) {
+                if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'))
+                    delete localData[k];
+            }
             const backup = {
                 app: 'vBookmarks',
                 version: chrome.runtime.getManifest().version,
@@ -447,6 +482,11 @@ const $ = id => document.getElementById(id);
         document.getElementById('stats-clear').innerText = __m('statsClearData');
         document.getElementById('option-favicon-contrast').innerText = __m('optionFaviconContrast');
         document.getElementById('option-favicon-contrast-hint').innerText = __m('optionFaviconContrastHint');
+        document.getElementById('option-favicon-enrich').innerText = __m('optionFaviconEnrich');
+        document.getElementById('option-favicon-enrich-hint').innerText = __m('optionFaviconEnrichHint');
+        document.getElementById('option-favicon-enrich-ddg').innerText = __m('optionFaviconEnrichDdg');
+        document.getElementById('option-favicon-enrich-ddg-hint').innerText = __m('optionFaviconEnrichDdgHint');
+        document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
         document.getElementById('option-theme').innerText = __m('optionTheme');

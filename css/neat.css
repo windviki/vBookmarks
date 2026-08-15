@@ -702,6 +702,14 @@ body.linux input {
     filter: invert(1) hue-rotate(180deg);
 }
 
+/* v4.1 favicon enrichment: while a real icon is being fetched, the default
+   SVG dims slightly so the user reads "in progress" rather than "broken" —
+   removed on success (replaced) or failure (fallback stays). */
+.favicon-enriching {
+    opacity: .45;
+    transition: opacity .3s;
+}
+
 #results ul li a:hover i,
 #tree ul li a:hover i {
     text-decoration: underline;

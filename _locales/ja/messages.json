@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "ライトテーマの白いアイコンとダークテーマの黒いアイコンは反転され、視認性が保たれます。各アイコンは読み込み時に一度だけサンプリングされるため、閲覧中の負荷はありません。"
   },
+  "optionFaviconEnrich": {
+    "message": "不足しているサイトアイコンを取得"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Chrome にキャッシュアイコンがないブックマーク済みサイトでは、実際のアイコンをサイトから直接取得します（/favicon.ico、次にページで宣言されたアイコン）。リクエストはブックマークしたサイトにのみ送信されます。"
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo アイコンのフォールバック"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "直接取得に失敗した場合、DuckDuckGo のアイコンサービスからドメインでアイコンを検索します（ドメインが第三者に開示されます）。アクセスできないサービスは6時間再試行されません。"
+  },
+  "optionFaviconCacheClear": {
+    "message": "アイコンキャッシュをクリア"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
+  },
   "optionSyncRefreshInterval": {
     "message": "更新間隔"
   },

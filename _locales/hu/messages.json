@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "A világos témák fehér ikonjai és a sötét témák fekete ikonjai invertálva lesznek, hogy láthatók maradjanak. Minden ikon a betöltésekor egyszer kerül mintavételezésre – böngészés közben nincs többletterhelés."
   },
+  "optionFaviconEnrich": {
+    "message": "Hiányzó webhelyikonok lekérése"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Azon könyvjelzőzött webhelyeknél, amelyekhez a Chrome nem rendelkezik gyorsítótárazott ikonnal, töltse le a tényleges ikont közvetlenül a webhelyről (/favicon.ico, majd az oldal által deklarált ikonok). A kérések csak az Ön által könyvjelzőzött webhelyekre irányulnak."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo ikon tartalék"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Ha a közvetlen lekérés sikertelen, keresse meg az ikont a domain alapján a DuckDuckGo ikonszolgáltatásában (ez felfedi a domaint egy harmadik fél előtt). Az elérhetetlen szolgáltatások 6 órán keresztül nem kerülnek újrapróbálásra."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Ikongyorsítótár törlése"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
+  },
   "optionSyncRefreshInterval": {
     "message": "Frissítési időköz"
   },

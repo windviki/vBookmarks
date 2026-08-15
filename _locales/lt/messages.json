@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Baltos piktogramos šviesiose temose ir juodos piktogramos tamsiose temose yra apverčiamos, kad jos liktų matomos. Kiekviena piktograma yra imama vieną kartą, kai įkeliama – jokios papildomos apkrovos naršant."
   },
+  "optionFaviconEnrich": {
+    "message": "Gauti trūkstamas svetainių piktogramas"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Svetainėms, kurioms Chrome neturi išsaugotos piktogramos, gaukite tikrą piktogramą tiesiogiai iš svetainės (/favicon.ico, tada svetainės deklaruotos piktogramos). Užklausos siunčiamos tik į jūsų įsimintas svetaines."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo piktogramų atsarginė parinktis"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Kai tiesioginis gavimas nepavyksta, ieškokite piktogramos pagal domeną DuckDuckGo piktogramų tarnyboje (domenas atskleidžiamas trečiajai šaliai). Nepasiekiamos tarnybos nebandomos iš naujo 6 valandas."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Išvalyti piktogramų talpyklą"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
+  },
   "optionSyncRefreshInterval": {
     "message": "Atnaujinimo intervalas"
   },

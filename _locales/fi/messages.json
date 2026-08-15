@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Valkoiset kuvakkeet vaaleissa teemoissa ja mustat kuvakkeet tummissa teemoissa käännetään, jotta ne pysyvät näkyvinä. Jokainen kuvake analysoidaan kerran latauksen yhteydessä — ei lisäkuormitusta selauksen aikana."
   },
+  "optionFaviconEnrich": {
+    "message": "Hae puuttuvat sivustokuvakkeet"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Niille kirjanmerkeissä oleville sivustoille, joille Chromella ei ole välimuistissa kuvaketta, hae oikea kuvake suoraan sivustolta (/favicon.ico, sitten sivun ilmoittamat kuvakkeet). Pyynnöt lähetetään vain sivustoille, jotka olet lisännyt kirjanmerkkeihin."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo-kuvakkeen varavaihtoehto"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Kun suora haku epäonnistuu, hae kuvaketta verkkotunnuksen perusteella DuckDuckGon kuvakepalvelusta (paljastaa verkkotunnuksen kolmannelle osapuolelle). Tavoittamattomia palveluita ei yritetä uudelleen 6 tuntiin."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Tyhjennä kuvakevälimuisti"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
+  },
   "optionSyncRefreshInterval": {
     "message": "Päivitysväli"
   },

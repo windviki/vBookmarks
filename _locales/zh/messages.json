@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "浅色主题上的白色图标和深色主题上的黑色图标会被反转，以便保持可见。每个图标在加载时采样一次——浏览时不产生额外开销。"
   },
+  "optionFaviconEnrich": {
+    "message": "获取缺失的网站图标"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "对于 Chrome 没有缓存图标的书签网站，直接从网站获取真实图标（先尝试 /favicon.ico，再尝试页面声明的图标）。请求仅发送到您收藏的网站。"
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo 图标回退"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "当直接获取失败时，通过域名从 DuckDuckGo 的图标服务查找图标（会将域名披露给第三方）。无法访问的服务 6 小时内不会重试。"
+  },
+  "optionFaviconCacheClear": {
+    "message": "清除图标缓存"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "图标缓存已清除。下次打开时将重新获取图标。"
+  },
   "optionSyncRefreshInterval": {
     "message": "刷新间隔"
   },

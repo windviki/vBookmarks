@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Faviconurile albe pe temele deschise și cele negre pe temele închise sunt inversate pentru a rămâne vizibile. Fiecare favicon este eșantionat o singură dată la încărcare — fără cost în timpul navigării."
   },
+  "optionFaviconEnrich": {
+    "message": "Preia pictogramele lipsă ale site-urilor"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Pentru site-urile marcate pentru care Chrome nu are nicio pictogramă în cache, preia pictograma reală direct de pe site (/favicon.ico, apoi pictogramele declarate ale paginii). Cererile sunt trimise doar către site-urile pe care le-ați marcat."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Fallback pentru pictograme DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Când preluarea directă eșuează, caută pictograma după domeniu în serviciul de pictograme DuckDuckGo (dezvăluie domeniul unei terțe părți). Serviciile inaccesibile nu sunt reîncercate timp de 6 ore."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Șterge cache-ul pictogramelor"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
+  },
   "optionSyncRefreshInterval": {
     "message": "Interval de actualizare"
   },

@@ -1370,6 +1370,30 @@
     "message": "White icons on light themes and black icons on dark themes are inverted so they stay visible. Each icon is sampled once when it loads — no cost while browsing.",
     "description": "Options hint under the favicon-contrast checkbox, explaining the low-overhead one-time-per-icon sampling."
   },
+  "optionFaviconEnrich": {
+    "message": "Fetch missing site icons",
+    "description": "Options checkbox (Views group): for bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). On by default."
+  },
+  "optionFaviconEnrichHint": {
+    "message": "For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page’s declared icons). Requests only go to sites you bookmarked.",
+    "description": "Hint under the favicon enrich checkbox."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo icon fallback",
+    "description": "Options checkbox (Views group): sub-switch enabling the DuckDuckGo icon service as a last-resort fallback when direct fetching fails."
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "When direct fetching fails, look the icon up by domain from DuckDuckGo’s icon service (discloses the domain to a third party). Unreachable services are not retried for 6 hours.",
+    "description": "Hint under the DDG fallback checkbox."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Clear icon cache",
+    "description": "Options button: clear the favicon cache so icons are re-fetched on next open."
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Icon cache cleared. Icons will be re-fetched on next open.",
+    "description": "Alert shown after clearing the favicon cache."
+  },
   "statsSortByCount": {
     "message": "By count",
     "description": "Stats view sort segment: order rows by visit count, highest first."

@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Biểu tượng màu trắng trên nền sáng và màu đen trên nền tối sẽ được đảo ngược để luôn hiển thị rõ. Mỗi biểu tượng được lấy mẫu một lần khi tải — không tốn chi phí khi duyệt web."
   },
+  "optionFaviconEnrich": {
+    "message": "Tải biểu tượng còn thiếu"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Đối với các trang đã đánh dấu mà Chrome không có biểu tượng trong bộ nhớ cache, hãy tải trực tiếp biểu tượng thực từ trang web (/favicon.ico, sau đó là các biểu tượng được khai báo của trang). Yêu cầu chỉ gửi đến các trang bạn đã đánh dấu."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "Dự phòng biểu tượng bằng DuckDuckGo"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Khi tải trực tiếp thất bại, hãy tra cứu biểu tượng theo tên miền từ dịch vụ biểu tượng của DuckDuckGo (tiết lộ tên miền cho bên thứ ba). Các dịch vụ không truy cập được sẽ không được thử lại trong 6 giờ."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Xóa bộ đệm biểu tượng"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
+  },
   "optionSyncRefreshInterval": {
     "message": "Khoảng thời gian làm mới"
   },

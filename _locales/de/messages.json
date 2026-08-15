@@ -777,6 +777,24 @@
   "optionFaviconContrastHint": {
     "message": "Weiße Favicons auf hellen Designs und schwarze Favicons auf dunklen Designs werden invertiert, damit sie sichtbar bleiben. Jedes Favicon wird beim Laden einmal erfasst – ohne Kosten beim Surfen."
   },
+  "optionFaviconEnrich": {
+    "message": "Fehlende Website-Icons abrufen"
+  },
+  "optionFaviconEnrichHint": {
+    "message": "Für Lesezeichen-Websites, für die Chrome kein Icon zwischengespeichert hat, wird das echte Icon direkt von der Website abgerufen (/favicon.ico, danach die in der Seite angegebenen Icons). Anfragen gehen nur an Websites, die Sie mit einem Lesezeichen versehen haben."
+  },
+  "optionFaviconEnrichDdg": {
+    "message": "DuckDuckGo-Icon-Fallback"
+  },
+  "optionFaviconEnrichDdgHint": {
+    "message": "Wenn der direkte Abruf fehlschlägt, wird das Icon im DuckDuckGo-Icon-Dienst anhand der Domain nachgeschlagen (die Domain wird dabei an einen Dritten weitergegeben). Nicht erreichbare Dienste werden 6 Stunden lang nicht erneut abgerufen."
+  },
+  "optionFaviconCacheClear": {
+    "message": "Icon-Cache leeren"
+  },
+  "optionFaviconCacheCleared": {
+    "message": "Icon-Cache geleert. Icons werden beim nächsten Öffnen erneut abgerufen."
+  },
   "optionSyncRefreshInterval": {
     "message": "Aktualisierungsintervall"
   },
