@@ -383,25 +383,25 @@ export function initContextMenu(ctx = {}) {
         armJitterGuard();
     };
 
-    // ── right-click on an open menu's background ──────────────────────
+    // ── right-click on an open menu re-opens it at the pointer ─────────
     // The classic context-menu contract: a second right-click RE-OPENS the
     // menu at the pointer instead of hiding it. The body handler would
     // otherwise eat the event (preventDefault + clearMenu + return — the menu
     // background is not a row), which is the zoom>100 alternation bug: a
     // zoom-enlarged menu flips up over the row that opened it, the user's
-    // next right-click lands on the MENU BACKGROUND, and the menu closes
-    // instead of following the cursor. Each main menu's contextmenu listener
-    // routes through here: a .menu-item target dispatches the handler; any
-    // other target (the menu box, its padding, hr separators) keeps the menu
-    // open and repositions it under the pointer. Submenu flyouts are body-
-    // level siblings, so their own (unchanged) listeners own the events they
-    // receive — only the parent menus are covered.
-    const menuBackgroundReposition = (menu, handler) => e => {
-        const t = e.target;
-        if (t && t.classList && t.classList.contains('menu-item')) {
-            handler(e);
-            return;
-        }
+    // next right-click lands on the MENU, and the menu closes instead of
+    // following the cursor. Each main menu's contextmenu listener routes
+    // through here. IMPORTANT: a right-click on the open menu — an item OR
+    // its background — NEVER dispatches the item's action (left-click does,
+    // via the mousedown listeners). Dispatching a right-clicked item is what
+    // made the zoomed menu "disappear": at zoom>100 the menu is scaled (items
+    // zoom:1.2 while the box stays zoom:1) so it grows tall enough to cover
+    // the row that opened it and the rows beneath, a follow-up right-click
+    // meant for "the folder row again" lands on a menu ITEM, and dispatching
+    // that item closed the menu instead of re-opening it. Submenu flyouts are
+    // body-level siblings, so their own (unchanged) listeners own the events
+    // they receive — only the parent menus are covered.
+    const menuBackgroundReposition = menu => e => {
         // A closed menu sits at -999px / opacity:0 — never resurrect it from
         // a stray event; without a context row there is nothing to re-open.
         if (!currentContext || menu.style.opacity !== '1')
@@ -652,10 +652,42 @@ export function initContextMenu(ctx = {}) {
         }
     }
 
+    // The currently visible PARENT context menu (a submenu flyout, if open,
+    // is not the menu the user right-clicked to dismiss/re-open — skip it).
+    const visibleMenu = () => {
+        const menus = document.querySelectorAll('menu[type=context]');
+        for (const m of menus) {
+            if (m.classList && m.classList.contains('submenu'))
+                continue;
+            if (m.style.opacity === '1')
+                return m;
+        }
+        return null;
+    };
+
     let macCloseContextMenu = false;
     body.addEventListener('contextmenu', e => {
         e.preventDefault();
-        clearMenu();
+        // Right-click re-open contract for an open menu, decided on the
+        // COORDINATES against the open menu's VISUAL box rather than the
+        // event target. At zoom>100 the menu's items are zoom:1.2 while the
+        // box is zoom:1, so the browser's hit-test for a point the user sees
+        // as "the folder row" (or as the menu itself) can resolve to the
+        // menu, to a row under the menu, or to an unrelated element (the
+        // search bar / tab strip / resizer) — but the intent is always "show
+        // the menu again HERE". A right-click within the open menu's visual
+        // box re-positions it at the pointer and returns; anything outside
+        // falls through to the row handling below (switch the menu to that
+        // row, or clear).
+        const openMenu = visibleMenu();
+        if (openMenu) {
+            const r = openMenu.getBoundingClientRect();
+            if (e.clientX >= r.left && e.clientX <= r.right
+                && e.clientY >= r.top && e.clientY <= r.bottom) {
+                positionMenu(openMenu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
+                return;
+            }
+        }
         if (os === 'mac') {
             macCloseContextMenu = false;
             setTimeout(() => {
@@ -677,8 +709,30 @@ export function initContextMenu(ctx = {}) {
         // lands on spans outside any row — the view-tab strip (right-clicking
         // a tab opened the FOLDER menu on the tab-icon span) and the view
         // toolbars. No row → no menu (default already suppressed above).
-        if (!el.closest || !el.closest('li'))
+        //
+        // …UNLESS a menu is already open (zoom>100 re-open contract): under
+        // CSS zoom the browser's hit-test can displace a pointer the user
+        // sees as "the folder area" onto a non-row neighbour — the tab strip,
+        // the search bar, the resizer — leaving no row to open. That
+        // right-click still means "show the menu HERE again", so re-position
+        // the open menu at the pointer instead of dismissing it. Its context
+        // is intentionally NOT cleared (no clearMenu on this path) so the
+        // re-positioned menu keeps dispatching its items. Only the menu
+        // Background path above (inside its visual box) is exclusive; outside
+        // the box a click on another row still switches menus, and a click on
+        // a true empty area with no menu open still dismisses.
+        if (!el.closest || !el.closest('li')) {
+            if (openMenu)
+                positionMenu(openMenu, { left: e.pageX, top: e.pageY, clientY: e.clientY }, 'cursor');
+            else
+                clearMenu(e);
             return;
+        }
+        // A real row under the pointer: this either switches the open menu to
+        // that row (clear the previous row's context/active + hide all menus
+        // first) or opens a fresh menu. clearMenu is deferred to here so the
+        // no-row reposition path above keeps its context.
+        clearMenu(e);
         const row = el.closest('li');
         let menu;
         // Round-4 item 7: a search-history row (the recorded-query rows of
@@ -984,7 +1038,7 @@ export function initContextMenu(ctx = {}) {
         if (e.button === 0 || (os === 'mac' && e.button === 1))
             bookmarkContextHandler(e);
     });
-    $bookmarkContextMenu.addEventListener('contextmenu', menuBackgroundReposition($bookmarkContextMenu, bookmarkContextHandler));
+    $bookmarkContextMenu.addEventListener('contextmenu', menuBackgroundReposition($bookmarkContextMenu));
     $bookmarkContextMenu.addEventListener('click', e => {
         e.stopPropagation();
     });
@@ -1160,7 +1214,7 @@ export function initContextMenu(ctx = {}) {
         if (e.button === 0 || (os === 'mac' && e.button === 1))
             folderContextHandler(e);
     });
-    $folderContextMenu.addEventListener('contextmenu', menuBackgroundReposition($folderContextMenu, folderContextHandler));
+    $folderContextMenu.addEventListener('contextmenu', menuBackgroundReposition($folderContextMenu));
     $folderContextMenu.addEventListener('click', e => {
         e.stopPropagation();
     });
@@ -1228,7 +1282,7 @@ export function initContextMenu(ctx = {}) {
         if (e.button === 0 || (os === 'mac' && e.button === 1))
             separatorContextHandler(e);
     });
-    $separatorContextMenu.addEventListener('contextmenu', menuBackgroundReposition($separatorContextMenu, separatorContextHandler));
+    $separatorContextMenu.addEventListener('contextmenu', menuBackgroundReposition($separatorContextMenu));
 
     // Round-4 item 7: the search-history menu. Dispatch reuses the history
     // area's own click affordances — search.js's delegated handlers own the
@@ -1281,7 +1335,7 @@ export function initContextMenu(ctx = {}) {
             if (e.button === 0 || (os === 'mac' && e.button === 1))
                 searchHistoryContextHandler(e);
         });
-        $searchHistoryContextMenu.addEventListener('contextmenu', menuBackgroundReposition($searchHistoryContextMenu, searchHistoryContextHandler));
+        $searchHistoryContextMenu.addEventListener('contextmenu', menuBackgroundReposition($searchHistoryContextMenu));
     }
 
     // v4 task-3 #10: the slim menu for unbookmarked stats-history rows.
@@ -1332,7 +1386,7 @@ export function initContextMenu(ctx = {}) {
             if (e.button === 0 || (os === 'mac' && e.button === 1))
                 histRowContextHandler(e);
         });
-        $histRowContextMenu.addEventListener('contextmenu', menuBackgroundReposition($histRowContextMenu, histRowContextHandler));
+        $histRowContextMenu.addEventListener('contextmenu', menuBackgroundReposition($histRowContextMenu));
     }
 
     // v4 task-3 #16: the dupes group-head menu. currentContext is the
@@ -1363,7 +1417,7 @@ export function initContextMenu(ctx = {}) {
             if (e.button === 0 || (os === 'mac' && e.button === 1))
                 dupesGroupContextHandler(e);
         });
-        $dupesGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($dupesGroupContextMenu, dupesGroupContextHandler));
+        $dupesGroupContextMenu.addEventListener('contextmenu', menuBackgroundReposition($dupesGroupContextMenu));
     }
 
     // v4 task-4 #6: the palette custom-command row menu. currentContext is
@@ -1401,7 +1455,7 @@ export function initContextMenu(ctx = {}) {
             if (e.button === 0 || (os === 'mac' && e.button === 1))
                 paletteCmdContextHandler(e);
         });
-        $paletteCmdContextMenu.addEventListener('contextmenu', menuBackgroundReposition($paletteCmdContextMenu, paletteCmdContextHandler));
+        $paletteCmdContextMenu.addEventListener('contextmenu', menuBackgroundReposition($paletteCmdContextMenu));
     }
 
     // v4 task-3 #11: the positional add-* entries + their separators, as one
