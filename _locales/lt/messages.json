@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Kai tiesioginis nuskaitymas nepavyksta, piktogramos ieškomos pagal domeną iš integruoto trečiųjų šalių piktogramų paslaugų sąrašo (favicon.run, tada DuckDuckGo). Nepasiekiama paslauga praleidžiama ir bandoma kita – ji nebandoma iš naujo 6 valandas."
   },
+  "optionFaviconBackup": {
+    "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Taip pat įtraukti praturtintą svetainės piktogramų talpyklą (duomenys pagal svetainę, gali būti dideli) į nustatymų eksportą/importą. Išjungus šią parinktį atsarginės kopijos lieka mažos; piktogramos vis tiek automatiškai įkeliamos iš naujo."
+  },
   "optionFaviconCacheClear": {
     "message": "Išvalyti piktogramų talpyklą"
   },
   "optionFaviconCacheCleared": {
     "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
+  },
+  "storageUsageIcon": {
+    "message": "Piktogramos"
+  },
+  "storageUsageBookmarks": {
+    "message": "Adresyno duomenys"
+  },
+  "storageUsageOther": {
+    "message": "Kita"
+  },
+  "storageUsageFree": {
+    "message": "Laisva vieta"
+  },
+  "storageUsageHint": {
+    "message": "Saugyklos vietos kiekis, kurį naudoja adresynas, piktogramų talpykla ir nustatymai. Laisvos vietos kiekis atnaujinamas išvalius piktogramų talpyklą."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Pagrindinis puslapis"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks versija"
   },
   "optionSyncRefreshInterval": {
     "message": "Atnaujinimo intervalas"

@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Kui otsene laadimine ebaõnnestub, otsitakse ikooni domeeni järgi sisseehitatud kolmanda osapoole ikooniteenuste loendist (favicon.run, seejärel DuckDuckGo). Kättesaamatuks osutunud teenus jäetakse vahele ja proovitakse järgmist — seda ei proovita uuesti 6 tunni jooksul."
   },
+  "optionFaviconBackup": {
+    "message": "Kaasa ikoonide vahemälu varukoopiatesse"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Samuti pakitakse rikastatud faviconi vahemälu (saidipõhised andmed, mis võivad olla suured) seadete eksporti/importi. Väljalülitamisel jäävad varukoopiad väikeseks; ikoone laaditakse niikuinii automaatselt uuesti."
+  },
   "optionFaviconCacheClear": {
     "message": "Tühjenda ikoonide vahemälu"
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoonide vahemälu on tühjendatud. Ikoonid laaditakse järgmisel avamisel uuesti."
+  },
+  "storageUsageIcon": {
+    "message": "Ikoonid"
+  },
+  "storageUsageBookmarks": {
+    "message": "Järjehoidjate andmed"
+  },
+  "storageUsageOther": {
+    "message": "Muu"
+  },
+  "storageUsageFree": {
+    "message": "Vaba"
+  },
+  "storageUsageHint": {
+    "message": "Salvestusruum, mida kasutavad järjehoidjad, ikoonivahemälu ja seaded. Vaba ruum uueneb pärast ikoonivahemälu tühjendamist."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Koduleht"
+  },
+  "optionsVersion": {
+    "message": "vBookmarksi versioon"
   },
   "optionSyncRefreshInterval": {
     "message": "Värskendamise intervall"

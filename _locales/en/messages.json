@@ -1407,6 +1407,14 @@
     "message": "When direct fetching fails, look the icon up by domain from a built-in list of third-party icon services (favicon.run, then DuckDuckGo). A service found unreachable is skipped and the next one is tried — it is not retried for 6 hours.",
     "description": "Hint under the third-party icon fallback checkbox."
   },
+  "optionFaviconBackup": {
+    "message": "Include icon cache in backups",
+    "description": "Options checkbox (Icons group): whether the settings export/import also carries the enriched favicon cache (per-site data, potentially large). Off by default to keep backups small."
+  },
+  "optionFaviconBackupHint": {
+    "message": "Also pack the enriched favicon cache (per-site data, potentially large) into the settings export/import. Off keeps backups small; icons are re-fetched automatically anyway.",
+    "description": "Hint under the include-icon-cache-in-backups checkbox."
+  },
   "optionFaviconCacheClear": {
     "message": "Clear icon cache",
     "description": "Options button: clear the favicon cache so icons are re-fetched on next open."
@@ -1414,6 +1422,38 @@
   "optionFaviconCacheCleared": {
     "message": "Icon cache cleared. Icons will be re-fetched on next open.",
     "description": "Alert shown after clearing the favicon cache."
+  },
+  "storageUsageIcon": {
+    "message": "Icons",
+    "description": "Storage usage bar legend segment: bytes held by the favicon cache."
+  },
+  "storageUsageBookmarks": {
+    "message": "Bookmark data",
+    "description": "Storage usage bar legend segment: bytes held by bookmark-derived data (dead-link scan, visit stats)."
+  },
+  "storageUsageOther": {
+    "message": "Other",
+    "description": "Storage usage bar legend segment: bytes held by settings and any other data."
+  },
+  "storageUsageFree": {
+    "message": "Free",
+    "description": "Storage usage bar legend segment: remaining space in chrome.storage.local."
+  },
+  "storageUsageHint": {
+    "message": "Storage space used by bookmarks, the icon cache and settings. Free space updates after clearing the icon cache.",
+    "description": "Hint under the storage usage bar in the Icons group."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub",
+    "description": "Options page header link to the GitHub profile/repository."
+  },
+  "optionsHomepageLink": {
+    "message": "Homepage",
+    "description": "Options page header link to the plugin homepage."
+  },
+  "optionsVersion": {
+    "message": "vBookmarks version",
+    "description": "Tooltip for the version number shown at the top-right of the options page."
   },
   "statsSortByCount": {
     "message": "By count",

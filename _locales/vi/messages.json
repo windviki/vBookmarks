@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Khi tải trực tiếp thất bại, tra cứu biểu tượng theo tên miền từ danh sách tích hợp các dịch vụ biểu tượng bên thứ ba (favicon.run, sau đó là DuckDuckGo). Dịch vụ không truy cập được sẽ bị bỏ qua và thử dịch vụ tiếp theo; dịch vụ đó sẽ không được thử lại trong 6 giờ."
   },
+  "optionFaviconBackup": {
+    "message": "Bao gồm cache biểu tượng trong bản sao lưu"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Cũng đóng gói bộ nhớ đệm favicon mở rộng (dữ liệu theo từng trang web, có thể lớn) vào bản xuất/nhập cài đặt. Tắt giúp giữ bản sao lưu nhỏ; các biểu tượng sẽ tự động được tải lại dù sao."
+  },
   "optionFaviconCacheClear": {
     "message": "Xóa bộ đệm biểu tượng"
   },
   "optionFaviconCacheCleared": {
     "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
+  },
+  "storageUsageIcon": {
+    "message": "Biểu tượng"
+  },
+  "storageUsageBookmarks": {
+    "message": "Dữ liệu dấu trang"
+  },
+  "storageUsageOther": {
+    "message": "Khác"
+  },
+  "storageUsageFree": {
+    "message": "Trống"
+  },
+  "storageUsageHint": {
+    "message": "Không gian lưu trữ được sử dụng bởi dấu trang, bộ nhớ đệm biểu tượng và cài đặt. Không gian trống được cập nhật sau khi xóa bộ nhớ đệm biểu tượng."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Trang chủ"
+  },
+  "optionsVersion": {
+    "message": "Phiên bản vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Khoảng thời gian làm mới"

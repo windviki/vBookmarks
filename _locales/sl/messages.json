@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Ko neposredno pridobivanje ne uspe, poiščite ikono po domeni iz vgrajenega seznama storitev tretjih oseb (favicon.run, nato DuckDuckGo). Nedosegljiva storitev se preskoči in poskusi se naslednja — ne ponovi se 6 ur."
   },
+  "optionFaviconBackup": {
+    "message": "Vključi predpomnilnik ikon v varnostne kopije"
+  },
+  "optionFaviconBackupHint": {
+    "message": "V izvoz/uvoz nastavitev zapakiraj tudi obogateni predpomnilnik ikon (podatki za posamezna spletišča, lahko zelo obsežni). Izklop ohranja varnostne kopije majhne; ikone se vseeno samodejno ponovno prenesejo."
+  },
   "optionFaviconCacheClear": {
     "message": "Počisti predpomnilnik ikon"
   },
   "optionFaviconCacheCleared": {
     "message": "Predpomnilnik ikon je počiščen. Ikone bodo ob naslednjem odpiranju znova pridobljene."
+  },
+  "storageUsageIcon": {
+    "message": "Ikone"
+  },
+  "storageUsageBookmarks": {
+    "message": "Podatki zaznamkov"
+  },
+  "storageUsageOther": {
+    "message": "Drugo"
+  },
+  "storageUsageFree": {
+    "message": "Prosto"
+  },
+  "storageUsageHint": {
+    "message": "Prostor za shranjevanje, ki ga uporabljajo zaznamki, predpomnilnik ikon in nastavitve. Prosti prostor se posodobi po čiščenju predpomnilnika ikon."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Domača stran"
+  },
+  "optionsVersion": {
+    "message": "Različica vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Interval osveževanja"

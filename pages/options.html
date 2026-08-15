@@ -12,6 +12,11 @@
     <img src="/assets/icons/icon.svg" width="32" height="32" alt="">
     <span id="ext-name"></span>
     <small id="small-options"></small>
+    <span id="header-links">
+        <a id="header-github" href="https://github.com/windviki" target="_blank" rel="noreferrer"></a>
+        <a id="header-homepage" href="https://windviki.github.io/vBookmarks/" target="_blank" rel="noreferrer"></a>
+        <span id="options-version"></span>
+    </span>
 </h1>
 <main class="options-grid">
 <section class="options-group">
@@ -52,7 +57,18 @@
     <li><label><input type="checkbox" id="favicon-contrast" aria-labelledby="option-favicon-contrast"><span id="option-favicon-contrast"></span></label><br><small id="option-favicon-contrast-hint"></small></li>
     <li><label><input type="checkbox" id="favicon-enrich" aria-labelledby="option-favicon-enrich"><span id="option-favicon-enrich"></span></label><br><small id="option-favicon-enrich-hint"></small></li>
     <li><label><input type="checkbox" id="favicon-enrich-ddg" aria-labelledby="option-favicon-enrich-ddg"><span id="option-favicon-enrich-ddg"></span></label><br><small id="option-favicon-enrich-ddg-hint"></small></li>
+    <li><label><input type="checkbox" id="favicon-backup" aria-labelledby="option-favicon-backup"><span id="option-favicon-backup"></span></label><br><small id="option-favicon-backup-hint"></small></li>
     <li><button id="favicon-cache-clear" type="button"></button></li>
+    <li id="storage-usage" class="storage-usage">
+        <div id="storage-usage-bar" class="usage-bar" role="img">
+            <span id="usage-icon" class="usage-seg usage-icon"></span>
+            <span id="usage-bookmarks" class="usage-seg usage-bookmarks"></span>
+            <span id="usage-other" class="usage-seg usage-other"></span>
+            <span id="usage-free" class="usage-seg usage-free"></span>
+        </div>
+        <small id="storage-usage-legend"></small>
+        <br><small id="storage-usage-hint"></small>
+    </li>
 </ul>
 </section>
 <section class="options-group">
@@ -182,10 +198,4 @@
 </ul>
 </section>
 </main>
-<div id="footer">
-    <p id="options-footer-1"></p>
-    <p id="options-footer-2"></p>
-    <p id="options-footer-3"></p>
-    <p id="options-footer-4"></p>
-</div>
 </div>

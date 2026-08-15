@@ -1272,11 +1272,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "直连获取失败时，从内置第三方图标服务按域名取图（favicon.run → DuckDuckGo 自动切换）。检测到某服务不可达时切换下一家，6 小时内不再重复尝试该服务。"
   },
+  "optionFaviconBackup": {
+    "message": "备份时包含图标缓存"
+  },
+  "optionFaviconBackupHint": {
+    "message": "把补全的图标缓存（按站点的数据，体积可能较大）一并纳入设置导出/导入。默认关闭以保持备份精简；图标本就会自动重新补全。"
+  },
   "optionFaviconCacheClear": {
     "message": "清除图标缓存"
   },
   "optionFaviconCacheCleared": {
     "message": "图标缓存已清除，将在下次打开时重新补全。"
+  },
+  "storageUsageIcon": {
+    "message": "图标"
+  },
+  "storageUsageBookmarks": {
+    "message": "书签数据"
+  },
+  "storageUsageOther": {
+    "message": "其他"
+  },
+  "storageUsageFree": {
+    "message": "剩余"
+  },
+  "storageUsageHint": {
+    "message": "书签、图标缓存与设置所占用的存储空间。清空图标缓存后剩余空间会即时更新。"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "主页"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks 版本号"
   },
   "statsSortByCount": {
     "message": "按次数",

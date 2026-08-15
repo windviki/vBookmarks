@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Ja tiešā izgūšana neizdodas, ikona tiek meklēta pēc domēna iebūvētajā trešās puses ikonu pakalpojumu sarakstā (favicon.run, pēc tam DuckDuckGo). Ja pakalpojums izrādās nesasniedzams, to izlaiž un izmēģina nākamo — to atkārtoti nemēģina 6 stundu laikā."
   },
+  "optionFaviconBackup": {
+    "message": "Iekļaut ikonu kešu dublējumos"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Iekļauj bagātināto ikonu kešu (datu apjoms uz vietni, potenciāli liels) iestatījumu eksportā/importā. Izslēdzot, dublējumi paliek mazi; ikonas tik un tā tiek automātiski iegūtas atkārtoti."
+  },
   "optionFaviconCacheClear": {
     "message": "Notīrīt ikonu kešatmiņu"
   },
   "optionFaviconCacheCleared": {
     "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
+  },
+  "storageUsageIcon": {
+    "message": "Ikonas"
+  },
+  "storageUsageBookmarks": {
+    "message": "Grāmatzīmju dati"
+  },
+  "storageUsageOther": {
+    "message": "Citi"
+  },
+  "storageUsageFree": {
+    "message": "Brīvs"
+  },
+  "storageUsageHint": {
+    "message": "Krātuves vieta, ko aizņem grāmatzīmes, ikonu kešatmiņa un iestatījumi. Brīvā vieta tiek atjaunināta pēc ikonu kešatmiņas notīrīšanas."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Mājaslapa"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks versija"
   },
   "optionSyncRefreshInterval": {
     "message": "Atsvaidzināšanas intervāls"

@@ -140,12 +140,36 @@ a{
 h1{
 	margin: 0;
 	padding: 0;
+	display: flex;
+	align-items: center;
+	gap: .5em;
 }
 h1 img{
 	vertical-align: text-bottom;
 }
 h1 small{
 	color: var(--vbm-muted);
+}
+/* Header meta: the project links + version, pinned to the top-right */
+#header-links{
+	margin-inline-start: auto;
+	display: flex;
+	align-items: center;
+	gap: 1em;
+	font-size: .85em;
+}
+#header-links a{
+	color: var(--vbm-accent);
+	text-decoration: none;
+	font-weight: 600;
+}
+#header-links a:hover{
+	color: var(--vbm-fg);
+	text-decoration: underline;
+}
+#options-version{
+	color: var(--vbm-muted);
+	font-variant-numeric: tabular-nums;
 }
 h2{
 	font-size: .85em;
@@ -465,12 +489,33 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 .options-group .options-list{
 	margin-top: 0;
 }
-#footer{
-	color: var(--vbm-muted);
-	border-top: 1px solid var(--vbm-border);
-	margin-top: 40px;
-	line-height: 2em;
+/* --- Storage usage bar (Icons group) ----------------------------------
+   Icon cache / bookmark data / other / free, so the user can judge whether
+   the icon cache is worth clearing. */
+.storage-usage small{
+	display: block;
+	opacity: .7;
+	line-height: 1.4;
+	margin-top: 2px;
 }
+.usage-bar{
+	display: flex;
+	height: 10px;
+	border-radius: 5px;
+	overflow: hidden;
+	background: var(--vbm-bg);
+	border: 1px solid var(--vbm-border);
+}
+.usage-seg{
+	display: block;
+	height: 100%;
+	width: 0;
+	transition: width .35s ease;
+}
+.usage-icon{ background: var(--vbm-accent); }
+.usage-bookmarks{ background: #4a7df0; }
+.usage-other{ background: #d98a2b; }
+.usage-free{ background: transparent; }
 
 
 /* --- v4 UX pass: native buttons & text inputs follow the tokens ---

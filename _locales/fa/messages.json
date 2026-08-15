@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "هنگامی که بازیابی مستقیم شکست می‌خورد، آیکون را بر اساس دامنه از فهرست داخلی سرویس‌های آیکون شخص ثالث (favicon.run، سپس DuckDuckGo) جستجو کنید. سرویسی که غیرقابل‌دسترسی یافت شود رد می‌شود و سرویس بعدی امتحان می‌شود — به مدت ۶ ساعت دوباره تلاش نمی‌شود."
   },
+  "optionFaviconBackup": {
+    "message": "شامل کردن کش آیکون در پشتیبانگیری"
+  },
+  "optionFaviconBackupHint": {
+    "message": "همچنین کش غنیشده آیکونها (دادههای مرتبط با هر سایت، احتمالاً بزرگ) را در خروجی/ورودی تنظیمات بستهبندی کنید. خاموش بودن، پشتیبانگیری را کوچک نگه میدارد؛ آیکونها به هر حال بهصورت خودکار دوباره دریافت میشوند."
+  },
   "optionFaviconCacheClear": {
     "message": "پاک‌سازی کش آیکون‌ها"
   },
   "optionFaviconCacheCleared": {
     "message": "کش آیکون‌ها پاک شد. آیکون‌ها در باز شدن بعدی دوباره دریافت خواهند شد."
+  },
+  "storageUsageIcon": {
+    "message": "آیکونها"
+  },
+  "storageUsageBookmarks": {
+    "message": "دادههای نشانک"
+  },
+  "storageUsageOther": {
+    "message": "سایر"
+  },
+  "storageUsageFree": {
+    "message": "آزاد"
+  },
+  "storageUsageHint": {
+    "message": "فضای ذخیرهسازی مصرفشده توسط نشانکها، کش آیکونها و تنظیمات. فضای آزاد پس از پاکسازی کش آیکونها بهروزرسانی میشود."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "صفحهٔ اصلی"
+  },
+  "optionsVersion": {
+    "message": "نسخهٔ vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "فاصله به‌روزرسانی"

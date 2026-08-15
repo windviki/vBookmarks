@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "যখন সরাসরি ফেচ করা ব্যর্থ হয়, তখন অন্তর্নির্মিত তৃতীয় পক্ষের আইকন পরিষেবার তালিকা থেকে ডোমেন অনুসারে আইকনটি সন্ধান করুন (favicon.run, তারপর DuckDuckGo)। যে পরিষেবাটি অপ্রাপ্য পাওয়া যায় তা এড়িয়ে যাওয়া হয় এবং পরেরটি চেষ্টা করা হয় — এটি ৬ ঘণ্টার জন্য আবার চেষ্টা করা হয় না।"
   },
+  "optionFaviconBackup": {
+    "message": "ব্যাকআপে আইকন ক্যাশ অন্তর্ভুক্ত করুন"
+  },
+  "optionFaviconBackupHint": {
+    "message": "এছাড়াও সমৃদ্ধ ফ্যাভিকন ক্যাশ (সাইট-নির্দিষ্ট ডেটা, সম্ভাব্য বড়) সেটিংস রপ্তানি/আমদানিতে প্যাক করুন। বন্ধ রাখলে ব্যাকআপ ছোট হয়; আইকন যেকোনোভাবে স্বয়ংক্রিয়ভাবে পুনরায় প্রাপ্ত করা হয়।"
+  },
   "optionFaviconCacheClear": {
     "message": "আইকন ক্যাশে সাফ করুন"
   },
   "optionFaviconCacheCleared": {
     "message": "আইকন ক্যাশে সাফ করা হয়েছে। পরবর্তী খোলায় আইকনগুলি পুনরায় আনা হবে।"
+  },
+  "storageUsageIcon": {
+    "message": "আইকন"
+  },
+  "storageUsageBookmarks": {
+    "message": "বুকমার্ক ডেটা"
+  },
+  "storageUsageOther": {
+    "message": "অন্যান্য"
+  },
+  "storageUsageFree": {
+    "message": "মুক্ত"
+  },
+  "storageUsageHint": {
+    "message": "বুকমার্ক, আইকন ক্যাশ এবং সেটিংস দ্বারা ব্যবহৃত স্টোরেজ স্থান। আইকন ক্যাশ মুছে ফেলার পরে মুক্ত স্থান আপডেট হয়।"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "হোমপেজ"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks সংস্করণ"
   },
   "optionSyncRefreshInterval": {
     "message": "রিফ্রেশ ইন্টারভাল"

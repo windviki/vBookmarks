@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Quando a busca direta falhar, consulte o ícone por domínio numa lista integrada de serviços de ícones de terceiros (favicon.run e depois DuckDuckGo). Um serviço considerado inacessível é ignorado e o próximo é tentado — não é repetido por 6 horas."
   },
+  "optionFaviconBackup": {
+    "message": "Incluir cache de ícones nos backups"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Inclua também o cache de favicons enriquecido (dados por site, potencialmente grandes) na exportação/importação de configurações. Desativar mantém os backups pequenos; os ícones são buscados novamente automaticamente."
+  },
   "optionFaviconCacheClear": {
     "message": "Limpar cache de ícones"
   },
   "optionFaviconCacheCleared": {
     "message": "Cache de ícones limpo. Os ícones serão buscados novamente na próxima abertura."
+  },
+  "storageUsageIcon": {
+    "message": "Ícones"
+  },
+  "storageUsageBookmarks": {
+    "message": "Dados de favoritos"
+  },
+  "storageUsageOther": {
+    "message": "Outros"
+  },
+  "storageUsageFree": {
+    "message": "Livre"
+  },
+  "storageUsageHint": {
+    "message": "Espaço de armazenamento usado por favoritos, cache de ícones e configurações. O espaço livre é atualizado após limpar a cache de ícones."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Página inicial"
+  },
+  "optionsVersion": {
+    "message": "Versão do vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Intervalo de atualização"

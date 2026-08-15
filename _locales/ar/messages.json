@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "عند فشل الجلب المباشر، يتم البحث عن الأيقونة حسب النطاق من قائمة مدمجة بخدمات أيقونات الطرف الثالث (favicon.run ثم DuckDuckGo). يتم تخطي الخدمة التي يتعذر الوصول إليها وتجربة التالية — لا يُعاد الاتصال بها لمدة 6 ساعات."
   },
+  "optionFaviconBackup": {
+    "message": "تضمين كاش الأيقونات في النسخ الاحتياطية"
+  },
+  "optionFaviconBackupHint": {
+    "message": "قم أيضًا بتضمين كاش الأيقونات المُخصَّب (بيانات لكل موقع، قد تكون كبيرة) في تصدير/استيراد الإعدادات. إيقاف هذا الخيار يُبقي النسخ الاحتياطية صغيرة؛ ويتم إعادة جلب الأيقونات تلقائيًا على أي حال."
+  },
   "optionFaviconCacheClear": {
     "message": "مسح كاش الأيقونات"
   },
   "optionFaviconCacheCleared": {
     "message": "تم مسح كاش الأيقونات. ستتم إعادة الجلب عند الفتح التالي."
+  },
+  "storageUsageIcon": {
+    "message": "الأيقونات"
+  },
+  "storageUsageBookmarks": {
+    "message": "بيانات الإشارات المرجعية"
+  },
+  "storageUsageOther": {
+    "message": "أخرى"
+  },
+  "storageUsageFree": {
+    "message": "المساحة الحرة"
+  },
+  "storageUsageHint": {
+    "message": "المساحة التخزينية المستخدمة بواسطة الإشارات المرجعية وذاكرة التخزين المؤقت للأيقونات والإعدادات. يتم تحديث المساحة الحرة بعد مسح ذاكرة التخزين المؤقت للأيقونات."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "الصفحة الرئيسية"
+  },
+  "optionsVersion": {
+    "message": "إصدار vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "فترة التحديث"

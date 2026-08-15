@@ -109,7 +109,10 @@ const $ = id => document.getElementById(id);
             // v4.1: favicon 补全 —— 为 Chrome 未缓存图标的收藏站点拉取真实图标，
             // 默认开启；聚合兜底默认关（第三方服务，opt-in）。
             { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
-            { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '', inverted: false }
+            { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '', inverted: false },
+            // 备份包含补全的图标缓存（vbmFavicon:* + 索引）：默认关，保持
+            // 设置备份精简；开启后导出/导入才携带这份 MB 级 per-site 数据。
+            { id: 'favicon-backup', key: 'faviconBackupInclude', defaultValue: '', inverted: false }
         ];
         // Context menus: the page right-click entry + the collapsed submenu
         // switches (issue #48 follow-up).
@@ -227,6 +230,47 @@ const $ = id => document.getElementById(id);
         // popup/panel hears the index removal via storage.onChanged and drops
         // its in-memory map; next render re-fetches (docs/favicon-补全设计.md
         // §5.4).
+        // The storage-usage bar (below the button) refreshes after a clear so
+        // the freed space is immediately visible.
+        const refreshStorageUsage = async () => {
+            const all = await chrome.storage.local.get(null);
+            const isFav = k => k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:');
+            const isBookmarkData = k => k === 'deadLastScan' || k === 'vbmDeadScan' || k === 'visitStats';
+            let icon = 0, bookmarks = 0, other = 0;
+            for (const [k, v] of Object.entries(all)) {
+                const n = JSON.stringify(v).length;
+                if (isFav(k)) icon += n;
+                else if (isBookmarkData(k)) bookmarks += n;
+                else other += n;
+            }
+            const used = icon + bookmarks + other;
+            const quota = chrome.storage.local.QUOTA_BYTES || 10 * 1024 * 1024;
+            const free = Math.max(0, quota - used);
+            const pct = n => (quota ? Math.round((n / quota) * 1000) / 10 : 0);
+            const seg = (label, n) => {
+                const el = document.getElementById('usage-' + label);
+                if (el) el.style.width = pct(n) + '%';
+            };
+            seg('icon', icon);
+            seg('bookmarks', bookmarks);
+            seg('other', other);
+            seg('free', free);
+            const fmt = n => {
+                if (n >= 1024 * 1024) return (n / (1024 * 1024)).toFixed(1) + ' MB';
+                if (n >= 1024) return (n / 1024).toFixed(0) + ' KB';
+                return n + ' B';
+            };
+            const legend = [
+                `${__m('storageUsageIcon')} ${fmt(icon)}`,
+                `${__m('storageUsageBookmarks')} ${fmt(bookmarks)}`,
+                `${__m('storageUsageOther')} ${fmt(other)}`,
+                `${__m('storageUsageFree')} ${fmt(free)}`
+            ].join(' · ');
+            const legendEl = document.getElementById('storage-usage-legend');
+            legendEl.innerText = legend;
+            const bar = document.getElementById('storage-usage-bar');
+            if (bar) bar.setAttribute('aria-label', legend);
+        };
         $('favicon-cache-clear').addEventListener('click', async () => {
             let all = {};
             try { all = await chrome.storage.local.get(null); } catch (_) { /* noop */ }
@@ -236,6 +280,7 @@ const $ = id => document.getElementById(id);
                 return;
             await chrome.storage.local.remove(keys);
             alert(_m('optionFaviconCacheCleared'));
+            refreshStorageUsage();
         });
 
         // Initialize sync settings. One write per change is enough: the
@@ -290,11 +335,15 @@ const $ = id => document.getElementById(id);
                 chrome.storage.sync.get(store.syncKeys)
             ]);
             // The favicon cache (per-host data keys + the index) is local,
-            // MB-scale base64 — never ship it in a settings backup (design
-            // docs/favicon-补全设计.md §5.4).
-            for (const k of Object.keys(localData)) {
-                if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'))
-                    delete localData[k];
+            // MB-scale base64. By default it never ships in a settings backup
+            // (design docs/favicon-补全设计.md §5.4); when the Icons group's
+            // "include icon cache" switch is on it rides along for full
+            // fidelity.
+            if (!$('favicon-backup').checked) {
+                for (const k of Object.keys(localData)) {
+                    if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'))
+                        delete localData[k];
+                }
             }
             const backup = {
                 app: 'vBookmarks',
@@ -335,9 +384,23 @@ const $ = id => document.getElementById(id);
             // backup overwrite the current values, keys it doesn't mention
             // are left untouched, so restoring an older/partial backup never
             // silently deletes settings added since. No storage clear.
+            // Favicon cache keys only land when the "include icon cache" switch
+            // is on — and even then in a SEPARATE best-effort write, so a quota
+            // overflow on MB-scale cache data never fails the settings import
+            // (the cache re-fetches on next render, worst case).
+            const favKeys = Object.keys(backup.local).filter(k =>
+                k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'));
+            const favObj = {};
+            for (const k of favKeys) favObj[k] = backup.local[k];
+            for (const k of favKeys) delete backup.local[k];
             await chrome.storage.local.set(backup.local);
             if (backup.sync)
                 await chrome.storage.sync.set(backup.sync);
+            if ($('favicon-backup').checked && favKeys.length) {
+                try {
+                    await chrome.storage.local.set(favObj);
+                } catch (_) { /* best effort — cache is re-fetchable */ }
+            }
             alert(_m('settingsImportDone'));
             location.reload();
         });
@@ -515,6 +578,8 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-favicon-enrich-hint').innerText = __m('optionFaviconEnrichHint');
         document.getElementById('option-favicon-enrich-ddg').innerText = __m('optionFaviconEnrichAgg');
         document.getElementById('option-favicon-enrich-ddg-hint').innerText = __m('optionFaviconEnrichAggHint');
+        document.getElementById('option-favicon-backup').innerText = __m('optionFaviconBackup');
+        document.getElementById('option-favicon-backup-hint').innerText = __m('optionFaviconBackupHint');
         document.getElementById('favicon-cache-clear').innerText = __m('optionFaviconCacheClear');
         // The dead-link proxy server row (label/buttons/hint/error) is bound
         // by src/options-proxy.js — a module, so it can import dead-proxy.js.
@@ -563,11 +628,15 @@ const $ = id => document.getElementById(id);
         document.getElementById('option-auto-refresh-sync').innerText = __m('optionAutoRefreshSync');
         document.getElementById('option-sync-refresh-interval').innerText = __m('optionSyncRefreshInterval');
         document.getElementById('option-sync-refresh-interval-seconds').innerText = __m('optionSyncRefreshIntervalSeconds');
-        document.getElementById('options-footer-1').innerHTML = '<p>Thanks: Lim Chee Aun</p>';
-        document.getElementById('options-footer-3').innerHTML =
-            '<a href="https://github.com/windviki">Follow me @windviki on Github</a>';
-        document.getElementById('options-footer-4').innerHTML =
-            '<a href="https://windviki.github.io/vBookmarks/">vBookmarks Mainpage (docs and source code)</a>';
+        document.getElementById('storage-usage-hint').innerText = __m('storageUsageHint');
+        // Header meta (top-right): project links + the full version number.
+        document.getElementById('header-github').innerText = __m('optionsGithubLink');
+        document.getElementById('header-homepage').innerText = __m('optionsHomepageLink');
+        const versionEl = document.getElementById('options-version');
+        versionEl.innerText = 'v' + chrome.runtime.getManifest().version;
+        versionEl.title = __m('optionsVersion');
+        // Seed the storage-usage bar once the page is up.
+        refreshStorageUsage();
     }
 
     document.addEventListener('DOMContentLoaded', () => {

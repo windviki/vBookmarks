@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Ha a közvetlen lekérés sikertelen, a beépített, harmadik féltől származó ikonszolgáltatások listájából a domain alapján keresi meg az ikont (favicon.run, majd DuckDuckGo). Ha egy szolgáltatás elérhetetlen, kihagyja, és a következőt próbálja ki – ezt a szolgáltatást 6 órán keresztül nem próbálja újra."
   },
+  "optionFaviconBackup": {
+    "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"
+  },
+  "optionFaviconBackupHint": {
+    "message": "A bővített ikon-gyorsítótár (oldalankénti adatok, akár nagy méretű) is bekerül a beállítások exportálásába/importálásába. Kikapcsolva a biztonsági mentések kicsik maradnak; az ikonok amúgy is automatikusan újra letöltődnek."
+  },
   "optionFaviconCacheClear": {
     "message": "Ikongyorsítótár törlése"
   },
   "optionFaviconCacheCleared": {
     "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
+  },
+  "storageUsageIcon": {
+    "message": "Ikonok"
+  },
+  "storageUsageBookmarks": {
+    "message": "Könyvjelzőadatok"
+  },
+  "storageUsageOther": {
+    "message": "Egyéb"
+  },
+  "storageUsageFree": {
+    "message": "Szabad"
+  },
+  "storageUsageHint": {
+    "message": "A könyvjelzők, az ikongyorsítótár és a beállítások által használt tárhely. A szabad hely az ikongyorsítótár törlése után frissül."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Kezdőlap"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks verzió"
   },
   "optionSyncRefreshInterval": {
     "message": "Frissítési időköz"

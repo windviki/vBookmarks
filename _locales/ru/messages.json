@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Когда прямое получение иконки не удаётся, выполняется поиск по домену во встроенном списке сторонних сервисов иконок (favicon.run, затем DuckDuckGo). Недоступный сервис пропускается, и используется следующий; повторно он не запрашивается в течение 6 часов."
   },
+  "optionFaviconBackup": {
+    "message": "Включать кэш значков в резервные копии"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Также добавлять расширенный кэш значков (данные по каждому сайту; объём может быть большим) в экспорт/импорт настроек. При выключенной опции резервные копии остаются небольшими; значки всё равно подгружаются автоматически."
+  },
   "optionFaviconCacheClear": {
     "message": "Очистить кэш значков"
   },
   "optionFaviconCacheCleared": {
     "message": "Кэш значков очищен. Значки будут загружены заново при следующем открытии."
+  },
+  "storageUsageIcon": {
+    "message": "Значки"
+  },
+  "storageUsageBookmarks": {
+    "message": "Данные закладок"
+  },
+  "storageUsageOther": {
+    "message": "Другое"
+  },
+  "storageUsageFree": {
+    "message": "Свободно"
+  },
+  "storageUsageHint": {
+    "message": "Место, используемое закладками, кэшем значков и настройками. Свободное место обновляется после очистки кэша значков."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Домашняя страница"
+  },
+  "optionsVersion": {
+    "message": "Версия vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Интервал обновления"

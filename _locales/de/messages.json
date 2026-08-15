@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Wenn das direkte Abrufen fehlschlägt, wird das Symbol anhand der Domain aus einer integrierten Liste von Drittanbieter-Icon-Diensten nachgeschlagen (zuerst favicon.run, dann DuckDuckGo). Ein nicht erreichbarer Dienst wird übersprungen und der nächste versucht – er wird für 6 Stunden nicht erneut versucht."
   },
+  "optionFaviconBackup": {
+    "message": "Favicon-Cache in Backups einbeziehen"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Auch den angereicherten Favicon-Cache (Daten pro Website, potenziell groß) in den Export/Import der Einstellungen einbeziehen. Wenn deaktiviert, bleiben Backups klein; Favicons werden ohnehin automatisch erneut geladen."
+  },
   "optionFaviconCacheClear": {
     "message": "Icon-Cache leeren"
   },
   "optionFaviconCacheCleared": {
     "message": "Icon-Cache geleert. Icons werden beim nächsten Öffnen erneut abgerufen."
+  },
+  "storageUsageIcon": {
+    "message": "Symbole"
+  },
+  "storageUsageBookmarks": {
+    "message": "Lesezeichendaten"
+  },
+  "storageUsageOther": {
+    "message": "Sonstiges"
+  },
+  "storageUsageFree": {
+    "message": "Frei"
+  },
+  "storageUsageHint": {
+    "message": "Von Lesezeichen, Symbol-Cache und Einstellungen belegter Speicherplatz. Der freie Speicherplatz wird nach dem Leeren des Symbol-Caches aktualisiert."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Startseite"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks-Version"
   },
   "optionSyncRefreshInterval": {
     "message": "Aktualisierungsintervall"

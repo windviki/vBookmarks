@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Când preluarea directă eșuează, caută pictograma după domeniu într-o listă încorporată de servicii terțe de pictograme (favicon.run, apoi DuckDuckGo). Un serviciu găsit inaccesibil este omis și se încearcă următorul — nu este reîncercat timp de 6 ore."
   },
+  "optionFaviconBackup": {
+    "message": "Include cache-ul de pictograme în copiile de rezervă"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Include și cache-ul îmbogățit de pictograme (date per site, potențial mari) în exportul/importul de setări. Dezactivat menține copiile de rezervă mici; pictogramele sunt oricum re-descărcate automat."
+  },
   "optionFaviconCacheClear": {
     "message": "Șterge cache-ul pictogramelor"
   },
   "optionFaviconCacheCleared": {
     "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
+  },
+  "storageUsageIcon": {
+    "message": "Icoane"
+  },
+  "storageUsageBookmarks": {
+    "message": "Datele marcajelor"
+  },
+  "storageUsageOther": {
+    "message": "Altele"
+  },
+  "storageUsageFree": {
+    "message": "Liber"
+  },
+  "storageUsageHint": {
+    "message": "Spațiul de stocare utilizat de marcaje, cache-ul de icoane și setări. Spațiul liber se actualizează după golirea cache-ului de icoane."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Pagina principală"
+  },
+  "optionsVersion": {
+    "message": "Versiunea vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Interval de actualizare"

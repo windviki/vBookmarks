@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Wanneer rechtstreeks ophalen mislukt, wordt het pictogram op basis van het domein opgezocht via een ingebouwde lijst van pictogramdiensten van derden (eerst favicon.run, daarna DuckDuckGo). Een onbereikbaar gebleken dienst wordt overgeslagen en de volgende wordt geprobeerd — deze wordt 6 uur lang niet opnieuw geprobeerd."
   },
+  "optionFaviconBackup": {
+    "message": "Pictogramcache opnemen in back-ups"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Neem de verrijkte pictogramcache (gegevens per site, potentieel groot) ook op in de export/import van instellingen. Uitschakelen houdt back-ups klein; pictogrammen worden toch automatisch opnieuw opgehaald."
+  },
   "optionFaviconCacheClear": {
     "message": "Pictogramcache wissen"
   },
   "optionFaviconCacheCleared": {
     "message": "Pictogramcache gewist. Pictogrammen worden bij de volgende opening opnieuw opgehaald."
+  },
+  "storageUsageIcon": {
+    "message": "Pictogrammen"
+  },
+  "storageUsageBookmarks": {
+    "message": "Bladwijzergegevens"
+  },
+  "storageUsageOther": {
+    "message": "Overig"
+  },
+  "storageUsageFree": {
+    "message": "Vrij"
+  },
+  "storageUsageHint": {
+    "message": "Opslagruimte die wordt gebruikt door bladwijzers, de pictogramcache en instellingen. De vrije ruimte wordt bijgewerkt na het wissen van de pictogramcache."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Startpagina"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks-versie"
   },
   "optionSyncRefreshInterval": {
     "message": "Vernieuwingsinterval"

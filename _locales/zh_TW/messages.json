@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "當直接取得失敗時，改為根據網域從內建的第三方圖示服務清單中尋找圖示（依序為 favicon.run 與 DuckDuckGo）。若某個服務無法連線，則略過並嘗試下一個；6小時內不會重試該服務。"
   },
+  "optionFaviconBackup": {
+    "message": "备份时包含图标缓存"
+  },
+  "optionFaviconBackupHint": {
+    "message": "同时将增强版图标缓存（逐站资料，可能很庞大）打包进设置汇出/汇入。关闭此选项可让备份保持精简；图标反正会自动重新撷取。"
+  },
   "optionFaviconCacheClear": {
     "message": "清除圖示快取"
   },
   "optionFaviconCacheCleared": {
     "message": "圖示快取已清除。下次開啟時將重新取得圖示。"
+  },
+  "storageUsageIcon": {
+    "message": "圖示"
+  },
+  "storageUsageBookmarks": {
+    "message": "書籤資料"
+  },
+  "storageUsageOther": {
+    "message": "其他"
+  },
+  "storageUsageFree": {
+    "message": "可用空間"
+  },
+  "storageUsageHint": {
+    "message": "書籤、圖示快取和設定所使用的儲存空間。清除圖示快取後，可用空間會更新。"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "首頁"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks 版本"
   },
   "optionSyncRefreshInterval": {
     "message": "刷新間隔"

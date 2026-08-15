@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Om direkt hämtning misslyckas, slås ikonen upp per domän från en inbyggd lista över tredjeparts-ikontjänster (favicon.run, sedan DuckDuckGo). En tjänst som inte går att nå hoppas över och nästa testas — den onåbara tjänsten kontaktas inte igen på 6 timmar."
   },
+  "optionFaviconBackup": {
+    "message": "Inkludera ikoncache i säkerhetskopior"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Paketera även den utökade favicon-cachen (webbplatsdata, kan vara stor) i export/import av inställningar. Av-läget håller säkerhetskopiorna små; ikonerna hämtas om automatiskt ändå."
+  },
   "optionFaviconCacheClear": {
     "message": "Rensa ikoncachen"
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoncachen rensad. Ikoner hämtas om vid nästa öppning."
+  },
+  "storageUsageIcon": {
+    "message": "Ikoner"
+  },
+  "storageUsageBookmarks": {
+    "message": "Bokmärkesdata"
+  },
+  "storageUsageOther": {
+    "message": "Övrigt"
+  },
+  "storageUsageFree": {
+    "message": "Ledigt"
+  },
+  "storageUsageHint": {
+    "message": "Lagringsutrymme som används av bokmärken, ikoncachen och inställningar. Ledigt utrymme uppdateras efter att ikoncachen rensas."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Hemsida"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks version"
   },
   "optionSyncRefreshInterval": {
     "message": "Uppdateringsintervall"

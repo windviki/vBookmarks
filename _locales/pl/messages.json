@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Gdy bezpośrednie pobieranie ikony się nie powiedzie, ikona jest wyszukiwana po domenie na wbudowanej liście zewnętrznych usług ikon (najpierw favicon.run, potem DuckDuckGo). Usługa nieosiągalna jest pomijana, a następna jest próbowana — przez 6 godzin nie będzie ponawiana."
   },
+  "optionFaviconBackup": {
+    "message": "Uwzględnij pamięć podręczną ikon w kopiach zapasowych"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Dołącz również wzbogaconą pamięć podręczną favicon (dane dla poszczególnych witryn, potencjalnie duże) do eksportu/importu ustawień. Wyłączenie utrzymuje małe kopie zapasowe; ikony i tak są automatycznie pobierane ponownie."
+  },
   "optionFaviconCacheClear": {
     "message": "Wyczyść pamięć podręczną ikon"
   },
   "optionFaviconCacheCleared": {
     "message": "Pamięć podręczna ikon wyczyszczona. Ikony zostaną pobrane ponownie przy następnym otwarciu."
+  },
+  "storageUsageIcon": {
+    "message": "Ikony"
+  },
+  "storageUsageBookmarks": {
+    "message": "Dane zakładek"
+  },
+  "storageUsageOther": {
+    "message": "Inne"
+  },
+  "storageUsageFree": {
+    "message": "Wolne"
+  },
+  "storageUsageHint": {
+    "message": "Miejsce na dysku zajmowane przez zakładki, pamięć podręczną ikon i ustawienia. Wolne miejsce aktualizuje się po wyczyszczeniu pamięci podręcznej ikon."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Strona główna"
+  },
+  "optionsVersion": {
+    "message": "Wersja vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Interwał odświeżania"

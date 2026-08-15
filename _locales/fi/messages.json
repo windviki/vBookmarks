@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Kun suora nouto epäonnistuu, hae kuvake verkkotunnuksen perusteella sisäänrakennetusta kolmannen osapuolen kuvakepalveluiden luettelosta (favicon.run, sitten DuckDuckGo). Tavoittamattomaksi havaittu palvelu ohitetaan ja seuraavaa yritetään — sitä ei yritetä uudelleen 6 tuntiin."
   },
+  "optionFaviconBackup": {
+    "message": "Sisällytä favicon-välimuisti varmuuskopioihin"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Sisällytä myös laajennettu favicon-välimuisti (sivustokohtaiset tiedot, mahdollisesti suuret) asetusten vientiin/tuontiin. Kun pois päältä, varmuuskopiot pysyvät pieninä; kuvakkeet haetaan kuitenkin automaattisesti uudelleen."
+  },
   "optionFaviconCacheClear": {
     "message": "Tyhjennä kuvakevälimuisti"
   },
   "optionFaviconCacheCleared": {
     "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
+  },
+  "storageUsageIcon": {
+    "message": "Kuvakkeet"
+  },
+  "storageUsageBookmarks": {
+    "message": "Kirjanmerkkitiedot"
+  },
+  "storageUsageOther": {
+    "message": "Muu"
+  },
+  "storageUsageFree": {
+    "message": "Vapaa"
+  },
+  "storageUsageHint": {
+    "message": "Kirjanmerkkien, kuvakevälimuistin ja asetusten käyttämä tallennustila. Vapaa tila päivittyy kuvakevälimuistin tyhjentämisen jälkeen."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Kotisivu"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks-versio"
   },
   "optionSyncRefreshInterval": {
     "message": "Päivitysväli"

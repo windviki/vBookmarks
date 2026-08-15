@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "当直接获取图标失败时，将按域名从内置的第三方图标服务列表中查找。优先使用 favicon.run，其次为 DuckDuckGo。无法访问的服务会被跳过，转而尝试下一个；该服务在 6 小时内不会被重试。"
   },
+  "optionFaviconBackup": {
+    "message": "备份时包含图标缓存"
+  },
+  "optionFaviconBackupHint": {
+    "message": "将增强图标缓存（站点数据，可能较大）打包到设置的导出/导入中。关闭可保持备份精简；图标会自动重新获取。"
+  },
   "optionFaviconCacheClear": {
     "message": "清除图标缓存"
   },
   "optionFaviconCacheCleared": {
     "message": "图标缓存已清除。下次打开时将重新获取图标。"
+  },
+  "storageUsageIcon": {
+    "message": "图标"
+  },
+  "storageUsageBookmarks": {
+    "message": "书签数据"
+  },
+  "storageUsageOther": {
+    "message": "其他"
+  },
+  "storageUsageFree": {
+    "message": "可用"
+  },
+  "storageUsageHint": {
+    "message": "书签、图标缓存和设置所占用的存储空间。清除图标缓存后，可用空间会更新。"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "主页"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks 版本"
   },
   "optionSyncRefreshInterval": {
     "message": "刷新间隔"

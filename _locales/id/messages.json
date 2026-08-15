@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Saat pengambilan langsung gagal, cari ikon berdasarkan domain dari daftar bawaan layanan ikon pihak ketiga (favicon.run, lalu DuckDuckGo). Layanan yang tidak dapat dijangkau akan dilewati dan layanan berikutnya dicoba — layanan tersebut tidak akan dicoba ulang selama 6 jam."
   },
+  "optionFaviconBackup": {
+    "message": "Sertakan cache ikon dalam cadangan"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Juga masukkan cache favicon yang diperkaya (data per situs, berpotensi besar) ke dalam ekspor/impor pengaturan. Jika nonaktif, cadangan tetap ringan; ikon akan diambil ulang secara otomatis."
+  },
   "optionFaviconCacheClear": {
     "message": "Bersihkan cache ikon"
   },
   "optionFaviconCacheCleared": {
     "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
+  },
+  "storageUsageIcon": {
+    "message": "Ikon"
+  },
+  "storageUsageBookmarks": {
+    "message": "Data penanda"
+  },
+  "storageUsageOther": {
+    "message": "Lainnya"
+  },
+  "storageUsageFree": {
+    "message": "Kosong"
+  },
+  "storageUsageHint": {
+    "message": "Ruang penyimpanan yang digunakan oleh penanda, cache ikon, dan pengaturan. Ruang kosong diperbarui setelah membersihkan cache ikon."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Beranda"
+  },
+  "optionsVersion": {
+    "message": "Versi vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Interval penyegaran"

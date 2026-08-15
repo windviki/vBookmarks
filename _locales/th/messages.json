@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "เมื่อการดึงข้อมูลโดยตรงล้มเหลว ให้ค้นหาไอคอนตามโดเมนจากรายการบริการไอคอนภายนอกในตัว (favicon.run แล้วตามด้วย DuckDuckGo) หากบริการใดใช้งานไม่ได้จะถูกข้ามและลองบริการถัดไป โดยจะไม่ลองใหม่เป็นเวลา 6 ชั่วโมง"
   },
+  "optionFaviconBackup": {
+    "message": "รวมแคชไอคอนในการสำรองข้อมูล"
+  },
+  "optionFaviconBackupHint": {
+    "message": "นอกจากนี้ยังรวมแคช favicon ที่ปรับปรุงแล้ว (ข้อมูลต่อเว็บไซต์ ซึ่งอาจมีขนาดใหญ่) เข้าไปในการส่งออก/นำเข้าการตั้งค่า การปิดตัวเลือกนี้จะช่วยให้ไฟล์สำรองมีขนาดเล็ก เพราะไอคอนจะถูกดึงข้อมูลใหม่อัตโนมัติอยู่แล้ว"
+  },
   "optionFaviconCacheClear": {
     "message": "ล้างแคชไอคอน"
   },
   "optionFaviconCacheCleared": {
     "message": "ล้างแคชไอคอนแล้ว ไอคอนจะถูกดึงใหม่เมื่อเปิดครั้งถัดไป"
+  },
+  "storageUsageIcon": {
+    "message": "ไอคอน"
+  },
+  "storageUsageBookmarks": {
+    "message": "ข้อมูลบุ๊กมาร์ก"
+  },
+  "storageUsageOther": {
+    "message": "อื่นๆ"
+  },
+  "storageUsageFree": {
+    "message": "พื้นที่ว่าง"
+  },
+  "storageUsageHint": {
+    "message": "พื้นที่จัดเก็บที่ใช้โดยบุ๊กมาร์ก แคชไอคอน และการตั้งค่า พื้นที่ว่างจะอัปเดตหลังจากการล้างแคชไอคอน"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "หน้าหลัก"
+  },
+  "optionsVersion": {
+    "message": "เวอร์ชัน vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "ช่วงเวลารีเฟรช"

@@ -77,6 +77,9 @@ const createSandbox = ({
         innerHTML: '',
         files: [],
         clicked: 0,
+        style: {},
+        _attributes: {},
+        setAttribute(name, val) { this._attributes[name] = val; },
         _listeners: {},
         addEventListener(type, fn) {
             (this._listeners[type] = this._listeners[type] || []).push(fn);
@@ -170,12 +173,22 @@ const validBackup = (overrides = {}) => JSON.stringify({
 
 describe('options.js settings backup', () => {
     describe('page markup', () => {
-        it('options.html carries the backup group after Accessibility, before the footer', () => {
+        it('options.html carries the backup group after Accessibility, and the old footer is gone (header links + version moved up)', () => {
             for (const id of ['backup-options', 'export-settings', 'import-settings', 'import-settings-file', 'backup-hint'])
                 expect(optionsHtml).toContain(`id="${id}"`);
             expect(optionsHtml).toMatch(/<input type="file" id="import-settings-file"[^>]*hidden/);
             expect(optionsHtml.indexOf('id="accessibility"')).toBeLessThan(optionsHtml.indexOf('id="backup-options"'));
-            expect(optionsHtml.indexOf('id="backup-options"')).toBeLessThan(optionsHtml.indexOf('id="footer"'));
+            // 4.0.8: the bottom footer was replaced by header meta — GitHub +
+            // homepage links and the version live top-right next to the title.
+            expect(optionsHtml).not.toContain('id="footer"');
+            expect(optionsHtml).not.toContain('Thanks');
+            for (const id of ['header-github', 'header-homepage', 'options-version'])
+                expect(optionsHtml).toContain(`id="${id}"`);
+            expect(optionsHtml.indexOf('id="header-links"')).toBeGreaterThan(optionsHtml.indexOf('id="ext-name"'));
+            // The storage-usage bar lives in the Icons group, next to the
+            // clear-icon-cache button (before the group's closing </ul>).
+            expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
+            expect(optionsHtml.indexOf('id="storage-usage"')).toBeLessThan(optionsHtml.indexOf('</ul>', optionsHtml.indexOf('id="icons-options"')));
         });
     });
 
@@ -239,6 +252,29 @@ describe('options.js settings backup', () => {
             expect(anchor.href).toBe('blob:mock-1');
             expect(anchor.clicked).toBe(1);
             expect(sb.URLStub.revokeObjectURL).toHaveBeenCalledWith('blob:mock-1');
+        });
+
+        it('ships the favicon cache keys only when the Icons backup switch is on', async () => {
+            const favKey = 'vbmFavicon:github.com';
+            const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
+            const seeded = {
+                __migrated_v1: '1', theme: 'dark',
+                [favKey]: 'data:image/png;base64,AAAA',
+                vbmFaviconIdx: favIdx
+            };
+            // Default (switch off): favicon keys stripped from the export.
+            let sb = createSandbox({ chromeLocalData: { ...seeded } });
+            await sb.start();
+            await sb.elements['export-settings'].fire('click');
+            expect(JSON.parse(await sb.objectURLs[0].text()).local)
+                .toEqual({ __migrated_v1: '1', theme: 'dark' });
+            // Switch on: the cache rides along for full-fidelity backup.
+            sb = createSandbox({ chromeLocalData: { ...seeded } });
+            await sb.start();
+            sb.elements['favicon-backup'].checked = true;
+            await sb.elements['export-settings'].fire('click');
+            expect(JSON.parse(await sb.objectURLs[0].text()).local)
+                .toEqual({ __migrated_v1: '1', theme: 'dark', [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
         });
     });
 
@@ -326,6 +362,133 @@ describe('options.js settings backup', () => {
             expect(sb.alerts).toEqual(['settingsImportDone']);
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
+
+        it('skips favicon cache keys on import while the switch is off (default)', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
+            await pickFile(sb, validBackup({ local: {
+                theme: 'dark',
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
+                vbmFaviconIdx: favIdx
+            } }));
+            expect(sb.localData.theme).toBe('dark');
+            expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
+            expect(sb.localData.vbmFaviconIdx).toBeUndefined();
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
+
+        it('restores favicon cache keys on import when the switch is on', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            sb.elements['favicon-backup'].checked = true;
+            const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
+            await pickFile(sb, validBackup({ local: {
+                theme: 'dark',
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
+                vbmFaviconIdx: favIdx
+            } }));
+            expect(sb.localData.theme).toBe('dark');
+            expect(sb.localData['vbmFavicon:github.com']).toBe('data:image/png;base64,AAAA');
+            expect(sb.localData.vbmFaviconIdx).toBe(favIdx);
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
+
+        it('a quota overflow restoring the favicon cache never fails the settings import', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            sb.elements['favicon-backup'].checked = true;
+            const orig = sb.chrome.storage.local.set;
+            sb.chrome.storage.local.set = async obj => {
+                if (obj && 'vbmFaviconIdx' in obj) throw new Error('QUOTA_BYTES exceeded');
+                return orig(obj);
+            };
+            await pickFile(sb, validBackup({ local: {
+                theme: 'dark',
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
+                vbmFaviconIdx: '{}'
+            } }));
+            expect(sb.localData.theme).toBe('dark');
+            expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
+    });
+});
+
+// Storage-usage bar (v4 Task C): a percentage bar in the Icons group splits
+// chrome.storage.local into icon cache / bookmark data / other / free so the
+// user can decide when to clear the icon cache.
+describe('storage usage bar', () => {
+    const iconBytes = label => {
+        const m = label.match(/storageUsageIcon (\d+(?:\.\d+)?) (B|KB|MB)/);
+        return m ? Number(m[1]) : -1;
+    };
+
+    it('categorizes stored bytes and renders each legend segment + a width', async () => {
+        const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
+        const sb = createSandbox({
+            chromeLocalData: {
+                __migrated_v1: '1',                                        // other
+                theme: 'dark',                                             // other
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',      // icon
+                vbmFaviconIdx: favIdx,                                     // icon
+                deadLastScan: JSON.stringify({ done: 1 }),                 // bookmark data
+                visitStats: '{}'                                           // bookmark data
+            }
+        });
+        await sb.start();
+        const legend = sb.elements['storage-usage-legend'].innerText;
+        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+            expect(legend).toContain(key);
+        expect(legend).toContain(' · ');
+        // every segment got a percentage width (10MB quota in the sandbox)
+        for (const id of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+            expect(sb.elements[id].style.width).toMatch(/^\d+(?:\.\d+)?%$/);
+        expect(sb.elements['storage-usage-bar']._attributes['aria-label']).toBe(legend);
+    });
+
+    it('drops the icons segment after clearing the icon cache', async () => {
+        const sb = createSandbox({
+            chromeLocalData: {
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
+                vbmFaviconIdx: JSON.stringify({ v: 3, down: {}, hosts: {} }),
+                theme: 'dark'
+            }
+        });
+        await sb.start();
+        const before = sb.elements['storage-usage-legend'].innerText;
+        expect(iconBytes(before)).toBeGreaterThan(0);
+        await sb.elements['favicon-cache-clear'].fire('click');
+        for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        expect(sb.alerts).toEqual(['optionFaviconCacheCleared']);
+        expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
+        expect(sb.localData.vbmFaviconIdx).toBeUndefined();
+        expect(iconBytes(sb.elements['storage-usage-legend'].innerText)).toBe(0);
+    });
+});
+
+// Options page header meta (v4 Task D): the footer "thanks" block is gone and
+// the project links + full version live at the top-right of the page title.
+describe('options page header meta', () => {
+    it('fills the GitHub/homepage links and the full version number', async () => {
+        const sb = createSandbox({ chromeLocalData: {} });
+        await sb.start();
+        expect(sb.elements['header-github'].innerText).toBe('optionsGithubLink');
+        expect(sb.elements['header-homepage'].innerText).toBe('optionsHomepageLink');
+        expect(sb.elements['options-version'].innerText).toBe('v4.0.1');
+        expect(sb.elements['options-version'].title).toBe('optionsVersion');
     });
 });
 

@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Keď priame načítanie zlyhá, ikona sa vyhľadá podľa domény vo vstavanom zozname služieb tretích strán na vyhľadávanie ikon (najprv favicon.run, potom DuckDuckGo). Ak je služba nedostupná, preskočí sa a skúsi sa ďalšia – takáto služba sa znova neskúša 6 hodín."
   },
+  "optionFaviconBackup": {
+    "message": "Zahrnúť vyrovnávaciu pamäť ikon do záloh"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Zabalí aj rozšírenú vyrovnávaciu pamäť ikon (dáta pre jednotlivé stránky, potenciálne veľké) do importu/exportu nastavení. Vypnuté udržiava zálohy malé; ikony sa aj tak automaticky znova načítajú."
+  },
   "optionFaviconCacheClear": {
     "message": "Vyčistiť medzipamäť ikon"
   },
   "optionFaviconCacheCleared": {
     "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
+  },
+  "storageUsageIcon": {
+    "message": "Ikony"
+  },
+  "storageUsageBookmarks": {
+    "message": "Údaje záložiek"
+  },
+  "storageUsageOther": {
+    "message": "Ostatné"
+  },
+  "storageUsageFree": {
+    "message": "Voľné"
+  },
+  "storageUsageHint": {
+    "message": "Priestor využívaný záložkami, vyrovnávacou pamäťou ikon a nastaveniami. Voľný priestor sa aktualizuje po vymazaní vyrovnávacej pamäte ikon."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Domovská stránka"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks verzia"
   },
   "optionSyncRefreshInterval": {
     "message": "Interval obnovenia"

@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "直接取得に失敗した場合、組み込みのサードパーティアイコンサービス一覧（favicon.run、次にDuckDuckGo）からドメインに基づいてアイコンを探します。到達できないサービスはスキップされ、次のサービスが試行されます。スキップされたサービスは6時間再試行されません。"
   },
+  "optionFaviconBackup": {
+    "message": "バックアップにアイコンキャッシュを含める"
+  },
+  "optionFaviconBackupHint": {
+    "message": "拡張ファビコンキャッシュ（サイト別データ、大容量の場合あり）も設定のエクスポート/インポートに含めます。オフにするとバックアップが小さくなります。アイコンは自動的に再取得されます。"
+  },
   "optionFaviconCacheClear": {
     "message": "アイコンキャッシュをクリア"
   },
   "optionFaviconCacheCleared": {
     "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
+  },
+  "storageUsageIcon": {
+    "message": "アイコン"
+  },
+  "storageUsageBookmarks": {
+    "message": "ブックマークデータ"
+  },
+  "storageUsageOther": {
+    "message": "その他"
+  },
+  "storageUsageFree": {
+    "message": "空き容量"
+  },
+  "storageUsageHint": {
+    "message": "ブックマーク、アイコンキャッシュ、設定によって使用されるストレージ容量。アイコンキャッシュをクリアすると空き容量が更新されます。"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "ホームページ"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks バージョン"
   },
   "optionSyncRefreshInterval": {
     "message": "更新間隔"

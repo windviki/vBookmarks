@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "सीधे प्राप्त करने में विफलता होने पर, तृतीय-पक्ष आइकन सेवाओं की अंतर्निहित सूची (favicon.run, फिर DuckDuckGo) से डोमेन द्वारा आइकन खोजें। अनुपलब्ध पाई गई सेवा को छोड़ दिया जाता है और अगली सेवा का प्रयास किया जाता है — इसे 6 घंटे तक दोबारा प्रयास नहीं किया जाता।"
   },
+  "optionFaviconBackup": {
+    "message": "बैकअप में आइकन कैश शामिल करें"
+  },
+  "optionFaviconBackupHint": {
+    "message": "इस विकल्प को चालू करने पर, संवर्धित फ़ेविकॉन कैश (प्रति-साइट डेटा, संभावित रूप से बड़ा) सेटिंग्स निर्यात/आयात में भी शामिल होता है। बंद रहने पर बैकअप छोटा रहता है; आइकन स्वचालित रूप से फिर से प्राप्त कर लिए जाते हैं।"
+  },
   "optionFaviconCacheClear": {
     "message": "आइकन कैश साफ़ करें"
   },
   "optionFaviconCacheCleared": {
     "message": "आइकन कैश साफ़ हो गया। अगली बार खोलने पर आइकन फिर से लाए जाएँगे।"
+  },
+  "storageUsageIcon": {
+    "message": "आइकन"
+  },
+  "storageUsageBookmarks": {
+    "message": "बुकमार्क डेटा"
+  },
+  "storageUsageOther": {
+    "message": "अन्य"
+  },
+  "storageUsageFree": {
+    "message": "खाली"
+  },
+  "storageUsageHint": {
+    "message": "बुकमार्क, आइकन कैश और सेटिंग्स द्वारा उपयोग किया गया संग्रहण स्थान। आइकन कैश साफ़ करने के बाद खाली स्थान अपडेट होता है।"
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "होमपेज"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks संस्करण"
   },
   "optionSyncRefreshInterval": {
     "message": "रिफ्रेश अंतराल"

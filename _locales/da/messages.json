@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Når direkte hentning mislykkes, slås ikonet op via domænet fra en indbygget liste over ikontjenester fra tredjeparter (favicon.run, derefter DuckDuckGo). En tjeneste, der ikke kan nås, springes over, og den næste prøves — den forsøges ikke igen i 6 timer."
   },
+  "optionFaviconBackup": {
+    "message": "Medtag ikoncache i sikkerhedskopier"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Pak også den berigede favicon-cache (side-specifikke data, potentielt store) ind i eksport/import af indstillinger. Fra holder sikkerhedskopier små; ikoner hentes automatisk igen alligevel."
+  },
   "optionFaviconCacheClear": {
     "message": "Ryd ikoncache"
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoncachen er ryddet. Ikonerne hentes igen ved næste åbning."
+  },
+  "storageUsageIcon": {
+    "message": "Ikoner"
+  },
+  "storageUsageBookmarks": {
+    "message": "Bogmærkedata"
+  },
+  "storageUsageOther": {
+    "message": "Andet"
+  },
+  "storageUsageFree": {
+    "message": "Ledig"
+  },
+  "storageUsageHint": {
+    "message": "Lagringsplads brugt af bogmærker, ikon-cachen og indstillinger. Ledig plads opdateres efter rydning af ikon-cachen."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Hjemmeside"
+  },
+  "optionsVersion": {
+    "message": "vBookmarks version"
   },
   "optionSyncRefreshInterval": {
     "message": "Opdateringsinterval"

@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Когато директното извличане е неуспешно, потърсете иконата по домейн от вграден списък с услуги за икони на трети страни (favicon.run, след това DuckDuckGo). Услуга, която се окаже недостъпна, се пропуска и се преминава към следващата — не се прави нов опит в продължение на 6 часа."
   },
+  "optionFaviconBackup": {
+    "message": "Включване на кеша на иконите в резервните копия"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Също така включва обогатения кеш на иконите (данни за всеки сайт, потенциално големи) в експорта/импорта на настройки. Когато е изключено, архивите остават малки; иконите така или иначе автоматично се изтеглят отново."
+  },
   "optionFaviconCacheClear": {
     "message": "Изчистване на кеша с икони"
   },
   "optionFaviconCacheCleared": {
     "message": "Кешът с икони е изчистен. Иконите ще бъдат изтеглени отново при следващото отваряне."
+  },
+  "storageUsageIcon": {
+    "message": "Икони"
+  },
+  "storageUsageBookmarks": {
+    "message": "Данни за отметки"
+  },
+  "storageUsageOther": {
+    "message": "Друго"
+  },
+  "storageUsageFree": {
+    "message": "Свободно"
+  },
+  "storageUsageHint": {
+    "message": "Пространство, използвано от отметки, кеша за икони и настройки. Свободното пространство се обновява след изчистване на кеша за икони."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Начална страница"
+  },
+  "optionsVersion": {
+    "message": "Версия на vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Интервал за опресняване"

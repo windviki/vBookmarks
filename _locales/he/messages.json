@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "כאשר האחזור הישיר נכשל, חפש את האייקון לפי דומיין מרשימה מובנית של שירותי אייקונים מצד שלישי (favicon.run, ולאחר מכן DuckDuckGo). שירות לא זמין ידולג והבא בתור ינוסה — הוא לא ינוסה שוב במשך 6 שעות."
   },
+  "optionFaviconBackup": {
+    "message": "כלול מטמון אייקונים בגיבויים"
+  },
+  "optionFaviconBackupHint": {
+    "message": "כלול גם את מטמון האייקונים המועשר (נתונים לכל אתר, שעלולים להיות גדולים) בייצוא/ייבוא של ההגדרות. במצב כבוי, הגיבויים נשארים קטנים; האייקונים נשלפים מחדש אוטומטית בכל מקרה."
+  },
   "optionFaviconCacheClear": {
     "message": "נקה מטמון אייקונים"
   },
   "optionFaviconCacheCleared": {
     "message": "מטמון האייקונים נוקה. האייקונים יאוחזרו מחדש בפתיחה הבאה."
+  },
+  "storageUsageIcon": {
+    "message": "אייקונים"
+  },
+  "storageUsageBookmarks": {
+    "message": "נתוני סימניות"
+  },
+  "storageUsageOther": {
+    "message": "אחר"
+  },
+  "storageUsageFree": {
+    "message": "פנוי"
+  },
+  "storageUsageHint": {
+    "message": "שטח אחסון המשמש את הסימניות, מטמון האייקונים וההגדרות. השטח הפנוי מתעדכן לאחר ניקוי מטמון האייקונים."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "דף הבית"
+  },
+  "optionsVersion": {
+    "message": "גרסת vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "מרווח רענון"

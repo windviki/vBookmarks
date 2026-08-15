@@ -807,11 +807,41 @@
   "optionFaviconEnrichAggHint": {
     "message": "Když přímé načtení selže, vyhledá se ikona podle domény z vestavěného seznamu služeb ikon třetích stran (favicon.run, poté DuckDuckGo). Služba, která je nedostupná, se přeskočí a zkusí se další – po dobu 6 hodin se nebude opakovat."
   },
+  "optionFaviconBackup": {
+    "message": "Zahrnout mezipaměť ikon do záloh"
+  },
+  "optionFaviconBackupHint": {
+    "message": "Také zabalí rozšířenou mezipaměť ikon webů (data pro jednotlivé weby, potenciálně velká) do exportu/importu nastavení. Po vypnutí zůstanou zálohy malé; ikony se stejně automaticky znovu načtou."
+  },
   "optionFaviconCacheClear": {
     "message": "Vymazat mezipaměť ikon"
   },
   "optionFaviconCacheCleared": {
     "message": "Mezipaměť ikon byla vymazána. Ikony se znovu načtou při příštím otevření."
+  },
+  "storageUsageIcon": {
+    "message": "Ikony"
+  },
+  "storageUsageBookmarks": {
+    "message": "Data záložek"
+  },
+  "storageUsageOther": {
+    "message": "Ostatní"
+  },
+  "storageUsageFree": {
+    "message": "Volné"
+  },
+  "storageUsageHint": {
+    "message": "Úložný prostor používaný záložkami, mezipamětí ikon a nastavením. Volné místo se aktualizuje po vymazání mezipaměti ikon."
+  },
+  "optionsGithubLink": {
+    "message": "GitHub"
+  },
+  "optionsHomepageLink": {
+    "message": "Domovská stránka"
+  },
+  "optionsVersion": {
+    "message": "Verze vBookmarks"
   },
   "optionSyncRefreshInterval": {
     "message": "Interval obnovení"
