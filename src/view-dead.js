@@ -440,6 +440,14 @@ export function initViewDead(ctx = {}) {
             if (lastScan || deadMarks.size)
                 html += `<button class="dead-rescan">${_m('deadRescan')}</button>`;
             const rows = allResultRows();
+            // mark-all / select-mode act on the FILTERED row set (markAll
+            // reads resultRows(), the selection prunes against it), so they
+            // key off the filtered count; delete-all additionally covers the
+            // marked-only view (no result rows there — it deletes the marked
+            // bookmarks, see deleteAll()). The filter segment stays keyed off
+            // the UNFILTERED count, so the way back remains reachable.
+            const markedOnly = filter === 'marked' || !lastScan;
+            const filteredN = resultRows().length;
             if (lastScan && (rows.length || deadMarks.size)) {
                 // dead-filter and the old dead-summary merge: each segment
                 // button carries its own count ("全部 28 · 仅死链 20 · 仅受限 0 ·
@@ -465,24 +473,19 @@ export function initViewDead(ctx = {}) {
                 ])
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
-                // mark-all / select-mode act on the FILTERED row set
-                // (markAll reads resultRows(), the selection prunes against
-                // it), so like delete-all they key off the filtered count:
-                // under a filter segment matching no rows a button that
-                // clicks into nothing must not render. The filter segment
-                // itself stays keyed off the UNFILTERED count above, so the
-                // way back remains reachable.
-                const filteredN = resultRows().length;
+                // mark-all: result rows only — a marked-only view has none to
+                // batch-mark (the batch bar handles those).
                 if (filteredN)
                     html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
-                // Batch delete-all: removes every row of the ACTIVE filter
-                // segment (the same scope as mark-all, so 仅死链 narrows it
-                // to dead rows only). Rendered only when that set is
-                // non-empty — a danger button that clicks into nothing
-                // under a filter matching no rows must not appear.
-                if (filteredN)
-                    html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             }
+            // Batch delete-all: the result view removes every row of the
+            // ACTIVE filter segment (the same scope as mark-all, so 仅死链
+            // narrows it to dead rows only); the marked-only view (cancelled
+            // scan / 过去标注 filter) deletes the marked bookmarks instead.
+            // Rendered only when the target set is non-empty — a danger
+            // button that clicks into nothing must not appear.
+            if (filteredN || (markedOnly && deadMarks.size))
+                html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
             // block, so the marked-only view (a cancelled scan with marks,
             // or the 上次标注 filter) still gets the batch bar: the marked
@@ -618,7 +621,7 @@ export function initViewDead(ctx = {}) {
                 if (!alive.has(id))
                     selected.delete(id);
         }
-        let html = riskBanner.html() + renderProxyStrip() + markedBannerHtml() + renderToolbar();
+        let html = riskBanner.html() + markedBannerHtml() + renderProxyStrip() + renderToolbar();
         if (live) {
             // Progressive rendering (v4 task-4 #16): the blob journal's
             // settled dead/blocked checks are already rows while the SW's
@@ -636,7 +639,11 @@ export function initViewDead(ctx = {}) {
             // bottom start row is gone — the toolbar's rescan (or the banner
             // above) is the way back into a run.
             const marks = markedRows();
-            if (marks.length || filter === 'marked')
+            // A marked-only view with marks gone (clear-all / delete-all just
+            // ran, or the segment has none) falls back to the executable start
+            // row — the empty `<ul class="dead-marked-list">` shell must not
+            // linger where there is nothing left to show.
+            if (marks.length)
                 html += renderMarkedRows(marks);
             else
                 html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
@@ -841,12 +848,19 @@ export function initViewDead(ctx = {}) {
     };
 
     // Toolbar "delete all": removes every row of the ACTIVE filter segment
-    // (all / dead / blocked — mirrors markAll). The dialog names the
-    // current-filter scope (the old text lumped everything under "dead
-    // bookmarks" while All also deletes blocked rows) and carries the note
-    // about blocked rows and the one-step undo granularity.
-    const deleteAll = () =>
-        confirmDeletion(resultRows().map(({ item }) => item.id), 'deadDeleteAll', null, 'deadDeleteAllNote');
+    // (all / dead / blocked — mirrors markAll); under the marked-only view
+    // (cancelled scan / 过去标注 filter) it deletes the marked bookmarks
+    // instead. The dialog names the current-filter scope (the old text
+    // lumped everything under "dead bookmarks" while All also deletes
+    // blocked rows); the blocked-rows note only applies to the All filter,
+    // so the marked-only path drops it.
+    const deleteAll = () => {
+        const markedOnly = filter === 'marked' || !lastScan;
+        const ids = markedOnly
+            ? markedRows().map(({ item }) => item.id)
+            : resultRows().map(({ item }) => item.id);
+        confirmDeletion(ids, 'deadDeleteAll', null, markedOnly ? null : 'deadDeleteAllNote');
+    };
 
     // Selection-mode "delete selected": removes the selected rows after a
     // confirm, then LEAVES the mode — the selection's rows are all gone, so

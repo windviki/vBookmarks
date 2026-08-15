@@ -432,6 +432,9 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(html).toContain('class="row-btn dead-mark-btn marked"');
         // the toolbar's batch clear-all is NOT gated on a result list
         expect(html).toContain('dead-unmark-all');
+        // …and the red delete-all is there too: in the marked-only view it
+        // targets the marked bookmarks (same danger style as the result view)
+        expect(html).toContain('class="dead-delete-all"');
         // …the bottom start row is gone once marks fill the list — the top
         // toolbar's rescan is the way back into a run, and the tooltip
         // banner above the toolbar says the same in words
@@ -448,6 +451,35 @@ describe('empty state + cached results (§5.5a)', () => {
         expect(JSON.parse(store.get('deadMarks', '[]'))).toEqual(['13']);
     });
 
+    it('clearing all marks in the marked-only view swaps the list for the start pill', () => {
+        // "清除全部标记" (unmark-all) clears the marks → the marked-only view
+        // must NOT be left holding an empty <ul class="dead-marked-list">
+        // shell: the executable start row (blue scan pill) takes its place,
+        // and the banner (which exists to prompt a rescan) goes with the marks.
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        const { $list, dialogs } = ctx;
+        ctx.def().activate(); // no lastScan → marked-only view
+        expect($list.innerHTML).toContain('<ul role="list" class="dead-marked-list">');
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).not.toContain('class="risk-banner dead-marked-banner"');
+    });
+
+    it('the marked tooltip banner sits above the proxy (add-server) strip', () => {
+        // The banner nudges the user toward a rescan AND points at the list
+        // below — it belongs on top of the add-server container so the
+        // management strip reads as part of the workflow, not after it.
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        ctx.def().activate();
+        const html = ctx.$list.innerHTML;
+        expect(html).toContain('class="dead-proxy-strip vbm-toolbar"');
+        const banner = html.indexOf('class="risk-banner dead-marked-banner"');
+        const strip = html.indexOf('dead-proxy-strip');
+        expect(banner).toBeGreaterThan(-1);
+        expect(banner).toBeLessThan(strip);
+    });
 
     it('the start row sends the start message on click and on Enter', () => {
         const ctx = setup({});
@@ -1101,6 +1133,25 @@ describe('batch deletion (delete all / delete selected)', () => {
         const ctx = setup({ storeData: { deadLastScan: healthy } });
         ctx.def().activate();
         expect(ctx.$list.innerHTML).not.toContain('dead-delete-all');
+    });
+
+    it('delete-all in the marked-only view removes the marked bookmarks (scope switch, no All-filter note)', async () => {
+        // A cancelled scan (marks, no result rows) still gets the red
+        // delete-all: deleteAll() switches scope to the marked bookmarks, the
+        // blocked-rows note (an All-filter concern) is dropped, and the batch
+        // still goes through the serial remove chain + single toast.
+        const ctx = setup({ storeData: { deadMarks: '["12","13"]' } });
+        const { dialogs, chrome, undo } = ctx;
+        ctx.def().activate(); // no lastScan → marked-only view
+        expect(ctx.$list.innerHTML).toContain('class="dead-delete-all"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-delete-all' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog)
+            .toBe('deadDeleteAll[2]<br>undoSingleStepNote');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect(chrome.bookmarks.removeCalls).toEqual(['12', '13']);
+        expect(undo.toastCalls).toEqual(['deadDeleted[2]']);
     });
 
     it('delete-all gates behind a confirm carrying the running count', () => {
