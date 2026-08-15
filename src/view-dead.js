@@ -50,8 +50,10 @@
  * sit on the bottom-right, so they never collide). Each list module calls
  * its onRowsRendered ctx hook after rendering (tree: onTreeGenerated,
  * fired after the innerHTML swap) — neat.js wires them all here (第五轮
- * 项3). Marks prune on bookmark removal, and ids that came back
- * ok/skipped after a rescan drop out automatically. Batch "mark all"
+ * 项3). Marks prune on bookmark removal (the tree re-join drops vanished
+ * ids); a mark that comes back ok/skipped after a rescan stays as the
+ * "过去标注" residue (§2.4 — see docs/dead-过去标注语义.md), cleared only by
+ * the user or by bookmark removal. Batch "mark all"
  * (every dead+blocked row of the result set) and "clear all marks" are
  * ConfirmDialog-gated. badge() = the last scan's dead+blocked count after
  * the tree join (see the badge hook at registration — NOT the marks count,
@@ -666,19 +668,22 @@ export function initViewDead(ctx = {}) {
                 ? renderRows(rows)
                 : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
             // The marked list renders ONLY under "全部" (the default view),
-            // when any mark exists — it is the "上次标注" record appended
-            // below the full result set. Content: marks the result rows do
-            // NOT cover (a marked id the last scan never probed, or one added
-            // after it) — marks among the scan's problem rows carry the
-            // toggle in the result rows, so they are not repeated here. Under
-            // 仅死链/仅受限 only that category's rows are on screen: a
-            // category filter hides the marked list entirely (a mark the
-            // category hides is covered by its own row once the segment
-            // switches back, so echoing it here read as "the toolbar filter
-            // is swapped / the list shows everything" — the toolbar/list
-            // mismatch report).
-            if (filter === 'all' && deadMarks.size)
-                html += renderMarkedRows(markedRows());
+            // when any residue mark exists — it is the "上次标注" record
+            // appended below the full result set. Content: marks the result
+            // rows do NOT cover (dead-过去标注语义.md §2.4: a marked id the last
+            // scan judged healthy, or one it never probed, or one added after
+            // it) — marks among the scan's problem rows carry the toggle in
+            // the result rows, so they are not repeated here. Gated on the
+            // RESIDUE count, not the raw set: when every mark is covered (过去
+            // 标注 empty) no empty list shell may linger. Under 仅死链/仅受限
+            // only that category's rows are on screen: a category filter hides
+            // the marked list entirely (a mark the category hides is covered
+            // by its own row once the segment switches back, so echoing it
+            // here read as "the toolbar filter is swapped / the list shows
+            // everything" — the toolbar/list mismatch report).
+            const marks = markedRows();
+            if (filter === 'all' && marks.length)
+                html += renderMarkedRows(marks);
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);
@@ -1053,26 +1058,23 @@ export function initViewDead(ctx = {}) {
     };
 
     // deadLastScan changed — only the SW writes it, so this means a run
-    // finished: fold in the fresh cache, prune the marks of ids that came
-    // back healthy (§5.5c) and repaint every overlay. Runs even when the
-    // view is not active (the prune must not wait for a revisit).
+    // finished: fold in the fresh cache and repaint every overlay. Runs even
+    // when the view is not active (the repaint must not wait for a revisit).
+    // Marks are NOT pruned here (dead-过去标注语义.md §2.4): a mark that came
+    // back healthy (ok/skipped) — or one the run never probed — stays in
+    // deadMarks as the "过去标注" residue, appended below the results. The
+    // only things that remove marks are the user (unmark / delete) and
+    // bookmark removal (the tree re-join prune).
     const onCacheWritten = raw => {
         try {
             lastScan = raw ? JSON.parse(raw) : null;
         } catch (e) {
             lastScan = null;
         }
-        if (lastScan && lastScan.results) {
-            let pruned = false;
-            for (const [id, r] of Object.entries(lastScan.results))
-                if ((r.status === 'ok' || r.status === 'skipped') && deadMarks.delete(id))
-                    pruned = true;
-            if (pruned)
-                persistMarks();
+        if (lastScan && lastScan.results)
             refreshOverlays();
-        }
         // The tab badge is now the scan's dead+blocked count — a finished run
-        // always re-evaluates it, even when no mark was pruned (the scan's
+        // always re-evaluates it, even when no mark was affected (the scan's
         // verdict alone can change the number).
         views.updateBadges();
         if (views.isActive('dead'))
@@ -1497,8 +1499,8 @@ export function initViewDead(ctx = {}) {
             if (!local || !local.get) // unit doubles without storage
                 return treeAndRender();
             local.get([DEAD_SCAN_KEY, DEAD_LAST_KEY], data => {
-                // Fold the cache in without the mark prune — that side
-                // effect belongs to the finish event (onCacheWritten).
+                // Fold the cache in raw — marks are never pruned here (nor by
+                // onCacheWritten): residue semantics keep every past mark.
                 try {
                     lastScan = data[DEAD_LAST_KEY] ? JSON.parse(data[DEAD_LAST_KEY]) : null;
                 } catch (e) {
