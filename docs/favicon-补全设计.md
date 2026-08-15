@@ -1,6 +1,7 @@
 # favicon 补全 · 原生功能设计（实施定稿）
 
 > 2026-08-15 · 实施版，所有决策已定稿（§15），无开放项。
+> v2 打磨：DDG 服务级熔断与代理兜底（§3.3/§3.4）；存储改为按 host 分键 + 索引，写开放大、爆炸边缘 case、淘汰管理全部明确（§5）。
 > 前置：[`docs/favicon-补全方案.md`](favicon-补全方案.md)（根因 + 真实 Chromium 实测 + 同类扩展调研）。
 > 本文是「补全缺失的网站图标」作为 vBookmarks **原生功能**的唯一实施依据：模块边界、代码契约、存储形状、选项 UI、测试与提交步骤均精确到文件与函数。
 
@@ -15,8 +16,8 @@
 **原生性约束**（与 vBookmarks 现有架构对齐，不引入异质模式）：
 
 - **零新权限、零 manifest 改动**：`connect-src *` + `host_permissions <all_urls>` 已覆盖 fetch；`img-src 'self' data:` 已覆盖 data URL 注入。
-- **零默认第三方依赖**：主链路只向用户已收藏的站点发请求（等同于访问该站）；DuckDuckGo 兜底做成独立子开关、默认关（§6）。
-- **复用现有基建**：`favicon-fallback` 的占位图识别与反色采样、`store.js` 的镜像与 debounce 持久化、`dead-proxy.js` 的 marker-PAC 代理通道、options 页 Views 组的开关模式、`tests/helpers/` 测试桩。
+- **零默认第三方依赖**：主链路只向用户已收藏的站点发请求（等同于访问该站）；DuckDuckGo 兜底做成独立子开关、默认关（§6），且带服务级熔断（§3.3）。
+- **复用现有基建**：`favicon-fallback` 的占位图识别与反色采样、`dead-proxy.js` 的 marker-PAC 代理通道、options 页 Views 组的开关模式、`tests/helpers/` 测试桩。
 - **遵循「操作即模块」**：纯逻辑全部进 `src/favicon-enrich.js`（ES 模块、可单测），`neat.js` 只做薄接线。
 
 ---
@@ -41,8 +42,9 @@ tree-render.js:144 getFaviconUrl(url)
 
 其他已核实的基建事实：
 
-- `store.js` 镜像在 `store.ready` 时 **全量 overlay `chrome.storage.local`**（store.js:230-234），任意 local 键都能 `store.get` 同步读；`store.set` 200ms 尾沿 debounce 持久化，`pagehide` 强制 flush。缓存读写零新增基建。
-- 设置备份导出**整个 local 区**（options.js:239 `chrome.storage.local.get(null)`），无排除名单——图标缓存（MB 级 base64）必须显式排除（§5.3）。
+- `store.js` 镜像面向**设置键**（KNOWN_KEYS 静态枚举）；图标缓存是动态 host 键的数据，不走 store——先例是 `deadLastScan`/`vbmDeadScan`，同样由持有方直接读写 `chrome.storage.local`（§5.1）。
+- 设置备份导出**整个 local 区**（options.js:239 `chrome.storage.local.get(null)`），无排除名单——图标缓存（MB 级 base64）必须按前缀显式排除（§5.4）。
+- `chrome.storage.local` 默认总配额 **5MB**，与死链缓存、访问统计等所有 local 键共享——图标缓存必须自带字节预算（§5.3）。
 - 死链扫描的代理会话对页面可见：`dead-scan-sw.js` 在 PAC 安装成功时写 `chrome.storage.session` 的 `vbmProxySession` 标记（dead-scan-sw.js:138），拆除时移除（:113）；`background.js:39-43` 冷启动按它清扫残留。页面侧 `chrome.storage.session.get('vbmProxySession')` 即为「PAC 此刻在线」的权威信号——**无需新增任何 SW 消息**。
 - PAC 一旦安装即浏览器级生效（scope regular），popup/panel 页面里的 fetch 同样被路由；`addProxyMarker(url)` 加 `__vbm_px=1` 参数即走代理（dead-proxy.js:109-114）。
 - 死链扫描的 `checkUrl` 是 HEAD 优先、405/501/403 才 GET，**从不读 body**（dead-links.js:49-70）——「扫描顺带解析 `<link>`」需要改 GET+读 body，明确不做进本期（§15）。
@@ -68,9 +70,11 @@ tree-render / search / palette / recent 渲染 <img _favicon>
   → 限流器（并发 ≤ 6）逐 host 走发现链：
       L1  fetch https://<host>/favicon.ico            (3s)
       L2  fetch 书签页 HTML (5s) → 提取 <link> 图标声明 → fetch 图标 (3s)
-      L3  fetch https://icons.duckduckgo.com/ip3/<host>.ico  (3s，faviconEnrichDdg 子开关)
-      L4  代理接力：死链扫描代理会话在线 → addProxyMarker 重试 L1/L2  (3s/5s)
-  → 成功：校验 → 解码验证 → data URL 写缓存 → 热替换 anchors 内的默认 SVG → 采样反色
+      L3  fetch https://icons.duckduckgo.com/ip3/<host>.ico  (3s)
+          ★ 仅 faviconEnrichDdg 开 且 DDG 熔断器未跳闸（§3.3）
+      L4  代理接力（死链扫描代理会话在线时）：addProxyMarker 重试 L1/L2，
+          熔断中的 DDG 也经代理补试一次 L3  (3s/5s/3s)
+  → 成功：校验 → 解码验证 → 按 host 写缓存 → 热替换 anchors 内的默认 SVG → 采样反色
   → 全失败：写 failed 标记（24h 免重试）
 ```
 
@@ -78,11 +82,11 @@ tree-render / search / palette / recent 渲染 <img _favicon>
 
 | 模块 | 职责 |
 |---|---|
-| `src/favicon-enrich.js`（新，ES 模块） | 发现链 L1-L4、图标校验与解码、data URL 编码、缓存读写（LRU/TTL/failed 标记）、队列与限流、AbortController 取消、热替换与反色登记。页面依赖（`fetch`/`Image`/`chrome.storage`）全部可注入，node 下可单测 |
+| `src/favicon-enrich.js`（新，ES 模块） | 发现链 L1-L4、DDG 熔断器、图标校验与解码、data URL 编码、缓存层（按 host 分键 + 索引 + LRU/字节预算/自愈）、队列与限流、AbortController 取消、热替换与反色登记。页面依赖（`fetch`/`Image`/`chrome.storage`）全部可注入，node 下可单测 |
 | `src/favicon-fallback.js`（改，3 处小改） | 新增 `ctx.onPlaceholder` 钩子；返回 API 增加 `sampleIcon`；`reapplyContrast` 选择器扩展（§4.1） |
 | `src/neat.js`（薄接线） | 实例化 enricher，接进 faviconService；扩展现有 `storage.onChanged` 监听（faviconEnrich / faviconEnrichDdg 两键） |
-| `src/options.js` + `pages/options.html`（改） | Views 组加两个开关 + 一个清除缓存按钮；备份导出排除缓存键 |
-| `src/store.js`（改 1 行） | `KNOWN_KEYS` 注册 `faviconEnrich`、`faviconEnrichDdg` |
+| `src/options.js` + `pages/options.html`（改） | Views 组加两个开关 + 一个清除缓存按钮；备份导出按前缀排除缓存键 |
+| `src/store.js`（改 1 行） | `KNOWN_KEYS` 注册 `faviconEnrich`、`faviconEnrichDdg`（仅两个开关键；缓存的动态 host 键不入 KNOWN_KEYS） |
 
 钩子挂在 `favicon-fallback` 的 capture-phase 委托上，意味着**树、搜索结果、palette 行、recent 视图——所有走 `_favicon` 的 `<img>` 自动获得补全**，无需逐视图接入。
 
@@ -90,12 +94,12 @@ tree-render / search / palette / recent 渲染 <img _favicon>
 
 ## 3. 发现链详表
 
-| 层 | 请求 | 超时 | 覆盖场景 | 开关 |
+| 层 | 请求 | 超时 | 覆盖场景 | 前提 |
 |---|---|---|---|---|
 | L1 | `GET https://<host>/favicon.ico` | 3s | 经典路径，实测 github/MDN/cloudflare 可用 | faviconEnrich |
 | L2 | `GET <pageUrl>`（书签本身的 URL）→ 提取 `<link>` → `GET <iconUrl>` | 5s + 3s | 非标准路径（`/icon.svg`、CDN、apple-touch-icon） | faviconEnrich |
-| L3 | `GET https://icons.duckduckgo.com/ip3/<host>.ico` | 3s | 站点 403/反爬（实测 stackoverflow `/favicon.ico` 403） | faviconEnrich + faviconEnrichDdg |
-| L4 | `addProxyMarker` 重试 L1、L2 | 3s + 5s | 直连不可达但用户代理可达（区域/ISP 限制） | faviconEnrich + 死链代理会话在线 |
+| L3 | `GET https://icons.duckduckgo.com/ip3/<host>.ico` | 3s | 站点 403/反爬（实测 stackoverflow `/favicon.ico` 403） | faviconEnrich + faviconEnrichDdg + **熔断器未跳闸** |
+| L4 | `addProxyMarker` 重试 L1、L2；熔断中则补试 L3 | 3s + 5s + 3s | 直连不可达但用户代理可达（区域/ISP 限制，**含 DDG 本身被区域的场景**） | faviconEnrich + 死链代理会话在线 |
 
 **链规则**：逐层串行，任一层产出**通过校验**的图标即短路返回；任一层抛错/超时/校验失败即落到下一层；全部落空写 failed 标记。
 
@@ -119,11 +123,27 @@ node 无 DOMParser，为保证模块可单测，用**容错的属性级正则**�
 - 选图打分：`sizes` 含 `16x16`/`32x32` → 3；`type="image/svg+xml"` → 2；其余 → 1；取最高分，同分取先出现者。SVG 没有固定尺寸但缩放无损，优先级高于未知位图。
 - `<link rel="manifest">` 本期不追（多一次 JSON fetch，收益边际），代码里留注释说明。
 
-### 3.3 L3 的已知瑕疵（如实记录）
+### 3.3 L3 的服务级熔断（DDG 直连不可达 → 不做无谓的重复尝试）
 
-DuckDuckGo 对未知域名返回它自己的默认图标（HTTP 200），无法可靠区分「真图标」与「DDG 占位」。接受策略：按成功缓存（30d TTL）。代价是「DDG 也查不到的站点会缓存一个 DDG 占位图」——观感不劣于默认 SVG，且该层默认关闭，可接受。
+**问题**：DuckDuckGo 在部分网络环境（典型：需要代理才能访问它的区域）里**整个服务直连不可达**。若按 host 逐个尝试，每个失败 host 都要白等一次 3s 超时——几千个占位图就是几千次徒劳请求。必须把「DDG 服务不可达」作为**服务级状态**记住，而非按 host 重试。
 
-### 3.4 L4 代理接力的门槛判定
+**失败分类**（L3 专用，其他层不需要）：
+
+| L3 结果 | 含义 | 动作 |
+|---|---|---|
+| HTTP 响应到达（任意状态码，含 404/5xx） | 服务**可达**，是该 host 查不到 | 按 host 走链规则（不落熔断） |
+| 网络错误（TypeError）/ 超时（AbortError） | 请求根本没到达服务 | **跳闸**：`ddgDownUntil = now + 6h` |
+
+**熔断器规则**：
+
+- 跳闸是**即时**的：一次网络级失败即可判定（ DDG 要么可达要么被区域，一次超时足以说明；误判代价仅是 6h 内不用这个可选兜底）。
+- 跳闸期间：所有 host 的 L3 **整体跳过**，一个请求都不发——这就是「不重复尝试」。
+- 状态**持久化**在缓存索引里（`vbmFaviconIdx` 的 `ddgDownUntil` 字段，§5.1），跨 popup 会话生效；**6h 到期自动愈合**，下一次补全放行一次 L3 直连做探测，仍不可达则重新跳闸 6h——周期性单发探测，不是每 host 重试。
+- 熔断只针对 L3 直连；L1/L2 的目标是每个书签自己的站点，可达性因站而异，天然按 host 的 failed 标记管理，不需要服务级熔断。
+
+**已知瑕疵（如实记录）**：DuckDuckGo 对未知域名返回它自己的默认图标（HTTP 200），无法可靠区分「真图标」与「DDG 占位」。接受策略：按成功缓存（30d TTL）。代价是「DDG 也查不到的站点会缓存一个 DDG 占位图」——观感不劣于默认 SVG，且该层默认关闭，可接受。
+
+### 3.4 L4 代理接力（含 DDG 的代理兜底）
 
 ```js
 const proxyRelayAvailable = async () => {
@@ -138,8 +158,9 @@ const proxyRelayAvailable = async () => {
 ```
 
 - 读 `chrome.storage.session` / `chrome.storage.local` **直读，不走 store 镜像**——镜像只反映页面加载时刻，扫描会话的 PAC 状态是运行期变化的。
-- 只对 L1/L2 重试（L3 的 DDG 是公网服务，直连必然可达，走代理无意义）。
-- PAC 窗口竞态（重试在途时扫描结束拆 PAC）→ fetch 失败 → 落入 failed 标记。因为直连 L1/L2 已经失败过，这个 failed 不冤，24h 后正常重试，无需特殊处理。
+- **重试范围 = L1、L2，以及「熔断中的 L3」**：L1/L2 无条件重试（直连失败的站点代理可能可达）；L3 仅在 `faviconEnrichDdg` 开 **且熔断器已跳闸**（或本次 L3 直连刚网络失败、即时跳闸）时经代理补试一次——这正覆盖「DDG 直连不可达但代理可达」的用户场景。L3 直连正常时不走代理（无意义的双倍请求）。
+- L4 经代理的成功与直连成功同等对待：过同一道校验（§3.1）、写同样的缓存。代理取到的 DDG 图标**不会**解除直连熔断（熔断描述的是直连可达性），`ddgDownUntil` 照旧到期自愈。
+- PAC 窗口竞态（重试在途时扫描结束拆 PAC）→ fetch 失败 → 落入 failed 标记。因为直连已经失败过，这个 failed 不冤，24h 后正常重试，无需特殊处理。
 - 代理流量与扫描共享 PAC 但互不协调：补全自己的 6 并发限流天然封顶，不会给扫描施压。
 
 ---
@@ -220,37 +241,77 @@ for (const anchor of item.anchors) {
 
 ---
 
-## 5. 缓存与持久化
+## 5. 缓存与持久化（含爆炸边缘 case 与淘汰管理）
 
-### 5.1 形状
+### 5.1 键布局：按 host 分键 + 一个索引（不用单键大 JSON）
 
-```js
-// chrome.storage.local 键 vbmFaviconCache，JSON 字符串（同 deadLastScan 先例）
+```
+chrome.storage.local:
+  vbmFavicon:github.com   = "data:image/png;base64,…"   // 每个成功 host 一个键，值即 data URL 字符串
+  vbmFavicon:example.org  = "data:image/x-icon;base64,…"
+  vbmFaviconIdx           = JSON 字符串（唯一的结构键）:
 {
-  "github.com":      { "d": "data:image/png;base64,…", "ts": 1755200000000 },
-  "noicon.example":  { "f": 1, "ts": 1755200000000 }   // failed 标记，极小
+  "v": 1,                          // 形状版本，未来迁移用
+  "ddgDownUntil": 0,               // DDG 熔断器跳闸截止 ts（§3.3）
+  "hosts": {
+    "github.com":   { "t": 1755200000000, "s": 2140 },   // 成功：t=最后命中 ts, s=data URL 长度
+    "noicon.example": { "f": 1, "t": 1755200000000 }     // 失败标记：只进索引，无数据键
+  }
 }
 ```
 
-- **data URL 而非 blob URL**：blob 会话级（页面关闭即失效）且 `img-src 'self' data:` 不含 blob scheme；data URL 可持久化、跨渲染注入稳定，CSP 原生覆盖。32px 图标约 1-4KB，base64 后 1.4-5.6KB。
-- 读写走 store 镜像：`store.get('vbmFaviconCache', '{}')` 同步读、`store.set` 200ms debounce 写、`pagehide` 强制 flush——高频逐 host 完成不 hammer storage。
-- enricher 内部持一份会话级 `Map`（hydrate 自 store.ready 后的镜像），渲染路径只读 Map；写缓存 = 改 Map + `store.set(key, JSON.stringify(map对象))`。
-- 监听 `chrome.storage.onChanged` 的 `vbmFaviconCache`：选项页清缓存或另一页面写入时重新 hydrate——常驻 side panel 也能即刻感知。
+**为什么不走 store 镜像、为什么不用单键大 JSON**：
 
-### 5.2 生命周期
+- store 镜像面向 KNOWN_KEYS 静态枚举的**设置**；缓存是动态 host 键的**数据**——先例 `deadLastScan`（死链结果）同样由持有方直读直写 `chrome.storage.local`。
+- 单键大 JSON 有**写放大**：500 个图标 ≈ 2MB 的 blob，每补全成功一个就整体重写一次；首屏风暴几百次完成 = 几百次 MB 级写。按 host 分键后，每次完成只写 ~3KB 的数据键 + ~20-40KB 的索引键，差两个数量级。
+- 分键让淘汰能精确删除（`chrome.storage.local.remove('vbmFavicon:' + host)`），不用重写整个缓存。
+
+**读写路径**：
+
+- enricher 持一份**会话级内存 Map**（host → `{ d: dataUrl } | { f: ts }`），渲染钩子只同步读 Map。
+- **hydrate**：enricher 初始化时（与 `store.ready` 并行，不等它）`chrome.storage.local.get(null)` 一次，按前缀过滤出数据键 + 解析索引，构建 Map，并做自愈对账（§5.3）。popup 打开时一次性读几 MB 是异步的、不在渲染关键路径上（calibrate 校准本身也要等一次 `_favicon` 往返）。
+- **hydrate 竞态**：首批占位图可能在 hydrate 完成前到达钩子——按未命中入队即可；**发现链启动前会重读 Map**，此时 hydrate 已就绪，命中则直接热替换、不发请求。竞态的代价最多是「队列里多待一会」，绝不重复 fetch。
+- **写**：每次完成 = `chrome.storage.local.set({ ['vbmFavicon:' + host]: dataUrl, vbmFaviconIdx: 新索引JSON })`（失败标记只动索引）。索引写走 1s 尾沿 debounce 合并突发（一场风暴几十次完成只落几次索引写），`pagehide` 前 flush。
+- **跨页面一致性**：enricher 监听 `chrome.storage.onChanged`，`vbmFaviconIdx` 被**移除**（选项页清缓存，§5.4）→ 清空内存 Map + 重置熔断器。popup/panel 互斥，不考虑第二个 enricher 并发写的合并。
+
+### 5.2 生命周期与刷新
 
 | 项 | 策略 |
 |---|---|
 | 成功图标 | **TTL 30 天**（站点会换图标），到期按未命中重新补全 |
 | failed 标记 | **24h 免重试**，到期允许重试（站点可能后来加了 favicon） |
-| 容量 | **LRU 500 个成功项**（failed 不占额度），超出淘汰最久未命中者 |
+| DDG 熔断 | **6h** 自愈探测（§3.3） |
 | 书签删除 | 不影响（按 host 缓存，多书签共享） |
+| 手动刷新 | 选项页「清除图标缓存」按钮（§6.2） |
 
-配额估算：500 × 平均 ~3KB ≈ 1.5-2.8MB，低于 `chrome.storage.local` 5MB 默认配额。`store.set` 持久化失败的兜底：catch 到配额错误时立即把 LRU 额度砍半重写一次；再失败则放弃本次写入（内存 Map 仍在，本会话不失效）。
+### 5.3 上限与淘汰管理（存储爆炸的边缘 case）
 
-### 5.3 设置备份排除
+`chrome.storage.local` 总配额 5MB 与扩展其他数据共享，图标缓存给自己划**双轴硬预算**：
 
-选项页导出打包**整个 local 区**（options.js:237-256）。在导出装配处加一行 `delete localData.vbmFaviconCache`——缓存不进备份文件（否则每个设置备份膨胀数 MB）。导入是 merge 语义（backup 里没有的键不动），自然无兼容问题。
+| 轴 | 上限 | 触发后淘汰到 | 说明 |
+|---|---|---|---|
+| 成功条数 | **500** | **400** | 批量淘汰（留 100 余量），避免「每进一条淘汰一条」的抖动 |
+| 总字节（Σ `s`） | **2MB** | **1.6MB** | 同样批量到 80%；大图标多时字节轴先于条数轴触发 |
+
+**淘汰策略 = 按 `t`（最后命中时间）的 LRU**：
+
+- 读命中即更新该 host 的 `t`（内存即时 + 索引 debounce 持久化，不为读放大额外写盘）。
+- 淘汰只动成功条目，按 `t` 升序删数据键 + 索引条目，直到两条轴都回到目标水位。
+- failed 标记不占额度：写索引时顺手**清除已过 24h 的 failed 条目**（它们反正已到期），索引体积自然收敛——几千书签的用户即便躺着几百个失败 host，索引也就几十 KB。
+
+**边缘 case 逐条明确**：
+
+1. **超大图标准入**：data URL 长度 > **96KB**（≈ 64KB 原始字节，覆盖一切正常 favicon；200KB 的 fetch 上限是「可展示」上限，不是「可入库」上限）→ **只进会话 Map 标 `persist: false`，不落盘**。本次会话照常热替换显示，下次会话重新补全。>64KB 的「favicon」通常是误配的大 PNG，不值得为它花配额。
+2. **配额写拒绝**（其他数据挤占 5MB）：`storage.local.set` catch 到配额错误 → **紧急淘汰**：成功条目按 `t` 砍掉最旧的一半，重试一次写入；再失败 → 该条目降级为会话级（`persist: false`），静默不报错。
+3. **索引损坏**（JSON 解析失败/形状不符，含手贱改 storage、`v` 版本不识别）：hydrate 时丢弃索引，**扫描现存 `vbmFavicon:` 前缀数据键重建索引**（`s` 取实际长度，`t` 取当前 ts）——数据键还在就不丢图标，只丢命中序。
+4. **索引与数据键漂移**（外部删了数据键、索引还在；或反过来）：hydrate 对账——索引有而数据键无 → 删索引条目；数据键有而索引无 → 补录条目。读到已漂移条目同理即读即修。
+5. **成千上万书签的首个会话**：假设 3000 书签 ≈ 800 个不同 host 占位图。工作量按视口惰性触发（§8）；每个 host 的成败都会沉淀，**后续每次打开 popup 的新增工作量单调递减**（成功进缓存、失败有 24h 标记）。队列对象轻量（host 字符串 + 引用集合），几千项也只是几百 KB 内存，页面关闭即释放。
+6. **索引键本身**：500 成功 + 数百 failed ≈ 30-50KB，远小于任何数据键，不是瓶颈；`v` 字段保证未来形状变更可识别迁移。
+
+### 5.4 设置备份排除与手动清除
+
+- **备份排除**：选项页导出打包整个 local 区（options.js:237-256），在导出装配处按前缀剔除：`Object.keys(localData).forEach(k => { if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:')) delete localData[k]; })`——否则每个设置备份膨胀数 MB。导入是 merge 语义，旧备份里没有这些键，自然无兼容问题。
+- **手动清除**（选项页按钮）：`chrome.storage.local.get(null)` → 收集 `vbmFaviconIdx` + 全部 `vbmFavicon:` 前缀键 → `chrome.storage.local.remove(键列表)` → `alert(_m('optionFaviconCacheCleared'))`。打开中的 popup/panel 靠 §5.1 的 onChanged（索引被移除）即刻清空内存 Map，下次渲染重新补全。
 
 ---
 
@@ -261,9 +322,9 @@ for (const anchor of item.anchors) {
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `faviconEnrich` | **开** | 主开关：占位图触发 L1/L2（+L4 代理接力）补全 |
-| `faviconEnrichDdg` | **关** | 子开关：追加 L3 DuckDuckGo 兜底 |
+| `faviconEnrichDdg` | **关** | 子开关：追加 L3 DuckDuckGo 兜底（含熔断与代理兜底，§3.3/§3.4） |
 
-- 入 `store.js` 的 `KNOWN_KEYS`（**不进 SYNC_KEYS**——与 faviconContrast 同区同模型；是否联网取图标是设备级网络偏好，不跨设备同步）。
+- 入 `store.js` 的 `KNOWN_KEYS`（**不进 SYNC_KEYS**——与 faviconContrast 同区同模型；是否联网取图标是设备级网络偏好，不跨设备同步）。缓存的动态 host 键与索引键**不入** KNOWN_KEYS（它们不是设置，且由 enricher 自管）。
 - **主开关默认开的理由**：请求只发往用户自己收藏的网站（等同于访问），无第三方，用户已明确反馈「很多默认图标」——开箱即受益。
 - **DDG 默认关的理由**：与项目退役第三方 relay 模板、改用用户自有代理的隐私姿态一致（dead-proxy.js 头注释）；DDG 会按域名向第三方发请求，必须显式 opt-in。
 
@@ -277,7 +338,7 @@ for (const anchor of item.anchors) {
 
 - `options.js`：`viewSettings` 数组加两项（`{ id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1' }` / `{ id: 'favicon-enrich-ddg', key: 'faviconEnrichDdg', defaultValue: '' }`），`bindSettingsList` 自动完成绑定；初始化区补 5 个 label/hint/button 的 `_m()` 赋值（`optionFaviconCacheCleared` 在清除按钮 handler 内引用，不做初始化赋值）。
 - 联动：主开关关 → DDG 子复选框 `disabled`（视觉降级，防「子开母关」的歧义态）。
-- 清除按钮 handler：`chrome.storage.local.remove('vbmFaviconCache')` 后 `alert(_m('optionFaviconCacheCleared'))`（沿用导入完成同款 alert 惯例）。选项页没有 enricher 实例，无需其他动作；popup/panel 靠 onChanged 重新 hydrate。
+- 清除按钮 handler：按 §5.4 的前缀收集 + remove 实现，完成后 alert 提示。选项页没有 enricher 实例，无需其他动作。
 
 ### 6.3 i18n（6 个新 key，走 `scripts/i18n.py` 流程）
 
@@ -286,7 +347,7 @@ for (const anchor of item.anchors) {
 | `optionFaviconEnrich` | Fetch missing site icons | 补全缺失的网站图标 |
 | `optionFaviconEnrichHint` | For bookmarked sites Chrome has no cached icon for, fetch the real icon directly from the site (/favicon.ico, then the page's declared icons). Requests only go to sites you bookmarked. | 对 Chrome 尚未缓存图标的收藏网站，直接从站点获取真实图标（/favicon.ico → 页面图标声明）。请求只发往你已收藏的网站。 |
 | `optionFaviconEnrichDdg` | DuckDuckGo icon fallback | 用 DuckDuckGo 图标服务兜底 |
-| `optionFaviconEnrichDdgHint` | When direct fetching fails, look the icon up by domain from DuckDuckGo's icon service (discloses the domain to a third party). | 直连获取失败时，改为从 DuckDuckGo 图标服务按域名取图（会向第三方透露网站域名）。 |
+| `optionFaviconEnrichDdgHint` | When direct fetching fails, look the icon up by domain from DuckDuckGo's icon service (discloses the domain to a third party). Unreachable services are not retried for 6 hours. | 直连获取失败时，改为从 DuckDuckGo 图标服务按域名取图（会向第三方透露网站域名）。服务不可达时 6 小时内不再重试。 |
 | `optionFaviconCacheClear` | Clear icon cache | 清除图标缓存 |
 | `optionFaviconCacheCleared` | Icon cache cleared. Icons will be re-fetched on next open. | 图标缓存已清除，将在下次打开时重新补全。 |
 
@@ -297,9 +358,10 @@ for (const anchor of item.anchors) {
 ## 7. 启停与生命周期
 
 - **即时生效**（复用 neat.js 现有 onChanged 模式，同一 listener 加两键分支）：
-  - 关：`enricher.setEnabled(false)` → 清空队列、AbortController 取消全部在途 fetch、移除残余 `.favicon-enriching` 类。**已注入的真实图标不撤，已写缓存不清**——只是停止新的补全。
+  - 关：`enricher.setEnabled(false)` → 清空队列、AbortController 取消全部在途 fetch、移除残余 `.favicon-enriching` 类。**已注入的真实图标不撤，已写缓存不清，DDG 熔断状态保留**——只是停止新的补全。
   - 开：`setEnabled(true)`；下次渲染到占位图即正常触发（已在屏的默认 SVG 不追补，等自然重渲染/下次打开——避免主动全树扫描）。
-- **生命周期 = 页面会话**：popup 关闭队列随页面销毁；缓存已持久化，下次打开命中即不重试。无 background 常驻任务。
+  - DDG 子开关翻转只改变发现链的 L3/L4-DDG 分支是否启用，不动主链路。
+- **生命周期 = 页面会话**：popup 关闭队列随页面销毁；缓存与熔断已持久化，下次打开命中即不重试。无 background 常驻任务。
 - **优雅降级**：`chrome.storage.session` 不可用、`fetch` 失败、canvas 不可用等任何环节缺失，enricher 静默落回「换默认 SVG」的现状——**永远不劣于现状**（与 favicon-fallback 的 inert 哲学一致）。失败路径一律不写 `console.error`，保证 harness smoke 的「零 console 错误」门禁不破。
 
 ---
@@ -308,9 +370,10 @@ for (const anchor of item.anchors) {
 
 1. **渲染零阻塞**：钩子是同步函数，只读内存 Map；全部网络在队列里异步进行。
 2. **并发限流 6**：防打爆站点/触发对端 rate limit；按 **host 去重**，同 host 多书签共享一次链路。
-3. **视口优先**：`<img loading="lazy">`（tree-render.js:161）决定屏外图标的 load 事件不触发——首屏只补全可见区域，滚动到哪补到哪。
-4. **failed 24h 免重试**：对无 favicon/403 站点不反复请求。
-5. **首屏风暴预算**：N 个可见占位图 → 入队去重 → 6 并发 × 每层 3-5s 超时 → 分批完成；视图全程不卡，图标陆续从默认变真实。
+3. **视口优先**：`<img loading="lazy">`（tree-render.js:161）决定屏外图标的 load 事件不触发——首屏只补全可见区域，滚动到哪补到哪。这同时把「几千书签首个会话」的总工作量摊薄到用户实际浏览的范围内（§5.3 第 5 条）。
+4. **免重试三道闸**：failed 标记 24h（站点级）、成功 30d TTL（新鲜度）、DDG 熔断 6h（服务级）——任何层面都不做无谓的重复请求。
+5. **写盘预算**：每次完成 ~3KB 数据键 + debounce 合并的索引写；不存在单键大 JSON 的 MB 级写放大（§5.1）。
+6. **首屏观感**：N 个可见占位图 → 入队去重 → 6 并发 × 每层 3-5s 超时 → 分批完成；视图全程不卡，图标陆续从默认变真实。
 
 ---
 
@@ -319,9 +382,10 @@ for (const anchor of item.anchors) {
 | 层 | 机制 |
 |---|---|
 | Chrome `_favicon` | 每次渲染重跑 calibrate+判定；Chrome 缓存建立后自动走真实图标（§4.4） |
-| 补全缓存 | 30d TTL 到期重新补全 + LRU 淘汰 |
-| failed 标记 | 24h 后允许重试 |
-| 手动 | 选项页「清除图标缓存」按钮（§6.2） |
+| 补全缓存 | 30d TTL 到期重新补全 + LRU/字节预算淘汰（§5.3） |
+| failed 标记 | 24h 后允许重试；写索引时顺手清过期条目 |
+| DDG 熔断 | 6h 后放行一次直连探测（§3.3） |
+| 手动 | 选项页「清除图标缓存」按钮（§5.4/§6.2） |
 
 **不做 palette 命令**：palette 命令表是刻意收敛的 curated 集合，且 `PALETTE_RESERVED` 被 `palette.test.js` 钉死同步；为低频的缓存清理增加保留词不划算，选项页按钮已覆盖需求。
 
@@ -339,12 +403,12 @@ for (const anchor of item.anchors) {
 
 | 文件 | 改动 |
 |---|---|
-| `src/favicon-enrich.js`（新，~300 行） | 导出 `initFaviconEnrich(ctx)` → `{ onPlaceholder, setEnabled, clearCache }`。ctx：`{ doc, store, faviconService, isEnabled(), ddgEnabled() }`（getter 决策时读取，同 faviconContrast 模式）。内含：发现链 L1-L4、`fetchWithTimeout`（自控 AbortController + 外链 signal，仿 dead-links.js:49-70）、图标校验+base64 编码（§3.1）、`<link>` 正则提取（§3.2）、缓存 Map/LRU/TTL/failed（§5）、队列+6 并发限流、热替换（§4.3）、onChanged 缓存重 hydrate |
+| `src/favicon-enrich.js`（新，~400 行） | 导出 `initFaviconEnrich(ctx)` → `{ onPlaceholder, setEnabled }`。ctx：`{ doc, faviconService, isEnabled(), ddgEnabled() }`（getter 决策时读取，同 faviconContrast 模式）。内含：发现链 L1-L4、DDG 熔断器（§3.3）、`fetchWithTimeout`（自控 AbortController + 外链 signal，仿 dead-links.js:49-70）、图标校验+base64 编码（§3.1）、`<link>` 正则提取（§3.2）、缓存层（§5：按 host 分键 + `vbmFaviconIdx` 索引 + LRU/字节预算 + 自愈对账 + onChanged 监听）、队列+6 并发限流、热替换（§4.3） |
 | `src/favicon-fallback.js` | §4.1 三处：`ctx.onPlaceholder` 两个分支调用；返回 API 加 `sampleIcon: fingerprint`；`reapplyContrast` 选择器加 `, img.favicon-enriched` |
 | `src/neat.js` | `import { initFaviconEnrich } from './favicon-enrich.js'`；在 faviconService 创建后立即实例化 enricher。实例化顺序有环：fallback 必须先于行渲染安装并拿到钩子，enricher 又依赖 faviconService 的 sampleIcon/statsBySrc——解法是 `ctx.onPlaceholder` 传惰性包装 `img => enricher && enricher.onPlaceholder(img)`（`let enricher = null`，建完赋值；钩子的首次调用发生在行渲染时，必然已就绪），同 neat.js 的 lazy getter 惯例；现有 storage.onChanged listener 加 `faviconEnrich`/`faviconEnrichDdg` 分支 → `enricher.setEnabled(...)` |
-| `src/options.js` | viewSettings +2 项；5 个 label 赋值；DDG 复选框 disabled 联动；`favicon-cache-clear` handler；备份导出 `delete localData.vbmFaviconCache` |
+| `src/options.js` | viewSettings +2 项；5 个 label 赋值；DDG 复选框 disabled 联动；`favicon-cache-clear` handler（前缀收集 + remove）；备份导出按前缀剔除 `vbmFaviconIdx`/`vbmFavicon:*` |
 | `pages/options.html` | Views 组 favicon-contrast 行后 +3 个 `<li>`（§6.2） |
-| `src/store.js` | `KNOWN_KEYS` + `'faviconEnrich'`、`'faviconEnrichDdg'`（紧跟 `'faviconContrast'` 注释行） |
+| `src/store.js` | `KNOWN_KEYS` + `'faviconEnrich'`、`'faviconEnrichDdg'`（紧跟 `'faviconContrast'` 注释行；缓存键不入列） |
 | `css/neat.css` | `.favicon-enriching` 规则（2 行） |
 | `_locales/{en,zh_CN,…}/messages.json` | 6 个新 key（§6.3 流程） |
 | `tests/favicon-enrich.test.js`（新） | §12 |
@@ -358,11 +422,13 @@ for (const anchor of item.anchors) {
 ### `tests/favicon-enrich.test.js`（新，ESM 直导 + globalThis 注入，仿 favicon-fallback.test.js）
 
 - **发现链**：L1 命中短路（L2 不发请求）；L1 404 → L2 解析 `<link>` 命中；L2 无声明 → L3（ddgEnabled=true 才发）；全失败 → failed 标记；L4 仅在 session 标记 + deadProxyServer 双条件满足时带 `__vbm_px=1` 重试。
+- **DDG 熔断**：L3 网络错误/超时 → 跳闸，后续 host 的 L3 整体跳过（断言 fetch 不再发往 DDG）；L3 返回 HTTP 403 → **不**跳闸（服务可达，按 host 失败处理）；`ddgDownUntil` 持久化到索引、重 hydrate 后仍生效；到期后放行一次探测、仍失败则重新跳闸；**跳闸 + 代理在线 → L3 经 `addProxyMarker` 补试**；跳闸 + 无代理 → 直接落 failed。
 - **校验**：200+`text/html` 拒绝；>200KB 拒绝；魔数不符拒绝；Image 解码 `naturalWidth=0` 拒绝；`data:` href 的 `<link>` 直接采用。
-- **缓存**：写读往返；成功 30d TTL 到期重补；failed 24h 内不重复请求、到期重试；LRU 500 淘汰最旧。
+- **缓存**：按 host 分键写读往返；成功 30d TTL 到期重补；failed 24h 内不重复请求、到期重试；hydrate 竞态（未 hydrate 完入队 → 链启动重读命中 → 不发 fetch）。
+- **淘汰管理**：满 500 触发批量淘汰到 400（按 `t` 升序、数据键同步删除）；字节预算 2MB 触发淘汰到 1.6MB；>96KB 图标只进会话 Map 不落盘；配额写拒绝 → 紧急淘汰一半 → 重试 → 再败降级会话级；索引损坏 → 扫描数据键重建；索引/数据键漂移对账；写索引时清除过期 failed 条目。
 - **队列**：同 host 并发渲染只入队一次（anchors 合并）；并发在途 ≤ 6；`setEnabled(false)` 清空队列 + abort 在途。
 - **热替换**：anchor 在 DOM → svg 换 img；anchor 脱离 → 跳过不抛。
-- 测试桩：`fetch` 脚本化响应、`Image` 伪类（仿 favicon-fallback.test.js:33-47）、`chrome.storage.session/local` 用 `tests/helpers/chrome.js` 的 `makeStorageArea`、`store` 用 `tests/helpers/dom.js` 的 `makeStoreDouble`。**禁止复制实现进测试**（AGENTS.md 红线）。
+- 测试桩：`fetch` 脚本化响应、`Image` 伪类（仿 favicon-fallback.test.js:33-47）、`chrome.storage.session/local` 用 `tests/helpers/chrome.js` 的 `makeStorageArea`。**禁止复制实现进测试**（AGENTS.md 红线）。
 
 ### `tests/favicon-fallback.test.js`（扩）
 
@@ -373,18 +439,18 @@ for (const anchor of item.anchors) {
 ### 门禁
 
 - `npm run test:run` 全绿。
-- `scripts/harness/run.sh --smoke-only`：popup/panel/options 加载零 console 错误（DinD 无外网，补全 fetch 全部快速失败——正是「静默降级不刷屏」的现成验证场）。
+- `scripts/harness/run.sh --smoke-only`：popup/panel/options 加载零 console 错误（DinD 无外网，补全 fetch 全部快速失败——正是「静默降级不刷屏」与「DDG 即时跳闸」的现成验证场）。
 - `python3 scripts/i18n.py verify` 0 错误。
-- 手动：真实 Chromium 加载，种子书签混含知名站 + 冷门站，观察图标陆续补全；选项页开关即时生效、清除缓存后下次打开重补。
+- 手动：真实 Chromium 加载，种子书签混含知名站 + 冷门站，观察图标陆续补全；选项页开关即时生效、清除缓存后下次打开重补；配代理 + 死链扫描会话期间验证 L4。
 
 ---
 
 ## 13. 落地步骤（每步独立提交，遵循「按任务粒度就地提交」）
 
-1. **S1** `src/favicon-enrich.js` + `tests/favicon-enrich.test.js` 全绿 → commit（`feat: favicon enrich module — discovery chain L1-L3, cache, queue`）。
+1. **S1** `src/favicon-enrich.js`（发现链 L1-L3 + 熔断 + 缓存层 + 队列限流）+ `tests/favicon-enrich.test.js` 全绿 → commit（`feat: favicon enrich module — discovery chain, breaker, cache, queue`）。
 2. **S2** `favicon-fallback.js` 钩子 + `sampleIcon` + 选择器扩展 + 测试扩展 → commit。
 3. **S3** neat.js 接线 + options（UI/联动/清除按钮/备份排除）+ store KNOWN_KEYS + neat.css + i18n（translate+verify 过闸）→ commit。
-4. **S4** L4 代理接力 + 对应测试 → commit。
+4. **S4** L4 代理接力（含熔断期 DDG 代理补试）+ 对应测试 → commit。
 5. **S5** harness smoke + AGENTS.md 同步 + 手动验证 → commit。
 
 ---
@@ -394,14 +460,18 @@ for (const anchor of item.anchors) {
 | 风险 | 缓解 |
 |---|---|
 | 大书签库首屏并发 | 6 限流 + host 去重 + lazy 视口优先 + failed 24h |
+| DDG 整个服务直连不可达 | 服务级熔断：一次网络失败跳闸 6h，期间零 DDG 请求；代理在线则经代理兜底（§3.3/§3.4） |
 | 站点 403/反爬 | L2 页面解析 + L3（opt-in）+ L4 代理 |
 | DDG 对未知域名返回自家占位 | 如实接受（§3.3），该层默认关 |
-| 服务器返回 200+非图片 | 三段校验 + Image 解码终验（§3.1），坏数据不进缓存 |
+| 熔断误判（偶发网络抖动） | 代价仅是 6h 内跳过可选兜底；到期自动探测愈合 |
+| 存储爆炸（成千上万书签） | 双轴预算（500 条 / 2MB）+ 批量 LRU 淘汰 + 超大图标会话级 + 配额错误紧急淘汰 + 失败标记自动清（§5.3） |
+| 缓存写放大 | 按 host 分键，每次完成 ~3KB 写；索引 debounce 合并（§5.1） |
+| 索引损坏/漂移 | hydrate 对账重建，数据键优先，不丢图标（§5.3 第 3/4 条） |
+| 设置备份膨胀 | 导出按前缀显式排除缓存键（§5.4） |
+| 服务器返回 200+非图片 | 四段校验 + Image 解码终验（§3.1），坏数据不进缓存 |
 | PAC 窗口竞态 | 重试失败落 failed，24h 后自愈（§3.4） |
-| 存储配额 | LRU 500 + 只存成功图标 + 配额错误砍半重试（§5.2） |
-| 设置备份膨胀 | 导出显式排除缓存键（§5.3） |
 | ICO 多尺寸 | `<img>` 加载 ICO 时 Chrome 自动选帧，无需处理 |
-| 隐私观感 | 主链路仅发往用户已收藏站点；第三方兜底独立子开关默认关 + hint 明说 |
+| 隐私观感 | 主链路仅发往用户已收藏站点；第三方兜底独立子开关默认关 + hint 明说熔断行为 |
 
 ---
 
@@ -411,11 +481,15 @@ for (const anchor of item.anchors) {
 |---|---|
 | 主开关 `faviconEnrich` | **默认开**，local 区 '1'/'' 模型，入 KNOWN_KEYS |
 | DDG 兜底 | **独立子开关 `faviconEnrichDdg`，默认关**（隐私姿态与项目一致；推翻旧稿「单开关含 DDG」） |
+| DDG 不可达 | **服务级熔断**：网络级失败即时跳闸 6h（持久化于索引 `ddgDownUntil`），期间 L3 整体跳过、跨会话生效，到期单发探测自愈；**不按 host 重复尝试** |
+| DDG 代理兜底 | **做**：熔断中（含本次直连刚失败）且死链代理会话在线 → L3 经 `addProxyMarker` 补试一次 |
 | 执行位置 | **前端**（popup/panel 页面）——热替换需要行内 DOM 锚点，SW 拿不到 |
 | 注入格式 | **data URL**（可持久化；CSP `img-src data:` 原生覆盖；不经 blob URL） |
-| 缓存 | `vbmFaviconCache` 单键 JSON 字符串，LRU 500 成功项，成功 30d TTL，failed 24h |
+| 缓存键布局 | **按 host 分键 `vbmFavicon:<host>` + 索引键 `vbmFaviconIdx`**（含 `v`/`ddgDownUntil`/`hosts`）；不走 store 镜像、不用单键大 JSON（写放大 + 动态键） |
+| 缓存上限与淘汰 | 成功 **500 条 / 2MB** 双轴硬预算，触发按 `t`（最后命中）LRU **批量淘汰到 400 条 / 1.6MB**；failed 仅索引、24h 过期即清；>96KB 图标会话级不落盘；配额拒绝 → 砍半重试 → 降级会话级 |
+| 缓存 TTL | 成功 30d；failed 24h；DDG 熔断 6h |
 | 并发 | **6**，按 host 去重 |
-| 刷新入口 | 选项页清除按钮；**不做 palette 命令**（curated 表 + 保留词测试钉死） |
+| 刷新入口 | 选项页清除按钮（前缀 remove）；**不做 palette 命令**（curated 表 + 保留词测试钉死） |
 | 代理接力 | **做**（L4）：门槛 = `storage.session.vbmProxySession` + `deadProxyServer`，复用 marker-PAC 零新消息 |
 | 死链扫描顺带解析 `<link>` | **本期不做**：checkUrl 是 HEAD 优先不读 body，改 GET+读 body 增加扫描带宽与复杂度，且 L2 已覆盖同一目标（非标准路径发现）。若未来要做（复用 blocked 站点的扫描响应），另行独立设计 |
 | 结果呈现 | 就地更新 + `.favicon-enriching` 微视觉；不做结果列表 |
