@@ -853,35 +853,41 @@ describe('filter + batch marks (§5.5c)', () => {
         expect($list.innerHTML).not.toContain('id="dead-item-13"');
     });
 
-    it('the marked list never echoes rows the active filter hides (工具栏/列表调换 regression)', () => {
+    it('under 仅死链/仅受限 the marked list hides with the category (工具栏/列表调换 regression)', () => {
         // 调换/全量 bug: marks 12(dead)+13(blocked) 都在扫描结果里, 但切到
         // 仅死链时旧逻辑把被过滤器隐藏的 13 当作 uncovered 重新塞进已标记列表
         // —— 已标记列表出现一条受限行, 读起来像"受限/死链调换了、列表全量显示"。
-        // 修复后 uncovered 只含"扫描没当成问题行"的标记 (11 在结果里是 ok,
-        // 不在 allResultRows 中), 被过滤器隐藏的 13 不再重复出现。
+        // 用户方案: 标注列表只在"全部"(默认)视图下常驻; 切到仅死链/仅受限时
+        // 只显示该类别结果 —— 标注列表整块不渲染, 自然谈不上 13 泄漏。
         const ctx = setup({
             storeData: { deadLastScan: CACHE, deadMarks: '["11","12","13"]' }
         });
         const { $list } = ctx;
         ctx.def().activate();
-        const markedBlock = html => {
-            const m = html.match(/<ul role="list" class="dead-marked-list[^"]*">[\s\S]*?<\/ul>/);
-            return m ? m[0] : '';
-        };
-        // filter=all: 12+13 ride the result rows, only 11 (an ok row) is extra
+        // filter=all (default): 12+13 ride the result rows, only 11 (an ok
+        // row, never probed as a problem row) is the marked list's extra
         expect($list.innerHTML).toContain('id="dead-item-12"');
         expect($list.innerHTML).toContain('id="dead-item-13"');
         expect($list.innerHTML).toContain('deadMarkedCount[1]');
-        expect(markedBlock($list.innerHTML)).toContain('id="dead-item-11"');
-        // 仅死链: the result rows drop 13, and 13 does NOT leak into the marked list
-        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
-        expect($list.innerHTML).toContain('id="dead-item-12"');
-        expect($list.innerHTML).not.toContain('id="dead-item-13"');
-        expect(markedBlock($list.innerHTML)).toContain('id="dead-item-11"');
-        expect(markedBlock($list.innerHTML)).not.toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('id="dead-item-11"');
         // the marked list renders AFTER the result rows (results are primary)
         expect($list.innerHTML.indexOf('id="dead-item-12"'))
             .toBeLessThan($list.innerHTML.indexOf('dead-marked-list'));
+        // 仅死链: only the dead result row stays — no marked list at all
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'dead' } } : null) });
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"');
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+        expect($list.innerHTML).not.toContain('id="dead-item-11"');
+        // …and 仅受限 behaves the same: only the blocked row
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'blocked' } } : null) });
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+        // back to 全部 restores the appended marked list
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'all' } } : null) });
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('deadMarkedCount[1]');
     });
 
     it("the '上次标注' segment switches to the marked-only view (results hidden)", () => {

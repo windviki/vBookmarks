@@ -319,11 +319,15 @@ export function initViewDead(ctx = {}) {
 
     // The rows the batch/selection toolbar acts on while idle: the active
     // result segment when results are on screen, PLUS the marked rows that
-    // aren't duplicated by a result row. In the marked-only view (filter
-    // 'marked' or no scan) the marks alone are the scope.
+    // aren't duplicated by a result row. The marked rows only join in the
+    // "全部" view (where the marked list renders below the results) and in
+    // the marked-only view (filter 'marked' or no scan, marks alone). Under
+    // 仅死链/仅受限 only that category's results are on screen — a category
+    // filter hides the marked list, so its rows are not selectable there.
     const selectableRows = () => {
-        const marks = markedRows();
-        return (filter === 'marked' || !lastScan) ? marks : resultRows().concat(marks);
+        if (filter === 'marked' || !lastScan)
+            return markedRows();
+        return filter === 'all' ? resultRows().concat(markedRows()) : resultRows();
     };
 
     // --- Proxy strip (dead-proxy.js quick add/manage) -------------------------
@@ -637,20 +641,20 @@ export function initViewDead(ctx = {}) {
             html += rows.length
                 ? renderRows(rows)
                 : `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(filter !== 'all' && allRows.length ? 'deadNoneFiltered' : 'deadNone')}</i></li></ul>`;
-            // Marks the RESULT rows do not cover: a marked id the last scan
-            // never probed (a manual mark that predates the run, or one added
-            // after it) has no row to unmark on under ANY filter — surface
-            // just those as their own list, after the result rows. A mark the
-            // ACTIVE filter hides is covered by its own row once the segment
-            // switches back, so it must NOT reappear here — doing so made the
-            // marked list echo the filtered-out category and read as "the
-            // toolbar filter is swapped / the list shows everything" (the
-            // toolbar/list mismatch report). Marks that ARE among the scan's
-            // problem rows carry the toggle in the result rows, so they are
-            // not repeated here either.
-            const marks = markedRows();
-            if (marks.length)
-                html += renderMarkedRows(marks);
+            // The marked list renders ONLY under "全部" (the default view),
+            // when any mark exists — it is the "上次标注" record appended
+            // below the full result set. Content: marks the result rows do
+            // NOT cover (a marked id the last scan never probed, or one added
+            // after it) — marks among the scan's problem rows carry the
+            // toggle in the result rows, so they are not repeated here. Under
+            // 仅死链/仅受限 only that category's rows are on screen: a
+            // category filter hides the marked list entirely (a mark the
+            // category hides is covered by its own row once the segment
+            // switches back, so echoing it here read as "the toolbar filter
+            // is swapped / the list shows everything" — the toolbar/list
+            // mismatch report).
+            if (filter === 'all' && deadMarks.size)
+                html += renderMarkedRows(markedRows());
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);
