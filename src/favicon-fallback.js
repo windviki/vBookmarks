@@ -50,17 +50,18 @@ export const hashPixels = bytes => {
 // one read. Transparent pixels are skipped; a fully transparent icon yields
 // cover 0.
 //
-// Why extreme-tone FRACTIONS instead of mean luminance (the 4.0.5 approach):
+// Why extreme-tone FRACTIONS instead of mean luminance (the earlier
+// pre-release 4.0.5-cycle approach):
 // a mean is fooled by plate-style icons — x.com's white-X-on-black-plate
 // averages to "very dark" (0.14), so a mean rule flips it on a dark theme
 // and turns the elegant self-inverting design (black plate vanishes, white
 // X remains) into a glaring white plate. The fractions see the design
 // directly: predominantly dark pixels PLUS a meaningful light minority =
 // the icon already handles dark backgrounds, leave it alone. Thresholds and
-// the flip filter were tuned against a 13-real-favicon matrix (thepaper,
+// the flip filter were tuned against a 14-real-favicon matrix (thepaper,
 // github, x, netflix, youtube, yabook, ccav1, spotify, zhihu,
-// stackoverflow, docker, bilibili, …) rendered on all four theme
-// backgrounds — see tmp/favicon-lab for the harness.
+// stackoverflow, docker, bilibili, devconsole, …) rendered on all four
+// theme backgrounds — see tmp/favicon-lab for the harness.
 export const contrastStats = data => {
     let dark = 0, light = 0, colored = 0, cover = 0;
     const total = data.length / 4;
@@ -153,7 +154,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
 
     let placeholder = null;       // {w, h, hash} of the stock placeholder
     const verdicts = new Map();   // src → true (placeholder) | false (real)
-    const statsBySrc = new Map(); // src → { lum, sat, cover } of a real icon
+    const statsBySrc = new Map(); // src → { dark, light, colored, cover } of a real icon
 
     const swapForDefaultIcon = img => {
         const host = doc.createElement('span');
