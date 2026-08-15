@@ -467,6 +467,50 @@ describe('empty state + cached results (§5.5a)', () => {
         expect($list.innerHTML).not.toContain('class="risk-banner dead-marked-banner"');
     });
 
+    it('a re-render whose focus target vanished lands focus on the dead view tab', () => {
+        // Cancelling a scan (or clearing all marks) re-renders a toolbar the
+        // focused control is gone from — restoreToolbarFocus fails silently
+        // and in a real DOM the swap drops focus to <body>, killing the ↓
+        // walk. The render must not let that happen: with the focus having
+        // been inside the list, a post-swap focus outside the list falls back
+        // to the dead view tab (never a dead zone). The test double cannot
+        // lose focus by itself, so the innerHTML setter models the swap's
+        // focus-drop (the same semantic the real browser enforces).
+        const ctx = setup({ storeData: { deadMarks: '["12"]' } });
+        const { def, doc, dialogs } = ctx;
+        const $list = ctx.$list;
+        def().activate();
+        // a focused marked row that belongs to this list
+        const row = {
+            tagName: 'LI',
+            id: 'dead-item-12',
+            parentNode: $list,
+            getAttribute: () => null // no tabindex → rowFocusTarget() finds no anchor
+        };
+        $list._lis = [row];
+        doc.activeElement = row;
+        // model the innerHTML swap dropping focus to <body>
+        const desc = Object.getOwnPropertyDescriptor($list, 'innerHTML');
+        Object.defineProperty($list, 'innerHTML', {
+            configurable: true,
+            get: desc.get,
+            set(v) {
+                desc.set.call(this, v);
+                doc.activeElement = null;
+            }
+        });
+        // the dead view tab exists and records focus
+        const tab = { focus() { doc.activeElement = this; } };
+        const origGet = doc.getElementById.bind(doc);
+        doc.getElementById = id => (id === 'view-tab-dead' ? tab : origGet(id));
+        // clearing the marks removes the focused row → the re-render has no
+        // control to restore and the fallback must land on the tab
+        ctx.clickOn({ closest: sel => (sel === '.dead-unmark-all' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect(doc.activeElement).toBe(tab);
+        expect(ctx.$list.innerHTML).toContain('class="empty-state dead-start"');
+    });
+
     it('the marked tooltip banner sits above the proxy (add-server) strip', () => {
         // The banner nudges the user toward a rescan AND points at the list
         // below — it belongs on top of the add-server container so the

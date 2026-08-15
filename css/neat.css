@@ -3033,6 +3033,18 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     cursor: default;
 }
 
+/* fill danger pills (全部应用 / 应用到所选): 与 dead-start 同款的发光焦点。
+   danger 填充同样吞掉半透明 focus-ring, 所以用背景缝隙 + 外层 ring + 危险色
+   光晕, 让键盘焦点在实心按钮上一样显眼。 */
+.dupes-toolbar .dupes-apply-all:focus-visible,
+.dupes-toolbar .dupes-apply-selected:focus-visible {
+    outline: 0;
+    box-shadow:
+        0 0 0 2px var(--vbm-bg),
+        0 0 0 4px var(--vbm-focus-ring),
+        0 0 10px 1px color-mix(in srgb, var(--vbm-danger) 50%, transparent);
+}
+
 /* Group head (§3.6): chevron + normalized URL (muted, monospace, middle
    ellipsis) + count pill + clean-rest row button. It is a row of the focus
    model itself, so it gets the same hover/focus chrome as list anchors. */
@@ -3433,8 +3445,15 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 #dead-list ul li.dead-start:focus-visible {
-    outline: 2px solid var(--vbm-focus-ring);
-    outline-offset: -2px;
+    /* fill pill: 半透明 focus-ring 直接叠在实心 accent 上会被"吃掉", 焦点
+       看不出来。发光方案——背景色细环把 focus-ring 顶到 fill 之外的背景
+       上, 再叠一层同色系光晕 (glow), 键盘用户一眼定位。box-shadow 跟随
+       pill 的圆角, 光晕保持胶囊形状。 */
+    outline: 0;
+    box-shadow:
+        0 0 0 2px var(--vbm-bg),
+        0 0 0 4px var(--vbm-focus-ring),
+        0 0 12px 2px color-mix(in srgb, var(--vbm-accent) 55%, transparent);
 }
 
 /* Marks that outlived a cancelled scan (or one that found nothing): the ids

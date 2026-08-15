@@ -696,6 +696,24 @@ export function initViewDead(ctx = {}) {
             if (a)
                 a.focus();
         }
+        // Cancelling a scan re-renders the toolbar from live (pause/cancel)
+        // to idle: the parked control (e.g. .dead-cancel) no longer exists,
+        // restoreToolbarFocus fails silently and focus falls out of the list
+        // to <body> — the ↓ walk then dies until the user clicks back in.
+        // The banner itself must not trap focus, but the keyboard must not
+        // lose it either: when the focus was IN this list before the swap and
+        // ends up outside it after (nothing to restore to), land on the dead
+        // view's tab instead of <body>.
+        if (parkedToolbar || parkedRow) {
+            let ae = document.activeElement;
+            while (ae && ae !== $list)
+                ae = ae.parentNode;
+            if (!ae) {
+                const tab = document.getElementById('view-tab-dead');
+                if (tab && tab.focus)
+                    tab.focus();
+            }
+        }
     };
 
     // --- Overlay (§5.5c + 第五轮项3) ------------------------------------------
