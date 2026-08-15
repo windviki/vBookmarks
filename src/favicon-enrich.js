@@ -26,6 +26,8 @@
  * injectable, so it is vitest-coverable in node (no DOM dependency).
  */
 
+import { addProxyMarker } from './dead-proxy.js';
+
 // --- Key layout --------------------------------------------------------------
 export const FAVICON_DATA_PREFIX = 'vbmFavicon:';
 export const FAVICON_IDX_KEY = 'vbmFaviconIdx';
@@ -435,6 +437,96 @@ export function initFaviconEnrich(ctx = {}) {
         return null;
     };
 
+    // L3: proxy relay — the dead-scan's marker-PAC session (when one is live)
+    // routes marker-tagged URLs through the user's own proxy. Direct-only
+    // attempts fail on region/ISP-limited sites; the proxy may reach them.
+    // Read session/local STRAIGHT (not through the store mirror — the mirror
+    // only reflects page-load time; the PAC window is a runtime state).
+    const proxyRelayAvailable = async () => {
+        if (!chromeImpl || !chromeImpl.storage || !chromeImpl.storage.session)
+            return false;
+        try {
+            const ses = await chromeImpl.storage.session.get('vbmProxySession');
+            if (!ses || !ses.vbmProxySession)
+                return false;
+            const loc = await chromeImpl.storage.local.get('deadProxyServer');
+            return !!(loc && loc.deadProxyServer);
+        } catch (_) { return false; }
+    };
+
+    // Retry L1 / L2 (and a breaker-tripped L4) through the proxy. The direct
+    // attempts already failed, so a proxied success is equivalent to a direct
+    // one — same validation, same cache write. Returns a valid icon or null.
+    const tryL3 = async (host, pageUrl, signal) => {
+        if (!await proxyRelayAvailable())
+            return null;
+        // L1 via proxy.
+        const proxiedL1 = await tryL1Proxy(host, signal);
+        if (proxiedL1)
+            return proxiedL1;
+        // L2 via proxy.
+        const proxiedL2 = await tryL2Proxy(pageUrl, signal);
+        if (proxiedL2)
+            return proxiedL2;
+        // A breaker-tripped DDG gets ONE proxied retry (covers "DDG direct is
+        // region-blocked but the proxy reaches it"). Only when DDG is opted in
+        // AND the breaker is currently tripped — L4 direct normal = no point
+        // double-fetching through the proxy.
+        if (ddgEnabled() && now() < idxData.ddgDownUntil) {
+            const proxiedL4 = await tryL4Proxy(host, signal);
+            if (proxiedL4)
+                return proxiedL4;
+        }
+        return null;
+    };
+
+    const fetchMarked = (url, ms, signal) => fetchWithTimeout(addProxyMarker(url), ms, signal);
+
+    const tryL1Proxy = async (host, signal) => {
+        try {
+            const res = await fetchMarked(`https://${host}/favicon.ico`, 3000, signal);
+            return await validateAndEncode(res, { Image: ImageCtor });
+        } catch (_) { return null; }
+    };
+
+    const tryL2Proxy = async (pageUrl, signal) => {
+        try {
+            const res = await fetchMarked(pageUrl, 5000, signal);
+            if (!res.ok)
+                return null;
+            const html = await res.text();
+            const links = extractLinkIcons(html, pageUrl);
+            for (const link of links) {
+                let candidate;
+                if (link.data) {
+                    const m = /^data:([^;,]+)?;base64,(.*)$/i.exec(link.href);
+                    if (!m)
+                        continue;
+                    const bin = atob(m[2]);
+                    const arr = new Uint8Array(bin.length);
+                    for (let i = 0; i < bin.length; i++)
+                        arr[i] = bin.charCodeAt(i);
+                    candidate = { ok: true, arrayBuffer: async () => arr.buffer, headers: { get: () => { const mm = /^data:([^;,]+)/i.exec(link.href); return mm ? mm[1] : null; } } };
+                } else {
+                    candidate = await fetchMarked(link.href, 3000, signal);
+                }
+                const valid = await validateAndEncode(candidate, { Image: ImageCtor });
+                if (valid)
+                    return valid;
+            }
+        } catch (_) { /* fall through */ }
+        return null;
+    };
+
+    // One proxied DDG retry for a breaker-tripped state (does NOT clear the
+    // breaker — that describes direct reachability and heals on its own).
+    const tryL4Proxy = async (host, signal) => {
+        try {
+            const res = await fetchMarked(DDG_URL(host), 3000, signal);
+            return await validateAndEncode(res, { Image: ImageCtor });
+        } catch (_) { return null; }
+    };
+
     // L4: DuckDuckGo (final means, breaker-guarded)
     const tryL4 = async (host, signal) => {
         if (!ddgEnabled())
@@ -495,7 +587,7 @@ export function initFaviconEnrich(ctx = {}) {
         }
     };
 
-    // The chain: L1 → L2 → L4 (L3 proxy relay lands in a later step).
+    // The chain: L1 direct → L2 direct → L3 proxy relay → L4 DDG (final).
     const discover = async (host, pageUrl, signal) => {
         const l1 = await tryL1(host, signal);
         if (l1)
@@ -503,6 +595,9 @@ export function initFaviconEnrich(ctx = {}) {
         const l2 = await tryL2(pageUrl, signal);
         if (l2)
             return l2;
+        const l3 = await tryL3(host, pageUrl, signal);
+        if (l3)
+            return l3;
         const l4 = await tryL4(host, signal);
         return l4 && l4.dataUrl ? l4 : null;
     };

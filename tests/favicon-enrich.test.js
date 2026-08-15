@@ -290,6 +290,93 @@ describe('initFaviconEnrich — discovery chain', () => {
         expect(fetchImpl.calls.some(c => c.url === DDG_URL('example.com'))).toBe(true);
     });
 
+    it('L1/L2 direct fail + proxy session live → L3 relays via addProxyMarker', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({ vbmProxySession: { active: true } });
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/^https:\/\/proxy\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/favicon\.ico.*__vbm_px=1/, pngResponse()]   // the PROXIED L1 succeeds
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            ddgEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://proxy.example/'));
+        await tick();
+        await tick();
+        // The proxied L1 (with the __vbm_px marker) was attempted and won.
+        const proxied = fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url) && /favicon\.ico/.test(c.url));
+        expect(proxied).toBe(true);
+        // DDG was not attempted (not opted in).
+        expect(fetchImpl.calls.some(c => c.url === DDG_URL('proxy.example'))).toBe(false);
+    });
+
+    it('proxy session NOT live → L3 skipped, chain falls to L4', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({});   // no vbmProxySession marker
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/^https:\/\/proxy\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/duckduckgo/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            ddgEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://proxy.example/'));
+        await tick();
+        await tick();
+        // No proxied attempt (session absent) → L4 DDG reached.
+        expect(fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url))).toBe(false);
+        expect(fetchImpl.calls.some(c => c.url === DDG_URL('proxy.example'))).toBe(true);
+    });
+
+    it('breaker-tripped DDG gets one proxied retry when the proxy is live', async () => {
+        const local = makeStorageArea({ deadProxyServer: 'http://proxy.example:8080' });
+        const session = makeStorageArea({ vbmProxySession: { active: true } });
+        let ddgProxied = 0;
+        const fetchImpl = makeFetch([
+            [/duckduckgo.*__vbm_px=1/, () => { ddgProxied++; return pngResponse(); }],  // proxied DDG succeeds
+            [/duckduckgo/, () => { throw new TypeError('down'); }],   // direct DDG unreachable
+            [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }],
+            [/^https:\/\/noicon\.example\/$/, { ok: false, status: 403, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            ddgEnabled: () => true,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local, session } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        // Pre-trip the breaker (as if a prior host's DDG direct network-failed).
+        en.getIdx().ddgDownUntil = nextNow() + BREAKER_TTL_MS;
+        // L1/L2 direct fail → L3: proxied L1/L2 fail, but the breaker is
+        // tripped so L3's proxied-DDG-retry branch fires and wins.
+        en.onPlaceholder(makePlaceholderImg('https://noicon.example/'));
+        await tick();
+        await tick();
+        expect(ddgProxied).toBeGreaterThanOrEqual(1);   // proxied DDG retry won
+    });
+
     it('ddgEnabled=false skips L4 (never hits DuckDuckGo)', async () => {
         const fetchImpl = makeFetch([
             [/\/favicon\.ico$/, { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } }]
