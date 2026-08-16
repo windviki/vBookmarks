@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Avancerade alternativ"
   },
+  "announceDismiss": {
+    "message": "Stäng"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 levererar den fullfjädrade vyn för döda länkar: skanna, markera, filtrera och sortera döda och begränsade länkar, med tidigare markeringar och tidsstämplar per rad."
+  },
+  "announceV407Title": {
+    "message": "Nyheter i v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Den här mappen innehåller $count$ objekt. Du kan ångra borttagningen.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pausad"
+  },
+  "whatsNewChangelog": {
+    "message": "Ändringslogg"
   },
   "deadProxyAdd": {
     "message": "Lägg till proxyserver för döda länkar"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Avancerede Indstillinger"
   },
+  "announceDismiss": {
+    "message": "Afvis"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 leverer den fuldt udstyrede visning af døde links: scan, marker, filtrer og sorter døde og begrænsede links, med tidligere markeringer og tidsstempler pr. række."
+  },
+  "announceV407Title": {
+    "message": "Hvad er nyt i v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Denne mappe indeholder $count$ emne(r). Du kan fortryde sletningen.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pauseret"
+  },
+  "whatsNewChangelog": {
+    "message": "Ændringslog"
   },
   "deadProxyAdd": {
     "message": "Tilføj en proxyserver til død-link-tjek"

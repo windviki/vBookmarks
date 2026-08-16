@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Täpsemad valikud"
   },
+  "announceDismiss": {
+    "message": "Sulge"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 pakub täisfunktsionaalset surnud linkide vaadet: skanni, märgi, filtreeri ja sorteeri surnud ning piiratud linke koos varasemate märgete ja rea-põhiste ajatemplitega."
+  },
+  "announceV407Title": {
+    "message": "Mis on uut versioonis v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "See kaust sisaldab $count$ kirje(t). Saate kustutamise tagasi võtta.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Peatatud"
+  },
+  "whatsNewChangelog": {
+    "message": "Muudatuste logi"
   },
   "deadProxyAdd": {
     "message": "Lisa puhverserver surnud linkide kontrollimiseks"

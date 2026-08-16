@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "خيارات متقدمة"
   },
+  "announceDismiss": {
+    "message": "تجاهل"
+  },
+  "announceV407Text": {
+    "message": "يوفّر الإصدار 4.0.7 عرضًا متكاملًا للروابط المعطلة: فحص الروابط المعطلة والمقيدة وتمييزها وتصفيتها وفرزها، مع العلامات السابقة والطوابع الزمنية لكل صف."
+  },
+  "announceV407Title": {
+    "message": "ما الجديد في v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "يحتوي هذا المجلد على $count$ عنصر(عناصر). يمكنك التراجع عن الحذف.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "متوقف مؤقتًا"
+  },
+  "whatsNewChangelog": {
+    "message": "سجل التغييرات"
   },
   "deadProxyAdd": {
     "message": "أضف خادم وكيل لفحوصات الروابط المعطلة"

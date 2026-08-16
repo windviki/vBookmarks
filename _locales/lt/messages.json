@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Išplėstiniai parametrai"
   },
+  "announceDismiss": {
+    "message": "Atmesti"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 pristato pilnavertį neveikiančių nuorodų rodinį: nuskaityti, pažymėti, filtruoti ir rūšiuoti neveikiančias bei apribotas nuorodas, su ankstesniais žymėjimais ir kiekvienos eilutės laiko žymomis."
+  },
+  "announceV407Title": {
+    "message": "Kas naujo v4.0.7 versijoje"
+  },
   "confirmDeleteFolder": {
     "message": "Šiame aplanke yra $count$ elementas(-ai). Galite atšaukti ištrynimą.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pristabdyta"
+  },
+  "whatsNewChangelog": {
+    "message": "Pakeitimų žurnalas"
   },
   "deadProxyAdd": {
     "message": "Pridėti tarpinį serverį negyvų nuorodų tikrinimui"

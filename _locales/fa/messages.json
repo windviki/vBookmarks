@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "گزینه‌های پیشرفته"
   },
+  "announceDismiss": {
+    "message": "رد"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 نمای تمام‌عیار لینک‌های شکسته را ارائه می‌دهد: اسکن، علامت‌گذاری، فیلتر و مرتب‌سازی لینک‌های شکسته و محدود، به‌همراه علامت‌های گذشته و مهر زمانی هر ردیف."
+  },
+  "announceV407Title": {
+    "message": "تازه‌های v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "این پوشه شامل $count$ آیتم است. می‌توانید حذف را لغو کنید.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "متوقف شده"
+  },
+  "whatsNewChangelog": {
+    "message": "فهرست تغییرات"
   },
   "deadProxyAdd": {
     "message": "افزودن سرور پروکسی برای بررسی لینک‌های خراب"

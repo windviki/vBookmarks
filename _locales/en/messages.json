@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Advanced Options"
   },
+  "announceDismiss": {
+    "message": "Dismiss"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
+  },
+  "announceV407Title": {
+    "message": "What's new in v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "This folder contains $count$ item(s). You can undo the deletion.",
     "placeholders": {
@@ -1668,5 +1677,8 @@
   },
   "deadPaused": {
     "message": "Paused"
+  },
+  "whatsNewChangelog": {
+    "message": "Changelog"
   }
 }

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Pokročilé Možnosti"
   },
+  "announceDismiss": {
+    "message": "Zavřít"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 přináší plnohodnotné zobrazení mrtvých odkazů: skenování, označování, filtrování a řazení mrtvých i omezených odkazů, s dřívějšími značkami a časovými razítky u každého řádku."
+  },
+  "announceV407Title": {
+    "message": "Co je nového ve v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Tato složka obsahuje $count$ položek. Smazání můžete vrátit.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pozastaveno"
+  },
+  "whatsNewChangelog": {
+    "message": "Seznam změn"
   },
   "deadProxyAdd": {
     "message": "Přidat proxy server pro kontroly nefunkčních odkazů"

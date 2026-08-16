@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opções avançadas"
   },
+  "announceDismiss": {
+    "message": "Dispensar"
+  },
+  "announceV407Text": {
+    "message": "A v4.0.7 fornece a vista de ligações mortas com todas as funcionalidades: analisar, marcar, filtrar e ordenar ligações mortas e restritas, com marcas anteriores e carimbos de data/hora por linha."
+  },
+  "announceV407Title": {
+    "message": "Novidades da v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Pode anular a eliminação.",
     "placeholders": {
@@ -298,6 +307,9 @@
   },
   "deadPaused": {
     "message": "Em pausa"
+  },
+  "whatsNewChangelog": {
+    "message": "Registo de alterações"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links mortos"

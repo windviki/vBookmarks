@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "אפשרויות מתקדמות"
   },
+  "announceDismiss": {
+    "message": "סגור"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 מספק תצוגת קישורים מתים מלאה: סריקה, סימון, סינון ומיון של קישורים מתים ומוגבלים, עם סימונים קודמים וחותמות זמן לכל שורה."
+  },
+  "announceV407Title": {
+    "message": "מה חדש ב-v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "תיקייה זו מכילה $count$ פריט(ים). ניתן לבטל את המחיקה.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "מושהה"
+  },
+  "whatsNewChangelog": {
+    "message": "יומן שינויים"
   },
   "deadProxyAdd": {
     "message": "הוסף שרת פרוקסי לבדיקות קישורים שבורים"

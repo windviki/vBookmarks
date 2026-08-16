@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Lisäasetukset"
   },
+  "announceDismiss": {
+    "message": "Sulje"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 tuo täysimittaisen toimimattomien linkkien näkymän: skannaa, merkitse, suodata ja lajittele toimimattomat ja rajoitetut linkit, sekä aiemmat merkinnät ja rivikohtaiset aikaleimat."
+  },
+  "announceV407Title": {
+    "message": "Uutta versiossa 4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Tämä kansio sisältää $count$ kohdetta. Voit peruuttaa poiston.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Keskeytetty"
+  },
+  "whatsNewChangelog": {
+    "message": "Muutosloki"
   },
   "deadProxyAdd": {
     "message": "Lisää välityspalvelin kuolleiden linkkien tarkistuksia varten"

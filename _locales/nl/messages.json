@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Geavanceerde opties"
   },
+  "announceDismiss": {
+    "message": "Sluiten"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 biedt de volledig uitgeruste dode-linkweergave: scan, markeer, filter en sorteer dode en beperkte links, inclusief eerdere markeringen en tijdstempels per rij."
+  },
+  "announceV407Title": {
+    "message": "Wat is er nieuw in v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Deze map bevat $count$ item(s). U kunt het verwijderen ongedaan maken.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Gepauzeerd"
+  },
+  "whatsNewChangelog": {
+    "message": "Wijzigingslog"
   },
   "deadProxyAdd": {
     "message": "Proxyserver toevoegen voor dode-linkcontroles"

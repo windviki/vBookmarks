@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "ตัวเลือกขั้นสูง"
   },
+  "announceDismiss": {
+    "message": "ปิด"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 มอบมุมมองลิงก์เสียที่ครบครัน: สแกน ทำเครื่องหมาย กรอง และจัดเรียงลิงก์เสียและลิงก์ที่ถูกจำกัด พร้อมเครื่องหมายก่อนหน้าและเวลาประจำแต่ละแถว"
+  },
+  "announceV407Title": {
+    "message": "มีอะไรใหม่ใน v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "โฟลเดอร์นี้มี $count$ รายการ คุณสามารถยกเลิกการลบได้",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "หยุดชั่วคราว"
+  },
+  "whatsNewChangelog": {
+    "message": "บันทึกการเปลี่ยนแปลง"
   },
   "deadProxyAdd": {
     "message": "เพิ่มพร็อกซีเซิร์ฟเวอร์สำหรับตรวจสอบลิงก์เสีย"

@@ -358,6 +358,15 @@
   "advancedOptions": {
     "message": "高级选项"
   },
+  "announceV407Title": {
+    "message": "v4.0.7 更新内容"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 全功能的死链视图：扫描、标注、筛选与排序死链/受限链接，保留过往标注与每次检测时间。"
+  },
+  "announceDismiss": {
+    "message": "关闭"
+  },
   "extName": {
     "message": "vBookmarks"
   },
@@ -1536,6 +1545,9 @@
   },
   "deadPaused": {
     "message": "已暂停"
+  },
+  "whatsNewChangelog": {
+    "message": "更新日志"
   },
   "deadProxyNeverShow": {
     "message": "不再显示"

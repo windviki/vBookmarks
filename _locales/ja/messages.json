@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "拡張オプション"
   },
+  "announceDismiss": {
+    "message": "閉じる"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 では、多機能なデッドリンクビューを提供します。デッドリンクやアクセス制限のあるリンクをスキャン、マーク、フィルタリング、並べ替えでき、過去のマークと行ごとのタイムスタンプも表示されます。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 の新機能"
+  },
   "confirmDeleteFolder": {
     "message": "このフォルダには$count$個のアイテムが含まれています。削除は元に戻せます。",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "一時停止中"
+  },
+  "whatsNewChangelog": {
+    "message": "変更履歴"
   },
   "deadProxyAdd": {
     "message": "リンク切れチェック用のプロキシサーバーを追加"

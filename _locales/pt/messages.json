@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opções avançadas"
   },
+  "announceDismiss": {
+    "message": "Dispensar"
+  },
+  "announceV407Text": {
+    "message": "O v4.0.7 traz a visão completa de links quebrados: escaneie, marque, filtre e classifique links quebrados e restritos, com marcações anteriores e carimbos de data/hora por linha."
+  },
+  "announceV407Title": {
+    "message": "Novidades na v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Esta pasta contém $count$ item(ns). Você pode desfazer a exclusão.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pausado"
+  },
+  "whatsNewChangelog": {
+    "message": "Histórico de alterações"
   },
   "deadProxyAdd": {
     "message": "Adicionar um servidor proxy para verificações de links quebrados"

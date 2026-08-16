@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Advanced Options"
   },
+  "announceDismiss": {
+    "message": "Chiudi"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 offre la vista completa dei link non funzionanti: scansiona, contrassegna, filtra e ordina quelli morti e limitati, con contrassegni precedenti e timestamp per riga."
+  },
+  "announceV407Title": {
+    "message": "Novità in v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Questa cartella contiene $count$ elemento(i). Puoi annullare l'eliminazione.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "In pausa"
+  },
+  "whatsNewChangelog": {
+    "message": "Registro delle modifiche"
   },
   "deadProxyAdd": {
     "message": "Aggiungi un server proxy per i controlli dei link morti"

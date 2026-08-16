@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "進階設定"
   },
+  "announceDismiss": {
+    "message": "關閉"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 推出功能完整的失效連結檢視：可掃描、標記、篩選與排序失效及受限連結，並包含先前的標記與逐列時間戳記。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 的新功能"
+  },
   "confirmDeleteFolder": {
     "message": "此資料夾包含 $count$ 個項目。您可以復原刪除。",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "已暫停"
+  },
+  "whatsNewChangelog": {
+    "message": "變更記錄"
   },
   "deadProxyAdd": {
     "message": "為失效連結檢查新增代理伺服器"

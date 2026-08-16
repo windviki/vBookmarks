@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Napredne opcije"
   },
+  "announceDismiss": {
+    "message": "Zatvori"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 donosi potpuno opremljen prikaz mrtvih veza: skenirajte, označite, filtrirajte i sortirajte mrtve i ograničene veze, s prethodnim oznakama i vremenskim oznakama po retku."
+  },
+  "announceV407Title": {
+    "message": "Što je novo u v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Ova mapa sadrži $count$ stavku(i). Možete poništiti brisanje.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pauzirano"
+  },
+  "whatsNewChangelog": {
+    "message": "Popis promjena"
   },
   "deadProxyAdd": {
     "message": "Dodaj proxy poslužitelj za provjeru mrtvih veza"

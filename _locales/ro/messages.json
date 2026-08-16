@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opțiuni Avansate"
   },
+  "announceDismiss": {
+    "message": "Închide"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 aduce vizualizarea completă a linkurilor moarte: scanați, marcați, filtrați și sortați linkurile moarte și restricționate, cu marcaje anterioare și timestamp-uri pe fiecare rând."
+  },
+  "announceV407Title": {
+    "message": "Noutăți în v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Acest dosar conține $count$ element(e). Puteți anula ștergerea.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "În pauză"
+  },
+  "whatsNewChangelog": {
+    "message": "Jurnal de modificări"
   },
   "deadProxyAdd": {
     "message": "Adaugă un server proxy pentru verificarea linkurilor moarte"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opcje zaawansowane"
   },
+  "announceDismiss": {
+    "message": "Zamknij"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 oferuje w pełni funkcjonalny widok martwych linków: skanuj, oznaczaj, filtruj i sortuj martwe oraz ograniczone linki, z wcześniejszymi oznaczeniami i znacznikami czasu dla każdego wiersza."
+  },
+  "announceV407Title": {
+    "message": "Co nowego w v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Ten folder zawiera $count$ element(y). Możesz cofnąć usunięcie.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Wstrzymane"
+  },
+  "whatsNewChangelog": {
+    "message": "Dziennik zmian"
   },
   "deadProxyAdd": {
     "message": "Dodaj serwer proxy do sprawdzania martwych linków"

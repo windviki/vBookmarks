@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Tùy Chọn Nâng Cao"
   },
+  "announceDismiss": {
+    "message": "Bỏ qua"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 mang đến chế độ xem liên kết hỏng đầy đủ tính năng: quét, đánh dấu, lọc và sắp xếp các liên kết hỏng và bị hạn chế, kèm theo các dấu đã đặt trước và mốc thời gian trên từng hàng."
+  },
+  "announceV407Title": {
+    "message": "Có gì mới trong v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Thư mục này chứa $count$ (mục). Bạn có thể hoàn tác việc xóa.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Đã tạm dừng"
+  },
+  "whatsNewChangelog": {
+    "message": "Nhật ký thay đổi"
   },
   "deadProxyAdd": {
     "message": "Thêm máy chủ proxy để kiểm tra liên kết hỏng"

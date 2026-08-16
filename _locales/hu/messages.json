@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Haladó Beállítások"
   },
+  "announceDismiss": {
+    "message": "Bezárás"
+  },
+  "announceV407Text": {
+    "message": "A v4.0.7 teljes értékű holt link-nézetet biztosít: holt és korlátozott linkek szkennelése, megjelölése, szűrése és rendezése, korábbi jelölésekkel és soronkénti időbélyegekkel."
+  },
+  "announceV407Title": {
+    "message": "Újdonságok a v4.0.7-ben"
+  },
   "confirmDeleteFolder": {
     "message": "Ez a mappa $count$ elemet tartalmaz. A törlés visszavonható.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Szüneteltetve"
+  },
+  "whatsNewChangelog": {
+    "message": "Változásnapló"
   },
   "deadProxyAdd": {
     "message": "Proxykiszolgáló hozzáadása a hibás linkek ellenőrzéséhez"

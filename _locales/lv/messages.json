@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Paplašinātās opcijas"
   },
+  "announceDismiss": {
+    "message": "Aizvērt"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 sniedz pilnvērtīgu nederīgu saišu skatu: skenējiet, atzīmējiet, filtrējiet un kārtojiet nederīgas un ierobežotas saites, ar iepriekšējām atzīmēm un katras rindas laika zīmogiem."
+  },
+  "announceV407Title": {
+    "message": "Jaunumi v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Šajā mapē ir $count$ vienums(-i). Dzēšanu var atsaukt.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Apturēts"
+  },
+  "whatsNewChangelog": {
+    "message": "Izmaiņu žurnāls"
   },
   "deadProxyAdd": {
     "message": "Pievienot starpniekserveri bojātu saišu pārbaudei"

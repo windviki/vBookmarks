@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Pokročilé možnosti"
   },
+  "announceDismiss": {
+    "message": "Zavrieť"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 prináša plnohodnotné zobrazenie nefunkčných odkazov: skenovanie, označovanie, filtrovanie a triedenie nefunkčných a obmedzených odkazov, s predchádzajúcimi označeniami a časovými pečiatkami pre každý riadok."
+  },
+  "announceV407Title": {
+    "message": "Čo je nové vo v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Tento priečinok obsahuje $count$ položiek. Odstránenie môžete vrátiť späť.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pozastavené"
+  },
+  "whatsNewChangelog": {
+    "message": "Zoznam zmien"
   },
   "deadProxyAdd": {
     "message": "Pridať proxy server pre kontroly nefunkčných odkazov"

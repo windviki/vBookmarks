@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Opsi Lanjutan"
   },
+  "announceDismiss": {
+    "message": "Tutup"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 menghadirkan tampilan tautan mati yang lengkap: pindai, tandai, filter, dan urutkan tautan mati dan terbatas, dengan penanda sebelumnya dan stempel waktu per baris."
+  },
+  "announceV407Title": {
+    "message": "Apa yang baru di v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Folder ini berisi $count$ item. Anda dapat membatalkan penghapusan.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Dijeda"
+  },
+  "whatsNewChangelog": {
+    "message": "Log Perubahan"
   },
   "deadProxyAdd": {
     "message": "Tambahkan server proxy untuk pemeriksaan tautan mati"

@@ -29,6 +29,15 @@
   "advancedOptions": {
     "message": "Avanserte Alternativer"
   },
+  "announceDismiss": {
+    "message": "Avvis"
+  },
+  "announceV407Text": {
+    "message": "v4.0.7 leverer den fullverdige visningen for døde lenker: skann, merk, filtrer og sorter døde og begrensede lenker, med tidligere markeringer og tidsstempler per rad."
+  },
+  "announceV407Title": {
+    "message": "Hva er nytt i v4.0.7"
+  },
   "confirmDeleteFolder": {
     "message": "Denne mappen inneholder $count$ element(er). Du kan angre slettingen.",
     "placeholders": {
@@ -299,6 +308,9 @@
   },
   "deadPaused": {
     "message": "Pauset"
+  },
+  "whatsNewChangelog": {
+    "message": "Endringslogg"
   },
   "deadProxyAdd": {
     "message": "Legg til en proxy-server for sjekk av døde lenker"
