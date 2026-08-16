@@ -144,10 +144,11 @@ describe('options page responsive layout rules (v4 task-3 #17)', () => {
 
 describe('options page header responsive wrap (narrow widths)', () => {
     // The header's three element groups — the title block (icon+name+small),
-    // the centered #header-since subtitle and the right #header-links pills —
-    // must wrap onto their own lines instead of being flex-crushed into
-    // truncation/overlap when the viewport gets narrow (flex-shrink would
-    // otherwise compress the nowrap pills against the title).
+    // the #header-since subtitle docked in front of the pills and the right
+    // #header-links pills — must wrap onto their own lines instead of being
+    // flex-crushed into truncation/overlap when the viewport gets narrow
+    // (flex-shrink would otherwise compress the nowrap pills against the
+    // title). Wide screens keep them on one row.
 
     it('the title row wraps the pills below instead of crushing them', () => {
         const h1 = ruleBody(optionsCss, 'h1{');
@@ -166,9 +167,12 @@ describe('options page header responsive wrap (narrow widths)', () => {
         expect(btn).toContain('white-space: nowrap');
     });
 
-    it('the since subtitle is a centered block on its own line, never sharing the title row', () => {
+    it('the since subtitle docks in the title row, grown to center before the pills', () => {
         const since = ruleBody(optionsCss, '#header-since{');
         expect(since).toContain('text-align: center');
-        expect(since).toContain('margin: .35em 0 0');
+        // flex:1 grows it to fill the free space between the title block and
+        // #header-links, so its text centers just before the donate pill; on
+        // narrow cards the row wraps and the subtitle drops to its own line.
+        expect(since).toContain('flex: 1 1 auto');
     });
 });

@@ -213,11 +213,15 @@ h1 > small{
 #options-version-text{
 	font-variant-numeric: tabular-nums;
 }
-/* Subtitle under the title row: fork origin + days-maintained, centered on
-   the title block (icon..version pill). .9em reads clearly next to the 28px
-   title and the .85em header pills without stealing the header's weight. */
+/* Subtitle in the title row, docked in front of the header pills: flex:1
+   grows it to fill the free space between the title block and #header-links,
+   so its text sits horizontally centered just before the donate pill. On
+   narrow cards the row wraps (h1's flex-wrap) and the subtitle takes its own
+   line, still centered, its text free to break across lines. */
 #header-since{
-	margin: .35em 0 0;
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
 	text-align: center;
 	color: var(--vbm-muted);
 	font-size: .9em;
@@ -326,6 +330,23 @@ h2{
 .options-list li:has(> span:first-child + button) > button{
 	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
 }
+/* Backup row: the Export + Import buttons split the card width evenly (each
+   flex:1) so the pair reads as one balanced control band — Export flush left,
+   Import flush against the card's right edge. The hint wraps to its own line
+   below. */
+.options-list li:has(> button#export-settings){
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: .5em 1em;
+}
+.options-list li:has(> button#export-settings) > button{
+	flex: 1 1 8em;
+	margin-__MSG_@@bidi_start_edge__: 0; /* the flex gap replaces the 1em offset */
+}
+.options-list li:has(> button#export-settings) > small{
+	flex-basis: 100%;
+}
 .options-list li button span{
 	font-weight: normal;
 }
@@ -374,12 +395,35 @@ h2{
 	box-sizing: border-box;
 	margin-top: 4px;
 }
-/* Dead-link proxy server input rides the row inline (Test & save + display
-   + clear sit beside it), so it stays compact rather than full-card. */
+/* Dead-link proxy server row: an edit row (label + full-card input) sits
+   above an action row (Test & save + saved value flush left, Clear pinned to
+   the card's right edge). The old single inline row left the buttons wherever
+   the text happened to wrap; two explicit rows give the input the whole line
+   and pin Clear instead. */
+.options-list li:has(> #dead-proxy-edit-row){
+	display: flex;
+	flex-direction: column;
+	gap: .5em;
+}
+.options-list li > #dead-proxy-edit-row,
+.options-list li > #dead-proxy-action-row{
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+.options-list li > #dead-proxy-edit-row > span{
+	flex: none;
+}
 .options-list li input#dead-proxy-server-input{
 	margin: 0;
-	margin-__MSG_@@bidi_start_edge__: 1em;
-	width: 12em;
+	flex: 1 1 10em;
+	min-width: 0;
+}
+.options-list li > #dead-proxy-action-row > button{
+	margin-__MSG_@@bidi_start_edge__: 0;
+}
+.options-list li > #dead-proxy-action-row > button#dead-proxy-server-clear{
+	margin-inline-start: auto; /* pin Clear to the card's right edge */
 }
 /* Result line under the row: failures read as danger, success as the green
    success token (paper's accent is vermilion — too close to the danger red). */

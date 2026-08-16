@@ -188,7 +188,8 @@ describe('options.js settings backup', () => {
             expect(optionsHtml.indexOf('id="accessibility"')).toBeLessThan(optionsHtml.indexOf('id="backup-options"'));
             // 4.0.8: the bottom footer was replaced by header meta — donate /
             // GitHub / homepage buttons + the version (linking to the changelog)
-            // live top-right next to the title, with a since-subtitle below.
+            // live top-right next to the title; the since-subtitle docks IN the
+            // title row, between the title block and the pills (before donate).
             expect(optionsHtml).not.toContain('id="footer"');
             expect(optionsHtml).not.toContain('Thanks');
             for (const id of ['header-donate', 'header-github', 'header-homepage',
@@ -196,7 +197,9 @@ describe('options.js settings backup', () => {
                 'header-homepage-label', 'options-version-text', 'header-since'])
                 expect(optionsHtml).toContain(`id="${id}"`);
             expect(optionsHtml.indexOf('id="header-links"')).toBeGreaterThan(optionsHtml.indexOf('id="ext-name"'));
-            expect(optionsHtml.indexOf('id="header-since"')).toBeGreaterThan(optionsHtml.indexOf('</h1>'));
+            expect(optionsHtml.indexOf('id="header-since"')).toBeGreaterThan(optionsHtml.indexOf('id="ext-name"'));
+            expect(optionsHtml.indexOf('id="header-since"')).toBeLessThan(optionsHtml.indexOf('id="header-links"'));
+            expect(optionsHtml.indexOf('id="header-links"')).toBeLessThan(optionsHtml.indexOf('</h1>'));
             // Static hrefs: donate → donation page, version → changelog.
             expect(optionsHtml).toContain('id="header-donate" href="https://github.com/windviki/vBookmarks/blob/master/donation/donation.md"');
             expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks#changelogs"');

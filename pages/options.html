@@ -12,6 +12,7 @@
     <img src="/assets/icons/icon.svg" width="32" height="32" alt="">
     <span id="ext-name"></span>
     <small id="small-options"></small>
+    <p id="header-since"></p>
     <span id="header-links">
         <a id="header-donate" href="https://github.com/windviki/vBookmarks/blob/master/donation/donation.md" target="_blank" rel="noreferrer" class="header-btn header-btn-accent">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -31,7 +32,6 @@
         </a>
     </span>
 </h1>
-<p id="header-since"></p>
 <main class="options-grid">
 <section class="options-group">
 <h2 id="general"></h2>
@@ -195,7 +195,19 @@
 <section class="options-group">
 <h2 id="dead-scan-options"></h2>
 <ul class="options-list">
-    <li><span id="option-dead-proxy-server"></span> <input type="text" id="dead-proxy-server-input" aria-labelledby="option-dead-proxy-server" aria-describedby="dead-proxy-server-hint" spellcheck="false" placeholder="127.0.0.1:7890"> <button type="button" id="dead-proxy-server-save"></button> <code id="dead-proxy-server-value"></code> <button type="button" id="dead-proxy-server-clear"></button><small id="dead-proxy-server-hint"></small> <span id="dead-proxy-server-error"></span></li>
+    <li>
+        <div id="dead-proxy-edit-row">
+            <span id="option-dead-proxy-server"></span>
+            <input type="text" id="dead-proxy-server-input" aria-labelledby="option-dead-proxy-server" aria-describedby="dead-proxy-server-hint" spellcheck="false" placeholder="127.0.0.1:7890">
+        </div>
+        <div id="dead-proxy-action-row">
+            <button type="button" id="dead-proxy-server-save"></button>
+            <code id="dead-proxy-server-value"></code>
+            <button type="button" id="dead-proxy-server-clear"></button>
+        </div>
+        <small id="dead-proxy-server-hint"></small>
+        <span id="dead-proxy-server-error"></span>
+    </li>
     <li><label><input type="checkbox" id="dead-proxy-strip-visible"> <span id="option-dead-proxy-strip"></span></label><small id="dead-proxy-strip-hint"></small></li>
     <li><label><span id="option-dead-scan-concurrency"></span> <input type="number" min="1" max="16" step="1" id="dead-scan-concurrency" aria-labelledby="option-dead-scan-concurrency"></label></li>
     <li><label><span id="option-dead-scan-timeout"></span> <input type="number" min="2" max="30" step="1" id="dead-scan-timeout" aria-labelledby="option-dead-scan-timeout"></label></li>

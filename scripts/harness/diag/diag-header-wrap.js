@@ -1,9 +1,9 @@
-// diag-header-wrap.js — options header 3-element auto-layout at narrow widths.
-// The h1 row holds the title block (icon + #ext-name + #small-options) and the
-// right-pinned #header-links pills; #header-since sits on its own line below.
-// Under narrow viewports each piece must WRAP onto its own line instead of
-// being flex-crushed into truncation or overlap. Probe measures geometry at a
-// width sweep and hard-fails on any overlap / horizontal overflow / truncation.
+// diag-header-wrap.js — options header 4-element auto-layout at narrow widths.
+// The h1 row holds the title block (icon + #ext-name + #small-options), the
+// #header-since subtitle docked in front of it and the right-pinned
+// #header-links pills. Under narrow viewports each piece must WRAP onto its
+// own line instead of being flex-crushed into truncation or overlap. Probe
+// measures geometry at a width sweep and hard-fails on any overlap / overflow.
 const puppeteer = require('puppeteer');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -56,9 +56,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         // 2) title block never overlaps the links (wrap, don't crush) — proper rect test
         if (overlap(m.titleBlock, m.links))
             problems.push(`${w}px: title block overlaps links`);
-        // 3) since subtitle stays below h1 on its own line, never overlapping
-        if (overlap(m.since, m.h1))
-            problems.push(`${w}px: #header-since overlaps h1 (sinceT=${m.since.t.toFixed(1)} h1B=${m.h1.b.toFixed(1)})`);
+        // 3) the docked since subtitle never overlaps the title block or the
+        //    pills (it sits between them on one row, or wraps to its own line)
+        if (overlap(m.since, m.titleBlock))
+            problems.push(`${w}px: #header-since overlaps the title block`);
+        if (overlap(m.since, m.links))
+            problems.push(`${w}px: #header-since overlaps the header pills`);
         // 4) pills never truncated (all within viewport) and never overlap each other
         for (let i = 0; i < m.pills.length; i++) {
             const p = m.pills[i];
