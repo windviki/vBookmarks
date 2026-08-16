@@ -256,22 +256,23 @@ describe('scrollbar-contract: sync-tooltip 回归守卫 98e29b3 (G)', () => {
         expect(guard).toContain('height: 10px');
     });
 
-    it('dead-mark 颜色语义: 死链=红、受限=橙, 已标注=类型色实心填充 (4.0.7)', () => {
+    it('dead-mark 颜色语义: 死链=红、受限=橙, 已标注=旗帜内部实心填充 (4.0.7)', () => {
         // 全视图同一套语义：死链(--vbm-danger 红) / 受限(--vbm-warning 橙)。
-        // 未标注 ⚑ = 类型色描边，已标注 = 同类型色实心填充（取消时填充消失、
-        // 反馈立现——受限行此前已标/未标都是琥珀看不出是否生效）。覆盖三处：
-        // 标记按钮、受限行标记按钮、favicon 上的 dead × 底色。
+        // 未标注 ⚑ = 类型色描边、hover 才现；已标注 = 常驻可见 + 旗帜本体实心
+        // 填充（.vbm-icon-flag path fill currentColor，随类型色），无背景方块
+        // ——取消标记是旗帜实心↔空心切换。覆盖三处：标记按钮、受限行标记按钮、
+        // favicon 上的 dead × 底色。
         const base = ruleBody(neatCss, '#dead-list .row-btn.dead-mark-btn {');
         expect(base).toContain('color: var(--vbm-danger)');
         expect(base).not.toContain('var(--vbm-accent)');
         const blockedBtn = ruleBody(neatCss, '#dead-list li.blocked .row-btn.dead-mark-btn {');
         expect(blockedBtn).toContain('color: var(--vbm-warning)');
         const marked = ruleBody(neatCss, '#dead-list .row-btn.dead-mark-btn.marked {');
-        expect(marked).toContain('background: var(--vbm-danger)');
-        expect(marked).toContain('color: var(--vbm-danger-fg)');
-        const blockedMarked = ruleBody(neatCss, '#dead-list li.blocked .row-btn.dead-mark-btn.marked {');
-        expect(blockedMarked).toContain('background: var(--vbm-warning)');
-        expect(blockedMarked).toContain('color: var(--vbm-warning-fg)');
+        expect(marked).toContain('visibility: visible');
+        expect(marked).not.toContain('background: var(--vbm-danger)');
+        expect(marked).not.toContain('border-radius: 3px');
+        const markedFill = ruleBody(neatCss, '#dead-list .row-btn.dead-mark-btn.marked .vbm-icon-flag path {');
+        expect(markedFill).toContain('fill: currentColor');
         const indicator = ruleBody(neatCss, '.favicon-container .dead-indicator,');
         expect(indicator).toContain('background: var(--vbm-danger)');
         expect(indicator).toContain('color: var(--vbm-danger-fg)');

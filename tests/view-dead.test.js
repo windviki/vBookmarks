@@ -1214,7 +1214,11 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         closest: sel => (sel === 'li' ? { dataset: { nodeId: id } } : null)
     });
     const markFilterClick = (ctx, v) => ctx.clickOn({
-        closest: sel => (sel === '.dead-mark-filter-btn' ? { dataset: { markFilter: v } } : null)
+        // 真实 DOM: `data-markfilter="marked"` → dataset.markfilter（全小写，
+        // 无连字符不变驼峰）。桩必须建模这一点，否则掩盖 4.0.7 的
+        // dataset.markFilter 读取 bug（点击全部失效）。nodeId 用 data-node-id
+        // → dataset.nodeId 是另一面：连字符才转驼峰。
+        closest: sel => (sel === '.dead-mark-filter-btn' ? { dataset: { markfilter: v } } : null)
     });
 
     it('第二工具条仅 idle 渲染：状态按钮 + 排序下拉；live/selecting/全新空态不渲染', () => {

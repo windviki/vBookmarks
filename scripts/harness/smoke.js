@@ -199,6 +199,72 @@ const waitForPalette = async (page, ms = 6000) => {
     await page.reload({ waitUntil: 'networkidle0' });
     await sleep(900);
 
+    // 2d3. 4.0.7 死链视图第二工具条：已标注/未标注过滤真实点击生效。真实浏览
+    // 器是最终门——单测的 closest/dataset 桩建模 `data-markfilter` →
+    // `dataset.markfilter`（无连字符不变驼峰），一旦视图读 `dataset.markFilter`
+    // 就取 undefined、恒回退"全部"，此处 已标注/未标注 点击会立即暴露。种入
+    // 两个书签 + 扫描缓存（一死链 404、一受限 403，仅死链被标记），断言：
+    // 已标注=只留已标注死链、未标注=只剩未受限未标注行、全部=两者都回。
+    const deadIds = await page.evaluate(() => new Promise(resolve => {
+        chrome.bookmarks.create(
+            { parentId: '2', title: 'Dead A', url: 'https://dead-a.example/' },
+            a => chrome.bookmarks.create(
+                { parentId: '2', title: 'Dead B', url: 'https://dead-b.example/' },
+                b => resolve([a.id, b.id])));
+    }));
+    const [deadA, deadB] = deadIds;
+    await page.evaluate(([a, b]) => new Promise(resolve => chrome.storage.local.set({
+        activeView: 'dead',
+        deadFilter: 'all',
+        deadMarkFilter: '',
+        deadMarks: JSON.stringify([a]),
+        deadLastScan: JSON.stringify({
+            ts: Date.now(), scannedCount: 2,
+            results: {
+                [a]: { status: 'dead', code: 404 },
+                [b]: { status: 'blocked', code: 403 }
+            }
+        })
+    }, resolve)), [deadA, deadB]);
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+    const deadRowsOf = () => page.evaluate(([a, b]) => {
+        const pressed = document.querySelector('#dead-list .dead-mark-filter-btn[aria-pressed="true"]');
+        return {
+            a: !!document.getElementById(`dead-item-${a}`),
+            b: !!document.getElementById(`dead-item-${b}`),
+            buttons: document.querySelectorAll('#dead-list .dead-mark-filter-btn').length,
+            pressed: pressed ? pressed.dataset.markfilter : ''
+        };
+    }, [deadA, deadB]);
+    const deadFilterAll = await deadRowsOf();
+    console.log('dead filter 全部:', JSON.stringify(deadFilterAll));
+    if (deadFilterAll.buttons !== 3 || !deadFilterAll.a || !deadFilterAll.b)
+        errors.push(`dead second toolbar missing: ${JSON.stringify(deadFilterAll)}`);
+    await page.evaluate(() => document.querySelector('#dead-list .dead-mark-filter-btn[data-markfilter="marked"]').click());
+    await sleep(300);
+    const deadFilterMarked = await deadRowsOf();
+    console.log('dead filter 已标注:', JSON.stringify(deadFilterMarked));
+    if (deadFilterMarked.a !== true || deadFilterMarked.b !== false)
+        errors.push(`dead 已标注 filter broken: ${JSON.stringify(deadFilterMarked)}`);
+    await page.evaluate(() => document.querySelector('#dead-list .dead-mark-filter-btn[data-markfilter="unmarked"]').click());
+    await sleep(300);
+    const deadFilterUnmarked = await deadRowsOf();
+    console.log('dead filter 未标注:', JSON.stringify(deadFilterUnmarked));
+    if (deadFilterUnmarked.a !== false || deadFilterUnmarked.b !== true)
+        errors.push(`dead 未标注 filter broken: ${JSON.stringify(deadFilterUnmarked)}`);
+    await page.evaluate(() => document.querySelector('#dead-list .dead-mark-filter-btn[data-markfilter=""]').click());
+    await sleep(300);
+    const deadFilterRestore = await deadRowsOf();
+    console.log('dead filter 全部恢复:', JSON.stringify(deadFilterRestore));
+    if (!deadFilterRestore.a || !deadFilterRestore.b)
+        errors.push(`dead 全部 restore broken: ${JSON.stringify(deadFilterRestore)}`);
+    await page.evaluate(([a, b]) => new Promise(resolve => chrome.storage.local.remove(
+        ['deadFilter', 'deadMarkFilter', 'deadMarks', 'deadLastScan', 'activeView'],
+        () => chrome.bookmarks.remove(a, () => chrome.bookmarks.remove(b, resolve)))), [deadA, deadB]);
+    await page.reload({ waitUntil: 'networkidle0' });
+    await sleep(900);
+
     // 2e. v4 task-3 #14: with onlyShowBMBar on, "reveal in tree" on a target
     // OUTSIDE the bar toasts a hint instead of silently failing; the toast
     // action shows the full tree (session only) and completes the reveal.

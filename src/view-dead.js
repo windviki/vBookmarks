@@ -1478,7 +1478,10 @@ export function initViewDead(ctx = {}) {
         const markFilterBtn = closest('.dead-mark-filter-btn');
         if (markFilterBtn) {
             e.preventDefault();
-            markFilter = markFilterBtn.dataset.markFilter || '';
+            // data-markfilter（无连字符）→ dataset.markfilter 全小写；写
+            // dataset.markFilter（camelCase）取到 undefined → 恒回退 ''（全部），
+            // 已标注/未标注点击全部失效——真实 DOM 的 dataset 键不含连字符不变驼峰。
+            markFilter = markFilterBtn.dataset.markfilter || '';
             store.set('deadMarkFilter', markFilter);
             render();
             return;
