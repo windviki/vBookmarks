@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Notīrīt skenēšanas rezultātus"
+  },
   "deadFilterAll": {
     "message": "Visi"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Vēl nav atzīmētu grāmatzīmju"
   },
   "deadMarkedRow": {
     "message": "Atzīmēts"

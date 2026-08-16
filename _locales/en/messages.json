@@ -221,6 +221,10 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Clear scan results",
+    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category."
+  },
   "deadNone": {
     "description": "Empty-state line of the palette's dead-link scan mode, shown when every bookmark checked out fine.",
     "message": "No dead links found"
@@ -1077,6 +1081,10 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "No bookmarks marked yet",
+    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button."
   },
   "deadMarkedRow": {
     "message": "Marked",

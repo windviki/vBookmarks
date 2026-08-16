@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "स्कैन परिणाम साफ़ करें"
+  },
   "deadFilterAll": {
     "message": "सभी"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "अभी तक कोई बुकमार्क चिह्नित नहीं है"
   },
   "deadMarkedRow": {
     "message": "चिह्नित"

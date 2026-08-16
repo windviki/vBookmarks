@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Cancella risultati scansione"
+  },
   "deadFilterAll": {
     "message": "Tutti"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Nessun segnalibro ancora contrassegnato"
   },
   "deadMarkedRow": {
     "message": "Segnato"

@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "清除掃描結果"
+  },
   "deadFilterAll": {
     "message": "全部"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "尚未標記任何書籤"
   },
   "deadMarkedRow": {
     "message": "已標記"

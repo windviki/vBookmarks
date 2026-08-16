@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Počisti rezultate skeniranja"
+  },
   "deadFilterAll": {
     "message": "Vsi"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Še ni označenih zaznamkov"
   },
   "deadMarkedRow": {
     "message": "Označeno"

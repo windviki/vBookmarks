@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Очистить результаты сканирования"
+  },
   "deadFilterAll": {
     "message": "Все"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Ещё нет отмеченных закладок"
   },
   "deadMarkedRow": {
     "message": "Отмечено"

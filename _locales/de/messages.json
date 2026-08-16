@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Scan-Ergebnisse löschen"
+  },
   "deadFilterAll": {
     "message": "Alle"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Noch keine Lesezeichen markiert"
   },
   "deadMarkedRow": {
     "message": "Markiert"

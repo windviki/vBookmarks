@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Očisti rezultate skeniranja"
+  },
   "deadFilterAll": {
     "message": "Sve"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Još nema označenih bookmarka"
   },
   "deadMarkedRow": {
     "message": "Označeno"

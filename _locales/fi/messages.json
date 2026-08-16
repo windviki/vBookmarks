@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Tyhjennä skannaustulokset"
+  },
   "deadFilterAll": {
     "message": "Kaikki"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Ei vielä merkittyjä kirjanmerkkejä"
   },
   "deadMarkedRow": {
     "message": "Merkitty"

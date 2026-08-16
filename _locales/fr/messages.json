@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Effacer les résultats du scan"
+  },
   "deadFilterAll": {
     "message": "Tous"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Aucun favori marqué pour l'instant"
   },
   "deadMarkedRow": {
     "message": "Marqué"

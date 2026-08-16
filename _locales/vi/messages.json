@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Xóa kết quả quét"
+  },
   "deadFilterAll": {
     "message": "Tất cả"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Chưa có dấu trang nào được đánh dấu"
   },
   "deadMarkedRow": {
     "message": "Đã đánh dấu"

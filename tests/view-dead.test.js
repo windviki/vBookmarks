@@ -1128,15 +1128,16 @@ describe('filter + batch marks (§5.5c)', () => {
         expect($list.innerHTML).toContain('deadFilterAll 2');
         expect($list.innerHTML).toContain('deadFilterMarked 0');
         expect($list.innerHTML).not.toContain('deadFilterAll 4');
-        // 过去标注视图: 无未覆盖残留 → 无标注列表, 结果行隐藏, 回退到可执行
-        // 的 start 空态; 分段计数仍为 0
+        // 过去标注视图: 无未覆盖残留 → 无标注列表, 结果行隐藏, 回退普通空态
+        // (不显示蓝色开始扫描——有历史扫描数据); 分段计数仍为 0
         ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
         const html = $list.innerHTML;
         expect(html).toContain('data-filter="marked" aria-pressed="true"');
         expect(html).toContain('deadFilterMarked 0');
         expect(html).not.toContain('id="dead-item-12"');
         expect(html).not.toContain('id="dead-item-13"');
-        expect(html).toContain('class="empty-state dead-start"');
+        expect(html).toContain('deadMarkedNone');
+        expect(html).not.toContain('class="empty-state dead-start"');
     });
 
     it('a filter matching nothing keeps the segment bar reachable (item: filter lock-up)', () => {
@@ -1289,9 +1290,11 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         // 主工具条切"上次标注" → 只显示残留列表
         ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
         expect($list.innerHTML).toContain('deadMarkedCount[1]');
-        // 叠加"未标注"：残留全为已标注 → 无可见行，回退可执行的 start 空态
+        // 叠加"未标注"：残留全为已标注 → 无可见行。有历史扫描 → 回退普通空态
+        // (提示换分段)，不是蓝色开始扫描
         markFilterClick(ctx, 'unmarked');
-        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).toContain('deadNoneFiltered');
+        expect($list.innerHTML).not.toContain('class="empty-state dead-start"');
         expect($list.innerHTML).not.toContain('dead-marked-list');
         expect($list.innerHTML).not.toContain('id="dead-item-11"');
         // 持久化：reload 后仍是 unmarked 并生效
@@ -1620,11 +1623,9 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
             markFilterClick(ctx, c.m);
             expect(rowIds(), `filter=${c.f} markFilter=${c.m}`)
                 .toEqual([...c.rows].sort());
-            if (c.f === 'marked' && c.m === 'unmarked')
-                // 残留全是已标注 → 无可见行，回退可执行的 start 空态
-                expect($list.innerHTML).toContain('class="empty-state dead-start"');
-            else if (!c.rows.length)
-                // 分类下该标注状态无行 → 区分"扫描无结果"的空态提示
+            if (!c.rows.length)
+                // 分类下该标注状态无行。有历史扫描 → 普通空态（残留被隐藏时
+                // 提示换分段；真无残留是 deadMarkedNone），绝不回退蓝色开始扫描
                 expect($list.innerHTML).toContain('deadNoneFiltered');
         }
     });
@@ -1699,6 +1700,110 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect($list.innerHTML).toMatch(
             /<li class="vbm-row[^"]* blocked[^"]*" id="dead-item-12"/);
     });
+
+    it('结果行与残留行都传 meta.badgeSlot → tree-render 把 pill 包进固定宽度槽', () => {
+        const ctx = richSetup();
+        const { treeRender } = ctx;
+        ctx.def().activate();
+        // 结果行（死链/受限/老备份）都带槽
+        for (const id of ['12', '13', '14', '15'])
+            expect(treeRender.calls.find(c => c.id === id).meta.badgeSlot, `row ${id}`).toBe(true);
+        // 残留行（11，最后一次调用是残留列表的）也带槽
+        const c11 = treeRender.calls.filter(c => c.id === '11').at(-1);
+        expect(c11.meta.badgeSlot).toBe(true);
+    });
+});
+
+describe('清除扫描结果 + 开始扫描显示条件 (4.0.7 二轮)', () => {
+    const CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 2,
+        results: {
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        }
+    });
+
+    it('清除扫描结果按钮：有扫描缓存时渲染在清空所有标记之后；无缓存不渲染', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        const html = $list.innerHTML;
+        const u = html.indexOf('class="dead-unmark-all"');
+        const c = html.indexOf('class="dead-clear-scan"');
+        expect(u).toBeGreaterThan(-1);
+        expect(c).toBeGreaterThan(u); // 紧随清空所有标记之后
+        // 无扫描缓存 → 按钮不渲染（仅无历史数据时才有"开始扫描"入口）
+        const fresh = setup({});
+        fresh.def().activate();
+        expect(fresh.$list.innerHTML).not.toContain('dead-clear-scan');
+        // 无标记但缓存存在 → 按钮仍在（清空结果不依赖标注）
+        const marksOnly = setup({ storeData: { deadLastScan: CACHE } });
+        marksOnly.def().activate();
+        expect(marksOnly.$list.innerHTML).toContain('dead-clear-scan');
+    });
+
+    it('清除扫描结果确认后：lastScan 清空、已标注划归过去标注、横幅重置', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12","13"]' } });
+        const { $list, store, dialogs } = ctx;
+        ctx.def().activate();
+        // 初始：结果行在，无过去标注残留（12/13 都被结果覆盖）
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-clear-scan' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toBe('deadClearScan');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        // lastScan 已清空（缓存 key 写入空串；扫描结果分段随之消失）
+        expect(store.get('deadLastScan', undefined)).toBe('');
+        expect($list.innerHTML).not.toContain('deadFilterAll');
+        expect($list.innerHTML).not.toContain('deadFilterDead');
+        // 已标注项划归"过去标注"分类：marked-only 视图（无扫描）列出全部标注
+        expect($list.innerHTML).toContain('deadMarkedCount[2]');
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('class="dead-marked-list"');
+        // 最上方"重新检测"横幅（markedBannerDismissed 重置）重新显示
+        expect($list.innerHTML).toContain('class="risk-banner dead-marked-banner"');
+        // 徽标来自扫描判定 → 清空后归 0（含 updateBadges 刷新）
+        expect(ctx.def().badge()).toBe(0);
+        // 标注列表在 → 底部无蓝色开始扫描
+        expect($list.innerHTML).not.toContain('class="empty-state dead-start"');
+        // 标注原样保留（清除扫描不清除标注）
+        expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['12', '13']);
+    });
+
+    it('清除扫描结果后若也无标注：无历史数据 → 蓝色开始扫描按钮出现', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } }); // 无标注
+        const { $list, dialogs } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        ctx.clickOn({ closest: sel => (sel === '.dead-clear-scan' ? {} : null) });
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).not.toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+    });
+
+    it('取消清除扫描对话框：lastScan 原样保留，结果行仍在', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        const { $list, dialogs } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-clear-scan' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+    });
+
+    it('有历史扫描但无任何标注：上次标注分类 0 → 普通空态（deadMarkedNone），非蓝色按钮', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
+        expect($list.innerHTML).toContain('deadMarkedNone');
+        expect($list.innerHTML).not.toContain('class="empty-state dead-start"');
+        // 与全新空态对照：无历史数据才显示蓝色开始扫描
+        const fresh = setup({});
+        fresh.def().activate();
+        expect(fresh.$list.innerHTML).toContain('class="empty-state dead-start"');
+    });
 });
 
 describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§2.4 + §4 counts)', () => {
@@ -1755,12 +1860,14 @@ describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§
         expect(html).not.toContain('dead-marked-banner');
         // 标注记录原样保留 (全覆盖不清除任何标注)
         expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12', '13']);
-        // "上次标注"视图: 0 → 可执行 start 空态, 分段计数仍在
+        // "上次标注"视图: 0 → 普通空态 (有历史扫描, 不显示蓝色开始扫描),
+        // 分段计数仍在
         clickFilter(ctx, 'marked');
         const markedHtml = $list.innerHTML;
         expect(markedHtml).toContain('data-filter="marked" aria-pressed="true"');
         expect(markedHtml).toContain('deadFilterMarked 0');
-        expect(markedHtml).toContain('class="empty-state dead-start"');
+        expect(markedHtml).toContain('deadMarkedNone');
+        expect(markedHtml).not.toContain('class="empty-state dead-start"');
         expect(markedHtml).not.toContain('id="dead-item-11"');
         expect(markedHtml).not.toContain('id="dead-item-12"');
     });

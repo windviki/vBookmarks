@@ -389,6 +389,42 @@ describe('generateBookmarkHTML', () => {
         expect(html).toContain('<span class="row-badge x&quot; onmouseover=&quot;">&lt;b&gt;</span>');
     });
 
+    // 4.0.7 死链视图 pill 外层槽：meta.badgeSlot 把 pill 包进固定宽度槽
+    // .row-badge-slot，让 pill 背景维持文本长度、时间右对齐到槽左边缘。只影响
+    // 显式传 badgeSlot 的调用方——其他视图不传 → 与老结构完全一致。
+    it('meta.badgeSlot wraps the pill in the fixed-width slot; absent → unchanged', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '' }) });
+        const slotted = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badgeSlot: true,
+            badge: { text: '404', cls: 'dead' }
+        });
+        expect(slotted).toContain('<span class="row-badge-slot"><span class="row-badge dead">404</span></span>');
+        // 多个 badge 也整体包进同一个槽
+        const multi = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badgeSlot: true,
+            badge: [
+                { text: '★', cls: 'starred' },
+                { text: '×5', cls: 'count' }
+            ]
+        });
+        expect(multi).toContain(
+            '<span class="row-badge-slot"><span class="row-badge starred">★</span>' +
+            '<span class="row-badge count">×5</span></span>');
+        // 不传 badgeSlot → 无槽包裹（老结构回归锁定）
+        const plain = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badge: { text: '404', cls: 'dead' }
+        });
+        expect(plain).toContain('<span class="row-badge dead">404</span>');
+        expect(plain).not.toContain('row-badge-slot');
+        // badge 为空时槽不渲染空壳
+        const empty = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            badgeSlot: true,
+            badge: { text: '', cls: 'dead' }
+        });
+        expect(empty).not.toContain('row-badge-slot');
+        expect(empty).not.toContain('row-badge');
+    });
+
     // batch-deletion slice: meta.badge may be an ARRAY — the merged stats
     // rows render the enlarged ★ marker next to the count/time pill. Each
     // entry gets its own span, empty/absent entries are skipped.

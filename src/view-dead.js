@@ -527,6 +527,10 @@ export function initViewDead(ctx = {}) {
             // before finishing leaves marked ids with no row to unmark on).
             if (deadMarks.size)
                 html += `<button class="dead-unmark-all">${_m('deadUnmarkAll')}</button>`;
+            // 清除扫描结果：紧跟在清空所有标记之后。清空本次扫描判定后，已标注
+            // 项划归"过去标注"分类；顶部"重新检测"横幅重新显示。
+            if (lastScan)
+                html += `<button class="dead-clear-scan">${_m('deadClearScan')}</button>`;
             if (lastScan) {
                 const time = new Date(lastScan.ts).toLocaleString();
                 html += `<span class="dead-last">${_m('deadLastScanAt', time)} · ${lastScan.scannedCount}</span>`;
@@ -684,6 +688,9 @@ export function initViewDead(ctx = {}) {
                     subText: path,
                     subRight: times,
                     tooltipAppend: tip.join('\n'),
+                    // pill 外层槽：宽/panel 下固定宽度，时间右对齐到槽左边缘
+                    // （pill 背景维持文本长度）。窄视口由 CSS 取消固定宽度。
+                    badgeSlot: true,
                     badge: {
                         // statusLabel expects the direct channel's
                         // raw verdict (numeric / 'error'+name)
@@ -740,6 +747,7 @@ export function initViewDead(ctx = {}) {
                     subText: path,
                     subRight: fmtTime(markTime),
                     tooltipAppend: tip,
+                    badgeSlot: true,
                     badge: { text: _m('deadMarkedRow'), cls: badgeCls }
                 }) +
                 (selecting ? '' :
@@ -820,14 +828,23 @@ export function initViewDead(ctx = {}) {
             const marks = visibleMarkedRows();
             // A marked-only view with marks gone (clear-all / delete-all just
             // ran, or the segment has none — incl. 'unmarked' 筛选下残留全隐藏)
-            // falls back to the executable start row — the empty
+            // falls back to an empty state — the empty
             // `<ul class="dead-marked-list">` shell must not linger where
             // there is nothing left to show.
             if (marks.length)
                 html += renderMarkedRows(marks);
-            else
+            else if (!lastScan)
+                // 没有任何历史死链数据（从未扫描 / 清除扫描结果）→ 蓝色开始扫描
+                // 按钮。这是"第一次启动"的号召性空态。
                 html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                     `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
+            else {
+                // 有历史扫描但"上次标注"分类为空 → 普通空态（不显示蓝色按钮）。
+                // 残留标注存在但被已标注/未标注子筛选隐藏 → 提示换分段；真无残留
+                // → "还没有标记过书签"。
+                const label = markedRows().length ? 'deadNoneFiltered' : 'deadMarkedNone';
+                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(label)}</i></li></ul>`;
+            }
         } else {
             const allRows = allResultRows();
             const rows = resultRows();
@@ -1003,6 +1020,31 @@ export function initViewDead(ctx = {}) {
                 deadMarkTimes.clear();
                 persistMarks();
                 refreshOverlays();
+                if (views.isActive('dead'))
+                    render();
+            }
+        });
+    };
+
+    // 清除扫描结果：清空 lastScan（与 DEAD_LAST_KEY），本次扫描的死链/受限
+    // 判定全部作废。已标注项保留——它们划归"过去标注"分类（marked-only 视图
+    // 的残留列表自然承接），"重新检测已处理/已标记"的顶部横幅同步重新显示
+    // （markedBannerDismissed 重置）。
+    const clearScanResults = () => {
+        if (!lastScan)
+            return;
+        dialogs.ConfirmDialog.open({
+            dialog: _m('deadClearScan'),
+            button1: `<strong>${_m('deadClearScan')}</strong>`,
+            button2: _m('nope'),
+            fn1: () => {
+                lastScan = null;
+                store.set(DEAD_LAST_KEY, '');
+                invalidateResultRows(); // 结果行缓存随 lastScan 失效
+                markedBannerDismissed = false; // 顶部"重新检测"横幅重新显示
+                refreshOverlays();
+                // tab 徽标来自扫描判定——清空后回到 0
+                views.updateBadges();
                 if (views.isActive('dead'))
                     render();
             }
@@ -1502,6 +1544,11 @@ export function initViewDead(ctx = {}) {
         if (closest('.dead-unmark-all')) {
             e.preventDefault();
             unmarkAll();
+            return;
+        }
+        if (closest('.dead-clear-scan')) {
+            e.preventDefault();
+            clearScanResults();
             return;
         }
         if (closest('.dead-delete-all')) {

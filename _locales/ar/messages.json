@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "مسح نتائج الفحص"
+  },
   "deadFilterAll": {
     "message": "الكل"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "لا توجد إشارات مرجعية معلّمة بعد"
   },
   "deadMarkedRow": {
     "message": "مُعلَّم"

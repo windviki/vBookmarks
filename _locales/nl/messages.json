@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Scanresultaten wissen"
+  },
   "deadFilterAll": {
     "message": "Alle"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Nog geen bladwijzers gemarkeerd"
   },
   "deadMarkedRow": {
     "message": "Gemarkeerd"

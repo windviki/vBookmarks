@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Șterge rezultatele scanării"
+  },
   "deadFilterAll": {
     "message": "Toate"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Niciun semn de carte marcat încă"
   },
   "deadMarkedRow": {
     "message": "Marcat"

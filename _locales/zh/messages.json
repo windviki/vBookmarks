@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "清除扫描结果"
+  },
   "deadFilterAll": {
     "message": "全部"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "尚未标记任何书签"
   },
   "deadMarkedRow": {
     "message": "已标记"

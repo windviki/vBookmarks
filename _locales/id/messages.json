@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Hapus hasil pemindaian"
+  },
   "deadFilterAll": {
     "message": "Semua"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Belum ada bookmark yang ditandai"
   },
   "deadMarkedRow": {
     "message": "Ditandai"

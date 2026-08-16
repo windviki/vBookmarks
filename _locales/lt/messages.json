@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Valyti nuskaitymo rezultatus"
+  },
   "deadFilterAll": {
     "message": "Visi"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Dar nėra pažymėtų žymių"
   },
   "deadMarkedRow": {
     "message": "Pažymėta"

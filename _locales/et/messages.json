@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Tühjenda skannimistulemused"
+  },
   "deadFilterAll": {
     "message": "Kõik"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Ühtegi järjehoidjat pole veel märgitud"
   },
   "deadMarkedRow": {
     "message": "Märgitud"

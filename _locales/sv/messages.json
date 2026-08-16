@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Rensa skanningsresultat"
+  },
   "deadFilterAll": {
     "message": "Alla"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Inga bokmärken har markerats ännu"
   },
   "deadMarkedRow": {
     "message": "Markerad"

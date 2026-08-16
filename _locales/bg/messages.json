@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Изчисти резултатите от сканирането"
+  },
   "deadFilterAll": {
     "message": "Всички"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Все още няма маркирани отметки"
   },
   "deadMarkedRow": {
     "message": "Маркирани"

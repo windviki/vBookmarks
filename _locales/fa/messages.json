@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "پاک کردن نتایج اسکن"
+  },
   "deadFilterAll": {
     "message": "همه"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "هنوز هیچ نشانکی علامت‌گذاری نشده است"
   },
   "deadMarkedRow": {
     "message": "نشان‌شده"
