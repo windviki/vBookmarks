@@ -92,6 +92,16 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         fallbackEnabled: () => store.get('faviconEnrichAgg', '1') === '1'
     });
 
+    // Flush any debounced index write when the page goes away — a failed
+    // marker (or a success whose index write is still coalescing) must not be
+    // lost to a quick popup close (docs/favicon-补全设计.md §5.1 "pagehide 前
+    // flush"). Best-effort: pagehide is not guaranteed on every close path,
+    // and a lost marker only costs one re-fetch next open.
+    window.addEventListener('pagehide', () => {
+        if (enricher)
+            enricher.flushIndex();
+    });
+
     // The store mirror has no onChanged forwarding, so an options-page
     // faviconContrast flip never reaches an already-open side panel (the
     // popup simply reloads on each open and never needed this). Listen

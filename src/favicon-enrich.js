@@ -237,7 +237,7 @@ export const extractLinkIcons = (html, pageUrl) => {
         if (sizes.some(s => s === '16x16' || s === '32x32'))
             score = 3;
         if (String(attrs.type || '').toLowerCase() === 'image/svg+xml')
-            score = 2;
+            score = Math.max(score, 2);
         found.push({ href: abs, data: false, size: score, type: attrs.type });
     }
     // Highest score first; ties keep document order (stable sort).
@@ -342,6 +342,8 @@ export function initFaviconEnrich(ctx = {}) {
         for (const [host, e] of cache) {
             if (e.f && now() - e.t >= FAILED_TTL_MS)
                 continue;
+            if (!e.f && e.persist === false)
+                continue;   // session-only (oversized / quota-degraded): no data key to index
             hosts[host] = e.f ? { f: 1, t: e.t } : { t: e.t, s: e.d ? e.d.length : 0 };
         }
         idxData.hosts = hosts;
@@ -361,15 +363,17 @@ export function initFaviconEnrich(ctx = {}) {
         cache.set(host, { d: dataUrl, t: now() });
         maybeRefreshBudget();
         evictIfOverBudget();
-        const setObj = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl };
         idxData.hosts[host] = { t: now(), s: bytes };
-        const p = chromeImpl.storage.local.set({ ...setObj, [FAVICON_IDX_KEY]: JSON.stringify(idxData) });
+        // Write only the data key immediately; the index is coalesced by the
+        // 1s debounce — a storm of completions writes the index once, not once
+        // per host (the write-amplification the per-host layout exists to
+        // avoid). hydrate reconciliation already self-heals the transient
+        // "data key present, index not yet flushed" window.
+        const p = chromeImpl.storage.local.set({ [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl });
         if (p && typeof p.catch === 'function') {
             // chrome.storage rejects async on quota error (try/catch can't see
             // it) — trigger the emergency eviction via .catch.
             p.catch(() => emergencyEvict(host, dataUrl));
-        } else {
-            try { p; } catch (_) { emergencyEvict(host, dataUrl); }
         }
         persistIdxDebounced();
     };
@@ -463,9 +467,11 @@ export function initFaviconEnrich(ctx = {}) {
     const emergencyEvict = (host, dataUrl) => {
         // Quota error on write: cut the oldest half, retry once; if the retry
         // also fails (other data squeezed the budget), degrade to session-only.
+        // The index is written by evictToHalve's debounce (never here) — the
+        // retry only re-attempts the data key.
         evictToHalve();
         idxData.hosts[host] = { t: now(), s: dataUrl.length };
-        const retry = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl, [FAVICON_IDX_KEY]: JSON.stringify(idxData) };
+        const retry = { [`${FAVICON_DATA_PREFIX}${host}`]: dataUrl };
         const rp = chromeImpl.storage.local.set(retry);
         if (rp && typeof rp.catch === 'function') {
             // Still over budget → degrade this entry to session-only.

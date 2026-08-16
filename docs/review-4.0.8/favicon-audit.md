@@ -1,100 +1,154 @@
-# 4.0.8 favicon 机制审计报告
+# favicon 补全机制 · 4.0.8 master 全量审计报告
 
-> 审计范围：favicon 补全（enrichment）+ 反色（contrast）+ 占位回退（fallback）全链路，对照设计契约 `docs/favicon-补全设计.md`，核查「设计文档 ↔ 实现 ↔ 测试覆盖」三方一致性。
-> 方法：逐节比对设计文档（§3 发现链 / §4 渲染钩子 / §5 缓存与淘汰 / §6 开关）与 `src/favicon-enrich.js`、`src/favicon-fallback.js`、`src/store.js` 实现，并核对 `tests/favicon-enrich.test.js` / `tests/favicon-fallback.test.js` 是否覆盖每一条设计断言。
-> 基线：`npm run test:run` 69 套件 / 2254 例全绿；`npm run lint` 干净；`bash scripts/harness/run.sh --smoke-only` EXIT=0。
+> 审计日期：2026-08-16 · 对象：master 4.0.8 favicon 补全链路（`favicon-enrich.js` / `favicon-fallback.js` / `neat.js` 接线 / `options.js` / `store.js` / CSS / 测试）
+> 依据：`docs/favicon-补全设计.md`（实施定稿）逐条核对契约。
+> 范围说明：死链视图（4.0.7 独立分支）不在本次审计范围。
 
 ---
 
-## 一、总体评价
+## 0. 结论摘要
 
-favicon 补全机制（4.0.6 落地）整体质量高：发现链四级递进（L1 favicon.ico → L2 页面 `<link>` → L3 代理接力 → L4 第三方聚合）、统一四步校验、per-host 缓存 + 索引自愈、配额淘汰与熔断服务商故障转移，设计与实现的契合度在多数环节达到「文档写什么、代码做什么、测试验什么」三线一致。
+功能整体完备、设计与实现高度对齐。本次审计发现 **4 处确定缺陷并已修复**，另有 **8 处评估后保留现状**（多为设计既定行为或低影响边界，逐一记录理由）。全部改动通过 2257 例单测、ESLint 与 i18n verify 门禁。
 
-但「设计文档已声明、实现未落实」的缺口存在，且集中在**读取路径的健壮性**与**会话级资源的上限治理**上——这些恰好是长驻侧面板 / 大书签库场景最容易踩的边缘 case。本轮审计共确认 6 处确定缺口并全部修复，另评估 4 处边界场景后决定保持现状（记录决策）。
+**本次修复（4 项）**：
 
-## 二、确定缺陷（已修）
-
-| # | 域 | 发现 | 位置 |
+| # | 缺陷 | 性质 | 修复 |
 |---|---|---|---|
-| A1 | 校验 | **`application/octet-stream` 图标被误拒**：许多 CDN / 静态站把 `/favicon.ico` 以 `application/octet-stream` 提供（MIME 即「我不知道是什么字节」），旧实现把它当「显式非图片类型」直接拒绝——魔数嗅探只留给缺失 Content-Type 的情况。设计 §3.1 的意图是「显式非图片才拒、未知则嗅探」，octet-stream 正属于「未知」，应落入魔数嗅探而非拒绝 | `validateAndEncode`（favicon-enrich.js:141） |
-| A2 | 读取 | **L2 页面 HTML 无大小上限**：`res.text()` 一次读整页。favicon `<link>` 全在 `<head>`，正文（巨型 / 恶意 body）只会拖慢解析、放大内存。设计 §3.1 给图标字节设了 200KB 上限，HTML 读取却没有同等的顶 | `tryL2` / `tryL2Proxy`（原 `res.text()`，无上限） |
-| A3 | 竞态 | **hydrate-race 缓解未实现**：设计 §5.1 明确「首批占位图可能在 hydrate 完成前到达钩子——发现链启动前会重读 Map，命中则直接热替换、不发请求」。实际 `runItem` 入队后立即发请求，不等待 hydrate；首开 popup 时已缓存的 host 可能被重复 fetch（部分场景触发失败标记污染 / 冗余请求） | `runItem`（未等 `hydrateDone`） |
-| A4 | 会话治理 | **会话级图标永不淘汰**：设计 §5.3 边缘 1 把 >96KB 图标定为「只进会话 Map 不落盘」，但内存里的会话级条目没有数量上限。长驻侧面板长期运行下，超大图标（每张 ≤200KB）可无界累积（设计原文：「>64KB 的 favicon 通常是误配的大 PNG，不值得为它花配额」——同样不值得无限占内存） | `writeEntry` oversized 分支 / `emergencyEvict` 降级分支 |
-| A5 | 提取 | **`<base href>` 与注释残留未处理**：L2 `<link>` 提取 1) 会匹配到被 HTML 注释掉的历史图标声明（fetch 死链）；2) 相对 `href` 一律以 pageUrl 为基准解析，遇到 `<head>` 顶部声明 `<base href>`（罕见但真实，如资源 CDN）时解析错基 | `extractLinkIcons` |
-| A6 | 存储 | **`faviconBackupInclude` 缺失于 KNOWN_KEYS**：options Icons 组「备份开关」（导出是否随包携带 favicon 缓存键）已接线，但未列入 `store.js` KNOWN_KEYS——镜像不预填、迁移不携带，旧用户升级后该开关的 localStorage 历史值丢失 | `src/store.js` KNOWN_KEYS |
+| 1 | `persistIdxNow` 重建索引时把会话级图标（`persist:false`，>96KB 或配额降级）写成 success 行，但无对应数据键 | 索引↔数据键漂移（自愈但错误） | 索引重建跳过 `persist === false` 条目 |
+| 2 | `extractLinkIcons` 打分 `type=svg` 分支无条件 `score=2`，覆盖 `sizes=16x16/32x32` 已给的 `score=3` | 违背"取最高分" | `Math.max(score, 2)` |
+| 3 | `writeEntry` 每次成功在同一个 `set` 里写数据键+索引，末尾又 `persistIdxDebounced()`——索引被写 N 次+1 次，抵消分键布局的写放大规避 | 写放大 | 只立即写数据键，索引完全走 1s debounce |
+| 4 | 设计 §5.1 "pagehide 前 flush" 未接线，`flushIndex` 暴露后从未调用 | failed 标记跨会话丢失 | `neat.js` 加 `pagehide → flushIndex` |
 
-## 三、核实后接受（记录决策，不改）
+---
 
-| # | 项 | 理由 |
+## 1. 功能完备性核对（设计契约 vs 实现）
+
+| 设计项 | 实现 | 结论 |
 |---|---|---|
-| B1 | 缓存读命中不刷新 `t`（LRU 失效） | 设计刻意用「写入时 t」而非「读时 t」：读命中重写存储会造成每次渲染的写放大（storage.local.set 有配额与延迟成本）。失效粒度是 30d 成功 TTL，读不刷新只是让「长期每天打开 popup 的老站点」到点重取一次，成本可接受 |
-| B2 | `emergencyEvict` 对一切写错误砍半 | 设计 §5.3 边缘 2 就是「配额写拒绝 → 砍最旧一半 → 重试 → 再失败降级会话级」。对非配额错误也走同一路径是安全优先（不区分错误类型，避免误放行坏数据），且降级到会话级兜底保证「本次会话仍可显示」，代价是命中率下降，无数据风险 |
-| B3 | `mask-icon` 候选不采集 | 设计 §3.2 的 `<link>` 白名单收 `icon` / `apple-touch-icon` / `shortcut icon`，`mask-icon` 是 SVG 单色模板（通常需要主题着色），语义上与「真实彩色图标」不符。边界收益低，维持现状 |
-| B4 | 合并锚点热替换不按尺寸分类 | 同一 host 多个书签合并渲染时只展示一个图标，属外观层细节；逐行按 `size` 分尺寸替换引入复杂度，收益仅为少数多尺寸场景的清晰度，本轮不动 |
+| 发现链 L1→L2→L3→L4 逐层短路 | `discover()` 顺序调用，任一层通过校验即返回 | ✅ |
+| 校验四段（`res.ok` + ≤200KB + 魔数/类型 + Image 解码） | `validateAndEncode` 完整实现，含 octet-stream 走魔数、非图片 header 权威拒绝 | ✅ |
+| L2 `<link>` 正则提取（无 DOMParser） | `extractLinkIcons`：剥注释、`<base href>`、data: 直用、相对路径、打分排序 | ✅（打分见修复 #2） |
+| L3 代理接力（session 标记 + `deadProxyServer` 双门槛，`addProxyMarker` 重试 L1/L2 + 熔断服务商） | `proxyRelayAvailable` 直读 session/local，`tryL3` 完整 | ✅ |
+| L4 第三方聚合（内置列表 + 按服务商独立熔断 + 故障转移） | `AGG_PROVIDERS`（favicon-run→duckduckgo）+ `interpret` 一致接口 + `down[]` 持久化 | ✅ |
+| 缓存按 host 分键 + 索引（v3 形状含 `down` 表） | `vbmFavicon:<host>` + `vbmFaviconIdx` | ✅ |
+| hydrate 竞态（链启动前重读 Map） | `runItem` `await hydrateDone` 后重查 `cache` | ✅ |
+| 动态字节预算 + 砍半淘汰 + 超大图标会话级 + 配额紧急淘汰 | 全部落地 | ✅（索引重建有泄漏，见修复 #1） |
+| 备份排除 / 手动清除 | options 导出前缀剔除 + 清除按钮 + `onChanged` 清 Map | ✅ |
+| 开关（主/聚合兜底，默认开）+ 联动降级 | `faviconEnrich`/`faviconEnrichAgg` 默认 '1'，主关→子 disabled | ✅ |
+| 热替换 + 反色登记（按 dataUrl 缓存采样） | `hotSwap`/`injectImg` + `registerEnriched` | ✅ |
+| `reapplyContrast` 选择器扩展 `img.favicon-enriched` | favicon-fallback 已加 | ✅ |
 
-## 四、修复明细
+**结论**：设计 §15 决策表所列项目全部实现，无缺失。仅存的偏差集中在写路径细节（已修复）与若干既定边界（见 §3）。
 
-### A1 `validateAndEncode`：octet-stream → 魔数嗅探
+---
 
-Content-Type 分三桶处理（此前只有两桶）：
+## 2. 本次修复明细
 
+### 2.1 `persistIdxNow` 会话级条目泄漏进索引（缺陷）
+
+**现象**：`persistIdxNow` 从内存 `cache` 全量重建 `idxData.hosts` 时，未过滤 `persist === false` 的会话级条目。超大图标（>96KB）或配额降级图标本应"只进会话 Map、不落盘、不入索引"，却会被写入索引为一个 success 行——但它的 `vbmFavicon:<host>` 数据键从未写过。
+
+**影响**：索引短暂地指向一个不存在的数据键，直到下次 hydrate 对账（"索引有而数据键无 → 删"）才自愈。不会丢数据，但产生瞬时漂移，且 `s` 字节数被错误计入索引。
+
+**修复**：索引重建循环跳过 `!e.f && e.persist === false`。
+
+```js
+if (!e.f && e.persist === false)
+    continue;   // session-only (oversized / quota-degraded): no data key to index
 ```
-image/*                   → 直接采信（设计 §3.1「直接采信」）
-缺省 / octet-stream       → 显式「我不知道」→ 魔数嗅探（mimeFromMagic）
-其它非图片类型            → 权威拒绝（text/html 即使字节以 '<' 开头也不放行）
+
+**测试**：新增「persisting the index skips session-only entries」——超大图标落会话 Map 后 `flushIndex()`，断言索引不含该 host。
+
+### 2.2 `extractLinkIcons` 打分覆盖（缺陷）
+
+**现象**：`type="image/svg+xml"` 分支用 `score = 2` 无条件覆盖，导致同时声明 `sizes="16x16"` 和 `type=svg` 的链接最终得 2 而非 3，违背设计 §3.2 "取最高分"。
+
+**修复**：`score = Math.max(score, 2)`。
+
+**测试**：新增「an SVG with 16x16/32x32 sizes keeps the top score」。
+
+### 2.3 索引写放大（性能/设计对齐）
+
+**现象**：`writeEntry` 在同一个 `set` 里写数据键 + 完整索引（30–50KB），末尾又 `persistIdxDebounced()`。一场 800 host 首屏风暴 = 800 次索引写 + 1 次 debounce，恰是分键布局要规避的写放大。
+
+**修复**：立即写只含数据键；索引完全交给 1s debounce 合并。hydrate 对账（"数据键有而索引无 → 补录"）已覆盖中间的短暂不一致窗口。`emergencyEvict` 重试同步改为只重试数据键（索引仍由 `evictToHalve` 的 debounce 落盘）。
+
+**测试**：改写「writes the data key immediately and the index via the debounce」，断言数据键立即落盘、索引在 `flushIndex()` 前不存在、flush 后存在。
+
+### 2.4 pagehide 未 flush（设计缺口）
+
+**现象**：设计 §5.1 明确"pagehide 前 flush"，但 `flushIndex` 暴露后从未接线。failed 标记只走 debounce 写索引，popup 快速关闭（<1s）时丢失，导致"24h 免重试"在跨会话退化（下次打开对该 host 多发一次请求）。
+
+**修复**：`neat.js` 在 enricher 实例化后加：
+
+```js
+window.addEventListener('pagehide', () => {
+    if (enricher)
+        enricher.flushIndex();
+});
 ```
 
-`; charset=` 等参数剥离后再判定。修复后 octet-stream 的 PNG / ICO 经魔数识别入缓存，text/html 依旧拒绝。
+注：`pagehide` 在部分关闭路径不保证触发（与 `store.js`、`popup.js` 同模型），属 best-effort；丢失的 failed 标记只多花一次重试，可接受。`neat.js` 不进 vitest，由 harness smoke 兜底（设计 §1 既定）。
 
-### A2 L2 读取上限：`readHtmlCapped`（MAX_HTML_BYTES = 200KB）
+---
 
-- 有 body 流（真实 fetch）→ `getReader()` 逐块读，读满 200KB 即 `cancel()` 截断
-- 无流（测试 double）→ `text()` 后 `.slice(0, maxBytes)` 截断
-- `tryL2` / `tryL2Proxy` 均改用 `readHtmlCapped`。favicon `<link>` 全在 `<head>`，200KB 足够；正文再多也不进解析
+## 3. 边缘 case 与设计合理性（保留现状，记录理由）
 
-### A3 hydrate-race 缓解：`runItem` 重读 Map
+| # | 观察 | 评估 | 处置 |
+|---|---|---|---|
+| 1 | L1 硬编码 `https://${host}/favicon.ico`，HTTP-only 站点丢失 `.ico` 捷径 | 设计 §3.1 明确写 `https://`；L2 用原始 `pageUrl`（含 scheme）覆盖 | 保留（as-designed） |
+| 2 | `data:` href 仅支持 base64，百分号编码 SVG（`data:image/svg+xml,%3Csvg…`）被 `bad data url` 丢弃 | 罕见；SVG-in-data 多走 base64；丢弃后落下一 `<link>` | 保留（边界） |
+| 3 | `mask-icon` 被采集（设计 §3.2 列出） | Safari 钉住标签的单色遮罩，作为 score 1/2 兜底，通常排在有尺寸 icon 之后 | 保留（as-designed，低分兜底） |
+| 4 | `persistedBytes()` 未计入索引键 + 每个 `vbmFavicon:<host>` 键名开销 | 预算的"其他占用"被轻微高估，方向偏保守（绝不超真实剩余空间），误差 ~几十 KB | 保留（保守无害） |
+| 5 | 合并锚点不分尺寸：同 host 多书签 L2 用第一个书签的 pageUrl | 若首 URL 是 404、另一 URL 才是含 `<link>` 的真实页，L2 可能错过；`/favicon.ico` 与 L4 兜底 | 保留（边界） |
+| 6 | 合并锚点不加 `.favicon-enriching`：同 host 第二个渲染行的默认 SVG 不显示"补全中"变淡 | 纯视觉微差，完成时仍被正确热替换 | 保留（可后续打磨） |
+| 7 | SVG 无固有宽高时 `naturalWidth > 0` 可能拒绝 | 浏览器对无尺寸 SVG 的 naturalWidth 行为不一；多数 SVG favicon 带 width/height | 保留（边缘） |
+| 8 | `emergencyEvict` 的 `else { cache.set(…persist) }` 分支在 MV3 下不可达（`set` 恒返回 Promise） | 无害死代码；本次已顺带移除 `writeEntry` 里的对应死分支 | 保留（emergencyEvict 处无害） |
 
-`runItem` 首行 `await hydrateDone`（并行与渲染的 hydrate 汇合），随后重读 `cache.get(host)`：
+---
 
-- 命中且未过 30d TTL → 直接 `hotSwap` + `clearEnriching` + 出队，**不发请求**
-- 未命中 → 照常走发现链
+## 4. 测试覆盖度评估
 
-与设计 §5.1 逐字对齐（「发现链启动前会重读 Map」）。注意顺序：`hotSwap` 经 `queue.get(host)` 取锚点集合，必须**先 hotSwap 后 queue.delete**（首版实现顺序颠倒导致热替换静默失效，测试当场捕获）。
+**体量**：`favicon-enrich.test.js` 70 例 + `favicon-fallback.test.js` 42 例，全绿。
 
-### A4 会话级上限：`evictSessionOverCap`（SESSION_ONLY_CAP = 24）
+**已覆盖**：
 
-- `writeEntry` oversized 分支（>96KB → 会话级）与 `emergencyEvict` 降级分支（配额再失败）均调用
-- 按 `t` 升序取全部会话级条目，超出 24 个淘汰最旧
-- 会话级条目本就 `persist: false` 不占存储预算，此上限只约束内存占用（长驻侧面板的关键治理）
+- 发现链：L1 短路（L2/L4 不发）、L1 404→L2 `<link>`、L1/L2 败→L4、`fallbackEnabled=false` 跳过 L4、favicon-run 干净 500 故障转移、favicon-run 网络错跳闸+转移、favicon-run 200+HTML 校验拒绝后转移、L3 代理接力（session 标记双门槛）、代理不在线跳过 L3。
+- 校验：非 2xx / >200KB / 非图片魔数 / octet-stream 魔数嗅探 / 显式非图片 header 拒绝 / Image 解码失败 / content-type 参数剥离。
+- L2 截断：body stream 与 text fallback 两条路径都测（200KB 截断）。
+- 熔断：跳闸后跳过、6h 自愈探测、各家独立、跨会话重 hydrate 仍生效、跳闸服务商经代理补试、无代理直接切下一家。
+- 缓存：分键写读、failed 标记（24h 内抑制）、成功缓存热替换不发请求、hydrate 竞态、v1→v3 迁移、损坏重建、漂移对账、配额拒绝紧急淘汰。
+- 队列/淘汰：host 去重、并发 ≤6、`setEnabled(false)` 清队+abort、动态预算、砍半、>96KB 会话级、配额满封顶。
+- 热替换：DOM 内替换、脱离锚点跳过、dataUrl 采样缓存（二次注入不重采样）。
 
-### A5 `extractLinkIcons`：注释剥离 + `<base href>` 解析
+**桩真实性**：`makeStorageArea.getBytesInUse` 用 JSON 串长近似真实字节；`set/remove` 记录调用供断言；`makeFakeImage` 默认解码成功、解码失败用自定义 `deadImage`；`streamResponse` 走真实 `body.getReader` 分支。无"复制实现进测试"（AGENTS.md 红线）。
 
-- 先 `replace(/<!--[\s\S]*?-->/g, '')` 剥注释，注释掉的图标声明不再误匹配
-- 提取首个 `<base href>`，`new URL(href, baseUrl)` 以其为基准解析相对链接（`<base>` 缺失时回退 pageUrl）
+**已知缺口**：`neat.js` 接线（pagehide flush、`storage.onChanged` 开关）不进 vitest，由 harness smoke 门禁兜底——设计 §1 既定，非本次新引入。
 
-### A6 `store.js`：KNOWN_KEYS 补 `faviconBackupInclude`
+---
 
-与 `faviconEnrich` / `faviconEnrichAgg` 并列加入 KNOWN_KEYS，镜像预填 + v1 迁移一并覆盖。
+## 5. 性能与视觉
 
-## 五、测试增量（`tests/favicon-enrich.test.js`）
+**性能（已落地 + 本次加固）**：
 
-| 用例 | 覆盖 |
+- 渲染零阻塞：`onPlaceholder` 同步只读内存 Map；网络全在队列异步。
+- 并发 ≤6 + host 去重 + `<img loading="lazy">` 视口优先。
+- `TextDecoder` 模块级单例复用（不再每 host 每次 L2 各建一个）。
+- `registerEnriched` 按 dataUrl 缓存采样结果，重渲染/主题切换/缓存注入命中缓存不重解码。
+- 本次 #2.3：索引写解耦，消除首屏风暴的 N 次 ~30–50KB 索引写。
+
+**视觉（1ba9a52 已落地）**：
+
+- `.favicon-container img { object-fit: contain }`——非方形 ICO/apple-touch 不再被 16px 盒压扁。
+- `.favicon-enriched` 180ms 淡入——默认 SVG → 真实图标替换不再是生硬闪变。
+- `.favicon-enriching` 变淡——补全中微视觉（`opacity:.45` + 过渡）。
+
+---
+
+## 6. 门禁结果
+
+| 门禁 | 结果 |
 |---|---|
-| validateAndEncode — octet-stream PNG / ICO 经魔数接受 | A1 |
-| validateAndEncode — text/html 仍拒绝（参数剥离后判定） | A1 回归 |
-| extractLinkIcons — `<base href>` 相对链接解析到 base | A5 |
-| extractLinkIcons — 注释内 `<link>` 忽略 | A5 |
-| initFaviconEnrich — L2 HTML 流读取 200KB 截断（链接被推到 cap 之后 → 不 fetch） | A2 |
-| initFaviconEnrich — L2 无流 fallback 同样截断 | A2 |
-| initFaviconEnrich — hydrate 前占位 → 队列汇合后命中缓存热替换、0 fetch | A3 |
-| initFaviconEnrich — 会话级图标超 SESSION_ONLY_CAP → 最旧被淘汰、不落盘 | A4 |
-
-## 六、验证
-
-- `npm run test:run`：69 套件 / 2254 例全绿（favicon-enrich 67 例、favicon-fallback 42 例含新增）
-- `npm run lint`：干净
-- `bash scripts/harness/run.sh --smoke-only`：EXIT=0，无页面错误，whats-new 横幅正常
-
-## 七、范围与提交
-
-本轮只提交审计直接涉及的文件：`src/favicon-enrich.js`、`src/store.js`、`tests/favicon-enrich.test.js`、本报告。
+| `npm run test:run` | 2257 passed（69 files） |
+| `npm run lint` | 0 error |
+| `python3 scripts/i18n.py verify` | 0 error（27 条菜单项长度警告，与 favicon 无关，既有） |

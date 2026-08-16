@@ -186,6 +186,17 @@ describe('extractLinkIcons', () => {
         expect(links.some(l => l.href.includes('style.css'))).toBe(false);
     });
 
+    it('an SVG with 16x16/32x32 sizes keeps the top score (sizes not overwritten by type)', () => {
+        // A link carrying BOTH a good size and type=image/svg+xml must score 3
+        // (the highest), not drop to 2 — "取最高分", not "last branch wins".
+        const html = '<link rel="icon" type="image/svg+xml" sizes="32x32" href="/icon.svg">' +
+            '<link rel="icon" type="image/png" sizes="32x32" href="/icon.png">';
+        const links = extractLinkIcons(html, 'https://example.com/');
+        // Both score 3; ties keep document order → the SVG stays first.
+        expect(links[0].href).toBe('https://example.com/icon.svg');
+        expect(links[0].size).toBe(3);
+    });
+
     it('passes data: hrefs through as inline icon data', () => {
         const dataHref = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/0D8lJQAAAABJRU5ErkJggg==';
         const links = extractLinkIcons(`<link rel="icon" href="${dataHref}">`, 'https://example.com/');
@@ -955,7 +966,7 @@ describe('initFaviconEnrich — per-provider breaker + failover', () => {
 describe('initFaviconEnrich — cache layer', () => {
     beforeEach(() => { seq = 0; });
 
-    it('writes per-host data key + index on success', async () => {
+    it('writes the data key immediately and the index via the debounce on success', async () => {
         const storage = makeStorageArea();
         const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
         const en = initFaviconEnrich({
@@ -973,7 +984,9 @@ describe('initFaviconEnrich — cache layer', () => {
         await tick();
         await tick();
         const key = `${FAVICON_DATA_PREFIX}github.com`;
-        expect(storage.data[key]).toContain('data:image/');
+        expect(storage.data[key]).toContain('data:image/');       // data key immediate
+        expect(storage.data[FAVICON_IDX_KEY]).toBeUndefined();    // index coalesced, not yet flushed
+        en.flushIndex();
         expect(storage.data[FAVICON_IDX_KEY]).toContain('github.com');
     });
 
@@ -1140,6 +1153,33 @@ describe('initFaviconEnrich — queue + eviction', () => {
         // Session cache has it, but no data key was persisted.
         expect(en.getCache().has('big.example')).toBe(true);
         expect(storage.data[`${FAVICON_DATA_PREFIX}big.example`]).toBeUndefined();
+    });
+
+    it('persisting the index skips session-only entries (no phantom success rows)', async () => {
+        // An oversized icon lands in the session map only. A later index flush
+        // (triggered by another host's write) must NOT write it as a success
+        // entry — there is no data key behind it, so the index would point at
+        // nothing until the next hydrate reconciliation.
+        const big = new Uint8Array(100 * 1024);
+        big[0] = 0x89; big[1] = 0x50; big[2] = 0x4e; big[3] = 0x47;
+        const storage = makeStorageArea();
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([[/\/favicon\.ico$/, pngResponse(big)]]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://big.example/'));
+        await tick(); await tick();
+        expect(en.getCache().has('big.example')).toBe(true);
+        en.flushIndex();
+        const idx = JSON.parse(storage.data[FAVICON_IDX_KEY]);
+        expect(idx.hosts['big.example']).toBeUndefined();
     });
 
     it('ceiling = (quota − other features) × BUDGET_FACTOR', async () => {
