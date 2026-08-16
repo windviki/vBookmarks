@@ -3319,6 +3319,30 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-warning-fg);
 }
 
+/* 死链视图状态 pill 的固定宽度槽（宽/panel）：pill 文本长度不一（404/error/
+   timeout/受限…）时，若保持内容宽度，第二行时间（.row-sub-right，右对齐到 pill
+   左边缘）的水平位置会随 pill 宽度漂移、视觉错位。宽/panel 下把死链/受限 pill
+   统一为固定宽度槽——时间右对齐到其左边缘，列对齐稳定（对齐方式参照 dupes/stats
+   视图的右侧 meta 列）。窄视口无第二行时间（.row-sub 隐藏），pill 保持内容宽度
+   紧凑；超长文本（个别本地化"受限"词）以 ellipsis 收尾、绝不撑破对齐列。 */
+@container (min-width: 480px) {
+    #dead-list .vbm-row .row-badge.dead,
+    #dead-list .vbm-row .row-badge.blocked {
+        width: 56px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+body.panel-mode #dead-list .vbm-row .row-badge.dead,
+body.panel-mode #dead-list .vbm-row .row-badge.blocked {
+    width: 56px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* dead toolbar pieces: determinate progress (2px, token colors), the
    three-state filter segment and the batch text buttons. */
 .dead-toolbar progress.dead-progress {
@@ -3635,8 +3659,9 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* Dead-view row actions: 死链=红、受限=橙，全视图同一套语义。⚑ 未标注=类型色
-   描边（死链红 / 受限橙），已标注=同类型色实心填充——取消标记时填充消失、反馈
-   立现（受限行此前已标/未标都是琥珀，看不出是否生效）。残留行的 li 带 blocked
+   描边（死链红 / 受限橙）、hover 才现；已标注=常驻可见 + 旗帜内部实心填充
+   （.vbm-icon-flag path 填 currentColor，随类型色：死链红 / 受限橙）——取消防
+   止是背景方块，而是旗帜本体实心↔空心切换，反馈立现。残留行的 li 带 blocked
    class（渲染时按 lastScan verdict 加），其 ⚑ 也随来源着色。删除按钮恒 danger
    红（destructive 语义）。 */
 #dead-list .row-btn.dead-mark-btn {
@@ -3651,16 +3676,14 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-danger);
 }
 
+/* 已标注：常驻可见；旗面实心填充随 currentColor（dead 红 / li.blocked 橙），
+   杆仍描边。不设背景方块——marked 状态是旗帜本体实心，不是按钮底色。 */
 #dead-list .row-btn.dead-mark-btn.marked {
     visibility: visible;
-    background: var(--vbm-danger);
-    color: var(--vbm-danger-fg);
-    border-radius: 3px;
 }
 
-#dead-list li.blocked .row-btn.dead-mark-btn.marked {
-    background: var(--vbm-warning);
-    color: var(--vbm-warning-fg);
+#dead-list .row-btn.dead-mark-btn.marked .vbm-icon-flag path {
+    fill: currentColor;
 }
 
 /* §5.5c overlay: 死链=红 / 受限=橙 的 × 落在 favicon 顶边角（LTR 右上，
