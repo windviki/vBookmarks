@@ -76,6 +76,7 @@ const createSandbox = ({
         checked: false,
         innerText: '',
         innerHTML: '',
+        textContent: '',
         files: [],
         clicked: 0,
         style: {},
@@ -203,6 +204,17 @@ describe('options.js settings backup', () => {
             // clear-icon-cache button (before the group's closing </ul>).
             expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
             expect(optionsHtml.indexOf('id="storage-usage"')).toBeLessThan(optionsHtml.indexOf('</ul>', optionsHtml.indexOf('id="icons-options"')));
+            // 4.0.9 storage-usage block: summary line above the bar, every
+            // segment keyboard-focusable (tabindex="0" so the tooltip value is
+            // reachable without a pointer), and destructive actions marked
+            // with .danger (same secondary shape, danger border + text).
+            expect(optionsHtml).toContain('id="storage-usage-summary"');
+            for (const cls of ['usage-icon', 'usage-bookmarks', 'usage-other', 'usage-free'])
+                expect(optionsHtml).toContain(`class="usage-seg ${cls}" data-usage="${cls.replace('usage-', '')}" tabindex="0"`);
+            for (const id of ['favicon-cache-clear', 'stats-clear', 'import-settings', 'reset-button'])
+                expect(optionsHtml).toMatch(new RegExp(`id="${id}"[^>]*class="danger"`));
+            // the export button stays a plain secondary action.
+            expect(optionsHtml).toMatch(/id="export-settings"[^>]*type="button"(?![^>]*class)/);
         });
     });
 
@@ -482,6 +494,12 @@ describe('storage usage bar', () => {
         const barLabel = sb.elements['storage-usage-bar']._attributes['aria-label'];
         for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
             expect(barLabel).toContain(key);
+        // 4.0.9: a summary line answers "used / quota" without hovering, and
+        // every legend item also carries its share — never encode data by
+        // color alone (chart guidance).
+        expect(sb.elements['storage-usage-summary'].textContent).toBe('storageUsageSummary');
+        for (const key of ['storageUsageIcon', 'storageUsageBookmarks', 'storageUsageOther', 'storageUsageFree'])
+            expect(legend).toMatch(new RegExp(`${key} \\d+(\\.\\d+)? (B|KB|MB) \\(\\d+(\\.\\d+)?%\\)`));
     });
 
     it('shows a size tooltip while a segment is hovered and hides on leave', async () => {

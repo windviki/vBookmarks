@@ -256,7 +256,8 @@ h2{
 	border: 1px solid var(--vbm-border);
 	border-bottom: 0;
 	padding: .5em 1em;
-	line-height: 30px;
+	line-height: 28px; /* 30px left rows reading too airy — 28 keeps checkbox
+	                      rows compact and the trailing hints within reach */
 	-webkit-box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
 	box-shadow: inset 0 -20px 60px -20px var(--vbm-bg-hover);
 }
@@ -284,8 +285,20 @@ h2{
 	margin-top: 4px;
 }
 .options-list li button{
-	font-weight: 600; /* light emphasis — padding inherits the base .3em 1.2em */
+	/* Same secondary shape as every other button (base .3em 1.2em padding,
+	   border, radius) — only the leading offset differs in this context. */
 	margin-__MSG_@@bidi_start_edge__: 1em;
+}
+/* Destructive actions (clear icon cache / stats, import, reset) read as
+   danger: same secondary shape, but danger-colored border + text. Hover
+   keeps the shared surface so the row doesn't flash red. */
+.options-list li button.danger{
+	color: var(--vbm-danger);
+	border-color: var(--vbm-danger);
+}
+.options-list li button.danger:hover{
+	background: var(--vbm-bg-hover);
+	border-color: var(--vbm-danger);
 }
 /* A button opening the row (classic-experience, export, the icon group's
    Use default) sits flush with the card edge — the 1em offset is only for
@@ -607,6 +620,16 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 .storage-usage{
 	position: relative;
 }
+/* Summary line above the bar: "Used 3.2MB of 10MB" — the one number the
+   chart answers without any hovering. tabular-nums keeps it from jittering
+   when a live storage.onChanged refresh updates the figure. */
+.usage-summary{
+	font-size: 12px;
+	color: var(--vbm-muted);
+	line-height: 1.4;
+	margin: 0 0 6px;
+	font-variant-numeric: tabular-nums;
+}
 .usage-bar{
 	display: flex;
 	height: 16px;
@@ -622,6 +645,12 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	cursor: help;
 	transition: width .35s ease, opacity .15s ease, filter .15s ease;
 }
+/* Segments are keyboard-focusable (tabindex="0") so the tooltip value is
+   reachable without a pointer — show a focus ring when tabbed to. */
+.usage-seg:focus-visible{
+	outline: 2px solid var(--vbm-focus-ring);
+	outline-offset: 1px;
+}
 /* Hover: the pointer's segment stays full while its siblings dim, so the
    category reads as highlighted (a focus effect, not a click target). */
 .usage-bar:hover .usage-seg{
@@ -632,9 +661,9 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	filter: brightness(1.08);
 }
 .usage-icon{ background: var(--vbm-accent); }
-.usage-bookmarks{ background: #4a7df0; }
+.usage-bookmarks{ background: var(--vbm-success); }
 .usage-other{ background: #d98a2b; }
-.usage-free{ background: transparent; }
+.usage-free{ background: var(--vbm-border); }
 
 /* Segment tooltip: a floating tag above the hovered category with its size
    and share. [hidden] is overridden because the div is position:absolute. */
@@ -678,7 +707,7 @@ body[data-theme="ink"] .cm-s-default span.cm-attribute { color: #d19a66; }
 	display: inline-block;
 }
 .legend-swatch.usage-icon{ background: var(--vbm-accent); }
-.legend-swatch.usage-bookmarks{ background: #4a7df0; }
+.legend-swatch.usage-bookmarks{ background: var(--vbm-success); }
 .legend-swatch.usage-other{ background: #d98a2b; }
 .legend-swatch.usage-free{ background: var(--vbm-border); }
 

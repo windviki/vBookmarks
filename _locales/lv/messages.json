@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Citi"
   },
+  "storageUsageSummary": {
+    "message": "Izmantoti $1$ no $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Brīvs"
   },

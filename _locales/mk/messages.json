@@ -868,6 +868,17 @@
   "storageUsageOther": {
     "message": "Друго"
   },
+  "storageUsageSummary": {
+    "message": "Искористено $1$ од $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Слободно"
   },

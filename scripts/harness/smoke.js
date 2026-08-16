@@ -321,9 +321,13 @@ const waitForPalette = async (page, ms = 6000) => {
         userstyle: !!document.querySelector('#userstyle'),
         codeMirror: !!document.querySelector('.CodeMirror'),
         iconPreview: !!document.querySelector('#custom-icon-preview img'),
-        groups: document.querySelectorAll('.options-group').length
+        groups: document.querySelectorAll('.options-group').length,
+        // 4.0.9: the storage-usage summary renders "used / quota" from JS —
+        // empty here (clean profile) but must be populated by refreshStorageUsage.
+        usageSummary: (document.querySelector('#storage-usage-summary') || { textContent: '' }).textContent
     }));
     console.log('options stats:', JSON.stringify(optsStats));
+    if (!optsStats.usageSummary) errors.push('options storage-usage summary missing');
     for (const res of [
         { name: '1080p', width: 1920, height: 1080 },
         { name: '2k', width: 2560, height: 1440 },

@@ -866,6 +866,17 @@
   "storageUsageOther": {
     "message": "Outros"
   },
+  "storageUsageSummary": {
+    "message": "Utilizado $1$ de $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Livre"
   },

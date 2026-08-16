@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "سایر"
   },
+  "storageUsageSummary": {
+    "message": "استفاده شده $1$ از $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "آزاد"
   },

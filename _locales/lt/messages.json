@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Kita"
   },
+  "storageUsageSummary": {
+    "message": "Naudojama $1$ iš $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Laisva vieta"
   },

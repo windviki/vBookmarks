@@ -275,6 +275,12 @@ const $ = id => document.getElementById(id);
             }
             // Legend: one item per category with a color swatch matching the
             // segment (the label is i18n text, escaped for the innerHTML).
+            // Each item also carries its share so the bar never needs to be
+            // hovered to read a size (chart guidance: don't encode data by
+            // color alone).
+            const summaryEl = document.getElementById('storage-usage-summary');
+            if (summaryEl)
+                summaryEl.textContent = __m('storageUsageSummary', [fmtBytes(used), fmtBytes(quota)]);
             const legendEl = document.getElementById('storage-usage-legend');
             if (legendEl) {
                 const esc = s => String(s).replace(/[&<>"']/g,
@@ -282,7 +288,7 @@ const $ = id => document.getElementById(id);
                 legendEl.innerHTML = storageUsageCats.map(c =>
                     `<span class="legend-item" role="listitem">` +
                     `<span class="legend-swatch usage-${c.id}"></span>` +
-                    `<span class="legend-label">${esc(c.label())} ${esc(fmtBytes(sizes[c.id]))}</span>` +
+                    `<span class="legend-label">${esc(c.label())} ${esc(fmtBytes(sizes[c.id]))} (${esc(pct(sizes[c.id]) + '%')})</span>` +
                     `</span>`
                 ).join('');
             }

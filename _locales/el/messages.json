@@ -875,6 +875,17 @@
   "storageUsageOther": {
     "message": "Άλλα"
   },
+  "storageUsageSummary": {
+    "message": "Χρήση: $1$ από $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Ελεύθερος χώρος"
   },

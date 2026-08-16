@@ -1478,6 +1478,17 @@
     "message": "Other",
     "description": "Storage usage bar legend segment: bytes held by settings and any other data."
   },
+  "storageUsageSummary": {
+    "message": "Used $1$ of $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Free",
     "description": "Storage usage bar legend segment: remaining space in chrome.storage.local."

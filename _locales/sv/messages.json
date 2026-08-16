@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Övrigt"
   },
+  "storageUsageSummary": {
+    "message": "Använt $1$ av $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Ledigt"
   },

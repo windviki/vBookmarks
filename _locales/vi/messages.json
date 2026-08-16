@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Khác"
   },
+  "storageUsageSummary": {
+    "message": "Đã sử dụng $1$ trên $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Trống"
   },

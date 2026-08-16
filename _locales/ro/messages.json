@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Altele"
   },
+  "storageUsageSummary": {
+    "message": "Folosit $1$ din $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Liber"
   },

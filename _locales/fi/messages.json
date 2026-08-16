@@ -869,6 +869,17 @@
   "storageUsageOther": {
     "message": "Muu"
   },
+  "storageUsageSummary": {
+    "message": "Käytetty $1$ / $2$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
   "storageUsageFree": {
     "message": "Vapaa"
   },
