@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Išplėstiniai parametrai"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 pristato pilnavertį neveikiančių nuorodų rodinį: nuskaityti, pažymėti, filtruoti ir rūšiuoti neveikiančias bei apribotas nuorodas, su ankstesniais žymėjimais ir kiekvienos eilutės laiko žymomis."
+  },
+  "announceV407Title": {
+    "message": "Kas naujo v4.0.7 versijoje"
+  },
   "announceV408Title": {
     "message": "Kas naujo v4.0.8"
   },

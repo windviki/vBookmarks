@@ -202,7 +202,7 @@ describe('options.js settings backup', () => {
             expect(optionsHtml.indexOf('id="header-links"')).toBeLessThan(optionsHtml.indexOf('</h1>'));
             // Static hrefs: donate → donation page, version → changelog.
             expect(optionsHtml).toContain('id="header-donate" href="https://github.com/windviki/vBookmarks/blob/master/donation/donation.md"');
-            expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks#changelogs"');
+            expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks#v408"');
             // The storage-usage bar lives in the Icons group, next to the
             // clear-icon-cache button (before the group's closing </ul>).
             expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
@@ -586,9 +586,9 @@ describe('options page header meta', () => {
         expect(sb.elements['header-donate-label'].innerText).toBe('optionsDonate');
         expect(sb.elements['header-github-label'].innerText).toBe('optionsGithubLink');
         expect(sb.elements['header-homepage-label'].innerText).toBe('optionsHomepageLink');
-        // Version button points at the changelog (the donate anchor's href is
-        // static HTML, asserted in the structure test above).
-        expect(sb.elements['options-version'].href).toContain('changelogs');
+        // Version button points at the current version's changelog section
+        // (assembled from the manifest version: 4.0.1 → #v401).
+        expect(sb.elements['options-version'].href).toBe('https://github.com/windviki/vBookmarks#v401');
         expect(sb.elements['options-version-text'].innerText).toBe('v4.0.1');
         expect(sb.elements['options-version'].title).toBe('optionsVersion');
         // Subtitle: forked-from + days since 1.0 (2011-11-15), i18n key only

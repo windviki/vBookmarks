@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "進階設定"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 提供功能完整的死連結檢視：可掃描、標記、篩選及排序死連結與受限連結，並包含過往標記和每行時間戳。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 新功能"
+  },
   "announceV408Title": {
     "message": "v4.0.8 的新功能"
   },

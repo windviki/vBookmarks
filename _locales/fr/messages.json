@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Options avancées"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 propose une vue complète des liens morts : analyser, marquer, filtrer et trier les liens morts et restreints, avec les marques précédentes et les horodatages par ligne."
+  },
+  "announceV407Title": {
+    "message": "Nouveautés de v4.0.7"
+  },
   "announceV408Title": {
     "message": "Nouveautés de v4.0.8"
   },

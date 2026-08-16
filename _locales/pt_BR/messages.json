@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Opções avançadas"
   },
+  "announceV407Text": {
+    "message": "A v4.0.7 traz a visão completa de links quebrados: verifique, marque, filtre e ordene links quebrados e restritos, com marcações anteriores e carimbos de data/hora por linha."
+  },
+  "announceV407Title": {
+    "message": "Novidades na v4.0.7"
+  },
   "announceV408Title": {
     "message": "Novidades na v4.0.8"
   },

@@ -147,7 +147,7 @@ const waitForPalette = async (page, ms = 6000) => {
                 textFallback: { en: 'favicon-enhanced release' },
                 links: [
                     { labelKey: 'donationV4GuideLink', url: 'https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md' },
-                    { labelKey: 'whatsNewChangelog', url: 'https://github.com/windviki/vBookmarks#changelogs' }
+                    { labelKey: 'whatsNewChangelog', url: 'https://github.com/windviki/vBookmarks#v408' }
                 ]
             }] }
         }
@@ -160,7 +160,7 @@ const waitForPalette = async (page, ms = 6000) => {
         guide: [...document.querySelectorAll('#announce .announce-link')]
             .map(a => a.href).find(h => h.includes('guide-v4')) || '',
         changelog: [...document.querySelectorAll('#announce .announce-link')]
-            .map(a => a.href).find(h => h.includes('changelog')) || ''
+            .map(a => a.href).find(h => h.includes('#v')) || ''
     }));
     console.log('announce banner:', JSON.stringify(announce));
     if (!announce.shown || !announce.guide || !announce.changelog)
@@ -192,7 +192,7 @@ const waitForPalette = async (page, ms = 6000) => {
     }));
     console.log('whats-new 4.0.8 banner:', JSON.stringify(whatsNew));
     if (!whatsNew.shown || !whatsNew.text.includes('favicon')
-        || !whatsNew.guide.includes('guide-v4') || !whatsNew.changelog.includes('changelog'))
+        || !whatsNew.guide.includes('guide-v4') || !whatsNew.changelog.includes('#v'))
         errors.push(`whats-new banner broken: ${JSON.stringify(whatsNew)}`);
     await page.screenshot({ path: '/tmp/shots/smoke/popup-whats-new.png' });
     await page.evaluate(() => chrome.storage.local.remove('currentVersion'));

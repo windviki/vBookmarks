@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Pokročilé Možnosti"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 přináší plnohodnotné zobrazení mrtvých odkazů: skenování, označování, filtrování a řazení mrtvých i omezených odkazů, s dřívějšími značkami a časovými razítky u každého řádku."
+  },
+  "announceV407Title": {
+    "message": "Co je nového ve v4.0.7"
+  },
   "announceV408Title": {
     "message": "Co je nového ve v4.0.8"
   },

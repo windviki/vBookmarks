@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Avancerade alternativ"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 levererar den fullfjädrade vyn för döda länkar: skanna, markera, filtrera och sortera döda och begränsade länkar, med tidigare markeringar och tidsstämplar per rad."
+  },
+  "announceV407Title": {
+    "message": "Nyheter i v4.0.7"
+  },
   "announceV408Title": {
     "message": "Nyheter i v4.0.8"
   },

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "進階設定"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 推出功能完整的失效連結檢視：可掃描、標記、篩選與排序失效及受限連結，並包含先前的標記與逐列時間戳記。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 的新功能"
+  },
   "announceV408Title": {
     "message": "v4.0.8 的新功能"
   },

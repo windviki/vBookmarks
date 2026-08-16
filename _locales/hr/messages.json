@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Napredne opcije"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 donosi potpuno opremljen prikaz mrtvih veza: skenirajte, označite, filtrirajte i sortirajte mrtve i ograničene veze, s prethodnim oznakama i vremenskim oznakama po retku."
+  },
+  "announceV407Title": {
+    "message": "Što je novo u v4.0.7"
+  },
   "announceV408Title": {
     "message": "Novosti u v4.0.8"
   },

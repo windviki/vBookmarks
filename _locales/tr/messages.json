@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Gelişmiş Seçenekler"
   },
+  "announceV407Text": {
+    "message": "v4.0.7, tam özellikli ölü bağlantı görünümünü sunar: ölü ve kısıtlı bağlantıları tarayın, işaretleyin, filtreleyin ve sıralayın; geçmiş işaretler ve satır başına zaman damgalarıyla."
+  },
+  "announceV407Title": {
+    "message": "v4.0.7'deki Yenilikler"
+  },
   "announceV408Title": {
     "message": "v4.0.8'deki yenilikler"
   },

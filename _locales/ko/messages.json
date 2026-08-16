@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "고급 옵션"
   },
+  "announceV407Text": {
+    "message": "v4.0.7은 완전한 기능을 갖춘 끊긴 링크 보기를 제공합니다: 끊긴 링크와 제한된 링크를 스캔, 표시, 필터링, 정렬할 수 있으며, 과거 표시와 행별 타임스탬프도 포함됩니다."
+  },
+  "announceV407Title": {
+    "message": "v4.0.7의 새로운 기능"
+  },
   "announceV408Title": {
     "message": "v4.0.8의 새로운 기능"
   },

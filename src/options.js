@@ -709,7 +709,7 @@ const $ = id => document.getElementById(id);
         document.getElementById('header-github-label').innerText = __m('optionsGithubLink');
         document.getElementById('header-homepage-label').innerText = __m('optionsHomepageLink');
         const versionEl = document.getElementById('options-version');
-        versionEl.href = 'https://github.com/windviki/vBookmarks#changelogs';
+        versionEl.href = 'https://github.com/windviki/vBookmarks#v' + chrome.runtime.getManifest().version.replace(/\./g, '');
         versionEl.title = __m('optionsVersion');
         document.getElementById('options-version-text').innerText = 'v' + chrome.runtime.getManifest().version;
         // Subtitle under the title row: since the 1.0 fork from Neat

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Paplašinātās opcijas"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 sniedz pilnvērtīgu nederīgu saišu skatu: skenējiet, atzīmējiet, filtrējiet un kārtojiet nederīgas un ierobežotas saites, ar iepriekšējām atzīmēm un katras rindas laika zīmogiem."
+  },
+  "announceV407Title": {
+    "message": "Jaunumi v4.0.7"
+  },
   "announceV408Title": {
     "message": "Jaunumi v4.0.8"
   },

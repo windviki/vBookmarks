@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Opciones avanzadas"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 incluye la vista completa de enlaces rotos: escanea, marca, filtra y ordena enlaces rotos y restringidos, con marcas anteriores y marcas de tiempo por fila."
+  },
+  "announceV407Title": {
+    "message": "Novedades en v4.0.7"
+  },
   "announceV408Title": {
     "message": "Novedades de v4.0.8"
   },

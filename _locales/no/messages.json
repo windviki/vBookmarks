@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Avanserte Alternativer"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 leverer den fullverdige visningen for døde lenker: skann, merk, filtrer og sorter døde og begrensede lenker, med tidligere markeringer og tidsstempler per rad."
+  },
+  "announceV407Title": {
+    "message": "Hva er nytt i v4.0.7"
+  },
   "announceV408Title": {
     "message": "Hva er nytt i v4.0.8"
   },

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "拡張オプション"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 では、多機能なデッドリンクビューを提供します。デッドリンクやアクセス制限のあるリンクをスキャン、マーク、フィルタリング、並べ替えでき、過去のマークと行ごとのタイムスタンプも表示されます。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 の新機能"
+  },
   "announceV408Title": {
     "message": "v4.0.8の新機能"
   },

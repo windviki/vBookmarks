@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Opcje zaawansowane"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 oferuje w pełni funkcjonalny widok martwych linków: skanuj, oznaczaj, filtruj i sortuj martwe oraz ograniczone linki, z wcześniejszymi oznaczeniami i znacznikami czasu dla każdego wiersza."
+  },
+  "announceV407Title": {
+    "message": "Co nowego w v4.0.7"
+  },
   "announceV408Title": {
     "message": "Co nowego w v4.0.8"
   },

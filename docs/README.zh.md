@@ -200,7 +200,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 # 更新日志
 
-### v4.0.8 · 2026-08-15
+### v4.0.8
+
+*2026-08-15*
 
 #### 新增
 
@@ -229,7 +231,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - bookmarklet 行为在真实浏览器 harness 中验证（`verify-bmlet.js`）。
 - 测试套件 69 个文件 / 2254 个用例全绿。
 
-### v4.0.7 · 2026-08-15
+### v4.0.7
+
+*2026-08-15*
 
 #### 修复
 
@@ -245,11 +249,15 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **结果排序**：排序下拉（检测时间——每行扫描落盘的时间戳，默认；路径顺序；标记时间——随标记持久化的标记时间戳）同时作用于结果行与残留列表。排序仅在扫描完成后生效——扫描中（live）保持渐进树序，行不跳动——老备份无时间戳时回退到稳定的存储键序。
 - **已标注 / 受限行的琥珀色区分**（4.1.0 task-1 A6/D1）：已标记的行、或扫描判定为受限（blocked）的行，其标记按钮改为警告琥珀色（与仅受限 pill 一致）而非中性 accent；树视图上死链标记的 × 覆盖层也改为琥珀色，"受限"语义与仅死链行区分开。
 
-### v4.0.6 · 2026-08-15
+### v4.0.6
+
+*2026-08-15*
 
 回滚到 4.0.4——4.0.5 发布引入两处回归（缩放后的右键菜单、死链标记列表与工具栏筛选不同步），其改动被召回并重新整理进 4.0.7。
 
-### v4.0.5 · 2026-08-15
+### v4.0.5
+
+*2026-08-15*
 
 > **⚠ 已召回 / 弃用**——已被 4.0.6（回滚到 4.0.4）取代；已在 4.0.7 中重新修复。
 
@@ -286,7 +294,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 弹窗 resize/zoom 层从 `neat.js` 拆出至 `src/resize.js`（纯决策内核在 `src/resize-core.js`），并修掉拖拽上限在两次拖拽间残留的泄漏。
 - 测试达 **67 文件 / 2078 例**全绿——新增 list-focus 套件、重写 favicon 反色策略测试、为删除链/菜单置灰/转义/i18n 文案改动新增契约。
 
-### v4.0.4 · 2026-08-13
+### v4.0.4
+
+*2026-08-13*
 
 #### 新增
 
@@ -311,7 +321,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - CI 与发版前置新增真实浏览器加载冒烟门禁（零控制台错误）——加载即崩溃的错误在打 tag 前被拦截。
 - 死代码清理（无效的 `copy-all-titles-and-urls` handler、无效果的 `hide-editables` 开关）。
 
-### v4.0.3 · 2026-08-12
+### v4.0.3
+
+*2026-08-12*
 
 #### 修复
 
@@ -327,7 +339,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **iGuge 冲突已核实并文档化**（[#53](https://github.com/windviki/vBookmarks/issues/53)、[#57](https://github.com/windviki/vBookmarks/issues/57)）：iGuge 代理/加速类扩展会主动禁用任何声明 `proxy` 权限、且不在其白名单中的已安装扩展——当两者同时安装时 vBookmarks 可能每次重启 Chrome 都被禁用。已对照商店在售 CRX 核实根因；死链章节现说明成因与受影响用户的处理办法，并已同步与 iGuge 协调白名单。vBookmarks 保留 `proxy` 权限（仅死链扫描期间临时、只路由带标记探测 URL 地使用）。
 - 开发者工具：vitest 1 → 3.2.7，清除 6 条 Dependabot 告警（仅开发期依赖，用户零影响）；`AGENTS.md` 补充改动 key 的 i18n 流程与发版流程。
 
-### v4.0.2 · 2026-08-11
+### v4.0.2
+
+*2026-08-11*
 
 #### 新增
 
@@ -354,7 +368,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 版本定为 **4.0.2**（`manifest.json`/`package.json`）；设计文档已转向 4.1.0 规划。
 
-### v4.0.1 · 2026-08-08
+### v4.0.1
+
+*2026-08-08*
 
 #### 新增
 
@@ -411,7 +427,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - **风险横幅重弹门**改为 major.minor 粒度（原先只认大版本）：patch 晋升（4.0.0 → 4.0.1）静默，4.0 → 4.1 或 4 → 5 会重弹一次。
 - **死链代理整合**：退役旧的中转 URL 模板（`deadProxyTemplate`）——老版本存下的值在升级时自动从存储中清理。选项页"死链扫描"分组现在可以就地管理你的代理服务器（添加 / 测试 / 保存 / 清除；保存前依次过 解析 → 权限 → 可控性 → 可达性探测，不可达拒收）；视图内的"添加代理"提示条可用 × 关闭，并在"死链扫描"分组的复选框恢复（`hideDeadProxyStrip`）。
 
-### v4.0 · 2026-08-02
+### v4.0
+
+*2026-08-02*
 
 #### 新增
 
@@ -453,7 +471,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - `proxy` 权限为安装时声明（Chrome 不允许列为可选权限），仅在配置了代理且扫描运行中（或添加流程的可达性探测时）使用——不设置代理服务器或不使用死链功能时完全不触发。
 
 
-### v3.7 · 2026-05-10
+### v3.7
+
+*2026-05-10*
 
 #### 新增
 
@@ -464,20 +484,26 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 修复：[#42](https://github.com/windviki/vBookmarks/issues/42)：Chrome 148 弃用 `<command>` 元素导致扩展失效，改用 `<div>` 完全兼容。
 
-### v3.6 · 2024-01-08
+### v3.6
+
+*2024-01-08*
 
 #### 修复
 
 - 修复：[#31](https://github.com/windviki/vBookmarks/issues/31)：自定义图标失效。
 
-### v3.5 · 2023-09-04
+### v3.5
+
+*2023-09-04*
 
 #### 修复
 
 - 修复：[#29](https://github.com/windviki/vBookmarks/issues/29)：清除搜索文本后光标焦点不保留在搜索框。
 - 修复 manifest 快捷键。默认快捷键现为 Ctrl+Shift+V（Ctrl+Shift+B 在新版 Chrome 不可用）。
 
-### v3.4 · 2023-02-14
+### v3.4
+
+*2023-02-14*
 
 #### 新增
 
@@ -491,7 +517,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 修复：[#26](https://github.com/windviki/vBookmarks/issues/26)：后台打开文件夹。
 
-### v3.3 · 2023-02-02
+### v3.3
+
+*2023-02-02*
 
 #### 新增
 
@@ -510,7 +538,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 升级至 Manifest V3，minimum_chrome_version = 88。
 
-### v3.2 · 2020-09-12
+### v3.2
+
+*2020-09-12*
 
 #### 新增
 
@@ -528,7 +558,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 升级至 ECMAScript 6，minimum_chrome_version = 61。
 
-### v3.1 · 2020-07-03
+### v3.1
+
+*2020-07-03*
 
 #### 新增
 
@@ -542,19 +574,25 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 修复按下方向键时的 undefined 错误。
 - 修复 bookmarklet 支持，感谢 @ZG-nico。
 
-### v3.0 · 2019-08-22
+### v3.0
+
+*2019-08-22*
 
 #### 修复
 
 - 修复：新图标。
 
-### v2.9 · 2019-08-22
+### v2.9
+
+*2019-08-22*
 
 #### 修复
 
 - 修复：Chrome 77+ 双滚动条。
 
-### v2.8 · 2019-05-06
+### v2.8
+
+*2019-05-06*
 
 #### 新增
 
@@ -570,38 +608,50 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 修复：搜索偶发失败。https://github.com/windviki/vBookmarks/issues/7
 - 修复：右键菜单位置。
 
-### v2.6 · 2013-10-21
+### v2.6
+
+*2013-10-21*
 
 #### 修复
 
 - 修复：移除双滚动条。
 
-### v2.5 · 2013-08-30
+### v2.5
+
+*2013-08-30*
 
 #### 修复
 
 - 修复：移除 HTML 通知（已不可用）。https://bugs.webkit.org/show_bug.cgi?id=98388
 
-### v2.4 · 2013-08-29
+### v2.4
+
+*2013-08-29*
 
 #### 修复
 
 - 修复：js 中 "Unexpected end of input"。
 
-### v2.3 · 2013-04-09
+### v2.3
+
+*2013-04-09*
 
 #### 修复
 
 - 修复：上下滚动时右键菜单未关闭（上一版回归）。
 - 修复：滚动条位置记忆（上一版回归）。
 
-### v2.2 · 2013-04-02
+### v2.2
+
+*2013-04-02*
 
 #### 修复
 
 - 修复：Chrome 26+ 滚动条失效（测试不足）。
 
-### v2.1 · 2012-12-12
+### v2.1
+
+*2012-12-12*
 
 #### 新增
 
@@ -615,7 +665,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 修复：正确记忆并恢复滚动条位置。
 
-### v2.0 · 2012-11-01
+### v2.0
+
+*2012-11-01*
 
 #### 新增
 
@@ -632,7 +684,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 「作为分隔线显示的书签的真实 URL」：默认为 "http://separatethis.com/"。即"在线分隔线"。
 - 「URL 包含此字符串的书签将显示为分隔线」：可设置多个 URL 以 ";" 连接，所有 URL 包含其中任一字符串的书签都会在 vBookmarks 中显示为分隔线。例如设为 google.com，所有 Google 服务都会显示为分隔线。
 
-### v1.9 · 2012-08-19
+### v1.9
+
+*2012-08-19*
 
 #### 修复
 
@@ -640,7 +694,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 更新：图标颜色。
 - 更新：分隔线样式。
 
-### v1.8 · 2012-08-01
+### v1.8
+
+*2012-08-01*
 
 #### 新增
 
@@ -656,14 +712,18 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 移除：部分语言，仅保留 4 个 locale：en, ja, zh, zh_TW。无力维护更多翻译。
 
-### v1.7 · 2012-06-26
+### v1.7
+
+*2012-06-26*
 
 #### 修复
 
 - 修复：Chrome 19 双滚动条。为之前未经测试的发布抱歉，我没有多个版本的 Chrome :)
 - 修复：展开根文件夹时宽度重置。https://github.com/windviki/vBookmarks/issues/2
 
-### v1.6 · 2012-06-24
+### v1.6
+
+*2012-06-24*
 
 #### 修复
 
@@ -671,26 +731,34 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 修复：恢复弹窗宽度。[内容安全策略]
 - 修复：对话框无法提交表单。[内容安全策略]
 
-### v1.5 · 2012-06-21
+### v1.5
+
+*2012-06-21*
 
 #### 修复
 
 - 修复：Chrome 20+ manifest 问题。
 - 修复：独立脚本文件替代内联脚本，见内容安全策略 http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
-### v1.4 · 2012-06-20
+### v1.4
+
+*2012-06-20*
 
 #### 修复
 
 - 修复：Chrome 18、19 滚动条问题。https://github.com/windviki/vBookmarks/issues/2
 
-### v1.3 · 2012-05-25
+### v1.3
+
+*2012-05-25*
 
 #### 修复
 
 - 修复：滚动条故障。https://github.com/windviki/vBookmarks/issues/1
 
-### v1.2 · 2011-11-30
+### v1.2
+
+*2011-11-30*
 
 #### 新增
 
@@ -702,7 +770,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 - 修复：向关闭的文件夹添加新书签或文件夹后，原有子项无法正确显示。
 - 修复：补齐 cs（捷克语）缺失的翻译。
 
-### v1.1 · 2011-11-16
+### v1.1
+
+*2011-11-16*
 
 #### 新增
 
@@ -713,7 +783,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<版本>.zip
 
 - 修复：多语言支持中的部分翻译。
 
-### v1.0 · 2011-11-15
+### v1.0
+
+*2011-11-15*
 
 #### 新增
 

@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "高级选项"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 带来了功能完整的失效链接视图：扫描、标记、筛选和排序失效及受限链接，并支持历史标记和每行时间戳。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 新特性"
+  },
   "announceV408Title": {
     "message": "v4.0.8 新功能"
   },

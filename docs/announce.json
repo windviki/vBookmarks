@@ -15,7 +15,24 @@
     },
     "link": [
       { "labelKey": "donationV4GuideLink", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" },
-      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#changelogs" }
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#v408" }
+    ]
+  }, {
+    "id": "v407-whats-new",
+    "minVersion": "4.0.7",
+    "maxVersion": "4.0.8",
+    "channel": "all",
+    "once": true,
+    "display": "banner",
+    "kind": "tip",
+    "titleKey": "announceV407Title",
+    "textKey": "announceV407Text",
+    "textFallback": {
+      "en": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
+    },
+    "link": [
+      { "labelKey": "donationV4GuideLink", "url": "https://github.com/windviki/vBookmarks/blob/master/docs/guide-v4.md" },
+      { "labelKey": "whatsNewChangelog", "url": "https://github.com/windviki/vBookmarks#v407" }
     ]
   }]
 }

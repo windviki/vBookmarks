@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Haladó Beállítások"
   },
+  "announceV407Text": {
+    "message": "A v4.0.7 teljes értékű holt link-nézetet biztosít: holt és korlátozott linkek szkennelése, megjelölése, szűrése és rendezése, korábbi jelölésekkel és soronkénti időbélyegekkel."
+  },
+  "announceV407Title": {
+    "message": "Újdonságok a v4.0.7-ben"
+  },
   "announceV408Title": {
     "message": "Újdonságok a v4.0.8-ban"
   },

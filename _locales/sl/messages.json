@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Napredne možnosti"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 prinaša celovit pogled na mrtve povezave: skeniranje, označevanje, filtriranje in razvrščanje mrtvih ter omejenih povezav, s prejšnjimi oznakami in časovnimi žigi na vrstico."
+  },
+  "announceV407Title": {
+    "message": "Novosti v različici v4.0.7"
+  },
   "announceV408Title": {
     "message": "Kaj je novega v v4.0.8"
   },

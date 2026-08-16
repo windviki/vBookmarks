@@ -200,7 +200,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 # Changelogs
 
-### v4.0.8 · 2026-08-15
+### v4.0.8
+
+*2026-08-15*
 
 #### New
 
@@ -229,7 +231,9 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
 - Test suite at **69 files / 2254 cases**, all green.
 
-### v4.0.7 · 2026-08-15
+### v4.0.7
+
+*2026-08-15*
 
 #### Fixed
 
@@ -245,11 +249,15 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **Result sorting**: a sort dropdown (Detection time — the per-row scan timestamp, default; Folder path; Mark time — a per-mark timestamp persisted alongside the marks) reorders the result rows and the residue list together. Sorting applies once a scan has finished only — a live scan keeps progressive tree order so rows never jump mid-scan — and old backups without timestamps fall back to the stable stored key order.
 - **Amber reading for marked / blocked rows** (4.1.0 task-1 A6/D1): a row's mark toggle that is already marked — or whose verdict is blocked (受限) — renders in the warning amber (same as the blocked pill) instead of the neutral accent, and the tree-view dead × overlay on marked bookmarks is amber too, so "restricted" reads apart from a dead-only row.
 
-### v4.0.6 · 2026-08-15
+### v4.0.6
+
+*2026-08-15*
 
 Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, and the dead-marked list out of sync with the toolbar filter); its changes were recalled and reworked into 4.0.7.
 
-### v4.0.5 · 2026-08-15
+### v4.0.5
+
+*2026-08-15*
 
 > **⚠ Recalled / deprecated** — superseded by 4.0.6 (rollback to 4.0.4); properly re-fixed in 4.0.7.
 
@@ -286,7 +294,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - The popup resize/zoom layer was extracted from `neat.js` into `src/resize.js` (pure decision kernels stay in `src/resize-core.js`), closing a stale drag-ceiling leak between drags.
 - Test suite at **67 files / 2078 cases**, all green — new `list-focus` suite, rewritten favicon-contrast strategy tests, and new contracts for the deletion chains, menu greying, escaping and the i18n copy changes.
 
-### v4.0.4 · 2026-08-13
+### v4.0.4
+
+*2026-08-13*
 
 #### New
 
@@ -311,7 +321,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - Added a real-browser smoke gate (zero console errors) to CI and the release pre-check, so an extension that crashes on load is caught before tagging.
 - Dead-code cleanup (the unused `copy-all-titles-and-urls` handler, the ineffective `hide-editables` toggle).
 
-### v4.0.3 · 2026-08-12
+### v4.0.3
+
+*2026-08-12*
 
 #### Fixed
 
@@ -327,7 +339,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - **iGuge conflict documented** ([#53](https://github.com/windviki/vBookmarks/issues/53), [#57](https://github.com/windviki/vBookmarks/issues/57)): the iGuge proxy/acceleration extension actively disables any installed extension that declares the `proxy` permission and is not on its whitelist — so vBookmarks could be disabled on every Chrome restart when both are installed. Verified against the store-shipped CRX; the Dead-link section now explains the cause and what affected users can do, and we're coordinating whitelisting with iGuge. vBookmarks keeps its `proxy` permission (it is only ever used, temporarily and marker-only, during a dead-link scan).
 - Developer tooling: vitest bumped 1 → 3.2.7, clearing 6 Dependabot advisories (dev-only — no user impact); the modified-key i18n flow and the release process are documented in `AGENTS.md`.
 
-### v4.0.2 · 2026-08-11
+### v4.0.2
+
+*2026-08-11*
 
 #### New
 
@@ -354,7 +368,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - Version bumped to **4.0.2** in `manifest.json` / `package.json`; the design docs move on to the 4.1.0 slate.
 
-### v4.0.1 · 2026-08-08
+### v4.0.1
+
+*2026-08-08*
 
 #### New
 
@@ -411,7 +427,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - **Risk-banner re-arm gate** is now major.minor-grained (it used to be major-only): a patch bump (4.0.0 → 4.0.1) stays silent, while 4.0 → 4.1 or 4 → 5 re-arms the banner once.
 - **Dead-link proxy consolidation**: the legacy relay URL template (`deadProxyTemplate`) is retired — values stored by older versions are cleaned out of storage automatically on upgrade. The options page's *Dead scan* group now manages your proxy server in place (add / test / save / clear; saving runs parse → permission → control → reachability probe and rejects unreachable servers), and the view's add-a-proxy hint strip can be dismissed with × and brought back from the *Dead scan* group's checkbox (`hideDeadProxyStrip`).
 
-### v4.0 · 2026-08-02
+### v4.0
+
+*2026-08-02*
 
 #### New
 
@@ -453,7 +471,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - The `proxy` permission is declared at install time (Chrome refuses it as an optional permission) and is exercised only while a configured proxy serves a running scan or the add-flow reachability probe — never when no proxy server is set or dead-link scanning is unused.
 
 
-### v3.7 · 2026-05-10
+### v3.7
+
+*2026-05-10*
 
 #### New
 
@@ -464,20 +484,26 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Fixed**: [#42](https://github.com/windviki/vBookmarks/issues/42): Extension broken in Chrome 148 due to deprecated `<command>` HTML element. Replaced with `<div>` elements for full compatibility.
 
-### v3.6 · 2024-01-08
+### v3.6
+
+*2024-01-08*
 
 #### Fixed
 
 - **Fixed**: [#31](https://github.com/windviki/vBookmarks/issues/31): Custom icon not working.
 
-### v3.5 · 2023-09-04
+### v3.5
+
+*2023-09-04*
 
 #### Fixed
 
 - **Fixed**: [#29](https://github.com/windviki/vBookmarks/issues/29): cursor focus doesn't stay in search bar after clearing the search text.
 - Fix shortcut in manifest. Now the default shortcut is Ctrl+Shift+V (Ctrl+Shift+B cannot work in new Chrome.)
 
-### v3.4 · 2023-02-14
+### v3.4
+
+*2023-02-14*
 
 #### New
 
@@ -491,7 +517,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Fixed**: [#26](https://github.com/windviki/vBookmarks/issues/26): open directory in the background.
 
-### v3.3 · 2023-02-02
+### v3.3
+
+*2023-02-02*
 
 #### New
 
@@ -510,7 +538,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - Update code to manifest V3. minimum_chrome_version = 88.
 
-### v3.2 · 2020-09-12
+### v3.2
+
+*2020-09-12*
 
 #### New
 
@@ -528,7 +558,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - Update code to ecmascript version 6. minimum_chrome_version = 61.
 
-### v3.1 · 2020-07-03
+### v3.1
+
+*2020-07-03*
 
 #### New
 
@@ -542,19 +574,25 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - Fix an undefined error when pressing key DOWN.
 - Fix the support of bookmarklet. Thanks for @ZG-nico.
 
-### v3.0 · 2019-08-22
+### v3.0
+
+*2019-08-22*
 
 #### Fixed
 
 - **Fixed**: New icons.
 
-### v2.9 · 2019-08-22
+### v2.9
+
+*2019-08-22*
 
 #### Fixed
 
 - **Fixed**: Double scrollbar since Chrome version 77+.
 
-### v2.8 · 2019-05-06
+### v2.8
+
+*2019-05-06*
 
 #### New
 
@@ -570,38 +608,50 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - **Fixed**: Sometimes search will fail. https://github.com/windviki/vBookmarks/issues/7
 - **Fixed**: Context menu position.
 
-### v2.6 · 2013-10-21
+### v2.6
+
+*2013-10-21*
 
 #### Fixed
 
 - **Fixed**: Remove double scroll bars.
 
-### v2.5 · 2013-08-30
+### v2.5
+
+*2013-08-30*
 
 #### Fixed
 
 - **Fixed**: Remove HTML notifications because it is not available now. https://bugs.webkit.org/show_bug.cgi?id=98388.
 
-### v2.4 · 2013-08-29
+### v2.4
+
+*2013-08-29*
 
 #### Fixed
 
 - **Fixed**: "Unexpected end of input" in js.
 
-### v2.3 · 2013-04-09
+### v2.3
+
+*2013-04-09*
 
 #### Fixed
 
 - **Fixed**: Context menu will be dismissed when scrolling up/down (broken again in previous version).
 - **Fixed**: Remember position of scroll bar (broken again in previous version).
 
-### v2.2 · 2013-04-02
+### v2.2
+
+*2013-04-02*
 
 #### Fixed
 
 - **Fixed**: Scroll bar does not work above chrome 26+ (not well tested).
 
-### v2.1 · 2012-12-12
+### v2.1
+
+*2012-12-12*
 
 #### New
 
@@ -615,7 +665,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Fixed**: Now it can remember and restore position of scroll bar correctly.
 
-### v2.0 · 2012-11-01
+### v2.0
+
+*2012-11-01*
 
 #### New
 
@@ -632,7 +684,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - "The real URL of bookmark which is shown as a separator": By default it is "http://separatethis.com/". It's a "online separator". The separators you added in vbookmarks will be shown as a normal bookmark in Chrome bookmark manager or bookmark menu, with this URL value.
 - "If URL of a bookmark contains this string, it will be shown as a separator": If you set this value (you can set several URLs joined by ";"), all bookmarks whose URL contains any of them will be shown as real separators in vbookmarks. e.g. if you set it to google.com, all google services in your bookmarks will be shown as separators.
 
-### v1.9 · 2012-08-19
+### v1.9
+
+*2012-08-19*
 
 #### Polish
 
@@ -643,7 +697,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Fixed**: Neatbookmarks bug: Scrollbar will be reset to the top when opening and scrolling the popup down.
 
-### v1.8 · 2012-08-01
+### v1.8
+
+*2012-08-01*
 
 #### New
 
@@ -659,14 +715,18 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Removed**: Several languages. Only 4 locales are left: en, ja, zh, zh_TW. Cannot maintain many translations any more.
 
-### v1.7 · 2012-06-26
+### v1.7
+
+*2012-06-26*
 
 #### Fixed
 
 - **Fixed**: Double scrollbars in Chrome 19. Sorry for the previous untest release. I do not have many different Chromes in different versions :)
 - **Fixed**: Width resetting occured when expanding root folder. https://github.com/windviki/vBookmarks/issues/2
 
-### v1.6 · 2012-06-24
+### v1.6
+
+*2012-06-24*
 
 #### Fixed
 
@@ -674,26 +734,34 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - **Fixed**: Restore width of the popup window. [Content Security Policy]
 - **Fixed**: Dialogs cannot submit their forms. [Content Security Policy]
 
-### v1.5 · 2012-06-21
+### v1.5
+
+*2012-06-21*
 
 #### Fixed
 
 - **Fixed**: manifest problem in Chrome 20+.
 - **Fixed**: separated script file instead of inline scripts. see Content Security Policy http://code.google.com/chrome/extensions/contentSecurityPolicy.html
 
-### v1.4 · 2012-06-20
+### v1.4
+
+*2012-06-20*
 
 #### Fixed
 
 - **Fixed**: Scrollbar problem in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/2
 
-### v1.3 · 2012-05-25
+### v1.3
+
+*2012-05-25*
 
 #### Fixed
 
 - **Fixed**: Scrollbar glitch in Chrome 18,19. https://github.com/windviki/vBookmarks/issues/1
 
-### v1.2 · 2011-11-30
+### v1.2
+
+*2011-11-30*
 
 #### New
 
@@ -705,7 +773,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 - **Fixed**: after adding new bookmark or folder to a closed folder, its original children cannot be shown correctly.
 - **Fixed**: make up some missing translations for cs(Czech).
 
-### v1.1 · 2011-11-16
+### v1.1
+
+*2011-11-16*
 
 #### New
 
@@ -716,7 +786,9 @@ Rollback to 4.0.4 — 4.0.5 shipped with two regressions (zoomed context menus, 
 
 - **Fixed**: some translations in multi-language support.
 
-### v1.0 · 2011-11-15
+### v1.0
+
+*2011-11-15*
 
 #### New
 

@@ -35,6 +35,12 @@
   "announceV408Text": {
     "message": "v4.0.8 is the favicon-enhanced release: real site icons are fetched automatically for bookmarks Chrome hasn't cached yet."
   },
+  "announceV407Text": {
+    "message": "v4.0.7 delivers the fully-featured dead-link view: scan, mark, filter and sort dead and restricted links, with past marks and per-row timestamps."
+  },
+  "announceV407Title": {
+    "message": "What's new in v4.0.7"
+  },
   "announceV408Title": {
     "message": "What's new in v4.0.8"
   },

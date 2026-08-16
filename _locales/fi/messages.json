@@ -29,6 +29,12 @@
   "advancedOptions": {
     "message": "Lisäasetukset"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 tuo täysimittaisen toimimattomien linkkien näkymän: skannaa, merkitse, suodata ja lajittele toimimattomat ja rajoitetut linkit, sekä aiemmat merkinnät ja rivikohtaiset aikaleimat."
+  },
+  "announceV407Title": {
+    "message": "Uutta versiossa 4.0.7"
+  },
   "announceV408Title": {
     "message": "Mitä uutta v4.0.8:ssa"
   },

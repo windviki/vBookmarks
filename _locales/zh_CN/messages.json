@@ -377,6 +377,12 @@
   "advancedOptions": {
     "message": "高级选项"
   },
+  "announceV407Text": {
+    "message": "v4.0.7 全功能的死链视图：扫描、标注、筛选与排序死链/受限链接，保留过往标注与每次检测时间。"
+  },
+  "announceV407Title": {
+    "message": "v4.0.7 更新内容"
+  },
   "announceV408Title": {
     "message": "v4.0.8 更新内容"
   },
