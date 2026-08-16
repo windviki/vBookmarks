@@ -16,7 +16,9 @@ import {
     AGG_PROVIDERS,
     providerUrl,
     interpretFaviconRun,
-    interpretDuckDuckGo
+    interpretDuckDuckGo,
+    MAX_HTML_BYTES,
+    SESSION_ONLY_CAP
 } from '../src/favicon-enrich.js';
 import { makeStorageArea } from './helpers/chrome.js';
 
@@ -75,6 +77,23 @@ const pngResponse = bytes => ({
 });
 
 const notFound = () => ({ ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0), headers: { get: () => null } });
+
+// A response whose body is a readable chunk stream (exercises the streaming
+// HTML-read cap — readHtmlCapped reads via res.body.getReader when present).
+const streamResponse = (chunks, contentType = 'text/html') => {
+    let i = 0;
+    return {
+        ok: true,
+        status: 200,
+        headers: { get: () => contentType },
+        body: {
+            getReader: () => ({
+                read: async () => (i < chunks.length ? { done: false, value: chunks[i++] } : { done: true }),
+                cancel: async () => {}
+            })
+        }
+    };
+};
 
 // A fake faviconService (fallback API) the enricher hot-swaps against.
 const makeFavService = () => {
@@ -174,6 +193,26 @@ describe('extractLinkIcons', () => {
         expect(links[0].data).toBe(true);
         expect(links[0].href).toBe(dataHref);
     });
+
+    it('resolves relative hrefs against a <base href> when present', () => {
+        // A <base> pointing at an asset CDN overrides the document base for
+        // relative link hrefs — the icon URL must resolve against it, not pageUrl.
+        const html = '<head><base href="https://cdn.example.com/icons/">' +
+            '<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"></head>';
+        const links = extractLinkIcons(html, 'https://example.com/page');
+        expect(links).toHaveLength(1);
+        expect(links[0].href).toBe('https://cdn.example.com/icons/favicon-32x32.png');
+    });
+
+    it('ignores <link> declarations inside HTML comments', () => {
+        // A commented-out icon declaration must not be fetched — regex matching
+        // on raw HTML would otherwise pick it up.
+        const html = '<!-- <link rel="icon" href="/commented.png"> -->' +
+            '<link rel="icon" type="image/png" sizes="32x32" href="/real.png">';
+        const links = extractLinkIcons(html, 'https://example.com/');
+        expect(links).toHaveLength(1);
+        expect(links[0].href).toBe('https://example.com/real.png');
+    });
 });
 
 describe('validateAndEncode', () => {
@@ -218,6 +257,53 @@ describe('validateAndEncode', () => {
         };
         const res = pngResponse(PNG_BYTES);
         expect(await validateAndEncode(res, { Image: deadImage })).toBeNull();
+    });
+
+    it('accepts application/octet-stream via magic sniff (a common /favicon.ico header)', async () => {
+        // Many servers/CDNs serve favicon.ico with an octet-stream content-type
+        // — an explicit "I don't know" that must fall back to the magic sniff
+        // (design §3.1 "否则 sniff 魔数"), not be treated as an authoritative reject.
+        const pngRes = {
+            ok: true,
+            arrayBuffer: async () => PNG_BYTES.buffer.slice(PNG_BYTES.byteOffset, PNG_BYTES.byteOffset + PNG_BYTES.byteLength),
+            headers: { get: () => 'application/octet-stream' }
+        };
+        const pngOut = await validateAndEncode(pngRes, { Image: makeFakeImage() });
+        expect(pngOut).not.toBeNull();
+        expect(pngOut.dataUrl.startsWith('data:image/png;base64,')).toBe(true);
+
+        const icoRes = {
+            ok: true,
+            arrayBuffer: async () => ICO_BYTES.buffer,
+            headers: { get: () => 'application/octet-stream; charset=binary' }
+        };
+        const icoOut = await validateAndEncode(icoRes, { Image: makeFakeImage() });
+        expect(icoOut).not.toBeNull();
+        expect(icoOut.dataUrl.startsWith('data:image/x-icon;base64,')).toBe(true);
+    });
+
+    it('still rejects an explicit non-image header even when bytes would sniff as SVG', async () => {
+        // The octet-stream relaxation must not weaken the authoritative-reject
+        // policy: text/html (bytes starting with '<') stays refused — the false
+        // SVG sniff guard.
+        const res = {
+            ok: true,
+            arrayBuffer: async () => new TextEncoder().encode('<html></html>').buffer,
+            headers: { get: () => 'text/html' }
+        };
+        expect(await validateAndEncode(res, { Image: makeFakeImage() })).toBeNull();
+    });
+
+    it('strips content-type params before building the data URL', async () => {
+        // image/png; charset=binary must not leak the params into the data URL.
+        const res = {
+            ok: true,
+            arrayBuffer: async () => PNG_BYTES.buffer.slice(PNG_BYTES.byteOffset, PNG_BYTES.byteOffset + PNG_BYTES.byteLength),
+            headers: { get: () => 'image/png; charset=binary' }
+        };
+        const out = await validateAndEncode(res, { Image: makeFakeImage() });
+        expect(out).not.toBeNull();
+        expect(out.dataUrl).toBe(`data:image/png;base64,${bytesToBase64(PNG_BYTES)}`);
     });
 });
 
@@ -515,6 +601,127 @@ describe('initFaviconEnrich — discovery chain', () => {
         expect(fetchImpl.calls.some(c => /__vbm_px=1/.test(c.url))).toBe(false);
         expect(fetchImpl.calls.some(c => c.url === FR('proxy.example'))).toBe(true);
         expect(fetchImpl.calls.some(c => c.url === DDG('proxy.example'))).toBe(true);
+    });
+});
+
+describe('initFaviconEnrich — L2 HTML read cap', () => {
+    beforeEach(() => { seq = 0; });
+
+    it('caps the page HTML via the body stream (a link past the cap is not parsed)', async () => {
+        // A 200KB pad puts the <link> beyond MAX_HTML_BYTES: the streamed read
+        // stops at the cap and the late declaration is never fetched.
+        const pad = new Uint8Array(MAX_HTML_BYTES).fill(0x20);
+        const late = new TextEncoder().encode('<link rel="icon" type="image/png" sizes="32x32" href="/late.png">');
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/huge\.example\/$/, () => streamResponse([pad, late])],
+            [/late\.png/, () => { throw new Error('must not fetch'); }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://huge.example/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.some(c => c.url.includes('late.png'))).toBe(false);
+    });
+
+    it('caps the page HTML via the text fallback (no body stream)', async () => {
+        const huge = 'x'.repeat(MAX_HTML_BYTES) + '<link rel="icon" type="image/png" sizes="32x32" href="/late.png">';
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/huge\.example\/$/, { ok: true, text: async () => huge, headers: { get: () => 'text/html' } }],
+            [/late\.png/, () => { throw new Error('must not fetch'); }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://huge.example/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.some(c => c.url.includes('late.png'))).toBe(false);
+    });
+});
+
+describe('initFaviconEnrich — hydrate-race + session-only cap', () => {
+    beforeEach(() => { seq = 0; });
+
+    it('a host enqueued before hydrate lands re-checks the cache and skips the network', async () => {
+        // onPlaceholder fires while the storage hydrate is still in flight — the
+        // host misses the in-memory Map and is enqueued. The queue must wait for
+        // the hydrate, then hot-swap the cached icon instead of fetching again
+        // (design §5.1 "发现链启动前会重读 Map").
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}github.com`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({ 'github.com': { t: 1700000000000, s: PNG_DATA_URL.length } })
+        });
+        let fetches = 0;
+        const fetchImpl = makeFetch([[/.*/, () => { fetches++; return notFound(); }]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        // Deliberately NOT awaited _hydrateDone — emulate the render-before-hydrate window.
+        const img = makePlaceholderImg('https://github.com/');
+        en.onPlaceholder(img);
+        await en._hydrateDone;
+        await tick();
+        await tick();
+        expect(fetches).toBe(0);
+        expect(img.parentNode.children[0].tagName).toBe('IMG');   // hot-swapped, not SVG
+    });
+
+    it('caps session-only oversized icons, evicting the oldest beyond the cap', async () => {
+        // 100KB icons are >MAX_ICON_BYTES (96KB) → session-only. A burst past
+        // SESSION_ONLY_CAP must not accumulate in memory for the session — the
+        // oldest is evicted.
+        const big = new Uint8Array(100 * 1024);
+        for (let i = 0; i < big.length; i++) big[i] = (i * 31) & 0xff;
+        big[0] = 0x89; big[1] = 0x50; big[2] = 0x4e; big[3] = 0x47;   // PNG magic
+        const storage = makeStorageArea();
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse(big)]]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        for (let i = 0; i < SESSION_ONLY_CAP + 1; i++)
+            en.onPlaceholder(makePlaceholderImg(`https://big${i}.example/`));
+        await new Promise(r => setTimeout(r, 50));
+        const cache = en.getCache();
+        expect(cache.size).toBeLessThanOrEqual(SESSION_ONLY_CAP);
+        expect(cache.has('big0.example')).toBe(false);                 // oldest evicted
+        expect(cache.has(`big${SESSION_ONLY_CAP}.example`)).toBe(true); // newest kept
+        // Session-only icons still never touch storage.
+        expect(storage.data[`${FAVICON_DATA_PREFIX}big1.example`]).toBeUndefined();
     });
 });
 

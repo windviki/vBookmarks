@@ -68,6 +68,8 @@
         'faviconContrast',
         // v4.1: favicon 补全——为 Chrome 未缓存图标的收藏站点拉取真实图标
         'faviconEnrich', 'faviconEnrichAgg',
+        // options Icons 组备份开关：导出时是否随包携带 favicon 缓存键
+        'faviconBackupInclude',
         // issue #33: folder-sort options JSON {by, foldersFirst, recursive}
         // (shared by the sort dialog and the options page Sorting group)
         'sortOptions',

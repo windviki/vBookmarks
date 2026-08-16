@@ -45,6 +45,8 @@ export const MIN_BUDGET = 512 * 1024;                      // ceiling floor (512
 export const BUDGET_REFRESH_MS = 60 * 1000;                // recompute ceiling at most /min
 export const MAX_ICON_BYTES = 96 * 1024;                  // >96KB → session only
 export const MAX_FETCH_BYTES = 200 * 1024;                // fetch cap
+export const MAX_HTML_BYTES = 200 * 1024;                 // page-HTML read cap (favicon <link>s live in <head>)
+export const SESSION_ONLY_CAP = 24;                       // max session-only icons held in memory
 export const CONCURRENCY = 6;
 
 // --- Third-party aggregator providers (L4, docs §3.4) ------------------------
@@ -139,17 +141,22 @@ export const validateAndEncode = async (res, { Image: ImageCtor = Image, maxByte
     if (bytes.length === 0 || bytes.length > maxBytes)
         return null;
     const ct = res.headers ? res.headers.get('content-type') : null;
-    let mime;
-    if (ct) {
-        // An explicit non-image Content-Type is authoritative — a server that
-        // says text/html must not be accepted because the bytes happen to
-        // start with '<' (a false SVG sniff). image/* or absent → magic sniff.
-        if (!isImageContentType(ct))
-            return null;
-        mime = ct;
-    } else {
-        mime = mimeFromMagic(bytes);
-    }
+    // The header's base type (before any `; charset=` params) decides how the
+    // bytes are typed. Two policy buckets:
+    //   image/*                    → trust it (design §3.1 "直接采信").
+    //   absent / octet-stream      → an explicit "I don't know" — fall back to
+    //                                magic sniff (many servers/CDNs serve
+    //                                /favicon.ico as application/octet-stream).
+    //   any other non-image type   → authoritative rejection: a server that
+    //                                says text/html must not be accepted
+    //                                because the bytes happen to start with
+    //                                '<' (a false SVG sniff).
+    const ctBase = ct ? ct.split(';')[0].trim().toLowerCase() : '';
+    const isImageCt = /^image\//.test(ctBase);
+    const isUnknownCt = ctBase === '' || ctBase === 'application/octet-stream';
+    if (ct && !isImageCt && !isUnknownCt)
+        return null;
+    const mime = isImageCt ? ctBase : mimeFromMagic(bytes);
     if (!mime)
         return null;
     const dataUrl = `data:${mime};base64,${bytesToBase64(bytes)}`;
@@ -169,9 +176,28 @@ export const validateAndEncode = async (res, { Image: ImageCtor = Image, maxByte
 
 // --- <link> extraction (attribute-level regex, no DOMParser) -----------------
 export const extractLinkIcons = (html, pageUrl) => {
+    // Strip HTML comments first — the <link> regex would otherwise match
+    // commented-out icon declarations and try to fetch a dead/stale URL.
+    const src = String(html || '').replace(/<!--[\s\S]*?-->/g, '');
+    // A <base href> overrides the document base for relative hrefs — resolve
+    // link URLs against it when present (rare but real; e.g. an asset CDN
+    // declared at the top of <head>).
+    let baseUrl = pageUrl;
+    const baseTag = /<base\b[^>]*>/i.exec(src);
+    if (baseTag) {
+        for (const a of baseTag[0].matchAll(ATTR_RE)) {
+            if (a[1].toLowerCase() === 'href') {
+                const v = a[2] ?? a[3] ?? a[4];
+                if (v) {
+                    try { baseUrl = new URL(v, pageUrl).href; } catch (_) { /* keep pageUrl */ }
+                }
+                break;
+            }
+        }
+    }
     const found = [];
     const seen = new Set();
-    for (const m of String(html || '').matchAll(LINK_RE)) {
+    for (const m of src.matchAll(LINK_RE)) {
         const tag = m[0];
         const attrs = {};
         for (const a of tag.matchAll(ATTR_RE)) {
@@ -197,7 +223,7 @@ export const extractLinkIcons = (html, pageUrl) => {
             continue;
         }
         let abs;
-        try { abs = new URL(href, pageUrl).href; } catch (_) { continue; }
+        try { abs = new URL(href, baseUrl).href; } catch (_) { continue; }
         if (!HTTP_URL.test(abs) || seen.has(abs))
             continue;
         seen.add(abs);
@@ -325,6 +351,7 @@ export function initFaviconEnrich(ctx = {}) {
         if (bytes > MAX_ICON_BYTES) {
             // Oversized: session-only, not persisted.
             cache.set(host, { d: dataUrl, t: now(), persist: false });
+            evictSessionOverCap();
             return;
         }
         cache.set(host, { d: dataUrl, t: now() });
@@ -415,6 +442,20 @@ export function initFaviconEnrich(ctx = {}) {
             evictToHalve();
     };
 
+    // Session-only icons (oversized >96KB, or quota-degraded) never touch
+    // storage and are therefore outside the persisted-byte budget — but they
+    // DO sit in the in-memory map for the session (up to MAX_FETCH_BYTES each),
+    // so a long-lived side panel must not accumulate them unboundedly. Cap the
+    // count and evict the oldest beyond it (design §5.3 edge 1 hardening).
+    const evictSessionOverCap = () => {
+        const entries = [...cache.entries()]
+            .filter(([, e]) => e.d && e.persist === false)
+            .sort((a, b) => a[1].t - b[1].t);
+        while (entries.length > SESSION_ONLY_CAP) {
+            cache.delete(entries.shift()[0]);
+        }
+    };
+
     const emergencyEvict = (host, dataUrl) => {
         // Quota error on write: cut the oldest half, retry once; if the retry
         // also fails (other data squeezed the budget), degrade to session-only.
@@ -427,6 +468,7 @@ export function initFaviconEnrich(ctx = {}) {
             rp.catch(() => {
                 cache.set(host, { d: dataUrl, t: now(), persist: false });
                 delete idxData.hosts[host];   // keep the index honest
+                evictSessionOverCap();
             });
         } else {
             cache.set(host, { d: dataUrl, t: now() });
@@ -515,6 +557,40 @@ export function initFaviconEnrich(ctx = {}) {
         try { return new URL(pageUrl).host; } catch (_) { return null; }
     };
 
+    // Page HTML is only parsed for <link> favicon declarations (all in
+    // <head>), so the read is capped at MAX_HTML_BYTES — a huge/malicious body
+    // can never balloon memory or make the attribute regex grind over
+    // megabytes (design §3.1 caps ICON bytes; this caps the HTML the same way).
+    // Streams when the response has a body (real fetch), else truncates the
+    // text (test doubles without a stream).
+    const readHtmlCapped = async (res, maxBytes) => {
+        if (res.body && typeof res.body.getReader === 'function') {
+            const reader = res.body.getReader();
+            const chunks = [];
+            let total = 0;
+            try {
+                while (total < maxBytes) {
+                    const { done, value } = await reader.read();
+                    if (done)
+                        break;
+                    chunks.push(value);
+                    total += value.length;
+                }
+            } finally {
+                try { reader.cancel(); } catch (_) { /* noop */ }
+            }
+            const buf = new Uint8Array(Math.min(total, maxBytes));
+            let off = 0;
+            for (const c of chunks) {
+                const n = Math.min(c.length, buf.length - off);
+                buf.set(c.subarray ? c.subarray(0, n) : c.slice(0, n), off);
+                off += n;
+            }
+            return new TextDecoder().decode(buf);
+        }
+        return (await res.text()).slice(0, maxBytes);
+    };
+
     // L1: classic /favicon.ico
     const tryL1 = async (host, signal) => {
         const url = `https://${host}/favicon.ico`;
@@ -530,7 +606,7 @@ export function initFaviconEnrich(ctx = {}) {
             const res = await fetchWithTimeout(pageUrl, 5000, signal);
             if (!res.ok)
                 return null;
-            const html = await res.text();
+            const html = await readHtmlCapped(res, MAX_HTML_BYTES);
             const links = extractLinkIcons(html, pageUrl);
             for (const link of links) {
                 let candidate;
@@ -621,7 +697,7 @@ export function initFaviconEnrich(ctx = {}) {
             const res = await fetchMarked(pageUrl, 5000, signal);
             if (!res.ok)
                 return null;
-            const html = await res.text();
+            const html = await readHtmlCapped(res, MAX_HTML_BYTES);
             const links = extractLinkIcons(html, pageUrl);
             for (const link of links) {
                 let candidate;
@@ -711,6 +787,19 @@ export function initFaviconEnrich(ctx = {}) {
 
     const runItem = async item => {
         const signal = item.ctrl.signal;
+        // Hydrate-race mitigation (design §5.1): onPlaceholder may have fired
+        // before the storage hydrate landed, enqueuing a host that is already
+        // cached. Wait for the hydrate, then re-check — a cache hit hot-swaps
+        // and short-circuits instead of issuing a redundant fetch.
+        await hydrateDone;
+        const hit = cache.get(item.host);
+        if (hit && hit.d && !isExpired(item.host, SUCCESS_TTL_MS)) {
+            // hotSwap reads the item back via queue.get — remove only after.
+            hotSwap(item.host, hit.d);
+            clearEnriching(item.anchors);
+            queue.delete(item.host);
+            return;
+        }
         try {
             const result = await discover(item.host, item.pageUrl, signal);
             if (result && result.dataUrl) {
