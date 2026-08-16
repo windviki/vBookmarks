@@ -708,6 +708,7 @@ export function initViewDead(ctx = {}) {
                 // 落在行容器上会被 membership 处理器吞掉——JS 层面不渲染更干净。
                 (selecting ? '' :
                     `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
+                    `aria-pressed="${marked}" ` +
                     `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
                     `title="${marked ? _m('deadUnmark') : _m('deadMark')}">${FLAG_ICON}</button>` +
                     `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
@@ -762,7 +763,7 @@ export function initViewDead(ctx = {}) {
                     badge: { text: _m('deadMarkedRow'), cls: badgeCls }
                 }) +
                 (selecting ? '' :
-                    `<button class="row-btn dead-mark-btn marked" ` +
+                    `<button class="row-btn dead-mark-btn marked" aria-pressed="true" ` +
                     `aria-label="${_m('deadUnmark')}" title="${_m('deadUnmark')}">${FLAG_ICON}</button>` +
                     `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
                     `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>`) +

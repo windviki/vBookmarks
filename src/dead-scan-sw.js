@@ -62,6 +62,13 @@ export function createDeadScanRunner() {
     let proxyGate = '';       // '' | i18n key — why the proxy channel is off
     let publishTimer = null;
     let started = false;
+    // Re-entrancy generation: start() runs its storage/bookmark/proxy setup
+    // asynchronously before launch() creates the session. A cancel (or a
+    // second start/resume) landing in that window must invalidate the
+    // in-flight chain, otherwise the cancelled run still launches (or two
+    // runs launch and clobber each other's `session`/`results`). Every async
+    // callback guards `gen !== myGen` and drops out when superseded.
+    let gen = 0;
 
     // --- Storage helpers (callback style, like the repo's other SW doubles) --
     const storageGet = (keys, cb) => chrome.storage.local.get(keys, cb);
@@ -232,9 +239,14 @@ export function createDeadScanRunner() {
     const start = ({ skipSettled = false, paused = false } = {}) => {
         if (session)
             return;
+        const myGen = ++gen;
         storageGet(SETTING_KEYS.concat(DEAD_SCAN_KEY), data => {
-            const settings = readSettings(data);
+            if (gen !== myGen)
+                return;
             chrome.bookmarks.getTree(tree => {
+                if (gen !== myGen)
+                    return;
+                const settings = readSettings(data);
                 const mgr = settings.separators;
                 const all = filterScannable(flattenTree(tree),
                     (title, url) => mgr.isSeparator(title, url));
@@ -251,10 +263,19 @@ export function createDeadScanRunner() {
                 if (!startTs)
                     startTs = Date.now();
                 proxyGate = '';
-                if (settings.proxyServer)
-                    gateProxy(settings.proxyServer).then(() => launch(settings, all, prior, paused));
-                else
+                const begin = () => {
+                    if (gen !== myGen) {
+                        // Superseded mid-gate: a PAC gateProxy may have already
+                        // installed — tear it down so it never leaks.
+                        stopProxy();
+                        return;
+                    }
                     launch(settings, all, prior, paused);
+                };
+                if (settings.proxyServer)
+                    gateProxy(settings.proxyServer).then(begin);
+                else
+                    begin();
             });
         });
     };
@@ -290,8 +311,19 @@ export function createDeadScanRunner() {
     };
 
     const cancel = () => {
-        if (!session)
+        if (!session) {
+            // No live session, but a start() may still be in its async setup
+            // window (cold-start resumeIfNeeded / a resume re-launch). Bump the
+            // generation so the in-flight chain drops out at its next guard,
+            // tear down any PAC gateProxy already installed, and clear the blob
+            // so "the run never happened" also holds for a cancel that lands
+            // before launch().
+            gen++;
+            stopProxy();
+            dropBlob();
+            startTs = 0;
             return;
+        }
         const s = session;
         session = null;
         s.cancel(); // the settle handler sees session!==s and stays out
