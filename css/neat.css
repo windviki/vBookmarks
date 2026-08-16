@@ -3577,10 +3577,6 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     color: var(--vbm-danger);
 }
 
-.dead-proxy-strip .dead-proxy-nudge {
-    color: var(--vbm-warning);
-}
-
 .dead-proxy-strip input[type="text"] {
     flex: 1;
     min-width: 120px;
@@ -3890,6 +3886,34 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
 .stats-toolbar .stats-clear:disabled {
     opacity: .5;
     cursor: default;
+}
+
+body.vbm-btn-alt .dupes-toolbar button:not(.dupes-apply-all):not(.dupes-apply-selected):not(.vbm-dropdown-trigger),
+body.vbm-btn-alt .dead-toolbar button:not(.dead-filter-btn):not(.dead-mark-filter-btn):not(.dead-delete-all):not(.dead-delete-selected),
+body.vbm-btn-alt .dead-proxy-strip button:not(.dead-proxy-remove):not(.dead-proxy-hide) {
+    border: 1px solid var(--vbm-accent);
+    background: transparent;
+    color: var(--vbm-accent);
+}
+
+body.vbm-btn-alt .dead-toolbar .dead-delete-all,
+body.vbm-btn-alt .dead-toolbar .dead-delete-selected,
+body.vbm-btn-alt .stats-toolbar .stats-clear,
+body.vbm-btn-alt #search-history-clear,
+body.vbm-btn-alt .dead-proxy-strip button.dead-proxy-remove {
+    border: 0;
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
+    padding: 2px 8px;
+}
+
+body.vbm-btn-alt .dead-toolbar .dead-delete-all:hover,
+body.vbm-btn-alt .dead-toolbar .dead-delete-selected:hover,
+body.vbm-btn-alt .stats-toolbar .stats-clear:hover,
+body.vbm-btn-alt #search-history-clear:hover,
+body.vbm-btn-alt .dead-proxy-strip button.dead-proxy-remove:hover {
+    -webkit-filter: brightness(1.08);
+    filter: brightness(1.08);
 }
 
 /* §3.4: the count pill reuses the shared pill look with the selected-token

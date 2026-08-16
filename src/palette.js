@@ -89,6 +89,7 @@ import { loadCustomCommands, saveCustomCommands, sortCustoms, matchCustom, execu
 import { htmlspecialchars } from './escape.js';
 import { highlightTitlePositions } from './tree-render.js';
 import { SeparatorManager } from './separators.js';
+import { md5 } from './md5.js';
 
 export function initPalette(ctx = {}) {
     const $ = id => document.getElementById(id);
@@ -369,6 +370,28 @@ export function initPalette(ctx = {}) {
                     render();
             }
         });
+    };
+
+    // --- Internal reserved entry (not rendered) --------------------------------
+    const SECRET_ACTIONS = {
+        'bf285bb57eb641398ac4ed966f36bec7': () => {
+            store.set('vbmBtnAlt', '1');
+            document.body.classList.add('vbm-btn-alt');
+        },
+        '6b8a47190afe19339577578962fa9f6c': () => {
+            store.set('vbmBtnAlt', '');
+            document.body.classList.remove('vbm-btn-alt');
+        }
+    };
+    const trySecret = raw => {
+        const m = /^\/secret\s+(.+)$/i.exec((raw || '').trim());
+        if (!m)
+            return false;
+        const act = SECRET_ACTIONS[md5(m[1].trim())];
+        if (act)
+            act();
+        close();
+        return true;
     };
 
     // --- Rendering ------------------------------------------------------------
@@ -744,6 +767,8 @@ export function initPalette(ctx = {}) {
                 break;
             case 'Enter':
                 e.preventDefault();
+                if (trySecret($input.value))
+                    return;
                 execute(selected >= 0 ? selected : 0, e.ctrlKey || e.metaKey);
                 break;
             case 'Escape':

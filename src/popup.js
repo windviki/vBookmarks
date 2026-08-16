@@ -8,8 +8,12 @@
     // is synchronously pre-filled), then refine it once chrome.storage.local,
     // the source of truth, has been overlaid onto the mirror.
     document.body.dataset.theme = store.get('theme', 'auto');
+    if (store.get('vbmBtnAlt', ''))
+        document.body.classList.add('vbm-btn-alt');
     store.ready.then(() => {
         document.body.dataset.theme = store.get('theme', 'auto');
+        if (store.get('vbmBtnAlt', ''))
+            document.body.classList.add('vbm-btn-alt');
     });
 
     // Phase 2b: the popup page doubles as the side panel page. The panel loads

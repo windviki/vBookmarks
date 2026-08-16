@@ -1734,16 +1734,18 @@ describe('custom commands (v4 task-4 #6)', () => {
         ...opts
     });
 
-    it('PALETTE_RESERVED lists exactly the built-in slash names + aliases', () => {
+    it('PALETTE_RESERVED lists the built-in slash names + aliases plus the invisible /secret', () => {
         const { palette, results, type } = setup({});
         palette.open();
-        type('/'); // every command row
+        type('/'); // every rendered command row
         const forms = results._appended
             .map(li => (li._innerHTML.match(/palette-slash">([^<]+)</) || [])[1])
             .filter(Boolean)
             .flatMap(s => s.split(' ').map(w => w.slice(1)))
             .sort();
-        expect(forms).toEqual([...PALETTE_RESERVED].sort());
+        // /secret is reserved but never rendered (invisible built-in entry)
+        expect(forms).not.toContain('secret');
+        expect([...forms, 'secret'].sort()).toEqual([...PALETTE_RESERVED].sort());
     });
 
     it('custom rows render after the built-ins, tagged, ordered by usage', () => {
@@ -2183,5 +2185,26 @@ describe('Tab ring: input ↔ Esc/close button', () => {
         const { paletteEl, keydown } = setup({});
         const ev = keydown(paletteEl, { key: 'Tab' });
         expect(ev.defaultPrevented).toBe(false);
+    });
+});
+
+describe('internal reserved entry', () => {
+    it('an unmatched /secret param closes silently without toggling', () => {
+        const { palette, input, keydown, type, body, store } = setup({});
+        palette.open();
+        type('/secret nope');
+        keydown(input, { key: 'Enter' });
+        expect(palette.isOpen()).toBe(false);
+        expect(body.classList.contains('vbm-btn-alt')).toBe(false);
+        expect(store.setCalls).toEqual([]);
+    });
+
+    it('a bare /secret is not consumed by the reserved path', () => {
+        const { palette, input, results, type } = setup({});
+        palette.open();
+        type('/secret');
+        // renders the generic save-as-command closure, never an invisible row
+        expect(results._appended.some(li => li._innerHTML.includes("Save '"))).toBe(true);
+        expect(results._appended.every(li => !li._innerHTML.includes('vbm-btn-alt'))).toBe(true);
     });
 });
