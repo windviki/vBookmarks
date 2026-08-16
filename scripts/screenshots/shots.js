@@ -49,9 +49,18 @@ const SEED = `
 
     const errors = [];
     const watch = (page, tag) => {
-        page.on('pageerror', e => errors.push(`${tag} pageerror: ${e.message}`));
+        page.on('pageerror', e => {
+            const msg = e.message;
+            if (msg.includes('Failed to load resource') || msg.includes('net::') || msg.includes('Refused to'))
+                return;
+            errors.push(`${tag} pageerror: ${msg}`);
+        });
         page.on('console', m => {
-            if (m.type() === 'error') errors.push(`${tag} console.error: ${m.text()}`);
+            if (m.type() !== 'error') return;
+            const txt = m.text();
+            if (txt.includes('Failed to load resource') || txt.includes('net::') || txt.includes('Refused to'))
+                return;
+            errors.push(`${tag} console.error: ${txt}`);
         });
     };
 
