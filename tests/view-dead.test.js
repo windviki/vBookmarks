@@ -1492,6 +1492,62 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect($list.innerHTML.indexOf('id="dead-item-13"')).toBeLessThan(
             $list.innerHTML.indexOf('id="dead-item-12"'));
     });
+
+    it('F1: 有缓存但 0 死链 0 标记——第二工具条不渲染（无行可过滤/排序）', () => {
+        const clean = setup({ storeData: {
+            deadLastScan: JSON.stringify({ ts: 1700000000000, scannedCount: 2, results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'ok', code: 200 }
+            } })
+        } });
+        clean.def().activate();
+        expect(clean.$list.innerHTML).toContain('deadNone');
+        expect(clean.$list.innerHTML).not.toContain('dead-mark-filter-btn');
+        expect(clean.$list.innerHTML).not.toContain('dead-sort');
+        // 有结果行时照常渲染
+        const dirty = setup({ storeData: { deadLastScan: CACHE } });
+        dirty.def().activate();
+        expect(dirty.$list.innerHTML).toContain('dead-mark-filter-btn');
+        expect(dirty.$list.innerHTML).toContain('dead-sort');
+    });
+
+    it('F2: "已标注"筛选下不渲染 mark-all（可见结果行全已标注，空转无意义）', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // 默认：结果行 12+13，13 未标注 → mark-all 显示
+        expect($list.innerHTML).toContain('class="dead-mark-all"');
+        // 已标注：结果行只留 12（已标注）→ mark-all 隐藏
+        markFilterClick(ctx, 'marked');
+        expect($list.innerHTML).not.toContain('class="dead-mark-all"');
+        // 未标注：结果行 13 未标注 → mark-all 恢复
+        markFilterClick(ctx, 'unmarked');
+        expect($list.innerHTML).toContain('class="dead-mark-all"');
+    });
+
+    it('F4: 残留行"已标注"badge 按上轮来源着色——受限来源琥珀、判断不了保持红', () => {
+        const ctx = setup({ storeData: {
+            deadLastScan: JSON.stringify({ ts: 1700000000000, scannedCount: 2, results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'blocked', code: 404 }
+            } }),
+            deadMarks: '["12"]'
+        } });
+        const { treeRender } = ctx;
+        ctx.def().activate();
+        // 扫描中（live）：12 尚未判定 → 未覆盖标记入残留；上轮 verdict=blocked
+        // → badge 琥珀
+        publishBlob(ctx, blobOf({ done: 0, results: {} }));
+        expect(treeRender.calls.filter(c => c.id === '12').at(-1).meta.badge)
+            .toEqual({ text: 'deadMarkedRow', cls: 'blocked' });
+        // 完成扫描：12 判健康 → 残留（过去标注）；上轮=ok → 判断不了 → 红
+        finishScan(ctx, {
+            '11': { status: 'ok', code: 200 },
+            '12': { status: 'ok', code: 200 }
+        });
+        expect(treeRender.calls.filter(c => c.id === '12').at(-1).meta.badge)
+            .toEqual({ text: 'deadMarkedRow', cls: 'dead' });
+    });
 });
 
 describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§2.4 + §4 counts)', () => {
