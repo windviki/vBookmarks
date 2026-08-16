@@ -231,10 +231,12 @@ export function initViewDead(ctx = {}) {
         // Mark times ride every marks mutation: one persistence path covers
         // toggle/mark-all/clear/mark-selected/onRemoved prune.
         store.set('deadMarkTimes', JSON.stringify(Object.fromEntries(deadMarkTimes)));
-        // Refresh the tab badge on every marks mutation (toggle/mark-all/
-        // clear/scan prune/onRemoved prune). badge() itself counts the last
-        // scan's dead+blocked rows, not the marks.
-        views.updateBadges();
+        // No updateBadges here: the tab badge derives from the last scan's
+        // dead+blocked rows (badge() = allResultRows().length), not the marks.
+        // A marks-only mutation can never change the count, so refreshing here
+        // would be a redundant DOM write per toggle — the badge is updated only
+        // where lastScan/tree actually change (scan complete, clear scan,
+        // onRemoved verdict removal, activation).
     };
 
     const scannableItems = tree =>
@@ -727,8 +729,11 @@ export function initViewDead(ctx = {}) {
     // mark/unmark/delete work on them exactly like on the results (the shared
     // row-click branch swallows the row buttons while selecting, so they are
     // not rendered in that mode — no dead controls on screen).
-    const renderMarkedRows = rows => {
-        let html = `<div class="dead-marked-head">${_m('deadMarkedCount', `${rows.length}`)}</div>`;
+    const renderMarkedRows = (rows, hasResults) => {
+        // head 的分隔线（.after-results）仅在结果列表在上方时出现——"全部"/扫描中
+        // 视图的残留区块与结果列表视觉分开；marked-only 视图（无结果列表）head 紧跟
+        // 工具栏，带分隔线会与工具栏 border-bottom 叠成双线。
+        let html = `<div class="dead-marked-head${hasResults ? ' after-results' : ''}">${_m('deadMarkedCount', `${rows.length}`)}</div>`;
         html += `<ul role="list" class="dead-marked-list${selecting ? ' selecting' : ''}">`;
         for (let i = 0, l = rows.length; i < l; i++) {
             const { item } = rows[i];
@@ -824,7 +829,7 @@ export function initViewDead(ctx = {}) {
             html += renderRows(liveRows());
             const marks = markedRows();
             if (marks.length)
-                html += renderMarkedRows(marks);
+                html += renderMarkedRows(marks, true);
         } else if (filter === 'marked' || !lastScan) {
             // Marked-only view: the whole marked set, no result rows. With no
             // scan at all AND no marks (a fresh first run) the executable
@@ -838,7 +843,7 @@ export function initViewDead(ctx = {}) {
             // `<ul class="dead-marked-list">` shell must not linger where
             // there is nothing left to show.
             if (marks.length)
-                html += renderMarkedRows(marks);
+                html += renderMarkedRows(marks, false);
             else if (!lastScan)
                 // 没有任何历史死链数据（从未扫描 / 清除扫描结果）→ 蓝色开始扫描
                 // 按钮。这是"第一次启动"的号召性空态。
@@ -880,7 +885,7 @@ export function initViewDead(ctx = {}) {
             // everything" — the toolbar/list mismatch report).
             const marks = visibleMarkedRows();
             if (filter === 'all' && marks.length)
-                html += renderMarkedRows(marks);
+                html += renderMarkedRows(marks, true);
         }
         // keep a focused toolbar control focused across the swap (see above)
         const parkedToolbar = parkToolbarFocus($list);

@@ -3640,6 +3640,16 @@ body.panel-mode #dead-list .vbm-row .row-badge-slot {
     max-width: calc(100% - 40px);
 }
 
+/* 残留区块与结果列表的分隔线（renderMarkedRows 在结果列表存在时给 head 加
+   .after-results）：短分隔线（元素宽度即 max-width 限制的文本宽）把"本次扫描
+   判定结果"与"你的过去标注"两个区块视觉分开。marked-only 视图（无结果列表）
+   不带该 class——head 紧跟工具栏，再画线会与工具栏 border-bottom 叠成双线。 */
+#dead-list .dead-marked-head.after-results {
+    border-top: 1px solid var(--vbm-border);
+    margin-top: 12px;
+    padding-top: 8px;
+}
+
 /* 已标注列表的斜体标题: 与上方扫描结果行区分(用户方案)。通用规则
    `.tree-item-link i` 在 (0,2,0) 强制 font-style:normal, 这里用更高优先级
    只在已标注列表内覆盖——结果行标题保持正体。 */
