@@ -438,7 +438,9 @@ export function initViewDead(ctx = {}) {
     // server always keeps its manage row (change/remove) visible.
     const proxyStripHidden = () => !proxyServerSetting() && store.get('hideDeadProxyStrip', '') === '1';
     const renderProxyStrip = () => {
-        if (proxyStripHidden())
+        // 选择模式下批量工具条接管工具栏，proxy strip 一并隐藏——避免面板与批量
+        // 条同屏的状态混叠（批量模式是临时态，退出后 strip 恢复）。
+        if (selecting || proxyStripHidden())
             return '';
         const server = proxyServerSetting();
         let html = '<div class="dead-proxy-strip vbm-toolbar">';
@@ -699,11 +701,15 @@ export function initViewDead(ctx = {}) {
                         cls: blocked ? 'blocked' : 'dead'
                     }
                 }) +
-                `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
-                `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
-                `title="${marked ? _m('deadUnmark') : _m('deadMark')}">${FLAG_ICON}</button>` +
-                `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
-                `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>` +
+                // 选择模式下结果行不渲染 ⚑/× 行按钮（与 renderMarkedRows 一致）：
+                // CSS 也会隐藏它们，但多出的 DOM 节点对屏幕阅读器仍可见、且点击
+                // 落在行容器上会被 membership 处理器吞掉——JS 层面不渲染更干净。
+                (selecting ? '' :
+                    `<button class="row-btn dead-mark-btn${marked ? ' marked' : ''}" ` +
+                    `aria-label="${marked ? _m('deadUnmark') : _m('deadMark')}" ` +
+                    `title="${marked ? _m('deadUnmark') : _m('deadMark')}">${FLAG_ICON}</button>` +
+                    `<button class="row-btn dead-del-btn" aria-label="${_m('rowActionDelete')}" ` +
+                    `title="${_m('rowActionDelete')}">${TRASH_ICON}</button>`) +
                 '</li>';
         }
         return html + '</ul>';
@@ -842,7 +848,11 @@ export function initViewDead(ctx = {}) {
                 // 有历史扫描但"上次标注"分类为空 → 普通空态（不显示蓝色按钮）。
                 // 残留标注存在但被已标注/未标注子筛选隐藏 → 提示换分段；真无残留
                 // → "还没有标记过书签"。
-                const label = markedRows().length ? 'deadNoneFiltered' : 'deadMarkedNone';
+                // 有标注但当前无可见残留（全被本次结果覆盖 / 被子筛选隐藏）→ 提示换
+                // 分段；真无标注才说"还没有标记过书签"（审计：全覆盖场景原显示
+                // deadMarkedNone 误导——用户明明标记过，只是都判进结果行了）。
+                const label = (markedRows().length || deadMarks.size)
+                    ? 'deadNoneFiltered' : 'deadMarkedNone';
                 html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m(label)}</i></li></ul>`;
             }
         } else {
@@ -1707,6 +1717,11 @@ export function initViewDead(ctx = {}) {
     // (docs/plan-4.0.0/v4task-2-list.md §3.5). Consumed by keyboard.js before the
     // type-ahead gate; dead registers typeAhead:false.
     const onKey = e => {
+        // 选择模式下 M/R 是单行操作，与批量选择的 membership 语义冲突——行点击
+        // 此时是勾选成员，键盘不应悄悄标记/定位单行（键盘 M 会 toggleMark 聚焦
+        // 行，与点选勾选不一致）。
+        if (selecting)
+            return false;
         const k = e.key;
         if (k !== 'm' && k !== 'M' && k !== 'r' && k !== 'R')
             return false;

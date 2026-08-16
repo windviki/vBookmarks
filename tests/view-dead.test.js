@@ -1129,14 +1129,17 @@ describe('filter + batch marks (§5.5c)', () => {
         expect($list.innerHTML).toContain('deadFilterMarked 0');
         expect($list.innerHTML).not.toContain('deadFilterAll 4');
         // 过去标注视图: 无未覆盖残留 → 无标注列表, 结果行隐藏, 回退普通空态
-        // (不显示蓝色开始扫描——有历史扫描数据); 分段计数仍为 0
+        // (不显示蓝色开始扫描——有历史扫描数据); 分段计数仍为 0。标注 12/13
+        // 存在但全被本次结果覆盖 → 提示换分段 (deadNoneFiltered), 而非"还没有
+        // 标记过书签" (审计: 全覆盖场景原误显 deadMarkedNone)。
         ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
         const html = $list.innerHTML;
         expect(html).toContain('data-filter="marked" aria-pressed="true"');
         expect(html).toContain('deadFilterMarked 0');
         expect(html).not.toContain('id="dead-item-12"');
         expect(html).not.toContain('id="dead-item-13"');
-        expect(html).toContain('deadMarkedNone');
+        expect(html).toContain('deadNoneFiltered');
+        expect(html).not.toContain('deadMarkedNone');
         expect(html).not.toContain('class="empty-state dead-start"');
     });
 
@@ -1861,12 +1864,14 @@ describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§
         // 标注记录原样保留 (全覆盖不清除任何标注)
         expect(JSON.parse(store.get('deadMarks')).sort()).toEqual(['11', '12', '13']);
         // "上次标注"视图: 0 → 普通空态 (有历史扫描, 不显示蓝色开始扫描),
-        // 分段计数仍在
+        // 分段计数仍在。标注 11/12/13 存在但全被本次结果覆盖 → 提示换分段
+        // (审计: 全覆盖场景原误显"还没有标记过书签")
         clickFilter(ctx, 'marked');
         const markedHtml = $list.innerHTML;
         expect(markedHtml).toContain('data-filter="marked" aria-pressed="true"');
         expect(markedHtml).toContain('deadFilterMarked 0');
-        expect(markedHtml).toContain('deadMarkedNone');
+        expect(markedHtml).toContain('deadNoneFiltered');
+        expect(markedHtml).not.toContain('deadMarkedNone');
         expect(markedHtml).not.toContain('class="empty-state dead-start"');
         expect(markedHtml).not.toContain('id="dead-item-11"');
         expect(markedHtml).not.toContain('id="dead-item-12"');
@@ -2626,6 +2631,52 @@ describe('selection mode (v4 task-3 #4)', () => {
         expect(neatCss).toContain('#dead-list ul.selecting li.vbm-row.sel::before');
         expect(neatCss).toContain('#dead-list ul.selecting .row-btn');
         expect(neatCss).toContain('#dead-list ul.selecting li.vbm-row.sel,');
+    });
+
+    it('审计: selecting mode — M/R 键盘失效 (批量选择接管 membership 语义)', () => {
+        // 选择模式下行点击是勾选成员, M/R 若仍操作聚焦行会与点选不一致——键盘
+        // 不应悄悄标记/定位单行。onKey 在 selecting 下必须整体返回 false。
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { def, doc, store, viewDead, $list, treeView } = ctx;
+        def().activate();
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).toContain('class="selecting"');
+        doc.activeElement = {
+            closest: sel => (sel === '[data-node-id]' ? { dataset: { nodeId: '12' } } : null)
+        };
+        let prevented = 0;
+        expect(def().onKey({ key: 'm', preventDefault: () => prevented++ })).toBe(false);
+        expect(def().onKey({ key: 'r', preventDefault: () => {} })).toBe(false);
+        expect(prevented).toBe(0);
+        expect(JSON.parse(store.get('deadMarks') || '[]')).toEqual([]);
+        expect(viewDead.isMarked('12')).toBe(false);
+        expect(treeView.revealCalls).toEqual([]);
+    });
+
+    it('审计: selecting mode — proxy strip 隐藏 (面板不与批量条同屏)', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-proxy-strip');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).not.toContain('dead-proxy-strip');
+        // 退出选择模式 → strip 恢复
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-exit' ? {} : null) });
+        expect($list.innerHTML).toContain('dead-proxy-strip');
+    });
+
+    it('审计: selecting mode — 结果行与残留行一致, JS 不渲染 ⚑/× 行按钮', () => {
+        // 不依赖 CSS 隐藏: 多余 DOM 节点对屏幕阅读器仍可见, 点击也落在行容器
+        // 上被 membership 处理器吞掉——渲染层直接不产出更干净。
+        const ctx = setup({ storeData: { deadLastScan: CACHE } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('dead-mark-btn');
+        expect($list.innerHTML).toContain('dead-del-btn');
+        ctx.clickOn({ closest: sel => (sel === '.dead-select-mode' ? {} : null) });
+        expect($list.innerHTML).not.toContain('dead-mark-btn');
+        expect($list.innerHTML).not.toContain('dead-del-btn');
+        expect($list.innerHTML).toContain('id="dead-item-12"'); // 行仍在 (可选择成员)
     });
 });
 
