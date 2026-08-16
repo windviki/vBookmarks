@@ -204,28 +204,30 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 #### New
 
-- **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback", and a "Clear icon cache" action.
+- **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback" (also on by default), and a "Clear icon cache" action.
 - **Options page regrouped into 15 sections**: the overloaded Views group split into View display / Icons / Context menus / Tools / Statistics, so every area has breathing room.
 - **Storage usage bar**: the Icons group now shows how much of the storage quota icons, bookmarks, settings and the free space each take (with a byte-formatted legend), updating live as data changes.
 - **Header GitHub / Homepage links and version number** in the top-right corner of the options page.
-- **Backup can include the icon cache**: a new "Include icon cache in backups" option packs the enriched per-site icon cache into settings export/import — off keeps backups small, and icons are re-fetched automatically.
+- **Backup includes the icon cache by default**: a new "Include icon cache in backups" option packs the enriched per-site icon cache into settings export/import (on by default, so a full-fidelity backup travels with its icons); turning it off keeps backups small, and icons are re-fetched automatically.
 
 #### Fixed
 
 - **Favicon cache quota race**: the byte budget is now enforced asynchronously, so a burst of concurrent fetches can no longer push the cache past the limit before the eviction runs.
+- **Favicon discovery edge cases**: site icons served as `application/octet-stream` (common on plain CDNs/static hosts) are now recognized by magic-byte sniffing instead of being rejected; page-HTML reads are capped at 200 KB; a host already cached no longer gets re-fetched when a placeholder renders before the storage hydrate lands; oversized session-only icons are capped in memory; and `<link>` extraction now honors `<base href>` and skips commented-out icon declarations.
 
 #### Changed
 
-- **In-product announcement banner**: the version-gate banner was replaced by a fetch-based "What's new" banner (toggled by the new "Show in-product announcements" option, content pulled from the project's GitHub repository at most every 6 hours) — the v4.0.8 banner announces this favicon-enhanced release and links the v4 guide and the changelog.
-- **Options-page polish**: trailing hints no longer sit far below their controls, and list buttons share one visual weight with the page's other buttons.
+- **In-product announcement banner**: the version-gate banner became a local "What's new" banner fired exactly once by the version gate on the 4.x → 4.0.8 crossing — no network, no dismiss; the remote announce feed (toggled by "Show in-product announcements") still runs as its network-dependent complement. The v4.0.8 banner announces this favicon-enhanced release and links the v4 guide and the changelog.
+- **Options-page polish**: trailing hints no longer sit far below their controls; list buttons share one visual weight with the page's other buttons; the storage bar gained a used/total overview row, distinct segment colors, per-segment share legend and keyboard-reachable tooltips; destructive actions (clear cache / clear stats / import / reset) render in the warning danger style; the header wraps gracefully at narrow widths.
+- **Third-party icon fallback and icon-cache backups are on by default**, so new users get working icons for sites Chrome can't reach directly and full-fidelity backups out of the box.
 
 #### Engineering
 
-- Favicon enrichment module: discovery chain, built-in provider list with per-provider circuit breaker + failover, cache + queue.
+- Favicon enrichment module: discovery chain, built-in provider list with per-provider circuit breaker + failover, cache + queue, capped HTML reads and session-only eviction.
 - Store publishing supports a trusted-tester grey release (`TRUSTED_TESTERS`); `DEFAULT_PUBLISH` restores a full rollout.
 - `loadDotenv` accepts inline comments (`KEY=value # note`).
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
-- Test suite at **69 files / 2192 cases**, all green.
+- Test suite at **69 files / 2254 cases**, all green.
 
 ### v4.0.7 · 2026-08-15
 
