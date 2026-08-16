@@ -31,7 +31,7 @@ const TREE = [
     ] }
 ];
 
-const makeChrome = ({ storage = {}, proxy = {} } = {}) => {
+const makeChrome = ({ storage = {}, proxy = {}, asyncGetTree = false } = {}) => {
     const local = { ...storage };
     const calls = { fetch: [], pacSet: 0, pacCleared: 0, onChanged: [] };
     const c = {
@@ -39,7 +39,12 @@ const makeChrome = ({ storage = {}, proxy = {} } = {}) => {
             lastError: null,
             onMessage: { addListener(fn) { (this.fns = this.fns || []).push(fn); } }
         },
-        bookmarks: { getTree: cb => cb(TREE) },
+        bookmarks: {
+            // asyncGetTree defers the callback a microtask so a test can land a
+            // message inside start()'s async setup window (the same gap real
+            // chrome.bookmarks.getTree has).
+            getTree: cb => asyncGetTree ? Promise.resolve().then(() => cb(TREE)) : cb(TREE)
+        },
         storage: {
             local: {
                 get(keys, cb) {
@@ -211,6 +216,55 @@ describe('dead-scan SW runner (v4 task-4 #16)', () => {
         // resume ran the remainder to completion and merged the journal
         expect(seen.sort()).toEqual(['https://b.example/', 'https://c.example/']);
         expect(local[DEAD_SCAN_KEY]).toBeUndefined();
+        expect(Object.keys(JSON.parse(local[DEAD_LAST_KEY]).results).sort())
+            .toEqual(['11', '12', '13']);
+    });
+
+    it('a cancel landing inside the cold-start resume setup window aborts the pending launch', async () => {
+        const prior = {
+            state: 'scanning', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200 } },
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({
+            storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) },
+            asyncGetTree: true
+        });
+        globalThis.chrome = chrome;
+        let fetched = 0;
+        globalThis.fetch = () => { fetched++; return Promise.resolve({ status: 200 }); };
+        const runner = createDeadScanRunner();
+        runner.start();                             // module start → resumeIfNeeded → start (getTree in flight)
+        runner.onMessage({ type: DEAD_SCAN_MSG.cancel }); // cancel lands BEFORE getTree's callback
+        await flush();
+        expect(fetched).toBe(0);                    // the pending scan never launched
+        expect(local[DEAD_SCAN_KEY]).toBeUndefined(); // the stale blob was dropped
+        expect(local[DEAD_LAST_KEY]).toBeUndefined(); // no cache written — the run never happened
+    });
+
+    it('a second start during the setup window supersedes the first (no double launch)', async () => {
+        const prior = {
+            state: 'scanning', done: 1, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'],
+            results: { '11': { status: 'ok', code: 200 } },
+            proxy: { active: false, gate: '' }
+        };
+        const { chrome, local } = makeChrome({
+            storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) },
+            asyncGetTree: true
+        });
+        globalThis.chrome = chrome;
+        const seen = [];
+        globalThis.fetch = url => { seen.push(url); return Promise.resolve({ status: 200 }); };
+        const runner = createDeadScanRunner();
+        runner.start();                             // resumeIfNeeded → start (getTree in flight)
+        runner.onMessage({ type: DEAD_SCAN_MSG.resume }); // resume re-asserts scan-the-remainder
+        await flush();
+        // Only one scan ever probed the unsettled bookmarks (a double launch
+        // would fetch each URL twice).
+        expect(seen.sort()).toEqual(['https://b.example/', 'https://c.example/']);
+        expect(local[DEAD_LAST_KEY]).toBeDefined();
         expect(Object.keys(JSON.parse(local[DEAD_LAST_KEY]).results).sort())
             .toEqual(['11', '12', '13']);
     });
