@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Merkitsemätön"
   },
+  "deadMarkTimeLabel": {
+    "message": "Merkintäaika"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Havaitsemisaika"
+  },
   "deadSortLabel": {
     "message": "Lajitteluperuste"
   },

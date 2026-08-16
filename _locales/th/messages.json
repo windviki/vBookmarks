@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "ไม่ถูกทำเครื่องหมาย"
   },
+  "deadMarkTimeLabel": {
+    "message": "ทำเครื่องหมายเมื่อ"
+  },
+  "deadDetectTimeLabel": {
+    "message": "ตรวจพบเมื่อ"
+  },
   "deadSortLabel": {
     "message": "จัดเรียงตาม"
   },

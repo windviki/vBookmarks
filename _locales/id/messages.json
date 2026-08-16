@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Tidak ditandai"
   },
+  "deadMarkTimeLabel": {
+    "message": "Ditandai pada"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Terdeteksi pada"
+  },
   "deadSortLabel": {
     "message": "Urutkan berdasarkan"
   },

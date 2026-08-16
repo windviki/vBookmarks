@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Ongemarkeerd"
   },
+  "deadMarkTimeLabel": {
+    "message": "Gemarkeerd op"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Gedetecteerd op"
+  },
   "deadSortLabel": {
     "message": "Sorteer op"
   },

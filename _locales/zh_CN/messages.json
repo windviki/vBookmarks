@@ -1039,6 +1039,14 @@
     "message": "未标注",
     "description": "死链视图第二工具条（标注状态筛选）：只显示未带死链标注的行。"
   },
+  "deadMarkTimeLabel": {
+    "message": "标记于",
+    "description": "死链视图行 tooltip 标签：该行被标注为死链的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。"
+  },
+  "deadDetectTimeLabel": {
+    "message": "检测于",
+    "description": "死链视图行 tooltip 标签：该行扫描判定死链/受限的绝对时间（追加在 tooltip 与宽/面板布局的第二行右侧）。"
+  },
   "deadSortLabel": {
     "message": "排序方式",
     "description": "死链视图排序下拉：触发器与列表框的 aria-label。"

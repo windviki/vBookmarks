@@ -2243,6 +2243,13 @@ body.no-view-tabs #view-tabs {
     .vbm-row .row-sub {
         display: block;
     }
+    /* 死链第二行左路径右时间：仅含 .row-sub-right 的行转 flex（其余纯文本
+       row-sub 保持 block）。此规则只在 ≥480px 容器内生效——窄视口下 .row-sub
+       （含 :has 变体）仍由 base 规则 display:none 隐藏。 */
+    .vbm-row .row-sub:has(.row-sub-right) {
+        display: flex;
+        align-items: baseline;
+    }
     /* v4.1 visual fix: 双行布局（icon 槽 + 右侧两行文本）下，图标与文本块的
        间隙沿用单行树视图的 4px 读起来贴得太紧——两行文本块更高，同样间隙显得
        更局促。参考树视图图标槽节奏（20px 槽 + 4px 距）把间隙加宽到 8px，并把
@@ -2274,12 +2281,36 @@ body.no-view-tabs #view-tabs {
     }
 }
 
+/* 死链视图第二行"左路径右时间"（tree-render meta.subRight）内部布局：左半路径
+   可截断（ellipsis）、右半时间推右不换行。子规则不触发窄模式的隐藏（.row-sub
+   在窄下 display:none，flex 只由上方宽/panel 规则开启）。 */
+.vbm-row .row-sub .row-sub-left {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vbm-row .row-sub .row-sub-right {
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+    padding-inline-start: 8px;
+    white-space: nowrap;
+}
+
 body.panel-mode .vbm-row .row-path {
     display: none;
 }
 
 body.panel-mode .vbm-row .row-sub {
     display: block;
+}
+
+/* 面板模式等价规则（与容器宽度无关）：死链第二行左路径右时间的 flex 变体 */
+body.panel-mode .vbm-row .row-sub:has(.row-sub-right) {
+    display: flex;
+    align-items: baseline;
 }
 
 /* 面板模式等价规则：panel-mode 与容器宽度无关，行始终是双行 */
@@ -3429,10 +3460,11 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 }
 
 /* 标注状态筛选（第二工具条）：与主工具条并列的独立 .vbm-toolbar（独立键盘
-   rung）。分段外观复用 dead-filter 的 segmented-recipe；第二工具条再压一层
-   上边距，与主工具条的下边框拉开呼吸空间。 */
+   rung）。分段外观复用 dead-filter 的 segmented-recipe；两工具条各带
+   border-bottom（base .dead-toolbar），零 margin 堆叠 → 分隔线上下对称
+   （主工具条线 / 第二工具条线 / 列表前各一条线，无单侧空隙）。 */
 .dead-toolbar.dead-mark-toolbar {
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 .dead-toolbar .dead-mark-filter {
@@ -3670,14 +3702,13 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin-inline-end: 4px;
 }
 
-/* Dead-view row actions: the mark toggle is a flag in the theme accent, lit
-   in warning amber once the row is marked OR its scan verdict is blocked
-   (受限) — the same amber as the blocked pill, so marked/blocked read as
-   "restricted" apart from a dead-only row (4.1.0 task-1 A6/D1: 死链 × 覆盖层
-   按场景着色，blocked 读琥珀). The delete is a trash can always in danger red —
-   destructive reads red, everything else follows the accent token. */
+/* Dead-view row actions: 死链=红、受限=橙，全视图同一套语义。⚑ 未标注=类型色
+   描边（死链红 / 受限橙），已标注=同类型色实心填充——取消标记时填充消失、反馈
+   立现（受限行此前已标/未标都是琥珀，看不出是否生效）。残留行的 li 带 blocked
+   class（渲染时按 lastScan verdict 加），其 ⚑ 也随来源着色。删除按钮恒 danger
+   红（destructive 语义）。 */
 #dead-list .row-btn.dead-mark-btn {
-    color: var(--vbm-accent);
+    color: var(--vbm-danger);
 }
 
 #dead-list li.blocked .row-btn.dead-mark-btn {
@@ -3690,15 +3721,21 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
 
 #dead-list .row-btn.dead-mark-btn.marked {
     visibility: visible;
-    color: var(--vbm-warning);
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
+    border-radius: 3px;
 }
 
-/* §5.5c overlay: amber × on the favicon's top trailing corner in every list
-   (top-right in LTR; inset-inline-end mirrors it under RTL — the sync dot
-   owns the bottom trailing corner, so they never collide). Amber = the
-   blocked/受限 reading (4.1.0 task-1 A6/D1): a manual mark flags a link as
-   "restricted", which reads warning, distinct from the danger-red destructive
-   actions (delete), and stands out against the favicon in any theme.
+#dead-list li.blocked .row-btn.dead-mark-btn.marked {
+    background: var(--vbm-warning);
+    color: var(--vbm-warning-fg);
+}
+
+/* §5.5c overlay: 死链=红 / 受限=橙 的 × 落在 favicon 顶边角（LTR 右上，
+   inset-inline-end 在 RTL 下镜像到左上；sync dot 占底边角，永不碰撞）。默认
+   danger 红（死链语义）；lastScan verdict 为 blocked 的行加 .blocked class 读
+   warning 琥珀（与残留行 badge 同规则，4.1.0 task-1 A6/D1）。老备份/健康残留
+   标记无 verdict → 红。颜色随类区分，不随视图区分。
    第五轮项2 — the generic `#tree ul li span` row rule (display/line-height/
    padding-inline-end, specificity 1,0,3) used to leak into this span: the
    4px end padding stretched the 10px circle into a 14×10 ellipse and the
@@ -3728,13 +3765,20 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     margin: 0;
     padding: 0;
     border-radius: 50%;
-    background: var(--vbm-warning);
-    color: var(--vbm-warning-fg);
+    background: var(--vbm-danger);
+    color: var(--vbm-danger-fg);
     font-size: 8px;
     line-height: 1;
     text-align: center;
     box-shadow: 0 0 0 1.5px var(--vbm-bg);
     pointer-events: none;
+}
+
+/* 受限标记：橙 ×（refreshOverlays 按 lastScan verdict 加 .blocked） */
+.favicon-container .dead-indicator.blocked,
+#tree ul li span.dead-indicator.blocked {
+    background: var(--vbm-warning);
+    color: var(--vbm-warning-fg);
 }
 
 /* === v4 task-2 slice D: stats view (docs/v4task-2-list.md §3.4) === */

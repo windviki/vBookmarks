@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Umerket"
   },
+  "deadMarkTimeLabel": {
+    "message": "Merket"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Oppdaget"
+  },
   "deadSortLabel": {
     "message": "Sorter etter"
   },

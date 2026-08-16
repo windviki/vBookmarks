@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "未マーク"
   },
+  "deadMarkTimeLabel": {
+    "message": "マーク日時"
+  },
+  "deadDetectTimeLabel": {
+    "message": "検出日時"
+  },
   "deadSortLabel": {
     "message": "並べ替え"
   },

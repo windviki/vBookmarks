@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Неотмеченные"
   },
+  "deadMarkTimeLabel": {
+    "message": "Отмечено"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Обнаружено"
+  },
   "deadSortLabel": {
     "message": "Сортировать по"
   },

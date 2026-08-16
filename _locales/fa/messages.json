@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "علامت‌نخورده"
   },
+  "deadMarkTimeLabel": {
+    "message": "زمان علامت‌گذاری"
+  },
+  "deadDetectTimeLabel": {
+    "message": "زمان تشخیص"
+  },
   "deadSortLabel": {
     "message": "مرتب‌سازی بر اساس"
   },

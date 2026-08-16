@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "अचिह्नित"
   },
+  "deadMarkTimeLabel": {
+    "message": "चिह्नित समय"
+  },
+  "deadDetectTimeLabel": {
+    "message": "पता लगने का समय"
+  },
   "deadSortLabel": {
     "message": "क्रमबद्ध करें"
   },

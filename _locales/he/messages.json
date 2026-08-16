@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "לא מסומן"
   },
+  "deadMarkTimeLabel": {
+    "message": "סומן ב-"
+  },
+  "deadDetectTimeLabel": {
+    "message": "זוהה ב-"
+  },
   "deadSortLabel": {
     "message": "מיין לפי"
   },

@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "표시 안 됨"
   },
+  "deadMarkTimeLabel": {
+    "message": "표시 시각"
+  },
+  "deadDetectTimeLabel": {
+    "message": "감지 시각"
+  },
   "deadSortLabel": {
     "message": "정렬 기준"
   },

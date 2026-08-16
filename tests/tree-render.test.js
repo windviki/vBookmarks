@@ -322,6 +322,42 @@ describe('generateBookmarkHTML', () => {
         expect(html).not.toContain('row-path');
     });
 
+    // v4.0.7 死链视图: meta.tooltipAppend 追加 tooltip 末行(标记/检测时间),
+    // meta.subRight 让第二行变"左路径 + 右时间"双子结构 —— 均为可选, 其他
+    // 视图不传时保持原有纯文本 `.row-sub` 不变.
+    it('meta.tooltipAppend joins the tooltip as a trailing escaped line', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A', tooltipAppend: 'Marked at 8/16/2026 "10:00"'
+        });
+        expect(html).toContain('title="T\nhttp://e.com/\nFolder A\nMarked at 8/16/2026 &quot;10:00&quot;"');
+    });
+
+    it('meta.subRight renders a two-child row-sub (left path, right time)', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        const html = tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, {
+            path: 'Folder A', subText: 'Folder A', subRight: '8/16/2026 <b>10:00</b>'
+        });
+        expect(html).toContain(
+            '<span class="row-sub" dir="auto">' +
+            '<span class="row-sub-left">Folder A</span>' +
+            '<span class="row-sub-right">8/16/2026 &lt;b&gt;10:00&lt;/b&gt;</span>' +
+            '</span>');
+        // 右侧时间槽存在时仍保留 row-path(窄模式路径)
+        expect(html).toContain('<span class="row-path" dir="auto">Folder A</span>');
+    });
+
+    it('subRight without subText yields a lone right child; without either the row-sub is untouched', () => {
+        const tr = setup({ store: makeStore({ showItemPath: '1' }) });
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { subRight: '8/16/2026' }))
+            .toContain('<span class="row-sub" dir="auto"><span class="row-sub-right">8/16/2026</span></span>');
+        // 不传 subRight → 仍是老结构的纯文本 sub（tree 等视图回归锁定）
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' }))
+            .toContain('<span class="row-sub" dir="auto">Folder A</span>');
+        expect(tr.generateBookmarkHTML('T', 'http://e.com/', '', '1', null, { path: 'Folder A' }))
+            .not.toContain('row-sub-left');
+    });
+
     // v4 task-2 slice C (docs/plan-4.0.0/v4task-2-list.md §3.5): meta.badge renders a
     // status pill (dead/blocked) between the main slot and the right slot.
     it('meta.badge renders the pill between row-main and row-path', () => {

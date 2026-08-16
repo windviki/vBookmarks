@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Jelöletlen"
   },
+  "deadMarkTimeLabel": {
+    "message": "Megjelölve"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Észlelve"
+  },
   "deadSortLabel": {
     "message": "Rendezés"
   },

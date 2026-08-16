@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "İşaretsiz"
   },
+  "deadMarkTimeLabel": {
+    "message": "İşaretlenme zamanı"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Tespit zamanı"
+  },
   "deadSortLabel": {
     "message": "Sıralama ölçütü"
   },

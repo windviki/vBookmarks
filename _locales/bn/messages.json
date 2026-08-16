@@ -273,6 +273,12 @@
   "deadMarkStatusUnmarked": {
     "message": "অচিহ্নিত"
   },
+  "deadMarkTimeLabel": {
+    "message": "চিহ্নিত হয়েছে"
+  },
+  "deadDetectTimeLabel": {
+    "message": "সনাক্ত হয়েছে"
+  },
   "deadSortLabel": {
     "message": "সাজান"
   },
