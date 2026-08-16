@@ -89,7 +89,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         doc: window.document,
         faviconService,
         isEnabled: () => store.get('faviconEnrich', '1') === '1',
-        fallbackEnabled: () => store.get('faviconEnrichAgg', '') === '1'
+        fallbackEnabled: () => store.get('faviconEnrichAgg', '1') === '1'
     });
 
     // The store mirror has no onChanged forwarding, so an options-page

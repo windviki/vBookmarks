@@ -17,7 +17,7 @@
 **原生性约束**（与 vBookmarks 现有架构对齐，不引入异质模式）：
 
 - **零新权限、零 manifest 改动**：`connect-src *` + `host_permissions <all_urls>` 已覆盖 fetch；`img-src 'self' data:` 已覆盖 data URL 注入。
-- **零默认第三方依赖**：主链路只向用户已收藏的站点发请求（等同于访问该站）；第三方聚合兜底（内置服务商列表，§3.4）做成独立子开关、默认关（§6），且带按服务商熔断 + 故障转移。
+- **低默认第三方依赖**：主链路只向用户已收藏的站点发请求（等同于访问该站）；第三方聚合兜底（内置服务商列表，§3.4）做成独立子开关、默认开（§6，直连抓不到的站点经服务商兜底），且带按服务商熔断 + 故障转移。
 - **复用现有基建**：`favicon-fallback` 的占位图识别与反色采样、`dead-proxy.js` 的 marker-PAC 代理通道、options 页 Icons 组的开关模式、`tests/helpers/` 测试桩。
 - **遵循「操作即模块」**：纯逻辑全部进 `src/favicon-enrich.js`（ES 模块、可单测），`neat.js` 只做薄接线。
 
@@ -205,7 +205,7 @@ const AGG_PROVIDERS = [
 
 - `sz` 取 **32**（对应树渲染 `_favicon` 的 32px 请求；16px 显示由浏览器下采样，HiDPI 清晰）。favicon-run 的 `sz` 非法/缺省回落默认尺寸（实测 `sz=999` → 等价 sz=16），不影响校验。
 - 带端口或奇异主机名的 host（如 `example.com:8080`）按原样传参可能各家都查不到——落到 failed 24h 即可，无需特殊处理。
-- DDG 占位污染（200+自家占位）仍在，但被限制在「favicon-run 也查不到（500）或整体不可达」的 host 上——严格优于早期实现中的「DDG 唯一聚合」；且该层默认关。
+- DDG 占位污染（200+自家占位）仍在，但被限制在「favicon-run 也查不到（500）或整体不可达」的 host 上——严格优于早期实现中的「DDG 唯一聚合」；该层默认开，介意第三方触达的用户可自行关闭。
 - favicon-run 是较新（2026-06 上线月更）的独立开发者服务，可靠性不如 DDG——正因如此才需要「列表 + 独立熔断 + 故障转移」；它失效即回退 duckduckgo 或默认 SVG，无损。
 
 ---
@@ -362,7 +362,7 @@ chrome.storage.local:
 
 ### 5.4 设置备份排除与手动清除
 
-- **备份排除**：选项页导出打包整个 local 区（options.js:237-256），在导出装配处按前缀剔除：`Object.keys(localData).forEach(k => { if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:')) delete localData[k]; })`——否则每个设置备份膨胀数 MB。导入是 merge 语义，旧备份里没有这些键，自然无兼容问题。
+- **备份包含图标缓存**（`faviconBackupInclude`，**默认开**）：选项页导出打包整个 local 区，`favicon-backup` 复选框勾选时**保留** `vbmFaviconIdx` + `vbmFavicon:*` 键（图标随备份携带、导入即复用，避免换机后重新抓取）；取消勾选才按前缀剔除，保持备份精简。导入是 merge 语义，旧备份里没有这些键，自然无兼容问题。
 - **手动清除**（选项页按钮）：`chrome.storage.local.get(null)` → 收集 `vbmFaviconIdx` + 全部 `vbmFavicon:` 前缀键 → `chrome.storage.local.remove(键列表)` → `alert(_m('optionFaviconCacheCleared'))`。打开中的 popup/panel 靠 §5.1 的 onChanged（索引被移除）即刻清空内存 Map，下次渲染重新补全。
 
 ---
@@ -374,11 +374,11 @@ chrome.storage.local:
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `faviconEnrich` | **开** | 主开关：占位图触发 L1/L2（+L3 代理接力 + L4 第三方聚合兜底）补全 |
-| `faviconEnrichAgg` | **关** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.8 首发，无历史包袱） |
+| `faviconEnrichAgg` | **开** | 子开关：追加 L4 第三方聚合兜底——内置服务商列表（favicon-run → duckduckgo）逐家尝试 + 按服务商熔断 + 故障转移（§3.4）。键名直取「聚合兜底」语义（favicon 补全随 4.0.8 首发，无历史包袱） |
 
 - 入 `store.js` 的 `KNOWN_KEYS`（**不进 SYNC_KEYS**——与 faviconContrast 同区同模型；是否联网取图标是设备级网络偏好，不跨设备同步）。缓存的动态 host 键与索引键**不入** KNOWN_KEYS（它们不是设置，且由 enricher 自管）。
 - **主开关默认开的理由**：请求只发往用户自己收藏的网站（等同于访问），无第三方，用户已明确反馈「很多默认图标」——开箱即受益。
-- **聚合兜底默认关的理由**：与项目退役第三方 relay 模板、改用用户自有代理的隐私姿态一致（dead-proxy.js 头注释）；服务商列表会把域名发给 favicon.run / DuckDuckGo 等第三方，必须显式 opt-in。
+- **聚合兜底默认开的理由**：直连抓不到图标的站点（403/反爬/无 `/favicon.ico`）仍占相当比例，默认开能让这些站点也得到图标，开箱受益最大化；隐私触达（把域名发给 favicon.run / DuckDuckGo）在选项 hint 里明说，介意者可一键关闭。
 
 ### 6.2 选项页 UI（Icons 组，`favicon-contrast` 行之后）
 
@@ -388,7 +388,7 @@ chrome.storage.local:
 <li><button id="favicon-cache-clear" type="button"></button></li>
 ```
 
-- `options.js`：`viewSettings` 数组加两项（`{ id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1' }` / `{ id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '' }`），`bindSettingsList` 自动完成绑定；初始化区补 5 个 label/hint/button 的 `_m()` 赋值（`optionFaviconCacheCleared` 在清除按钮 handler 内引用，不做初始化赋值）。
+- `options.js`：`viewSettings` 数组加两项（`{ id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1' }` / `{ id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '1' }`），`bindSettingsList` 自动完成绑定；初始化区补 5 个 label/hint/button 的 `_m()` 赋值（`optionFaviconCacheCleared` 在清除按钮 handler 内引用，不做初始化赋值）。
 - 联动：主开关关 → 聚合兜底子复选框 `disabled`（视觉降级，防「子开母关」的歧义态）。
 - 清除按钮 handler：按 §5.4 的前缀收集 + remove 实现，完成后 alert 提示。选项页没有 enricher 实例，无需其他动作。
 
@@ -516,7 +516,7 @@ chrome.storage.local:
 | 大书签库首屏并发 | 6 限流 + host 去重 + lazy 视口优先 + failed 24h |
 | 某服务商整体直连不可达（区域/ISP 限制） | 按服务商熔断：一次网络失败跳闸该家 6h，期间跳过它并**自动故障转移下一家**；代理在线则经 L3 代理补试（§3.4/§3.3） |
 | 某服务商未来被限流/下线/不可用 | 内置列表 + 独立熔断 = 单家失效不阻塞整体；duckduckgo 兜底仍在；全列表失效回退默认 SVG（§3.4） |
-| 站点 403/反爬 | L2 页面解析 + L3 代理接力 + L4（opt-in，服务商列表聚合兜底） |
+| 站点 403/反爬 | L2 页面解析 + L3 代理接力 + L4（服务商列表聚合兜底，默认开） |
 | 聚合兜底假成功 | favicon-run 对未知/无图标域名返回 HTTP 500 干净拒绝；DDG 200+自家占位作为最后一层兜底接受（§3.4）；四段校验 + Image 解码终验兜底（§3.1） |
 | 熔断误判（偶发网络抖动） | 代价仅是 6h 内跳过可选兜底；到期自动探测愈合 |
 | 存储爆炸（成千上万书签） | 动态字节预算（配额−其他占用）×0.8、60s 刷新 + 超限砍最旧一半 + 超大图标会话级 + 配额错误紧急淘汰 + 失败标记自动清（§5.3） |
@@ -526,7 +526,7 @@ chrome.storage.local:
 | 服务器返回 200+非图片 | 四段校验 + Image 解码终验（§3.1），坏数据不进缓存 |
 | PAC 窗口竞态 | 重试失败落 failed，24h 后自愈（§3.4） |
 | ICO 多尺寸 | `<img>` 加载 ICO 时 Chrome 自动选帧，无需处理 |
-| 隐私观感 | 主链路仅发往用户已收藏站点；第三方兜底独立子开关默认关 + hint 明说熔断行为 |
+| 隐私观感 | 主链路仅发往用户已收藏站点；第三方兜底独立子开关默认开但可一键关闭，hint 明说熔断与第三方触达行为 |
 
 ---
 
@@ -537,7 +537,7 @@ chrome.storage.local:
 | 主开关 `faviconEnrich` | **默认开**，local 区 '1'/'' 模型，入 KNOWN_KEYS |
 | 聚合兜底源 | **内置服务商列表**：`favicon-run`（`GET /favicon?domain=<host>&sz=32`）首选 → `duckduckgo`（`GET icons.duckduckgo.com/ip3/<host>.ico`）兜底（v4，§3.4）；各家判定差异封装为**一致接口** `url(host)` + `interpret(outcome)` |
 | 服务商失败语义 | favicon-run：非 2xx → 干净 `'no-icon'`（消灭假成功）；DDG：2xx 一律 `'icon'`（接受未知域名 200+自家占位，作为最后一层） |
-| 聚合兜底开关 | **独立子开关 `faviconEnrichAgg`，默认关**（键名直取「聚合兜底」语义；隐私姿态与项目一致） |
+| 聚合兜底开关 | **独立子开关 `faviconEnrichAgg`，默认开**（键名直取「聚合兜底」语义；直连抓不到的站点经服务商兜底，介意第三方触达者可关闭） |
 | 服务商不可达 | **按服务商独立熔断**：网络级失败即时跳闸该家 6h（持久化于索引 `down[<id>]`），冷却期内遍历时**跳过它并自动故障转移下一家**，跨会话生效，到期单发探测自愈；**不按 host 重复尝试** |
 | 服务商代理兜底 | **做**：某家直连熔断中（含本次直连刚失败）且死链代理会话在线 → 该家经 L3 的 `addProxyMarker` 补试一次 |
 | 执行位置 | **前端**（popup/panel 页面）——热替换需要行内 DOM 锚点，SW 拿不到 |

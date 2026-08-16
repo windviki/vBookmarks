@@ -107,12 +107,12 @@ const $ = id => document.getElementById(id);
             // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
             { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false },
             // v4.1: favicon 补全 —— 为 Chrome 未缓存图标的收藏站点拉取真实图标，
-            // 默认开启；聚合兜底默认关（第三方服务，opt-in）。
+            // 默认开启；聚合兜底同样默认开（第三方服务，为直连抓不到的站点兜底）。
             { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
-            { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '', inverted: false },
-            // 备份包含补全的图标缓存（vbmFavicon:* + 索引）：默认关，保持
-            // 设置备份精简；开启后导出/导入才携带这份 MB 级 per-site 数据。
-            { id: 'favicon-backup', key: 'faviconBackupInclude', defaultValue: '', inverted: false }
+            { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '1', inverted: false },
+            // 备份包含补全的图标缓存（vbmFavicon:* + 索引）：默认开，导出/导入
+            // 携带这份 per-site 数据；关闭可保持备份精简、图标自动重新抓取。
+            { id: 'favicon-backup', key: 'faviconBackupInclude', defaultValue: '1', inverted: false }
         ];
         // Context menus: the page right-click entry + the collapsed submenu
         // switches (issue #48 follow-up).

@@ -283,7 +283,7 @@ describe('options.js settings backup', () => {
             expect(sb.URLStub.revokeObjectURL).toHaveBeenCalledWith('blob:mock-1');
         });
 
-        it('ships the favicon cache keys only when the Icons backup switch is on', async () => {
+        it('ships the favicon cache keys by default, and strips them when the backup switch is off', async () => {
             const favKey = 'vbmFavicon:github.com';
             const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
             const seeded = {
@@ -291,19 +291,19 @@ describe('options.js settings backup', () => {
                 [favKey]: 'data:image/png;base64,AAAA',
                 vbmFaviconIdx: favIdx
             };
-            // Default (switch off): favicon keys stripped from the export.
+            // Default (switch on): the cache rides along for full-fidelity backup.
             let sb = createSandbox({ chromeLocalData: { ...seeded } });
             await sb.start();
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
-                .toEqual({ __migrated_v1: '1', theme: 'dark' });
-            // Switch on: the cache rides along for full-fidelity backup.
+                .toEqual({ __migrated_v1: '1', theme: 'dark', [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
+            // Switch off: favicon keys stripped from the export to keep it small.
             sb = createSandbox({ chromeLocalData: { ...seeded } });
             await sb.start();
-            sb.elements['favicon-backup'].checked = true;
+            sb.elements['favicon-backup'].checked = false;
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
-                .toEqual({ __migrated_v1: '1', theme: 'dark', [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
+                .toEqual({ __migrated_v1: '1', theme: 'dark' });
         });
     });
 
@@ -392,12 +392,13 @@ describe('options.js settings backup', () => {
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
 
-        it('skips favicon cache keys on import while the switch is off (default)', async () => {
+        it('skips favicon cache keys on import while the switch is off', async () => {
             const sb = createSandbox({
                 chromeLocalData: { __migrated_v1: '1', theme: 'light' },
                 chromeSyncData: {}
             });
             await sb.start();
+            sb.elements['favicon-backup'].checked = false;
             const favIdx = JSON.stringify({ v: 3, down: {}, hosts: { 'github.com': { t: 1, s: 2 } } });
             await pickFile(sb, validBackup({ local: {
                 theme: 'dark',
@@ -411,7 +412,7 @@ describe('options.js settings backup', () => {
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
 
-        it('restores favicon cache keys on import when the switch is on', async () => {
+        it('restores favicon cache keys on import by default (switch on)', async () => {
             const sb = createSandbox({
                 chromeLocalData: { __migrated_v1: '1', theme: 'light' },
                 chromeSyncData: {}
