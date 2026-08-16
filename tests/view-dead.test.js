@@ -1286,6 +1286,21 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect(html).toContain('id="dead-item-11"');
     });
 
+    it('残留列表 head：结果在上方带 after-results 分隔线，marked-only 不带（视觉区块区分）', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        // 全部视图：结果列表 + 残留 11 在上方 → head 带分隔线 class，残留区块
+        // 与"本次扫描判定结果"视觉分开
+        expect($list.innerHTML).toContain('class="dead-marked-head after-results"');
+        expect($list.innerHTML).toContain('id="dead-item-12"'); // 结果行在上方
+        // marked-only 视图：无结果列表 → head 保留 base、不带分隔线（head 紧跟
+        // 工具栏，再画线会与工具栏 border-bottom 叠成双线）
+        ctx.clickOn({ closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: 'marked' } } : null) });
+        expect($list.innerHTML).toContain('dead-marked-head');
+        expect($list.innerHTML).not.toContain('dead-marked-head after-results');
+    });
+
     it('filter=marked 叠加 unmarked 回退空态；markFilter 跨会话持久化', () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
         const { $list } = ctx;
@@ -2249,12 +2264,14 @@ describe('marks + overlay (§5.5c)', () => {
         expect(JSON.parse(store.get('deadMarks'))).toEqual(['12']);
         expect($list.innerHTML).toContain('aria-label="deadUnmark"');
         expect(def().badge()).toBe(1);
-        // every marks mutation keeps the tab badge in sync (item 3 fix)
+        // The badge counts the last scan's dead+blocked rows, NOT the marks:
+        // a marks-only mutation must not refresh it (no redundant DOM write
+        // per toggle). The scan-derived count itself is checked above.
         expect(views.badgeCalls).toBeGreaterThan(0);
         const bumps = views.badgeCalls;
         viewDead.toggleMark('12');
         expect(JSON.parse(store.get('deadMarks'))).toEqual([]);
-        expect(views.badgeCalls).toBe(bumps + 1);
+        expect(views.badgeCalls).toBe(bumps);
     });
 
     it('refreshOverlays adds and removes the × on every list, idempotently', () => {
