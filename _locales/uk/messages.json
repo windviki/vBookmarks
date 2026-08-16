@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Очистити результати сканування"
+  },
   "deadFilterAll": {
     "message": "Усі"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Ще не позначено жодних закладок"
   },
   "deadMarkedRow": {
     "message": "Позначено"

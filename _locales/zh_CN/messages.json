@@ -316,6 +316,10 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "清除扫描结果",
+    "description": "Batch button in the dead-link view after Clear all marks: wipe the current scan's dead/blocked verdicts. Marks survive and move to the past-marks category."
+  },
   "deadNone": {
     "message": "没有发现死链"
   },
@@ -1018,6 +1022,10 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "还没有标记过书签",
+    "description": "Empty state of the past-marks (上次标注) category when the last scan left no marks; a scan has run, so this is a plain empty state, not the first-run start button."
   },
   "deadMarkedRow": {
     "message": "已标记",

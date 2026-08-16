@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Tarama sonuçlarını temizle"
+  },
   "deadFilterAll": {
     "message": "Tümü"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Henüz işaretlenmiş yer imi yok"
   },
   "deadMarkedRow": {
     "message": "İşaretli"

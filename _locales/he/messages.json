@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "נקה תוצאות סריקה"
+  },
   "deadFilterAll": {
     "message": "הכל"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "עדיין לא סומנו סימניות"
   },
   "deadMarkedRow": {
     "message": "מסומן"

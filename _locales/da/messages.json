@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Ryd scanresultater"
+  },
   "deadFilterAll": {
     "message": "Alle"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Ingen bogmærker markeret endnu"
   },
   "deadMarkedRow": {
     "message": "Markeret"

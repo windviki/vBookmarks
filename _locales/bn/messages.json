@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "স্ক্যান ফলাফল পরিষ্কার করুন"
+  },
   "deadFilterAll": {
     "message": "সব"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "এখনও কোনো বুকমার্ক চিহ্নিত করা হয়নি"
   },
   "deadMarkedRow": {
     "message": "চিহ্নিত"

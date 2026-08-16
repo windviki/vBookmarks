@@ -281,6 +281,32 @@ describe('scrollbar-contract: sync-tooltip 回归守卫 98e29b3 (G)', () => {
         expect(indicatorBlocked).toContain('color: var(--vbm-warning-fg)');
     });
 
+    it('dead 状态 pill 外层槽: 槽固定宽度、pill 维持文本长度、时间留间隙 (4.0.7)', () => {
+        // pill 背景维持文本长度（不是整体 fill 等宽）；槽是"容纳 pill 的矩形"，
+        // 宽/panel 下固定宽度使时间右对齐到槽左边缘、列对齐稳定。margin 在时间
+        // 与 pill 之间留出间隙。
+        const slot = ruleBody(neatCss, '.row-badge-slot {');
+        for (const p of ['display: inline-flex', 'align-items: center',
+            'max-width: 100%', 'overflow: hidden'])
+            expect(slot, `.row-badge-slot contains ${p}`).toContain(p);
+        // 默认（窄视口）槽无固定宽度——pill 保持紧凑内容宽度（行首锚定，避开
+        // max-width: 100% 里的 "width: 1" 子串）
+        expect(slot).not.toMatch(/^width:\s*\d/m);
+        // 槽内 pill: 贴内容长度（无固定宽度），超长文本 ellipsis 收尾
+        const inner = ruleBody(neatCss, '.row-badge-slot .row-badge {');
+        for (const p of ['margin-inline-end: 0', 'max-width: 100%', 'overflow: hidden',
+            'text-overflow: ellipsis', 'white-space: nowrap'])
+            expect(inner, `.row-badge-slot .row-badge contains ${p}`).toContain(p);
+        expect(inner).not.toMatch(/^width:\s*\d/m);
+        // 宽/panel 槽固定宽度 + 时间与 pill 的间隙
+        const wide = ruleBody(neatCss, '    #dead-list .vbm-row .row-badge-slot {');
+        expect(wide).toContain('width: 56px');
+        expect(wide).toContain('margin-inline-start: 8px');
+        const panel = ruleBody(neatCss, 'body.panel-mode #dead-list .vbm-row .row-badge-slot {');
+        expect(panel).toContain('width: 56px');
+        expect(panel).toContain('margin-inline-start: 8px');
+    });
+
     it('the stats "by recent" time badge undoes the shared pill geometry (issue #47)', () => {
         // The shared .vbm-row .row-badge base sizes every badge as a pill
         // (fixed 14px height / 7px radius / centered 9px type). The time

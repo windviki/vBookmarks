@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Εκκαθάριση αποτελεσμάτων σάρωσης"
+  },
   "deadFilterAll": {
     "message": "Όλα"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Δεν έχουν επισημανθεί σελιδοδείκτες ακόμα"
   },
   "deadMarkedRow": {
     "message": "Σημειωμένο"

@@ -217,10 +217,15 @@ export function initTreeRender(ctx = {}) {
         // + the count/time sort key). Empty entries are skipped.
         const badgeList = meta && Array.isArray(meta.badge) ? meta.badge
             : (meta && meta.badge && meta.badge.text ? [meta.badge] : []);
-        const badge = badgeList.filter(b => b && b.text).map(b =>
+        const badgeHtml = badgeList.filter(b => b && b.text).map(b =>
             `<span class="row-badge ${htmlspecialchars(b.cls || '')}"` +
             (b.aria ? ` aria-label="${htmlspecialchars(b.aria)}"` : '') +
             `>${htmlspecialchars(b.text)}</span>`).join('');
+        // meta.badgeSlot（可选）：把 pill 包进固定宽度的外层槽 `.row-badge-slot`，
+        // 让 pill 背景维持文本长度、而时间等 meta 在槽左边缘对齐。死链视图
+        // 宽/panel 行传 true；其他视图不传 → 结构与老代码完全一致。
+        const badge = meta && meta.badgeSlot && badgeHtml
+            ? `<span class="row-badge-slot">${badgeHtml}</span>` : badgeHtml;
         const nameHtml = (rightText || subHtml || badge)
             ? `<span class="row-main"><i>${name}</i>${subHtml}</span>` + badge +
               (rightText ? `<span class="row-path" dir="auto">${htmlspecialchars(rightText)}</span>` : '')

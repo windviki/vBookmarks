@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Wyczyść wyniki skanowania"
+  },
   "deadFilterAll": {
     "message": "Wszystkie"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Nie oznaczono jeszcze żadnych zakładek"
   },
   "deadMarkedRow": {
     "message": "Oznaczone"

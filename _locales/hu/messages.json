@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Vizsgálati eredmények törlése"
+  },
   "deadFilterAll": {
     "message": "Összes"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Még nincs megjelölt könyvjelző"
   },
   "deadMarkedRow": {
     "message": "Megjelölve"

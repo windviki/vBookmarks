@@ -220,6 +220,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Исчисти ги резултатите од скенирањето"
+  },
   "deadFilterAll": {
     "message": "Сите"
   },
@@ -256,6 +259,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Сè уште нема обележани обележувачи"
   },
   "deadMarkedRow": {
     "message": "Означено"

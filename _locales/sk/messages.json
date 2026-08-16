@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "Vymazať výsledky skenovania"
+  },
   "deadFilterAll": {
     "message": "Všetky"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "Zatiaľ nie sú označené žiadne záložky"
   },
   "deadMarkedRow": {
     "message": "Označené"

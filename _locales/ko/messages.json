@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "스캔 결과 지우기"
+  },
   "deadFilterAll": {
     "message": "모두"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "아직 표시된 북마크가 없습니다"
   },
   "deadMarkedRow": {
     "message": "표시됨"

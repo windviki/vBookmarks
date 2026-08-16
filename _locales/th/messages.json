@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "ล้างผลการสแกน"
+  },
   "deadFilterAll": {
     "message": "ทั้งหมด"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "ยังไม่มีบุ๊กมาร์กที่ทำเครื่องหมาย"
   },
   "deadMarkedRow": {
     "message": "ทำเครื่องหมายแล้ว"

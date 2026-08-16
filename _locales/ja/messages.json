@@ -221,6 +221,9 @@
       }
     }
   },
+  "deadClearScan": {
+    "message": "スキャン結果をクリア"
+  },
   "deadFilterAll": {
     "message": "すべて"
   },
@@ -257,6 +260,9 @@
         "content": "$1"
       }
     }
+  },
+  "deadMarkedNone": {
+    "message": "マーク済みのブックマークはまだありません"
   },
   "deadMarkedRow": {
     "message": "マーク済み"

@@ -3387,28 +3387,39 @@ body.panel-mode #results ul li.vbm-row:has(.row-sub) a.tree-item-link .favicon-c
     color: var(--vbm-warning-fg);
 }
 
-/* 死链视图状态 pill 的固定宽度槽（宽/panel）：pill 文本长度不一（404/error/
-   timeout/受限…）时，若保持内容宽度，第二行时间（.row-sub-right，右对齐到 pill
-   左边缘）的水平位置会随 pill 宽度漂移、视觉错位。宽/panel 下把死链/受限 pill
-   统一为固定宽度槽——时间右对齐到其左边缘，列对齐稳定（对齐方式参照 dupes/stats
-   视图的右侧 meta 列）。窄视口无第二行时间（.row-sub 隐藏），pill 保持内容宽度
-   紧凑；超长文本（个别本地化"受限"词）以 ellipsis 收尾、绝不撑破对齐列。 */
-@container (min-width: 480px) {
-    #dead-list .vbm-row .row-badge.dead,
-    #dead-list .vbm-row .row-badge.blocked {
-        width: 56px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+/* 死链视图状态 pill 的外层槽（.row-badge-slot，经 tree-render meta.badgeSlot
+   包裹）：pill 背景维持文本长度，槽是"容纳 pill 的矩形"——宽/panel 下槽固定
+   宽度（56px），第二行时间（.row-sub-right 右对齐到槽左边缘）的水平位置不再随
+   pill 文本长度漂移、列对齐稳定（对齐方式参照 dupes/stats 视图的右侧 meta 列）；
+   margin-inline-start 在时间与 pill 之间留出间隙。窄视口无第二行时间
+   （.row-sub 隐藏），槽保持内容宽度、pill 紧凑。超长文本（个别本地化"受限"词）
+   在槽内以 ellipsis 收尾、绝不撑破对齐列。 */
+.row-badge-slot {
+    display: inline-flex;
+    align-items: center;
+    /* 默认无固定宽度：pill 贴内容长度（窄视口 & 其他视图的裸 slot 不存在）。 */
+    max-width: 100%;
+    overflow: hidden;
 }
 
-body.panel-mode #dead-list .vbm-row .row-badge.dead,
-body.panel-mode #dead-list .vbm-row .row-badge.blocked {
-    width: 56px;
+.row-badge-slot .row-badge {
+    margin-inline-end: 0;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+@container (min-width: 480px) {
+    #dead-list .vbm-row .row-badge-slot {
+        width: 56px;
+        margin-inline-start: 8px;
+    }
+}
+
+body.panel-mode #dead-list .vbm-row .row-badge-slot {
+    width: 56px;
+    margin-inline-start: 8px;
 }
 
 /* dead toolbar pieces: determinate progress (2px, token colors), the
