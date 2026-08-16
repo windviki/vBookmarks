@@ -1121,6 +1121,59 @@ describe('collapsed-group submenus (issue #48 follow-up)', () => {
     });
 });
 
+describe('overlong menu items under the 320px popup (i18n length warnings)', () => {
+    // i18n.py verify 报的 27 条"菜单项过长"全部落在 tab-group 折叠子菜单项上
+    // （openBookmarksInExistingGroup / bookmarkOpenInExistingGroup 等，最长 fi
+    // 48ch）。popup body 固定 width:320px，这些项在 zoom>100（menu-item 会随
+    // data-zoom 放大）下 intrinsic 宽可超 320。兜底链：容器 max-width:100% 钳到
+    // 320 + .menu-item overflow:hidden/ellipsis；positionMenu 把 left 钳进
+    // [0, winW-width]，flyout 两侧都放不下时 below 堆叠到入口下方。以下固化
+    // "超长项 + 320px 窄视口"——菜单照常弹出、不越界、正常宽度不被误伤。
+
+    it('clamps an overlong main menu to the 320px viewport and still opens it', () => {
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerWidth: 320, bodyWidth: 320 });
+        bookmarkMenu.offsetWidth = 340; // > viewport: a 48ch item at zoom 150%
+        bookmarkMenu.offsetHeight = 200;
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageX: 150, pageY: 100, clientY: 100 });
+        expect(bookmarkMenu.style.opacity).toBe('1');          // 菜单照常弹出
+        expect(bookmarkMenu.style.maxWidth).toBe('320px');     // 容器钳到视口宽
+        expect(bookmarkMenu.style.left).toBe('0px');           // 贴左缘，不越界
+    });
+
+    it('stacks an overlong flyout below its entry when neither side fits 320px', () => {
+        const { menus, folderTabGroupEntry, folderTabGroupSubmenu, makeFolderRow, openOn } =
+            setup({ innerWidth: 320, bodyWidth: 320, children: { 7: [{ id: '8', title: 'X', url: 'https://x.example' }] } });
+        folderTabGroupSubmenu.offsetWidth = 340; // 超长 tab-group 子菜单项
+        folderTabGroupSubmenu.offsetHeight = 100;
+        openOn(makeFolderRow().span);
+        // 入口在视口中部：左 100 右 220，340 宽 flyout 两侧都放不下
+        folderTabGroupEntry.rect = { left: 100, top: 100, width: 120, height: 26, right: 220, bottom: 126 };
+        menus.openSubmenuFor(folderTabGroupEntry);
+        expect(folderTabGroupSubmenu.style.opacity).toBe('1'); // 弹出
+        expect(folderTabGroupSubmenu.style.left).toBe('0px');  // 钳到左缘不越界
+        expect(folderTabGroupSubmenu.style.top).toBe('126px'); // below 堆叠在入口下方
+    });
+
+    it('does not clamp or shift a normal-width menu (overlong regression guard)', () => {
+        const { bookmarkMenu, makeBookmarkRow, openOn } = setup({ innerWidth: 320, bodyWidth: 320 });
+        bookmarkMenu.offsetWidth = 200; // fits comfortably
+        bookmarkMenu.offsetHeight = 200;
+        const { a } = makeBookmarkRow();
+        openOn(a, { pageX: 150, pageY: 100, clientY: 100 });
+        expect(bookmarkMenu.style.maxWidth).toBe('');          // 未误设 maxWidth
+        expect(bookmarkMenu.style.left).toBe('120px');         // 120=320-200，右缘贴视口
+    });
+
+    it('renders an overlong localized tab-group label verbatim (fi 48ch)', () => {
+        const LONG = 'Avaa kaikki olemassa olevassa välilehtiryhmässä…';
+        const ctx = setup({
+            i18n: key => key === 'tabGroupOptions' ? LONG : key
+        });
+        expect(ctx.byId['bookmark-tab-group-collapse'].textContent).toBe(LONG);
+    });
+});
+
 describe('mac right-click hold', () => {
     it('closes the menu when the right button is released after 500ms', () => {
         const { body, bookmarkMenu, makeBookmarkRow, openOn } = setup({ os: 'mac' });

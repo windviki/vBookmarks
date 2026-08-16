@@ -36,7 +36,7 @@ trap cleanup EXIT
 mkdir -p "$CTX/vBookmarks" "$OUT"
 (cd "$REPO_ROOT" && tar cf - --exclude=./.git --exclude=./node_modules --exclude=./tmp --exclude=./.env --exclude=./.claude --exclude=./.env.example .) \
     | tar xf - -C "$CTX/vBookmarks"
-cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-rightclick-repeat.js,verify-bmlet.js} "$CTX/"
+cp "$REPO_ROOT"/scripts/harness/{Dockerfile,smoke.js,verify-keyboard.js,verify-scrollbars.js,verify-menu-overflow.js,verify-menu-collapse.js,verify-menu-extreme.js,verify-menu-overlong.js,verify-rightclick-repeat.js,verify-bmlet.js} "$CTX/"
 cp "$REPO_ROOT"/scripts/screenshots/{shots.js,shots-matrix.js,shots-i18n.js,shots-palette.js,shots-guide.js,shots-tabgroups.js} "$CTX/"
 cp -r "$REPO_ROOT"/scripts/harness/diag "$CTX/diag"
 
@@ -80,7 +80,11 @@ run_verify verify-menu-collapse.js
 # menus + flyouts must open, stay open and never clip or cover their entry
 # (captures verify-menu-extreme/*).
 run_verify verify-menu-extreme.js
-# Layer 2f — zoom > 100 right-click repeat: the zoom-scaled menu must not grow
+# Layer 2f — overlong localized menu items (the i18n.py "菜单项过长" warnings):
+# fi 48ch tab-group labels under the 320px popup at zoom 100/150 must open and
+# stay inside the viewport (captures verify-menu-overlong/*).
+run_verify verify-menu-overlong.js
+# Layer 2g — zoom > 100 right-click repeat: the zoom-scaled menu must not grow
 # tall enough to cover the triggered row (which turned every follow-up
 # right-click into a dismiss), so a folder row right-clicked repeatedly still
 # reopens the menu each time.
