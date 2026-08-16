@@ -271,7 +271,16 @@ export function initViewDead(ctx = {}) {
     // UNFILTERED set — the toolbar keys off it so the filter segment stays
     // reachable even when the active filter matches nothing (otherwise
     // "blocked only" with zero blocked rows would hide the way back).
+    // 结果行缓存（审计 F3）：一次 render 里 renderToolbar（含 filter 分段循环
+    // 每段一次 resultRows）与 render 会对 allResultRows 求值多次，每次还带
+    // sort —— 大死链集下重复排序。缓存结果行，仅在依赖变化（lastScan、
+    // treeItems、deadSort）时由 invalidateResultRows() 失效。resultRows /
+    // selectableRows 只读该数组，不会 mutate。
+    let cachedResultRows = null;
+    const invalidateResultRows = () => { cachedResultRows = null; };
     const allResultRows = () => {
+        if (cachedResultRows)
+            return cachedResultRows;
         if (!lastScan || !lastScan.results)
             return [];
         const items = [];
@@ -299,6 +308,7 @@ export function initViewDead(ctx = {}) {
         // idle 排序（deadSort）：仅结果行；老备份全 tie 时稳定排序保持 key 序。
         if (rows.length > 1)
             rows.sort(compareRows);
+        cachedResultRows = rows;
         return rows;
     };
 
@@ -560,8 +570,10 @@ export function initViewDead(ctx = {}) {
                     html += `<button class="dead-filter-btn" data-filter="${value}" aria-pressed="${filter === value}">${_m(key)} ${count}</button>`;
                 html += '</span>';
                 // mark-all: result rows only — a marked-only view has none to
-                // batch-mark (the batch bar handles those).
-                if (filteredN)
+                // batch-mark (the batch bar handles those), and under the
+                // 已标注 mark filter every visible result row is already
+                // marked, so "mark all" would be a no-op confirm (审计 F2).
+                if (filteredN && markFilter !== 'marked')
                     html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
             }
             // Batch delete-all: the result view removes every row of the
@@ -587,8 +599,10 @@ export function initViewDead(ctx = {}) {
         html += '</div>';
         // 标注状态筛选 + 排序（第二工具条，独立 .vbm-toolbar = 独立键盘 rung，
         // 与主工具条并列）。仅空闲态：selecting / live 已在上方 early-return。
-        // 全新空态（无扫描无标记）不渲染，保持首启引导纯净。
-        if (lastScan || deadMarks.size) {
+        // gating = 有可见行可过滤/排序才渲染（审计 F1）：有标记（残留列表）或
+        // 有结果行时出现；仅"有缓存但 0 死链 0 标记"的纯空态下不渲染无意义的
+        // 工具条（下方是 deadNone 空态，没有行）。全新空态同理不渲染。
+        if (deadMarks.size || (lastScan && allResultRows().length)) {
             html += '<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">';
             html += '<span class="dead-mark-filter" role="group">';
             for (const [value, key] of MARK_FILTERS)
@@ -673,13 +687,20 @@ export function initViewDead(ctx = {}) {
             const { item } = rows[i];
             const sel = selecting && selected.has(item.id);
             const path = views.pathOf(item.id);
+            // 残留行的"已标注"badge 按来源着色（审计 F4）：一次标注的来源是
+            // 过去的死链（danger 红）或受限（warning 琥珀）——本行若在 lastScan
+            // 里判过 blocked 就读琥珀，其余（dead / ok / 未探测 / 无缓存）一律
+            // 红。idle 完成扫描后残留行多为健康/未探测，自然落红；live 扫描中
+            // 未判定标记可查上轮 verdict。
+            const verdict = lastScan && lastScan.results && lastScan.results[item.id];
+            const badgeCls = verdict && verdict.status === 'blocked' ? 'blocked' : 'dead';
             html += `<li class="vbm-row${sel ? ' sel' : ''}" id="dead-item-${item.id}" ` +
                 `role="listitem" data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     rightText: path,
                     subText: path,
-                    badge: { text: _m('deadMarkedRow'), cls: 'dead' }
+                    badge: { text: _m('deadMarkedRow'), cls: badgeCls }
                 }) +
                 (selecting ? '' :
                     `<button class="row-btn dead-mark-btn marked" ` +
@@ -896,6 +917,10 @@ export function initViewDead(ctx = {}) {
     };
 
     const markAll = () => {
+        // 已标注筛选下可见结果行全是已标注的——"标注全部"无对象，直接返回
+        // （按钮已隐藏，这里兜底防其他入口）。
+        if (markFilter === 'marked')
+            return;
         const rows = resultRows();
         if (!rows.length)
             return;
@@ -980,6 +1005,7 @@ export function initViewDead(ctx = {}) {
                     undo.showToast(_m('deadDeleted', `${removed}`));
                     for (const id of doomed)
                         treeItems.delete(id);
+                    invalidateResultRows(); // 删除后 treeItems 变动 → 结果行重算
                     // Rebuild the tree: the batch removal goes straight to
                     // chrome.bookmarks.remove and the tree has no onRemoved
                     // listener of its own — without this the deleted rows
@@ -1191,6 +1217,7 @@ export function initViewDead(ctx = {}) {
         } catch (e) {
             lastScan = null;
         }
+        invalidateResultRows(); // 新缓存 → 结果行重算
         if (lastScan && lastScan.results)
             refreshOverlays();
         // The tab badge is now the scan's dead+blocked count — a finished run
@@ -1278,6 +1305,7 @@ export function initViewDead(ctx = {}) {
         // on the next scan.
         if (lastScan && lastScan.results && id in lastScan.results) {
             delete lastScan.results[id];
+            invalidateResultRows(); // 缓存 verdict 原地删了一个 id
             views.updateBadges();
         }
     });
@@ -1289,6 +1317,7 @@ export function initViewDead(ctx = {}) {
                 // re-join against the live tree, then repaint
                 chrome.bookmarks.getTree(t => {
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
+                    invalidateResultRows(); // tree join 重建 → 结果行重算
                     render();
                 });
             }
@@ -1629,6 +1658,7 @@ export function initViewDead(ctx = {}) {
                 chrome.bookmarks.getTree(t => {
                     // the first entry builds the tree-item map the rows join against
                     treeItems = new Map(scannableItems(t).map(item => [item.id, item]));
+                    invalidateResultRows(); // tree join 重建 → 结果行重算
                     render();
                     // Refresh the tab badge now that lastScan is available: the
                     // activation-time updateBadges ran BEFORE the async storage
@@ -1648,6 +1678,7 @@ export function initViewDead(ctx = {}) {
                 } catch (e) {
                     lastScan = null;
                 }
+                invalidateResultRows(); // 直接读 storage 的缓存同样要失效
                 applyBlob(data[DEAD_SCAN_KEY]);
                 treeAndRender();
             });
@@ -1694,6 +1725,7 @@ export function initViewDead(ctx = {}) {
                 return;
             deadSort = ['detected', 'path', 'marked'].indexOf(value) !== -1 ? value : 'detected';
             store.set('deadSort', deadSort);
+            invalidateResultRows(); // 排序键变化 → 结果行重算
             render();
             const t = $list.querySelector('.dead-sort .vbm-dropdown-trigger');
             if (t && t.focus)
