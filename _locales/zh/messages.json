@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "未标记"
   },
+  "deadMarkTimeLabel": {
+    "message": "标记时间"
+  },
+  "deadDetectTimeLabel": {
+    "message": "检测时间"
+  },
   "deadSortLabel": {
     "message": "排序方式"
   },

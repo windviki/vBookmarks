@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Nepažymėti"
   },
+  "deadMarkTimeLabel": {
+    "message": "Pažymėta"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Aptikta"
+  },
   "deadSortLabel": {
     "message": "Rūšiuoti pagal"
   },

@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Chưa đánh dấu"
   },
+  "deadMarkTimeLabel": {
+    "message": "Thời gian đánh dấu"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Thời gian phát hiện"
+  },
   "deadSortLabel": {
     "message": "Sắp xếp theo"
   },

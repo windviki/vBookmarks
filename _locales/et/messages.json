@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Märkimata"
   },
+  "deadMarkTimeLabel": {
+    "message": "Märgitud kell"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Tuvastatud kell"
+  },
   "deadSortLabel": {
     "message": "Sorteeri"
   },

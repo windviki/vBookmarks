@@ -185,14 +185,32 @@ export function initTreeRender(ctx = {}) {
         // adds meta.badge.aria for pills whose bare text isn't self-explanatory
         // (the stats ×N count pill gets "Visited N times").
         const path = (meta && meta.path) ? String(meta.path) : '';
-        const tooltip = path
+        const tooltip = (path
             ? `${htmlspecialchars(title || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle')))}\n${tooltipURL}\n${htmlspecialchars(path)}`
-            : tooltipURL;
+            : tooltipURL) +
+            // meta.tooltipAppend（可选，死链视图追加标记/检测时间）：追加在
+            // tooltip 末行；其他视图不传 → 行为不变。escape 与其余 segment 一致。
+            (meta && meta.tooltipAppend ? `\n${htmlspecialchars(meta.tooltipAppend)}` : '');
         const showPath = path && !!store.get('showItemPath', '1');
         const rightText = meta && typeof meta.rightText === 'string'
             ? meta.rightText : (showPath ? path : '');
         const subText = meta && typeof meta.subText === 'string'
             ? meta.subText : (showPath ? path : '');
+        // meta.subRight（可选，死链视图宽/panel 第二行右侧的时间）：仅当其存在
+        // 时第二行才改用"左子 + 右子"结构（左路径可截断、右时间推右对齐）；其他
+        // 视图不传 → 保持纯文本 `.row-sub` 不变（tree-render.test.js 锁定结构）。
+        const subRight = meta && typeof meta.subRight === 'string' ? meta.subRight : '';
+        // 双子结构仅在 subRight 存在时启用：subText 单文本时保持老结构的纯文本
+        // `.row-sub`（tree/search 等视图回归锁定）；有右侧时间槽时路径包进
+        // `.row-sub-left` 可截断、时间在 `.row-sub-right` 右对齐。
+        const subHtml = (subText || subRight)
+            ? `<span class="row-sub" dir="auto">` +
+              (subRight
+                  ? (subText ? `<span class="row-sub-left">${htmlspecialchars(subText)}</span>` : '') +
+                    `<span class="row-sub-right">${htmlspecialchars(subRight)}</span>`
+                  : htmlspecialchars(subText)) +
+              `</span>`
+            : '';
         // A view badge via meta.badge = { text, cls } (object form, the
         // dead/dupes/stats convention) — or an ARRAY of them, when one row
         // needs two independent pills (the stats merge: ★ bookmarked marker
@@ -203,10 +221,8 @@ export function initTreeRender(ctx = {}) {
             `<span class="row-badge ${htmlspecialchars(b.cls || '')}"` +
             (b.aria ? ` aria-label="${htmlspecialchars(b.aria)}"` : '') +
             `>${htmlspecialchars(b.text)}</span>`).join('');
-        const nameHtml = (rightText || subText || badge)
-            ? `<span class="row-main"><i>${name}</i>` +
-              (subText ? `<span class="row-sub" dir="auto">${htmlspecialchars(subText)}</span>` : '') +
-              `</span>` + badge +
+        const nameHtml = (rightText || subHtml || badge)
+            ? `<span class="row-main"><i>${name}</i>${subHtml}</span>` + badge +
               (rightText ? `<span class="row-path" dir="auto">${htmlspecialchars(rightText)}</span>` : '')
             : `<i>${name}</i>`;
 

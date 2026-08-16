@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Umarkeret"
   },
+  "deadMarkTimeLabel": {
+    "message": "Markeret"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Opdaget"
+  },
   "deadSortLabel": {
     "message": "Sorter efter"
   },

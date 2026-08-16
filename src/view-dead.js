@@ -379,6 +379,19 @@ export function initViewDead(ctx = {}) {
     // "未标注"筛选下它们不该出现在视野里）；其余状态原样透出。
     const visibleMarkedRows = () => markFilter === 'unmarked' ? [] : markedRows();
 
+    // 第二工具条计数：按当前分类（filter）划分标注状态。全部 = 该分类下可见行
+    // 总数（= 已标注 + 未标注）。残留（过去标注）只在它可见的分类（全部 / 上次
+    // 标注 / 无扫描）计入"已标注"；仅死链/仅受限分类下残留不可见、不计入。
+    const markStatusCounts = () => {
+        const markedOnly = filter === 'marked' || !lastScan;
+        const rows = markedOnly ? [] : (filter === 'all'
+            ? allResultRows() : allResultRows().filter(r => r.result.status === filter));
+        const residue = (markedOnly || filter === 'all') ? markedRows().length : 0;
+        const marked = rows.filter(r => deadMarks.has(r.item.id)).length + residue;
+        const unmarked = rows.length - (marked - residue);
+        return { all: marked + unmarked, marked, unmarked };
+    };
+
     // 空闲态排序（deadSort）：结果行与残留标注列表共用同一比较器，全视图视觉
     // 一致。'detected' 用扫描的 per-row ts（老备份无 ts → 0 → 全 tie → 稳定
     // 排序回退 Object.entries 的 key 序）；'path' 用 views.pathOf；'marked' 用
@@ -603,10 +616,14 @@ export function initViewDead(ctx = {}) {
         // 有结果行时出现；仅"有缓存但 0 死链 0 标记"的纯空态下不渲染无意义的
         // 工具条（下方是 deadNone 空态，没有行）。全新空态同理不渲染。
         if (deadMarks.size || (lastScan && allResultRows().length)) {
+            const counts = markStatusCounts();
             html += '<div class="dead-toolbar dead-mark-toolbar vbm-toolbar">';
             html += '<span class="dead-mark-filter" role="group">';
-            for (const [value, key] of MARK_FILTERS)
-                html += `<button class="dead-mark-filter-btn" data-markfilter="${value}" aria-pressed="${markFilter === value}">${_m(key)}</button>`;
+            for (const [value, key] of MARK_FILTERS) {
+                const n = value === 'marked' ? counts.marked
+                    : value === 'unmarked' ? counts.unmarked : counts.all;
+                html += `<button class="dead-mark-filter-btn" data-markfilter="${value}" aria-pressed="${markFilter === value}">${_m(key)} ${n}</button>`;
+            }
             html += '</span>';
             html += dropdownHtml('dead-sort', 'deadSortLabel', DEAD_SORT_OPTS, deadSort);
             html += '</div>';
@@ -629,6 +646,10 @@ export function initViewDead(ctx = {}) {
             `<ul id="${cls}-listbox" class="vbm-dropdown-list" role="listbox" aria-label="${_m(labelKey)}" hidden>` + opts + '</ul></div>';
     };
 
+    // 绝对时间（检测时间/标记时间）：行的第二行右侧与 tooltip 追加使用。老备份
+    // 无 per-row ts、未标记行无标记时间 → 返回空串（"标记时间没有就不显示"）。
+    const fmtTime = ts => (typeof ts === 'number' && ts) ? new Date(ts).toLocaleString() : '';
+
     // One <ul> of result rows — shared by the cached result set and the
     // progressive mid-scan list (same row markup, same buttons).
     const renderRows = rows => {
@@ -639,6 +660,14 @@ export function initViewDead(ctx = {}) {
             const path = views.pathOf(item.id);
             const marked = deadMarks.has(item.id);
             const sel = selecting && selected.has(item.id);
+            // 时间信息：标记时间（有则显）+ 检测时间（per-row ts）。第二行右侧
+            // (subRight) 显示 `标记时间 · 检测时间`；tooltip 追加同两行带标签。
+            const markTime = deadMarkTimes.get(item.id);
+            const detectTime = typeof result.ts === 'number' ? result.ts : null;
+            const times = [markTime, detectTime].filter(t => t).map(fmtTime).join(' · ');
+            const tip = [];
+            if (markTime) tip.push(`${_m('deadMarkTimeLabel')} ${fmtTime(markTime)}`);
+            if (detectTime) tip.push(`${_m('deadDetectTimeLabel')} ${fmtTime(detectTime)}`);
             html += `<li class="vbm-row${sel ? ' sel' : ''}${blocked ? ' blocked' : ''}" ` +
                 `id="dead-item-${item.id}" role="listitem" data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
@@ -649,7 +678,12 @@ export function initViewDead(ctx = {}) {
                     // to be visible (docs/plan-4.0.0/v4task-2-list.md §3.5 row spec:
                     // "[icon][title ……] [×dead | ⇄直连×] [path]").
                     rightText: path,
+                    // 宽/panel 第二行：路径左对齐（subText）+ 时间右对齐（subRight）。
+                    // 窄视口 row-sub 隐藏、右侧槽只显示 path（rightText）→ 时间仅
+                    // 存 tooltip（追加在下方）。
                     subText: path,
+                    subRight: times,
+                    tooltipAppend: tip.join('\n'),
                     badge: {
                         // statusLabel expects the direct channel's
                         // raw verdict (numeric / 'error'+name)
@@ -691,15 +725,21 @@ export function initViewDead(ctx = {}) {
             // 过去的死链（danger 红）或受限（warning 琥珀）——本行若在 lastScan
             // 里判过 blocked 就读琥珀，其余（dead / ok / 未探测 / 无缓存）一律
             // 红。idle 完成扫描后残留行多为健康/未探测，自然落红；live 扫描中
-            // 未判定标记可查上轮 verdict。
+            // 未判定标记可查上轮 verdict。li 同步带 blocked class → ⚑ 按钮与
+            // tree overlay 的颜色随来源（受限橙 / 其余红）。
             const verdict = lastScan && lastScan.results && lastScan.results[item.id];
             const badgeCls = verdict && verdict.status === 'blocked' ? 'blocked' : 'dead';
-            html += `<li class="vbm-row${sel ? ' sel' : ''}" id="dead-item-${item.id}" ` +
+            const markTime = deadMarkTimes.get(item.id);
+            const tip = markTime ? `${_m('deadMarkTimeLabel')} ${fmtTime(markTime)}` : '';
+            html += `<li class="vbm-row${sel ? ' sel' : ''}${badgeCls === 'blocked' ? ' blocked' : ''}" ` +
+                `id="dead-item-${item.id}" ` +
                 `role="listitem" data-node-id="${item.id}">` +
                 treeRender.generateBookmarkHTML(item.title, item.url, 'data-virtual="1"', item.id, null, {
                     path,
                     rightText: path,
                     subText: path,
+                    subRight: fmtTime(markTime),
+                    tooltipAppend: tip,
                     badge: { text: _m('deadMarkedRow'), cls: badgeCls }
                 }) +
                 (selecting ? '' :
@@ -882,11 +922,19 @@ export function initViewDead(ctx = {}) {
                 const fav = li.querySelector ? li.querySelector('.favicon-container') : null;
                 if (!fav)
                     continue;
+                const id = rowIdOf(li);
+                // 死链=红（默认），受限=橙：按该 id 在本次扫描中的 verdict 着色
+                // （残留标记无 verdict / 老备份 → 红，与残留行 badge 同规则）。
+                const verdict = lastScan && lastScan.results && lastScan.results[id];
+                const blocked = verdict && verdict.status === 'blocked';
+                const cls = `dead-indicator${blocked ? ' blocked' : ''}`;
                 const existing = fav.querySelector('.dead-indicator');
-                if (deadMarks.has(rowIdOf(li))) {
-                    if (!existing) {
+                if (deadMarks.has(id)) {
+                    if (existing)
+                        existing.className = cls; // verdict 可能随新扫描变化
+                    else {
                         const span = document.createElement('span');
-                        span.className = 'dead-indicator';
+                        span.className = cls;
                         span.textContent = '×';
                         fav.appendChild(span);
                     }

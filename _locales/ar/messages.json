@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "غير موسوم"
   },
+  "deadMarkTimeLabel": {
+    "message": "وُسم في"
+  },
+  "deadDetectTimeLabel": {
+    "message": "اكتُشف في"
+  },
   "deadSortLabel": {
     "message": "ترتيب حسب"
   },

@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "未標記"
   },
+  "deadMarkTimeLabel": {
+    "message": "標記於"
+  },
+  "deadDetectTimeLabel": {
+    "message": "偵測於"
+  },
   "deadSortLabel": {
     "message": "排序方式"
   },

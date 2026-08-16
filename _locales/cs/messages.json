@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Neoznačeno"
   },
+  "deadMarkTimeLabel": {
+    "message": "Označeno v"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Detekováno v"
+  },
   "deadSortLabel": {
     "message": "Řadit podle"
   },

@@ -84,7 +84,10 @@ const makeLi = (id, nodeId) => {
     const fav = {
         children: [],
         querySelector(sel) {
-            return this.children.filter(c => c.className === sel.slice(1))[0] || null;
+            // class-token 匹配：真实 DOM 的 querySelector('.dead-indicator') 也命中
+            // 'dead-indicator blocked'（overlay 按 verdict 着色后的双 class）。
+            const cls = sel.slice(1);
+            return this.children.filter(c => c.className.split(' ').includes(cls))[0] || null;
         },
         appendChild(c) {
             this.children.push(c);
@@ -1548,6 +1551,150 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect(treeRender.calls.filter(c => c.id === '12').at(-1).meta.badge)
             .toEqual({ text: 'deadMarkedRow', cls: 'dead' });
     });
+
+    // --- 两工具条组合覆盖 + 计数 + 时间 + 残留着色（4.0.7 死链视图优化 v2）---
+    // 丰富死链列表，多种类型都有：11 ok（标记 → 健康残留）、12 dead 已标注、
+    // 13 blocked 未标注、14 dead 未标注（老备份无 per-row ts）、15 blocked 已标注。
+    // marks=11+12+15 → 残留只有 11（12/15 骑结果行），12/15 结果行已标注。
+    const RICH_TREE = [{
+        id: '0', title: '', children: [{
+            id: '1', title: 'Bar', children: [
+                { id: '11', parentId: '1', title: 'Fine', url: 'https://fine.example/', dateAdded: 100 },
+                { id: '12', parentId: '1', title: 'Gone', url: 'https://gone.example/page', dateAdded: 200 },
+                { id: '13', parentId: '1', title: 'Blocked', url: 'https://blocked.example/', dateAdded: 300 },
+                { id: '14', parentId: '1', title: 'Dead2', url: 'https://dead2.example/', dateAdded: 400 },
+                { id: '15', parentId: '1', title: 'Blocked2', url: 'https://blocked2.example/', dateAdded: 500 }
+            ]
+        }]
+    }];
+    const RICH_CACHE = JSON.stringify({
+        ts: 1700000000000, scannedCount: 5,
+        results: {
+            '11': { status: 'ok', code: 200, ts: 1700000001000 },
+            '12': { status: 'dead', code: 404, ts: 1700000002000 },
+            '13': { status: 'blocked', code: 404, ts: 1700000003000 },
+            '14': { status: 'dead', code: 500 },          // 老备份：无 per-row ts
+            '15': { status: 'blocked', code: 403, ts: 1700000004000 }
+        }
+    });
+    const RICH_STORE = {
+        deadLastScan: RICH_CACHE,
+        deadMarks: '["11","12","15"]',
+        deadMarkTimes: '{"11":1700000005000,"12":1700000006000,"15":1700000007000}'
+    };
+    // 死链行路径标签直接来自 views.pathOf（定位死书签需始终显示所在文件夹）：
+    // RICH_TREE 里 11-15 都在文件夹 '1'(Bar) 下 → 路径固定 'Bar'.
+    const richSetup = () => setup({ tree: RICH_TREE, storeData: RICH_STORE, pathOf: () => 'Bar' });
+    const filterClick = (ctx, f) => ctx.clickOn({
+        closest: sel => (sel === '.dead-filter-btn' ? { dataset: { filter: f } } : null)
+    });
+
+    it('两工具条全组合：filter × markFilter 的可见行集合逐组合正确', () => {
+        const ctx = richSetup();
+        const { $list } = ctx;
+        ctx.def().activate();
+        const rowIds = () => [...$list.innerHTML.matchAll(/id="dead-item-(\d+)"/g)]
+            .map(m => m[1]).sort();
+        // 12 组合矩阵：主 filter（all/dead/blocked/marked）× 第二工具条（''/marked/unmarked）。
+        // 结果行 12/13/14/15 + 残留 11；残留只在 all 与 marked-only 视图渲染。
+        const combos = [
+            { f: 'all',     m: '',         rows: ['11', '12', '13', '14', '15'] },
+            { f: 'all',     m: 'marked',   rows: ['11', '12', '15'] },
+            { f: 'all',     m: 'unmarked', rows: ['13', '14'] },
+            { f: 'dead',    m: '',         rows: ['12', '14'] },
+            { f: 'dead',    m: 'marked',   rows: ['12'] },
+            { f: 'dead',    m: 'unmarked', rows: ['14'] },
+            { f: 'blocked', m: '',         rows: ['13', '15'] },
+            { f: 'blocked', m: 'marked',   rows: ['15'] },
+            { f: 'blocked', m: 'unmarked', rows: ['13'] },
+            { f: 'marked',  m: '',         rows: ['11'] },
+            { f: 'marked',  m: 'marked',   rows: ['11'] },
+            { f: 'marked',  m: 'unmarked', rows: [] }
+        ];
+        for (const c of combos) {
+            filterClick(ctx, c.f);
+            markFilterClick(ctx, c.m);
+            expect(rowIds(), `filter=${c.f} markFilter=${c.m}`)
+                .toEqual([...c.rows].sort());
+            if (c.f === 'marked' && c.m === 'unmarked')
+                // 残留全是已标注 → 无可见行，回退可执行的 start 空态
+                expect($list.innerHTML).toContain('class="empty-state dead-start"');
+            else if (!c.rows.length)
+                // 分类下该标注状态无行 → 区分"扫描无结果"的空态提示
+                expect($list.innerHTML).toContain('deadNoneFiltered');
+        }
+    });
+
+    it('第二工具条计数：全部=该分类结果行+残留，已标注/未标注各按其列；残留仅 all/marked 计入', () => {
+        const ctx = richSetup();
+        const { $list } = ctx;
+        ctx.def().activate();
+        const counts = () => {
+            const g = re => ($list.innerHTML.match(re) || [])[1];
+            return {
+                all: g(/>deadMarkStatusAll (\d+)</),
+                marked: g(/>deadMarkStatusMarked (\d+)</),
+                unmarked: g(/>deadMarkStatusUnmarked (\d+)</)
+            };
+        };
+        // 全部：5 结果行 + 残留 1（11）；已标注 = 结果行 12/15 + 残留 11 = 3
+        expect(counts()).toEqual({ all: '5', marked: '3', unmarked: '2' });
+        // 仅死链：残留不可见不计入 → 2 = 已标注 1（12）+ 未标注 1（14）
+        filterClick(ctx, 'dead');
+        expect(counts()).toEqual({ all: '2', marked: '1', unmarked: '1' });
+        // 仅受限：13 未标注 + 15 已标注
+        filterClick(ctx, 'blocked');
+        expect(counts()).toEqual({ all: '2', marked: '1', unmarked: '1' });
+        // 上次标注：无结果行，全部 = 残留 1（全是已标注，未标注 0）
+        filterClick(ctx, 'marked');
+        expect(counts()).toEqual({ all: '1', marked: '1', unmarked: '0' });
+        // 计数描述该分类的总量，不随第二工具条的 markFilter 变化
+        markFilterClick(ctx, 'unmarked');
+        expect(counts()).toEqual({ all: '1', marked: '1', unmarked: '0' });
+    });
+
+    it('行右侧保留路径；宽/panel 第二行（subRight）显示绝对时间；tooltip 追加带标签时间；无时间不显示', () => {
+        const ctx = richSetup();
+        const { treeRender } = ctx;
+        ctx.def().activate();
+        const ts = t => new Date(t).toLocaleString();
+        // 12：已标注死链 → 标记时间 · 检测时间都在 subRight，tooltip 带两个标签
+        const c12 = treeRender.calls.find(c => c.id === '12');
+        expect(c12.meta.rightText).toBe('Bar');            // 窄视口右侧仍是路径
+        expect(c12.meta.subText).toBe('Bar');              // 宽第二行左侧仍是路径
+        expect(c12.meta.subRight).toBe(`${ts(1700000006000)} · ${ts(1700000002000)}`);
+        expect(c12.meta.tooltipAppend).toContain('deadMarkTimeLabel');
+        expect(c12.meta.tooltipAppend).toContain('deadDetectTimeLabel');
+        // 13：受限未标注 → 只有检测时间
+        const c13 = treeRender.calls.find(c => c.id === '13');
+        expect(c13.meta.subRight).toBe(ts(1700000003000));
+        expect(c13.meta.tooltipAppend).toContain('deadDetectTimeLabel');
+        expect(c13.meta.tooltipAppend).not.toContain('deadMarkTimeLabel');
+        // 14：老备份无 ts 且未标注 → 无时间，subRight/tooltip 空（"没有就不显示"）
+        const c14 = treeRender.calls.find(c => c.id === '14');
+        expect(c14.meta.subRight).toBe('');
+        expect(c14.meta.tooltipAppend).toBe('');
+        // 残留 11：只有标记时间（残留无检测时间语义）
+        const c11 = treeRender.calls.filter(c => c.id === '11').at(-1);
+        expect(c11.meta.subRight).toBe(ts(1700000005000));
+        expect(c11.meta.tooltipAppend).toContain('deadMarkTimeLabel');
+        expect(c11.meta.tooltipAppend).not.toContain('deadDetectTimeLabel');
+    });
+
+    it('残留行 li 带 blocked class 当上轮 verdict=blocked（⚑/overlay 颜色随来源）', () => {
+        const ctx = setup({ storeData: {
+            deadLastScan: JSON.stringify({ ts: 1700000000000, scannedCount: 2, results: {
+                '11': { status: 'ok', code: 200 },
+                '12': { status: 'blocked', code: 404 }
+            } }),
+            deadMarks: '["12"]'
+        } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        publishBlob(ctx, blobOf({ done: 0, results: {} })); // 扫描中，12 未判定 → 残留
+        expect($list.innerHTML).toMatch(
+            /<li class="vbm-row[^"]* blocked[^"]*" id="dead-item-12"/);
+    });
 });
 
 describe('multi-scan lifecycle — docs/dead-过去标注语义.md §2 (§2.1-§2.4 + §4 counts)', () => {
@@ -2018,6 +2165,38 @@ describe('marks + overlay (§5.5c)', () => {
         ctx.viewDead.toggleMark('12');
         expect(liMarked._fav.children).toEqual([]);
         expect(liDupes._fav.children).toEqual([]);
+    });
+
+    it('overlay 着色: 死链=dead-indicator 红, 受限=dead-indicator blocked 橙, verdict 变化更新 class', () => {
+        // 语义: 浮动 ⚑ 与行内 badge 同规则 —— 默认红(死链), blocked 橙(受限).
+        const liDead = makeLi('results-item-12', '12');
+        const liBlocked = makeLi('results-item-13', '13');
+        const ctx = setup({ treeLis: [liDead, liBlocked] });
+        ctx.$results._lis = [liDead, liBlocked];
+        finishScan(ctx, {
+            '12': { status: 'dead', code: 404 },
+            '13': { status: 'blocked', code: 404 }
+        });
+        // 尚未标注 → 无 indicator
+        ctx.viewDead.refreshOverlays();
+        expect(liDead._fav.children.map(c => c.className)).toEqual([]);
+        // 标注后按各自 verdict 着色
+        ctx.viewDead.toggleMark('12');
+        ctx.viewDead.toggleMark('13');
+        ctx.viewDead.refreshOverlays();
+        expect(liDead._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
+        expect(liBlocked._fav.children.map(c => c.className)).toEqual(['dead-indicator blocked']);
+        // 取消标注 → indicator 消失
+        ctx.viewDead.toggleMark('13');
+        expect(liBlocked._fav.children.map(c => c.className)).toEqual([]);
+    });
+
+    it('overlay verdict 依赖 live lastScan: 无扫描(仅残留标注)时默认死链红', () => {
+        // 用户场景: 旧标注残留, 当前无扫描结果 → 无 verdict 可查 → 默认红.
+        const li = makeLi('neat-tree-item-12', '12');
+        const ctx = setup({ treeLis: [li], storeData: { deadMarks: '["12"]' } });
+        ctx.viewDead.refreshOverlays();
+        expect(li._fav.children.map(c => c.className)).toEqual(['dead-indicator']);
     });
 
     it('an all-healthy rescan keeps every past mark as residue (过去标注, §2.4)', () => {

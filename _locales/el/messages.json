@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Μη σημειωμένα"
   },
+  "deadMarkTimeLabel": {
+    "message": "Σημειώθηκε στις"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Εντοπίστηκε στις"
+  },
   "deadSortLabel": {
     "message": "Ταξινόμηση κατά"
   },

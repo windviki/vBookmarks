@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Non contrassegnati"
   },
+  "deadMarkTimeLabel": {
+    "message": "Contrassegnato il"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Rilevato il"
+  },
   "deadSortLabel": {
     "message": "Ordina per"
   },

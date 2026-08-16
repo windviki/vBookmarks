@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Непозначені"
   },
+  "deadMarkTimeLabel": {
+    "message": "Позначено:"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Виявлено:"
+  },
   "deadSortLabel": {
     "message": "Сортувати за"
   },

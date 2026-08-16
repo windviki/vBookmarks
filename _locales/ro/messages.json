@@ -264,6 +264,12 @@
   "deadMarkStatusUnmarked": {
     "message": "Nemarcate"
   },
+  "deadMarkTimeLabel": {
+    "message": "Marcat la"
+  },
+  "deadDetectTimeLabel": {
+    "message": "Detectat la"
+  },
   "deadSortLabel": {
     "message": "Sortează după"
   },

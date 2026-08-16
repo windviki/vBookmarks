@@ -1089,6 +1089,14 @@
     "message": "Unmarked",
     "description": "Dead view second toolbar (mark-status filter): show only rows without the user's dead mark."
   },
+  "deadMarkTimeLabel": {
+    "message": "Marked at",
+    "description": "Dead view row tooltip label: the absolute time a row was marked dead (appended to the tooltip, and to the second line of the wide/panel layout)."
+  },
+  "deadDetectTimeLabel": {
+    "message": "Detected at",
+    "description": "Dead view row tooltip label: the absolute time a row's scan check returned its dead/blocked verdict (appended to the tooltip, and to the second line of the wide/panel layout)."
+  },
   "deadSortLabel": {
     "message": "Sort by",
     "description": "Dead view sort dropdown: aria-label of the trigger and the listbox."
