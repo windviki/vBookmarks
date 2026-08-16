@@ -96,6 +96,10 @@ export const providerUrl = (id, host) => {
 const HTTP_URL = /^https?:\/\//i;
 const LINK_RE = /<link\b[^>]*>/gi;
 const ATTR_RE = /(rel|href|sizes|type)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/g;
+// TextDecoder instances are heavyweight; one module-level instance is reused
+// for every capped HTML read (each L2/L2-proxy page parse), instead of
+// allocating one per read.
+const TEXT_DECODER = new TextDecoder();
 
 // --- Data URL encoding (pure JS, no DOM) -------------------------------------
 export const bytesToBase64 = bytes => {
@@ -586,7 +590,7 @@ export function initFaviconEnrich(ctx = {}) {
                 buf.set(c.subarray ? c.subarray(0, n) : c.slice(0, n), off);
                 off += n;
             }
-            return new TextDecoder().decode(buf);
+            return TEXT_DECODER.decode(buf);
         }
         return (await res.text()).slice(0, maxBytes);
     };
@@ -833,6 +837,21 @@ export function initFaviconEnrich(ctx = {}) {
     };
 
     // --- Hot swap + contrast registration ---------------------------------------
+    // Sample + register contrast stats ONCE per dataUrl, then apply the cached
+    // decision. Re-renders (expand / undo / theme / re-inject from cache) rebuild
+    // the row and re-fire the load, but the same icon's stats are already keyed
+    // by src — re-decoding the data URL on every rebuild is pure waste.
+    const registerEnriched = el => {
+        if (faviconService && faviconService.statsBySrc && !faviconService.statsBySrc.has(el.src)
+            && faviconService.sampleIcon) {
+            const fp = faviconService.sampleIcon(el);
+            if (fp)
+                faviconService.statsBySrc.set(el.src, fp);
+        }
+        if (faviconService && faviconService.applyContrast)
+            faviconService.applyContrast(el);
+    };
+
     const hotSwap = (host, dataUrl) => {
         const item = queue.get(host);
         if (!item)
@@ -849,15 +868,7 @@ export function initFaviconEnrich(ctx = {}) {
             el.height = 16;
             el.alt = '';
             el.className = 'favicon-enriched';
-            el.addEventListener('load', () => {
-                if (faviconService && faviconService.sampleIcon) {
-                    const fp = faviconService.sampleIcon(el);
-                    if (fp && faviconService.statsBySrc)
-                        faviconService.statsBySrc.set(dataUrl, fp);
-                }
-                if (faviconService && faviconService.applyContrast)
-                    faviconService.applyContrast(el);
-            }, { once: true });
+            el.addEventListener('load', () => registerEnriched(el), { once: true });
             anchor.replaceChild(el, svg);
         }
     };
@@ -917,15 +928,7 @@ export function initFaviconEnrich(ctx = {}) {
         el.height = 16;
         el.alt = '';
         el.className = 'favicon-enriched';
-        el.addEventListener('load', () => {
-            if (faviconService && faviconService.sampleIcon) {
-                const fp = faviconService.sampleIcon(el);
-                if (fp && faviconService.statsBySrc)
-                    faviconService.statsBySrc.set(dataUrl, fp);
-            }
-            if (faviconService && faviconService.applyContrast)
-                faviconService.applyContrast(el);
-        }, { once: true });
+        el.addEventListener('load', () => registerEnriched(el), { once: true });
         img.parentNode.replaceChild(el, img);
     };
 

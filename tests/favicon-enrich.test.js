@@ -1244,6 +1244,52 @@ describe('initFaviconEnrich — hot swap', () => {
         const img = { src: `chrome-extension://t/_favicon/?pageUrl=${encodeURIComponent('https://gone.example/')}&size=32`, parentNode: null };
         expect(() => en.onPlaceholder(img)).not.toThrow();
     });
+
+    it('samples a dataUrl only once across re-injections', async () => {
+        // The first <img> load fingerprints the icon and caches its contrast
+        // stats keyed by dataUrl. A later re-render of the same host injects
+        // the cached icon again — that second load must skip the re-sample
+        // (no re-decode of the data URL), not just re-apply the decision.
+        const fetchImpl = makeFetch([[/\/favicon\.ico$/, pngResponse()]]);
+        let samples = 0;
+        const statsBySrc = new Map();
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: {
+                statsBySrc,
+                sampleIcon: img => { samples++; return { hash: 1, dark: 0, light: 1, colored: 0, cover: 1, w: 1, h: 1 }; },
+                applyContrast: () => {}
+            },
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        // First render: discovery + hot-swap → load samples once.
+        const img1 = makePlaceholderImg('https://github.com/');
+        en.onPlaceholder(img1);
+        await tick();
+        await tick();
+        const el1 = img1.parentNode.children[0];
+        expect(el1.className).toBe('favicon-enriched');
+        el1.dispatchLoad();
+        expect(samples).toBe(1);
+        // Re-render of the same host: cache hit → injectImg, same dataUrl —
+        // its load must re-apply contrast from the cached stats, not re-sample.
+        const img2 = makePlaceholderImg('https://github.com/');
+        en.onPlaceholder(img2);
+        await tick();
+        await tick();
+        // injectImg replaces the placeholder <img> itself (pushed to the
+        // anchor's end — the SVG stays), so the enriched element is last.
+        const el2 = img2.parentNode.children[img2.parentNode.children.length - 1];
+        expect(el2.className).toBe('favicon-enriched');
+        el2.dispatchLoad();
+        expect(samples).toBe(1);
+    });
 });
 
 describe('initFaviconEnrich — setEnabled / onChanged', () => {

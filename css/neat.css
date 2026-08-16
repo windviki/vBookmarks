@@ -710,6 +710,24 @@ body.linux input {
     transition: opacity .3s;
 }
 
+/* All icon <img>s letterbox inside the fixed 16px box instead of being
+   crushed: a non-square ICO (or a tall apple-touch icon) keeps its aspect
+   ratio. Squares render unchanged. */
+.favicon-container img {
+    object-fit: contain;
+}
+
+/* The enriched <img> (data URL) drops in with a quick fade instead of a hard
+   swap, so the default SVG → real-icon replacement reads as a settle rather
+   than a flicker. */
+.favicon-enriched {
+    animation: favicon-enrich-in .18s ease-out;
+}
+@keyframes favicon-enrich-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 #results ul li a:hover i,
 #tree ul li a:hover i {
     text-decoration: underline;
