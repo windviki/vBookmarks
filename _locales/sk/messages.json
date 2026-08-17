@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pri filtri Všetko to zahŕňa blokované záložky (dostupné cez váš proxy, pravdepodobne stále živé).",
+    "message": "Pri filtri Všetko to zahŕňa zablokované záložky (dostupné cez váš proxy server, pravdepodobne stále funkčné) a predtým označené riadky.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Označiť vybrané"
   },
   "deadMarkStatusAll": {
-    "message": "Všetky"
+    "message": "Ľubovoľný stav"
   },
   "deadMarkStatusMarked": {
     "message": "Označené"
@@ -870,10 +870,16 @@
     "message": "Zahrnúť vyrovnávaciu pamäť ikon do záloh"
   },
   "optionFaviconBackupHint": {
-    "message": "Zabalí aj rozšírenú vyrovnávaciu pamäť ikon (dáta pre jednotlivé stránky, potenciálne veľké) do importu/exportu nastavení. Vypnuté udržiava zálohy malé; ikony sa aj tak automaticky znova načítajú."
+    "message": "Zahrnúť aj obohatenú vyrovnávaciu pamäť favikôn (údaje pre jednotlivé stránky, potenciálne veľké) do exportu/importu nastavení. To pokrýva už uložené ikony, aj keď je načítavanie vypnuté. Vypnutie udržiava zálohy malé; ikony sa aj tak automaticky znova načítajú."
   },
   "optionFaviconCacheClear": {
     "message": "Vyčistiť medzipamäť ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Vyčistiť obohatenú vyrovnávaciu pamäť ikon? Ikony sa pri ďalšom otvorení automaticky znova načítajú."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nie je čo vymazať z vyrovnávacej pamäte ikon."
   },
   "optionFaviconCacheCleared": {
     "message": "Medzipamäť ikon bola vyčistená. Ikony sa pri ďalšom otvorení znova načítajú."
@@ -882,7 +888,7 @@
     "message": "Ikony"
   },
   "storageUsageBookmarks": {
-    "message": "Údaje záložiek"
+    "message": "Údaje skenovania/označovania"
   },
   "storageUsageOther": {
     "message": "Ostatné"
@@ -902,7 +908,7 @@
     "message": "Voľné"
   },
   "storageUsageHint": {
-    "message": "Priestor využívaný záložkami, vyrovnávacou pamäťou ikon a nastaveniami. Voľný priestor sa aktualizuje po vymazaní vyrovnávacej pamäte ikon."
+    "message": "Miesto v úložisku používané údajmi skenovania/označovania záložiek, vyrovnávacou pamäťou ikon a nastaveniami. Voľné miesto sa aktualizuje po vyčistení vyrovnávacej pamäte ikon."
   },
   "optionsDonate": {
     "message": "Prispieť"

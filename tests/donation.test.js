@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import fs from 'node:fs';
 import {
     createDonation,
     donationVisible,
@@ -35,6 +36,9 @@ const DOM_IDS = ['donation', 'new-version-text', 'v4-notice', 'v4-notice-text',
     'whats-new', 'whats-new-text', 'whats-new-guide', 'whats-new-changelog'];
 
 const _m = (key, subs) => key + (subs ? `[${subs.join(',')}]` : '');
+
+const popupHtml = fs.readFileSync(new URL('../pages/popup.html', import.meta.url), 'utf8');
+const sidepanelHtml = fs.readFileSync(new URL('../pages/sidepanel.html', import.meta.url), 'utf8');
 
 describe('donationVisible (the ask rule)', () => {
     it('is permanently off once disabled — even on an upgrade', () => {
@@ -221,5 +225,20 @@ describe('createDonation wiring', () => {
             expect(changelogEv.preventDefault).toHaveBeenCalled();
             expect(openNewTab).toHaveBeenCalledWith(CHANGELOG_URL, true, true);
         });
+    });
+});
+
+describe('banner markup contract (audit T8)', () => {
+    it.each(['popup', 'sidepanel'])('%s.html carries #whats-new/#announce with their interactive children', page => {
+        const html = page === 'popup' ? popupHtml : sidepanelHtml;
+        for (const id of ['whats-new', 'whats-new-text', 'whats-new-guide',
+            'whats-new-changelog', 'announce'])
+            expect(html).toContain(`id="${id}"`);
+        expect(html).toMatch(/<div id="whats-new" hidden>/);
+        expect(html).toMatch(/<div id="announce" hidden>/);
+    });
+
+    it('the whats-new changelog link points at the docs/README.md changelog anchor (audit B3/O13)', () => {
+        expect(CHANGELOG_URL).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408');
     });
 });

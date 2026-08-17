@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Unter dem Filter „Alle“ sind darin auch blockierte Lesezeichen enthalten (über Ihren Proxy erreichbar, wahrscheinlich noch aktiv).",
+    "message": "Unter dem Filter „Alle“ umfasst dies blockierte Lesezeichen (über Ihren Proxy erreichbar, wahrscheinlich noch aktiv) und zuvor markierte Zeilen.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Ausgewählte markieren"
   },
   "deadMarkStatusAll": {
-    "message": "Alle"
+    "message": "Beliebiger Status"
   },
   "deadMarkStatusMarked": {
     "message": "Markiert"
@@ -870,10 +870,16 @@
     "message": "Favicon-Cache in Backups einbeziehen"
   },
   "optionFaviconBackupHint": {
-    "message": "Auch den angereicherten Favicon-Cache (Daten pro Website, potenziell groß) in den Export/Import der Einstellungen einbeziehen. Wenn deaktiviert, bleiben Backups klein; Favicons werden ohnehin automatisch erneut geladen."
+    "message": "Auch den erweiterten Favicon-Cache (Daten pro Website, möglicherweise groß) in den Export/Import der Einstellungen aufnehmen. Dies umfasst bereits gecachte Icons, auch wenn das Abrufen deaktiviert ist. Deaktiviert hält Backups klein; Icons werden ohnehin automatisch neu abgerufen."
   },
   "optionFaviconCacheClear": {
     "message": "Icon-Cache leeren"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Erweiterten Icon-Cache leeren? Icons werden beim nächsten Öffnen automatisch neu abgerufen."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Kein Icon-Cache zum Leeren vorhanden."
   },
   "optionFaviconCacheCleared": {
     "message": "Icon-Cache geleert. Icons werden beim nächsten Öffnen erneut abgerufen."
@@ -882,7 +888,7 @@
     "message": "Symbole"
   },
   "storageUsageBookmarks": {
-    "message": "Lesezeichendaten"
+    "message": "Scan-/Markierungsdaten"
   },
   "storageUsageOther": {
     "message": "Sonstiges"
@@ -902,7 +908,7 @@
     "message": "Frei"
   },
   "storageUsageHint": {
-    "message": "Von Lesezeichen, Symbol-Cache und Einstellungen belegter Speicherplatz. Der freie Speicherplatz wird nach dem Leeren des Symbol-Caches aktualisiert."
+    "message": "Speicherplatz, der von Scan-/Markierungsdaten für Lesezeichen, dem Icon-Cache und den Einstellungen belegt wird. Freier Speicherplatz wird nach dem Leeren des Icon-Caches aktualisiert."
   },
   "optionsDonate": {
     "message": "Spenden"

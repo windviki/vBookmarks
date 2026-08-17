@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Az Összes szűrő alatt ez tartalmazza a blokkolt könyvjelzőket is (amelyek a proxy-n keresztül elérhetők, valószínűleg még élnek).",
+    "message": "Az „Összes” szűrő alatt ez magában foglalja a blokkolt könyvjelzőket (amelyek a proxy-n keresztül elérhetők, és valószínűleg még élnek), valamint a korábban megjelölt sorokat.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Kijelöltek megjelölése"
   },
   "deadMarkStatusAll": {
-    "message": "Összes"
+    "message": "Bármilyen állapot"
   },
   "deadMarkStatusMarked": {
     "message": "Megjelölve"
@@ -870,10 +870,16 @@
     "message": "Ikon-gyorsítótár belefoglalása a biztonsági mentésekbe"
   },
   "optionFaviconBackupHint": {
-    "message": "A bővített ikon-gyorsítótár (oldalankénti adatok, akár nagy méretű) is bekerül a beállítások exportálásába/importálásába. Kikapcsolva a biztonsági mentések kicsik maradnak; az ikonok amúgy is automatikusan újra letöltődnek."
+    "message": "A beállítások exportálásába/importálásába a bővített favicon-gyorsítótár (webhelyenkénti adatok, amelyek nagyok lehetnek) is beletartozik. Ez a már gyorsítótárazott ikonokat is magában foglalja, akkor is, ha a letöltés ki van kapcsolva. Kikapcsolva a biztonsági mentés kicsi marad; az ikonok úgyis automatikusan újra letöltődnek."
   },
   "optionFaviconCacheClear": {
     "message": "Ikongyorsítótár törlése"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Törli a bővített ikon-gyorsítótárat? Az ikonok a következő megnyitáskor automatikusan újra letöltődnek."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nincs törlendő ikon-gyorsítótár."
   },
   "optionFaviconCacheCleared": {
     "message": "Az ikongyorsítótár törölve. Az ikonok a következő megnyitáskor újra lekérésre kerülnek."
@@ -882,7 +888,7 @@
     "message": "Ikonok"
   },
   "storageUsageBookmarks": {
-    "message": "Könyvjelzőadatok"
+    "message": "Vizsgálat/megjelölés adatai"
   },
   "storageUsageOther": {
     "message": "Egyéb"
@@ -902,7 +908,7 @@
     "message": "Szabad"
   },
   "storageUsageHint": {
-    "message": "A könyvjelzők, az ikongyorsítótár és a beállítások által használt tárhely. A szabad hely az ikongyorsítótár törlése után frissül."
+    "message": "A könyvjelző-vizsgálat/megjelölés adatai, az ikon-gyorsítótár és a beállítások által használt tárhely. A szabad terület az ikon-gyorsítótár törlése után frissül."
   },
   "optionsDonate": {
     "message": "Adomány"

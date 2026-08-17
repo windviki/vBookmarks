@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pri filtru Vsi to vključuje blokirane zaznamke (dostopne prek vašega proxyja, verjetno še žive).",
+    "message": "Pri filtru Vse to vključuje blokirane zaznamke (dosegljive prek vašega posrednika, verjetno še vedno žive) in prej označene vrstice.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Označi izbrane"
   },
   "deadMarkStatusAll": {
-    "message": "Vsi"
+    "message": "Vsi statusi"
   },
   "deadMarkStatusMarked": {
     "message": "Označeno"
@@ -870,10 +870,16 @@
     "message": "Vključi predpomnilnik ikon v varnostne kopije"
   },
   "optionFaviconBackupHint": {
-    "message": "V izvoz/uvoz nastavitev zapakiraj tudi obogateni predpomnilnik ikon (podatki za posamezna spletišča, lahko zelo obsežni). Izklop ohranja varnostne kopije majhne; ikone se vseeno samodejno ponovno prenesejo."
+    "message": "V izvoz/uvoz nastavitev vključi tudi predpomnilnik obogatenih ikon (podatki po spletiščih, lahko veliki). To zajema že predpomnjene ikone tudi, ko je pridobivanje izklopljeno. Če je možnost izklopljena, so varnostne kopije majhne; ikone se tako ali tako samodejno znova pridobijo."
   },
   "optionFaviconCacheClear": {
     "message": "Počisti predpomnilnik ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Počisti predpomnilnik obogatenih ikon? Ikone bodo ob naslednjem odprtju samodejno znova pridobljene."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ni predpomnilnika ikon za čiščenje."
   },
   "optionFaviconCacheCleared": {
     "message": "Predpomnilnik ikon je počiščen. Ikone bodo ob naslednjem odpiranju znova pridobljene."
@@ -882,7 +888,7 @@
     "message": "Ikone"
   },
   "storageUsageBookmarks": {
-    "message": "Podatki zaznamkov"
+    "message": "Podatki pregleda/označevanja"
   },
   "storageUsageOther": {
     "message": "Drugo"
@@ -902,7 +908,7 @@
     "message": "Prosto"
   },
   "storageUsageHint": {
-    "message": "Prostor za shranjevanje, ki ga uporabljajo zaznamki, predpomnilnik ikon in nastavitve. Prosti prostor se posodobi po čiščenju predpomnilnika ikon."
+    "message": "Prostor, ki ga uporabljajo podatki pregleda/označevanja zaznamkov, predpomnilnik ikon in nastavitve. Prosti prostor se posodobi po čiščenju predpomnilnika ikon."
   },
   "optionsDonate": {
     "message": "Doniraj"

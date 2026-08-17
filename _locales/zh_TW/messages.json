@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "在「全部」篩選下，這包括被封鎖的書籤（可透過代理存取，可能仍有效）。",
+    "message": "在「全部」篩選器下，這包括被封鎖的書籤（可透過您的代理伺服器存取，可能仍然有效）以及先前標記的列。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "標記選取項目"
   },
   "deadMarkStatusAll": {
-    "message": "全部"
+    "message": "任何狀態"
   },
   "deadMarkStatusMarked": {
     "message": "已標記"
@@ -870,10 +870,16 @@
     "message": "备份时包含图标缓存"
   },
   "optionFaviconBackupHint": {
-    "message": "同时将增强版图标缓存（逐站资料，可能很庞大）打包进设置汇出/汇入。关闭此选项可让备份保持精简；图标反正会自动重新撷取。"
+    "message": "也將增強的圖示快取（每個網站的資料，可能很大）打包到設定匯出/匯入中。這涵蓋即使關閉擷取時已快取的圖示。關閉可讓備份保持輕量；圖示反正會自動重新擷取。"
   },
   "optionFaviconCacheClear": {
     "message": "清除圖示快取"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "清除增強的圖示快取嗎？圖示將在下次開啟時自動重新擷取。"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "沒有可清除的圖示快取。"
   },
   "optionFaviconCacheCleared": {
     "message": "圖示快取已清除。下次開啟時將重新取得圖示。"
@@ -882,7 +888,7 @@
     "message": "圖示"
   },
   "storageUsageBookmarks": {
-    "message": "書籤資料"
+    "message": "掃描/標記資料"
   },
   "storageUsageOther": {
     "message": "其他"
@@ -902,7 +908,7 @@
     "message": "可用空間"
   },
   "storageUsageHint": {
-    "message": "書籤、圖示快取和設定所使用的儲存空間。清除圖示快取後，可用空間會更新。"
+    "message": "書籤掃描/標記資料、圖示快取與設定所使用的儲存空間。清除圖示快取後，可用空間會更新。"
   },
   "optionsDonate": {
     "message": "贊助"

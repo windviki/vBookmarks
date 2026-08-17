@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under filteret \"Alle\" omfatter dette blokerede bogmærker (tilgængelige via din proxy, sandsynligvis stadig aktive).",
+    "message": "Under filteret Alle inkluderer dette blokerede bogmærker (tilgængelige via din proxy, sandsynligvis stadig aktive) og tidligere markerede rækker.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Markér valgte"
   },
   "deadMarkStatusAll": {
-    "message": "Alle"
+    "message": "Enhver status"
   },
   "deadMarkStatusMarked": {
     "message": "Markeret"
@@ -870,10 +870,16 @@
     "message": "Medtag ikoncache i sikkerhedskopier"
   },
   "optionFaviconBackupHint": {
-    "message": "Pak også den berigede favicon-cache (side-specifikke data, potentielt store) ind i eksport/import af indstillinger. Fra holder sikkerhedskopier små; ikoner hentes automatisk igen alligevel."
+    "message": "Pak også den berigede favicon-cache (data pr. site, potentielt stor) med i eksport/import af indstillinger. Dette dækker ikoner, der allerede er cachet, selv mens hentning er slået fra. Fra holder sikkerhedskopier små; ikoner hentes automatisk igen alligevel."
   },
   "optionFaviconCacheClear": {
     "message": "Ryd ikoncache"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Ryd den berigede ikon-cache? Ikoner hentes automatisk igen ved næste åbning."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ingen ikon-cache at rydde."
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoncachen er ryddet. Ikonerne hentes igen ved næste åbning."
@@ -882,7 +888,7 @@
     "message": "Ikoner"
   },
   "storageUsageBookmarks": {
-    "message": "Bogmærkedata"
+    "message": "Scan-/markeringsdata"
   },
   "storageUsageOther": {
     "message": "Andet"
@@ -902,7 +908,7 @@
     "message": "Ledig"
   },
   "storageUsageHint": {
-    "message": "Lagringsplads brugt af bogmærker, ikon-cachen og indstillinger. Ledig plads opdateres efter rydning af ikon-cachen."
+    "message": "Lagringsplads brugt af bogmærke-scan/markeringsdata, ikon-cachen og indstillinger. Ledig plads opdateres efter rydning af ikon-cachen."
   },
   "optionsDonate": {
     "message": "Donér"

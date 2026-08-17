@@ -20,7 +20,13 @@ import { makeEl } from './helpers/dom.js';
 vi.mock('../src/favicon-fallback.js', () => ({
     initFaviconFallback: vi.fn()
 }));
+// favicon-enrich's real instance needs chrome.storage for hydrate; the boot
+// suite only cares that neat.js wires pagehide → flushIndex (audit T4).
+vi.mock('../src/favicon-enrich.js', () => ({
+    initFaviconEnrich: vi.fn()
+}));
 import { initFaviconFallback } from '../src/favicon-fallback.js';
+import { initFaviconEnrich } from '../src/favicon-enrich.js';
 
 const makeWindow = store => {
     const document = {
@@ -61,6 +67,7 @@ const makePendingStore = () => {
 beforeEach(() => {
     vi.resetModules();
     initFaviconFallback.mockClear();
+    initFaviconEnrich.mockClear();
 });
 
 describe('neat.js boot wiring (pre-store.ready)', () => {
@@ -84,11 +91,37 @@ describe('neat.js boot wiring (pre-store.ready)', () => {
         expect(guards).toHaveLength(1);
 
         // favicon fallback installed against the document, wired with the
-        // v4.1 contrast-service context (lazy getters — no store access here)
+        // contrast-service context (lazy getters — no store access here)
         expect(initFaviconFallback).toHaveBeenCalledTimes(1);
         const [docArg, ctxArg] = initFaviconFallback.mock.calls[0];
         expect(docArg).toBe(globalThis.window.document);
         expect(typeof ctxArg.contrastEnabled).toBe('function');
         expect(typeof ctxArg.themeIsDark).toBe('function');
+    });
+
+    it('wires pagehide → enricher.flushIndex() so debounced index writes flush on close (audit T4)', async () => {
+        const store = makePendingStore();
+        globalThis.window = makeWindow(store);
+        globalThis.document = globalThis.window.document;
+        globalThis.chrome = { i18n: { getMessage: k => k } };
+        globalThis.localStorage = {
+            getItem: () => null, setItem: vi.fn(), removeItem: vi.fn(), clear: vi.fn()
+        };
+        const flushIndex = vi.fn();
+        initFaviconEnrich.mockReturnValue({ flushIndex });
+
+        await import('../src/neat.js');
+
+        expect(initFaviconEnrich).toHaveBeenCalledTimes(1);
+        const [enrichCtx] = initFaviconEnrich.mock.calls[0];
+        expect(enrichCtx.doc).toBe(globalThis.window.document);
+        expect(typeof enrichCtx.isEnabled).toBe('function');
+        expect(typeof enrichCtx.fallbackEnabled).toBe('function');
+
+        const pagehideCalls = globalThis.window.addEventListener.mock.calls
+            .filter(([type]) => type === 'pagehide');
+        expect(pagehideCalls.length).toBeGreaterThanOrEqual(1);
+        pagehideCalls[0][1]();
+        expect(flushIndex).toHaveBeenCalledTimes(1);
     });
 });

@@ -64,9 +64,9 @@
         // separators & appearance
         'separators', 'separatorTitle', 'separatorURL', 'separatorUrl', 'separatorString',
         'separatorcolor', 'userstyle', 'customIcon', 'theme',
-        // v4.1: favicon 反色服务（默认开启）
+        // 4.0.5 favicon 反色服务（默认开启）
         'faviconContrast',
-        // v4.1: favicon 补全——为 Chrome 未缓存图标的收藏站点拉取真实图标
+        // 4.0.8 favicon 补全——为 Chrome 未缓存图标的收藏站点拉取真实图标
         'faviconEnrich', 'faviconEnrichAgg',
         // options Icons 组备份开关：导出时是否随包携带 favicon 缓存键
         'faviconBackupInclude',

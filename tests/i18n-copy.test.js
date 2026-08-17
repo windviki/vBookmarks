@@ -76,7 +76,7 @@ describe('参数化 i18n 文案的真实替换结果 (en)', () => {
             .toBe('Undo can only restore the most recent deletion.');
         // 死链 delete-all 的第二行 = All 筛选警告 + undo 提示 (代码拼接)
         expect(_m('deadDeleteAllNote'))
-            .toBe('Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive).');
+            .toBe('Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive) and previously marked rows.');
         expect(_m('deadDeleteAllNote')).not.toContain('Undo');
     });
 

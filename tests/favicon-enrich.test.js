@@ -3,6 +3,7 @@ import {
     initFaviconEnrich,
     validateAndEncode,
     extractLinkIcons,
+    decodeDataUrl,
     bytesToBase64,
     parseIdx,
     emptyIdx,
@@ -18,7 +19,8 @@ import {
     interpretFaviconRun,
     interpretDuckDuckGo,
     MAX_HTML_BYTES,
-    SESSION_ONLY_CAP
+    SESSION_ONLY_CAP,
+    MAX_L2_CANDIDATES
 } from '../src/favicon-enrich.js';
 import { makeStorageArea } from './helpers/chrome.js';
 
@@ -167,6 +169,19 @@ const nextNow = () => { seq += 1000; return 1700000000000 + seq; };
 describe('bytesToBase64 / mime sniff', () => {
     it('encodes bytes to base64', () => {
         expect(bytesToBase64(new Uint8Array([255, 0, 128]))).toBe('/wCA');
+    });
+});
+
+describe('decodeDataUrl', () => {
+    it('decodes base64 and percent-encoded plain data URLs; bad input is null', () => {
+        const b64 = decodeDataUrl(`data:image/png;base64,${bytesToBase64(PNG_BYTES)}`);
+        expect(b64.mime).toBe('image/png');
+        expect([...b64.bytes]).toEqual([...PNG_BYTES]);
+        const plain = decodeDataUrl('data:image/svg+xml,%3Csvg%3E%3C%2Fsvg%3E');
+        expect(plain.mime).toBe('image/svg+xml');
+        expect(new TextDecoder().decode(plain.bytes)).toBe('<svg></svg>');
+        expect(decodeDataUrl('not-data:x')).toBeNull();
+        expect(decodeDataUrl('data:image/svg+xml,bad%')).toBeNull();
     });
 });
 
@@ -420,6 +435,96 @@ describe('initFaviconEnrich — discovery chain', () => {
         expect(fetchImpl.calls.some(c => /favicon-32x32\.png$/.test(c.url))).toBe(true);
         expect(fetchImpl.calls.some(c => c.url === FR('example.com'))).toBe(false);
         expect(fetchImpl.calls.some(c => c.url === DDG('example.com'))).toBe(false);
+    });
+
+    it('L2 accepts a percent-encoded (non-base64) data: SVG icon (audit F2)', async () => {
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"></svg>';
+        const dataHref = 'data:image/svg+xml,' + encodeURIComponent(svg);
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, {
+                ok: true,
+                text: async () => `<link rel="icon" type="image/svg+xml" href="${dataHref}">`,
+                headers: { get: () => 'text/html' }
+            }]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        const entry = en.getCache().get('example.com');
+        expect(entry && entry.d).toMatch(/^data:image\/svg\+xml;base64,/);
+    });
+
+    it('L2 skips a malformed data: candidate and continues to the next <link> (audit F2)', async () => {
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, {
+                ok: true,
+                text: async () => '<link rel="icon" href="data:image/svg+xml,bad%">' +
+                    '<link rel="icon" href="/ok.png">',
+                headers: { get: () => 'text/html' }
+            }],
+            [/ok\.png$/, pngResponse()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        expect(fetchImpl.calls.some(c => /ok\.png$/.test(c.url))).toBe(true);
+        expect(en.getCache().get('example.com').d).toMatch(/^data:image\/png;base64,/);
+    });
+
+    it('L2 tries at most MAX_L2_CANDIDATES declared icons per page (audit F7)', async () => {
+        const links = Array.from({ length: 6 }, (_, i) =>
+            `<link rel="icon" href="/icon-${i + 1}.png">`).join('');
+        const fetchImpl = makeFetch([
+            [/\/favicon\.ico$/, notFound()],
+            [/^https:\/\/example\.com\/$/, {
+                ok: true,
+                text: async () => links,
+                headers: { get: () => 'text/html' }
+            }],
+            [/icon-\d+\.png$/, notFound()]
+        ]);
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl,
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: makeStorageArea() } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        en.onPlaceholder(makePlaceholderImg('https://example.com/'));
+        await tick();
+        await tick();
+        await tick();
+        const iconCalls = fetchImpl.calls.filter(c => /icon-\d+\.png$/.test(c.url));
+        expect(iconCalls).toHaveLength(MAX_L2_CANDIDATES);
+        expect(fetchImpl.calls.some(c => c.url.endsWith('icon-6.png'))).toBe(false);
     });
 
     it('L1/L2 fail → L4 reached; favicon-run 200+PNG short-circuits (duckduckgo not called)', async () => {
@@ -1520,6 +1625,39 @@ describe('initFaviconEnrich — setEnabled / onChanged', () => {
         });
         await en2._hydrateDone;
         expect(en2.getCache().has('github.com')).toBe(false);
+    });
+
+    it('drops only the host(s) whose data key was removed when the index event is absent (audit O10)', async () => {
+        const storage = makeStorageArea({
+            [`${FAVICON_DATA_PREFIX}one.example`]: PNG_DATA_URL,
+            [`${FAVICON_DATA_PREFIX}two.example`]: PNG_DATA_URL,
+            [FAVICON_IDX_KEY]: idxV3({
+                'one.example': { t: Date.now(), s: PNG_DATA_URL.length },
+                'two.example': { t: Date.now(), s: PNG_DATA_URL.length }
+            })
+        });
+        const listeners = [];
+        storage.onChanged = { addListener: fn => listeners.push(fn) };
+        const en = initFaviconEnrich({
+            doc: makeDoc(),
+            faviconService: makeFavService(),
+            isEnabled: () => true,
+            fallbackEnabled: () => false,
+            fetchImpl: makeFetch([]),
+            ImageCtor: makeFakeImage(),
+            chromeImpl: { storage: { local: storage, onChanged: storage.onChanged } },
+            now: nextNow
+        });
+        await en._hydrateDone;
+        expect(en.getCache().has('one.example')).toBe(true);
+        expect(en.getCache().has('two.example')).toBe(true);
+        // A partial import/clear removed one data key without the index batch.
+        listeners[0]({ [`${FAVICON_DATA_PREFIX}one.example`]: { newValue: undefined } }, 'local');
+        expect(en.getCache().has('one.example')).toBe(false);
+        expect(en.getCache().has('two.example')).toBe(true);
+        // The full index-removal event still clears everything.
+        listeners[0]({ [FAVICON_IDX_KEY]: { newValue: undefined } }, 'local');
+        expect(en.getCache().has('two.example')).toBe(false);
     });
 });
 

@@ -50,7 +50,7 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
     // placeholder bitmap for the theme-following DEFAULT_BOOKMARK_ICON.
     // Installed before any rows render (the store.ready block below) so the
     // capture-phase load delegation catches every favicon <img>.
-    // v4.1: the same module also runs the favicon contrast service (invert
+    // 4.0.5: the same module also runs the favicon contrast service (invert
     // low-contrast icons against the current background). Both getters read at
     // decision time, so the options toggle and live palette theme switches
     // take effect immediately. themeIsDark resolves the --vbm-bg token's
@@ -120,7 +120,9 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
             // 4.0.6 favicon enrichment switches are live: off cancels in-flight
             // fetches and stops new enqueues; on lets the next placeholder
             // render trigger again. No re-render sweep on enable (avoid a
-            // whole-tree scan) — the user reopens or scrolls to refresh.
+            // whole-tree scan) — reopen, switch views, or render new rows to
+            // retry. Scrolling alone only helps rows whose lazy <img> never
+            // loaded yet (audit F8).
             if (enricher && (Object.prototype.hasOwnProperty.call(changes, 'faviconEnrich')
                 || Object.prototype.hasOwnProperty.call(changes, 'faviconEnrichAgg'))) {
                 enricher.setEnabled(store.get('faviconEnrich', '1') === '1');
@@ -296,10 +298,10 @@ import { shouldHighlightUnsynced, shouldRememberState } from './settings.js';
         _m,
         get openNewTab() { return (url, inNewTab, selected) => actions.openBookmarkNewTab(url, inNewTab, selected); }
     });
-    // 4.0.8: the remote announcement layer (docs/announce.json + src/announce.js)
-    // — the what's-new banner. Fire-and-forget: the 6h cache avoids network,
-    // every fetch failure is silent, and when the donation card claims this
-    // open the announcement defers to the next one (4.1.0 §4.3 priority).
+    // 4.0.7: the remote announcement layer (docs/announce.json + src/announce.js);
+    // 4.0.8 adds the local what's-new banner beside it. Fire-and-forget: the
+    // 6h cache avoids network, every fetch failure is silent, and when the
+    // donation card claims this open the announcement defers to the next one.
     initAnnounce({
         store,
         $,

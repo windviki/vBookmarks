@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Filtrā “Visi” tas ietver bloķētas grāmatzīmes (sasniedzamas caur jūsu starpniekserveri, visticamāk, joprojām darbojas).",
+    "message": "Zem filtra “Visi” tas ietver bloķētās grāmatzīmes (sasniedzamas caur jūsu starpniekserveri, visticamāk, joprojām aktīvas) un iepriekš atzīmētās rindas.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Atzīmēt atlasītos"
   },
   "deadMarkStatusAll": {
-    "message": "Visi"
+    "message": "Jebkurš statuss"
   },
   "deadMarkStatusMarked": {
     "message": "Atzīmēti"
@@ -870,10 +870,16 @@
     "message": "Iekļaut ikonu kešu dublējumos"
   },
   "optionFaviconBackupHint": {
-    "message": "Iekļauj bagātināto ikonu kešu (datu apjoms uz vietni, potenciāli liels) iestatījumu eksportā/importā. Izslēdzot, dublējumi paliek mazi; ikonas tik un tā tiek automātiski iegūtas atkārtoti."
+    "message": "Iekļaujiet arī bagātināto favicon kešatmiņu (vietņu dati, potenciāli lieli) iestatījumu eksportā/importā. Tas aptver jau kešotās ikonas, pat ja ielāde ir izslēgta. Izslēgts uztur dublējumus mazus; ikonas tik un tā tiek automātiski ielādētas no jauna."
   },
   "optionFaviconCacheClear": {
     "message": "Notīrīt ikonu kešatmiņu"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Vai notīrīt bagātināto ikonu kešatmiņu? Ikonas tiks automātiski ielādētas no jauna nākamajā atvēršanā."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nav ikonu kešatmiņas, ko notīrīt."
   },
   "optionFaviconCacheCleared": {
     "message": "Ikonu kešatmiņa ir notīrīta. Ikonas tiks atkārtoti iegūtas nākamajā atvēršanas reizē."
@@ -882,7 +888,7 @@
     "message": "Ikonas"
   },
   "storageUsageBookmarks": {
-    "message": "Grāmatzīmju dati"
+    "message": "Skenēšanas/atzīmju dati"
   },
   "storageUsageOther": {
     "message": "Citi"
@@ -902,7 +908,7 @@
     "message": "Brīvs"
   },
   "storageUsageHint": {
-    "message": "Krātuves vieta, ko aizņem grāmatzīmes, ikonu kešatmiņa un iestatījumi. Brīvā vieta tiek atjaunināta pēc ikonu kešatmiņas notīrīšanas."
+    "message": "Krātuves vieta, ko izmanto grāmatzīmju skenēšanas/atzīmju dati, ikonu kešatmiņa un iestatījumi. Brīvā vieta tiek atjaunināta pēc ikonu kešatmiņas notīrīšanas."
   },
   "optionsDonate": {
     "message": "Ziedot"

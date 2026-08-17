@@ -14,12 +14,13 @@ const optionsHtml = fs.readFileSync(new URL('../pages/options.html', import.meta
 const createSandbox = ({
     chromeLocalData = {},
     chromeSyncData = {},
+    chromeLocalExtras = {},
     windowExtras = {}
 } = {}) => {
     // chrome.storage areas, backed by plain objects (same shape as store.test.js)
     const localData = chromeLocalData;
     const syncData = chromeSyncData;
-    const makeArea = data => ({
+    const makeArea = (data, extras = {}) => ({
         get: async keys => {
             if (keys === null || keys === undefined) return { ...data };
             if (typeof keys === 'string') return { [keys]: data[keys] };
@@ -38,7 +39,8 @@ const createSandbox = ({
         },
         clear: async () => {
             for (const k in data) delete data[k];
-        }
+        },
+        ...extras
     });
 
     const onChangedListeners = [];
@@ -47,7 +49,7 @@ const createSandbox = ({
         // alert assertions target the i18n contract
         i18n: { getMessage: key => key },
         storage: {
-            local: makeArea(localData),
+            local: makeArea(localData, chromeLocalExtras),
             sync: makeArea(syncData),
             onChanged: { addListener: fn => onChangedListeners.push(fn) }
         },
@@ -202,7 +204,11 @@ describe('options.js settings backup', () => {
             expect(optionsHtml.indexOf('id="header-links"')).toBeLessThan(optionsHtml.indexOf('</h1>'));
             // Static hrefs: donate → donation page, version → changelog.
             expect(optionsHtml).toContain('id="header-donate" href="https://github.com/windviki/vBookmarks/blob/master/donation/donation.md"');
-            expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks#v408"');
+            expect(optionsHtml).toContain('id="header-github" href="https://github.com/windviki/vBookmarks"');
+            expect(optionsHtml).toContain('id="options-version" href="https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408"');
+            // audit O11: the subtitle is a span, not a <p> nested inside <h1>
+            expect(optionsHtml).toContain('<span id="header-since"></span>');
+            expect(optionsHtml).not.toContain('<p id="header-since"></p>');
             // The storage-usage bar lives in the Icons group, next to the
             // clear-icon-cache button (before the group's closing </ul>).
             expect(optionsHtml.indexOf('id="favicon-cache-clear"')).toBeLessThan(optionsHtml.indexOf('id="storage-usage"'));
@@ -216,6 +222,11 @@ describe('options.js settings backup', () => {
                 expect(optionsHtml).toContain(`class="usage-seg ${cls}" data-usage="${cls.replace('usage-', '')}" tabindex="0"`);
             for (const id of ['favicon-cache-clear', 'stats-clear', 'import-settings', 'reset-button'])
                 expect(optionsHtml).toMatch(new RegExp(`id="${id}"[^>]*class="danger"`));
+            // audit T5: the three icon switches + backup switch exist as real
+            // checkboxes, so deleting them from options.html cannot pass the
+            // dynamically-created DOM stub unnoticed.
+            for (const id of ['favicon-contrast', 'favicon-enrich', 'favicon-enrich-ddg', 'favicon-backup'])
+                expect(optionsHtml).toMatch(new RegExp(`<input type="checkbox" id="${id}"`));
             // the export button stays a plain secondary action.
             expect(optionsHtml).toMatch(/id="export-settings"[^>]*type="button"(?![^>]*class)/);
         });
@@ -243,6 +254,43 @@ describe('options.js settings backup', () => {
             await sb.start();
             await sb.elements['import-settings'].fire('click');
             expect(sb.elements['import-settings-file'].clicked).toBe(1);
+        });
+
+        it('icons-group switches default on and persist in the 1/empty model (audit T5)', async () => {
+            const sb = createSandbox(); // fresh storage
+            await sb.start();
+            // defaults: contrast / enrich / aggregate fallback / backup all on
+            for (const id of ['favicon-contrast', 'favicon-enrich', 'favicon-enrich-ddg', 'favicon-backup'])
+                expect(sb.elements[id].checked, id).toBe(true);
+            expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(false);
+
+            sb.elements['favicon-enrich'].checked = false;
+            await sb.elements['favicon-enrich'].fire('change');
+            expect(sb.localData.faviconEnrich).toBe('');
+            expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(true);
+
+            sb.elements['favicon-enrich'].checked = true;
+            await sb.elements['favicon-enrich'].fire('change');
+            expect(sb.localData.faviconEnrich).toBe('1');
+            expect(sb.elements['favicon-enrich-ddg'].disabled).toBe(false);
+
+            sb.elements['favicon-backup'].checked = false;
+            await sb.elements['favicon-backup'].fire('change');
+            expect(sb.localData.faviconBackupInclude).toBe('');
+
+            // restore stored states across reload
+            const sb2 = createSandbox({
+                chromeLocalData: {
+                    faviconContrast: '', faviconEnrich: '', faviconEnrichAgg: '',
+                    faviconBackupInclude: ''
+                }
+            });
+            await sb2.start();
+            expect(sb2.elements['favicon-contrast'].checked).toBe(false);
+            expect(sb2.elements['favicon-enrich'].checked).toBe(false);
+            expect(sb2.elements['favicon-enrich-ddg'].checked).toBe(false);
+            expect(sb2.elements['favicon-enrich-ddg'].disabled).toBe(true);
+            expect(sb2.elements['favicon-backup'].checked).toBe(false);
         });
     });
 
@@ -277,7 +325,7 @@ describe('options.js settings backup', () => {
             });
 
             const anchor = sb.created.find(el => el.tagName === 'a');
-            expect(anchor.download).toMatch(/^vbookmarks-settings-\d{4}-\d{2}-\d{2}\.json$/);
+            expect(anchor.download).toMatch(/^vbookmarks-settings-\d{4}-\d{2}-\d{2}-with-icons\.json$/);
             expect(anchor.href).toBe('blob:mock-1');
             expect(anchor.clicked).toBe(1);
             expect(sb.URLStub.revokeObjectURL).toHaveBeenCalledWith('blob:mock-1');
@@ -297,13 +345,32 @@ describe('options.js settings backup', () => {
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
                 .toEqual({ __migrated_v1: '1', theme: 'dark', [favKey]: seeded[favKey], vbmFaviconIdx: favIdx });
-            // Switch off: favicon keys stripped from the export to keep it small.
+            // Switch off: favicon keys stripped from the export to keep it small,
+            // and the filename says -no-icons (audit O7).
             sb = createSandbox({ chromeLocalData: { ...seeded } });
             await sb.start();
             sb.elements['favicon-backup'].checked = false;
             await sb.elements['export-settings'].fire('click');
             expect(JSON.parse(await sb.objectURLs[0].text()).local)
                 .toEqual({ __migrated_v1: '1', theme: 'dark' });
+            expect(sb.created.find(el => el.tagName === 'a').download)
+                .toMatch(/-no-icons\.json$/);
+        });
+
+        it('never ships the live vbmDeadScan journal, regardless of cache switch (audit D7)', async () => {
+            const sb = createSandbox({
+                chromeLocalData: {
+                    theme: 'dark',
+                    vbmDeadScan: JSON.stringify({ state: 'scanning', done: 200, total: 5000 }),
+                    'vbmFavicon:github.com': 'data:image/png;base64,AAAA'
+                }
+            });
+            await sb.start();
+            await sb.elements['export-settings'].fire('click');
+            const backup = JSON.parse(await sb.objectURLs[0].text());
+            expect(backup.local.theme).toBe('dark');
+            expect(backup.local.vbmDeadScan).toBeUndefined();
+            expect(backup.local['vbmFavicon:github.com']).toBe('data:image/png;base64,AAAA');
         });
     });
 
@@ -377,6 +444,22 @@ describe('options.js settings backup', () => {
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
             // the file input is reset so the same file can be picked again
             expect(sb.elements['import-settings-file'].value).toBe('');
+        });
+
+        it('ignores a vbmDeadScan journal inside a legacy backup (audit D7)', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            await pickFile(sb, validBackup({ local: {
+                theme: 'dark',
+                vbmDeadScan: JSON.stringify({ state: 'scanning', done: 200, total: 5000 })
+            } }));
+            expect(sb.localData.theme).toBe('dark');
+            expect(sb.localData.vbmDeadScan).toBeUndefined();
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
 
         it('accepts a backup without a sync section', async () => {
@@ -589,26 +672,118 @@ describe('storage usage bar', () => {
         expect(iconBytes(sb)).toBeGreaterThan(0);
         await sb.elements['favicon-cache-clear'].fire('click');
         for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        // audit O5: clearing is confirmed like the other destructive actions
+        expect(sb.confirms).toEqual(['optionFaviconCacheClearConfirm']);
         expect(sb.alerts).toEqual(['optionFaviconCacheCleared']);
         expect(sb.localData['vbmFavicon:github.com']).toBeUndefined();
         expect(sb.localData.vbmFaviconIdx).toBeUndefined();
         expect(iconBytes(sb)).toBe(0);
     });
 
+    it('a cancelled clear-cache confirm removes nothing (audit O5)', async () => {
+        const sb = createSandbox({
+            chromeLocalData: { 'vbmFavicon:github.com': 'data:image/png;base64,AAAA' }
+        });
+        await sb.start();
+        sb.setConfirm(false);
+        await sb.elements['favicon-cache-clear'].fire('click');
+        expect(sb.localData['vbmFavicon:github.com']).toBe('data:image/png;base64,AAAA');
+        expect(sb.alerts).toHaveLength(0);
+    });
+
+    it('an empty cache answers with feedback instead of a silent return (audit O5)', async () => {
+        const sb = createSandbox({ chromeLocalData: { theme: 'dark' } });
+        await sb.start();
+        await sb.elements['favicon-cache-clear'].fire('click');
+        expect(sb.confirms).toHaveLength(0);
+        expect(sb.alerts).toEqual(['optionFaviconCacheEmpty']);
+        expect(sb.localData.theme).toBe('dark');
+        expect(sb.localData.vbmFaviconIdx).toBeUndefined();
+    });
+
     it('re-measures live when the background writes icon-cache keys', async () => {
         const sb = createSandbox({ chromeLocalData: { theme: 'dark' } });
         await sb.start();
         expect(sb.elements['usage-icon']._attributes['aria-label']).toBe('storageUsageIcon 0 B');
-        // the background stores an enriched favicon while the page is open
+        // the background stores an enriched favicon while the page is open;
+        // onChanged is debounced (audit O3), so wait past the 300ms window
         await sb.chrome.storage.local.set({ 'vbmFavicon:github.com': 'data:image/png;base64,AAAA' });
         for (const fn of sb.onChangedListeners)
             fn({ 'vbmFavicon:github.com': { newValue: 'data:image/png;base64,AAAA' } }, 'local');
-        for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        await new Promise(r => setTimeout(r, 350));
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
         // unrelated local changes (theme via sync never fires local) are ignored
         for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
-        for (let i = 0; i < 5; i++) await new Promise(r => setTimeout(r, 0));
+        await new Promise(r => setTimeout(r, 350));
         expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
+    });
+
+    it('debounces a burst of icon writes into one full re-measure (audit O3)', async () => {
+        const sb = createSandbox({ chromeLocalData: { theme: 'dark' } });
+        await sb.start();
+        let fullReads = 0;
+        const originalGet = sb.chrome.storage.local.get;
+        sb.chrome.storage.local.get = async (...args) => {
+            fullReads++;
+            return originalGet(...args);
+        };
+        for (let i = 0; i < 5; i++) {
+            await sb.chrome.storage.local.set({
+                [`vbmFavicon:h${i}.example`]: 'data:image/png;base64,AAAA'
+            });
+            for (const fn of sb.onChangedListeners)
+                fn({ [`vbmFavicon:h${i}.example`]: { newValue: 'data:image/png;base64,AAAA' } }, 'local');
+        }
+        // still inside the debounce window: no full-area read yet
+        expect(fullReads).toBe(0);
+        await new Promise(r => setTimeout(r, 350));
+        expect(fullReads).toBe(1); // the whole burst collapsed into one scan
+        expect(sb.elements['usage-icon']._attributes['aria-label']).toMatch(/storageUsageIcon \d+ B/);
+        // unrelated keys never schedule a re-measure
+        for (const fn of sb.onChangedListeners) fn({ zoom: { newValue: 110 } }, 'local');
+        await new Promise(r => setTimeout(r, 350));
+        expect(fullReads).toBe(1);
+    });
+
+    it('counts deadMarks/deadMarkTimes as scan/mark data, not other (audit O4)', async () => {
+        const sb = createSandbox({
+            chromeLocalData: {
+                theme: 'dark',
+                deadMarks: '["12","13"]',
+                deadMarkTimes: '{"12":1700000000000}'
+            }
+        });
+        await sb.start();
+        const expectedBytes = JSON.stringify('["12","13"]').length
+            + JSON.stringify('{"12":1700000000000}').length;
+        expect(sb.elements['usage-bookmarks']._attributes['aria-label'])
+            .toBe(`storageUsageBookmarks ${expectedBytes} B`);
+    });
+
+    it('prefers chrome.storage.local.getBytesInUse for real billed bytes (audit O9)', async () => {
+        const bytesFor = keys => {
+            const first = keys[0] || '';
+            if (first.startsWith('vbmFavicon'))
+                return 100;
+            if (first === 'deadMarks' || first === 'deadMarkTimes'
+                || first === 'deadLastScan' || first === 'vbmDeadScan' || first === 'visitStats')
+                return 200;
+            return 300;
+        };
+        const getBytesInUse = vi.fn(async keys => bytesFor(keys));
+        const sb = createSandbox({
+            chromeLocalData: {
+                'vbmFavicon:github.com': 'data:image/png;base64,AAAA',
+                deadMarks: '["12"]',
+                theme: 'dark'
+            },
+            chromeLocalExtras: { getBytesInUse }
+        });
+        await sb.start();
+        expect(getBytesInUse).toHaveBeenCalledTimes(3);
+        expect(sb.elements['usage-icon']._attributes['aria-label']).toBe('storageUsageIcon 100 B');
+        expect(sb.elements['usage-bookmarks']._attributes['aria-label']).toBe('storageUsageBookmarks 200 B');
+        expect(sb.elements['usage-other']._attributes['aria-label']).toBe('storageUsageOther 300 B');
     });
 });
 
@@ -646,7 +821,7 @@ describe('options page header meta', () => {
         expect(sb.elements['header-homepage-label'].innerText).toBe('optionsHomepageLink');
         // Version button points at the current version's changelog section
         // (assembled from the manifest version: 4.0.1 → #v401).
-        expect(sb.elements['options-version'].href).toBe('https://github.com/windviki/vBookmarks#v401');
+        expect(sb.elements['options-version'].href).toBe('https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v401');
         expect(sb.elements['options-version-text'].innerText).toBe('v4.0.1');
         expect(sb.elements['options-version'].title).toBe('optionsVersion');
         // Subtitle: forked-from + days since 1.0 (2011-11-15), i18n key only

@@ -19,7 +19,7 @@ createVisitStatsCollector().start();
 // --- Dead-scan SW runner (v4 task-4 #16) -----------------------------------
 // The scan outlives the popup here: pages send vbm-dead-scan-* messages and
 // mirror the published vbmDeadScan blob; a cold start resumes a live run.
-createDeadScanRunner().start();
+const deadScanRunner = createDeadScanRunner();
 
 // --- Tab-group opener SW runner (P3.4 hardening) ----------------------------
 // Opening bookmarks "as a tab group" must outlive the popup too: the popup
@@ -32,16 +32,25 @@ createTabGroupOpener().start();
 // The popup tears down its marker-PAC on every scan exit (settle/cancel/
 // pagehide), but a popup crash mid-scan would leave it installed. The PAC
 // only proxies marker-tagged probe URLs (everything else resolves DIRECT),
-// so residue is benign — still, sweep it whenever no live scan marker
-// exists. The guard covers browsers/builds where chrome.proxy is absent;
-// settings.clear removes only what THIS extension set.
-if (chrome.proxy && chrome.proxy.settings && chrome.storage && chrome.storage.session) {
-    chrome.storage.session.get('vbmProxySession', data => {
-        if (data && data.vbmProxySession)
-            return; // a scan is live right now — its PAC is legitimate
-        chrome.proxy.settings.clear({ scope: 'regular' }, () => void chrome.runtime.lastError);
-    });
-}
+// so residue is benign — still, sweep it when the cold-start resume check
+// decides there is NO live run. The guard covers browsers/builds where
+// chrome.proxy is absent; settings.clear removes only what THIS extension
+// set. audit D9: the sweep waits for resumeIfNeeded's read and is skipped
+// entirely when a run was resumed, so it can no longer clear the PAC that
+// the resumed run is installing.
+const sweepDeadProxyResidue = () => {
+    if (chrome.proxy && chrome.proxy.settings && chrome.storage && chrome.storage.session) {
+        chrome.storage.session.get('vbmProxySession', data => {
+            if (data && data.vbmProxySession)
+                return; // a scan is live right now — its PAC is legitimate
+            chrome.proxy.settings.clear({ scope: 'regular' }, () => void chrome.runtime.lastError);
+        });
+    }
+};
+deadScanRunner.start().then(resumed => {
+    if (!resumed)
+        sweepDeadProxyResidue();
+});
 
 // --- Custom action icon persistence (issue #52) -----------------------------
 // chrome.action.setIcon is session-scoped: a browser restart resets the action

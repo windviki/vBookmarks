@@ -59,6 +59,7 @@ export function createDeadScanRunner() {
     let doneCount = 0;
     let startTs = 0;
     let proxyOn = false;      // THIS runner installed the marker-PAC
+    let proxyGen = 0;        // generation that installed the PAC (audit D6)
     let proxyGate = '';       // '' | i18n key — why the proxy channel is off
     let publishTimer = null;
     let started = false;
@@ -111,10 +112,16 @@ export function createDeadScanRunner() {
     };
 
     // --- Proxy session ------------------------------------------------------------
-    const stopProxy = () => {
+    // ownerGen is the generation asking for teardown. A stale begin() must
+    // not tear down a PAC a NEWER generation just installed (audit D6); the
+    // newer chain owns the session until its own finish/cancel.
+    const stopProxy = ownerGen => {
         if (!proxyOn)
             return;
+        if (ownerGen !== undefined && proxyGen && proxyGen !== ownerGen)
+            return;
         proxyOn = false;
+        proxyGen = 0;
         endProxySession();
         if (chrome.storage && chrome.storage.session)
             chrome.storage.session.remove('vbmProxySession');
@@ -122,13 +129,19 @@ export function createDeadScanRunner() {
 
     // Resolves true only with the PAC live; failures are noted in proxyGate
     // and the scan degrades to direct(+template)-only (popup-era semantics).
-    const gateProxy = server =>
-        proxyPermission().then(have => {
+    const gateProxy = (server, ownerGen) => {
+        if (gen !== ownerGen)
+            return Promise.resolve(false);
+        return proxyPermission().then(have => {
+            if (gen !== ownerGen)
+                return false;
             if (!have) {
                 proxyGate = 'deadProxyDenied';
                 return false;
             }
             return proxyControllable().then(control => {
+                if (gen !== ownerGen)
+                    return false;
                 if (control !== 'ok') {
                     proxyGate = control === 'other-extension' ? 'deadProxyControlled' : 'deadProxyUnavailable';
                     return false;
@@ -138,8 +151,15 @@ export function createDeadScanRunner() {
                         proxyGate = 'deadProxyControlled';
                         return false;
                     }
+                    if (gen !== ownerGen) {
+                        // Superseded while startProxySession was installing —
+                        // tear down only the PAC THIS chain just created.
+                        endProxySession();
+                        return false;
+                    }
                     proxyGate = '';
                     proxyOn = true;
+                    proxyGen = ownerGen;
                     // Crash-residue marker swept by background.js on the next
                     // cold start if this runner dies without stopProxy().
                     if (chrome.storage && chrome.storage.session)
@@ -148,6 +168,7 @@ export function createDeadScanRunner() {
                 });
             });
         });
+    };
 
     // --- Settings + items -----------------------------------------------------------
     const readSettings = data => ({
@@ -218,7 +239,7 @@ export function createDeadScanRunner() {
 
     const finish = () => {
         session = null;
-        stopProxy();
+        stopProxy(gen);
         const plain = {};
         results.forEach((r, id) => {
             plain[id] = { status: r.status, code: r.code, error: r.error, ts: r.ts };
@@ -266,14 +287,14 @@ export function createDeadScanRunner() {
                 const begin = () => {
                     if (gen !== myGen) {
                         // Superseded mid-gate: a PAC gateProxy may have already
-                        // installed — tear it down so it never leaks.
-                        stopProxy();
+                        // installed — tear down only THIS generation's PAC.
+                        stopProxy(myGen);
                         return;
                     }
                     launch(settings, all, prior, paused);
                 };
                 if (settings.proxyServer)
-                    gateProxy(settings.proxyServer).then(begin);
+                    gateProxy(settings.proxyServer, myGen).then(begin);
                 else
                     begin();
             });
@@ -321,11 +342,12 @@ export function createDeadScanRunner() {
             // No live session, but a start() may still be in its async setup
             // window (cold-start resumeIfNeeded / a resume re-launch). Bump the
             // generation so the in-flight chain drops out at its next guard,
-            // tear down any PAC gateProxy already installed, and clear the blob
-            // so "the run never happened" also holds for a cancel that lands
-            // before launch().
+            // tear down only the superseded generation's PAC, and clear the
+            // blob so "the run never happened" also holds for a cancel that
+            // lands before launch().
+            const cancelledGen = gen;
             gen++;
-            stopProxy();
+            stopProxy(cancelledGen);
             dropBlob();
             startTs = 0;
             return;
@@ -333,7 +355,7 @@ export function createDeadScanRunner() {
         const s = session;
         session = null;
         s.cancel(); // the settle handler sees session!==s and stays out
-        stopProxy();
+        stopProxy(gen);
         dropBlob();
         results = new Map();
         items = [];
@@ -356,38 +378,43 @@ export function createDeadScanRunner() {
     };
 
     // MV3 cold start: a fresh live blob means the SW died mid-run — continue
-    // from the published remainder (a paused blob stays paused).
-    const resumeIfNeeded = () => {
+    // from the published remainder (a paused blob stays paused). Resolves
+    // true when a run was actually resumed so background.js can skip its
+    // crash-residue PAC sweep for that path (audit D9 — the sweep must not
+    // race the resumed run's own PAC install).
+    const resumeIfNeeded = () => new Promise(resolve => {
         const myGen = gen;
+        const done = resumed => resolve(!!resumed);
         storageGet(DEAD_SCAN_KEY, data => {
             // 审计 D3: same guard as resume() — a cancel that landed while
             // this read was in flight bumped the generation (and dropped the
             // blob); the captured stale snapshot must not bring the run back.
             if (gen !== myGen)
-                return;
+                return done(false);
             const raw = data[DEAD_SCAN_KEY];
             if (!raw || session)
-                return;
+                return done(false);
             let old;
             try {
                 old = JSON.parse(raw);
             } catch (e) {
-                return;
+                return done(false);
             }
             if ((old.state !== 'scanning' && old.state !== 'paused')
                 || !old.ts || Date.now() - old.ts > STALE_MS)
-                return;
+                return done(false);
             startTs = old.ts;
             start({ skipSettled: true, paused: old.state === 'paused' });
+            done(true);
         });
-    };
+    });
 
     const start_ = () => {
         if (started)
-            return;
+            return Promise.resolve(false);
         started = true;
         chrome.runtime.onMessage.addListener(onMessage);
-        resumeIfNeeded();
+        return resumeIfNeeded();
     };
 
     // start() is what background.js calls; the rest is test surface.

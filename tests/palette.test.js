@@ -1,4 +1,18 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+
+// The secret path hashes two internal passphrases through src/md5.js. The md5
+// CONTRACT is covered by tests/md5.test.js; here the dependency is mocked so
+// the positive palette path can be exercised without publishing the real
+// passphrases in the test suite (audit T6).
+vi.mock('../src/md5.js', () => ({
+    md5: vi.fn(input => {
+        if (input === 'button-alt-on')
+            return 'bf285bb57eb641398ac4ed966f36bec7';
+        if (input === 'button-alt-off')
+            return '6b8a47190afe19339577578962fa9f6c';
+        return '00000000000000000000000000000000';
+    })
+}));
 
 // palette.js touches page globals (document/window/chrome) only inside
 // initPalette and its handlers, so the real module imports cleanly in node
@@ -2189,6 +2203,23 @@ describe('Tab ring: input ↔ Esc/close button', () => {
 });
 
 describe('internal reserved entry', () => {
+    it('the correct passphrases toggle the button-alt class and persist it (audit T6)', () => {
+        const { palette, input, keydown, type, body, store } = setup({});
+        palette.open();
+        type('/secret button-alt-on');
+        keydown(input, { key: 'Enter' });
+        expect(palette.isOpen()).toBe(false);
+        expect(body.classList.contains('vbm-btn-alt')).toBe(true);
+        expect(store.setCalls).toEqual([['vbmBtnAlt', '1']]);
+
+        palette.open();
+        type('/secret button-alt-off');
+        keydown(input, { key: 'Enter' });
+        expect(palette.isOpen()).toBe(false);
+        expect(body.classList.contains('vbm-btn-alt')).toBe(false);
+        expect(store.setCalls).toEqual([['vbmBtnAlt', '1'], ['vbmBtnAlt', '']]);
+    });
+
     it('an unmatched /secret param closes silently without toggling', () => {
         const { palette, input, keydown, type, body, store } = setup({});
         palette.open();

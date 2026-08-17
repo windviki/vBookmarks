@@ -199,7 +199,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive).",
+    "message": "Under the All filter this includes blocked bookmarks (reachable through your proxy, likely still alive) and previously marked rows.",
     "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
   },
   "undoSingleStepNote": {
@@ -1116,8 +1116,8 @@
     "description": "Dead view selection mode: mark every selected row as dead."
   },
   "deadMarkStatusAll": {
-    "message": "All",
-    "description": "Dead view second toolbar (mark-status filter): show both marked and unmarked rows."
+    "message": "Any status",
+    "description": "Dead view second toolbar (mark-status filter): show rows regardless of their mark status (distinct wording from the category toolbar's All)."
   },
   "deadMarkStatusMarked": {
     "message": "Marked",
@@ -1477,12 +1477,20 @@
     "description": "Options checkbox (Icons group): whether the settings export/import also carries the enriched favicon cache (per-site data, potentially large). Off by default to keep backups small."
   },
   "optionFaviconBackupHint": {
-    "message": "Also pack the enriched favicon cache (per-site data, potentially large) into the settings export/import. Off keeps backups small; icons are re-fetched automatically anyway.",
+    "message": "Also pack the enriched favicon cache (per-site data, potentially large) into the settings export/import. This covers icons already cached even while fetching is off. Off keeps backups small; icons are re-fetched automatically anyway.",
     "description": "Hint under the include-icon-cache-in-backups checkbox."
   },
   "optionFaviconCacheClear": {
     "message": "Clear icon cache",
     "description": "Options button: clear the favicon cache so icons are re-fetched on next open."
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Clear the enriched icon cache? Icons will be re-fetched automatically on next open.",
+    "description": "Confirmation shown before clearing the favicon cache."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "No icon cache to clear.",
+    "description": "Alert shown when the user clicks Clear icon cache and no cache keys exist."
   },
   "optionFaviconCacheCleared": {
     "message": "Icon cache cleared. Icons will be re-fetched on next open.",
@@ -1493,8 +1501,8 @@
     "description": "Storage usage bar legend segment: bytes held by the favicon cache."
   },
   "storageUsageBookmarks": {
-    "message": "Bookmark data",
-    "description": "Storage usage bar legend segment: bytes held by bookmark-derived data (dead-link scan, visit stats)."
+    "message": "Scan/mark data",
+    "description": "Storage usage bar legend segment: bytes held by bookmark-derived data (dead-link scan, marks, visit stats)."
   },
   "storageUsageOther": {
     "message": "Other",
@@ -1516,7 +1524,7 @@
     "description": "Storage usage bar legend segment: remaining space in chrome.storage.local."
   },
   "storageUsageHint": {
-    "message": "Storage space used by bookmarks, the icon cache and settings. Free space updates after clearing the icon cache.",
+    "message": "Storage space used by bookmark scan/mark data, the icon cache and settings. Free space updates after clearing the icon cache.",
     "description": "Hint under the storage usage bar in the Icons group."
   },
   "optionsDonate": {

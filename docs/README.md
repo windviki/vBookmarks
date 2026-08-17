@@ -208,7 +208,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 
 - **Real site icons for bookmarks Chrome hasn't cached**: this release fetches the actual site icon for bookmarks the browser has no cached image for — direct from the site first, then through a built-in third-party icon fallback list (favicon.run) guarded by a per-provider circuit breaker and failover; while a dead-link proxy session is active, discovery re-runs through the proxy. The enriched cache is capped by a dynamic byte budget that halves-and-evicts under pressure. New Icons-group controls: "Fetch missing site icons" (on by default), "Third-party icon fallback" (also on by default), and a "Clear icon cache" action.
 - **Options page regrouped into 15 sections**: the overloaded Views group split into View display / Icons / Context menus / Tools / Statistics, so every area has breathing room.
-- **Storage usage bar**: the Icons group now shows how much of the storage quota icons, bookmarks, settings and the free space each take (with a byte-formatted legend), updating live as data changes.
+- **Storage usage bar**: the Icons group now shows how much of the storage quota icons, bookmark scan/mark data, settings and the free space each take (with a byte-formatted legend), updating live as data changes.
 - **Header GitHub / Homepage links and version number** in the top-right corner of the options page.
 - **Backup includes the icon cache by default**: a new "Include icon cache in backups" option packs the enriched per-site icon cache into settings export/import (on by default, so a full-fidelity backup travels with its icons); turning it off keeps backups small, and icons are re-fetched automatically.
 
@@ -221,6 +221,10 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - **No more zombie rows in the dead-link view**: the marks-only "past marks" view (no scan run yet) now re-joins on bookmark events too — a deleted bookmark's row disappears at once and its ⚑ can no longer re-persist the deleted id; a bookmark deleted while a scan is running no longer resurfaces as a ghost row when the run finishes.
 - **Cancelling a scan is final**: a cancel landing while a cold-start resume / resume re-launch is still reading its state can no longer resurrect the cancelled run from a stale snapshot.
 - **Announcement and "What's new" banners are keyboard-reachable**: both new banners joined the managed Tab ring, the announcement's dismiss button is reachable, and Esc dismisses the announcement outright (same mark-as-seen semantics as its ×) — keyboard-only users could previously never get rid of it.
+- **Icon-discovery data URLs and candidate cap**: L2 tries at most the first 5 declared `<link>` candidates per page, a malformed `data:` candidate now skips just that item and the loop continues, and percent-encoded (non-base64) inline SVG data URLs decode correctly.
+- **Options-page low-priority polish**: the storage bar measures with `getBytesInUse` and debounces burst writes (300 ms); `deadMarks/deadMarkTimes` are counted in the scan/mark segment; clearing the icon cache now confirms first and gives feedback when empty; backup filenames say `-with-icons`/`-no-icons`; backup export/import drops the runtime `vbmDeadScan` journal; the header GitHub link goes to the project repo, changelog links point at `docs/README.md` explicitly, and the header subtitle is valid markup.
+- **Dead-link view low-priority polish**: the second toolbar's "All" now reads "Any status" to disambiguate the two counters; rows without a per-row timestamp sort last under detection-time sorting; a hidden-by-filter marks-only view shows the "try another segment" hint instead of the first-scan call-to-action; the bare status pill "0" renders as "—"; and "Delete all" now covers the same visible set as "Select all" in the All view (result rows plus uncovered past marks).
+- **Scan race hardening**: a stale start chain tears down only its own generation's PAC, so it can no longer strip the proxy session from a newer scan; and an import rewriting `deadMarks/deadMarkTimes` while the side panel is open is reflected in the dead-link view immediately.
 
 #### Changed
 
@@ -234,7 +238,7 @@ python3 scripts/package.py         # → tmp/vBookmarks_<version>.zip
 - Store publishing supports a trusted-tester grey release (`TRUSTED_TESTERS`); `DEFAULT_PUBLISH` restores a full rollout.
 - `loadDotenv` accepts inline comments (`KEY=value # note`).
 - Bookmarklet behavior verified in a real-browser harness (`verify-bmlet.js`).
-- Test suite at **70 files / 2301 cases**, all green.
+- Test suite at **70 files / 2328 cases**, all green.
 
 ### v4.0.7
 

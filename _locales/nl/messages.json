@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Onder het filter Alles omvat dit ook geblokkeerde bladwijzers (bereikbaar via je proxy, waarschijnlijk nog actief).",
+    "message": "Onder het filter 'Alles' omvat dit geblokkeerde bladwijzers (bereikbaar via je proxy, waarschijnlijk nog actief) en eerder gemarkeerde rijen.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Markeer geselecteerde"
   },
   "deadMarkStatusAll": {
-    "message": "Alles"
+    "message": "Elke status"
   },
   "deadMarkStatusMarked": {
     "message": "Gemarkeerd"
@@ -870,10 +870,16 @@
     "message": "Pictogramcache opnemen in back-ups"
   },
   "optionFaviconBackupHint": {
-    "message": "Neem de verrijkte pictogramcache (gegevens per site, potentieel groot) ook op in de export/import van instellingen. Uitschakelen houdt back-ups klein; pictogrammen worden toch automatisch opnieuw opgehaald."
+    "message": "Neem ook de verrijkte favicon-cache (gegevens per site, potentieel groot) mee in de export/import van instellingen. Dit omvat pictogrammen die al in de cache zitten, zelfs wanneer het ophalen is uitgeschakeld. Als deze optie uit staat, blijven back-ups klein; pictogrammen worden toch automatisch opnieuw opgehaald."
   },
   "optionFaviconCacheClear": {
     "message": "Pictogramcache wissen"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "De verrijkte pictogrammencache wissen? Pictogrammen worden bij de volgende opening automatisch opnieuw opgehaald."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Er is geen pictogrammencache om te wissen."
   },
   "optionFaviconCacheCleared": {
     "message": "Pictogramcache gewist. Pictogrammen worden bij de volgende opening opnieuw opgehaald."
@@ -882,7 +888,7 @@
     "message": "Pictogrammen"
   },
   "storageUsageBookmarks": {
-    "message": "Bladwijzergegevens"
+    "message": "Scan-/markeergegevens"
   },
   "storageUsageOther": {
     "message": "Overig"
@@ -902,7 +908,7 @@
     "message": "Vrij"
   },
   "storageUsageHint": {
-    "message": "Opslagruimte die wordt gebruikt door bladwijzers, de pictogramcache en instellingen. De vrije ruimte wordt bijgewerkt na het wissen van de pictogramcache."
+    "message": "Opslagruimte gebruikt door scan-/markeergegevens van bladwijzers, de pictogrammencache en instellingen. Vrije ruimte wordt bijgewerkt nadat de pictogrammencache is gewist."
   },
   "optionsDonate": {
     "message": "Doneren"

@@ -1286,6 +1286,17 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect(html).toContain('id="dead-item-11"');
     });
 
+    it('行级 ⚑ 标注按钮的 aria-pressed 与真实标注态一致（audit T7）', () => {
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        const html = $list.innerHTML;
+        // 12 已标注 → aria-pressed=true；13 未标注 → aria-pressed=false
+        expect(html).toContain('id="dead-item-12"');
+        expect(html).toMatch(/id="dead-item-12"[\s\S]*?dead-mark-btn marked"[^>]*aria-pressed="true"/);
+        expect(html).toMatch(/id="dead-item-13"[\s\S]*?dead-mark-btn"[^>]*aria-pressed="false"/);
+    });
+
     it('残留列表 head：结果在上方带 after-results 分隔线，marked-only 不带（视觉区块区分）', () => {
         const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]' } });
         const { $list } = ctx;
@@ -1324,6 +1335,45 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect(ctx2.$list.innerHTML).not.toContain('id="dead-item-12"');
     });
 
+    it('无扫描缓存 + 有标注但被 unmarked 隐藏 → 提示换分段，不是首次扫描 CTA（audit D13）', () => {
+        // 取消首扫后进入无缓存标注视图；再切"未标注"会把残留（全是已标注）
+        // 整块隐藏。此时用户明明有标注数据，不应看到"开始第一次扫描"的
+        // 蓝色 CTA——提示换分段才文对题。
+        const ctx = setup({
+            storeData: { deadMarks: '["11","12"]', deadMarkFilter: 'unmarked' }
+        });
+        const { $list } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('deadNoneFiltered');
+        expect($list.innerHTML).not.toContain('class="empty-state dead-start"');
+        expect($list.innerHTML).not.toContain('deadMarkedCount[');
+        // 真正的首次使用（无缓存且无标注）仍保留可执行的开始扫描空态
+        const fresh = setup({ storeData: { deadMarkFilter: 'unmarked' } });
+        fresh.def().activate();
+        expect(fresh.$list.innerHTML).toContain('class="empty-state dead-start"');
+        expect(fresh.$list.innerHTML).toContain('deadStartHint[3]');
+    });
+
+    it('侧栏开着时导入写入 deadMarks/deadMarkTimes：storage.onChanged 即时代入并重渲染（audit D7）', () => {
+        const ctx = setup({ storeData: { deadMarks: '["12"]' } });
+        const { $list } = ctx;
+        ctx.def().activate(); // 无缓存 → marked-only 视图
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).not.toContain('id="dead-item-13"');
+        // 模拟选项页导入：一次 local 写同时带来 deadMarks + deadMarkTimes
+        ctx.chrome.storage.onChanged.fire({
+            deadMarks: { newValue: '["12","13"]' },
+            deadMarkTimes: { newValue: '{"12":1700000001000,"13":1700000002000}' }
+        }, 'local');
+        expect($list.innerHTML).toContain('id="dead-item-12"');
+        expect($list.innerHTML).toContain('id="dead-item-13"');
+        expect($list.innerHTML).toContain('deadMarkedCount[2]');
+        // 移除全部标注（导入了一份无标注的备份）→ 回到首次扫描空态
+        ctx.chrome.storage.onChanged.fire({ deadMarks: { newValue: '[]' } }, 'local');
+        expect($list.innerHTML).not.toContain('dead-marked-list');
+        expect($list.innerHTML).toContain('class="empty-state dead-start"');
+    });
+
     it('select-all/invert 只作用于可见集（unmarked 下不含残留/已标注行）', () => {
         const ctx = setup({
             storeData: { deadLastScan: CACHE, deadMarks: '["11","12"]', deadMarkFilter: 'unmarked' }
@@ -1354,6 +1404,22 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         expect(dialogs.ConfirmDialog.openCalls[0].dialog).toContain('deadDeleteAll[1]');
     });
 
+    it('全部视图下 delete-all 与 select-all 同作用域：可见结果行 + 残留标注一起删（audit D5）', async () => {
+        // 11 判 ok 且被标注 → 残留行；12/13 是结果行。全部视图里三行都可见，
+        // 所以"删除全部"的确认数量与真正删除集合必须和"全选"看到的一致。
+        const ctx = setup({ storeData: { deadLastScan: CACHE, deadMarks: '["11"]' } });
+        const { $list, dialogs, chrome, undo } = ctx;
+        ctx.def().activate();
+        expect($list.innerHTML).toContain('id="dead-item-11"'); // residue on screen
+        ctx.clickOn({ closest: sel => (sel === '.dead-delete-all' ? {} : null) });
+        expect(dialogs.ConfirmDialog.openCalls).toHaveLength(1);
+        expect(dialogs.ConfirmDialog.openCalls[0].dialog).toContain('deadDeleteAll[3]');
+        dialogs.ConfirmDialog.openCalls[0].fn1();
+        await flush();
+        expect([...chrome.bookmarks.removeCalls].sort()).toEqual(['11', '12', '13']);
+        expect(undo.toastCalls).toEqual(['deadDeleted[3]']);
+    });
+
     it('detected 排序按每行扫描 ts，老备份无 ts 回退 key 序', () => {
         // 三条非 ok 行；ts 与 key 序（JSON 解析后数字键恒升序 11,12,13）相反 →
         // 检测时间序 13,12,11，证明排序真的按 ts 走而不是按 key
@@ -1380,6 +1446,23 @@ describe('mark-status filter + sort (4.0.7 死链视图增强)', () => {
         html = legacy.$list.innerHTML;
         expect(html.indexOf('id="dead-item-11"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
         expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-13"'));
+    });
+
+    it('detected 排序下混合新旧数据：无 ts 行排最后，不再跳到最前（audit D12）', () => {
+        // 12/13 有 per-row ts，11 是老备份残留（无 ts）。按检测时间排序时
+        // 无 ts 行应像 marked 排序里"无标记时间"一样垫底，避免新旧数据交界
+        // 时突兀地跳到列表头部。
+        const ctx = setup({ storeData: { deadSort: 'detected' } });
+        const { $list } = ctx;
+        ctx.def().activate();
+        finishScan(ctx, {
+            '11': { status: 'dead', code: 404 },             // legacy, no ts
+            '12': { status: 'dead', code: 404, ts: 200 },
+            '13': { status: 'blocked', code: 404, ts: 100 }
+        });
+        const html = $list.innerHTML;
+        expect(html.indexOf('id="dead-item-13"')).toBeLessThan(html.indexOf('id="dead-item-12"'));
+        expect(html.indexOf('id="dead-item-12"')).toBeLessThan(html.indexOf('id="dead-item-11"'));
     });
 
     it('path 排序按 views.pathOf；marked 排序按 deadMarkTimes（未标注排最后），残留列表同序', () => {

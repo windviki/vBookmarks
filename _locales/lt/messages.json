@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Taikant filtrą „Visi“, tai apima užblokuotas žymes (pasiekiamas per tarpinį serverį, tikriausiai vis dar veikiančias).",
+    "message": "Naudojant filtrą „Viskas“, tai apima užblokuotas žymes (pasiekiamas per tarpinį serverį, tikėtinai vis dar veikiančias) ir anksčiau pažymėtas eilutes.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Pažymėti pasirinktus"
   },
   "deadMarkStatusAll": {
-    "message": "Visi"
+    "message": "Bet kokia būsena"
   },
   "deadMarkStatusMarked": {
     "message": "Pažymėti"
@@ -870,10 +870,16 @@
     "message": "Įtraukti piktogramų talpyklą į atsargines kopijas"
   },
   "optionFaviconBackupHint": {
-    "message": "Taip pat įtraukti praturtintą svetainės piktogramų talpyklą (duomenys pagal svetainę, gali būti dideli) į nustatymų eksportą/importą. Išjungus šią parinktį atsarginės kopijos lieka mažos; piktogramos vis tiek automatiškai įkeliamos iš naujo."
+    "message": "Taip pat įtraukite papildytą piktogramų talpyklą (svetainės duomenys, gali būti dideli) į nustatymų eksportą/importą. Tai apima jau talpykloje saugomas piktogramas, net kai gavimas išjungtas. Išjungus atsarginės kopijos lieka mažos; piktogramos vis tiek bus automatiškai gautos iš naujo."
   },
   "optionFaviconCacheClear": {
     "message": "Išvalyti piktogramų talpyklą"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Išvalyti papildytą piktogramų talpyklą? Piktogramos bus automatiškai iš naujo gautos kitą kartą atidarant."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nėra piktogramų talpyklos, kurią būtų galima išvalyti."
   },
   "optionFaviconCacheCleared": {
     "message": "Piktogramų talpykla išvalyta. Piktogramos bus gautos iš naujo kitą kartą atidarius."
@@ -882,7 +888,7 @@
     "message": "Piktogramos"
   },
   "storageUsageBookmarks": {
-    "message": "Adresyno duomenys"
+    "message": "Skenavimo/žymėjimo duomenys"
   },
   "storageUsageOther": {
     "message": "Kita"
@@ -902,7 +908,7 @@
     "message": "Laisva vieta"
   },
   "storageUsageHint": {
-    "message": "Saugyklos vietos kiekis, kurį naudoja adresynas, piktogramų talpykla ir nustatymai. Laisvos vietos kiekis atnaujinamas išvalius piktogramų talpyklą."
+    "message": "Saugyklos vieta, kurią naudoja žymių skenavimo/žymėjimo duomenys, piktogramų talpykla ir nustatymai. Laisva vieta atnaujinama išvalius piktogramų talpyklą."
   },
   "optionsDonate": {
     "message": "Paremkite"

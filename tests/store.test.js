@@ -98,6 +98,23 @@ describe('store.js', () => {
             expect(sb.lsData.get('donationKey')).toBe('801');
         });
 
+        it('registers the three favicon settings keys for migration (audit T8)', async () => {
+            const sb = createSandbox({
+                localStorageData: {
+                    faviconContrast: '1',
+                    faviconEnrich: '',
+                    faviconEnrichAgg: '1',
+                    faviconBackupInclude: ''
+                }
+            });
+            await sb.window.store.ready;
+            expect(sb.localData.faviconContrast).toBe('1');
+            expect(sb.localData.faviconEnrich).toBe('');
+            expect(sb.localData.faviconEnrichAgg).toBe('1');
+            expect(sb.localData.faviconBackupInclude).toBe('');
+            expect(sb.window.store.get('faviconBackupInclude')).toBe('');
+        });
+
         it('registers the focusSpot popup-state key for migration', async () => {
             const sb = createSandbox({
                 localStorageData: { focusSpot: '{"zone":"header","key":"tool-btn"}' }

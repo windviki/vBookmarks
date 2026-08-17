@@ -285,7 +285,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)。",
+    "message": "「全部」筛选下包含受限书签(代理服务器可达,大概率并未失效)以及过去标注的行。",
     "description": "Delete-all confirmation in the Dead links view: the All-filter warning, shown on the confirmation's second line before undoSingleStepNote."
   },
   "undoSingleStepNote": {
@@ -1042,8 +1042,8 @@
     "description": "Dead view selection mode: mark every selected row as dead."
   },
   "deadMarkStatusAll": {
-    "message": "全部",
-    "description": "死链视图第二工具条（标注状态筛选）：显示已标注与未标注两类行。"
+    "message": "任意状态",
+    "description": "死链视图第二工具条（标注状态筛选）：不论标注状态显示所有行，与分类工具条的“全部”措辞区分。"
   },
   "deadMarkStatusMarked": {
     "message": "已标注",
@@ -1340,10 +1340,18 @@
     "message": "备份时包含图标缓存"
   },
   "optionFaviconBackupHint": {
-    "message": "把补全的图标缓存（按站点的数据，体积可能较大）一并纳入设置导出/导入。默认关闭以保持备份精简；图标本就会自动重新补全。"
+    "message": "把补全的图标缓存（按站点的数据，体积可能较大）一并纳入设置导出/导入；即使已关闭补全，已缓存的图标也会一并携带。关闭可保持备份精简；图标本就会自动重新补全。"
   },
   "optionFaviconCacheClear": {
     "message": "清除图标缓存"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "确定清除补全的图标缓存？图标会在下次打开时自动重新补全。",
+    "description": "清除 favicon 缓存前显示的确认提示。"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "没有可清除的图标缓存。",
+    "description": "用户点击“清除图标缓存”但没有缓存键时显示的提示。"
   },
   "optionFaviconCacheCleared": {
     "message": "图标缓存已清除，将在下次打开时重新补全。"
@@ -1352,7 +1360,7 @@
     "message": "图标"
   },
   "storageUsageBookmarks": {
-    "message": "书签数据"
+    "message": "扫描/标注数据"
   },
   "storageUsageOther": {
     "message": "其他"
@@ -1372,7 +1380,7 @@
     "message": "剩余"
   },
   "storageUsageHint": {
-    "message": "书签、图标缓存与设置所占用的存储空间。清空图标缓存后剩余空间会即时更新。"
+    "message": "书签扫描/标注数据、图标缓存与设置所占用的存储空间。清空图标缓存后剩余空间会即时更新。"
   },
   "optionsDonate": {
     "message": "捐赠"

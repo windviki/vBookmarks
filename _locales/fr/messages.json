@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Avec le filtre Tous, cela inclut les signets bloqués (accessibles via votre proxy, probablement encore actifs).",
+    "message": "Sous le filtre Tous, cela inclut les signets bloqués (accessibles via votre proxy, probablement encore actifs) et les lignes précédemment marquées.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Marquer la sélection"
   },
   "deadMarkStatusAll": {
-    "message": "Tous"
+    "message": "Tout statut"
   },
   "deadMarkStatusMarked": {
     "message": "Marqués"
@@ -870,10 +870,16 @@
     "message": "Inclure le cache d'icônes dans les sauvegardes"
   },
   "optionFaviconBackupHint": {
-    "message": "Inclut également le cache de favicons enrichi (données par site, potentiellement volumineuses) dans l'export/import des paramètres. Désactivé, les sauvegardes restent légères ; les icônes sont de toute façon récupérées automatiquement."
+    "message": "Inclure également le cache de favicons enrichis (données par site, potentiellement volumineuses) dans l'export/import des paramètres. Cela couvre les icônes déjà en cache même lorsque la récupération est désactivée. Si l'option est désactivée, les sauvegardes restent légères ; les icônes sont de toute façon récupérées automatiquement."
   },
   "optionFaviconCacheClear": {
     "message": "Vider le cache d'icônes"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Effacer le cache d'icônes enrichies ? Les icônes seront récupérées automatiquement à la prochaine ouverture."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Aucun cache d'icônes à effacer."
   },
   "optionFaviconCacheCleared": {
     "message": "Cache d'icônes vidé. Les icônes seront récupérées à la prochaine ouverture."
@@ -882,7 +888,7 @@
     "message": "Icônes"
   },
   "storageUsageBookmarks": {
-    "message": "Données des favoris"
+    "message": "Données de scan/marquage"
   },
   "storageUsageOther": {
     "message": "Autres"
@@ -902,7 +908,7 @@
     "message": "Libre"
   },
   "storageUsageHint": {
-    "message": "Espace de stockage utilisé par les favoris, le cache d'icônes et les paramètres. L'espace libre est mis à jour après la suppression du cache d'icônes."
+    "message": "Espace de stockage utilisé par les données de scan/marquage des signets, le cache d'icônes et les paramètres. L'espace libre est mis à jour après la suppression du cache d'icônes."
   },
   "optionsDonate": {
     "message": "Faire un don"

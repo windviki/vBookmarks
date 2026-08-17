@@ -24,7 +24,9 @@ export const DONATION_MAX_KEY = 3200;     // snooze cap
 export const DONATE_SNOOZE = 800;         // donors get the longest quiet period
 export const LATER_SNOOZE = 120;
 export const DONATION_URL = 'https://github.com/windviki/vBookmarks/blob/master/donation/donation.md';
-export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks#v408';
+// Point at the changelog file explicitly, not the repo root: the root anchor
+// breaks the moment a top-level README appears (audit B3/O13).
+export const CHANGELOG_URL = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v408';
 
 // The ask shows unless permanently disabled, and when this open is an
 // upgrade (newOrUpgrade) OR the accumulated opens have crossed the key.

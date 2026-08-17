@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy, có thể vẫn còn hoạt động).",
+    "message": "Trong bộ lọc Tất cả, điều này bao gồm các dấu trang bị chặn (có thể truy cập qua proxy của bạn, có khả năng vẫn còn hoạt động) và các hàng đã được đánh dấu trước đó.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Đánh dấu mục đã chọn"
   },
   "deadMarkStatusAll": {
-    "message": "Tất cả"
+    "message": "Mọi trạng thái"
   },
   "deadMarkStatusMarked": {
     "message": "Đã đánh dấu"
@@ -870,10 +870,16 @@
     "message": "Bao gồm cache biểu tượng trong bản sao lưu"
   },
   "optionFaviconBackupHint": {
-    "message": "Cũng đóng gói bộ nhớ đệm favicon mở rộng (dữ liệu theo từng trang web, có thể lớn) vào bản xuất/nhập cài đặt. Tắt giúp giữ bản sao lưu nhỏ; các biểu tượng sẽ tự động được tải lại dù sao."
+    "message": "Cũng đóng gói bộ nhớ đệm biểu tượng nâng cao (dữ liệu theo từng trang web, có thể lớn) vào xuất/nhập cài đặt. Điều này bao gồm các biểu tượng đã được lưu trữ ngay cả khi tính năng tải biểu tượng bị tắt. Tắt tùy chọn này giúp bản sao lưu nhỏ; các biểu tượng sẽ được tải lại tự động."
   },
   "optionFaviconCacheClear": {
     "message": "Xóa bộ đệm biểu tượng"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Xóa bộ nhớ đệm biểu tượng nâng cao? Các biểu tượng sẽ được tải lại tự động khi mở lần sau."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Không có bộ nhớ đệm biểu tượng nào để xóa."
   },
   "optionFaviconCacheCleared": {
     "message": "Đã xóa bộ đệm biểu tượng. Biểu tượng sẽ được tải lại khi mở lần sau."
@@ -882,7 +888,7 @@
     "message": "Biểu tượng"
   },
   "storageUsageBookmarks": {
-    "message": "Dữ liệu dấu trang"
+    "message": "Dữ liệu quét/đánh dấu"
   },
   "storageUsageOther": {
     "message": "Khác"
@@ -902,7 +908,7 @@
     "message": "Trống"
   },
   "storageUsageHint": {
-    "message": "Không gian lưu trữ được sử dụng bởi dấu trang, bộ nhớ đệm biểu tượng và cài đặt. Không gian trống được cập nhật sau khi xóa bộ nhớ đệm biểu tượng."
+    "message": "Dung lượng lưu trữ được sử dụng bởi dữ liệu quét/đánh dấu dấu trang, bộ nhớ đệm biểu tượng và cài đặt. Dung lượng trống sẽ được cập nhật sau khi xóa bộ nhớ đệm biểu tượng."
   },
   "optionsDonate": {
     "message": "Quyên góp"

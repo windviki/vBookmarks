@@ -388,6 +388,9 @@ describe('helpers', () => {
         expect(statusLabel({ status: 200, ok: true })).toBe('200');
         expect(statusLabel({ status: 'error', ok: false, error: 'AbortError' })).toBe('timeout');
         expect(statusLabel({ status: 'error', ok: false, error: 'TypeError' })).toBe('error');
+        // audit D15: status 0 means "no HTTP response" and renders as a dash,
+        // not a bare "0" that reads like a valid status code.
+        expect(statusLabel({ status: 0, ok: false })).toBe('\u2014');
     });
 
     it('startDeadScan.abort() cancels the scan and aborts in-flight fetches', async () => {

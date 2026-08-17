@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Con el filtro Todos, esto incluye marcadores bloqueados (accesibles a través de su proxy, probablemente aún activos).",
+    "message": "En el filtro Todos, esto incluye marcadores bloqueados (accesibles mediante tu proxy, probablemente aún vivos) y filas marcadas anteriormente.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Marcar seleccionados"
   },
   "deadMarkStatusAll": {
-    "message": "Todos"
+    "message": "Cualquier estado"
   },
   "deadMarkStatusMarked": {
     "message": "Marcados"
@@ -870,10 +870,16 @@
     "message": "Incluir caché de iconos en las copias de seguridad"
   },
   "optionFaviconBackupHint": {
-    "message": "Incluye también la caché de favicons enriquecida (datos por sitio, potencialmente grande) en la exportación/importación de ajustes. Desactivado mantiene las copias pequeñas; los iconos se vuelven a obtener automáticamente de todos modos."
+    "message": "Incluye también la caché de iconos enriquecidos (datos por sitio, potencialmente grandes) en la exportación/importación de ajustes. Esto cubre los iconos ya almacenados incluso cuando la obtención está desactivada. Desactivado mantiene las copias de seguridad pequeñas; los iconos se vuelven a obtener automáticamente de todos modos."
   },
   "optionFaviconCacheClear": {
     "message": "Limpiar caché de iconos"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "¿Vaciar la caché de iconos enriquecidos? Los iconos se volverán a obtener automáticamente en la próxima apertura."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "No hay caché de iconos que vaciar."
   },
   "optionFaviconCacheCleared": {
     "message": "Caché de iconos limpiada. Los iconos se volverán a obtener en la próxima apertura."
@@ -882,7 +888,7 @@
     "message": "Iconos"
   },
   "storageUsageBookmarks": {
-    "message": "Datos de marcadores"
+    "message": "Datos de escaneo/marcado"
   },
   "storageUsageOther": {
     "message": "Otros"
@@ -902,7 +908,7 @@
     "message": "Libre"
   },
   "storageUsageHint": {
-    "message": "Espacio de almacenamiento utilizado por marcadores, la caché de iconos y la configuración. El espacio libre se actualiza después de borrar la caché de iconos."
+    "message": "Espacio de almacenamiento utilizado por los datos de escaneo/marcado de marcadores, la caché de iconos y los ajustes. El espacio libre se actualiza después de vaciar la caché de iconos."
   },
   "optionsDonate": {
     "message": "Donar"

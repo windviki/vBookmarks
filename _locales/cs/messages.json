@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Ve filtru Vše to zahrnuje blokované záložky (dostupné přes proxy, pravděpodobně stále funkční).",
+    "message": "Ve filtru Vše to zahrnuje blokované záložky (dostupné přes váš proxy, pravděpodobně stále živé) a dříve označené řádky.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Označit vybrané"
   },
   "deadMarkStatusAll": {
-    "message": "Vše"
+    "message": "Jakýkoli stav"
   },
   "deadMarkStatusMarked": {
     "message": "Označeno"
@@ -870,10 +870,16 @@
     "message": "Zahrnout mezipaměť ikon do záloh"
   },
   "optionFaviconBackupHint": {
-    "message": "Také zabalí rozšířenou mezipaměť ikon webů (data pro jednotlivé weby, potenciálně velká) do exportu/importu nastavení. Po vypnutí zůstanou zálohy malé; ikony se stejně automaticky znovu načtou."
+    "message": "Také zahrnout mezipaměť rozšířených ikon (data pro jednotlivé weby, potenciálně velká) do exportu/importu nastavení. Tím se pokryjí ikony již uložené v mezipaměti, i když je načítání vypnuté. Vypnuto udržuje zálohy malé; ikony se stejně automaticky znovu načtou."
   },
   "optionFaviconCacheClear": {
     "message": "Vymazat mezipaměť ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Vymazat mezipaměť rozšířených ikon? Ikony budou při příštím otevření automaticky znovu načteny."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Žádná mezipaměť ikon k vymazání."
   },
   "optionFaviconCacheCleared": {
     "message": "Mezipaměť ikon byla vymazána. Ikony se znovu načtou při příštím otevření."
@@ -882,7 +888,7 @@
     "message": "Ikony"
   },
   "storageUsageBookmarks": {
-    "message": "Data záložek"
+    "message": "Data skenování/označování"
   },
   "storageUsageOther": {
     "message": "Ostatní"
@@ -902,7 +908,7 @@
     "message": "Volné"
   },
   "storageUsageHint": {
-    "message": "Úložný prostor používaný záložkami, mezipamětí ikon a nastavením. Volné místo se aktualizuje po vymazání mezipaměti ikon."
+    "message": "Místo v úložišti použité daty skenování/označování záložek, mezipamětí ikon a nastavením. Volné místo se aktualizuje po vymazání mezipaměti ikon."
   },
   "optionsDonate": {
     "message": "Přispět"

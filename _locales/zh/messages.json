@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "在“全部”过滤器下，这包括被阻止的书签（可通过代理访问，可能仍然有效）。",
+    "message": "在“全部”过滤器下，此操作包括被屏蔽的书签（可通过代理访问，可能仍然有效）以及之前标记的行。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "标记所选"
   },
   "deadMarkStatusAll": {
-    "message": "全部"
+    "message": "任意状态"
   },
   "deadMarkStatusMarked": {
     "message": "已标记"
@@ -870,10 +870,16 @@
     "message": "备份时包含图标缓存"
   },
   "optionFaviconBackupHint": {
-    "message": "将增强图标缓存（站点数据，可能较大）打包到设置的导出/导入中。关闭可保持备份精简；图标会自动重新获取。"
+    "message": "将增强图标缓存（按站点数据，可能较大）一并打包到设置导出/导入中。即使关闭图标抓取，也会包含已缓存的图标。关闭此项可使备份更小；图标仍会自动重新获取。"
   },
   "optionFaviconCacheClear": {
     "message": "清除图标缓存"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "清除增强图标缓存？图标将在下次打开时自动重新获取。"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "没有可清除的图标缓存。"
   },
   "optionFaviconCacheCleared": {
     "message": "图标缓存已清除。下次打开时将重新获取图标。"
@@ -882,7 +888,7 @@
     "message": "图标"
   },
   "storageUsageBookmarks": {
-    "message": "书签数据"
+    "message": "扫描/标记数据"
   },
   "storageUsageOther": {
     "message": "其他"
@@ -902,7 +908,7 @@
     "message": "可用"
   },
   "storageUsageHint": {
-    "message": "书签、图标缓存和设置所占用的存储空间。清除图标缓存后，可用空间会更新。"
+    "message": "书签扫描/标记数据、图标缓存和设置所占用的存储空间。清除图标缓存后，可用空间会更新。"
   },
   "optionsDonate": {
     "message": "捐赠"

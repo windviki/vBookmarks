@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pod filtrom Sve ovo uključuje blokirane oznake (dostupne putem vašeg proxyja, vjerojatno još uvijek aktivne).",
+    "message": "Pod filtrom Sve to uključuje blokirane zabilješke (dostupne putem proxyja, vjerojatno još aktivne) i prethodno označene retke.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Označi odabrano"
   },
   "deadMarkStatusAll": {
-    "message": "Sve"
+    "message": "Bilo koji status"
   },
   "deadMarkStatusMarked": {
     "message": "Označeno"
@@ -870,10 +870,16 @@
     "message": "Uključi predmemoriju ikona u sigurnosne kopije"
   },
   "optionFaviconBackupHint": {
-    "message": "Također pakiraj obogaćenu predmemoriju favicona (podatke po web-mjestu, potencijalno velike) u izvoz/uvoz postavki. Isključeno drži sigurnosne kopije malima; ikone se ionako automatski ponovno dohvaćaju."
+    "message": "Također uključi predmemoriju obogaćenih favicona (podatke po web-mjestu, potencijalno velike) u izvoz/uvoz postavki. Ovo obuhvaća ikone koje su već u predmemoriji čak i dok je dohvaćanje isključeno. Ako je isključeno, sigurnosne kopije su male; ikone se svejedno automatski ponovno dohvaćaju."
   },
   "optionFaviconCacheClear": {
     "message": "Očisti predmemoriju ikona"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Očistiti predmemoriju obogaćenih ikona? Ikone će se automatski ponovno dohvatiti pri sljedećem otvaranju."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nema predmemorije ikona za čišćenje."
   },
   "optionFaviconCacheCleared": {
     "message": "Predmemorija ikona je očišćena. Ikone će se ponovno dohvatiti pri sljedećem otvaranju."
@@ -882,7 +888,7 @@
     "message": "Ikone"
   },
   "storageUsageBookmarks": {
-    "message": "Podaci o oznakama"
+    "message": "Podaci skeniranja/označavanja"
   },
   "storageUsageOther": {
     "message": "Ostalo"
@@ -902,7 +908,7 @@
     "message": "Slobodno"
   },
   "storageUsageHint": {
-    "message": "Prostor za pohranu koji koriste oznake, predmemorija ikona i postavke. Slobodni prostor ažurira se nakon čišćenja predmemorije ikona."
+    "message": "Prostor za pohranu koji koriste podaci skeniranja/označavanja zabilješki, predmemorija ikona i postavke. Slobodni prostor osvježava se nakon čišćenja predmemorije ikona."
   },
   "optionsDonate": {
     "message": "Doniraj"

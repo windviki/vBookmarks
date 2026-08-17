@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Under filtret Alla ingår blockerade bokmärken (nåbara via din proxy, troligtvis fortfarande aktiva).",
+    "message": "Under filtret Alla inkluderas blockerade bokmärken (tillgängliga via din proxy, troligen fortfarande aktiva) och tidigare markerade rader.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Markera valda"
   },
   "deadMarkStatusAll": {
-    "message": "Alla"
+    "message": "Valfri status"
   },
   "deadMarkStatusMarked": {
     "message": "Markerade"
@@ -870,10 +870,16 @@
     "message": "Inkludera ikoncache i säkerhetskopior"
   },
   "optionFaviconBackupHint": {
-    "message": "Paketera även den utökade favicon-cachen (webbplatsdata, kan vara stor) i export/import av inställningar. Av-läget håller säkerhetskopiorna små; ikonerna hämtas om automatiskt ändå."
+    "message": "Inkludera även den berikade faviconcachen (webbplatsdata, kan vara omfattande) i export/import av inställningar. Detta omfattar redan cachelagrade ikoner även när hämtning är avstängd. Avstängt håller säkerhetskopiorna små; ikonerna hämtas automatiskt ändå."
   },
   "optionFaviconCacheClear": {
     "message": "Rensa ikoncachen"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Rensa den berikade faviconcachen? Ikonerna hämtas automatiskt igen vid nästa öppning."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ingen faviconcache att rensa."
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoncachen rensad. Ikoner hämtas om vid nästa öppning."
@@ -882,7 +888,7 @@
     "message": "Ikoner"
   },
   "storageUsageBookmarks": {
-    "message": "Bokmärkesdata"
+    "message": "Skannings-/markeringsdata"
   },
   "storageUsageOther": {
     "message": "Övrigt"
@@ -902,7 +908,7 @@
     "message": "Ledigt"
   },
   "storageUsageHint": {
-    "message": "Lagringsutrymme som används av bokmärken, ikoncachen och inställningar. Ledigt utrymme uppdateras efter att ikoncachen rensas."
+    "message": "Lagringsutrymme som används av skannings-/markeringsdata för bokmärken, faviconcachen och inställningar. Ledigt utrymme uppdateras efter rensning av faviconcachen."
   },
   "optionsDonate": {
     "message": "Donera"

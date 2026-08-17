@@ -166,7 +166,10 @@ export const collectDead = (items, results) =>
 
 export const statusLabel = result => {
     if (typeof result.status === 'number')
-        return `${result.status}`;
+        // HTTP status 0 means "no HTTP response at all" (DNS/TCP/TLS failure)
+        // — a bare "0" on the badge reads as a mystery number. Use "—" for
+        // that case (audit D15); every real HTTP code still prints as-is.
+        return result.status === 0 ? '\u2014' : `${result.status}`;
     return result.error === 'AbortError' ? 'timeout' : 'error';
 };
 

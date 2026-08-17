@@ -100,14 +100,15 @@ const $ = id => document.getElementById(id);
             { id: 'show-dead-view', key: 'showDeadView', defaultValue: '1', inverted: false },
             { id: 'show-dupes-view', key: 'showDupesView', defaultValue: '1', inverted: false }
         ];
-        // Icons: favicon contrast service + favicon enrichment (4.0.6) — the
-        // per-site icon pipeline, one group.
+        // Icons: favicon contrast service + favicon enrichment (4.0.8, docs/
+        // favicon-补全设计.md) — the per-site icon pipeline, one group.
         const iconsSettings = [
-            // v4.1: favicon 反色服务 —— 亮/暗主题下偏白/偏黑的单色 icon 反色，
-            // 默认开启。每个 icon 只在加载时采样一次，零滚动开销。
+            // favicon 反色服务（4.0.5 起）：亮/暗主题下偏白/偏黑的单色 icon
+            // 反色，默认开启。每个 icon 只在加载时采样一次，零滚动开销。
             { id: 'favicon-contrast', key: 'faviconContrast', defaultValue: '1', inverted: false },
-            // v4.1: favicon 补全 —— 为 Chrome 未缓存图标的收藏站点拉取真实图标，
-            // 默认开启；聚合兜底同样默认开（第三方服务，为直连抓不到的站点兜底）。
+            // favicon 补全（4.0.8）：为 Chrome 未缓存图标的收藏站点拉取真实
+            // 图标，默认开启；聚合兜底同样默认开（第三方服务，为直连抓不到的
+            // 站点兜底）。
             { id: 'favicon-enrich', key: 'faviconEnrich', defaultValue: '1', inverted: false },
             { id: 'favicon-enrich-ddg', key: 'faviconEnrichAgg', defaultValue: '1', inverted: false },
             // 备份包含补全的图标缓存（vbmFavicon:* + 索引）：默认开，导出/导入
@@ -146,7 +147,7 @@ const $ = id => document.getElementById(id);
         await bindSettingsList(contextMenuSettings);
         await bindSettingsList(toolsSettings);
         await bindSettingsList(statsSettings);
-        // v4.1 favicon enrich: the aggregate-fallback sub-switch only makes
+        // favicon enrich (4.0.8): the aggregate-fallback sub-switch only makes
         // sense while the master is on — grey it out when the master is off
         // (visual demotion, no ambiguous "child on, parent off" state).
         // Applied on change and once at init.
@@ -234,7 +235,12 @@ const $ = id => document.getElementById(id);
         // the freed space is immediately visible, and tracks icon fetches
         // live while the page is open (chrome.storage.onChanged below).
         const isFavKey = k => k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:');
-        const isBookmarkDataKey = k => k === 'deadLastScan' || k === 'vbmDeadScan' || k === 'visitStats';
+        // Bookmark-derived local data: scan cache / live journal / dead marks
+        // and their timestamps / visit stats. The bookmark tree itself lives
+        // in Chrome's bookmarks store, not in storage.local — the bar label
+        // says "scan/mark data" to match (audit O4).
+        const isBookmarkDataKey = k => k === 'deadLastScan' || k === 'vbmDeadScan'
+            || k === 'deadMarks' || k === 'deadMarkTimes' || k === 'visitStats';
         const storageUsageCats = [
             { id: 'icon', label: () => __m('storageUsageIcon') },
             { id: 'bookmarks', label: () => __m('storageUsageBookmarks') },
@@ -246,15 +252,41 @@ const $ = id => document.getElementById(id);
             if (n >= 1024) return (n / 1024).toFixed(0) + ' KB';
             return n + ' B';
         };
+        // Real byte accounting: chrome.storage.local.getBytesInUse reports the
+        // serialized footprint Chrome actually bills (data keys included), not
+        // JSON.stringify(value).length. Fall back to the old approximation for
+        // test doubles / unusual builds without the API (audit O9).
+        const approxBytes = (keys, all) => {
+            let n = 0;
+            for (const k of keys)
+                n += JSON.stringify(all[k]).length;
+            return n;
+        };
+        const measureUsage = async all => {
+            const favKeys = Object.keys(all).filter(isFavKey);
+            const bookmarkKeys = Object.keys(all).filter(isBookmarkDataKey);
+            const otherKeys = Object.keys(all).filter(k => !isFavKey(k) && !isBookmarkDataKey(k));
+            const rawGbiu = chrome.storage.local.getBytesInUse;
+            if (typeof rawGbiu === 'function') {
+                const gbiu = rawGbiu.bind(chrome.storage.local);
+                try {
+                    const [icon, bookmarks, other] = await Promise.all([
+                        favKeys.length ? gbiu(favKeys) : Promise.resolve(0),
+                        bookmarkKeys.length ? gbiu(bookmarkKeys) : Promise.resolve(0),
+                        otherKeys.length ? gbiu(otherKeys) : Promise.resolve(0)
+                    ]);
+                    return { icon: icon || 0, bookmarks: bookmarks || 0, other: other || 0 };
+                } catch (_) { /* fall through to the approximation */ }
+            }
+            return {
+                icon: approxBytes(favKeys, all),
+                bookmarks: approxBytes(bookmarkKeys, all),
+                other: approxBytes(otherKeys, all)
+            };
+        };
         const refreshStorageUsage = async () => {
             const all = await chrome.storage.local.get(null);
-            let icon = 0, bookmarks = 0, other = 0;
-            for (const [k, v] of Object.entries(all)) {
-                const n = JSON.stringify(v).length;
-                if (isFavKey(k)) icon += n;
-                else if (isBookmarkDataKey(k)) bookmarks += n;
-                else other += n;
-            }
+            const { icon, bookmarks, other } = await measureUsage(all);
             const used = icon + bookmarks + other;
             const quota = chrome.storage.local.QUOTA_BYTES || 10 * 1024 * 1024;
             const free = Math.max(0, quota - used);
@@ -328,25 +360,50 @@ const $ = id => document.getElementById(id);
 
         // Live updates: the background keeps fetching icons (vbmFavicon:*
         // writes into storage.local) while the page is open, so re-measure the
-        // bar whenever a key that feeds it changes.
+        // bar whenever a key that feeds it changes. Debounce the full-area
+        // read + stringification — an icon-completion storm while the options
+        // page is open could otherwise rescan MB-scale storage on every key
+        // (audit O3). The clear-cache handler below bypasses the debounce so
+        // freed space shows immediately.
+        let usageRefreshTimer = null;
+        const scheduleUsageRefresh = () => {
+            clearTimeout(usageRefreshTimer);
+            usageRefreshTimer = setTimeout(() => {
+                usageRefreshTimer = null;
+                refreshStorageUsage();
+            }, 300);
+        };
+        const flushUsageRefresh = () => {
+            clearTimeout(usageRefreshTimer);
+            usageRefreshTimer = null;
+            refreshStorageUsage();
+        };
         if (chrome.storage.onChanged && chrome.storage.onChanged.addListener) {
             chrome.storage.onChanged.addListener((changes, area) => {
                 if (area !== 'local') return;
                 const touched = Object.keys(changes || {});
                 if (touched.some(k => isFavKey(k) || isBookmarkDataKey(k)))
-                    refreshStorageUsage();
+                    scheduleUsageRefresh();
             });
         }
         $('favicon-cache-clear').addEventListener('click', async () => {
             let all = {};
             try { all = await chrome.storage.local.get(null); } catch (_) { /* noop */ }
-            const keys = Object.keys(all).filter(k =>
-                k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'));
-            if (!keys.length)
+            const keys = Object.keys(all).filter(isFavKey);
+            if (!keys.length) {
+                // Match the clear-stats interaction: always give feedback,
+                // including the empty-cache case (audit O5).
+                alert(_m('optionFaviconCacheEmpty'));
+                return;
+            }
+            // Destructive actions on this page share one interaction contract:
+            // confirm first (the cache re-fetches automatically, so this is
+            // lower-stakes than clearing stats, but consistent).
+            if (!confirm(_m('optionFaviconCacheClearConfirm')))
                 return;
             await chrome.storage.local.remove(keys);
             alert(_m('optionFaviconCacheCleared'));
-            refreshStorageUsage();
+            flushUsageRefresh();
         });
 
         // Initialize sync settings. One write per change is enough: the
@@ -401,16 +458,20 @@ const $ = id => document.getElementById(id);
                 chrome.storage.sync.get(store.syncKeys)
             ]);
             // The favicon cache (per-host data keys + the index) is local,
-            // MB-scale base64. By default it never ships in a settings backup
-            // (design docs/favicon-补全设计.md §5.4); when the Icons group's
-            // "include icon cache" switch is on it rides along for full
-            // fidelity.
+            // MB-scale base64. The Icons group's "include icon cache" switch
+            // (default ON) controls whether it ships in a settings backup
+            // (docs/favicon-补全设计.md §5.4); turning it off strips the keys
+            // to keep the backup small.
             if (!$('favicon-backup').checked) {
                 for (const k of Object.keys(localData)) {
                     if (k === 'vbmFaviconIdx' || k.startsWith('vbmFavicon:'))
                         delete localData[k];
                 }
             }
+            // vbmDeadScan is a live SW journal, not user data: a backup taken
+            // mid-scan must not carry it to another machine where
+            // resumeIfNeeded would mistake it for a local run (audit D7).
+            delete localData.vbmDeadScan;
             const backup = {
                 app: 'vBookmarks',
                 version: chrome.runtime.getManifest().version,
@@ -422,7 +483,11 @@ const $ = id => document.getElementById(id);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `vbookmarks-settings-${backup.exportedAt.slice(0, 10)}.json`;
+            // Filename advertises the cache decision (audit O7): an
+            // icons-included backup can be several MB, and the suffix makes
+            // that visible before anyone opens or shares the file.
+            const iconSuffix = $('favicon-backup').checked ? '-with-icons' : '-no-icons';
+            a.download = `vbookmarks-settings-${backup.exportedAt.slice(0, 10)}${iconSuffix}.json`;
             a.click();
             URL.revokeObjectURL(url);
         });
@@ -459,6 +524,9 @@ const $ = id => document.getElementById(id);
             const favObj = {};
             for (const k of favKeys) favObj[k] = backup.local[k];
             for (const k of favKeys) delete backup.local[k];
+            // Same live-journal exclusion on the way in, for hand-edited or
+            // legacy backups that still contain it (audit D7).
+            delete backup.local.vbmDeadScan;
             try {
                 await chrome.storage.local.set(backup.local);
                 if (backup.sync)
@@ -738,7 +806,10 @@ const $ = id => document.getElementById(id);
         document.getElementById('header-github-label').innerText = __m('optionsGithubLink');
         document.getElementById('header-homepage-label').innerText = __m('optionsHomepageLink');
         const versionEl = document.getElementById('options-version');
-        versionEl.href = 'https://github.com/windviki/vBookmarks#v' + chrome.runtime.getManifest().version.replace(/\./g, '');
+        // Point at docs/README.md explicitly: the repo-root anchor would break
+        // the day a top-level README appears (audit O13).
+        versionEl.href = 'https://github.com/windviki/vBookmarks/blob/master/docs/README.md#v'
+            + chrome.runtime.getManifest().version.replace(/\./g, '');
         versionEl.title = __m('optionsVersion');
         document.getElementById('options-version-text').innerText = 'v' + chrome.runtime.getManifest().version;
         // Subtitle under the title row: since the 1.0 fork from Neat

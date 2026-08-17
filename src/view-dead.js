@@ -395,8 +395,9 @@ export function initViewDead(ctx = {}) {
     };
 
     // 空闲态排序（deadSort）：结果行与残留标注列表共用同一比较器，全视图视觉
-    // 一致。'detected' 用扫描的 per-row ts（老备份无 ts → 0 → 全 tie → 稳定
-    // 排序回退 Object.entries 的 key 序）；'path' 用 views.pathOf；'marked' 用
+    // 一致。'detected' 用扫描的 per-row ts；老备份无 ts 的行排在有时间的行
+    // 之后（与 'marked' 的"无标记时间排最后"对称，避免新旧数据交界时无 ts
+    // 行突兀地跳到最前，audit D12）；'path' 用 views.pathOf；'marked' 用
     // deadMarkTimes（未标注行排最后）。live 不经过此路径（liveRows 走 tree 序）。
     const rowSortKey = row => {
         switch (deadSort) {
@@ -408,7 +409,7 @@ export function initViewDead(ctx = {}) {
                 const r = row.result
                     || (lastScan && lastScan.results && lastScan.results[row.item.id])
                     || {};
-                return typeof r.ts === 'number' ? r.ts : 0;
+                return typeof r.ts === 'number' ? r.ts : Number.MAX_SAFE_INTEGER;
             }
         }
     };
@@ -551,11 +552,9 @@ export function initViewDead(ctx = {}) {
             const rows = allResultRows();
             // mark-all / select-mode act on the FILTERED row set (markAll
             // reads resultRows(), the selection prunes against it), so they
-            // key off the filtered count; delete-all additionally covers the
-            // marked-only view (no result rows there — it deletes the marked
-            // bookmarks, see deleteAll()). The filter segment stays keyed off
+            // key off the filtered count; delete-all and select-all share
+            // selectableRows() (audit D5). The filter segment stays keyed off
             // the UNFILTERED count, so the way back remains reachable.
-            const markedOnly = filter === 'marked' || !lastScan;
             const filteredN = resultRows().length;
             // The marked segment counts the UNCOVERED marks (markedRows), not
             // the raw deadMarks set: a mark the scan verdicts dead/blocked
@@ -597,15 +596,14 @@ export function initViewDead(ctx = {}) {
                 if (filteredN && markFilter !== 'marked')
                     html += `<button class="dead-mark-all">${_m('deadMarkAll')}</button>`;
             }
-            // Batch delete-all: the result view removes every row of the
-            // ACTIVE filter segment (the same scope as mark-all, so 仅死链
-            // narrows it to dead rows only); the marked-only view (cancelled
-            // scan / 过去标注 filter) deletes the marked bookmarks instead.
-            // Rendered only when the target set is non-empty — a danger
-            // button that clicks into nothing must not appear. The marked-only
-            // branch keys off the VISIBLE residue (markFilter hides it under
-            // 'unmarked'), so the button never clicks into an empty set.
-            if (filteredN || (markedOnly && visibleMarkedRows().length))
+            // Batch delete-all: deletes every VISIBLE row (selectableRows()).
+            // In 全部 that includes the uncovered-mark residue below the
+            // results — "delete all" and "select all" must mean the same set
+            // (audit D5). 仅死链/仅受限 narrow to that category; the
+            // marked-only view deletes the visible marks. Rendered only when
+            // the target set is non-empty — a danger button that clicks into
+            // nothing must not appear.
+            if (selectableRows().length)
                 html += `<button class="dead-delete-all">${_m('deadDeleteAllBtn')}</button>`;
             // v4 task-3 #4: selection mode entry — OUTSIDE the result-gated
             // block, so the marked-only view (a cancelled scan with marks,
@@ -845,11 +843,16 @@ export function initViewDead(ctx = {}) {
             // there is nothing left to show.
             if (marks.length)
                 html += renderMarkedRows(marks, false);
-            else if (!lastScan)
-                // 没有任何历史死链数据（从未扫描 / 清除扫描结果）→ 蓝色开始扫描
-                // 按钮。这是"第一次启动"的号召性空态。
+            else if (!lastScan && !deadMarks.size)
+                // 没有任何历史死链数据（从未扫描 / 清除扫描结果）且从未标注 →
+                // 蓝色开始扫描按钮。这是"第一次启动"的号召性空态。
                 html += `<ul role="list"><li class="empty-state dead-start" role="listitem" tabindex="-1">` +
                     `<i>${_m('deadStartHint', `${treeItems.size}`)}</i></li></ul>`;
+            else if (!lastScan)
+                // 有标注但被"未标注"子筛选整块隐藏（无缓存 + markFilter=unmarked
+                // + 有标注）→ 不能说"开始第一次扫描"，提示换分段才文对题
+                // （audit D13）。有历史扫描的情况走下面的普通空态。
+                html += `<ul role="list"><li class="empty-state" role="listitem"><i>${_m('deadNoneFiltered')}</i></li></ul>`;
             else {
                 // 有历史扫描但"上次标注"分类为空 → 普通空态（不显示蓝色按钮）。
                 // 残留标注存在但被已标注/未标注子筛选隐藏 → 提示换分段；真无残留
@@ -1135,9 +1138,9 @@ export function initViewDead(ctx = {}) {
     // so the marked-only path drops it.
     const deleteAll = () => {
         const markedOnly = filter === 'marked' || !lastScan;
-        const ids = markedOnly
-            ? visibleMarkedRows().map(({ item }) => item.id)
-            : resultRows().map(({ item }) => item.id);
+        // Same scope as selection mode's "select all": result rows plus the
+        // uncovered marks in 全部, visible marks in marked-only views.
+        const ids = selectableRows().map(({ item }) => item.id);
         confirmDeletion(ids, 'deadDeleteAll', null, markedOnly ? null : 'deadDeleteAllNote');
     };
 
@@ -1309,8 +1312,10 @@ export function initViewDead(ctx = {}) {
             render();
     };
 
-    // deadLastScan changed — only the SW writes it, so this means a run
-    // finished: fold in the fresh cache and repaint every overlay. Runs even
+    // deadLastScan changed — the SW writes the finished-run snapshot, and
+    // options.js import / clear-scan paths write it too (audit D10). All of
+    // those mean "the cache changed": fold it in and repaint every overlay.
+    // Runs even
     // when the view is not active (the repaint must not wait for a revisit).
     // Marks are NOT pruned here (dead-过去标注语义.md §2.4): a mark that came
     // back healthy (ok/skipped) — or one the run never probed — stays in
@@ -1344,10 +1349,41 @@ export function initViewDead(ctx = {}) {
         chrome.storage.onChanged.addListener((changes, area) => {
             if (area !== 'local')
                 return;
+            // Import (or another open options page) can rewrite deadMarks /
+            // deadMarkTimes while a side panel sits open. The store mirror has
+            // no onChanged forwarding, so read the new value from the change
+            // itself instead of store.get() (audit D7).
+            let marksChanged = false;
+            const parseMarkSet = raw => {
+                try {
+                    const arr = JSON.parse(raw || '[]');
+                    return new Set(Array.isArray(arr) ? arr : []);
+                } catch (_) { return new Set(); }
+            };
+            const parseMarkTimes = raw => {
+                try {
+                    return new Map(Object.entries(JSON.parse(raw || '{}')));
+                } catch (_) { return new Map(); }
+            };
+            if ('deadMarks' in changes) {
+                deadMarks = parseMarkSet(changes.deadMarks.newValue);
+                marksChanged = true;
+            }
+            if ('deadMarkTimes' in changes) {
+                deadMarkTimes = parseMarkTimes(changes.deadMarkTimes.newValue);
+                marksChanged = true;
+            }
+            if (marksChanged) {
+                invalidateResultRows();
+                refreshOverlays();
+            }
             if (DEAD_SCAN_KEY in changes)
                 applyBlob(changes[DEAD_SCAN_KEY].newValue);
             if (DEAD_LAST_KEY in changes)
                 onCacheWritten(changes[DEAD_LAST_KEY].newValue);
+            if (marksChanged && !(DEAD_SCAN_KEY in changes || DEAD_LAST_KEY in changes)
+                && views.isActive('dead'))
+                render();
         });
 
     // Start: one fire-and-forget message; scanStarting guards the window

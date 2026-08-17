@@ -138,6 +138,18 @@ describe('theme bootstrap', () => {
         const sb = createSandbox({});
         expect(sb.body.dataset.theme).toBe('auto');
     });
+
+    it('restores the button-alt experiment class synchronously and after store.ready (audit T6)', async () => {
+        const sb = createSandbox({ storeData: { vbmBtnAlt: '1' } });
+        expect(sb.body.classList.contains('vbm-btn-alt')).toBe(true);
+        await flushMicrotasks();
+        expect(sb.body.classList.contains('vbm-btn-alt')).toBe(true);
+
+        const off = createSandbox({ storeData: { vbmBtnAlt: '' } });
+        expect(off.body.classList.contains('vbm-btn-alt')).toBe(false);
+        await flushMicrotasks();
+        expect(off.body.classList.contains('vbm-btn-alt')).toBe(false);
+    });
 });
 
 describe('panel mode (sidepanel.html / ?panel=1)', () => {

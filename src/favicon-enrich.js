@@ -47,6 +47,7 @@ export const MAX_ICON_BYTES = 96 * 1024;                  // >96KB → session o
 export const MAX_FETCH_BYTES = 200 * 1024;                // fetch cap
 export const MAX_HTML_BYTES = 200 * 1024;                 // page-HTML read cap (favicon <link>s live in <head>)
 export const SESSION_ONLY_CAP = 24;                       // max session-only icons held in memory
+export const MAX_L2_CANDIDATES = 5;                        // per-page <link> candidates tried before L3/L4
 export const CONCURRENCY = 6;
 
 // --- Third-party aggregator providers (L4, docs §3.4) ------------------------
@@ -132,6 +133,29 @@ const mimeFromMagic = bytes => {
 };
 
 export const isImageContentType = ct => /^image\//i.test(ct || '');
+
+/**
+ * Decode an inline <link> href into bytes. Supports both data URL encodings
+ * (;base64 and percent-encoded plain text — inline SVG icons are usually the
+ * latter), and returns null instead of throwing so a bad candidate can be
+ * skipped without aborting the whole L2 candidate loop (audit F2).
+ */
+export const decodeDataUrl = href => {
+    const m = /^data:([^,]*?),(.*)$/is.exec(String(href || ''));
+    if (!m)
+        return null;
+    const meta = m[1] || '';
+    try {
+        const isBase64 = /;base64$/i.test(meta);
+        const bin = isBase64 ? atob(m[2].replace(/\s+/g, '')) : decodeURIComponent(m[2]);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++)
+            bytes[i] = bin.charCodeAt(i);
+        return { bytes, mime: meta.split(';')[0].toLowerCase() };
+    } catch (_) {
+        return null;
+    }
+};
 
 /**
  * Validate a fetched icon: res.ok + size cap + magic sniff + Image decode.
@@ -617,22 +641,20 @@ export function initFaviconEnrich(ctx = {}) {
             if (!res.ok)
                 return null;
             const html = await readHtmlCapped(res, MAX_HTML_BYTES);
-            const links = extractLinkIcons(html, pageUrl);
+            // Cap the candidate loop: a page can declare dozens of <link>
+            // icons and each non-data candidate costs a 3s timeout. The first
+            // few declarations are the intended favicon in practice (audit F7).
+            const links = extractLinkIcons(html, pageUrl).slice(0, MAX_L2_CANDIDATES);
             for (const link of links) {
                 let candidate;
                 if (link.data) {
-                    // data: href → validate the inline bytes directly.
-                    candidate = { ok: true, arrayBuffer: async () => {
-                        // Decode the base64 body back to bytes for validation.
-                        const m = /^data:([^;,]+)?;base64,(.*)$/i.exec(link.href);
-                        if (!m)
-                            throw new Error('bad data url');
-                        const bin = atob(m[2]);
-                        const arr = new Uint8Array(bin.length);
-                        for (let i = 0; i < bin.length; i++)
-                            arr[i] = bin.charCodeAt(i);
-                        return arr.buffer;
-                    }, headers: { get: () => { const m = /^data:([^;,]+)/i.exec(link.href); return m ? m[1] : null; } } };
+                    // data: href → decode + validate the inline bytes. A bad
+                    // data URL skips THIS candidate and lets the loop continue
+                    // (audit F2: the old arrayBuffer() throw escaped the loop).
+                    const decoded = decodeDataUrl(link.href);
+                    if (!decoded)
+                        continue;
+                    candidate = { ok: true, arrayBuffer: async () => decoded.bytes.buffer, headers: { get: () => decoded.mime || null } };
                 } else {
                     const r = await fetchWithTimeout(link.href, 3000, signal);
                     candidate = r;
@@ -708,18 +730,15 @@ export function initFaviconEnrich(ctx = {}) {
             if (!res.ok)
                 return null;
             const html = await readHtmlCapped(res, MAX_HTML_BYTES);
-            const links = extractLinkIcons(html, pageUrl);
+            // Same candidate cap and same data-URL decode rules as tryL2.
+            const links = extractLinkIcons(html, pageUrl).slice(0, MAX_L2_CANDIDATES);
             for (const link of links) {
                 let candidate;
                 if (link.data) {
-                    const m = /^data:([^;,]+)?;base64,(.*)$/i.exec(link.href);
-                    if (!m)
+                    const decoded = decodeDataUrl(link.href);
+                    if (!decoded)
                         continue;
-                    const bin = atob(m[2]);
-                    const arr = new Uint8Array(bin.length);
-                    for (let i = 0; i < bin.length; i++)
-                        arr[i] = bin.charCodeAt(i);
-                    candidate = { ok: true, arrayBuffer: async () => arr.buffer, headers: { get: () => { const mm = /^data:([^;,]+)/i.exec(link.href); return mm ? mm[1] : null; } } };
+                    candidate = { ok: true, arrayBuffer: async () => decoded.bytes.buffer, headers: { get: () => decoded.mime || null } };
                 } else {
                     candidate = await fetchMarked(link.href, 3000, signal);
                 }
@@ -1005,6 +1024,19 @@ export function initFaviconEnrich(ctx = {}) {
                 hydrated = true;
                 // Storage just got lighter — recompute the ceiling on next write.
                 budgetRefreshedAt = 0;
+                return;
+            }
+            // Options/import removed individual data keys without the index
+            // (or the index-removal event arrived in a different batch): drop
+            // those hosts too instead of leaving stale in-memory entries until
+            // the next hydrate (audit O10).
+            for (const key of Object.keys(changes)) {
+                if (key.startsWith(FAVICON_DATA_PREFIX) && changes[key].newValue === undefined) {
+                    const host = key.slice(FAVICON_DATA_PREFIX.length);
+                    cache.delete(host);
+                    if (idxData.hosts && host in idxData.hosts)
+                        delete idxData.hosts[host];
+                }
             }
         });
     }

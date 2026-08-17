@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Pada filter Semua, ini mencakup bookmark yang diblokir (dapat diakses melalui proxy Anda, kemungkinan masih aktif).",
+    "message": "Pada filter Semua, ini mencakup bookmark yang diblokir (masih dapat diakses melalui proksi, kemungkinan masih hidup) dan baris yang telah ditandai sebelumnya.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Tandai yang dipilih"
   },
   "deadMarkStatusAll": {
-    "message": "Semua"
+    "message": "Semua status"
   },
   "deadMarkStatusMarked": {
     "message": "Ditandai"
@@ -870,10 +870,16 @@
     "message": "Sertakan cache ikon dalam cadangan"
   },
   "optionFaviconBackupHint": {
-    "message": "Juga masukkan cache favicon yang diperkaya (data per situs, berpotensi besar) ke dalam ekspor/impor pengaturan. Jika nonaktif, cadangan tetap ringan; ikon akan diambil ulang secara otomatis."
+    "message": "Juga sertakan cache favicon yang diperkaya (data per situs, berpotensi besar) ke dalam ekspor/impor pengaturan. Ini mencakup ikon yang sudah ada dalam cache meskipun pengambilan ikon dinonaktifkan. Nonaktif membuat cadangan tetap kecil; ikon akan diambil ulang secara otomatis."
   },
   "optionFaviconCacheClear": {
     "message": "Bersihkan cache ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Hapus cache favicon yang diperkaya? Ikon akan diambil ulang secara otomatis pada pembukaan berikutnya."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Tidak ada cache favicon untuk dihapus."
   },
   "optionFaviconCacheCleared": {
     "message": "Cache ikon telah dibersihkan. Ikon akan diambil ulang saat dibuka berikutnya."
@@ -882,7 +888,7 @@
     "message": "Ikon"
   },
   "storageUsageBookmarks": {
-    "message": "Data penanda"
+    "message": "Data pemindaian/penandaan"
   },
   "storageUsageOther": {
     "message": "Lainnya"
@@ -902,7 +908,7 @@
     "message": "Kosong"
   },
   "storageUsageHint": {
-    "message": "Ruang penyimpanan yang digunakan oleh penanda, cache ikon, dan pengaturan. Ruang kosong diperbarui setelah membersihkan cache ikon."
+    "message": "Ruang penyimpanan yang digunakan oleh data pemindaian/penandaan bookmark, cache favicon, dan pengaturan. Ruang kosong diperbarui setelah membersihkan cache favicon."
   },
   "optionsDonate": {
     "message": "Donasi"

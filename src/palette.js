@@ -373,6 +373,11 @@ export function initPalette(ctx = {}) {
     };
 
     // --- Internal reserved entry (not rendered) --------------------------------
+    // Developer-only cosmetic experiment: /secret <口令> toggles the
+    // `.vbm-btn-alt` button-shape class on <body>. It has no data surface and
+    // the two passphrases are only MD5-obscured, so it must never grow any
+    // real capability — it exists to compare button styles during development
+    // without a rebuild (audit B4).
     const SECRET_ACTIONS = {
         'bf285bb57eb641398ac4ed966f36bec7': () => {
             store.set('vbmBtnAlt', '1');

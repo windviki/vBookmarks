@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Kõik-filtri all hõlmab see blokeeritud järjehoidjaid (kättesaadavad teie puhverserveri kaudu, tõenäoliselt endiselt aktiivsed).",
+    "message": "Kõik-filtri all hõlmab see blokeeritud järjehoidjaid (kättesaadavad puhverserveri kaudu, tõenäoliselt endiselt töötavad) ja varem märgitud ridu.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Märgi valitud"
   },
   "deadMarkStatusAll": {
-    "message": "Kõik"
+    "message": "Mis tahes olek"
   },
   "deadMarkStatusMarked": {
     "message": "Märgitud"
@@ -870,10 +870,16 @@
     "message": "Kaasa ikoonide vahemälu varukoopiatesse"
   },
   "optionFaviconBackupHint": {
-    "message": "Samuti pakitakse rikastatud faviconi vahemälu (saidipõhised andmed, mis võivad olla suured) seadete eksporti/importi. Väljalülitamisel jäävad varukoopiad väikeseks; ikoone laaditakse niikuinii automaatselt uuesti."
+    "message": "Kaasake rikastatud ikoonide vahemälu (saidipõhised andmed, potentsiaalselt suured) seadete eksporti/importi. See hõlmab juba vahemällu salvestatud ikoone ka siis, kui allalaadimine on välja lülitatud. Väljalülitamisel jäävad varukoopiad väikeseks; ikoonid laaditakse niikuinii automaatselt uuesti."
   },
   "optionFaviconCacheClear": {
     "message": "Tühjenda ikoonide vahemälu"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Kas kustutada rikastatud ikoonide vahemälu? Ikoonid laaditakse järgmisel avamisel automaatselt uuesti."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Kustutatavat ikoonide vahemälu pole."
   },
   "optionFaviconCacheCleared": {
     "message": "Ikoonide vahemälu on tühjendatud. Ikoonid laaditakse järgmisel avamisel uuesti."
@@ -882,7 +888,7 @@
     "message": "Ikoonid"
   },
   "storageUsageBookmarks": {
-    "message": "Järjehoidjate andmed"
+    "message": "Skaneerimise/märkimise andmed"
   },
   "storageUsageOther": {
     "message": "Muu"
@@ -902,7 +908,7 @@
     "message": "Vaba"
   },
   "storageUsageHint": {
-    "message": "Salvestusruum, mida kasutavad järjehoidjad, ikoonivahemälu ja seaded. Vaba ruum uueneb pärast ikoonivahemälu tühjendamist."
+    "message": "Salvestusruum, mida kasutavad järjehoidjate skaneerimise/märkimise andmed, ikoonide vahemälu ja seaded. Vaba ruum uueneb pärast ikoonide vahemälu tühjendamist."
   },
   "optionsDonate": {
     "message": "Anneta"

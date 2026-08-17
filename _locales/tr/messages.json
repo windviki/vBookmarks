@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Tüm filtresinde bu, engellenmiş yer imlerini içerir (proxy üzerinden erişilebilir, büyük olasılıkla hâlâ etkin).",
+    "message": "Tüm filtresi altında bu, engellenmiş yer imlerini (proxy üzerinden erişilebilir, muhtemelen hâlâ mevcut) ve daha önce işaretlenmiş satırları içerir.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Seçilenleri işaretle"
   },
   "deadMarkStatusAll": {
-    "message": "Tümü"
+    "message": "Herhangi bir durum"
   },
   "deadMarkStatusMarked": {
     "message": "İşaretli"
@@ -870,10 +870,16 @@
     "message": "Yedeklere simge önbelleğini ekle"
   },
   "optionFaviconBackupHint": {
-    "message": "Ayrıca zenginleştirilmiş simge önbelleğini (site başına veriler, büyük olabilir) ayarların dışa/içe aktarımına ekler. Kapalıyken yedekler küçük kalır; simgeler zaten otomatik olarak yeniden alınır."
+    "message": "Ayrıca zenginleştirilmiş favicon önbelleğini (site başına veri, potansiyel olarak büyük) ayarlar dışa/içe aktarmasına dahil et. Bu, getirme kapalıyken bile zaten önbelleğe alınmış simgeleri kapsar. Kapalı, yedekleri küçük tutar; simgeler zaten otomatik olarak yeniden getirilir."
   },
   "optionFaviconCacheClear": {
     "message": "Simge önbelleğini temizle"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Zenginleştirilmiş simge önbelleği temizlensin mi? Simgeler bir sonraki açılışta otomatik olarak yeniden alınacak."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Temizlenecek simge önbelleği yok."
   },
   "optionFaviconCacheCleared": {
     "message": "Simge önbelleği temizlendi. Simgeler bir sonraki açılışta yeniden getirilecek."
@@ -882,7 +888,7 @@
     "message": "Simgeler"
   },
   "storageUsageBookmarks": {
-    "message": "Yer imi verileri"
+    "message": "Tarama/işaretleme verileri"
   },
   "storageUsageOther": {
     "message": "Diğer"
@@ -902,7 +908,7 @@
     "message": "Boş"
   },
   "storageUsageHint": {
-    "message": "Yer imlerinin, simge önbelleğinin ve ayarların kullandığı depolama alanı. Simge önbelleği temizlendikten sonra boş alan güncellenir."
+    "message": "Yer imi tarama/işaretleme verileri, simge önbelleği ve ayarlar tarafından kullanılan depolama alanı. Simge önbelleği temizlendikten sonra boş alan güncellenir."
   },
   "optionsDonate": {
     "message": "Bağış Yap"

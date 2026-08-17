@@ -179,6 +179,27 @@ describe('dead-scan SW runner (v4 task-4 #16)', () => {
         expect(local[DEAD_LAST_KEY]).toBeUndefined(); // the run never happened
     });
 
+    it('start() reports whether a cold-start resume happened (background sweep gate, D9)', async () => {
+        // No live blob → false: background.js may sweep crash-residue PAC.
+        const none = makeChrome();
+        globalThis.chrome = none.chrome;
+        const idleRunner = createDeadScanRunner();
+        await expect(idleRunner.start()).resolves.toBe(false);
+
+        // Fresh live blob → true: background.js must NOT sweep because the
+        // resumed run is about to install its own PAC.
+        const prior = {
+            state: 'scanning', done: 0, total: 3, ts: Date.now(),
+            items: ['11', '12', '13'], results: {}, proxy: { active: false, gate: '' }
+        };
+        const live = makeChrome({ storage: { [DEAD_SCAN_KEY]: JSON.stringify(prior) } });
+        globalThis.chrome = live.chrome;
+        globalThis.fetch = () => new Promise(() => {});
+        const resumedRunner = createDeadScanRunner();
+        await expect(resumedRunner.start()).resolves.toBe(true);
+        resumedRunner.onMessage({ type: DEAD_SCAN_MSG.cancel });
+    });
+
     it('cold start resumes a live blob from the published remainder', async () => {
         const prior = {
             state: 'scanning', done: 1, total: 3, ts: Date.now(),
@@ -356,6 +377,38 @@ describe('dead-scan SW runner (v4 task-4 #16)', () => {
         expect(local[DEAD_LAST_KEY]).toBeDefined(); // scan completed anyway
         // the gate was published while scanning (blob already consumed) —
         // assert through the run state instead: no PAC was ever installed
+    });
+
+    it('a stale start chain never tears down the new chain\'s PAC (audit D6)', async () => {
+        // Two starts land back-to-back while getTree is deferred. Chain A's
+        // gateProxy and chain B's both install; A's begin then sees its
+        // generation is stale and calls stopProxy(A). That teardown must be
+        // generation-scoped: B's fresh PAC has to survive for B's scan.
+        const { chrome, local, calls } = makeChrome({
+            storage: { deadProxyServer: 'http://127.0.0.1:7890' },
+            proxy: {
+                permissions: { contains(perms, cb) { cb(true); } },
+                settings: { getResult: { levelOfControl: 'controllable_by_this_extension' } }
+            }
+        });
+        const treeCallbacks = [];
+        chrome.bookmarks.getTree = cb => treeCallbacks.push(cb);
+        globalThis.chrome = chrome;
+        globalThis.fetch = () => new Promise(() => {}); // hang B's probes
+        const runner = createDeadScanRunner();
+        runner.start();
+        runner.onMessage({ type: DEAD_SCAN_MSG.start }); // chain A, getTree deferred
+        runner.onMessage({ type: DEAD_SCAN_MSG.start }); // chain B, getTree deferred
+        expect(treeCallbacks).toHaveLength(2);
+        treeCallbacks[0](TREE);
+        treeCallbacks[1](TREE);
+        await flush(); // both gateProxy chains settle; B launches, A drops out
+        const live = blobOf(local);
+        expect(live).not.toBeNull();
+        expect(live.proxy.active).toBe(true);   // B's PAC survived A's stale stopProxy
+        expect(calls.pacCleared).toBe(0);        // …and was NOT torn down early
+        runner.onMessage({ type: DEAD_SCAN_MSG.cancel });
+        expect(calls.pacCleared).toBe(1);        // B's own cancel tears it down
     });
 
     it('proxy granted + controllable: PAC lives only for the scan duration', async () => {

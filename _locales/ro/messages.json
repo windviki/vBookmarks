@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Sub filtrul „Toate”, aceasta include marcajele blocate (accesibile prin proxy, probabil încă active).",
+    "message": "Sub filtrul Toate, aceasta include marcajele blocate (accesibile prin proxy-ul dumneavoastră, probabil încă active) și rândurile marcate anterior.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Marcați selectatele"
   },
   "deadMarkStatusAll": {
-    "message": "Toate"
+    "message": "Orice stare"
   },
   "deadMarkStatusMarked": {
     "message": "Marcate"
@@ -870,10 +870,16 @@
     "message": "Include cache-ul de pictograme în copiile de rezervă"
   },
   "optionFaviconBackupHint": {
-    "message": "Include și cache-ul îmbogățit de pictograme (date per site, potențial mari) în exportul/importul de setări. Dezactivat menține copiile de rezervă mici; pictogramele sunt oricum re-descărcate automat."
+    "message": "Includeți și cache-ul de favicon îmbogățit (date per site, potențial mari) în exportul/importul de setări. Aceasta acoperă pictogramele deja stocate în cache chiar și când preluarea este dezactivată. Cu opțiunea dezactivată, backup-urile rămân mici; pictogramele sunt oricum preluate din nou automat."
   },
   "optionFaviconCacheClear": {
     "message": "Șterge cache-ul pictogramelor"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Ștergeți cache-ul de pictograme îmbogățit? Pictogramele vor fi preluate din nou automat la următoarea deschidere."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nu există cache de pictograme de șters."
   },
   "optionFaviconCacheCleared": {
     "message": "Cache-ul pictogramelor a fost șters. Pictogramele vor fi preluate din nou la următoarea deschidere."
@@ -882,7 +888,7 @@
     "message": "Icoane"
   },
   "storageUsageBookmarks": {
-    "message": "Datele marcajelor"
+    "message": "Date de scanare/marcare"
   },
   "storageUsageOther": {
     "message": "Altele"
@@ -902,7 +908,7 @@
     "message": "Liber"
   },
   "storageUsageHint": {
-    "message": "Spațiul de stocare utilizat de marcaje, cache-ul de icoane și setări. Spațiul liber se actualizează după golirea cache-ului de icoane."
+    "message": "Spațiul de stocare folosit de datele de scanare/marcare a marcajelor, cache-ul de pictograme și setări. Spațiul liber se actualizează după ștergerea cache-ului de pictograme."
   },
   "optionsDonate": {
     "message": "Donează"

@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Con il filtro Tutti vengono inclusi i segnalibri bloccati (raggiungibili tramite il proxy, probabilmente ancora attivi).",
+    "message": "Con il filtro Tutti, questo include i segnalibri bloccati (raggiungibili tramite il proxy, probabilmente ancora attivi) e le righe precedentemente contrassegnate.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Contrassegna selezionati"
   },
   "deadMarkStatusAll": {
-    "message": "Tutti"
+    "message": "Qualsiasi stato"
   },
   "deadMarkStatusMarked": {
     "message": "Contrassegnati"
@@ -870,10 +870,16 @@
     "message": "Includi la cache delle icone nei backup"
   },
   "optionFaviconBackupHint": {
-    "message": "Includi anche la cache arricchita delle favicon (dati per sito, potenzialmente grandi) nell'esportazione/importazione delle impostazioni. Se disattivata, i backup restano piccoli; le icone vengono comunque recuperate automaticamente."
+    "message": "Includi anche la cache delle icone arricchite (dati per sito, potenzialmente grandi) nell'esportazione/importazione delle impostazioni. Copre le icone già in cache anche quando il recupero è disattivato. Con l'opzione disattivata, i backup rimangono piccoli; le icone vengono comunque recuperate automaticamente."
   },
   "optionFaviconCacheClear": {
     "message": "Svuota cache icone"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Svuotare la cache delle icone arricchite? Le icone verranno recuperate automaticamente alla prossima apertura."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Nessuna cache di icone da svuotare."
   },
   "optionFaviconCacheCleared": {
     "message": "Cache icone svuotata. Le icone verranno recuperate alla prossima apertura."
@@ -882,7 +888,7 @@
     "message": "Icone"
   },
   "storageUsageBookmarks": {
-    "message": "Dati dei segnalibri"
+    "message": "Dati di scansione/marcatura"
   },
   "storageUsageOther": {
     "message": "Altro"
@@ -902,7 +908,7 @@
     "message": "Libero"
   },
   "storageUsageHint": {
-    "message": "Spazio di archiviazione utilizzato da segnalibri, cache delle icone e impostazioni. Lo spazio libero si aggiorna dopo aver svuotato la cache delle icone."
+    "message": "Spazio di archiviazione utilizzato dai dati di scansione/marcatura dei segnalibri, dalla cache delle icone e dalle impostazioni. Lo spazio libero viene aggiornato dopo aver svuotato la cache delle icone."
   },
   "optionsDonate": {
     "message": "Dona"

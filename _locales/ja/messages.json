@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "すべてのフィルターでは、ブロックされたブックマーク（プロキシ経由でアクセス可能、おそらく有効）も含まれます。",
+    "message": "「すべて」フィルターでは、これにはブロックされたブックマーク（プロキシ経由で到達可能で、まだ有効な可能性が高い）と、以前マークされた行が含まれます。",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "選択済みをマーク"
   },
   "deadMarkStatusAll": {
-    "message": "すべて"
+    "message": "すべてのステータス"
   },
   "deadMarkStatusMarked": {
     "message": "マーク済み"
@@ -870,10 +870,16 @@
     "message": "バックアップにアイコンキャッシュを含める"
   },
   "optionFaviconBackupHint": {
-    "message": "拡張ファビコンキャッシュ（サイト別データ、大容量の場合あり）も設定のエクスポート/インポートに含めます。オフにするとバックアップが小さくなります。アイコンは自動的に再取得されます。"
+    "message": "また、拡充ファビコンキャッシュ（サイトごとのデータで、大きくなる可能性があります）を設定のエクスポート/インポートに含めます。これには、取得がオフの場合でも、すでにキャッシュされているアイコンが含まれます。オフのままだとバックアップは小さくなりますが、アイコンは自動的に再取得されます。"
   },
   "optionFaviconCacheClear": {
     "message": "アイコンキャッシュをクリア"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "拡充アイコンキャッシュをクリアしますか？アイコンは次回開いたときに自動的に再取得されます。"
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "クリアするアイコンキャッシュはありません。"
   },
   "optionFaviconCacheCleared": {
     "message": "アイコンキャッシュがクリアされました。次回開いたときに再取得されます。"
@@ -882,7 +888,7 @@
     "message": "アイコン"
   },
   "storageUsageBookmarks": {
-    "message": "ブックマークデータ"
+    "message": "スキャン/マークデータ"
   },
   "storageUsageOther": {
     "message": "その他"
@@ -902,7 +908,7 @@
     "message": "空き容量"
   },
   "storageUsageHint": {
-    "message": "ブックマーク、アイコンキャッシュ、設定によって使用されるストレージ容量。アイコンキャッシュをクリアすると空き容量が更新されます。"
+    "message": "ブックマークのスキャン/マークデータ、アイコンキャッシュ、設定が使用するストレージ容量です。空き容量はアイコンキャッシュをクリアした後に更新されます。"
   },
   "optionsDonate": {
     "message": "寄付"

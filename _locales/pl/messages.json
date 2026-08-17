@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "W filtrze Wszystko obejmuje to zablokowane zakładki (dostępne przez proxy, prawdopodobnie nadal działające).",
+    "message": "W filtrze Wszystkie obejmuje to zablokowane zakładki (dostępne przez proxy, prawdopodobnie nadal aktywne) oraz wcześniej oznaczone wiersze.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Oznacz zaznaczone"
   },
   "deadMarkStatusAll": {
-    "message": "Wszystkie"
+    "message": "Dowolny status"
   },
   "deadMarkStatusMarked": {
     "message": "Oznaczone"
@@ -870,10 +870,16 @@
     "message": "Uwzględnij pamięć podręczną ikon w kopiach zapasowych"
   },
   "optionFaviconBackupHint": {
-    "message": "Dołącz również wzbogaconą pamięć podręczną favicon (dane dla poszczególnych witryn, potencjalnie duże) do eksportu/importu ustawień. Wyłączenie utrzymuje małe kopie zapasowe; ikony i tak są automatycznie pobierane ponownie."
+    "message": "Dołącz także wzbogaconą pamięć podręczną ikon (dane per-strony, potencjalnie duże) do eksportu/importu ustawień. Obejmuje to ikony już zbuforowane, nawet gdy pobieranie jest wyłączone. Wyłączenie utrzymuje małe kopie zapasowe; ikony i tak są pobierane automatycznie."
   },
   "optionFaviconCacheClear": {
     "message": "Wyczyść pamięć podręczną ikon"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Wyczyścić wzbogaconą pamięć podręczną ikon? Ikony zostaną automatycznie pobrane ponownie przy następnym otwarciu."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Brak pamięci podręcznej ikon do wyczyszczenia."
   },
   "optionFaviconCacheCleared": {
     "message": "Pamięć podręczna ikon wyczyszczona. Ikony zostaną pobrane ponownie przy następnym otwarciu."
@@ -882,7 +888,7 @@
     "message": "Ikony"
   },
   "storageUsageBookmarks": {
-    "message": "Dane zakładek"
+    "message": "Dane skanowania/oznaczania"
   },
   "storageUsageOther": {
     "message": "Inne"
@@ -902,7 +908,7 @@
     "message": "Wolne"
   },
   "storageUsageHint": {
-    "message": "Miejsce na dysku zajmowane przez zakładki, pamięć podręczną ikon i ustawienia. Wolne miejsce aktualizuje się po wyczyszczeniu pamięci podręcznej ikon."
+    "message": "Miejsce zajmowane przez dane skanowania/oznaczania zakładek, pamięć podręczną ikon i ustawienia. Wolne miejsce aktualizuje się po wyczyszczeniu pamięci podręcznej ikon."
   },
   "optionsDonate": {
     "message": "Przekaż darowiznę"

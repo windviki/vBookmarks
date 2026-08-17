@@ -3,6 +3,7 @@
 > 2026-08-15 · 实施版，所有决策已定稿（§15），无开放项。
 > v2 打磨：DDG 服务级熔断与代理兜底（§3.3/§3.4）；存储改为按 host 分键 + 索引，写开放大、爆炸边缘 case、淘汰管理全部明确（§5）。
 > v3/v4 更新（4.0.8，替代早期已实现的单一家 DDG 聚合层）：第三方聚合兜底改为**内置服务商列表 + 按服务商独立熔断 + 自动故障转移**（§3.4）——`favicon-run` 首选、`duckduckgo` 兜底；检测到某服务商不可达即跳闸并切换下一候选，**不重复尝试**。2026-08 实测 favicon.run：已知站点 200+真实 PNG；**未知/无图标域名 HTTP 500 干净失败**（DDG 对未知域名返回 200+自家占位，不可判定）。各家判定差异封装为**一致行为接口**（`url` + `interpret`）。其余链路（L1/L2/L3）与缓存/预算机制不变。
+> v5 更新（4.0.8 独立审计低优先级收尾）：L2 的 `<link>` 候选上限 5 个，坏 `data:` 候选跳过继续（支持 base64 与百分号编码两种 data URL）；选项页清除图标缓存补确认与空缓存反馈；备份导出/导入排除运行时 `vbmDeadScan` 活动日志；存储横条改用 `getBytesInUse` 真实计费并防抖刷新（§3.2/§5.4）。
 > 前置：[`docs/favicon-补全方案.md`](favicon-补全方案.md)（根因 + 真实 Chromium 实测 + 同类扩展调研）。
 > 本文是「补全缺失的网站图标」作为 vBookmarks **原生功能**的唯一实施依据：模块边界、代码契约、存储形状、选项 UI、测试与提交步骤均精确到文件与函数。
 
@@ -120,7 +121,8 @@ node 无 DOMParser，为保证模块可单测，用**容错的属性级正则**�
 
 - `<link\b[^>]*>` 逐个取标签，再按 `(rel|href|sizes|type)\s*=\s*("…"|'…'|裸值)` 提属性（属性顺序无关）。
 - `rel` 按空白拆 token，命中 `icon` / `shortcut icon` / `apple-touch-icon` / `apple-touch-icon-precomposed` / `mask-icon`。
-- **`href="data:…"` 直接用**：本身就是图标数据，省一次 fetch，直接进校验第 4 步。
+- **`href="data:…"` 直接用**：本身就是图标数据，省一次 fetch，直接进校验第 4 步。支持 `;base64` 与百分号编码两种 data URL（内联 SVG 常见后者）；解码失败**只跳过该候选**，继续尝试后续 `<link>`（早期实现会把坏 data URL 的异常穿透整个 L2 循环）。
+- **候选上限 5 个**：页面若声明几十个 `<link>` 图标，只尝试评分排序后的前 5 个，避免单个怪页面独占 worker 数分钟。
 - 相对路径用 `new URL(href, pageUrl)` 解析。
 - 选图打分：`sizes` 含 `16x16`/`32x32` → 3；`type="image/svg+xml"` → 2；其余 → 1；取最高分，同分取先出现者。SVG 没有固定尺寸但缩放无损，优先级高于未知位图。
 - `<link rel="manifest">` 本期不追（多一次 JSON fetch，收益边际），代码里留注释说明。
@@ -363,7 +365,8 @@ chrome.storage.local:
 ### 5.4 设置备份排除与手动清除
 
 - **备份包含图标缓存**（`faviconBackupInclude`，**默认开**）：选项页导出打包整个 local 区，`favicon-backup` 复选框勾选时**保留** `vbmFaviconIdx` + `vbmFavicon:*` 键（图标随备份携带、导入即复用，避免换机后重新抓取）；取消勾选才按前缀剔除，保持备份精简。导入是 merge 语义，旧备份里没有这些键，自然无兼容问题。
-- **手动清除**（选项页按钮）：`chrome.storage.local.get(null)` → 收集 `vbmFaviconIdx` + 全部 `vbmFavicon:` 前缀键 → `chrome.storage.local.remove(键列表)` → `alert(_m('optionFaviconCacheCleared'))`。打开中的 popup/panel 靠 §5.1 的 onChanged（索引被移除）即刻清空内存 Map，下次渲染重新补全。
+- **手动清除**（选项页按钮）：`chrome.storage.local.get(null)` → 收集 `vbmFaviconIdx` + 全部 `vbmFavicon:` 前缀键 → `confirm` 确认（与其他破坏性操作一致）→ `chrome.storage.local.remove(键列表)` → `alert(_m('optionFaviconCacheCleared'))`；缓存为空时给 `optionFaviconCacheEmpty` 反馈，不再静默返回。打开中的 popup/panel 靠 §5.1 的 onChanged（索引被移除）即刻清空内存 Map，下次渲染重新补全。
+- **备份的运行时数据隔离**：导出**永远剔除** `vbmDeadScan`（死链扫描的活动日志），导入时也丢弃该键——它不是用户数据，带到另一台机器会被误当成可续扫的本地扫描。其余 local 区数据仍随备份导出。
 
 ---
 

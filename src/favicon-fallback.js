@@ -42,7 +42,7 @@ export const hashPixels = bytes => {
     return h;
 };
 
-// v4.1 favicon contrast service: from the SAME getImageData buffer the
+// 4.0.5 favicon contrast service: from the SAME getImageData buffer the
 // placeholder check already samples, derive four stats — the fraction of
 // opaque pixels sitting on the DARK extreme (lum < 0.30), on the LIGHT
 // extreme (lum > 0.70), the COLORED share (chroma — max−min of the RGB
@@ -120,7 +120,7 @@ export function initFaviconFallback(doc = document, ctx = {}) {
     if (typeof Image !== 'function' || !doc || !doc.addEventListener)
         return null;
 
-    // v4.1 favicon contrast service: themeIsDark / contrastEnabled are getters
+    // 4.0.5 favicon contrast service: themeIsDark / contrastEnabled are getters
     // read at DECISION time (not snapshotted at init), so a live palette theme
     // switch or an options-page toggle takes effect without a restart. Defaults
     // keep the service inert when no context is provided (unit tests, or any

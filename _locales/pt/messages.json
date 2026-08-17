@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "No filtro Todos, isso inclui marcadores bloqueados (acessíveis pelo seu proxy, provavelmente ainda ativos).",
+    "message": "No filtro Todos, isso inclui favoritos bloqueados (acessíveis pelo seu proxy, provavelmente ainda ativos) e linhas marcadas anteriormente.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Marcar selecionados"
   },
   "deadMarkStatusAll": {
-    "message": "Todos"
+    "message": "Qualquer status"
   },
   "deadMarkStatusMarked": {
     "message": "Marcados"
@@ -870,10 +870,16 @@
     "message": "Incluir cache de ícones nos backups"
   },
   "optionFaviconBackupHint": {
-    "message": "Inclua também o cache de favicons enriquecido (dados por site, potencialmente grandes) na exportação/importação de configurações. Desativar mantém os backups pequenos; os ícones são buscados novamente automaticamente."
+    "message": "Incluir também o cache de ícones enriquecidos (dados por site, potencialmente grandes) na exportação/importação de configurações. Isso abrange ícones já em cache, mesmo com a busca desativada. Quando desativado, os backups permanecem pequenos; os ícones são buscados novamente automaticamente de qualquer forma."
   },
   "optionFaviconCacheClear": {
     "message": "Limpar cache de ícones"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Limpar o cache de ícones enriquecidos? Os ícones serão buscados novamente automaticamente na próxima abertura."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Não há cache de ícones para limpar."
   },
   "optionFaviconCacheCleared": {
     "message": "Cache de ícones limpo. Os ícones serão buscados novamente na próxima abertura."
@@ -882,7 +888,7 @@
     "message": "Ícones"
   },
   "storageUsageBookmarks": {
-    "message": "Dados de favoritos"
+    "message": "Dados de verificação/marcação"
   },
   "storageUsageOther": {
     "message": "Outros"
@@ -902,7 +908,7 @@
     "message": "Livre"
   },
   "storageUsageHint": {
-    "message": "Espaço de armazenamento usado por favoritos, cache de ícones e configurações. O espaço livre é atualizado após limpar a cache de ícones."
+    "message": "Espaço de armazenamento usado pelos dados de verificação/marcação de favoritos, pelo cache de ícones e pelas configurações. O espaço livre é atualizado após limpar o cache de ícones."
   },
   "optionsDonate": {
     "message": "Doar"

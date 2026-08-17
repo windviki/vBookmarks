@@ -197,7 +197,7 @@
     }
   },
   "deadDeleteAllNote": {
-    "message": "Kaikki-suodattimella tämä sisältää estetyt kirjanmerkit (välityspalvelimen kautta tavoitettavissa, todennäköisesti edelleen toimivat).",
+    "message": "Kaikki-suodattimessa tämä sisältää estetyt kirjanmerkit (tavoitettavissa välityspalvelimen kautta, todennäköisesti edelleen toimivia) ja aiemmin merkityt rivit.",
     "description": "Second line of the delete-all confirmation in the Dead links view."
   },
   "undoSingleStepNote": {
@@ -277,7 +277,7 @@
     "message": "Merkitse valitut"
   },
   "deadMarkStatusAll": {
-    "message": "Kaikki"
+    "message": "Kaikki tilat"
   },
   "deadMarkStatusMarked": {
     "message": "Merkitty"
@@ -870,10 +870,16 @@
     "message": "Sisällytä favicon-välimuisti varmuuskopioihin"
   },
   "optionFaviconBackupHint": {
-    "message": "Sisällytä myös laajennettu favicon-välimuisti (sivustokohtaiset tiedot, mahdollisesti suuret) asetusten vientiin/tuontiin. Kun pois päältä, varmuuskopiot pysyvät pieninä; kuvakkeet haetaan kuitenkin automaattisesti uudelleen."
+    "message": "Sisällytä myös rikastettu favicon-välimuisti (sivustokohtaiset tiedot, mahdollisesti suuria) asetusten vientiin/tuontiin. Tämä kattaa jo välimuistissa olevat kuvakkeet, vaikka nouto on pois päältä. Kun nouto on pois päältä, varmuuskopiot pysyvät pieninä; kuvakkeet noudetaan automaattisesti uudelleen joka tapauksessa."
   },
   "optionFaviconCacheClear": {
     "message": "Tyhjennä kuvakevälimuisti"
+  },
+  "optionFaviconCacheClearConfirm": {
+    "message": "Tyhjennetäänkö rikastettu kuvakevälimuisti? Kuvakkeet haetaan automaattisesti uudelleen seuraavalla avauskerralla."
+  },
+  "optionFaviconCacheEmpty": {
+    "message": "Ei tyhjennettävää kuvakevälimuistia."
   },
   "optionFaviconCacheCleared": {
     "message": "Kuvakevälimuisti tyhjennetty. Kuvakkeet haetaan uudelleen seuraavalla avauksella."
@@ -882,7 +888,7 @@
     "message": "Kuvakkeet"
   },
   "storageUsageBookmarks": {
-    "message": "Kirjanmerkkitiedot"
+    "message": "Skannaus-/merkintätiedot"
   },
   "storageUsageOther": {
     "message": "Muu"
@@ -902,7 +908,7 @@
     "message": "Vapaa"
   },
   "storageUsageHint": {
-    "message": "Kirjanmerkkien, kuvakevälimuistin ja asetusten käyttämä tallennustila. Vapaa tila päivittyy kuvakevälimuistin tyhjentämisen jälkeen."
+    "message": "Kirjanmerkkien skannaus-/merkintätietojen, kuvakevälimuistin ja asetusten käyttämä tallennustila. Vapaa tila päivittyy kuvakevälimuistin tyhjentämisen jälkeen."
   },
   "optionsDonate": {
     "message": "Lahjoita"
