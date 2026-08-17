@@ -1014,6 +1014,18 @@ export function initKeyboard(ctx = {}) {
                 return;
             }
         }
+        // 4.0.8: the remote announce banner sits at the same layer — dismiss
+        // it through its own × so the once-semantics (mark-seen + hide) stay
+        // in announce.js. (#whats-new needs no layer: it fires exactly once
+        // at the version crossing and carries no dismiss by design.)
+        const annBanner = $('announce');
+        if (annBanner && !annBanner.hidden && annBanner.querySelector) {
+            const annDismiss = annBanner.querySelector('.announce-dismiss');
+            if (annDismiss && annDismiss.click) {
+                annDismiss.click();
+                return;
+            }
+        }
         // v4 task-4 #14: a visible risk banner (dead/dupes) sits at the same
         // layer — dismissed with the session × semantics through its button.
         const activeDef = views.activeDef ? views.activeDef() : null;
@@ -1161,17 +1173,22 @@ export function initKeyboard(ctx = {}) {
             if (tabVisible(el))
                 stops.push(el);
         }
-        // keyboard-model §7: the transient banner (donation / what's-new)
-        // joins the ring at its visual spot — between the header row and the
-        // tab strip — whenever it is up. Never an arrow rung: the arrow chain
-        // stays stable whether or not the banner happens to be showing.
-        const bannerEl = $('donation');
-        if (bannerEl && bannerEl.querySelectorAll && tabVisible(bannerEl)) {
-            const bannerControls = bannerEl.querySelectorAll('button, a[href]');
-            for (let i = 0, l = bannerControls.length; i < l; i++) {
-                const c = bannerControls[i];
-                if (!c.disabled && tabVisible(c))
-                    stops.push(c);
+        // keyboard-model §7: the transient banners (donation card, the 4.0.8
+        // local what's-new, the remote announce) join the ring at their visual
+        // spot — between the header row and the tab strip — whenever they are
+        // up. Never an arrow rung: the arrow chain stays stable whether or not
+        // a banner happens to be showing. whats-new/announce signal visibility
+        // with the `hidden` attribute — a real browser gives them no client
+        // rects, which tabVisible catches.
+        for (const bannerId of ['donation', 'whats-new', 'announce']) {
+            const bannerEl = $(bannerId);
+            if (bannerEl && bannerEl.querySelectorAll && tabVisible(bannerEl)) {
+                const bannerControls = bannerEl.querySelectorAll('button, a[href]');
+                for (let i = 0, l = bannerControls.length; i < l; i++) {
+                    const c = bannerControls[i];
+                    if (!c.disabled && tabVisible(c))
+                        stops.push(c);
+                }
             }
         }
         const tabsEl = $('view-tabs');

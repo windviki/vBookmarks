@@ -30,7 +30,7 @@ Top to bottom, the popup is:
 
 ```
 ┌ 1 Header row   [search box] [☆ quick-add] [⚙ tools]        ┐ always there
-├ 2 Banner       donation / what's-new (transient, rare)     ┤ sometimes
+├ 2 Banner       donation / what's-new / announce (transient)  ┤ sometimes
 ├ 3 Tab strip    [tree][search][recent][stats][dead][dupes]  ┤ hideable
 ├ 4 View content [in-list toolbar?] + list rows              ┤ one visible
 └ 5 Overlays     context menu · dialogs · palette (modal)    ┘ on demand
@@ -264,8 +264,11 @@ per press:
    first, then the menu — and arrowing away from the collapse entry inside
    the parent menu closes the flyout (no stale flyout).
 4. **Banner** visible → dismiss it (the donation card uses the *Later*
-   semantics — it snoozes, never unsubscribes; a dead/dupes **risk banner**
-   (v4 task-4 #14) dismisses with its session × semantics).
+   semantics — it snoozes, never unsubscribes; the remote **announce** banner
+   (4.0.8) dismisses through its own × so the mark-seen once-semantics stay
+   in announce.js — `#whats-new` needs no layer, it fires exactly once at the
+   version crossing; a dead/dupes **risk banner** (v4 task-4 #14) dismisses
+   with its session × semantics).
 5. **Palette** open → close it.
 6. **View-local transient state**: Duplicates/Dead **selection mode** exits;
    a Dead **scan pauses** (next `Esc` resumes — non-destructive; cancelling
@@ -356,7 +359,7 @@ endpoint moves to the next surviving rung.
 | *Remember previous state* off | Completely fresh startup: no `focusSpot` restore (the stored record is dropped at startup), no per-view `viewState` scroll/row restore (4.0.5: now under the same gate), no tree focusID/scroll restore, no saved-query restore. Within-session focus memory is unaffected. |
 | Side panel mode | Identical model; startup always restores the last view. |
 | RTL locale | Every horizontal law mirrors (`←`/`→` swap) on the strip, the header chain, tree folders, menus, history rows. |
-| Banner visible | Joins the `Tab` ring between header and strip; `Esc` dismisses (Later). Never an arrow rung — the arrow chain stays stable whether or not the banner happens to be up. |
+| Banner visible | Joins the `Tab` ring between header and strip; `Esc` dismisses (Later). Never an arrow rung — the arrow chain stays stable whether or not the banner happens to be up. 4.0.8: this covers all three transient banners in DOM order — the donation card, the local `#whats-new` strip, and the remote `#announce` banner (whose dismiss × must be keyboard-reachable); each visible banner contributes its `button, a[href]` controls at its own spot, hidden ones contribute nothing. |
 | Risk banner visible (dead/dupes, v4 task-4 #14) | Same laws as the donation banner, at its own visual spot: `Tab` ring between the strip and the toolbar rungs; `Esc` dismisses (session ×); never an arrow rung, so the multi-toolbar chain of §2.5 is unaffected. |
 | Tree-only filter (`onlyShowBMBar`) | Content-level filter; the keyboard model is untouched. |
 | Dialog / menu / palette open | Overlay laws (§2.6, §5) replace the zone chain until closed. |

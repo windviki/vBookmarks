@@ -661,6 +661,80 @@ describe('Tab region cycle (§2.1)', () => {
         expect(doc.activeElement).toBe(tabBtn);
     });
 
+    // keyboard-model §7 (4.0.8): the local what's-new strip and the remote
+    // announce banner sit between #donation and the tab strip and join the
+    // ring the same way. whats-new carries two links; announce carries its
+    // link(s) plus the dismiss × button — the dismiss must be keyboard
+    // reachable, otherwise mouse-only users could clear the banner.
+    const multiBannerEnv = ({ donation = 'none', whatsNew = 'none', announce = 'none' } = {}) => {
+        const refs = {};
+        const env = setup({
+            views: ({ tree, el }) => {
+                refs.quickAdd = el('BUTTON', 'quick-add-btn');
+                refs.tool = el('BUTTON', 'tool-btn');
+                const donationEl = el('DIV', 'donation');
+                donationEl.style.display = donation;
+                donationEl._qsa['button, a[href]'] = [];
+                const whatsNewEl = el('DIV', 'whats-new');
+                whatsNewEl.style.display = whatsNew;
+                refs.guide = el('A', 'whats-new-guide');
+                refs.changelog = el('A', 'whats-new-changelog');
+                whatsNewEl._qsa['button, a[href]'] = [refs.guide, refs.changelog];
+                const announceEl = el('DIV', 'announce');
+                announceEl.style.display = announce;
+                refs.annLink = el('A', 'announce-link');
+                refs.annDismiss = el('BUTTON', 'announce-dismiss');
+                announceEl._qsa['button, a[href]'] = [refs.annLink, refs.annDismiss];
+                refs.tabs = el('DIV', 'view-tabs');
+                refs.tabBtn = el('BUTTON', 'view-tab-tree');
+                refs.tabBtn.parentNode = refs.tabs;
+                return {
+                    lists: () => [{ id: 'tree', el: tree, typeAhead: true }],
+                    activeDef: () => ({ listEl: tree, tabEl: refs.tabBtn }),
+                    onEscapeActive: () => false,
+                    escapeToTree: () => false,
+                    focusTop: () => {},
+                    activate: () => {}
+                };
+            }
+        });
+        return { ...env, ...refs };
+    };
+
+    it('a visible what\'s-new strip contributes its links between header and strip', () => {
+        const { doc, fireDoc, tool, guide, changelog, tabBtn, tree, f1 } = multiBannerEnv({ whatsNew: 'block' });
+        tree._qs[ROW_SEL] = f1.link;
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(guide);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(changelog);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn);
+    });
+
+    it('a visible announce banner contributes link and dismiss button', () => {
+        const { doc, fireDoc, tool, annLink, annDismiss, tabBtn, tree, f1 } = multiBannerEnv({ announce: 'block' });
+        tree._qs[ROW_SEL] = f1.link;
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(annLink);
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(annDismiss); // dismiss is keyboard reachable
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(tabBtn);
+    });
+
+    it('hidden banners are skipped while visible ones keep their spot', () => {
+        const { doc, fireDoc, tool, annLink, annDismiss, tabBtn, tree, f1 } = multiBannerEnv({ announce: 'block' });
+        tree._qs[ROW_SEL] = f1.link;
+        tool.focus();
+        fireDoc('keydown', makeEvent({ key: 'Tab' }));
+        expect(doc.activeElement).toBe(annLink); // donation + whats-new skipped
+        fireDoc('keydown', makeEvent({ key: 'Tab', shiftKey: true }));
+        expect(doc.activeElement).toBe(tool); // backwards skips them too
+    });
+
     // keyboard-model §7: the transient undo toast (undo.js showToast/
     // toastAction) joins the ring at its visual spot — the fixed bottom bar,
     // after the list rows — whenever it is up (`hidden` off is the visibility
@@ -3059,6 +3133,40 @@ describe('Esc layering — full document chain (item 2)', () => {
         const clicks = [];
         later.click = () => clicks.push('later');
         ctx.searchInput.value = 'query'; // arm the search rung below
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(clicks).toEqual([]);
+        expect(ctx.searchCalls).toEqual(['escape']);
+    });
+
+    // keyboard-model §4 layer 3 (4.0.8): the remote announce banner shares the
+    // rung — Esc dispatches its own × so the mark-seen once-semantics stay in
+    // announce.js. Its visibility signal is the `hidden` attribute.
+    it('a visible announce banner dismisses via its × at the banner rung', () => {
+        const ctx = setup({ searchActive: true });
+        const ann = ctx.el('DIV', 'announce');
+        ann.hidden = false;
+        const dismiss = ctx.el('BUTTON', 'announce-dismiss-x');
+        const clicks = [];
+        dismiss.click = () => clicks.push('dismiss');
+        ann._qs['.announce-dismiss'] = dismiss;
+        ctx.searchInput.value = 'query';
+        const ev = makeEvent({ key: 'Escape' });
+        ctx.fireDoc('keydown', ev);
+        expect(clicks).toEqual(['dismiss']);
+        expect(ctx.searchCalls).toEqual([]); // lower rungs untouched
+        expect(ctx.windowCloseCalls).toEqual([]);
+    });
+
+    it('a hidden announce banner is skipped — Esc falls through', () => {
+        const ctx = setup({ searchActive: true });
+        const ann = ctx.el('DIV', 'announce');
+        ann.hidden = true;
+        const dismiss = ctx.el('BUTTON', 'announce-dismiss-x');
+        const clicks = [];
+        dismiss.click = () => clicks.push('dismiss');
+        ann._qs['.announce-dismiss'] = dismiss;
+        ctx.searchInput.value = 'query';
         const ev = makeEvent({ key: 'Escape' });
         ctx.fireDoc('keydown', ev);
         expect(clicks).toEqual([]);
