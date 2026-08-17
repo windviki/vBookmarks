@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Đã nhập cài đặt. Trang sẽ tải lại ngay bây giờ."
   },
+  "settingsImportError": {
+    "message": "Không thể ghi một số cài đặt (do dung lượng lưu trữ hoặc lỗi tạm thời). Việc nhập không hoàn tất — vui lòng thử lại."
+  },
   "settingsImportInvalid": {
     "message": "Tệp cài đặt không hợp lệ: không phải bản sao lưu cài đặt vBookmarks."
   },

@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Asetukset tuotu. Sivu ladataan nyt uudelleen."
   },
+  "settingsImportError": {
+    "message": "Joitakin asetuksia ei voitu tallentaa (tallennustilan ylittyminen tai tilapäinen virhe). Tuontia ei suoritettu loppuun — yritä uudelleen."
+  },
   "settingsImportInvalid": {
     "message": "Virheellinen asetustiedosto: ei ole vBookmarks-asetusten varmuuskopio."
   },

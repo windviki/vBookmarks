@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Instellingen geïmporteerd. De pagina wordt nu herladen."
   },
+  "settingsImportError": {
+    "message": "Sommige instellingen konden niet worden opgeslagen (opslagquota of een tijdelijke fout). De import is niet voltooid — probeer het opnieuw."
+  },
   "settingsImportInvalid": {
     "message": "Ongeldig instellingenbestand: dit is geen vBookmarks back-up van instellingen."
   },

@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Nastavení importována. Stránka se nyní znovu načte."
   },
+  "settingsImportError": {
+    "message": "Některá nastavení se nepodařilo zapsat (kvóta úložiště nebo dočasná chyba). Import nebyl dokončen – zkuste to prosím znovu."
+  },
   "settingsImportInvalid": {
     "message": "Neplatný soubor nastavení: nejedná se o zálohu nastavení vBookmarks."
   },

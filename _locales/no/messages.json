@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Innstillinger importert. Siden vil nå lastes inn på nytt."
   },
+  "settingsImportError": {
+    "message": "Noen innstillinger kunne ikke skrives (lagringskvote eller en midlertidig feil). Importen ble ikke fullført — prøv igjen."
+  },
   "settingsImportInvalid": {
     "message": "Ugyldig innstillingsfil: er ikke en vBookmarks sikkerhetskopi."
   },

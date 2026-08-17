@@ -1360,6 +1360,9 @@
   "settingsImportDone": {
     "message": "Definições importadas. A página será agora recarregada."
   },
+  "settingsImportError": {
+    "message": "Algumas definições não puderam ser gravadas (cota de armazenamento ou erro transitório). A importação não foi concluída — tente novamente."
+  },
   "settingsImportInvalid": {
     "message": "Ficheiro de definições inválido: não é uma cópia de segurança das definições do vBookmarks."
   },

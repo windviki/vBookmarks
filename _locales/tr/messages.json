@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Ayarlar içe aktarıldı. Sayfa şimdi yeniden yüklenecek."
   },
+  "settingsImportError": {
+    "message": "Bazı ayarlar yazılamadı (depolama kotası veya geçici bir hata). İçe aktarma tamamlanmadı — lütfen tekrar deneyin."
+  },
   "settingsImportInvalid": {
     "message": "Geçersiz ayar dosyası: bir vBookmarks ayar yedeklemesi değil."
   },

@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Nustatymai importuoti. Puslapis bus perkrautas."
   },
+  "settingsImportError": {
+    "message": "Kai kurių nustatymų nepavyko įrašyti (viršyta saugyklos kvota arba laikina klaida). Importavimas nebaigtas – bandykite dar kartą."
+  },
   "settingsImportInvalid": {
     "message": "Netinkamas nustatymų failas: tai nėra vBookmarks nustatymų atsarginė kopija."
   },

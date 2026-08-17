@@ -459,12 +459,41 @@ const $ = id => document.getElementById(id);
             const favObj = {};
             for (const k of favKeys) favObj[k] = backup.local[k];
             for (const k of favKeys) delete backup.local[k];
-            await chrome.storage.local.set(backup.local);
-            if (backup.sync)
-                await chrome.storage.sync.set(backup.sync);
+            try {
+                await chrome.storage.local.set(backup.local);
+                if (backup.sync)
+                    await chrome.storage.sync.set(backup.sync);
+            } catch (e) {
+                // Quota exceeded or a transient storage failure — without this
+                // catch the await above would reject, the user would get no
+                // feedback, and a later reload would surface half-applied
+                // settings with no explanation. Keep the page as-is so the
+                // user can retry the import.
+                alert(_m('settingsImportError'));
+                return;
+            }
             if ($('favicon-backup').checked && favKeys.length) {
+                // Sanitize before writing: a hand-edited backup could carry
+                // non-image payloads or MB-scale blobs under icon keys, which
+                // would bypass the enricher's 96KB/budget guards forever.
+                // Invalid entries are dropped silently — the cache simply
+                // re-fetches those icons on next render. (Limit mirrors
+                // MAX_ICON_BYTES in favicon-enrich.js; options.js is a classic
+                // script and cannot import the constant.)
+                const MAX_IMPORT_ICON_BYTES = 96 * 1024;
+                const cleanObj = {};
+                for (const k of Object.keys(favObj)) {
+                    const v = favObj[k];
+                    if (k === 'vbmFaviconIdx') {
+                        cleanObj[k] = v; // index self-heals on hydrate
+                        continue;
+                    }
+                    if (typeof v === 'string' && v.length <= MAX_IMPORT_ICON_BYTES
+                        && v.slice(0, 11).toLowerCase() === 'data:image/')
+                        cleanObj[k] = v;
+                }
                 try {
-                    await chrome.storage.local.set(favObj);
+                    await chrome.storage.local.set(cleanObj);
                 } catch (_) { /* best effort — cache is re-fetchable */ }
             }
             alert(_m('settingsImportDone'));

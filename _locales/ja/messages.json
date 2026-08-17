@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "設定がインポートされました。ページをリロードします。"
   },
+  "settingsImportError": {
+    "message": "一部の設定を書き込めませんでした（ストレージ容量または一時的なエラー）。インポートは完了しませんでした。もう一度お試しください。"
+  },
   "settingsImportInvalid": {
     "message": "無効な設定ファイルです。vBookmarksの設定バックアップではありません。"
   },

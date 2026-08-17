@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "設定已匯入。頁面將會重新載入。"
   },
+  "settingsImportError": {
+    "message": "部分設定無法寫入（儲存配額或暫時性錯誤）。匯入未完成，請重試。"
+  },
   "settingsImportInvalid": {
     "message": "設定檔案無效：並非 vBookmarks 的設定備份。"
   },

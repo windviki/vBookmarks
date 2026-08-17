@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Beállítások importálva. Az oldal most újratöltődik."
   },
+  "settingsImportError": {
+    "message": "Néhány beállítás nem írható (tárhelykvóta vagy átmeneti hiba miatt). Az importálás nem fejeződött be – kérjük, próbálja újra."
+  },
   "settingsImportInvalid": {
     "message": "Érvénytelen beállításfájl: nem vBookmarks beállítások biztonsági mentése."
   },

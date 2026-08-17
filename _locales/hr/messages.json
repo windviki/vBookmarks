@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Postavke uvezene. Stranica će se sada ponovno učitati."
   },
+  "settingsImportError": {
+    "message": "Neke postavke nije moguće zapisati (kvota pohrane ili privremena pogreška). Uvoz nije dovršen — pokušajte ponovno."
+  },
   "settingsImportInvalid": {
     "message": "Nevažeća datoteka postavki: nije sigurnosna kopija vBookmarks postavki."
   },

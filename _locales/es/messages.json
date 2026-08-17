@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Ajustes importados. La página se recargará ahora."
   },
+  "settingsImportError": {
+    "message": "No se pudieron escribir algunos ajustes (cuota de almacenamiento o error transitorio). La importación no se completó; inténtalo de nuevo."
+  },
   "settingsImportInvalid": {
     "message": "Archivo de ajustes no válido: no es una copia de seguridad de vBookmarks."
   },

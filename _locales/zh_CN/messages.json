@@ -1624,6 +1624,9 @@
   "settingsImportDone": {
     "message": "设置已导入，页面即将重新加载。"
   },
+  "settingsImportError": {
+    "message": "部分设置未能写入（存储配额不足或临时错误），导入未完成，请重试。"
+  },
   "statsSectionRecent": {
     "message": "最近访问"
   },

@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Einstellungen importiert. Die Seite wird nun neu geladen."
   },
+  "settingsImportError": {
+    "message": "Einige Einstellungen konnten nicht geschrieben werden (Speicherkontingent oder ein vorübergehender Fehler). Der Import wurde nicht abgeschlossen – bitte versuchen Sie es erneut."
+  },
   "settingsImportInvalid": {
     "message": "Ungültige Einstellungsdatei: Kein vBookmarks-Einstellungs-Backup."
   },

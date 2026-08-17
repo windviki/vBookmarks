@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Setări importate. Pagina se va reîncărca acum."
   },
+  "settingsImportError": {
+    "message": "Unele setări nu au putut fi scrise (cotă de stocare sau o eroare tranzitorie). Importul nu s-a finalizat — încercați din nou."
+  },
   "settingsImportInvalid": {
     "message": "Fișier de setări invalid: nu este o copie de rezervă a setărilor vBookmarks."
   },

@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Iestatījumi importēti. Lapa tiks pārlādēta."
   },
+  "settingsImportError": {
+    "message": "Dažus iestatījumus nevarēja ierakstīt (krātuves kvota vai pārejoša kļūda). Importēšana netika pabeigta — lūdzu, mēģiniet vēlreiz."
+  },
   "settingsImportInvalid": {
     "message": "Nederīgs iestatījumu fails: tas nav vBookmarks iestatījumu dublējums."
   },

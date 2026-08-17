@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Ustawienia zaimportowane. Strona zostanie przeładowana."
   },
+  "settingsImportError": {
+    "message": "Niektóre ustawienia nie mogły zostać zapisane (limit pamięci lub błąd przejściowy). Import nie został ukończony — spróbuj ponownie."
+  },
   "settingsImportInvalid": {
     "message": "Nieprawidłowy plik ustawień: to nie jest kopia zapasowa ustawień vBookmarks."
   },

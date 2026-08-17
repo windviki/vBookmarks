@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "הגדרות יובאו. הדף ייטען מחדש כעת."
   },
+  "settingsImportError": {
+    "message": "לא ניתן היה לכתוב חלק מההגדרות (מכסת אחסון או שגיאה זמנית). הייבוא לא הושלם — נסה שוב."
+  },
   "settingsImportInvalid": {
     "message": "קובץ הגדרות לא תקין: אינו גיבוי הגדרות של vBookmarks."
   },

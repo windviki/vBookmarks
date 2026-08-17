@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Inställningar importerade. Sidan kommer nu att laddas om."
   },
+  "settingsImportError": {
+    "message": "Vissa inställningar kunde inte skrivas (lagringskvot eller ett tillfälligt fel). Importen slutfördes inte – försök igen."
+  },
   "settingsImportInvalid": {
     "message": "Ogiltig inställningsfil: inte en säkerhetskopia av vBookmarks-inställningar."
   },

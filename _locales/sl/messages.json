@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Nastavitve uvožene. Stran se bo zdaj ponovno naložila."
   },
+  "settingsImportError": {
+    "message": "Nekaterih nastavitev ni bilo mogoče zapisati (kvota shrambe ali začasna napaka). Uvoz ni bil dokončan — poskusite znova."
+  },
   "settingsImportInvalid": {
     "message": "Neveljavna datoteka nastavitev: ni varnostna kopija nastavitev vBookmarks."
   },

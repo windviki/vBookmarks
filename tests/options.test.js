@@ -454,6 +454,64 @@ describe('options.js settings backup', () => {
             expect(sb.alerts).toEqual(['settingsImportDone']);
             expect(sb.location.reload).toHaveBeenCalledTimes(1);
         });
+
+        it('a failed local settings write alerts and never reloads into half-applied state', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: { showSyncStatus: 'true' }
+            });
+            await sb.start();
+            sb.chrome.storage.local.set = async () => { throw new Error('QUOTA_BYTES exceeded'); };
+            await pickFile(sb, validBackup({ local: { theme: 'dark' } }));
+            expect(sb.alerts).toEqual(['settingsImportError']);
+            expect(sb.localData.theme).toBe('light'); // untouched
+            expect(sb.syncData.showSyncStatus).toBe('true'); // sync write never attempted
+            expect(sb.location.reload).not.toHaveBeenCalled();
+        });
+
+        it('a failed sync settings write alerts and skips the favicon restore', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            sb.elements['favicon-backup'].checked = true;
+            sb.chrome.storage.sync.set = async () => { throw new Error('QUOTA_BYTES exceeded'); };
+            await pickFile(sb, validBackup({
+                local: { theme: 'dark', 'vbmFavicon:github.com': 'data:image/png;base64,AAAA' },
+                sync: { showSyncStatus: 'false' }
+            }));
+            expect(sb.alerts).toEqual(['settingsImportError']);
+            expect(sb.localData['vbmFavicon:github.com']).toBeUndefined(); // restore skipped
+            expect(sb.location.reload).not.toHaveBeenCalled();
+        });
+
+        it('sanitizes imported favicon entries: keeps data:image payloads, drops the rest', async () => {
+            const sb = createSandbox({
+                chromeLocalData: { __migrated_v1: '1', theme: 'light' },
+                chromeSyncData: {}
+            });
+            await sb.start();
+            sb.elements['favicon-backup'].checked = true;
+            const favIdx = JSON.stringify({ v: 3, down: {}, hosts: {} });
+            await pickFile(sb, validBackup({ local: {
+                theme: 'dark',
+                'vbmFavicon:good.com': 'data:image/png;base64,AAAA',
+                'vbmFavicon:upper.com': 'DATA:IMAGE/PNG;BASE64,BBBB',
+                'vbmFavicon:evil.com': 'https://evil.example/x.png',
+                'vbmFavicon:huge.com': `data:image/png;base64,${'A'.repeat(97 * 1024)}`,
+                'vbmFavicon:notstr.com': 42,
+                vbmFaviconIdx: favIdx
+            } }));
+            expect(sb.localData['vbmFavicon:good.com']).toBe('data:image/png;base64,AAAA');
+            expect(sb.localData['vbmFavicon:upper.com']).toBe('DATA:IMAGE/PNG;BASE64,BBBB');
+            expect(sb.localData['vbmFavicon:evil.com']).toBeUndefined();
+            expect(sb.localData['vbmFavicon:huge.com']).toBeUndefined();
+            expect(sb.localData['vbmFavicon:notstr.com']).toBeUndefined();
+            expect(sb.localData.vbmFaviconIdx).toBe(favIdx); // index rides along, self-heals
+            expect(sb.alerts).toEqual(['settingsImportDone']);
+            expect(sb.location.reload).toHaveBeenCalledTimes(1);
+        });
     });
 });
 

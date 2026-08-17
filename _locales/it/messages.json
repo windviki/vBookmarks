@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Impostazioni importate. La pagina verrà ora ricaricata."
   },
+  "settingsImportError": {
+    "message": "Non è stato possibile scrivere alcune impostazioni (quota di archiviazione o errore temporaneo). L'importazione non è stata completata: riprova."
+  },
   "settingsImportInvalid": {
     "message": "File impostazioni non valido: non è un backup delle impostazioni di vBookmarks."
   },

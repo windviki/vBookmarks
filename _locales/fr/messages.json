@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Paramètres importés. La page va maintenant se recharger."
   },
+  "settingsImportError": {
+    "message": "Certains paramètres n'ont pas pu être écrits (quota de stockage ou erreur temporaire). L'importation n'a pas abouti — veuillez réessayer."
+  },
   "settingsImportInvalid": {
     "message": "Fichier de paramètres invalide : ce n'est pas une sauvegarde des paramètres de vBookmarks."
   },

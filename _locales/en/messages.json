@@ -1774,6 +1774,9 @@
   "settingsImportDone": {
     "message": "Settings imported. The page will now reload."
   },
+  "settingsImportError": {
+    "message": "Some settings could not be written (storage quota or a transient error). The import did not complete — please try again."
+  },
   "statsSectionRecent": {
     "message": "Recent visits"
   },

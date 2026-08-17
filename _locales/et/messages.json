@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Sätted imporditud. Leht laaditakse nüüd uuesti."
   },
+  "settingsImportError": {
+    "message": "Mõnda seadet ei õnnestunud kirjutada (salvestuskvoot või ajutine viga). Import ei lõppenud — proovige palun uuesti."
+  },
   "settingsImportInvalid": {
     "message": "Vigane sätete fail: see pole vBookmarksi sätete varundus."
   },

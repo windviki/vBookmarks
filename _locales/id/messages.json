@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Pengaturan diimpor. Halaman akan dimuat ulang sekarang."
   },
+  "settingsImportError": {
+    "message": "Beberapa pengaturan tidak dapat ditulis (kuota penyimpanan atau kesalahan sementara). Impor tidak selesai — silakan coba lagi."
+  },
   "settingsImportInvalid": {
     "message": "File pengaturan tidak valid: bukan cadangan pengaturan vBookmarks."
   },

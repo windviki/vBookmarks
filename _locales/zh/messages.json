@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "设置已导入。页面即将重新加载。"
   },
+  "settingsImportError": {
+    "message": "部分设置无法写入（存储配额或临时错误）。导入未完成，请重试。"
+  },
   "settingsImportInvalid": {
     "message": "无效的设置文件：不是vBookmarks设置备份。"
   },

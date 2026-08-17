@@ -1364,6 +1364,9 @@
   "settingsImportDone": {
     "message": "Configurações importadas. A página será agora recarregada."
   },
+  "settingsImportError": {
+    "message": "Algumas configurações não puderam ser gravadas (cota de armazenamento ou erro transitório). A importação não foi concluída — tente novamente."
+  },
   "settingsImportInvalid": {
     "message": "Ficheiro de configurações inválido: não é uma cópia de segurança das configurações do vBookmarks."
   },
